@@ -39,6 +39,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
@@ -61,48 +62,13 @@ import de.steinwedel.vaadin.MessageBox.ButtonType;
 public class MessageListViewImpl extends AbstractView implements
 		MessageListView, HasEditFormHandlers<Message> {
 
-	private static final long serialVersionUID = 8433776359091397422L;
-	private final PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
-	private Set<EditFormHandler<Message>> editFormHandlers;
-	private MessageSearchCriteria searchCriteria;
-	private final TopMessagePanel topMessagePanel;
-
-	public MessageListViewImpl() {
-		super();
-		this.setSpacing(true);
-		this.setMargin(false, true, true, true);
-		this.setWidth("100%");
-		topMessagePanel = new TopMessagePanel();
-		topMessagePanel.setWidth("100%");
-
-		topMessagePanel.getSearchHandlers().addSearchHandler(
-				new SearchHandler<MessageSearchCriteria>() {
-					@Override
-					public void onSearch(MessageSearchCriteria criteria) {
-						tableItem.setSearchCriteria(criteria);
-					}
-				});
-		this.addComponent(topMessagePanel);
-		tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
-				AppContext.getSpringBean(MessageService.class),
-				new MessageRowDisplayHandler());
-		this.addComponent(tableItem);
-	}
-
-	@Override
-	public void setCriteria(MessageSearchCriteria criteria) {
-		this.searchCriteria = criteria;
-		topMessagePanel.createBasicLayout();
-		tableItem.setSearchCriteria(searchCriteria);
-
-	}
-
 	private class MessageRowDisplayHandler implements
 			RowDisplayHandler<SimpleMessage> {
 
 		@Override
-		public Component generateRow(final SimpleMessage message, int rowIndex) {
-			HorizontalLayout messageLayout = new HorizontalLayout();
+		public Component generateRow(final SimpleMessage message,
+				final int rowIndex) {
+			final HorizontalLayout messageLayout = new HorizontalLayout();
 			messageLayout.setStyleName("message");
 			if (message.getIsstick() != null && message.getIsstick()) {
 				messageLayout.addStyleName("important-message");
@@ -112,15 +78,15 @@ public class MessageListViewImpl extends AbstractView implements
 					.createUserAvatarLink(message.getPosteduser(),
 							message.getFullPostedUserName()));
 
-			CssLayout rowLayout = new CssLayout();
+			final CssLayout rowLayout = new CssLayout();
 			rowLayout.setStyleName("message-container");
 			rowLayout.setWidth("100%");
-			Button title = new Button(message.getTitle(),
+			final Button title = new Button(message.getTitle(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							EventBus.getInstance().fireEvent(
 									new MessageEvent.GotoRead(
 											MessageListViewImpl.this, message
@@ -135,34 +101,34 @@ public class MessageListViewImpl extends AbstractView implements
 			title.setStyleName("link");
 			title.addStyleName(UIConstants.WORD_WRAP);
 
-			HorizontalLayout messageHeader = new HorizontalLayout();
+			final HorizontalLayout messageHeader = new HorizontalLayout();
 			messageHeader.setStyleName("message-header");
-			VerticalLayout leftHeader = new VerticalLayout();
+			final VerticalLayout leftHeader = new VerticalLayout();
 
-			Label username = new Label(message.getFullPostedUserName());
+			final Label username = new Label(message.getFullPostedUserName());
 			username.setStyleName("user-name");
 			leftHeader.addComponent(username);
 
 			title.addStyleName("message-title");
 			leftHeader.addComponent(title);
 
-			VerticalLayout rightHeader = new VerticalLayout();
-			Label timePostLbl = new Label(
+			final VerticalLayout rightHeader = new VerticalLayout();
+			final Label timePostLbl = new Label(
 					DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
 			timePostLbl.setSizeUndefined();
 			timePostLbl.setStyleName("time-post");
 			rightHeader.addComponent(timePostLbl);
-			HorizontalLayout notification = new HorizontalLayout();
+			final HorizontalLayout notification = new HorizontalLayout();
 			notification.setStyleName("notification");
 			notification.setSizeUndefined();
 			if (message.getCommentsCount() > 0) {
-				HorizontalLayout commentNotification = new HorizontalLayout();
-				Label commentCountLbl = new Label(Integer.toString(message
-						.getCommentsCount()));
+				final HorizontalLayout commentNotification = new HorizontalLayout();
+				final Label commentCountLbl = new Label(
+						Integer.toString(message.getCommentsCount()));
 				commentCountLbl.setStyleName("comment-count");
 				commentCountLbl.setSizeUndefined();
 				commentNotification.addComponent(commentCountLbl);
-				Embedded commentIcon = new Embedded();
+				final Embedded commentIcon = new Embedded();
 				commentIcon.setSource(new ThemeResource(
 						"icons/16/project/message.png"));
 				commentNotification.addComponent(commentIcon);
@@ -170,15 +136,15 @@ public class MessageListViewImpl extends AbstractView implements
 				notification.addComponent(commentNotification);
 
 			}
-			int attachmentCount = 1;
+			final int attachmentCount = 1;
 			if (attachmentCount > 0) {
-				HorizontalLayout attachmentNotification = new HorizontalLayout();
-				Label attachmentCountLbl = new Label(
+				final HorizontalLayout attachmentNotification = new HorizontalLayout();
+				final Label attachmentCountLbl = new Label(
 						Integer.toString(attachmentCount));
 				attachmentCountLbl.setStyleName("attachment-count");
 				attachmentCountLbl.setSizeUndefined();
 				attachmentNotification.addComponent(attachmentCountLbl);
-				Embedded attachmentIcon = new Embedded();
+				final Embedded attachmentIcon = new Embedded();
 				attachmentIcon.setSource(new ThemeResource(
 						"icons/16/attachment.png"));
 				attachmentNotification.addComponent(attachmentIcon);
@@ -198,7 +164,7 @@ public class MessageListViewImpl extends AbstractView implements
 
 			rowLayout.addComponent(messageHeader);
 
-			Label messageContent = new Label(message.getMessage(),
+			final Label messageContent = new Label(message.getMessage(),
 					Label.CONTENT_XHTML);
 			messageContent.setStyleName("message-body");
 			rowLayout.addComponent(messageContent);
@@ -219,7 +185,7 @@ public class MessageListViewImpl extends AbstractView implements
 		private String textSearch = "";
 
 		public MessageSearchPanel() {
-			this.project = CurrentProjectVariables.getProject();
+			project = CurrentProjectVariables.getProject();
 		}
 
 		@Override
@@ -229,15 +195,14 @@ public class MessageListViewImpl extends AbstractView implements
 		}
 
 		private void createBasicSearchLayout() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setWidth("100%");
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setSizeUndefined();
 			basicSearchBody.setSpacing(true);
-			basicSearchBody.setMargin(true);
 
 			final TextField nameField = new TextField();
 			nameField.addListener(new TextChangeListener() {
 				@Override
-				public void textChange(TextChangeEvent event) {
+				public void textChange(final TextChangeEvent event) {
 					messageSearchCriteria = new MessageSearchCriteria();
 
 					messageSearchCriteria
@@ -258,14 +223,14 @@ public class MessageListViewImpl extends AbstractView implements
 			nameField.setTextChangeTimeout(200);
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, nameField,
-					Alignment.MIDDLE_RIGHT);
+					Alignment.MIDDLE_LEFT);
 
-			Button searchBtn = new Button();
+			final Button searchBtn = new Button();
 			searchBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(Button.ClickEvent event) {
+				public void buttonClick(final Button.ClickEvent event) {
 					messageSearchCriteria = new MessageSearchCriteria();
 
 					messageSearchCriteria
@@ -283,7 +248,7 @@ public class MessageListViewImpl extends AbstractView implements
 			searchBtn.setStyleName("link");
 			basicSearchBody.addComponent(searchBtn);
 
-			this.setCompositionRoot(basicSearchBody);
+			setCompositionRoot(basicSearchBody);
 		}
 	}
 
@@ -291,42 +256,149 @@ public class MessageListViewImpl extends AbstractView implements
 
 		private static final long serialVersionUID = 1L;
 		private final MessageSearchPanel messageSearchPanel;
+		private final CssLayout messagePanelBody;
 
 		public TopMessagePanel() {
 			this.setWidth("100%");
+			setStyleName("message-toppanel");
 			messageSearchPanel = new MessageSearchPanel();
+			messagePanelBody = new CssLayout();
+			final Label headerLbl = new Label("Messages");
+			headerLbl.setStyleName("h2");
+			final HorizontalLayout layoutHeader = new HorizontalLayout();
+			layoutHeader.setStyleName("message-toppanel-header");
+			layoutHeader.addComponent(headerLbl);
+			layoutHeader.setWidth("100%");
+			addComponent(layoutHeader);
+			messageSearchPanel.setWidth("320px");
+			messagePanelBody.setStyleName("message-toppanel-body");
+			messagePanelBody.setWidth("100%");
+			addComponent(messagePanelBody);
+
 			createBasicLayout();
 		}
 
-		public HasSearchHandlers<MessageSearchCriteria> getSearchHandlers() {
-			return messageSearchPanel;
+		private void createAddMessageLayout() {
+			messagePanelBody.removeAllComponents();
+
+			final VerticalLayout addMessageWrapper = new VerticalLayout();
+			addMessageWrapper.setSpacing(true);
+			addMessageWrapper.setWidth("500px");
+
+			final RichTextArea ckEditorTextField = new RichTextArea();
+			final AttachmentPanel attachments = new AttachmentPanel();
+			final TextField titleField = new TextField();
+
+			final HorizontalLayout titleLayout = new HorizontalLayout();
+			titleLayout.setSpacing(true);
+			final Label titleLbl = new Label("Title: ");
+			titleLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+
+			titleField.setWidth("100%");
+			titleField.setNullRepresentation("");
+			titleField.setRequired(true);
+			titleField.setRequiredError("Please enter a Title");
+
+			titleLayout.addComponent(titleLbl);
+			titleLayout.addComponent(titleField);
+			titleLayout.setExpandRatio(titleField, 1.0f);
+			titleLayout.setSizeFull();
+
+			addMessageWrapper.addComponent(titleLayout);
+			addMessageWrapper.setComponentAlignment(titleLayout,
+					Alignment.MIDDLE_LEFT);
+
+			ckEditorTextField.setWidth("100%");
+			addMessageWrapper.addComponent(ckEditorTextField);
+			addMessageWrapper.addComponent(attachments);
+			addMessageWrapper.setComponentAlignment(ckEditorTextField,
+					Alignment.MIDDLE_CENTER);
+
+			final HorizontalLayout controls = new HorizontalLayout();
+			controls.setWidth("100%");
+			controls.setSpacing(true);
+
+			final MultiFileUploadExt uploadExt = new MultiFileUploadExt(
+					attachments);
+			controls.addComponent(uploadExt);
+			controls.setExpandRatio(uploadExt, 1.0f);
+			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
+
+			final CheckBox chkIsStick = new CheckBox("Is Stick");
+			controls.addComponent(chkIsStick);
+			controls.setComponentAlignment(chkIsStick, Alignment.MIDDLE_CENTER);
+
+			final Button cancelBtn = new Button("Cancel",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							createBasicLayout();
+						}
+					});
+			cancelBtn.setStyleName("link");
+			controls.addComponent(cancelBtn);
+			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
+
+			final Button saveBtn = new Button("Post",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							final Message message = new Message();
+							message.setProjectid(CurrentProjectVariables
+									.getProjectId());
+							message.setPosteddate(new GregorianCalendar()
+									.getTime());
+							if (!titleField.getValue().toString().trim()
+									.equals("")) {
+								message.setTitle((String) titleField.getValue());
+								message.setMessage((String) ckEditorTextField
+										.getValue());
+								message.setPosteduser(AppContext.getUsername());
+								message.setSaccountid(AppContext.getAccountId());
+								message.setIsstick((Boolean) chkIsStick
+										.getValue());
+								fireSaveItem(message);
+								attachments.saveContentsToRepo(
+										AttachmentConstants.PROJECT_MESSAGE,
+										message.getId());
+							} else {
+								titleField.addStyleName("errorField");
+								final MessageBox mb = new MessageBox(AppContext
+										.getApplication().getMainWindow(),
+										"Error!", MessageBox.Icon.ERROR,
+										"Title must be not null!",
+										new MessageBox.ButtonConfig(
+												ButtonType.OK, "Ok"));
+								mb.show();
+							}
+						}
+					});
+			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			controls.addComponent(saveBtn);
+			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+
+			addMessageWrapper.addComponent(controls);
+			addMessageWrapper.setComponentAlignment(controls,
+					Alignment.MIDDLE_CENTER);
+			messagePanelBody.addComponent(addMessageWrapper);
 		}
 
 		public void createBasicLayout() {
-			this.removeAllComponents();
+			messagePanelBody.removeAllComponents();
+			messagePanelBody.addComponent(messageSearchPanel);
 
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setMargin(false, false, false, true);
-			layout.setWidth("100%");
-			Label headerLbl = new Label("Messages");
-			headerLbl.setStyleName("h2");
-			layout.addComponent(headerLbl);
-			layout.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
-			layout.setExpandRatio(headerLbl, 1.0f);
-			messageSearchPanel.setWidth("350px");
-
-			layout.addComponent(messageSearchPanel);
-			layout.setComponentAlignment(messageSearchPanel,
-					Alignment.MIDDLE_CENTER);
-
-			Button createMessageBtn = new Button(
+			final Button createMessageBtn = new Button(
 					LocalizationHelper
 							.getMessage(MessageI18nEnum.NEW_MESSAGE_ACTION),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							createAddMessageLayout();
 						}
 					});
@@ -338,114 +410,56 @@ public class MessageListViewImpl extends AbstractView implements
 			createMessageBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
-			layout.addComponent(createMessageBtn);
-			layout.setComponentAlignment(createMessageBtn,
-					Alignment.MIDDLE_CENTER);
-			this.addComponent(layout);
+			messagePanelBody.addComponent(createMessageBtn);
 		}
 
-		private void createAddMessageLayout() {
-			this.removeAllComponents();
-
-			this.setSpacing(true);
-
-			final RichTextArea ckEditorTextField = new RichTextArea();
-			final AttachmentPanel attachments = new AttachmentPanel();
-			final TextField titleField = new TextField();
-
-			HorizontalLayout titleLayout = new HorizontalLayout();
-			titleLayout.setSpacing(true);
-			Label titleLbl = new Label("Title: ");
-
-			titleField.setWidth("600px");
-			titleField.setNullRepresentation("");
-			titleField.setRequired(true);
-			titleField.setRequiredError("Please enter a Title");
-
-			titleLayout.addComponent(titleLbl);
-			titleLayout.addComponent(titleField);
-
-			this.addComponent(titleLayout);
-
-			ckEditorTextField.setWidth("100%");
-			this.addComponent(ckEditorTextField);
-			this.addComponent(attachments);
-
-			HorizontalLayout controls = new HorizontalLayout();
-			controls.setWidth("100%");
-			controls.setSpacing(true);
-
-			MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
-			controls.addComponent(uploadExt);
-			controls.setExpandRatio(uploadExt, 1.0f);
-			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
-
-			final CheckBox chkIsStick = new CheckBox("Is Stick");
-			controls.addComponent(chkIsStick);
-			controls.setComponentAlignment(chkIsStick, Alignment.MIDDLE_CENTER);
-
-			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					createBasicLayout();
-				}
-			});
-			cancelBtn.setStyleName("link");
-			controls.addComponent(cancelBtn);
-			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
-
-			Button saveBtn = new Button("Post", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					Message message = new Message();
-					message.setProjectid(CurrentProjectVariables.getProjectId());
-					message.setPosteddate(new GregorianCalendar().getTime());
-					if (!titleField.getValue().toString().trim().equals("")) {
-						message.setTitle((String) titleField.getValue());
-						message.setMessage((String) ckEditorTextField
-								.getValue());
-						message.setPosteduser(AppContext.getUsername());
-						message.setSaccountid(AppContext.getAccountId());
-						message.setIsstick((Boolean) chkIsStick.getValue());
-						fireSaveItem(message);
-						attachments.saveContentsToRepo(
-								AttachmentConstants.PROJECT_MESSAGE,
-								message.getId());
-					} else {
-						titleField.addStyleName("errorField");
-						MessageBox mb = new MessageBox(
-								AppContext.getApplication().getMainWindow(),
-								"Error!",
-								MessageBox.Icon.ERROR,
-								"Title must be not null!",
-								new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-						mb.show();
-					}
-				}
-			});
-			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			controls.addComponent(saveBtn);
-			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-
-			this.addComponent(controls);
+		public HasSearchHandlers<MessageSearchCriteria> getSearchHandlers() {
+			return messageSearchPanel;
 		}
 	}
 
+	private static final long serialVersionUID = 8433776359091397422L;
+	private final PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
+
+	private Set<EditFormHandler<Message>> editFormHandlers;
+
+	private MessageSearchCriteria searchCriteria;
+
+	private final TopMessagePanel topMessagePanel;
+
+	public MessageListViewImpl() {
+		super();
+		this.setMargin(false, true, true, true);
+		this.setWidth("100%");
+		topMessagePanel = new TopMessagePanel();
+		topMessagePanel.setWidth("100%");
+
+		topMessagePanel.getSearchHandlers().addSearchHandler(
+				new SearchHandler<MessageSearchCriteria>() {
+					@Override
+					public void onSearch(final MessageSearchCriteria criteria) {
+						tableItem.setSearchCriteria(criteria);
+					}
+				});
+		this.addComponent(topMessagePanel);
+		tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
+				AppContext.getSpringBean(MessageService.class),
+				new MessageRowDisplayHandler());
+		tableItem.setStyleName("message-list");
+		this.addComponent(tableItem);
+	}
+
 	@Override
-	public void addFormHandler(EditFormHandler<Message> handler) {
+	public void addFormHandler(final EditFormHandler<Message> handler) {
 		if (editFormHandlers == null) {
 			editFormHandlers = new HashSet<EditFormHandler<Message>>();
 		}
 		editFormHandlers.add(handler);
 	}
 
-	private void fireSaveItem(Message message) {
+	private void fireSaveItem(final Message message) {
 		if (editFormHandlers != null) {
-			for (EditFormHandler<Message> handler : editFormHandlers) {
+			for (final EditFormHandler<Message> handler : editFormHandlers) {
 				handler.onSave(message);
 			}
 		}
@@ -454,5 +468,13 @@ public class MessageListViewImpl extends AbstractView implements
 	@Override
 	public HasEditFormHandlers<Message> getEditFormHandlers() {
 		return this;
+	}
+
+	@Override
+	public void setCriteria(final MessageSearchCriteria criteria) {
+		searchCriteria = criteria;
+		topMessagePanel.createBasicLayout();
+		tableItem.setSearchCriteria(searchCriteria);
+
 	}
 }

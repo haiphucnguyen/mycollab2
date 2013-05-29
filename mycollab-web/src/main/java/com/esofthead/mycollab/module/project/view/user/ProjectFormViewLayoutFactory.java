@@ -20,60 +20,12 @@ import com.vaadin.ui.VerticalLayout;
  */
 public abstract class ProjectFormViewLayoutFactory implements
 		IFormLayoutFactory {
-	private static final long serialVersionUID = 1L;
-
-	private final String title;
-
-	private ProjectInformationLayout projectInformationLayout;
-
-	public ProjectFormViewLayoutFactory(String title) {
-		this.title = title;
-	}
-
-	@Override
-	public Layout getLayout() {
-		AddViewLayout projectAddLayout = new AddViewLayout(title,
-				new ThemeResource("icons/48/project/project.png"));
-
-		projectInformationLayout = new ProjectInformationLayout();
-
-		projectAddLayout.addTopControls(createTopPanel());
-
-		projectAddLayout.addBody(projectInformationLayout.getLayout());
-
-		projectAddLayout.addBottomControls(createBottomPanel());
-
-		return projectAddLayout;
-	}
-
-	@Override
-	public void attachField(Object propertyId, Field field) {
-		projectInformationLayout.attachField(propertyId, field);
-	}
-
-	protected abstract Layout createTopPanel();
-
-	protected abstract Layout createBottomPanel();
-
 	public static class ProjectInformationLayout implements IFormLayoutFactory {
 		private static final long serialVersionUID = 1L;
 		private GridFormLayoutHelper moreInfoLayout;
 
 		@Override
-		public Layout getLayout() {
-			VerticalLayout layout = new VerticalLayout();
-
-			moreInfoLayout = new GridFormLayoutHelper(2, 6);
-			moreInfoLayout.getLayout().setWidth("900px");
-			moreInfoLayout.getLayout().setMargin(false, false, true, false);
-			layout.addComponent(moreInfoLayout.getLayout());
-			layout.setComponentAlignment(moreInfoLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-			return layout;
-		}
-
-		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("homepage")) {
 				moreInfoLayout.addComponent(field, "Home Page", 0, 0,
 						Alignment.TOP_LEFT);
@@ -111,5 +63,54 @@ public abstract class ProjectFormViewLayoutFactory implements
 								Alignment.TOP_LEFT);
 			}
 		}
+
+		@Override
+		public Layout getLayout() {
+			final VerticalLayout layout = new VerticalLayout();
+
+			moreInfoLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			moreInfoLayout.getLayout().setWidth("100%");
+			moreInfoLayout.getLayout().setMargin(false);
+			layout.addComponent(moreInfoLayout.getLayout());
+			layout.setComponentAlignment(moreInfoLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
+			return layout;
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final String title;
+
+	private ProjectInformationLayout projectInformationLayout;
+
+	public ProjectFormViewLayoutFactory(final String title) {
+		this.title = title;
+	}
+
+	@Override
+	public void attachField(final Object propertyId, final Field field) {
+		projectInformationLayout.attachField(propertyId, field);
+	}
+
+	protected abstract Layout createBottomPanel();
+
+	protected abstract Layout createTopPanel();
+
+	@Override
+	public Layout getLayout() {
+		final AddViewLayout projectAddLayout = new AddViewLayout(title,
+				new ThemeResource("icons/48/project/project.png"));
+
+		projectInformationLayout = new ProjectInformationLayout();
+
+		projectAddLayout.addTopControls(createTopPanel());
+
+		projectAddLayout.addBody(projectInformationLayout.getLayout());
+
+		projectAddLayout.addBottomControls(createBottomPanel());
+
+		return projectAddLayout;
 	}
 }

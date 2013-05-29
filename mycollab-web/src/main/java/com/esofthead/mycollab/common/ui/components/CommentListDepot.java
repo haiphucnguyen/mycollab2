@@ -22,65 +22,21 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class CommentListDepot extends Depot {
 
-	private CommentDisplay commentListBox;
-
-	public CommentListDepot(boolean isDisplayCommentInput) {
-		super("Comments", new CommentDisplay(isDisplayCommentInput));
-		this.setWidth("900px");
-		commentListBox = (CommentDisplay) this.bodyContent;
-		commentListBox.setMargin(true);
-	}
-	
-	public CommentListDepot(boolean isDisplayCommentInput, Class emailHandler) {
-		super("Comments", new CommentDisplay(isDisplayCommentInput, emailHandler));
-		this.setWidth("900px");
-		commentListBox = (CommentDisplay) this.bodyContent;
-		commentListBox.setMargin(true);
-	}
-
-//	public CommentListDepot(String type, int typeid) {
-//		this(type, typeid, true);
-//	}
-
-	public CommentListDepot(String type, int typeid,
-			boolean isDisplayCommentInput, boolean isSendingRelayEmail) {
-		super("Comments", new CommentDisplay(type, typeid,
-				isDisplayCommentInput, isSendingRelayEmail, null));
-		this.setWidth("900px");
-		commentListBox = (CommentDisplay) this.bodyContent;
-		this.setTitle("Comments(" + commentListBox.getNumComments() + ")");
-		commentListBox.setMargin(true);
-	}
-	
-	public CommentListDepot(String type, int typeid,
-			boolean isDisplayCommentInput, boolean isSendingRelayEmail, Class emailHandler) {
-		super("Comments", new CommentDisplay(type, typeid,
-				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
-		this.setWidth("900px");
-		commentListBox = (CommentDisplay) this.bodyContent;
-		this.setTitle("Comments(" + commentListBox.getNumComments() + ")");
-		commentListBox.setMargin(true);
-	}
-
-	public void loadComments(String type, int typeid) {
-		commentListBox.loadComments(type, typeid);
-		this.setTitle("Comments(" + commentListBox.getNumComments() + ")");
-	}
-
 	public static class CommentDisplay extends VerticalLayout implements
 			ReloadableComponent {
-		private BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
+		private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
 		private String type;
 		private int typeid;
 		private int numComments;
 		private CommentInput commentBox;
 
-		public CommentDisplay(boolean isDisplayCommentInput) {
+		public CommentDisplay(final boolean isDisplayCommentInput) {
 			this(isDisplayCommentInput, null);
 		}
-		
-		public CommentDisplay(boolean isDisplayCommentInput, Class emailHandler) {
-			this.setSpacing(true);
+
+		public CommentDisplay(final boolean isDisplayCommentInput,
+				final Class emailHandler) {
+			setSpacing(true);
 			if (isDisplayCommentInput) {
 				commentBox = new CommentInput(this, type, typeid, emailHandler);
 				this.addComponent(commentBox);
@@ -95,15 +51,17 @@ public class CommentListDepot extends Depot {
 		// public CommentDisplay(String type, int typeid) {
 		// this(type, typeid, true);
 		// }
-		
-		public CommentDisplay(String type, int typeid,
-				boolean isDisplayCommentInput, boolean isSendingRelayEmail) {
-			this (type, typeid, isDisplayCommentInput, isSendingRelayEmail, null);
+
+		public CommentDisplay(final String type, final int typeid,
+				final boolean isDisplayCommentInput,
+				final boolean isSendingRelayEmail) {
+			this(type, typeid, isDisplayCommentInput, isSendingRelayEmail, null);
 		}
 
-		public CommentDisplay(String type, int typeid,
-				boolean isDisplayCommentInput, boolean isSendingRelayEmail, Class emailHandler) {
-			this.setSpacing(true);
+		public CommentDisplay(final String type, final int typeid,
+				final boolean isDisplayCommentInput,
+				final boolean isSendingRelayEmail, final Class emailHandler) {
+			setSpacing(true);
 			this.type = type;
 			this.typeid = typeid;
 
@@ -121,7 +79,27 @@ public class CommentListDepot extends Depot {
 			displayCommentList();
 		}
 
-		public void loadComments(String type, int typeid) {
+		@Override
+		public void cancel() {
+			throw new UnsupportedOperationException("Not supported yet.");
+		}
+
+		private void displayCommentList() {
+			if (type == null || typeid == 0) {
+				throw new MyCollabException("Parameters are invalid");
+			}
+
+			final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
+			searchCriteria.setType(new StringSearchField(type));
+			searchCriteria.setTypeid(new NumberSearchField(typeid));
+			numComments = commentList.setSearchCriteria(searchCriteria);
+		}
+
+		public int getNumComments() {
+			return numComments;
+		}
+
+		public void loadComments(final String type, final int typeid) {
 			this.type = type;
 			this.typeid = typeid;
 			displayCommentList();
@@ -131,29 +109,62 @@ public class CommentListDepot extends Depot {
 			}
 		}
 
-		private void displayCommentList() {
-			if (type == null || typeid == 0) {
-				throw new MyCollabException("Parameters are invalid");
-			}
-
-			CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-			searchCriteria.setType(new StringSearchField(type));
-			searchCriteria.setTypeid(new NumberSearchField(typeid));
-			numComments = commentList.setSearchCriteria(searchCriteria);
-		}
-
-		@Override
-		public void cancel() {
-			throw new UnsupportedOperationException("Not supported yet.");
-		}
-
 		@Override
 		public void reload() {
 			displayCommentList();
 		}
+	}
 
-		public int getNumComments() {
-			return numComments;
-		}
+	private final CommentDisplay commentListBox;
+
+	public CommentListDepot(final boolean isDisplayCommentInput) {
+		super("Comments", new CommentDisplay(isDisplayCommentInput));
+		this.setWidth("900px");
+		addStyleName("comment-list");
+		commentListBox = (CommentDisplay) bodyContent;
+		commentListBox.setMargin(true);
+	}
+
+	// public CommentListDepot(String type, int typeid) {
+	// this(type, typeid, true);
+	// }
+
+	public CommentListDepot(final boolean isDisplayCommentInput,
+			final Class emailHandler) {
+		super("Comments", new CommentDisplay(isDisplayCommentInput,
+				emailHandler));
+		this.setWidth("900px");
+		addStyleName("comment-list");
+		commentListBox = (CommentDisplay) bodyContent;
+		commentListBox.setMargin(true);
+	}
+
+	public CommentListDepot(final String type, final int typeid,
+			final boolean isDisplayCommentInput,
+			final boolean isSendingRelayEmail) {
+		super("Comments", new CommentDisplay(type, typeid,
+				isDisplayCommentInput, isSendingRelayEmail, null));
+		this.setWidth("900px");
+		addStyleName("comment-list");
+		commentListBox = (CommentDisplay) bodyContent;
+		setTitle("Comments(" + commentListBox.getNumComments() + ")");
+		commentListBox.setMargin(true);
+	}
+
+	public CommentListDepot(final String type, final int typeid,
+			final boolean isDisplayCommentInput,
+			final boolean isSendingRelayEmail, final Class emailHandler) {
+		super("Comments", new CommentDisplay(type, typeid,
+				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
+		this.setWidth("900px");
+		addStyleName("comment-list");
+		commentListBox = (CommentDisplay) bodyContent;
+		setTitle("Comments(" + commentListBox.getNumComments() + ")");
+		commentListBox.setMargin(true);
+	}
+
+	public void loadComments(final String type, final int typeid) {
+		commentListBox.loadComments(type, typeid);
+		setTitle("Comments(" + commentListBox.getNumComments() + ")");
 	}
 }

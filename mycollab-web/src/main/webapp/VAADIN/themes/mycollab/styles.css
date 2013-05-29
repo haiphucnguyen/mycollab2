@@ -1332,20 +1332,41 @@ input.v-textfield-errorField {
 	width: 100% !important;
 }
 
-.projectinfo-header {
-	font-size: 14px;
-	border-bottom: 1px solid #8f8f8f;
+.projectinfo, .message-toppanel {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 1px solid #a9a9a9;
+	background: url('icons/grad-light-top2.png') repeat-x left top #f5f5f5;
+	border-radius: 3px;
+}
+.projectinfo-header, .message-toppanel-header {
+	font-size: 13px;
+	border-bottom: 1px solid #a9a9a9;
 	padding-bottom: 0.2em;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: none no-repeat left top #e4e4e4;
+	border-radius: 3px 3px 0px 0px;
+}
+
+.v-horizontallayout-projectinfo-header .v-horizontallayout-margin, .v-horizontallayout-message-toppanel-header .v-horizontallayout-margin {
+	padding: 7px 10px 7px 18px;
 }
 
 .projectinfo-header .project-name {
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .projectinfo-header .project-shortname {
 	color: gray;
 	padding-left: 5px;
+}
+
+.v-horizontallayout-projectinfo-footer .v-horizontallayout-margin {
+	padding: 5px 5px 5px 18px;
 }
 
 .project-feed-header .h1 {
@@ -1438,7 +1459,7 @@ input.v-textfield-errorField {
 
 /* Depot */
 .depotComp {
-	margin-top: 30px;
+	margin-top: 20px;
 }
 .depotComp .v-verticallayout-header-wrapper .v-verticallayout-margin {
 	padding: 5px 10px 5px 5px;
@@ -2155,6 +2176,30 @@ input.v-textfield-errorField {
 /* End Token Field */
 
 /* Messages */
+.message-toppanel {
+	border-radius: 3px 3px 0px 0px;
+}
+.v-csslayout-message-toppanel-body > .v-csslayout-margin {
+	padding: 7px 5px 7px 18px;
+}
+.v-csslayout-message-toppanel-body > .v-csslayout-margin > .v-csslayout-container > div {
+	display: inline-block;
+}
+.message-list .beanlist-content {
+	background: none no-repeat left top #F5F5F5;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	border-color: #a9a9a9;
+}
+.message-list .v-verticallayout-beanlist-content .v-verticallayout-margin {
+	padding: 5px 15px;
+}
+.message-list .v-verticallayout-beanlist-content .message-container .v-verticallayout-margin{
+	padding: 0px;
+}
 .message {
 	margin: 5px 0px;
 }
@@ -2166,9 +2211,9 @@ input.v-textfield-errorField {
 .message .message-container>.v-csslayout-margin {
 	background-color: #fff;
 	padding: 10px 15px 10px 10px;
-	border: 1px solid #8f8f8f;
+	border: 2px solid #a9a9a9;
 	/* 	box-shadow: 0px 0px 3px rgb(143,143,143); */
-	border-radius: 3px;
+	border-radius: 5px;
 	margin-left: 10px;
 	position: relative;
 }
@@ -2184,10 +2229,10 @@ input.v-textfield-errorField {
 	/* reduce the damage in FF3.0 */
 	display: block;
 	width: 0;
-	top: 10px; /* controls vertical position */
-	left: -10px; /* value = - border-left-width - border-right-width */
-	border-width: 10px 9px 10px 0;
-	border-color: transparent #8f8f8f;
+	top: 9px; /* controls vertical position */
+	left: -12px; /* value = - border-left-width - border-right-width */
+	border-width: 11px 11px 11px 0;
+	border-color: transparent #a9a9a9;
 	border-radius: 0px;
 }
 
@@ -2200,34 +2245,19 @@ input.v-textfield-errorField {
 	width: 0;
 	top: 10px;
 	/* value = (:before top) + (:before border-top) - (:after border-top) */
-	left: -9px; /* value = - border-left-width - border-right-width */
-	border-width: 10px 9px 10px 0;
+	left: -10px; /* value = - border-left-width - border-right-width */
+	border-width: 10px 10px 10px 0;
 	border-color: transparent #fff;
 	border-radius: 0px;
 }
 
 .message.important-message .message-container>.v-csslayout-margin {
-	background-color: #762c54;
-	border-color: #2e0023;
+	border-color: #045c8e;
 }
 
 .message.important-message .message-container>.v-csslayout-margin:before
 	{
-	border-color: transparent #2e0023;
-}
-
-.message.important-message .message-container>.v-csslayout-margin:after
-	{
-	border-color: transparent #762c54;
-}
-
-.message.important-message .message-header .user-name {
-	color: white;
-}
-
-.message.important-message .message-header .v-button-link.message-title .v-button-caption
-	{
-	color: white;
+	border-color: transparent #045c8e;
 }
 
 .message-header .user-name {
@@ -2250,17 +2280,9 @@ input.v-textfield-errorField {
 	padding: 1px 0px;
 }
 
-.message.important-message .message-header .time-post {
-	color: #aea79e;
-}
-
 .message-header .time-post {
 	color: gray;
 	font-size: 10px;
-}
-
-.message.important-message .message-header .notification {
-	color: white;
 }
 
 .message-header .notification {
@@ -2276,15 +2298,22 @@ input.v-textfield-errorField {
 	padding-left: 5px;
 }
 
-.message.important-message .message-body {
-	color: #e5e5e5;
-}
-
 .message-body p {
 	margin: 4px 0px;
 	color: gray;
 }
 
+.comment-list .depotContent {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: none no-repeat left top #f5f5f5;
+	border: 1px solid #a9a9a9;
+}
+.comment-list.collapsed .depotContent {
+	border-bottom: none;
+	border-top: none;
+}
 /* End Messages */
 
 /* Button Group */
@@ -3374,3 +3403,37 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	margin-right: 3px;
 }
 /* End Richtext Editor */
+
+/* The New GridLayout */
+.v-gridlayout-margin {
+	border-bottom: 1px solid #a9a9a9;
+}
+.v-gridlayout-margin .v-csslayout > .v-csslayout-margin {
+	padding: 8px 5px 8px 18px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.v-horizontallayout-gridform-caption .v-horizontallayout-margin, .v-horizontallayout-gridform-field .v-horizontallayout-margin {
+	padding: 8px 5px 8px 18px;
+}
+.v-gridlayout-margin .gridform-caption {
+	background-color: #cce4ee;
+	border-left: 1px solid #a9a9a9;
+}
+.v-gridlayout-margin .gridform-caption.first-col {
+	border-left: none;
+}
+.v-gridlayout-margin .gridform-field {
+	background-color: #e5eff0;
+}
+.v-gridlayout-margin > div > div > div > div {
+	border-top: 1px solid #c8c8c8;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.v-gridlayout-margin > div > div > div > div.first-row {
+	border-top: none;
+}
+/* End The New GridLayout */

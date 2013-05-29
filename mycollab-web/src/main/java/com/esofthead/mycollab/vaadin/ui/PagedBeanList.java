@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -20,15 +24,17 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class PagedBeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
 		extends VerticalLayout implements HasPagableHandlers {
 
+	public interface RowDisplayHandler<T> {
+
+		Component generateRow(T obj, int rowIndex);
+	}
+
 	private static final long serialVersionUID = 1L;
-	private SearchService searchService;
+	private final SearchService searchService;
 	private SearchRequest<S> searchRequest;
 	private int currentPage = 1;
 	private int totalPage = 1;
@@ -39,16 +45,43 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 	private TextField currentPageTextField;
 	private List<T> currentListData;
 	private Set<PagableHandler> pagableHandlers;
-	private RowDisplayHandler<T> rowDisplayHandler;
 
-	public PagedBeanList(SearchService searchService,
-			RowDisplayHandler<T> rowDisplayHandler) {
+	private final RowDisplayHandler<T> rowDisplayHandler;
+
+	public PagedBeanList(final SearchService searchService,
+			final RowDisplayHandler<T> rowDisplayHandler) {
 		this.searchService = searchService;
 		this.rowDisplayHandler = rowDisplayHandler;
 	}
 
+	@Override
+	public void addPagableHandler(final PagableHandler handler) {
+		if (pagableHandlers == null) {
+			pagableHandlers = new HashSet<PagableHandler>();
+		}
+		pagableHandlers.add(handler);
+	}
+
+	private void checkButtonStatus() {
+		if (this.currentPage == 1) {
+			this.previous.setEnabled(false);
+			this.first.setEnabled(false);
+		} else {
+			this.previous.setEnabled(true);
+			this.first.setEnabled(true);
+		}
+
+		if (this.currentPage == totalPage) {
+			this.last.setEnabled(false);
+			this.next.setEnabled(false);
+		} else {
+			this.last.setEnabled(true);
+			this.next.setEnabled(true);
+		}
+	}
+
 	private Layout createPageControls() {
-		Label itemsPerPageLabel = new Label("Items per page:");
+		final Label itemsPerPageLabel = new Label("Items per page:");
 		itemsPerPageSelect = new ComboBox();
 
 		itemsPerPageSelect.addItem("5");
@@ -65,18 +98,19 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 
 			@Override
 			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				Integer numberOfItems = Integer
+					final com.vaadin.data.Property.ValueChangeEvent event) {
+				final Integer numberOfItems = Integer
 						.parseInt((String) itemsPerPageSelect.getValue());
 				displayItemChange(numberOfItems);
 			}
 		});
 
-		Label pageLabel = new Label("Page:&nbsp;", Label.CONTENT_XHTML);
+		final Label pageLabel = new Label("Page:&nbsp;", Label.CONTENT_XHTML);
 		currentPageTextField = new TextField();
 		currentPageTextField.setValue(String.valueOf(currentPage));
 		currentPageTextField.addValidator(new IntegerValidator(null));
-		Label separatorLabel = new Label("&nbsp;/&nbsp;", Label.CONTENT_XHTML);
+		final Label separatorLabel = new Label("&nbsp;/&nbsp;",
+				Label.CONTENT_XHTML);
 		totalPagesLabel = new Label(String.valueOf(totalPage),
 				Label.CONTENT_XHTML);
 		currentPageTextField.setStyleName(Reindeer.TEXTFIELD_SMALL);
@@ -86,7 +120,7 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 
 			@Override
 			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
+					final com.vaadin.data.Property.ValueChangeEvent event) {
 			}
 		});
 		pageLabel.setWidth(null);
@@ -94,15 +128,15 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 		separatorLabel.setWidth(null);
 		totalPagesLabel.setWidth(null);
 
-		HorizontalLayout controlBar = new HorizontalLayout();
+		final HorizontalLayout controlBar = new HorizontalLayout();
 		controlBar.setStyleName("listControl");
-		HorizontalLayout pageSize = new HorizontalLayout();
-		HorizontalLayout pageManagement = new HorizontalLayout();
+		final HorizontalLayout pageSize = new HorizontalLayout();
+		final HorizontalLayout pageManagement = new HorizontalLayout();
 		first = new ButtonLink("<<", new ClickListener() {
 			private static final long serialVersionUID = -355520120491283992L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				pageChange(1);
 			}
 		});
@@ -110,7 +144,7 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 			private static final long serialVersionUID = -355520120491283992L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				pageChange(PagedBeanList.this.currentPage - 1);
 			}
 		});
@@ -118,7 +152,7 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 			private static final long serialVersionUID = -1927138212640638452L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				pageChange(PagedBeanList.this.currentPage + 1);
 			}
 		});
@@ -126,7 +160,7 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 			private static final long serialVersionUID = -355520120491283992L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				pageChange(PagedBeanList.this.totalPage);
 			}
 		});
@@ -191,116 +225,87 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 		return controlBar;
 	}
 
-	private void pageChange(int currentPage) {
-		if (searchRequest != null) {
-			this.currentPage = currentPage;
-			searchRequest.setCurrentPage(currentPage);
-			doSearch();
-
-			if (pagableHandlers != null) {
-				for (PagableHandler handler : pagableHandlers) {
-					handler.move(currentPage);
-				}
-			}
-		}
-	}
-
-	private void displayItemChange(int numOfItems) {
+	private void displayItemChange(final int numOfItems) {
 		if (searchRequest != null) {
 			searchRequest.setNumberOfItems(numOfItems);
 			doSearch();
 		}
 	}
 
-	public void setSearchCriteria(S searchCriteria) {
-		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
-				SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-		doSearch();
-	}
-
 	@SuppressWarnings("unchecked")
 	private void doSearch() {
 		totalCount = searchService.getTotalCount(searchRequest
 				.getSearchCriteria());
-		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+		final int totalPage = (totalCount - 1)
+				/ searchRequest.getNumberOfItems() + 1;
 		if (searchRequest.getCurrentPage() > totalPage) {
 			searchRequest.setCurrentPage(totalPage);
 		}
 
 		if (totalPage > 1) {
-			if (this.getComponentCount() == 1 || this.getComponentCount() == 0) {
+			if (getComponentCount() == 1 || getComponentCount() == 0) {
 				this.addComponent(createPageControls());
 			}
 			this.setCurrentPage(currentPage);
 			this.setTotalPage(totalPage);
 		} else {
-			if (this.getComponentCount() == 2) {
-				this.removeComponent(this.getComponent(1));
+			if (getComponentCount() == 2) {
+				removeComponent(getComponent(1));
 			}
 		}
 
 		currentListData = searchService
 				.findPagableListByCriteria(searchRequest);
 
-		if (this.getComponentCount() > 0) {
-			Component comp = this.getComponent(0);
+		if (getComponentCount() > 0) {
+			final Component comp = getComponent(0);
 			if (comp instanceof LazyLoadWrapper) {
-				this.removeComponent(comp);
+				removeComponent(comp);
 			}
 		}
 
-		VerticalLayout content = new VerticalLayout();
-		LazyLoadWrapper wrapperComp = new LazyLoadWrapper(content);
+		final VerticalLayout content = new VerticalLayout();
+		content.setStyleName("beanlist-content");
+		final LazyLoadWrapper wrapperComp = new LazyLoadWrapper(content);
 		this.addComponent(wrapperComp, 0);
 
 		int i = 0;
-		for (T item : currentListData) {
-			Component row = rowDisplayHandler.generateRow(item, i);
+		for (final T item : currentListData) {
+			final Component row = rowDisplayHandler.generateRow(item, i);
 			content.addComponent(row);
 			i++;
 		}
 	}
 
-	private void setCurrentPage(int currentPage) {
+	private void pageChange(final int currentPage) {
+		if (searchRequest != null) {
+			this.currentPage = currentPage;
+			searchRequest.setCurrentPage(currentPage);
+			doSearch();
+
+			if (pagableHandlers != null) {
+				for (final PagableHandler handler : pagableHandlers) {
+					handler.move(currentPage);
+				}
+			}
+		}
+	}
+
+	private void setCurrentPage(final int currentPage) {
 		this.currentPage = currentPage;
 		currentPageTextField.setValue(currentPage);
 		checkButtonStatus();
 	}
 
-	private void setTotalPage(int totalPage) {
+	public void setSearchCriteria(final S searchCriteria) {
+		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
+				SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+		doSearch();
+	}
+
+	private void setTotalPage(final int totalPage) {
 		this.totalPage = totalPage;
 		totalPagesLabel.setValue(String.valueOf(totalPage));
 		checkButtonStatus();
-	}
-
-	private void checkButtonStatus() {
-		if (this.currentPage == 1) {
-			this.previous.setEnabled(false);
-			this.first.setEnabled(false);
-		} else {
-			this.previous.setEnabled(true);
-			this.first.setEnabled(true);
-		}
-
-		if (this.currentPage == totalPage) {
-			this.last.setEnabled(false);
-			this.next.setEnabled(false);
-		} else {
-			this.last.setEnabled(true);
-			this.next.setEnabled(true);
-		}
-	}
-
-	@Override
-	public void addPagableHandler(PagableHandler handler) {
-		if (pagableHandlers == null) {
-			pagableHandlers = new HashSet<PagableHandler>();
-		}
-		pagableHandlers.add(handler);
-	}
-
-	public interface RowDisplayHandler<T> {
-
-		Component generateRow(T obj, int rowIndex);
 	}
 }

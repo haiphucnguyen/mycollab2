@@ -30,96 +30,20 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ProjectInformationComponent extends VerticalLayout {
-	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
-	private ProjectDisplayInformation prjDisplay;
-	private final HorizontalLayout projectInfoHeader;
-
-	public ProjectInformationComponent() {
-		prjDisplay = new BasicProjectInformation();
-		projectInfoHeader = new HorizontalLayout();
-		projectInfoHeader.setWidth("100%");
-		projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
-		this.addComponent(projectInfoHeader);
-		this.addComponent(prjDisplay);
-	}
-
-	public void displayProjectInformation() {
-		project = CurrentProjectVariables.getProject();
-
-		projectInfoHeader.removeAllComponents();
-		Label projectName = new Label(project.getName());
-		projectName.setStyleName(UIConstants.PROJECT_NAME);
-		projectName.setSizeUndefined();
-		Label projectShortname = new Label("(" + project.getShortname() + ")");
-		projectShortname.setStyleName(UIConstants.PROJECT_SHORT_NAME);
-		projectInfoHeader.addComponent(projectName);
-		projectInfoHeader.addComponent(projectShortname);
-		projectInfoHeader.setExpandRatio(projectShortname, 1.0f);
-		projectInfoHeader.setComponentAlignment(projectShortname,
-				Alignment.TOP_LEFT);
-
-		prjDisplay.show();
-	}
-
-	private interface ProjectDisplayInformation extends Component {
-
-		void show();
-	}
-
-	private class BasicProjectInformation extends VerticalLayout implements
-			ProjectDisplayInformation {
-		private static final long serialVersionUID = 1L;
-		private final BasicPreviewForm previewForm;
-
-		public BasicProjectInformation() {
-			previewForm = new BasicPreviewForm();
-			this.addComponent(previewForm);
-
-			Button moreBtn = new Button("More", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					ProjectInformationComponent.this
-							.removeComponent(BasicProjectInformation.this);
-					prjDisplay = new DetailProjectInformation();
-					ProjectInformationComponent.this.addComponent(prjDisplay);
-					prjDisplay.show();
-				}
-			});
-			moreBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			this.addComponent(moreBtn);
-		}
-
-		@Override
-		public void show() {
-			previewForm.setItemDataSource(new BeanItem<SimpleProject>(project));
-		}
-	}
-
 	private class BasicPreviewForm extends
 			AdvancedPreviewBeanForm<SimpleProject> {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new IFormLayoutFactory() {
+		public void setItemDataSource(final Item newDataSource) {
+			setFormLayoutFactory(new IFormLayoutFactory() {
 				private static final long serialVersionUID = 1L;
 				private GridFormLayoutHelper informationLayout;
 
 				@Override
-				public Layout getLayout() {
-					informationLayout = new GridFormLayoutHelper(2, 3);
-					informationLayout.getLayout().setWidth("900px");
-					informationLayout.getLayout().setMargin(false, false, true,
-							false);
-					return informationLayout.getLayout();
-				}
-
-				@Override
-				public void attachField(Object propertyId, Field field) {
+				public void attachField(final Object propertyId,
+						final Field field) {
 					if (propertyId.equals("homepage")) {
 						informationLayout.addComponent(field, "Home Page", 0,
 								0, Alignment.TOP_LEFT);
@@ -128,18 +52,26 @@ public class ProjectInformationComponent extends VerticalLayout {
 								0, Alignment.TOP_LEFT);
 					} else if (propertyId.equals("description")) {
 						informationLayout.addComponent(field, "Description", 0,
-								1, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH,
-								Alignment.TOP_LEFT);
+								1, 2, "100%", Alignment.TOP_LEFT);
 					}
+				}
+
+				@Override
+				public Layout getLayout() {
+					informationLayout = new GridFormLayoutHelper(2, 3, "100%",
+							"167px", Alignment.MIDDLE_LEFT);
+					informationLayout.getLayout().setWidth("100%");
+					informationLayout.getLayout().setMargin(false);
+					return informationLayout.getLayout();
 				}
 			});
 
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+			setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
+				protected Field onCreateField(final Item item,
+						final Object propertyId, final Component uiContext) {
 					if (propertyId.equals("actualstartdate")) {
 						return new DefaultFormViewFieldFactory.FormViewField(
 								AppContext.formatDate(project
@@ -157,30 +89,31 @@ public class ProjectInformationComponent extends VerticalLayout {
 		}
 	}
 
-	private class DetailProjectInformation extends VerticalLayout implements
+	private class BasicProjectInformation extends VerticalLayout implements
 			ProjectDisplayInformation {
 		private static final long serialVersionUID = 1L;
-		private final DetailPreviewForm previewForm;
+		private final BasicPreviewForm previewForm;
 
-		public DetailProjectInformation() {
-			previewForm = new DetailPreviewForm();
+		public BasicProjectInformation() {
+			previewForm = new BasicPreviewForm();
 			this.addComponent(previewForm);
 
-			Button lessBtn = new Button("Less", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					ProjectInformationComponent.this
-							.removeComponent(DetailProjectInformation.this);
-					prjDisplay = new BasicProjectInformation();
-					ProjectInformationComponent.this.addComponent(prjDisplay);
-					prjDisplay.show();
-				}
-			});
-
-			lessBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			this.addComponent(lessBtn);
+			// final Button moreBtn = new Button("More",
+			// new Button.ClickListener() {
+			// private static final long serialVersionUID = 1L;
+			//
+			// @Override
+			// public void buttonClick(final ClickEvent event) {
+			// ProjectInformationComponent.this
+			// .removeComponent(BasicProjectInformation.this);
+			// prjDisplay = new DetailProjectInformation();
+			// ProjectInformationComponent.this
+			// .addComponent(prjDisplay);
+			// prjDisplay.show();
+			// }
+			// });
+			// moreBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			// this.addComponent(moreBtn);
 		}
 
 		@Override
@@ -195,14 +128,14 @@ public class ProjectInformationComponent extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new ProjectFormViewLayoutFactory.ProjectInformationLayout());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+		public void setItemDataSource(final Item newDataSource) {
+			setFormLayoutFactory(new ProjectFormViewLayoutFactory.ProjectInformationLayout());
+			setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
+				protected Field onCreateField(final Item item,
+						final Object propertyId, final Component uiContext) {
 					if (propertyId.equals("planstartdate")) {
 						return new FormViewField(AppContext.formatDate(project
 								.getPlanstartdate()));
@@ -233,5 +166,111 @@ public class ProjectInformationComponent extends VerticalLayout {
 			});
 			super.setItemDataSource(newDataSource);
 		}
+	}
+
+	private class DetailProjectInformation extends VerticalLayout implements
+			ProjectDisplayInformation {
+		private static final long serialVersionUID = 1L;
+		private final DetailPreviewForm previewForm;
+
+		public DetailProjectInformation() {
+			previewForm = new DetailPreviewForm();
+			this.addComponent(previewForm);
+
+			// final Button lessBtn = new Button("Less",
+			// new Button.ClickListener() {
+			// private static final long serialVersionUID = 1L;
+			//
+			// @Override
+			// public void buttonClick(final ClickEvent event) {
+			// ProjectInformationComponent.this
+			// .removeComponent(DetailProjectInformation.this);
+			// prjDisplay = new BasicProjectInformation();
+			// ProjectInformationComponent.this
+			// .addComponent(prjDisplay);
+			// prjDisplay.show();
+			// }
+			// });
+			//
+			// lessBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			// this.addComponent(lessBtn);
+		}
+
+		@Override
+		public void show() {
+			previewForm.setItemDataSource(new BeanItem<SimpleProject>(project));
+		}
+	}
+
+	private interface ProjectDisplayInformation extends Component {
+
+		void show();
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private SimpleProject project;
+
+	private ProjectDisplayInformation prjDisplay;
+
+	private final HorizontalLayout projectInfoHeader;
+
+	private final HorizontalLayout projectInfoFooter;
+
+	public ProjectInformationComponent() {
+		setStyleName(UIConstants.PROJECT_INFO);
+		prjDisplay = new BasicProjectInformation();
+		projectInfoHeader = new HorizontalLayout();
+		projectInfoHeader.setWidth("100%");
+		projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
+		this.addComponent(projectInfoHeader);
+		this.addComponent(prjDisplay);
+
+		projectInfoFooter = new HorizontalLayout();
+		projectInfoFooter.setStyleName(UIConstants.PROJECT_INFO_FOOTER);
+		final Button toggleBtn = new Button("More");
+		toggleBtn.addListener(new Button.ClickListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				final int replaceIndex = ProjectInformationComponent.this
+						.getComponentIndex(prjDisplay);
+				ProjectInformationComponent.this.removeComponent(prjDisplay);
+				if (prjDisplay instanceof BasicProjectInformation) {
+					prjDisplay = new DetailProjectInformation();
+					event.getButton().setCaption("Less");
+				} else {
+					prjDisplay = new BasicProjectInformation();
+					event.getButton().setCaption("More");
+				}
+				ProjectInformationComponent.this.addComponent(prjDisplay,
+						replaceIndex);
+				prjDisplay.show();
+			}
+		});
+		toggleBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		projectInfoFooter.addComponent(toggleBtn);
+		this.addComponent(projectInfoFooter);
+	}
+
+	public void displayProjectInformation() {
+		project = CurrentProjectVariables.getProject();
+
+		projectInfoHeader.removeAllComponents();
+		final Label projectName = new Label(project.getName());
+		projectName.setStyleName(UIConstants.PROJECT_NAME);
+		projectName.setSizeUndefined();
+		final Label projectShortname = new Label("(" + project.getShortname()
+				+ ")");
+		projectShortname.setStyleName(UIConstants.PROJECT_SHORT_NAME);
+		projectInfoHeader.addComponent(projectName);
+		projectInfoHeader.addComponent(projectShortname);
+		projectInfoHeader.setExpandRatio(projectShortname, 1.0f);
+		projectInfoHeader.setComponentAlignment(projectShortname,
+				Alignment.TOP_LEFT);
+
+		prjDisplay.show();
 	}
 }
