@@ -122,7 +122,7 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 											.getMessage(
 													GenericI18Enum.DELETE_DIALOG_TITLE,
 													ApplicationProperties
-															.getProperty(ApplicationProperties.SITE_NAME)),
+															.getString(ApplicationProperties.SITE_NAME)),
 									LocalizationHelper
 											.getMessage(GenericI18Enum.DELETE_DIALOG_MESSAGE),
 									LocalizationHelper

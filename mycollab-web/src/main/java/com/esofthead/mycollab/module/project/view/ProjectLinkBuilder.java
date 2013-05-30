@@ -196,7 +196,7 @@ public class ProjectLinkBuilder {
 
 			if (!ApplicationProperties.productionMode) {
 				siteUrl = ApplicationProperties
-						.getProperty(ApplicationProperties.APP_URL);
+						.getString(ApplicationProperties.APP_URL);
 			} else {
 				ProjectService projectService = ApplicationContextUtil
 						.getApplicationContext().getBean(ProjectService.class);
@@ -204,7 +204,7 @@ public class ProjectLinkBuilder {
 						.getSubdomainOfProject(projectId);
 				if (subdomain != null) {
 					siteUrl = String.format(ApplicationProperties
-							.getProperty(ApplicationProperties.APP_URL),
+							.getString(ApplicationProperties.APP_URL),
 							subdomain);
 				} else {
 					log.error("Can not find subdomain for projectid {}",

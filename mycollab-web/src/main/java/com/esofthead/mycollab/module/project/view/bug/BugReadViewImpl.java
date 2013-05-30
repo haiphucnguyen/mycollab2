@@ -371,7 +371,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 												.getMessage(
 														GenericI18Enum.DELETE_DIALOG_TITLE,
 														ApplicationProperties
-																.getProperty(ApplicationProperties.SITE_NAME)),
+																.getString(ApplicationProperties.SITE_NAME)),
 										LocalizationHelper
 												.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 										LocalizationHelper

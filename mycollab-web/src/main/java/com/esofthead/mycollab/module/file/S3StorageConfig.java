@@ -27,10 +27,10 @@ public class S3StorageConfig {
 
 	static {
 		try {
-			String awsKey = ApplicationProperties.getProperty(AWS_KEY);
+			String awsKey = ApplicationProperties.getString(AWS_KEY);
 			String awsSecretKey = ApplicationProperties
-					.getProperty(AWS_SECRET_KEY);
-			String bucket = ApplicationProperties.getProperty(BUCKET);
+					.getString(AWS_SECRET_KEY);
+			String bucket = ApplicationProperties.getString(BUCKET);
 
 			instance = new S3StorageConfig(awsKey, awsSecretKey, bucket);
 		} catch (Exception e) {
@@ -50,7 +50,7 @@ public class S3StorageConfig {
 	}
 
 	public static String getAvatarLink(String username, int size) {
-		String s3UrlPath = ApplicationProperties.getProperty(S3_DOWNLOAD_URL,
+		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL,
 				"");
 		if ("".equals(s3UrlPath)) {
 			return "";
@@ -60,7 +60,7 @@ public class S3StorageConfig {
 	}
 
 	public static String getResourceLink(String documentPath) {
-		String s3UrlPath = ApplicationProperties.getProperty(S3_DOWNLOAD_URL,
+		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL,
 				"");
 		if ("".equals(s3UrlPath)) {
 			return "";

@@ -71,10 +71,10 @@ public class SendInvitationUserCommandService {
 	private String getSiteUrl(String subdomain) {
 		if (ApplicationProperties.productionMode) {
 			return String.format(ApplicationProperties
-					.getProperty(ApplicationProperties.APP_URL), subdomain);
+					.getString(ApplicationProperties.APP_URL), subdomain);
 		} else {
 			return ApplicationProperties
-					.getProperty(ApplicationProperties.APP_URL);
+					.getString(ApplicationProperties.APP_URL);
 		}
 	}
 }

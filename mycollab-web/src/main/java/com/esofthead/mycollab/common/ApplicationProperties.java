@@ -44,6 +44,7 @@ public class ApplicationProperties {
 
 	public static final String SITE_NAME = "site.name";
 	public static final String RUNNING_MODE = "running.mode";
+	public static final String SUPPORT_ACCOUNT_SUBDOMAIN = "isSupportAccountSubDomain";
 
 	public static boolean productionMode = false;
 
@@ -67,12 +68,17 @@ public class ApplicationProperties {
 		return properties;
 	}
 
-	public static String getProperty(String key) {
+	public static String getString(String key) {
 		return properties.getProperty(key);
 	}
 
-	public static String getProperty(String key, String defaultValue) {
+	public static String getString(String key, String defaultValue) {
 		return properties.getProperty(key, defaultValue);
+	}
+
+	public static boolean getBoolean(String key) {
+		return Boolean.parseBoolean(properties.getProperty(key,
+				Boolean.FALSE.toString()));
 	}
 
 	public static String getSendErrorEmail() {

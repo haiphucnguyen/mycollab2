@@ -22,14 +22,14 @@ public class ExtMailServiceImpl extends AbstractMailService implements
 	@Override
 	protected Mailer getMailer() {
 		String smtphost = ApplicationProperties
-				.getProperty(ApplicationProperties.RELAYMAIL_SMTPHOST);
+				.getString(ApplicationProperties.RELAYMAIL_SMTPHOST);
 		String port = ApplicationProperties
-				.getProperty(ApplicationProperties.RELAYMAIL_PORT);
+				.getString(ApplicationProperties.RELAYMAIL_PORT);
 		String username = ApplicationProperties
-				.getProperty(ApplicationProperties.RELAYMAIL_USERNAME);
+				.getString(ApplicationProperties.RELAYMAIL_USERNAME);
 		String password = ApplicationProperties
-				.getProperty(ApplicationProperties.RELAYMAIL_PASSWORD);
-		boolean isTLS = Boolean.parseBoolean(ApplicationProperties.getProperty(
+				.getString(ApplicationProperties.RELAYMAIL_PASSWORD);
+		boolean isTLS = Boolean.parseBoolean(ApplicationProperties.getString(
 				ApplicationProperties.RELAYMAIL_IS_TLS, "false"));
 
 		if (null == smtphost || smtphost.trim().length() == 0 || null == port
@@ -38,16 +38,16 @@ public class ExtMailServiceImpl extends AbstractMailService implements
 				|| password.trim().length() == 0 || null == port
 				|| port.trim().length() == 0) {
 			smtphost = ApplicationProperties
-					.getProperty(ApplicationProperties.MAIL_SMTPHOST);
+					.getString(ApplicationProperties.MAIL_SMTPHOST);
 			port = ApplicationProperties
-					.getProperty(ApplicationProperties.MAIL_PORT);
+					.getString(ApplicationProperties.MAIL_PORT);
 			username = ApplicationProperties
-					.getProperty(ApplicationProperties.MAIL_USERNAME);
+					.getString(ApplicationProperties.MAIL_USERNAME);
 			password = ApplicationProperties
-					.getProperty(ApplicationProperties.MAIL_PASSWORD);
+					.getString(ApplicationProperties.MAIL_PASSWORD);
 			port = ApplicationProperties
-					.getProperty(ApplicationProperties.MAIL_PORT);
-			isTLS = Boolean.parseBoolean(ApplicationProperties.getProperty(
+					.getString(ApplicationProperties.MAIL_PORT);
+			isTLS = Boolean.parseBoolean(ApplicationProperties.getString(
 					ApplicationProperties.MAIL_IS_TLS, "false"));
 		}
 		try {

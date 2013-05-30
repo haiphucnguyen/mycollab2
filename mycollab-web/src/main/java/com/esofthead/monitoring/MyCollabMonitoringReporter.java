@@ -26,13 +26,13 @@ public class MyCollabMonitoringReporter {
 		 * do send mail here
 		 */
 		String host = ApplicationProperties
-				.getProperty(ApplicationProperties.MAIL_SMTPHOST);
+				.getString(ApplicationProperties.MAIL_SMTPHOST);
 		String userName = ApplicationProperties
-				.getProperty(ApplicationProperties.MAIL_USERNAME);
+				.getString(ApplicationProperties.MAIL_USERNAME);
 		String password = ApplicationProperties
-				.getProperty(ApplicationProperties.MAIL_PASSWORD);
+				.getString(ApplicationProperties.MAIL_PASSWORD);
 		String port = ApplicationProperties
-				.getProperty(ApplicationProperties.MAIL_PORT);
+				.getString(ApplicationProperties.MAIL_PORT);
 
 		Mailer mailer = new Mailer(host, userName, password,
 				Integer.parseInt(port), true);
@@ -47,7 +47,7 @@ public class MyCollabMonitoringReporter {
 		try {
 			mailer.sendHTMLMail(userName, "eSofthead reporter", Arrays
 					.asList(new MailRecipientField(ApplicationProperties
-							.getProperty(ApplicationProperties.ERROR_SENDTO),
+							.getString(ApplicationProperties.ERROR_SENDTO),
 							"eSofthead")), null, null,
 					"Daily Report Monitoring - " + toDayString(),
 					"<h1>This is the sample of daily monitoring report</h1>",

@@ -17,7 +17,7 @@ public class RawContentServiceFactoryBean extends
 	protected RawContentService createInstance() throws Exception {
 		if (StorageSetting.isFileStorage()) {
 			String rawContentImplClassName = ApplicationProperties
-					.getProperty("content.rawContentServiceImpl",
+					.getString("content.rawContentServiceImpl",
 							"com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl");
 			Class<RawContentService> cls = (Class<RawContentService>) Class
 					.forName(rawContentImplClassName);

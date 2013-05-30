@@ -16,14 +16,14 @@ public class SystemMailServiceImpl extends AbstractMailService implements
 		if (gmailer == null) {
 			gmailer = new Mailer(
 					ApplicationProperties
-							.getProperty(ApplicationProperties.MAIL_SMTPHOST),
+							.getString(ApplicationProperties.MAIL_SMTPHOST),
 					ApplicationProperties
-							.getProperty(ApplicationProperties.MAIL_USERNAME),
+							.getString(ApplicationProperties.MAIL_USERNAME),
 					ApplicationProperties
-							.getProperty(ApplicationProperties.MAIL_PASSWORD),
+							.getString(ApplicationProperties.MAIL_PASSWORD),
 					Integer.parseInt(ApplicationProperties
-							.getProperty(ApplicationProperties.MAIL_PORT)),
-					Boolean.parseBoolean(ApplicationProperties.getProperty(
+							.getString(ApplicationProperties.MAIL_PORT)),
+					Boolean.parseBoolean(ApplicationProperties.getString(
 							ApplicationProperties.MAIL_IS_TLS, "false")));
 		}
 		return gmailer;

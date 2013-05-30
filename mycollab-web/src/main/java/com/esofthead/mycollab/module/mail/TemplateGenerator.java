@@ -48,15 +48,15 @@ public class TemplateGenerator {
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 		
 		defaultUrls.put("cdn_url", ApplicationProperties
-				.getProperty(ApplicationProperties.CDN_URL));
+				.getString(ApplicationProperties.CDN_URL));
 		defaultUrls.put("facebook_url", ApplicationProperties
-				.getProperty(ApplicationProperties.FACEBOOK_URL));
+				.getString(ApplicationProperties.FACEBOOK_URL));
 		defaultUrls.put("google_url", ApplicationProperties
-				.getProperty(ApplicationProperties.GOOGLE_URL));
+				.getString(ApplicationProperties.GOOGLE_URL));
 		defaultUrls.put("linkedin_url", ApplicationProperties
-				.getProperty(ApplicationProperties.LINKEDIN_URL));
+				.getString(ApplicationProperties.LINKEDIN_URL));
 		defaultUrls.put("twitter_url", ApplicationProperties
-				.getProperty(ApplicationProperties.TWITTER_URL));
+				.getString(ApplicationProperties.TWITTER_URL));
 
 		velocityContext.put("defaultUrls", defaultUrls);
 	}
@@ -92,10 +92,10 @@ public class TemplateGenerator {
 	public static String getSiteUrl(String domain) {
 		if (domain == null) {
 			return ApplicationProperties
-					.getProperty(ApplicationProperties.APP_URL);
+					.getString(ApplicationProperties.APP_URL);
 		}
 
 		return String.format(ApplicationProperties
-				.getProperty(ApplicationProperties.APP_URL), domain);
+				.getString(ApplicationProperties.APP_URL), domain);
 	}
 }

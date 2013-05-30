@@ -167,7 +167,7 @@ public class FeedbackWindow extends Window {
 					nameEmailFrom = nameEmailFrom.equals("") ? email
 							: nameEmailFrom;
 					String toEmail = ApplicationProperties
-							.getProperty(ApplicationProperties.MAIL_SENDTO);
+							.getString(ApplicationProperties.MAIL_SENDTO);
 
 					FeedbackWindow.this.close();
 

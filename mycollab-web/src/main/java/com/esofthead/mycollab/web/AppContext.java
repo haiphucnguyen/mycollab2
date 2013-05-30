@@ -152,11 +152,11 @@ public class AppContext implements Serializable {
 		if (getInstance().siteUrl == null) {
 			if (ApplicationProperties.productionMode) {
 				getInstance().siteUrl = String.format(ApplicationProperties
-						.getProperty(ApplicationProperties.APP_URL),
+						.getString(ApplicationProperties.APP_URL),
 						getInstance().subdomain);
 			} else {
 				getInstance().siteUrl = ApplicationProperties
-						.getProperty(ApplicationProperties.APP_URL);
+						.getString(ApplicationProperties.APP_URL);
 			}
 		}
 
