@@ -62,6 +62,8 @@ public class ProjectInformationComponent extends VerticalLayout {
 							"167px", Alignment.MIDDLE_LEFT);
 					informationLayout.getLayout().setWidth("100%");
 					informationLayout.getLayout().setMargin(false);
+					informationLayout.getLayout().addStyleName(
+							"colored-gridlayout");
 					return informationLayout.getLayout();
 				}
 			});
@@ -176,24 +178,6 @@ public class ProjectInformationComponent extends VerticalLayout {
 		public DetailProjectInformation() {
 			previewForm = new DetailPreviewForm();
 			this.addComponent(previewForm);
-
-			// final Button lessBtn = new Button("Less",
-			// new Button.ClickListener() {
-			// private static final long serialVersionUID = 1L;
-			//
-			// @Override
-			// public void buttonClick(final ClickEvent event) {
-			// ProjectInformationComponent.this
-			// .removeComponent(DetailProjectInformation.this);
-			// prjDisplay = new BasicProjectInformation();
-			// ProjectInformationComponent.this
-			// .addComponent(prjDisplay);
-			// prjDisplay.show();
-			// }
-			// });
-			//
-			// lessBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			// this.addComponent(lessBtn);
 		}
 
 		@Override

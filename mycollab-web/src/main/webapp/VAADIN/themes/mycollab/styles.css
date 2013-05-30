@@ -11,6 +11,24 @@
 }
 
 @font-face {
+	font-family: 'Aller';
+	src: url('fonts/aller_bd-webfont.eot');
+	src: local('☺'), url('fonts/aller_bd-webfont.woff') format('woff'), url('fonts/aller_bd-webfont.ttf')
+		format('truetype'), url('fonts/aller_bd-webfont.svg') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Aller';
+	src: url('fonts/aller_rg-webfont.eot');
+	src: local('☺'), url('fonts/aller_rg-webfont.woff') format('woff'), url('fonts/aller_rg-webfont.ttf')
+		format('truetype'), url('fonts/aller_rg-webfont.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
 	font-family: 'Lucida Sans Unicode';
 	src: url('fonts/LSANSD.eot');
 	src: local('☺'), url('fonts/LSANSD.eot') format('embedded-opentype'),
@@ -176,7 +194,7 @@ input.v-textfield[type="text"],.v-filterselect {
 
 .v-app,.v-window,.v-popupview-popup,.v-tooltip,.v-app input,.v-app select,.v-app button,.v-app textarea,.v-window input,.v-window select,.v-window button,.v-window textarea,.v-popupview-popup input,.v-popupview-popup select,.v-popupview-popup button,.v-popupview-popup textarea,.v-filterselect-suggestpopup,.v-datefield-popup,.v-contextmenu,.v-Notification,.v-menubar-submenu,.v-table-header-drag,.v-menubar-submenu,.v-drag-element
 	{
-	font: 12px/18px "Lucida Sans Unicode", Helvetica, Arial, Verdana,
+	font: 12px/18px "Aller", Helvetica, Arial, Verdana,
 		sans-serif !important;
 }
 
@@ -1472,7 +1490,7 @@ input.v-textfield-errorField {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e4e4e4;
+	background: url('icons/grad-light-top2.png') repeat-x 0 0 rgb(204, 204, 204);
 }
 
 .depotComp.collapsed .header-wrapper {
@@ -2092,7 +2110,7 @@ input.v-textfield-errorField {
 	cursor: pointer;
 }
 .v-table-row {
-    background: none repeat scroll 0% 0% rgb(229, 239, 240);
+    background: none repeat scroll 0% 0% rgb(220, 241, 249);
 }
 .v-table-row-odd {
     background: none repeat scroll 0% 0% rgb(247, 247, 247);
@@ -2111,7 +2129,7 @@ input.v-textfield-errorField {
 	background: none no-repeat 0 0 #f5f5f5;
 }
 .v-table-row-spacer {
-	background: none no-repeat 0 0 rgb(229, 239, 240);
+	background: none no-repeat 0 0 rgb(220, 241, 249);
 }
 /* End New Table */
 
@@ -3161,6 +3179,13 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border: 1px solid #a9a9a9;
 	background-color: #f5f5f5;
 	border-radius: 3px 3px 0px 0px;
+	padding: 0px;
+}
+.v-csslayout-readview-layout > .v-csslayout-margin > .v-csslayout-container {
+	padding-top:0px;
+	margin: 0px;
+	position: relative;
+	top: 0px;
 }
 .readview-layout-header {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
@@ -3169,6 +3194,11 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	position: relative;
 	z-index: 0;
 	overflow: visible !important;
+	top: 0px;
+	left: 0px;
+}
+.readview-layout-header .v-horizontallayout-margin {
+	padding: 12px 0px 0px;
 }
 .readview-layout-header > div {
 	position: absolute;
@@ -3405,35 +3435,35 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 /* End Richtext Editor */
 
 /* The New GridLayout */
-.v-gridlayout-margin {
+.colored-gridlayout .v-gridlayout-margin {
 	border-bottom: 1px solid #a9a9a9;
 }
-.v-gridlayout-margin .v-csslayout > .v-csslayout-margin {
+.colored-gridlayout .v-gridlayout-margin .v-csslayout > .v-csslayout-margin {
 	padding: 8px 5px 8px 18px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.v-horizontallayout-gridform-caption .v-horizontallayout-margin, .v-horizontallayout-gridform-field .v-horizontallayout-margin {
+.colored-gridlayout .v-horizontallayout-gridform-caption .v-horizontallayout-margin, .v-horizontallayout-gridform-field .v-horizontallayout-margin {
 	padding: 8px 5px 8px 18px;
 }
-.v-gridlayout-margin .gridform-caption {
+.colored-gridlayout .v-gridlayout-margin .gridform-caption {
 	background-color: #cce4ee;
 	border-left: 1px solid #a9a9a9;
 }
-.v-gridlayout-margin .gridform-caption.first-col {
+.colored-gridlayout .v-gridlayout-margin .gridform-caption.first-col {
 	border-left: none;
 }
-.v-gridlayout-margin .gridform-field {
+.colored-gridlayout .v-gridlayout-margin .gridform-field {
 	background-color: #e5eff0;
 }
-.v-gridlayout-margin > div > div > div > div {
+.colored-gridlayout .v-gridlayout-margin > div > div > div > div {
 	border-top: 1px solid #c8c8c8;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.v-gridlayout-margin > div > div > div > div.first-row {
+.colored-gridlayout .v-gridlayout-margin > div > div > div > div.first-row {
 	border-top: none;
 }
 /* End The New GridLayout */

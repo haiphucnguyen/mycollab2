@@ -67,6 +67,7 @@ public abstract class ProjectFormViewLayoutFactory implements
 		@Override
 		public Layout getLayout() {
 			final VerticalLayout layout = new VerticalLayout();
+			layout.addStyleName("colored-gridlayout");
 
 			moreInfoLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
