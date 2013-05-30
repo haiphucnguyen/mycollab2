@@ -386,13 +386,12 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button .v-button-caption {
-	line-height: 16px;
+	line-height: 14px;
 }
 
 .h-sidebar-menu {
 	height: 30px;
-	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
-		#F3F3F3;
+	background: url('icons/grad-dark-bottom.png') repeat-x left bottom rgb(230, 230, 230);
 	/*     background: -moz-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%); */
 	/*     background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#F3F3F3),color-stop(100%,#C6C6C6)); */
 	/*     background: -webkit-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%); */
@@ -1490,7 +1489,7 @@ input.v-textfield-errorField {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: url('icons/grad-light-top2.png') repeat-x 0 0 rgb(204, 204, 204);
+	background: url('icons/grad-light-top2.png') repeat-x 0 0 rgb(230, 230, 230);
 }
 
 .depotComp.collapsed .header-wrapper {
@@ -1916,7 +1915,7 @@ input.v-textfield-errorField {
 	border: none;
 }
 .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout > div > div:nth-child(odd) > div > .activity-stream {
-	background-color: #e5eff0;
+	background-color: rgb(212, 223, 239);
 }
 .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout > div > div:nth-child(even) > div > .activity-stream {
 	background-color: rgb(247, 247, 247);
@@ -2110,7 +2109,7 @@ input.v-textfield-errorField {
 	cursor: pointer;
 }
 .v-table-row {
-    background: none repeat scroll 0% 0% rgb(220, 241, 249);
+    background: none repeat scroll 0% 0% rgb(212, 223, 239);
 }
 .v-table-row-odd {
     background: none repeat scroll 0% 0% rgb(247, 247, 247);
@@ -2129,7 +2128,7 @@ input.v-textfield-errorField {
 	background: none no-repeat 0 0 #f5f5f5;
 }
 .v-table-row-spacer {
-	background: none no-repeat 0 0 rgb(220, 241, 249);
+	background: none no-repeat 0 0 rgb(212, 223, 239);
 }
 /* End New Table */
 
@@ -2975,15 +2974,7 @@ table.legendBox {
 }
 table.legendBox .legendBoxContent {
 	padding: 0px;
-	background: #f5f5f5;
-	background: -moz-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5),
-		color-stop(100%, #e2e2e2) );
-	background: -webkit-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
-	background: -o-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
-	background: -ms-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
-	background: linear-gradient(to bottom, #f5f5f5 0, #e2e2e2 100%);
-	filter: progid : DXImageTransform.Microsoft.gradient (startColorstr = '#F5F5F5', endColorstr = '#E2E2E2', GradientType = 0 );
+	background: rgb(245, 245, 245);
 }
 .chart-wrapper {
 	border-width: 1px 1px 0px;
@@ -3001,7 +2992,6 @@ table.legendBox .legendBoxContent {
 	background-color: #f7f7f7;
 	margin-bottom: 15px;
 	font-size: 13px;
-	/* 	width: 290px; */
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption {
@@ -3214,7 +3204,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	white-space: nowrap;
 }
 .readview-layout-body .v-gridlayout {
-	background-color: #e5eff0;
+/* 	background-color: #e5eff0; */
 }
 .readview-layout-header .detachedtabs .v-button-tab {
 	padding: 0px 2px;
@@ -3251,15 +3241,6 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .v-gridlayout-margin {
 	border-bottom: 1px solid #a9a9a9;
 }
-/* .readview-layout-body .v-gridlayout-margin > div > div > div > div { */
-/* 	padding: 8px 0px 8px 18px; */
-/* 	-moz-box-sizing: border-box; */
-/* 	-webkit-box-sizing: border-box; */
-/* 	box-sizing: border-box; */
-/* } */
-/* .readview-layout-body .v-gridlayout-margin > div > div > div { */
-/* 	height: 100% !important; */
-/* } */
 .readview-layout-body .v-gridlayout-margin .v-csslayout > .v-csslayout-margin {
 	padding: 8px 5px 8px 18px;
 	-moz-box-sizing: border-box;
@@ -3270,14 +3251,14 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 8px 5px 8px 18px;
 }
 .readview-layout-body .v-gridlayout-margin .gridform-caption {
-	background-color: #cce4ee;
+	background-color: rgb(212, 223, 239);
 	border-left: 1px solid #a9a9a9;
 }
 .readview-layout-body .v-gridlayout-margin .gridform-caption.first-col {
 	border-left: none;
 }
 .readview-layout-body .v-gridlayout-margin .gridform-field {
-	background-color: #e5eff0;
+/* 	background-color: #e5eff0; */
 }
 .readview-layout-body .v-gridlayout-margin > div > div > div > div {
 	border-top: 1px solid #c8c8c8;
@@ -3368,14 +3349,14 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 8px 5px 8px 18px;
 }
 .addview-layout-body .v-gridlayout-margin .gridform-caption {
-	background-color: #cce4ee;
+	background-color: rgb(212, 223, 239);
 	border-left: 1px solid #a9a9a9;
 }
 .addview-layout-body .v-gridlayout-margin .gridform-caption.first-col {
 	border-left: none;
 }
 .addview-layout-body .v-gridlayout-margin .gridform-field {
-	background-color: #e5eff0;
+/* 	background-color: #e5eff0; */
 }
 .addview-layout-body .v-gridlayout-margin .v-csslayout.gridform-field {
 	padding: 0px;
