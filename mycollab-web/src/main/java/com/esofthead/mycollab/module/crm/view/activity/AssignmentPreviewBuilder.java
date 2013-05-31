@@ -10,6 +10,8 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -82,19 +84,14 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 
 	public static class ReadView extends AssignmentPreviewBuilder {
 		private static final long serialVersionUID = 1L;
-		private TabSheet tabContainer;
 		private VerticalLayout assignmentInformation;
-		private AddViewLayout assignmentAddLayout;
+		private ReadViewLayout assignmentAddLayout;
 
 		public ReadView() {
-			assignmentAddLayout = new AddViewLayout("", new ThemeResource(
+			assignmentAddLayout = new ReadViewLayout(new ThemeResource(
 					"icons/48/crm/task.png"));
-			assignmentAddLayout.addStyleName("preview");
 			this.addComponent(assignmentAddLayout);
 			initRelatedComponent();
-
-			tabContainer = new TabSheet();
-			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 
 			previewForm = new AdvancedPreviewBeanForm<SimpleTask>() {
 				private static final long serialVersionUID = 1L;
@@ -141,19 +138,27 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 				}
 			};
 
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_TASK);
+
+			assignmentAddLayout.addControlButtons(optionalActionControls);
+			
 			assignmentInformation = new VerticalLayout();
-			assignmentInformation.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<SimpleTask>(
-					previewForm)
-					.createButtonControls(RolePermissionCollections.CRM_TASK);
+			assignmentInformation.addStyleName("main-info");
+			
+			final Layout actionControls = PreviewFormControlsGenerator2
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_TASK);
+			actionControls.addStyleName("control-buttons");
 			assignmentInformation.addComponent(actionControls);
+			
 			assignmentInformation.addComponent(previewForm);
 			assignmentInformation.addComponent(noteListItems);
 
-			tabContainer
-					.addTab(assignmentInformation, "Assignment Information");
-
-			assignmentAddLayout.addBody(tabContainer);
+			assignmentAddLayout.addTab(assignmentInformation, "Assignment Information");
+			
+			this.addComponent(assignmentAddLayout);
 		}
 	}
 

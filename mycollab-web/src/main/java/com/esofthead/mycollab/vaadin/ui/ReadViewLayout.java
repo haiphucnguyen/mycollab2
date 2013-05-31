@@ -2,6 +2,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -46,6 +47,7 @@ public class ReadViewLayout extends CssLayout {
 		viewTab = new DetachedTabs.Horizontal(body);
 		viewTab.setSizeUndefined();
 		header.addComponent(viewTab);
+		header.setComponentAlignment(viewTab, Alignment.BOTTOM_CENTER);
 	}
 
 	public void addControlButtons(Component controlsBtn) {

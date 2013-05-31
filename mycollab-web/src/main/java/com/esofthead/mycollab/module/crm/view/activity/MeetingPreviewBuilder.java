@@ -11,6 +11,8 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -75,21 +77,22 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 	 */
 	public static class ReadView extends MeetingPreviewBuilder {
 
-		private final TabSheet tabContainer;
 		private final VerticalLayout meetingInformation;
-		private final AddViewLayout meetingAddLayout;
+		private final ReadViewLayout meetingAddLayout;
 
 		public ReadView() {
-			meetingAddLayout = new AddViewLayout("", new ThemeResource(
+			meetingAddLayout = new ReadViewLayout(new ThemeResource(
 					"icons/48/crm/meeting.png"));
-			meetingAddLayout.addStyleName("preview");
-			this.addComponent(meetingAddLayout);
+			this.addComponent(meetingAddLayout);	
 
 			initRelatedComponent();
 
-			tabContainer = new TabSheet();
-			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_MEETING);
 
+			meetingAddLayout.addControlButtons(optionalActionControls);
+			
 			previewForm = new AdvancedPreviewBeanForm<Meeting>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
@@ -134,18 +137,21 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 			};
 
 			meetingInformation = new VerticalLayout();
-			meetingInformation.setMargin(true);
-			meetingInformation.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<Meeting>(
-					previewForm)
-					.createButtonControls(RolePermissionCollections.CRM_MEETING);
+			meetingInformation.addStyleName("main-info");
+			final Layout actionControls = PreviewFormControlsGenerator2
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_MEETING);
+			actionControls.addStyleName("control-buttons");
 			meetingInformation.addComponent(actionControls);
+			
+//			meetingInformation.setMargin(true);
+		
 			meetingInformation.addComponent(previewForm);
 			meetingInformation.addComponent(noteListItems);
 
-			tabContainer.addTab(meetingInformation, "Meeting Information");
+			meetingAddLayout.addTab(meetingInformation, "Meeting Information");
 
-			meetingAddLayout.addBody(tabContainer);
+			this.addComponent(meetingAddLayout);
 		}
 	}
 

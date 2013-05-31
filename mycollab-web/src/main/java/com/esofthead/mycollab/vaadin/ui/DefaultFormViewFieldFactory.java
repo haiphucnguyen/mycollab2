@@ -174,10 +174,15 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 		public FormLinkViewField(final String value,
 				final Button.ClickListener listener) {
-			final ButtonLink l = new ButtonLink(value, listener);
-			// l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			l.setWidth("100%");
-			setCompositionRoot(l);
+			if (value != null && (!value.equals(""))) {
+				final ButtonLink l = new ButtonLink(value, listener);
+				l.setWidth("100%");
+				setCompositionRoot(l);
+			} else {
+				final Label l = new Label("&nbsp;", Label.CONTENT_XHTML);
+				l.setWidth("100%");
+				setCompositionRoot(l);
+			}
 		}
 
 		@Override

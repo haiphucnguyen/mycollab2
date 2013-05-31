@@ -65,11 +65,13 @@ public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory 
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(2, 5);
-			informationLayout.getLayout().setWidth("900px");
+			informationLayout = new GridFormLayoutHelper(2, 5,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			informationLayout.getLayout().setWidth("100%");
+			informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
+			
 			layout.addComponent(informationLayout.getLayout());
-			layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
 
 			return layout;
 		}
@@ -85,14 +87,11 @@ public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory 
 			} else if (propertyId.equals("priority")) {
 				informationLayout.addComponent(field, "Priority", 0, 3);
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 4, 2,
-						UIConstants.DEFAULT_2XCONTROL_WIDTH,
-						UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+				informationLayout.addComponent(field, "Description", 0, 4, 2,"100%", Alignment.TOP_LEFT);
 			} else if (propertyId.equals("status")) {
 				informationLayout.addComponent(field, "Status", 1, 0);
 			} else if (propertyId.equals("type")) {
-				informationLayout.addComponent(field, "Related To", 1, 1,
-						UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
+				informationLayout.addComponent(field, "Related To", 1, 1,UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
 			} else if (propertyId.equals("contactid")) {
 				informationLayout.addComponent(field, "Contact", 1, 2);
 			} else if (propertyId.equals("assignuser")) {

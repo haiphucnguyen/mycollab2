@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -56,6 +58,7 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 
 		private VerticalLayout layout;
 		private GridFormLayoutHelper informationLayout;
+		private GridFormLayoutHelper descriptionLayout;
 
 		@Override
 		public Layout getLayout() {
@@ -63,11 +66,24 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 			Label organizationHeader = new Label("Meeting Information");
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
-			informationLayout = new GridFormLayoutHelper(2, 4);
-			informationLayout.getLayout().setWidth("900px");
+			informationLayout = new GridFormLayoutHelper(2, 4,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			informationLayout.getLayout().setWidth("100%");
+			informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
 			layout.addComponent(informationLayout.getLayout());
-			layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
+			
+			descriptionLayout = new GridFormLayoutHelper(2, 1, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			Label descHeader = new Label("Description");
+			descHeader.setStyleName("h2");
+			layout.addComponent(descHeader);
+			descriptionLayout.getLayout().setWidth("100%");
+			descriptionLayout.getLayout().setMargin(false);
+			descriptionLayout.getLayout().setSpacing(false);
+			
+			layout.addComponent(descriptionLayout.getLayout());
+			
 			return layout;
 		}
 
@@ -88,9 +104,7 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("location")) {
 				informationLayout.addComponent(field, "Location", 1, 2);
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 3, 2,
-						UIConstants.DEFAULT_2XCONTROL_WIDTH,
-						UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+				descriptionLayout.addComponent(field, "Description", 0, 0, 2,"100%", Alignment.TOP_LEFT);
 			}
 		}
 
