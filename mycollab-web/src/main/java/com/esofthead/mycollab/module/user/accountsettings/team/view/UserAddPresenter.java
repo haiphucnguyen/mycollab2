@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -14,6 +15,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -83,13 +85,13 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 		SimpleUser user = (SimpleUser) data.getParams();
 		view.editItem(user);
 
+		AccountSettingBreadcrumb breadcrumb = ViewManager
+				.getView(AccountSettingBreadcrumb.class);
+
 		if (user.getUsername() == null) {
-			AppContext.addFragment("account/user/add", "New User Account");
+			breadcrumb.gotoUserAdd();
 		} else {
-			AppContext.addFragment(
-					"account/user/edit/"
-							+ UrlEncodeDecoder.encode(user.getUsername()),
-					"Edit User " + user.getUsername());
+			breadcrumb.gotoUserEdit(user);
 		}
 
 	}
