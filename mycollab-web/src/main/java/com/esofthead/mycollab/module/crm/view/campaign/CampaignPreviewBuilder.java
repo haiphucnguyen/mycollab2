@@ -11,12 +11,14 @@ import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
+import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -26,7 +28,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -143,19 +144,15 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 	public static class ReadView extends CampaignPreviewBuilder {
 
 		private static final long serialVersionUID = 1L;
-		private TabSheet tabContainer;
 		private VerticalLayout campaignInformationLayout;
 		private VerticalLayout relatedItemsContainer;
-		private AddViewLayout campaignAddLayout;
+		private ReadViewLayout campaignAddLayout;
 
 		public ReadView() {
-			campaignAddLayout = new AddViewLayout("", new ThemeResource(
-					"icons/48/crm/campaign.png"));
-			campaignAddLayout.addStyleName("preview");
+			campaignAddLayout = new ReadViewLayout(new ThemeResource(
+					"icons/18/crm/campaign.png"));
 			this.addComponent(campaignAddLayout);
-
-			tabContainer = new TabSheet();
-			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
+			
 			initRelatedComponent();
 
 			previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
@@ -201,27 +198,48 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 				}
 			};
 
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_CAMPAIGN);
+			campaignAddLayout.addControlButtons(optionalActionControls);
+
 			campaignInformationLayout = new VerticalLayout();
-			campaignInformationLayout.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<CampaignWithBLOBs>(
-					previewForm)
-					.createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
+			
+			campaignInformationLayout.addStyleName("main-info");
+			
+			final Layout actionControls = PreviewFormControlsGenerator2
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_CAMPAIGN);
+			actionControls.addStyleName("control-buttons");
 			campaignInformationLayout.addComponent(actionControls);
+			
 			campaignInformationLayout.addComponent(previewForm);
 			campaignInformationLayout.addComponent(noteListItems);
-
-			tabContainer.addTab(campaignInformationLayout,
-					"Campaign Information");
+			
+			campaignAddLayout.addTab(campaignInformationLayout, "Contact Information");
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
-			relatedItemsContainer.addComponent(associateActivityList);
-			relatedItemsContainer.addComponent(associateAccountList);
-			relatedItemsContainer.addComponent(associateContactList);
-			relatedItemsContainer.addComponent(associateLeadList);
-			tabContainer.addTab(relatedItemsContainer, "More Information");
+			campaignAddLayout.addTab(relatedItemsContainer, "More Information");
 
-			campaignAddLayout.addBody(tabContainer);
+			campaignAddLayout
+			.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+
+				@Override
+				public void tabChanged(final TabChangedEvent event) {
+					final Button btn = event.getSource();
+					final String caption = btn.getCaption();
+					if ("Account Information".equals(caption)) {
+
+					} else if ("More Information".equals(caption)) {
+						relatedItemsContainer.addComponent(associateActivityList);
+						relatedItemsContainer.addComponent(associateAccountList);
+						relatedItemsContainer.addComponent(associateContactList);
+						relatedItemsContainer.addComponent(associateLeadList);
+					}
+					campaignAddLayout.selectTab(caption);
+				}
+			});
 		}
 	}
 

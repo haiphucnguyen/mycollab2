@@ -18,8 +18,12 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -98,19 +102,15 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
 	public static class ReadView extends OpportunityPreviewBuilder {
 
-		private TabSheet tabContainer;
 		private VerticalLayout opportunityInformationLayout;
 		private VerticalLayout relatedItemsContainer;
-		private AddViewLayout opportunityAddLayout;
+		private ReadViewLayout opportunityAddLayout;
 
 		public ReadView() {
-			opportunityAddLayout = new AddViewLayout("", new ThemeResource(
-					"icons/48/crm/opportunity.png"));
-			opportunityAddLayout.addStyleName("preview");
+			opportunityAddLayout = new ReadViewLayout(new ThemeResource(
+					"icons/18/crm/opportunity.png"));
 			this.addComponent(opportunityAddLayout);
 
-			tabContainer = new TabSheet();
-			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 			initRelatedComponent();
 
 			previewForm = new AdvancedPreviewBeanForm<Opportunity>() {
@@ -157,26 +157,46 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 				}
 			};
 
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_OPPORTUNITY);
+			
+			opportunityAddLayout.addControlButtons(optionalActionControls);
+			
 			opportunityInformationLayout = new VerticalLayout();
-			opportunityInformationLayout.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<Opportunity>(
-					previewForm)
-					.createButtonControls(RolePermissionCollections.CRM_OPPORTUNITY);
+			
+			opportunityInformationLayout.addStyleName("main-info");
+				
+			final Layout actionControls = PreviewFormControlsGenerator2
+						.createFormControls(previewForm,
+								RolePermissionCollections.CRM_OPPORTUNITY);
+				actionControls.addStyleName("control-buttons");
 			opportunityInformationLayout.addComponent(actionControls);
+			
 			opportunityInformationLayout.addComponent(previewForm);
 			opportunityInformationLayout.addComponent(noteListItems);
-
-			tabContainer.addTab(opportunityInformationLayout,
-					"Opportunity Information");
+			
+			opportunityAddLayout.addTab(opportunityInformationLayout, "Opportunity Information");
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
-			relatedItemsContainer.addComponent(associateActivityList);
-			relatedItemsContainer.addComponent(associateContactList);
-			relatedItemsContainer.addComponent(associateLeadList);
-			tabContainer.addTab(relatedItemsContainer, "More Information");
+			opportunityAddLayout.addTab(relatedItemsContainer, "More Information");
+			opportunityAddLayout
+			.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+				@Override
+				public void tabChanged(final TabChangedEvent event) {
+					final Button btn = event.getSource();
+					final String caption = btn.getCaption();
+					if ("Opportunity Information".equals(caption)) {
 
-			opportunityAddLayout.addBody(tabContainer);
+					} else if ("More Information".equals(caption)) {
+						relatedItemsContainer.addComponent(associateActivityList);
+						relatedItemsContainer.addComponent(associateContactList);
+						relatedItemsContainer.addComponent(associateLeadList);
+					}
+					opportunityAddLayout.selectTab(caption);
+				}
+			});
 		}
 	}
 

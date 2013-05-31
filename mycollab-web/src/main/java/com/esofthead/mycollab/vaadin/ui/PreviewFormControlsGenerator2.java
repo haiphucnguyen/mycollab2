@@ -106,7 +106,23 @@ public class PreviewFormControlsGenerator2 {
 		HorizontalLayout editButtons = new HorizontalLayout();
 		editButtons.setSpacing(true);
 
-		Button editBtn, deleteBtn, cloneBtn;
+		Button backBtn,editBtn, deleteBtn, cloneBtn;
+		backBtn = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            public void buttonClick(ClickEvent event) {
+                T item = ((BeanItem<T>) previewForm.getItemDataSource())
+                        .getBean();
+                previewForm.fireCancelForm(item);
+            }
+        });
+        backBtn.setIcon(new ThemeResource("icons/16/back.png"));
+        backBtn.setDescription("Back to list");
+        backBtn.setStyleName("link");
+        layout.addComponent(backBtn);
+        layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
+        
 		editBtn = new Button(GenericForm.EDIT_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -160,9 +176,11 @@ public class PreviewFormControlsGenerator2 {
 		layout.setExpandRatio(editButtons, 1.0f);
 
 		if (permissionItem != null) {
+			boolean canRead = AppContext.canRead(permissionItem);
 			boolean canWrite = AppContext.canWrite(permissionItem);
 			boolean canAccess = AppContext.canAccess(permissionItem);
 
+			 backBtn.setEnabled(canRead);
 			editBtn.setEnabled(canWrite);
 			cloneBtn.setEnabled(canWrite);
 			deleteBtn.setEnabled(canAccess);

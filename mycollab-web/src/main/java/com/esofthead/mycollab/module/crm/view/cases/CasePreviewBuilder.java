@@ -19,8 +19,12 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -121,18 +125,13 @@ public class CasePreviewBuilder extends VerticalLayout {
     
     public static class ReadView extends CasePreviewBuilder {
 
-        private TabSheet tabContainer;
         private VerticalLayout caseInformationLayout;
         private VerticalLayout relatedItemsContainer;
-        private AddViewLayout caseAddLayout;
+        private ReadViewLayout caseAddLayout;
 
         public ReadView() {
-            caseAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/case.png"));
-            caseAddLayout.addStyleName("preview");
+            caseAddLayout = new ReadViewLayout(new ThemeResource("icons/18/crm/case.png"));
             this.addComponent(caseAddLayout);
-
-            tabContainer = new TabSheet();
-            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
 
             previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
@@ -176,23 +175,50 @@ public class CasePreviewBuilder extends VerticalLayout {
                 }
             };
 
+            final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_CASE);
+
+            caseAddLayout.addControlButtons(optionalActionControls);
+			
             caseInformationLayout = new VerticalLayout();
-            caseInformationLayout.setMargin(true);
-            Layout actionControls = new PreviewFormControlsGenerator<CaseWithBLOBs>(
-                    previewForm).createButtonControls(RolePermissionCollections.CRM_CASE);
-            caseInformationLayout.addComponent(actionControls);
+            caseInformationLayout.addStyleName("main-info");
+            
+            final Layout actionControls = PreviewFormControlsGenerator2
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_CASE);
+			actionControls.addStyleName("control-buttons");
+			caseInformationLayout.addComponent(actionControls);
+			
             caseInformationLayout.addComponent(previewForm);
             caseInformationLayout.addComponent(noteListItems);
 
-            tabContainer.addTab(caseInformationLayout, "Case Information");
+            caseAddLayout.addTab(caseInformationLayout,"Case Information");
 
             relatedItemsContainer = new VerticalLayout();
             relatedItemsContainer.setMargin(true);
-            relatedItemsContainer.addComponent(associateActivityList);
-            relatedItemsContainer.addComponent(associateContactList);
-            tabContainer.addTab(relatedItemsContainer, "More Information");
+            
+            
+            caseAddLayout.addTab(relatedItemsContainer,  "More Information");
+            
+            this.addComponent(caseAddLayout);
 
-            caseAddLayout.addBody(tabContainer);
+            caseAddLayout
+					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+
+						@Override
+						public void tabChanged(final TabChangedEvent event) {
+							final Button btn = event.getSource();
+							final String caption = btn.getCaption();
+							if ("Case Information".equals(caption)) {
+
+							} else if ("More Information".equals(caption)) {
+								relatedItemsContainer.addComponent(associateActivityList);
+					            relatedItemsContainer.addComponent(associateContactList);
+							}
+							caseAddLayout.selectTab(caption);
+						}
+					});
         }
     }
 

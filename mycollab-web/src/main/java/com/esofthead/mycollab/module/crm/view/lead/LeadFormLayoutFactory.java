@@ -24,7 +24,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 
     @Override
     public Layout getLayout() {
-        AddViewLayout leadAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/crm/lead.png"));
+        AddViewLayout leadAddLayout = new AddViewLayout(title, new ThemeResource("icons/18/crm/lead.png"));
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
             leadAddLayout.addTopControls(topPanel);
@@ -62,18 +62,20 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
         @Override
         public Layout getLayout() {
             layout = new VerticalLayout();
-            layout.setSpacing(true);
+            layout.setSpacing(false);
 
             Label organizationHeader = new Label("Contact Information");
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            informationLayout = new GridFormLayoutHelper(2, 8);
-            informationLayout.getLayout().setWidth("900px");
+            informationLayout = new GridFormLayoutHelper(2, 8,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+            informationLayout.getLayout().setWidth("100%");
+            informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
+			
             layout.addComponent(informationLayout.getLayout());
-            layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-
+            
             prefixFirstNameBox = new HorizontalLayout();
             prefixFirstNameBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
             informationLayout.addComponent(prefixFirstNameBox, "First Name", 0, 0);
@@ -81,20 +83,23 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
             Label addressHeader = new Label("Address Information");
             addressHeader.setStyleName("h2");
             layout.addComponent(addressHeader);
-            addressLayout = new GridFormLayoutHelper(2, 5);
-            addressLayout.getLayout().setWidth("900px");
+            addressLayout = new GridFormLayoutHelper(2, 5,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+            addressLayout.getLayout().setWidth("100%");
+            addressLayout.getLayout().setMargin(false);
+			addressLayout.getLayout().setSpacing(false);
             layout.addComponent(addressLayout.getLayout());
-            layout.setComponentAlignment(addressLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-
+            
             Label descriptionHeader = new Label("Description");
             descriptionHeader.setStyleName("h2");
             layout.addComponent(descriptionHeader);
-            descLayout = new GridFormLayoutHelper(2, 1);
-            descLayout.getLayout().setWidth("900px");
+            descLayout = new GridFormLayoutHelper(2, 1,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+            descLayout.getLayout().setWidth("100%");
+            descLayout.getLayout().setMargin(false);
+            descLayout.getLayout().setSpacing(false);
             layout.addComponent(descLayout.getLayout());
-            layout.setComponentAlignment(descLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
+           
             return layout;
         }
 
@@ -162,9 +167,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
                     "Other Country", 1, 4);
 
             if (propertyId.equals("description")) {
-                descLayout.addComponent(field, "Description", 0, 0, 2,
-                        UIConstants.DEFAULT_2XCONTROL_WIDTH,
-                        UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+                descLayout.addComponent(field, "Description", 0, 0, 2,"100%", Alignment.TOP_LEFT);
             }
         }
     }

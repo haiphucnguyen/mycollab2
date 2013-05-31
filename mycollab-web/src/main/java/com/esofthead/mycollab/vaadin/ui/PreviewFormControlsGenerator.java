@@ -15,10 +15,10 @@ public class PreviewFormControlsGenerator<T> {
     private Button editBtn;
     private Button deleteBtn;
     private Button cloneBtn;
-    private Button previousItem;
-    private Button nextItemBtn;
-    private Button historyBtn;
-    private Button printBtn; 
+//    private Button previousItem;
+//    private Button nextItemBtn;
+//    private Button historyBtn;
+//    private Button printBtn; 
     
     public PreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
         this.previewForm = editForm;
@@ -105,71 +105,71 @@ public class PreviewFormControlsGenerator<T> {
         layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
         layout.setExpandRatio(editButtons, 1.0f);
 
-        previousItem = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+//        previousItem = new Button(null, new Button.ClickListener() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//            public void buttonClick(ClickEvent event) {
+//                T item = ((BeanItem<T>) previewForm.getItemDataSource())
+//                        .getBean();
+//                previewForm.fireGotoPrevious(item);
+//            }
+//        });
 
-			@Override
-            public void buttonClick(ClickEvent event) {
-                T item = ((BeanItem<T>) previewForm.getItemDataSource())
-                        .getBean();
-                previewForm.fireGotoPrevious(item);
-            }
-        });
+//        previousItem.setIcon(new ThemeResource("icons/16/previous.png"));
+//        previousItem.setStyleName("link");
+//        previousItem.setDescription("Show previous item");
+//        layout.addComponent(previousItem);
+//        layout.setComponentAlignment(previousItem, Alignment.MIDDLE_RIGHT);
+//
+//        nextItemBtn = new Button(null, new Button.ClickListener() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//            public void buttonClick(ClickEvent event) {
+//                T item = ((BeanItem<T>) previewForm.getItemDataSource())
+//                        .getBean();
+//                previewForm.fireGotoNextItem(item);
+//            }
+//        });
 
-        previousItem.setIcon(new ThemeResource("icons/16/previous.png"));
-        previousItem.setStyleName("link");
-        previousItem.setDescription("Show previous item");
-        layout.addComponent(previousItem);
-        layout.setComponentAlignment(previousItem, Alignment.MIDDLE_RIGHT);
-
-        nextItemBtn = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-            public void buttonClick(ClickEvent event) {
-                T item = ((BeanItem<T>) previewForm.getItemDataSource())
-                        .getBean();
-                previewForm.fireGotoNextItem(item);
-            }
-        });
-
-        nextItemBtn.setIcon(new ThemeResource("icons/16/next.png"));
-        nextItemBtn.setStyleName("link");
-        nextItemBtn.setDescription("Show next item");
-        layout.addComponent(nextItemBtn);
-        layout.setComponentAlignment(nextItemBtn, Alignment.MIDDLE_RIGHT);
-
-
-        historyBtn = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-            public void buttonClick(ClickEvent event) {
-                previewForm.showHistory();
-            }
-        });
-        historyBtn.setIcon(new ThemeResource("icons/16/history.png"));
-        historyBtn.setStyleName("link");
-        historyBtn.setDescription("Show history log");
-        layout.addComponent(historyBtn);
-        layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
-
-        printBtn = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-            public void buttonClick(ClickEvent event) {
-                previewForm.doPrint();
-            }
-        });
+//        nextItemBtn.setIcon(new ThemeResource("icons/16/next.png"));
+//        nextItemBtn.setStyleName("link");
+//        nextItemBtn.setDescription("Show next item");
+//        layout.addComponent(nextItemBtn);
+//        layout.setComponentAlignment(nextItemBtn, Alignment.MIDDLE_RIGHT);
+//
+//
+//        historyBtn = new Button(null, new Button.ClickListener() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//            public void buttonClick(ClickEvent event) {
+//                previewForm.showHistory();
+//            }
+//        });
+//        historyBtn.setIcon(new ThemeResource("icons/16/history.png"));
+//        historyBtn.setStyleName("link");
+//        historyBtn.setDescription("Show history log");
+//        layout.addComponent(historyBtn);
+//        layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
+//
+//        printBtn = new Button(null, new Button.ClickListener() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//            public void buttonClick(ClickEvent event) {
+//                previewForm.doPrint();
+//            }
+//        });
         
         
 
-        printBtn.setIcon(new ThemeResource("icons/16/print.png"));
-        printBtn.setStyleName("link");
-        printBtn.setDescription("Print this page");
-        layout.addComponent(printBtn);
-        layout.setComponentAlignment(printBtn, Alignment.MIDDLE_RIGHT);
+//        printBtn.setIcon(new ThemeResource("icons/16/print.png"));
+//        printBtn.setStyleName("link");
+//        printBtn.setDescription("Print this page");
+//        layout.addComponent(printBtn);
+//        layout.setComponentAlignment(printBtn, Alignment.MIDDLE_RIGHT);
         
         if (permissionItem != null) {
             boolean canRead = AppContext.canRead(permissionItem);
@@ -180,8 +180,8 @@ public class PreviewFormControlsGenerator<T> {
             editBtn.setEnabled(canWrite);
             cloneBtn.setEnabled(canWrite);
             deleteBtn.setEnabled(canAccess);
-            printBtn.setEnabled(canRead);
-            historyBtn.setEnabled(canRead);
+//            printBtn.setEnabled(canRead);
+//            historyBtn.setEnabled(canRead);
         }
         return layout;
     }
