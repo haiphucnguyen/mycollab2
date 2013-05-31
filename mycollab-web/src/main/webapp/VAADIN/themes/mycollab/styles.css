@@ -156,7 +156,7 @@ input.v-textfield[type="text"],.v-filterselect {
 
 .v-app,.v-window,.v-popupview-popup,.v-tooltip,.v-app input,.v-app select,.v-app button,.v-app textarea,.v-window input,.v-window select,.v-window button,.v-window textarea,.v-popupview-popup input,.v-popupview-popup select,.v-popupview-popup button,.v-popupview-popup textarea,.v-filterselect-suggestpopup,.v-datefield-popup,.v-contextmenu,.v-Notification,.v-menubar-submenu,.v-table-header-drag,.v-menubar-submenu,.v-drag-element
 	{
-	font: 11px/18px  Arial, Verdana, Helvetica, 
+	font: 12px/18px  Arial, Verdana, Helvetica, 
 		sans-serif !important;
 }
 
@@ -333,7 +333,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	display: inline-block;
 	white-space: normal;
 	word-wrap: break-word;
-	word-break: normal;
+	word-break: break-all;
 	width: 100%;
 	height: 100%;
 }
@@ -348,7 +348,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button .v-button-caption {
-	line-height: 14px;
+	line-height: 16px;
 }
 
 .h-sidebar-menu {
@@ -414,6 +414,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	text-shadow: none;
 	font-weight: bold;
 	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption,.h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption:hover
@@ -3127,7 +3128,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* New ReadViewLayout */
 .v-csslayout-readview-layout {
-	margin-top: 20px;
+	top: 20px;
+	margin: 0px;
+	position: relative;
 }
 .v-csslayout-readview-layout > .v-csslayout-margin {
 	border: 1px solid #a9a9a9;
@@ -3148,24 +3151,28 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	position: relative;
 	z-index: 0;
 	overflow: visible !important;
-	top: 0px;
+	bottom: 0px;
 	left: 0px;
 }
-.readview-layout-header .v-horizontallayout-margin {
-	padding: 12px 0px 0px;
-}
+/* .readview-layout-header .v-horizontallayout-margin { */
+/* 	position: absolute !importan */
+/* } */
 .readview-layout-header > div {
-	position: absolute;
-	z-index: 1;
 	top: 1px;
+	position: absolute !important;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .readview-layout-header .v-label-h1 {
 	padding: 0px;
 	padding-left: 5px;
 	font-size: 15px;
 	text-overflow: ellipsis;
+	-ms-text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	word-wrap: normal;
 }
 .readview-layout-body .v-gridlayout {
 /* 	background-color: #e5eff0; */

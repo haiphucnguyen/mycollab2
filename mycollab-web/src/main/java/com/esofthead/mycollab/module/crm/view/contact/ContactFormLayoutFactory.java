@@ -1,11 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -15,97 +12,20 @@ import com.vaadin.ui.VerticalLayout;
 
 public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 
-	private static final long serialVersionUID = 1L;
-	private String title;
-	private ContactInformationLayout informationLayout;
-
-	public ContactFormLayoutFactory(String title) {
-		this.title = title;
-	}
-
-	@Override
-	public Layout getLayout() {
-		informationLayout = new ContactInformationLayout(false);
-		AddViewLayout contactAddLayout = new AddViewLayout(title,
-				new ThemeResource("icons/18/crm/contact.png"));
-
-		Layout topPanel = createTopPanel();
-		if (topPanel != null) {
-			contactAddLayout.addTopControls(topPanel);
-		}
-
-		contactAddLayout.addBody(informationLayout.getLayout());
-
-		Layout bottomPanel = createBottomPanel();
-		if (bottomPanel != null) {
-
-		}
-		contactAddLayout.addBottomControls(bottomPanel);
-
-		return contactAddLayout;
-	}
-
-	protected abstract Layout createTopPanel();
-
-	protected abstract Layout createBottomPanel();
-
-	@Override
-	public void attachField(Object propertyId, Field field) {
-		informationLayout.attachField(propertyId, field);
-	}
-
 	public static class ContactInformationLayout implements IFormLayoutFactory {
 
 		private VerticalLayout layout;
 		private GridFormLayoutHelper informationLayout;
 		private GridFormLayoutHelper addressLayout;
 		private GridFormLayoutHelper descriptionLayout;
-		private boolean isReadMode;
+		private final boolean isReadMode;
 
-		public ContactInformationLayout(boolean isReadMode) {
+		public ContactInformationLayout(final boolean isReadMode) {
 			this.isReadMode = isReadMode;
 		}
 
 		@Override
-		public Layout getLayout() {
-			layout = new VerticalLayout();
-			Label organizationHeader = new Label("Contact Information");
-			organizationHeader.setStyleName("h2");
-			layout.addComponent(organizationHeader);
-
-			informationLayout = new GridFormLayoutHelper(2, 9, "100%", "167px",
-					Alignment.MIDDLE_LEFT);
-			informationLayout.getLayout().setWidth("100%");
-			informationLayout.getLayout().setMargin(false);
-			informationLayout.getLayout().setSpacing(false);
-			layout.addComponent(informationLayout.getLayout());
-
-			Label addressHeader = new Label("Address Information");
-			addressHeader.setStyleName("h2");
-			layout.addComponent(addressHeader);
-			addressLayout = new GridFormLayoutHelper(2, 6,"100%", "167px",
-					Alignment.MIDDLE_LEFT);
-			addressLayout.getLayout().setWidth("100%");
-			addressLayout.getLayout().setMargin(false);
-			addressLayout.getLayout().setSpacing(false);
-			layout.addComponent(addressLayout.getLayout());
-
-			descriptionLayout = new GridFormLayoutHelper(2, 1, "100%", "167px",
-					Alignment.MIDDLE_LEFT);
-			Label descHeader = new Label("Description");
-			descHeader.setStyleName("h2");
-			layout.addComponent(descHeader);
-			descriptionLayout.getLayout().setWidth("100%");
-			descriptionLayout.getLayout().setMargin(false);
-			descriptionLayout.getLayout().setSpacing(false);
-			
-			layout.addComponent(descriptionLayout.getLayout());
-			
-			return layout;
-		}
-
-		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("firstname")) {
 				informationLayout.addComponent(field, "First Name", 0, 0);
 			} else if (propertyId.equals("lastname")) {
@@ -123,7 +43,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("assistantphone")) {
 				informationLayout.addComponent(field, "Assistant Phone", 0, 7);
 			} else if (propertyId.equals("leadsource")) {
-				informationLayout.addComponent(field, "Leade Source", 0, 8);
+				informationLayout.addComponent(field, "Leader Source", 0, 8, 2);
 			} else if (propertyId.equals("officephone")) {
 				informationLayout.addComponent(field, "Phone Office", 1, 0);
 			} else if (propertyId.equals("mobile")) {
@@ -163,8 +83,87 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("id") && !isReadMode) {
 				addressLayout.addComponent(field, "Copy Other Address", 0, 5);
 			} else if (propertyId.equals("description")) {
-				descriptionLayout.addComponent(field, "Description", 0, 0, 2,"100%", Alignment.TOP_LEFT);
+				descriptionLayout.addComponent(field, "Description", 0, 0, 2,
+						"100%", Alignment.TOP_LEFT);
 			}
 		}
+
+		@Override
+		public Layout getLayout() {
+			layout = new VerticalLayout();
+			final Label organizationHeader = new Label("Contact Information");
+			organizationHeader.setStyleName("h2");
+			layout.addComponent(organizationHeader);
+
+			informationLayout = new GridFormLayoutHelper(2, 9, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			informationLayout.getLayout().setWidth("100%");
+			informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
+			layout.addComponent(informationLayout.getLayout());
+
+			final Label addressHeader = new Label("Address Information");
+			addressHeader.setStyleName("h2");
+			layout.addComponent(addressHeader);
+			addressLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			addressLayout.getLayout().setWidth("100%");
+			addressLayout.getLayout().setMargin(false);
+			addressLayout.getLayout().setSpacing(false);
+			layout.addComponent(addressLayout.getLayout());
+
+			descriptionLayout = new GridFormLayoutHelper(2, 1, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			final Label descHeader = new Label("Description");
+			descHeader.setStyleName("h2");
+			layout.addComponent(descHeader);
+			descriptionLayout.getLayout().setWidth("100%");
+			descriptionLayout.getLayout().setMargin(false);
+			descriptionLayout.getLayout().setSpacing(false);
+
+			layout.addComponent(descriptionLayout.getLayout());
+
+			return layout;
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+	private final String title;
+
+	private ContactInformationLayout informationLayout;
+
+	public ContactFormLayoutFactory(final String title) {
+		this.title = title;
+	}
+
+	@Override
+	public void attachField(final Object propertyId, final Field field) {
+		informationLayout.attachField(propertyId, field);
+	}
+
+	protected abstract Layout createBottomPanel();
+
+	protected abstract Layout createTopPanel();
+
+	@Override
+	public Layout getLayout() {
+		informationLayout = new ContactInformationLayout(false);
+		final AddViewLayout contactAddLayout = new AddViewLayout(title,
+				new ThemeResource("icons/18/crm/contact.png"));
+
+		final Layout topPanel = createTopPanel();
+		if (topPanel != null) {
+			contactAddLayout.addTopControls(topPanel);
+		}
+
+		contactAddLayout.addBody(informationLayout.getLayout());
+
+		final Layout bottomPanel = createBottomPanel();
+		if (bottomPanel != null) {
+
+		}
+		contactAddLayout.addBottomControls(bottomPanel);
+
+		return contactAddLayout;
 	}
 }
