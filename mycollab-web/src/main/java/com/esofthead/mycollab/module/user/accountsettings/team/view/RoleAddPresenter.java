@@ -4,9 +4,9 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -85,14 +86,13 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 			Role role = (Role) data.getParams();
 			view.editItem(role);
 
+			AccountSettingBreadcrumb breadcrumb = ViewManager
+					.getView(AccountSettingBreadcrumb.class);
+			
 			if (role.getId() == null) {
-				AppContext.addFragment("account/role", "New Role");
+				breadcrumb.gotoRoleAdd();
 			} else {
-				AppContext
-						.addFragment(
-								"account/role/edit/"
-										+ UrlEncodeDecoder.encode(role.getId()),
-								"Edit Role: " + role.getRolename());
+				breadcrumb.gotoRoleEdit(role);
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

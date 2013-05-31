@@ -66,14 +66,12 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(2, 6);
-			informationLayout.getLayout().setWidth("900px");
+			informationLayout = new GridFormLayoutHelper(2, 6,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			informationLayout.getLayout().setWidth("100%");
+			informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
 			layout.addComponent(informationLayout.getLayout());
-			layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-			layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-
 			return layout;
 		}
 
@@ -94,15 +92,11 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("purpose")) {
 				informationLayout.addComponent(field, "Purpose", 1, 2);
 			} else if (propertyId.equals("assignuser")) {
-				informationLayout.addComponent(field, "Assigned to", 0, 3);
+				informationLayout.addComponent(field, "Assigned to", 0, 3, 2,"100%", Alignment.TOP_LEFT);
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 4, 2,
-						UIConstants.DEFAULT_2XCONTROL_WIDTH,
-						UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+				informationLayout.addComponent(field, "Description", 0, 4, 2,"100%", Alignment.TOP_LEFT);
 			} else if (propertyId.equals("result")) {
-				informationLayout.addComponent(field, "Result", 0, 5, 2,
-						UIConstants.DEFAULT_2XCONTROL_WIDTH,
-						UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+				informationLayout.addComponent(field, "Result", 0, 5, 2,"100%", Alignment.TOP_LEFT);
 			}
 		}
 

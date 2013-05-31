@@ -49,7 +49,7 @@ public class ReadViewLayout extends CssLayout {
 		viewTab = new DetachedTabs.Horizontal(body);
 		viewTab.setSizeUndefined();
 		header.addComponent(viewTab);
-		header.setComponentAlignment(viewTab, Alignment.BOTTOM_RIGHT);
+		header.setComponentAlignment(viewTab, Alignment.BOTTOM_CENTER);
 	}
 
 	public void addControlButtons(final Component controlsBtn) {

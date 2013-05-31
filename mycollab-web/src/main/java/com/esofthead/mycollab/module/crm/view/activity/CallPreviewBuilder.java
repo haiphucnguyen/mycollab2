@@ -11,6 +11,8 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -110,19 +112,14 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 	public static class ReadView extends CallPreviewBuilder {
 
-		private TabSheet tabContainer;
 		private VerticalLayout callInformation;
-		private AddViewLayout callAddLayout;
+		private ReadViewLayout callAddLayout;
 
 		public ReadView() {
-			callAddLayout = new AddViewLayout("", new ThemeResource(
+			callAddLayout = new ReadViewLayout(new ThemeResource(
 					"icons/48/crm/call.png"));
-			callAddLayout.addStyleName("preview");
 			this.addComponent(callAddLayout);
 			initRelatedComponent();
-
-			tabContainer = new TabSheet();
-			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 
 			previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
 				@Override
@@ -167,18 +164,26 @@ public class CallPreviewBuilder extends VerticalLayout {
 				}
 			};
 
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_CALL);
+
+			callAddLayout.addControlButtons(optionalActionControls);
+
 			callInformation = new VerticalLayout();
+			callInformation.addStyleName("main-info");
 			callInformation.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<SimpleCall>(
-					previewForm)
-					.createButtonControls(RolePermissionCollections.CRM_CALL);
+
+			final Layout actionControls = PreviewFormControlsGenerator2
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_CALL);
+			actionControls.addStyleName("control-buttons");
 			callInformation.addComponent(actionControls);
+			
 			callInformation.addComponent(previewForm);
 			callInformation.addComponent(noteListItems);
-
-			tabContainer.addTab(callInformation, "Call Information");
-
-			callAddLayout.addBody(tabContainer);
+			
+			callAddLayout.addTab(callInformation, "Call Information");
 		}
 	}
 
