@@ -15,8 +15,12 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -130,18 +134,14 @@ public class LeadPreviewBuilder extends VerticalLayout {
     public static class ReadView extends LeadPreviewBuilder {
 
         private static final long serialVersionUID = 1L;
-        private TabSheet tabContainer;
         private VerticalLayout leadInformationLayout;
         private VerticalLayout relatedItemsContainer;
-        private AddViewLayout leadAddLayout;
+        private ReadViewLayout leadAddLayout;
 
         public ReadView() {
-            leadAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/lead.png"));
-            leadAddLayout.addStyleName("preview");
+            leadAddLayout = new ReadViewLayout(new ThemeResource("icons/18/crm/lead.png"));
             this.addComponent(leadAddLayout);
 
-            tabContainer = new TabSheet();
-            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
 
             previewForm = new AdvancedPreviewBeanForm<Lead>() {
@@ -184,26 +184,48 @@ public class LeadPreviewBuilder extends VerticalLayout {
                     getWindow().addWindow(historyLog);
                 }
             };
-
+            
+            final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_LEAD);
+			
+            leadAddLayout.addControlButtons(optionalActionControls);
+			
             leadInformationLayout = new VerticalLayout();
-            leadInformationLayout.setMargin(true);
-            Layout actionControls = new PreviewFormControlsGenerator<Lead>(
-                    previewForm).createButtonControls(RolePermissionCollections.CRM_LEAD);
-            leadInformationLayout.addComponent(actionControls);
+           
+            leadInformationLayout.addStyleName("main-info");
+			
+			final Layout actionControls = PreviewFormControlsGenerator2
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_LEAD);
+			actionControls.addStyleName("control-buttons");
+			leadInformationLayout.addComponent(actionControls);
+            
             leadInformationLayout.addComponent(previewForm);
             leadInformationLayout.addComponent(noteListItems);
 
-            tabContainer.addTab(leadInformationLayout, "Lead Information");
-
-
+            leadAddLayout.addTab(leadInformationLayout, "Lead Information");
 
             relatedItemsContainer = new VerticalLayout();
             relatedItemsContainer.setMargin(true);
-            relatedItemsContainer.addComponent(associateActivityList);
-            relatedItemsContainer.addComponent(associateCampaignList);
-            tabContainer.addTab(relatedItemsContainer, "More Information");
+            leadAddLayout.addTab(relatedItemsContainer, "More Information");
+            leadAddLayout
+			.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+				@Override
+				public void tabChanged(final TabChangedEvent event) {
+					final Button btn = event.getSource();
+					final String caption = btn.getCaption();
+					if ("Lead Information".equals(caption)) {
 
-            leadAddLayout.addBody(tabContainer);
+					} else if ("More Information".equals(caption)) {
+						 relatedItemsContainer.addComponent(associateActivityList);
+				         relatedItemsContainer.addComponent(associateCampaignList);
+					}
+					leadAddLayout.selectTab(caption);
+				}
+			});
+
+            
         }
     }
 

@@ -24,7 +24,7 @@ public abstract class OpportunityFormLayoutFactory implements
 
     @Override
     public Layout getLayout() {
-        AddViewLayout opportunityAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/crm/opportunity.png"));
+        AddViewLayout opportunityAddLayout = new AddViewLayout(title, new ThemeResource("icons/18/crm/opportunity.png"));
 
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
@@ -62,26 +62,32 @@ public abstract class OpportunityFormLayoutFactory implements
         @Override
         public Layout getLayout() {
             layout = new VerticalLayout();
-            layout.setSpacing(true);
+            layout.setSpacing(false);
 
             Label organizationHeader = new Label("Account Information");
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            informationLayout = new GridFormLayoutHelper(2, 6);
-            informationLayout.getLayout().setWidth("900px");
+            informationLayout = new GridFormLayoutHelper(2, 6,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+            informationLayout.getLayout().setWidth("100%");
+            informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
+			
             layout.addComponent(informationLayout.getLayout());
-            layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-
-            descriptionLayout = new GridFormLayoutHelper(2, 1);
-            descriptionLayout.getLayout().setWidth("900px");
+        
+            descriptionLayout = new GridFormLayoutHelper(2, 1,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+            descriptionLayout.getLayout().setWidth("100%");
+            
+            descriptionLayout.getLayout().setMargin(false);
+            descriptionLayout.getLayout().setSpacing(false);
+			
             Label descHeader = new Label("Description");
             descHeader.setStyleName("h2");
             layout.addComponent(descHeader);
             layout.addComponent(descriptionLayout.getLayout());
-            layout.setComponentAlignment(descriptionLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
+           
             return layout;
         }
 
@@ -112,9 +118,7 @@ public abstract class OpportunityFormLayoutFactory implements
             } else if (propertyId.equals("assignuser")) {
                 informationLayout.addComponent(field, "Assigned User", 1, 5);
             } else if (propertyId.equals("description")) {
-                descriptionLayout.addComponent(field, "Description", 0, 0, 2,
-                        UIConstants.DEFAULT_2XCONTROL_WIDTH,
-                        UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+                descriptionLayout.addComponent(field, "Description", 0, 0, 2,"100%", Alignment.TOP_LEFT);
             }
         }
     }

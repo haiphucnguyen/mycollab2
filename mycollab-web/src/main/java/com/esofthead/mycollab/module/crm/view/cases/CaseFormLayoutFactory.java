@@ -58,25 +58,29 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
         @Override
         public Layout getLayout() {
             VerticalLayout layout = new VerticalLayout();
+            layout.setSpacing(false);
 
             Label organizationHeader = new Label("Case Information");
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            informationLayout = new GridFormLayoutHelper(2, 5);
-            informationLayout.getLayout().setWidth("900px");
+            informationLayout = new GridFormLayoutHelper(2, 5,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+            informationLayout.getLayout().setWidth("100%");
+            informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
             layout.addComponent(informationLayout.getLayout());
-            layout.setComponentAlignment(informationLayout.getLayout(),
-                    Alignment.BOTTOM_CENTER);
 
-            descriptionLayout = new GridFormLayoutHelper(2, 2);
+            descriptionLayout = new GridFormLayoutHelper(2, 2,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
             Label descHeader = new Label("Description");
             descHeader.setStyleName("h2");
             layout.addComponent(descHeader);
-            descriptionLayout.getLayout().setWidth("900px");
+            descriptionLayout.getLayout().setWidth("100%");
+            descriptionLayout.getLayout().setMargin(false);
+            descriptionLayout.getLayout().setSpacing(false);
             layout.addComponent(descriptionLayout.getLayout());
-            layout.setComponentAlignment(descriptionLayout.getLayout(),
-                    Alignment.BOTTOM_CENTER);
+            
             return layout;
         }
 
@@ -103,13 +107,9 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
             } else if (propertyId.equals("assignuser")) {
                 informationLayout.addComponent(field, "Assigned User", 1, 4);
             } else if (propertyId.equals("description")) {
-                descriptionLayout.addComponent(field, "Description", 0, 0, 2,
-                        UIConstants.DEFAULT_2XCONTROL_WIDTH,
-                        UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+                descriptionLayout.addComponent(field, "Description", 0, 0, 2,"100%", Alignment.TOP_LEFT);
             } else if (propertyId.equals("resolution")) {
-                descriptionLayout.addComponent(field, "Resolution", 0, 1, 2,
-                        UIConstants.DEFAULT_2XCONTROL_WIDTH,
-                        UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+                descriptionLayout.addComponent(field, "Resolution", 0, 1, 2,"100%", Alignment.TOP_LEFT);
             }
         }
     }

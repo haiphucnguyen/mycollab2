@@ -186,6 +186,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 							RolePermissionCollections.CRM_ACCOUNT);
 			actionControls.addStyleName("control-buttons");
 			accountInformation.addComponent(actionControls);
+			
 			accountInformation.addComponent(previewForm);
 			accountInformation.addComponent(noteListItems);
 
@@ -193,12 +194,6 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
-			relatedItemsContainer.addComponent(associateActivityList);
-			relatedItemsContainer.addComponent(associateContactList);
-			relatedItemsContainer.addComponent(associateOpportunityList);
-			relatedItemsContainer.addComponent(associateCaseList);
-			relatedItemsContainer.addComponent(associateLeadList);
-
 			accountAddLayout.addTab(relatedItemsContainer, "More Information");
 
 			this.addComponent(accountAddLayout);
@@ -213,7 +208,11 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 							if ("Account Information".equals(caption)) {
 
 							} else if ("More Information".equals(caption)) {
-
+								relatedItemsContainer.addComponent(associateActivityList);
+								relatedItemsContainer.addComponent(associateContactList);
+								relatedItemsContainer.addComponent(associateOpportunityList);
+								relatedItemsContainer.addComponent(associateCaseList);
+								relatedItemsContainer.addComponent(associateLeadList);
 							}
 							accountAddLayout.selectTab(caption);
 						}

@@ -23,7 +23,7 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 
     @Override
     public Layout getLayout() {
-        AddViewLayout campaignFormLayout = new AddViewLayout(title, new ThemeResource("icons/48/crm/campaign.png"));
+        AddViewLayout campaignFormLayout = new AddViewLayout(title, new ThemeResource("icons/18/crm/campaign.png"));
 
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
@@ -66,30 +66,35 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            informationLayout = new GridFormLayoutHelper(2, 6);
-            informationLayout.getLayout().setWidth("900px");
+            informationLayout = new GridFormLayoutHelper(2, 6,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
+            informationLayout.getLayout().setWidth("100%");
+            informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
             layout.addComponent(informationLayout.getLayout());
-            layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-
-            campaignGoal = new GridFormLayoutHelper(2, 4);
+            
+            campaignGoal = new GridFormLayoutHelper(2, 4,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
             Label addressHeader = new Label("Campaign Goal");
             addressHeader.setStyleName("h2");
             layout.addComponent(addressHeader);
-            campaignGoal.getLayout().setWidth("900px");
+            campaignGoal.getLayout().setWidth("100%");
+            campaignGoal.getLayout().setMargin(false);
+            campaignGoal.getLayout().setSpacing(false);
+			
             layout.addComponent(campaignGoal.getLayout());
-            layout.setComponentAlignment(campaignGoal.getLayout(),
-					Alignment.BOTTOM_CENTER);
 
-            descriptionLayout = new GridFormLayoutHelper(2, 1);
+            descriptionLayout = new GridFormLayoutHelper(2, 1,"100%", "167px",
+					Alignment.MIDDLE_LEFT);
             Label descHeader = new Label("Description");
             descHeader.setStyleName("h2");
 
             layout.addComponent(descHeader);
             layout.addComponent(descriptionLayout.getLayout());
-            descriptionLayout.getLayout().setWidth("900px");
-            layout.setComponentAlignment(descriptionLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
+            descriptionLayout.getLayout().setWidth("100%");
+            descriptionLayout.getLayout().setMargin(false);
+			descriptionLayout.getLayout().setSpacing(false);
+			layout.addComponent(descriptionLayout.getLayout());
             return layout;
         }
 
@@ -121,8 +126,7 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
                 informationLayout.addComponent(field, "Assigned to", 1, 2);
             } else if (propertyId.equals("description")) {
                 descriptionLayout.addComponent(field,
-                        "Description", 0, 0, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH,
-                        UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+                        "Description", 0, 0, 2, "100%", Alignment.TOP_LEFT);
             }
         }
     }
