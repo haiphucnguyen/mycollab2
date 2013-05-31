@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.terminal.Resource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
@@ -12,7 +15,7 @@ public class AddViewLayout extends CustomLayout {
 
 	private final Label titleLbl;
 	private final Embedded icon;
-
+	
 	public AddViewLayout(String title, Resource resource) {
 		super("addView");
 
@@ -56,4 +59,5 @@ public class AddViewLayout extends CustomLayout {
 	public void addBody(ComponentContainer body) {
 		this.addComponent(body, "addViewBody");
 	}
+	
 }
