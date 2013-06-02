@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -200,7 +201,12 @@ public class UserServiceDBImpl extends
 			String subdomain, boolean isPasswordEncrypt) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
-		criteria.setSubdomain(new StringSearchField(subdomain));
+		
+		boolean isSupportSubDomain = ApplicationProperties
+				.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
+		if (isSupportSubDomain) {
+			criteria.setSubdomain(new StringSearchField(subdomain));
+		}
 
 		List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 				criteria, 0, Integer.MAX_VALUE));

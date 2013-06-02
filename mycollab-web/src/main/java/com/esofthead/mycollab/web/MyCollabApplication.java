@@ -74,7 +74,7 @@ public class MyCollabApplication extends Application implements
 			if (isSupportSubDomain) {
 				initialSubDomain = request.getServerName().split("\\.")[0];
 			} else {
-				initialSubDomain = "localhost";
+				initialSubDomain = request.getServerName();
 			}
 
 		}
