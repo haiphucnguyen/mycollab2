@@ -198,7 +198,7 @@
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
-            lastUpdatedTime DESC
+            projectName ASC
         ]]>
     </sql>
 

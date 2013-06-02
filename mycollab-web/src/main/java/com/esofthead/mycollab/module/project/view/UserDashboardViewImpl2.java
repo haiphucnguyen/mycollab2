@@ -1,10 +1,13 @@
-package com.esofthead.mycollab.module.project.view.user;
+package com.esofthead.mycollab.module.project.view;
 
 import java.util.List;
 
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
+import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
+import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -21,17 +24,17 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
-public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
-
+public class UserDashboardViewImpl2 extends AbstractView implements
+		UserDashboardView {
 	private static final long serialVersionUID = 1L;
+
+	private MyProjectListComponent myProjectListComponent;
 
 	private ActivityStreamComponent activityStreamComponent;
 
-	private MessageListComponent messageListComponent;
-
 	private TaskStatusComponent taskStatusComponent;
 
-	public MyFeedsViewImpl() {
+	public UserDashboardViewImpl2() {
 		this.setSpacing(true);
 		this.setMargin(true);
 
@@ -56,8 +59,8 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new ProjectEvent.GotoAdd(MyFeedsViewImpl.this,
-										null));
+								new ProjectEvent.GotoAdd(
+										UserDashboardViewImpl2.this, null));
 
 					}
 				});
@@ -73,31 +76,35 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		messageListComponent = new MessageListComponent();
+		VerticalLayout leftPanel = new VerticalLayout();
+		myProjectListComponent = new MyProjectListComponent();
+		taskStatusComponent = new TaskStatusComponent();
+		leftPanel.addComponent(myProjectListComponent);
+		leftPanel.addComponent(new LazyLoadWrapper(taskStatusComponent));
+
+		VerticalLayout rightPanel = new VerticalLayout();
 		activityStreamComponent = new ActivityStreamComponent();
 
-		VerticalLayout leftPanel = new VerticalLayout();
-		leftPanel.addComponent(new LazyLoadWrapper(messageListComponent));
-		leftPanel.addComponent(new LazyLoadWrapper(activityStreamComponent));
+		rightPanel.addComponent(activityStreamComponent);
 
-		taskStatusComponent = new TaskStatusComponent();
 		layout.addComponent(leftPanel);
-		layout.addComponent(new LazyLoadWrapper(taskStatusComponent));
+		layout.addComponent(rightPanel);
 
 		this.addComponent(layout);
 	}
 
 	@Override
-	public void displayFeeds() {
+	public void display() {
 		ProjectService prjService = AppContext
 				.getSpringBean(ProjectService.class);
 		List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
 				.getUsername());
 		if (prjKeys != null && !prjKeys.isEmpty()) {
-			messageListComponent.showLatestMessages(prjKeys);
 			activityStreamComponent.showFeeds(prjKeys);
+			myProjectListComponent.showProjects(prjKeys);
 		}
 
 		taskStatusComponent.showProjectTasksByStatus();
+
 	}
 }

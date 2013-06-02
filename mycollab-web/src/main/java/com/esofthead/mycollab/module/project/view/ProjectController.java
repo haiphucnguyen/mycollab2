@@ -104,9 +104,7 @@ public class ProjectController implements IController {
 					public void handle(ProjectEvent.GotoAdd event) {
 						UserDashboardView projectView = ViewManager
 								.getView(UserDashboardView.class);
-						ScreenData.Add<Project> data = new ScreenData.Add<Project>(
-								new Project());
-						projectView.gotoMyProjectList(data);
+						//TODO: Create new project
 					}
 				});
 
