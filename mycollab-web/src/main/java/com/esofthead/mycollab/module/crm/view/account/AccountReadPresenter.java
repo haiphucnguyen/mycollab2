@@ -30,14 +30,17 @@ import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -292,6 +295,10 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 
 		if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
+			crmToolbar.gotoItem(LocalizationHelper
+					.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER));
+
 			if (data.getParams() instanceof Integer) {
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
