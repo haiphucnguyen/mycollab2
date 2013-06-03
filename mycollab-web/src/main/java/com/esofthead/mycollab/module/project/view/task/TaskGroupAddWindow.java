@@ -6,9 +6,11 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
@@ -19,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -43,19 +46,19 @@ public class TaskGroupAddWindow extends Window {
 	private SimpleTaskList taskList;
 	private TaskGroupAddWindow.TaskListForm taskListForm;
 
-	
-	public TaskGroupAddWindow(TaskGroupDisplayView taskView, SimpleTaskList taskList) {
+	public TaskGroupAddWindow(TaskGroupDisplayView taskView,
+			SimpleTaskList taskList) {
 		this.taskView = taskView;
 		this.taskList = taskList;
 		initUI();
 	}
-	
+
 	public TaskGroupAddWindow(TaskGroupDisplayView taskView) {
 		taskList = new SimpleTaskList();
 		this.taskView = taskView;
 		initUI();
 	}
-	
+
 	private void initUI() {
 		this.setWidth("800px");
 		taskListForm = new TaskGroupAddWindow.TaskListForm();
@@ -86,8 +89,9 @@ public class TaskGroupAddWindow extends Window {
 			@Override
 			public Layout getLayout() {
 				AddViewLayout taskListAddLayout = new AddViewLayout(
-						"New Task List", new ThemeResource(
-								"icons/48/project/tasklist.png"));
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE),
+						new ThemeResource("icons/48/project/tasklist.png"));
 
 				informationLayout = new GridFormLayoutHelper(2, 3);
 
@@ -107,22 +111,27 @@ public class TaskGroupAddWindow extends Window {
 				layout.setSpacing(true);
 				layout.setMargin(true);
 				layout.setStyleName("addNewControl");
-				Button saveBtn = new Button("Save", new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+				Button saveBtn = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						if (TaskGroupAddWindow.TaskListForm.this
-								.validateForm(taskList)) {
-							saveTaskList();
-							TaskGroupAddWindow.this.close();
-						}
-					}
-				});
+							@Override
+							public void buttonClick(ClickEvent event) {
+								if (TaskGroupAddWindow.TaskListForm.this
+										.validateForm(taskList)) {
+									saveTaskList();
+									TaskGroupAddWindow.this.close();
+								}
+							}
+						});
 				saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				layout.addComponent(saveBtn);
 
-				Button saveAndNewBtn = new Button("Save & New",
+				Button saveAndNewBtn = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_SAVE_NEW_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -138,7 +147,9 @@ public class TaskGroupAddWindow extends Window {
 				saveAndNewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				layout.addComponent(saveAndNewBtn);
 
-				Button cancelBtn = new Button("Cancel",
+				Button cancelBtn = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 

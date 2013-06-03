@@ -58,9 +58,8 @@ public class UserDashboardViewImpl2 extends AbstractView implements
 
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new ProjectEvent.GotoAdd(
-										UserDashboardViewImpl2.this, null));
+						//TODO: show add project window
+						
 
 					}
 				});

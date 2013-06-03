@@ -19,8 +19,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	private static Logger log = LoggerFactory.getLogger(BeanList.class);
 	private static final long serialVersionUID = 1L;
+	
+	protected SearchService searchService;
+	
 	private Object parentComponent;
-	private SearchService searchService;
 	private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
 	private LazyLoadWrapper contentWrapper;
 	private VerticalLayout contentLayout;

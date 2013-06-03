@@ -76,9 +76,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 
 					@Override
 					public void onSaveAndNew(final Project project) {
-						saveProject(project);
-						EventBus.getInstance().fireEvent(
-								new ProjectEvent.GotoAdd(this, null));
+						
 					}
 				});
 	}

@@ -21,7 +21,7 @@
             <artifactId>mycollab-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-jackrabbit</artifactId>
@@ -196,6 +196,11 @@
             <groupId>org.vaadin.addon</groupId>
             <artifactId>confirmdialog</artifactId>
             <version>1.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin</groupId>
+            <artifactId>dontpush-addon-ozonelayer</artifactId>
+            <version>1.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.dbunit</groupId>
