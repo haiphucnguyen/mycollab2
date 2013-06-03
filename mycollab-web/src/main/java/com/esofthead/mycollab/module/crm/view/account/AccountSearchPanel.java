@@ -294,6 +294,7 @@ public class AccountSearchPanel extends
 							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
+			cancelBtn.setWidth("55px");
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {

@@ -37,83 +37,21 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ActivityStreamComponent extends Depot {
-	private static final long serialVersionUID = 1L;
-	private final ProjectActivityStreamPagedList activityStreamList;
-
-	public ActivityStreamComponent() {
-		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
-				new VerticalLayout());
-		activityStreamList = new ProjectActivityStreamPagedList();
-		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		this.addStyleName("activity-panel");
-		((VerticalLayout) this.bodyContent).setMargin(false);
-	}
-
-	public void showFeeds(List<Integer> prjKeys) {
-		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-				new String[] { ModuleNameConstants.PRJ }));
-		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
-				.toArray(new Integer[0])));
-		activityStreamList.setSearchCriteria(searchCriteria);
-
-	}
-
-	static class ProjectActivityStreamPagedList
-			extends
-			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
-		private static final long serialVersionUID = 1L;
-		private final ProjectService projectService;
-
-		public ProjectActivityStreamPagedList() {
-			super(
-					ActivityStreamComponent.ActivityStreamRowDisplayHandler.class,
-					10);
-
-			projectService = AppContext.getSpringBean(ProjectService.class);
-		}
-
-		@Override
-		public void doSearch() {
-			totalCount = projectService.getTotalActivityStream(searchRequest
-					.getSearchCriteria());
-			totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-			if (searchRequest.getCurrentPage() > totalPage) {
-				searchRequest.setCurrentPage(totalPage);
-			}
-
-			this.setCurrentPage(currentPage);
-			this.setTotalPage(totalPage);
-
-			List<ProjectActivityStream> currentListData = projectService
-					.getProjectActivityStreams(searchRequest);
-			listContainer.removeAllComponents();
-			int i = 0;
-			try {
-				for (ProjectActivityStream item : currentListData) {
-					AbstractBeanPagedList.RowDisplayHandler<ProjectActivityStream> rowHandler = rowDisplayHandler
-							.newInstance();
-					Component row = rowHandler.generateRow(item, i);
-					listContainer.addComponent(row);
-					i++;
-				}
-			} catch (Exception e) {
-				throw new MyCollabException(e);
-			}
-		}
-	}
-
 	public static class ActivityStreamRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<ProjectActivityStream> {
 
 		@Override
 		public Component generateRow(
-				final ProjectActivityStream activityStream, int rowIndex) {
-			CssLayout layout = new CssLayout();
+				final ProjectActivityStream activityStream, final int rowIndex) {
+			final CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 
-			CssLayout header = new CssLayout();
+			if ((rowIndex + 1) % 2 != 0) {
+				layout.addStyleName("odd");
+			}
+
+			final CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 
 			String content = "";
@@ -175,14 +113,14 @@ public class ActivityStreamComponent extends Depot {
 								activityStream.getProjectName());
 			}
 
-			Label activityLink = new Label(content, Label.CONTENT_XHTML);
+			final Label activityLink = new Label(content, Label.CONTENT_XHTML);
 			header.addComponent(activityLink);
 
 			layout.addComponent(header);
 
-			CssLayout body = new CssLayout();
+			final CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
-			Label dateLbl = new Label(
+			final Label dateLbl = new Label(
 					DateTimeUtils.getStringDateFromNow(activityStream
 							.getCreatedtime()));
 			body.addComponent(dateLbl);
@@ -190,5 +128,72 @@ public class ActivityStreamComponent extends Depot {
 			layout.addComponent(body);
 			return layout;
 		}
+	}
+
+	static class ProjectActivityStreamPagedList
+			extends
+			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
+		private static final long serialVersionUID = 1L;
+		private final ProjectService projectService;
+
+		public ProjectActivityStreamPagedList() {
+			super(
+					ActivityStreamComponent.ActivityStreamRowDisplayHandler.class,
+					10);
+
+			projectService = AppContext.getSpringBean(ProjectService.class);
+		}
+
+		@Override
+		public void doSearch() {
+			totalCount = projectService.getTotalActivityStream(searchRequest
+					.getSearchCriteria());
+			totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+			if (searchRequest.getCurrentPage() > totalPage) {
+				searchRequest.setCurrentPage(totalPage);
+			}
+
+			setCurrentPage(currentPage);
+			setTotalPage(totalPage);
+
+			final List<ProjectActivityStream> currentListData = projectService
+					.getProjectActivityStreams(searchRequest);
+			listContainer.removeAllComponents();
+			int i = 0;
+			try {
+				for (final ProjectActivityStream item : currentListData) {
+					final AbstractBeanPagedList.RowDisplayHandler<ProjectActivityStream> rowHandler = rowDisplayHandler
+							.newInstance();
+					final Component row = rowHandler.generateRow(item, i);
+					listContainer.addComponent(row);
+					i++;
+				}
+			} catch (final Exception e) {
+				throw new MyCollabException(e);
+			}
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final ProjectActivityStreamPagedList activityStreamList;
+
+	public ActivityStreamComponent() {
+		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
+				new VerticalLayout());
+		activityStreamList = new ProjectActivityStreamPagedList();
+		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+		addStyleName("activity-panel");
+		((VerticalLayout) bodyContent).setMargin(false);
+	}
+
+	public void showFeeds(final List<Integer> prjKeys) {
+		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.PRJ }));
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+				.toArray(new Integer[0])));
+		activityStreamList.setSearchCriteria(searchCriteria);
+
 	}
 }

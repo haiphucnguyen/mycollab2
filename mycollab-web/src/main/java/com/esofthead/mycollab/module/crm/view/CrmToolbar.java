@@ -22,216 +22,23 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class CrmToolbar extends CssLayout implements View {
-	private static final long serialVersionUID = 1L;
-
-	private final PopupButton addBtn;
-
-	public CrmToolbar() {
-		NavigatorItemListener listener = new NavigatorItemListener();
-		Button homeBtn = new Button(null, listener);
-		homeBtn.setStyleName("link");
-		homeBtn.setIcon(new ThemeResource("icons/16/home.png"));
-		this.addComponent(homeBtn);
-
-		Button accountList = new Button(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER),
-				listener);
-		accountList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_ACCOUNT));
-		accountList.setStyleName("link");
-		this.addComponent(accountList);
-
-		Button contactList = new Button(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER),
-				listener);
-		contactList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_CONTACT));
-		contactList.setStyleName("link");
-		this.addComponent(contactList);
-
-		Button campaignList = new Button(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER),
-				listener);
-		campaignList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_CAMPAIGN));
-		campaignList.setStyleName("link");
-		this.addComponent(campaignList);
-
-		Button leadList = new Button(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER),
-				listener);
-		leadList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_LEAD));
-		leadList.setStyleName("link");
-		this.addComponent(leadList);
-
-		Button opportunityList = new Button(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER),
-				listener);
-		opportunityList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_OPPORTUNITY));
-		opportunityList.setStyleName("link");
-		this.addComponent(opportunityList);
-
-		Button caseList = new Button(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER),
-				listener);
-		caseList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_CASE));
-		caseList.setStyleName("link");
-		this.addComponent(caseList);
-
-		Button activitiesList = new Button(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER),
-				listener);
-		boolean isActivityEnable = AppContext
-				.canRead(RolePermissionCollections.CRM_MEETING)
-				|| AppContext.canRead(RolePermissionCollections.CRM_TASK)
-				|| AppContext.canRead(RolePermissionCollections.CRM_CALL);
-		activitiesList.setEnabled(isActivityEnable);
-		activitiesList.setStyleName("link");
-		this.addComponent(activitiesList);
-
-		this.setStyleName("h-sidebar-menu");
-
-		addBtn = new PopupButton("Add");
-		GridLayout addBtnLayout = new GridLayout(3, 2);
-		addBtnLayout.setMargin(true);
-		addBtnLayout.setWidth("370px");
-		addBtnLayout.setSpacing(true);
-
-		ButtonLink newAccountBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION),
-				listener);
-		newAccountBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-		newAccountBtn.setIcon(new ThemeResource("icons/18/crm/account.png"));
-		addBtnLayout.addComponent(newAccountBtn);
-
-		ButtonLink newContactBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION),
-				listener);
-		newContactBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		newContactBtn.setIcon(new ThemeResource("icons/18/crm/contact.png"));
-		addBtnLayout.addComponent(newContactBtn);
-
-		ButtonLink newCampaignBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION),
-				listener);
-		newCampaignBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
-		newCampaignBtn.setIcon(new ThemeResource("icons/18/crm/campaign.png"));
-		addBtnLayout.addComponent(newCampaignBtn);
-
-		ButtonLink newOpportunityBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION),
-				listener);
-		newOpportunityBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
-		newOpportunityBtn.setIcon(new ThemeResource(
-				"icons/18/crm/opportunity.png"));
-		addBtnLayout.addComponent(newOpportunityBtn);
-
-		ButtonLink newLeadBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION),
-				listener);
-		newLeadBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_LEAD));
-		newLeadBtn.setIcon(new ThemeResource("icons/18/crm/lead.png"));
-		addBtnLayout.addComponent(newLeadBtn);
-
-		ButtonLink newCaseBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION),
-				listener);
-		newCaseBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CASE));
-		newCaseBtn.setIcon(new ThemeResource("icons/18/crm/case.png"));
-		addBtnLayout.addComponent(newCaseBtn);
-
-		ButtonLink newTaskBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION),
-				listener);
-		newTaskBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_TASK));
-		newTaskBtn.setIcon(new ThemeResource("icons/18/crm/task.png"));
-		addBtnLayout.addComponent(newTaskBtn);
-
-		ButtonLink newCallBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION),
-				listener);
-		newCallBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CALL));
-		newCallBtn.setIcon(new ThemeResource("icons/18/crm/call.png"));
-		addBtnLayout.addComponent(newCallBtn);
-
-		ButtonLink newMeetingBtn = new ButtonLink(
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION),
-				listener);
-		newMeetingBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_MEETING));
-		newMeetingBtn.setIcon(new ThemeResource("icons/18/crm/meeting.png"));
-		addBtnLayout.addComponent(newMeetingBtn);
-
-		addBtn.addComponent(addBtnLayout);
-		addBtn.setStyleName("link");
-		this.addComponent(addBtn);
-	}
-
-	@Override
-	public ComponentContainer getWidget() {
-		return this;
-	}
-
-	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-	}
-
-	public void gotoItem(String crmItem) {
-		for (Iterator<com.vaadin.ui.Component> it = this.getComponentIterator(); it
-				.hasNext();) {
-			Button btn = (Button) it.next();
-			if (crmItem.equals(btn.getCaption())) {
-				btn.addStyleName("isSelected");
-			} else {
-				btn.removeStyleName("isSelected");
-			}
-		}
-	}
-
 	private class NavigatorItemListener implements Button.ClickListener {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void buttonClick(ClickEvent event) {
-			String caption = event.getButton().getCaption();
+		public void buttonClick(final ClickEvent event) {
+			final String caption = event.getButton().getCaption();
 
 			if (caption == null) {
 				EventBus.getInstance().fireEvent(
@@ -311,13 +118,209 @@ public class CrmToolbar extends CssLayout implements View {
 
 			addBtn.setPopupVisible(false);
 
-			for (Iterator<com.vaadin.ui.Component> it = CrmToolbar.this
-					.getComponentIterator(); it.hasNext();) {
-				Button btn = (Button) it.next();
+			for (final Iterator<com.vaadin.ui.Component> it = getComponentIterator(); it
+					.hasNext();) {
+				final Button btn = (Button) it.next();
 				btn.removeStyleName("isSelected");
 			}
 
 			event.getButton().addStyleName("isSelected");
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final PopupButton addBtn;
+
+	public CrmToolbar() {
+		this.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+		this.setHeight("30px");
+		final NavigatorItemListener listener = new NavigatorItemListener();
+		final Button homeBtn = new Button(null, listener);
+		homeBtn.setStyleName("link");
+		homeBtn.setIcon(new ThemeResource("icons/16/home.png"));
+		addComponent(homeBtn);
+
+		final Button accountList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER),
+				listener);
+		accountList.setEnabled(AppContext
+				.canRead(RolePermissionCollections.CRM_ACCOUNT));
+		accountList.setStyleName("link");
+		addComponent(accountList);
+
+		final Button contactList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER),
+				listener);
+		contactList.setEnabled(AppContext
+				.canRead(RolePermissionCollections.CRM_CONTACT));
+		contactList.setStyleName("link");
+		addComponent(contactList);
+
+		final Button campaignList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER),
+				listener);
+		campaignList.setEnabled(AppContext
+				.canRead(RolePermissionCollections.CRM_CAMPAIGN));
+		campaignList.setStyleName("link");
+		addComponent(campaignList);
+
+		final Button leadList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER),
+				listener);
+		leadList.setEnabled(AppContext
+				.canRead(RolePermissionCollections.CRM_LEAD));
+		leadList.setStyleName("link");
+		addComponent(leadList);
+
+		final Button opportunityList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER),
+				listener);
+		opportunityList.setEnabled(AppContext
+				.canRead(RolePermissionCollections.CRM_OPPORTUNITY));
+		opportunityList.setStyleName("link");
+		addComponent(opportunityList);
+
+		final Button caseList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER),
+				listener);
+		caseList.setEnabled(AppContext
+				.canRead(RolePermissionCollections.CRM_CASE));
+		caseList.setStyleName("link");
+		addComponent(caseList);
+
+		final Button activitiesList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER),
+				listener);
+		final boolean isActivityEnable = AppContext
+				.canRead(RolePermissionCollections.CRM_MEETING)
+				|| AppContext.canRead(RolePermissionCollections.CRM_TASK)
+				|| AppContext.canRead(RolePermissionCollections.CRM_CALL);
+		activitiesList.setEnabled(isActivityEnable);
+		activitiesList.setStyleName("link");
+		addComponent(activitiesList);
+
+		setStyleName("h-sidebar-menu");
+
+		addBtn = new PopupButton("Add");
+		final GridLayout addBtnLayout = new GridLayout(3, 2);
+		addBtnLayout.setMargin(true);
+		addBtnLayout.setWidth("370px");
+		addBtnLayout.setSpacing(true);
+
+		final ButtonLink newAccountBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION),
+				listener);
+		newAccountBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+		newAccountBtn.setIcon(new ThemeResource("icons/18/crm/account.png"));
+		addBtnLayout.addComponent(newAccountBtn);
+
+		final ButtonLink newContactBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION),
+				listener);
+		newContactBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CONTACT));
+		newContactBtn.setIcon(new ThemeResource("icons/18/crm/contact.png"));
+		addBtnLayout.addComponent(newContactBtn);
+
+		final ButtonLink newCampaignBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION),
+				listener);
+		newCampaignBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
+		newCampaignBtn.setIcon(new ThemeResource("icons/18/crm/campaign.png"));
+		addBtnLayout.addComponent(newCampaignBtn);
+
+		final ButtonLink newOpportunityBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION),
+				listener);
+		newOpportunityBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
+		newOpportunityBtn.setIcon(new ThemeResource(
+				"icons/18/crm/opportunity.png"));
+		addBtnLayout.addComponent(newOpportunityBtn);
+
+		final ButtonLink newLeadBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION),
+				listener);
+		newLeadBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_LEAD));
+		newLeadBtn.setIcon(new ThemeResource("icons/18/crm/lead.png"));
+		addBtnLayout.addComponent(newLeadBtn);
+
+		final ButtonLink newCaseBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION),
+				listener);
+		newCaseBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CASE));
+		newCaseBtn.setIcon(new ThemeResource("icons/18/crm/case.png"));
+		addBtnLayout.addComponent(newCaseBtn);
+
+		final ButtonLink newTaskBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION),
+				listener);
+		newTaskBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_TASK));
+		newTaskBtn.setIcon(new ThemeResource("icons/18/crm/task.png"));
+		addBtnLayout.addComponent(newTaskBtn);
+
+		final ButtonLink newCallBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION),
+				listener);
+		newCallBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CALL));
+		newCallBtn.setIcon(new ThemeResource("icons/18/crm/call.png"));
+		addBtnLayout.addComponent(newCallBtn);
+
+		final ButtonLink newMeetingBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION),
+				listener);
+		newMeetingBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_MEETING));
+		newMeetingBtn.setIcon(new ThemeResource("icons/18/crm/meeting.png"));
+		addBtnLayout.addComponent(newMeetingBtn);
+
+		addBtn.addComponent(addBtnLayout);
+		addBtn.setStyleName("link");
+		addComponent(addBtn);
+	}
+
+	@Override
+	public void addViewListener(
+			final ApplicationEventListener<? extends ApplicationEvent> listener) {
+	}
+
+	@Override
+	public ComponentContainer getWidget() {
+		return this;
+	}
+
+	public void gotoItem(final String crmItem) {
+		for (final Iterator<com.vaadin.ui.Component> it = getComponentIterator(); it
+				.hasNext();) {
+			final Button btn = (Button) it.next();
+			if (crmItem.equals(btn.getCaption())) {
+				btn.addStyleName("isSelected");
+			} else {
+				btn.removeStyleName("isSelected");
+			}
 		}
 	}
 
