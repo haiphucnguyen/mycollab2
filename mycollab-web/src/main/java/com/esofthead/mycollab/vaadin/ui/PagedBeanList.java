@@ -18,6 +18,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -52,6 +53,8 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 			final RowDisplayHandler<T> rowDisplayHandler) {
 		this.searchService = searchService;
 		this.rowDisplayHandler = rowDisplayHandler;
+		this.setMargin(false);
+		setSpacing(false);
 	}
 
 	@Override
@@ -128,8 +131,14 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 		separatorLabel.setWidth(null);
 		totalPagesLabel.setWidth(null);
 
+		final CssLayout controlBarWrapper = new CssLayout();
+		controlBarWrapper.setStyleName("listControl");
+		controlBarWrapper.setWidth("100%");
+
 		final HorizontalLayout controlBar = new HorizontalLayout();
-		controlBar.setStyleName("listControl");
+		controlBar.setWidth("100%");
+		controlBarWrapper.addComponent(controlBar);
+
 		final HorizontalLayout pageSize = new HorizontalLayout();
 		final HorizontalLayout pageManagement = new HorizontalLayout();
 		first = new ButtonLink("<<", new ClickListener() {
@@ -215,14 +224,14 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 		pageManagement.setWidth(null);
 		pageManagement.setSpacing(true);
 		controlBar.addComponent(pageSize);
+		controlBar.setComponentAlignment(pageSize, Alignment.MIDDLE_LEFT);
+		controlBar.setExpandRatio(pageSize, 1.0f);
 		controlBar.addComponent(pageManagement);
-		controlBar.setComponentAlignment(pageManagement,
-				Alignment.MIDDLE_CENTER);
-		controlBar.setWidth("100%");
-		controlBar.setExpandRatio(pageSize, 1);
+		controlBar
+				.setComponentAlignment(pageManagement, Alignment.MIDDLE_RIGHT);
 
 		itemsPerPageSelect.select("25");
-		return controlBar;
+		return controlBarWrapper;
 	}
 
 	private void displayItemChange(final int numOfItems) {
@@ -264,8 +273,9 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 			}
 		}
 
-		final VerticalLayout content = new VerticalLayout();
+		final CssLayout content = new CssLayout();
 		content.setStyleName("beanlist-content");
+		content.setWidth("100%");
 		final LazyLoadWrapper wrapperComp = new LazyLoadWrapper(content);
 		this.addComponent(wrapperComp, 0);
 

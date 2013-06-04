@@ -1,12 +1,12 @@
 /* Reindeer theme */
 
 .v-splitbutton {
-	height: 26px;
+/* 	height: 26px; */
 	white-space: nowrap;
 }
 
 .v-splitbutton .v-button {
-	height: 25px;
+/* 	height: 25px; */
 	vertical-align: top;
 }
 

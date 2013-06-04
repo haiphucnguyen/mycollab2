@@ -48,8 +48,9 @@ body.v-ie7 .v-menubar-submenu,
 .v-accordion-opaque div.v-accordion-item-open,
 .v-table-scrollposition,
 .v-table-body {
-	background-color: rgb(146,189,132);
-	}
+/* 	background-color: rgb(146,189,132); */
+	background: none no-repeat left top rgb(245, 245, 245);
+}
 
 /* Base font size and color */
 .v-app,
@@ -389,7 +390,7 @@ body.v-ie7 .v-menubar-submenu,
 .v-accordion-opaque div.v-accordion-item-open,
 .v-table-scrollposition,
 .v-table-body {
-	background-color: transparent;
+/* 	background-color: transparent; */
 	}
 
 /* Base font size and color */
