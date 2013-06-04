@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -79,7 +80,13 @@ public class ProblemSearchPanel extends
 		return layout;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private class ProblemBasicSearchLayout extends BasicSearchLayout {
+
+		@SuppressWarnings("unchecked")
+		public ProblemBasicSearchLayout() {
+			super(ProblemSearchPanel.this);
+		}
 
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
@@ -108,21 +115,7 @@ public class ProblemSearchPanel extends
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					searchCriteria = new ProblemSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, project.getId()));
-
-					searchCriteria.setProblemname(new StringSearchField(
-							nameField.getValue().toString().trim()));
-
-					if (myItemCheckbox.booleanValue()) {
-						searchCriteria.setAssignToUser(new StringSearchField(
-								SearchField.AND, AppContext.getUsername()));
-					} else {
-						searchCriteria.setAssignToUser(null);
-					}
-
-					ProblemSearchPanel.this.notifySearchHandler(searchCriteria);
+					ProblemBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -139,6 +132,24 @@ public class ProblemSearchPanel extends
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new ProblemSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					SearchField.AND, project.getId()));
+
+			searchCriteria.setProblemname(new StringSearchField(
+					nameField.getValue().toString().trim()));
+
+			if (myItemCheckbox.booleanValue()) {
+				searchCriteria.setAssignToUser(new StringSearchField(
+						SearchField.AND, AppContext.getUsername()));
+			} else {
+				searchCriteria.setAssignToUser(null);
+			}
+			return searchCriteria;
 		}
 	}
 }

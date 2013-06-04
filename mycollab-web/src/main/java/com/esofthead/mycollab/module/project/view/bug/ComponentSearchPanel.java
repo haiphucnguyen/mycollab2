@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -84,8 +85,14 @@ public class ComponentSearchPanel extends
 		return layout;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private class ComponentBasicSearchCriteria extends
 			GenericSearchPanel.BasicSearchLayout {
+
+		@SuppressWarnings("unchecked")
+		public ComponentBasicSearchCriteria() {
+			super(ComponentSearchPanel.this);
+		}
 
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
@@ -114,14 +121,7 @@ public class ComponentSearchPanel extends
 
 				@Override
 				public void buttonClick(Button.ClickEvent event) {
-					searchCriteria = new ComponentSearchCriteria();
-					searchCriteria.setProjectid(new NumberSearchField(
-							SearchField.AND, project.getId()));
-					searchCriteria.setComponentName(new StringSearchField(
-							nameField.getValue().toString().trim()));
-
-					ComponentSearchPanel.this
-							.notifySearchHandler(searchCriteria);
+					ComponentBasicSearchCriteria.this.callSearchAction();
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -138,6 +138,16 @@ public class ComponentSearchPanel extends
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new ComponentSearchCriteria();
+			searchCriteria.setProjectid(new NumberSearchField(
+					SearchField.AND, project.getId()));
+			searchCriteria.setComponentName(new StringSearchField(
+					nameField.getValue().toString().trim()));
+			return searchCriteria;
 		}
 	}
 

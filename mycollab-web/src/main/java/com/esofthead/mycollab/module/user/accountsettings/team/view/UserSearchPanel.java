@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
@@ -66,8 +67,13 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 		return layout;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private class UserBasicSearchLayout extends BasicSearchLayout {
 
+		@SuppressWarnings("unchecked")
+		public UserBasicSearchLayout() {
+			super(UserSearchPanel.this);
+		}
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
 
@@ -91,17 +97,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 
 				@Override
 				public void buttonClick(Button.ClickEvent event) {
-					searchCriteria = new UserSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							AppContext.getAccountId()));
-
-					if (StringUtil.isNotNullOrEmpty((String) nameField
-							.getValue())) {
-						searchCriteria.setDisplayName(new StringSearchField(
-								SearchField.AND, (String) nameField.getValue()));
-					}
-
-					UserSearchPanel.this.notifySearchHandler(searchCriteria);
+					UserBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -118,6 +114,20 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new UserSearchCriteria();
+			searchCriteria.setSaccountid(new NumberSearchField(
+					AppContext.getAccountId()));
+
+			if (StringUtil.isNotNullOrEmpty((String) nameField
+					.getValue())) {
+				searchCriteria.setDisplayName(new StringSearchField(
+						SearchField.AND, (String) nameField.getValue()));
+			}
+			return searchCriteria;
 		}
 	}
 }

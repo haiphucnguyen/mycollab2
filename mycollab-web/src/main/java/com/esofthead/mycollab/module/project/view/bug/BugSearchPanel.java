@@ -7,6 +7,7 @@ import java.util.List;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -96,7 +97,13 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		return layout;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private class BugBasicSearchLayout extends BasicSearchLayout {
+
+		@SuppressWarnings("unchecked")
+		public BugBasicSearchLayout() {
+			super(BugSearchPanel.this);
+		}
 
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
@@ -126,11 +133,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(ClickEvent event) {
-					searchCriteria = new BugSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, project.getId()));
-					searchCriteria.setSummary(new StringSearchField(nameField
-							.getValue().toString().trim()));
+					
 					BugSearchPanel.this.notifySearchHandler(searchCriteria);
 				}
 			});
@@ -160,9 +163,19 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 			return basicSearchBody;
 		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new BugSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					SearchField.AND, project.getId()));
+			searchCriteria.setSummary(new StringSearchField(nameField
+					.getValue().toString().trim()));
+			return searchCriteria;
+		}
 	}
 
-	@SuppressWarnings("serial")
+	@SuppressWarnings({ "serial", "rawtypes" })
 	private class BugAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private TextField nameField;
@@ -182,8 +195,9 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		private DateSelectionField dueDateField;
 		private DateSelectionField resolveDateField;
 
+		@SuppressWarnings("unchecked")
 		public BugAdvancedSearchLayout() {
-			super();
+			super(BugSearchPanel.this);
 		}
 
 		@Override
@@ -283,140 +297,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 				@SuppressWarnings("unchecked")
 				@Override
 				public void buttonClick(ClickEvent event) {
-					searchCriteria = new BugSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, project.getId()));
-
-					if (StringUtil.isNotNullOrEmpty((String) nameField
-							.getValue())) {
-
-						if (((Boolean) summaryField.getValue()) == true) {
-							searchCriteria.setSummary(new StringSearchField(
-									SearchField.AND, ((String) nameField
-											.getValue()).trim()));
-						}
-
-						if (((Boolean) descriptionField.getValue()) == true) {
-							if (((Boolean) summaryField.getValue()) == true) {
-								searchCriteria
-										.setDescription(new StringSearchField(
-												SearchField.OR,
-												((String) nameField.getValue())
-														.trim()));
-							} else {
-								searchCriteria
-										.setDescription(new StringSearchField(
-												SearchField.AND,
-												((String) nameField.getValue())
-														.trim()));
-							}
-						}
-					}
-
-					SearchField updateDate = updateDateField.getValue();
-					if (updateDate != null
-							&& (updateDate instanceof DateSearchField)) {
-						searchCriteria
-								.setUpdatedDate((DateSearchField) updateDate);
-					} else if (updateDate != null
-							&& (updateDate instanceof RangeDateSearchField)) {
-						searchCriteria
-								.setUpdatedDateRange((RangeDateSearchField) updateDate);
-					}
-
-					SearchField resolvedDate = resolveDateField.getValue();
-					if (resolvedDate != null
-							&& (resolvedDate instanceof DateSearchField)) {
-						searchCriteria
-								.setResolvedDate((DateSearchField) resolvedDate);
-					} else if (resolvedDate != null
-							&& (resolvedDate instanceof RangeDateSearchField)) {
-						searchCriteria
-								.setResolvedDateRange((RangeDateSearchField) resolvedDate);
-					}
-
-					SearchField dueDate = dueDateField.getValue();
-					if (dueDate != null && (dueDate instanceof DateSearchField)) {
-						searchCriteria.setDueDate((DateSearchField) dueDate);
-					} else if (dueDate != null
-							&& (dueDate instanceof RangeDateSearchField)) {
-						searchCriteria
-								.setDueDateRange((RangeDateSearchField) dueDate);
-					}
-
-					Collection<String> priorities = priorityField
-							.getSelectedItems();
-					if (priorities != null && priorities.size() > 0) {
-						searchCriteria
-								.setPriorities(new SetSearchField<String>(
-										SearchField.AND, priorities));
-					}
-
-					Collection<String> resolutions = resolutionField
-							.getSelectedItems();
-					if (resolutions != null && resolutions.size() > 0) {
-						searchCriteria
-								.setResolutions(new SetSearchField<String>(
-										SearchField.AND, resolutions));
-					}
-
-					Collection<String> statues = statusField.getSelectedItems();
-					if (statues != null && statues.size() > 0) {
-						searchCriteria.setStatuses(new SetSearchField<String>(
-								SearchField.AND, statues));
-					}
-
-					Collection<String> severities = severityField
-							.getSelectedItems();
-					if (severities != null && severities.size() > 0) {
-						searchCriteria
-								.setSeverities(new SetSearchField<String>(
-										SearchField.AND, severities));
-					}
-
-					Collection<Version> afftectVersions = affectedVersionField
-							.getSelectedItems();
-
-					List<Integer> lstIdAfectedVersion = new ArrayList<Integer>();
-					for (Version itemVersion : afftectVersions) {
-						lstIdAfectedVersion.add(itemVersion.getId());
-					}
-					if (lstIdAfectedVersion != null
-							&& lstIdAfectedVersion.size() > 0) {
-						searchCriteria
-								.setVersionids(new SetSearchField<Integer>(
-										SearchField.AND, lstIdAfectedVersion));
-					}
-
-					Collection<Version> fixedVersions = fixedVersionField
-							.getSelectedItems();
-
-					List<Integer> lstIdFixedVersion = new ArrayList<Integer>();
-					for (Version itemVersion : fixedVersions) {
-						lstIdFixedVersion.add(itemVersion.getId());
-					}
-					if (lstIdFixedVersion != null
-							&& lstIdFixedVersion.size() > 0) {
-						searchCriteria
-								.setFixedversionids(new SetSearchField<Integer>(
-										SearchField.AND, lstIdFixedVersion));
-					}
-
-					Collection<Component> components = componentField
-							.getSelectedItems();
-
-					List<Integer> lstIdComponent = new ArrayList<Integer>();
-					for (Component itemComp : components) {
-						lstIdFixedVersion.add(itemComp.getId());
-					}
-					if (lstIdComponent != null && lstIdComponent.size() > 0) {
-						searchCriteria
-								.setComponentids(new SetSearchField<Integer>(
-										SearchField.AND, lstIdComponent));
-					}
-
-					BugSearchPanel.this.notifySearchHandler(searchCriteria);
-
+					BugAdvancedSearchLayout.this.callSearchAction();
 				}
 			});
 
@@ -456,6 +337,142 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			UiUtils.addComponent(buttonControls, basicSearchBtn,
 					Alignment.MIDDLE_CENTER);
 			return buttonControls;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new BugSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					SearchField.AND, project.getId()));
+
+			if (StringUtil.isNotNullOrEmpty((String) nameField
+					.getValue())) {
+
+				if (((Boolean) summaryField.getValue()) == true) {
+					searchCriteria.setSummary(new StringSearchField(
+							SearchField.AND, ((String) nameField
+									.getValue()).trim()));
+				}
+
+				if (((Boolean) descriptionField.getValue()) == true) {
+					if (((Boolean) summaryField.getValue()) == true) {
+						searchCriteria
+								.setDescription(new StringSearchField(
+										SearchField.OR,
+										((String) nameField.getValue())
+												.trim()));
+					} else {
+						searchCriteria
+								.setDescription(new StringSearchField(
+										SearchField.AND,
+										((String) nameField.getValue())
+												.trim()));
+					}
+				}
+			}
+
+			SearchField updateDate = updateDateField.getValue();
+			if (updateDate != null
+					&& (updateDate instanceof DateSearchField)) {
+				searchCriteria
+						.setUpdatedDate((DateSearchField) updateDate);
+			} else if (updateDate != null
+					&& (updateDate instanceof RangeDateSearchField)) {
+				searchCriteria
+						.setUpdatedDateRange((RangeDateSearchField) updateDate);
+			}
+
+			SearchField resolvedDate = resolveDateField.getValue();
+			if (resolvedDate != null
+					&& (resolvedDate instanceof DateSearchField)) {
+				searchCriteria
+						.setResolvedDate((DateSearchField) resolvedDate);
+			} else if (resolvedDate != null
+					&& (resolvedDate instanceof RangeDateSearchField)) {
+				searchCriteria
+						.setResolvedDateRange((RangeDateSearchField) resolvedDate);
+			}
+
+			SearchField dueDate = dueDateField.getValue();
+			if (dueDate != null && (dueDate instanceof DateSearchField)) {
+				searchCriteria.setDueDate((DateSearchField) dueDate);
+			} else if (dueDate != null
+					&& (dueDate instanceof RangeDateSearchField)) {
+				searchCriteria
+						.setDueDateRange((RangeDateSearchField) dueDate);
+			}
+
+			Collection<String> priorities = priorityField
+					.getSelectedItems();
+			if (priorities != null && priorities.size() > 0) {
+				searchCriteria
+						.setPriorities(new SetSearchField<String>(
+								SearchField.AND, priorities));
+			}
+
+			Collection<String> resolutions = resolutionField
+					.getSelectedItems();
+			if (resolutions != null && resolutions.size() > 0) {
+				searchCriteria
+						.setResolutions(new SetSearchField<String>(
+								SearchField.AND, resolutions));
+			}
+
+			Collection<String> statues = statusField.getSelectedItems();
+			if (statues != null && statues.size() > 0) {
+				searchCriteria.setStatuses(new SetSearchField<String>(
+						SearchField.AND, statues));
+			}
+
+			Collection<String> severities = severityField
+					.getSelectedItems();
+			if (severities != null && severities.size() > 0) {
+				searchCriteria
+						.setSeverities(new SetSearchField<String>(
+								SearchField.AND, severities));
+			}
+
+			Collection<Version> afftectVersions = affectedVersionField
+					.getSelectedItems();
+
+			List<Integer> lstIdAfectedVersion = new ArrayList<Integer>();
+			for (Version itemVersion : afftectVersions) {
+				lstIdAfectedVersion.add(itemVersion.getId());
+			}
+			if (lstIdAfectedVersion != null
+					&& lstIdAfectedVersion.size() > 0) {
+				searchCriteria
+						.setVersionids(new SetSearchField<Integer>(
+								SearchField.AND, lstIdAfectedVersion));
+			}
+
+			Collection<Version> fixedVersions = fixedVersionField
+					.getSelectedItems();
+
+			List<Integer> lstIdFixedVersion = new ArrayList<Integer>();
+			for (Version itemVersion : fixedVersions) {
+				lstIdFixedVersion.add(itemVersion.getId());
+			}
+			if (lstIdFixedVersion != null
+					&& lstIdFixedVersion.size() > 0) {
+				searchCriteria
+						.setFixedversionids(new SetSearchField<Integer>(
+								SearchField.AND, lstIdFixedVersion));
+			}
+
+			Collection<Component> components = componentField
+					.getSelectedItems();
+
+			List<Integer> lstIdComponent = new ArrayList<Integer>();
+			for (Component itemComp : components) {
+				lstIdFixedVersion.add(itemComp.getId());
+			}
+			if (lstIdComponent != null && lstIdComponent.size() > 0) {
+				searchCriteria
+						.setComponentids(new SetSearchField<Integer>(
+								SearchField.AND, lstIdComponent));
+			}
+			return searchCriteria;
 		}
 	}
 }

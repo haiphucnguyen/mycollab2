@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
@@ -67,9 +68,15 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
         return layout;
     }
 
-    private class RoleBasicSearchLayout extends GenericSearchPanel.BasicSearchLayout {
+    @SuppressWarnings("rawtypes")
+	private class RoleBasicSearchLayout extends GenericSearchPanel.BasicSearchLayout {
 
-        private static final long serialVersionUID = 1L;
+        @SuppressWarnings("unchecked")
+		public RoleBasicSearchLayout() {
+			super(RoleSearchPanel.this);
+		}
+
+		private static final long serialVersionUID = 1L;
         private TextField nameField;
 
         @Override
@@ -93,15 +100,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 
                         @Override
                         public void buttonClick(Button.ClickEvent event) {
-                            searchCriteria = new RoleSearchCriteria();
-                            searchCriteria.setsAccountId(new NumberSearchField(AppContext.getAccountId()));
-                            if (StringUtil.isNotNullOrEmpty((String) nameField
-        							.getValue())) {
-        						searchCriteria.setRoleName(new StringSearchField(
-        								SearchField.AND, (String) nameField.getValue()));
-        					}
-                            RoleSearchPanel.this
-                                    .notifySearchHandler(searchCriteria);
+                        	RoleBasicSearchLayout.this.callSearchAction();
                         }
                     });
             searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -120,5 +119,17 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
             basicSearchBody.addComponent(clearBtn);
             return basicSearchBody;
         }
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			 searchCriteria = new RoleSearchCriteria();
+             searchCriteria.setsAccountId(new NumberSearchField(AppContext.getAccountId()));
+             if (StringUtil.isNotNullOrEmpty((String) nameField
+						.getValue())) {
+					searchCriteria.setRoleName(new StringSearchField(
+							SearchField.AND, (String) nameField.getValue()));
+				}
+			return searchCriteria;
+		}
     }
 }

@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -101,13 +102,15 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
         return layout;
     }
 
-    private class EventBasicSearchLayout extends BasicSearchLayout {
+    @SuppressWarnings({ "serial", "rawtypes" })
+	private class EventBasicSearchLayout extends BasicSearchLayout {
 
         private TextField nameField;
         private CheckBox myItemCheckbox;
 
-        public EventBasicSearchLayout() {
-            super();
+        @SuppressWarnings("unchecked")
+		public EventBasicSearchLayout() {
+            super(EventSearchPanel.this);
         }
 
         @Override
@@ -133,11 +136,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
             searchBtn.addListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    searchCriteria = new EventSearchCriteria();
-                    searchCriteria.setSaccountid(new NumberSearchField(
-                            SearchField.AND, AppContext.getAccountId()));
-
-                    EventSearchPanel.this.notifySearchHandler(searchCriteria);
+                	EventBasicSearchLayout.this.callSearchAction();
                 }
             });
 
@@ -166,12 +165,22 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 //                    Alignment.MIDDLE_CENTER);
             return basicSearchBody;
         }
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			 searchCriteria = new EventSearchCriteria();
+             searchCriteria.setSaccountid(new NumberSearchField(
+                     SearchField.AND, AppContext.getAccountId()));
+			return searchCriteria;
+		}
     }
 
-    private class EventAdvancedSearchLayout extends AdvancedSearchLayout {
+    @SuppressWarnings({ "rawtypes", "serial" })
+	private class EventAdvancedSearchLayout extends AdvancedSearchLayout {
 
-        public EventAdvancedSearchLayout() {
-            super();
+        @SuppressWarnings("unchecked")
+		public EventAdvancedSearchLayout() {
+            super(EventSearchPanel.this);
         }
 
         @Override
@@ -195,13 +204,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
                 @SuppressWarnings({"unchecked", "rawtypes"})
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    searchCriteria = new EventSearchCriteria();
-                    searchCriteria.setSaccountid(new NumberSearchField(
-                            SearchField.AND, AppContext.getAccountId()));
-
-
-                    EventSearchPanel.this.notifySearchHandler(searchCriteria);
-
+                	EventAdvancedSearchLayout.this.callSearchAction();
                 }
             });
 
@@ -229,5 +232,13 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
                     Alignment.MIDDLE_CENTER);
             return buttonControls;
         }
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			 searchCriteria = new EventSearchCriteria();
+             searchCriteria.setSaccountid(new NumberSearchField(
+                     SearchField.AND, AppContext.getAccountId()));
+			return searchCriteria;
+		}
     }
 }

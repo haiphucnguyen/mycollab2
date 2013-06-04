@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -51,7 +52,7 @@ public class VersionSearchPanel extends
 
 	private void createBasicSearchLayout() {
 
-		this.setCompositionRoot(new VersionBasicSearchCriteria());
+		this.setCompositionRoot(new VersionBasicSearchLayout());
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
@@ -84,8 +85,15 @@ public class VersionSearchPanel extends
 		return layout;
 	}
 
-	private class VersionBasicSearchCriteria extends
+	@SuppressWarnings("rawtypes")
+	private class VersionBasicSearchLayout extends
 			GenericSearchPanel.BasicSearchLayout {
+
+		@SuppressWarnings("unchecked")
+		public VersionBasicSearchLayout() {
+			super(VersionSearchPanel.this);
+			// TODO Auto-generated constructor stub
+		}
 
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
@@ -114,13 +122,7 @@ public class VersionSearchPanel extends
 
 				@Override
 				public void buttonClick(Button.ClickEvent event) {
-					searchCriteria = new VersionSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, project.getId()));
-					searchCriteria.setVersionname(new StringSearchField(
-							nameField.getValue().toString().trim()));
-
-					VersionSearchPanel.this.notifySearchHandler(searchCriteria);
+					VersionBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -137,6 +139,16 @@ public class VersionSearchPanel extends
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new VersionSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					SearchField.AND, project.getId()));
+			searchCriteria.setVersionname(new StringSearchField(
+					nameField.getValue().toString().trim()));
+			return searchCriteria;
 		}
 	}
 
