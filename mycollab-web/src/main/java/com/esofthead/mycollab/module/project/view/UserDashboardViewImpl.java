@@ -2,13 +2,11 @@ package com.esofthead.mycollab.module.project.view;
 
 import java.util.List;
 
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
 import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -24,7 +22,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
-public class UserDashboardViewImpl2 extends AbstractView implements
+public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
 	private static final long serialVersionUID = 1L;
 
@@ -34,7 +32,7 @@ public class UserDashboardViewImpl2 extends AbstractView implements
 
 	private TaskStatusComponent taskStatusComponent;
 
-	public UserDashboardViewImpl2() {
+	public UserDashboardViewImpl() {
 		this.setSpacing(true);
 		this.setMargin(true);
 
