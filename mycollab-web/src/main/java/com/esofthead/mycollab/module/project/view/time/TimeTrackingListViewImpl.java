@@ -52,11 +52,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private ItemTimeLoggingService itemTimeLoggingService;
 	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
 			new FieldExportColumn("logUserFullName", "User"),
-			new FieldExportColumn("type", "Type"),
 			new FieldExportColumn("type", "Summary", 70),
 			new FieldExportColumn("createdtime", "Created Time"),
-			new FieldExportColumn("logvalue", "Hours"),
-			};
+			new FieldExportColumn("logvalue", "Hours"), };
 
 	private Label lbTimeRange;
 

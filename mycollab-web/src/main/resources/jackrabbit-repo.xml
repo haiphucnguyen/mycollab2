@@ -26,14 +26,11 @@
     <Workspaces rootPath='${rep.home}/workspaces'
         defaultWorkspace='default' />
     <Workspace name="${wsp.name}">
-        <FileSystem class="org.apache.jackrabbit.core.fs.mem.MemoryFileSystem">
+        <FileSystem class="com.esofthead.mycollab.module.ecm.DbFileSystemExt">
         </FileSystem>
 
         <PersistenceManager
-            class="org.apache.jackrabbit.core.persistence.mem.InMemBundlePersistenceManager">
-            <param name='initialCapacity' value='32768' />
-            <param name="persistent" value='false' />
-            <param name='useFileBlobStore' value='false' />
+            class="com.esofthead.mycollab.module.ecm.BundleDbPersistenceManagerExt">
         </PersistenceManager>
         <!-- <SearchIndex class='org.apache.jackrabbit.core.query.lucene.SearchIndex'> 
             <param name='path' value='${wsp.home}/index' /> <param name='extractorPoolSize' 
@@ -43,13 +40,10 @@
     </Workspace>
     <!-- Configures the versioning -->
     <Versioning rootPath='${rep.home}/version'>
-        <FileSystem class='org.apache.jackrabbit.core.fs.mem.MemoryFileSystem'>
+        <FileSystem class='com.esofthead.mycollab.module.ecm.DbFileSystemExt'>
         </FileSystem>
         <PersistenceManager
-            class="org.apache.jackrabbit.core.persistence.mem.InMemBundlePersistenceManager">
-            <param name='initialCapacity' value='32768' />
-            <param name="persistent" value='false' />
-            <param name='useFileBlobStore' value='false' />
+            class="com.esofthead.mycollab.module.ecm.BundleDbPersistenceManagerExt">
         </PersistenceManager>
 
     </Versioning>
