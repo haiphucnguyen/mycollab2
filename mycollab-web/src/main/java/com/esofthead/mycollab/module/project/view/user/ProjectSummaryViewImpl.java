@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -32,10 +33,10 @@ public class ProjectSummaryViewImpl extends AbstractView implements
 		VerticalLayout leftPanel = new VerticalLayout();
 
 		messageWidget = new ProjectMessageListComponent();
-		leftPanel.addComponent(messageWidget);
+		leftPanel.addComponent(new LazyLoadWrapper(messageWidget));
 
 		activityPanel = new ProjectActivityStreamComponent();
-		leftPanel.addComponent(activityPanel);
+		leftPanel.addComponent(new LazyLoadWrapper(activityPanel));
 		layout.addComponent(leftPanel);
 
 		VerticalLayout rightPanel = new VerticalLayout();
@@ -44,8 +45,8 @@ public class ProjectSummaryViewImpl extends AbstractView implements
 
 		membersWidget = new ProjectMembersWidget();
 		highlightWidget = new ProjectTaskStatusComponent();
-		rightPanel.addComponent(membersWidget);
-		rightPanel.addComponent(highlightWidget);
+		rightPanel.addComponent(new LazyLoadWrapper(membersWidget));
+		rightPanel.addComponent(new LazyLoadWrapper(highlightWidget));
 	}
 
 	@Override

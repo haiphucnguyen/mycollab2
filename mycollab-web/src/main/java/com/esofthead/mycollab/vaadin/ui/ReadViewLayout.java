@@ -19,7 +19,7 @@ public class ReadViewLayout extends CssLayout {
 	private final DetachedTabs viewTab;
 	private final CssLayout body;
 
-	public ReadViewLayout(ThemeResource icon) {
+	public ReadViewLayout(final ThemeResource icon) {
 		setSizeFull();
 		setStyleName("readview-layout");
 
@@ -32,11 +32,13 @@ public class ReadViewLayout extends CssLayout {
 		iconEmbed = new Embedded();
 		iconEmbed.setSource(icon);
 		header.addComponent(iconEmbed);
+		header.setComponentAlignment(iconEmbed, Alignment.MIDDLE_LEFT);
 
 		titleLbl = new Label();
 		titleLbl.setStyleName("h1");
 		header.addComponent(titleLbl);
 		header.setExpandRatio(titleLbl, 1.0f);
+		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
 
 		body = new CssLayout();
 		body.setStyleName("readview-layout-body");
@@ -50,23 +52,25 @@ public class ReadViewLayout extends CssLayout {
 		header.setComponentAlignment(viewTab, Alignment.BOTTOM_CENTER);
 	}
 
-	public void addControlButtons(Component controlsBtn) {
+	public void addControlButtons(final Component controlsBtn) {
 		header.addComponent(controlsBtn);
+		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_CENTER);
 	}
 
-	public void addTab(Component content, String button) {
+	public void addTab(final Component content, final String button) {
 		viewTab.addTab(content, new Button(button));
 	}
 
-	public void addTabChangedListener(DetachedTabs.TabChangedListener listener) {
+	public void addTabChangedListener(
+			final DetachedTabs.TabChangedListener listener) {
 		viewTab.addTabChangedListener(listener);
 	}
 
-	public void selectTab(String viewName) {
+	public void selectTab(final String viewName) {
 		viewTab.selectTab(viewName);
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		titleLbl.setValue(title);
 	}
 }

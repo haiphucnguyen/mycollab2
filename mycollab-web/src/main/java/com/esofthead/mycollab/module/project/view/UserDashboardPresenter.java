@@ -27,6 +27,6 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
         prjContainer.removeAllComponents();
         prjContainer.addComponent((Component) view);
         prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);
-        view.gotoMyFeeds();
+        view.display();
     }
 }

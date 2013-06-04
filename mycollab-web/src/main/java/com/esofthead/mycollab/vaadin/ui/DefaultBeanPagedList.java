@@ -4,11 +4,12 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.vaadin.ui.Component;
-import java.util.List;
 
 /**
  *
@@ -42,6 +43,7 @@ public class DefaultBeanPagedList<SearchService extends ISearchableService<S>, S
         List<T> currentListData = searchService
                 .findPagableListByCriteria(searchRequest);
         listContainer.removeAllComponents();
+        
         int i = 0;
         try {
             for (T item : currentListData) {

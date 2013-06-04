@@ -155,8 +155,16 @@ public class AppContext implements Serializable {
 						.getString(ApplicationProperties.APP_URL),
 						getInstance().subdomain);
 			} else {
-				getInstance().siteUrl = ApplicationProperties
-						.getString(ApplicationProperties.APP_URL);
+				boolean isSupportSubDomain = ApplicationProperties
+						.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
+				if (!isSupportSubDomain) {
+					getInstance().siteUrl = String.format(ApplicationProperties
+							.getString(ApplicationProperties.APP_URL),
+							getInstance().subdomain);
+				} else {
+					getInstance().siteUrl = ApplicationProperties
+							.getString(ApplicationProperties.APP_URL);
+				}
 			}
 		}
 

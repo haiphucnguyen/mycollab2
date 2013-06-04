@@ -196,8 +196,9 @@ public class MessageListViewImpl extends AbstractView implements
 
 		private void createBasicSearchLayout() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setStyleName("message-search");
 			basicSearchBody.setSizeUndefined();
-			basicSearchBody.setSpacing(true);
+			basicSearchBody.setSpacing(false);
 
 			final TextField nameField = new TextField();
 			nameField.addListener(new TextChangeListener() {
@@ -244,8 +245,8 @@ public class MessageListViewImpl extends AbstractView implements
 							.notifySearchHandler(messageSearchCriteria);
 				}
 			});
-			searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
-			searchBtn.setStyleName("link");
+			searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
 			basicSearchBody.addComponent(searchBtn);
 
 			setCompositionRoot(basicSearchBody);
@@ -256,13 +257,13 @@ public class MessageListViewImpl extends AbstractView implements
 
 		private static final long serialVersionUID = 1L;
 		private final MessageSearchPanel messageSearchPanel;
-		private final CssLayout messagePanelBody;
+		private final HorizontalLayout messagePanelBody;
 
 		public TopMessagePanel() {
 			this.setWidth("100%");
 			setStyleName("message-toppanel");
 			messageSearchPanel = new MessageSearchPanel();
-			messagePanelBody = new CssLayout();
+			messagePanelBody = new HorizontalLayout();
 			final Label headerLbl = new Label("Messages");
 			headerLbl.setStyleName("h2");
 			final HorizontalLayout layoutHeader = new HorizontalLayout();
@@ -411,6 +412,8 @@ public class MessageListViewImpl extends AbstractView implements
 					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
 			messagePanelBody.addComponent(createMessageBtn);
+			messagePanelBody.setComponentAlignment(createMessageBtn,
+					Alignment.MIDDLE_RIGHT);
 		}
 
 		public HasSearchHandlers<MessageSearchCriteria> getSearchHandlers() {

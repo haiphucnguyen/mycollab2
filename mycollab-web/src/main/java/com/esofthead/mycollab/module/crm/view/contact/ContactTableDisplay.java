@@ -27,46 +27,46 @@ public class ContactTableDisplay extends
 		PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> {
 
 	public ContactTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+			final String[] columnHeaders) {
 		super(AppContext.getSpringBean(ContactService.class),
 				SimpleContact.class, visibleColumns, columnHeaders);
-		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
+		addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
+					final Object columnId) {
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
 				cb.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						SimpleContact contact = ContactTableDisplay.this
+					public void buttonClick(final Button.ClickEvent event) {
+						final SimpleContact contact = ContactTableDisplay.this
 								.getBeanByIndex(itemId);
 						ContactTableDisplay.this.fireSelectItemEvent(contact);
 						fireTableEvent(new TableClickEvent(
 								ContactTableDisplay.this, contact, "selected"));
 					}
 				});
-				SimpleContact contact = ContactTableDisplay.this
+				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
 				contact.setExtraData(cb);
 				return cb;
 			}
 		});
 
-		this.addGeneratedColumn("contactName", new ColumnGenerator() {
+		addGeneratedColumn("contactName", new ColumnGenerator() {
 			@Override
-			public Object generateCell(Table source, Object itemId,
-					Object columnId) {
+			public Object generateCell(final Table source, final Object itemId,
+					final Object columnId) {
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(contact.getContactName(),
+				final ButtonLink b = new ButtonLink(contact.getContactName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								fireTableEvent(new TableClickEvent(
 										ContactTableDisplay.this, contact,
 										"contactName"));
@@ -77,12 +77,12 @@ public class ContactTableDisplay extends
 			}
 		});
 
-		this.addGeneratedColumn("createdtime", new ColumnGenerator() {
+		addGeneratedColumn("createdtime", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
 				return new Label(AppContext.formatDateTime(contact
@@ -91,42 +91,41 @@ public class ContactTableDisplay extends
 			}
 		});
 
-		this.addGeneratedColumn("email", new Table.ColumnGenerator() {
+		addGeneratedColumn("email", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				SimpleContact contact = ContactTableDisplay.this
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
+				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
 				return new EmailLink(contact.getEmail());
 			}
 		});
 
-		this.addGeneratedColumn("accountName", new Table.ColumnGenerator() {
+		addGeneratedColumn("accountName", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
-				List<Account> accounts = contact.getAccounts();
+				final List<Account> accounts = contact.getAccounts();
 				if (accounts != null && !accounts.isEmpty()) {
-					VerticalLayout hLayout = new VerticalLayout();
+					final VerticalLayout hLayout = new VerticalLayout();
 					for (final Account account : accounts) {
-						Button accountLink = new Button(account
+						final ButtonLink accountLink = new ButtonLink(account
 								.getAccountname(), new Button.ClickListener() {
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new AccountEvent.GotoRead(
 												ContactTableDisplay.this,
 												account.getId()));
 							}
 						});
-						accountLink.setStyleName("link");
 						hLayout.addComponent(accountLink);
 					}
 
@@ -137,15 +136,14 @@ public class ContactTableDisplay extends
 			}
 		});
 
-		this.setColumnExpandRatio("contactName", 1.0f);
+		setColumnExpandRatio("contactName", 1.0f);
 
-		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		this.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("accountName", UIConstants.TABLE_EX_LABEL_WIDTH);
-		this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		this.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("assignUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
+		setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
+		setColumnWidth("accountName", UIConstants.TABLE_EX_LABEL_WIDTH);
+		setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+		setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+		setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 		this.setWidth("100%");
 	}

@@ -5,6 +5,7 @@ import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -34,7 +35,7 @@ public class Depot extends VerticalLayout {
 		setStyleName("depotComp");
 		header = new HorizontalLayout();
 		header.setStyleName("depotHeader");
-		header.setWidth(headerWidth);
+		header.setWidth("100%");
 		bodyContent = component;
 		if (headerElement != null) {
 			headerContent = headerElement;
@@ -46,14 +47,16 @@ public class Depot extends VerticalLayout {
 		headerContent.setStyleName("header-elements");
 		headerContent.setSizeUndefined();
 
-		final VerticalLayout headerWrapper = new VerticalLayout();
+		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.addComponent(header);
 		headerWrapper.setStyleName("header-wrapper");
+		headerWrapper.setWidth(headerWidth);
 		this.addComponent(headerWrapper);
 
 		final VerticalLayout headerLeft = new VerticalLayout();
 		headerLbl = new Label(title);
 		headerLbl.setStyleName("h2");
+		headerLbl.setWidth("100%");
 		headerLeft.addComponent(headerLbl);
 		headerLeft.setStyleName("depot-title");
 		headerLeft.addListener(new LayoutClickListener() {

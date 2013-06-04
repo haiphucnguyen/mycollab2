@@ -41,6 +41,10 @@ public class ActivityStreamPanel extends Depot {
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 
+			if ((rowIndex + 1) % 2 != 0) {
+				layout.addStyleName("odd");
+			}
+
 			final CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 

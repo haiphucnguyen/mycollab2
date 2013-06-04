@@ -11,7 +11,6 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
-import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.Risk;
@@ -19,6 +18,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
@@ -69,7 +69,6 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -93,22 +92,6 @@ public class ProjectController implements IController {
 
 	@SuppressWarnings("serial")
 	private void bindProjectEvents() {
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProjectEvent.GotoAdd>() {
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ProjectEvent.GotoAdd.class;
-					}
-
-					@Override
-					public void handle(ProjectEvent.GotoAdd event) {
-						UserDashboardView projectView = ViewManager
-								.getView(UserDashboardView.class);
-						ScreenData.Add<Project> data = new ScreenData.Add<Project>(
-								new Project());
-						projectView.gotoMyProjectList(data);
-					}
-				});
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectEvent.GotoEdit>() {
@@ -755,6 +738,31 @@ public class ProjectController implements IController {
 								.getView(ProjectView.class);
 						MessageScreenData.Read data = new MessageScreenData.Read(
 								(Integer) event.getData());
+						MessagePresenter presenter = PresenterResolver
+								.getPresenter(MessagePresenter.class);
+						presenter.go(projectView, data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<MessageEvent.GotoList>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return MessageEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(MessageEvent.GotoList event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
+						searchCriteria
+								.setProjectids(new SetSearchField<Integer>(
+										CurrentProjectVariables.getProjectId()));
+						MessageScreenData.Search data = new MessageScreenData.Search(
+								searchCriteria);
 						MessagePresenter presenter = PresenterResolver
 								.getPresenter(MessagePresenter.class);
 						presenter.go(projectView, data);

@@ -1,152 +1,107 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.esofthead.mycollab.module.project.view.user.MyFeedsPresenter;
-import com.esofthead.mycollab.module.project.view.user.MyProjectsPresenter;
+import java.util.List;
+
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
+import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
+import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.Reindeer;
 
-@SuppressWarnings("serial")
 @ViewComponent
 public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
+	private static final long serialVersionUID = 1L;
 
-	private final HorizontalLayout root;
-	private final DetachedTabs mySpaceTabs;
-	private final CssLayout mySpaceArea = new CssLayout();
-	private final DetachedTabs calendarToolTabs;
-	private MyProjectsPresenter myProjectPresenter;
-	private MyFeedsPresenter myFeedsPresenter;
+	private MyProjectListComponent myProjectListComponent;
+
+	private ActivityStreamComponent activityStreamComponent;
+
+	private TaskStatusComponent taskStatusComponent;
 
 	public UserDashboardViewImpl() {
-		this.setStyleName("projectDashboardView");
-		this.setMargin(false);
-		root = new HorizontalLayout();
-		root.setStyleName("menuContent");
-		root.setWidth("100%");
+		this.setSpacing(true);
+		this.setMargin(true);
 
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setStyleName("projectTabContent");
-		mySpaceTabs = new DetachedTabs.Vertical(mySpaceArea);
-		mySpaceTabs.setSizeFull();
-		mySpaceTabs.setHeight(null);
+		HorizontalLayout header = new HorizontalLayout();
+		header.setWidth("100%");
+		header.setMargin(false, false, false, true);
+		header.addStyleName("project-feed-header");
 
-		calendarToolTabs = new DetachedTabs.Vertical(mySpaceArea);
-		calendarToolTabs.setSizeFull();
-		calendarToolTabs.setHeight(null);
+		Label searchtitle = new Label(
+				LocalizationHelper
+						.getMessage(ProjectCommonI18nEnum.DASHBOARD_TITLE));
+		searchtitle.setStyleName(Reindeer.LABEL_H1);
+		header.addComponent(searchtitle);
+		header.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		CssLayout menu = new CssLayout();
-		menu.setWidth("150px");
-		menu.setStyleName("sidebar-menu");
+		Button createProjectBtn = new Button(
+				LocalizationHelper
+						.getMessage(ProjectCommonI18nEnum.NEW_PROJECT_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-		Label myHome = new Label("My Home");
-		myHome.setStyleName("sectionHeader");
-		menu.addComponent(myHome);
-		menu.addComponent(mySpaceTabs);
-
-		mySpaceTabs.addStyleName("hide-selection");
-		calendarToolTabs.addStyleName("hide-selection");
-		menu.addListener(new LayoutClickListener() {
-			@Override
-			public void layoutClick(LayoutClickEvent event) {
-				if (!root.getComponent(1).equals(mySpaceArea)) {
-					root.replaceComponent(root.getComponent(1), mySpaceArea);
-					root.setExpandRatio(root.getComponent(1), 1.0f);
-				}
-				if (event.getChildComponent() == mySpaceTabs) {
-					calendarToolTabs.addStyleName("hide-selection");
-					mySpaceTabs.removeStyleName("hide-selection");
-				} else if (event.getChildComponent() == calendarToolTabs) {
-					mySpaceTabs.addStyleName("hide-selection");
-					calendarToolTabs.removeStyleName("hide-selection");
-				}
-			}
-		});
-
-		root.addComponent(menu);
-		root.addComponent(mySpaceArea);
-		root.setExpandRatio(mySpaceArea, 1.0f);
-
-		buildComponents();
-
-		this.addComponent(root);
-	}
-
-	private void buildComponents() {
-		mySpaceTabs.addTab(constructMyFeedsComponents(), new MenuButton(
-				"My Feeds", "menu_myfeeds.png"));
-		mySpaceTabs.addTab(constructMyProjectsComponents(), new MenuButton(
-				"My Projects", "menu_myprojects.png"));
-
-		mySpaceTabs
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
 					@Override
-					public void tabChanged(TabChangedEvent event) {
-						Button btn = event.getSource();
-						String caption = btn.getCaption();
-						if ("My Projects".equals(caption)) {
-							ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-							searchCriteria
-									.setInvolvedMember(new StringSearchField(
-											AppContext.getUsername()));
-							gotoMyProjectList(new ScreenData.Search<ProjectSearchCriteria>(
-									searchCriteria));
-						} else if ("My Feeds".equals(caption)) {
-							gotoMyFeeds();
-						}
+					public void buttonClick(Button.ClickEvent event) {
+						ProjectAddWindow projectNewWindow = new ProjectAddWindow();
+						UserDashboardViewImpl.this.getWindow().addWindow(
+								projectNewWindow);
 					}
 				});
-	}
+		createProjectBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		header.addComponent(createProjectBtn);
+		header.setComponentAlignment(createProjectBtn, Alignment.MIDDLE_RIGHT);
 
-	private ComponentContainer constructMyFeedsComponents() {
-		myFeedsPresenter = PresenterResolver
-				.getPresenter(MyFeedsPresenter.class);
-		return myFeedsPresenter.getView();
-	}
+		this.addComponent(header);
 
-	private ComponentContainer constructMyProjectsComponents() {
-		myProjectPresenter = PresenterResolver
-				.getPresenter(MyProjectsPresenter.class);
-		return myProjectPresenter.getView();
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
+		layout.setMargin(true);
+
+		VerticalLayout leftPanel = new VerticalLayout();
+		myProjectListComponent = new MyProjectListComponent();
+		taskStatusComponent = new TaskStatusComponent();
+		leftPanel.addComponent(myProjectListComponent);
+		leftPanel.addComponent(new LazyLoadWrapper(taskStatusComponent));
+
+		VerticalLayout rightPanel = new VerticalLayout();
+		activityStreamComponent = new ActivityStreamComponent();
+
+		rightPanel.addComponent(activityStreamComponent);
+
+		layout.addComponent(leftPanel);
+		layout.addComponent(rightPanel);
+
+		this.addComponent(layout);
 	}
 
 	@Override
-	public void gotoMyProjectList(ScreenData data) {
-		myProjectPresenter.go(this, data);
-	}
-
-	@Override
-	public void gotoMyFeeds() {
-		myFeedsPresenter.go(this, null);
-	}
-
-	@Override
-	public Component gotoSubView(String name) {
-		View component = (View) mySpaceTabs.selectTab(name);
-		return component;
-	}
-
-	private static class MenuButton extends Button {
-		public MenuButton(String caption, String iconResource) {
-			super(caption);
-			this.setIcon(new ThemeResource("icons/22/project/" + iconResource));
-			this.setStyleName("link");
+	public void display() {
+		ProjectService prjService = AppContext
+				.getSpringBean(ProjectService.class);
+		List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
+				.getUsername());
+		if (prjKeys != null && !prjKeys.isEmpty()) {
+			activityStreamComponent.showFeeds(prjKeys);
+			myProjectListComponent.showProjects(prjKeys);
 		}
+
+		taskStatusComponent.showProjectTasksByStatus();
+
 	}
 }

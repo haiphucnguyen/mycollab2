@@ -8,6 +8,7 @@ import com.esofthead.mycollab.vaadin.ui.JFreeChartWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class GenericChartWrapper<S extends SearchCriteria> extends
@@ -46,15 +47,19 @@ public abstract class GenericChartWrapper<S extends SearchCriteria> extends
 
 		final JFreeChart chart = createChart();
 		final JFreeChartWrapper chartWrapper = new JFreeChartWrapper(chart);
+
+		removeAllComponents();
+		final CssLayout borderWrap = new CssLayout();
+		borderWrap.addComponent(chartWrapper);
+		borderWrap.setStyleName("chart-wrapper");
+		borderWrap.setHeight(height + "px");
+		borderWrap.setWidth(width + "px");
 		chartWrapper.setHeight(height + "px");
 		chartWrapper.setWidth(width + "px");
 		chartWrapper.setGraphHeight(height);
 		chartWrapper.setGraphWidth(width);
-
-		removeAllComponents();
-		chartWrapper.setStyleName("chart-wrapper");
-		this.addComponent(chartWrapper);
-		this.setComponentAlignment(chartWrapper, Alignment.MIDDLE_CENTER);
+		this.addComponent(borderWrap);
+		// this.setComponentAlignment(chartWrapper, Alignment.MIDDLE_CENTER);
 		final Component legendBox = createLegendBox();
 		this.addComponent(legendBox);
 		this.setComponentAlignment(legendBox, Alignment.MIDDLE_CENTER);
