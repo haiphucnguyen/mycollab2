@@ -73,7 +73,7 @@ public class CampaignContactListComp extends
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Contact");
 		controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
 		controlsBtn
@@ -103,7 +103,7 @@ public class CampaignContactListComp extends
 		controlsBtn.addComponent(selectBtn);
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		contentContainer.addComponent(controlsBtn);
+		addHeaderElement(controlsBtn);
 
 		tableItem = new ContactTableDisplay(
 				new String[] { "contactName", "email", "officephone",

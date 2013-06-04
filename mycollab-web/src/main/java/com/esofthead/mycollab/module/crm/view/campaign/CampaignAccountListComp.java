@@ -73,7 +73,7 @@ public class CampaignAccountListComp extends
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Account");
 		controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
 		controlsBtn
@@ -103,7 +103,7 @@ public class CampaignAccountListComp extends
 		controlsBtn.addComponent(selectBtn);
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-		contentContainer.addComponent(controlsBtn);
+		addHeaderElement(controlsBtn);
 
 		tableItem = new AccountTableDisplay(
 				new String[] { "accountname", "phoneoffice", "email", "city",
