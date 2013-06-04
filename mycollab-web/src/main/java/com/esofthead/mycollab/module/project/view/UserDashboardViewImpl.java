@@ -56,9 +56,9 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						//TODO: show add project window
-						
-
+						ProjectAddWindow projectNewWindow = new ProjectAddWindow();
+						UserDashboardViewImpl.this.getWindow().addWindow(
+								projectNewWindow);
 					}
 				});
 		createProjectBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
