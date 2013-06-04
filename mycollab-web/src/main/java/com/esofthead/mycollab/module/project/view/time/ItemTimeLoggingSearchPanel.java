@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -54,15 +55,16 @@ public class ItemTimeLoggingSearchPanel extends
 		return layout;
 	}
 
-	@SuppressWarnings("serial")
+	@SuppressWarnings({ "serial", "rawtypes" })
 	private class BugAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private DateRangeField dateRangeField;
 
 		private ProjectMemberListSelect userField;
 
+		@SuppressWarnings("unchecked")
 		public BugAdvancedSearchLayout() {
-			super();
+			super(ItemTimeLoggingSearchPanel.this);
 		}
 
 		@Override
@@ -107,27 +109,9 @@ public class ItemTimeLoggingSearchPanel extends
 					LocalizationHelper
 							.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL),
 					new Button.ClickListener() {
-						@SuppressWarnings({ "unchecked", "rawtypes" })
 						@Override
 						public void buttonClick(ClickEvent event) {
-							searchCriteria = new ItemTimeLoggingSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									CurrentProjectVariables.getProjectId()));
-
-							searchCriteria.setRangeDate(dateRangeField
-									.getRangeSearchValue());
-
-							Collection<String> types = (Collection<String>) userField
-									.getValue();
-
-							if (types != null && types.size() > 0) {
-								searchCriteria.setLogUsers(new SetSearchField(
-										SearchField.AND, types));
-							}
-
-							ItemTimeLoggingSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-
+							BugAdvancedSearchLayout.this.callSearchAction();
 						}
 					});
 
@@ -148,6 +132,26 @@ public class ItemTimeLoggingSearchPanel extends
 			buttonControls.addComponent(clearBtn);
 
 			return buttonControls;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new ItemTimeLoggingSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					CurrentProjectVariables.getProjectId()));
+
+			searchCriteria.setRangeDate(dateRangeField
+					.getRangeSearchValue());
+
+			Collection<String> types = (Collection<String>) userField
+					.getValue();
+
+			if (types != null && types.size() > 0) {
+				searchCriteria.setLogUsers(new SetSearchField(
+						SearchField.AND, types));
+			}
+
+			return searchCriteria;
 		}
 	}
 }

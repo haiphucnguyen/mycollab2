@@ -72,7 +72,7 @@ public class ContactOpportunityListComp extends
 		contentContainer.setSpacing(true);
 
 		final SplitButton controlsBtn = new SplitButton();
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Opportunity");
 		controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
 		controlsBtn
@@ -106,7 +106,7 @@ public class ContactOpportunityListComp extends
 		controlsBtn.addComponent(selectBtn);
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
-		contentContainer.addComponent(controlsBtn);
+		addHeaderElement(controlsBtn);
 
 		tableItem = new OpportunityTableDisplay(
 				new String[] { "opportunityname", "salesstage", "amount",

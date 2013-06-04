@@ -38,11 +38,17 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 
 		projectInformationLayout = new ProjectInformationLayout();
 
-		projectAddLayout.addTopControls(createTopPanel());
+		Layout topPanel = createTopPanel();
+		if (topPanel != null) {
+			projectAddLayout.addTopControls(topPanel);
+		}
 
 		projectAddLayout.addBody(projectInformationLayout.getLayout());
 
-		projectAddLayout.addBottomControls(createBottomPanel());
+		Layout bottomPanel = createTopPanel();
+		if (bottomPanel != null) {
+			projectAddLayout.addBottomControls(bottomPanel);
+		}
 
 		return projectAddLayout;
 	}

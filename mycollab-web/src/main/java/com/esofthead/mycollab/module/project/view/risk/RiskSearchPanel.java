@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -77,7 +78,14 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		return layout;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private class RiskBasicSearchLayout extends BasicSearchLayout {
+
+		@SuppressWarnings("unchecked")
+		public RiskBasicSearchLayout() {
+			super(RiskSearchPanel.this);
+			// TODO Auto-generated constructor stub
+		}
 
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
@@ -106,21 +114,8 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					searchCriteria = new RiskSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, project.getId()));
-					searchCriteria.setRiskname(new StringSearchField(nameField
-							.getValue().toString().trim()));
-
-					if (myItemCheckbox.booleanValue()) {
-						searchCriteria.setAssignToUser(new StringSearchField(
-								SearchField.AND, AppContext.getUsername()));
-					} else {
-						searchCriteria.setAssignToUser(null);
+					RiskBasicSearchLayout.this.callSearchAction();
 					}
-
-					RiskSearchPanel.this.notifySearchHandler(searchCriteria);
-				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(searchBtn);
@@ -136,6 +131,23 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new RiskSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					SearchField.AND, project.getId()));
+			searchCriteria.setRiskname(new StringSearchField(nameField
+					.getValue().toString().trim()));
+
+			if (myItemCheckbox.booleanValue()) {
+				searchCriteria.setAssignToUser(new StringSearchField(
+						SearchField.AND, AppContext.getUsername()));
+			} else {
+				searchCriteria.setAssignToUser(null);
+			}
+			return searchCriteria;
 		}
 	}
 

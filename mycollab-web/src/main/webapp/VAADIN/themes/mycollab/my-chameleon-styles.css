@@ -20,7 +20,7 @@
 .v-menubar-submenu {
 	background-color: rgb(146,189,132);
 	background-color: rgba(146,189,132,.85);
-	}
+}
 
 body.v-ie6 .v-window,
 body.v-ie7 .v-window,
@@ -48,9 +48,8 @@ body.v-ie7 .v-menubar-submenu,
 .v-accordion-opaque div.v-accordion-item-open,
 .v-table-scrollposition,
 .v-table-body {
-/* 	background-color: rgb(146,189,132); */
-	background: none no-repeat left top rgb(245, 245, 245);
-}
+	background-color: rgb(146,189,132);
+	}
 
 /* Base font size and color */
 .v-app,
@@ -359,10 +358,10 @@ td.v-datefield-calendarpanel-month,
 .v-Notification,
 .v-menubar-submenu {
 /* 	background-color: rgb(209,209,209); */
+	background-color: white;
 	background-color: rgba(255,255,255,.85);
 	border-radius: 3px;
-/* 	background-color: white; */
-	}
+}
 
 body.v-ie6 .v-window,
 body.v-ie7 .v-window,

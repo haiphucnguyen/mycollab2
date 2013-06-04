@@ -161,9 +161,10 @@ public class AppContext implements Serializable {
 					getInstance().siteUrl = String.format(ApplicationProperties
 							.getString(ApplicationProperties.APP_URL),
 							getInstance().subdomain);
+				} else {
+					getInstance().siteUrl = ApplicationProperties
+							.getString(ApplicationProperties.APP_URL);
 				}
-				getInstance().siteUrl = ApplicationProperties
-						.getString(ApplicationProperties.APP_URL);
 			}
 		}
 

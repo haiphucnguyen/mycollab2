@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -75,7 +76,13 @@ public class ProjectRoleSearchPanel extends
 		return layout;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private class ProjectRoleBasicSearchLayout extends BasicSearchLayout {
+
+		@SuppressWarnings("unchecked")
+		public ProjectRoleBasicSearchLayout() {
+			super(ProjectRoleSearchPanel.this);
+		}
 
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
@@ -104,12 +111,7 @@ public class ProjectRoleSearchPanel extends
 
 				@Override
 				public void buttonClick(Button.ClickEvent event) {
-					searchCriteria = new ProjectRoleSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, project.getId()));
-
-					ProjectRoleSearchPanel.this
-							.notifySearchHandler(searchCriteria);
+					ProjectRoleBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -126,6 +128,14 @@ public class ProjectRoleSearchPanel extends
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
+		}
+
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			searchCriteria = new ProjectRoleSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					SearchField.AND, project.getId()));
+			return searchCriteria;
 		}
 	}
 

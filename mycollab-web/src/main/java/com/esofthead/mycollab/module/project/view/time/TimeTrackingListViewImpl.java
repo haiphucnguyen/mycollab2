@@ -1,11 +1,9 @@
 package com.esofthead.mycollab.module.project.view.time;
 
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.file.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -53,11 +51,12 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private Button exportBtn;
 	private ItemTimeLoggingService itemTimeLoggingService;
 	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
-		new FieldExportColumn("logUserFullName", "User"),
-		new FieldExportColumn("type", "Type"),
-		new FieldExportColumn("type", "Summary", 70),
-		new FieldExportColumn("createdtime", "Created Time"),
-		new FieldExportColumn("logvalue", "Hours") };
+			new FieldExportColumn("logUserFullName", "User"),
+			new FieldExportColumn("type", "Type"),
+			new FieldExportColumn("type", "Summary", 70),
+			new FieldExportColumn("createdtime", "Created Time"),
+			new FieldExportColumn("logvalue", "Hours"),
+			};
 
 	private Label lbTimeRange;
 
@@ -65,8 +64,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
-		
-		itemTimeLoggingService = AppContext.getSpringBean(ItemTimeLoggingService.class);
+
+		itemTimeLoggingService = AppContext
+				.getSpringBean(ItemTimeLoggingService.class);
 
 		Label titleLbl = new Label(
 				LocalizationHelper
@@ -90,13 +90,14 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		headerLayout.addComponent(lbTimeRange);
 		headerLayout.setComponentAlignment(lbTimeRange, Alignment.MIDDLE_LEFT);
 		headerLayout.setExpandRatio(lbTimeRange, 1.0f);
-		
+
 		exportBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
 		exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
 		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		headerLayout.addComponent(exportBtn);
 		exportBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -105,11 +106,14 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 								.getProject().getName() != null) ? CurrentProjectVariables
 								.getProject().getName() : "");
 				Resource res = new StreamResource(
-						new ExportTimeLoggingStreamResource(title,
-								EXPORT_COLUMNS, AppContext
+						new ExportTimeLoggingStreamResource(
+								title,
+								EXPORT_COLUMNS,
+								AppContext
 										.getSpringBean(ItemTimeLoggingService.class),
-										itemTimeLogginSearchCriteria), "timeLogging_list.xls", AppContext.getApplication());
-				 AppContext.getApplication().getMainWindow().open(res, "_blank");
+								itemTimeLogginSearchCriteria),
+						"timeLogging_list.xls", AppContext.getApplication());
+				AppContext.getApplication().getMainWindow().open(res, "_blank");
 			}
 		});
 		headerLayout.setComponentAlignment(exportBtn, Alignment.MIDDLE_RIGHT);
@@ -124,12 +128,14 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 		String fromDate = AppContext.formatDate(rangeField.getFrom());
 		String toDate = AppContext.formatDate(rangeField.getTo());
-		
-		Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(itemTimeLogginSearchCriteria);
-		
+
+		Double totalHour = itemTimeLoggingService
+				.getTotalHoursByCriteria(itemTimeLogginSearchCriteria);
+
 		if (totalHour != null && totalHour > 0) {
 			lbTimeRange.setValue(LocalizationHelper.getMessage(
-					TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR, fromDate, toDate, totalHour));
+					TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+					fromDate, toDate, totalHour));
 		} else {
 			lbTimeRange.setValue(LocalizationHelper.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));

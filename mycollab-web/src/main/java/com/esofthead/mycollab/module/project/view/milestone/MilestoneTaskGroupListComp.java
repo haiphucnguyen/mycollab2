@@ -43,6 +43,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 	}
 	
 	private class TaskGroupListView extends AbstractView implements TaskGroupDisplayView {
+		private static final long serialVersionUID = 1L;
 		private VerticalLayout mainLayout;
 		public void contructTaskLayout() {
 			mainLayout = new VerticalLayout();
@@ -52,6 +53,8 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 					LocalizationHelper
 							.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							SimpleTaskList taskList = new SimpleTaskList();

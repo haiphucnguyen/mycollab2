@@ -110,11 +110,9 @@ public class ExportTimeLoggingStreamResource extends
 								idRow = (Integer) PropertyUtils.getProperty(
 										rowObj, "typeid");
 							} catch (Exception e) {
-								log.error(
-										"Error when geting values for excel stream",
-										e);
 								throw new MyCollabException(
-										"Having error when exporting records to excel file.");
+										"Having error when exporting records to excel file.",
+										e);
 							}
 
 							if (value == null) {
@@ -145,11 +143,10 @@ public class ExportTimeLoggingStreamResource extends
 										value = task.getTaskname();
 									}
 								}
-								
+
 								createCell(wb, rowValue, (short) k,
 										CellStyle.ALIGN_LEFT,
-										CellStyle.VERTICAL_BOTTOM, value,
-										true);
+										CellStyle.VERTICAL_BOTTOM, value, true);
 							}
 						}
 
@@ -191,11 +188,12 @@ public class ExportTimeLoggingStreamResource extends
 
 		return inStream;
 	}
-	
+
 	protected Cell createCell(Workbook wb, Row row, short column, short halign,
 			short valign, Object value, boolean displayBorder) {
 		Cell cell = row.createCell(column);
-		CellStyle cellStyle = createBasicCellStyle(wb, halign, valign, displayBorder);
+		CellStyle cellStyle = createBasicCellStyle(wb, halign, valign,
+				displayBorder);
 		if (value instanceof Date) {
 			value = AppContext.formatDateTime((Date) value);
 		}
