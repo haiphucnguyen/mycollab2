@@ -18,24 +18,31 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.ValueListSelect;
+import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.data.Property;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutListener;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 public class AccountSearchPanel extends
 		GenericSearchPanel<AccountSearchCriteria> {
-
-	private class AccountAdvancedSearchLayout extends AdvancedSearchLayout {
+	public class AccountAdvancedSearchLayout extends
+			AdvancedSearchLayout<AccountSearchCriteria> {
 
 		private TextField nameField;
 		private TextField websiteField;
@@ -48,7 +55,7 @@ public class AccountSearchPanel extends
 		private UserListSelect userField;
 
 		public AccountAdvancedSearchLayout() {
-			super();
+			super(AccountSearchPanel.this);
 		}
 
 		@Override
@@ -65,34 +72,80 @@ public class AccountSearchPanel extends
 				gridLayout = new GridFormLayoutHelper(3, 3, "90px");
 			}
 
-			nameField = (TextField) gridLayout.addComponent(new TextField(),
-					"Name", 0, 0);
+			nameField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"nameField"), "Name",0, 0);
+			
+			websiteField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"websiteField"),"Website", 1, 0);
+			
+			anyPhoneField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"anyPhoneField"), "Any Phone", 2, 0);
 
-			websiteField = (TextField) gridLayout.addComponent(new TextField(),
-					"Website", 1, 0);
+			anyMailField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"anyMailField"), "Any Email", 0, 1);
 
-			anyPhoneField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Phone", 2, 0);
+			anyAddressField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"anyAddressField"), "Any Address", 1, 1);
 
-			anyMailField = (TextField) gridLayout.addComponent(new TextField(),
-					"Any Email", 0, 1);
+			cityField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"cityField"),"City", 2, 1);
 
-			anyAddressField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Address", 1, 1);
-
-			cityField = (TextField) gridLayout.addComponent(new TextField(),
-					"City", 2, 1);
-
-			industryField = (AccountIndustryListSelect) gridLayout
-					.addComponent(new AccountIndustryListSelect(), "Industry",
-							0, 2);
-
-			typeField = (AccountTypeListSelect) gridLayout.addComponent(
-					new AccountTypeListSelect(), "Type", 1, 2);
-
-			userField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assigned User", 2, 2);
+			industryField = (AccountIndustryListSelect) gridLayout.addComponent(this.createSeachSupportComboBox(new AccountIndustryListSelect()), "Industry",0, 2);
+			
+			typeField = (AccountTypeListSelect) gridLayout.addComponent(this.createSeachSupportComboBox(new AccountTypeListSelect()), "Type", 1, 2);
+			
+			userField = (UserListSelect) gridLayout.addComponent(this.createSeachSupportComboBox(new UserListSelect()), "Assigned User", 2, 2);
 			return gridLayout.getLayout();
+		}
+
+		protected AccountSearchCriteria fillupSearchCriteria() {
+			AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
+			searchCriteria.setAccountname(new StringSearchField(
+					SearchField.AND, (String) nameField.getValue()));
+
+			if (StringUtil.isNotNullOrEmpty((String) nameField.getValue())) {
+				searchCriteria.setAccountname(new StringSearchField(
+						SearchField.AND, (String) nameField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) websiteField.getValue())) {
+				searchCriteria.setWebsite(new StringSearchField(
+						SearchField.AND, (String) websiteField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) anyPhoneField.getValue())) {
+				searchCriteria.setAnyPhone(new StringSearchField(
+						SearchField.AND, (String) anyPhoneField.getValue()));
+			}
+
+			if (StringUtil
+					.isNotNullOrEmpty((String) anyAddressField.getValue())) {
+				searchCriteria.setAnyAddress(new StringSearchField(
+						SearchField.AND, (String) anyAddressField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) anyMailField.getValue())) {
+				searchCriteria.setAnyMail(new StringSearchField(
+						SearchField.AND, (String) anyMailField.getValue()));
+			}
+
+			final Collection<String> industries = (Collection<String>) industryField.getValue();
+			if (industries != null && industries.size() > 0) {
+				searchCriteria.setIndustries(new SetSearchField(
+						SearchField.AND, industries));
+			}
+
+			final Collection<String> types = (Collection<String>) typeField
+					.getValue();
+			if (types != null && types.size() > 0) {
+				searchCriteria.setTypes(new SetSearchField(SearchField.AND,
+						types));
+			}
+
+			final Collection<String> users = (Collection<String>) userField
+					.getValue();
+			if (users != null && users.size() > 0) {
+				searchCriteria.setAssignUsers(new SetSearchField(
+						SearchField.AND, users));
+			}
+
+			return searchCriteria;
 		}
 
 		@Override
@@ -107,86 +160,7 @@ public class AccountSearchPanel extends
 						@SuppressWarnings({ "unchecked", "rawtypes" })
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							searchCriteria = new AccountSearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setAccountname(new StringSearchField(
-											SearchField.AND, (String) nameField
-													.getValue()));
-
-							if (StringUtil.isNotNullOrEmpty((String) nameField
-									.getValue())) {
-								searchCriteria
-										.setAccountname(new StringSearchField(
-												SearchField.AND,
-												(String) nameField.getValue()));
-							}
-
-							if (StringUtil
-									.isNotNullOrEmpty((String) websiteField
-											.getValue())) {
-								searchCriteria
-										.setWebsite(new StringSearchField(
-												SearchField.AND,
-												(String) websiteField
-														.getValue()));
-							}
-
-							if (StringUtil
-									.isNotNullOrEmpty((String) anyPhoneField
-											.getValue())) {
-								searchCriteria
-										.setAnyPhone(new StringSearchField(
-												SearchField.AND,
-												(String) anyPhoneField
-														.getValue()));
-							}
-
-							if (StringUtil
-									.isNotNullOrEmpty((String) anyAddressField
-											.getValue())) {
-								searchCriteria
-										.setAnyAddress(new StringSearchField(
-												SearchField.AND,
-												(String) anyAddressField
-														.getValue()));
-							}
-
-							if (StringUtil
-									.isNotNullOrEmpty((String) anyMailField
-											.getValue())) {
-								searchCriteria
-										.setAnyMail(new StringSearchField(
-												SearchField.AND,
-												(String) anyMailField
-														.getValue()));
-							}
-
-							final Collection<String> industries = (Collection<String>) industryField
-									.getValue();
-							if (industries != null && industries.size() > 0) {
-								searchCriteria
-										.setIndustries(new SetSearchField(
-												SearchField.AND, industries));
-							}
-
-							final Collection<String> types = (Collection<String>) typeField
-									.getValue();
-							if (types != null && types.size() > 0) {
-								searchCriteria.setTypes(new SetSearchField(
-										SearchField.AND, types));
-							}
-
-							final Collection<String> users = (Collection<String>) userField
-									.getValue();
-							if (users != null && users.size() > 0) {
-								searchCriteria
-										.setAssignUsers(new SetSearchField(
-												SearchField.AND, users));
-							}
-
-							notifySearchHandler(searchCriteria);
+							AccountAdvancedSearchLayout.this.callSearchAction();
 
 						}
 					});
@@ -236,13 +210,30 @@ public class AccountSearchPanel extends
 		}
 	}
 
-	private class AccountBasicSearchLayout extends BasicSearchLayout {
+	private class AccountBasicSearchLayout extends
+			BasicSearchLayout<AccountSearchCriteria> {
 
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
 
 		public AccountBasicSearchLayout() {
-			super();
+			super(AccountSearchPanel.this);
+		}
+
+		protected AccountSearchCriteria fillupSearchCriteria() {
+			AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
+			searchCriteria.setAccountname(new StringSearchField(
+					SearchField.AND, ((String) nameField.getValue()).trim()));
+			if (myItemCheckbox.booleanValue()) {
+				searchCriteria.setAssignUser(new StringSearchField(
+						SearchField.AND, AppContext.getUsername()));
+			} else {
+				searchCriteria.setAssignUsers(null);
+			}
+
+			return searchCriteria;
 		}
 
 		@Override
@@ -250,32 +241,23 @@ public class AccountSearchPanel extends
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
 			// basicSearchBody.addComponent(new Label("Name"));
-			nameField = new TextField();
+			
+			nameField = this.createSeachSupportTextField(new TextField(),"NameFieldOfBasicSearch");
+			
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
 			// final Button searchBtn = new Button(
 			// LocalizationHelper
 			// .getMessage(CrmCommonI18nEnum.BUTTON_SEARCH));
+
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					searchCriteria = new AccountSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							SearchField.AND, AppContext.getAccountId()));
-					searchCriteria.setAccountname(new StringSearchField(
-							SearchField.AND, ((String) nameField.getValue())
-									.trim()));
-					if (myItemCheckbox.booleanValue()) {
-						searchCriteria.setAssignUser(new StringSearchField(
-								SearchField.AND, AppContext.getUsername()));
-					} else {
-						searchCriteria.setAssignUsers(null);
-					}
-					notifySearchHandler(searchCriteria);
+					AccountBasicSearchLayout.this.callSearchAction();
 				}
 			});
 
@@ -324,8 +306,6 @@ public class AccountSearchPanel extends
 		}
 	}
 
-	protected AccountSearchCriteria searchCriteria;
-
 	@Override
 	public void attach() {
 		super.attach();
@@ -369,4 +349,5 @@ public class AccountSearchPanel extends
 
 		return layout;
 	}
+
 }
