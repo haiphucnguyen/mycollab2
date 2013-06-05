@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
+import com.esofthead.mycollab.module.project.view.file.FileManagerPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
@@ -70,6 +71,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private MilestonePresenter milestonesPresenter;
 	private TaskPresenter taskPresenter;
 	private BugPresenter bugPresenter;
+	private FileManagerPresenter filePresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 	private TimeTrackingPresenter timePresenter;
@@ -136,6 +138,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				"Tasks", "menu_task.png"));
 		myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
 				"Bugs", "menu_bug.png"));
+		myProjectTab.addTab(constructProjectFileComponent(), new MenuButton(
+				"Files", "menu_file.png"));
 		myProjectTab.addTab(constructProjectRiskComponent(), new MenuButton(
 				"Risks", "menu_risk.png"));
 		myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
@@ -175,6 +179,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 											.getProjectId()));
 							gotoRiskView(new RiskScreenData.Search(
 									searchCriteria));
+						} else if ("Files".equals(caption)) {
+							filePresenter.go(ProjectViewImpl.this, null);
 						} else if ("Problems".equals(caption)) {
 							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
@@ -305,6 +311,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private Component constructProjectBugComponent() {
 		bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
 		return bugPresenter.getView();
+	}
+
+	private Component constructProjectFileComponent() {
+		filePresenter = PresenterResolver
+				.getPresenter(FileManagerPresenter.class);
+		return filePresenter.getView();
 	}
 
 	@Override

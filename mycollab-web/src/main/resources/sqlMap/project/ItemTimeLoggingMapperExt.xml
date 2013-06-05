@@ -6,10 +6,17 @@
         extends="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapper.ResultMapWithBLOBs"
         id="TimeLoggingResult"
         type="com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging">
-        <result column="logUserFullName" jdbcType="VARCHAR" property="logUserFullName" />
-        <result column="projectOrBugName" jdbcType="VARCHAR" property="projectOrBugName" />
-        <result column="status" jdbcType="INTEGER" property="status" />        
-
+        <result column="logUserFullName" jdbcType="VARCHAR"
+            property="logUserFullName" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+        <result column="projectShortName" jdbcType="VARCHAR"
+            property="projectShortName" />
+        <result column="percentageComplete" jdbcType="DOUBLE"
+            property="percentageComplete" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="dueDate" jdbcType="TIMESTAMP" property="dueDate" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -42,27 +49,29 @@
         </if>
     </sql>
 
-    <sql id="selectItem">
+    <sql id="selectTask">
         <![CDATA[
-          (
           	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
                  m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_time_logging.typeid, m_prj_time_logging.type,
-                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName, s_user.email as email,
-                 m_prj_task.taskname as projectOrBugName,
-                 m_prj_task.status as status
+                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                 m_prj_task.taskname as summary,  m_prj_task.status, m_prj_task.deadline AS dueDate, m_prj_task.percentagecomplete AS percentageComplete
+                
             FROM m_prj_time_logging
               LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
-              inner join m_prj_task on ( m_prj_time_logging.typeid = m_prj_task.id and m_prj_time_logging.type = "Project-Task" )
-          )Union (
-          	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
+              INNER JOIN m_prj_task ON ( m_prj_time_logging.typeid = m_prj_task.id and m_prj_time_logging.type = "Project-Task" )
+        
+        ]]>
+    </sql>
+
+    <sql id="selectBug">
+        <![CDATA[
+        SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
                  m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_time_logging.typeid, m_prj_time_logging.type,
-                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName, s_user.email as email,
-                 m_tracker_bug.summary as projectOrBugName,
-                 m_tracker_bug.status as status
+                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                 m_tracker_bug.summary,  m_tracker_bug.status, m_tracker_bug.duedate AS dueDate, NULL as percentageComplete
             FROM m_prj_time_logging
               LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
-              inner join m_tracker_bug on ( m_prj_time_logging.typeid = m_tracker_bug.id and m_prj_time_logging.type = "Project-Bug" )
-          )
+              INNER JOIN m_tracker_bug ON ( m_prj_time_logging.typeid = m_tracker_bug.id and m_prj_time_logging.type = "Project-Bug" )
         ]]>
     </sql>
 
@@ -96,15 +105,26 @@
         ORDER BY
         <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
-            m_prj_time_logging.createdTime DESC
+            createdTime DESC
         ]]>
     </sql>
 
     <select id="findPagableListByCriteria" parameterType="ItemTimeLoggingSearchCriteria"
         resultMap="TimeLoggingResult">
-
+        (
         <include
-            refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.selectItem" />
+            refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.selectTask" />
+ 
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1
+
+            <include
+                refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.querySearchCriteria" />
+        </trim>
+        ) UNION (
+        
+         <include
+            refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.selectBug" />
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1
@@ -112,6 +132,7 @@
             <include
                 refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.querySearchCriteria" />
         </trim>
+        )
         <include refid="orderStatement" />
     </select>
 </mapper>
