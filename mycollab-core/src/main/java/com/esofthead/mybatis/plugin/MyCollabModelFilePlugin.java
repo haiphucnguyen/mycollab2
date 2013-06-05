@@ -155,6 +155,11 @@ public class MyCollabModelFilePlugin extends
 	@Override
 	public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
+		String commentLine = "/*Domain class of table %s*/";
+		topLevelClass
+				.addFileCommentLine(String.format(commentLine,
+						introspectedTable
+								.getAliasedFullyQualifiedTableNameAtRuntime()));
 		if (!isBlobDomainGenerated(introspectedTable)) {
 			topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 		} else {

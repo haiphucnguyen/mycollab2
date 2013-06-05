@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
 
@@ -36,23 +37,23 @@ public class ContentJcrDaoTest extends ServiceTest {
 
 	@Test
 	public void testGetContent() {
-		Content content = contentJcrDao.getResource("example/a");
+		Resource content = contentJcrDao.getResource("example/a");
 		Assert.assertNotNull(content);
 	}
 
 	@Test
 	public void testRemoveContent() {
 		contentJcrDao.removeResource("example/a/b");
-		Content content = contentJcrDao.getResource("example/a/b");
+		Resource content = contentJcrDao.getResource("example/a/b");
 		Assert.assertNull(content);
 	}
 
-//	public void testSaveOverride() {
-//		Content pageContent = new Content();
-//		pageContent.setCreatedBy("hainguyen");
-//		pageContent.setTitle("page example");
-//		pageContent.setDescription("aaa");
-//		pageContent.setPath("a/b/xyz.mycollabtext");
-//		contentJcrDao.saveContent(pageContent, "example/a/b");
-//	}
+	// public void testSaveOverride() {
+	// Content pageContent = new Content();
+	// pageContent.setCreatedBy("hainguyen");
+	// pageContent.setTitle("page example");
+	// pageContent.setDescription("aaa");
+	// pageContent.setPath("a/b/xyz.mycollabtext");
+	// contentJcrDao.saveContent(pageContent, "example/a/b");
+	// }
 }

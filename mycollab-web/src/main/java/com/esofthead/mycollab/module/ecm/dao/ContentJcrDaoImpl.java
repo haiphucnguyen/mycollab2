@@ -5,10 +5,8 @@ import java.util.List;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
-import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.ValueFormatException;
 import javax.jcr.nodetype.NodeType;
 
 import org.apache.jackrabbit.commons.JcrUtils;
@@ -45,7 +43,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			public Object doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, content.getPath()); // forward to current path
+				Node node = getNode(rootNode, content.getPath());
+				// forward to current path
 				if (node != null) {
 					if (isNodeFolder(node)) {
 						String errorStr = String
@@ -68,6 +67,22 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					ContentNodeMapper cnm = new ContentNodeMapper();
 					cnm.convertToNode(session, content);
 				}
+				return null;
+			}
+		});
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void createFolder(final Folder folder) {
+		log.debug("Save content {} {}", folder, jcrTemplate);
+		jcrTemplate.execute(new JcrCallback() {
+
+			@Override
+			public Object doInJcr(Session session) throws IOException,
+					RepositoryException {
+				FolderNodeMapper nodeMapper = new FolderNodeMapper();
+				nodeMapper.convertToNode(session, folder);
 				return null;
 			}
 		});
@@ -216,31 +231,20 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				String[] pathStr = path.split("/");
 				Node parentNode = rootNode;
 				// create folder note
-				for (int i = 0; i < pathStr.length - 1; i++) { // move to
-																// lastest node
-																// of the path
+				for (int i = 0; i < pathStr.length - 1; i++) {
+					// move to lastest node of the path
 					Node childNode = getNode(parentNode, pathStr[i]);
 					if (childNode != null) {
 						if (!isNodeFolder(childNode)) {
-							throw new ContentException("Invalid path"); // node
-																		// must
-																		// is
-																		// folder
+							// node must be the folder
+							throw new ContentException("Invalid path");
 						}
 					} else { // add node
 						childNode = JcrUtils.getOrAddFolder(parentNode,
 								pathStr[i]);
-						parentNode = childNode;
+						session.save();
 					}
 				}
-				Node addNode = parentNode.addNode(pathStr[pathStr.length - 1],
-						"{http://www.esofthead.com/mycollab}content");
-				addNode.addMixin(NodeType.MIX_LAST_MODIFIED);
-				addNode.addMixin(NodeType.MIX_TITLE);
-
-				addNode.setProperty("jcr:created", folder.getCreated());
-				addNode.setProperty("jcr:createdBy", folder.getCreatedBy());
-				session.save();
 			} catch (Exception e) {
 				log.debug("error" + e.getMessage());
 			}
@@ -265,12 +269,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					content.setLastModified(node
 							.getProperty("jcr:lastModified").getDate());
 					return content;
-				} catch (ValueFormatException e) {
-					e.printStackTrace();
-				} catch (PathNotFoundException e) {
-					e.printStackTrace();
-				} catch (RepositoryException e) {
-					e.printStackTrace();
+				} catch (Exception e) {
+					log.debug("Error while convert content to node", e);
 				}
 			}
 			return null;
@@ -280,7 +280,6 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 		public void convertToNode(Session session, Content content) {
 			try {
 				String path = content.getPath();
-				log.debug("Path : " + path);
 				Node rootNode = session.getRootNode();
 				Node node = getNode(rootNode, path);
 				if (node != null) {
@@ -297,18 +296,16 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				String[] pathStr = path.split("/");
 				Node parentNode = rootNode;
 				// create folder note
-				for (int i = 0; i < pathStr.length - 1; i++) { // move to
-																// lastest node
-																// of the path
+				for (int i = 0; i < pathStr.length - 1; i++) {
+					// move to lastest node of the path
 					Node childNode = getNode(parentNode, pathStr[i]);
 					if (childNode != null) {
 						if (!isNodeFolder(childNode)) {
-							throw new ContentException("Invalid path"); // node
-																		// must
-																		// is
-																		// folder
+							// node must is folder
+							throw new ContentException("Invalid path");
 						}
-					} else { // add node
+					} else {
+						// add node
 						childNode = JcrUtils.getOrAddFolder(parentNode,
 								pathStr[i]);
 						parentNode = childNode;

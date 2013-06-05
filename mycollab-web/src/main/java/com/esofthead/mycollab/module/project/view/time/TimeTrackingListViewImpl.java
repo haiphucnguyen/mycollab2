@@ -4,22 +4,18 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.module.file.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -52,11 +48,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private ItemTimeLoggingService itemTimeLoggingService;
 	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
 			new FieldExportColumn("logUserFullName", "User"),
-			new FieldExportColumn("type", "Type"),
 			new FieldExportColumn("type", "Summary", 70),
 			new FieldExportColumn("createdtime", "Created Time"),
-			new FieldExportColumn("logvalue", "Hours"),
-			};
+			new FieldExportColumn("logvalue", "Hours"), };
 
 	private Label lbTimeRange;
 
@@ -146,7 +140,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 				AppContext.getSpringBean(ItemTimeLoggingService.class),
 				SimpleItemTimeLogging.class, new String[] { "logUserFullName",
-						"type", "createdtime", "logvalue" }, new String[] {
+						"summary", "createdtime", "logvalue" }, new String[] {
 						"User", "Summary", "Created Time", "Hours" });
 
 		tableItem.addGeneratedColumn("logUserFullName",
@@ -165,7 +159,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					}
 				});
 
-		tableItem.addGeneratedColumn("type", new Table.ColumnGenerator() {
+		tableItem.addGeneratedColumn("summary", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -178,12 +172,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 				if (itemLogging.getType().equals(MonitorTypeConstants.PRJ_BUG)) {
 
-					BugService bugService = AppContext
-							.getSpringBean(BugService.class);
-					SimpleBug bug = bugService.findBugById(itemLogging
-							.getTypeid());
-
-					b = new ButtonLink(bug.getSummary(),
+					b = new ButtonLink(itemLogging.getSummary(),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -196,21 +185,17 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 							});
 					b.setIcon(new ThemeResource("icons/16/project/bug.png"));
 
-					if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+					if (BugStatusConstants.CLOSE.equals(itemLogging.getStatus())) {
 						b.addStyleName(UIConstants.LINK_COMPLETED);
-					} else if (bug.getDuedate() != null
-							&& (bug.getDuedate().before(new GregorianCalendar()
-									.getTime()))) {
+					} else if (itemLogging.getDueDate() != null
+							&& (itemLogging.getDueDate()
+									.before(new GregorianCalendar().getTime()))) {
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				} else if (itemLogging.getType().equals(
 						MonitorTypeConstants.PRJ_TASK)) {
-					ProjectTaskService taskService = AppContext
-							.getSpringBean(ProjectTaskService.class);
-					SimpleTask task = taskService.findTaskById(itemLogging
-							.getTypeid());
 
-					b = new ButtonLink(task.getTaskname(),
+					b = new ButtonLink(itemLogging.getSummary(),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -223,23 +208,16 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 							});
 					b.setIcon(new ThemeResource("icons/16/project/task.png"));
 
-					if (task.getPercentagecomplete() != null
-							&& 100d == task.getPercentagecomplete()) {
+					if (itemLogging.getPercentageComplete() != null
+							&& 100d == itemLogging.getPercentageComplete()) {
 						b.addStyleName(UIConstants.LINK_COMPLETED);
 					} else {
-						if ("Pending".equals(task.getStatus())) {
+						if ("Pending".equals(itemLogging.getStatus())) {
 							b.addStyleName(UIConstants.LINK_PENDING);
-						} else if ((task.getEnddate() != null && (task
-								.getEnddate().before(new GregorianCalendar()
-								.getTime())))
-								|| (task.getActualenddate() != null && (task
-										.getActualenddate()
+						} else if (itemLogging.getDueDate() != null
+								&& (itemLogging.getDueDate()
 										.before(new GregorianCalendar()
-												.getTime())))
-								|| (task.getDeadline() != null && (task
-										.getDeadline()
-										.before(new GregorianCalendar()
-												.getTime())))) {
+												.getTime()))) {
 							b.addStyleName(UIConstants.LINK_OVERDUE);
 						}
 					}
