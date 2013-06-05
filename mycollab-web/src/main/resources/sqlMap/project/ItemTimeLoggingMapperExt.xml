@@ -11,6 +11,8 @@
         <result column="projectName" jdbcType="VARCHAR" property="projectName" />
         <result column="projectShortName" jdbcType="VARCHAR"
             property="projectShortName" />
+        <result column="summary" jdbcType="VARCHAR"
+            property="summary" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -45,6 +47,7 @@
 
     <sql id="selectItem">
         <![CDATA[
+                  
           SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
                  m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_time_logging.typeid, m_prj_time_logging.type,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,

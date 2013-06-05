@@ -8,6 +8,8 @@ public class SimpleItemTimeLogging extends ItemTimeLogging {
 	private String projectName;
 	
 	private String projectShortName;
+	
+	private String summary;
 
 	public String getLogUserFullName() {
 		return logUserFullName;
@@ -31,5 +33,13 @@ public class SimpleItemTimeLogging extends ItemTimeLogging {
 
 	public void setProjectShortName(String projectShortName) {
 		this.projectShortName = projectShortName;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 }
