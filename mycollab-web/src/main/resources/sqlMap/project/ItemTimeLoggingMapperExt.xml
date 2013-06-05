@@ -6,8 +6,9 @@
         extends="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapper.ResultMapWithBLOBs"
         id="TimeLoggingResult"
         type="com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging">
-        <result column="logUserFullName" jdbcType="VARCHAR"
-            property="logUserFullName" />
+        <result column="logUserFullName" jdbcType="VARCHAR" property="logUserFullName" />
+        <result column="projectOrBugName" jdbcType="VARCHAR" property="projectOrBugName" />
+        <result column="status" jdbcType="INTEGER" property="status" />        
     </resultMap>
     
     <sql id="querySearchCriteria">
@@ -40,11 +41,25 @@
 
 	<sql id="selectItem">
         <![CDATA[
-          SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
+          (
+          	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
                  m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_time_logging.typeid, m_prj_time_logging.type,
-                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName, s_user.email as email
+                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName, s_user.email as email,
+                 m_prj_task.taskname as projectOrBugName,
+                 m_prj_task.status as status
             FROM m_prj_time_logging
               LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+              inner join m_prj_task on ( m_prj_time_logging.typeid = m_prj_task.id and m_prj_time_logging.type = "Project-Task" )
+          )Union (
+          	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
+                 m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_time_logging.typeid, m_prj_time_logging.type,
+                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName, s_user.email as email,
+                 m_tracker_bug.summary as projectOrBugName,
+                 m_tracker_bug.status as status
+            FROM m_prj_time_logging
+              LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+              inner join m_tracker_bug on ( m_prj_time_logging.typeid = m_tracker_bug.id and m_prj_time_logging.type = "Project-Bug" )
+          )
         ]]>
 	</sql>
 
