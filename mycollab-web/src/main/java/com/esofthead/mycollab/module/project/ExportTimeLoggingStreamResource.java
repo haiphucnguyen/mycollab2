@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.eclipse.jetty.util.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,24 +130,29 @@ public class ExportTimeLoggingStreamResource extends
 												.equals("Summary")
 										&& idRow > -1) {
 
-									if (value
-											.equals(MonitorTypeConstants.PRJ_BUG)) {
-
-										BugService bugService = AppContext
-												.getSpringBean(BugService.class);
-										SimpleBug bug = bugService
-												.findBugById(idRow);
-										value = bug.getSummary();
-									} else if (value
-											.equals(MonitorTypeConstants.PRJ_TASK)) {
-										ProjectTaskService taskService = AppContext
-												.getSpringBean(ProjectTaskService.class);
-										SimpleTask task = taskService
-												.findTaskById(idRow);
-										value = task.getTaskname();
+//									if (value
+//											.equals(MonitorTypeConstants.PRJ_BUG)) {
+//
+//										BugService bugService = AppContext
+//												.getSpringBean(BugService.class);
+//										SimpleBug bug = bugService
+//												.findBugById(idRow);
+//										value = bug.getSummary();
+//									} else if (value
+//											.equals(MonitorTypeConstants.PRJ_TASK)) {
+//										ProjectTaskService taskService = AppContext
+//												.getSpringBean(ProjectTaskService.class);
+//										SimpleTask task = taskService
+//												.findTaskById(idRow);
+//										value = task.getTaskname();
+//									}
+									try {
+										value = (String) PropertyUtils.getProperty(
+												rowObj, "summary");
+									} catch (Exception e) {
 									}
 								}
-
+								
 								createCell(wb, rowValue, (short) k,
 										CellStyle.ALIGN_LEFT,
 										CellStyle.VERTICAL_BOTTOM, value, true);
