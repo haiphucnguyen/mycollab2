@@ -10,6 +10,7 @@ import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -49,9 +50,13 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
 		listContainer = new VerticalLayout();
 		this.addComponent(listContainer);
 
+		final CssLayout bottomLayoutWrapper = new CssLayout();
+		bottomLayoutWrapper.setWidth("100%");
+		bottomLayoutWrapper.addStyleName("listControl");
+
 		final HorizontalLayout bottomLayout = new HorizontalLayout();
 		bottomLayout.setWidth("100%");
-		bottomLayout.addStyleName("listControl");
+		bottomLayoutWrapper.addComponent(bottomLayout);
 
 		final HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSizeUndefined();
@@ -115,7 +120,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
 		});
 		controlsLayout.addComponent(last);
 
-		this.addComponent(bottomLayout);
+		this.addComponent(bottomLayoutWrapper);
 	}
 
 	private void checkButtonStatus() {

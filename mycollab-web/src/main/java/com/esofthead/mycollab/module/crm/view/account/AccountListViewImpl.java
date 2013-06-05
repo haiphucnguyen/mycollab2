@@ -42,7 +42,7 @@ public class AccountListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public AccountListViewImpl() {
-		this.setSpacing(true);
+		setSpacing(true);
 
 		accountSearchPanel = new AccountSearchPanel();
 		this.addComponent(accountSearchPanel);
@@ -52,6 +52,51 @@ public class AccountListViewImpl extends AbstractView implements
 		this.addComponent(accountListLayout);
 
 		generateDisplayTable();
+	}
+
+	private ComponentContainer constructTableActionControls() {
+		final HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
+
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		selectOptionButton.setSizeUndefined();
+		layout.addComponent(selectOptionButton);
+
+		final Button deleteBtn = new Button(
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+		deleteBtn.setEnabled(AppContext
+				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
+
+		tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		tableActionControls.addOptionItem("mail",
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
+		tableActionControls.addOptionItem("export",
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
+		tableActionControls.setVisible(false);
+
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+
+		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+		return layout;
+	}
+
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setVisible(false);
+		selectOptionButton.setSelectedChecbox(false);
+		selectedItemsNumberLabel.setValue("");
+	}
+
+	@Override
+	public void enableActionControls(final int numOfSelectedItems) {
+		tableActionControls.setVisible(true);
+		selectedItemsNumberLabel.setValue(LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
+						numOfSelectedItems));
 	}
 
 	private void generateDisplayTable() {
@@ -97,8 +142,9 @@ public class AccountListViewImpl extends AbstractView implements
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleAccount account = (SimpleAccount) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleAccount account = (SimpleAccount) event
+								.getData();
 						if ("accountname".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new AccountEvent.GotoRead(
@@ -113,57 +159,13 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
-		return accountSearchPanel;
-	}
-
-	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
-
-		Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
-		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
-
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		tableActionControls.addOptionItem("export",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
-		tableActionControls.setVisible(false);
-
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-
-		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
-		return layout;
-	}
-
-	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue(LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
-						numOfSelectedItems));
-	}
-
-	@Override
-	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
-	}
-
-	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
 		return selectOptionButton;
+	}
+
+	@Override
+	public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
+		return tableItem;
 	}
 
 	@Override
@@ -172,12 +174,12 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
-		return tableItem;
+	public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
+		return accountSearchPanel;
 	}
 
 	@Override
-	public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
+	public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
 		return tableItem;
 	}
 }

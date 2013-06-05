@@ -74,6 +74,7 @@ a {
 
 .v-button .v-icon,.v-nativebutton .v-icon {
 	vertical-align: top;
+	margin: 0px;
 }
 
 div.v-button-link {
@@ -170,10 +171,20 @@ body div>input.v-filterselect-input[type="text"] {
 
 .v-button-wrap {
 	text-overflow: clip;
+	height: auto;
 }
 
 .v-button-caption {
 	vertical-align: top;
+}
+
+.v-button:active .v-button-wrap, .v-ie7 .v-pressed.v-button .v-button-wrap, .v-ie8 .v-pressed.v-button .v-button-wrap, .v-button-down .v-button-wrap {
+	padding: 0px;
+}
+
+select.v-select-select {
+	background: none no-repeat left top #FFFFFF;
+	border: 1px solid #A9A9A9;
 }
 /* div > input.v-textfield[type="text"] { */
 /* 	height: 13px; */
@@ -207,6 +218,10 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	margin: 0px;
 }
 
+.v-button-wrap, .v-disabled:active .v-button-wrap {
+	padding: 0px;
+}
+
 .v-button-bluebtn,.v-button.v-button-bluebtn.v-disabled:active {
 	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
 		#2599c8;
@@ -224,11 +239,11 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	text-shadow: 1px 1px 0px #1570cd;
 	border-radius: 3px;
 	margin-right: 4px;
+	padding: 3px 13px;
 }
 
 .v-button.bluebtn:active .v-button-wrap {
 	border: none;
-	padding: 3px 13px;
 }
 
 .v-button.bluebtn:focus, .v-button.bluebtn:active {
@@ -239,10 +254,14 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	display: none;
 }
 
+.v-splitbutton .v-popupbutton.bluebtn .v-button-wrap, .v-splitbutton div.v-disabled.v-popupbutton.bluebtn .v-button-wrap {
+	padding: 0px;
+}
+
 .v-button-bluebtn .v-button-wrap,.v-button-bluebtn.v-disabled .v-button-wrap
-	{
+{
 	background-image: none;
-	padding: 3px 13px;
+	padding: 0px;
 }
 
 .v-button-bluebtn:hover {
@@ -338,6 +357,10 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	height: 100%;
 }
 
+.v-ie7 .v-button-link.v-button-wordWrap .v-button-caption {
+	white-space: nowrap;
+}
+
 .v-table-cell-wrapper .v-button-link.v-button-wordWrap .v-button-wrap {
 	display: table;
 }
@@ -408,8 +431,10 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	zoom: 1;
 	position: relative;
 }
-
-.h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap:active, .h-sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap
+v-ie .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link, v-ie6 .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link, .v-ie7 .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link {
+	margin: 0px;
+}
+.h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .v-ie .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link .v-button-wrap, .v-ie7 .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link .v-button-wrap, .h-sidebar-menu .v-csslayout-container div.v-button-link:active .v-button-wrap, .h-sidebar-menu .v-csslayout-container div.v-button-link:focus .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap:active, .h-sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap
 {
 	margin: 7px auto 0px;
 	display: inline-block;
@@ -1191,6 +1216,7 @@ input.v-textfield-errorField {
 	border-bottom-left-radius: 5px;
 	border: 1px solid #8F8F8F;
 	max-width: 1130px;
+	margin: 20px auto;
 }
 
 .projectDashboardView .v-label-h1,.projectDashboardView .v-label h1 {
@@ -1235,8 +1261,8 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .sidebar-menu .tab-selected,.accountViewContainer .sidebar-menu .selected
-	{
-	background: none;
+{
+	background: none no-repeat scroll 0px 0px rgb(40, 126, 206);
 }
 
 .projectDashboardView .v-nativebutton .v-nativebutton-caption {
@@ -1249,7 +1275,7 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .v-nativebutton-tab-selected .v-nativebutton-caption,.projectDashboardView .tab-selected .v-nativebutton-caption
-	{
+{
 	background: #287ECE;
 	font-weight: bold;
 	font-size: 15px;
@@ -1271,7 +1297,7 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption
-	{ /* 	background-color: #F3F3F3; */
+{ /* 	background-color: #F3F3F3; */
 	
 }
 
@@ -1956,10 +1982,9 @@ input.v-textfield-errorField {
 }
 
 .v-button.v-button-round-border .v-button-wrap,.v-button.v-button-round-border:active .v-button-wrap
-	{
+{
 	border: none;
 	background: none;
-	padding: 2px 10px;
 }
 
 .v-button.v-button-round-border:hover { /* 	border: none; */
@@ -1972,7 +1997,7 @@ input.v-textfield-errorField {
 
 /* Split button */
 .v-splitbutton .v-button {
-	height: 26px !important;
+/* 	height: auto !important; */
 }
 
 .v-splitbutton-esofthead {
@@ -1981,8 +2006,8 @@ input.v-textfield-errorField {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-.v-splitbutton-esofthead .v-button-esofthead,.v-splitbutton-esofthead .v-button-esofthead.v-disabled
-	{
+.v-splitbutton-esofthead .v-button-esofthead,.v-splitbutton-esofthead .v-button-esofthead.v-disabled, .v-splitbutton-esofthead .v-button-esofthead:active
+{
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#fcfcfc;
 	/* 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fcfcfc), color-stop(1, #dcdcdc) ); */
@@ -1993,6 +2018,7 @@ input.v-textfield-errorField {
 	/* 	background-image: linear-gradient(top,#fcfcfc,#dcdcdc); */
 	border-radius: 25px 0px 0px 25px;
 	border-right: none;
+	padding: 4px 6px 4px 15px;
 }
 
 .v-splitbutton-esofthead .v-button-esofthead.bluebtn {
@@ -2010,15 +2036,8 @@ input.v-textfield-errorField {
 	border-color: rgb(171, 171, 171);
 }
 
-.v-splitbutton-esofthead .v-button.v-button-esofthead .v-button-wrap {
-	padding-right: 6px;
-	padding-left: 15px;
-}
-
-.v-splitbutton-esofthead .v-button.v-button-esofthead:active .v-button-wrap
-	{
+.v-splitbutton-esofthead .v-button.v-button-esofthead .v-button-wrap, .v-splitbutton-esofthead .v-button.v-button-esofthead:active .v-button-wrap {
 	border: none;
-	padding: 4px 6px 4px 15px;
 }
 
 .v-splitbutton-esofthead .v-button-esofthead.v-popupbutton {
@@ -2040,7 +2059,7 @@ input.v-textfield-errorField {
 }
 
 .v-splitbutton-esofthead .v-button-esofthead.bluebtn.v-popupbutton:focus
-	{
+{
 	border-left-color: rgb(47, 91, 183);
 }
 
@@ -2048,13 +2067,20 @@ input.v-textfield-errorField {
 	background-image: none;
 }
 
-.v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton .v-button-wrap,.v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton:active .v-button-wrap
-	{
+.v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton,.v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton:active
+{
 	padding: 4px 8px 4px 2px;
 }
 .v-splitbutton .bluebtn {
 	margin: 0px;
 	border-radius: 3px 0px 0px 3px;
+	padding: 3px 8px;
+}
+/* .v-ie.v-ie7 .v-splitbutton .bluebtn { */
+/* 	padding: 5px 8px 0px 8px; */
+/* } */
+.v-ie .v-splitbutton .bluebtn {
+	padding: 5px 8px 0px 8px;
 }
 .v-splitbutton .v-popupbutton.bluebtn {
 	border-width: 1px 1px 1px 0px;
@@ -2062,8 +2088,11 @@ input.v-textfield-errorField {
 	border-radius: 0px 3px 3px 0px;
 	
 }
-.v-splitbutton .v-popupbutton.bluebtn .v-button-wrap, .v-splitbutton .v-popupbutton.bluebtn:active .v-button-wrap {
-	padding: 3px 10px 3px 2px;
+.v-splitbutton .v-popupbutton.bluebtn, .v-splitbutton .v-popupbutton.bluebtn:active {
+	padding: 3px 7px 8px 2px;
+}
+.v-ie7 .v-splitbutton .v-popupbutton.bluebtn,.v-ie7 .v-splitbutton .v-popupbutton.bluebtn:active {
+	padding: 5px 7px 0px 2px;
 }
 .v-splitbutton .v-popupbutton.bluebtn .v-popupindicator {
 	background: url("icons/sprites.png") no-repeat scroll -5px -10px transparent;
@@ -2098,10 +2127,8 @@ input.v-textfield-errorField {
 .v-table-row-odd {
     background: none repeat scroll 0% 0% rgb(247, 247, 247);
 }
-.v-horizontallayout-listControl .v-horizontallayout-margin {
+.v-csslayout-listControl > .v-csslayout-margin {
 	padding: 2px;
-}
-.listControl {
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	border-color: #a9a9a9;
@@ -2111,6 +2138,7 @@ input.v-textfield-errorField {
 	box-sizing: border-box;
 	background: none no-repeat 0 0 #f5f5f5;
 }
+
 .v-table-row-spacer {
 	background: none no-repeat 0 0 rgb(212, 223, 239);
 }
@@ -2189,7 +2217,8 @@ input.v-textfield-errorField {
 .message-search input {
 	border-radius: 3px 0px 0px 3px;
 }
-.message-list .beanlist-content {
+.message-list .v-csslayout-beanlist-content > .v-csslayout-margin {
+	padding: 5px 15px;
 	background: none no-repeat left top rgb(229, 239, 240);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -2198,11 +2227,11 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-color: #a9a9a9;
 }
-.message-list .v-verticallayout-beanlist-content .v-verticallayout-margin {
-	padding: 5px 15px;
-}
-.message-list .v-verticallayout-beanlist-content .message-container .v-verticallayout-margin{
-	padding: 0px;
+.message-list .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+	position: relative;
 }
 .message {
 	margin: 5px 0px;
@@ -2220,6 +2249,10 @@ input.v-textfield-errorField {
 	border-radius: 5px;
 	margin-left: 10px;
 	position: relative;
+}
+
+.v-ie7 .message .message-container >.v-csslayout-margin {
+	margin-left: 0px;
 }
 
 .message .message-container>.v-csslayout-margin>.v-csslayout-container {
@@ -2609,6 +2642,7 @@ div.v-lazyloadingwrapper-loading {
 	border: none;
 	background: none no-repeat 0 0 transparent;
 	border-radius: 0px;
+	padding: 4px 13px;
 }
 
 .detachedtabs .v-button-tab>.v-button-wrap {
@@ -2619,7 +2653,7 @@ div.v-lazyloadingwrapper-loading {
 }
 
 .detachedtabs .v-button-tab>.v-button-wrap:active {
-	padding: 4px 13px;
+	
 }
 
 .detachedtabs .v-button-tab.tab-selected>.v-button-wrap {

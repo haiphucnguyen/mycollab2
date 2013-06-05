@@ -31,6 +31,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -139,7 +140,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		}
 	}
 
-	private HorizontalLayout createControls() {
+	private CssLayout createControls() {
 		final Label itemsPerPageLabel = new Label("Items per page:");
 		itemsPerPageSelect = new ComboBox();
 
@@ -188,8 +189,14 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		separatorLabel.setWidth(null);
 		totalPagesLabel.setWidth(null);
 
+		final CssLayout controlBarWrapper = new CssLayout();
+		controlBarWrapper.setStyleName("listControl");
+		controlBarWrapper.setWidth("100%");
+
 		final HorizontalLayout controlBar = new HorizontalLayout();
-		controlBar.setStyleName("listControl");
+		controlBar.setWidth("100%");
+		controlBarWrapper.addComponent(controlBar);
+
 		final HorizontalLayout pageSize = new HorizontalLayout();
 		final HorizontalLayout pageManagement = new HorizontalLayout();
 		first = new ButtonLink("<<", new ClickListener() {
@@ -275,12 +282,13 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		pageManagement.setWidth(null);
 		pageManagement.setSpacing(true);
 		controlBar.addComponent(pageSize);
+		controlBar.setComponentAlignment(pageSize, Alignment.MIDDLE_LEFT);
+		controlBar.setExpandRatio(pageSize, 1.0f);
 		controlBar.addComponent(pageManagement);
-		controlBar.setComponentAlignment(pageManagement,
-				Alignment.MIDDLE_CENTER);
-		controlBar.setWidth("100%");
-		controlBar.setExpandRatio(pageSize, 1);
-		return controlBar;
+		controlBar
+				.setComponentAlignment(pageManagement, Alignment.MIDDLE_RIGHT);
+
+		return controlBarWrapper;
 	}
 
 	@Override
