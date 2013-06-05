@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,21 +15,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.eclipse.jetty.util.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.file.ExportExcelStreamResource;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
@@ -129,30 +122,16 @@ public class ExportTimeLoggingStreamResource extends
 										&& exportColumns[k].getDisplayName()
 												.equals("Summary")
 										&& idRow > -1) {
-
-//									if (value
-//											.equals(MonitorTypeConstants.PRJ_BUG)) {
-//
-//										BugService bugService = AppContext
-//												.getSpringBean(BugService.class);
-//										SimpleBug bug = bugService
-//												.findBugById(idRow);
-//										value = bug.getSummary();
-//									} else if (value
-//											.equals(MonitorTypeConstants.PRJ_TASK)) {
-//										ProjectTaskService taskService = AppContext
-//												.getSpringBean(ProjectTaskService.class);
-//										SimpleTask task = taskService
-//												.findTaskById(idRow);
-//										value = task.getTaskname();
-//									}
 									try {
-										value = (String) PropertyUtils.getProperty(
-												rowObj, "summary");
+										value = (String) PropertyUtils
+												.getProperty(rowObj, "summary");
 									} catch (Exception e) {
+										log.error(
+												"Error while export time logging",
+												e);
 									}
 								}
-								
+
 								createCell(wb, rowValue, (short) k,
 										CellStyle.ALIGN_LEFT,
 										CellStyle.VERTICAL_BOTTOM, value, true);
