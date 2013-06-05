@@ -220,4 +220,21 @@
         </trim>
     </select>
     
+    <update id="updateListAccount" parameterType="map">
+    	UPDATE 
+    		m_crm_account
+    	SET 
+    		assignUser = #{accountSearchCriteria.assignUser,jbdcType="VARCHAR"},
+<!--      		billingAddress = #{billingAddress,jdbcType="VARCHAR"}, -->
+<!--      		city = #{city, jbdcType="VARCHAR"}, -->
+<!--      		postalCode = #{postalCode, jbdcType="VARCHAR"}, -->
+<!--       		createdTime = #{createdtime,jdbcType=TIMESTAMP} -->
+    	WHERE 
+    		id in (
+				<foreach open="(" collection="list" index="id" item="id"
+                      close=")" separator=",">
+               	 	#{id}
+            	</foreach>
+    		) 
+    </update>
 </mapper>
