@@ -229,12 +229,10 @@
 <!--      		city = #{city, jbdcType="VARCHAR"}, -->
 <!--      		postalCode = #{postalCode, jbdcType="VARCHAR"}, -->
 <!--       		createdTime = #{createdtime,jdbcType=TIMESTAMP} -->
-    	WHERE 
-    		id in (
-				<foreach open="(" collection="list" index="id" item="id"
-                      close=")" separator=",">
-               	 	#{id}
-            	</foreach>
-    		) 
+    	WHERE id IN 
+			<foreach open="(" collection="list" index="id" item="id"
+                     close=")" separator=",">
+              	 	#{id}
+           	</foreach>
     </update>
 </mapper>
