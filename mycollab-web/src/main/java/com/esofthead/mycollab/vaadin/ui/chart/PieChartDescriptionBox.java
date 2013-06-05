@@ -21,26 +21,27 @@ public class PieChartDescriptionBox {
 	private static Map<String, Comparable> mapKeyStatus = new HashMap<String, Comparable>();
 
 	public static ComponentContainer createLegendBox(
-			final PieChartWrapper pieChartHost, DefaultPieDataset pieDataSet) {
-		CustomLayout boxWrapper = new CustomLayout("legendBox");
-		CssLayout mainLayout = new CssLayout();
-		mainLayout.addStyleName("border-box");
+			final PieChartWrapper pieChartHost,
+			final DefaultPieDataset pieDataSet) {
+		final CustomLayout boxWrapper = new CustomLayout("legendBox");
+		final CssLayout mainLayout = new CssLayout();
+		// mainLayout.addStyleName("border-box");
 		mainLayout.setSizeUndefined();
-		List keys = pieDataSet.getKeys();
+		final List keys = pieDataSet.getKeys();
 		for (int i = 0; i < keys.size(); i++) {
-			HorizontalLayout layout = new HorizontalLayout();
+			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setMargin(false, false, false, true);
 			layout.addStyleName("inline-block");
-			Comparable key = (Comparable) keys.get(i);
+			final Comparable key = (Comparable) keys.get(i);
 
-			String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
+			final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
 					+ GenericChartWrapper.CHART_COLOR_STR[i
 							% GenericChartWrapper.CHART_COLOR_STR.length]
 					+ "\" />";
-			Label lblCircle = new Label(color);
+			final Label lblCircle = new Label(color);
 			lblCircle.setContentMode(Label.CONTENT_XHTML);
 
-			Button btnLink = new Button(
+			final Button btnLink = new Button(
 					key
 							+ "("
 							+ String.valueOf(pieDataSet.getValue(key)
@@ -49,16 +50,18 @@ public class PieChartDescriptionBox {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							String caption = event.getButton().getCaption();
-							if (mapKeyStatus.containsKey(caption)) {
-								String keyStatus = mapKeyStatus.get(caption)
-										+ "";
+						public void buttonClick(final ClickEvent event) {
+							final String caption = event.getButton()
+									.getCaption();
+							if (PieChartDescriptionBox.mapKeyStatus
+									.containsKey(caption)) {
+								final String keyStatus = PieChartDescriptionBox.mapKeyStatus
+										.get(caption) + "";
 								pieChartHost.onClickedDescription(keyStatus);
 							}
 						}
 					});
-			mapKeyStatus.put(btnLink.getCaption(), key);
+			PieChartDescriptionBox.mapKeyStatus.put(btnLink.getCaption(), key);
 			btnLink.addStyleName("link");
 			layout.addComponent(lblCircle);
 			layout.setComponentAlignment(lblCircle, Alignment.MIDDLE_CENTER);

@@ -53,8 +53,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 	public MilestoneListViewImpl() {
 
-		HorizontalLayout header = new HorizontalLayout();
-		Label titleLbl = new Label("Phases");
+		final HorizontalLayout header = new HorizontalLayout();
+		final Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
 		header.setMargin(true, true, false, true);
 		header.setWidth("100%");
@@ -67,7 +67,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new MilestoneEvent.GotoAdd(
 										MilestoneListViewImpl.this, null));
@@ -78,18 +78,18 @@ public class MilestoneListViewImpl extends AbstractView implements
 		header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
 		this.addComponent(header);
 
-		CustomLayout bodyContent = new CustomLayout("milestoneView");
+		final CustomLayout bodyContent = new CustomLayout("milestoneView");
 		bodyContent.setWidth("100%");
 		bodyContent.setStyleName("milestone-view");
 
-		HorizontalLayout closedHeaderLayout = new HorizontalLayout();
+		final HorizontalLayout closedHeaderLayout = new HorizontalLayout();
 		closedHeaderLayout.setSpacing(true);
-		Embedded embeddClosed = new Embedded(null, new ThemeResource(
+		final Embedded embeddClosed = new Embedded(null, new ThemeResource(
 				"icons/16/project/phase_closed.png"));
 		closedHeaderLayout.addComponent(embeddClosed);
 		closedHeaderLayout.setComponentAlignment(embeddClosed,
 				Alignment.MIDDLE_CENTER);
-		Label closedHeader = new Label("Closed");
+		final Label closedHeader = new Label("Closed");
 		closedHeader.setSizeUndefined();
 		closedHeaderLayout.addComponent(closedHeader);
 		closedHeaderLayout.setComponentAlignment(closedHeader,
@@ -100,14 +100,14 @@ public class MilestoneListViewImpl extends AbstractView implements
 		closeContainer.setWidth("100%");
 		bodyContent.addComponent(closeContainer, "closed-milestones");
 
-		HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
+		final HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
 		inProgressHeaderLayout.setSpacing(true);
-		Embedded embeddInProgress = new Embedded(null, new ThemeResource(
+		final Embedded embeddInProgress = new Embedded(null, new ThemeResource(
 				"icons/16/project/phase_progress.png"));
 		inProgressHeaderLayout.addComponent(embeddInProgress);
 		inProgressHeaderLayout.setComponentAlignment(embeddInProgress,
 				Alignment.MIDDLE_CENTER);
-		Label inProgressHeader = new Label("In Progress");
+		final Label inProgressHeader = new Label("In Progress");
 		inProgressHeader.setSizeUndefined();
 		inProgressHeaderLayout.addComponent(inProgressHeader);
 		inProgressHeaderLayout.setComponentAlignment(inProgressHeader,
@@ -118,14 +118,14 @@ public class MilestoneListViewImpl extends AbstractView implements
 		inProgressContainer.setWidth("100%");
 		bodyContent.addComponent(inProgressContainer, "in-progress-milestones");
 
-		HorizontalLayout futureHeaderLayout = new HorizontalLayout();
+		final HorizontalLayout futureHeaderLayout = new HorizontalLayout();
 		futureHeaderLayout.setSpacing(true);
-		Embedded embeddFuture = new Embedded(null, new ThemeResource(
+		final Embedded embeddFuture = new Embedded(null, new ThemeResource(
 				"icons/16/project/phase_future.png"));
 		futureHeaderLayout.addComponent(embeddFuture);
 		futureHeaderLayout.setComponentAlignment(embeddFuture,
 				Alignment.MIDDLE_CENTER);
-		Label futureHeader = new Label("Future");
+		final Label futureHeader = new Label("Future");
 		futureHeader.setSizeUndefined();
 		futureHeaderLayout.addComponent(futureHeader);
 		futureHeaderLayout.setComponentAlignment(futureHeader,
@@ -137,51 +137,27 @@ public class MilestoneListViewImpl extends AbstractView implements
 		bodyContent.addComponent(futureContainer, "future-milestones");
 
 		this.addComponent(bodyContent);
-		this.setExpandRatio(bodyContent, 1.0f);
-	}
-
-	@Override
-	public void displayMilestones(List<SimpleMilestone> milestones) {
-		createBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.MILESTONES));
-
-		inProgressContainer.removeAllComponents();
-		futureContainer.removeAllComponents();
-		closeContainer.removeAllComponents();
-
-		for (SimpleMilestone milestone : milestones) {
-			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
-				inProgressContainer
-						.addComponent(constructMilestoneBox(milestone));
-			} else if (SimpleMilestone.STATUS_FUTURE.equals(milestone
-					.getStatus())) {
-				futureContainer.addComponent(constructMilestoneBox(milestone));
-			} else if (SimpleMilestone.STATUS_CLOSE.equals(milestone
-					.getStatus())) {
-				closeContainer.addComponent(constructMilestoneBox(milestone));
-			}
-		}
-
+		setExpandRatio(bodyContent, 1.0f);
 	}
 
 	private ComponentContainer constructMilestoneBox(
 			final SimpleMilestone milestone) {
-		CssLayout layout = new CssLayout();
+		final CssLayout layout = new CssLayout();
 		layout.addStyleName(UIConstants.MILESTONE_BOX);
 		layout.setWidth("100%");
 
-		VerticalLayout linkWrapper = new VerticalLayout();
+		final VerticalLayout linkWrapper = new VerticalLayout();
 		linkWrapper.setWidth("100%");
 		linkWrapper.setHeight("32px");
-		String milestoneLinkCaption = StringUtils.trimString(
+		final String milestoneLinkCaption = StringUtils.trimString(
 				milestone.getName(), 45, true);
-		Button milestoneLink = CommonUIFactory.createButtonTooltip(
+		final Button milestoneLink = CommonUIFactory.createButtonTooltip(
 				milestoneLinkCaption, milestone.getName(),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new MilestoneEvent.GotoRead(
 										MilestoneListViewImpl.this, milestone
@@ -198,8 +174,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		layout.addComponent(linkWrapper);
 
-		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 5,
-				"100%", "60px");
+		final GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1,
+				5, "100%", "60px");
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate())),
 				"Start Date", 0, 0, Alignment.MIDDLE_LEFT);
@@ -210,17 +186,17 @@ public class MilestoneListViewImpl extends AbstractView implements
 		layoutHelper.addComponent(new ProjectUserLink(milestone.getOwner(), "",
 				false, true), "Assignee", 0, 2, Alignment.MIDDLE_LEFT);
 
-		HorizontalLayout taskComp = new HorizontalLayout();
+		final HorizontalLayout taskComp = new HorizontalLayout();
 		taskComp.setWidth("100%");
 		taskComp.setSpacing(true);
-		ProgressIndicator progressTask = new ProgressIndicator(new Float(
+		final ProgressIndicator progressTask = new ProgressIndicator(new Float(
 				(float) (milestone.getNumTasks() - milestone.getNumOpenTasks())
 						/ milestone.getNumTasks()));
 		progressTask.setPollingInterval(1000000000);
 		progressTask.setWidth("100%");
 		taskComp.addComponent(progressTask);
-		Label taskNumber = new Label("(" + milestone.getNumOpenTasks() + "/"
-				+ milestone.getNumTasks() + ")");
+		final Label taskNumber = new Label("(" + milestone.getNumOpenTasks()
+				+ "/" + milestone.getNumTasks() + ")");
 		taskNumber.setWidth("90px");
 		taskComp.addComponent(taskNumber);
 		taskComp.setExpandRatio(progressTask, 1.0f);
@@ -229,27 +205,52 @@ public class MilestoneListViewImpl extends AbstractView implements
 		layoutHelper.addComponent(taskComp, "Tasks", 0, 3,
 				Alignment.MIDDLE_LEFT);
 
-		HorizontalLayout bugComp = new HorizontalLayout();
+		final HorizontalLayout bugComp = new HorizontalLayout();
 		bugComp.setWidth("100%");
 		bugComp.setSpacing(true);
-		ProgressIndicator progressBug = new ProgressIndicator(new Float(
+		final ProgressIndicator progressBug = new ProgressIndicator(new Float(
 				(float) (milestone.getNumBugs() - milestone.getNumOpenBugs())
 						/ milestone.getNumBugs()));
 		progressBug.setPollingInterval(1000000000);
 		progressBug.setWidth("100%");
 		bugComp.addComponent(progressBug);
-		Label bugNumber = new Label("(" + milestone.getNumOpenBugs() + "/"
-				+ milestone.getNumBugs() + ")");
+		final Label bugNumber = new Label("(" + milestone.getNumOpenBugs()
+				+ "/" + milestone.getNumBugs() + ")");
 		bugNumber.setWidth("90px");
 		bugComp.addComponent(bugNumber);
 		bugComp.setExpandRatio(progressBug, 1.0f);
 
 		layoutHelper.addComponent(bugComp, "Bugs", 0, 4, Alignment.MIDDLE_LEFT);
-		GridLayout milestoneInfoLayout = layoutHelper.getLayout();
+		final GridLayout milestoneInfoLayout = layoutHelper.getLayout();
 		milestoneInfoLayout.setWidth("100%");
 		milestoneInfoLayout.setMargin(false);
+		milestoneInfoLayout.setSpacing(true);
 		layout.addComponent(milestoneInfoLayout);
 
 		return layout;
+	}
+
+	@Override
+	public void displayMilestones(final List<SimpleMilestone> milestones) {
+		createBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.MILESTONES));
+
+		inProgressContainer.removeAllComponents();
+		futureContainer.removeAllComponents();
+		closeContainer.removeAllComponents();
+
+		for (final SimpleMilestone milestone : milestones) {
+			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
+				inProgressContainer
+						.addComponent(constructMilestoneBox(milestone));
+			} else if (SimpleMilestone.STATUS_FUTURE.equals(milestone
+					.getStatus())) {
+				futureContainer.addComponent(constructMilestoneBox(milestone));
+			} else if (SimpleMilestone.STATUS_CLOSE.equals(milestone
+					.getStatus())) {
+				closeContainer.addComponent(constructMilestoneBox(milestone));
+			}
+		}
+
 	}
 }

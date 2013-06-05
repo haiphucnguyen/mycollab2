@@ -32,14 +32,14 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class BugChartComponent extends Depot {
 	private static final long serialVersionUID = 1L;
-	private String[] reportDashboard = { "BugTrend", "BugsByPriority",
+	private final String[] reportDashboard = { "BugTrend", "BugsByPriority",
 			"BugsByStatus", "BugByResolution" };
 	private int currentReportIndex = 0;
 
-	private BugSearchCriteria baseSearchCriteria;
+	private final BugSearchCriteria baseSearchCriteria;
 
-	public BugChartComponent(BugSearchCriteria baseSearchCriteria,
-			int headerWidth, int titleWidth) {
+	public BugChartComponent(final BugSearchCriteria baseSearchCriteria,
+			final int headerWidth, final int titleWidth) {
 		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
 				new HorizontalLayout(), new VerticalLayout(), headerWidth
 						+ "px", titleWidth + "px");
@@ -47,93 +47,18 @@ public class BugChartComponent extends Depot {
 		initUI();
 	}
 
-	private void initUI() {
-		HorizontalLayout headerContainer = (HorizontalLayout) this.headerContent;
-		headerContainer.setWidth("100%");
-		headerContainer.setSpacing(true);
-		Label emptySpace = new Label();
-		headerContainer.addComponent(emptySpace);
-		headerContainer.setExpandRatio(emptySpace, 1.0f);
-		
-		final PopupButton bugChartPopup = new PopupButton("Bug Trend");
-		bugChartPopup.addStyleName("link");
-		
-		VerticalLayout filterBtnLayout = new VerticalLayout();
-		filterBtnLayout.setMargin(true);
-		filterBtnLayout.setSpacing(true);
-		filterBtnLayout.setWidth("200px");
-		
-		Button btnBugTrend = new Button("Bugs Trend",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						bugChartPopup.setPopupVisible(false);
-						bugChartPopup.setCaption("Bugs Trend");
-						currentReportIndex = 0;
-						displayReport();
-					}
-				});
-		btnBugTrend.setStyleName("link");
-		filterBtnLayout.addComponent(btnBugTrend);
-		
-		Button btnBugByPriority = new Button("Bugs By Priority",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						bugChartPopup.setPopupVisible(false);
-						bugChartPopup.setCaption("Bugs By Priority");
-						currentReportIndex = 1;
-						displayReport();
-					}
-				});
-		btnBugByPriority.setStyleName("link");
-		filterBtnLayout.addComponent(btnBugByPriority);
-		
-		Button btnBugByStatus = new Button("Bugs By Status",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						bugChartPopup.setPopupVisible(false);
-						bugChartPopup.setCaption("Bugs By Status");
-						currentReportIndex = 2;
-						displayReport();
-					}
-				});
-		btnBugByStatus.setStyleName("link");
-		filterBtnLayout.addComponent(btnBugByStatus);
-		
-		Button btnBugByResolution = new Button("Bugs By Resolution",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						bugChartPopup.setPopupVisible(false);
-						bugChartPopup.setCaption("Bugs By Resolution");
-						currentReportIndex = 3;
-						displayReport();
-					}
-				});
-		btnBugByResolution.setStyleName("link");
-		filterBtnLayout.addComponent(btnBugByResolution);
-		
-		displayReport();
-		
-		bugChartPopup.addComponent(filterBtnLayout);
-		headerContainer.addComponent(bugChartPopup);
-		
+	public BugChartComponent(final BugSearchCriteria baseSearchCriteria,
+			final String headerWidth, final String titleWidth) {
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
+				null, new VerticalLayout(), headerWidth, titleWidth);
+		this.baseSearchCriteria = baseSearchCriteria;
+		initUI();
 	}
 
 	public void displayReport() {
-		String reportName = reportDashboard[currentReportIndex];
+		final String reportName = reportDashboard[currentReportIndex];
 
-		VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
+		final VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
 
 		if ("BugTrend".equals(reportName)) {
@@ -143,13 +68,13 @@ public class BugChartComponent extends Depot {
 			} else if (ScreenSize.hasSupport1280Pixels()) {
 				bugTrendWidget = new BugTrendReportChartWidget();
 			}
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(bugTrendWidget);
+			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(bugTrendWidget);
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria trendSearchCriteria = new Cloner()
+			final BugSearchCriteria trendSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
-			Date last30Days = DateTimeUtils.subtractOrAddDayDuration(
+			final Date last30Days = DateTimeUtils.subtractOrAddDayDuration(
 					new GregorianCalendar().getTime(), -30);
 			trendSearchCriteria.setUpdatedDate(new DateTimeSearchField(
 					SearchField.AND, DateTimeSearchField.GREATERTHANEQUAL,
@@ -163,12 +88,12 @@ public class BugChartComponent extends Depot {
 			} else if (ScreenSize.hasSupport1280Pixels()) {
 				prioritySummaryChartWidget = new PrioritySummaryChartWidget();
 			}
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(
+			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					prioritySummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria prioritySearchCriteria = new Cloner()
+			final BugSearchCriteria prioritySearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
 			prioritySummaryChartWidget
 					.setSearchCriteria(prioritySearchCriteria);
@@ -180,12 +105,12 @@ public class BugChartComponent extends Depot {
 			} else if (ScreenSize.hasSupport1280Pixels()) {
 				statusSummaryChartWidget = new StatusSummaryChartWidget();
 			}
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(
+			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					statusSummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria statusSearchCriteria = new Cloner()
+			final BugSearchCriteria statusSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
 			statusSummaryChartWidget.setSearchCriteria(statusSearchCriteria);
 		} else if ("BugByResolution".equals(reportName)) {
@@ -196,14 +121,96 @@ public class BugChartComponent extends Depot {
 			} else if (ScreenSize.hasSupport1280Pixels()) {
 				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget();
 			}
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(
+			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					resolutionSummaryWdiget);
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria statusSearchCriteria = new Cloner()
+			final BugSearchCriteria statusSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
 			resolutionSummaryWdiget.setSearchCriteria(statusSearchCriteria);
 		}
+	}
+
+	private void initUI() {
+		final HorizontalLayout headerContainer = (HorizontalLayout) headerContent;
+		// headerContainer.setWidth("100%");
+		// headerContainer.setSpacing(true);
+		final Label emptySpace = new Label();
+		headerContainer.addComponent(emptySpace);
+		headerContainer.setExpandRatio(emptySpace, 1.0f);
+
+		final PopupButton bugChartPopup = new PopupButton("Bug Trend");
+		bugChartPopup.addStyleName("link");
+
+		final VerticalLayout filterBtnLayout = new VerticalLayout();
+		filterBtnLayout.setMargin(true);
+		filterBtnLayout.setSpacing(true);
+		filterBtnLayout.setWidth("200px");
+
+		final Button btnBugTrend = new Button("Bugs Trend",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs Trend");
+						currentReportIndex = 0;
+						displayReport();
+					}
+				});
+		btnBugTrend.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugTrend);
+
+		final Button btnBugByPriority = new Button("Bugs By Priority",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs By Priority");
+						currentReportIndex = 1;
+						displayReport();
+					}
+				});
+		btnBugByPriority.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugByPriority);
+
+		final Button btnBugByStatus = new Button("Bugs By Status",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs By Status");
+						currentReportIndex = 2;
+						displayReport();
+					}
+				});
+		btnBugByStatus.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugByStatus);
+
+		final Button btnBugByResolution = new Button("Bugs By Resolution",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs By Resolution");
+						currentReportIndex = 3;
+						displayReport();
+					}
+				});
+		btnBugByResolution.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugByResolution);
+
+		displayReport();
+
+		bugChartPopup.addComponent(filterBtnLayout);
+		headerContainer.addComponent(bugChartPopup);
 	}
 }

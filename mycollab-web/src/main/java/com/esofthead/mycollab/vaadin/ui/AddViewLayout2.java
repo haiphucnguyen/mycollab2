@@ -17,7 +17,7 @@ public class AddViewLayout2 extends CssLayout {
 	private final Label titleLbl;
 	private final VerticalLayout body;
 
-	public AddViewLayout2(String title, ThemeResource icon) {
+	public AddViewLayout2(final String title, final ThemeResource icon) {
 		// this.setSizeFull();
 		setStyleName("addview-layout");
 
@@ -41,17 +41,17 @@ public class AddViewLayout2 extends CssLayout {
 		this.addComponent(body);
 	}
 
-	public void addBody(ComponentContainer body) {
+	public void addBody(final ComponentContainer body) {
 		this.body.addComponent(body);
 		this.body.setExpandRatio(body, 1.0f);
 	}
 
-	public void addControlButtons(Component controlsBtn) {
+	public void addControlButtons(final Component controlsBtn) {
 		controlsBtn.addStyleName("control-buttons");
 		body.addComponent(controlsBtn);
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		titleLbl.setValue(title);
 	}
 }

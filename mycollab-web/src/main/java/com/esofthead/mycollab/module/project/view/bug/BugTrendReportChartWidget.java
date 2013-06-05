@@ -47,42 +47,45 @@ public class BugTrendReportChartWidget extends
 
 	private static String patternDate = "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
-			patternDate);
-
-	public BugTrendReportChartWidget(int width, int height) {
-		super(LocalizationHelper.getMessage(BugI18nEnum.CHART_TREND_TITLE),
-				width, height);
-	}
+			BugTrendReportChartWidget.patternDate);
 
 	public BugTrendReportChartWidget() {
 		super(LocalizationHelper.getMessage(BugI18nEnum.CHART_TREND_TITLE),
 				400, 300);
 	}
 
+	public BugTrendReportChartWidget(final int width, final int height) {
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHART_TREND_TITLE),
+				width, height);
+	}
+
 	@Override
 	protected XYDataset createDataset() {
-		BugService bugService = AppContext.getSpringBean(BugService.class);
-		List<GroupItem> groupItems = bugService
+		final BugService bugService = AppContext
+				.getSpringBean(BugService.class);
+		final List<GroupItem> groupItems = bugService
 				.getBugStatusTrendSummary(searchCriteria);
 
-		Map<String, TimeSeries> seriesMap = new HashMap<String, TimeSeries>();
+		final Map<String, TimeSeries> seriesMap = new HashMap<String, TimeSeries>();
 
-		for (GroupItem item : groupItems) {
+		for (final GroupItem item : groupItems) {
 			TimeSeries series = seriesMap.get(item.getGroupid());
 			if (series == null) {
 				series = new TimeSeries(item.getGroupid());
 				seriesMap.put(item.getGroupid(), series);
 			}
 			try {
-				series.add(new Day(dateFormat.parse(item.getGroupname())),
-						item.getValue());
-			} catch (ParseException ex) {
-				log.error("Error while construct chart", ex);
+				series.add(
+						new Day(BugTrendReportChartWidget.dateFormat.parse(item
+								.getGroupname())), item.getValue());
+			} catch (final ParseException ex) {
+				BugTrendReportChartWidget.log.error(
+						"Error while construct chart", ex);
 			}
 		}
 
-		TimeSeriesCollection dataset = new TimeSeriesCollection();
-		for (TimeSeries series : seriesMap.values()) {
+		final TimeSeriesCollection dataset = new TimeSeriesCollection();
+		for (final TimeSeries series : seriesMap.values()) {
 			dataset.addSeries(series);
 		}
 		return dataset;
@@ -90,29 +93,30 @@ public class BugTrendReportChartWidget extends
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		CustomLayout boxWrapper = new CustomLayout("legendBox");
-		CssLayout mainLayout = new CssLayout();
-		mainLayout.addStyleName("border-box");
+		final CustomLayout boxWrapper = new CustomLayout("legendBox");
+		final CssLayout mainLayout = new CssLayout();
+		// mainLayout.addStyleName("border-box");
 		mainLayout.setSizeUndefined();
 		for (int i = 0; i < xyDataSet.getSeriesCount(); i++) {
-			HorizontalLayout layout = new HorizontalLayout();
+			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setMargin(false, false, false, true);
 			layout.addStyleName("inline-block");
-			Comparable key = xyDataSet.getSeriesKey(i);
-			String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
+			final Comparable key = xyDataSet.getSeriesKey(i);
+			final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
 					+ GenericChartWrapper.CHART_COLOR_STR[i
 							% GenericChartWrapper.CHART_COLOR_STR.length]
 					+ "\" />";
-			Label lblCircle = new Label(color);
+			final Label lblCircle = new Label(color);
 			lblCircle.setContentMode(Label.CONTENT_XHTML);
 
-			Button btnLink = new Button(key + "", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button btnLink = new Button(key + "",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+						}
+					});
 			btnLink.addStyleName("link");
 			layout.addComponent(lblCircle);
 			layout.setComponentAlignment(lblCircle, Alignment.MIDDLE_CENTER);

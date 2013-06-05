@@ -65,80 +65,46 @@ public class AccountSearchPanel extends
 				gridLayout = new GridFormLayoutHelper(3, 3, "90px");
 			}
 
-			nameField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"nameField"), "Name",0, 0);
-			
-			websiteField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"websiteField"),"Website", 1, 0);
-			
-			anyPhoneField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"anyPhoneField"), "Any Phone", 2, 0);
+			nameField = (TextField) gridLayout.addComponent(
+					createSeachSupportTextField(new TextField(), "nameField"),
+					"Name", 0, 0);
 
-			anyMailField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"anyMailField"), "Any Email", 0, 1);
+			websiteField = (TextField) gridLayout
+					.addComponent(
+							createSeachSupportTextField(new TextField(),
+									"websiteField"), "Website", 1, 0);
 
-			anyAddressField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"anyAddressField"), "Any Address", 1, 1);
+			anyPhoneField = (TextField) gridLayout.addComponent(
+					createSeachSupportTextField(new TextField(),
+							"anyPhoneField"), "Any Phone", 2, 0);
 
-			cityField = (TextField) gridLayout.addComponent(this.createSeachSupportTextField(new TextField(),"cityField"),"City", 2, 1);
+			anyMailField = (TextField) gridLayout
+					.addComponent(
+							createSeachSupportTextField(new TextField(),
+									"anyMailField"), "Any Email", 0, 1);
 
-			industryField = (AccountIndustryListSelect) gridLayout.addComponent(this.createSeachSupportComboBox(new AccountIndustryListSelect()), "Industry",0, 2);
-			
-			typeField = (AccountTypeListSelect) gridLayout.addComponent(this.createSeachSupportComboBox(new AccountTypeListSelect()), "Type", 1, 2);
-			
-			userField = (UserListSelect) gridLayout.addComponent(this.createSeachSupportComboBox(new UserListSelect()), "Assigned User", 2, 2);
+			anyAddressField = (TextField) gridLayout.addComponent(
+					createSeachSupportTextField(new TextField(),
+							"anyAddressField"), "Any Address", 1, 1);
+
+			cityField = (TextField) gridLayout.addComponent(
+					createSeachSupportTextField(new TextField(), "cityField"),
+					"City", 2, 1);
+
+			industryField = (AccountIndustryListSelect) gridLayout
+					.addComponent(
+							this.createSeachSupportComboBox(new AccountIndustryListSelect()),
+							"Industry", 0, 2);
+
+			typeField = (AccountTypeListSelect) gridLayout.addComponent(this
+					.createSeachSupportComboBox(new AccountTypeListSelect()),
+					"Type", 1, 2);
+
+			userField = (UserListSelect) gridLayout.addComponent(
+					this.createSeachSupportComboBox(new UserListSelect()),
+					"Assigned User", 2, 2);
+			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
-		}
-
-		protected AccountSearchCriteria fillupSearchCriteria() {
-			AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
-			searchCriteria.setAccountname(new StringSearchField(
-					SearchField.AND, (String) nameField.getValue()));
-
-			if (StringUtil.isNotNullOrEmpty((String) nameField.getValue())) {
-				searchCriteria.setAccountname(new StringSearchField(
-						SearchField.AND, (String) nameField.getValue()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) websiteField.getValue())) {
-				searchCriteria.setWebsite(new StringSearchField(
-						SearchField.AND, (String) websiteField.getValue()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) anyPhoneField.getValue())) {
-				searchCriteria.setAnyPhone(new StringSearchField(
-						SearchField.AND, (String) anyPhoneField.getValue()));
-			}
-
-			if (StringUtil
-					.isNotNullOrEmpty((String) anyAddressField.getValue())) {
-				searchCriteria.setAnyAddress(new StringSearchField(
-						SearchField.AND, (String) anyAddressField.getValue()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) anyMailField.getValue())) {
-				searchCriteria.setAnyMail(new StringSearchField(
-						SearchField.AND, (String) anyMailField.getValue()));
-			}
-
-			final Collection<String> industries = (Collection<String>) industryField.getValue();
-			if (industries != null && industries.size() > 0) {
-				searchCriteria.setIndustries(new SetSearchField(
-						SearchField.AND, industries));
-			}
-
-			final Collection<String> types = (Collection<String>) typeField
-					.getValue();
-			if (types != null && types.size() > 0) {
-				searchCriteria.setTypes(new SetSearchField(SearchField.AND,
-						types));
-			}
-
-			final Collection<String> users = (Collection<String>) userField
-					.getValue();
-			if (users != null && users.size() > 0) {
-				searchCriteria.setAssignUsers(new SetSearchField(
-						SearchField.AND, users));
-			}
-
-			return searchCriteria;
 		}
 
 		@Override
@@ -201,6 +167,64 @@ public class AccountSearchPanel extends
 		public ComponentContainer constructHeader() {
 			return createSearchTopPanel();
 		}
+
+		@Override
+		protected AccountSearchCriteria fillupSearchCriteria() {
+			final AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
+			searchCriteria.setAccountname(new StringSearchField(
+					SearchField.AND, (String) nameField.getValue()));
+
+			if (StringUtil.isNotNullOrEmpty((String) nameField.getValue())) {
+				searchCriteria.setAccountname(new StringSearchField(
+						SearchField.AND, (String) nameField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) websiteField.getValue())) {
+				searchCriteria.setWebsite(new StringSearchField(
+						SearchField.AND, (String) websiteField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) anyPhoneField.getValue())) {
+				searchCriteria.setAnyPhone(new StringSearchField(
+						SearchField.AND, (String) anyPhoneField.getValue()));
+			}
+
+			if (StringUtil
+					.isNotNullOrEmpty((String) anyAddressField.getValue())) {
+				searchCriteria.setAnyAddress(new StringSearchField(
+						SearchField.AND, (String) anyAddressField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) anyMailField.getValue())) {
+				searchCriteria.setAnyMail(new StringSearchField(
+						SearchField.AND, (String) anyMailField.getValue()));
+			}
+
+			final Collection<String> industries = (Collection<String>) industryField
+					.getValue();
+			if (industries != null && industries.size() > 0) {
+				searchCriteria.setIndustries(new SetSearchField(
+						SearchField.AND, industries));
+			}
+
+			final Collection<String> types = (Collection<String>) typeField
+					.getValue();
+			if (types != null && types.size() > 0) {
+				searchCriteria.setTypes(new SetSearchField(SearchField.AND,
+						types));
+			}
+
+			final Collection<String> users = (Collection<String>) userField
+					.getValue();
+			if (users != null && users.size() > 0) {
+				searchCriteria.setAssignUsers(new SetSearchField(
+						SearchField.AND, users));
+			}
+
+			return searchCriteria;
+		}
 	}
 
 	private class AccountBasicSearchLayout extends
@@ -213,30 +237,15 @@ public class AccountSearchPanel extends
 			super(AccountSearchPanel.this);
 		}
 
-		protected AccountSearchCriteria fillupSearchCriteria() {
-			AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
-			searchCriteria.setAccountname(new StringSearchField(
-					SearchField.AND, ((String) nameField.getValue()).trim()));
-			if (myItemCheckbox.booleanValue()) {
-				searchCriteria.setAssignUser(new StringSearchField(
-						SearchField.AND, AppContext.getUsername()));
-			} else {
-				searchCriteria.setAssignUsers(null);
-			}
-
-			return searchCriteria;
-		}
-
 		@Override
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
 			// basicSearchBody.addComponent(new Label("Name"));
-			
-			nameField = this.createSeachSupportTextField(new TextField(),"NameFieldOfBasicSearch");
-			
+
+			nameField = createSeachSupportTextField(new TextField(),
+					"NameFieldOfBasicSearch");
+
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
@@ -297,6 +306,23 @@ public class AccountSearchPanel extends
 		@Override
 		public ComponentContainer constructHeader() {
 			return createSearchTopPanel();
+		}
+
+		@Override
+		protected AccountSearchCriteria fillupSearchCriteria() {
+			final AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
+			searchCriteria.setAccountname(new StringSearchField(
+					SearchField.AND, ((String) nameField.getValue()).trim()));
+			if (myItemCheckbox.booleanValue()) {
+				searchCriteria.setAssignUser(new StringSearchField(
+						SearchField.AND, AppContext.getUsername()));
+			} else {
+				searchCriteria.setAssignUsers(null);
+			}
+
+			return searchCriteria;
 		}
 	}
 

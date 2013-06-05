@@ -61,6 +61,7 @@ public abstract class GenericChartWrapper<S extends SearchCriteria> extends
 		this.addComponent(borderWrap);
 		// this.setComponentAlignment(chartWrapper, Alignment.MIDDLE_CENTER);
 		final Component legendBox = createLegendBox();
+		legendBox.setWidth(width + "px");
 		this.addComponent(legendBox);
 		this.setComponentAlignment(legendBox, Alignment.MIDDLE_CENTER);
 	}

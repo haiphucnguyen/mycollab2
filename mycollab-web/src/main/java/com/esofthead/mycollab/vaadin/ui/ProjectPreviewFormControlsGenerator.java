@@ -10,7 +10,7 @@ import com.vaadin.ui.HorizontalLayout;
 
 public class ProjectPreviewFormControlsGenerator<T> {
 
-	private AdvancedPreviewBeanForm<T> previewForm;
+	private final AdvancedPreviewBeanForm<T> previewForm;
 	private Button backBtn;
 	private Button editBtn;
 	private Button deleteBtn;
@@ -23,21 +23,16 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private boolean haveAssignButton;
 
 	public ProjectPreviewFormControlsGenerator(
-			AdvancedPreviewBeanForm<T> editForm) {
+			final AdvancedPreviewBeanForm<T> editForm) {
 		this.previewForm = editForm;
 	}
 
 	public HorizontalLayout createButtonControls() {
 		return createButtonControls(null);
 	}
-	
-	public HorizontalLayout createButtonControls(String permissionItem, boolean haveAssignButton) {
-		this.haveAssignButton = haveAssignButton;
-		return createButtonControls(permissionItem);
-	}
 
-	public HorizontalLayout createButtonControls(String permissionItem) {
-		HorizontalLayout layout = new HorizontalLayout();
+	public HorizontalLayout createButtonControls(final String permissionItem) {
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setStyleName("addNewControl");
 		layout.setWidth("100%");
@@ -46,8 +41,8 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				T item = ((BeanItem<T>) previewForm.getItemDataSource())
+			public void buttonClick(final ClickEvent event) {
+				final T item = ((BeanItem<T>) previewForm.getItemDataSource())
 						.getBean();
 				previewForm.fireCancelForm(item);
 			}
@@ -58,8 +53,9 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		layout.addComponent(backBtn);
 		layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
 
-		HorizontalLayout editButtons = new HorizontalLayout();
+		final HorizontalLayout editButtons = new HorizontalLayout();
 		editButtons.setSpacing(true);
+		editButtons.addStyleName("edit-btn");
 
 		if (haveAssignButton) {
 			assignBtn = new Button(GenericForm.ASSIGN_ACTION,
@@ -67,27 +63,28 @@ public class ProjectPreviewFormControlsGenerator<T> {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							@SuppressWarnings("unchecked")
-							T item = ((BeanItem<T>) previewForm.getItemDataSource())
-									.getBean();
+							final T item = ((BeanItem<T>) previewForm
+									.getItemDataSource()).getBean();
 							previewForm.fireAssignForm(item);
 						}
 					});
 			assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			editButtons.addComponent(assignBtn);
-			editButtons.setComponentAlignment(assignBtn, Alignment.MIDDLE_CENTER);
+			editButtons.setComponentAlignment(assignBtn,
+					Alignment.MIDDLE_CENTER);
 		}
-		
+
 		editBtn = new Button(GenericForm.EDIT_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						@SuppressWarnings("unchecked")
-						T item = ((BeanItem<T>) previewForm.getItemDataSource())
-								.getBean();
+						final T item = ((BeanItem<T>) previewForm
+								.getItemDataSource()).getBean();
 						previewForm.fireEditForm(item);
 					}
 				});
@@ -100,10 +97,10 @@ public class ProjectPreviewFormControlsGenerator<T> {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						@SuppressWarnings("unchecked")
-						T item = ((BeanItem<T>) previewForm.getItemDataSource())
-								.getBean();
+						final T item = ((BeanItem<T>) previewForm
+								.getItemDataSource()).getBean();
 						previewForm.fireDeleteForm(item);
 					}
 				});
@@ -116,10 +113,10 @@ public class ProjectPreviewFormControlsGenerator<T> {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						@SuppressWarnings("unchecked")
-						T item = ((BeanItem<T>) previewForm.getItemDataSource())
-								.getBean();
+						final T item = ((BeanItem<T>) previewForm
+								.getItemDataSource()).getBean();
 						previewForm.fireCloneForm(item);
 					}
 				});
@@ -135,8 +132,8 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				T item = ((BeanItem<T>) previewForm.getItemDataSource())
+			public void buttonClick(final ClickEvent event) {
+				final T item = ((BeanItem<T>) previewForm.getItemDataSource())
 						.getBean();
 				previewForm.fireGotoPrevious(item);
 			}
@@ -152,8 +149,8 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				T item = ((BeanItem<T>) previewForm.getItemDataSource())
+			public void buttonClick(final ClickEvent event) {
+				final T item = ((BeanItem<T>) previewForm.getItemDataSource())
 						.getBean();
 				previewForm.fireGotoNextItem(item);
 			}
@@ -169,7 +166,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				previewForm.showHistory();
 			}
 		});
@@ -183,7 +180,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				previewForm.doPrint();
 			}
 		});
@@ -195,9 +192,11 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		layout.setComponentAlignment(printBtn, Alignment.MIDDLE_RIGHT);
 
 		if (permissionItem != null) {
-			boolean canRead = CurrentProjectVariables.canRead(permissionItem);
-			boolean canWrite = CurrentProjectVariables.canWrite(permissionItem);
-			boolean canAccess = CurrentProjectVariables
+			final boolean canRead = CurrentProjectVariables
+					.canRead(permissionItem);
+			final boolean canWrite = CurrentProjectVariables
+					.canWrite(permissionItem);
+			final boolean canAccess = CurrentProjectVariables
 					.canAccess(permissionItem);
 
 			backBtn.setEnabled(canRead);
@@ -208,6 +207,12 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			historyBtn.setEnabled(canRead);
 		}
 		return layout;
+	}
+
+	public HorizontalLayout createButtonControls(final String permissionItem,
+			final boolean haveAssignButton) {
+		this.haveAssignButton = haveAssignButton;
+		return createButtonControls(permissionItem);
 	}
 
 }

@@ -49,67 +49,7 @@ import com.vaadin.ui.Window;
 @ViewComponent
 public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
-	private static final long serialVersionUID = 1L;
-	protected AdvancedPreviewBeanForm<Task> previewForm;
-	protected SimpleTask task;
-
-	public TaskReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
-
-	@Override
-	public void previewItem(SimpleTask task) {
-		this.task = task;
-		previewForm.setItemDataSource(new BeanItem<Task>(task));
-	}
-
-	@Override
-	public HasPreviewFormHandlers<Task> getPreviewFormHandlers() {
-		return previewForm;
-	}
-
 	private class PreviewForm extends TaskFormComponent {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		TaskFormLayoutFactory getFormLayoutFactory() {
-			return new FormLayoutFactory();
-		}
-
-		@Override
-		protected void taskDoPrint() {
-			// Create a window that contains what you want to print
-			Window window = new Window("Window to Print");
-
-			TaskReadViewImpl printView = new TaskReadViewImpl.PrintView();
-			printView.previewItem(task);
-			window.addComponent(printView);
-
-			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
-
-			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
-
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
-
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
-		}
-
-		@Override
-		protected void taskShowHistory() {
-			TaskHistoryLogWindow historyLog = new TaskHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.TASK, task.getId());
-			getWindow().addWindow(historyLog);
-		}
-
 		class FormLayoutFactory extends TaskFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
@@ -137,64 +77,126 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			}
 
 			@Override
-			protected ComponentContainer createTopPanel() {
-				HorizontalLayout topPanel = (new ProjectPreviewFormControlsGenerator<Task>(PreviewForm.this))
-						.createButtonControls(
-								ProjectRolePermissionCollections.TASKS, true);
-				topPanel.setMargin(true);
-				return topPanel;
-			}
-
-			@Override
 			protected ComponentContainer createBottomPanel() {
-				TabSheet tabTaskDetail = new TabSheet();
+				final TabSheet tabTaskDetail = new TabSheet();
 				tabTaskDetail.setWidth("100%");
-				tabTaskDetail.setStyleName(UIConstants.WHITE_TABSHEET);
+				// tabTaskDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
-				CommentDisplay commentList = new CommentDisplay(
+				final CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_TASK, task.getId(), true,
 						true, ProjectTaskNotificationService.class);
 				commentList.setMargin(true);
 				tabTaskDetail.addTab(commentList, "Comments");
 
-				TaskHistoryList historyList = new TaskHistoryList(task.getId());
+				final TaskHistoryList historyList = new TaskHistoryList(
+						task.getId());
 				historyList.setMargin(true);
 				tabTaskDetail.addTab(historyList, "History");
 
-				TaskFollowersSheet followerSheet = new TaskFollowersSheet(task);
+				final TaskFollowersSheet followerSheet = new TaskFollowersSheet(
+						task);
 				tabTaskDetail.addTab(followerSheet, "Follower");
 
-				TaskTimeLogSheet timesheet = new TaskTimeLogSheet(task);
+				final TaskTimeLogSheet timesheet = new TaskTimeLogSheet(task);
 				tabTaskDetail.addTab(timesheet, "Time");
 
 				return tabTaskDetail;
 			}
+
+			@Override
+			protected ComponentContainer createTopPanel() {
+				final HorizontalLayout topPanel = (new ProjectPreviewFormControlsGenerator<Task>(
+						PreviewForm.this)).createButtonControls(
+						ProjectRolePermissionCollections.TASKS, true);
+				topPanel.setMargin(true);
+				return topPanel;
+			}
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		TaskFormLayoutFactory getFormLayoutFactory() {
+			return new FormLayoutFactory();
+		}
+
+		@Override
+		protected void taskDoPrint() {
+			// Create a window that contains what you want to print
+			final Window window = new Window("Window to Print");
+
+			final TaskReadViewImpl printView = new TaskReadViewImpl.PrintView();
+			printView.previewItem(task);
+			window.addComponent(printView);
+
+			// Add the printing window as a new application-level window
+			getApplication().addWindow(window);
+
+			// Open it as a popup window with no decorations
+			getWindow().open(new ExternalResource(window.getURL()), "_blank",
+					1100, 200, // Width and height
+					Window.BORDER_NONE); // No decorations
+
+			// Print automatically when the window opens.
+			// This call will block until the print dialog exits!
+			window.executeJavaScript("print();");
+
+			// Close the window automatically after printing
+			window.executeJavaScript("self.close();");
+		}
+
+		@Override
+		protected void taskShowHistory() {
+			final TaskHistoryLogWindow historyLog = new TaskHistoryLogWindow(
+					ModuleNameConstants.PRJ, ProjectContants.TASK, task.getId());
+			getWindow().addWindow(historyLog);
 		}
 	}
 
 	@SuppressWarnings("serial")
 	public static class PrintView extends TaskReadViewImpl {
 
+		class FormLayoutFactory extends TaskFormLayoutFactory {
+
+			private static final long serialVersionUID = 1L;
+
+			public FormLayoutFactory() {
+				super(task.getTaskname());
+			}
+
+			@Override
+			protected ComponentContainer createBottomPanel() {
+				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
+						task.getId(), false, false);
+			}
+
+			@Override
+			protected ComponentContainer createTopPanel() {
+				return new HorizontalLayout();
+			}
+		}
+
 		public PrintView() {
 
 			previewForm = new AdvancedPreviewBeanForm<Task>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
-					BeanItem<SimpleTask> beanItem = (BeanItem<SimpleTask>) newDataSource;
+				public void setItemDataSource(final Item newDataSource) {
+					final BeanItem<SimpleTask> beanItem = (BeanItem<SimpleTask>) newDataSource;
 					task = beanItem.getBean();
 
-					this.setFormLayoutFactory(new FormLayoutFactory());
-					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+					setFormLayoutFactory(new FormLayoutFactory());
+					setFormFieldFactory(new DefaultFormViewFieldFactory() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						protected Field onCreateField(Item item,
-								Object propertyId, Component uiContext) {
+						protected Field onCreateField(final Item item,
+								final Object propertyId,
+								final Component uiContext) {
 
 							if (propertyId.equals("assignuser")) {
-								return new ProjectUserFormLinkField(task
-										.getAssignuser(), task
-										.getAssignUserFullName());
+								return new ProjectUserFormLinkField(
+										task.getAssignuser(),
+										task.getAssignUserFullName());
 							} else if (propertyId.equals("taskListName")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
 										task.getTaskListName());
@@ -223,7 +225,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 										new Button.ClickListener() {
 											@Override
 											public void buttonClick(
-													Button.ClickEvent event) {
+													final Button.ClickEvent event) {
 												EventBus.getInstance()
 														.fireEvent(
 																new TaskListEvent.GotoRead(
@@ -238,15 +240,15 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 							} else if (propertyId.equals("priority")) {
 								if (StringUtil.isNotNullOrEmpty(task
 										.getPriority())) {
-									ThemeResource iconPriority = TaskPriorityComboBox
+									final ThemeResource iconPriority = TaskPriorityComboBox
 											.getIconResourceByPriority(task
 													.getPriority());
-									Embedded iconEmbedded = new Embedded(null,
-											iconPriority);
-									Label lbPriority = new Label(task
-											.getPriority());
+									final Embedded iconEmbedded = new Embedded(
+											null, iconPriority);
+									final Label lbPriority = new Label(
+											task.getPriority());
 
-									FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+									final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 									containerField
 											.addComponentField(iconEmbedded);
 									lbPriority.setWidth("220px");
@@ -268,30 +270,33 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			this.addComponent(previewForm);
 
 		}
+	}
 
-		class FormLayoutFactory extends TaskFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
 
-			private static final long serialVersionUID = 1L;
+	protected AdvancedPreviewBeanForm<Task> previewForm;
 
-			public FormLayoutFactory() {
-				super(task.getTaskname());
-			}
+	protected SimpleTask task;
 
-			@Override
-			protected ComponentContainer createTopPanel() {
-				return new HorizontalLayout();
-			}
-
-			@Override
-			protected ComponentContainer createBottomPanel() {
-				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
-						task.getId(), false, false);
-			}
-		}
+	public TaskReadViewImpl() {
+		super();
+		previewForm = new PreviewForm();
+		this.addComponent(previewForm);
 	}
 
 	@Override
 	public SimpleTask getItem() {
 		return task;
+	}
+
+	@Override
+	public HasPreviewFormHandlers<Task> getPreviewFormHandlers() {
+		return previewForm;
+	}
+
+	@Override
+	public void previewItem(final SimpleTask task) {
+		this.task = task;
+		previewForm.setItemDataSource(new BeanItem<Task>(task));
 	}
 }

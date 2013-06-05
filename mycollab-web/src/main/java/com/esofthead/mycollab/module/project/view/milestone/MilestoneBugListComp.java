@@ -13,10 +13,10 @@ import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByAssigneeWi
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByPriorityWidget;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -38,11 +38,11 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	}
 
 	private void constructHeader() {
-		HorizontalLayout header = new HorizontalLayout();
+		final HorizontalLayout header = new HorizontalLayout();
 		header.setMargin(true, false, false, false);
 		header.setSpacing(true);
 		header.setWidth("100%");
-		Label taskGroupSelection = new Label("Related Bugs");
+		final Label taskGroupSelection = new Label("Related Bugs");
 		taskGroupSelection.addStyleName("h2");
 		taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
 		header.addComponent(taskGroupSelection);
@@ -51,27 +51,29 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 		viewGroup = new ToggleButtonGroup();
 
-		Button simpleDisplay = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button simpleDisplay = new Button(null,
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				displaySimpleView();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						displaySimpleView();
+					}
+				});
 		simpleDisplay.setIcon(new ThemeResource(
 				"icons/16/project/list_display.png"));
 
 		viewGroup.addButton(simpleDisplay);
 
-		Button advanceDisplay = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button advanceDisplay = new Button(null,
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				displayAdvancedView();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						displayAdvancedView();
+					}
+				});
 		advanceDisplay.setIcon(new ThemeResource(
 				"icons/16/project/bug_advanced_display.png"));
 		viewGroup.addButton(advanceDisplay);
@@ -80,45 +82,27 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		this.addComponent(header);
 	}
 
-	public void displayBugs(Milestone milestone) {
-		this.milestone = milestone;
-		displayBugReports();
-	}
-
-	private void displaySimpleView() {
-		if (this.getComponentCount() > 1) {
-			this.removeComponent(this.getComponent(1));
-		}
-
-		BugSearchCriteria criteria = new BugSearchCriteria();
-		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
-				.getProjectId()));
-		criteria.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
-
-		BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
-		this.addComponent(new LazyLoadWrapper(displayWidget));
-		displayWidget.setSearchCriteria(criteria);
-	}
-
 	private void displayAdvancedView() {
 
-		if (this.getComponentCount() > 1) {
-			this.removeComponent(this.getComponent(1));
+		if (getComponentCount() > 1) {
+			removeComponent(getComponent(1));
 		}
 
-		HorizontalLayout bodyLayout = new HorizontalLayout();
+		final HorizontalLayout bodyLayout = new HorizontalLayout();
 		bodyLayout.setSpacing(true);
-		VerticalLayout leftColumn = new VerticalLayout();
+		bodyLayout.setWidth("100%");
+		final VerticalLayout leftColumn = new VerticalLayout();
 		bodyLayout.addComponent(leftColumn);
-		VerticalLayout rightColumn = new VerticalLayout();
+		bodyLayout.setExpandRatio(leftColumn, 1.0f);
+		final VerticalLayout rightColumn = new VerticalLayout();
 		bodyLayout.addComponent(rightColumn);
 
-		UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
+		final UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
 				this);
-		unresolvedBugWidget.setWidth("400px");
+		unresolvedBugWidget.setWidth("100%");
 		leftColumn.addComponent(unresolvedBugWidget);
 
-		BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
+		final BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
 		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		unresolvedByPrioritySearchCriteria
@@ -131,12 +115,12 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		unresolvedBugWidget
 				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
 
-		UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
+		final UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
 				this);
-		unresolvedByAssigneeWidget.setWidth("400px");
+		unresolvedByAssigneeWidget.setWidth("100%");
 		leftColumn.addComponent(unresolvedByAssigneeWidget);
 
-		BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+		final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
 		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		unresolvedByAssigneeSearchCriteria
@@ -149,20 +133,30 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		unresolvedByAssigneeWidget
 				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
 
-		BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+		final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
 		chartSearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		chartSearchCriteria.setMilestoneIds(new SetSearchField<Integer>(
 				milestone.getId()));
 		BugChartComponent bugChartComponent = null;
-		if (ScreenSize.hasSupport1024Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300, 200);
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
-		}
+		bugChartComponent = new BugChartComponent(chartSearchCriteria, "400px",
+				"200px");
 		rightColumn.addComponent(bugChartComponent);
+		rightColumn.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 
 		this.addComponent(bodyLayout);
+	}
+
+	@Override
+	public void displayBugListWidget(final String title,
+			final BugSearchCriteria criteria) {
+		if (getComponentCount() > 1) {
+			removeComponent(getComponent(1));
+		}
+		final BugListWidget bugListWidget = new BugListWidget(title,
+				"Back to milestone dashboard", criteria, this);
+		bugListWidget.setWidth("100%");
+		this.addComponent(bugListWidget);
 	}
 
 	@Override
@@ -171,15 +165,24 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		displayAdvancedView();
 	}
 
-	@Override
-	public void displayBugListWidget(String title, BugSearchCriteria criteria) {
-		if (this.getComponentCount() > 1) {
-			this.removeComponent(this.getComponent(1));
+	public void displayBugs(final Milestone milestone) {
+		this.milestone = milestone;
+		displayBugReports();
+	}
+
+	private void displaySimpleView() {
+		if (getComponentCount() > 1) {
+			removeComponent(getComponent(1));
 		}
-		BugListWidget bugListWidget = new BugListWidget(title,
-				"Back to milestone dashboard", criteria, this);
-		bugListWidget.setWidth("100%");
-		this.addComponent(bugListWidget);
+
+		final BugSearchCriteria criteria = new BugSearchCriteria();
+		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
+		criteria.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
+
+		final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
+		this.addComponent(new LazyLoadWrapper(displayWidget));
+		displayWidget.setSearchCriteria(criteria);
 	}
 
 }

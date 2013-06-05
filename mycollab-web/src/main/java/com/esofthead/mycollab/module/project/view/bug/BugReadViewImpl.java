@@ -53,214 +53,82 @@ import com.vaadin.ui.TabSheet;
 public class BugReadViewImpl extends AbstractView implements BugReadView,
 		IBugCallbackStatusComp {
 
-	private static final long serialVersionUID = 1L;
-	private SimpleBug bug;
-	private final BugPreviewForm previewForm;
-	private HorizontalLayout bugWorkflowControl;
-
-	public BugReadViewImpl() {
-		super();
-
-		previewForm = new BugPreviewForm();
-		this.addComponent(previewForm);
-	}
-
-	@Override
-	public void previewItem(SimpleBug item) {
-		this.bug = item;
-		previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-	}
-
-	@Override
-	public SimpleBug getItem() {
-		return bug;
-	}
-
-	@Override
-	public void refreshBugItem() {
-		EventBus.getInstance().fireEvent(
-				new BugEvent.GotoRead(BugReadViewImpl.this, bug.getId()));
-	}
-
-	private void displayWorkflowControl() {
-		if (BugStatusConstants.OPEN.equals(bug.getStatus())
-				|| BugStatusConstants.REOPENNED.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
-			ButtonGroup navButton = new ButtonGroup();
-			navButton.addButton(new Button("Start Progress",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							bug.setStatus(BugStatusConstants.INPROGRESS);
-							BugService bugService = AppContext
-									.getSpringBean(BugService.class);
-							bugService.updateWithSession(bug,
-									AppContext.getUsername());
-							displayWorkflowControl();
-						}
-					}));
-			navButton.addButton(new Button("Resolved",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ResolvedInputWindow(
-													BugReadViewImpl.this, bug));
-						}
-					}));
-
-			navButton.addButton(new Button("Won't Fix",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new WontFixExplainWindow(
-													BugReadViewImpl.this, bug));
-						}
-					}));
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.INPROGRESS.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
-			ButtonGroup navButton = new ButtonGroup();
-			navButton.addButton(new Button("Stop Progress",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							bug.setStatus(BugStatusConstants.OPEN);
-							BugService bugService = AppContext
-									.getSpringBean(BugService.class);
-							bugService.updateWithSession(bug,
-									AppContext.getUsername());
-							displayWorkflowControl();
-						}
-					}));
-			navButton.addButton(new Button("Resolved",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ResolvedInputWindow(
-													BugReadViewImpl.this, bug));
-						}
-					}));
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
-			ButtonGroup navButton = new ButtonGroup();
-			Button reopenBtn = new Button("Reopen", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.addWindow(
-									new ReOpenWindow(BugReadViewImpl.this, bug));
-				}
-			});
-			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			navButton.addButton(reopenBtn);
-
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.TESTPENDING.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
-			ButtonGroup navButton = new ButtonGroup();
-			navButton.addButton(new Button("Reopen",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ReOpenWindow(
-													BugReadViewImpl.this, bug));
-						}
-					}));
-			navButton.addButton(new Button("Approve & Close",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ApproveInputWindow(
-													BugReadViewImpl.this, bug));
-						}
-					}));
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.WONFIX.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
-			ButtonGroup navButton = new ButtonGroup();
-			Button reopenBtn = new Button("Reopen", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.addWindow(
-									new ReOpenWindow(BugReadViewImpl.this, bug));
-				}
-			});
-			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			navButton.addButton(reopenBtn);
-
-			bugWorkflowControl.addComponent(navButton);
-		}
-		bugWorkflowControl.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS));
-	}
-
 	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
-		private static final long serialVersionUID = 1L;
-		private BugHistoryList historyList;
-		private BugFollowersSheet bugFollowersList;
-		private BugTimeLogSheet bugTimeLogList;
-		private BugRelatedField bugRelatedField;
-
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new PreviewFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-			displayWorkflowControl();
-		}
-
 		private class FormLayoutFactory implements IFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
 			private GridFormLayoutHelper informationLayout;
 
 			@Override
+			public void attachField(final Object propertyId, final Field field) {
+				if (propertyId.equals("summary")) {
+					informationLayout.addComponent(field, "Summary", 0, 0, 2,
+							"100%");
+				} else if (propertyId.equals("description")) {
+					informationLayout.addComponent(field, "Description", 0, 1,
+							2, "100%");
+				} else if (propertyId.equals("status")) {
+					informationLayout.addComponent(field, "Status", 0, 2);
+				} else if (propertyId.equals("priority")) {
+					informationLayout.addComponent(field, "Priority", 1, 2);
+				} else if (propertyId.equals("severity")) {
+					informationLayout.addComponent(field, "Severity", 0, 3);
+				} else if (propertyId.equals("resolution")) {
+					informationLayout.addComponent(field, "Resolution", 1, 3);
+				} else if (propertyId.equals("duedate")) {
+					informationLayout.addComponent(field, "Due Date", 0, 4);
+				} else if (propertyId.equals("createdTime")) {
+					informationLayout.addComponent(field, "Created Time", 1, 4);
+				} else if (propertyId.equals("loguserFullName")) {
+					informationLayout.addComponent(field, "Logged by", 0, 5);
+				} else if (propertyId.equals("assignuserFullName")) {
+					informationLayout.addComponent(field, "Assigned to", 1, 5);
+				} else if (propertyId.equals("milestoneName")) {
+					informationLayout.addComponent(field, "Phase", 0, 6);
+				} else if (propertyId.equals("components")) {
+					informationLayout.addComponent(field, "Components", 0, 7,
+							2, "100%");
+				} else if (propertyId.equals("affectedVersions")) {
+					informationLayout.addComponent(field, "Affected Versions",
+							0, 8, 2, "100%");
+				} else if (propertyId.equals("fixedVersions")) {
+					informationLayout.addComponent(field, "Fixed Versions", 0,
+							9, 2, "100%");
+				} else if (propertyId.equals("id")) {
+					informationLayout.addComponent(field, "Attachments", 0, 10,
+							2, "100%");
+				}
+			}
+
+			private ComponentContainer createBottomLayout() {
+				final TabSheet tabBugDetail = new TabSheet();
+				tabBugDetail.setWidth("100%");
+				// tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
+
+				final CommentDisplay commentList = new CommentDisplay(
+						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true,
+						BugNotificationService.class);
+				commentList.setMargin(true);
+				tabBugDetail.addTab(commentList, "Comments");
+
+				historyList = new BugHistoryList(bug.getId());
+				historyList.setMargin(true);
+				tabBugDetail.addTab(historyList, "History");
+
+				bugRelatedField = new BugRelatedField(bug);
+				tabBugDetail.addTab(bugRelatedField, "Related Bugs");
+
+				bugFollowersList = new BugFollowersSheet(bug);
+				tabBugDetail.addTab(bugFollowersList, "Followers");
+
+				bugTimeLogList = new BugTimeLogSheet(bug);
+				tabBugDetail.addTab(bugTimeLogList, "Time");
+				return tabBugDetail;
+			}
+
+			@Override
 			public Layout getLayout() {
-				AddViewLayout taskListAddLayout = new AddViewLayout("[Issue "
-						+ bug.getBugkey() + "#]: " + bug.getSummary(),
+				final AddViewLayout taskListAddLayout = new AddViewLayout(
+						"[Issue " + bug.getBugkey() + "#]: " + bug.getSummary(),
 						new ThemeResource("icons/48/project/bug.png"));
 
 				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
@@ -273,12 +141,12 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							.addTitleStyleName(UIConstants.LINK_OVERDUE);
 				}
 
-				Button createAccountBtn = new Button("Create",
+				final Button createAccountBtn = new Button("Create",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new BugEvent.GotoAdd(this, null));
 							}
@@ -289,17 +157,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				createAccountBtn.setIcon(new ThemeResource(
 						"icons/16/addRecord.png"));
 
-				HorizontalLayout headerRight = new HorizontalLayout();
+				final HorizontalLayout headerRight = new HorizontalLayout();
 				headerRight.addComponent(createAccountBtn);
 				headerRight.setMargin(true);
 				taskListAddLayout.addHeaderRight(headerRight);
 
-				HorizontalLayout topPanel = new HorizontalLayout();
+				final HorizontalLayout topPanel = new HorizontalLayout();
 				topPanel.setSpacing(true);
 				topPanel.setMargin(true);
 				topPanel.setWidth("100%");
 
-				HorizontalLayout buttonControls = new HorizontalLayout();
+				final HorizontalLayout buttonControls = new HorizontalLayout();
 				buttonControls.setSpacing(true);
 
 				Button backBtn;
@@ -307,7 +175,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugEvent.GotoList(this, null));
 					}
@@ -318,12 +186,12 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				topPanel.addComponent(backBtn);
 				topPanel.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
 
-				Button assignBtn = new Button("Assign",
+				final Button assignBtn = new Button("Assign",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								AppContext
 										.getApplication()
 										.getMainWindow()
@@ -340,17 +208,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				buttonControls.setComponentAlignment(assignBtn,
 						Alignment.MIDDLE_CENTER);
 
-				Button editBtn = new Button("Edit", new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+				final Button editBtn = new Button("Edit",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance()
-								.fireEvent(
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								EventBus.getInstance().fireEvent(
 										new BugEvent.GotoEdit(
 												BugReadViewImpl.this, bug));
-					}
-				});
+							}
+						});
 				editBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
 				editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -358,12 +226,12 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				buttonControls.setComponentAlignment(editBtn,
 						Alignment.MIDDLE_CENTER);
 
-				Button deleteBtn = new Button("Delete",
+				final Button deleteBtn = new Button("Delete",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								ConfirmDialog.show(
 										AppContext.getApplication()
 												.getMainWindow(),
@@ -383,9 +251,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 											@Override
 											public void onClose(
-													ConfirmDialog dialog) {
+													final ConfirmDialog dialog) {
 												if (dialog.isConfirmed()) {
-													BugService bugService = AppContext
+													final BugService bugService = AppContext
 															.getSpringBean(BugService.class);
 													bugService.removeWithSession(
 															bug.getId(),
@@ -427,73 +295,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				taskListAddLayout.addBottomControls(createBottomLayout());
 				return taskListAddLayout;
 			}
-
-			private ComponentContainer createBottomLayout() {
-				TabSheet tabBugDetail = new TabSheet();
-				tabBugDetail.setWidth("100%");
-				tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
-
-				CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true,
-						BugNotificationService.class);
-				commentList.setMargin(true);
-				tabBugDetail.addTab(commentList, "Comments");
-
-				historyList = new BugHistoryList(bug.getId());
-				historyList.setMargin(true);
-				tabBugDetail.addTab(historyList, "History");
-
-				bugRelatedField = new BugRelatedField(bug);
-				tabBugDetail.addTab(bugRelatedField, "Related Bugs");
-
-				bugFollowersList = new BugFollowersSheet(bug);
-				tabBugDetail.addTab(bugFollowersList, "Followers");
-
-				bugTimeLogList = new BugTimeLogSheet(bug);
-				tabBugDetail.addTab(bugTimeLogList, "Time");
-				return tabBugDetail;
-			}
-
-			@Override
-			public void attachField(Object propertyId, Field field) {
-				if (propertyId.equals("summary")) {
-					informationLayout.addComponent(field, "Summary", 0, 0, 2,
-							"100%");
-				} else if (propertyId.equals("description")) {
-					informationLayout.addComponent(field, "Description", 0, 1,
-							2, "100%");
-				} else if (propertyId.equals("status")) {
-					informationLayout.addComponent(field, "Status", 0, 2);
-				} else if (propertyId.equals("priority")) {
-					informationLayout.addComponent(field, "Priority", 1, 2);
-				} else if (propertyId.equals("severity")) {
-					informationLayout.addComponent(field, "Severity", 0, 3);
-				} else if (propertyId.equals("resolution")) {
-					informationLayout.addComponent(field, "Resolution", 1, 3);
-				} else if (propertyId.equals("duedate")) {
-					informationLayout.addComponent(field, "Due Date", 0, 4);
-				} else if (propertyId.equals("createdTime")) {
-					informationLayout.addComponent(field, "Created Time", 1, 4);
-				} else if (propertyId.equals("loguserFullName")) {
-					informationLayout.addComponent(field, "Logged by", 0, 5);
-				} else if (propertyId.equals("assignuserFullName")) {
-					informationLayout.addComponent(field, "Assigned to", 1, 5);
-				} else if (propertyId.equals("milestoneName")) {
-					informationLayout.addComponent(field, "Phase", 0, 6);
-				} else if (propertyId.equals("components")) {
-					informationLayout.addComponent(field, "Components", 0, 7,
-							2, "100%");
-				} else if (propertyId.equals("affectedVersions")) {
-					informationLayout.addComponent(field, "Affected Versions",
-							0, 8, 2, "100%");
-				} else if (propertyId.equals("fixedVersions")) {
-					informationLayout.addComponent(field, "Fixed Versions", 0,
-							9, 2, "100%");
-				} else if (propertyId.equals("id")) {
-					informationLayout.addComponent(field, "Attachments", 0, 10,
-							2, "100%");
-				}
-			}
 		}
 
 		private class PreviewFormFieldFactory extends
@@ -502,8 +303,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("duedate")) {
 					return new FormDateViewField(bug.getDuedate());
 				} else if (propertyId.equals("assignuserFullName")) {
@@ -517,15 +319,16 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
 				} else if (propertyId.equals("components")) {
 					if (bug.getComponents() != null) {
-						FormContainerViewField componentContainer = new FormContainerViewField();
+						final FormContainerViewField componentContainer = new FormContainerViewField();
 						for (final Component component : bug.getComponents()) {
-							Button componentLink = new Button(
+							final Button componentLink = new Button(
 									component.getComponentname(),
 									new Button.ClickListener() {
 										private static final long serialVersionUID = 1L;
 
 										@Override
-										public void buttonClick(ClickEvent event) {
+										public void buttonClick(
+												final ClickEvent event) {
 											EventBus.getInstance()
 													.fireEvent(
 															new BugComponentEvent.GotoRead(
@@ -542,15 +345,16 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						return componentContainer;
 					}
 				} else if (propertyId.equals("affectedVersions")) {
-					FormContainerViewField componentContainer = new FormContainerViewField();
+					final FormContainerViewField componentContainer = new FormContainerViewField();
 					for (final Version version : bug.getAffectedVersions()) {
-						Button versionLink = new Button(
+						final Button versionLink = new Button(
 								version.getVersionname(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
-									public void buttonClick(ClickEvent event) {
+									public void buttonClick(
+											final ClickEvent event) {
 										EventBus.getInstance().fireEvent(
 												new BugVersionEvent.GotoRead(
 														BugReadViewImpl.this,
@@ -562,15 +366,16 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					}
 					return componentContainer;
 				} else if (propertyId.equals("fixedVersions")) {
-					FormContainerViewField componentContainer = new FormContainerViewField();
+					final FormContainerViewField componentContainer = new FormContainerViewField();
 					for (final Version version : bug.getFixedVersions()) {
-						Button versionLink = new Button(
+						final Button versionLink = new Button(
 								version.getVersionname(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
-									public void buttonClick(ClickEvent event) {
+									public void buttonClick(
+											final ClickEvent event) {
 										EventBus.getInstance().fireEvent(
 												new BugVersionEvent.GotoRead(
 														BugReadViewImpl.this,
@@ -583,13 +388,14 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					return componentContainer;
 				} else if (propertyId.equals("milestoneName")) {
 					if (bug.getMilestoneid() != null) {
-						FormLinkViewField componentContainer = new FormLinkViewField(
+						final FormLinkViewField componentContainer = new FormLinkViewField(
 								bug.getMilestoneName(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
-									public void buttonClick(ClickEvent event) {
+									public void buttonClick(
+											final ClickEvent event) {
 										EventBus.getInstance().fireEvent(
 												new MilestoneEvent.GotoRead(
 														BugReadViewImpl.this,
@@ -609,12 +415,13 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							bug.getDescription(), Label.CONTENT_XHTML);
 				} else if (propertyId.equals("priority")) {
 					if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
-						ThemeResource iconPriority = BugPriorityComboBox
+						final ThemeResource iconPriority = BugPriorityComboBox
 								.getIconResourceByPriority(bug.getPriority());
-						Embedded iconEmbedded = new Embedded(null, iconPriority);
-						Label lbPriority = new Label(bug.getPriority());
+						final Embedded iconEmbedded = new Embedded(null,
+								iconPriority);
+						final Label lbPriority = new Label(bug.getPriority());
 
-						FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
@@ -622,12 +429,13 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					}
 				} else if (propertyId.equals("severity")) {
 					if (StringUtil.isNotNullOrEmpty(bug.getSeverity())) {
-						ThemeResource iconPriority = BugSeverityComboBox
+						final ThemeResource iconPriority = BugSeverityComboBox
 								.getIconResourceBySeverity(bug.getSeverity());
-						Embedded iconEmbedded = new Embedded(null, iconPriority);
-						Label lbPriority = new Label(bug.getSeverity());
+						final Embedded iconEmbedded = new Embedded(null,
+								iconPriority);
+						final Label lbPriority = new Label(bug.getSeverity());
 
-						FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
@@ -637,5 +445,211 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				return null;
 			}
 		}
+
+		private static final long serialVersionUID = 1L;
+		private BugHistoryList historyList;
+		private BugFollowersSheet bugFollowersList;
+
+		private BugTimeLogSheet bugTimeLogList;
+
+		private BugRelatedField bugRelatedField;
+
+		@Override
+		public void setItemDataSource(final Item newDataSource) {
+			setFormLayoutFactory(new FormLayoutFactory());
+			setFormFieldFactory(new PreviewFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+			displayWorkflowControl();
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+	private SimpleBug bug;
+	private final BugPreviewForm previewForm;
+
+	private HorizontalLayout bugWorkflowControl;
+
+	public BugReadViewImpl() {
+		super();
+
+		previewForm = new BugPreviewForm();
+		this.addComponent(previewForm);
+	}
+
+	private void displayWorkflowControl() {
+		if (BugStatusConstants.OPEN.equals(bug.getStatus())
+				|| BugStatusConstants.REOPENNED.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			final ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Start Progress",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							bug.setStatus(BugStatusConstants.INPROGRESS);
+							final BugService bugService = AppContext
+									.getSpringBean(BugService.class);
+							bugService.updateWithSession(bug,
+									AppContext.getUsername());
+							displayWorkflowControl();
+						}
+					}));
+			navButton.addButton(new Button("Resolved",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AppContext
+									.getApplication()
+									.getMainWindow()
+									.addWindow(
+											new ResolvedInputWindow(
+													BugReadViewImpl.this, bug));
+						}
+					}));
+
+			navButton.addButton(new Button("Won't Fix",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AppContext
+									.getApplication()
+									.getMainWindow()
+									.addWindow(
+											new WontFixExplainWindow(
+													BugReadViewImpl.this, bug));
+						}
+					}));
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.INPROGRESS.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			final ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Stop Progress",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							bug.setStatus(BugStatusConstants.OPEN);
+							final BugService bugService = AppContext
+									.getSpringBean(BugService.class);
+							bugService.updateWithSession(bug,
+									AppContext.getUsername());
+							displayWorkflowControl();
+						}
+					}));
+			navButton.addButton(new Button("Resolved",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AppContext
+									.getApplication()
+									.getMainWindow()
+									.addWindow(
+											new ResolvedInputWindow(
+													BugReadViewImpl.this, bug));
+						}
+					}));
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			final ButtonGroup navButton = new ButtonGroup();
+			final Button reopenBtn = new Button("Reopen",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AppContext
+									.getApplication()
+									.getMainWindow()
+									.addWindow(
+											new ReOpenWindow(
+													BugReadViewImpl.this, bug));
+						}
+					});
+			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			navButton.addButton(reopenBtn);
+
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.TESTPENDING.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			final ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Reopen",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AppContext
+									.getApplication()
+									.getMainWindow()
+									.addWindow(
+											new ReOpenWindow(
+													BugReadViewImpl.this, bug));
+						}
+					}));
+			navButton.addButton(new Button("Approve & Close",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AppContext
+									.getApplication()
+									.getMainWindow()
+									.addWindow(
+											new ApproveInputWindow(
+													BugReadViewImpl.this, bug));
+						}
+					}));
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.WONFIX.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			final ButtonGroup navButton = new ButtonGroup();
+			final Button reopenBtn = new Button("Reopen",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AppContext
+									.getApplication()
+									.getMainWindow()
+									.addWindow(
+											new ReOpenWindow(
+													BugReadViewImpl.this, bug));
+						}
+					});
+			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			navButton.addButton(reopenBtn);
+
+			bugWorkflowControl.addComponent(navButton);
+		}
+		bugWorkflowControl.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
+	}
+
+	@Override
+	public SimpleBug getItem() {
+		return bug;
+	}
+
+	@Override
+	public void previewItem(final SimpleBug item) {
+		bug = item;
+		previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+	}
+
+	@Override
+	public void refreshBugItem() {
+		EventBus.getInstance().fireEvent(
+				new BugEvent.GotoRead(BugReadViewImpl.this, bug.getId()));
 	}
 }

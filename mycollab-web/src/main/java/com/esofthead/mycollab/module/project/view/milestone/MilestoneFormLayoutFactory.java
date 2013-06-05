@@ -20,46 +20,6 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
-	private static final long serialVersionUID = 1L;
-
-	private final String title;
-	private MilestoneInformationLayout milestoneInformationLayout;
-
-	public MilestoneFormLayoutFactory(String title) {
-		this.title = title;
-	}
-
-	@Override
-	public Layout getLayout() {
-		AddViewLayout milestoneAddLayout = new AddViewLayout(title,
-				new ThemeResource("icons/48/project/milestone.png"));
-
-		Layout topLayout = createTopPanel();
-		if (topLayout != null) {
-			milestoneAddLayout.addTopControls(topLayout);
-		}
-
-		milestoneInformationLayout = new MilestoneInformationLayout();
-
-		Layout bottomLayout = createBottomPanel();
-		if (bottomLayout != null) {
-			milestoneAddLayout.addBottomControls(bottomLayout);
-		}
-
-		milestoneAddLayout.addBody(milestoneInformationLayout.getLayout());
-
-		return milestoneAddLayout;
-	}
-
-	@Override
-	public void attachField(Object propertyId, Field field) {
-		milestoneInformationLayout.attachField(propertyId, field);
-	}
-
-	protected abstract Layout createTopPanel();
-
-	protected abstract Layout createBottomPanel();
-
 	public static class MilestoneInformationLayout implements
 			IFormLayoutFactory {
 		private static final long serialVersionUID = 1L;
@@ -67,23 +27,7 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 		private GridFormLayoutHelper informationLayout;
 
 		@Override
-		public Layout getLayout() {
-			VerticalLayout layout = new VerticalLayout();
-
-			Label organizationHeader = new Label("Milestone Information");
-			organizationHeader.setStyleName("h2");
-			layout.addComponent(organizationHeader);
-
-			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 5);
-			informationLayout.getLayout().setWidth("100%");
-			layout.addComponent(informationLayout.getLayout());
-			layout.setComponentAlignment(informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-			return layout;
-		}
-
-		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("name")) {
 				informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
 			} else if (propertyId.equals("startdate")) {
@@ -104,5 +48,63 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 			}
 		}
 
+		@Override
+		public Layout getLayout() {
+			final VerticalLayout layout = new VerticalLayout();
+
+			final Label organizationHeader = new Label("Milestone Information");
+			organizationHeader.setStyleName("h2");
+			layout.addComponent(organizationHeader);
+
+			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 5);
+			informationLayout.getLayout().setWidth("100%");
+			informationLayout.getLayout().addStyleName("colored-gridlayout");
+			informationLayout.getLayout().setMargin(false);
+			layout.addComponent(informationLayout.getLayout());
+			layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
+			return layout;
+		}
+
+	}
+
+	private static final long serialVersionUID = 1L;
+	private final String title;
+
+	private MilestoneInformationLayout milestoneInformationLayout;
+
+	public MilestoneFormLayoutFactory(final String title) {
+		this.title = title;
+	}
+
+	@Override
+	public void attachField(final Object propertyId, final Field field) {
+		milestoneInformationLayout.attachField(propertyId, field);
+	}
+
+	protected abstract Layout createBottomPanel();
+
+	protected abstract Layout createTopPanel();
+
+	@Override
+	public Layout getLayout() {
+		final AddViewLayout milestoneAddLayout = new AddViewLayout(title,
+				new ThemeResource("icons/48/project/milestone.png"));
+
+		final Layout topLayout = createTopPanel();
+		if (topLayout != null) {
+			milestoneAddLayout.addTopControls(topLayout);
+		}
+
+		milestoneInformationLayout = new MilestoneInformationLayout();
+
+		final Layout bottomLayout = createBottomPanel();
+		if (bottomLayout != null) {
+			milestoneAddLayout.addBottomControls(bottomLayout);
+		}
+
+		milestoneAddLayout.addBody(milestoneInformationLayout.getLayout());
+
+		return milestoneAddLayout;
 	}
 }
