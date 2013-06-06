@@ -190,7 +190,6 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 
 							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
-							view.getWindow().showNotification("Click mass update");
 						}
 					}
 				});
