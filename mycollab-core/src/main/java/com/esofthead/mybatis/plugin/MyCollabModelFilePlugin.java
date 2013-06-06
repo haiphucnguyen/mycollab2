@@ -30,6 +30,7 @@ public class MyCollabModelFilePlugin extends
 		if (isTableHasIdPrimaryKey(introspectedTable)) {
 			generateInsertAndReturnKeySqlStatement(document, introspectedTable);
 			generateRemoveMultipleKeysSqlStatement(document, introspectedTable);
+			generateUpdateMultipleKeysSqlStatement(document, introspectedTable);
 		}
 
 		return true;
@@ -147,6 +148,52 @@ public class MyCollabModelFilePlugin extends
 		document.getRootElement().addElement(element);
 	}
 
+	private void generateUpdateMultipleKeysSqlStatement(Document document,
+			IntrospectedTable introspectedTable) {
+		XmlElement element = new XmlElement("update");
+		element.addAttribute(new Attribute("id", "massUpdateWithSession"));
+		element.addAttribute(new Attribute("parameterType", "map"));
+
+		TextElement commentElement = new TextElement(
+				"<!--WARNING - @mbggenerated-->");
+		element.addElement(commentElement);
+
+		StringBuffer sqlBuilder = new StringBuffer("update ")
+				.append(introspectedTable
+						.getAliasedFullyQualifiedTableNameAtRuntime());
+		element.addElement(new TextElement(sqlBuilder.toString()));
+		XmlElement setElement = new XmlElement("set");
+
+		// set every field of table
+		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+		for (IntrospectedColumn column : allColumns) {
+			if (!isPrimaryKeyOfTable(column, introspectedTable)) {
+				XmlElement ifElement = new XmlElement("if");
+				String conditionStr = "record.%s != null";
+				ifElement.addAttribute(new Attribute("test", String.format(
+						conditionStr, column.getJavaProperty())));
+
+				String setStr = "%s = #{record.%s,jdbcType=%s}";
+				ifElement.addElement(new TextElement(String.format(setStr,
+						column.getActualColumnName(), column.getJavaProperty(),
+						column.getJdbcTypeName())));
+
+				setElement.addElement(ifElement);
+			}
+		}
+		element.addElement(setElement);
+
+		// generate query statement
+		XmlElement queryElement = new XmlElement("if");
+		queryElement.addAttribute(new Attribute("test", "_parameter != null"));
+		queryElement
+				.addElement(new TextElement(
+						" where id IN <foreach item=\"item\" index=\"index\" collection=\"primaryKeys\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>"));
+
+		element.addElement(queryElement);
+		document.getRootElement().addElement(element);
+	}
+
 	private boolean isBlobDomainGenerated(IntrospectedTable introspectedTable) {
 		return !(introspectedTable.getBLOBColumns().size() == 0 || introspectedTable
 				.getBLOBColumns().size() == 1);
@@ -177,6 +224,7 @@ public class MyCollabModelFilePlugin extends
 		if (isTableHasIdPrimaryKey(introspectedTable)) {
 			generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
 			generateRemoveMultipleKeysMethod(interfaze, introspectedTable);
+			generateMassUpdateMultipleKeysMethod(interfaze, introspectedTable);
 		}
 
 		return true;
@@ -211,6 +259,26 @@ public class MyCollabModelFilePlugin extends
 		interfaze.addMethod(method);
 	}
 
+	private void generateMassUpdateMultipleKeysMethod(Interface interfaze,
+			IntrospectedTable introspectedTable) {
+		Method method = new Method();
+		method.setVisibility(JavaVisibility.PUBLIC);
+		context.getCommentGenerator().addGeneralMethodComment(method,
+				introspectedTable);
+		method.setName("massUpdateWithSession");
+		method.setReturnType(new FullyQualifiedJavaType("void"));
+
+		String paramterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
+				.getBaseRecordType() : introspectedTable
+				.getRecordWithBLOBsType();
+
+		method.addParameter(new Parameter(new FullyQualifiedJavaType(
+				paramterType), "record", "@Param(\"record\")"));
+		method.addParameter(new Parameter(new FullyQualifiedJavaType(
+				"java.util.List"), "primaryKeys", "@Param(\"primaryKeys\")"));
+		interfaze.addMethod(method);
+	}
+
 	@Override
 	public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(
 			Method method, Interface interfaze,
@@ -230,8 +298,6 @@ public class MyCollabModelFilePlugin extends
 			Method method, Interface interfaze,
 			IntrospectedTable introspectedTable) {
 		boolean result = isBlobDomainGenerated(introspectedTable);
-		System.out.println("Generate select by example without blogs: "
-				+ !result);
 		return !result;
 	}
 
@@ -240,8 +306,6 @@ public class MyCollabModelFilePlugin extends
 			Method method, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		boolean result = isBlobDomainGenerated(introspectedTable);
-		System.out.println("Generate update by example without blogs: "
-				+ !result);
 		return !result;
 	}
 
@@ -250,8 +314,6 @@ public class MyCollabModelFilePlugin extends
 			Method method, Interface interfaze,
 			IntrospectedTable introspectedTable) {
 		boolean result = isBlobDomainGenerated(introspectedTable);
-		System.out.println("Generate update by example without blogs: "
-				+ !result);
 		return !result;
 	}
 

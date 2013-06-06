@@ -32,6 +32,8 @@ public interface ICrudService<K extends Serializable, T> extends IService {
 	 */
 	int updateWithSession(T record, String userSessionId);
 
+	void massUpdateWithSession(T record, List<K> primaryKeys);
+
 	/**
 	 * @param id
 	 * @return
@@ -45,7 +47,7 @@ public interface ICrudService<K extends Serializable, T> extends IService {
 	 * @return
 	 */
 	int removeWithSession(K primaryKey, String userSessionId);
-	
+
 	/**
 	 * 
 	 * @param primaryKeys

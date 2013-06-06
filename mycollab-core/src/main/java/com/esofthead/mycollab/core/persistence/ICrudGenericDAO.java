@@ -19,6 +19,8 @@ package com.esofthead.mycollab.core.persistence;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 /**
  *
  * @author haiphucnguyen
@@ -45,6 +47,8 @@ public interface ICrudGenericDAO<K extends Serializable, T> {
      * @return
      */
     int updateByPrimaryKeySelective(T record);
+    
+    void massUpdateWithSession(@Param("record") T record, @Param("primaryKeys") List<K> primaryKeys);
 
     /**
      * @param id
@@ -64,6 +68,7 @@ public interface ICrudGenericDAO<K extends Serializable, T> {
      * @return 
      */
     int insertAndReturnKey(T value);
+    
     
     void removeKeysWithSession(List keys);
     
