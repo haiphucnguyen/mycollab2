@@ -102,4 +102,9 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
     public void removeWithSession(List<K> primaryKeys, String username) {
         throw new RuntimeException("Sub classes must override before call");
     }
+    
+    @Override
+	public void massUpdateWithSession(T record, List<K> primaryKeys) {
+		getCrudMapper().massUpdateWithSession(record, primaryKeys);
+	}
 }
