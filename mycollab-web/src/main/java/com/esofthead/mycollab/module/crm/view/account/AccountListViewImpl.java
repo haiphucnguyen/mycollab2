@@ -73,6 +73,8 @@ public class AccountListViewImpl extends AbstractView implements
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
 		tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
+		tableActionControls.addOptionItem("massUpdate", LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
 		tableActionControls.setVisible(false);
 
 		layout.addComponent(tableActionControls);

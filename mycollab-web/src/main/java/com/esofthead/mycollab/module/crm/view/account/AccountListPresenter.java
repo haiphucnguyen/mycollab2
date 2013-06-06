@@ -186,9 +186,11 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES, tableData),
 										"export.csv", view.getApplication());
-							}
+							} 
 
 							view.getWidget().getWindow().open(res, "_blank");
+						} else if ("massUpdate".equals(id)) {
+							view.getWindow().showNotification("Click mass update");
 						}
 					}
 				});
