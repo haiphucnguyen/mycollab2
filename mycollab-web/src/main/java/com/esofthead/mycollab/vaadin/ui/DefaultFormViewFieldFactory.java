@@ -34,7 +34,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			final Component comp = AttachmentDisplayComponent
 					.getAttachmentDisplayComponent(type, typeid);
 			if (comp == null) {
-				setCompositionRoot(new Label());
+				final Label l = new Label("&nbsp;", Label.CONTENT_XHTML);
+				setCompositionRoot(l);
 			} else {
 				setCompositionRoot(comp);
 			}
@@ -142,7 +143,12 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		public FormDateViewField(final Date date) {
 			final Label l = new Label();
 			l.setWidth("100%");
-			l.setValue(AppContext.formatDate(date));
+			if (date == null) {
+				l.setValue("&nbsp;");
+				l.setContentMode(Label.CONTENT_XHTML);
+			} else {
+				l.setValue(AppContext.formatDate(date));
+			}
 			setCompositionRoot(l);
 		}
 

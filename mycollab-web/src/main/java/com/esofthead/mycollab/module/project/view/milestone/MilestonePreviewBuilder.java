@@ -216,7 +216,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 			final VerticalLayout marginLayout = new VerticalLayout();
 			marginLayout.setMargin(false);
-			marginLayout.addComponent(actionControls);
+			milestoneAddLayout.addTopControls(actionControls);
 			marginLayout.addComponent(previewForm);
 
 			milestoneInformation.addComponent(marginLayout);

@@ -33,40 +33,21 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ProjectActivityStreamComponent extends Depot {
-	private static final long serialVersionUID = 1L;
-	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
-
-	public ProjectActivityStreamComponent() {
-		super("Project Feeds", new VerticalLayout());
-		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
-				AppContext.getSpringBean(ActivityStreamService.class),
-				ActivityStreamRowDisplayHandler.class, 10);
-		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		this.addStyleName("activity-panel");
-		((VerticalLayout) this.bodyContent).setMargin(false);
-	}
-
-	public void showProjectFeeds() {
-		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-				new String[] { ModuleNameConstants.PRJ }));
-
-		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
-				CurrentProjectVariables.getProjectId()));
-		activityStreamList.setSearchCriteria(searchCriteria);
-	}
-
 	public static class ActivityStreamRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
 		@Override
-		public Component generateRow(SimpleActivityStream activityStream,
-				int rowIndex) {
-			CssLayout layout = new CssLayout();
+		public Component generateRow(final SimpleActivityStream activityStream,
+				final int rowIndex) {
+			final CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 
-			CssLayout header = new CssLayout();
+			if ((rowIndex + 1) % 2 != 0) {
+				layout.addStyleName("odd");
+			}
+
+			final CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 			String content = "";
 
@@ -113,13 +94,13 @@ public class ProjectActivityStreamComponent extends Depot {
 								activityStream.getNamefield());
 			}
 
-			Label actionLbl = new Label(content, Label.CONTENT_XHTML);
+			final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
 			header.addComponent(actionLbl);
 			layout.addComponent(header);
 
-			CssLayout body = new CssLayout();
+			final CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
-			Label dateLbl = new Label(
+			final Label dateLbl = new Label(
 					DateTimeUtils.getStringDateFromNow(activityStream
 							.getCreatedtime()));
 			body.addComponent(dateLbl);
@@ -127,5 +108,29 @@ public class ProjectActivityStreamComponent extends Depot {
 			layout.addComponent(body);
 			return layout;
 		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+
+	public ProjectActivityStreamComponent() {
+		super("Project Feeds", new VerticalLayout());
+		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
+				AppContext.getSpringBean(ActivityStreamService.class),
+				ActivityStreamRowDisplayHandler.class, 10);
+		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+		addStyleName("activity-panel");
+		((VerticalLayout) bodyContent).setMargin(false);
+	}
+
+	public void showProjectFeeds() {
+		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.PRJ }));
+
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
+				CurrentProjectVariables.getProjectId()));
+		activityStreamList.setSearchCriteria(searchCriteria);
 	}
 }

@@ -94,6 +94,9 @@ public class MyBugListWidget extends BugDisplayWidget {
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);
 			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
+			if((rowIndex + 1) % 2 != 0) {
+				rowLayout.addStyleName("odd");
+			}
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}

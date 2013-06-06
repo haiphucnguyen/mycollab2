@@ -79,9 +79,10 @@ public class Depot extends VerticalLayout {
 		header.addComponent(headerContent);
 		header.setExpandRatio(headerLeft, 1.0f);
 
-		final CustomComponent customComp = new CustomComponent(component);
+		final CustomComponent customComp = new CustomComponent(bodyContent);
 		customComp.setWidth("100%");
-		customComp.setStyleName("depotContent");
+		bodyContent.setStyleName("depotContent");
+
 		this.addComponent(customComp);
 		this.setComponentAlignment(customComp, Alignment.TOP_CENTER);
 	}
@@ -94,6 +95,14 @@ public class Depot extends VerticalLayout {
 	public void addHeaderElement(final Component component) {
 		if (component != null) {
 			headerContent.addComponent(component);
+		}
+	}
+
+	public void setContentBorder(final boolean hasBorder) {
+		if (hasBorder) {
+			bodyContent.addStyleName("bordered");
+		} else {
+			bodyContent.removeStyleName("bordered");
 		}
 	}
 

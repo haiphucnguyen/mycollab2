@@ -25,10 +25,11 @@ public abstract class BugDisplayWidget extends Depot {
 
 	protected BugSearchCriteria searchCriteria;
 	private final BeanList<BugService, BugSearchCriteria, SimpleBug> dataList;
-	private Button moreBtn;
+	private final Button moreBtn;
 
-	public BugDisplayWidget(String title,
-			Class<? extends RowDisplayHandler<SimpleBug>> rowDisplayHandler) {
+	public BugDisplayWidget(
+			final String title,
+			final Class<? extends RowDisplayHandler<SimpleBug>> rowDisplayHandler) {
 		super(title, new VerticalLayout());
 
 		dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
@@ -39,7 +40,7 @@ public abstract class BugDisplayWidget extends Depot {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				EventBus.getInstance().fireEvent(
 						new BugEvent.GotoList(BugDisplayWidget.this,
 								new BugScreenData.Search(
@@ -48,19 +49,22 @@ public abstract class BugDisplayWidget extends Depot {
 		});
 		moreBtn.setStyleName(UIConstants.THEME_LINK);
 		moreBtn.setVisible(false);
-		bodyContent.addComponent(moreBtn);
-		((VerticalLayout) bodyContent).setComponentAlignment(moreBtn,
-				Alignment.TOP_RIGHT);
+		final VerticalLayout widgetFooter = new VerticalLayout();
+		widgetFooter.addStyleName("widget-footer");
+		widgetFooter.setWidth("100%");
+		widgetFooter.addComponent(moreBtn);
+		widgetFooter.setComponentAlignment(moreBtn, Alignment.TOP_RIGHT);
+		bodyContent.addComponent(widgetFooter);
 		bodyContent.setStyleName(UIConstants.BUG_LIST);
 	}
 
-	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		SearchRequest<BugSearchCriteria> searchRequest = new SearchRequest<BugSearchCriteria>(
-				searchCriteria, 0, MAX_ITEM_DISPLAY);
-		int displayItemsCount = dataList.setSearchRequest(searchRequest);
-		moreBtn.setVisible((displayItemsCount == MAX_ITEM_DISPLAY));
-	}
-
 	protected abstract BugSearchParameter constructMoreDisplayFilter();
+
+	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
+		this.searchCriteria = searchCriteria;
+		final SearchRequest<BugSearchCriteria> searchRequest = new SearchRequest<BugSearchCriteria>(
+				searchCriteria, 0, BugDisplayWidget.MAX_ITEM_DISPLAY);
+		final int displayItemsCount = dataList.setSearchRequest(searchRequest);
+		moreBtn.setVisible((displayItemsCount == BugDisplayWidget.MAX_ITEM_DISPLAY));
+	}
 }

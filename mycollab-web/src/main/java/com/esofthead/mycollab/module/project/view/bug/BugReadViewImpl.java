@@ -75,7 +75,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("resolution")) {
 					informationLayout.addComponent(field, "Resolution", 1, 3);
 				} else if (propertyId.equals("duedate")) {
-					informationLayout.addComponent(field, "Due Date", 0, 4);
+					informationLayout.addComponent(field, "Due Date", 0, 4, 2,
+							"100%");
 				} else if (propertyId.equals("createdTime")) {
 					informationLayout.addComponent(field, "Created Time", 1, 4);
 				} else if (propertyId.equals("loguserFullName")) {
@@ -127,18 +128,16 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 			@Override
 			public Layout getLayout() {
-				final AddViewLayout taskListAddLayout = new AddViewLayout(
-						"[Issue " + bug.getBugkey() + "#]: " + bug.getSummary(),
+				final AddViewLayout bugAddLayout = new AddViewLayout("[Issue "
+						+ bug.getBugkey() + "#]: " + bug.getSummary(),
 						new ThemeResource("icons/48/project/bug.png"));
 
 				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
-					taskListAddLayout
-							.addTitleStyleName(UIConstants.LINK_COMPLETED);
+					bugAddLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
 						&& (bug.getDuedate().before(new GregorianCalendar()
 								.getTime()))) {
-					taskListAddLayout
-							.addTitleStyleName(UIConstants.LINK_OVERDUE);
+					bugAddLayout.addTitleStyleName(UIConstants.LINK_OVERDUE);
 				}
 
 				final Button createAccountBtn = new Button("Create",
@@ -160,14 +159,15 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				final HorizontalLayout headerRight = new HorizontalLayout();
 				headerRight.addComponent(createAccountBtn);
 				headerRight.setMargin(true);
-				taskListAddLayout.addHeaderRight(headerRight);
+				bugAddLayout.addHeaderRight(headerRight);
 
 				final HorizontalLayout topPanel = new HorizontalLayout();
-				topPanel.setSpacing(true);
-				topPanel.setMargin(true);
+				topPanel.setSpacing(false);
+				topPanel.setMargin(false);
 				topPanel.setWidth("100%");
 
 				final HorizontalLayout buttonControls = new HorizontalLayout();
+				buttonControls.addStyleName("edit-btn");
 				buttonControls.setSpacing(true);
 
 				Button backBtn;
@@ -275,6 +275,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				buttonControls.addComponent(deleteBtn);
 				buttonControls.setComponentAlignment(deleteBtn,
 						Alignment.MIDDLE_CENTER);
+				buttonControls.setMargin(false);
 
 				topPanel.addComponent(buttonControls);
 				topPanel.setComponentAlignment(buttonControls,
@@ -282,18 +283,22 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				topPanel.setExpandRatio(buttonControls, 1);
 
 				bugWorkflowControl = new HorizontalLayout();
+				bugWorkflowControl.setMargin(false);
 				topPanel.addComponent(bugWorkflowControl);
 				topPanel.setComponentAlignment(bugWorkflowControl,
 						Alignment.MIDDLE_RIGHT);
 
-				taskListAddLayout.addTopControls(topPanel);
+				bugAddLayout.addTopControls(topPanel);
 
 				informationLayout = new GridFormLayoutHelper(2, 11);
-				informationLayout.getLayout().setMargin(true);
-				taskListAddLayout.addBody(informationLayout.getLayout());
+				informationLayout.getLayout()
+						.addStyleName("colored-gridlayout");
+				informationLayout.getLayout().setMargin(false);
+				informationLayout.getLayout().setWidth("100%");
+				bugAddLayout.addBody(informationLayout.getLayout());
 
-				taskListAddLayout.addBottomControls(createBottomLayout());
-				return taskListAddLayout;
+				bugAddLayout.addBottomControls(createBottomLayout());
+				return bugAddLayout;
 			}
 		}
 

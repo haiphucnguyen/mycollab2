@@ -35,36 +35,29 @@ import com.vaadin.ui.Label;
  * @author haiphucnguyen
  */
 public class RecentBugUpdateWidget extends BugDisplayWidget {
-	private static final long serialVersionUID = 1L;
-
-	public RecentBugUpdateWidget() {
-		super(LocalizationHelper
-				.getMessage(BugI18nEnum.UPDATED_RECENTLY_WIDGET_TITLE),
-				RecentBugRowDisplayHandler.class);
-	}
-
 	public static class RecentBugRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
 
 		@Override
-		public Component generateRow(final SimpleBug obj, int rowIndex) {
-			GridLayout layout = new GridLayout(2, 4);
+		public Component generateRow(final SimpleBug obj, final int rowIndex) {
+			final GridLayout layout = new GridLayout(2, 4);
 			layout.setWidth("100%");
 			layout.setSpacing(false);
 			layout.addComponent(new Embedded(null, new ThemeResource(
 					"icons/22/project/bug.png")), 0, 0, 0, 1);
 
-			ButtonLink defectLink = new ButtonLink("["
+			final ButtonLink defectLink = new ButtonLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"
-					+ obj.getBugkey() + "]: " + obj.getSummary(), new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+					+ obj.getBugkey() + "]: " + obj.getSummary(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					EventBus.getInstance().fireEvent(
-							new BugEvent.GotoRead(this, obj.getId()));
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new BugEvent.GotoRead(this, obj.getId()));
+						}
+					});
 			defectLink.setWidth("100%");
 
 			if (BugStatusConstants.CLOSE.equals(obj.getStatus())) {
@@ -77,37 +70,49 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
 
-			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
+			final LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
 					obj.getDescription());
 			descInfo.setWidth("100%");
 			layout.addComponent(descInfo);
 
-			Label dateInfo = new Label("Last updated on "
+			final Label dateInfo = new Label("Last updated on "
 					+ AppContext.formatDateTime(obj.getLastupdatedtime()));
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			layout.addComponent(dateInfo, 1, 2);
 
-			HorizontalLayout hLayoutAssigneeInfo = new HorizontalLayout();
+			final HorizontalLayout hLayoutAssigneeInfo = new HorizontalLayout();
 			hLayoutAssigneeInfo.setSpacing(true);
-			Label assignee = new Label("Assignee: ");
+			final Label assignee = new Label("Assignee: ");
 			assignee.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			hLayoutAssigneeInfo.addComponent(assignee);
 			hLayoutAssigneeInfo.setComponentAlignment(assignee,
 					Alignment.MIDDLE_CENTER);
 
-			ProjectUserLink userLink = new ProjectUserLink(
-					obj.getAssignuser(), obj.getAssignuserFullName(), false, true);
+			final ProjectUserLink userLink = new ProjectUserLink(
+					obj.getAssignuser(), obj.getAssignuserFullName(), false,
+					true);
 			hLayoutAssigneeInfo.addComponent(userLink);
 			hLayoutAssigneeInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);
 			layout.addComponent(hLayoutAssigneeInfo, 1, 3);
 
-			CssLayout rowLayout = new CssLayout();
+			final CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);
 			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
+			if ((rowIndex + 1) % 2 != 0) {
+				rowLayout.addStyleName("odd");
+			}
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	public RecentBugUpdateWidget() {
+		super(LocalizationHelper
+				.getMessage(BugI18nEnum.UPDATED_RECENTLY_WIDGET_TITLE),
+				RecentBugRowDisplayHandler.class);
 	}
 
 	@Override

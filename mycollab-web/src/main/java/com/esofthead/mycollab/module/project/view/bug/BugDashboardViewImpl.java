@@ -47,31 +47,128 @@ public class BugDashboardViewImpl extends AbstractView implements
 		initUI();
 	}
 
+	@Override
+	public void attach() {
+		leftColumn.removeAllComponents();
+		rightColumn.removeAllComponents();
+
+		final SimpleProject project = CurrentProjectVariables.getProject();
+
+		final MyBugListWidget myBugListWidget = new MyBugListWidget();
+		final LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
+				myBugListWidget);
+		leftColumn.addComponent(myBugsWidgetWrapper);
+		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
+		myBugsSearchCriteria
+				.setProjectId(new NumberSearchField(project.getId()));
+		myBugsSearchCriteria.setStatuses(new SetSearchField<String>(
+				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
+						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
+						BugStatusConstants.TESTPENDING }));
+		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
+				.getUsername()));
+
+		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
+
+		final DueBugWidget dueBugWidget = new DueBugWidget();
+		final LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(
+				dueBugWidget);
+		leftColumn.addComponent(dueBugWidgetWrapper);
+		final BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
+		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
+		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
+				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
+						.getTime()));
+		dueDefectsCriteria.setStatuses(new SetSearchField<String>(
+				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
+						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
+						BugStatusConstants.TESTPENDING }));
+		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
+
+		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
+		final LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
+				updateBugWidget);
+		leftColumn.addComponent(updateBugWidgetWrapper);
+
+		// Unresolved by assignee
+		final UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
+		final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
+				project.getId()));
+		unresolvedByAssigneeSearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
+		unresolvedByAssigneeWidget
+				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+		rightColumn
+				.addComponent(new LazyLoadWrapper(unresolvedByAssigneeWidget));
+
+		// Unresolve by priority widget
+		final UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
+		final BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
+		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
+				project.getId()));
+		unresolvedByPrioritySearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
+		unresolvedByPriorityWidget
+				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
+		rightColumn
+				.addComponent(new LazyLoadWrapper(unresolvedByPriorityWidget));
+
+		// bug chart
+		final BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
+		recentDefectsCriteria.setProjectId(new NumberSearchField(project
+				.getId()));
+		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
+
+		final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+		chartSearchCriteria.setProjectId(new NumberSearchField(
+				CurrentProjectVariables.getProjectId()));
+		BugChartComponent bugChartComponent = null;
+		if (ScreenSize.hasSupport1024Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300,
+					200);
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+					200);
+		} else {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+					200);
+		}
+		rightColumn.addComponent(bugChartComponent);
+	}
+
 	private void initUI() {
-		HorizontalLayout header = new HorizontalLayout();
+		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
 
-		Label title = new Label(
+		final Label title = new Label(
 				LocalizationHelper.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
 		header.addComponent(title);
 		header.setExpandRatio(title, 0.5f);
 
-		ButtonGroup navButton = new ButtonGroup();
-		Button bugListBtn = new Button("Bugs", new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new BugEvent.GotoList(this, null));
-			}
-		});
+		final ButtonGroup navButton = new ButtonGroup();
+		final Button bugListBtn = new Button("Bugs",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoList(this, null));
+					}
+				});
 
 		navButton.addButton(bugListBtn);
 
-		Button componentListBtn = new Button("Components",
+		final Button componentListBtn = new Button("Components",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugComponentEvent.GotoList(this, null));
 					}
@@ -79,10 +176,10 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		navButton.addButton(componentListBtn);
 
-		Button versionListBtn = new Button("Versions",
+		final Button versionListBtn = new Button("Versions",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugVersionEvent.GotoList(this, null));
 					}
@@ -93,11 +190,11 @@ public class BugDashboardViewImpl extends AbstractView implements
 		header.addComponent(navButton);
 		header.setExpandRatio(navButton, 0.5f);
 
-		Button createBugBtn = new Button(
+		final Button createBugBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugEvent.GotoAdd(this, null));
 					}
@@ -109,13 +206,13 @@ public class BugDashboardViewImpl extends AbstractView implements
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
-		VerticalLayout btnControlsLayout = new VerticalLayout();
+		final VerticalLayout btnControlsLayout = new VerticalLayout();
 		btnControlsLayout.setWidth("150px");
-		Button createComponentBtn = new Button(
+		final Button createComponentBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_COMPONENT_ACTION),
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						controlsBtn.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new BugComponentEvent.GotoAdd(this, null));
@@ -126,11 +223,11 @@ public class BugDashboardViewImpl extends AbstractView implements
 				.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 		btnControlsLayout.addComponent(createComponentBtn);
 
-		Button createVersionBtn = new Button(
+		final Button createVersionBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						controlsBtn.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new BugVersionEvent.GotoAdd(this, null));
@@ -148,7 +245,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		this.addComponent(header);
 
-		HorizontalLayout body = new HorizontalLayout();
+		final HorizontalLayout body = new HorizontalLayout();
 		body.setWidth("100%");
 		body.setSpacing(true);
 
@@ -168,100 +265,5 @@ public class BugDashboardViewImpl extends AbstractView implements
 		body.setComponentAlignment(rightColumn, Alignment.TOP_RIGHT);
 
 		this.addComponent(body);
-	}
-
-	@Override
-	public void attach() {
-		leftColumn.removeAllComponents();
-		rightColumn.removeAllComponents();
-
-		SimpleProject project = CurrentProjectVariables.getProject();
-
-		MyBugListWidget myBugListWidget = new MyBugListWidget();
-		LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
-				myBugListWidget);
-		leftColumn.addComponent(myBugsWidgetWrapper);
-		BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
-		myBugsSearchCriteria
-				.setProjectId(new NumberSearchField(project.getId()));
-		myBugsSearchCriteria.setStatuses(new SetSearchField<String>(
-				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
-						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
-						BugStatusConstants.TESTPENDING }));
-		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
-				.getUsername()));
-
-		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
-
-		DueBugWidget dueBugWidget = new DueBugWidget();
-		LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
-		leftColumn.addComponent(dueBugWidgetWrapper);
-		BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
-		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
-		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
-				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
-						.getTime()));
-		dueDefectsCriteria.setStatuses(new SetSearchField<String>(
-				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
-						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
-						BugStatusConstants.TESTPENDING }));
-		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
-
-		RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
-		LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
-				updateBugWidget);
-		leftColumn.addComponent(updateBugWidgetWrapper);
-
-		// Unresolved by assignee
-		UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
-		BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
-		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
-				project.getId()));
-		unresolvedByAssigneeSearchCriteria
-				.setStatuses(new SetSearchField<String>(SearchField.AND,
-						new String[] { BugStatusConstants.INPROGRESS,
-								BugStatusConstants.OPEN,
-								BugStatusConstants.REOPENNED }));
-		unresolvedByAssigneeWidget
-				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-		rightColumn
-				.addComponent(new LazyLoadWrapper(unresolvedByAssigneeWidget));
-
-		// Unresolve by priority widget
-		UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
-		BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
-		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
-				project.getId()));
-		unresolvedByPrioritySearchCriteria
-				.setStatuses(new SetSearchField<String>(SearchField.AND,
-						new String[] { BugStatusConstants.INPROGRESS,
-								BugStatusConstants.OPEN,
-								BugStatusConstants.REOPENNED }));
-		unresolvedByPriorityWidget
-				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-		rightColumn
-				.addComponent(new LazyLoadWrapper(unresolvedByPriorityWidget));
-
-		// bug chart
-		BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
-		recentDefectsCriteria.setProjectId(new NumberSearchField(project
-				.getId()));
-		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
-
-		BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
-		chartSearchCriteria.setProjectId(new NumberSearchField(
-				CurrentProjectVariables.getProjectId()));
-		BugChartComponent bugChartComponent = null;
-		if (ScreenSize.hasSupport1024Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300,
-					200);
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
-					200);
-		} else {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
-					200);
-		}
-		rightColumn.addComponent(bugChartComponent);
 	}
 }

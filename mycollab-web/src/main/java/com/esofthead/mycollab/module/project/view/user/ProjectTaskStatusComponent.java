@@ -32,44 +32,21 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ProjectTaskStatusComponent extends Depot {
-	private static final long serialVersionUID = 1L;
-	private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
-
-	public ProjectTaskStatusComponent() {
-		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.TASKS_TITLE),
-				new VerticalLayout());
-
-		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
-				AppContext.getSpringBean(ProjectGenericTaskService.class),
-				TaskRowDisplayHandler.class, 10);
-		this.bodyContent.addComponent(new LazyLoadWrapper(taskList));
-		this.addStyleName("activity-panel");
-		((VerticalLayout) this.bodyContent).setMargin(false);
-	}
-
-	public void showProjectTasksByStatus() {
-		ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
-		searchCriteria.setsAccountId(new NumberSearchField(AppContext
-				.getAccountId()));
-		searchCriteria.setIsOpenned(new SearchField());
-		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,
-				AppContext.getUsername()));
-		searchCriteria.setProjectId(new NumberSearchField(
-				CurrentProjectVariables.getProjectId()));
-		taskList.setSearchCriteria(searchCriteria);
-	}
-
 	public static class TaskRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
 
 		@Override
 		public Component generateRow(final ProjectGenericTask genericTask,
-				int rowIndex) {
-			CssLayout layout = new CssLayout();
+				final int rowIndex) {
+			final CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 
-			CssLayout header = new CssLayout();
+			if ((rowIndex + 1) % 2 != 0) {
+				layout.addStyleName("odd");
+			}
+
+			final CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 
 			String taskType = "normal";
@@ -80,7 +57,7 @@ public class ProjectTaskStatusComponent extends Depot {
 				taskType = "overdue";
 			}
 
-			String content = LocalizationHelper.getMessage(
+			final String content = LocalizationHelper.getMessage(
 					ProjectCommonI18nEnum.PROJECT_TASK_TITLE, ProjectResources
 							.getResourceLink(genericTask.getType()),
 					ProjectLinkBuilder.WebLinkGenerator
@@ -90,15 +67,15 @@ public class ProjectTaskStatusComponent extends Depot {
 									genericTask.getTypeId()), taskType,
 					genericTask.getName());
 
-			Label taskLink = new Label(content, Label.CONTENT_XHTML);
+			final Label taskLink = new Label(content, Label.CONTENT_XHTML);
 
 			header.addComponent(taskLink);
 
 			layout.addComponent(header);
 
-			CssLayout body = new CssLayout();
+			final CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
-			Label dateLbl = new Label("Last updated on "
+			final Label dateLbl = new Label("Last updated on "
 					+ DateTimeUtils.getStringDateFromNow(genericTask
 							.getLastUpdatedTime()));
 			body.addComponent(dateLbl);
@@ -107,6 +84,34 @@ public class ProjectTaskStatusComponent extends Depot {
 
 			return layout;
 		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+
+	public ProjectTaskStatusComponent() {
+		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.TASKS_TITLE),
+				new VerticalLayout());
+
+		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
+				AppContext.getSpringBean(ProjectGenericTaskService.class),
+				TaskRowDisplayHandler.class, 10);
+		bodyContent.addComponent(new LazyLoadWrapper(taskList));
+		addStyleName("activity-panel");
+		((VerticalLayout) bodyContent).setMargin(false);
+	}
+
+	public void showProjectTasksByStatus() {
+		final ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+		searchCriteria.setsAccountId(new NumberSearchField(AppContext
+				.getAccountId()));
+		searchCriteria.setIsOpenned(new SearchField());
+		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,
+				AppContext.getUsername()));
+		searchCriteria.setProjectId(new NumberSearchField(
+				CurrentProjectVariables.getProjectId()));
+		taskList.setSearchCriteria(searchCriteria);
 	}
 
 }

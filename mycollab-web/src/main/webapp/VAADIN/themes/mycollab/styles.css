@@ -991,17 +991,17 @@ input.v-textfield-errorField {
 	border-bottom-left-radius: 0px;
 	border: 1px solid #8F8F8F;
 }
-.addViewLayout .addNewControl {
+.addViewLayout .addViewTopControls {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
-.addViewLayout .addNewControl .v-horizontallayout-margin {
+.addViewLayout .addViewTopControls > .v-horizontallayout .v-horizontallayout-margin {
 	padding: 5px;
 }
 
-.addViewLayout .addNewControl .edit-btn .v-horizontallayout-margin {
+.addViewLayout .addViewTopControls .edit-btn .v-horizontallayout-margin {
 	padding: 0px;
 }
 
@@ -1045,9 +1045,9 @@ input.v-textfield-errorField {
 	text-shadow: #F0F0F0 0 1px 0;
 }
 
-.addViewBody {
-	padding: 0px 5px 0px 10px;
-}
+/* .addViewBody { */
+/* 	padding: 0px 5px 0px 10px; */
+/* } */
 
 .preview .addViewLayout .addViewBody {
 	padding: 0px;
@@ -1500,14 +1500,39 @@ input.v-textfield-errorField {
 
 .depotComp .depotContent {
 	padding: 0px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.depotComp .depotContent.empty {
+	border-bottom: 1px solid rgb(169, 169, 169);
 }
 
 .depotComp .depotContent .taskdisplay-component>.v-csslayout-margin {
 	padding-left: 30px;
 }
 
+.depotContent.bordered {
+	border: 1px solid rgb(169, 169, 169);
+	background-color: rgb(245, 245, 245);
+}
+
+.depotContent.bordered .v-verticallayout-margin {
+	padding: 5px;
+}
+
 .addViewLayout .depotContent .v-button-link {
 	margin-bottom: 5px;
+}
+.bug-list .widget-footer {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: rgb(245, 245, 245);
+	border: 1px solid rgb(169, 169, 169);
+}
+.bug-list .widget-footer .v-verticallayout-margin {
+	padding: 5px;
 }
 /* End Depot */
 
@@ -1861,7 +1886,14 @@ input.v-textfield-errorField {
 /* End round border button */
 
 /* Split button */
-
+div.v-splitbutton, div.v-splitbutton .v-button {
+	height: auto;
+}
+.v-splitbutton.esofthead .v-popupbutton .v-button-wrap,
+.v-splitbutton.esofthead div.v-disabled.v-popupbutton .v-button-wrap {
+	padding-left: 0px;
+	padding-right: 0px;
+}
 .v-splitbutton-esofthead {
 	font-weight: bold;
 	font-size: 13px !important;
@@ -1925,7 +1957,7 @@ input.v-textfield-errorField {
 
 .v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton,.v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton:active
 {
-	padding: 4px 0px 4px 2px;
+	padding: 4px 10px 4px 2px;
 }
 .v-splitbutton .bluebtn {
 	margin: 0px;
@@ -2323,9 +2355,6 @@ input.v-textfield-errorField {
 /* End Widget */
 
 /* Bug Widget */
-.bug-list {
-	margin: 10px 0px;
-}
 
 .widget-title {
 	border-bottom: 1px solid rgb(183, 183, 183);
@@ -2334,14 +2363,15 @@ input.v-textfield-errorField {
 	font-weight: bold
 }
 
-.widget-row {
-	margin-bottom: 5px;
-}
-
-.widget-row>.v-csslayout-margin {
+.widget-row >.v-csslayout-margin {
 	background-color: rgb(247, 247, 247);
-	border: 1px solid rgba(0, 0, 0, 0.25);
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
 	padding: 3px 5px 0px;
+}
+.widget-row.odd >.v-csslayout-margin {
+	background-color: rgb(212, 223, 239);
 }
 /* End Bug Widget */
 

@@ -24,48 +24,6 @@ import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 public class UnresolvedBugsByAssigneeWidget2 extends Depot {
-	private static final long serialVersionUID = 1L;
-
-	private BugSearchCriteria bugSearchCriteria;
-
-	public UnresolvedBugsByAssigneeWidget2() {
-		super(LocalizationHelper
-				.getMessage(BugI18nEnum.UNRESOLVED_BY_ASSIGNEE_WIDGET_TITLE),
-				new VerticalLayout());
-	}
-
-	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
-		this.bugSearchCriteria = searchCriteria;
-		this.bodyContent.removeAllComponents();
-		BugService bugService = AppContext.getSpringBean(BugService.class);
-		int totalCount = bugService.getTotalCount(searchCriteria);
-		List<GroupItem> groupItems = bugService
-				.getAssignedDefectsSummary(searchCriteria);
-		if (!groupItems.isEmpty()) {
-			for (GroupItem item : groupItems) {
-				HorizontalLayout assigneeLayout = new HorizontalLayout();
-				assigneeLayout.setSpacing(true);
-
-				String assignUser = item.getGroupid();
-				String assignUserFullName = (item.getGroupid() == null) ? "Undefined"
-						: item.getGroupname();
-				BugAssigneeButton userLbl = new BugAssigneeButton(assignUser,
-						assignUserFullName);
-				assigneeLayout.addComponent(userLbl);
-				ProgressIndicator indicator = new ProgressIndicator(new Float(
-						(float) item.getValue() / totalCount));
-				indicator.setPollingInterval(1000000000);
-				assigneeLayout.addComponent(indicator);
-
-				Label progressLbl = new Label("(" + item.getValue() + "/"
-						+ totalCount + ")");
-				assigneeLayout.addComponent(progressLbl);
-				bodyContent.addComponent(assigneeLayout);
-			}
-
-		}
-	}
-
 	class BugAssigneeButton extends Button {
 		private static final long serialVersionUID = 1L;
 
@@ -75,10 +33,10 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					bugSearchCriteria.setAssignuser(new StringSearchField(
 							SearchField.AND, assignee));
-					BugSearchParameter param = new BugSearchParameter(
+					final BugSearchParameter param = new BugSearchParameter(
 							"Unresolved Bug List of " + assigneeFullName,
 							bugSearchCriteria);
 					EventBus.getInstance().fireEvent(
@@ -87,10 +45,55 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				}
 			});
 
-			this.setStyleName("link");
+			setStyleName("link");
 			this.setWidth("110px");
-			this.addStyleName(UIConstants.WORD_WRAP);
-			this.setIcon(UserAvatarControlFactory.getResource(assignee, 16));
+			addStyleName(UIConstants.WORD_WRAP);
+			setIcon(UserAvatarControlFactory.getResource(assignee, 16));
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private BugSearchCriteria bugSearchCriteria;
+
+	public UnresolvedBugsByAssigneeWidget2() {
+		super(LocalizationHelper
+				.getMessage(BugI18nEnum.UNRESOLVED_BY_ASSIGNEE_WIDGET_TITLE),
+				new VerticalLayout());
+		setContentBorder(true);
+		((VerticalLayout) bodyContent).setSpacing(true);
+	}
+
+	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
+		bugSearchCriteria = searchCriteria;
+		bodyContent.removeAllComponents();
+		final BugService bugService = AppContext
+				.getSpringBean(BugService.class);
+		final int totalCount = bugService.getTotalCount(searchCriteria);
+		final List<GroupItem> groupItems = bugService
+				.getAssignedDefectsSummary(searchCriteria);
+		if (!groupItems.isEmpty()) {
+			for (final GroupItem item : groupItems) {
+				final HorizontalLayout assigneeLayout = new HorizontalLayout();
+				assigneeLayout.setSpacing(true);
+
+				final String assignUser = item.getGroupid();
+				final String assignUserFullName = (item.getGroupid() == null) ? "Undefined"
+						: item.getGroupname();
+				final BugAssigneeButton userLbl = new BugAssigneeButton(
+						assignUser, assignUserFullName);
+				assigneeLayout.addComponent(userLbl);
+				final ProgressIndicator indicator = new ProgressIndicator(
+						new Float((float) item.getValue() / totalCount));
+				indicator.setPollingInterval(1000000000);
+				assigneeLayout.addComponent(indicator);
+
+				final Label progressLbl = new Label("(" + item.getValue() + "/"
+						+ totalCount + ")");
+				assigneeLayout.addComponent(progressLbl);
+				bodyContent.addComponent(assigneeLayout);
+			}
+
 		}
 	}
 
