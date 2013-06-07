@@ -30,6 +30,7 @@ import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -44,20 +45,20 @@ public class BugDashboardViewImpl extends AbstractView implements
 	public BugDashboardViewImpl() {
 		super();
 		this.setMargin(true);
-		initUI();
+		this.initUI();
 	}
 
 	@Override
 	public void attach() {
-		leftColumn.removeAllComponents();
-		rightColumn.removeAllComponents();
+		this.leftColumn.removeAllComponents();
+		this.rightColumn.removeAllComponents();
 
 		final SimpleProject project = CurrentProjectVariables.getProject();
 
 		final MyBugListWidget myBugListWidget = new MyBugListWidget();
 		final LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
 				myBugListWidget);
-		leftColumn.addComponent(myBugsWidgetWrapper);
+		this.leftColumn.addComponent(myBugsWidgetWrapper);
 		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
@@ -73,7 +74,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		final DueBugWidget dueBugWidget = new DueBugWidget();
 		final LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(
 				dueBugWidget);
-		leftColumn.addComponent(dueBugWidgetWrapper);
+		this.leftColumn.addComponent(dueBugWidgetWrapper);
 		final BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
 		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
 		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
@@ -88,7 +89,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
 		final LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
 				updateBugWidget);
-		leftColumn.addComponent(updateBugWidgetWrapper);
+		this.leftColumn.addComponent(updateBugWidgetWrapper);
 
 		// Unresolved by assignee
 		final UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
@@ -102,8 +103,8 @@ public class BugDashboardViewImpl extends AbstractView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByAssigneeWidget
 				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-		rightColumn
-				.addComponent(new LazyLoadWrapper(unresolvedByAssigneeWidget));
+		this.rightColumn.addComponent(new LazyLoadWrapper(
+				unresolvedByAssigneeWidget));
 
 		// Unresolve by priority widget
 		final UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
@@ -117,8 +118,8 @@ public class BugDashboardViewImpl extends AbstractView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByPriorityWidget
 				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-		rightColumn
-				.addComponent(new LazyLoadWrapper(unresolvedByPriorityWidget));
+		this.rightColumn.addComponent(new LazyLoadWrapper(
+				unresolvedByPriorityWidget));
 
 		// bug chart
 		final BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
@@ -140,10 +141,16 @@ public class BugDashboardViewImpl extends AbstractView implements
 			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
 					200);
 		}
-		rightColumn.addComponent(bugChartComponent);
+		this.rightColumn.addComponent(bugChartComponent);
 	}
 
 	private void initUI() {
+		final VerticalLayout headerWrapper = new VerticalLayout();
+		headerWrapper.setWidth("100%");
+		headerWrapper.addStyleName("bugdashboard-header");
+		final CssLayout headerTop = new CssLayout();
+		headerTop.setWidth("100%");
+		headerTop.addStyleName("bugdashboard-header-top");
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
 
@@ -152,43 +159,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		title.setStyleName("h2");
 		header.addComponent(title);
 		header.setExpandRatio(title, 0.5f);
-
-		final ButtonGroup navButton = new ButtonGroup();
-		final Button bugListBtn = new Button("Bugs",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new BugEvent.GotoList(this, null));
-					}
-				});
-
-		navButton.addButton(bugListBtn);
-
-		final Button componentListBtn = new Button("Components",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new BugComponentEvent.GotoList(this, null));
-					}
-				});
-
-		navButton.addButton(componentListBtn);
-
-		final Button versionListBtn = new Button("Versions",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new BugVersionEvent.GotoList(this, null));
-					}
-				});
-
-		navButton.addButton(versionListBtn);
-
-		header.addComponent(navButton);
-		header.setExpandRatio(navButton, 0.5f);
+		header.setComponentAlignment(title, Alignment.MIDDLE_LEFT);
 
 		final Button createBugBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
@@ -243,26 +214,71 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
-		this.addComponent(header);
+		headerTop.addComponent(header);
+		headerWrapper.addComponent(headerTop);
+
+		final VerticalLayout headerContent = new VerticalLayout();
+		headerContent.setWidth("100%");
+		headerContent.setMargin(true);
+		final ButtonGroup navButton = new ButtonGroup();
+		final Button bugListBtn = new Button("Bugs",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoList(this, null));
+					}
+				});
+
+		navButton.addButton(bugListBtn);
+
+		final Button componentListBtn = new Button("Components",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugComponentEvent.GotoList(this, null));
+					}
+				});
+
+		navButton.addButton(componentListBtn);
+
+		final Button versionListBtn = new Button("Versions",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugVersionEvent.GotoList(this, null));
+					}
+				});
+
+		navButton.addButton(versionListBtn);
+
+		headerContent.addComponent(navButton);
+		headerContent.setComponentAlignment(navButton, Alignment.MIDDLE_CENTER);
+
+		headerWrapper.addComponent(headerContent);
+
+		this.addComponent(headerWrapper);
 
 		final HorizontalLayout body = new HorizontalLayout();
 		body.setWidth("100%");
 		body.setSpacing(true);
 
-		leftColumn = new VerticalLayout();
-		leftColumn.setSpacing(true);
-		body.addComponent(leftColumn);
-		body.setExpandRatio(leftColumn, 1.0f);
+		this.leftColumn = new VerticalLayout();
+		this.leftColumn.setSpacing(true);
+		body.addComponent(this.leftColumn);
+		body.setExpandRatio(this.leftColumn, 1.0f);
 
-		rightColumn = new VerticalLayout();
-		rightColumn.setSpacing(true);
+		this.rightColumn = new VerticalLayout();
+		this.rightColumn.setSpacing(true);
 		if (ScreenSize.hasSupport1024Pixels()) {
-			rightColumn.setWidth("310px");
+			this.rightColumn.setWidth("310px");
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			rightColumn.setWidth("400px");
+			this.rightColumn.setWidth("400px");
 		}
-		body.addComponent(rightColumn);
-		body.setComponentAlignment(rightColumn, Alignment.TOP_RIGHT);
+		body.addComponent(this.rightColumn);
+		body.setComponentAlignment(this.rightColumn, Alignment.TOP_RIGHT);
 
 		this.addComponent(body);
 	}

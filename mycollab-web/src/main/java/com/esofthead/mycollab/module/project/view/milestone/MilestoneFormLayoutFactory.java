@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -29,22 +28,24 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 		@Override
 		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("name")) {
-				informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
-			} else if (propertyId.equals("startdate")) {
-				informationLayout.addComponent(field, "Start Date", 0, 1);
-			} else if (propertyId.equals("enddate")) {
-				informationLayout.addComponent(field, "End Date", 0, 2);
-			} else if (propertyId.equals("owner")) {
-				informationLayout.addComponent(field, "Responsible User", 1, 1);
-			} else if (propertyId.equals("status")) {
-				informationLayout.addComponent(field, "Status", 1, 2);
-			} else if (propertyId.equals("numOpenTasks")) {
-				informationLayout.addComponent(field, "Tasks", 0, 3);
-			} else if (propertyId.equals("numOpenBugs")) {
-				informationLayout.addComponent(field, "Bugs", 1, 3);
-			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 4, 2,
+				this.informationLayout.addComponent(field, "Name", 0, 0, 2,
 						"100%");
+			} else if (propertyId.equals("startdate")) {
+				this.informationLayout.addComponent(field, "Start Date", 0, 1);
+			} else if (propertyId.equals("enddate")) {
+				this.informationLayout.addComponent(field, "End Date", 0, 2);
+			} else if (propertyId.equals("owner")) {
+				this.informationLayout.addComponent(field, "Responsible User",
+						1, 1);
+			} else if (propertyId.equals("status")) {
+				this.informationLayout.addComponent(field, "Status", 1, 2);
+			} else if (propertyId.equals("numOpenTasks")) {
+				this.informationLayout.addComponent(field, "Tasks", 0, 3);
+			} else if (propertyId.equals("numOpenBugs")) {
+				this.informationLayout.addComponent(field, "Bugs", 1, 3);
+			} else if (propertyId.equals("description")) {
+				this.informationLayout.addComponent(field, "Description", 0, 4,
+						2, "100%");
 			}
 		}
 
@@ -56,12 +57,14 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 5);
-			informationLayout.getLayout().setWidth("100%");
-			informationLayout.getLayout().addStyleName("colored-gridlayout");
-			informationLayout.getLayout().setMargin(false);
-			layout.addComponent(informationLayout.getLayout());
-			layout.setComponentAlignment(informationLayout.getLayout(),
+			this.informationLayout = new GridFormLayoutHelper(2, 5, "100%",
+					"145px", Alignment.MIDDLE_LEFT);
+			this.informationLayout.getLayout().setWidth("100%");
+			this.informationLayout.getLayout().addStyleName(
+					"colored-gridlayout");
+			this.informationLayout.getLayout().setMargin(false);
+			layout.addComponent(this.informationLayout.getLayout());
+			layout.setComponentAlignment(this.informationLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 			return layout;
 		}
@@ -79,7 +82,7 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public void attachField(final Object propertyId, final Field field) {
-		milestoneInformationLayout.attachField(propertyId, field);
+		this.milestoneInformationLayout.attachField(propertyId, field);
 	}
 
 	protected abstract Layout createBottomPanel();
@@ -88,22 +91,22 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout milestoneAddLayout = new AddViewLayout(title,
+		final AddViewLayout milestoneAddLayout = new AddViewLayout(this.title,
 				new ThemeResource("icons/48/project/milestone.png"));
 
-		final Layout topLayout = createTopPanel();
+		final Layout topLayout = this.createTopPanel();
 		if (topLayout != null) {
 			milestoneAddLayout.addTopControls(topLayout);
 		}
 
-		milestoneInformationLayout = new MilestoneInformationLayout();
+		this.milestoneInformationLayout = new MilestoneInformationLayout();
 
-		final Layout bottomLayout = createBottomPanel();
+		final Layout bottomLayout = this.createBottomPanel();
 		if (bottomLayout != null) {
 			milestoneAddLayout.addBottomControls(bottomLayout);
 		}
 
-		milestoneAddLayout.addBody(milestoneInformationLayout.getLayout());
+		milestoneAddLayout.addBody(this.milestoneInformationLayout.getLayout());
 
 		return milestoneAddLayout;
 	}

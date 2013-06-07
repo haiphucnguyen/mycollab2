@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.terminal.Resource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
@@ -15,8 +12,8 @@ public class AddViewLayout extends CustomLayout {
 
 	private final Label titleLbl;
 	private final Embedded icon;
-	
-	public AddViewLayout(String title, Resource resource) {
+
+	public AddViewLayout(final String title, final Resource resource) {
 		super("addView");
 
 		icon = new Embedded();
@@ -30,34 +27,34 @@ public class AddViewLayout extends CustomLayout {
 		this.addComponent(titleLbl, "addViewHeaderTitle");
 
 		if (title == null) {
-			this.setTitle("Undefined");
+			setTitle("Undefined");
 		} else {
-			this.setTitle(title);
+			setTitle(title);
 		}
 	}
 
-	public void addHeaderRight(ComponentContainer headerRight) {
-		this.addComponent(headerRight, "addViewHeaderRight");
+	public void addBody(final ComponentContainer body) {
+		this.addComponent(body, "addViewBody");
 	}
 
-	public void setTitle(String title) {
-		this.titleLbl.setValue(title);
-	}
-	
-	public void addTitleStyleName(String styleName) {
-		this.titleLbl.addStyleName(styleName);
-	}
-
-	public void addTopControls(ComponentContainer topControls) {
-		this.addComponent(topControls, "addViewTopControls");
-	}
-
-	public void addBottomControls(ComponentContainer bottomControls) {
+	public void addBottomControls(final ComponentContainer bottomControls) {
 		this.addComponent(bottomControls, "addViewBottomControls");
 	}
 
-	public void addBody(ComponentContainer body) {
-		this.addComponent(body, "addViewBody");
+	public void addHeaderRight(final ComponentContainer headerRight) {
+		this.addComponent(headerRight, "addViewHeaderRight");
 	}
-	
+
+	public void addTitleStyleName(final String styleName) {
+		titleLbl.addStyleName(styleName);
+	}
+
+	public void addTopControls(final ComponentContainer topControls) {
+		this.addComponent(topControls, "addViewTopControls");
+	}
+
+	public void setTitle(final String title) {
+		titleLbl.setValue(title);
+	}
+
 }

@@ -32,26 +32,27 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 
 				if ("type".equals(propertyId)) {
-					AccountTypeComboBox accountTypeBox = new AccountTypeComboBox();
+					final AccountTypeComboBox accountTypeBox = new AccountTypeComboBox();
 					return accountTypeBox;
 				} else if ("industry".equals(propertyId)) {
-					IndustryComboBox accountIndustryBox = new IndustryComboBox();
+					final IndustryComboBox accountIndustryBox = new IndustryComboBox();
 					return accountIndustryBox;
 				} else if ("assignuser".equals(propertyId)) {
-					UserComboBox userBox = new UserComboBox();
+					final UserComboBox userBox = new UserComboBox();
 					userBox.select(account.getAssignuser());
 					return userBox;
 				} else if ("description".equals(propertyId)) {
-					TextArea textArea = new TextArea("", "");
+					final TextArea textArea = new TextArea("", "");
 					textArea.setNullRepresentation("");
 					return textArea;
 				} else if ("billingcountry".equals(propertyId)
 						|| "shippingcountry".equals(propertyId)) {
-					CountryComboBox billingCountryComboBox = new CountryComboBox();
+					final CountryComboBox billingCountryComboBox = new CountryComboBox();
 					return billingCountryComboBox;
 				} else if ("id".equals(propertyId)) {
 					final CheckboxField chkField = new CheckboxField();
@@ -59,7 +60,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 							new Button.ClickListener() {
 
 								@Override
-								public void buttonClick(ClickEvent event) {
+								public void buttonClick(final ClickEvent event) {
 									if ((Boolean) chkField.getCheckBox()
 											.getValue()) {
 										account.setShippingaddress(account
@@ -108,7 +109,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 				}
 
 				if (propertyId.equals("accountname")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(false);
 					tf.setRequiredError("Please enter an Account Name");
@@ -118,6 +119,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 				return null;
 			}
 		}
+
 		class FormLayoutFactory extends AccountFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
@@ -139,7 +141,14 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				final HorizontalLayout topPanel = new HorizontalLayout();
+				final Layout controlButtons = createButtonControls();
+				controlButtons.setSizeUndefined();
+				topPanel.addComponent(controlButtons);
+				topPanel.setWidth("100%");
+				topPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return topPanel;
 			}
 		}
 
@@ -148,12 +157,13 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 		private boolean isCheckToCopy;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			setFormLayoutFactory(new FormLayoutFactory());
 			setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
 		}
 	}
+
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
 
@@ -166,7 +176,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	}
 
 	@Override
-	public void editItem(Account account) {
+	public void editItem(final Account account) {
 		this.account = account;
 		if (editForm.isCheckToCopy) {
 			editForm.isCheckToCopy = false;

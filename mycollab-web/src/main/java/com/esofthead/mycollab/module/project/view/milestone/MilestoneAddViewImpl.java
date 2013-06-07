@@ -17,7 +17,9 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.ProgressIndicator;
@@ -33,19 +35,19 @@ public class MilestoneAddViewImpl extends AbstractView implements
 		MilestoneAddView {
 
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
+	private final EditForm editForm;
 	private Milestone milestone;
 
 	public MilestoneAddViewImpl() {
 		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
 	}
 
 	@Override
-	public void editItem(Milestone milestone) {
+	public void editItem(final Milestone milestone) {
 		this.milestone = milestone;
-		editForm.setItemDataSource(new BeanItem<Milestone>(milestone));
+		this.editForm.setItemDataSource(new BeanItem<Milestone>(milestone));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Milestone> {
@@ -53,7 +55,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -64,22 +66,31 @@ public class MilestoneAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super((milestone.getId() == null) ? "Create Milestone" : milestone.getName());
+				super(
+						(MilestoneAddViewImpl.this.milestone.getId() == null) ? "Create Milestone"
+								: MilestoneAddViewImpl.this.milestone.getName());
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Milestone>(EditForm.this))
-						.createButtonControls();
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<Milestone>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -88,61 +99,63 @@ public class MilestoneAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("owner")) {
-					ProjectMemberComboBox userbox = new ProjectMemberComboBox();
+					final ProjectMemberComboBox userbox = new ProjectMemberComboBox();
 					userbox.setRequired(true);
 					userbox.setRequiredError("Please enter a owner");
 					return userbox;
 				} else if (propertyId.equals("status")) {
-					if (milestone.getStatus() == null) {
-						milestone.setStatus("In Progress");
+					if (MilestoneAddViewImpl.this.milestone.getStatus() == null) {
+						MilestoneAddViewImpl.this.milestone
+								.setStatus("In Progress");
 					}
 					return new ValueComboBox(false, "In Progress", "Future",
 							"Closed");
 				} else if (propertyId.equals("name")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");
 					return tf;
 				} else if (propertyId.equals("description")) {
-					RichTextArea descArea = new RichTextArea();
+					final RichTextArea descArea = new RichTextArea();
 					descArea.setNullRepresentation("");
 					return descArea;
 				} else if (propertyId.equals("numOpenTasks")) {
-					FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
-					int numOpenTask = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+					final FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
+					final int numOpenTask = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumOpenTasks() : 0;
-					int numTasks = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+					final int numTasks = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumTasks() : 0;
 
-					ProgressIndicator progressTask = new ProgressIndicator(
+					final ProgressIndicator progressTask = new ProgressIndicator(
 							new Float((float) (numTasks - numOpenTask)
 									/ numTasks));
 					progressTask.setPollingInterval(1000000000);
 					progressTask.setWidth("120px");
 					taskComp.addComponentField(progressTask);
-					Label taskNumber = new Label("(" + numOpenTask + "/"
+					final Label taskNumber = new Label("(" + numOpenTask + "/"
 							+ numTasks + ")");
 					taskNumber.setWidth("90px");
 					taskComp.addComponentField(taskNumber);
 					return taskComp;
 				} else if (propertyId.equals("numOpenBugs")) {
-					FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
-					int numOpenBugs = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+					final FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
+					final int numOpenBugs = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumOpenBugs() : 0;
-					int numBugs = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+					final int numBugs = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumBugs() : 0;
 
-					ProgressIndicator progressBug = new ProgressIndicator(
+					final ProgressIndicator progressBug = new ProgressIndicator(
 							new Float((float) (numBugs - numOpenBugs) / numBugs));
 					progressBug.setPollingInterval(1000000000);
 					progressBug.setWidth("120px");
 					bugComp.addComponentField(progressBug);
 
-					Label bugNumber = new Label("(" + numOpenBugs + "/"
+					final Label bugNumber = new Label("(" + numOpenBugs + "/"
 							+ numBugs + ")");
 					bugNumber.setWidth("90px");
 					bugComp.addComponentField(bugNumber);
@@ -156,6 +169,6 @@ public class MilestoneAddViewImpl extends AbstractView implements
 
 	@Override
 	public HasEditFormHandlers<Milestone> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }

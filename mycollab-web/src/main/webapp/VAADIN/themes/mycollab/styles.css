@@ -997,11 +997,17 @@ input.v-textfield-errorField {
 	-webkit-box-sizing: border-box;
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
+.addViewLayout .addViewTopControls .addNewControl {
+	border-bottom: none;
+}
 .addViewLayout .addViewTopControls > .v-horizontallayout .v-horizontallayout-margin {
 	padding: 5px;
 }
+.addViewLayout .addViewTopControls .addNewControl .v-horizontallayout-margin {
+	padding: 0px;
+}
 
-.addViewLayout .addViewTopControls .edit-btn .v-horizontallayout-margin {
+.addViewLayout .addViewTopControls .edit-btn .v-horizontallayout-margin, .addViewLayout .addViewTopControls .workflow-controls .v-horizontallayout-margin {
 	padding: 0px;
 }
 
@@ -2701,7 +2707,7 @@ div.v-lazyloadingwrapper-loading {
 }
 
 .milestone-box>.v-csslayout-margin {
-	padding: 15px 20px 10px;
+	padding: 12px 20px 10px;
 }
 
 .milestone-box .v-button-link {
@@ -2709,7 +2715,7 @@ div.v-lazyloadingwrapper-loading {
 }
 
 .milestone-view-body>div>.v-verticallayout>div>div:first-child>div>.milestone-box
-	{
+{
 	border: none;
 }
 
@@ -2919,21 +2925,34 @@ table.legendBox .legendBoxContent .v-csslayout-container > div {
 /* End Label complete */
 
 /* Milestone View */
+.milestonelist-header {
+	
+}
+.milestonelist-header > .v-csslayout-margin {
+	border-width: 1px 1px 0px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+	border-radius: 3px 3px 0px 0px;
+	padding: 7px 10px 7px 18px;
+	background: url('icons/grad-light-top2.png') repeat-x left top rgb(228, 228, 228);
+	margin: 0px 12px;
+}
 .milestone-view {
-	padding: 12px 12px 30px;
+	padding: 0px 12px 30px;
 }
 
 .milestone-view-table {
 	width: 100%;
 	height: 100%;
-	border: 1px solid #d7d7d7;
+	border: 1px solid rgb(169, 169, 169);
 }
 
 .milestone-view-header {
 	text-align: center;
-	background-color: #e5e5e5;
+	background: url('icons/grad-light-top2.png') repeat-x left top rgb(212, 223, 239);
 	height: 30px;
 	color: #5e5e5e;
+	border-bottom: 1px solid rgb(169, 169, 169);
 }
 
 .milestone-view-header .v-label {
@@ -3320,6 +3339,22 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .colored-gridlayout .v-gridlayout-margin {
 	border-bottom: 1px solid #a9a9a9;
 }
+.task-list .colored-gridlayout .v-gridlayout-margin {
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+}
+.task-list {
+	background-color: rgb(245, 245, 245);
+}
+.task-list-footer {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+}
 .colored-gridlayout .v-gridlayout-margin .v-csslayout > .v-csslayout-margin {
 	padding: 8px 5px 8px 18px;
 	-moz-box-sizing: border-box;
@@ -3329,7 +3364,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .colored-gridlayout .v-horizontallayout-gridform-caption .v-horizontallayout-margin, .colored-gridlayout .v-horizontallayout-gridform-field .v-horizontallayout-margin {
 	padding: 8px 5px 8px 18px;
 }
-.colored-gridlayout .gridform-field .v-customcomponent > .v-horizontallayout .v-horizontallayout-margin {
+.colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin {
 	padding: 0px;
 }
 .colored-gridlayout .v-gridlayout-margin .gridform-caption {
@@ -3350,3 +3385,58 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border-top: none;
 }
 /* End The New GridLayout */
+
+/* Bug Dashboard */
+.bugdashboard-header {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 1px solid rgb(169, 169, 169);
+	border-radius: 3px 3px 0px 0px;
+	background: url(grad-light-top2.png) repeat-x left top rgb(245, 245, 245);
+}
+.bugdashboard-header-top {
+	border-radius: 3px 3px 0px 0px;
+	background-color: rgb(228, 228, 228);
+}
+.bugdashboard-header-top > .v-csslayout-margin {
+	padding: 3px 10px 3px 18px;
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+
+/* Task Group */
+.taskgroup-header > .v-csslayout-margin {
+	padding: 7px 10px 7px 18px;
+	border: 1px solid rgb(169, 169, 169);
+	border-radius: 3px;
+	background: url(grad-light-top2.png) repeat-x left top rgb(245, 245, 245);
+}
+.taskadd-popup {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+}
+.taskadd-popup .popup-header .v-verticallayout-margin {
+	padding: 8px 0px 8px 18px;
+}
+.taskadd-popup .popup-header {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+.taskadd-popup .v-tabsheet {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+.taskadd-popup .v-tabsheet .v-tabsheet-content {
+	padding-bottom: 0px;
+}
+.task-list .taskadd-popup .colored-gridlayout .v-gridlayout-margin {
+	border: none;
+}
