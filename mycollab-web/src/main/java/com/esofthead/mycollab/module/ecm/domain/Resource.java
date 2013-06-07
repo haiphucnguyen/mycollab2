@@ -6,6 +6,8 @@ public class Resource{
 	protected String createdBy = "";
 	protected Calendar created;
 	protected String path = "";
+	protected long size = 0;
+	
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -23,5 +25,11 @@ public class Resource{
 	}
 	public String getPath(){
 		return path;
+	}
+	public long getSize() {
+		return size;
+	}
+	public void setSize(long size) {
+		this.size = size;
 	}
 }

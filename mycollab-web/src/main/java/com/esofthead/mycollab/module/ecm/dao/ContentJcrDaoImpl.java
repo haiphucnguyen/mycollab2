@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.ecm.dao;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jcr.Node;
@@ -18,6 +19,7 @@ import org.springframework.extensions.jcr.JcrTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -54,8 +56,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						throw new ContentException(errorStr);
 					} else if (isNodeMyCollabContent(node)) {
 						log.debug("Found existing resource. Override");
-						ContentNodeMapper cnm = new ContentNodeMapper();
-						cnm.convertToNode(session, content);
+
 					} else {
 						String errorStr = String
 								.format("Resource is existed. But its node type is not mycollab:content. It has path %s and type is %s",
@@ -64,8 +65,43 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						throw new ContentException(errorStr);
 					}
 				} else {
-					ContentNodeMapper cnm = new ContentNodeMapper();
-					cnm.convertToNode(session, content);
+					try {
+						String path = content.getPath();
+						String[] pathStr = path.split("/");
+						Node parentNode = rootNode;
+						// create folder note
+						for (int i = 0; i < pathStr.length - 1; i++) {
+							// move to lastest node of the path
+							Node childNode = getNode(parentNode, pathStr[i]);
+							if (childNode != null) {
+								if (!isNodeFolder(childNode)) {
+									// node must is folder
+									String errorString = "Invalid path. User want to create a content has path %s but there is a folder has path %s";
+									throw new ContentException(String.format(
+											errorString, content.getPath(),
+											childNode.getPath()));
+								}
+							} else {
+								// add node
+								childNode = JcrUtils.getOrAddFolder(parentNode,
+										pathStr[i]);
+								parentNode = childNode;
+							}
+						}
+						Node addNode = parentNode.addNode(
+								pathStr[pathStr.length - 1],
+								"{http://www.esofthead.com/mycollab}content");
+						addNode.addMixin(NodeType.MIX_LAST_MODIFIED);
+						addNode.addMixin(NodeType.MIX_TITLE);
+
+						addNode.setProperty("jcr:title", content.getTitle());
+						addNode.setProperty("jcr:description",
+								content.getDescription());
+						session.save();
+					} catch (Exception e) {
+						log.debug("error in convertToNode Method"
+								+ e.getMessage());
+					}
 				}
 				return null;
 			}
@@ -81,8 +117,34 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			@Override
 			public Object doInJcr(Session session) throws IOException,
 					RepositoryException {
-				FolderNodeMapper nodeMapper = new FolderNodeMapper();
-				nodeMapper.convertToNode(session, folder);
+				try {
+					String path = folder.getPath();
+					Node rootNode = session.getRootNode();
+					String[] pathStr = path.split("/");
+					Node parentNode = rootNode;
+					// create folder note
+					for (int i = 0; i < pathStr.length - 1; i++) {
+						// move to lastest node of the path
+						Node childNode = getNode(parentNode, pathStr[i]);
+						if (childNode != null) {
+							if (!isNodeFolder(childNode)) {
+								// node must be the folder
+								String errorString = "Invalid path. User want to create folder has path %s but there is a content has path %s";
+								throw new ContentException(String.format(
+										errorString, folder.getPath(),
+										childNode.getPath()));
+							}
+						} else { // add node
+							childNode = JcrUtils.getOrAddFolder(parentNode,
+									pathStr[i]);
+							session.save();
+						}
+					}
+				} catch (Exception e) {
+					String errorString = "Error while create folder with path %s";
+					throw new MyCollabException(String.format(errorString,
+							folder.getPath()), e);
+				}
 				return null;
 			}
 		});
@@ -113,27 +175,36 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 	}
 
 	@Override
-	public Content getResource(final String path) {
-		return jcrTemplate.execute(new JcrCallback<Content>() {
+	public Resource getResource(final String path) {
+		return jcrTemplate.execute(new JcrCallback<Resource>() {
 			@Override
-			public Content doInJcr(Session session) throws IOException,
+			public Resource doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
 				Node node = getNode(rootNode, path);
 
 				if (node != null) {
-					Content content = new Content();
-					content.setCreated(node.getProperty("jcr:created")
-							.getDate());
-					content.setCreatedBy(node.getProperty("jcr:createdBy")
-							.getString());
-					content.setTitle(node.getProperty("jcr:title").getString());
-					content.setDescription(node.getProperty("jcr:description")
-							.getString());
-					content.setPath(node.getProperty("path").getString());
-					content.setLastModified(node
-							.getProperty("jcr:lastModified").getDate());
-					return content;
+					if (isNodeMyCollabContent(node)) {
+						Content content = new Content();
+						content.setCreated(node.getProperty("jcr:created")
+								.getDate());
+						content.setCreatedBy(node.getProperty("jcr:createdBy")
+								.getString());
+						content.setTitle(node.getProperty("jcr:title")
+								.getString());
+						content.setDescription(node.getProperty(
+								"jcr:description").getString());
+						content.setPath(node.getPath());
+						content.setLastModified(node.getProperty(
+								"jcr:lastModified").getDate());
+						return content;
+					} else if (isNodeFolder(node)) {
+						return convertNodeToFolder(node);
+					} else {
+						throw new MyCollabException(
+								"Resource does not have type be nt:folder or mycollab:content. Its path is "
+										+ node.getPath());
+					}
 				}
 				return null;
 			}
@@ -170,7 +241,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				Node rootNode = session.getRootNode();
 				Node node = getNode(rootNode, path);
 				if (node != null) {
-					if (node.isNodeType("nt:folder")) {
+					if (isNodeFolder(node)) {
 						Folder folder = new Folder();
 						folder.setCreated(node.getProperty("jcr:created")
 								.getDate());
@@ -190,141 +261,49 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 		});
 	}
 
-	static interface NodeMapper<T extends Resource> {
-		T convertFromNode(Node node);
+	@Override
+	public List<Folder> getSubFolders(final String path) {
+		return jcrTemplate.execute(new JcrCallback<List<Folder>>() {
 
-		void convertToNode(Session session, T item);
-	}
-
-	static class FolderNodeMapper implements NodeMapper<Folder> {
-
-		@Override
-		public Folder convertFromNode(Node node) {
-			if (node != null && isNodeMyCollabContent(node)) {
-				try {
+			@Override
+			public List<Folder> doInJcr(Session session) throws IOException,
+					RepositoryException {
+				Node rootNode = session.getRootNode();
+				Node node = getNode(rootNode, path);
+				if (node != null) {
 					if (node.isNodeType("nt:folder")) {
-						Folder folder = new Folder();
-						folder.setCreated(node.getProperty("jcr:created")
-								.getDate());
-						folder.setCreatedBy(node.getProperty("jcr:createdBy")
-								.getString());
+						List<Folder> folders = new ArrayList<Folder>();
 						NodeIterator childNodes = node.getNodes();
+						while (childNodes.hasNext()) {
+							Node childNode = (Node) childNodes.next();
+							if (isNodeFolder(childNode)) {
+								Folder subFolder = convertNodeToFolder(childNode);
+								folders.add(subFolder);
+							}
 
+						}
+						return folders;
 					} else {
 						throw new ContentException(
 								"Do not support any node type except nt:folder. The current node has type "
 										+ node.getPrimaryNodeType().getName());
 					}
-
-				} catch (Exception e) {
-					log.debug("ConvertFromNode Exception" + e.getMessage());
 				}
-			}
-			return null;
-		}
 
-		@Override
-		public void convertToNode(Session session, Folder folder) {
-			try {
-				String path = folder.getPath();
-				Node rootNode = session.getRootNode();
-				String[] pathStr = path.split("/");
-				Node parentNode = rootNode;
-				// create folder note
-				for (int i = 0; i < pathStr.length - 1; i++) {
-					// move to lastest node of the path
-					Node childNode = getNode(parentNode, pathStr[i]);
-					if (childNode != null) {
-						if (!isNodeFolder(childNode)) {
-							// node must be the folder
-							throw new ContentException("Invalid path");
-						}
-					} else { // add node
-						childNode = JcrUtils.getOrAddFolder(parentNode,
-								pathStr[i]);
-						session.save();
-					}
-				}
-			} catch (Exception e) {
-				log.debug("error" + e.getMessage());
+				return null;
 			}
-		}
-
+		});
 	}
 
-	static class ContentNodeMapper implements NodeMapper<Content> {
-		@Override
-		public Content convertFromNode(final Node node) {
-			if (node != null) {
-				try {
-					Content content = new Content();
-					content.setCreated(node.getProperty("jcr:created")
-							.getDate());
-					content.setCreatedBy(node.getProperty("jcr:createdBy")
-							.getString());
-					content.setTitle(node.getProperty("jcr:title").getString());
-					content.setDescription(node.getProperty("jcr:description")
-							.getString());
-					content.setPath(node.getProperty("path").getString());
-					content.setLastModified(node
-							.getProperty("jcr:lastModified").getDate());
-					return content;
-				} catch (Exception e) {
-					log.debug("Error while convert content to node", e);
-				}
-			}
-			return null;
+	private static Folder convertNodeToFolder(Node node) {
+		try {
+			Folder folder = new Folder();
+			folder.setCreated(node.getProperty("jcr:created").getDate());
+			folder.setCreatedBy(node.getProperty("jcr:createdBy").getString());
+			folder.setPath(node.getPath());
+			return folder;
+		} catch (Exception e) {
+			throw new MyCollabException(e);
 		}
-
-		@Override
-		public void convertToNode(Session session, Content content) {
-			try {
-				String path = content.getPath();
-				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
-				if (node != null) {
-					node.addMixin(NodeType.MIX_LAST_MODIFIED);
-					node.addMixin(NodeType.MIX_TITLE);
-
-					node.setProperty("jcr:title", content.getTitle());
-					node.setProperty("jcr:description",
-							content.getDescription());
-					node.setProperty("path", path);
-					session.save();
-					return;
-				}
-				String[] pathStr = path.split("/");
-				Node parentNode = rootNode;
-				// create folder note
-				for (int i = 0; i < pathStr.length - 1; i++) {
-					// move to lastest node of the path
-					Node childNode = getNode(parentNode, pathStr[i]);
-					if (childNode != null) {
-						if (!isNodeFolder(childNode)) {
-							// node must is folder
-							throw new ContentException("Invalid path");
-						}
-					} else {
-						// add node
-						childNode = JcrUtils.getOrAddFolder(parentNode,
-								pathStr[i]);
-						parentNode = childNode;
-					}
-				}
-				Node addNode = parentNode.addNode(pathStr[pathStr.length - 1],
-						"{http://www.esofthead.com/mycollab}content");
-				addNode.addMixin(NodeType.MIX_LAST_MODIFIED);
-				addNode.addMixin(NodeType.MIX_TITLE);
-
-				addNode.setProperty("jcr:title", content.getTitle());
-				addNode.setProperty("jcr:description", content.getDescription());
-				addNode.setProperty("path", path);
-				session.save();
-			} catch (Exception e) {
-				log.debug("error in convertToNode Method" + e.getMessage());
-			}
-		}
-
 	}
-
 }
