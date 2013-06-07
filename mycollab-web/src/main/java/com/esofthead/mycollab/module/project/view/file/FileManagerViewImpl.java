@@ -1,10 +1,8 @@
 package com.esofthead.mycollab.module.project.view.file;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -15,16 +13,15 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.HierarchicalContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.Window;
 
@@ -87,6 +84,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		tree = new Tree();
 		tree.setMultiSelect(false);
+		tree.setImmediate(true);
 		tree.setItemCaptionMode(Tree.ITEM_CAPTION_MODE_EXPLICIT);
 
 		this.addComponent(tree);
@@ -96,7 +94,32 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			@Override
 			public void nodeExpand(ExpandEvent event) {
-				System.out.println("expand event: " + event.getItemId());
+				Folder expandFolder = (Folder) event.getItemId();
+				List<Folder> subFolders = resourceService
+						.getSubFolders(expandFolder.getPath());
+				if (subFolders != null) {
+					for (Folder subFolder : subFolders) {
+						expandFolder.addChild(subFolder);
+						tree.addItem(subFolder);
+						tree.setItemCaption(subFolder, subFolder.getName());
+						tree.setParent(subFolder, expandFolder);
+					}
+				}
+			}
+		});
+
+		tree.addListener(new Tree.CollapseListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void nodeCollapse(CollapseEvent event) {
+				Folder collapseFolder = (Folder) event.getItemId();
+				List<Folder> childs = collapseFolder.getChilds();
+				for (Folder subFolder : childs) {
+					tree.removeItem(subFolder);
+				}
+
+				childs.clear();
 			}
 		});
 
@@ -105,7 +128,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				Folder baseFolder = (Folder) event.getItemId();
+				baseFolder = (Folder) event.getItemId();
 				displayResourcesInTable(baseFolder);
 			}
 		});
@@ -133,45 +156,31 @@ public class FileManagerViewImpl extends AbstractView implements
 	}
 
 	private void displayResourcesInTable(Folder baseFolder) {
-		Folder testFolder = new Folder();
-		testFolder.setPath("/a/b/d");
-
-		Content content = new Content();
-		content.setPath("/a/b/e");
-
-		List<Resource> resources = Arrays.asList(testFolder, content);
-		resourceTable.setContainerDataSource(new BeanItemContainer(
-				Resource.class, resources));
+		// Folder testFolder = new Folder();
+		// testFolder.setPath("/a/b/d");
+		//
+		// Content content = new Content();
+		// content.setPath("/a/b/e");
+		//
+		// List<Resource> resources = Arrays.asList(testFolder, content);
+		// resourceTable.setContainerDataSource(new BeanItemContainer(
+		// Resource.class, resources));
 	}
 
 	@Override
 	public void displayProjectFiles() {
+		tree.removeAllItems();
 		int projectId = CurrentProjectVariables.getProjectId();
-		projectPath = String.format("%d/project/%d",
-				AppContext.getAccountId(), projectId);
-		List<Resource> resources = resourceService.getResources(projectPath);
-		HierarchicalContainer container = new HierarchicalContainer();
+		projectPath = String.format("%d/project/%d", AppContext.getAccountId(),
+				projectId);
 
-		if (resources != null) {
-			AppContext.getApplication().getMainWindow()
-					.showNotification("Resource not null");
-		} else {
-			Folder rootFolder = new Folder();
-			rootFolder.setPath("/a/b");
+		baseFolder = new Folder();
+		baseFolder.setPath(projectPath);
+		tree.addItem(baseFolder);
+		tree.setItemCaption(baseFolder, CurrentProjectVariables.getProject()
+				.getName());
 
-			Folder docFolder = new Folder();
-			docFolder.setPath("/a/b/c");
-
-			container.addItem(rootFolder);
-			tree.setItemCaption(rootFolder, "b");
-
-			container.addItem(docFolder);
-			tree.setItemCaption(docFolder, "c");
-			container.setParent(rootFolder, docFolder);
-		}
-
-		tree.setContainerDataSource(container);
-
+		tree.expandItem(baseFolder);
 	}
 
 	private class AddNewFolderWindow extends Window {
@@ -215,6 +224,15 @@ public class FileManagerViewImpl extends AbstractView implements
 										.createNewFolder(baseFolderPath,
 												folderVal,
 												AppContext.getUsername());
+								baseFolder.addChild(newFolder);
+								tree.addItem(newFolder);
+								tree.setItemCaption(newFolder,
+										newFolder.getName());
+								tree.setParent(newFolder, baseFolder);
+								if (!tree.isExpanded(baseFolder)) {
+									tree.expandItem(baseFolder);
+								}
+								AddNewFolderWindow.this.close();
 
 							}
 						}
