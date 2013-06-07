@@ -85,8 +85,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 								// add node
 								childNode = JcrUtils.getOrAddFolder(parentNode,
 										pathStr[i]);
-								parentNode = childNode;
 							}
+							parentNode = childNode;
 						}
 						Node addNode = parentNode.addNode(
 								pathStr[pathStr.length - 1],
@@ -149,6 +149,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 									pathStr[i]);
 							session.save();
 						}
+						
+						parentNode = childNode;
 					}
 
 					log.debug("Node path {} is existed {}", path,
