@@ -6,6 +6,9 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
 public interface ResourceService {
+	Folder createNewFolder(String baseFolderPath, String folderName,
+			String createdBy);
+
 	List<Resource> getResources(String path);
 
 	List<Folder> getSubFolders(String path);

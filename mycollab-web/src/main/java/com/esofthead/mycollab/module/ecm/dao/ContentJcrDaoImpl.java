@@ -123,23 +123,36 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					String[] pathStr = path.split("/");
 					Node parentNode = rootNode;
 					// create folder note
-					for (int i = 0; i < pathStr.length - 1; i++) {
+					for (int i = 0; i < pathStr.length; i++) {
+						if ("".equals(pathStr[i])) {
+							continue;
+						}
 						// move to lastest node of the path
 						Node childNode = getNode(parentNode, pathStr[i]);
 						if (childNode != null) {
+							log.debug("Found node with path {} in sub node ",
+									pathStr[i], parentNode.getPath());
 							if (!isNodeFolder(childNode)) {
 								// node must be the folder
 								String errorString = "Invalid path. User want to create folder has path %s but there is a content has path %s";
 								throw new ContentException(String.format(
 										errorString, folder.getPath(),
 										childNode.getPath()));
+							} else {
+								log.debug("Found folder node {}",
+										childNode.getPath());
 							}
 						} else { // add node
+							log.debug("Create new folder {} of sub node ",
+									pathStr[i], parentNode.getPath());
 							childNode = JcrUtils.getOrAddFolder(parentNode,
 									pathStr[i]);
 							session.save();
 						}
 					}
+
+					log.debug("Node path {} is existed {}", path,
+							(getNode(rootNode, path) != null));
 				} catch (Exception e) {
 					String errorString = "Error while create folder with path %s";
 					throw new MyCollabException(String.format(errorString,
@@ -242,13 +255,23 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				Node node = getNode(rootNode, path);
 				if (node != null) {
 					if (isNodeFolder(node)) {
-						Folder folder = new Folder();
-						folder.setCreated(node.getProperty("jcr:created")
-								.getDate());
-						folder.setCreatedBy(node.getProperty("jcr:createdBy")
-								.getString());
+						List<Resource> resources = new ArrayList<Resource>();
 						NodeIterator childNodes = node.getNodes();
+						while (childNodes.hasNext()) {
+							Node childNode = childNodes.nextNode();
+							if (isNodeFolder(childNode)) {
+								Folder subFolder = convertNodeToFolder(node);
+								resources.add(subFolder);
+							} else if (isNodeMyCollabContent(childNode)) {
 
+							} else {
+								String errorString = "Node %s has type not mycollab:content or nt:folder";
+								log.error(String.format(errorString,
+										childNode.getPath()));
+							}
+						}
+
+						return resources;
 					} else {
 						throw new ContentException(
 								"Do not support any node type except nt:folder. The current node has type "
@@ -256,6 +279,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					}
 				}
 
+				log.debug("There is no resource in path {}", path);
 				return null;
 			}
 		});

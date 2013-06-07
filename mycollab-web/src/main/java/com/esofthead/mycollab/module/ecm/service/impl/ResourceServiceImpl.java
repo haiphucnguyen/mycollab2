@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.ecm.service.impl;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,24 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public List<Resource> getResources(String path) {
-		return null;
+		return contentJcrDao.getResources(path);
 
 	}
 
 	@Override
 	public List<Folder> getSubFolders(String path) {
-		// TODO Auto-generated method stub
-		return null;
+		return contentJcrDao.getSubFolders(path);
+	}
+
+	@Override
+	public Folder createNewFolder(String baseFolderPath, String folderName,
+			String createdBy) {
+		Folder folder = new Folder();
+		String folderPath = baseFolderPath + "/" + folderName;
+		folder.setPath(folderPath);
+		folder.setCreatedBy(createdBy);
+		folder.setCreated(new GregorianCalendar());
+		contentJcrDao.createFolder(folder);
+		return folder;
 	}
 }

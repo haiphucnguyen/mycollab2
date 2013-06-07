@@ -21,7 +21,10 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
 				.getString(ApplicationProperties.DB_USERNAME));
 		setPassword(ApplicationProperties
 				.getString(ApplicationProperties.DB_PASSWORD));
-		setSchemaObjectPrefix("ecm_p_");
+		
+		if (getSchemaObjectPrefix() == null) {
+			setSchemaObjectPrefix("ecm_p_workspace");
+		}
 
 		if (getDatabaseType() == null) {
 			setDatabaseType("mysql");

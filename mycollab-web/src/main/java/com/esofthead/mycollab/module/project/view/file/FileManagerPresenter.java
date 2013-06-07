@@ -16,6 +16,8 @@ public class FileManagerPresenter extends AbstractPresenter<FileManagerView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Files");
+		
+		view.displayProjectFiles();
 	}
 
 }

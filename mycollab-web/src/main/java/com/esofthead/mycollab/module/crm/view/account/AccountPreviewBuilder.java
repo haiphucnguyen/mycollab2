@@ -40,6 +40,19 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 public abstract class AccountPreviewBuilder extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+	protected SimpleAccount account;
+	protected AdvancedPreviewBeanForm<Account> previewForm;
+	protected AccountContactListComp associateContactList;
+	protected AccountOpportunityListComp associateOpportunityList;
+	protected AccountLeadListComp associateLeadList;
+
+	protected AccountCaseListComp associateCaseList;
+
+	protected EventRelatedItemListComp associateActivityList;
+
+	protected NoteListItems noteListItems;
+	
 	protected class AccountFormFieldFactory extends DefaultFormViewFieldFactory {
 
 		private static final long serialVersionUID = 1L;
@@ -219,19 +232,6 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 					});
 		}
 	}
-
-	private static final long serialVersionUID = 1L;
-	protected SimpleAccount account;
-	protected AdvancedPreviewBeanForm<Account> previewForm;
-	protected AccountContactListComp associateContactList;
-	protected AccountOpportunityListComp associateOpportunityList;
-	protected AccountLeadListComp associateLeadList;
-
-	protected AccountCaseListComp associateCaseList;
-
-	protected EventRelatedItemListComp associateActivityList;
-
-	protected NoteListItems noteListItems;
 
 	public void displayActivities() {
 		final EventSearchCriteria criteria = new EventSearchCriteria();
