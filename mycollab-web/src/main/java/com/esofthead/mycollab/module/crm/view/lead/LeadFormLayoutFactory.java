@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -24,21 +24,13 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 
     @Override
     public Layout getLayout() {
-        AddViewLayout leadAddLayout = new AddViewLayout(title, new ThemeResource("icons/18/crm/lead.png"));
+        AddViewLayout2 leadAddLayout = new AddViewLayout2(title, new ThemeResource("icons/18/crm/lead.png"));
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
-            leadAddLayout.addTopControls(topPanel);
+            leadAddLayout.addControlButtons(topPanel);
         }
-
-
         leadInformation = new LeadInformationLayout();
         leadAddLayout.addBody(leadInformation.getLayout());
-
-        Layout bottonPanel = createBottomPanel();
-        if (bottonPanel != null) {
-            leadAddLayout.addBottomControls(bottonPanel);
-        }
-
         return leadAddLayout;
     }
 

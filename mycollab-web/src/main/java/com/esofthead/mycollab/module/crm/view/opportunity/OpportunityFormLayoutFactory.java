@@ -1,9 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -24,21 +23,15 @@ public abstract class OpportunityFormLayoutFactory implements
 
     @Override
     public Layout getLayout() {
-        AddViewLayout opportunityAddLayout = new AddViewLayout(title, new ThemeResource("icons/18/crm/opportunity.png"));
+        AddViewLayout2 opportunityAddLayout = new AddViewLayout2(title, new ThemeResource("icons/18/crm/opportunity.png"));
 
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
-            opportunityAddLayout.addTopControls(topPanel);
+            opportunityAddLayout.addControlButtons(topPanel);
         }
-
 
         opportunityInformation = new OpportunityInformationLayout();
         opportunityAddLayout.addBody(opportunityInformation.getLayout());
-
-        Layout bottomPanel = createBottomPanel();
-        if (bottomPanel != null) {
-            opportunityAddLayout.addBottomControls(bottomPanel);
-        }
 
         return opportunityAddLayout;
     }

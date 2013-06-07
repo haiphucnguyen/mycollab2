@@ -139,14 +139,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 			@Override
 			protected Layout createTopPanel() {
-				HorizontalLayout topPanel = new HorizontalLayout();
-				Layout controlButtons = createButtonControls();
-				controlButtons.setSizeUndefined();
-				topPanel.addComponent(controlButtons);
-				topPanel.setWidth("100%");
-				topPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return topPanel;
+				return createButtonControls();
 			}
 		}
 

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.terminal.ThemeResource;
@@ -148,21 +148,15 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		informationLayout = new ContactInformationLayout(false);
-		final AddViewLayout contactAddLayout = new AddViewLayout(title,
+		final AddViewLayout2 contactAddLayout = new AddViewLayout2(title,
 				new ThemeResource("icons/18/crm/contact.png"));
 
 		final Layout topPanel = createTopPanel();
 		if (topPanel != null) {
-			contactAddLayout.addTopControls(topPanel);
+			contactAddLayout.addControlButtons(topPanel);
 		}
 
 		contactAddLayout.addBody(informationLayout.getLayout());
-
-		final Layout bottomPanel = createBottomPanel();
-		if (bottomPanel != null) {
-
-		}
-		contactAddLayout.addBottomControls(bottomPanel);
 
 		return contactAddLayout;
 	}
