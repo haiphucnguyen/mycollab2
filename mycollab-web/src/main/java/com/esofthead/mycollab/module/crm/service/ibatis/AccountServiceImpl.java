@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -33,10 +39,6 @@ import com.esofthead.mycollab.module.crm.domain.AccountLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -104,4 +106,9 @@ public class AccountServiceImpl extends DefaultService<Integer, Account, Account
         ex.createCriteria().andAccountidEqualTo(associateLead.getAccountid()).andLeadidEqualTo(associateLead.getLeadid());
         accountLeadMapper.deleteByExample(ex);
     }
+
+	@Override
+	public void updateBySearchCriteria(Account account, AccountSearchCriteria searchCriteria) {
+		accountMapperExt.upateAccountBySearchCriteria(account,searchCriteria);
+	}
 }

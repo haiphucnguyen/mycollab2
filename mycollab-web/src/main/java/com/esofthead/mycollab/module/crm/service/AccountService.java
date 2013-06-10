@@ -37,4 +37,6 @@ public interface AccountService extends
 	void removeAccountContactRelationship(AccountContact associateContact);
 
 	void removeAccountLeadRelationship(AccountLead associateLead);
+	
+	void updateBySearchCriteria(Account account, AccountSearchCriteria searchCriteria);
 }

@@ -8,6 +8,67 @@
                 property="assignUserFullName" />
     </resultMap>
 
+	<sql id="querySearchCriteria4MassUpdate">
+        <if test="searchCriteria.accountname != null ">
+            <![CDATA[${searchCriteria.accountname.operation} m_crm_account.accountName LIKE '%${searchCriteria.accountname.value}%' ]]>
+        </if>
+        <if test="searchCriteria.assignUser != null">
+            <![CDATA[${searchCriteria.assignUser.operation} m_crm_account.assignUser = #{searchCriteria.assignUser.value}]]>
+        </if>
+        <if test="searchCriteria.assignUserName != null ">
+            <![CDATA[${searchCriteria.assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${searchCriteria.assignUserName.value}%']]>
+        </if>
+        <if test="searchCriteria.website != null">
+            <![CDATA[${searchCriteria.website.operation} m_crm_account.website like '%${searchCriteria.website.value}%']]>
+        </if>
+        <if test="searchCriteria.anyCity != null">
+            ${searchCriteria.anyCity.operation} (shippingCity LIKE '%${searchCriteria.anyCity.value}%' OR city LIKE '%${searchCriteria.anyCity.value}%')
+        </if>
+        <if test="searchCriteria.types != null">
+            ${searchCriteria.types.operation} m_crm_account.type IN
+            <foreach close=")" collection="searchCriteria.types.values" item="type"
+                     open="(" separator=",">
+                #{type}
+            </foreach>
+        </if>
+        <if test="searchCriteria.industries != null">
+            ${searchCriteria.industries.operation} m_crm_account.industry IN
+            <foreach close=")" collection="searchCriteria.industries.values" item="industry"
+                     open="(" separator=",">
+                #{industry}
+            </foreach>
+        </if>
+
+        <if test="searchCriteria.assignUsers != null">
+            ${searchCriteria.assignUsers.operation} m_crm_account.assignuser IN
+            <foreach close=")" collection="searchCriteria.assignUsers.values" item="user"
+                     open="(" separator=",">
+                #{user}
+            </foreach>
+        </if>
+        
+        <if test="searchCriteria.anyPhone != null">
+            ${searchCriteria.anyPhone.operation} (alternatePhone LIKE '%${searchCriteria.anyPhone.value}%' OR phoneOffice LIKE '%${searchCriteria.anyPhone.value}%')
+        </if>
+        
+        <if test="searchCriteria.anyAddress != null">
+            ${searchCriteria.anyAddress.operation} (shippingAddress LIKE '%${searchCriteria.anyAddress.value}%' OR billingAddress LIKE '%${searchCriteria.anyAddress.value}%')
+        </if>
+        
+        <if test="searchCriteria.anyMail != null">
+            ${searchCriteria.anyMail.operation} m_crm_account.email LIKE '%${searchCriteria.anyMail.value}%'      
+        </if>
+
+        <if test="searchCriteria.campaignId != null">
+            <![CDATA[
+            ${searchCriteria.campaignId.operation} 
+            (SELECT COUNT(*) 
+                FROM m_crm_campaign, m_crm_campaigns_accounts 
+                WHERE m_crm_campaign.id=#{searchCriteria.campaignId.value,javaType=INTEGER} AND m_crm_account.id=m_crm_campaigns_accounts.accountId AND
+                    m_crm_campaigns_accounts.campaignId=#{searchCriteria.campaignId.value,javaType=INTEGER}) > 0]]>
+        </if>
+    </sql>
+
 
     <sql id="querySearchCriteria">
         <if test="accountname != null ">
@@ -219,4 +280,15 @@
                 refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria"/>
         </trim>
     </select>
+    
+	<!-- Here for Mass Update -->
+    <update id="upateAccountBySearchCriteria" parameterType="map">
+    	<include refid="com.esofthead.mycollab.module.crm.dao.AccountMapper.massUpdateWithSessionSql"/>
+    	<if test="searchCriteria != null">
+       		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+           		 1=1 
+           		 <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria4MassUpdate" />
+        	</trim>
+    	</if>
+    </update>
 </mapper>

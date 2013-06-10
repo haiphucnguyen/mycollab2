@@ -8,6 +8,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -32,10 +34,10 @@ import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
-		implements ListPresenter<AccountSearchCriteria> {
+		implements ListPresenter<AccountSearchCriteria>,
+		MassUpdatePresenter<Account> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -187,11 +189,13 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES, tableData),
 										"export.csv", view.getApplication());
-							} 
+							}
 
 							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
-							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow("Mass Update Accounts");
+							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow(
+									"Mass Update Accounts",
+									AccountListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
@@ -272,12 +276,34 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER));
-			
+
 			super.onGo(container, data);
 			doSearch((AccountSearchCriteria) data.getParams());
 			AppContext.addFragment("crm/account/list", "Account List");
 		} else {
 			MessageConstants.showMessagePermissionAlert();
+		}
+	}
+
+	@Override
+	public void massUpdate(Account value) {
+		if (!isSelectAll) {
+			Collection<SimpleAccount> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleAccount item : currentDataList) {
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
+			}
+
+			if (keyList.size() > 0) {
+				accountService.massUpdateWithSession(value, keyList);
+				doSearch(searchCriteria);
+			}
+		} else {
+			accountService.updateBySearchCriteria(value,searchCriteria);
+			doSearch(searchCriteria);
 		}
 	}
 }

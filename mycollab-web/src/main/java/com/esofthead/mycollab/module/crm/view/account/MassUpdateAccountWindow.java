@@ -2,39 +2,40 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
-import com.esofthead.mycollab.vaadin.ui.GenericForm;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
-public class MassUpdateAccountWindow extends Window {
+public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 	private static final long serialVersionUID = 1L;
 
 	private Account account;
 	private final EditForm updateForm;
 	private ReadViewLayout accountAddLayout;
+	private VerticalLayout layout;
 
-	public MassUpdateAccountWindow(String title) {
-		super(title);
-		center();
+	public MassUpdateAccountWindow(String title, AccountListPresenter presenter) {
+		super(title, presenter);
 		this.setWidth("1000px");
+
 		accountAddLayout = new ReadViewLayout(new ThemeResource(
 				"icons/18/account.png"));
 
 		account = new Account();
+
+		layout = getLayout();
+
 		updateForm = new EditForm();
 
 		updateForm.setItemDataSource(new BeanItem<Account>(account));
@@ -44,7 +45,7 @@ public class MassUpdateAccountWindow extends Window {
 		this.addComponent(accountAddLayout);
 	}
 
-	private class EditForm extends GenericForm {
+	private class EditForm extends AdvancedEditBeanForm<Account> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -57,19 +58,17 @@ public class MassUpdateAccountWindow extends Window {
 		private class MassUpdateAccountFormLayoutFactory implements
 				IFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
-			private VerticalLayout layout;
 
 			private GridFormLayoutHelper informationLayout;
 			private GridFormLayoutHelper addressLayout;
-			private Button updateBtn, closeBtn;
 
 			@Override
 			public Layout getLayout() {
-				layout = new VerticalLayout();
+				VerticalLayout formLayout = new VerticalLayout();
 
 				Label organizationHeader = new Label("Account Information");
 				organizationHeader.setStyleName("h2");
-				layout.addComponent(organizationHeader);
+				formLayout.addComponent(organizationHeader);
 
 				informationLayout = new GridFormLayoutHelper(2, 6, "100%",
 						"167px", Alignment.MIDDLE_LEFT);
@@ -79,40 +78,22 @@ public class MassUpdateAccountWindow extends Window {
 				informationLayout.getLayout().setSpacing(false);
 				informationLayout.getLayout()
 						.addStyleName("colored-gridlayout");
-				layout.addComponent(informationLayout.getLayout());
+				formLayout.addComponent(informationLayout.getLayout());
 
 				addressLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
 						Alignment.MIDDLE_LEFT);
 				Label addressHeader = new Label("Address Information");
 				addressHeader.setStyleName("h2");
-				layout.addComponent(addressHeader);
+				formLayout.addComponent(addressHeader);
 				addressLayout.getLayout().setWidth("100%");
 				addressLayout.getLayout().setMargin(false);
 				addressLayout.getLayout().setSpacing(false);
 				addressLayout.getLayout().addStyleName("colored-gridlayout");
-				layout.addComponent(addressLayout.getLayout());
+				formLayout.addComponent(addressLayout.getLayout());
 
-				HorizontalLayout bottomButton = new HorizontalLayout();
-				bottomButton.setMargin(true);
-				bottomButton.setSpacing(true);
-				bottomButton.setStyleName("addNewControl");
+				formLayout.addComponent(layout);
 
-				updateBtn = new Button("MassUpdate");
-				updateBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-				bottomButton.addComponent(updateBtn);
-				bottomButton.setComponentAlignment(updateBtn,
-						Alignment.MIDDLE_CENTER);
-
-				closeBtn = new Button("Close");
-				closeBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-				bottomButton.addComponent(closeBtn);
-				bottomButton.setComponentAlignment(closeBtn,
-						Alignment.MIDDLE_CENTER);
-
-				layout.addComponent(bottomButton);
-				layout.setComponentAlignment(bottomButton,
-						Alignment.BOTTOM_CENTER);
-				return layout;
+				return formLayout;
 			}
 
 			@Override
@@ -195,5 +176,10 @@ public class MassUpdateAccountWindow extends Window {
 								1, 4);
 			}
 		}
+	}
+
+	@Override
+	protected Account getItem() {
+		return account;
 	}
 }

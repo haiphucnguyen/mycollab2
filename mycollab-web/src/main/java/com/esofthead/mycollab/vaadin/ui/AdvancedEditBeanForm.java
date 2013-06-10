@@ -24,16 +24,13 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 
     private final Validator validation;
     private List<EditFormHandler<T>> editFormHandlers;
+    
+    
 
     public AdvancedEditBeanForm() {
         this.setImmediate(true);
         this.setWriteThrough(true);
         validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
-    }
-
-    public AdvancedEditBeanForm(IFormLayoutFactory factory) {
-        this();
-        this.setFormLayoutFactory(factory);
     }
 
     public boolean validateForm(Object data) {
