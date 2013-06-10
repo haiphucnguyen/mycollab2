@@ -2,7 +2,10 @@ package com.esofthead.mycollab.module.project.view.file;
 
 import java.util.List;
 
+import org.vaadin.easyuploads.SingleFileUploadField;
+
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -12,7 +15,6 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.google.gwt.user.client.ui.TextArea;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -23,6 +25,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.Tree.CollapseEvent;
@@ -88,7 +91,7 @@ public class FileManagerViewImpl extends AbstractView implements
 		this.addComponent(menuBar);
 
 		HorizontalSplitPanel resourceContainer = new HorizontalSplitPanel();
-		resourceContainer.setWidth("100%");
+		resourceContainer.setSizeFull();
 
 		folderTree = new Tree();
 		folderTree.setMultiSelect(false);
@@ -264,17 +267,55 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		private TextField titleField;
 		private TextArea descField;
-		
+		private SingleFileUploadField uploadField;
+
 		public UploadContentWindow() {
 			super("Upload Content");
 			this.setWidth("500px");
 			this.setModal(true);
-			
-			layoutHelper = new GridFormLayoutHelper(2, 2);
 
-			
-			
+			layoutHelper = new GridFormLayoutHelper(1, 3);
+
+			titleField = (TextField) layoutHelper.addComponent(new TextField(),
+					"Title", 0, 0);
+			descField = (TextArea) layoutHelper.addComponent(new TextArea(),
+					"Description", 0, 1);
+
+			uploadField = (SingleFileUploadField) layoutHelper.addComponent(
+					new SingleFileUploadField(), "File", 0, 2);
+
 			this.addComponent(layoutHelper.getLayout());
+
+			HorizontalLayout controlsLayout = new HorizontalLayout();
+			controlsLayout.setWidth("100%");
+
+			Button uploadBtn = new Button("Upload", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+					Content content = new Content();
+					content.setTitle((String) titleField.getValue());
+					content.setDescription((String) descField.getValue());
+					content.setPath(baseFolder.getPath() + "/" );
+					UploadContentWindow.this.close();
+				}
+			});
+
+			controlsLayout.addComponent(uploadBtn);
+
+			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					UploadContentWindow.this.close();
+				}
+			});
+			controlsLayout.addComponent(cancelBtn);
+
+			this.addComponent(controlsLayout);
 		}
 
 	}

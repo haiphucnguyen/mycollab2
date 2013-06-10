@@ -70,7 +70,6 @@ public class TaskTableDisplay extends
 										TaskTableDisplay.this, task, "taskname"));
 							}
 						});
-				b.addStyleName("medium-text");
 
 				if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
 					ThemeResource iconPriority = TaskPriorityComboBox

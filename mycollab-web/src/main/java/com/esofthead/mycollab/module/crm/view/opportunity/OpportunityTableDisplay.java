@@ -75,7 +75,6 @@ public class OpportunityTableDisplay extends PagedBeanTable2<OpportunityService,
                                 fireTableEvent(new TableClickEvent(OpportunityTableDisplay.this, opportunity, "opportunityname"));
                             }
                         });
-                b.addStyleName("medium-text");
                 
                 if ("Closed Won".equals(opportunity.getSalesstage()) || "Closed Lost".equals(opportunity.getSalesstage())) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);

@@ -155,7 +155,9 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 
     protected FileBuffer createReceiver() {
         FileBuffer receiver = new FileBuffer(UploadField.FieldType.FILE) {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public FileFactory getFileFactory() {
                 return MultiFileUploadExt.this.getFileFactory();
             }
@@ -245,7 +247,8 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
             progressBars.addComponent(pi);
             final FileBuffer receiver = createReceiver();
             html5File.setStreamVariable(new StreamVariable() {
-                private String name;
+				private static final long serialVersionUID = 1L;
+				private String name;
                 private String mime;
 
                 public OutputStream getOutputStream() {

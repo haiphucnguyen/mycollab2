@@ -113,7 +113,7 @@ public class ProblemListViewImpl extends AbstractView implements
 												.getId()));
 							}
 						});
-				b.addStyleName("medium-text");
+				
 				if ("Closed".equals(problem.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else {

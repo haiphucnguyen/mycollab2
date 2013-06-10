@@ -118,7 +118,7 @@ public class VersionListViewImpl extends AbstractView implements
 												bugVersion.getId()));
 							}
 						});
-						b.addStyleName("medium-text");
+						
 
 						if (bugVersion.getDuedate() != null
 								&& (bugVersion.getDuedate()

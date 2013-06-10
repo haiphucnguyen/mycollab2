@@ -170,7 +170,6 @@ public class MilestoneListViewImpl extends AbstractView implements
 					}
 				});
 		milestoneLink.setStyleName("link");
-		milestoneLink.addStyleName("medium-text");
 		milestoneLink.addStyleName("bold");
 		milestoneLink.addStyleName(UIConstants.WORD_WRAP);
 		milestoneLink.setWidth("100%");

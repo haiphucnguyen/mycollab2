@@ -81,7 +81,6 @@ public class UserTableDisplay extends
 										UserTableDisplay.this, user, "username"));
 							}
 						});
-				b.addStyleName("medium-text");
 				return b;
 
 			}
@@ -106,7 +105,6 @@ public class UserTableDisplay extends
 										"displayName"));
 							}
 						});
-				b.addStyleName("medium-text");
 				return b;
 
 			}

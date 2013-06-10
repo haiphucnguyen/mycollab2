@@ -113,7 +113,6 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 												role.getId()));
 							}
 						});
-				b.addStyleName("medium-text");
 				return b;
 
 			}

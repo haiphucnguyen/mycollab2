@@ -272,7 +272,7 @@ public class BugRelatedField extends CustomField {
 					b.setIcon(iconPriority);
 				}
 
-				b.addStyleName("medium-text");
+				
 				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null

@@ -111,7 +111,6 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 												.getId()));
 							}
 						});
-				b.addStyleName("medium-text");
 
 				if ("Closed".equals(risk.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);

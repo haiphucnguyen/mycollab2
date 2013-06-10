@@ -107,7 +107,6 @@ public class EventTableDisplay extends
 										"subject"));
 							}
 						});
-				b.addStyleName("medium-text");
 
 				if ("Held".equals(simpleEvent.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);

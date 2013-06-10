@@ -71,7 +71,6 @@ public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCri
                                 fireTableEvent(new TableClickEvent(LeadTableDisplay.this, lead, "leadName"));
                             }
                         });
-                b.addStyleName("medium-text");
                 
                 if ("Dead".equals(lead.getStatus())) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);

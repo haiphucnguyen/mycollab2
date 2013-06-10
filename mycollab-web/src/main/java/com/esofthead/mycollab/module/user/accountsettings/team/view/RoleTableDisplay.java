@@ -72,7 +72,6 @@ public class RoleTableDisplay extends PagedBeanTable2<RoleService, RoleSearchCri
                                 fireTableEvent(new TableClickEvent(RoleTableDisplay.this, user, "rolename"));
                             }
                         });
-                b.addStyleName("medium-text");
                 return b;
 
             }

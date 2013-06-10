@@ -92,7 +92,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 			}
 		};
 		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
-		avatarUploadField.setMaxUploadSize(MAX_UPLOAD_SIZE);
+		// TODO: set upload maximum file size
 		userAvatar.addComponent(avatarUploadField);
 	}
 

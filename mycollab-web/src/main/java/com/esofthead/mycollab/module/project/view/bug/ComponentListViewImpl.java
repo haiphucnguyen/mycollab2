@@ -121,7 +121,7 @@ public class ComponentListViewImpl extends AbstractView implements
 																.getId()));
 									}
 								});
-						b.addStyleName("medium-text");
+						
 						return b;
 
 					}

@@ -72,7 +72,6 @@ public class ContactTableDisplay extends
 										"contactName"));
 							}
 						});
-				b.addStyleName("medium-text");
 				return b;
 			}
 		});

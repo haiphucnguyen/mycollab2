@@ -76,7 +76,6 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
                             }
                         });
                 b.setStyleName("link");
-                b.addStyleName("medium-text");
 
                 if ("Complete".equals(campaign.getStatus())) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);
