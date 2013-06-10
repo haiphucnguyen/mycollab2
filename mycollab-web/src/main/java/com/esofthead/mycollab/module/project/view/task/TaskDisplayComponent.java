@@ -36,7 +36,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -53,69 +53,74 @@ public class TaskDisplayComponent extends CssLayout {
 	private GridFormLayoutHelper layoutHelper;
 
 	private SimpleTaskList taskList;
-	private boolean isDisplayTaskListInfo;
+	private final boolean isDisplayTaskListInfo;
 
 	public TaskDisplayComponent(final SimpleTaskList taskList,
-			boolean isDisplayTaskListInfo) {
+			final boolean isDisplayTaskListInfo) {
 		this.taskList = taskList;
 		this.isDisplayTaskListInfo = isDisplayTaskListInfo;
 		this.setStyleName("taskdisplay-component");
 
-		showTaskGroupInfo();
+		this.showTaskGroupInfo();
 	}
 
 	private void showTaskGroupInfo() {
-		if (isDisplayTaskListInfo) {
-			layoutHelper = new GridFormLayoutHelper(2, 3);
-			layoutHelper.getLayout().setWidth("100%");
-			this.addComponent(layoutHelper.getLayout());
+		if (this.isDisplayTaskListInfo) {
+			this.layoutHelper = new GridFormLayoutHelper(2, 3, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			this.layoutHelper.getLayout().setWidth("100%");
+			this.layoutHelper.getLayout().addStyleName("colored-gridlayout");
+			this.layoutHelper.getLayout().setMargin(false);
+			this.addComponent(this.layoutHelper.getLayout());
 
-			Label descLbl = (Label) layoutHelper.addComponent(new Label(),
-					"Description", 0, 0, 2, "100%", Alignment.TOP_RIGHT);
-			descLbl.setContentMode(Label.CONTENT_XHTML);
-			descLbl.setValue(taskList.getDescription());
-
-			layoutHelper.addComponent(
-					new ProjectUserFormLinkField(taskList.getOwner(), taskList
-							.getOwnerFullName()), "Responsible User", 0, 1,
+			final Label descLbl = (Label) this.layoutHelper.addComponent(
+					new Label(), "Description", 0, 0, 2, "100%",
 					Alignment.TOP_RIGHT);
+			descLbl.setContentMode(Label.CONTENT_XHTML);
+			descLbl.setValue(this.taskList.getDescription());
 
-			DefaultFormViewFieldFactory.FormLinkViewField milestoneLink = new DefaultFormViewFieldFactory.FormLinkViewField(
-					taskList.getMilestoneName(), new Button.ClickListener() {
+			this.layoutHelper.addComponent(
+					new ProjectUserFormLinkField(this.taskList.getOwner(),
+							this.taskList.getOwnerFullName()),
+					"Responsible User", 0, 1, Alignment.TOP_RIGHT);
+
+			final DefaultFormViewFieldFactory.FormLinkViewField milestoneLink = new DefaultFormViewFieldFactory.FormLinkViewField(
+					this.taskList.getMilestoneName(),
+					new Button.ClickListener() {
 
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(Button.ClickEvent event) {
+						public void buttonClick(final Button.ClickEvent event) {
 							EventBus.getInstance().fireEvent(
-									new MilestoneEvent.GotoRead(this, taskList
-											.getMilestoneid()));
+									new MilestoneEvent.GotoRead(this,
+											TaskDisplayComponent.this.taskList
+													.getMilestoneid()));
 						}
 					});
-			layoutHelper.addComponent(milestoneLink, "Phase", 1, 1,
+			this.layoutHelper.addComponent(milestoneLink, "Phase", 1, 1,
 					Alignment.TOP_RIGHT);
 
-			taskListProgress = (ProgressPercentageIndicator) layoutHelper
+			this.taskListProgress = (ProgressPercentageIndicator) this.layoutHelper
 					.addComponent(
-							new ProgressPercentageIndicator(taskList
+							new ProgressPercentageIndicator(this.taskList
 									.getPercentageComplete()), "Progress", 0, 2);
-			taskListProgress.setWidth("100px");
+			this.taskListProgress.setWidth("100px");
 
 			HorizontalLayout taskNumberProgress = new HorizontalLayout();
 			taskNumberProgress.setSpacing(true);
-			taskNumberProgress = (HorizontalLayout) layoutHelper.addComponent(
-					taskNumberProgress, "Number of open tasks", 1, 2);
+			taskNumberProgress = (HorizontalLayout) this.layoutHelper
+					.addComponent(taskNumberProgress, "Number of open tasks",
+							1, 2);
 
-			taskNumberLbl = new Label("(" + taskList.getNumOpenTasks() + "/"
-					+ taskList.getNumAllTasks() + ")");
-			taskNumberProgress.addComponent(taskNumberLbl);
-
-			Layout taskInfo = layoutHelper.getLayout();
-			taskInfo.setMargin(false, false, true, false);
+			this.taskNumberLbl = new Label("("
+					+ this.taskList.getNumOpenTasks() + "/"
+					+ this.taskList.getNumAllTasks() + ")");
+			taskNumberProgress.addComponent(this.taskNumberLbl);
 		}
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			taskDisplay = new TaskTableDisplay(
+			this.taskDisplay = new TaskTableDisplay(
 					new String[] { "id", "taskname", "deadline",
 							"percentagecomplete", "assignUserFullName" },
 					new String[] {
@@ -129,7 +134,7 @@ public class TaskDisplayComponent extends CssLayout {
 							LocalizationHelper
 									.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			taskDisplay = new TaskTableDisplay(
+			this.taskDisplay = new TaskTableDisplay(
 					new String[] { "id", "taskname", "startdate", "deadline",
 							"percentagecomplete", "assignUserFullName" },
 					new String[] {
@@ -145,9 +150,9 @@ public class TaskDisplayComponent extends CssLayout {
 							LocalizationHelper
 									.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
 		}
-		this.addComponent(taskDisplay);
+		this.addComponent(this.taskDisplay);
 
-		taskDisplay
+		this.taskDisplay
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					private static final long serialVersionUID = 1L;
 
@@ -157,8 +162,8 @@ public class TaskDisplayComponent extends CssLayout {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleTask task = (SimpleTask) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleTask task = (SimpleTask) event.getData();
 						if ("taskname".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new TaskEvent.GotoRead(
@@ -170,91 +175,110 @@ public class TaskDisplayComponent extends CssLayout {
 								|| "reopenTask".equals(event.getFieldName())
 								|| "deleteTask".equals(event.getFieldName())) {
 							TaskDisplayComponent.this.removeAllComponents();
-							ProjectTaskListService taskListService = AppContext
+							final ProjectTaskListService taskListService = AppContext
 									.getSpringBean(ProjectTaskListService.class);
-							taskList = taskListService
-									.findTaskListById(taskList.getId());
-							showTaskGroupInfo();
+							TaskDisplayComponent.this.taskList = taskListService
+									.findTaskListById(TaskDisplayComponent.this.taskList
+											.getId());
+							TaskDisplayComponent.this.showTaskGroupInfo();
 						}
 					}
 				});
 
-		createTaskBtn = new Button("Add Task", new Button.ClickListener() {
+		this.createTaskBtn = new Button("Add Task", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(Button.ClickEvent event) {
+			public void buttonClick(final Button.ClickEvent event) {
 
 				TaskDisplayComponent.this.removeAllComponents();
 
-				TaskAddPopup taskAddView = new TaskAddPopup(
-						TaskDisplayComponent.this, taskList);
-				if (layoutHelper != null) {
+				final TaskAddPopup taskAddView = new TaskAddPopup(
+						TaskDisplayComponent.this,
+						TaskDisplayComponent.this.taskList);
+				if (TaskDisplayComponent.this.layoutHelper != null) {
 					TaskDisplayComponent.this.addComponent(
-							layoutHelper.getLayout(), 0);
-					TaskDisplayComponent.this.addComponent(taskDisplay, 1);
+							TaskDisplayComponent.this.layoutHelper.getLayout(),
+							0);
+					TaskDisplayComponent.this.addComponent(
+							TaskDisplayComponent.this.taskDisplay, 1);
 					TaskDisplayComponent.this.addComponent(taskAddView, 2);
 				} else {
-					TaskDisplayComponent.this.addComponent(taskDisplay, 0);
+					TaskDisplayComponent.this.addComponent(
+							TaskDisplayComponent.this.taskDisplay, 0);
 					TaskDisplayComponent.this.addComponent(taskAddView, 1);
 				}
-				TaskDisplayComponent.this.removeComponent(createTaskBtn);
+				TaskDisplayComponent.this
+						.removeComponent(TaskDisplayComponent.this.createTaskBtn);
 			}
 		});
-		createTaskBtn.setEnabled(CurrentProjectVariables
+		this.createTaskBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.TASKS));
-		createTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		this.addComponent(createTaskBtn);
+		this.createTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		this.createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		final VerticalLayout taskGroupFooter = new VerticalLayout();
+		taskGroupFooter.setMargin(true);
+		taskGroupFooter.addStyleName("task-list-footer");
+		taskGroupFooter.addComponent(this.createTaskBtn);
+		taskGroupFooter.setComponentAlignment(this.createTaskBtn,
+				Alignment.MIDDLE_RIGHT);
+		this.addComponent(taskGroupFooter);
 
-		taskDisplay.setItems(taskList.getSubTasks());
+		this.taskDisplay.setItems(this.taskList.getSubTasks());
 	}
 
-	public void setSearchCriteria(TaskSearchCriteria criteria) {
+	public void setSearchCriteria(final TaskSearchCriteria criteria) {
 		this.criteria = criteria;
-		displayTasks();
+		this.displayTasks();
 
 	}
 
 	private void displayTasks() {
-		if (criteria == null) {
-			TaskSearchCriteria criteria = new TaskSearchCriteria();
+		if (this.criteria == null) {
+			final TaskSearchCriteria criteria = new TaskSearchCriteria();
 			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
-			criteria.setTaskListId(new NumberSearchField(taskList.getId()));
+			criteria.setTaskListId(new NumberSearchField(this.taskList.getId()));
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
 					new String[] { "Open", "Pending" }));
 			this.criteria = criteria;
 		}
 
-		taskDisplay.setSearchCriteria(criteria);
+		this.taskDisplay.setSearchCriteria(this.criteria);
 
 		// Update tasklist progress and number of open task/all task
-		if (taskNumberLbl != null) {
-			taskNumberLbl.setValue("(" + (taskList.getNumOpenTasks() + 1) + "/"
-					+ (taskList.getNumAllTasks() + 1) + ")");
+		if (this.taskNumberLbl != null) {
+			this.taskNumberLbl.setValue("("
+					+ (this.taskList.getNumOpenTasks() + 1) + "/"
+					+ (this.taskList.getNumAllTasks() + 1) + ")");
 		}
 
-		int newAllTasks = taskList.getNumAllTasks() + 1;
-		double newProgressTask = (taskList.getPercentageComplete() * taskList
+		final int newAllTasks = this.taskList.getNumAllTasks() + 1;
+		final double newProgressTask = (this.taskList.getPercentageComplete() * this.taskList
 				.getNumAllTasks()) / newAllTasks;
-		if (taskListProgress != null) {
-			taskListProgress.setValue(newProgressTask);
+		if (this.taskListProgress != null) {
+			this.taskListProgress.setValue(newProgressTask);
 		}
 	}
 
-	public void saveTaskSuccess(SimpleTask task) {
-		displayTasks();
-		if (!isDisplayTaskListInfo) {
+	public void saveTaskSuccess(final SimpleTask task) {
+		this.displayTasks();
+		if (!this.isDisplayTaskListInfo) {
 			EventBus.getInstance().fireEvent(
-					new TaskListEvent.GotoRead(this, taskList.getId()));
+					new TaskListEvent.GotoRead(this, this.taskList.getId()));
 		}
 	}
 
 	public void closeTaskAdd() {
-		this.addComponent(createTaskBtn);
+		final VerticalLayout taskGroupFooter = new VerticalLayout();
+		taskGroupFooter.setMargin(true);
+		taskGroupFooter.addStyleName("task-list-footer");
+		taskGroupFooter.addComponent(this.createTaskBtn);
+		taskGroupFooter.setComponentAlignment(this.createTaskBtn,
+				Alignment.MIDDLE_RIGHT);
+		this.addComponent(taskGroupFooter);
 		Component comp;
-		if (layoutHelper != null) {
+		if (this.layoutHelper != null) {
 			comp = this.getComponent(2);
 		} else {
 			comp = this.getComponent(1);

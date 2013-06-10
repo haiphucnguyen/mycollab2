@@ -84,7 +84,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("assignuserFullName")) {
 					informationLayout.addComponent(field, "Assigned to", 1, 5);
 				} else if (propertyId.equals("milestoneName")) {
-					informationLayout.addComponent(field, "Phase", 0, 6);
+					informationLayout.addComponent(field, "Phase", 0, 6, 2,
+							"100%");
 				} else if (propertyId.equals("components")) {
 					informationLayout.addComponent(field, "Components", 0, 7,
 							2, "100%");
@@ -284,6 +285,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 				bugWorkflowControl = new HorizontalLayout();
 				bugWorkflowControl.setMargin(false);
+				bugWorkflowControl.addStyleName("workflow-controls");
 				topPanel.addComponent(bugWorkflowControl);
 				topPanel.setComponentAlignment(bugWorkflowControl,
 						Alignment.MIDDLE_RIGHT);

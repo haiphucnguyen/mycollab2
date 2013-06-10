@@ -685,12 +685,22 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void gotoTimeTrackingList() {
 		this.select(1);
-		this.addLink(new Button("Time"));
+		this.addLink(new Button("Time Tracking"));
 		AppContext
 				.addFragment(
 						"project/time/list/"
 								+ UrlEncodeDecoder.encode(project.getId()),
 						"Time Tracking");
+	}
+
+	public void gotoFileList() {
+		this.select(1);
+		this.addLink(new Button("Files"));
+		AppContext
+				.addFragment(
+						"project/file/list/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"Files");
 	}
 
 	public void gotoStandupList() {

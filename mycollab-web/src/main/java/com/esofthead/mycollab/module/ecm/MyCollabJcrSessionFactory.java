@@ -58,14 +58,14 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 				contentTypeTemplate.getDeclaredPropertyDefinitions().length,
 				contentTypeTemplate.getDeclaredChildNodeDefinitions().length);
 
-		PropertyDefinitionTemplate propertyTemplate = manager
-				.createPropertyDefinitionTemplate();
-		propertyTemplate.setMultiple(false);
-		propertyTemplate.setName("path");
-		propertyTemplate.setMandatory(true);
-		propertyTemplate.setRequiredType(PropertyType.STRING);
-		contentTypeTemplate.getPropertyDefinitionTemplates().add(
-				propertyTemplate);
+//		PropertyDefinitionTemplate pathPropertyTemplate = manager
+//				.createPropertyDefinitionTemplate();
+//		pathPropertyTemplate.setMultiple(false);
+//		pathPropertyTemplate.setName("path");
+//		pathPropertyTemplate.setMandatory(true);
+//		pathPropertyTemplate.setRequiredType(PropertyType.STRING);
+//		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+//				pathPropertyTemplate);
 
 		manager.registerNodeType(contentTypeTemplate, true);
 

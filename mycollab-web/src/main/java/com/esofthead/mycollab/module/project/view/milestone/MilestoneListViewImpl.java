@@ -52,11 +52,13 @@ public class MilestoneListViewImpl extends AbstractView implements
 	private final Button createBtn;
 
 	public MilestoneListViewImpl() {
-
+		final CssLayout headerWrapper = new CssLayout();
+		headerWrapper.setWidth("100%");
+		headerWrapper.addStyleName("milestonelist-header");
 		final HorizontalLayout header = new HorizontalLayout();
 		final Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
-		header.setMargin(true, true, false, true);
+		// header.setMargin(true, true, false, true);
 		header.setWidth("100%");
 		header.addComponent(titleLbl);
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
@@ -76,7 +78,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(createBtn);
 		header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
-		this.addComponent(header);
+		headerWrapper.addComponent(header);
+		this.addComponent(headerWrapper);
 
 		final CustomLayout bodyContent = new CustomLayout("milestoneView");
 		bodyContent.setWidth("100%");

@@ -6,6 +6,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
+import com.esofthead.mycollab.module.project.view.file.FileManagerPresenter;
+import com.esofthead.mycollab.module.project.view.file.FileTrackingScreenData;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
@@ -144,6 +146,10 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				TimeTrackingScreenData.Search.class)) {
 			presenter = PresenterResolver
 					.getPresenter(TimeTrackingPresenter.class);
+		} else if (ClassUtils.instanceOf(pageAction,
+				FileTrackingScreenData.Search.class)) {
+			presenter = PresenterResolver
+					.getPresenter(FileManagerPresenter.class);
 		} else {
 			throw new UnsupportedOperationException(
 					"Not support page action chain " + pageAction);

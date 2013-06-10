@@ -14,6 +14,39 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
+	private final String title;
+
+	private AccountInformationLayout informationLayout;
+
+	public AccountFormLayoutFactory(String title) {
+		this.title = title;
+	}
+
+	@Override
+	public void attachField(Object propertyId, Field field) {
+		informationLayout.attachField(propertyId, field);
+	}
+
+	protected abstract Layout createTopPanel();
+
+	protected abstract Layout createBottomPanel();
+
+	@Override
+	public Layout getLayout() {
+		AddViewLayout2 accountAddLayout = new AddViewLayout2(title,
+				new ThemeResource("icons/18/account.png"));
+
+		Layout topPanel = createTopPanel();
+		if (topPanel != null) {
+			accountAddLayout.addControlButtons(topPanel);
+		}
+
+		informationLayout = new AccountInformationLayout();
+		accountAddLayout.addBody(informationLayout.getLayout());
+
+		return accountAddLayout;
+	}
 
 	@SuppressWarnings("serial")
 	public static class AccountInformationLayout implements IFormLayoutFactory {
@@ -161,39 +194,5 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			layout.addComponent(descriptionLayout.getLayout());
 			return layout;
 		}
-	}
-
-	private static final long serialVersionUID = 1L;
-	private final String title;
-
-	private AccountInformationLayout informationLayout;
-
-	public AccountFormLayoutFactory(String title) {
-		this.title = title;
-	}
-
-	@Override
-	public void attachField(Object propertyId, Field field) {
-		informationLayout.attachField(propertyId, field);
-	}
-
-	protected abstract Layout createBottomPanel();
-
-	protected abstract Layout createTopPanel();
-
-	@Override
-	public Layout getLayout() {
-		AddViewLayout2 accountAddLayout = new AddViewLayout2(title,
-				new ThemeResource("icons/18/account.png"));
-
-		Layout topPanel = createTopPanel();
-		if (topPanel != null) {
-			accountAddLayout.addControlButtons(topPanel);
-		}
-
-		informationLayout = new AccountInformationLayout();
-		accountAddLayout.addBody(informationLayout.getLayout());
-
-		return accountAddLayout;
 	}
 }

@@ -4,7 +4,7 @@ public class ScreenSize {
 
 	private static int width = 1024;
 	
-	private static int DEVIATION = 50;
+	private static int DEVIATION = 100;
 
 	public static int PIXELS_1024_WIDTH = 1024;
 

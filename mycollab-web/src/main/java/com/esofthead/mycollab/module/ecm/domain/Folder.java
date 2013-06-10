@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Folder extends Resource {
-	private List<Resource> childs = new ArrayList<Resource>();
+	private List<Folder> childs = new ArrayList<Folder>();
 
-	public List<Resource> getChilds() {
+	public List<Folder> getChilds() {
 		return childs;
 	}
 
-	public void setChilds(List<Resource> childs) {
+	public void setChilds(List<Folder> childs) {
 		this.childs = childs;
 	}
-	
-	public void addChild(Resource child) {
+
+	public void addChild(Folder child) {
 		childs.add(child);
 	}
 }

@@ -13,7 +13,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final AdvancedEditBeanForm<T> editForm;
 
-	public EditFormControlsGenerator(AdvancedEditBeanForm<T> editForm) {
+	public EditFormControlsGenerator(final AdvancedEditBeanForm<T> editForm) {
 		this.editForm = editForm;
 	}
 
@@ -21,25 +21,29 @@ public class EditFormControlsGenerator<T> implements Serializable {
 		return this.createButtonControls(true, true, true);
 	}
 
-	public HorizontalLayout createButtonControls(boolean isSaveBtnVisible,
-			boolean isSaveAndNewBtnVisible, boolean isCancelBtnVisible) {
-		HorizontalLayout layout = new HorizontalLayout();
+	public HorizontalLayout createButtonControls(
+			final boolean isSaveBtnVisible,
+			final boolean isSaveAndNewBtnVisible,
+			final boolean isCancelBtnVisible) {
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setMargin(true);
 		layout.setSpacing(true);
 		layout.setStyleName("addNewControl");
 
 		if (isSaveBtnVisible) {
-			Button saveBtn = new Button(GenericForm.SAVE_ACTION,
+			final Button saveBtn = new Button(GenericForm.SAVE_ACTION,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							@SuppressWarnings("unchecked")
-							T item = ((BeanItem<T>) editForm
+							final T item = ((BeanItem<T>) EditFormControlsGenerator.this.editForm
 									.getItemDataSource()).getBean();
-							if (editForm.validateForm(item)) {
-								editForm.fireSaveForm(item);
+							if (EditFormControlsGenerator.this.editForm
+									.validateForm(item)) {
+								EditFormControlsGenerator.this.editForm
+										.fireSaveForm(item);
 							}
 						}
 					});
@@ -49,17 +53,20 @@ public class EditFormControlsGenerator<T> implements Serializable {
 		}
 
 		if (isSaveAndNewBtnVisible) {
-			Button saveAndNewBtn = new Button(GenericForm.SAVE_AND_NEW_ACTION,
+			final Button saveAndNewBtn = new Button(
+					GenericForm.SAVE_AND_NEW_ACTION,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							@SuppressWarnings("unchecked")
-							T item = ((BeanItem<T>) editForm
+							final T item = ((BeanItem<T>) EditFormControlsGenerator.this.editForm
 									.getItemDataSource()).getBean();
-							if (editForm.validateForm(item)) {
-								editForm.fireSaveAndNewForm(item);
+							if (EditFormControlsGenerator.this.editForm
+									.validateForm(item)) {
+								EditFormControlsGenerator.this.editForm
+										.fireSaveAndNewForm(item);
 							}
 						}
 					});
@@ -69,13 +76,14 @@ public class EditFormControlsGenerator<T> implements Serializable {
 		}
 
 		if (isCancelBtnVisible) {
-			Button cancelBtn = new Button(GenericForm.CANCEL_ACTION,
+			final Button cancelBtn = new Button(GenericForm.CANCEL_ACTION,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							editForm.fireCancelForm();
+						public void buttonClick(final ClickEvent event) {
+							EditFormControlsGenerator.this.editForm
+									.fireCancelForm();
 						}
 					});
 			cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

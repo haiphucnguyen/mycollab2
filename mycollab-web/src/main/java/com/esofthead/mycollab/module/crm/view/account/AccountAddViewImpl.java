@@ -14,6 +14,8 @@ import com.vaadin.ui.Layout;
 public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 	private class EditForm extends AdvancedEditBeanForm<Account> {
+
+		
 		class FormLayoutFactory extends AccountFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
@@ -41,8 +43,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 		private static final long serialVersionUID = 1L;
 
-		private boolean isCheckToCopy;
-
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			setFormLayoutFactory(new FormLayoutFactory());
@@ -50,7 +50,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			super.setItemDataSource(newDataSource);
 		}
 	}
-
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
 
@@ -65,9 +64,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	@Override
 	public void editItem(Account account) {
 		this.account = account;
-		if (editForm.isCheckToCopy) {
-			editForm.isCheckToCopy = false;
-		}
 		editForm.setItemDataSource(new BeanItem<Account>(account));
 	}
 
