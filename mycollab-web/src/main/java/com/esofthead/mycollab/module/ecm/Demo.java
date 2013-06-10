@@ -23,19 +23,13 @@ public class Demo {
 				"META-INF/spring/user-context.xml");
 
 		ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
-		jcrDao.removeResource("a/b/c");
-		jcrDao.removeResource("a");
-		jcrDao.removeResource("b");
-		jcrDao.removeResource("c");
 		
 		Folder pageContent = new Folder();
-		pageContent.setPath("a/b/c");
-//		pageContent.setTitle("AAA");
-//		pageContent.setDescription("ccc");
+		pageContent.setPath("/a/b/d");
 
 		jcrDao.createFolder(pageContent);
 
-		Resource content = jcrDao.getResource("a/b");
+		Resource content = jcrDao.getResource("/a/b/d");
 		System.out.println(content);
 		// System.out.println("CONTENT " + content);
 		//

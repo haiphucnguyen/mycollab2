@@ -143,13 +143,13 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 										childNode.getPath());
 							}
 						} else { // add node
-							log.debug("Create new folder {} of sub node ",
+							log.debug("Create new folder {} of sub node {}",
 									pathStr[i], parentNode.getPath());
 							childNode = JcrUtils.getOrAddFolder(parentNode,
 									pathStr[i]);
 							session.save();
 						}
-						
+
 						parentNode = childNode;
 					}
 
@@ -200,18 +200,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 
 				if (node != null) {
 					if (isNodeMyCollabContent(node)) {
-						Content content = new Content();
-						content.setCreated(node.getProperty("jcr:created")
-								.getDate());
-						content.setCreatedBy(node.getProperty("jcr:createdBy")
-								.getString());
-						content.setTitle(node.getProperty("jcr:title")
-								.getString());
-						content.setDescription(node.getProperty(
-								"jcr:description").getString());
-						content.setPath(node.getPath());
-						content.setLastModified(node.getProperty(
-								"jcr:lastModified").getDate());
+						Content content = convertNodeToContent(node);
 						return content;
 					} else if (isNodeFolder(node)) {
 						return convertNodeToFolder(node);
@@ -265,7 +254,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 								Folder subFolder = convertNodeToFolder(node);
 								resources.add(subFolder);
 							} else if (isNodeMyCollabContent(childNode)) {
-
+								Content content = convertNodeToContent(childNode);
+								resources.add(content);
 							} else {
 								String errorString = "Node %s has type not mycollab:content or nt:folder";
 								log.error(String.format(errorString,
@@ -321,12 +311,39 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 		});
 	}
 
+	private static Content convertNodeToContent(Node node) {
+		try {
+			Content content = new Content();
+			content.setCreated(node.getProperty("jcr:created").getDate());
+			content.setCreatedBy(node.getProperty("jcr:createdBy").getString());
+			content.setTitle(node.getProperty("jcr:title").getString());
+			content.setDescription(node.getProperty("jcr:description")
+					.getString());
+			String contentPath = node.getPath();
+			if (contentPath.startsWith("/")) {
+				contentPath = contentPath.substring(1);
+			}
+			content.setPath(contentPath);
+
+			content.setLastModified(node.getProperty("jcr:lastModified")
+					.getDate());
+			return content;
+		} catch (Exception e) {
+			throw new MyCollabException(e);
+		}
+	}
+
 	private static Folder convertNodeToFolder(Node node) {
 		try {
 			Folder folder = new Folder();
 			folder.setCreated(node.getProperty("jcr:created").getDate());
 			folder.setCreatedBy(node.getProperty("jcr:createdBy").getString());
-			folder.setPath(node.getPath());
+
+			String folderPath = node.getPath();
+			if (folderPath.startsWith("/")) {
+				folderPath = folderPath.substring(1);
+			}
+			folder.setPath(folderPath);
 			return folder;
 		} catch (Exception e) {
 			throw new MyCollabException(e);
