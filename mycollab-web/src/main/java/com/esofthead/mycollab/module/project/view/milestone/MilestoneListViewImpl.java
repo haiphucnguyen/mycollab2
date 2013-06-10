@@ -52,6 +52,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 	private final Button createBtn;
 
 	public MilestoneListViewImpl() {
+		this.setMargin(true);
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.addStyleName("milestonelist-header");
@@ -63,7 +64,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		header.addComponent(titleLbl);
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
 
-		createBtn = new Button(
+		this.createBtn = new Button(
 				LocalizationHelper.getMessage(TaskI18nEnum.NEW_PHASE_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -75,9 +76,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 										MilestoneListViewImpl.this, null));
 					}
 				});
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		header.addComponent(createBtn);
-		header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
+		this.createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		header.addComponent(this.createBtn);
+		header.setComponentAlignment(this.createBtn, Alignment.MIDDLE_RIGHT);
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
@@ -99,9 +100,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 
 		bodyContent.addComponent(closedHeaderLayout, "closed-header");
-		closeContainer = new VerticalLayout();
-		closeContainer.setWidth("100%");
-		bodyContent.addComponent(closeContainer, "closed-milestones");
+		this.closeContainer = new VerticalLayout();
+		this.closeContainer.setWidth("100%");
+		bodyContent.addComponent(this.closeContainer, "closed-milestones");
 
 		final HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
 		inProgressHeaderLayout.setSpacing(true);
@@ -117,9 +118,10 @@ public class MilestoneListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 
 		bodyContent.addComponent(inProgressHeaderLayout, "in-progress-header");
-		inProgressContainer = new VerticalLayout();
-		inProgressContainer.setWidth("100%");
-		bodyContent.addComponent(inProgressContainer, "in-progress-milestones");
+		this.inProgressContainer = new VerticalLayout();
+		this.inProgressContainer.setWidth("100%");
+		bodyContent.addComponent(this.inProgressContainer,
+				"in-progress-milestones");
 
 		final HorizontalLayout futureHeaderLayout = new HorizontalLayout();
 		futureHeaderLayout.setSpacing(true);
@@ -135,12 +137,12 @@ public class MilestoneListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 
 		bodyContent.addComponent(futureHeaderLayout, "future-header");
-		futureContainer = new VerticalLayout();
-		futureContainer.setWidth("100%");
-		bodyContent.addComponent(futureContainer, "future-milestones");
+		this.futureContainer = new VerticalLayout();
+		this.futureContainer.setWidth("100%");
+		bodyContent.addComponent(this.futureContainer, "future-milestones");
 
 		this.addComponent(bodyContent);
-		setExpandRatio(bodyContent, 1.0f);
+		this.setExpandRatio(bodyContent, 1.0f);
 	}
 
 	private ComponentContainer constructMilestoneBox(
@@ -235,23 +237,25 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 	@Override
 	public void displayMilestones(final List<SimpleMilestone> milestones) {
-		createBtn.setEnabled(CurrentProjectVariables
+		this.createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
-		inProgressContainer.removeAllComponents();
-		futureContainer.removeAllComponents();
-		closeContainer.removeAllComponents();
+		this.inProgressContainer.removeAllComponents();
+		this.futureContainer.removeAllComponents();
+		this.closeContainer.removeAllComponents();
 
 		for (final SimpleMilestone milestone : milestones) {
 			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
-				inProgressContainer
-						.addComponent(constructMilestoneBox(milestone));
+				this.inProgressContainer.addComponent(this
+						.constructMilestoneBox(milestone));
 			} else if (SimpleMilestone.STATUS_FUTURE.equals(milestone
 					.getStatus())) {
-				futureContainer.addComponent(constructMilestoneBox(milestone));
+				this.futureContainer.addComponent(this
+						.constructMilestoneBox(milestone));
 			} else if (SimpleMilestone.STATUS_CLOSE.equals(milestone
 					.getStatus())) {
-				closeContainer.addComponent(constructMilestoneBox(milestone));
+				this.closeContainer.addComponent(this
+						.constructMilestoneBox(milestone));
 			}
 		}
 

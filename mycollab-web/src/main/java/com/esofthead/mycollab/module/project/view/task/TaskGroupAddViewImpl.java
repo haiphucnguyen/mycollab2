@@ -20,7 +20,9 @@ import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
@@ -34,19 +36,20 @@ import com.vaadin.ui.TextField;
 public class TaskGroupAddViewImpl extends AbstractView implements
 		TaskGroupAddView {
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
+	private final EditForm editForm;
 	private TaskList taskList;
 
 	public TaskGroupAddViewImpl() {
 		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+		this.setMargin(true);
 	}
 
 	@Override
-	public void editItem(TaskList item) {
+	public void editItem(final TaskList item) {
 		this.taskList = item;
-		editForm.setItemDataSource(new BeanItem<TaskList>(taskList));
+		this.editForm.setItemDataSource(new BeanItem<TaskList>(this.taskList));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<TaskList> {
@@ -54,8 +57,8 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
+		public void setItemDataSource(final Item newDataSource,
+				final Collection<?> propertyIds) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource, propertyIds);
@@ -66,23 +69,31 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super((taskList.getName() != null) ? taskList.getName()
-						: "Create Task Group");
+				super(
+						(TaskGroupAddViewImpl.this.taskList.getName() != null) ? TaskGroupAddViewImpl.this.taskList
+								.getName() : "Create Task Group");
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<TaskList>(EditForm.this))
-						.createButtonControls();
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<TaskList>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -91,8 +102,9 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if ("owner".equals(propertyId)) {
 					return new ProjectMemberComboBox();
 				} else if ("milestoneid".equals(propertyId)) {
@@ -102,26 +114,26 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 				}
 
 				if ("name".equals(propertyId)) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");
 					return tf;
 				} else if (propertyId.equals("percentageComplete")) {
-					double percentage = (taskList instanceof SimpleTaskList) ? ((SimpleTaskList) taskList)
+					final double percentage = (TaskGroupAddViewImpl.this.taskList instanceof SimpleTaskList) ? ((SimpleTaskList) TaskGroupAddViewImpl.this.taskList)
 							.getPercentageComplete() : 0;
-					FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-					ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
+					final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+					final ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
 							percentage);
 					fieldContainer.addComponentField(progressField);
 					return fieldContainer;
 				} else if (propertyId.equals("numOpenTasks")) {
-					int openTask = (taskList instanceof SimpleTaskList) ? ((SimpleTaskList) taskList)
+					final int openTask = (TaskGroupAddViewImpl.this.taskList instanceof SimpleTaskList) ? ((SimpleTaskList) TaskGroupAddViewImpl.this.taskList)
 							.getNumOpenTasks() : 0;
-					int allTasks = (taskList instanceof SimpleTaskList) ? ((SimpleTaskList) taskList)
+					final int allTasks = (TaskGroupAddViewImpl.this.taskList instanceof SimpleTaskList) ? ((SimpleTaskList) TaskGroupAddViewImpl.this.taskList)
 							.getNumAllTasks() : 0;
-					FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-					Label numTaskLbl = new Label("(" + openTask + "/"
+					final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+					final Label numTaskLbl = new Label("(" + openTask + "/"
 							+ allTasks + ")");
 					fieldContainer.addComponentField(numTaskLbl);
 					return fieldContainer;
@@ -134,6 +146,6 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 
 	@Override
 	public HasEditFormHandlers<TaskList> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }

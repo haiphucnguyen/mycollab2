@@ -37,7 +37,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
-			setFormLayoutFactory(new IFormLayoutFactory() {
+			this.setFormLayoutFactory(new IFormLayoutFactory() {
 				private static final long serialVersionUID = 1L;
 				private GridFormLayoutHelper informationLayout;
 
@@ -45,30 +45,31 @@ public class ProjectInformationComponent extends VerticalLayout {
 				public void attachField(final Object propertyId,
 						final Field field) {
 					if (propertyId.equals("homepage")) {
-						informationLayout.addComponent(field, "Home Page", 0,
-								0, Alignment.TOP_LEFT);
+						this.informationLayout.addComponent(field, "Home Page",
+								0, 0, Alignment.TOP_LEFT);
 					} else if (propertyId.equals("actualstartdate")) {
-						informationLayout.addComponent(field, "Start Date", 1,
-								0, Alignment.TOP_LEFT);
+						this.informationLayout.addComponent(field,
+								"Start Date", 1, 0, Alignment.TOP_LEFT);
 					} else if (propertyId.equals("description")) {
-						informationLayout.addComponent(field, "Description", 0,
-								1, 2, "100%", Alignment.TOP_LEFT);
+						this.informationLayout.addComponent(field,
+								"Description", 0, 1, 2, "100%",
+								Alignment.TOP_LEFT);
 					}
 				}
 
 				@Override
 				public Layout getLayout() {
-					informationLayout = new GridFormLayoutHelper(2, 3, "100%",
-							"167px", Alignment.MIDDLE_LEFT);
-					informationLayout.getLayout().setWidth("100%");
-					informationLayout.getLayout().setMargin(false);
-					informationLayout.getLayout().addStyleName(
+					this.informationLayout = new GridFormLayoutHelper(2, 3,
+							"100%", "167px", Alignment.MIDDLE_LEFT);
+					this.informationLayout.getLayout().setWidth("100%");
+					this.informationLayout.getLayout().setMargin(false);
+					this.informationLayout.getLayout().addStyleName(
 							"colored-gridlayout");
-					return informationLayout.getLayout();
+					return this.informationLayout.getLayout();
 				}
 			});
 
-			setFormFieldFactory(new DefaultFormViewFieldFactory() {
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -76,13 +77,17 @@ public class ProjectInformationComponent extends VerticalLayout {
 						final Object propertyId, final Component uiContext) {
 					if (propertyId.equals("actualstartdate")) {
 						return new DefaultFormViewFieldFactory.FormViewField(
-								AppContext.formatDate(project
-										.getActualstartdate()));
+								AppContext
+										.formatDate(ProjectInformationComponent.this.project
+												.getActualstartdate()));
 					} else if (propertyId.equals("homepage")) {
-						return new FormUrlLinkViewField(project.getHomepage());
+						return new FormUrlLinkViewField(
+								ProjectInformationComponent.this.project
+										.getHomepage());
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(project.getDescription(),
-								Label.CONTENT_XHTML);
+						return new FormViewField(
+								ProjectInformationComponent.this.project
+										.getDescription(), Label.CONTENT_XHTML);
 					}
 					return null;
 				}
@@ -97,8 +102,8 @@ public class ProjectInformationComponent extends VerticalLayout {
 		private final BasicPreviewForm previewForm;
 
 		public BasicProjectInformation() {
-			previewForm = new BasicPreviewForm();
-			this.addComponent(previewForm);
+			this.previewForm = new BasicPreviewForm();
+			this.addComponent(this.previewForm);
 
 			// final Button moreBtn = new Button("More",
 			// new Button.ClickListener() {
@@ -120,7 +125,8 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 		@Override
 		public void show() {
-			previewForm.setItemDataSource(new BeanItem<SimpleProject>(project));
+			this.previewForm.setItemDataSource(new BeanItem<SimpleProject>(
+					ProjectInformationComponent.this.project));
 		}
 	}
 
@@ -131,34 +137,47 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
-			setFormLayoutFactory(new ProjectFormViewLayoutFactory.ProjectInformationLayout());
-			setFormFieldFactory(new DefaultFormViewFieldFactory() {
+			this.setFormLayoutFactory(new ProjectFormViewLayoutFactory.ProjectInformationLayout());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				protected Field onCreateField(final Item item,
 						final Object propertyId, final Component uiContext) {
 					if (propertyId.equals("planstartdate")) {
-						return new FormViewField(AppContext.formatDate(project
-								.getPlanstartdate()));
+						return new FormViewField(
+								AppContext
+										.formatDate(ProjectInformationComponent.this.project
+												.getPlanstartdate()));
 					} else if (propertyId.equals("planenddate")) {
-						return new FormViewField(AppContext.formatDate(project
-								.getPlanenddate()));
+						return new FormViewField(
+								AppContext
+										.formatDate(ProjectInformationComponent.this.project
+												.getPlanenddate()));
 					} else if (propertyId.equals("actualstartdate")) {
-						return new FormViewField(AppContext.formatDate(project
-								.getActualstartdate()));
+						return new FormViewField(
+								AppContext
+										.formatDate(ProjectInformationComponent.this.project
+												.getActualstartdate()));
 					} else if (propertyId.equals("actualenddate")) {
-						return new FormViewField(AppContext.formatDate(project
-								.getActualenddate()));
+						return new FormViewField(
+								AppContext
+										.formatDate(ProjectInformationComponent.this.project
+												.getActualenddate()));
 					} else if (propertyId.equals("homepage")) {
-						return new FormUrlLinkViewField(project.getHomepage());
+						return new FormUrlLinkViewField(
+								ProjectInformationComponent.this.project
+										.getHomepage());
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(project.getDescription(),
-								Label.CONTENT_XHTML);
+						return new FormViewField(
+								ProjectInformationComponent.this.project
+										.getDescription(), Label.CONTENT_XHTML);
 					} else if (propertyId.equals("currencyid")) {
-						if (project.getCurrency() != null) {
-							return new FormViewField(project.getCurrency()
-									.getName());
+						if (ProjectInformationComponent.this.project
+								.getCurrency() != null) {
+							return new FormViewField(
+									ProjectInformationComponent.this.project
+											.getCurrency().getName());
 						} else {
 							return new FormViewField("");
 						}
@@ -176,13 +195,14 @@ public class ProjectInformationComponent extends VerticalLayout {
 		private final DetailPreviewForm previewForm;
 
 		public DetailProjectInformation() {
-			previewForm = new DetailPreviewForm();
-			this.addComponent(previewForm);
+			this.previewForm = new DetailPreviewForm();
+			this.addComponent(this.previewForm);
 		}
 
 		@Override
 		public void show() {
-			previewForm.setItemDataSource(new BeanItem<SimpleProject>(project));
+			this.previewForm.setItemDataSource(new BeanItem<SimpleProject>(
+					ProjectInformationComponent.this.project));
 		}
 	}
 
@@ -202,16 +222,16 @@ public class ProjectInformationComponent extends VerticalLayout {
 	private final HorizontalLayout projectInfoFooter;
 
 	public ProjectInformationComponent() {
-		setStyleName(UIConstants.PROJECT_INFO);
-		prjDisplay = new BasicProjectInformation();
-		projectInfoHeader = new HorizontalLayout();
-		projectInfoHeader.setWidth("100%");
-		projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
-		this.addComponent(projectInfoHeader);
-		this.addComponent(prjDisplay);
+		this.setStyleName(UIConstants.PROJECT_INFO);
+		this.prjDisplay = new BasicProjectInformation();
+		this.projectInfoHeader = new HorizontalLayout();
+		this.projectInfoHeader.setWidth("100%");
+		this.projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
+		this.addComponent(this.projectInfoHeader);
+		this.addComponent(this.prjDisplay);
 
-		projectInfoFooter = new HorizontalLayout();
-		projectInfoFooter.setStyleName(UIConstants.PROJECT_INFO_FOOTER);
+		this.projectInfoFooter = new HorizontalLayout();
+		this.projectInfoFooter.setStyleName(UIConstants.PROJECT_INFO_FOOTER);
 		final Button toggleBtn = new Button("More");
 		toggleBtn.addListener(new Button.ClickListener() {
 
@@ -220,41 +240,43 @@ public class ProjectInformationComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				final int replaceIndex = ProjectInformationComponent.this
-						.getComponentIndex(prjDisplay);
-				ProjectInformationComponent.this.removeComponent(prjDisplay);
-				if (prjDisplay instanceof BasicProjectInformation) {
-					prjDisplay = new DetailProjectInformation();
+						.getComponentIndex(ProjectInformationComponent.this.prjDisplay);
+				ProjectInformationComponent.this
+						.removeComponent(ProjectInformationComponent.this.prjDisplay);
+				if (ProjectInformationComponent.this.prjDisplay instanceof BasicProjectInformation) {
+					ProjectInformationComponent.this.prjDisplay = new DetailProjectInformation();
 					event.getButton().setCaption("Less");
 				} else {
-					prjDisplay = new BasicProjectInformation();
+					ProjectInformationComponent.this.prjDisplay = new BasicProjectInformation();
 					event.getButton().setCaption("More");
 				}
-				ProjectInformationComponent.this.addComponent(prjDisplay,
+				ProjectInformationComponent.this.addComponent(
+						ProjectInformationComponent.this.prjDisplay,
 						replaceIndex);
-				prjDisplay.show();
+				ProjectInformationComponent.this.prjDisplay.show();
 			}
 		});
 		toggleBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		projectInfoFooter.addComponent(toggleBtn);
-		this.addComponent(projectInfoFooter);
+		this.projectInfoFooter.addComponent(toggleBtn);
+		this.addComponent(this.projectInfoFooter);
 	}
 
 	public void displayProjectInformation() {
-		project = CurrentProjectVariables.getProject();
+		this.project = CurrentProjectVariables.getProject();
 
-		projectInfoHeader.removeAllComponents();
-		final Label projectName = new Label(project.getName());
+		this.projectInfoHeader.removeAllComponents();
+		final Label projectName = new Label(this.project.getName());
 		projectName.setStyleName(UIConstants.PROJECT_NAME);
 		projectName.setSizeUndefined();
-		final Label projectShortname = new Label("(" + project.getShortname()
-				+ ")");
+		final Label projectShortname = new Label("("
+				+ this.project.getShortname() + ")");
 		projectShortname.setStyleName(UIConstants.PROJECT_SHORT_NAME);
-		projectInfoHeader.addComponent(projectName);
-		projectInfoHeader.addComponent(projectShortname);
-		projectInfoHeader.setExpandRatio(projectShortname, 1.0f);
-		projectInfoHeader.setComponentAlignment(projectShortname,
+		this.projectInfoHeader.addComponent(projectName);
+		this.projectInfoHeader.addComponent(projectShortname);
+		this.projectInfoHeader.setExpandRatio(projectShortname, 1.0f);
+		this.projectInfoHeader.setComponentAlignment(projectShortname,
 				Alignment.TOP_LEFT);
 
-		prjDisplay.show();
+		this.prjDisplay.show();
 	}
 }

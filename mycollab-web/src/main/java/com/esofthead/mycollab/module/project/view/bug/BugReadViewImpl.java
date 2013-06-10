@@ -61,43 +61,49 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("summary")) {
-					informationLayout.addComponent(field, "Summary", 0, 0, 2,
-							"100%");
+					this.informationLayout.addComponent(field, "Summary", 0, 0,
+							2, "100%");
 				} else if (propertyId.equals("description")) {
-					informationLayout.addComponent(field, "Description", 0, 1,
-							2, "100%");
+					this.informationLayout.addComponent(field, "Description",
+							0, 1, 2, "100%");
 				} else if (propertyId.equals("status")) {
-					informationLayout.addComponent(field, "Status", 0, 2);
+					this.informationLayout.addComponent(field, "Status", 0, 2);
 				} else if (propertyId.equals("priority")) {
-					informationLayout.addComponent(field, "Priority", 1, 2);
+					this.informationLayout
+							.addComponent(field, "Priority", 1, 2);
 				} else if (propertyId.equals("severity")) {
-					informationLayout.addComponent(field, "Severity", 0, 3);
+					this.informationLayout
+							.addComponent(field, "Severity", 0, 3);
 				} else if (propertyId.equals("resolution")) {
-					informationLayout.addComponent(field, "Resolution", 1, 3);
+					this.informationLayout.addComponent(field, "Resolution", 1,
+							3);
 				} else if (propertyId.equals("duedate")) {
-					informationLayout.addComponent(field, "Due Date", 0, 4, 2,
-							"100%");
+					this.informationLayout.addComponent(field, "Due Date", 0,
+							4, 2, "100%");
 				} else if (propertyId.equals("createdTime")) {
-					informationLayout.addComponent(field, "Created Time", 1, 4);
+					this.informationLayout.addComponent(field, "Created Time",
+							1, 4);
 				} else if (propertyId.equals("loguserFullName")) {
-					informationLayout.addComponent(field, "Logged by", 0, 5);
+					this.informationLayout.addComponent(field, "Logged by", 0,
+							5);
 				} else if (propertyId.equals("assignuserFullName")) {
-					informationLayout.addComponent(field, "Assigned to", 1, 5);
+					this.informationLayout.addComponent(field, "Assigned to",
+							1, 5);
 				} else if (propertyId.equals("milestoneName")) {
-					informationLayout.addComponent(field, "Phase", 0, 6, 2,
-							"100%");
+					this.informationLayout.addComponent(field, "Phase", 0, 6,
+							2, "100%");
 				} else if (propertyId.equals("components")) {
-					informationLayout.addComponent(field, "Components", 0, 7,
-							2, "100%");
+					this.informationLayout.addComponent(field, "Components", 0,
+							7, 2, "100%");
 				} else if (propertyId.equals("affectedVersions")) {
-					informationLayout.addComponent(field, "Affected Versions",
-							0, 8, 2, "100%");
+					this.informationLayout.addComponent(field,
+							"Affected Versions", 0, 8, 2, "100%");
 				} else if (propertyId.equals("fixedVersions")) {
-					informationLayout.addComponent(field, "Fixed Versions", 0,
-							9, 2, "100%");
+					this.informationLayout.addComponent(field,
+							"Fixed Versions", 0, 9, 2, "100%");
 				} else if (propertyId.equals("id")) {
-					informationLayout.addComponent(field, "Attachments", 0, 10,
-							2, "100%");
+					this.informationLayout.addComponent(field, "Attachments",
+							0, 10, 2, "100%");
 				}
 			}
 
@@ -107,37 +113,46 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				// tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				final CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true,
+						CommentTypeConstants.PRJ_BUG,
+						BugReadViewImpl.this.bug.getId(), true, true,
 						BugNotificationService.class);
 				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");
 
-				historyList = new BugHistoryList(bug.getId());
-				historyList.setMargin(true);
-				tabBugDetail.addTab(historyList, "History");
+				BugPreviewForm.this.historyList = new BugHistoryList(
+						BugReadViewImpl.this.bug.getId());
+				BugPreviewForm.this.historyList.setMargin(true);
+				tabBugDetail.addTab(BugPreviewForm.this.historyList, "History");
 
-				bugRelatedField = new BugRelatedField(bug);
-				tabBugDetail.addTab(bugRelatedField, "Related Bugs");
+				BugPreviewForm.this.bugRelatedField = new BugRelatedField(
+						BugReadViewImpl.this.bug);
+				tabBugDetail.addTab(BugPreviewForm.this.bugRelatedField,
+						"Related Bugs");
 
-				bugFollowersList = new BugFollowersSheet(bug);
-				tabBugDetail.addTab(bugFollowersList, "Followers");
+				BugPreviewForm.this.bugFollowersList = new BugFollowersSheet(
+						BugReadViewImpl.this.bug);
+				tabBugDetail.addTab(BugPreviewForm.this.bugFollowersList,
+						"Followers");
 
-				bugTimeLogList = new BugTimeLogSheet(bug);
-				tabBugDetail.addTab(bugTimeLogList, "Time");
+				BugPreviewForm.this.bugTimeLogList = new BugTimeLogSheet(
+						BugReadViewImpl.this.bug);
+				tabBugDetail.addTab(BugPreviewForm.this.bugTimeLogList, "Time");
 				return tabBugDetail;
 			}
 
 			@Override
 			public Layout getLayout() {
 				final AddViewLayout bugAddLayout = new AddViewLayout("[Issue "
-						+ bug.getBugkey() + "#]: " + bug.getSummary(),
+						+ BugReadViewImpl.this.bug.getBugkey() + "#]: "
+						+ BugReadViewImpl.this.bug.getSummary(),
 						new ThemeResource("icons/48/project/bug.png"));
 
-				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+				if (BugStatusConstants.CLOSE.equals(BugReadViewImpl.this.bug
+						.getStatus())) {
 					bugAddLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
-				} else if (bug.getDuedate() != null
-						&& (bug.getDuedate().before(new GregorianCalendar()
-								.getTime()))) {
+				} else if (BugReadViewImpl.this.bug.getDuedate() != null
+						&& (BugReadViewImpl.this.bug.getDuedate()
+								.before(new GregorianCalendar().getTime()))) {
 					bugAddLayout.addTitleStyleName(UIConstants.LINK_OVERDUE);
 				}
 
@@ -199,7 +214,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 										.addWindow(
 												new AssignBugWindow(
 														BugReadViewImpl.this,
-														bug));
+														BugReadViewImpl.this.bug));
 							}
 						});
 				assignBtn.setEnabled(CurrentProjectVariables
@@ -217,7 +232,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							public void buttonClick(final ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new BugEvent.GotoEdit(
-												BugReadViewImpl.this, bug));
+												BugReadViewImpl.this,
+												BugReadViewImpl.this.bug));
 							}
 						});
 				editBtn.setEnabled(CurrentProjectVariables
@@ -256,15 +272,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 												if (dialog.isConfirmed()) {
 													final BugService bugService = AppContext
 															.getSpringBean(BugService.class);
-													bugService.removeWithSession(
-															bug.getId(),
-															AppContext
-																	.getUsername());
+													bugService
+															.removeWithSession(
+																	BugReadViewImpl.this.bug
+																			.getId(),
+																	AppContext
+																			.getUsername());
 													EventBus.getInstance()
 															.fireEvent(
 																	new BugEvent.GotoList(
 																			BugReadViewImpl.this,
-																			bug));
+																			BugReadViewImpl.this.bug));
 												}
 											}
 										});
@@ -283,23 +301,25 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						Alignment.MIDDLE_CENTER);
 				topPanel.setExpandRatio(buttonControls, 1);
 
-				bugWorkflowControl = new HorizontalLayout();
-				bugWorkflowControl.setMargin(false);
-				bugWorkflowControl.addStyleName("workflow-controls");
-				topPanel.addComponent(bugWorkflowControl);
-				topPanel.setComponentAlignment(bugWorkflowControl,
+				BugReadViewImpl.this.bugWorkflowControl = new HorizontalLayout();
+				BugReadViewImpl.this.bugWorkflowControl.setMargin(false);
+				BugReadViewImpl.this.bugWorkflowControl
+						.addStyleName("workflow-controls");
+				topPanel.addComponent(BugReadViewImpl.this.bugWorkflowControl);
+				topPanel.setComponentAlignment(
+						BugReadViewImpl.this.bugWorkflowControl,
 						Alignment.MIDDLE_RIGHT);
 
 				bugAddLayout.addTopControls(topPanel);
 
-				informationLayout = new GridFormLayoutHelper(2, 11);
-				informationLayout.getLayout()
-						.addStyleName("colored-gridlayout");
-				informationLayout.getLayout().setMargin(false);
-				informationLayout.getLayout().setWidth("100%");
-				bugAddLayout.addBody(informationLayout.getLayout());
+				this.informationLayout = new GridFormLayoutHelper(2, 11);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().setWidth("100%");
+				bugAddLayout.addBody(this.informationLayout.getLayout());
 
-				bugAddLayout.addBottomControls(createBottomLayout());
+				bugAddLayout.addBottomControls(this.createBottomLayout());
 				return bugAddLayout;
 			}
 		}
@@ -314,20 +334,25 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					final Object propertyId,
 					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("duedate")) {
-					return new FormDateViewField(bug.getDuedate());
+					return new FormDateViewField(
+							BugReadViewImpl.this.bug.getDuedate());
 				} else if (propertyId.equals("assignuserFullName")) {
-					return new ProjectUserFormLinkField(bug.getAssignuser(),
-							bug.getAssignuserFullName());
+					return new ProjectUserFormLinkField(
+							BugReadViewImpl.this.bug.getAssignuser(),
+							BugReadViewImpl.this.bug.getAssignuserFullName());
 				} else if (propertyId.equals("loguserFullName")) {
-					return new ProjectUserFormLinkField(bug.getLogby(),
-							bug.getLoguserFullName());
+					return new ProjectUserFormLinkField(
+							BugReadViewImpl.this.bug.getLogby(),
+							BugReadViewImpl.this.bug.getLoguserFullName());
 				} else if (propertyId.equals("id")) {
 					return new FormAttachmentDisplayField(
-							AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
+							AttachmentConstants.PROJECT_BUG_TYPE,
+							BugReadViewImpl.this.bug.getId());
 				} else if (propertyId.equals("components")) {
-					if (bug.getComponents() != null) {
+					if (BugReadViewImpl.this.bug.getComponents() != null) {
 						final FormContainerViewField componentContainer = new FormContainerViewField();
-						for (final Component component : bug.getComponents()) {
+						for (final Component component : BugReadViewImpl.this.bug
+								.getComponents()) {
 							final Button componentLink = new Button(
 									component.getComponentname(),
 									new Button.ClickListener() {
@@ -353,7 +378,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					}
 				} else if (propertyId.equals("affectedVersions")) {
 					final FormContainerViewField componentContainer = new FormContainerViewField();
-					for (final Version version : bug.getAffectedVersions()) {
+					for (final Version version : BugReadViewImpl.this.bug
+							.getAffectedVersions()) {
 						final Button versionLink = new Button(
 								version.getVersionname(),
 								new Button.ClickListener() {
@@ -374,7 +400,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					return componentContainer;
 				} else if (propertyId.equals("fixedVersions")) {
 					final FormContainerViewField componentContainer = new FormContainerViewField();
-					for (final Version version : bug.getFixedVersions()) {
+					for (final Version version : BugReadViewImpl.this.bug
+							.getFixedVersions()) {
 						final Button versionLink = new Button(
 								version.getVersionname(),
 								new Button.ClickListener() {
@@ -394,19 +421,21 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					}
 					return componentContainer;
 				} else if (propertyId.equals("milestoneName")) {
-					if (bug.getMilestoneid() != null) {
+					if (BugReadViewImpl.this.bug.getMilestoneid() != null) {
 						final FormLinkViewField componentContainer = new FormLinkViewField(
-								bug.getMilestoneName(),
+								BugReadViewImpl.this.bug.getMilestoneName(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
 									public void buttonClick(
 											final ClickEvent event) {
-										EventBus.getInstance().fireEvent(
-												new MilestoneEvent.GotoRead(
-														BugReadViewImpl.this,
-														bug.getMilestoneid()));
+										EventBus.getInstance()
+												.fireEvent(
+														new MilestoneEvent.GotoRead(
+																BugReadViewImpl.this,
+																BugReadViewImpl.this.bug
+																		.getMilestoneid()));
 									}
 								});
 						return componentContainer;
@@ -416,17 +445,22 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 				} else if (propertyId.equals("environment")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							bug.getEnvironment(), Label.CONTENT_XHTML);
+							BugReadViewImpl.this.bug.getEnvironment(),
+							Label.CONTENT_XHTML);
 				} else if (propertyId.equals("description")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							bug.getDescription(), Label.CONTENT_XHTML);
+							BugReadViewImpl.this.bug.getDescription(),
+							Label.CONTENT_XHTML);
 				} else if (propertyId.equals("priority")) {
-					if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
+					if (StringUtil.isNotNullOrEmpty(BugReadViewImpl.this.bug
+							.getPriority())) {
 						final ThemeResource iconPriority = BugPriorityComboBox
-								.getIconResourceByPriority(bug.getPriority());
+								.getIconResourceByPriority(BugReadViewImpl.this.bug
+										.getPriority());
 						final Embedded iconEmbedded = new Embedded(null,
 								iconPriority);
-						final Label lbPriority = new Label(bug.getPriority());
+						final Label lbPriority = new Label(
+								BugReadViewImpl.this.bug.getPriority());
 
 						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
@@ -435,12 +469,15 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						return containerField;
 					}
 				} else if (propertyId.equals("severity")) {
-					if (StringUtil.isNotNullOrEmpty(bug.getSeverity())) {
+					if (StringUtil.isNotNullOrEmpty(BugReadViewImpl.this.bug
+							.getSeverity())) {
 						final ThemeResource iconPriority = BugSeverityComboBox
-								.getIconResourceBySeverity(bug.getSeverity());
+								.getIconResourceBySeverity(BugReadViewImpl.this.bug
+										.getSeverity());
 						final Embedded iconEmbedded = new Embedded(null,
 								iconPriority);
-						final Label lbPriority = new Label(bug.getSeverity());
+						final Label lbPriority = new Label(
+								BugReadViewImpl.this.bug.getSeverity());
 
 						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
@@ -463,10 +500,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
-			setFormLayoutFactory(new FormLayoutFactory());
-			setFormFieldFactory(new PreviewFormFieldFactory());
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new PreviewFormFieldFactory());
 			super.setItemDataSource(newDataSource);
-			displayWorkflowControl();
+			BugReadViewImpl.this.displayWorkflowControl();
 		}
 	}
 
@@ -479,14 +516,15 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 	public BugReadViewImpl() {
 		super();
 
-		previewForm = new BugPreviewForm();
-		this.addComponent(previewForm);
+		this.previewForm = new BugPreviewForm();
+		this.addComponent(this.previewForm);
+		this.setMargin(true);
 	}
 
 	private void displayWorkflowControl() {
-		if (BugStatusConstants.OPEN.equals(bug.getStatus())
-				|| BugStatusConstants.REOPENNED.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
+		if (BugStatusConstants.OPEN.equals(this.bug.getStatus())
+				|| BugStatusConstants.REOPENNED.equals(this.bug.getStatus())) {
+			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Start Progress",
 					new Button.ClickListener() {
@@ -494,12 +532,14 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							bug.setStatus(BugStatusConstants.INPROGRESS);
+							BugReadViewImpl.this.bug
+									.setStatus(BugStatusConstants.INPROGRESS);
 							final BugService bugService = AppContext
 									.getSpringBean(BugService.class);
-							bugService.updateWithSession(bug,
+							bugService.updateWithSession(
+									BugReadViewImpl.this.bug,
 									AppContext.getUsername());
-							displayWorkflowControl();
+							BugReadViewImpl.this.displayWorkflowControl();
 						}
 					}));
 			navButton.addButton(new Button("Resolved",
@@ -513,7 +553,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 									.getMainWindow()
 									.addWindow(
 											new ResolvedInputWindow(
-													BugReadViewImpl.this, bug));
+													BugReadViewImpl.this,
+													BugReadViewImpl.this.bug));
 						}
 					}));
 
@@ -528,12 +569,13 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 									.getMainWindow()
 									.addWindow(
 											new WontFixExplainWindow(
-													BugReadViewImpl.this, bug));
+													BugReadViewImpl.this,
+													BugReadViewImpl.this.bug));
 						}
 					}));
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.INPROGRESS.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
+			this.bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.INPROGRESS.equals(this.bug.getStatus())) {
+			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Stop Progress",
 					new Button.ClickListener() {
@@ -541,12 +583,14 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							bug.setStatus(BugStatusConstants.OPEN);
+							BugReadViewImpl.this.bug
+									.setStatus(BugStatusConstants.OPEN);
 							final BugService bugService = AppContext
 									.getSpringBean(BugService.class);
-							bugService.updateWithSession(bug,
+							bugService.updateWithSession(
+									BugReadViewImpl.this.bug,
 									AppContext.getUsername());
-							displayWorkflowControl();
+							BugReadViewImpl.this.displayWorkflowControl();
 						}
 					}));
 			navButton.addButton(new Button("Resolved",
@@ -560,12 +604,13 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 									.getMainWindow()
 									.addWindow(
 											new ResolvedInputWindow(
-													BugReadViewImpl.this, bug));
+													BugReadViewImpl.this,
+													BugReadViewImpl.this.bug));
 						}
 					}));
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
+			this.bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.CLOSE.equals(this.bug.getStatus())) {
+			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			final Button reopenBtn = new Button("Reopen",
 					new Button.ClickListener() {
@@ -578,15 +623,16 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 									.getMainWindow()
 									.addWindow(
 											new ReOpenWindow(
-													BugReadViewImpl.this, bug));
+													BugReadViewImpl.this,
+													BugReadViewImpl.this.bug));
 						}
 					});
 			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			navButton.addButton(reopenBtn);
 
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.TESTPENDING.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
+			this.bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.TESTPENDING.equals(this.bug.getStatus())) {
+			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Reopen",
 					new Button.ClickListener() {
@@ -599,7 +645,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 									.getMainWindow()
 									.addWindow(
 											new ReOpenWindow(
-													BugReadViewImpl.this, bug));
+													BugReadViewImpl.this,
+													BugReadViewImpl.this.bug));
 						}
 					}));
 			navButton.addButton(new Button("Approve & Close",
@@ -613,12 +660,13 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 									.getMainWindow()
 									.addWindow(
 											new ApproveInputWindow(
-													BugReadViewImpl.this, bug));
+													BugReadViewImpl.this,
+													BugReadViewImpl.this.bug));
 						}
 					}));
-			bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.WONFIX.equals(bug.getStatus())) {
-			bugWorkflowControl.removeAllComponents();
+			this.bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.WONFIX.equals(this.bug.getStatus())) {
+			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			final Button reopenBtn = new Button("Reopen",
 					new Button.ClickListener() {
@@ -631,32 +679,33 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 									.getMainWindow()
 									.addWindow(
 											new ReOpenWindow(
-													BugReadViewImpl.this, bug));
+													BugReadViewImpl.this,
+													BugReadViewImpl.this.bug));
 						}
 					});
 			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			navButton.addButton(reopenBtn);
 
-			bugWorkflowControl.addComponent(navButton);
+			this.bugWorkflowControl.addComponent(navButton);
 		}
-		bugWorkflowControl.setEnabled(CurrentProjectVariables
+		this.bugWorkflowControl.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 	}
 
 	@Override
 	public SimpleBug getItem() {
-		return bug;
+		return this.bug;
 	}
 
 	@Override
 	public void previewItem(final SimpleBug item) {
-		bug = item;
-		previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		this.bug = item;
+		this.previewForm.setItemDataSource(new BeanItem<SimpleBug>(this.bug));
 	}
 
 	@Override
 	public void refreshBugItem() {
 		EventBus.getInstance().fireEvent(
-				new BugEvent.GotoRead(BugReadViewImpl.this, bug.getId()));
+				new BugEvent.GotoRead(BugReadViewImpl.this, this.bug.getId()));
 	}
 }

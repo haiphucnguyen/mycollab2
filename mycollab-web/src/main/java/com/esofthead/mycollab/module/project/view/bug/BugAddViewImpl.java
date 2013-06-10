@@ -5,7 +5,6 @@ import java.util.List;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberMultiSelectField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -20,7 +19,9 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -37,39 +38,39 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 	private ComponentMultiSelectField componentSelect;
 	private VersionMultiSelectField affectedVersionSelect;
 	private VersionMultiSelectField fixedVersionSelect;
-	private ProjectMemberMultiSelectField projectMemberSelect;
 
 	public BugAddViewImpl() {
 		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+		this.setMargin(true);
 	}
 
 	@Override
-	public void editItem(SimpleBug item) {
+	public void editItem(final SimpleBug item) {
 		this.bug = item;
-		editForm.setItemDataSource(new BeanItem<BugWithBLOBs>(item));
+		this.editForm.setItemDataSource(new BeanItem<BugWithBLOBs>(item));
 
 	}
 
 	@Override
 	public AttachmentUploadField getAttachUploadField() {
-		return attachmentUploadField;
+		return this.attachmentUploadField;
 	}
 
 	@Override
 	public List<Component> getComponents() {
-		return componentSelect.getSelectedItems();
+		return this.componentSelect.getSelectedItems();
 	}
 
 	@Override
 	public List<Version> getAffectedVersions() {
-		return affectedVersionSelect.getSelectedItems();
+		return this.affectedVersionSelect.getSelectedItems();
 	}
 
 	@Override
 	public List<Version> getFixedVersion() {
-		return fixedVersionSelect.getSelectedItems();
+		return this.fixedVersionSelect.getSelectedItems();
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
@@ -77,7 +78,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -88,22 +89,30 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super((bug.getId() == null) ? "Create Bug" : bug.getSummary());
+				super((BugAddViewImpl.this.bug.getId() == null) ? "Create Bug"
+						: BugAddViewImpl.this.bug.getSummary());
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<SimpleBug>(EditForm.this))
-						.createButtonControls();
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<SimpleBug>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -112,62 +121,75 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 
 				if (propertyId.equals("environment")) {
-					RichTextArea field = new RichTextArea("", "");
+					final RichTextArea field = new RichTextArea("", "");
 					field.setNullRepresentation("");
 					return field;
 				} else if (propertyId.equals("description")) {
-					RichTextArea field = new RichTextArea("", "");
+					final RichTextArea field = new RichTextArea("", "");
 					field.setNullRepresentation("");
 					return field;
 				} else if (propertyId.equals("priority")) {
-					if (bug.getPriority() == null) {
-						bug.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
+					if (BugAddViewImpl.this.bug.getPriority() == null) {
+						BugAddViewImpl.this.bug
+								.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
 					}
 					return new BugPriorityComboBox();
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("id")) {
-					attachmentUploadField = new FormAttachmentUploadField();
-					if (bug.getId() != null) {
-						attachmentUploadField.getAttachments(
-								AttachmentConstants.PROJECT_BUG_TYPE,
-								bug.getId());
+					BugAddViewImpl.this.attachmentUploadField = new FormAttachmentUploadField();
+					if (BugAddViewImpl.this.bug.getId() != null) {
+						BugAddViewImpl.this.attachmentUploadField
+								.getAttachments(
+										AttachmentConstants.PROJECT_BUG_TYPE,
+										BugAddViewImpl.this.bug.getId());
 					}
-					return attachmentUploadField;
+					return BugAddViewImpl.this.attachmentUploadField;
 				} else if (propertyId.equals("severity")) {
-					if (bug.getSeverity() == null) {
-						bug.setSeverity(BugSeverityConstants.MAJOR);
+					if (BugAddViewImpl.this.bug.getSeverity() == null) {
+						BugAddViewImpl.this.bug
+								.setSeverity(BugSeverityConstants.MAJOR);
 					}
 					return new BugSeverityComboBox();
 				} else if (propertyId.equals("components")) {
-					componentSelect = new ComponentMultiSelectField();
-					if (bug.getComponents() != null
-							&& bug.getComponents().size() > 0) {
-						componentSelect.setSelectedItems(bug.getComponents());
+					BugAddViewImpl.this.componentSelect = new ComponentMultiSelectField(
+							"100%");
+					if (BugAddViewImpl.this.bug.getComponents() != null
+							&& BugAddViewImpl.this.bug.getComponents().size() > 0) {
+						BugAddViewImpl.this.componentSelect
+								.setSelectedItems(BugAddViewImpl.this.bug
+										.getComponents());
 					}
-					return componentSelect;
+					return BugAddViewImpl.this.componentSelect;
 				} else if (propertyId.equals("affectedVersions")) {
-					affectedVersionSelect = new VersionMultiSelectField();
-					if (bug.getAffectedVersions() != null
-							&& bug.getAffectedVersions().size() > 0) {
-						affectedVersionSelect.setSelectedItems(bug
-								.getAffectedVersions());
+					BugAddViewImpl.this.affectedVersionSelect = new VersionMultiSelectField(
+							"100%");
+					if (BugAddViewImpl.this.bug.getAffectedVersions() != null
+							&& BugAddViewImpl.this.bug.getAffectedVersions()
+									.size() > 0) {
+						BugAddViewImpl.this.affectedVersionSelect
+								.setSelectedItems(BugAddViewImpl.this.bug
+										.getAffectedVersions());
 					}
-					return affectedVersionSelect;
+					return BugAddViewImpl.this.affectedVersionSelect;
 				} else if (propertyId.equals("fixedVersions")) {
-					fixedVersionSelect = new VersionMultiSelectField();
-					if (bug.getFixedVersions() != null
-							&& bug.getFixedVersions().size() > 0) {
-						fixedVersionSelect.setSelectedItems(bug
-								.getFixedVersions());
+					BugAddViewImpl.this.fixedVersionSelect = new VersionMultiSelectField(
+							"100%");
+					if (BugAddViewImpl.this.bug.getFixedVersions() != null
+							&& BugAddViewImpl.this.bug.getFixedVersions()
+									.size() > 0) {
+						BugAddViewImpl.this.fixedVersionSelect
+								.setSelectedItems(BugAddViewImpl.this.bug
+										.getFixedVersions());
 					}
-					return fixedVersionSelect;
+					return BugAddViewImpl.this.fixedVersionSelect;
 				} else if (propertyId.equals("summary")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Summary");
@@ -188,11 +210,12 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected void setValue(Object newValue, boolean repaintIsNotNeeded) {
+		protected void setValue(final Object newValue,
+				final boolean repaintIsNotNeeded) {
 			try {
-				double d = Double.parseDouble((String) newValue);
+				final double d = Double.parseDouble((String) newValue);
 				super.setValue(d, repaintIsNotNeeded);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				super.setValue(0, repaintIsNotNeeded);
 			}
 		}
@@ -200,6 +223,6 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 
 	@Override
 	public HasEditFormHandlers<SimpleBug> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }

@@ -34,157 +34,166 @@ public abstract class MultiSelectComp extends CustomField {
 
 	public MultiSelectComp() {
 		this.setWidth("100%");
-		HorizontalLayout content = new HorizontalLayout();
+		final HorizontalLayout content = new HorizontalLayout();
 		content.setSpacing(false);
 
-		componentsDisplay = new TextField();
-		componentsDisplay.setNullRepresentation("");
-		componentsDisplay.setReadOnly(true);
-		componentsDisplay.addStyleName("noBorderRight");
-		componentsDisplay.setWidth("195px");
+		this.componentsDisplay = new TextField();
+		this.componentsDisplay.setNullRepresentation("");
+		this.componentsDisplay.setReadOnly(true);
+		this.componentsDisplay.addStyleName("noBorderRight");
+		this.componentsDisplay.setWidth("195px");
 
-		componentPopupSelection = new MultipleItemsPopupSelection();
-		componentPopupSelection.addListener(new Button.ClickListener() {
+		this.componentPopupSelection = new MultipleItemsPopupSelection();
+		this.componentPopupSelection.addListener(new Button.ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event) {
-				initData();
-				createItemPopup();
-				setSelectedComponentsDisplay();
-				isClicked = true;
+			public void buttonClick(final ClickEvent event) {
+				MultiSelectComp.this.initData();
+				MultiSelectComp.this.createItemPopup();
+				MultiSelectComp.this.setSelectedComponentsDisplay();
+				MultiSelectComp.this.isClicked = true;
 			}
 		});
 
-		content.addComponent(componentsDisplay);
-		content.setComponentAlignment(componentsDisplay,
+		content.addComponent(this.componentsDisplay);
+		content.setComponentAlignment(this.componentsDisplay,
 				Alignment.TOP_RIGHT);
 
-		componentPopupSelection.addStyleName("nonPopupIndicator");
-		componentPopupSelection.addStyleName(UIConstants.SELECT_BG);
-		componentPopupSelection.setWidth("23px");
-		content.addComponent(componentPopupSelection);
-		content.setComponentAlignment(componentPopupSelection,
+		this.componentPopupSelection.addStyleName("nonPopupIndicator");
+		this.componentPopupSelection.addStyleName(UIConstants.SELECT_BG);
+		this.componentPopupSelection.setWidth("23px");
+		content.addComponent(this.componentPopupSelection);
+		content.setComponentAlignment(this.componentPopupSelection,
 				Alignment.TOP_LEFT);
 
 		content.setWidth("100%");
-		//content.setExpandRatio(componentsDisplay, 1.0f);
+		content.setExpandRatio(this.componentsDisplay, 1.0f);
 
 		this.setCompositionRoot(content);
 	}
 
-	public MultiSelectComp(String displayName, String width) {
+	public MultiSelectComp(final String displayName, final String width) {
 		this(displayName);
-		componentsDisplay.setWidth(width);
+		this.componentsDisplay.setWidth(width);
 	}
 
-	public MultiSelectComp(String displayName) {
+	public MultiSelectComp(final String displayName) {
 		this();
 		this.displayName = displayName;
 	}
 
 	public void resetComp() {
-		for (int i = 0; i < selectedItemsList.size(); i++) {
-			selectedItemsList.remove(i);
+		for (int i = 0; i < this.selectedItemsList.size(); i++) {
+			this.selectedItemsList.remove(i);
 		}
 
-		componentsDisplay.setReadOnly(false);
-		componentsDisplay.setValue("");
-		componentsDisplay.setReadOnly(true);
+		this.componentsDisplay.setReadOnly(false);
+		this.componentsDisplay.setValue("");
+		this.componentsDisplay.setReadOnly(true);
 
-		for (CheckBox chk : componentPoupMap.values()) {
+		for (final CheckBox chk : this.componentPoupMap.values()) {
 			chk.setValue(false);
 		}
 	}
 
 	protected void createItemPopup() {
-		for (int i = 0; i < dataList.size(); i++) {
+		for (int i = 0; i < this.dataList.size(); i++) {
 
-			Object itemComp = dataList.get(i);
+			final Object itemComp = this.dataList.get(i);
 			String itemName = "";
-			if (displayName != "") {
+			if (this.displayName != "") {
 				try {
 					itemName = (String) PropertyUtils.getProperty(itemComp,
-							displayName);
-				} catch (Exception e) {
+							this.displayName);
+				} catch (final Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				itemName = (String) dataList.get(i);
+				itemName = (String) this.dataList.get(i);
 			}
 			final CheckBox chkItem = new CheckBox(itemName);
 			chkItem.setImmediate(true);
 			chkItem.addListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					Boolean value = (Boolean) chkItem.getValue();
+						final com.vaadin.data.Property.ValueChangeEvent event) {
+					final Boolean value = (Boolean) chkItem.getValue();
 					String objDisplayName = "";
-					if (displayName != "") {
-						Object itemObj = getElementInDataListByName(chkItem
-								.getCaption());
+					if (MultiSelectComp.this.displayName != "") {
+						final Object itemObj = MultiSelectComp.this
+								.getElementInDataListByName(chkItem
+										.getCaption());
 						try {
 							objDisplayName = (String) PropertyUtils
-									.getProperty(itemObj, displayName);
-						} catch (Exception e) {
+									.getProperty(itemObj,
+											MultiSelectComp.this.displayName);
+						} catch (final Exception e) {
 							e.printStackTrace();
 						}
 						if (itemObj != null) {
-							if (isClicked) {
-								removeElementSelectedListByName(objDisplayName);
+							if (MultiSelectComp.this.isClicked) {
+								MultiSelectComp.this
+										.removeElementSelectedListByName(objDisplayName);
 								if (value) {
-									if (!selectedItemsList.contains(itemObj)) {
-										selectedItemsList.add(itemObj);
+									if (!MultiSelectComp.this.selectedItemsList
+											.contains(itemObj)) {
+										MultiSelectComp.this.selectedItemsList
+												.add(itemObj);
 									}
 								}
-								setSelectedItems(selectedItemsList);
+								MultiSelectComp.this
+										.setSelectedItems(MultiSelectComp.this.selectedItemsList);
 							}
 						}
 					} else {
-						if (isClicked) {
+						if (MultiSelectComp.this.isClicked) {
 							if (value) {
-								if (!selectedItemsList.contains(chkItem
-										.getCaption())) {
-									selectedItemsList.add(chkItem.getCaption());
+								if (!MultiSelectComp.this.selectedItemsList
+										.contains(chkItem.getCaption())) {
+									MultiSelectComp.this.selectedItemsList
+											.add(chkItem.getCaption());
 								}
 							} else {
-								selectedItemsList.remove(chkItem.getCaption());
+								MultiSelectComp.this.selectedItemsList
+										.remove(chkItem.getCaption());
 							}
-							setSelectedItems(selectedItemsList);
+							MultiSelectComp.this
+									.setSelectedItems(MultiSelectComp.this.selectedItemsList);
 						}
 					}
 				}
 			});
-			if (!componentPoupMap.containsKey(chkItem.getCaption())) {
-				componentPoupMap.put(chkItem.getCaption(), chkItem);
-				addItemToComponent(chkItem);
+			if (!this.componentPoupMap.containsKey(chkItem.getCaption())) {
+				this.componentPoupMap.put(chkItem.getCaption(), chkItem);
+				this.addItemToComponent(chkItem);
 			}
 		}
 	}
 
-	protected void removeElementSelectedListByName(String name) {
+	protected void removeElementSelectedListByName(final String name) {
 
-		for (int i = 0; i < selectedItemsList.size(); i++) {
-			Object item = selectedItemsList.get(i);
+		for (int i = 0; i < this.selectedItemsList.size(); i++) {
+			final Object item = this.selectedItemsList.get(i);
 			String itemName = "";
 			try {
-				itemName = (String) PropertyUtils
-						.getProperty(item, displayName);
-			} catch (Exception e) {
+				itemName = (String) PropertyUtils.getProperty(item,
+						this.displayName);
+			} catch (final Exception e) {
 				e.printStackTrace();
 			}
 			if (itemName.equals(name)) {
-				selectedItemsList.remove(i);
+				this.selectedItemsList.remove(i);
 				return;
 			}
 		}
 	}
 
-	public Object getElementInDataListByName(String name) {
-		for (Object item : dataList) {
+	public Object getElementInDataListByName(final String name) {
+		for (final Object item : this.dataList) {
 			String itemName = "";
 			try {
-				itemName = (String) PropertyUtils
-						.getProperty(item, displayName);
-			} catch (Exception e) {
+				itemName = (String) PropertyUtils.getProperty(item,
+						this.displayName);
+			} catch (final Exception e) {
 				e.printStackTrace();
 			}
 			if (itemName.equals(name)) {
@@ -195,64 +204,64 @@ public abstract class MultiSelectComp extends CustomField {
 	}
 
 	protected void setSelectedComponentsDisplay() {
-		for (int i = 0; i < selectedItemsList.size(); i++) {
-			Object itemObj = selectedItemsList.get(i);
+		for (int i = 0; i < this.selectedItemsList.size(); i++) {
+			final Object itemObj = this.selectedItemsList.get(i);
 
 			String objDisplayName = "";
-			if (displayName != "") {
+			if (this.displayName != "") {
 				try {
 					objDisplayName = (String) PropertyUtils.getProperty(
-							itemObj, displayName);
-				} catch (Exception e) {
+							itemObj, this.displayName);
+				} catch (final Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				objDisplayName = (String) selectedItemsList.get(i);
+				objDisplayName = (String) this.selectedItemsList.get(i);
 			}
 
-			if (componentPoupMap.containsKey(objDisplayName)) {
-				CheckBox chk = componentPoupMap.get(objDisplayName);
+			if (this.componentPoupMap.containsKey(objDisplayName)) {
+				final CheckBox chk = this.componentPoupMap.get(objDisplayName);
 				chk.setValue(true);
 			}
 		}
 	}
 
-	protected void addItemToComponent(Component comp) {
-		componentPopupSelection.addItemComponent(comp);
+	protected void addItemToComponent(final Component comp) {
+		this.componentPopupSelection.addItemComponent(comp);
 	}
 
 	public List getDataList() {
-		return dataList;
+		return this.dataList;
 	}
 
-	public void setSelectedItems(List items) {
+	public void setSelectedItems(final List items) {
 		this.selectedItemsList = items;
-		componentsDisplay.setReadOnly(false);
-		componentsDisplay.setValue(getDisplaySelectedItemsString());
-		componentsDisplay.setReadOnly(true);
+		this.componentsDisplay.setReadOnly(false);
+		this.componentsDisplay.setValue(this.getDisplaySelectedItemsString());
+		this.componentsDisplay.setReadOnly(true);
 	}
 
 	public List getSelectedItems() {
-		return selectedItemsList;
+		return this.selectedItemsList;
 	}
 
 	protected String getDisplaySelectedItemsString() {
-		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < selectedItemsList.size(); i++) {
-			Object itemObj = selectedItemsList.get(i);
+		final StringBuilder str = new StringBuilder();
+		for (int i = 0; i < this.selectedItemsList.size(); i++) {
+			final Object itemObj = this.selectedItemsList.get(i);
 
 			String objDisplayName = "";
-			if (displayName != "") {
+			if (this.displayName != "") {
 				try {
 					objDisplayName = (String) PropertyUtils.getProperty(
-							itemObj, displayName);
-				} catch (Exception e) {
+							itemObj, this.displayName);
+				} catch (final Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				objDisplayName = (String) selectedItemsList.get(i);
+				objDisplayName = (String) this.selectedItemsList.get(i);
 			}
-			if (i == selectedItemsList.size() - 1) {
+			if (i == this.selectedItemsList.size() - 1) {
 				str.append(objDisplayName);
 			} else {
 				str.append(objDisplayName + ", ");

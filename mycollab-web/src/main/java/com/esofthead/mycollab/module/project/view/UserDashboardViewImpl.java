@@ -26,37 +26,37 @@ public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
 	private static final long serialVersionUID = 1L;
 
-	private MyProjectListComponent myProjectListComponent;
+	private final MyProjectListComponent myProjectListComponent;
 
-	private ActivityStreamComponent activityStreamComponent;
+	private final ActivityStreamComponent activityStreamComponent;
 
-	private TaskStatusComponent taskStatusComponent;
+	private final TaskStatusComponent taskStatusComponent;
 
 	public UserDashboardViewImpl() {
 		this.setSpacing(true);
 		this.setMargin(true);
 
-		HorizontalLayout header = new HorizontalLayout();
+		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
 		header.setMargin(false, false, false, true);
 		header.addStyleName("project-feed-header");
 
-		Label searchtitle = new Label(
+		final Label searchtitle = new Label(
 				LocalizationHelper
 						.getMessage(ProjectCommonI18nEnum.DASHBOARD_TITLE));
 		searchtitle.setStyleName(Reindeer.LABEL_H1);
 		header.addComponent(searchtitle);
 		header.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		Button createProjectBtn = new Button(
+		final Button createProjectBtn = new Button(
 				LocalizationHelper
 						.getMessage(ProjectCommonI18nEnum.NEW_PROJECT_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						ProjectAddWindow projectNewWindow = new ProjectAddWindow();
+					public void buttonClick(final Button.ClickEvent event) {
+						final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
 						UserDashboardViewImpl.this.getWindow().addWindow(
 								projectNewWindow);
 					}
@@ -68,21 +68,21 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 		this.addComponent(header);
 
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		VerticalLayout leftPanel = new VerticalLayout();
-		myProjectListComponent = new MyProjectListComponent();
-		taskStatusComponent = new TaskStatusComponent();
-		leftPanel.addComponent(myProjectListComponent);
-		leftPanel.addComponent(new LazyLoadWrapper(taskStatusComponent));
+		final VerticalLayout leftPanel = new VerticalLayout();
+		this.myProjectListComponent = new MyProjectListComponent();
+		this.taskStatusComponent = new TaskStatusComponent();
+		leftPanel.addComponent(this.myProjectListComponent);
+		leftPanel.addComponent(new LazyLoadWrapper(this.taskStatusComponent));
 
-		VerticalLayout rightPanel = new VerticalLayout();
-		activityStreamComponent = new ActivityStreamComponent();
+		final VerticalLayout rightPanel = new VerticalLayout();
+		this.activityStreamComponent = new ActivityStreamComponent();
 
-		rightPanel.addComponent(activityStreamComponent);
+		rightPanel.addComponent(this.activityStreamComponent);
 
 		layout.addComponent(leftPanel);
 		layout.addComponent(rightPanel);
@@ -92,16 +92,16 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	@Override
 	public void display() {
-		ProjectService prjService = AppContext
+		final ProjectService prjService = AppContext
 				.getSpringBean(ProjectService.class);
-		List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
+		final List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
 				.getUsername());
 		if (prjKeys != null && !prjKeys.isEmpty()) {
-			activityStreamComponent.showFeeds(prjKeys);
-			myProjectListComponent.showProjects(prjKeys);
+			this.activityStreamComponent.showFeeds(prjKeys);
+			this.myProjectListComponent.showProjects(prjKeys);
 		}
 
-		taskStatusComponent.showProjectTasksByStatus();
+		this.taskStatusComponent.showProjectTasksByStatus();
 
 	}
 }

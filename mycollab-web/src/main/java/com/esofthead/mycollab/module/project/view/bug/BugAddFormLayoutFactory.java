@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -17,30 +16,33 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 	private GridFormLayoutHelper informationLayout;
 	private final String title;
 
-	public BugAddFormLayoutFactory(String title) {
+	public BugAddFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout bugAddLayout = new AddViewLayout(title,
+		final AddViewLayout bugAddLayout = new AddViewLayout(this.title,
 				new ThemeResource("icons/48/project/bug.png"));
 
-		bugAddLayout.addTopControls(createTopPanel());
+		bugAddLayout.addTopControls(this.createTopPanel());
 
-		VerticalLayout layout = new VerticalLayout();
+		final VerticalLayout layout = new VerticalLayout();
 
-		Label organizationHeader = new Label("Bug Information");
+		final Label organizationHeader = new Label("Bug Information");
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
-		informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 9);
-		informationLayout.getLayout().setWidth("100%");
-		layout.addComponent(informationLayout.getLayout());
-		layout.setComponentAlignment(informationLayout.getLayout(),
+		this.informationLayout = new GridFormLayoutHelper(2, 9, "100%",
+				"167px", Alignment.MIDDLE_LEFT);
+		this.informationLayout.getLayout().setWidth("100%");
+		this.informationLayout.getLayout().setMargin(false);
+		this.informationLayout.getLayout().addStyleName("colored-gridlayout");
+		layout.addComponent(this.informationLayout.getLayout());
+		layout.setComponentAlignment(this.informationLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
 
-		bugAddLayout.addBottomControls(createBottomPanel());
+		bugAddLayout.addBottomControls(this.createBottomPanel());
 
 		bugAddLayout.addBody(layout);
 
@@ -48,38 +50,41 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
+	public void attachField(final Object propertyId, final Field field) {
 		if (propertyId.equals("summary")) {
-			informationLayout.addComponent(field, "Summary", 0, 0, 2, "100%");
+			this.informationLayout.addComponent(field, "Summary", 0, 0, 2,
+					"100%");
 		} else if (propertyId.equals("priority")) {
-			informationLayout.addComponent(field, "Priority", 0, 1);
+			this.informationLayout.addComponent(field, "Priority", 0, 1);
 		} else if (propertyId.equals("severity")) {
-			informationLayout.addComponent(field, "Severity", 0, 2);
+			this.informationLayout.addComponent(field, "Severity", 0, 2);
 		} else if (propertyId.equals("duedate")) {
-			informationLayout.addComponent(field, "Due Date", 0, 3);
+			this.informationLayout.addComponent(field, "Due Date", 0, 3);
 		} else if (propertyId.equals("assignuser")) {
-			informationLayout.addComponent(field, "Assignee", 0, 4);
+			this.informationLayout.addComponent(field, "Assignee", 0, 4);
 		} else if (propertyId.equals("components")) {
-			informationLayout.addComponent(field, "Components", 1, 1);
+			this.informationLayout.addComponent(field, "Components", 1, 1);
 		} else if (propertyId.equals("affectedVersions")) {
-			informationLayout.addComponent(field, "Affected Versions", 1, 2);
+			this.informationLayout.addComponent(field, "Affected Versions", 1,
+					2);
 		} else if (propertyId.equals("fixedVersions")) {
-			informationLayout.addComponent(field, "Fixed Versions", 1, 3);
+			this.informationLayout.addComponent(field, "Fixed Versions", 1, 3);
 		} else if (propertyId.equals("estimatetime")) {
-			informationLayout.addComponent(field, "Original Estimate", 0, 5);
+			this.informationLayout.addComponent(field, "Original Estimate", 0,
+					5);
 		} else if (propertyId.equals("estimateremaintime")) {
-			informationLayout.addComponent(field, "Remain Estimate", 1, 5);
+			this.informationLayout.addComponent(field, "Remain Estimate", 1, 5);
 		} else if (propertyId.equals("environment")) {
-			informationLayout.addComponent(field, "Environment", 0, 6, 2,
+			this.informationLayout.addComponent(field, "Environment", 0, 6, 2,
 					"100%");
 		} else if (propertyId.equals("description")) {
-			informationLayout.addComponent(field, "Description", 0, 7, 2,
+			this.informationLayout.addComponent(field, "Description", 0, 7, 2,
 					"100%");
 		} else if (propertyId.equals("id")) {// add attachment box
-			informationLayout
-					.addComponent(field, "Attachment", 0, 8, 2, "100%");
+			this.informationLayout.addComponent(field, "Attachment", 0, 8, 2,
+					"100%");
 		} else if (propertyId.equals("milestoneid")) {
-			informationLayout.addComponent(field, "Phase", 1, 4);
+			this.informationLayout.addComponent(field, "Phase", 1, 4);
 		}
 
 	}

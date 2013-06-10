@@ -14,7 +14,6 @@ import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -24,12 +23,11 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -42,41 +40,45 @@ import com.vaadin.ui.Window;
  */
 public class TaskGroupAddWindow extends Window {
 	private static final long serialVersionUID = 1L;
-	private TaskGroupDisplayView taskView;
+	private final TaskGroupDisplayView taskView;
 	private SimpleTaskList taskList;
 	private TaskGroupAddWindow.TaskListForm taskListForm;
 
-	public TaskGroupAddWindow(TaskGroupDisplayView taskView,
-			SimpleTaskList taskList) {
+	public TaskGroupAddWindow(final TaskGroupDisplayView taskView,
+			final SimpleTaskList taskList) {
+		super(LocalizationHelper.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE));
 		this.taskView = taskView;
 		this.taskList = taskList;
-		initUI();
+		this.initUI();
 	}
 
-	public TaskGroupAddWindow(TaskGroupDisplayView taskView) {
-		taskList = new SimpleTaskList();
+	public TaskGroupAddWindow(final TaskGroupDisplayView taskView) {
+		super(LocalizationHelper.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE));
+		this.taskList = new SimpleTaskList();
 		this.taskView = taskView;
-		initUI();
+
+		this.initUI();
 	}
 
 	private void initUI() {
 		this.setWidth("800px");
-		taskListForm = new TaskGroupAddWindow.TaskListForm();
-		taskListForm.setItemDataSource(new BeanItem(taskList));
-		this.addComponent(taskListForm);
+		this.taskListForm = new TaskGroupAddWindow.TaskListForm();
+		this.taskListForm.setItemDataSource(new BeanItem(this.taskList));
+		this.addComponent(this.taskListForm);
+		((VerticalLayout) this.getContent()).setMargin(false);
 
-		center();
+		this.center();
 	}
 
 	private void notifyToReloadTaskList() {
-		taskView.insertTaskList(taskList);
+		this.taskView.insertTaskList(this.taskList);
 	}
 
 	private class TaskListForm extends AdvancedEditBeanForm<TaskList> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new TaskGroupAddWindow.TaskListForm.TaskListFormLayoutFactory());
 			this.setFormFieldFactory(new TaskGroupAddWindow.TaskListForm.EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -88,40 +90,54 @@ public class TaskGroupAddWindow extends Window {
 
 			@Override
 			public Layout getLayout() {
-				AddViewLayout taskListAddLayout = new AddViewLayout(
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE),
-						new ThemeResource("icons/48/project/tasklist.png"));
+				// final AddViewLayout taskListAddLayout = new AddViewLayout(
+				// LocalizationHelper
+				// .getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE),
+				// new ThemeResource("icons/48/project/tasklist.png"));
 
-				informationLayout = new GridFormLayoutHelper(2, 3);
+				final VerticalLayout taskListAddLayout = new VerticalLayout();
+				taskListAddLayout.setMargin(false);
+				taskListAddLayout.setWidth("100%");
 
-				VerticalLayout bodyLayout = new VerticalLayout();
-				Label organizationHeader = new Label("Task List Information");
-				organizationHeader.setStyleName("h2");
-				bodyLayout.addComponent(organizationHeader);
-				bodyLayout.addComponent(informationLayout.getLayout());
+				this.informationLayout = new GridFormLayoutHelper(2, 3, "100%",
+						"167px", Alignment.MIDDLE_LEFT);
 
-				taskListAddLayout.addBody(bodyLayout);
-				taskListAddLayout.addBottomControls(createBottomPanel());
+				final VerticalLayout bodyLayout = new VerticalLayout();
+				// final Label organizationHeader = new Label(
+				// "Task List Information");
+				// organizationHeader.setStyleName("h2");
+				// bodyLayout.addComponent(organizationHeader);
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().setWidth("100%");
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				bodyLayout.addComponent(this.informationLayout.getLayout());
+
+				taskListAddLayout.addComponent(bodyLayout);
+				final Layout bottomPanel = this.createBottomPanel();
+				taskListAddLayout.addComponent(bottomPanel);
+				taskListAddLayout.setComponentAlignment(bottomPanel,
+						Alignment.MIDDLE_CENTER);
 				return taskListAddLayout;
 			}
 
 			private Layout createBottomPanel() {
-				HorizontalLayout layout = new HorizontalLayout();
+				final HorizontalLayout layout = new HorizontalLayout();
 				layout.setSpacing(true);
 				layout.setMargin(true);
 				layout.setStyleName("addNewControl");
-				Button saveBtn = new Button(
+				final Button saveBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
-										.validateForm(taskList)) {
-									saveTaskList();
+										.validateForm(TaskGroupAddWindow.this.taskList)) {
+									TaskListFormLayoutFactory.this
+											.saveTaskList();
 									TaskGroupAddWindow.this.close();
 								}
 							}
@@ -129,32 +145,33 @@ public class TaskGroupAddWindow extends Window {
 				saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				layout.addComponent(saveBtn);
 
-				Button saveAndNewBtn = new Button(
+				final Button saveAndNewBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_SAVE_NEW_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
-										.validateForm(taskList)) {
-									saveTaskList();
-									taskList = new SimpleTaskList();
+										.validateForm(TaskGroupAddWindow.this.taskList)) {
+									TaskListFormLayoutFactory.this
+											.saveTaskList();
+									TaskGroupAddWindow.this.taskList = new SimpleTaskList();
 								}
 							}
 						});
 				saveAndNewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				layout.addComponent(saveAndNewBtn);
 
-				Button cancelBtn = new Button(
+				final Button cancelBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								TaskGroupAddWindow.this.close();
 							}
 						});
@@ -165,31 +182,35 @@ public class TaskGroupAddWindow extends Window {
 			}
 
 			private void saveTaskList() {
-				ProjectTaskListService taskListService = AppContext
+				final ProjectTaskListService taskListService = AppContext
 						.getSpringBean(ProjectTaskListService.class);
-				taskList.setSaccountid(AppContext.getAccountId());
-				taskList.setCreatedtime(new GregorianCalendar().getTime());
-				taskList.setStatus("Open");
-				taskList.setProjectid(CurrentProjectVariables.getProjectId());
-				taskListService.saveWithSession(taskList,
+				TaskGroupAddWindow.this.taskList.setSaccountid(AppContext
+						.getAccountId());
+				TaskGroupAddWindow.this.taskList
+						.setCreatedtime(new GregorianCalendar().getTime());
+				TaskGroupAddWindow.this.taskList.setStatus("Open");
+				TaskGroupAddWindow.this.taskList
+						.setProjectid(CurrentProjectVariables.getProjectId());
+				taskListService.saveWithSession(
+						TaskGroupAddWindow.this.taskList,
 						AppContext.getUsername());
-				notifyToReloadTaskList();
+				TaskGroupAddWindow.this.notifyToReloadTaskList();
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
+			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("name")) {
-					informationLayout.addComponent(field, "Name", 0, 0, 2,
+					this.informationLayout.addComponent(field, "Name", 0, 0, 2,
 							"100%");
 				} else if (propertyId.equals("description")) {
-					informationLayout.addComponent(field, "Description", 0, 1,
-							2, "100%");
+					this.informationLayout.addComponent(field, "Description",
+							0, 1, 2, "100%");
 				} else if (propertyId.equals("owner")) {
-					informationLayout.addComponent(field, "Responsible User",
-							0, 2);
+					this.informationLayout.addComponent(field,
+							"Responsible User", 0, 2);
 				} else if (propertyId.equals("milestoneid")) {
-					informationLayout.addComponent(field, "Related Milestone",
-							1, 2);
+					this.informationLayout.addComponent(field,
+							"Related Milestone", 1, 2);
 				}
 			}
 		}
@@ -199,10 +220,11 @@ public class TaskGroupAddWindow extends Window {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("description")) {
-					TextArea area = new TextArea();
+					final TextArea area = new TextArea();
 					area.setNullRepresentation("");
 					return area;
 				} else if (propertyId.equals("owner")) {
@@ -212,7 +234,7 @@ public class TaskGroupAddWindow extends Window {
 				}
 
 				if ("name".equals(propertyId)) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");

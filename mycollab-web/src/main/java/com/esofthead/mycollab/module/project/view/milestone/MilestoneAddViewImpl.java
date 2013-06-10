@@ -42,6 +42,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 		super();
 		this.editForm = new EditForm();
 		this.addComponent(this.editForm);
+		this.setMargin(true);
 	}
 
 	@Override

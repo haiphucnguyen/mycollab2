@@ -12,49 +12,49 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectSummaryViewImpl extends AbstractView implements
 		ProjectSummaryView {
 
-	private ProjectActivityStreamComponent activityPanel;
-	private ProjectInformationComponent prjView;
-	private ProjectMembersWidget membersWidget;
-	private ProjectTaskStatusComponent highlightWidget;
-	private ProjectMessageListComponent messageWidget;
+	private final ProjectActivityStreamComponent activityPanel;
+	private final ProjectInformationComponent prjView;
+	private final ProjectMembersWidget membersWidget;
+	private final ProjectTaskStatusComponent highlightWidget;
+	private final ProjectMessageListComponent messageWidget;
 
 	public ProjectSummaryViewImpl() {
 		this.setSpacing(true);
 		this.setMargin(true);
 
-		prjView = new ProjectInformationComponent();
-		this.addComponent(prjView);
+		this.prjView = new ProjectInformationComponent();
+		this.addComponent(this.prjView);
 
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 		this.addComponent(layout);
 
-		VerticalLayout leftPanel = new VerticalLayout();
+		final VerticalLayout leftPanel = new VerticalLayout();
 
-		messageWidget = new ProjectMessageListComponent();
-		leftPanel.addComponent(new LazyLoadWrapper(messageWidget));
+		this.messageWidget = new ProjectMessageListComponent();
+		leftPanel.addComponent(new LazyLoadWrapper(this.messageWidget));
 
-		activityPanel = new ProjectActivityStreamComponent();
-		leftPanel.addComponent(new LazyLoadWrapper(activityPanel));
+		this.activityPanel = new ProjectActivityStreamComponent();
+		leftPanel.addComponent(new LazyLoadWrapper(this.activityPanel));
 		layout.addComponent(leftPanel);
 
-		VerticalLayout rightPanel = new VerticalLayout();
+		final VerticalLayout rightPanel = new VerticalLayout();
 		rightPanel.setSpacing(true);
 		layout.addComponent(rightPanel);
 
-		membersWidget = new ProjectMembersWidget();
-		highlightWidget = new ProjectTaskStatusComponent();
-		rightPanel.addComponent(new LazyLoadWrapper(membersWidget));
-		rightPanel.addComponent(new LazyLoadWrapper(highlightWidget));
+		this.membersWidget = new ProjectMembersWidget();
+		this.highlightWidget = new ProjectTaskStatusComponent();
+		rightPanel.addComponent(new LazyLoadWrapper(this.membersWidget));
+		rightPanel.addComponent(new LazyLoadWrapper(this.highlightWidget));
 	}
 
 	@Override
 	public void displayDashboard() {
-		activityPanel.showProjectFeeds();
-		prjView.displayProjectInformation();
-		membersWidget.showInformation();
-		highlightWidget.showProjectTasksByStatus();
-		messageWidget.showLatestMessages();
+		this.activityPanel.showProjectFeeds();
+		this.prjView.displayProjectInformation();
+		this.membersWidget.showInformation();
+		this.highlightWidget.showProjectTasksByStatus();
+		this.messageWidget.showLatestMessages();
 	}
 }

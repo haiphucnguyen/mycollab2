@@ -32,31 +32,31 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private final BugSearchPanel bugSearchPanel;
 	private BugTableDisplay tableItem;
 	private final VerticalLayout bugListLayout;
-	private Label titleLbl;
+	private final Label titleLbl;
 	private Button exportBtn;
 
 	public BugListViewImpl() {
 		this.setSpacing(true);
-		this.setMargin(false, true, true, true);
+		this.setMargin(true);
 
-		titleLbl = new Label();
-		titleLbl.setStyleName("h2");
-		this.addComponent(titleLbl);
+		this.titleLbl = new Label();
+		this.titleLbl.setStyleName("h2");
+		this.addComponent(this.titleLbl);
 
-		bugSearchPanel = new BugSearchPanel();
-		this.addComponent(bugSearchPanel);
+		this.bugSearchPanel = new BugSearchPanel();
+		this.addComponent(this.bugSearchPanel);
 
-		bugListLayout = new VerticalLayout();
-		bugListLayout.setSpacing(true);
-		this.addComponent(bugListLayout);
+		this.bugListLayout = new VerticalLayout();
+		this.bugListLayout.setSpacing(true);
+		this.addComponent(this.bugListLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new BugTableDisplay(
+			this.tableItem = new BugTableDisplay(
 					new String[] { "id", "summary", "assignuserFullName",
 							"severity", "resolution" },
 					new String[] {
@@ -70,7 +70,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 							LocalizationHelper
 									.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new BugTableDisplay(
+			this.tableItem = new BugTableDisplay(
 					new String[] { "id", "summary", "assignuserFullName",
 							"severity", "resolution", "duedate" },
 					new String[] {
@@ -87,7 +87,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 									.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
 		}
 
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					private static final long serialVersionUID = 1L;
 
@@ -97,8 +97,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleBug bug = (SimpleBug) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleBug bug = (SimpleBug) event.getData();
 						if ("summary".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new BugEvent.GotoRead(BugListViewImpl.this,
@@ -107,51 +107,51 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 					}
 				});
 
-		bugListLayout.addComponent(constructTableActionControls());
-		bugListLayout.addComponent(tableItem);
+		this.bugListLayout.addComponent(this.constructTableActionControls());
+		this.bugListLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<BugSearchCriteria> getSearchHandlers() {
-		return bugSearchPanel;
+		return this.bugSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setWidth("100%");
 
-		Label lbEmpty = new Label("");
+		final Label lbEmpty = new Label("");
 		layout.addComponent(lbEmpty);
 		layout.setExpandRatio(lbEmpty, 1.0f);
 
-		exportBtn = new Button(
+		this.exportBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
-		exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
-		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		exportBtn.setEnabled(CurrentProjectVariables
+		this.exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
+		this.exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		this.exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
-		layout.addComponent(exportBtn);
+		layout.addComponent(this.exportBtn);
 		return layout;
 	}
 
 	@Override
 	public Button getExportBtn() {
-		return exportBtn;
+		return this.exportBtn;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
-	public void setTitle(String title) {
-		titleLbl.setValue(title);
+	public void setTitle(final String title) {
+		this.titleLbl.setValue(title);
 	}
 }

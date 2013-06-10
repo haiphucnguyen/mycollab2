@@ -7,7 +7,6 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -28,30 +27,30 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 	private final String title;
 	private TaskInformationLayout informationLayout;
 
-	private List<String> lstStyleTitle = new ArrayList<String>();
+	private final List<String> lstStyleTitle = new ArrayList<String>();
 
-	public TaskFormLayoutFactory(String title) {
+	public TaskFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout taskAddLayout = new AddViewLayout(title,
+		final AddViewLayout taskAddLayout = new AddViewLayout(this.title,
 				new ThemeResource("icons/48/project/task.png"));
 
-		for (int i = 0; i < lstStyleTitle.size(); i++) {
-			taskAddLayout.addTitleStyleName(lstStyleTitle.get(i));
+		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
+			taskAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));
 		}
 
-		ComponentContainer topPanel = createTopPanel();
+		final ComponentContainer topPanel = this.createTopPanel();
 		if (topPanel != null) {
 			taskAddLayout.addTopControls(topPanel);
 		}
 
-		informationLayout = new TaskInformationLayout();
-		taskAddLayout.addBody(informationLayout.getLayout());
+		this.informationLayout = new TaskInformationLayout();
+		taskAddLayout.addBody(this.informationLayout.getLayout());
 
-		ComponentContainer bottomPanel = createBottomPanel();
+		final ComponentContainer bottomPanel = this.createBottomPanel();
 		if (bottomPanel != null) {
 			taskAddLayout.addBottomControls(bottomPanel);
 		}
@@ -59,13 +58,13 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 		return taskAddLayout;
 	}
 
-	protected void addTitleStyle(String styleName) {
-		lstStyleTitle.add(styleName);
+	protected void addTitleStyle(final String styleName) {
+		this.lstStyleTitle.add(styleName);
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
-		informationLayout.attachField(propertyId, field);
+	public void attachField(final Object propertyId, final Field field) {
+		this.informationLayout.attachField(propertyId, field);
 	}
 
 	protected abstract ComponentContainer createTopPanel();
@@ -79,46 +78,53 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 
 		@Override
 		public Layout getLayout() {
-			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 8);
-			VerticalLayout layout = new VerticalLayout();
-			layout.setMargin(true);
-			layout.addComponent(informationLayout.getLayout());
-			layout.setComponentAlignment(informationLayout.getLayout(),
+			this.informationLayout = new GridFormLayoutHelper(2, 8, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+			final VerticalLayout layout = new VerticalLayout();
+			layout.setMargin(false);
+			this.informationLayout.getLayout().setMargin(false);
+			this.informationLayout.getLayout().setWidth("100%");
+			this.informationLayout.getLayout().addStyleName(
+					"colored-gridlayout");
+			layout.addComponent(this.informationLayout.getLayout());
+			layout.setComponentAlignment(this.informationLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 			return layout;
 		}
 
 		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("taskname")) {
-				informationLayout.addComponent(field, "Task Name", 0, 0, 2,
-						"100%");
+				this.informationLayout.addComponent(field, "Task Name", 0, 0,
+						2, "100%");
 			} else if (propertyId.equals("startdate")) {
-				informationLayout.addComponent(field, "Start Date", 0, 1);
+				this.informationLayout.addComponent(field, "Start Date", 0, 1);
 			} else if (propertyId.equals("enddate")) {
-				informationLayout.addComponent(field, "End Date", 0, 2);
+				this.informationLayout.addComponent(field, "End Date", 0, 2);
 			} else if (propertyId.equals("actualstartdate")) {
-				informationLayout
-						.addComponent(field, "Actual Start Date", 1, 1);
+				this.informationLayout.addComponent(field, "Actual Start Date",
+						1, 1);
 			} else if (propertyId.equals("actualenddate")) {
-				informationLayout.addComponent(field, "Actual End Date", 1, 2);
+				this.informationLayout.addComponent(field, "Actual End Date",
+						1, 2);
 			} else if (propertyId.equals("deadline")) {
-				informationLayout.addComponent(field, "Deadline", 0, 3);
+				this.informationLayout.addComponent(field, "Deadline", 0, 3);
 			} else if (propertyId.equals("priority")) {
-				informationLayout.addComponent(field, "Priority", 1, 3);
+				this.informationLayout.addComponent(field, "Priority", 1, 3);
 			} else if (propertyId.equals("assignuser")) {
-				informationLayout.addComponent(field, "Assign", 0, 4);
+				this.informationLayout.addComponent(field, "Assign", 0, 4);
 			} else if (propertyId.equals("tasklistid")) {
-				informationLayout.addComponent(field, "Task List", 1, 4);
+				this.informationLayout.addComponent(field, "Task List", 1, 4);
 			} else if (propertyId.equals("percentagecomplete")) {
-				informationLayout.addComponent(field, "Complete(%)", 0, 5);
+				this.informationLayout.addComponent(field, "Complete(%)", 0, 5,
+						2, "100%", Alignment.MIDDLE_LEFT);
 			} else if (propertyId.equals("notes")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(field, "Notes", 0, 6, 2,
+				this.informationLayout.addComponent(field, "Notes", 0, 6, 2,
 						UIConstants.DEFAULT_2XCONTROL_WIDTH);
 			} else if (propertyId.equals("id")) {
-				informationLayout.addComponent(field, "Attachments", 0, 7, 2,
-						"100%");
+				this.informationLayout.addComponent(field, "Attachments", 0, 7,
+						2, "100%");
 			}
 		}
 	}

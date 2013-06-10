@@ -185,13 +185,13 @@ public class MessageListViewImpl extends AbstractView implements
 		private String textSearch = "";
 
 		public MessageSearchPanel() {
-			project = CurrentProjectVariables.getProject();
+			this.project = CurrentProjectVariables.getProject();
 		}
 
 		@Override
 		public void attach() {
 			super.attach();
-			createBasicSearchLayout();
+			this.createBasicSearchLayout();
 		}
 
 		private void createBasicSearchLayout() {
@@ -204,19 +204,22 @@ public class MessageListViewImpl extends AbstractView implements
 			nameField.addListener(new TextChangeListener() {
 				@Override
 				public void textChange(final TextChangeEvent event) {
-					messageSearchCriteria = new MessageSearchCriteria();
+					MessageSearchPanel.this.messageSearchCriteria = new MessageSearchCriteria();
 
-					messageSearchCriteria
+					MessageSearchPanel.this.messageSearchCriteria
 							.setProjectids(new SetSearchField<Integer>(
-									SearchField.AND, project.getId()));
+									SearchField.AND,
+									MessageSearchPanel.this.project.getId()));
 
-					textSearch = event.getText().toString().trim();
+					MessageSearchPanel.this.textSearch = event.getText()
+							.toString().trim();
 
-					messageSearchCriteria.setMessage(new StringSearchField(
-							textSearch));
+					MessageSearchPanel.this.messageSearchCriteria
+							.setMessage(new StringSearchField(
+									MessageSearchPanel.this.textSearch));
 
 					MessageSearchPanel.this
-							.notifySearchHandler(messageSearchCriteria);
+							.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
 				}
 			});
 
@@ -232,24 +235,26 @@ public class MessageListViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(final Button.ClickEvent event) {
-					messageSearchCriteria = new MessageSearchCriteria();
+					MessageSearchPanel.this.messageSearchCriteria = new MessageSearchCriteria();
 
-					messageSearchCriteria
+					MessageSearchPanel.this.messageSearchCriteria
 							.setProjectids(new SetSearchField<Integer>(
-									SearchField.AND, project.getId()));
+									SearchField.AND,
+									MessageSearchPanel.this.project.getId()));
 
-					messageSearchCriteria.setMessage(new StringSearchField(
-							textSearch));
+					MessageSearchPanel.this.messageSearchCriteria
+							.setMessage(new StringSearchField(
+									MessageSearchPanel.this.textSearch));
 
 					MessageSearchPanel.this
-							.notifySearchHandler(messageSearchCriteria);
+							.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
 				}
 			});
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
 			basicSearchBody.addComponent(searchBtn);
 
-			setCompositionRoot(basicSearchBody);
+			this.setCompositionRoot(basicSearchBody);
 		}
 	}
 
@@ -261,26 +266,26 @@ public class MessageListViewImpl extends AbstractView implements
 
 		public TopMessagePanel() {
 			this.setWidth("100%");
-			setStyleName("message-toppanel");
-			messageSearchPanel = new MessageSearchPanel();
-			messagePanelBody = new HorizontalLayout();
+			this.setStyleName("message-toppanel");
+			this.messageSearchPanel = new MessageSearchPanel();
+			this.messagePanelBody = new HorizontalLayout();
 			final Label headerLbl = new Label("Messages");
 			headerLbl.setStyleName("h2");
 			final HorizontalLayout layoutHeader = new HorizontalLayout();
 			layoutHeader.setStyleName("message-toppanel-header");
 			layoutHeader.addComponent(headerLbl);
 			layoutHeader.setWidth("100%");
-			addComponent(layoutHeader);
-			messageSearchPanel.setWidth("320px");
-			messagePanelBody.setStyleName("message-toppanel-body");
-			messagePanelBody.setWidth("100%");
-			addComponent(messagePanelBody);
+			this.addComponent(layoutHeader);
+			this.messageSearchPanel.setWidth("320px");
+			this.messagePanelBody.setStyleName("message-toppanel-body");
+			this.messagePanelBody.setWidth("100%");
+			this.addComponent(this.messagePanelBody);
 
-			createBasicLayout();
+			this.createBasicLayout();
 		}
 
 		private void createAddMessageLayout() {
-			messagePanelBody.removeAllComponents();
+			this.messagePanelBody.removeAllComponents();
 
 			final VerticalLayout addMessageWrapper = new VerticalLayout();
 			addMessageWrapper.setSpacing(true);
@@ -335,7 +340,7 @@ public class MessageListViewImpl extends AbstractView implements
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							createBasicLayout();
+							TopMessagePanel.this.createBasicLayout();
 						}
 					});
 			cancelBtn.setStyleName("link");
@@ -362,7 +367,7 @@ public class MessageListViewImpl extends AbstractView implements
 								message.setSaccountid(AppContext.getAccountId());
 								message.setIsstick((Boolean) chkIsStick
 										.getValue());
-								fireSaveItem(message);
+								MessageListViewImpl.this.fireSaveItem(message);
 								attachments.saveContentsToRepo(
 										AttachmentConstants.PROJECT_MESSAGE,
 										message.getId());
@@ -385,12 +390,12 @@ public class MessageListViewImpl extends AbstractView implements
 			addMessageWrapper.addComponent(controls);
 			addMessageWrapper.setComponentAlignment(controls,
 					Alignment.MIDDLE_CENTER);
-			messagePanelBody.addComponent(addMessageWrapper);
+			this.messagePanelBody.addComponent(addMessageWrapper);
 		}
 
 		public void createBasicLayout() {
-			messagePanelBody.removeAllComponents();
-			messagePanelBody.addComponent(messageSearchPanel);
+			this.messagePanelBody.removeAllComponents();
+			this.messagePanelBody.addComponent(this.messageSearchPanel);
 
 			final Button createMessageBtn = new Button(
 					LocalizationHelper
@@ -400,7 +405,7 @@ public class MessageListViewImpl extends AbstractView implements
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							createAddMessageLayout();
+							TopMessagePanel.this.createAddMessageLayout();
 						}
 					});
 			createMessageBtn.setEnabled(CurrentProjectVariables
@@ -411,13 +416,13 @@ public class MessageListViewImpl extends AbstractView implements
 			createMessageBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
-			messagePanelBody.addComponent(createMessageBtn);
-			messagePanelBody.setComponentAlignment(createMessageBtn,
+			this.messagePanelBody.addComponent(createMessageBtn);
+			this.messagePanelBody.setComponentAlignment(createMessageBtn,
 					Alignment.MIDDLE_RIGHT);
 		}
 
 		public HasSearchHandlers<MessageSearchCriteria> getSearchHandlers() {
-			return messageSearchPanel;
+			return this.messageSearchPanel;
 		}
 	}
 
@@ -432,37 +437,38 @@ public class MessageListViewImpl extends AbstractView implements
 
 	public MessageListViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
+		this.setMargin(true);
 		this.setWidth("100%");
-		topMessagePanel = new TopMessagePanel();
-		topMessagePanel.setWidth("100%");
+		this.topMessagePanel = new TopMessagePanel();
+		this.topMessagePanel.setWidth("100%");
 
-		topMessagePanel.getSearchHandlers().addSearchHandler(
+		this.topMessagePanel.getSearchHandlers().addSearchHandler(
 				new SearchHandler<MessageSearchCriteria>() {
 					@Override
 					public void onSearch(final MessageSearchCriteria criteria) {
-						tableItem.setSearchCriteria(criteria);
+						MessageListViewImpl.this.tableItem
+								.setSearchCriteria(criteria);
 					}
 				});
-		this.addComponent(topMessagePanel);
-		tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
+		this.addComponent(this.topMessagePanel);
+		this.tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
 				AppContext.getSpringBean(MessageService.class),
 				new MessageRowDisplayHandler());
-		tableItem.setStyleName("message-list");
-		this.addComponent(tableItem);
+		this.tableItem.setStyleName("message-list");
+		this.addComponent(this.tableItem);
 	}
 
 	@Override
 	public void addFormHandler(final EditFormHandler<Message> handler) {
-		if (editFormHandlers == null) {
-			editFormHandlers = new HashSet<EditFormHandler<Message>>();
+		if (this.editFormHandlers == null) {
+			this.editFormHandlers = new HashSet<EditFormHandler<Message>>();
 		}
-		editFormHandlers.add(handler);
+		this.editFormHandlers.add(handler);
 	}
 
 	private void fireSaveItem(final Message message) {
-		if (editFormHandlers != null) {
-			for (final EditFormHandler<Message> handler : editFormHandlers) {
+		if (this.editFormHandlers != null) {
+			for (final EditFormHandler<Message> handler : this.editFormHandlers) {
 				handler.onSave(message);
 			}
 		}
@@ -475,9 +481,9 @@ public class MessageListViewImpl extends AbstractView implements
 
 	@Override
 	public void setCriteria(final MessageSearchCriteria criteria) {
-		searchCriteria = criteria;
-		topMessagePanel.createBasicLayout();
-		tableItem.setSearchCriteria(searchCriteria);
+		this.searchCriteria = criteria;
+		this.topMessagePanel.createBasicLayout();
+		this.tableItem.setSearchCriteria(this.searchCriteria);
 
 	}
 }

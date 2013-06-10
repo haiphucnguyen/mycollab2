@@ -44,27 +44,30 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 	private static Logger log = LoggerFactory
 			.getLogger(CompFollowersSheet.class);
 
-	protected CompTimeLogSheet(V bean) {
+	protected CompTimeLogSheet(final V bean) {
 		this.bean = bean;
 		this.setMargin(true);
 		this.setSpacing(true);
 
-		itemTimeLoggingService = AppContext
+		this.itemTimeLoggingService = AppContext
 				.getSpringBean(ItemTimeLoggingService.class);
 
-		initUI();
+		this.initUI();
 	}
 
 	private void initUI() {
 
-		investTimeLayout = this.new AddTimeInvest();
-		this.addComponent(investTimeLayout);
-		updateTimeRemainLayout = this.new UpdateTimeRemain();
-		this.addComponent(updateTimeRemainLayout);
+		this.investTimeLayout = this.new AddTimeInvest();
+		this.addComponent(this.investTimeLayout);
+		this.setExpandRatio(this.investTimeLayout, 1);
+		this.updateTimeRemainLayout = this.new UpdateTimeRemain();
+		this.addComponent(this.updateTimeRemainLayout);
+		this.setExpandRatio(this.updateTimeRemainLayout, 1);
+		this.setWidth("100%");
 	}
 
 	protected double getInvestValue() {
-		return Double.parseDouble(investTimeLayout.numberField.getValue()
+		return Double.parseDouble(this.investTimeLayout.numberField.getValue()
 				.toString());
 	}
 
@@ -79,8 +82,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 	protected abstract boolean isEnableAdd();
 
 	protected double getUpdateRemainTime() {
-		return Double.parseDouble(updateTimeRemainLayout.numberField.getValue()
-				.toString());
+		return Double.parseDouble(this.updateTimeRemainLayout.numberField
+				.getValue().toString());
 	}
 
 	private class AddTimeInvest extends VerticalLayout {
@@ -92,76 +95,84 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		public AddTimeInvest() {
 
 			this.setSpacing(true);
-			this.setWidth("420px");
 
-			VerticalLayout totalLayout = new VerticalLayout();
-			totalLayout.setMargin(false, false, true, false);
+			final VerticalLayout totalLayout = new VerticalLayout();
+			totalLayout.setMargin(true);
 			totalLayout.addStyleName("boxTotal");
-			totalLayout.setWidth("95%");
+			totalLayout.setWidth("100%");
 			this.addComponent(totalLayout);
 
-			Label lbTimeInstructTotal = new Label("Total Time Invested");
+			final Label lbTimeInstructTotal = new Label("Total Time Invested");
 			totalLayout.addComponent(lbTimeInstructTotal);
-			lbTimeTotal = new Label("_");
-			lbTimeTotal.addStyleName("numberTotal");
-			totalLayout.addComponent(lbTimeTotal);
+			this.lbTimeTotal = new Label("_");
+			this.lbTimeTotal.addStyleName("numberTotal");
+			totalLayout.addComponent(this.lbTimeTotal);
 
-			HorizontalLayout addLayout = new HorizontalLayout();
+			final HorizontalLayout addLayout = new HorizontalLayout();
 			addLayout.setSpacing(true);
 			addLayout.setSizeUndefined();
 			this.addComponent(addLayout);
 
-			numberField = new NumbericTextField();
-			numberField.setWidth("80px");
-			addLayout.addComponent(numberField);
-			addLayout.setComponentAlignment(numberField, Alignment.MIDDLE_LEFT);
+			this.numberField = new NumbericTextField();
+			this.numberField.setWidth("80px");
+			addLayout.addComponent(this.numberField);
+			addLayout.setComponentAlignment(this.numberField,
+					Alignment.MIDDLE_LEFT);
 
-			btnAdd = new Button("Add", new Button.ClickListener() {
+			CompTimeLogSheet.this.btnAdd = new Button("Add",
+					new Button.ClickListener() {
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					try {
-						double d = Double.parseDouble(numberField.getValue()
-								.toString());
-						if (d > 0) {
-							saveTimeInvest();
-							loadTimeInvestItem();
-							numberField.setValue(0.0);
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							try {
+								final double d = Double
+										.parseDouble(AddTimeInvest.this.numberField
+												.getValue().toString());
+								if (d > 0) {
+									CompTimeLogSheet.this.saveTimeInvest();
+									AddTimeInvest.this.loadTimeInvestItem();
+									AddTimeInvest.this.numberField
+											.setValue(0.0);
+								}
+							} catch (final Exception e) {
+								AddTimeInvest.this.numberField.setValue(0.0);
+							}
 						}
-					} catch (Exception e) {
-						numberField.setValue(0.0);
-					}
-				}
 
-			});
+					});
 
-			btnAdd.setEnabled(isEnableAdd());
-			btnAdd.setStyleName(UIConstants.THEME_BLUE_LINK);
-			btnAdd.setIcon(new ThemeResource("icons/16/addRecord.png"));
-			addLayout.addComponent(btnAdd);
-			addLayout.setComponentAlignment(btnAdd, Alignment.MIDDLE_LEFT);
+			CompTimeLogSheet.this.btnAdd.setEnabled(CompTimeLogSheet.this
+					.isEnableAdd());
+			CompTimeLogSheet.this.btnAdd
+					.setStyleName(UIConstants.THEME_BLUE_LINK);
+			CompTimeLogSheet.this.btnAdd.setIcon(new ThemeResource(
+					"icons/16/addRecord.png"));
+			addLayout.addComponent(CompTimeLogSheet.this.btnAdd);
+			addLayout.setComponentAlignment(CompTimeLogSheet.this.btnAdd,
+					Alignment.MIDDLE_LEFT);
 
-			Label lbIntructAdd = new Label("Add only time invested by you.");
+			final Label lbIntructAdd = new Label(
+					"Add only time invested by you.");
 			addLayout.addComponent(lbIntructAdd);
 			addLayout
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
 
-			tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+			CompTimeLogSheet.this.tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 					AppContext.getSpringBean(ItemTimeLoggingService.class),
 					SimpleItemTimeLogging.class,
 					new String[] { "logUserFullName", "createdtime",
 							"logvalue", "id" }, new String[] { "User",
 							"Created Time", "Time", "" });
 
-			tableItem.addGeneratedColumn("logUserFullName",
-					new Table.ColumnGenerator() {
+			CompTimeLogSheet.this.tableItem.addGeneratedColumn(
+					"logUserFullName", new Table.ColumnGenerator() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public com.vaadin.ui.Component generateCell(
-								Table source, final Object itemId,
-								Object columnId) {
-							final SimpleItemTimeLogging monitorItem = tableItem
+								final Table source, final Object itemId,
+								final Object columnId) {
+							final SimpleItemTimeLogging monitorItem = CompTimeLogSheet.this.tableItem
 									.getBeanByIndex(itemId);
 
 							return new ProjectUserLink(
@@ -171,125 +182,140 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 						}
 					});
 
-			tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
+			CompTimeLogSheet.this.tableItem.addGeneratedColumn("createdtime",
+					new ColumnGenerator() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public com.vaadin.ui.Component generateCell(Table source,
-						Object itemId, Object columnId) {
-					final SimpleItemTimeLogging monitorItem = tableItem
-							.getBeanByIndex(itemId);
-					Label l = new Label();
-					l.setValue(AppContext.formatDateTime(monitorItem
-							.getCreatedtime()));
-					return l;
-				}
-			});
+						@Override
+						public com.vaadin.ui.Component generateCell(
+								final Table source, final Object itemId,
+								final Object columnId) {
+							final SimpleItemTimeLogging monitorItem = CompTimeLogSheet.this.tableItem
+									.getBeanByIndex(itemId);
+							final Label l = new Label();
+							l.setValue(AppContext.formatDateTime(monitorItem
+									.getCreatedtime()));
+							return l;
+						}
+					});
 
-			tableItem.addGeneratedColumn("logvalue", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
+			CompTimeLogSheet.this.tableItem.addGeneratedColumn("logvalue",
+					new ColumnGenerator() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public com.vaadin.ui.Component generateCell(Table source,
-						Object itemId, Object columnId) {
-					final SimpleItemTimeLogging itemTimeLogging = tableItem
-							.getBeanByIndex(itemId);
-					Label l = new Label();
-					l.setValue(itemTimeLogging.getLogvalue());
-					return l;
-				}
-			});
+						@Override
+						public com.vaadin.ui.Component generateCell(
+								final Table source, final Object itemId,
+								final Object columnId) {
+							final SimpleItemTimeLogging itemTimeLogging = CompTimeLogSheet.this.tableItem
+									.getBeanByIndex(itemId);
+							final Label l = new Label();
+							l.setValue(itemTimeLogging.getLogvalue());
+							return l;
+						}
+					});
 
-			tableItem.addGeneratedColumn("id", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
+			CompTimeLogSheet.this.tableItem.addGeneratedColumn("id",
+					new ColumnGenerator() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public com.vaadin.ui.Component generateCell(Table source,
-						Object itemId, Object columnId) {
-					final SimpleItemTimeLogging itemTimeLogging = tableItem
-							.getBeanByIndex(itemId);
-					Button deleteBtn = new Button(null,
-							new Button.ClickListener() {
-								@Override
-								public void buttonClick(ClickEvent event) {
-									ConfirmDialog
-											.show(AppContext.getApplication()
-													.getMainWindow(),
-													"Please Confirm:",
-													"Are you sure to delete this invest?",
-													"Yes",
-													"No",
-													new ConfirmDialog.Listener() {
-														private static final long serialVersionUID = 1L;
+						@Override
+						public com.vaadin.ui.Component generateCell(
+								final Table source, final Object itemId,
+								final Object columnId) {
+							final SimpleItemTimeLogging itemTimeLogging = CompTimeLogSheet.this.tableItem
+									.getBeanByIndex(itemId);
+							final Button deleteBtn = new Button(null,
+									new Button.ClickListener() {
+										@Override
+										public void buttonClick(
+												final ClickEvent event) {
+											ConfirmDialog
+													.show(AppContext
+															.getApplication()
+															.getMainWindow(),
+															"Please Confirm:",
+															"Are you sure to delete this invest?",
+															"Yes",
+															"No",
+															new ConfirmDialog.Listener() {
+																private static final long serialVersionUID = 1L;
 
-														@Override
-														public void onClose(
-																ConfirmDialog dialog) {
-															if (dialog
-																	.isConfirmed()) {
-																itemTimeLoggingService
-																		.removeWithSession(
-																				itemTimeLogging
-																						.getId(),
-																				AppContext
-																						.getUsername());
-																loadTimeInvestItem();
-															}
-														}
-													});
-								}
-							});
-					deleteBtn.setStyleName("link");
-					deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
-					itemTimeLogging.setExtraData(deleteBtn);
+																@Override
+																public void onClose(
+																		final ConfirmDialog dialog) {
+																	if (dialog
+																			.isConfirmed()) {
+																		CompTimeLogSheet.this.itemTimeLoggingService
+																				.removeWithSession(
+																						itemTimeLogging
+																								.getId(),
+																						AppContext
+																								.getUsername());
+																		AddTimeInvest.this
+																				.loadTimeInvestItem();
+																	}
+																}
+															});
+										}
+									});
+							deleteBtn.setStyleName("link");
+							deleteBtn.setIcon(new ThemeResource(
+									"icons/16/delete.png"));
+							itemTimeLogging.setExtraData(deleteBtn);
 
-					ProjectMemberService memberService = AppContext
-							.getSpringBean(ProjectMemberService.class);
-					SimpleProjectMember member = memberService
-							.findMemberByUsername(AppContext.getUsername(),
-									CurrentProjectVariables.getProjectId());
+							final ProjectMemberService memberService = AppContext
+									.getSpringBean(ProjectMemberService.class);
+							final SimpleProjectMember member = memberService
+									.findMemberByUsername(AppContext
+											.getUsername(),
+											CurrentProjectVariables
+													.getProjectId());
 
-					if (member != null) {
-						deleteBtn.setEnabled(member.getIsadmin());
-					}
-					return deleteBtn;
-				}
-			});
+							if (member != null) {
+								deleteBtn.setEnabled(member.getIsadmin());
+							}
+							return deleteBtn;
+						}
+					});
 
-			tableItem.setWidth("100%");
+			CompTimeLogSheet.this.tableItem.setWidth("100%");
 
-			tableItem.setColumnExpandRatio("logUserFullName", 1.0f);
-			tableItem.setColumnWidth("monitorDate",
+			CompTimeLogSheet.this.tableItem.setColumnExpandRatio(
+					"logUserFullName", 1.0f);
+			CompTimeLogSheet.this.tableItem.setColumnWidth("monitorDate",
 					UIConstants.TABLE_DATE_TIME_WIDTH);
-			tableItem.setColumnWidth("logvalue",
+			CompTimeLogSheet.this.tableItem.setColumnWidth("logvalue",
 					UIConstants.TABLE_S_LABEL_WIDTH);
 
-			this.addComponent(tableItem);
-			loadTimeInvestItem();
-			setTotalTimeValue();
+			this.addComponent(CompTimeLogSheet.this.tableItem);
+			this.loadTimeInvestItem();
+			this.setTotalTimeValue();
 		}
 
 		private void loadTimeInvestItem() {
-			ItemTimeLoggingSearchCriteria searchCriteria = getItemSearchCriteria();
-			tableItem.setSearchCriteria(searchCriteria);
-			setTotalTimeValue();
+			final ItemTimeLoggingSearchCriteria searchCriteria = CompTimeLogSheet.this
+					.getItemSearchCriteria();
+			CompTimeLogSheet.this.tableItem.setSearchCriteria(searchCriteria);
+			this.setTotalTimeValue();
 		}
 
 		private double getTotalInvest() {
 			double total = 0;
-			ItemTimeLoggingSearchCriteria searchCriteria = getItemSearchCriteria();
-			List<SimpleItemTimeLogging> listTime = itemTimeLoggingService
+			final ItemTimeLoggingSearchCriteria searchCriteria = CompTimeLogSheet.this
+					.getItemSearchCriteria();
+			final List<SimpleItemTimeLogging> listTime = CompTimeLogSheet.this.itemTimeLoggingService
 					.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 							searchCriteria, 0, Integer.MAX_VALUE));
-			for (SimpleItemTimeLogging simpleItemTimeLogging : listTime) {
+			for (final SimpleItemTimeLogging simpleItemTimeLogging : listTime) {
 				total += simpleItemTimeLogging.getLogvalue();
 			}
 			return total;
 		}
 
 		public void setTotalTimeValue() {
-			if (getTotalInvest() > 0) {
-				lbTimeTotal.setValue(getTotalInvest());
+			if (this.getTotalInvest() > 0) {
+				this.lbTimeTotal.setValue(this.getTotalInvest());
 			}
 		}
 	}
@@ -298,70 +324,81 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 		public NumbericTextField numberField;
 
-		private Label lbUpdateTime;
+		private final Label lbUpdateTime;
 
 		public UpdateTimeRemain() {
 
 			this.setSpacing(true);
 			this.setMargin(false, false, false, true);
+			this.setWidth("100%");
 
-			VerticalLayout updateLayout = new VerticalLayout();
-			updateLayout.setMargin(false, false, true, false);
+			final VerticalLayout updateLayout = new VerticalLayout();
+			updateLayout.setMargin(true);
 			updateLayout.addStyleName("boxTotal");
-			updateLayout.setWidth("300px");
+			updateLayout.setWidth("100%");
 			this.addComponent(updateLayout);
 
-			Label lbTimeInstructTotal = new Label("Work Hours Remaining");
+			final Label lbTimeInstructTotal = new Label("Work Hours Remaining");
 			updateLayout.addComponent(lbTimeInstructTotal);
-			lbUpdateTime = new Label("_");
-			lbUpdateTime.addStyleName("numberTotal");
-			updateLayout.addComponent(lbUpdateTime);
+			this.lbUpdateTime = new Label("_");
+			this.lbUpdateTime.addStyleName("numberTotal");
+			updateLayout.addComponent(this.lbUpdateTime);
 
-			HorizontalLayout addLayout = new HorizontalLayout();
+			final HorizontalLayout addLayout = new HorizontalLayout();
 			addLayout.setSpacing(true);
 			addLayout.setSizeUndefined();
 			this.addComponent(addLayout);
 
-			numberField = new NumbericTextField();
-			numberField.setWidth("80px");
-			addLayout.addComponent(numberField);
-			addLayout.setComponentAlignment(numberField, Alignment.MIDDLE_LEFT);
+			this.numberField = new NumbericTextField();
+			this.numberField.setWidth("80px");
+			addLayout.addComponent(this.numberField);
+			addLayout.setComponentAlignment(this.numberField,
+					Alignment.MIDDLE_LEFT);
 
-			btnAdd = new Button("Update", new Button.ClickListener() {
+			CompTimeLogSheet.this.btnAdd = new Button("Update",
+					new Button.ClickListener() {
 
-				@Override
-				public void buttonClick(ClickEvent event) {
+						@Override
+						public void buttonClick(final ClickEvent event) {
 
-					try {
-						double d = Double.parseDouble(numberField.getValue()
-								.toString());
-						if (d > 0) {
-							updateTimeRemain();
-							lbUpdateTime.setValue(numberField.getValue());
-							numberField.setValue(0.0);
+							try {
+								final double d = Double
+										.parseDouble(UpdateTimeRemain.this.numberField
+												.getValue().toString());
+								if (d > 0) {
+									CompTimeLogSheet.this.updateTimeRemain();
+									UpdateTimeRemain.this.lbUpdateTime
+											.setValue(UpdateTimeRemain.this.numberField
+													.getValue());
+									UpdateTimeRemain.this.numberField
+											.setValue(0.0);
+								}
+							} catch (final Exception e) {
+								UpdateTimeRemain.this.numberField.setValue(0.0);
+							}
 						}
-					} catch (Exception e) {
-						numberField.setValue(0.0);
-					}
-				}
 
-			});
+					});
 
-			btnAdd.setEnabled(isEnableAdd());
-			btnAdd.setStyleName(UIConstants.THEME_BLUE_LINK);
-			addLayout.addComponent(btnAdd);
-			addLayout.setComponentAlignment(btnAdd, Alignment.MIDDLE_LEFT);
+			CompTimeLogSheet.this.btnAdd.setEnabled(CompTimeLogSheet.this
+					.isEnableAdd());
+			CompTimeLogSheet.this.btnAdd
+					.setStyleName(UIConstants.THEME_BLUE_LINK);
+			addLayout.addComponent(CompTimeLogSheet.this.btnAdd);
+			addLayout.setComponentAlignment(CompTimeLogSheet.this.btnAdd,
+					Alignment.MIDDLE_LEFT);
 
-			Label lbIntructAdd = new Label("Update remaining estimate.");
+			final Label lbIntructAdd = new Label("Update remaining estimate.");
 			addLayout.addComponent(lbIntructAdd);
 			addLayout
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
-			setUpdateTimeValue();
+			this.setUpdateTimeValue();
 		}
 
 		public void setUpdateTimeValue() {
-			if (getEstimateRemainTime() > -1) {
-				lbUpdateTime.setValue(getEstimateRemainTime());
+			if (CompTimeLogSheet.this.getEstimateRemainTime() > -1) {
+				this.lbUpdateTime.setValue(CompTimeLogSheet.this
+						.getEstimateRemainTime());
 			}
 		}
 	}
@@ -370,11 +407,12 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected void setValue(Object newValue, boolean repaintIsNotNeeded) {
+		protected void setValue(final Object newValue,
+				final boolean repaintIsNotNeeded) {
 			try {
-				double d = Double.parseDouble((String) newValue);
+				final double d = Double.parseDouble((String) newValue);
 				super.setValue(d, repaintIsNotNeeded);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				super.setValue(0.0, repaintIsNotNeeded);
 			}
 		}

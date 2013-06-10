@@ -11,33 +11,35 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MilestoneReadViewImpl extends AbstractView implements MilestoneReadView {
-    
-    private static final long serialVersionUID = 1L;
-    private MilestonePreviewBuilder.ReadView milestonePreview;
-    
-    public MilestoneReadViewImpl() {
-        super();
-        milestonePreview = new MilestonePreviewBuilder.ReadView();
-        this.addComponent(milestonePreview);
-    }
-    
-    @Override
-    public void previewItem(SimpleMilestone item) {
-    	milestonePreview.previewItem(item);
-    }
-    
-    @Override
-    public SimpleMilestone getItem() {
-        return milestonePreview.getMilestone();
-    }
-    
-    @Override
-    public HasPreviewFormHandlers<Milestone> getPreviewFormHandlers() {
-        return milestonePreview.getPreviewForm();
-    }
+public class MilestoneReadViewImpl extends AbstractView implements
+		MilestoneReadView {
+
+	private static final long serialVersionUID = 1L;
+	private final MilestonePreviewBuilder.ReadView milestonePreview;
+
+	public MilestoneReadViewImpl() {
+		super();
+		this.milestonePreview = new MilestonePreviewBuilder.ReadView();
+		this.addComponent(this.milestonePreview);
+		this.setMargin(true);
+	}
+
+	@Override
+	public void previewItem(final SimpleMilestone item) {
+		this.milestonePreview.previewItem(item);
+	}
+
+	@Override
+	public SimpleMilestone getItem() {
+		return this.milestonePreview.getMilestone();
+	}
+
+	@Override
+	public HasPreviewFormHandlers<Milestone> getPreviewFormHandlers() {
+		return this.milestonePreview.getPreviewForm();
+	}
 }

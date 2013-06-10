@@ -157,7 +157,9 @@ input.v-textfield[type="text"],.v-filterselect {
 	font: 12px/18px  Arial, Verdana, Helvetica, 
 		sans-serif !important;
 }
-
+.popupContent .v-window-contents {
+	background-color: rgb(245, 245, 245);	
+}
 body div>input.v-filterselect-input[type="text"] {
 	height: 1.2em;
 }
@@ -1003,7 +1005,7 @@ input.v-textfield-errorField {
 .addViewLayout .addViewTopControls > .v-horizontallayout .v-horizontallayout-margin {
 	padding: 5px;
 }
-.addViewLayout .addViewTopControls .addNewControl .v-horizontallayout-margin {
+.addViewLayout .addViewTopControls > .v-horizontallayout .addNewControl .v-horizontallayout-margin {
 	padding: 0px;
 }
 
@@ -1065,6 +1067,25 @@ input.v-textfield-errorField {
 
 .addViewLayout .addViewBottomControls {
 /* 	margin-bottom: 10px; */
+}
+.addViewLayout .addViewBottomControls .depotComp {
+	margin: 0px;
+}
+.addViewLayout .addViewBottomControls .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
+	border-radius: 0px;
+	border-width: 0px;
+}
+.addViewLayout .addViewBottomControls .depotComp.collapsed .header-wrapper > .v-csslayout-margin {
+	border-width: 0px 0px 1px 0px;
+}
+.addViewLayout .addViewBottomControls .comment-list .depotContent {
+	border-width: 1px 0px 1px 0px;
+}
+.addViewLayout .addViewBottomControls .depotComp .v-table-header-wrap, .addViewLayout .addViewBottomControls .depotComp .v-table-body {
+	border-width: 1px 0px 1px 0px;
+}
+.addViewLayout .addViewBottomControls .depotComp .task-list-footer {
+	border-width: 0px;
 }
 /* End Add View Styles */
 
@@ -1272,7 +1293,7 @@ input.v-textfield-errorField {
 	border: 1px solid rgb(169, 169, 169);
 	background: none no-repeat left top rgb(245, 245, 245);
 	box-shadow: none;
-	margin: 0px 18px 10px;
+	margin: 0px 0px 10px;
 	border-radius: 3px 3px 0px 0px;
 }
 
@@ -1290,7 +1311,7 @@ input.v-textfield-errorField {
 }
 
 .v-csslayout-projectTabContent>.v-csslayout-margin {
-	padding: 10px 0px 0px;
+	padding: 0px;
 	border-style: solid;
 	border-color: #8f8f8f;
 	border-width: 1px 0px 0px 1px;
@@ -2935,10 +2956,9 @@ table.legendBox .legendBoxContent .v-csslayout-container > div {
 	border-radius: 3px 3px 0px 0px;
 	padding: 7px 10px 7px 18px;
 	background: url('icons/grad-light-top2.png') repeat-x left top rgb(228, 228, 228);
-	margin: 0px 12px;
 }
 .milestone-view {
-	padding: 0px 12px 30px;
+	padding: 0px 0px 30px;
 }
 
 .milestone-view-table {
@@ -3056,10 +3076,14 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .boxTotal {
 	background-color: #E9E9E9;
-	padding: 10px;
 	-moz-border-radius: 15px;
 	border-radius: 5px;
-	border-bottom: 2px solid #CCCCCC;
+	border-color: rgb(169, 169, 169);
+	border-width: 1px 1px 2px 1px;
+	border-style: solid;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 /* End Time Addon */
@@ -3316,7 +3340,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	margin-left: 0px;
 }
 /* Note List Items */
-.note-list .depotContent {
+.note-list .depotContent, .comment-list .depotContent {
 	background-color: rgb(229, 239, 240);
 }
 /* End Note List Items */
@@ -3367,6 +3391,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin {
 	padding: 0px;
 }
+.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
+	padding: 0px;
+} 
 .colored-gridlayout .v-gridlayout-margin .gridform-caption {
 	background-color: rgb(212, 223, 239);
 	border-left: 1px solid #a9a9a9;

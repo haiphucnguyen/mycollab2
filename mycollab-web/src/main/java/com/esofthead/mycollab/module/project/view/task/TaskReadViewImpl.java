@@ -55,23 +55,26 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(task.getTaskname());
+				super(TaskReadViewImpl.this.task.getTaskname());
 
-				if (task.getPercentagecomplete() != null
-						&& 100d == task.getPercentagecomplete()) {
-					addTitleStyle(UIConstants.LINK_COMPLETED);
+				if (TaskReadViewImpl.this.task.getPercentagecomplete() != null
+						&& 100d == TaskReadViewImpl.this.task
+								.getPercentagecomplete()) {
+					this.addTitleStyle(UIConstants.LINK_COMPLETED);
 				} else {
-					if ("Pending".equals(task.getStatus())) {
-						addTitleStyle(UIConstants.LINK_PENDING);
-					} else if ((task.getEnddate() != null && (task.getEnddate()
-							.before(new GregorianCalendar().getTime())))
-							|| (task.getActualenddate() != null && (task
+					if ("Pending"
+							.equals(TaskReadViewImpl.this.task.getStatus())) {
+						this.addTitleStyle(UIConstants.LINK_PENDING);
+					} else if ((TaskReadViewImpl.this.task.getEnddate() != null && (TaskReadViewImpl.this.task
+							.getEnddate().before(new GregorianCalendar()
+							.getTime())))
+							|| (TaskReadViewImpl.this.task.getActualenddate() != null && (TaskReadViewImpl.this.task
 									.getActualenddate()
 									.before(new GregorianCalendar().getTime())))
-							|| (task.getDeadline() != null && (task
+							|| (TaskReadViewImpl.this.task.getDeadline() != null && (TaskReadViewImpl.this.task
 									.getDeadline()
 									.before(new GregorianCalendar().getTime())))) {
-						addTitleStyle(UIConstants.LINK_OVERDUE);
+						this.addTitleStyle(UIConstants.LINK_OVERDUE);
 					}
 				}
 			}
@@ -83,21 +86,23 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				// tabTaskDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				final CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_TASK, task.getId(), true,
-						true, ProjectTaskNotificationService.class);
+						CommentTypeConstants.PRJ_TASK,
+						TaskReadViewImpl.this.task.getId(), true, true,
+						ProjectTaskNotificationService.class);
 				commentList.setMargin(true);
 				tabTaskDetail.addTab(commentList, "Comments");
 
 				final TaskHistoryList historyList = new TaskHistoryList(
-						task.getId());
+						TaskReadViewImpl.this.task.getId());
 				historyList.setMargin(true);
 				tabTaskDetail.addTab(historyList, "History");
 
 				final TaskFollowersSheet followerSheet = new TaskFollowersSheet(
-						task);
+						TaskReadViewImpl.this.task);
 				tabTaskDetail.addTab(followerSheet, "Follower");
 
-				final TaskTimeLogSheet timesheet = new TaskTimeLogSheet(task);
+				final TaskTimeLogSheet timesheet = new TaskTimeLogSheet(
+						TaskReadViewImpl.this.task);
 				tabTaskDetail.addTab(timesheet, "Time");
 
 				return tabTaskDetail;
@@ -126,15 +131,15 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			final Window window = new Window("Window to Print");
 
 			final TaskReadViewImpl printView = new TaskReadViewImpl.PrintView();
-			printView.previewItem(task);
+			printView.previewItem(TaskReadViewImpl.this.task);
 			window.addComponent(printView);
 
 			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
+			this.getApplication().addWindow(window);
 
 			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
+			this.getWindow().open(new ExternalResource(window.getURL()),
+					"_blank", 1100, 200, // Width and height
 					Window.BORDER_NONE); // No decorations
 
 			// Print automatically when the window opens.
@@ -148,8 +153,9 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 		@Override
 		protected void taskShowHistory() {
 			final TaskHistoryLogWindow historyLog = new TaskHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.TASK, task.getId());
-			getWindow().addWindow(historyLog);
+					ModuleNameConstants.PRJ, ProjectContants.TASK,
+					TaskReadViewImpl.this.task.getId());
+			this.getWindow().addWindow(historyLog);
 		}
 	}
 
@@ -161,13 +167,13 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(task.getTaskname());
+				super(PrintView.this.task.getTaskname());
 			}
 
 			@Override
 			protected ComponentContainer createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
-						task.getId(), false, false);
+						PrintView.this.task.getId(), false, false);
 			}
 
 			@Override
@@ -178,14 +184,14 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 		public PrintView() {
 
-			previewForm = new AdvancedPreviewBeanForm<Task>() {
+			this.previewForm = new AdvancedPreviewBeanForm<Task>() {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
 					final BeanItem<SimpleTask> beanItem = (BeanItem<SimpleTask>) newDataSource;
-					task = beanItem.getBean();
+					PrintView.this.task = beanItem.getBean();
 
-					setFormLayoutFactory(new FormLayoutFactory());
-					setFormFieldFactory(new DefaultFormViewFieldFactory() {
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
@@ -195,33 +201,40 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 							if (propertyId.equals("assignuser")) {
 								return new ProjectUserFormLinkField(
-										task.getAssignuser(),
-										task.getAssignUserFullName());
+										PrintView.this.task.getAssignuser(),
+										PrintView.this.task
+												.getAssignUserFullName());
 							} else if (propertyId.equals("taskListName")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
-										task.getTaskListName());
+										PrintView.this.task.getTaskListName());
 							} else if (propertyId.equals("startdate")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
-										AppContext.formatDate(task
-												.getStartdate()));
+										AppContext
+												.formatDate(PrintView.this.task
+														.getStartdate()));
 							} else if (propertyId.equals("enddate")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
-										AppContext.formatDate(task.getEnddate()));
+										AppContext
+												.formatDate(PrintView.this.task
+														.getEnddate()));
 							} else if (propertyId.equals("actualstartdate")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
-										AppContext.formatDate(task
-												.getActualstartdate()));
+										AppContext
+												.formatDate(PrintView.this.task
+														.getActualstartdate()));
 							} else if (propertyId.equals("actualenddate")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
-										AppContext.formatDate(task
-												.getActualenddate()));
+										AppContext
+												.formatDate(PrintView.this.task
+														.getActualenddate()));
 							} else if (propertyId.equals("deadline")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
-										AppContext.formatDate(task
-												.getDeadline()));
+										AppContext
+												.formatDate(PrintView.this.task
+														.getDeadline()));
 							} else if (propertyId.equals("tasklistid")) {
 								return new DefaultFormViewFieldFactory.FormLinkViewField(
-										task.getTaskListName(),
+										PrintView.this.task.getTaskListName(),
 										new Button.ClickListener() {
 											@Override
 											public void buttonClick(
@@ -230,23 +243,25 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 														.fireEvent(
 																new TaskListEvent.GotoRead(
 																		this,
-																		task.getTasklistid()));
+																		PrintView.this.task
+																				.getTasklistid()));
 											}
 										});
 							} else if (propertyId.equals("id")) {
 								return new FormAttachmentDisplayField(
 										AttachmentConstants.PROJECT_TASK_TYPE,
-										task.getId());
+										PrintView.this.task.getId());
 							} else if (propertyId.equals("priority")) {
-								if (StringUtil.isNotNullOrEmpty(task
-										.getPriority())) {
+								if (StringUtil
+										.isNotNullOrEmpty(PrintView.this.task
+												.getPriority())) {
 									final ThemeResource iconPriority = TaskPriorityComboBox
-											.getIconResourceByPriority(task
+											.getIconResourceByPriority(PrintView.this.task
 													.getPriority());
 									final Embedded iconEmbedded = new Embedded(
 											null, iconPriority);
 									final Label lbPriority = new Label(
-											task.getPriority());
+											PrintView.this.task.getPriority());
 
 									final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 									containerField
@@ -257,8 +272,8 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 									return containerField;
 								}
 							} else if (propertyId.equals("notes")) {
-								return new FormViewField(task.getNotes(),
-										Label.CONTENT_XHTML);
+								return new FormViewField(PrintView.this.task
+										.getNotes(), Label.CONTENT_XHTML);
 							}
 							return null;
 						}
@@ -267,7 +282,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				}
 			};
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 
 		}
 	}
@@ -280,23 +295,24 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 	public TaskReadViewImpl() {
 		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
+		this.previewForm = new PreviewForm();
+		this.addComponent(this.previewForm);
+		this.setMargin(true);
 	}
 
 	@Override
 	public SimpleTask getItem() {
-		return task;
+		return this.task;
 	}
 
 	@Override
 	public HasPreviewFormHandlers<Task> getPreviewFormHandlers() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	@Override
 	public void previewItem(final SimpleTask task) {
 		this.task = task;
-		previewForm.setItemDataSource(new BeanItem<Task>(task));
+		this.previewForm.setItemDataSource(new BeanItem<Task>(task));
 	}
 }

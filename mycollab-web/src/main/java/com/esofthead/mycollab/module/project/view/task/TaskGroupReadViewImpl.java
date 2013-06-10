@@ -57,20 +57,20 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 
 	public TaskGroupReadViewImpl() {
 		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
+		this.previewForm = new PreviewForm();
+		this.addComponent(this.previewForm);
 		this.setMargin(true);
 	}
 
 	@Override
-	public void previewItem(SimpleTaskList taskList) {
+	public void previewItem(final SimpleTaskList taskList) {
 		this.taskList = taskList;
-		previewForm.setItemDataSource(new BeanItem<TaskList>(taskList));
+		this.previewForm.setItemDataSource(new BeanItem<TaskList>(taskList));
 	}
 
 	@Override
 	public HasPreviewFormHandlers<SimpleTaskList> getPreviewFormHandlers() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	private class PreviewForm extends AdvancedPreviewBeanForm<SimpleTaskList> {
@@ -78,48 +78,57 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
+				protected Field onCreateField(final Item item,
+						final Object propertyId, final Component uiContext) {
 
 					if (propertyId.equals("milestoneid")) {
-						return new FormLinkViewField(taskList
-								.getMilestoneName(),
+						return new FormLinkViewField(
+								TaskGroupReadViewImpl.this.taskList
+										.getMilestoneName(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
-									public void buttonClick(ClickEvent event) {
+									public void buttonClick(
+											final ClickEvent event) {
 										EventBus.getInstance()
 												.fireEvent(
 														new MilestoneEvent.GotoRead(
 																this,
-																taskList.getMilestoneid()));
+																TaskGroupReadViewImpl.this.taskList
+																		.getMilestoneid()));
 									}
 								});
 					} else if (propertyId.equals("owner")) {
 						return new ProjectUserFormLinkField(
-								taskList.getOwner(), taskList
+								TaskGroupReadViewImpl.this.taskList.getOwner(),
+								TaskGroupReadViewImpl.this.taskList
 										.getOwnerFullName());
 					} else if (propertyId.equals("percentageComplete")) {
-						FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-						ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
-								taskList.getPercentageComplete());
+						final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+						final ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
+								TaskGroupReadViewImpl.this.taskList
+										.getPercentageComplete());
 						fieldContainer.addComponentField(progressField);
 						return fieldContainer;
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(taskList.getDescription(),
-								Label.CONTENT_XHTML);
+						return new FormViewField(
+								TaskGroupReadViewImpl.this.taskList
+										.getDescription(), Label.CONTENT_XHTML);
 					} else if (propertyId.equals("numOpenTasks")) {
-						FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-						Label numTaskLbl = new Label("("
-								+ taskList.getNumOpenTasks() + "/"
-								+ taskList.getNumAllTasks() + ")");
+						final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+						final Label numTaskLbl = new Label("("
+								+ TaskGroupReadViewImpl.this.taskList
+										.getNumOpenTasks()
+								+ "/"
+								+ TaskGroupReadViewImpl.this.taskList
+										.getNumAllTasks() + ")");
 						fieldContainer.addComponentField(numTaskLbl);
 						return fieldContainer;
 					}
@@ -134,18 +143,18 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 		@Override
 		protected void doPrint() {
 			// Create a window that contains what you want to print
-			Window window = new Window("Window to Print");
+			final Window window = new Window("Window to Print");
 
-			TaskGroupReadViewImpl printView = new TaskGroupReadViewImpl.PrintView();
-			printView.previewItem(taskList);
+			final TaskGroupReadViewImpl printView = new TaskGroupReadViewImpl.PrintView();
+			printView.previewItem(TaskGroupReadViewImpl.this.taskList);
 			window.addComponent(printView);
 
 			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
+			this.getApplication().addWindow(window);
 
 			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
+			this.getWindow().open(new ExternalResource(window.getURL()),
+					"_blank", 1100, 200, // Width and height
 					Window.BORDER_NONE); // No decorations
 
 			// Print automatically when the window opens.
@@ -158,10 +167,10 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 
 		@Override
 		protected void showHistory() {
-			TaskListHistoryLogWindow historyLog = new TaskListHistoryLogWindow(
+			final TaskListHistoryLogWindow historyLog = new TaskListHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.TASK_LIST,
-					taskList.getId());
-			getWindow().addWindow(historyLog);
+					TaskGroupReadViewImpl.this.taskList.getId());
+			this.getWindow().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends TaskGroupFormLayoutFactory {
@@ -169,9 +178,10 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(taskList.getName());
-				if ("Closed".equals(taskList.getStatus())) {
-					addTitleStyle(UIConstants.LINK_COMPLETED);
+				super(TaskGroupReadViewImpl.this.taskList.getName());
+				if ("Closed".equals(TaskGroupReadViewImpl.this.taskList
+						.getStatus())) {
+					this.addTitleStyle(UIConstants.LINK_COMPLETED);
 				}
 			}
 
@@ -179,15 +189,17 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			protected Layout createTopPanel() {
 				return (new ProjectPreviewFormControlsGenerator<SimpleTaskList>(
 						PreviewForm.this)).createButtonControls(
-								ProjectRolePermissionCollections.TASKS, true);
+						ProjectRolePermissionCollections.TASKS, true);
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
-				relatedItemsPanel.addComponent(new CommentListDepot(
-						CommentTypeConstants.PRJ_TASK_LIST, taskList.getId(),
-						true, true));
+				final VerticalLayout relatedItemsPanel = new VerticalLayout();
+				final CommentListDepot commentList = new CommentListDepot(
+						CommentTypeConstants.PRJ_TASK_LIST,
+						TaskGroupReadViewImpl.this.taskList.getId(), true, true);
+				commentList.setWidth("100%");
+				relatedItemsPanel.addComponent(commentList);
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}
@@ -198,51 +210,61 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 	public static class PrintView extends TaskGroupReadViewImpl {
 
 		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<SimpleTaskList>() {
+			this.previewForm = new AdvancedPreviewBeanForm<SimpleTaskList>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new FormLayoutFactory());
 					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						protected Field onCreateField(Item item,
-								Object propertyId, Component uiContext) {
+						protected Field onCreateField(final Item item,
+								final Object propertyId,
+								final Component uiContext) {
 
 							if (propertyId.equals("milestoneid")) {
-								return new FormLinkViewField(taskList
-										.getMilestoneName(),
+								return new FormLinkViewField(
+										PrintView.this.taskList
+												.getMilestoneName(),
 										new Button.ClickListener() {
 											private static final long serialVersionUID = 1L;
 
 											@Override
 											public void buttonClick(
-													ClickEvent event) {
+													final ClickEvent event) {
 												EventBus.getInstance()
 														.fireEvent(
 																new MilestoneEvent.GotoRead(
 																		this,
-																		taskList.getMilestoneid()));
+																		PrintView.this.taskList
+																				.getMilestoneid()));
 											}
 										});
 							} else if (propertyId.equals("owner")) {
-								return new ProjectUserFormLinkField(taskList
-										.getOwner(), taskList
-										.getOwnerFullName());
+								return new ProjectUserFormLinkField(
+										PrintView.this.taskList.getOwner(),
+										PrintView.this.taskList
+												.getOwnerFullName());
 							} else if (propertyId.equals("percentageComplete")) {
-								FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-								ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
-										taskList.getPercentageComplete());
+								final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+								final ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
+										PrintView.this.taskList
+												.getPercentageComplete());
 								fieldContainer.addComponentField(progressField);
 								return fieldContainer;
 							} else if (propertyId.equals("description")) {
-								return new FormViewField(taskList
-										.getDescription(), Label.CONTENT_XHTML);
+								return new FormViewField(
+										PrintView.this.taskList
+												.getDescription(),
+										Label.CONTENT_XHTML);
 							} else if (propertyId.equals("numOpenTasks")) {
-								FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-								Label numTaskLbl = new Label("("
-										+ taskList.getNumOpenTasks() + "/"
-										+ taskList.getNumAllTasks() + ")");
+								final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+								final Label numTaskLbl = new Label("("
+										+ PrintView.this.taskList
+												.getNumOpenTasks()
+										+ "/"
+										+ PrintView.this.taskList
+												.getNumAllTasks() + ")");
 								fieldContainer.addComponentField(numTaskLbl);
 								return fieldContainer;
 							}
@@ -254,7 +276,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 				}
 			};
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 		}
 
 		class FormLayoutFactory extends TaskGroupFormLayoutFactory {
@@ -262,7 +284,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(taskList.getName());
+				super(PrintView.this.taskList.getName());
 			}
 
 			@Override
@@ -272,10 +294,10 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.addComponent(new CommentListDepot(
-						CommentTypeConstants.PRJ_TASK_LIST, taskList.getId(),
-						false, false));
+						CommentTypeConstants.PRJ_TASK_LIST,
+						PrintView.this.taskList.getId(), false, false));
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}
@@ -285,18 +307,18 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 	@SuppressWarnings("serial")
 	public class TaskDepot extends Depot {
 
-		private TaskDisplayComponent taskDisplayComponent;
+		private final TaskDisplayComponent taskDisplayComponent;
 
 		public TaskDepot() {
 			super("Tasks", new HorizontalLayout(), new TaskDisplayComponent(
-					taskList, false));
+					TaskGroupReadViewImpl.this.taskList, false));
 			this.addStyleName("task-list");
-			initHeader();
-			taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
+			this.initHeader();
+			this.taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
 		}
 
 		private void initHeader() {
-			HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
+			final HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
 			headerLayout.setSpacing(true);
 
 			final PopupButton taskListFilterControl;
@@ -304,42 +326,42 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			taskListFilterControl.setWidth("120px");
 			taskListFilterControl.addStyleName("link");
 
-			VerticalLayout filterBtnLayout = new VerticalLayout();
+			final VerticalLayout filterBtnLayout = new VerticalLayout();
 			filterBtnLayout.setMargin(true);
 			filterBtnLayout.setSpacing(true);
 			filterBtnLayout.setWidth("200px");
 
-			Button allTasksFilterBtn = new Button("All Tasks",
+			final Button allTasksFilterBtn = new Button("All Tasks",
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							taskListFilterControl.setPopupVisible(false);
 							taskListFilterControl.setCaption("All Tasks");
-							displayAllTasks();
+							TaskDepot.this.displayAllTasks();
 						}
 					});
 			allTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(allTasksFilterBtn);
 
-			Button activeTasksFilterBtn = new Button("Active Tasks Only",
+			final Button activeTasksFilterBtn = new Button("Active Tasks Only",
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							taskListFilterControl.setPopupVisible(false);
 							taskListFilterControl.setCaption("Active Tasks");
-							displayActiveTasksOnly();
+							TaskDepot.this.displayActiveTasksOnly();
 						}
 					});
 			activeTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(activeTasksFilterBtn);
 
-			Button archievedTasksFilterBtn = new Button("Archieved Tasks Only",
-					new Button.ClickListener() {
+			final Button archievedTasksFilterBtn = new Button(
+					"Archieved Tasks Only", new Button.ClickListener() {
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							taskListFilterControl.setCaption("Archieved Tasks");
 							taskListFilterControl.setPopupVisible(false);
-							displayInActiveTasks();
+							TaskDepot.this.displayInActiveTasks();
 						}
 					});
 			archievedTasksFilterBtn.setStyleName("link");
@@ -349,35 +371,36 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 		}
 
 		private TaskSearchCriteria createBaseSearchCriteria() {
-			TaskSearchCriteria criteria = new TaskSearchCriteria();
+			final TaskSearchCriteria criteria = new TaskSearchCriteria();
 			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
-			criteria.setTaskListId(new NumberSearchField(taskList.getId()));
+			criteria.setTaskListId(new NumberSearchField(
+					TaskGroupReadViewImpl.this.taskList.getId()));
 			return criteria;
 		}
 
 		private void displayActiveTasksOnly() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
+			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
 					new String[] { "Open", "Pending" }));
-			taskDisplayComponent.setSearchCriteria(criteria);
+			this.taskDisplayComponent.setSearchCriteria(criteria);
 		}
 
 		private void displayAllTasks() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
-			taskDisplayComponent.setSearchCriteria(criteria);
+			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
+			this.taskDisplayComponent.setSearchCriteria(criteria);
 		}
 
 		private void displayInActiveTasks() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
+			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
 					new String[] { "Closed" }));
-			taskDisplayComponent.setSearchCriteria(criteria);
+			this.taskDisplayComponent.setSearchCriteria(criteria);
 		}
 	}
 
 	@Override
 	public SimpleTaskList getItem() {
-		return taskList;
+		return this.taskList;
 	}
 }

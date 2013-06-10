@@ -36,56 +36,58 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 
 	public UserGroupViewImpl() {
 
-		myProjectTab = new DetachedTabs.Horizontal(mySpaceArea);
-		myProjectTab.setSizeUndefined();
+		this.myProjectTab = new DetachedTabs.Horizontal(this.mySpaceArea);
+		this.myProjectTab.setSizeUndefined();
 
-		HorizontalLayout menu = new HorizontalLayout();
+		final HorizontalLayout menu = new HorizontalLayout();
 		menu.setWidth("100%");
 		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
 		menu.setHeight("40px");
-		menu.addComponent(myProjectTab);
+		menu.addComponent(this.myProjectTab);
 
 		this.addComponent(menu);
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setHeight(null);
-		this.addComponent(mySpaceArea);
-		this.setExpandRatio(mySpaceArea, 1.0f);
+		this.mySpaceArea.setWidth("100%");
+		this.mySpaceArea.setHeight(null);
+		this.addComponent(this.mySpaceArea);
+		this.setExpandRatio(this.mySpaceArea, 1.0f);
 		this.setWidth("100%");
-		this.setMargin(false, true, true, true);
-		buildComponents();
+		this.setMargin(true);
+		this.buildComponents();
 	}
 
 	private void buildComponents() {
-		userPresenter = PresenterResolver
+		this.userPresenter = PresenterResolver
 				.getPresenter(ProjectMemberPresenter.class);
-		myProjectTab.addTab(userPresenter.getView(), "Users");
+		this.myProjectTab.addTab(this.userPresenter.getView(), "Users");
 
-		rolePresenter = PresenterResolver
+		this.rolePresenter = PresenterResolver
 				.getPresenter(ProjectRolePresenter.class);
-		myProjectTab.addTab(rolePresenter.getView(), "Roles");
+		this.myProjectTab.addTab(this.rolePresenter.getView(), "Roles");
 
-		myProjectTab
+		this.myProjectTab
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
 					@Override
-					public void tabChanged(DetachedTabs.TabChangedEvent event) {
-						Button btn = event.getSource();
-						String caption = btn.getCaption();
-						SimpleProject project = CurrentProjectVariables
+					public void tabChanged(
+							final DetachedTabs.TabChangedEvent event) {
+						final Button btn = event.getSource();
+						final String caption = btn.getCaption();
+						final SimpleProject project = CurrentProjectVariables
 								.getProject();
 
 						if ("Users".equals(caption)) {
-							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+							final ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 							criteria.setProjectId(new NumberSearchField(project
 									.getId()));
-							userPresenter
+							UserGroupViewImpl.this.userPresenter
 									.go(UserGroupViewImpl.this,
 											new ScreenData.Search<ProjectMemberSearchCriteria>(
 													criteria));
 						} else if ("Roles".equals(caption)) {
-							ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
+							final ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
 							criteria.setProjectId(new NumberSearchField(project
 									.getId()));
-							rolePresenter.go(UserGroupViewImpl.this,
+							UserGroupViewImpl.this.rolePresenter.go(
+									UserGroupViewImpl.this,
 									new ProjectRoleScreenData.Search(criteria));
 						}
 					}
@@ -94,8 +96,8 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 	}
 
 	@Override
-	public Component gotoSubView(String name) {
-		View component = (View) myProjectTab.selectTab(name);
+	public Component gotoSubView(final String name) {
+		final View component = (View) this.myProjectTab.selectTab(name);
 		return component;
 	}
 }
