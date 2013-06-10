@@ -29,7 +29,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	protected abstract Layout createTopPanel();
-	
+
 	protected abstract Layout createBottomPanel();
 
 	@Override
