@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.google.gwt.user.client.ui.TextArea;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -65,7 +66,8 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
+				FileManagerViewImpl.this.getWindow().addWindow(
+						new UploadContentWindow());
 
 			}
 		});
@@ -260,8 +262,19 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		private GridFormLayoutHelper layoutHelper;
 
+		private TextField titleField;
+		private TextArea descField;
+		
 		public UploadContentWindow() {
+			super("Upload Content");
+			this.setWidth("500px");
+			this.setModal(true);
+			
 			layoutHelper = new GridFormLayoutHelper(2, 2);
+
+			
+			
+			this.addComponent(layoutHelper.getLayout());
 		}
 
 	}

@@ -150,18 +150,16 @@ public class MyCollabModelFilePlugin extends
 
 	private void generateUpdateMultipleKeysSqlStatement(Document document,
 			IntrospectedTable introspectedTable) {
-		XmlElement element = new XmlElement("update");
-		element.addAttribute(new Attribute("id", "massUpdateWithSession"));
-		element.addAttribute(new Attribute("parameterType", "map"));
-
-		TextElement commentElement = new TextElement(
-				"<!--WARNING - @mbggenerated-->");
-		element.addElement(commentElement);
+		XmlElement sqlElement = new XmlElement("sql");
+		sqlElement
+				.addAttribute(new Attribute("id", "massUpdateWithSessionSql"));
+		sqlElement
+				.addElement(new TextElement("<!--WARNING - @mbggenerated-->"));
 
 		StringBuffer sqlBuilder = new StringBuffer("update ")
 				.append(introspectedTable
 						.getAliasedFullyQualifiedTableNameAtRuntime());
-		element.addElement(new TextElement(sqlBuilder.toString()));
+		sqlElement.addElement(new TextElement(sqlBuilder.toString()));
 		XmlElement setElement = new XmlElement("set");
 
 		// set every field of table
@@ -181,7 +179,21 @@ public class MyCollabModelFilePlugin extends
 				setElement.addElement(ifElement);
 			}
 		}
-		element.addElement(setElement);
+		sqlElement.addElement(setElement);
+		document.getRootElement().addElement(sqlElement);
+
+		XmlElement element = new XmlElement("update");
+		element.addAttribute(new Attribute("id", "massUpdateWithSession"));
+		element.addAttribute(new Attribute("parameterType", "map"));
+		TextElement commentElement = new TextElement(
+				"<!--WARNING - @mbggenerated-->");
+		element.addElement(commentElement);
+
+		XmlElement includeElement = new XmlElement("include");
+		includeElement.addAttribute(new Attribute("refid",
+				"massUpdateWithSessionSql"));
+
+		element.addElement(includeElement);
 
 		// generate query statement
 		XmlElement queryElement = new XmlElement("if");
