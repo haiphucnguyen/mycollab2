@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -146,11 +147,15 @@ public class FileManagerViewImpl extends AbstractView implements
 		this.addComponent(resourceContainer);
 	}
 
-	private void displayResourcesInTable(Folder baseFolder) {
-		List<Resource> resources = resourceService.getResources(baseFolder
+	private void displayResourcesInTable(Folder folder) {
+		List<Resource> resources = resourceService.getResources(folder
 				.getPath());
 		resourceTable.setContainerDataSource(new BeanItemContainer<Resource>(
 				Resource.class, resources));
+		resourceTable.setVisibleColumns(new String[] { "path", "size",
+				"created", "createdBy" });
+		resourceTable.setColumnHeaders(new String[] { "Name", "Size",
+				"Created", "By" });
 	}
 
 	@Override
@@ -167,8 +172,15 @@ public class FileManagerViewImpl extends AbstractView implements
 				.getProject().getName());
 
 		folderTree.expandItem(baseFolder);
+		displayResourcesInTable(baseFolder);
 	}
 
+	/**
+	 * Window to ask user enter the new folder
+	 * 
+	 * @author haiphucnguyen
+	 * 
+	 */
 	private class AddNewFolderWindow extends Window {
 		private static final long serialVersionUID = 1L;
 
@@ -243,6 +255,17 @@ public class FileManagerViewImpl extends AbstractView implements
 		}
 	}
 
+	private class UploadContentWindow extends Window {
+		private static final long serialVersionUID = 1L;
+
+		private GridFormLayoutHelper layoutHelper;
+
+		public UploadContentWindow() {
+			layoutHelper = new GridFormLayoutHelper(2, 2);
+		}
+
+	}
+
 	@SuppressWarnings("serial")
 	private class ResourceTableDisplay extends Table {
 		public ResourceTableDisplay() {
@@ -254,7 +277,12 @@ public class FileManagerViewImpl extends AbstractView implements
 						Object columnId) {
 					Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
-					return new Label(resource.getPath());
+					String path = resource.getPath();
+					int pathIndex = path.lastIndexOf("/");
+					if (pathIndex > -1) {
+						path = path.substring(pathIndex + 1);
+					}
+					return new Label(path);
 				}
 			});
 
@@ -291,11 +319,6 @@ public class FileManagerViewImpl extends AbstractView implements
 					return new Label(resource.getCreatedBy());
 				}
 			});
-
-			this.setVisibleColumns(new String[] { "path", "size", "created",
-					"createdBy" });
-			this.setColumnHeaders(new String[] { "Name", "Size", "Created",
-					"By" });
 		}
 
 		private Resource getResource(Object itemId) {
