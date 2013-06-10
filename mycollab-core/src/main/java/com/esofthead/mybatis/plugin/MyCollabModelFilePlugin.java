@@ -171,7 +171,7 @@ public class MyCollabModelFilePlugin extends
 				ifElement.addAttribute(new Attribute("test", String.format(
 						conditionStr, column.getJavaProperty())));
 
-				String setStr = "%s = #{record.%s,jdbcType=%s}";
+				String setStr = "%s = #{record.%s,jdbcType=%s},";
 				ifElement.addElement(new TextElement(String.format(setStr,
 						column.getActualColumnName(), column.getJavaProperty(),
 						column.getJdbcTypeName())));

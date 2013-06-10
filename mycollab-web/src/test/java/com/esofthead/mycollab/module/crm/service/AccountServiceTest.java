@@ -218,6 +218,7 @@ public class AccountServiceTest extends ServiceTest {
 		List<Integer> updateKeys = Arrays.asList(1, 2, 3);
 		Account account = new Account();
 		account.setAssignuser("hai79");
+		account.setIndustry("aaa");
 		accountService.massUpdateWithSession(account, updateKeys);
 
 		List<SimpleAccount> accountList = accountService
