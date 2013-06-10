@@ -13,10 +13,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -30,8 +32,8 @@ public class FileManagerViewImpl extends AbstractView implements
 		FileManagerView {
 	private static final long serialVersionUID = 1L;
 
-	private Tree tree;
-	private Table resourceTable;
+	private Tree folderTree;
+	private ResourceTableDisplay resourceTable;
 	private String projectPath;
 
 	private Folder baseFolder;
@@ -49,7 +51,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						baseFolder = (Folder) tree.getValue();
+						baseFolder = (Folder) folderTree.getValue();
 						FileManagerViewImpl.this.getWindow().addWindow(
 								new AddNewFolderWindow());
 					}
@@ -82,14 +84,17 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		this.addComponent(menuBar);
 
-		tree = new Tree();
-		tree.setMultiSelect(false);
-		tree.setImmediate(true);
-		tree.setItemCaptionMode(Tree.ITEM_CAPTION_MODE_EXPLICIT);
+		HorizontalSplitPanel resourceContainer = new HorizontalSplitPanel();
+		resourceContainer.setWidth("100%");
 
-		this.addComponent(tree);
+		folderTree = new Tree();
+		folderTree.setMultiSelect(false);
+		folderTree.setImmediate(true);
+		folderTree.setItemCaptionMode(Tree.ITEM_CAPTION_MODE_EXPLICIT);
 
-		tree.addListener(new Tree.ExpandListener() {
+		resourceContainer.addComponent(folderTree);
+
+		folderTree.addListener(new Tree.ExpandListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -100,15 +105,16 @@ public class FileManagerViewImpl extends AbstractView implements
 				if (subFolders != null) {
 					for (Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
-						tree.addItem(subFolder);
-						tree.setItemCaption(subFolder, subFolder.getName());
-						tree.setParent(subFolder, expandFolder);
+						folderTree.addItem(subFolder);
+						folderTree.setItemCaption(subFolder,
+								subFolder.getName());
+						folderTree.setParent(subFolder, expandFolder);
 					}
 				}
 			}
 		});
 
-		tree.addListener(new Tree.CollapseListener() {
+		folderTree.addListener(new Tree.CollapseListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -116,14 +122,14 @@ public class FileManagerViewImpl extends AbstractView implements
 				Folder collapseFolder = (Folder) event.getItemId();
 				List<Folder> childs = collapseFolder.getChilds();
 				for (Folder subFolder : childs) {
-					tree.removeItem(subFolder);
+					folderTree.removeItem(subFolder);
 				}
 
 				childs.clear();
 			}
 		});
 
-		tree.addListener(new ItemClickEvent.ItemClickListener() {
+		folderTree.addListener(new ItemClickEvent.ItemClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -133,54 +139,34 @@ public class FileManagerViewImpl extends AbstractView implements
 			}
 		});
 
-		resourceTable = new Table();
-		resourceTable.addGeneratedColumn("path", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+		resourceTable = new ResourceTableDisplay();
+		resourceTable.setWidth("800px");
+		resourceContainer.addComponent(resourceTable);
 
-			@Override
-			public Object generateCell(Table source, Object itemId,
-					Object columnId) {
-				final Container container = source.getContainerDataSource();
-				final BeanItem<Resource> item = (BeanItem<Resource>) container
-						.getItem(itemId);
-				if (item != null) {
-					Resource resource = item.getBean();
-					return new Label(resource.getPath());
-				} else {
-					return new Label("Undefined resource");
-				}
-			}
-		});
-
-		this.addComponent(resourceTable);
+		this.addComponent(resourceContainer);
 	}
 
 	private void displayResourcesInTable(Folder baseFolder) {
-		// Folder testFolder = new Folder();
-		// testFolder.setPath("/a/b/d");
-		//
-		// Content content = new Content();
-		// content.setPath("/a/b/e");
-		//
-		// List<Resource> resources = Arrays.asList(testFolder, content);
-		// resourceTable.setContainerDataSource(new BeanItemContainer(
-		// Resource.class, resources));
+		List<Resource> resources = resourceService.getResources(baseFolder
+				.getPath());
+		resourceTable.setContainerDataSource(new BeanItemContainer<Resource>(
+				Resource.class, resources));
 	}
 
 	@Override
 	public void displayProjectFiles() {
-		tree.removeAllItems();
+		folderTree.removeAllItems();
 		int projectId = CurrentProjectVariables.getProjectId();
 		projectPath = String.format("%d/project/%d", AppContext.getAccountId(),
 				projectId);
 
 		baseFolder = new Folder();
 		baseFolder.setPath(projectPath);
-		tree.addItem(baseFolder);
-		tree.setItemCaption(baseFolder, CurrentProjectVariables.getProject()
-				.getName());
+		folderTree.addItem(baseFolder);
+		folderTree.setItemCaption(baseFolder, CurrentProjectVariables
+				.getProject().getName());
 
-		tree.expandItem(baseFolder);
+		folderTree.expandItem(baseFolder);
 	}
 
 	private class AddNewFolderWindow extends Window {
@@ -225,12 +211,12 @@ public class FileManagerViewImpl extends AbstractView implements
 												folderVal,
 												AppContext.getUsername());
 								baseFolder.addChild(newFolder);
-								tree.addItem(newFolder);
-								tree.setItemCaption(newFolder,
+								folderTree.addItem(newFolder);
+								folderTree.setItemCaption(newFolder,
 										newFolder.getName());
-								tree.setParent(newFolder, baseFolder);
-								if (!tree.isExpanded(baseFolder)) {
-									tree.expandItem(baseFolder);
+								folderTree.setParent(newFolder, baseFolder);
+								if (!folderTree.isExpanded(baseFolder)) {
+									folderTree.expandItem(baseFolder);
 								}
 								AddNewFolderWindow.this.close();
 
@@ -254,6 +240,69 @@ public class FileManagerViewImpl extends AbstractView implements
 			controlsLayout.addComponent(cancelBtn);
 
 			this.addComponent(controlsLayout);
+		}
+	}
+
+	@SuppressWarnings("serial")
+	private class ResourceTableDisplay extends Table {
+		public ResourceTableDisplay() {
+			this.addGeneratedColumn("path", new Table.ColumnGenerator() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					Resource resource = ResourceTableDisplay.this
+							.getResource(itemId);
+					return new Label(resource.getPath());
+				}
+			});
+
+			this.addGeneratedColumn("created", new Table.ColumnGenerator() {
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					Resource resource = ResourceTableDisplay.this
+							.getResource(itemId);
+					return new Label(AppContext.formatDateTime(resource
+							.getCreated().getTime()));
+				}
+			});
+
+			this.addGeneratedColumn("size", new Table.ColumnGenerator() {
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					Resource resource = ResourceTableDisplay.this
+							.getResource(itemId);
+					return new Label(resource.getSize() + "");
+				}
+			});
+
+			this.addGeneratedColumn("createdBy", new Table.ColumnGenerator() {
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					Resource resource = ResourceTableDisplay.this
+							.getResource(itemId);
+					return new Label(resource.getCreatedBy());
+				}
+			});
+
+			this.setVisibleColumns(new String[] { "path", "size", "created",
+					"createdBy" });
+			this.setColumnHeaders(new String[] { "Name", "Size", "Created",
+					"By" });
+		}
+
+		private Resource getResource(Object itemId) {
+			final Container container = this.getContainerDataSource();
+			final BeanItem<Resource> item = (BeanItem<Resource>) container
+					.getItem(itemId);
+			return (item != null) ? item.getBean() : null;
 		}
 	}
 }

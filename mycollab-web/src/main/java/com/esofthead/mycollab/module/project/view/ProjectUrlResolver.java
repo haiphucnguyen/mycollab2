@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver;
+import com.esofthead.mycollab.module.project.view.file.ProjectFileUrlResolver;
 import com.esofthead.mycollab.module.project.view.message.MessageUrlResolver;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
@@ -32,6 +33,7 @@ public class ProjectUrlResolver extends UrlResolver {
 		this.addSubResolver("user", new UserUrlResolver());
 		this.addSubResolver("role", new RoleUrlResolver());
 		this.addSubResolver("time", new TimeUrlResolver());
+		this.addSubResolver("file", new ProjectFileUrlResolver());
 	}
 
 	@Override
