@@ -32,6 +32,7 @@ import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 		implements ListPresenter<AccountSearchCriteria> {
@@ -190,6 +191,8 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 
 							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
+							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow("Mass Update Accounts");
+							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
 				});
