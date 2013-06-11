@@ -247,6 +247,8 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 					"State", 2, 2);
 			userField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assigned User", 2, 3);
+			
+			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
 		}
 

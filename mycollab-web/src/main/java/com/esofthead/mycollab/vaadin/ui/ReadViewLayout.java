@@ -22,34 +22,45 @@ public class ReadViewLayout extends CssLayout {
 	public ReadViewLayout(final ThemeResource icon) {
 		setSizeFull();
 		setStyleName("readview-layout");
+		
+		if(icon!=null){
+			header = new HorizontalLayout();
+			header.setWidth("100%");
+			header.setMargin(true, true, false, true);
+			header.setStyleName("readview-layout-header");
+			this.addComponent(header);
 
-		header = new HorizontalLayout();
-		header.setWidth("100%");
-		header.setMargin(true, true, false, true);
-		header.setStyleName("readview-layout-header");
-		this.addComponent(header);
+			iconEmbed = new Embedded();
+			iconEmbed.setSource(icon);
+			header.addComponent(iconEmbed);
+			header.setComponentAlignment(iconEmbed, Alignment.MIDDLE_LEFT);
 
-		iconEmbed = new Embedded();
-		iconEmbed.setSource(icon);
-		header.addComponent(iconEmbed);
-		header.setComponentAlignment(iconEmbed, Alignment.MIDDLE_LEFT);
-
-		titleLbl = new Label();
-		titleLbl.setStyleName("h1");
-		header.addComponent(titleLbl);
-		header.setExpandRatio(titleLbl, 1.0f);
-		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
-
-		body = new CssLayout();
-		body.setStyleName("readview-layout-body");
-		body.setSizeFull();
-		this.addComponent(body);
-		// this.setExpandRatio(body, 1.0f);
-
-		viewTab = new DetachedTabs.Horizontal(body);
-		viewTab.setSizeUndefined();
-		header.addComponent(viewTab);
-		header.setComponentAlignment(viewTab, Alignment.BOTTOM_CENTER);
+			titleLbl = new Label();
+			titleLbl.setStyleName("h1");
+			header.addComponent(titleLbl);
+			header.setExpandRatio(titleLbl, 1.0f);
+			header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
+			body = new CssLayout();
+			body.setStyleName("readview-layout-body");
+			body.setSizeFull();
+			this.addComponent(body);
+			// this.setExpandRatio(body, 1.0f);
+	
+			viewTab = new DetachedTabs.Horizontal(body);
+			viewTab.setSizeUndefined();
+			header.addComponent(viewTab);
+			header.setComponentAlignment(viewTab, Alignment.BOTTOM_CENTER);
+		}else{
+			header = null;
+			iconEmbed = null;
+			titleLbl = null;
+			viewTab = null;
+			
+			body = new CssLayout();
+			body.setStyleName("readview-layout-body");
+			body.setSizeFull();
+			this.addComponent(body);
+		}
 	}
 
 	public void addControlButtons(final Component controlsBtn) {

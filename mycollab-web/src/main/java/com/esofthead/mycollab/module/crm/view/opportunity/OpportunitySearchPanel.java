@@ -240,6 +240,7 @@ public class OpportunitySearchPanel extends
 			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
 					new LeadSourceListSelect(), "Lead Source", 2, 1);
 
+			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
 		}
 
