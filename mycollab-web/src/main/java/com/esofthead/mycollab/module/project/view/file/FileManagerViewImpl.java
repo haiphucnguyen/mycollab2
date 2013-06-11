@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.file;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.vaadin.easyuploads.SingleFileUploadField;
@@ -264,8 +265,6 @@ public class FileManagerViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		private GridFormLayoutHelper layoutHelper;
-
-		private TextField titleField;
 		private TextArea descField;
 		private SingleFileUploadField uploadField;
 
@@ -274,15 +273,12 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.setWidth("500px");
 			this.setModal(true);
 
-			layoutHelper = new GridFormLayoutHelper(1, 3);
-
-			titleField = (TextField) layoutHelper.addComponent(new TextField(),
-					"Title", 0, 0);
-			descField = (TextArea) layoutHelper.addComponent(new TextArea(),
-					"Description", 0, 1);
+			layoutHelper = new GridFormLayoutHelper(1, 2);
 
 			uploadField = (SingleFileUploadField) layoutHelper.addComponent(
-					new SingleFileUploadField(), "File", 0, 2);
+					new SingleFileUploadField(), "File", 0, 0);
+			descField = (TextArea) layoutHelper.addComponent(new TextArea(),
+					"Description", 0, 1);
 
 			this.addComponent(layoutHelper.getLayout());
 
@@ -295,11 +291,23 @@ public class FileManagerViewImpl extends AbstractView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					// TODO Auto-generated method stub
-					Content content = new Content();
-					content.setTitle((String) titleField.getValue());
-					content.setDescription((String) descField.getValue());
-					content.setPath(baseFolder.getPath() + "/" );
-					UploadContentWindow.this.close();
+					InputStream contentStream = uploadField
+							.getContentAsStream();
+					if (contentStream != null) {
+						Content content = new Content();
+						content.setDescription((String) descField.getValue());
+						content.setPath(baseFolder.getPath() + "/"
+								+ uploadField.getFileName());
+						resourceService.saveContent(content, contentStream);
+						UploadContentWindow.this.close();
+					} else {
+						AppContext
+								.getApplication()
+								.getMainWindow()
+								.showNotification(
+										"It seems you did not attach file yet!");
+					}
+
 				}
 			});
 
