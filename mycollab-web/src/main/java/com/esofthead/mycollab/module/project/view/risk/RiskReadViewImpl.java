@@ -36,25 +36,25 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
 	public RiskReadViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
+		this.setMargin(true);
+		this.previewForm = new PreviewForm();
+		this.addComponent(this.previewForm);
 	}
 
 	@Override
-	public void previewItem(SimpleRisk item) {
-		risk = item;
-		previewForm.setItemDataSource(new BeanItem<Risk>(item));
+	public void previewItem(final SimpleRisk item) {
+		this.risk = item;
+		this.previewForm.setItemDataSource(new BeanItem<Risk>(item));
 	}
 
 	@Override
 	public SimpleRisk getItem() {
-		return risk;
+		return this.risk;
 	}
 
 	@Override
 	public HasPreviewFormHandlers<Risk> getPreviewFormHandlers() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	private class PreviewForm extends AdvancedPreviewBeanForm<Risk> {
@@ -62,38 +62,42 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
+				protected Field onCreateField(final Item item,
+						final Object propertyId, final Component uiContext) {
 					if (propertyId.equals("description")) {
-						return new FormViewField(risk.getDescription(),
-								Label.CONTENT_XHTML);
+						return new FormViewField(RiskReadViewImpl.this.risk
+								.getDescription(), Label.CONTENT_XHTML);
 					} else if (propertyId.equals("level")) {
-						RatingStars tinyRs = new RatingStars();
-						tinyRs.setValue(risk.getLevel());
+						final RatingStars tinyRs = new RatingStars();
+						tinyRs.setValue(RiskReadViewImpl.this.risk.getLevel());
 						tinyRs.setReadOnly(true);
 						return tinyRs;
 					} else if (propertyId.equals("status")) {
-						return new FormViewField(risk.getStatus());
+						return new FormViewField(RiskReadViewImpl.this.risk
+								.getStatus());
 					} else if (propertyId.equals("datedue")) {
-						return new FormViewField(AppContext.formatDate(risk
-								.getDatedue()));
+						return new FormViewField(AppContext
+								.formatDate(RiskReadViewImpl.this.risk
+										.getDatedue()));
 					} else if (propertyId.equals("raisedbyuser")) {
-						return new ProjectUserFormLinkField(risk
-								.getRaisedbyuser(), risk
-								.getRaisedByUserFullName());
+						return new ProjectUserFormLinkField(
+								RiskReadViewImpl.this.risk.getRaisedbyuser(),
+								RiskReadViewImpl.this.risk
+										.getRaisedByUserFullName());
 					} else if (propertyId.equals("response")) {
-						return new FormViewField(risk.getResponse(),
-								Label.CONTENT_XHTML);
+						return new FormViewField(RiskReadViewImpl.this.risk
+								.getResponse(), Label.CONTENT_XHTML);
 					} else if (propertyId.equals("assigntouser")) {
-						return new ProjectUserFormLinkField(risk
-								.getAssigntouser(), risk
-								.getAssignedToUserFullName());
+						return new ProjectUserFormLinkField(
+								RiskReadViewImpl.this.risk.getAssigntouser(),
+								RiskReadViewImpl.this.risk
+										.getAssignedToUserFullName());
 					}
 
 					return null;
@@ -105,18 +109,18 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 		@Override
 		protected void doPrint() {
 			// Create a window that contains what you want to print
-			Window window = new Window("Window to Print");
+			final Window window = new Window("Window to Print");
 
-			RiskReadViewImpl printView = new RiskReadViewImpl.PrintView();
-			printView.previewItem(risk);
+			final RiskReadViewImpl printView = new RiskReadViewImpl.PrintView();
+			printView.previewItem(RiskReadViewImpl.this.risk);
 			window.addComponent(printView);
 
 			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
+			this.getApplication().addWindow(window);
 
 			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
+			this.getWindow().open(new ExternalResource(window.getURL()),
+					"_blank", 1100, 200, // Width and height
 					Window.BORDER_NONE); // No decorations
 
 			// Print automatically when the window opens.
@@ -129,9 +133,10 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
 		@Override
 		protected void showHistory() {
-			RiskHistoryLogWindow historyLog = new RiskHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.RISK, risk.getId());
-			getWindow().addWindow(historyLog);
+			final RiskHistoryLogWindow historyLog = new RiskHistoryLogWindow(
+					ModuleNameConstants.PRJ, ProjectContants.RISK,
+					RiskReadViewImpl.this.risk.getId());
+			this.getWindow().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends RiskFormLayoutFactory {
@@ -139,19 +144,23 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(risk.getRiskname());
+				super(RiskReadViewImpl.this.risk.getRiskname());
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new ProjectPreviewFormControlsGenerator<Risk>(PreviewForm.this))
+				return (new ProjectPreviewFormControlsGenerator<Risk>(
+						PreviewForm.this))
 						.createButtonControls(ProjectRolePermissionCollections.RISKS);
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return new CommentListDepot(CommentTypeConstants.PRJ_RISK,
-						risk.getId(), true, false);
+				final CommentListDepot commentList = new CommentListDepot(
+						CommentTypeConstants.PRJ_RISK,
+						RiskReadViewImpl.this.risk.getId(), true, false);
+				commentList.setWidth("100%");
+				return commentList;
 			}
 		}
 	}
@@ -160,41 +169,46 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 	public static class PrintView extends RiskReadViewImpl {
 
 		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<Risk>() {
+			this.previewForm = new AdvancedPreviewBeanForm<Risk>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new RiskReadViewImpl.PrintView.FormLayoutFactory());
 					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						protected Field onCreateField(Item item,
-								Object propertyId, Component uiContext) {
+						protected Field onCreateField(final Item item,
+								final Object propertyId,
+								final Component uiContext) {
 
 							if (propertyId.equals("description")) {
-								return new FormViewField(risk.getDescription(),
-										Label.CONTENT_XHTML);
+								return new FormViewField(PrintView.this.risk
+										.getDescription(), Label.CONTENT_XHTML);
 							} else if (propertyId.equals("level")) {
-								RatingStars tinyRs = new RatingStars();
-								tinyRs.setValue(risk.getLevel());
+								final RatingStars tinyRs = new RatingStars();
+								tinyRs.setValue(PrintView.this.risk.getLevel());
 								tinyRs.setReadOnly(true);
 								return tinyRs;
 							} else if (propertyId.equals("status")) {
-								return new FormViewField(risk.getStatus());
+								return new FormViewField(PrintView.this.risk
+										.getStatus());
 							} else if (propertyId.equals("datedue")) {
 								return new FormViewField(AppContext
-										.formatDate(risk.getDatedue()));
+										.formatDate(PrintView.this.risk
+												.getDatedue()));
 							} else if (propertyId.equals("raisedbyuser")) {
-								return new ProjectUserFormLinkField(risk
-										.getRaisedbyuser(), risk
-										.getRaisedByUserFullName());
+								return new ProjectUserFormLinkField(
+										PrintView.this.risk.getRaisedbyuser(),
+										PrintView.this.risk
+												.getRaisedByUserFullName());
 							} else if (propertyId.equals("assigntouser")) {
-								return new ProjectUserFormLinkField(risk
-										.getAssigntouser(), risk
-										.getAssignedToUserFullName());
+								return new ProjectUserFormLinkField(
+										PrintView.this.risk.getAssigntouser(),
+										PrintView.this.risk
+												.getAssignedToUserFullName());
 							} else if (propertyId.equals("response")) {
-								return new FormViewField(risk.getResponse(),
-										Label.CONTENT_XHTML);
+								return new FormViewField(PrintView.this.risk
+										.getResponse(), Label.CONTENT_XHTML);
 							}
 
 							return null;
@@ -204,7 +218,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 				}
 			};
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 		}
 
 		class FormLayoutFactory extends RiskFormLayoutFactory {
@@ -212,7 +226,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(risk.getRiskname());
+				super(PrintView.this.risk.getRiskname());
 			}
 
 			@Override
@@ -223,7 +237,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_RISK,
-						risk.getId(), false, false);
+						PrintView.this.risk.getId(), false, false);
 			}
 		}
 	}

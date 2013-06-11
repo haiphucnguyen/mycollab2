@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
-import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -17,30 +16,33 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 	private GridFormLayoutHelper informationLayout;
 	private final String title;
 
-	public RiskFormLayoutFactory(String title) {
+	public RiskFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout riskAddLayout = new AddViewLayout(title,
+		final AddViewLayout riskAddLayout = new AddViewLayout(this.title,
 				new ThemeResource("icons/48/project/risk.png"));
 
-		riskAddLayout.addTopControls(createTopPanel());
+		riskAddLayout.addTopControls(this.createTopPanel());
 
-		VerticalLayout layout = new VerticalLayout();
+		final VerticalLayout layout = new VerticalLayout();
 
-		Label organizationHeader = new Label("Risk Information");
+		final Label organizationHeader = new Label("Risk Information");
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
-		informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 7);
-		informationLayout.getLayout().setWidth("100%");
-		layout.addComponent(informationLayout.getLayout());
-		layout.setComponentAlignment(informationLayout.getLayout(),
+		this.informationLayout = new GridFormLayoutHelper(2, 7, "100%",
+				"167px", Alignment.MIDDLE_LEFT);
+		this.informationLayout.getLayout().setWidth("100%");
+		this.informationLayout.getLayout().setMargin(false);
+		this.informationLayout.getLayout().addStyleName("colored-gridlayout");
+		layout.addComponent(this.informationLayout.getLayout());
+		layout.setComponentAlignment(this.informationLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
 
-		riskAddLayout.addBottomControls(createBottomPanel());
+		riskAddLayout.addBottomControls(this.createBottomPanel());
 
 		riskAddLayout.addBody(layout);
 
@@ -48,30 +50,31 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
+	public void attachField(final Object propertyId, final Field field) {
 		if (propertyId.equals("riskname")) {
-			informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
+			this.informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
 		} else if (propertyId.equals("description")) {
-			informationLayout.addComponent(field, "Description", 0, 1, 2,
+			this.informationLayout.addComponent(field, "Description", 0, 1, 2,
 					"100%");
 		} else if (propertyId.equals("raisedbyuser")) {
-			informationLayout.addComponent(field, "Raised by", 0, 2);
+			this.informationLayout.addComponent(field, "Raised by", 0, 2);
 		} else if (propertyId.equals("type")) {
-			informationLayout.addComponent(field, "Related to", 1, 2);
+			this.informationLayout.addComponent(field, "Related to", 1, 2);
 		} else if (propertyId.equals("assigntouser")) {
-			informationLayout.addComponent(field, "Assigned to", 0, 3);
+			this.informationLayout.addComponent(field, "Assigned to", 0, 3);
 		} else if (propertyId.equals("consequence")) {
-			informationLayout.addComponent(field, "Consequence", 1, 3);
+			this.informationLayout.addComponent(field, "Consequence", 1, 3);
 		} else if (propertyId.equals("datedue")) {
-			informationLayout.addComponent(field, "Date due", 0, 4);
+			this.informationLayout.addComponent(field, "Date due", 0, 4);
 		} else if (propertyId.equals("probalitity")) {
-			informationLayout.addComponent(field, "Probality", 1, 4);
+			this.informationLayout.addComponent(field, "Probality", 1, 4);
 		} else if (propertyId.equals("status")) {
-			informationLayout.addComponent(field, "Status", 0, 5);
+			this.informationLayout.addComponent(field, "Status", 0, 5);
 		} else if (propertyId.equals("level")) {
-			informationLayout.addComponent(field, "Rating", 1, 5);
+			this.informationLayout.addComponent(field, "Rating", 1, 5);
 		} else if (propertyId.equals("response")) {
-			informationLayout.addComponent(field, "Response", 0, 6, 2, "100%");
+			this.informationLayout.addComponent(field, "Response", 0, 6, 2,
+					"100%");
 		}
 	}
 

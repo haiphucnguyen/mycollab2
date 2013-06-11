@@ -20,57 +20,66 @@ public class ReadViewLayout extends CssLayout {
 	private final CssLayout body;
 
 	public ReadViewLayout(final ThemeResource icon) {
-		setSizeFull();
-		setStyleName("readview-layout");
+		this.setSizeFull();
+		this.setStyleName("readview-layout");
 
-		header = new HorizontalLayout();
-		header.setWidth("100%");
-		header.setMargin(true, true, false, true);
-		header.setStyleName("readview-layout-header");
-		this.addComponent(header);
+		this.header = new HorizontalLayout();
+		this.header.setWidth("100%");
+		this.header.setMargin(true, true, false, true);
+		this.header.setStyleName("readview-layout-header");
+		this.addComponent(this.header);
 
-		iconEmbed = new Embedded();
-		iconEmbed.setSource(icon);
-		header.addComponent(iconEmbed);
-		header.setComponentAlignment(iconEmbed, Alignment.MIDDLE_LEFT);
+		this.iconEmbed = new Embedded();
+		this.header.addComponent(this.iconEmbed);
+		if (icon != null) {
+			this.setIcon(icon);
+		}
 
-		titleLbl = new Label();
-		titleLbl.setStyleName("h1");
-		header.addComponent(titleLbl);
-		header.setExpandRatio(titleLbl, 1.0f);
-		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
+		this.header
+				.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);
 
-		body = new CssLayout();
-		body.setStyleName("readview-layout-body");
-		body.setSizeFull();
-		this.addComponent(body);
+		this.titleLbl = new Label();
+		this.titleLbl.setStyleName("h1");
+		this.header.addComponent(this.titleLbl);
+		this.header.setExpandRatio(this.titleLbl, 1.0f);
+		this.header.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_LEFT);
+
+		this.body = new CssLayout();
+		this.body.setStyleName("readview-layout-body");
+		this.body.setSizeFull();
+		this.addComponent(this.body);
 		// this.setExpandRatio(body, 1.0f);
 
-		viewTab = new DetachedTabs.Horizontal(body);
-		viewTab.setSizeUndefined();
-		header.addComponent(viewTab);
-		header.setComponentAlignment(viewTab, Alignment.BOTTOM_CENTER);
+		this.viewTab = new DetachedTabs.Horizontal(this.body);
+		this.viewTab.setSizeUndefined();
+		this.header.addComponent(this.viewTab);
+		this.header
+				.setComponentAlignment(this.viewTab, Alignment.BOTTOM_CENTER);
 	}
 
 	public void addControlButtons(final Component controlsBtn) {
-		header.addComponent(controlsBtn);
-		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_CENTER);
+		this.header.addComponent(controlsBtn);
+		this.header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_CENTER);
 	}
 
 	public void addTab(final Component content, final String button) {
-		viewTab.addTab(content, new Button(button));
+		this.viewTab.addTab(content, new Button(button));
 	}
 
 	public void addTabChangedListener(
 			final DetachedTabs.TabChangedListener listener) {
-		viewTab.addTabChangedListener(listener);
+		this.viewTab.addTabChangedListener(listener);
 	}
 
 	public void selectTab(final String viewName) {
-		viewTab.selectTab(viewName);
+		this.viewTab.selectTab(viewName);
 	}
 
 	public void setTitle(final String title) {
-		titleLbl.setValue(title);
+		this.titleLbl.setValue(title);
+	}
+
+	public void setIcon(final ThemeResource iconResource) {
+		this.iconEmbed.setSource(iconResource);
 	}
 }

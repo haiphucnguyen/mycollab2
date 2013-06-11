@@ -8,6 +8,8 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
@@ -15,41 +17,51 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 	private class EditForm extends AdvancedEditBeanForm<Account> {
 
-		
 		class FormLayoutFactory extends AccountFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super((account.getId() == null) ? "Create Account" : account
-						.getAccountname());
+				super(
+						(AccountAddViewImpl.this.account.getId() == null) ? "Create Account"
+								: AccountAddViewImpl.this.account
+										.getAccountname());
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Account>(EditForm.this))
-						.createButtonControls();
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<Account>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			setFormLayoutFactory(new FormLayoutFactory());
-			setFormFieldFactory(new AccountEditFormFieldFactory(account));
+		public void setItemDataSource(final Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new AccountEditFormFieldFactory(
+					AccountAddViewImpl.this.account));
 			super.setItemDataSource(newDataSource);
 		}
 	}
+
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
 
@@ -57,18 +69,18 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 	public AccountAddViewImpl() {
 		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
 	}
 
 	@Override
-	public void editItem(Account account) {
+	public void editItem(final Account account) {
 		this.account = account;
-		editForm.setItemDataSource(new BeanItem<Account>(account));
+		this.editForm.setItemDataSource(new BeanItem<Account>(account));
 	}
 
 	@Override
 	public HasEditFormHandlers<Account> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }

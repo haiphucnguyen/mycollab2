@@ -4,11 +4,11 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -24,33 +24,33 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 	private final String title;
 	private VersionInformationLayout informationLayout;
 
-	public VersionFormLayoutFactory(String title) {
+	public VersionFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout componentAddLayout = new AddViewLayout(title,
+		final AddViewLayout componentAddLayout = new AddViewLayout(this.title,
 				new ThemeResource("icons/48/project/version.png"));
 
-		Layout topPanel = createTopPanel();
+		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {
 			componentAddLayout.addTopControls(topPanel);
 		}
 
-		VerticalLayout layout = new VerticalLayout();
+		final VerticalLayout layout = new VerticalLayout();
 
-		Label organizationHeader = new Label("Version Information");
+		final Label organizationHeader = new Label("Version Information");
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
-		informationLayout = new VersionInformationLayout();
-		informationLayout.getLayout().setWidth("100%");
-		layout.addComponent(informationLayout.getLayout());
+		this.informationLayout = new VersionInformationLayout();
+		this.informationLayout.getLayout().setWidth("100%");
+		layout.addComponent(this.informationLayout.getLayout());
 
 		componentAddLayout.addBody(layout);
 
-		Layout bottomPanel = createBottomPanel();
+		final Layout bottomPanel = this.createBottomPanel();
 		if (bottomPanel != null) {
 			componentAddLayout.addBottomControls(bottomPanel);
 		}
@@ -59,8 +59,8 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
-		informationLayout.attachField(propertyId, field);
+	public void attachField(final Object propertyId, final Field field) {
+		this.informationLayout.attachField(propertyId, field);
 	}
 
 	protected abstract Layout createTopPanel();
@@ -73,23 +73,27 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 
 		@Override
 		public Layout getLayout() {
-			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 3);
-			informationLayout.getLayout().setWidth("100%");
-			VerticalLayout layout = new VerticalLayout();
-			layout.addComponent(informationLayout.getLayout());
+			this.informationLayout = new GridFormLayoutHelper(2, 3, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+			this.informationLayout.getLayout().setWidth("100%");
+			this.informationLayout.getLayout().setMargin(false);
+			this.informationLayout.getLayout().addStyleName(
+					"colored-gridlayout");
+			final VerticalLayout layout = new VerticalLayout();
+			layout.addComponent(this.informationLayout.getLayout());
 			return layout;
 		}
 
 		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("versionname")) {
-				informationLayout.addComponent(field, "Version Name", 0, 0, 2,
-						"100%");
+				this.informationLayout.addComponent(field, "Version Name", 0,
+						0, 2, "100%");
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 1, 2,
-						"100%");
+				this.informationLayout.addComponent(field, "Description", 0, 1,
+						2, "100%");
 			} else if (propertyId.equals("duedate")) {
-				informationLayout.addComponent(field, "Due Date", 0, 2);
+				this.informationLayout.addComponent(field, "Due Date", 0, 2);
 			}
 		}
 	}

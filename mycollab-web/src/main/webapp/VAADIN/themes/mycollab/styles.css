@@ -1807,6 +1807,10 @@ input.v-textfield-errorField {
 	background-color: #F7F7F7;
 }
 
+.activity-stream.odd {
+	background-color: rgb(212, 223, 239);
+}
+
 .activity-stream >.v-csslayout-margin {
 	border-color: #a9a9a9;
 	border-width: 0px 1px 1px;
@@ -2595,6 +2599,9 @@ div.v-lazyloadingwrapper-loading {
 /* End Horizontal Detached Tabs 3 */
 
 /* StandUp Report List */
+.projectDashboardView .addViewLayout .depotContent .beanlist-content > .v-csslayout-margin {
+	border-top: 1px solid rgb(169, 169, 169);
+}
 .report-row-header {
 	text-align: center;
 	font-weight: bold;
@@ -2608,15 +2615,23 @@ div.v-lazyloadingwrapper-loading {
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 }
-
+.report-row-content {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 1px 0px 1px 0px;
+	border-style: solid;
+	border-color: rgb(204, 204, 204);
+	background-color: rgb(229, 239, 240);
+}
 .report-row-block {
 	height: 100%;
 }
 
 .report-row-block>.v-csslayout-margin {
 	padding: 5px 5px 0px;
-	border: 1px solid #b7b7b7;
-	background-color: #f3f3f3;
+/* 	border: 1px solid #b7b7b7; */
+/* 	background-color: #f3f3f3; */
 }
 /* End StandUp Report List */
 
@@ -2903,6 +2918,7 @@ table.legendBox .legendBoxContent .v-csslayout-container > div {
 	background-color: #f7f7f7;
 	margin-bottom: 15px;
 	font-size: 13px;
+	vertical-align: top;
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption {

@@ -30,6 +30,7 @@ import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -53,15 +54,15 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 	public ProjectMemberAddViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.setMargin(false, false, true, false);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
 	}
 
 	@Override
-	public void editItem(ProjectMember item) {
+	public void editItem(final ProjectMember item) {
 		this.user = item;
-		editForm.setItemDataSource(new BeanItem<ProjectMember>(user));
+		this.editForm.setItemDataSource(new BeanItem<ProjectMember>(this.user));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<ProjectMember> {
@@ -69,8 +70,8 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
+		public void setItemDataSource(final Item newDataSource,
+				final Collection<?> propertyIds) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource, propertyIds);
@@ -86,18 +87,25 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<ProjectMember>(
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<ProjectMember>(
 						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -106,25 +114,27 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 
 				if (propertyId.equals("username")) {
-					if (user.getUsername() == null) {
-						ProjectMemberService prjMemberService = AppContext
+					if (ProjectMemberAddViewImpl.this.user.getUsername() == null) {
+						final ProjectMemberService prjMemberService = AppContext
 								.getSpringBean(ProjectMemberService.class);
-						List<SimpleUser> users = prjMemberService
+						final List<SimpleUser> users = prjMemberService
 								.getUsersNotInProject(CurrentProjectVariables
 										.getProjectId());
 						return new UserComboBox(users);
 					} else {
-						if (user instanceof SimpleProjectMember) {
+						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
 							return new DefaultFormViewFieldFactory.FormViewField(
-									((SimpleProjectMember) user)
+									((SimpleProjectMember) ProjectMemberAddViewImpl.this.user)
 											.getMemberFullName());
 						} else {
 							return new DefaultFormViewFieldFactory.FormViewField(
-									user.getUsername());
+									ProjectMemberAddViewImpl.this.user
+											.getUsername());
 						}
 					}
 
@@ -143,45 +153,58 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			private final ProjectRoleComboBox roleComboBox;
 
 			public AdminRoleSelectionField() {
-				layout = new HorizontalLayout();
-				layout.setSpacing(true);
+				this.layout = new HorizontalLayout();
+				this.layout.setSpacing(true);
 
-				roleLayout = new HorizontalLayout();
-				roleLayout.setSpacing(true);
-				roleLayout.addComponent(new Label("Role"));
-				roleComboBox = new ProjectRoleComboBox();
-				roleComboBox.addListener(new Property.ValueChangeListener() {
+				this.roleLayout = new HorizontalLayout();
+				this.roleLayout.setSpacing(true);
+				this.roleLayout.addComponent(new Label("Role"));
+				this.roleComboBox = new ProjectRoleComboBox();
+				this.roleComboBox
+						.addListener(new Property.ValueChangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void valueChange(
+									final Property.ValueChangeEvent event) {
+								ProjectMemberAddViewImpl.this.user
+										.setProjectroleid((Integer) AdminRoleSelectionField.this.roleComboBox
+												.getValue());
+								ProjectMemberAddViewImpl.this.user
+										.setIsadmin(Boolean.FALSE);
+							}
+						});
+
+				this.roleLayout.addComponent(this.roleComboBox);
+
+				this.isAdminCheck = new CheckBox("");
+				this.isAdminCheck.setImmediate(true);
+				this.isAdminCheck.setWriteThrough(true);
+				this.isAdminCheck.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void valueChange(Property.ValueChangeEvent event) {
-						user.setProjectroleid((Integer) roleComboBox.getValue());
-						user.setIsadmin(Boolean.FALSE);
-					}
-				});
+					public void buttonClick(final ClickEvent event) {
+						ProjectMemberAddViewImpl.this.user
+								.setIsadmin((Boolean) AdminRoleSelectionField.this.isAdminCheck
+										.getValue());
 
-				roleLayout.addComponent(roleComboBox);
-
-				isAdminCheck = new CheckBox("");
-				isAdminCheck.setImmediate(true);
-				isAdminCheck.setWriteThrough(true);
-				isAdminCheck.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						user.setIsadmin((Boolean) isAdminCheck.getValue());
-
-						if (user.getIsadmin()) {
-							user.setProjectroleid(null);
-							layout.removeComponent(roleLayout);
+						if (ProjectMemberAddViewImpl.this.user.getIsadmin()) {
+							ProjectMemberAddViewImpl.this.user
+									.setProjectroleid(null);
+							AdminRoleSelectionField.this.layout
+									.removeComponent(AdminRoleSelectionField.this.roleLayout);
 						} else {
-							if (roleComboBox.getContainerPropertyIds().size() > 0) {
-								layout.addComponent(roleLayout);
+							if (AdminRoleSelectionField.this.roleComboBox
+									.getContainerPropertyIds().size() > 0) {
+								AdminRoleSelectionField.this.layout
+										.addComponent(AdminRoleSelectionField.this.roleLayout);
 
-								if (user.getProjectroleid() != null) {
-									roleComboBox.setValue(user
-											.getProjectroleid());
+								if (ProjectMemberAddViewImpl.this.user
+										.getProjectroleid() != null) {
+									AdminRoleSelectionField.this.roleComboBox
+											.setValue(ProjectMemberAddViewImpl.this.user
+													.getProjectroleid());
 								}
 							} else {
 								AppContext
@@ -192,23 +215,26 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 														.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 												"You must have at least one role to deselect admin checkbox",
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
-								isAdminCheck.setValue(Boolean.TRUE);
+								AdminRoleSelectionField.this.isAdminCheck
+										.setValue(Boolean.TRUE);
 							}
 						}
 					}
 				});
 
-				isAdminCheck.setValue(user.getIsadmin());
-				layout.addComponent(isAdminCheck);
-				if (user.getIsadmin() == null || !user.getIsadmin()) {
-					if (roleComboBox.isComboRoleNotEmpty()) {
-						layout.addComponent(roleLayout);
+				this.isAdminCheck.setValue(ProjectMemberAddViewImpl.this.user
+						.getIsadmin());
+				this.layout.addComponent(this.isAdminCheck);
+				if (ProjectMemberAddViewImpl.this.user.getIsadmin() == null
+						|| !ProjectMemberAddViewImpl.this.user.getIsadmin()) {
+					if (this.roleComboBox.isComboRoleNotEmpty()) {
+						this.layout.addComponent(this.roleLayout);
 					} else {
-						isAdminCheck.setValue(true);
+						this.isAdminCheck.setValue(true);
 					}
 				}
 
-				this.setCompositionRoot(layout);
+				this.setCompositionRoot(this.layout);
 			}
 
 			@Override
@@ -220,6 +246,6 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 	@Override
 	public HasEditFormHandlers<ProjectMember> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }

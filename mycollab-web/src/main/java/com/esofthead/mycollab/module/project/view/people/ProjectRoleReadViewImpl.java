@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -42,20 +43,20 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 
 	public ProjectRoleReadViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
+		this.setMargin(false, false, true, false);
+		this.previewForm = new PreviewForm();
+		this.addComponent(this.previewForm);
 	}
 
 	@Override
-	public void previewItem(SimpleProjectRole role) {
+	public void previewItem(final SimpleProjectRole role) {
 		this.role = role;
-		previewForm.setItemDataSource(new BeanItem<ProjectRole>(role));
+		this.previewForm.setItemDataSource(new BeanItem<ProjectRole>(role));
 	}
 
 	@Override
 	public HasPreviewFormHandlers<ProjectRole> getPreviewFormHandlers() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	private class PreviewForm extends AdvancedPreviewBeanForm<ProjectRole> {
@@ -63,14 +64,14 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
+				protected Field onCreateField(final Item item,
+						final Object propertyId, final Component uiContext) {
 					return null;
 				}
 			});
@@ -80,18 +81,18 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 		@Override
 		protected void doPrint() {
 			// Create a window that contains what you want to print
-			Window window = new Window("Window to Print");
+			final Window window = new Window("Window to Print");
 
-			ProjectRoleReadViewImpl printView = new ProjectRoleReadViewImpl.PrintView();
-			printView.previewItem(role);
+			final ProjectRoleReadViewImpl printView = new ProjectRoleReadViewImpl.PrintView();
+			printView.previewItem(ProjectRoleReadViewImpl.this.role);
 			window.addComponent(printView);
 
 			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
+			this.getApplication().addWindow(window);
 
 			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
+			this.getWindow().open(new ExternalResource(window.getURL()),
+					"_blank", 1100, 200, // Width and height
 					Window.BORDER_NONE); // No decorations
 
 			// Print automatically when the window opens.
@@ -104,10 +105,10 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 
 		@Override
 		protected void showHistory() {
-			ProjectRoleHistoryLogWindow historyLog = new ProjectRoleHistoryLogWindow(
+			final ProjectRoleHistoryLogWindow historyLog = new ProjectRoleHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.PROJECT_ROLE,
-					role.getId());
-			getWindow().addWindow(historyLog);
+					ProjectRoleReadViewImpl.this.role.getId());
+			this.getWindow().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends ProjectRoleFormLayoutFactory {
@@ -115,44 +116,52 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(role.getRolename());
+				super(ProjectRoleReadViewImpl.this.role.getRolename());
 			}
 
 			@Override
 			protected Layout createTopPanel() {
 				return (new ProjectPreviewFormControlsGenerator<ProjectRole>(
-						PreviewForm.this)).createButtonControls(
-						ProjectRolePermissionCollections.ROLES);
+						PreviewForm.this))
+						.createButtonControls(ProjectRolePermissionCollections.ROLES);
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				VerticalLayout permissionsPanel = new VerticalLayout();
-				Label organizationHeader = new Label("Permissions");
+				final VerticalLayout permissionsPanel = new VerticalLayout();
+				final Label organizationHeader = new Label("Permissions");
 				organizationHeader.setStyleName("h2");
 				permissionsPanel.addComponent(organizationHeader);
 
-				PermissionMap permissionMap = role.getPermissionMap();
+				final PermissionMap permissionMap = ProjectRoleReadViewImpl.this.role
+						.getPermissionMap();
 
-				GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
+				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
 						2,
-						ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
+						ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length,
+						"100%", "167px", Alignment.MIDDLE_LEFT);
 
 				for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
-					String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
+					final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
 					projectFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
+							new Label(this.getValueFromPerPath(permissionMap,
 									permissionPath)), permissionPath, 0, i);
 				}
+
+				projectFormHelper.getLayout().setWidth("100%");
+				projectFormHelper.getLayout().setMargin(false);
+				projectFormHelper.getLayout()
+						.addStyleName("colored-gridlayout");
 
 				permissionsPanel.addComponent(projectFormHelper.getLayout());
 
 				return permissionsPanel;
 			}
 
-			private String getValueFromPerPath(PermissionMap permissionMap,
-					String permissionItem) {
-				Integer perVal = permissionMap.get(permissionItem);
+			private String getValueFromPerPath(
+					final PermissionMap permissionMap,
+					final String permissionItem) {
+				final Integer perVal = permissionMap.get(permissionItem);
 				if (perVal == null) {
 					return "No Access";
 				} else {
@@ -166,16 +175,17 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 	public static class PrintView extends ProjectRoleReadViewImpl {
 
 		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<ProjectRole>() {
+			this.previewForm = new AdvancedPreviewBeanForm<ProjectRole>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new FormLayoutFactory());
 					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						protected Field onCreateField(Item item,
-								Object propertyId, Component uiContext) {
+						protected Field onCreateField(final Item item,
+								final Object propertyId,
+								final Component uiContext) {
 							return null;
 						}
 					});
@@ -183,7 +193,7 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 				}
 			};
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 		}
 
 		class FormLayoutFactory extends ProjectRoleFormLayoutFactory {
@@ -191,7 +201,7 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(role.getRolename());
+				super(PrintView.this.role.getRolename());
 			}
 
 			@Override
@@ -201,21 +211,22 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createBottomPanel() {
-				VerticalLayout permissionsPanel = new VerticalLayout();
-				Label organizationHeader = new Label("Permissions");
+				final VerticalLayout permissionsPanel = new VerticalLayout();
+				final Label organizationHeader = new Label("Permissions");
 				organizationHeader.setStyleName("h2");
 				permissionsPanel.addComponent(organizationHeader);
 
-				PermissionMap permissionMap = role.getPermissionMap();
+				final PermissionMap permissionMap = PrintView.this.role
+						.getPermissionMap();
 
-				GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
+				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
 						2,
 						ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
 
 				for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
-					String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
+					final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
 					projectFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
+							new Label(this.getValueFromPerPath(permissionMap,
 									permissionPath)), permissionPath, 0, i);
 				}
 
@@ -224,9 +235,10 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 				return permissionsPanel;
 			}
 
-			private String getValueFromPerPath(PermissionMap permissionMap,
-					String permissionItem) {
-				Integer perVal = permissionMap.get(permissionItem);
+			private String getValueFromPerPath(
+					final PermissionMap permissionMap,
+					final String permissionItem) {
+				final Integer perVal = permissionMap.get(permissionItem);
 				if (perVal == null) {
 					return "No Access";
 				} else {
@@ -238,6 +250,6 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 
 	@Override
 	public SimpleProjectRole getItem() {
-		return role;
+		return this.role;
 	}
 }

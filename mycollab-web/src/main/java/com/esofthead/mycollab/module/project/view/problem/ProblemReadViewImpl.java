@@ -37,25 +37,25 @@ public class ProblemReadViewImpl extends AbstractView implements
 
 	public ProblemReadViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
+		this.setMargin(true);
+		this.previewForm = new PreviewForm();
+		this.addComponent(this.previewForm);
 	}
 
 	@Override
-	public void previewItem(SimpleProblem item) {
-		problem = item;
-		previewForm.setItemDataSource(new BeanItem<Problem>(item));
+	public void previewItem(final SimpleProblem item) {
+		this.problem = item;
+		this.previewForm.setItemDataSource(new BeanItem<Problem>(item));
 	}
 
 	@Override
 	public SimpleProblem getItem() {
-		return problem;
+		return this.problem;
 	}
 
 	@Override
 	public HasPreviewFormHandlers<Problem> getPreviewFormHandlers() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	private class PreviewForm extends AdvancedPreviewBeanForm<Problem> {
@@ -63,34 +63,41 @@ public class ProblemReadViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
+				protected Field onCreateField(final Item item,
+						final Object propertyId, final Component uiContext) {
 
 					if (propertyId.equals("raisedbyuser")) {
-						return new ProjectUserFormLinkField(problem
-								.getRaisedbyuser(), problem
-								.getRaisedByUserFullName());
+						return new ProjectUserFormLinkField(
+								ProblemReadViewImpl.this.problem
+										.getRaisedbyuser(),
+								ProblemReadViewImpl.this.problem
+										.getRaisedByUserFullName());
 					} else if (propertyId.equals("level")) {
-						RatingStars tinyRs = new RatingStars();
-						tinyRs.setValue(problem.getLevel());
+						final RatingStars tinyRs = new RatingStars();
+						tinyRs.setValue(ProblemReadViewImpl.this.problem
+								.getLevel());
 						tinyRs.setReadOnly(true);
 						return tinyRs;
 					} else if (propertyId.equals("datedue")) {
-						return new FormViewField(AppContext.formatDate(problem
-								.getDatedue()));
+						return new FormViewField(AppContext
+								.formatDate(ProblemReadViewImpl.this.problem
+										.getDatedue()));
 					} else if (propertyId.equals("assigntouser")) {
-						return new ProjectUserFormLinkField(problem
-								.getAssigntouser(), problem
-								.getAssignedUserFullName());
+						return new ProjectUserFormLinkField(
+								ProblemReadViewImpl.this.problem
+										.getAssigntouser(),
+								ProblemReadViewImpl.this.problem
+										.getAssignedUserFullName());
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(problem.getDescription(),
-								Label.CONTENT_XHTML);
+						return new FormViewField(
+								ProblemReadViewImpl.this.problem
+										.getDescription(), Label.CONTENT_XHTML);
 					}
 
 					return null;
@@ -102,18 +109,18 @@ public class ProblemReadViewImpl extends AbstractView implements
 		@Override
 		protected void doPrint() {
 			// Create a window that contains what you want to print
-			Window window = new Window("Window to Print");
+			final Window window = new Window("Window to Print");
 
-			ProblemReadViewImpl printView = new ProblemReadViewImpl.PrintView();
-			printView.previewItem(problem);
+			final ProblemReadViewImpl printView = new ProblemReadViewImpl.PrintView();
+			printView.previewItem(ProblemReadViewImpl.this.problem);
 			window.addComponent(printView);
 
 			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
+			this.getApplication().addWindow(window);
 
 			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
+			this.getWindow().open(new ExternalResource(window.getURL()),
+					"_blank", 1100, 200, // Width and height
 					Window.BORDER_NONE); // No decorations
 
 			// Print automatically when the window opens.
@@ -126,10 +133,10 @@ public class ProblemReadViewImpl extends AbstractView implements
 
 		@Override
 		protected void showHistory() {
-			ProblemHistoryLogWindow historyLog = new ProblemHistoryLogWindow(
+			final ProblemHistoryLogWindow historyLog = new ProblemHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.PROBLEM,
-					problem.getId());
-			getWindow().addWindow(historyLog);
+					ProblemReadViewImpl.this.problem.getId());
+			this.getWindow().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends ProblemFormLayoutFactory {
@@ -137,20 +144,23 @@ public class ProblemReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(problem.getIssuename());
+				super(ProblemReadViewImpl.this.problem.getIssuename());
 			}
 
 			@Override
 			protected Layout createTopPanel() {
 				return (new ProjectPreviewFormControlsGenerator<Problem>(
-						PreviewForm.this)).createButtonControls(
-						ProjectRolePermissionCollections.PROBLEMS);
+						PreviewForm.this))
+						.createButtonControls(ProjectRolePermissionCollections.PROBLEMS);
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
-						problem.getId(), true, false);
+				final CommentListDepot commentList = new CommentListDepot(
+						CommentTypeConstants.PRJ_PROBLEM,
+						ProblemReadViewImpl.this.problem.getId(), true, false);
+				commentList.setWidth("100%");
+				return commentList;
 			}
 		}
 	}
@@ -159,38 +169,45 @@ public class ProblemReadViewImpl extends AbstractView implements
 	public static class PrintView extends ProblemReadViewImpl {
 
 		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<Problem>() {
+			this.previewForm = new AdvancedPreviewBeanForm<Problem>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new ProblemReadViewImpl.PrintView.FormLayoutFactory());
 					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						protected Field onCreateField(Item item,
-								Object propertyId, Component uiContext) {
+						protected Field onCreateField(final Item item,
+								final Object propertyId,
+								final Component uiContext) {
 
 							if (propertyId.equals("raisedbyuser")) {
-								return new ProjectUserFormLinkField(problem
-										.getRaisedbyuser(), problem
-										.getRaisedByUserFullName());
+								return new ProjectUserFormLinkField(
+										PrintView.this.problem
+												.getRaisedbyuser(),
+										PrintView.this.problem
+												.getRaisedByUserFullName());
 							} else if (propertyId.equals("assigntouser")) {
-								return new ProjectUserFormLinkField(problem
-										.getAssigntouser(), problem
-										.getAssignedUserFullName());
+								return new ProjectUserFormLinkField(
+										PrintView.this.problem
+												.getAssigntouser(),
+										PrintView.this.problem
+												.getAssignedUserFullName());
 							} else if (propertyId.equals("level")) {
-								RatingStars tinyRs = new RatingStars();
-								tinyRs.setValue(problem.getLevel());
+								final RatingStars tinyRs = new RatingStars();
+								tinyRs.setValue(PrintView.this.problem
+										.getLevel());
 								tinyRs.setReadOnly(true);
 								return tinyRs;
 							} else if (propertyId.equals("datedue")) {
 								return new FormViewField(AppContext
-										.formatDate(problem.getDatedue()));
+										.formatDate(PrintView.this.problem
+												.getDatedue()));
 							} else if (propertyId.equals("description")) {
-								return new FormViewField(problem
+								return new FormViewField(PrintView.this.problem
 										.getDescription(), Label.CONTENT_XHTML);
 							} else if (propertyId.equals("resolution")) {
-								return new FormViewField(problem
+								return new FormViewField(PrintView.this.problem
 										.getResolution(), Label.CONTENT_XHTML);
 							}
 
@@ -201,7 +218,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 				}
 			};
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 		}
 
 		class FormLayoutFactory extends ProblemFormLayoutFactory {
@@ -209,7 +226,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(problem.getIssuename());
+				super(PrintView.this.problem.getIssuename());
 			}
 
 			@Override
@@ -220,7 +237,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
-						problem.getId(), false, false);
+						PrintView.this.problem.getId(), false, false);
 			}
 		}
 	}

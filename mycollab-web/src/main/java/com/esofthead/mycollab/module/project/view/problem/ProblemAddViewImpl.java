@@ -19,7 +19,9 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -31,29 +33,29 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
 	private Problem problem;
-	
+
 	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
 			5);
 
 	static {
-		valueCaptions.put(1, "Epic Fail");
-		valueCaptions.put(2, "Poor");
-		valueCaptions.put(3, "OK");
-		valueCaptions.put(4, "Good");
-		valueCaptions.put(5, "Excellent");
+		ProblemAddViewImpl.valueCaptions.put(1, "Epic Fail");
+		ProblemAddViewImpl.valueCaptions.put(2, "Poor");
+		ProblemAddViewImpl.valueCaptions.put(3, "OK");
+		ProblemAddViewImpl.valueCaptions.put(4, "Good");
+		ProblemAddViewImpl.valueCaptions.put(5, "Excellent");
 	}
 
 	public ProblemAddViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.setMargin(true);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
 	}
 
 	@Override
-	public void editItem(Problem problem) {
+	public void editItem(final Problem problem) {
 		this.problem = problem;
-		editForm.setItemDataSource(new BeanItem<Problem>(problem));
+		this.editForm.setItemDataSource(new BeanItem<Problem>(problem));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Problem> {
@@ -61,7 +63,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -76,18 +78,25 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Problem>(EditForm.this))
-						.createButtonControls();
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<Problem>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -96,56 +105,63 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 
 				if (propertyId.equals("description")) {
-					RichTextArea risk = new RichTextArea();
+					final RichTextArea risk = new RichTextArea();
 					risk.setRequired(true);
 					risk.setNullRepresentation("");
 					risk.setRequiredError("Please enter a Desciption");
 					return risk;
 				} else if (propertyId.equals("raisedbyuser")) {
-					if (problem.getRaisedbyuser() == null) {
-						problem.setRaisedbyuser(AppContext.getUsername());
+					if (ProblemAddViewImpl.this.problem.getRaisedbyuser() == null) {
+						ProblemAddViewImpl.this.problem
+								.setRaisedbyuser(AppContext.getUsername());
 					}
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("type")) {
 				} else if (propertyId.equals("assigntouser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("priority")) {
-					if (problem.getPriority() == null) {
-						problem.setPriority("Medium");
+					if (ProblemAddViewImpl.this.problem.getPriority() == null) {
+						ProblemAddViewImpl.this.problem.setPriority("Medium");
 					}
-					ValueComboBox box = new ValueComboBox(false, "High", "Medium", "Low");
+					final ValueComboBox box = new ValueComboBox(false, "High",
+							"Medium", "Low");
 					return box;
 				} else if (propertyId.equals("status")) {
-					if (problem.getStatus() == null) {
-						problem.setStatus("Open");
+					if (ProblemAddViewImpl.this.problem.getStatus() == null) {
+						ProblemAddViewImpl.this.problem.setStatus("Open");
 					}
-					ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
+					final ValueComboBox box = new ValueComboBox(false, "Open",
+							"Closed");
 					return box;
 				} else if (propertyId.equals("level")) {
 					final RatingStars ratingField = new RatingStars();
 					ratingField.setMaxValue(5);
 					ratingField.setImmediate(true);
 					ratingField.setDescription("Problem level");
-					ratingField.setValueCaption(valueCaptions.values().toArray(
-							new String[5]));
+					ratingField
+							.setValueCaption(ProblemAddViewImpl.valueCaptions
+									.values().toArray(new String[5]));
 
 					ratingField.addListener(new Property.ValueChangeListener() {
 						private static final long serialVersionUID = -3277119031169194273L;
 
 						@Override
-						public void valueChange(Property.ValueChangeEvent event) {
-							Double value = (Double) event.getProperty()
+						public void valueChange(
+								final Property.ValueChangeEvent event) {
+							final Double value = (Double) event.getProperty()
 									.getValue();
-							RatingStars changedRs = (RatingStars) event
+							final RatingStars changedRs = (RatingStars) event
 									.getProperty();
 
 							// reset value captions
-							changedRs.setValueCaption(valueCaptions.values()
-									.toArray(new String[5]));
+							changedRs
+									.setValueCaption(ProblemAddViewImpl.valueCaptions
+											.values().toArray(new String[5]));
 							// set "Your Rating" caption
 							if (value == null) {
 								changedRs.setValue(3);
@@ -162,7 +178,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 				}
 
 				if (propertyId.equals("issuename")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");
@@ -176,6 +192,6 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 
 	@Override
 	public HasEditFormHandlers<Problem> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }

@@ -18,7 +18,9 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -34,24 +36,24 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 			5);
 
 	static {
-		valueCaptions.put(1, "Epic Fail");
-		valueCaptions.put(2, "Poor");
-		valueCaptions.put(3, "OK");
-		valueCaptions.put(4, "Good");
-		valueCaptions.put(5, "Excellent");
+		RiskAddViewImpl.valueCaptions.put(1, "Epic Fail");
+		RiskAddViewImpl.valueCaptions.put(2, "Poor");
+		RiskAddViewImpl.valueCaptions.put(3, "OK");
+		RiskAddViewImpl.valueCaptions.put(4, "Good");
+		RiskAddViewImpl.valueCaptions.put(5, "Excellent");
 	}
 
 	public RiskAddViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.setMargin(true);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
 	}
 
 	@Override
-	public void editItem(Risk risk) {
+	public void editItem(final Risk risk) {
 		this.risk = risk;
-		editForm.setItemDataSource(new BeanItem<Risk>(risk));
+		this.editForm.setItemDataSource(new BeanItem<Risk>(risk));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Risk> {
@@ -59,7 +61,7 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -74,18 +76,25 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Risk>(EditForm.this))
-						.createButtonControls();
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<Risk>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -94,17 +103,19 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("description")) {
-					RichTextArea risk = new RichTextArea();
+					final RichTextArea risk = new RichTextArea();
 					risk.setRequired(true);
 					risk.setNullRepresentation("");
 					risk.setRequiredError("Please enter a Desciption");
 					return risk;
 				} else if (propertyId.equals("raisedbyuser")) {
-					if (risk.getRaisedbyuser() == null) {
-						risk.setRaisedbyuser(AppContext.getUsername());
+					if (RiskAddViewImpl.this.risk.getRaisedbyuser() == null) {
+						RiskAddViewImpl.this.risk.setRaisedbyuser(AppContext
+								.getUsername());
 					}
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("assigntouser")) {
@@ -112,46 +123,50 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 				} else if (propertyId.equals("response")) {
 					return new RichTextArea();
 				} else if (propertyId.equals("consequence")) {
-					if (risk.getConsequence() == null) {
-						risk.setConsequence("Marginal");
+					if (RiskAddViewImpl.this.risk.getConsequence() == null) {
+						RiskAddViewImpl.this.risk.setConsequence("Marginal");
 					}
-					ValueComboBox box = new ValueComboBox(false, "Catastrophic", "Critical",
-							"Marginal", "Negligible");
+					final ValueComboBox box = new ValueComboBox(false,
+							"Catastrophic", "Critical", "Marginal",
+							"Negligible");
 					return box;
 				} else if (propertyId.equals("probalitity")) {
-					if (risk.getProbalitity() == null) {
-						risk.setProbalitity("Possible");
+					if (RiskAddViewImpl.this.risk.getProbalitity() == null) {
+						RiskAddViewImpl.this.risk.setProbalitity("Possible");
 					}
-					ValueComboBox box = new ValueComboBox(false, "Certain", "Likely",
-							"Possible", "Unlikely", "Rare");
+					final ValueComboBox box = new ValueComboBox(false,
+							"Certain", "Likely", "Possible", "Unlikely", "Rare");
 					return box;
 				} else if (propertyId.equals("status")) {
-					if (risk.getStatus() == null) {
-						risk.setStatus("Open");
+					if (RiskAddViewImpl.this.risk.getStatus() == null) {
+						RiskAddViewImpl.this.risk.setStatus("Open");
 					}
-					ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
+					final ValueComboBox box = new ValueComboBox(false, "Open",
+							"Closed");
 					return box;
 				} else if (propertyId.equals("level")) {
 					final RatingStars ratingField = new RatingStars();
 					ratingField.setMaxValue(5);
 					ratingField.setImmediate(true);
 					ratingField.setDescription("Risk level");
-					ratingField.setValueCaption(valueCaptions.values().toArray(
-							new String[5]));
+					ratingField.setValueCaption(RiskAddViewImpl.valueCaptions
+							.values().toArray(new String[5]));
 
 					ratingField.addListener(new Property.ValueChangeListener() {
 						private static final long serialVersionUID = -3277119031169194273L;
 
 						@Override
-						public void valueChange(Property.ValueChangeEvent event) {
-							Double value = (Double) event.getProperty()
+						public void valueChange(
+								final Property.ValueChangeEvent event) {
+							final Double value = (Double) event.getProperty()
 									.getValue();
-							RatingStars changedRs = (RatingStars) event
+							final RatingStars changedRs = (RatingStars) event
 									.getProperty();
 
 							// reset value captions
-							changedRs.setValueCaption(valueCaptions.values()
-									.toArray(new String[5]));
+							changedRs
+									.setValueCaption(RiskAddViewImpl.valueCaptions
+											.values().toArray(new String[5]));
 							// set "Your Rating" caption
 							if (value == null) {
 								changedRs.setValue(3);
@@ -166,7 +181,7 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 				}
 
 				if (propertyId.equals("riskname")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Summary");
@@ -180,6 +195,6 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 
 	@Override
 	public HasEditFormHandlers<Risk> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }
