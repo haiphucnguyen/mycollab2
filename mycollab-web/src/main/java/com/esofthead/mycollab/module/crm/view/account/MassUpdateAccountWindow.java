@@ -92,6 +92,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 				formLayout.addComponent(addressLayout.getLayout());
 
 				formLayout.addComponent(layout);
+				formLayout.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
 
 				return formLayout;
 			}
