@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.crm.service;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
@@ -22,7 +22,7 @@ public class TaskServiceTest extends ServiceTest{
     @Test
     public void testSearchByCriteria() {
         Assert.assertEquals(1,
-                taskService.findPagableListByCriteria(new SearchRequest<TaskSearchCriteria>(getCriteria(), 0,
+                taskService.findPagableListByCriteria(new SearchRequest<TodoSearchCriteria>(getCriteria(), 0,
                 2))
                 .size());
     }
@@ -33,8 +33,8 @@ public class TaskServiceTest extends ServiceTest{
         Assert.assertEquals(1, taskService.getTotalCount(getCriteria()));
     }
 
-    private TaskSearchCriteria getCriteria() {
-        TaskSearchCriteria criteria = new TaskSearchCriteria();
+    private TodoSearchCriteria getCriteria() {
+        TodoSearchCriteria criteria = new TodoSearchCriteria();
         return criteria;
     }
 }

@@ -21,7 +21,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class TaskSearchCriteria extends SearchCriteria {
+public class TodoSearchCriteria extends SearchCriteria {
 
     private StringSearchField subject;
     private StringSearchField contact;

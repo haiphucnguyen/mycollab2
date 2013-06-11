@@ -20,6 +20,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -235,6 +236,7 @@ public class FileManagerViewImpl extends AbstractView implements
 								folderTree.setParent(newFolder, baseFolder);
 								if (!folderTree.isExpanded(baseFolder)) {
 									folderTree.expandItem(baseFolder);
+									folderTree.setItemIcon(baseFolder, new ThemeResource(""));
 								}
 								AddNewFolderWindow.this.close();
 
