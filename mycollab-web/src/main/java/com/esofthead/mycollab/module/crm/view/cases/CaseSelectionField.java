@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
@@ -48,9 +49,8 @@ public class CaseSelectionField extends FieldWrapper<CaseWithBLOBs> implements
 			public void click(ClickEvent event) {
 				CaseSelectionWindow casesWindow = new CaseSelectionWindow(
 						CaseSelectionField.this);
-				getWindow().addWindow(casesWindow);
+				UIHelper.addWindowToRoot(CaseSelectionField.this, casesWindow);
 				casesWindow.show();
-
 			}
 		});
 

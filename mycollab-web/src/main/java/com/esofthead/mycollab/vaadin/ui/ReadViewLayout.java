@@ -23,39 +23,50 @@ public class ReadViewLayout extends CssLayout {
 	public ReadViewLayout(final ThemeResource icon) {
 		this.setSizeFull();
 		this.setStyleName("readview-layout");
+		if(icon != null){
+			this.header = new HorizontalLayout();
+			this.header.setWidth("100%");
+			this.header.setMargin(true, true, false, true);
+			this.header.setStyleName("readview-layout-header");
+			this.addComponent(this.header);
 
-		this.header = new HorizontalLayout();
-		this.header.setWidth("100%");
-		this.header.setMargin(true, true, false, true);
-		this.header.setStyleName("readview-layout-header");
-		this.addComponent(this.header);
+			this.iconEmbed = new Embedded();
+			this.header.addComponent(this.iconEmbed);
+			if (icon != null) {
+				this.setTitleIcon(icon);
+			}
 
-		this.iconEmbed = new Embedded();
-		this.header.addComponent(this.iconEmbed);
-		if (icon != null) {
-			this.setTitleIcon(icon);
+			this.header
+					.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);
+
+			this.titleLbl = new Label();
+			this.titleLbl.setStyleName("h1");
+			this.header.addComponent(this.titleLbl);
+			this.header.setExpandRatio(this.titleLbl, 1.0f);
+			this.header.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_LEFT);
+
+			this.body = new CssLayout();
+			this.body.setStyleName("readview-layout-body");
+			this.body.setSizeFull();
+			this.addComponent(this.body);
+			// this.setExpandRatio(body, 1.0f);
+
+			this.viewTab = new DetachedTabs.Horizontal(this.body);
+			this.viewTab.setSizeUndefined();
+			this.header.addComponent(this.viewTab);
+			this.header
+					.setComponentAlignment(this.viewTab, Alignment.BOTTOM_CENTER);
+		}else{
+			this.header = null;
+			this.iconEmbed = null;
+			this.titleLbl = null;
+			this.body = new CssLayout();
+			this.body.setStyleName("readview-layout-body");
+			this.body.setSizeFull();
+			this.addComponent(this.body);
+			this.viewTab = null;
 		}
-
-		this.header
-				.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);
-
-		this.titleLbl = new Label();
-		this.titleLbl.setStyleName("h1");
-		this.header.addComponent(this.titleLbl);
-		this.header.setExpandRatio(this.titleLbl, 1.0f);
-		this.header.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_LEFT);
-
-		this.body = new CssLayout();
-		this.body.setStyleName("readview-layout-body");
-		this.body.setSizeFull();
-		this.addComponent(this.body);
-		// this.setExpandRatio(body, 1.0f);
-
-		this.viewTab = new DetachedTabs.Horizontal(this.body);
-		this.viewTab.setSizeUndefined();
-		this.header.addComponent(this.viewTab);
-		this.header
-				.setComponentAlignment(this.viewTab, Alignment.BOTTOM_CENTER);
+		
 	}
 
 	public void addControlButtons(final Component controlsBtn) {

@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
@@ -48,7 +49,7 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 			public void click(ClickEvent event) {
 				LeadSelectionWindow leadWindow = new LeadSelectionWindow(
 						LeadSelectionField.this);
-				getWindow().addWindow(leadWindow);
+				UIHelper.addWindowToRoot(LeadSelectionField.this, leadWindow);
 				leadWindow.show();
 
 			}
