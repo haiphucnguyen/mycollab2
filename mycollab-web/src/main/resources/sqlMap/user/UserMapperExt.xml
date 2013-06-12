@@ -14,48 +14,48 @@
     </resultMap>
 
     <sql id="querySearchCriteria">
-        <if test="displayName != null">
+        <if test="searchCriteria.displayName != null">
           <![CDATA[
-            ${displayName.operation} (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${displayName.value}%')
+            ${searchCriteria.displayName.operation} (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${searchCriteria.displayName.value}%')
             ]]>
         </if>
-        <if test="username != null">
+        <if test="searchCriteria.username != null">
           <![CDATA[
-            ${username.operation} s_user.username = #{username.value}
+            ${searchCriteria.username.operation} s_user.username = #{searchCriteria.username.value}
             ]]>
         </if>
-        <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} s_user_account.accountId = #{saccountid.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} s_user_account.accountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
         </if>
-        <if test="subdomain != null">
-            <![CDATA[${subdomain.operation} (SELECT COUNT(*) 
+        <if test="searchCriteria.subdomain != null">
+            <![CDATA[${searchCriteria.subdomain.operation} (SELECT COUNT(*) 
                 FROM s_account, s_user_account AS user_account 
-                WHERE s_account.subdomain=#{subdomain.value} AND  user_account.accountId=s_account.id AND user_account.username=s_user.username
+                WHERE s_account.subdomain=#{searchCriteria.subdomain.value} AND  user_account.accountId=s_account.id AND user_account.username=s_user.username
             ) > 0                                
             ]]>
         </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
-        <if test="displayName != null">
+        <if test="searchCriteria.displayName != null">
           <![CDATA[
-            ${displayName.operation} (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${displayName.value}%')
+            ${searchCriteria.displayName.operation} (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${searchCriteria.displayName.value}%')
             ]]>
         </if>
-        <if test="username != null">
+        <if test="searchCriteria.username != null">
           <![CDATA[
-            ${username.operation} s_user.username = #{username.value}
+            ${searchCriteria.username.operation} s_user.username = #{searchCriteria.username.value}
             ]]>
         </if>
-        <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} (SELECT COUNT(*) 
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} (SELECT COUNT(*) 
                 FROM s_user_account 
-                WHERE s_user_account.accountId = #{saccountid.value,javaType=INTEGER} AND s_user_account.username=s_user.username) > 0]]>
+                WHERE s_user_account.accountId = #{searchCriteria.saccountid.value,javaType=INTEGER} AND s_user_account.username=s_user.username) > 0]]>
         </if>
-        <if test="subdomain != null">
-            <![CDATA[${subdomain.operation} (SELECT COUNT(*) 
+        <if test="searchCriteria.subdomain != null">
+            <![CDATA[${searchCriteria.subdomain.operation} (SELECT COUNT(*) 
                 FROM s_account, s_user_account AS user_account 
-                WHERE s_account.subdomain=#{subdomain.value} AND  user_account.accountId=s_account.id AND user_account.username=s_user.username
+                WHERE s_account.subdomain=#{searchCriteria.subdomain.value} AND  user_account.accountId=s_account.id AND user_account.username=s_user.username
             ) > 0                                
             ]]>
         </if>
@@ -88,10 +88,13 @@
     <select id="findPagableListByCriteria" resultMap="SimpleUserResult"
         parameterType="UserSearchCriteria">
         <include refid="selectUser" />
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include refid="querySearchCriteria" />
-        </trim>
+
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include refid="querySearchCriteria" />
+            </trim>
+        </if>
     </select>
 
     <select id="findUserByUserName" resultMap="SimpleUserResult"

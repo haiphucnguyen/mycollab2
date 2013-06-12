@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.NoteMapperExt">
-    <resultMap extends="com.esofthead.mycollab.module.crm.dao.NoteMapper.ResultMapWithBLOBs"
-                   id="SimpleNoteResult" type="com.esofthead.mycollab.module.crm.domain.SimpleNote">
+    <resultMap
+        extends="com.esofthead.mycollab.module.crm.dao.NoteMapper.ResultMapWithBLOBs"
+        id="SimpleNoteResult" type="com.esofthead.mycollab.module.crm.domain.SimpleNote">
         <result column="contactName" jdbcType="VARCHAR" property="contactName" />
         <result column="createUserFullName" jdbcType="VARCHAR"
-                        property="createUserFullName" />
-        
-        <collection property="attachments" ofType="com.esofthead.mycollab.module.file.domain.Attachment" 
-                    resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap" columnPrefix="attach_"/>
-        <collection property="comments" ofType="com.esofthead.mycollab.common.domain.SimpleComment" 
-                    resultMap="com.esofthead.mycollab.common.dao.CommentMapperExt.BaseResultMap" columnPrefix="comment_"/>
+            property="createUserFullName" />
+
+        <collection property="attachments"
+            ofType="com.esofthead.mycollab.module.file.domain.Attachment"
+            resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap"
+            columnPrefix="attach_" />
+        <collection property="comments"
+            ofType="com.esofthead.mycollab.common.domain.SimpleComment"
+            resultMap="com.esofthead.mycollab.common.dao.CommentMapperExt.BaseResultMap"
+            columnPrefix="comment_" />
     </resultMap>
 
     <sql id="querySearchCriteria">
-		
-        <if test="type != null">
-            ${type.operation} m_crm_note.type = #{type.value}
+
+        <if test="searchCriteria.type != null">
+            ${searchCriteria.type.operation} m_crm_note.type = #{searchCriteria.type.value}
         </if>
-        <if test="typeid != null">
-            ${type.operation} m_crm_note.typeid = ${typeid.value}
+        <if test="searchCriteria.typeid != null">
+            ${searchCriteria.type.operation} m_crm_note.typeid =
+            ${searchCriteria.typeid.value}
         </if>
     </sql>
-    
+
     <sql id="selectSimpleNote">
         <![CDATA[
         SELECT m_crm_note.id, m_crm_note.subject, m_crm_note.note, m_crm_note.type, m_crm_note.typeid, m_crm_note.createdTime, 
@@ -47,32 +53,39 @@
             LEFT OUTER JOIN m_attachment AS attachment_comment ON (attachment_comment.type='common-comment' AND attachment_comment.typeid=m_comment.id)
         ]]>
     </sql>
-    
+
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${sortDirection}, </if>
         <![CDATA[
             m_crm_note.createdTime DESC
         ]]>
     </sql>
-    
+
     <select id="findPagableListByCriteria" parameterType="NoteSearchCriteria"
         resultMap="SimpleNoteResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.selectSimpleNote" />
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
-                refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-        </trim>
-        <include refid="orderStatement"/>
-        
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
+        <include refid="orderStatement" />
+
     </select>
 
     <select id="getTotalCount" parameterType="NoteSearchCriteria"
         resultType="java.lang.Integer">
         SELECT count(*) as totalCount FROM m_crm_note
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
-                refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-        </trim>
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
     </select>
 </mapper>

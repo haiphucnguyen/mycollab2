@@ -53,4 +53,11 @@ public class ResourceServiceImpl implements ResourceService {
 		String contentPath = content.getPath();
 		rawContentService.saveContent(contentPath, refStream);
 	}
+
+	@Override
+	public void removeResource(String path) {
+		contentJcrDao.removeResource(path);
+
+		rawContentService.removeContent(path);
+	}
 }

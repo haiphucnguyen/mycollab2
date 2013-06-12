@@ -16,4 +16,6 @@ public interface ResourceService {
 	List<Folder> getSubFolders(String path);
 
 	void saveContent(Content content, InputStream refStream);
+
+	void removeResource(String path);
 }

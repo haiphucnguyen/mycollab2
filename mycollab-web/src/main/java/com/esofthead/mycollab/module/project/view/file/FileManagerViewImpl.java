@@ -3,7 +3,9 @@ package com.esofthead.mycollab.module.project.view.file;
 import java.io.InputStream;
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
+import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -34,6 +36,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.Window;
@@ -87,7 +90,19 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
+				if (baseFolder != null
+						&& !projectPath.equals(baseFolder.getPath())) {
+					ConfirmDialog.show(FileManagerViewImpl.this.getWindow(),
+							"", new ConfirmDialog.Listener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void onClose(ConfirmDialog dialog) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+				}
 
 			}
 		});
@@ -176,6 +191,38 @@ public class FileManagerViewImpl extends AbstractView implements
 		resourceTable.setColumnHeaders(new String[] { "", "Name", "Size",
 				"Created", "By" });
 
+	}
+
+	private void displayResourcesInTable(String foldername) {
+		List<Folder> childs = baseFolder.getChilds();
+		if (childs == null) {
+			childs = resourceService.getSubFolders(baseFolder.getPath());
+
+			for (Folder subFolder : childs) {
+				baseFolder.addChild(subFolder);
+				folderTree.addItem(subFolder);
+				folderTree.setItemCaption(subFolder, subFolder.getName());
+				folderTree.setParent(subFolder, baseFolder);
+				if (foldername.equals(subFolder.getName())) {
+					folderTree.expandItem(subFolder);
+					folderTree.setValue(subFolder);
+					displayResourcesInTable(subFolder);
+					baseFolder = subFolder;
+				} else {
+					folderTree.setItemIcon(subFolder, new ThemeResource(
+							"icons/16/ecm/folder_close.png"));
+				}
+			}
+		} else {
+			for (Folder subFolder : childs) {
+				if (foldername.equals(subFolder.getName())) {
+					folderTree.expandItem(subFolder);
+					folderTree.setValue(subFolder);
+					displayResourcesInTable(subFolder);
+					baseFolder = subFolder;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -352,9 +399,54 @@ public class FileManagerViewImpl extends AbstractView implements
 				@Override
 				public Object generateCell(Table source, Object itemId,
 						Object columnId) {
-					Resource resource = ResourceTableDisplay.this
-							.getResource(itemId);
-					return new Label("");
+
+					PopupButton resourceSettingPopupBtn = new PopupButton();
+					VerticalLayout filterBtnLayout = new VerticalLayout();
+
+					Button renameBtn = new Button("Rename",
+							new Button.ClickListener() {
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+					renameBtn.setStyleName("link");
+					filterBtnLayout.addComponent(renameBtn);
+
+					Button downloadBtn = new Button("Download",
+							new Button.ClickListener() {
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+					downloadBtn.setStyleName("link");
+					filterBtnLayout.addComponent(downloadBtn);
+
+					Button deleteBtn = new Button("Delete",
+							new Button.ClickListener() {
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+					deleteBtn.setStyleName("link");
+					filterBtnLayout.addComponent(deleteBtn);
+
+					filterBtnLayout.setMargin(true);
+					filterBtnLayout.setSpacing(true);
+					filterBtnLayout.setWidth("100px");
+					resourceSettingPopupBtn.setIcon(new ThemeResource(
+							"icons/12/project/task_menu.png"));
+					resourceSettingPopupBtn.setStyleName("link");
+					resourceSettingPopupBtn.addComponent(filterBtnLayout);
+					return resourceSettingPopupBtn;
 				}
 			});
 
@@ -364,7 +456,7 @@ public class FileManagerViewImpl extends AbstractView implements
 				@Override
 				public Object generateCell(Table source, Object itemId,
 						Object columnId) {
-					Resource resource = ResourceTableDisplay.this
+					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					String path = resource.getPath();
 					int pathIndex = path.lastIndexOf("/");
@@ -392,7 +484,10 @@ public class FileManagerViewImpl extends AbstractView implements
 
 								@Override
 								public void buttonClick(ClickEvent event) {
-									// TODO Auto-generated method stub
+									if (resource instanceof Folder) {
+										displayResourcesInTable(resource
+												.getName());
+									}
 
 								}
 							});
