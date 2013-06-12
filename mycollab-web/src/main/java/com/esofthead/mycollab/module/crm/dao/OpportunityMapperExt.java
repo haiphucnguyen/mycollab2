@@ -12,13 +12,17 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 
 public interface OpportunityMapperExt extends
-        ISearchableDAO<OpportunitySearchCriteria> {
+		ISearchableDAO<OpportunitySearchCriteria> {
 
-    SimpleOpportunity findOpportunityById(int opportunityId);
+	SimpleOpportunity findOpportunityById(int opportunityId);
 
-    List<GroupItem> getSalesStageSummary(OpportunitySearchCriteria criteria);
-    
-    List<GroupItem> getLeadSourcesSummary(OpportunitySearchCriteria criteria);
-    
-    public abstract void upateOpportunityBySearchCriteria(@Param("record") Opportunity record, @Param("searchCriteria")SearchCriteria searchCriteria);
+	List<GroupItem> getSalesStageSummary(
+			@Param("searchCriteria") OpportunitySearchCriteria criteria);
+
+	List<GroupItem> getLeadSourcesSummary(
+			@Param("searchCriteria") OpportunitySearchCriteria criteria);
+
+	public abstract void upateOpportunityBySearchCriteria(
+			@Param("record") Opportunity record,
+			@Param("searchCriteria") SearchCriteria searchCriteria);
 }
