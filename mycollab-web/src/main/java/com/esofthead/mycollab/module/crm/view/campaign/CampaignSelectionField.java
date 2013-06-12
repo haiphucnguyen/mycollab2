@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
@@ -47,7 +48,7 @@ public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs> impl
 			public void click(ClickEvent event) {
 				CampaignSelectionWindow campaignWindow = new CampaignSelectionWindow(
 						CampaignSelectionField.this);
-				getWindow().addWindow(campaignWindow);
+				UIHelper.addWindowToRoot(CampaignSelectionField.this, campaignWindow);
 				campaignWindow.show();
 
 			}

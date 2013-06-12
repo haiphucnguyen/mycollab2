@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
@@ -52,7 +53,7 @@ public class ContactSelectionField extends FieldWrapper<Contact> implements
 			public void click(ClickEvent event) {
 				ContactSelectionWindow accountWindow = new ContactSelectionWindow(
 						ContactSelectionField.this);
-				getWindow().addWindow(accountWindow);
+				UIHelper.addWindowToRoot(ContactSelectionField.this, accountWindow);
 				accountWindow.show();
 
 			}

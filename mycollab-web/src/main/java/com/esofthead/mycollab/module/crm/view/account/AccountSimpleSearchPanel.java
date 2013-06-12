@@ -68,7 +68,8 @@ public class AccountSimpleSearchPanel extends
 		addTextFieldSearch();
 
 		Button searchBtn = new Button("Search");
-		searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		
 		searchBtn.addListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

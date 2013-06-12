@@ -1,16 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
-import com.esofthead.mycollab.module.crm.view.account.AccountEditFormFieldFactory;
-import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -105,31 +100,32 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("accountId")) {
-					informationLayout.addComponent(field, "Account", 0, 1);
+					informationLayout.addComponent(field, "Account", 0, 0);
 				} else if (propertyId.equals("title")) {
-					informationLayout.addComponent(field, "Title", 1, 1);
+					informationLayout.addComponent(field, "Title", 1, 0);
 				} else if (propertyId.equals("leadsource")) {
-					informationLayout.addComponent(field, "Leader Source", 0, 2);
+					informationLayout.addComponent(field, "Leader Source", 0, 1);
 				} else if (propertyId.equals("iscallable")) {
-					informationLayout.addComponent(field, "Callable", 1, 2);
+					informationLayout.addComponent(field, "Callable", 1, 1);
 				} else if (propertyId.equals("assignuser")) {
-					informationLayout.addComponent(field, "Assign User", 0, 3);
+					informationLayout.addComponent(field, "Assign User", 0, 2, 1,
+							"100%", Alignment.TOP_LEFT);
 				}else if (propertyId.equals("primcity")) {
-					addressLayout.addComponent(field, "City", 0, 1);
+					addressLayout.addComponent(field, "City", 0, 0);
 				} else if (propertyId.equals("primstate")) {
-					addressLayout.addComponent(field, "State", 1, 1);
+					addressLayout.addComponent(field, "State", 1, 0);
 				} else if (propertyId.equals("primpostalcode")) {
-					addressLayout.addComponent(field, "Postal Code", 0, 2);
+					addressLayout.addComponent(field, "Postal Code", 0, 1);
 				} else if (propertyId.equals("primcountry")) {
-					addressLayout.addComponent(field, "Country", 1, 2);
+					addressLayout.addComponent(field, "Country", 1, 1);
 				} else if (propertyId.equals("othercity")) {
-					addressLayout.addComponent(field, "Other City", 0, 3);
+					addressLayout.addComponent(field, "Other City", 0, 2);
 				} else if (propertyId.equals("otherstate")) {
-					addressLayout.addComponent(field, "Other State", 1, 3);
+					addressLayout.addComponent(field, "Other State", 1, 2);
 				} else if (propertyId.equals("otherpostalcode")) {
-					addressLayout.addComponent(field, "Other Postal Code", 0, 4);
+					addressLayout.addComponent(field, "Other Postal Code", 0, 3);
 				} else if (propertyId.equals("othercountry")) {
-					addressLayout.addComponent(field, "Other Country", 1, 4);
+					addressLayout.addComponent(field, "Other Country", 1, 3);
 				}
 			}
 		}
