@@ -46,7 +46,7 @@ public class CampaignAddViewImpl extends AbstractView implements
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
+			this.setFormFieldFactory(new CampaignEditFormFieldFactory(campaign));
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -72,44 +72,6 @@ public class CampaignAddViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				return createButtonControls();
-			}
-		}
-
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
-
-				if ("type".equals(propertyId)) {
-					CampaignTypeComboBox typeCombo = new CampaignTypeComboBox();
-					typeCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-					return typeCombo;
-				} else if ("status".equals(propertyId)) {
-					CampaignStatusComboBox statusCombo = new CampaignStatusComboBox();
-					statusCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-					return statusCombo;
-				} else if ("campaignname".equals(propertyId)) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Name must not be null");
-					return tf;
-				} else if ("description".equals(propertyId)) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				} else if ("assignuser".equals(propertyId)) {
-					UserComboBox userBox = new UserComboBox();
-					userBox.select(campaign.getAssignuser());
-					return userBox;
-				} else if (propertyId.equals("currencyid")) {
-					return new CurrencyComboBox();
-				}
-
-				return null;
 			}
 		}
 	}

@@ -113,4 +113,10 @@ public class ContactServiceImpl extends DefaultService<Integer, Contact, Contact
         ex.createCriteria().andContactidEqualTo(associateCase.getContactid()).andCaseidEqualTo(associateCase.getCaseid());
         contactCaseMapper.deleteByExample(ex);
     }
+
+	@Override
+	public void updateBySearchCriteria(Contact value,
+			ContactSearchCriteria searchCriteria) {
+		contactMapperExt.upateContactBySearchCriteria(value, searchCriteria);
+	}
 }

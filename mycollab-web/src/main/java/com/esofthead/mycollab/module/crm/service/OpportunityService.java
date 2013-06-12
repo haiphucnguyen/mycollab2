@@ -41,4 +41,6 @@ public interface OpportunityService extends
     void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads);
     
     void removeOpportunityLeadRelationship(OpportunityLead associateLead);
+
+	void updateBySearchCriteria(Opportunity value,OpportunitySearchCriteria searchCriteria);
 }

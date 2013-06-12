@@ -42,4 +42,6 @@ public interface CampaignService extends
     void saveCampaignLeadRelationship(List<CampaignLead> associateLeads);
 
     void removeCampaignLeadRelationship(CampaignLead associateLead);
+
+	void updateBySearchCriteria(CampaignWithBLOBs value,CampaignSearchCriteria searchCriteria);
 }

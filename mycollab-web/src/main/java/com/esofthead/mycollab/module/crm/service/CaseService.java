@@ -9,4 +9,6 @@ public interface CaseService extends
         IDefaultService<Integer, CaseWithBLOBs, CaseSearchCriteria> {
 
     SimpleCase findCaseById(int caseId);
+
+	void updateBySearchCriteria(CaseWithBLOBs value,CaseSearchCriteria searchCriteria);
 }

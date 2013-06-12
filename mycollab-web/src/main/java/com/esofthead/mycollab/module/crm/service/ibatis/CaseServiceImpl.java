@@ -42,4 +42,10 @@ public class CaseServiceImpl extends DefaultService<Integer, CaseWithBLOBs, Case
     public SimpleCase findCaseById(int caseId) {
         return caseMapperExt.findCaseById(caseId);
     }
+
+	@Override
+	public void updateBySearchCriteria(CaseWithBLOBs value,
+			CaseSearchCriteria searchCriteria) {
+		caseMapperExt.upateCaseBySearchCriteria(value, searchCriteria);
+	}
 }

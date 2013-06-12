@@ -8,6 +8,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -34,7 +36,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
-		implements ListPresenter<LeadSearchCriteria> {
+		implements ListPresenter<LeadSearchCriteria>, MassUpdatePresenter<Lead> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -188,6 +190,11 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
+						}else if ("massUpdate".equals(id)) {
+							MassUpdateLeadWindow massUpdateWindow = new MassUpdateLeadWindow(
+									"Mass Update Leads",
+									LeadListPresenter.this);
+							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
 				});
@@ -273,6 +280,28 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 			}
 		} else {
 			leadService.removeByCriteria(searchCriteria);
+			doSearch(searchCriteria);
+		}
+	}
+
+	@Override
+	public void massUpdate(Lead value) {
+		if (!isSelectAll) {
+			Collection<SimpleLead> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleLead item : currentDataList) {
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
+			}
+
+			if (keyList.size() > 0) {
+				leadService.massUpdateWithSession(value, keyList);
+				doSearch(searchCriteria);
+			}
+		} else {
+			leadService.updateBySearchCriteria(value,searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

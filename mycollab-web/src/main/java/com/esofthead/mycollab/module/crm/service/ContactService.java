@@ -36,4 +36,6 @@ public interface ContactService extends
     void saveContactCaseRelationship(List<ContactCase> associateCases);
     
     void removeContactCaseRelationship(ContactCase associateCase);
+
+	void updateBySearchCriteria(Contact value,ContactSearchCriteria searchCriteria);
 }

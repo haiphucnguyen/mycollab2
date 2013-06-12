@@ -52,7 +52,7 @@ public class OpportunityAddViewImpl extends AbstractView implements
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
+			this.setFormFieldFactory(new OpportunityEditFormFieldFactory(opportunity));
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -78,67 +78,6 @@ public class OpportunityAddViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				return createButtonControls();
-			}
-		}
-
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
-				if (propertyId.equals("campaignid")) {
-					CampaignSelectionField campaignField = new CampaignSelectionField();
-					if (opportunity.getCampaignid() != null) {
-						CampaignService campaignService = AppContext
-								.getSpringBean(CampaignService.class);
-						SimpleCampaign campaign = campaignService
-								.findCampaignById(opportunity.getCampaignid());
-						if (campaign != null) {
-							campaignField.setCampaign(campaign);
-						}
-					}
-					return campaignField;
-				} else if (propertyId.equals("accountid")) {
-					AccountSelectionField accountField = new AccountSelectionField();
-					accountField.setRequired(true);
-					if (opportunity.getAccountid() != null) {
-						AccountService accountService = AppContext
-								.getSpringBean(AccountService.class);
-						SimpleAccount account = accountService
-								.findAccountById(opportunity.getAccountid());
-						if (account != null) {
-							accountField.setAccount(account);
-						}
-					}
-					return accountField;
-				} else if (propertyId.equals("opportunityname")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Name must not be null");
-					return tf;
-				} else if (propertyId.equals("currencyid")) {
-					CurrencyComboBox currencyBox = new CurrencyComboBox();
-					
-					return currencyBox;
-				} else if (propertyId.equals("salesstage")) {
-					return new OpportunitySalesStageComboBox();
-				} else if (propertyId.equals("opportunitytype")) {
-					return new OpportunityTypeComboBox();
-				} else if (propertyId.equals("source")) {
-					return new LeadSourceComboBox();
-				} else if (propertyId.equals("description")) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				} else if (propertyId.equals("assignuser")) {
-					UserComboBox userBox = new UserComboBox();
-					return userBox;
-				}
-
-				return null;
 			}
 		}
 	}

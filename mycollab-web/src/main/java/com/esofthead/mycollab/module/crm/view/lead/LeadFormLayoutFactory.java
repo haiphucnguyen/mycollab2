@@ -44,8 +44,8 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
     }
 
     public static class LeadInformationLayout implements IFormLayoutFactory {
-
-        protected VerticalLayout layout;
+		private static final long serialVersionUID = 1L;
+		protected VerticalLayout layout;
         protected GridFormLayoutHelper informationLayout;
         protected GridFormLayoutHelper addressLayout;
         protected GridFormLayoutHelper descLayout;
