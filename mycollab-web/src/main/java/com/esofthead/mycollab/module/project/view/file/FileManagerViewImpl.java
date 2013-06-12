@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.file;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.vaadin.easyuploads.SingleFileUploadField;
@@ -11,7 +12,9 @@ import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -19,8 +22,11 @@ import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
@@ -108,10 +114,16 @@ public class FileManagerViewImpl extends AbstractView implements
 				Folder expandFolder = (Folder) event.getItemId();
 				List<Folder> subFolders = resourceService
 						.getSubFolders(expandFolder.getPath());
+
+				folderTree.setItemIcon(expandFolder, new ThemeResource(
+						"icons/16/ecm/folder_open.png"));
+
 				if (subFolders != null) {
 					for (Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
 						folderTree.addItem(subFolder);
+						folderTree.setItemIcon(subFolder, new ThemeResource(
+								"icons/16/ecm/folder_close.png"));
 						folderTree.setItemCaption(subFolder,
 								subFolder.getName());
 						folderTree.setParent(subFolder, expandFolder);
@@ -126,6 +138,8 @@ public class FileManagerViewImpl extends AbstractView implements
 			@Override
 			public void nodeCollapse(CollapseEvent event) {
 				Folder collapseFolder = (Folder) event.getItemId();
+				folderTree.setItemIcon(collapseFolder, new ThemeResource(
+						"icons/16/ecm/folder_close.png"));
 				List<Folder> childs = collapseFolder.getChilds();
 				for (Folder subFolder : childs) {
 					folderTree.removeItem(subFolder);
@@ -157,10 +171,11 @@ public class FileManagerViewImpl extends AbstractView implements
 				.getPath());
 		resourceTable.setContainerDataSource(new BeanItemContainer<Resource>(
 				Resource.class, resources));
-		resourceTable.setVisibleColumns(new String[] { "path", "size",
+		resourceTable.setVisibleColumns(new String[] { "uuid", "path", "size",
 				"created", "createdBy" });
-		resourceTable.setColumnHeaders(new String[] { "Name", "Size",
+		resourceTable.setColumnHeaders(new String[] { "", "Name", "Size",
 				"Created", "By" });
+
 	}
 
 	@Override
@@ -264,8 +279,6 @@ public class FileManagerViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		private GridFormLayoutHelper layoutHelper;
-
-		private TextField titleField;
 		private TextArea descField;
 		private SingleFileUploadField uploadField;
 
@@ -274,15 +287,12 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.setWidth("500px");
 			this.setModal(true);
 
-			layoutHelper = new GridFormLayoutHelper(1, 3);
-
-			titleField = (TextField) layoutHelper.addComponent(new TextField(),
-					"Title", 0, 0);
-			descField = (TextArea) layoutHelper.addComponent(new TextArea(),
-					"Description", 0, 1);
+			layoutHelper = new GridFormLayoutHelper(1, 2);
 
 			uploadField = (SingleFileUploadField) layoutHelper.addComponent(
-					new SingleFileUploadField(), "File", 0, 2);
+					new SingleFileUploadField(), "File", 0, 0);
+			descField = (TextArea) layoutHelper.addComponent(new TextArea(),
+					"Description", 0, 1);
 
 			this.addComponent(layoutHelper.getLayout());
 
@@ -295,11 +305,24 @@ public class FileManagerViewImpl extends AbstractView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					// TODO Auto-generated method stub
-					Content content = new Content();
-					content.setTitle((String) titleField.getValue());
-					content.setDescription((String) descField.getValue());
-					content.setPath(baseFolder.getPath() + "/" );
-					UploadContentWindow.this.close();
+					InputStream contentStream = uploadField
+							.getContentAsStream();
+					if (contentStream != null) {
+						Content content = new Content();
+						content.setDescription((String) descField.getValue());
+						content.setPath(baseFolder.getPath() + "/"
+								+ uploadField.getFileName());
+						resourceService.saveContent(content, contentStream);
+						UploadContentWindow.this.close();
+						displayResourcesInTable(baseFolder);
+					} else {
+						AppContext
+								.getApplication()
+								.getMainWindow()
+								.showNotification(
+										"It seems you did not attach file yet!");
+					}
+
 				}
 			});
 
@@ -323,6 +346,18 @@ public class FileManagerViewImpl extends AbstractView implements
 	@SuppressWarnings("serial")
 	private class ResourceTableDisplay extends Table {
 		public ResourceTableDisplay() {
+			this.addGeneratedColumn("uuid", new Table.ColumnGenerator() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					Resource resource = ResourceTableDisplay.this
+							.getResource(itemId);
+					return new Label("");
+				}
+			});
+
 			this.addGeneratedColumn("path", new Table.ColumnGenerator() {
 				private static final long serialVersionUID = 1L;
 
@@ -336,7 +371,37 @@ public class FileManagerViewImpl extends AbstractView implements
 					if (pathIndex > -1) {
 						path = path.substring(pathIndex + 1);
 					}
-					return new Label(path);
+					HorizontalLayout resourceLabel = new HorizontalLayout();
+
+					com.vaadin.terminal.Resource iconResource = null;
+					if (resource instanceof Content) {
+						iconResource = new ThemeResource(
+								"icons/16/ecm/file.png");
+					} else {
+						iconResource = new ThemeResource(
+								"icons/16/ecm/folder_close.png");
+					}
+					Embedded iconEmbed = new Embedded(null, iconResource);
+
+					resourceLabel.addComponent(iconEmbed);
+					resourceLabel.setComponentAlignment(iconEmbed,
+							Alignment.MIDDLE_CENTER);
+
+					ButtonLink resourceLink = new ButtonLink(path,
+							new Button.ClickListener() {
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+
+					resourceLink.setWidth("100%");
+					resourceLabel.addComponent(resourceLink);
+					resourceLabel.setExpandRatio(resourceLink, 1.0f);
+					resourceLabel.setWidth("100%");
+					return resourceLabel;
 				}
 			});
 
@@ -373,6 +438,12 @@ public class FileManagerViewImpl extends AbstractView implements
 					return new Label(resource.getCreatedBy());
 				}
 			});
+
+			this.setColumnExpandRatio("path", 1);
+			this.setColumnWidth("uuid", 30);
+			this.setColumnWidth("createdBy", UIConstants.TABLE_X_LABEL_WIDTH);
+			this.setColumnWidth("size", UIConstants.TABLE_S_LABEL_WIDTH);
+			this.setColumnWidth("created", UIConstants.TABLE_DATE_TIME_WIDTH);
 		}
 
 		private Resource getResource(Object itemId) {

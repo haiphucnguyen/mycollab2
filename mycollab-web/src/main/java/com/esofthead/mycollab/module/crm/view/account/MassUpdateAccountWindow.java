@@ -28,9 +28,10 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 	public MassUpdateAccountWindow(String title, AccountListPresenter presenter) {
 		super(title, presenter);
 		this.setWidth("1000px");
-
-		accountAddLayout = new ReadViewLayout(new ThemeResource(
-				"icons/18/account.png"));
+		
+		this.setIcon(new ThemeResource("icons/18/account.png"));
+		
+		accountAddLayout = new ReadViewLayout(null);
 
 		account = new Account();
 
@@ -92,6 +93,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 				formLayout.addComponent(addressLayout.getLayout());
 
 				formLayout.addComponent(layout);
+				formLayout.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
 
 				return formLayout;
 			}

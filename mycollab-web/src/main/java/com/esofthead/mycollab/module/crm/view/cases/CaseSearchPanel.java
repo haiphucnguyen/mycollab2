@@ -107,6 +107,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 			priorityField = (CasePriorityListSelect) gridLayout.addComponent(
 					new CasePriorityListSelect(), "Priority", 2, 1);
 
+			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
 		}
 

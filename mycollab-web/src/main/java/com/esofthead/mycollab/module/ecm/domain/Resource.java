@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.ecm.domain;
 import java.util.Calendar;
 
 public class Resource {
+	protected String uuid="";
 	protected String createdBy = "";
 	protected Calendar created;
 	protected String path = "";
@@ -38,6 +39,14 @@ public class Resource {
 
 	public void setSize(long size) {
 		this.size = size;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getName() {

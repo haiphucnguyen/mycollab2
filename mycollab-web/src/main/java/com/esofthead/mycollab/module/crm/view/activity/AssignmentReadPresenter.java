@@ -8,7 +8,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
-import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
 import com.esofthead.mycollab.module.crm.service.TaskService;
@@ -96,7 +96,7 @@ public class AssignmentReadPresenter extends
 					public void gotoNext(SimpleTask data) {
 						TaskService taskService = AppContext
 								.getSpringBean(TaskService.class);
-						TaskSearchCriteria criteria = new TaskSearchCriteria();
+						TodoSearchCriteria criteria = new TodoSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
@@ -121,7 +121,7 @@ public class AssignmentReadPresenter extends
 					public void gotoPrevious(SimpleTask data) {
 						TaskService taskService = AppContext
 								.getSpringBean(TaskService.class);
-						TaskSearchCriteria criteria = new TaskSearchCriteria();
+						TodoSearchCriteria criteria = new TodoSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),

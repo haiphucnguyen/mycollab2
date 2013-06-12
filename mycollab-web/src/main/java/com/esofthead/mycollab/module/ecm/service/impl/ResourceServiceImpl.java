@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.ecm.service.impl;
 
+import java.io.InputStream;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -7,15 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
+import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.service.RawContentService;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
 	@Autowired
 	private ContentJcrDao contentJcrDao;
+
+	@Autowired
+	private RawContentService rawContentService;
 
 	@Override
 	public List<Resource> getResources(String path) {
@@ -38,5 +44,13 @@ public class ResourceServiceImpl implements ResourceService {
 		folder.setCreated(new GregorianCalendar());
 		contentJcrDao.createFolder(folder);
 		return folder;
+	}
+
+	@Override
+	public void saveContent(Content content, InputStream refStream) {
+		contentJcrDao.saveContent(content);
+
+		String contentPath = content.getPath();
+		rawContentService.saveContent(contentPath, refStream);
 	}
 }

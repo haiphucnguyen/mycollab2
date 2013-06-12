@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.dao.TaskMapperExt;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
-import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Traceable(module = "Crm", type = "Task", nameField = "subject")
 @Auditable(module = "Crm", type = "Task")
 public class TaskServiceImpl extends
-		DefaultService<Integer, Task, TaskSearchCriteria> implements
+		DefaultService<Integer, Task, TodoSearchCriteria> implements
 		TaskService {
 
 	@Autowired
@@ -52,7 +52,7 @@ public class TaskServiceImpl extends
 	}
 
 	@Override
-	public ISearchableDAO<TaskSearchCriteria> getSearchMapper() {
+	public ISearchableDAO<TodoSearchCriteria> getSearchMapper() {
 		return taskMapperExt;
 	}
 

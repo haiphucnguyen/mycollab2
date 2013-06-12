@@ -234,6 +234,9 @@ public class CampaignSearchPanel extends
 					new CampaignStatusListSelect(), "Status", 1, 1);
 			assignUserField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assign User", 2, 1);
+			
+			gridLayout.getLayout().setSpacing(true);
+			
 			return gridLayout.getLayout();
 		}
 

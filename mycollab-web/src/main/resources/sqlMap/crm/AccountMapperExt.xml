@@ -284,10 +284,24 @@
 	<!-- Here for Mass Update -->
     <update id="upateAccountBySearchCriteria" parameterType="map">
     	<include refid="com.esofthead.mycollab.module.crm.dao.AccountMapper.massUpdateWithSessionSql"/>
+    	
+    	<bind name="accountname" value="searchCriteria.accountname"/>
+    	<bind name="assignUser" value="searchCriteria.assignUser"/>
+    	<bind name="assignUserName" value="searchCriteria.assignUserName"/>
+    	<bind name="website" value="searchCriteria.website"/>
+    	<bind name="anyCity" value="searchCriteria.anyCity"/>
+    	<bind name="types" value="searchCriteria.types"/>
+    	<bind name="industries" value="searchCriteria.industries"/>
+    	<bind name="assignUsers" value="searchCriteria.assignUsers"/>
+    	<bind name="anyPhone" value="searchCriteria.anyPhone"/>
+    	<bind name="anyAddress" value="searchCriteria.anyAddress"/>
+    	<bind name="anyMail" value="searchCriteria.anyMail"/>
+    	<bind name="campaignId" value="searchCriteria.campaignId"/>
+    	
     	<if test="searchCriteria != null">
        		<trim prefix="WHERE" prefixOverrides="AND | OR ">
            		 1=1 
-           		 <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria4MassUpdate" />
+           		 <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria" />
         	</trim>
     	</if>
     </update>

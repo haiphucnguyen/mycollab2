@@ -214,6 +214,7 @@ public class ContactSearchPanel extends
 			return createSearchTopPanel();
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4,
@@ -227,33 +228,35 @@ public class ContactSearchPanel extends
 				"90px");
 			}
 
-			firstnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "First Name", 0, 0);
-			lastnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Last Name", 0, 1);
-			accountnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Account Name", 0, 2);
-			assignUserField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assign User", 0, 3);
+			firstnameField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(),"firstnameField")
+					, "First Name", 0, 0);
+			lastnameField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(), "lastnameField"),
+					"Last Name", 0, 1);
+			accountnameField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(), "accountnameField")
+					, "Account Name", 0, 2);
+			assignUserField = (UserListSelect) gridLayout.addComponent(createSeachSupportComboBox(new UserListSelect())
+					, "Assign User", 0, 3);
 
-			anyEmailField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Email", 1, 0);
-			anyAddressField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Address", 1, 1);
-			stateField = (TextField) gridLayout.addComponent(new TextField(),
-					"State", 1, 2);
-			countryField = (CountryListSelect) gridLayout.addComponent(
-					new CountryListSelect(), "Country", 1, 3);
+			anyEmailField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(), "anyEmailField")
+					, "Any Email", 1, 0);
+			anyAddressField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(),"anyAddressField")
+					, "Any Address", 1, 1);
+			stateField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(),"stateField")
+					,"State", 1, 2);
+			countryField = (CountryListSelect) gridLayout.addComponent(createSeachSupportComboBox(new CountryListSelect())
+					, "Country", 1, 3);
 
-			anyPhoneField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Phone", 2, 0);
-			cityField = (TextField) gridLayout.addComponent(new TextField(),
+			anyPhoneField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(), "anyPhoneField")
+					, "Any Phone", 2, 0);
+			cityField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(),"cityField"),
 					"City", 2, 1);
-			postalCodeField = (TextField) gridLayout.addComponent(
-					new TextField(), "Postal Code", 2, 2);
-			leadSourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					new LeadSourceListSelect(), "Lead Source", 2, 3);
+			postalCodeField = (TextField) gridLayout.addComponent(createSeachSupportTextField(new TextField(), "postalCodeField")
+					, "Postal Code", 2, 2);
+			leadSourceField = (LeadSourceListSelect) gridLayout.addComponent(createSeachSupportComboBox(new LeadSourceListSelect())
+					, "Lead Source", 2, 3);
 
+			gridLayout.getLayout().setSpacing(true);
+			
 			return gridLayout.getLayout();
 		}
 

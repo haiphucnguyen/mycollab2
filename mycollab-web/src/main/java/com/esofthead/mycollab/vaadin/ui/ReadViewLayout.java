@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -32,7 +33,7 @@ public class ReadViewLayout extends CssLayout {
 		this.iconEmbed = new Embedded();
 		this.header.addComponent(this.iconEmbed);
 		if (icon != null) {
-			this.setIcon(icon);
+			this.setTitleIcon(icon);
 		}
 
 		this.header
@@ -79,7 +80,7 @@ public class ReadViewLayout extends CssLayout {
 		this.titleLbl.setValue(title);
 	}
 
-	public void setIcon(final ThemeResource iconResource) {
+	public void setTitleIcon(final Resource iconResource) {
 		this.iconEmbed.setSource(iconResource);
 	}
 }
