@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -18,14 +19,19 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
  */
 public interface ProjectGenericTaskMapper extends
 		ISearchableDAO<ProjectGenericTaskSearchCriteria> {
-	int getTotalCountFromProblem(ProjectGenericTaskSearchCriteria criteria);
+	int getTotalCountFromProblem(
+			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
-	int getTotalCountFromRisk(ProjectGenericTaskSearchCriteria criteria);
+	int getTotalCountFromRisk(
+			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
-	int getTotalCountFromBug(ProjectGenericTaskSearchCriteria criteria);
+	int getTotalCountFromBug(
+			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
-	int getTotalCountFromTask(ProjectGenericTaskSearchCriteria criteria);
+	int getTotalCountFromTask(
+			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
 	List<ProjectGenericTaskCount> findPagableTaskCountListByCriteria(
-			ProjectGenericTaskSearchCriteria criteria, RowBounds rowBounds);
+			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria,
+			RowBounds rowBounds);
 }

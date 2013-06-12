@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.esofthead.mycollab.common.dao.CommentMapperExt" >
+<mapper namespace="com.esofthead.mycollab.common.dao.CommentMapperExt">
 
-    <resultMap
-        id="BaseResultMap"
+    <resultMap id="BaseResultMap"
         extends="com.esofthead.mycollab.common.dao.CommentMapper.BaseResultMap"
-        type="com.esofthead.mycollab.common.domain.SimpleComment" >
-        
-        <result
-            column="ownerFullName"
-            jdbcType="VARCHAR"
+        type="com.esofthead.mycollab.common.domain.SimpleComment">
+
+        <result column="ownerFullName" jdbcType="VARCHAR"
             property="ownerFullName" />
-        <collection property="attachments" javaType="ArrayList" columnPrefix="attach_"
-                    resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap"
-                    ofType="com.esofthead.mycollab.module.file.domain.Attachment"/>
+        <collection property="attachments" javaType="ArrayList"
+            columnPrefix="attach_"
+            resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap"
+            ofType="com.esofthead.mycollab.module.file.domain.Attachment" />
     </resultMap>
-    
+
     <sql id="querySearchCriteria">
-        <if test="type != null ">
-            <![CDATA[${type.operation} m_comment.type = '${type.value}' ]]>
+        <if test="searchCriteria.type != null ">
+            <![CDATA[${searchCriteria.type.operation} m_comment.type = #{searchCriteria.type.value} ]]>
         </if>
-        <if test="typeid != null ">
-            <![CDATA[${typeid.operation} m_comment.typeid = ${typeid.value} ]]>
+        <if test="searchCriteria.typeid != null ">
+            <![CDATA[${searchCriteria.typeid.operation} m_comment.typeid = #{searchCriteria.typeid.value} ]]>
         </if>
     </sql>
-    
+
     <sql id="selectSimpleComment">
         <![CDATA[
             SELECT m_comment.id, m_comment.comment, m_comment.createdUser, m_comment.createdTime, 
@@ -38,9 +36,10 @@
                     LEFT OUTER JOIN m_attachment ON (m_attachment.type='common-comment' AND m_attachment.typeid=m_comment.id)
         ]]>
     </sql>
-    
+
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             createdTime DESC
         ]]>
@@ -50,12 +49,14 @@
         resultMap="BaseResultMap">
         <include
             refid="com.esofthead.mycollab.common.dao.CommentMapperExt.selectSimpleComment" />
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
-                refid="com.esofthead.mycollab.common.dao.CommentMapperExt.querySearchCriteria" />
-        </trim>
-        <include refid="orderStatement"/>
-        
-    </select>        
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.CommentMapperExt.querySearchCriteria" />
+            </trim>
+            <include refid="orderStatement" />
+        </if>
+    </select>
 
 </mapper>

@@ -15,22 +15,22 @@
 
     <sql id="querySearchCriteria">
 
-        <if test="id != null">
-            <![CDATA[${id.operation} m_prj_milestone.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.id != null">
+            <![CDATA[${searchCriteria.id.operation} m_prj_milestone.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
         </if>
 
-        <if test="assignUser != null">
-            <![CDATA[${assignUser.operation} m_prj_milestone.owner = #{assignUser.value}]]>
+        <if test="searchCriteria.assignUser != null">
+            <![CDATA[${searchCriteria.assignUser.operation} m_prj_milestone.owner = #{searchCriteria.assignUser.value}]]>
         </if>
-        <if test="status != null">
-            <![CDATA[${status.operation} m_prj_milestone.status = #{status.value}]]>
+        <if test="searchCriteria.status != null">
+            <![CDATA[${searchCriteria.status.operation} m_prj_milestone.status = #{searchCriteria.status.value}]]>
         </if>
-        <if test="projectId != null">
-            <![CDATA[${projectId.operation} m_prj_milestone.projectid = #{projectId.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.projectId != null">
+            <![CDATA[${searchCriteria.projectId.operation} m_prj_milestone.projectid = #{searchCriteria.projectId.value,javaType=INTEGER}]]>
         </if>
-        <if test="milestoneName != null">
+        <if test="searchCriteria.milestoneName != null">
           <![CDATA[
-            ${milestoneName.operation} m_prj_milestone.name like '%${milestoneName.value}%'
+            ${searchCriteria.milestoneName.operation} m_prj_milestone.name like '%${searchCriteria.milestoneName.value}%'
             ]]>
         </if>
     </sql>
@@ -55,13 +55,14 @@
         resultType="int">
         SELECT count(*) as totalCount FROM m_prj_milestone
 
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
 
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-
-            <include
-                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
-        </trim>
+                <include
+                    refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
     </select>
 
     <select id="findPagableListByCriteria" parameterType="ProblemSearchCriteria"
@@ -69,13 +70,14 @@
 
         <include
             refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.selectMilestone" />
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
 
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-
-            <include
-                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
-        </trim>
+                <include
+                    refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
     </select>
 
     <select id="findMilestoneById" parameterType="java.lang.Integer"
