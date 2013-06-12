@@ -121,48 +121,43 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
         @Override
         public ComponentContainer constructBody() {
             HorizontalLayout basicSearchBody = new HorizontalLayout();
-            basicSearchBody.setSpacing(true);
+            basicSearchBody.setSpacing(false);
             basicSearchBody.addComponent(new Label("Subject"));
+            
             nameField = new TextField();
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
             UiUtils.addComponent(basicSearchBody, nameField,
                     Alignment.MIDDLE_CENTER);
-            myItemCheckbox = new CheckBox("My Items");
-            myItemCheckbox.setWidth("75px");
-            UiUtils.addComponent(basicSearchBody, myItemCheckbox,
-                    Alignment.MIDDLE_CENTER);
-            Button searchBtn = new Button("Search");
-            searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+            
+            Button searchBtn = new Button();
+            searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+			
             searchBtn.addListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                 	EventBasicSearchLayout.this.callSearchAction();
                 }
             });
-
-            basicSearchBody.addComponent(searchBtn);
+            UiUtils.addComponent(basicSearchBody, searchBtn,
+					Alignment.MIDDLE_LEFT);
+            
+            myItemCheckbox = new CheckBox("My Items");
+            myItemCheckbox.setWidth("75px");
+            UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+                    Alignment.MIDDLE_CENTER);
 
             Button cancelBtn = new Button("Clear");
-            cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+            cancelBtn.setStyleName(UIConstants.THEME_LINK);
+			cancelBtn.addStyleName("cancel-button");
+			cancelBtn.setWidth("55px");
             cancelBtn.addListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     nameField.setValue("");
                 }
             });
-            basicSearchBody.addComponent(cancelBtn);
-
-//            Button advancedSearchBtn = new Button("Advanced Search",
-//                    new Button.ClickListener() {
-//                        @Override
-//                        public void buttonClick(Button.ClickEvent event) {
-//                            EventSearchPanel.this
-//                                    .createAdvancedSearchLayout();
-//                        }
-//                    });
-//            advancedSearchBtn.setStyleName("link");
-//            UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
-//                    Alignment.MIDDLE_CENTER);
+            UiUtils.addComponent(basicSearchBody, cancelBtn,Alignment.MIDDLE_CENTER);
             return basicSearchBody;
         }
 
@@ -208,6 +203,9 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
                 }
             });
 
+            searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+            
             buttonControls.addComponent(searchBtn);
             searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
@@ -216,7 +214,8 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
                 public void buttonClick(Button.ClickEvent event) {
                 }
             });
-            clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+            clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            clearBtn.addStyleName("cancel-button");
             buttonControls.addComponent(clearBtn);
 
             Button basicSearchBtn = new Button("Basic Search",

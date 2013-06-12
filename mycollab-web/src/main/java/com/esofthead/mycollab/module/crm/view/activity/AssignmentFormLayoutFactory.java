@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory.AccountInformationLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -23,23 +24,17 @@ public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory 
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout taskAddLayout = new AddViewLayout(title,
-				new ThemeResource("icons/48/crm/task.png"));
+		AddViewLayout2 taskAddLayout = new AddViewLayout2(title,
+				new ThemeResource("icons/18/crm/task.png"));
 
 		Layout topPanel = createTopPanel();
-
 		if (topPanel != null) {
-			taskAddLayout.addTopControls(topPanel);
+			taskAddLayout.addControlButtons(topPanel);
 		}
 
 		informationLayout = new AssignmentInformationLayout();
 		taskAddLayout.addBody(informationLayout.getLayout());
-
-		Layout bottomPanel = createBottomPanel();
-		if (bottomPanel != null) {
-			taskAddLayout.addBottomControls(bottomPanel);
-		}
-
+		
 		return taskAddLayout;
 	}
 

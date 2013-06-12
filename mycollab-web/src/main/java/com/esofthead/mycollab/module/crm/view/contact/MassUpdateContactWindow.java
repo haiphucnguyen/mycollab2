@@ -105,12 +105,12 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 					informationLayout.addComponent(field, "Title", 1, 0);
 				} else if (propertyId.equals("leadsource")) {
 					informationLayout.addComponent(field, "Leader Source", 0, 1);
-				} else if (propertyId.equals("iscallable")) {
-					informationLayout.addComponent(field, "Callable", 1, 1);
 				} else if (propertyId.equals("assignuser")) {
-					informationLayout.addComponent(field, "Assign User", 0, 2, 1,
+					informationLayout.addComponent(field, "Assign User", 1, 1);
+				}else if (propertyId.equals("iscallable")) {
+					informationLayout.addComponent(field, "Callable", 0, 2, 2,
 							"100%", Alignment.TOP_LEFT);
-				}else if (propertyId.equals("primcity")) {
+				} else if (propertyId.equals("primcity")) {
 					addressLayout.addComponent(field, "City", 0, 0);
 				} else if (propertyId.equals("primstate")) {
 					addressLayout.addComponent(field, "State", 1, 0);
