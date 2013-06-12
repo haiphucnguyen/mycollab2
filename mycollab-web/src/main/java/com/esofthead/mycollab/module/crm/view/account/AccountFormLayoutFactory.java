@@ -35,7 +35,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 accountAddLayout = new AddViewLayout2(title,
-				new ThemeResource("icons/18/account.png"));
+				new ThemeResource("icons/22/crm/account.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

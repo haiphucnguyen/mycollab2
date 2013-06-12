@@ -149,7 +149,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 	public Layout getLayout() {
 		informationLayout = new ContactInformationLayout(false);
 		final AddViewLayout2 contactAddLayout = new AddViewLayout2(title,
-				new ThemeResource("icons/18/crm/contact.png"));
+				new ThemeResource("icons/22/crm/contact.png"));
 
 		final Layout topPanel = createTopPanel();
 		if (topPanel != null) {

@@ -13,7 +13,6 @@ import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
@@ -150,7 +149,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 
 		public ReadView() {
 			campaignAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/18/crm/campaign.png"));
+					"icons/22/crm/campaign.png"));
 			this.addComponent(campaignAddLayout);
 			
 			initRelatedComponent();

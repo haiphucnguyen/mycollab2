@@ -15,13 +15,10 @@ import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
@@ -34,7 +31,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -130,7 +126,7 @@ public class CasePreviewBuilder extends VerticalLayout {
         private ReadViewLayout caseAddLayout;
 
         public ReadView() {
-            caseAddLayout = new ReadViewLayout(new ThemeResource("icons/18/crm/case.png"));
+            caseAddLayout = new ReadViewLayout(new ThemeResource("icons/22/crm/case.png"));
             this.addComponent(caseAddLayout);
             initRelatedComponent();
 

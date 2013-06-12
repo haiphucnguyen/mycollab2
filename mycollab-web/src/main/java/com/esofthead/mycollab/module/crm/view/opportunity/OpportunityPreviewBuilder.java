@@ -14,13 +14,10 @@ import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
@@ -33,7 +30,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -108,7 +104,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
 		public ReadView() {
 			opportunityAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/18/crm/opportunity.png"));
+					"icons/22/crm/opportunity.png"));
 			this.addComponent(opportunityAddLayout);
 
 			initRelatedComponent();
@@ -160,43 +156,48 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 			final Layout optionalActionControls = PreviewFormControlsGenerator2
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_OPPORTUNITY);
-			
+
 			opportunityAddLayout.addControlButtons(optionalActionControls);
-			
+
 			opportunityInformationLayout = new VerticalLayout();
-			
+
 			opportunityInformationLayout.addStyleName("main-info");
-				
+
 			final Layout actionControls = PreviewFormControlsGenerator2
-						.createFormControls(previewForm,
-								RolePermissionCollections.CRM_OPPORTUNITY);
-				actionControls.addStyleName("control-buttons");
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_OPPORTUNITY);
+			actionControls.addStyleName("control-buttons");
 			opportunityInformationLayout.addComponent(actionControls);
-			
+
 			opportunityInformationLayout.addComponent(previewForm);
 			opportunityInformationLayout.addComponent(noteListItems);
-			
-			opportunityAddLayout.addTab(opportunityInformationLayout, "Opportunity Information");
+
+			opportunityAddLayout.addTab(opportunityInformationLayout,
+					"Opportunity Information");
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
-			opportunityAddLayout.addTab(relatedItemsContainer, "More Information");
+			opportunityAddLayout.addTab(relatedItemsContainer,
+					"More Information");
 			opportunityAddLayout
-			.addTabChangedListener(new DetachedTabs.TabChangedListener() {
-				@Override
-				public void tabChanged(final TabChangedEvent event) {
-					final Button btn = event.getSource();
-					final String caption = btn.getCaption();
-					if ("Opportunity Information".equals(caption)) {
+					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+						@Override
+						public void tabChanged(final TabChangedEvent event) {
+							final Button btn = event.getSource();
+							final String caption = btn.getCaption();
+							if ("Opportunity Information".equals(caption)) {
 
-					} else if ("More Information".equals(caption)) {
-						relatedItemsContainer.addComponent(associateActivityList);
-						relatedItemsContainer.addComponent(associateContactList);
-						relatedItemsContainer.addComponent(associateLeadList);
-					}
-					opportunityAddLayout.selectTab(caption);
-				}
-			});
+							} else if ("More Information".equals(caption)) {
+								relatedItemsContainer
+										.addComponent(associateActivityList);
+								relatedItemsContainer
+										.addComponent(associateContactList);
+								relatedItemsContainer
+										.addComponent(associateLeadList);
+							}
+							opportunityAddLayout.selectTab(caption);
+						}
+					});
 		}
 	}
 
