@@ -8,12 +8,15 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
+import com.esofthead.mycollab.module.crm.view.contact.MassUpdateContactWindow;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
@@ -22,6 +25,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -35,7 +39,8 @@ import com.vaadin.ui.ComponentContainer;
 
 public class CampaignListPresenter extends
 		CrmGenericPresenter<CampaignListView> implements
-		ListPresenter<CampaignSearchCriteria> {
+		ListPresenter<CampaignSearchCriteria> ,
+		MassUpdatePresenter<CampaignWithBLOBs>{
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -171,6 +176,11 @@ public class CampaignListPresenter extends
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
+						} else if ("massUpdate".equals(id)) {
+							MassUpdateCampaignWindow massUpdateWindow = new MassUpdateCampaignWindow(
+									"Mass Update Campaigns",
+									CampaignListPresenter.this);
+							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
 				});
@@ -254,6 +264,27 @@ public class CampaignListPresenter extends
 			}
 		} else {
 			campaignService.removeByCriteria(searchCriteria);
+			doSearch(searchCriteria);
+		}
+	}
+
+	@Override
+	public void massUpdate(CampaignWithBLOBs value) {
+		if (!isSelectAll) {
+			Collection<SimpleCampaign> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleCampaign item : currentDataList) {
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
+			}
+			if (keyList.size() > 0) {
+				campaignService.massUpdateWithSession(value, keyList);
+				doSearch(searchCriteria);
+			}
+		} else {
+			campaignService.updateBySearchCriteria(value,searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

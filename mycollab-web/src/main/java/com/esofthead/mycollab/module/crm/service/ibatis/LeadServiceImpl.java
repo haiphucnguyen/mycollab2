@@ -57,4 +57,10 @@ public class LeadServiceImpl extends DefaultService<Integer, Lead, LeadSearchCri
     public SimpleLead findLeadById(int leadId) {
         return leadMapperExt.findLeadById(leadId);
     }
+
+	@Override
+	public void updateBySearchCriteria(Lead value,
+			LeadSearchCriteria searchCriteria) {
+		leadMapperExt.upateLeadBySearchCriteria(value, searchCriteria);
+	}
 }

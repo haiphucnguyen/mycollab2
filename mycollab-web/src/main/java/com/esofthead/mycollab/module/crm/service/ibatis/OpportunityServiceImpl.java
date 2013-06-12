@@ -115,4 +115,10 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
         ex.createCriteria().andOpportunityidEqualTo(associateLead.getOpportunityid()).andLeadidEqualTo(associateLead.getLeadid());
         opportunityLeadMapper.deleteByExample(ex);
     }
+
+	@Override
+	public void updateBySearchCriteria(Opportunity value,
+			OpportunitySearchCriteria searchCriteria) {
+		opportunityMapperExt.upateOpportunityBySearchCriteria(value, searchCriteria);
+	}
 }

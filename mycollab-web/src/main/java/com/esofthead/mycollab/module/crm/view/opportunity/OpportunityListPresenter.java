@@ -8,12 +8,16 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
+import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
+import com.esofthead.mycollab.module.crm.view.account.MassUpdateAccountWindow;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
@@ -22,6 +26,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -35,7 +40,8 @@ import com.vaadin.ui.ComponentContainer;
 
 public class OpportunityListPresenter extends
 		CrmGenericPresenter<OpportunityListView> implements
-		ListPresenter<OpportunitySearchCriteria> {
+		ListPresenter<OpportunitySearchCriteria>,
+		MassUpdatePresenter<Opportunity>{
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -168,6 +174,11 @@ public class OpportunityListPresenter extends
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
+						} else if("massUpdate".equals(id)){
+							MassUpdateOpportunityWindow massUpdateWindow = new MassUpdateOpportunityWindow(
+									"Mass Update Opportunitys",
+									OpportunityListPresenter.this);
+							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
 				});
@@ -252,6 +263,28 @@ public class OpportunityListPresenter extends
 			}
 		} else {
 			opportunityService.removeByCriteria(searchCriteria);
+			doSearch(searchCriteria);
+		}
+	}
+
+	@Override
+	public void massUpdate(Opportunity value) {
+		if (!isSelectAll) {
+			Collection<SimpleOpportunity> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleOpportunity item : currentDataList) {
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
+			}
+
+			if (keyList.size() > 0) {
+				opportunityService.massUpdateWithSession(value, keyList);
+				doSearch(searchCriteria);
+			}
+		} else {
+			opportunityService.updateBySearchCriteria(value,searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

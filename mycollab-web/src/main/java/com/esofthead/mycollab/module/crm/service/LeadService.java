@@ -25,4 +25,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 public interface LeadService extends
 		IDefaultService<Integer, Lead, LeadSearchCriteria> {
 	SimpleLead findLeadById(int leadId);
+
+	void updateBySearchCriteria(Lead value, LeadSearchCriteria searchCriteria);
 }

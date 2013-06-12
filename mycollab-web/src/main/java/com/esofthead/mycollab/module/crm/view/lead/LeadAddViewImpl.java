@@ -48,7 +48,7 @@ public class LeadAddViewImpl extends AbstractView implements
         public void setItemDataSource(Item newDataSource,
                 Collection<?> propertyIds) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
+            this.setFormFieldFactory(new LeadEditFormFieldFactory(lead));
             super.setItemDataSource(newDataSource, propertyIds);
         }
 
@@ -73,47 +73,6 @@ public class LeadAddViewImpl extends AbstractView implements
             @Override
             protected Layout createBottomPanel() {
                 return createButtonControls();
-            }
-        }
-
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("prefixname")) {
-                    return new PrefixListSelect();
-                } else if (propertyId.equals("primcountry")
-                        || propertyId.equals("othercountry")) {
-                	CountryComboBox otherCountryComboBox = new CountryComboBox();
-                    return otherCountryComboBox;
-                } else if (propertyId.equals("status")) {
-                    LeadStatusComboBox statusComboBox = new LeadStatusComboBox();
-                    return statusComboBox;
-                } else if (propertyId.equals("industry")) {
-                    IndustryComboBox industryComboBox = new IndustryComboBox();
-                    return industryComboBox;
-                } else if (propertyId.equals("assignuser")) {
-                    UserComboBox userComboBox = new UserComboBox();
-                    return userComboBox;
-                } else if (propertyId.equals("source")) {
-                    LeadSourceComboBox statusComboBox = new LeadSourceComboBox();
-                    return statusComboBox;
-                } else if (propertyId.equals("lastname")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Last name must not be null");
-                    return tf;
-                } else if (propertyId.equals("description")) {
-                    TextArea descArea = new TextArea();
-                    descArea.setNullRepresentation("");
-                    return descArea;
-                }
-
-                return null;
             }
         }
     }
