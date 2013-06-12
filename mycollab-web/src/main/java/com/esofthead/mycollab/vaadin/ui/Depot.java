@@ -32,56 +32,58 @@ public class Depot extends VerticalLayout {
 	public Depot(final String title, final ComponentContainer headerElement,
 			final ComponentContainer component, final String headerWidth,
 			final String headerLeftWidth) {
-		setStyleName("depotComp");
-		header = new HorizontalLayout();
-		header.setStyleName("depotHeader");
-		header.setWidth("100%");
-		bodyContent = component;
+		this.setStyleName("depotComp");
+		this.header = new HorizontalLayout();
+		this.header.setStyleName("depotHeader");
+		this.header.setWidth("100%");
+		this.bodyContent = component;
 		if (headerElement != null) {
-			headerContent = headerElement;
+			this.headerContent = headerElement;
 		} else {
-			headerContent = new HorizontalLayout();
-			((HorizontalLayout) headerContent).setSpacing(true);
+			this.headerContent = new HorizontalLayout();
+			((HorizontalLayout) this.headerContent).setSpacing(true);
 		}
 
-		headerContent.setStyleName("header-elements");
-		headerContent.setSizeUndefined();
+		this.headerContent.setStyleName("header-elements");
+		this.headerContent.setSizeUndefined();
 
 		final CssLayout headerWrapper = new CssLayout();
-		headerWrapper.addComponent(header);
+		headerWrapper.addComponent(this.header);
 		headerWrapper.setStyleName("header-wrapper");
 		headerWrapper.setWidth(headerWidth);
 		this.addComponent(headerWrapper);
 
 		final VerticalLayout headerLeft = new VerticalLayout();
-		headerLbl = new Label(title);
-		headerLbl.setStyleName("h2");
-		headerLbl.setWidth("100%");
-		headerLeft.addComponent(headerLbl);
+		this.headerLbl = new Label(title);
+		this.headerLbl.setStyleName("h2");
+		this.headerLbl.setWidth("100%");
+		headerLeft.addComponent(this.headerLbl);
 		headerLeft.setStyleName("depot-title");
 		headerLeft.addListener(new LayoutClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void layoutClick(final LayoutClickEvent event) {
-				isOpenned = !isOpenned;
-				if (isOpenned) {
-					bodyContent.setHeight("100%");
+				Depot.this.isOpenned = !Depot.this.isOpenned;
+				if (Depot.this.isOpenned) {
+					Depot.this.bodyContent.setHeight("100%");
 					Depot.this.removeStyleName("collapsed");
 				} else {
-					bodyContent.setHeight("0px");
+					Depot.this.bodyContent.setHeight("0px");
 					Depot.this.addStyleName("collapsed");
 				}
 			}
 		});
-		header.addComponent(headerLeft);
-		header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
-		header.addComponent(headerContent);
-		header.setExpandRatio(headerLeft, 1.0f);
+		this.header.addComponent(headerLeft);
+		this.header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
+		this.header.addComponent(this.headerContent);
+		this.header.setComponentAlignment(this.headerContent,
+				Alignment.MIDDLE_LEFT);
+		this.header.setExpandRatio(headerLeft, 1.0f);
 
-		final CustomComponent customComp = new CustomComponent(bodyContent);
+		final CustomComponent customComp = new CustomComponent(this.bodyContent);
 		customComp.setWidth("100%");
-		bodyContent.setStyleName("depotContent");
+		this.bodyContent.setStyleName("depotContent");
 
 		this.addComponent(customComp);
 		this.setComponentAlignment(customComp, Alignment.TOP_CENTER);
@@ -94,19 +96,19 @@ public class Depot extends VerticalLayout {
 
 	public void addHeaderElement(final Component component) {
 		if (component != null) {
-			headerContent.addComponent(component);
+			this.headerContent.addComponent(component);
 		}
 	}
 
 	public void setContentBorder(final boolean hasBorder) {
 		if (hasBorder) {
-			bodyContent.addStyleName("bordered");
+			this.bodyContent.addStyleName("bordered");
 		} else {
-			bodyContent.removeStyleName("bordered");
+			this.bodyContent.removeStyleName("bordered");
 		}
 	}
 
 	public void setTitle(final String title) {
-		headerLbl.setValue(title);
+		this.headerLbl.setValue(title);
 	}
 }

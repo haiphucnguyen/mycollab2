@@ -82,8 +82,11 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super("Create Project Member", UserAvatarControlFactory
-						.getResource(null, 48));
+				super(
+						(ProjectMemberAddViewImpl.this.user.getId() == null) ? "Create Project Member"
+								: ((SimpleProjectMember) ProjectMemberAddViewImpl.this.user)
+										.getMemberFullName(),
+						UserAvatarControlFactory.getResource(null, 48));
 			}
 
 			private Layout createButtonControls() {

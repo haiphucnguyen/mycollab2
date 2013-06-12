@@ -30,20 +30,25 @@ public class ReadViewLayout extends CssLayout {
 		this.header.setStyleName("readview-layout-header");
 		this.addComponent(this.header);
 
+		final HorizontalLayout headerLeft = new HorizontalLayout();
+		headerLeft.setWidth("100%");
+		headerLeft.addStyleName("readview-header-left");
 		this.iconEmbed = new Embedded();
-		this.header.addComponent(this.iconEmbed);
+		headerLeft.addComponent(this.iconEmbed);
 		if (icon != null) {
 			this.setTitleIcon(icon);
 		}
 
-		this.header
-				.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);
+		headerLeft.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);
 
 		this.titleLbl = new Label();
 		this.titleLbl.setStyleName("h1");
-		this.header.addComponent(this.titleLbl);
-		this.header.setExpandRatio(this.titleLbl, 1.0f);
-		this.header.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_LEFT);
+		headerLeft.addComponent(this.titleLbl);
+		headerLeft.setExpandRatio(this.titleLbl, 1.0f);
+		headerLeft.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_LEFT);
+		this.header.addComponent(headerLeft);
+		this.header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
+		this.header.setExpandRatio(headerLeft, 1.0f);
 
 		this.body = new CssLayout();
 		this.body.setStyleName("readview-layout-body");

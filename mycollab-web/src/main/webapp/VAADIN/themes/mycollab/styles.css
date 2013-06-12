@@ -1328,8 +1328,14 @@ input.v-textfield-errorField {
 	font-size: 20px;
 	border-bottom: 1px solid #B7B7B7;
 	text-shadow: #F0F0F0 0 1px 0;
-	min-width: 300px !important;
+/* 	min-width: 300px !important; */
 	margin-bottom: 10px;
+}
+
+.projectTabContent .readview-layout-header .h1 {
+	border: none;
+	text-shadow: none;
+	margin: 0px;
 }
 
 .projectDashboardView .addViewLayout .depot-title .h2 {
@@ -3108,6 +3114,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .v-csslayout-readview-layout {
 	margin-top: 20px;
 }
+.projectTabContent .usergroup-view .v-csslayout-readview-layout {
+	margin: 0px;
+}
 .v-csslayout-readview-layout > .v-csslayout-margin {
 	border: 1px solid #a9a9a9;
 	background-color: #f5f5f5;
@@ -3129,6 +3138,12 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	overflow: visible !important;
 	bottom: 0px;
 	left: 0px;
+}
+.projectTabContent .usergroup-view .readview-header-left .v-horizontallayout-margin {
+	padding: 0px 0px 5px 0px;
+}
+.projectTabContent .usergroup-view .readview-header-left .h1 {
+	font-weight: bold;
 }
 /* .readview-layout-header .v-horizontallayout-margin { */
 /* 	position: absolute !importan */
@@ -3221,8 +3236,10 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	margin-top: 0px;
 }
 .readview-layout-body .main-info .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
-	padding: 0px;
-	border: none;
+	padding: 0px 5px 0px 0px;
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
 }
 .readview-layout-body .main-info .depotComp .header-wrapper {
 	border: none;
@@ -3234,7 +3251,6 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	font-weight: bold;
 	padding: 8px 0px 8px 18px;
 	font-size: 12px;
-	border-bottom: 1px solid #a9a9a9;
 	color: rgb(69, 69, 69);
 }
 .readview-layout-body .main-info .depotComp.collapsed .depotHeader .h2 {
@@ -3482,4 +3498,14 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 .task-list .taskadd-popup .colored-gridlayout .v-gridlayout-margin {
 	border: none;
+}
+
+/* User Group */
+.projectTabContent .usergroup-view .readview-layout .v-table-header-wrap {
+	border: none;
+}
+.projectTabContent .usergroup-view .readview-layout .v-table-body {
+	border-width: 1px 0px 1px 0px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
 }

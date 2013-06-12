@@ -16,7 +16,9 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -30,22 +32,23 @@ import com.vaadin.ui.TextField;
 public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
 
 	private Project project;
-	private EditForm editForm;
+	private final EditForm editForm;
 
 	public ProjectAddViewImpl() {
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+		this.setMargin(true);
 	}
 
 	@Override
 	public HasEditFormHandlers<Project> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 
 	@Override
-	public void editItem(Project item) {
+	public void editItem(final Project item) {
 		this.project = item;
-		editForm.setItemDataSource(new BeanItem<Project>(project));
+		this.editForm.setItemDataSource(new BeanItem<Project>(this.project));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Project> {
@@ -53,7 +56,7 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -64,31 +67,41 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super((project.getId() == null) ? "Create Project" : project
-						.getName());
+				super(
+						(ProjectAddViewImpl.this.project.getId() == null) ? "Create Project"
+								: ProjectAddViewImpl.this.project.getName());
 			}
 
 			private Layout createButtonControls() {
-				if (project.getId() == null) {
-					return (new EditFormControlsGenerator<Project>(
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons;
+
+				if (ProjectAddViewImpl.this.project.getId() == null) {
+					controlButtons = (new EditFormControlsGenerator<Project>(
 							ProjectAddViewImpl.EditForm.this))
 							.createButtonControls();
 				} else {
-					return (new EditFormControlsGenerator<Project>(
+					controlButtons = (new EditFormControlsGenerator<Project>(
 							ProjectAddViewImpl.EditForm.this))
 							.createButtonControls(true, false, true);
 				}
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
 
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -97,23 +110,25 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("description")) {
-					RichTextArea field = new RichTextArea();
+					final RichTextArea field = new RichTextArea();
 					field.setHeight("350px");
 					return field;
 				} else if (propertyId.equals("projectstatus")) {
-					ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
+					final ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
 					projectCombo.setRequired(true);
 					projectCombo
 							.setRequiredError("Please enter a project status");
-					if (project.getProjectstatus() == null) {
-						project.setProjectstatus("Open");
+					if (ProjectAddViewImpl.this.project.getProjectstatus() == null) {
+						ProjectAddViewImpl.this.project
+								.setProjectstatus("Open");
 					}
 					return projectCombo;
 				} else if (propertyId.equals("shortname")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a project short name");
@@ -121,7 +136,7 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
 				} else if (propertyId.equals("currencyid")) {
 					return new CurrencyComboBox();
 				} else if (propertyId.equals("name")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");
@@ -142,6 +157,6 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
 
 	@Override
 	public Project getItem() {
-		return project;
+		return this.project;
 	}
 }

@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -27,25 +26,25 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 
 	private ProjectInformationLayout projectInformationLayout;
 
-	public ProjectFormLayoutFactory(String title) {
+	public ProjectFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout projectAddLayout = new AddViewLayout(title,
+		final AddViewLayout projectAddLayout = new AddViewLayout(this.title,
 				new ThemeResource("icons/48/project/project.png"));
 
-		projectInformationLayout = new ProjectInformationLayout();
+		this.projectInformationLayout = new ProjectInformationLayout();
 
-		Layout topPanel = createTopPanel();
+		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {
 			projectAddLayout.addTopControls(topPanel);
 		}
 
-		projectAddLayout.addBody(projectInformationLayout.getLayout());
+		projectAddLayout.addBody(this.projectInformationLayout.getLayout());
 
-		Layout bottomPanel = createTopPanel();
+		final Layout bottomPanel = this.createTopPanel();
 		if (bottomPanel != null) {
 			projectAddLayout.addBottomControls(bottomPanel);
 		}
@@ -54,8 +53,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
-		projectInformationLayout.attachField(propertyId, field);
+	public void attachField(final Object propertyId, final Field field) {
+		this.projectInformationLayout.attachField(propertyId, field);
 	}
 
 	protected abstract Layout createTopPanel();
@@ -70,70 +69,85 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 
 		@Override
 		public Layout getLayout() {
-			VerticalLayout layout = new VerticalLayout();
+			final VerticalLayout layout = new VerticalLayout();
 
-			Label organizationHeader = new Label("Project Information");
+			final Label organizationHeader = new Label("Project Information");
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 2);
-			informationLayout.getLayout().setWidth("100%");
-			layout.addComponent(informationLayout.getLayout());
-			layout.setComponentAlignment(informationLayout.getLayout(),
+			this.informationLayout = new GridFormLayoutHelper(2, 2, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+			this.informationLayout.getLayout().setWidth("100%");
+			this.informationLayout.getLayout().setMargin(false);
+			this.informationLayout.getLayout().addStyleName(
+					"colored-gridlayout");
+			layout.addComponent(this.informationLayout.getLayout());
+			layout.setComponentAlignment(this.informationLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 
-			Label financialHeader = new Label(
+			final Label financialHeader = new Label(
 					"Schedule & Financial Information");
 			financialHeader.setStyleName("h2");
 			layout.addComponent(financialHeader);
 
-			financialLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 4);
-			financialLayout.getLayout().setWidth("100%");
-			layout.addComponent(financialLayout.getLayout());
-			layout.setComponentAlignment(financialLayout.getLayout(),
+			this.financialLayout = new GridFormLayoutHelper(2, 4, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+			this.financialLayout.getLayout().setWidth("100%");
+			this.financialLayout.getLayout().setMargin(false);
+			this.financialLayout.getLayout().addStyleName("colored-gridlayout");
+			layout.addComponent(this.financialLayout.getLayout());
+			layout.setComponentAlignment(this.financialLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 
-			Label descHeader = new Label("Description");
+			final Label descHeader = new Label("Description");
 			descHeader.setStyleName("h2");
 			layout.addComponent(descHeader);
 
-			descriptionLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 1);
-			descriptionLayout.getLayout().setWidth("100%");
-			layout.addComponent(descriptionLayout.getLayout());
-			layout.setComponentAlignment(descriptionLayout.getLayout(),
+			this.descriptionLayout = new GridFormLayoutHelper(2, 1, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+			this.descriptionLayout.getLayout().setWidth("100%");
+			this.descriptionLayout.getLayout().setMargin(false);
+			this.descriptionLayout.getLayout().addStyleName(
+					"colored-gridlayout");
+			layout.addComponent(this.descriptionLayout.getLayout());
+			layout.setComponentAlignment(this.descriptionLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 			return layout;
 		}
 
 		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("name")) {
-				informationLayout.addComponent(field, "Project Name", 0, 0);
+				this.informationLayout
+						.addComponent(field, "Project Name", 0, 0);
 			} else if (propertyId.equals("homepage")) {
-				informationLayout.addComponent(field, "Home Page", 1, 0);
+				this.informationLayout.addComponent(field, "Home Page", 1, 0);
 			} else if (propertyId.equals("shortname")) {
-				informationLayout.addComponent(field, "Short Name", 0, 1);
+				this.informationLayout.addComponent(field, "Short Name", 0, 1);
 			} else if (propertyId.equals("projectstatus")) {
-				informationLayout.addComponent(field, "Status", 1, 1);
+				this.informationLayout.addComponent(field, "Status", 1, 1);
 			} else if (propertyId.equals("planstartdate")) {
-				financialLayout.addComponent(field, "Plan Start Date", 0, 0);
+				this.financialLayout.addComponent(field, "Plan Start Date", 0,
+						0);
 			} else if (propertyId.equals("currencyid")) {
-				financialLayout.addComponent(field, "Currency", 1, 0);
+				this.financialLayout.addComponent(field, "Currency", 1, 0);
 			} else if (propertyId.equals("planenddate")) {
-				financialLayout.addComponent(field, "Plan End Date", 0, 1);
+				this.financialLayout.addComponent(field, "Plan End Date", 0, 1);
 			} else if (propertyId.equals("defaultbillingrate")) {
-				financialLayout.addComponent(field, "Rate", 1, 1);
+				this.financialLayout.addComponent(field, "Rate", 1, 1);
 			} else if (propertyId.equals("actualstartdate")) {
-				financialLayout.addComponent(field, "Actual Start Date", 0, 2);
+				this.financialLayout.addComponent(field, "Actual Start Date",
+						0, 2);
 			} else if (propertyId.equals("targetbudget")) {
-				financialLayout.addComponent(field, "Target Budget", 1, 2);
+				this.financialLayout.addComponent(field, "Target Budget", 1, 2);
 			} else if (propertyId.equals("actualenddate")) {
-				financialLayout.addComponent(field, "Actual End Date", 0, 3);
+				this.financialLayout.addComponent(field, "Actual End Date", 0,
+						3);
 			} else if (propertyId.equals("actualbudget")) {
-				financialLayout.addComponent(field, "Actual Budget", 1, 3);
+				this.financialLayout.addComponent(field, "Actual Budget", 1, 3);
 			} else if (propertyId.equals("description")) {
-				descriptionLayout.addComponent(field, "Description", 0, 0, 2,
-						UIConstants.DEFAULT_2XCONTROL_WIDTH);
+				this.descriptionLayout.addComponent(field, "Description", 0, 0,
+						2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
 			}
 		}
 	}
