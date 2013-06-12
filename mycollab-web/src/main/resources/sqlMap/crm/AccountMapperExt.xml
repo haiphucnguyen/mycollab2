@@ -249,7 +249,7 @@
     </select>
 
     <!-- Here for Mass Update -->
-    <update id="upateAccountBySearchCriteria" parameterType="map">
+    <update id="updateBySearchCriteria" parameterType="map">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.AccountMapper.massUpdateWithSessionSql" />
 

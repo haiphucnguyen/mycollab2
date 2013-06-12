@@ -106,9 +106,4 @@ public class AccountServiceImpl extends DefaultService<Integer, Account, Account
         ex.createCriteria().andAccountidEqualTo(associateLead.getAccountid()).andLeadidEqualTo(associateLead.getLeadid());
         accountLeadMapper.deleteByExample(ex);
     }
-
-	@Override
-	public void updateBySearchCriteria(Account account, AccountSearchCriteria searchCriteria) {
-		accountMapperExt.upateAccountBySearchCriteria(account,searchCriteria);
-	}
 }

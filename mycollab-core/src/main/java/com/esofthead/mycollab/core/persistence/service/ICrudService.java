@@ -32,6 +32,11 @@ public interface ICrudService<K extends Serializable, T> extends IService {
 	 */
 	int updateWithSession(T record, String userSessionId);
 
+	/**
+	 * 
+	 * @param record
+	 * @param primaryKeys
+	 */
 	void massUpdateWithSession(T record, List<K> primaryKeys);
 
 	/**
