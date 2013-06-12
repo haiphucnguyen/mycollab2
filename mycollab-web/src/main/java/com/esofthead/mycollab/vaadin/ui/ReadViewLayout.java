@@ -23,7 +23,6 @@ public class ReadViewLayout extends CssLayout {
 	public ReadViewLayout(final ThemeResource icon) {
 		this.setSizeFull();
 		this.setStyleName("readview-layout");
-
 		this.header = new HorizontalLayout();
 		this.header.setWidth("100%");
 		this.header.setMargin(true, true, false, true);
@@ -37,6 +36,7 @@ public class ReadViewLayout extends CssLayout {
 		headerLeft.addComponent(this.iconEmbed);
 		if (icon != null) {
 			this.setTitleIcon(icon);
+
 		}
 
 		headerLeft.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);

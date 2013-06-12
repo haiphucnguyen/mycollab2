@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -18,12 +20,13 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import java.util.Collection;
 
 @ViewComponent
 public class AssignmentAddViewImpl extends AbstractView implements AssignmentAddView {
@@ -65,8 +68,15 @@ public class AssignmentAddViewImpl extends AbstractView implements AssignmentAdd
             }
 
             private Layout createButtonControls() {
-            return (new EditFormControlsGenerator<Task>(EditForm.this))
-                        .createButtonControls();
+            	final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<Task>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
             }
 
             @Override
@@ -76,7 +86,7 @@ public class AssignmentAddViewImpl extends AbstractView implements AssignmentAdd
 
             @Override
             protected Layout createBottomPanel() {
-                return createButtonControls();
+                return null;
             }
         }
 

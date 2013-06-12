@@ -21,7 +21,9 @@ import com.vaadin.ui.VerticalLayout;
  */
 public abstract class RelatedListComp<T, S extends SearchCriteria> extends
 		Depot implements IRelatedListHandlers<T> {
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	protected Set<RelatedListHandler<T>> handlers;
 	protected IPagedBeanTable<S, T> tableItem;
 

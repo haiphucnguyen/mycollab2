@@ -28,7 +28,7 @@ public class CaseEditFormFieldFactory extends DefaultEditFormFieldFactory{
         } else if (propertyId.equals("reason")) {
             return new CaseReasonComboBox();
         } else if (propertyId.equals("origin")) {
-            return new CasesOriginComboBox();
+            return new CasesOriginComboBox(); 
         } else if (propertyId.equals("type")) {
             return new CaseTypeComboBox();
         } else if (propertyId.equals("description")) {

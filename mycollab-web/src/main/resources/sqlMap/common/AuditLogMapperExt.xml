@@ -3,24 +3,25 @@
 <mapper namespace="com.esofthead.mycollab.common.dao.AuditLogMapperExt">
     <resultMap id="SimpleAuditLogResult"
         extends="com.esofthead.mycollab.common.dao.AuditLogMapper.ResultMapWithBLOBs"
-               type="com.esofthead.mycollab.common.domain.SimpleAuditLog">
-        <result column="postedUserFullName" jdbcType="VARCHAR" property="postedUserFullName" />
+        type="com.esofthead.mycollab.common.domain.SimpleAuditLog">
+        <result column="postedUserFullName" jdbcType="VARCHAR"
+            property="postedUserFullName" />
     </resultMap>
-    
-    <sql id="querySearchCriteria" >
-         <if test="module != null" >
-            <![CDATA[${module.operation} m_audit_log.module=#{module.value}]]>
+
+    <sql id="querySearchCriteria">
+        <if test="searchCriteria.module != null">
+            <![CDATA[${searchCriteria.module.operation} m_audit_log.module=#{searchCriteria.module.value}]]>
         </if>
-        <if test="type != null" >
-            <![CDATA[${type.operation} m_audit_log.type=#{type.value}]]>
+        <if test="searchCriteria.type != null">
+            <![CDATA[${searchCriteria.type.operation} m_audit_log.type=#{searchCriteria.type.value}]]>
         </if>
-        <if test="typeid != null" >
-            <![CDATA[${typeid.operation} m_audit_log.typeid=#{typeid.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.typeid != null">
+            <![CDATA[${searchCriteria.typeid.operation} m_audit_log.typeid=#{searchCriteria.typeid.value,javaType=INTEGER}]]>
         </if>
-        <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} m_audit_log.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} m_audit_log.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
         </if>
-    </sql>    
+    </sql>
 
     <sql id="selectSimpleAuditLog">
         <![CDATA[
@@ -31,29 +32,32 @@
         LEFT OUTER JOIN s_user ON (s_user.username = m_audit_log.posteduser)
         ]]>
     </sql>
-    
+
     <select id="findPagableListByCriteria" parameterType="AuditLogSearchCriteria"
         resultMap="SimpleAuditLogResult">
         <include
             refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.selectSimpleAuditLog" />
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
-                refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.querySearchCriteria" />
-        </trim>
-        <include refid="orderStatement"/>
-        
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.querySearchCriteria" />
+            </trim>
+            <include refid="orderStatement" />
+        </if>
     </select>
-    
+
     <select id="findById" parameterType="java.lang.Integer"
-            resultMap="SimpleAuditLogResult">
+        resultMap="SimpleAuditLogResult">
         <include
             refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.selectSimpleAuditLog" />
 
         WHERE m_audit_log.id=#{auditLogId, javaType=INTEGER}
     </select>
-    
+
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_audit_log.posteddate DESC
         ]]>
@@ -62,9 +66,12 @@
     <select id="getTotalCount" parameterType="AuditLogSearchCriteria"
         resultType="java.lang.Integer">
         SELECT count(*) as totalCount FROM s_activitystream
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
-                refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.querySearchCriteria" />
-        </trim>
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
     </select>
 </mapper>    

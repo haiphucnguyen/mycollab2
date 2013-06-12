@@ -5,31 +5,31 @@
     <resultMap id="SimpleActivityStreamResult"
         extends="com.esofthead.mycollab.common.dao.ActivityStreamMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.common.domain.SimpleActivityStream">
-        
-        <result column="createdUserFullName" jdbcType="VARCHAR" property="createdUserFullName" />
 
-        <collection property="comments"
-            columnPrefix="comment_"
+        <result column="createdUserFullName" jdbcType="VARCHAR"
+            property="createdUserFullName" />
+
+        <collection property="comments" columnPrefix="comment_"
             ofType="com.esofthead.mycollab.common.domain.SimpleComment"
-            resultMap="com.esofthead.mycollab.common.dao.CommentMapperExt.BaseResultMap"/>
+            resultMap="com.esofthead.mycollab.common.dao.CommentMapperExt.BaseResultMap" />
     </resultMap>
-    
-    <sql id="querySearchCriteria" >
-        <if test="moduleSet != null" >
-            ${moduleSet.operation} s_activitystream.module IN
-            <foreach close=")" collection="moduleSet.values" item="module"
-                open="(" separator=",">
+
+    <sql id="querySearchCriteria">
+        <if test="searchCriteria.moduleSet != null">
+            ${searchCriteria.moduleSet.operation} s_activitystream.module IN
+            <foreach close=")" collection="searchCriteria.moduleSet.values"
+                item="module" open="(" separator=",">
                 #{module}
             </foreach>
         </if>
-        <if test="extraTypeIds != null" >
-            ${extraTypeIds.operation} s_activitystream.extraTypeId IN
-            <foreach close=")" collection="extraTypeIds.values" item="extraTypeId"
-                open="(" separator=",">
+        <if test="searchCriteria.extraTypeIds != null">
+            ${searchCriteria.extraTypeIds.operation} s_activitystream.extraTypeId IN
+            <foreach close=")" collection="searchCriteria.extraTypeIds.values"
+                item="extraTypeId" open="(" separator=",">
                 #{extraTypeId}
             </foreach>
-        </if>    
-    </sql>    
+        </if>
+    </sql>
 
     <sql id="selectSimpleActivityStream">
         <![CDATA[
@@ -46,21 +46,24 @@
         LEFT OUTER JOIN s_user AS comment_user ON (m_comment.createdUser = comment_user.username)
         ]]>
     </sql>
-    
+
     <select id="findPagableListByCriteria" parameterType="ActivityStreamSearchCriteria"
         resultMap="SimpleActivityStreamResult">
         <include
             refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.selectSimpleActivityStream" />
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
-                refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-        </trim>
-        <include refid="orderStatement"/>
-        
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+            </trim>
+            <include refid="orderStatement" />
+        </if>
     </select>
-    
+
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             s_activitystream.createdTime DESC
         ]]>
@@ -69,9 +72,12 @@
     <select id="getTotalCount" parameterType="ActivityStreamSearchCriteria"
         resultType="java.lang.Integer">
         SELECT count(*) as totalCount FROM s_activitystream
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
-                refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-        </trim>
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
     </select>
 </mapper>

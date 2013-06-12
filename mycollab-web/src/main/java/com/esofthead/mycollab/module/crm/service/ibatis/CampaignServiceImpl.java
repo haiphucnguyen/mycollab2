@@ -129,10 +129,4 @@ public class CampaignServiceImpl extends DefaultService<Integer, CampaignWithBLO
         ex.createCriteria().andCampaignidEqualTo(associateLead.getCampaignid()).andLeadidEqualTo(associateLead.getLeadid());
         campaignLeadMapper.deleteByExample(ex);
     }
-
-	@Override
-	public void updateBySearchCriteria(CampaignWithBLOBs value,
-			CampaignSearchCriteria searchCriteria) {
-		campaignMapperExt.upateCampaignBySearchCriteria(value, searchCriteria);
-	}
 }

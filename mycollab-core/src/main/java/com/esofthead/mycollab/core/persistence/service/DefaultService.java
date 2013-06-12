@@ -13,6 +13,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.IMassUpdateDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 public abstract class DefaultService<K extends Serializable, T, S extends SearchCriteria>
@@ -131,4 +132,14 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	public void massUpdateWithSession(T record, List<K> primaryKeys) {
 		getCrudMapper().massUpdateWithSession(record, primaryKeys);
 	}
+
+	@Override
+	public void updateBySearchCriteria(T record, S searchCriteria) {
+		ISearchableDAO<S> searchMapper = getSearchMapper();
+		if (searchMapper != null && searchMapper instanceof IMassUpdateDAO) {
+			((IMassUpdateDAO) searchMapper).updateBySearchCriteria(record,
+					searchCriteria);
+		}
+	}
+
 }

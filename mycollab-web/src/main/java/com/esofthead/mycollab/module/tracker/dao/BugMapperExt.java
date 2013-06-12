@@ -6,25 +6,27 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface BugMapperExt extends ISearchableDAO<BugSearchCriteria> {
 
     SimpleBug getBugById(int bugid);
 
-    List<GroupItem> getStatusSummary(BugSearchCriteria criteria);
+    List<GroupItem> getStatusSummary(@Param("searchCriteria") BugSearchCriteria criteria);
 
-    List<GroupItem> getPrioritySummary(BugSearchCriteria criteria);
+    List<GroupItem> getPrioritySummary(@Param("searchCriteria")BugSearchCriteria criteria);
 
-    List<GroupItem> getAssignedDefectsSummary(BugSearchCriteria criteria);
+    List<GroupItem> getAssignedDefectsSummary(@Param("searchCriteria")BugSearchCriteria criteria);
 
-    List<GroupItem> getResolutionDefectsSummary(BugSearchCriteria criteria);
+    List<GroupItem> getResolutionDefectsSummary(@Param("searchCriteria")BugSearchCriteria criteria);
 
-    List<GroupItem> getReporterDefectsSummary(BugSearchCriteria criteria);
+    List<GroupItem> getReporterDefectsSummary(@Param("searchCriteria")BugSearchCriteria criteria);
 
-    List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria);
+    List<GroupItem> getVersionDefectsSummary(@Param("searchCriteria")BugSearchCriteria criteria);
 
-    List<GroupItem> getComponentDefectsSummary(BugSearchCriteria criteria);
+    List<GroupItem> getComponentDefectsSummary(@Param("searchCriteria")BugSearchCriteria criteria);
     
-    List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria);
+    List<GroupItem> getBugStatusTrendSummary(@Param("searchCriteria")BugSearchCriteria criteria);
     
     Integer getMaxKey(int projectId);
 }

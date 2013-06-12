@@ -108,11 +108,12 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
 	                    "Type", 1, 0);
 	            
 	            if (propertyId.equals("assignuser")) {
-	                informationLayout.addComponent(field, "Assigned to", 0, 1);
+	                informationLayout.addComponent(field, "Assigned to", 0, 1 , 1 , "100%", Alignment.TOP_RIGHT);
 	            }
 	            
-	            campaignGoal.addComponent(propertyId.equals("currencyid"), field,
-	                    "Currency", 0, 0);
+	            if (propertyId.equals("currencyid")) {
+	            	campaignGoal.addComponent(field, "Currency", 0, 0);
+	            }
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
@@ -48,7 +49,7 @@ public class OpportunitySelectionField extends FieldWrapper<Opportunity> impleme
 			public void click(ClickEvent event) {
 				OpportunitySelectionWindow opportunityWindow = new OpportunitySelectionWindow(
 						OpportunitySelectionField.this);
-				getWindow().addWindow(opportunityWindow);
+				UIHelper.addWindowToRoot(OpportunitySelectionField.this, opportunityWindow);
 				opportunityWindow.show();
 
 			}

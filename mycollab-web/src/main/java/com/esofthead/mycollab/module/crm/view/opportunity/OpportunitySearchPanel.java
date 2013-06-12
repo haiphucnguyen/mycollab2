@@ -65,7 +65,7 @@ public class OpportunitySearchPanel extends
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search");
+		Label searchtitle = new Label("Search Opportunities");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 

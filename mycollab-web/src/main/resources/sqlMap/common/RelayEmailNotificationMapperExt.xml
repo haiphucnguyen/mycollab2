@@ -14,8 +14,8 @@
     </resultMap>
 
     <sql id="querySearchCriteria">
-        <if test="type != null">
-            <![CDATA[${type.operation} s_relay_email_notification.type=#{type.value}]]>
+        <if test="searchCriteria.type != null">
+            <![CDATA[${searchCriteria.type.operation} s_relay_email_notification.type=#{searchCriteria.type.value}]]>
         </if>
     </sql>
 
@@ -39,20 +39,23 @@
         resultMap="SimpleEmailRelayNotificationResult">
         <include
             refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.selectSimpleRelayEmailNotification" />
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.querySearchCriteria" />
-        </trim>
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
     </select>
-    
+
     <delete id="removeByCriteria" parameterType="RelayEmailNotificationSearchCriteria">
         DELETE FROM s_relay_email_notification
-        <!--  <if test="_parameter != null">-->
+        <if test="searchCriteria != null">
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1  
-                <include refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.querySearchCriteria" />
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.querySearchCriteria" />
             </trim>
-        <!--  </if>-->
+        </if>
     </delete>
 </mapper>

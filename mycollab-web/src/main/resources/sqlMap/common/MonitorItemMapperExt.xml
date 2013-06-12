@@ -1,70 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.common.dao.MonitorItemMapperExt">
-	<resultMap
-		extends="com.esofthead.mycollab.common.dao.MonitorItemMapper.BaseResultMap"
-		id="MonitorItemResult" type="com.esofthead.mycollab.common.domain.SimpleMonitorItem">
-		<result column="userFullname" jdbcType="VARCHAR" property="userFullname" />
-	</resultMap>
-	
-	 <sql id="querySearchCriteria">
-		
-		<if test="typeId != null">
-            <![CDATA[${typeId.operation} m_monitor_item.typeid ${typeId.compareOperator} #{typeId.value,javaType=INTEGER}]]>
-		</if>
-		
-		<if test="type != null ">
-            <![CDATA[${type.operation} m_monitor_item.type = '${type.value}' ]]>
+    <resultMap
+        extends="com.esofthead.mycollab.common.dao.MonitorItemMapper.BaseResultMap"
+        id="MonitorItemResult" type="com.esofthead.mycollab.common.domain.SimpleMonitorItem">
+        <result column="userFullname" jdbcType="VARCHAR"
+            property="userFullname" />
+    </resultMap>
+
+    <sql id="querySearchCriteria">
+
+        <if test="searchCriteria.typeId != null">
+            <![CDATA[${searchCriteria.typeId.operation} m_monitor_item.typeid ${searchCriteria.typeId.compareOperator} #{searchCriteria.typeId.value,javaType=INTEGER}]]>
         </if>
-        
-        <if test="user != null ">
-            <![CDATA[${user.operation} m_monitor_item.type = '${user.value}' ]]>
+
+        <if test="searchCriteria.type != null ">
+            <![CDATA[${searchCriteria.type.operation} m_monitor_item.type = #{searchCriteria.type.value} ]]>
         </if>
-	</sql>
-	
-	<sql id="selectItem">
+
+        <if test="searchCriteria.user != null ">
+            <![CDATA[${searchCriteria.user.operation} m_monitor_item.type = #{searchCriteria.user.value} ]]>
+        </if>
+    </sql>
+
+    <sql id="selectItem">
         <![CDATA[
           SELECT m_monitor_item.id, m_monitor_item.user, m_monitor_item.monitor_date, m_monitor_item.type, m_monitor_item.typeid, 
                  concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename + ' ', '')), changeUser.lastname) as userFullname
             FROM m_monitor_item
               LEFT OUTER JOIN s_user AS changeUser ON (m_monitor_item.user=changeUser.username)
         ]]>
-	</sql>
-	
-	<select id="getTotalCount" parameterType="MonitorSearchCriteria"
-		resultType="int">
-		SELECT count(*) as totalCount FROM m_monitor_item
+    </sql>
 
+    <select id="getTotalCount" parameterType="MonitorSearchCriteria"
+        resultType="int">
+        SELECT count(*) as totalCount FROM m_monitor_item
 
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
 
-			<include
-				refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+                <include
+                    refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
+    </select>
 
-	<sql id="orderStatement">
-		ORDER BY
-		<if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+    <sql id="orderStatement">
+        ORDER BY
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_monitor_item.monitor_date DESC
         ]]>
-	</sql>
-	
-	<select id="findPagableListByCriteria" parameterType="MonitorSearchCriteria"
-		resultMap="MonitorItemResult">
+    </sql>
 
-		<include
-			refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.selectItem" />
+    <select id="findPagableListByCriteria" parameterType="MonitorSearchCriteria"
+        resultMap="MonitorItemResult">
 
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1
+        <include
+            refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.selectItem" />
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
 
-			<include
-				refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
-		</trim>
-		<include refid="orderStatement" />
-	</select>
-	
+                <include
+                    refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
+            </trim>
+            <include refid="orderStatement" />
+        </if>
+    </select>
+
 </mapper>

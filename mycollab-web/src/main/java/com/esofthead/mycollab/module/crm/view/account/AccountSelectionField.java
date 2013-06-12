@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
@@ -46,7 +47,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
             public void click(ClickEvent event) {
                 AccountSelectionWindow accountWindow = new AccountSelectionWindow(
                         AccountSelectionField.this);
-                getWindow().addWindow(accountWindow);
+                UIHelper.addWindowToRoot(AccountSelectionField.this, accountWindow);
                 accountWindow.show();
             }
         });

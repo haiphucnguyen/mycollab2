@@ -6,18 +6,23 @@ import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 public interface ProjectMapperExt extends ISearchableDAO<ProjectSearchCriteria> {
 
-	int getTotalActivityStream(ActivityStreamSearchCriteria criteria);
+	int getTotalActivityStream(
+			@Param("searchCriteria") ActivityStreamSearchCriteria criteria);
 
 	List<ProjectActivityStream> getProjectActivityStreams(
-			ActivityStreamSearchCriteria criteria, RowBounds rowBounds);
+			@Param("searchCriteria") ActivityStreamSearchCriteria criteria,
+			RowBounds rowBounds);
 
-	List<Integer> getUserProjectKeys(ProjectSearchCriteria criteria);
+	List<Integer> getUserProjectKeys(
+			@Param("searchCriteria") ProjectSearchCriteria criteria);
 
 	SimpleProject findProjectById(int projectId);
-	
+
 	String getSubdomainOfProject(int projectId);
 }

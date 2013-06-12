@@ -136,7 +136,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 		public ReadView() {
 			accountAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/18/account.png"));
+					"icons/22/crm/account.png"));
 			this.addComponent(accountAddLayout);
 
 			initRelatedComponent();

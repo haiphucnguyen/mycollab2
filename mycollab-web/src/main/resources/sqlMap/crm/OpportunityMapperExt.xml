@@ -15,64 +15,64 @@
     </resultMap>
 
     <sql id="querySearchCriteria">
-        <if test="opportunityName != null">
-            <![CDATA[${opportunityName.operation} m_crm_opportunity.opportunityName like '%${opportunityName.value}%']]>
+        <if test="searchCriteria.opportunityName != null">
+            <![CDATA[${searchCriteria.opportunityName.operation} m_crm_opportunity.opportunityName like '%${searchCriteria.opportunityName.value}%']]>
         </if>
-        <if test="accountName != null">
+        <if test="searchCriteria.accountName != null">
             <![CDATA[
-            ${accountName.operation}
-            m_crm_account.accountName like '%${accountName.value}%']]>
+            ${searchCriteria.accountName.operation}
+            m_crm_account.accountName like '%${searchCriteria.accountName.value}%']]>
         </if>
-        <if test="accountId != null">
+        <if test="searchCriteria.accountId != null">
             <![CDATA[
-                ${accountId.operation} m_crm_opportunity.accountid = #{accountId.value,javaType=INTEGER}
+                ${searchCriteria.accountId.operation} m_crm_opportunity.accountid = #{searchCriteria.accountId.value,javaType=INTEGER}
                 ]]>
         </if>
-        <if test="contactId != null">
+        <if test="searchCriteria.contactId != null">
             <![CDATA[
-                ${contactId.operation} 
+                ${searchCriteria.contactId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_contacts_opportunities, m_crm_contact 
-                    WHERE m_crm_contact.id=#{contactId.value, javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
-                            AND m_crm_contacts_opportunities.contactId=#{contactId.value,javaType=INTEGER}) > 0
+                    WHERE m_crm_contact.id=#{searchCriteria.contactId.value, javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
+                            AND m_crm_contacts_opportunities.contactId=#{searchCriteria.contactId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
-        <if test="campaignName != null">
+        <if test="searchCriteria.campaignName != null">
             <![CDATA[
-            ${campaignName.operation} m_crm_campaign.campaignName like '%${campaignName.value}%'
+            ${searchCriteria.campaignName.operation} m_crm_campaign.campaignName like '%${searchCriteria.campaignName.value}%'
             ]]>
         </if>
-        <if test="assignUserName != null">
+        <if test="searchCriteria.assignUserName != null">
             <![CDATA[
-            ${assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${assignUserName.value}%'
+            ${searchCriteria.assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${searchCriteria.assignUserName.value}%'
             ]]>
         </if>
-        <if test="assignUsers != null">
-            ${assignUsers.operation} m_crm_opportunity.assignUser IN
-            <foreach close=")" collection="assignUsers.values"
+        <if test="searchCriteria.assignUsers != null">
+            ${searchCriteria.assignUsers.operation} m_crm_opportunity.assignUser IN
+            <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="assignUser" open="(" separator=",">
                 #{assignUser}
             </foreach>
         </if>
-        <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} m_crm_opportunity.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_opportunity.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
         </if>
-        <if test="nextStep != null">
+        <if test="searchCriteria.nextStep != null">
             <![CDATA[
-            ${nextStep.operation} m_crm_opportunity.nextStep like '%${nextStep.value}%'
+            ${searchCriteria.nextStep.operation} m_crm_opportunity.nextStep like '%${searchCriteria.nextStep.value}%'
             ]]>
         </if>
-        <if test="salesStages != null">
-            ${salesStages.operation} m_crm_opportunity.salesStage IN
+        <if test="searchCriteria.salesStages != null">
+            ${searchCriteria.salesStages.operation} m_crm_opportunity.salesStage IN
             <foreach item="salesStage" open="(" close=")"
-                collection="salesStages.values" separator=",">
+                collection="searchCriteria.salesStages.values" separator=",">
                 #{salesStage}
             </foreach>
         </if>
-        <if test="leadSources != null">
-            ${leadSources.operation} m_crm_opportunity.source IN
+        <if test="searchCriteria.leadSources != null">
+            ${searchCriteria.leadSources.operation} m_crm_opportunity.source IN
             <foreach item="source" open="(" close=")"
-                collection="leadSources.values" separator=",">
+                collection="searchCriteria.leadSources.values" separator=",">
                 #{source}
             </foreach>
         </if>
@@ -80,84 +80,84 @@
 
     <sql id="queryTotalCountSearchCriteria">
 
-        <if test="id != null">
-            <![CDATA[${id.operation} m_crm_opportunity.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.id != null">
+            <![CDATA[${searchCriteria.id.operation} m_crm_opportunity.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
         </if>
 
-        <if test="opportunityName != null">
-            <![CDATA[${opportunityName.operation} m_crm_opportunity.opportunityName like '%${opportunityName.value}%']]>
+        <if test="searchCriteria.opportunityName != null">
+            <![CDATA[${searchCriteria.opportunityName.operation} m_crm_opportunity.opportunityName like '%${searchCriteria.opportunityName.value}%']]>
         </if>
-        <if test="accountName != null">
+        <if test="searchCriteria.accountName != null">
             <![CDATA[
-            ${accountName.operation}
+            ${searchCriteria.accountName.operation}
             (SELECT COUNT(*)
             FROM m_crm_account 
             WHERE m_crm_opportunity.accountid = m_crm_account.id 
-                AND m_crm_account.accountName like '%${accountName.value}%') > 0
+                AND m_crm_account.accountName like '%${searchCriteria.accountName.value}%') > 0
                 ]]>
         </if>
-        <if test="accountId != null">
+        <if test="searchCriteria.accountId != null">
             <![CDATA[
-                ${accountId.operation}
+                ${searchCriteria.accountId.operation}
                 (SELECT COUNT(*) 
                 FROM m_crm_account 
                 WHERE m_crm_opportunity.accountid = m_crm_account.id 
-                    AND m_crm_account.id = #{accountId.value,javaType=INTEGER}) > 0
+                    AND m_crm_account.id = #{searchCriteria.accountId.value,javaType=INTEGER}) > 0
                 ]]>
         </if>
-        <if test="contactId != null">
+        <if test="searchCriteria.contactId != null">
             <![CDATA[
-                ${contactId.operation} 
+                ${searchCriteria.contactId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_contacts_opportunities, m_crm_contact 
-                    WHERE m_crm_contact.id=#{contactId.value,javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
-                            AND m_crm_contacts_opportunities.contactId=#{contactId.value,javaType=INTEGER}) > 0
+                    WHERE m_crm_contact.id=#{searchCriteria.contactId.value,javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
+                            AND m_crm_contacts_opportunities.contactId=#{searchCriteria.contactId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
-        <if test="campaignName != null">
+        <if test="searchCriteria.campaignName != null">
             <![CDATA[
-            ${campaignName.operation}
+            ${searchCriteria.campaignName.operation}
             (SELECT COUNT(*) 
             FROM m_crm_campaign 
             WHERE m_crm_opportunity.campaignid = m_crm_campaign.id 
-                AND m_crm_campaign.campaignName like '%${campaignName.value}%') > 0
+                AND m_crm_campaign.campaignName like '%${searchCriteria.campaignName.value}%') > 0
                 ]]>
         </if>
-        <if test="assignUserName != null">
+        <if test="searchCriteria.assignUserName != null">
             <![CDATA[
-            ${assignUserName.operation}
+            ${searchCriteria.assignUserName.operation}
             (SELECT COUNT(*)
             FROM s_user 
             WHERE m_crm_opportunity.assignUser = s_user.username 
-                AND (concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${assignUserName.value}%')) > 0
+                AND (concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${searchCriteria.assignUserName.value}%')) > 0
             ]]>
         </if>
-        <if test="assignUsers != null">
-            ${assignUsers.operation} m_crm_opportunity.assignUser IN
-            <foreach close=")" collection="assignUsers.values"
+        <if test="searchCriteria.assignUsers != null">
+            ${searchCriteria.assignUsers.operation} m_crm_opportunity.assignUser IN
+            <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="assignUser" open="(" separator=",">
                 #{assignUser}
             </foreach>
         </if>
-        <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} m_crm_opportunity.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_opportunity.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
         </if>
-        <if test="nextStep != null">
+        <if test="searchCriteria.nextStep != null">
             <![CDATA[
-            ${nextStep.operation} m_crm_opportunity.nextStep like '%${nextStep.value}%'
+            ${searchCriteria.nextStep.operation} m_crm_opportunity.nextStep like '%${searchCriteria.nextStep.value}%'
             ]]>
         </if>
-        <if test="salesStages != null">
-            ${salesStages.operation} m_crm_opportunity.salesStage IN
+        <if test="searchCriteria.salesStages != null">
+            ${searchCriteria.salesStages.operation} m_crm_opportunity.salesStage IN
             <foreach item="salesStage" open="(" close=")"
-                collection="salesStages.values" separator=",">
+                collection="searchCriteria.salesStages.values" separator=",">
                 #{salesStage}
             </foreach>
         </if>
-        <if test="leadSources != null">
-            ${leadSources.operation} m_crm_opportunity.source IN
+        <if test="searchCriteria.leadSources != null">
+            ${searchCriteria.leadSources.operation} m_crm_opportunity.source IN
             <foreach item="source" open="(" close=")"
-                collection="leadSources.values" separator=",">
+                collection="searchCriteria.leadSources.values" separator=",">
                 #{source}
             </foreach>
         </if>
@@ -186,16 +186,18 @@
     <select id="getTotalCount" resultType="int"
         parameterType="OpportunitySearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_opportunity
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
-        </trim>
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+            </trim>
+        </if>
     </select>
 
     <delete id="removeByCriteria" parameterType="OpportunitySearchCriteria">
         DELETE FROM m_crm_opportunity
-        <if test="_parameter != null">
+        <if test="searchCriteria != null">
             <include
                 refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
         </if>
@@ -203,7 +205,7 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_crm_opportunity.lastUpdatedTime DESC
         ]]>
@@ -213,13 +215,14 @@
         parameterType="OpportunitySearchCriteria">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.selectSimpleOpportunity" />
-
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.querySearchCriteria" />
-        </trim>
-        <include refid="orderStatement" />
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.querySearchCriteria" />
+            </trim>
+            <include refid="orderStatement" />
+        </if>
     </select>
 
     <select id="findOpportunityById" parameterType="int"
@@ -257,11 +260,13 @@
         COUNT(m_crm_opportunity.salesStage) AS
         value, '' as groupname
         FROM m_crm_opportunity
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
-        </trim>
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+            </trim>
+        </if>
         GROUP BY m_crm_opportunity.salesStage
     </select>
 
@@ -270,12 +275,15 @@
         SELECT m_crm_opportunity.source AS groupid,
         COUNT(m_crm_opportunity.source) AS
         value, '' as groupname
-        FROM m_crm_opportunity
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
-        </trim>
+        FROM
+        m_crm_opportunity
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+            </trim>
+        </if>
         GROUP BY m_crm_opportunity.source
     </select>
 </mapper>
