@@ -11,13 +11,10 @@ import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
@@ -30,246 +27,250 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
 public class LeadPreviewBuilder extends VerticalLayout {
 
-    protected AdvancedPreviewBeanForm<Lead> previewForm;
-    protected SimpleLead lead;
-    protected LeadCampaignListComp associateCampaignList;
-    protected EventRelatedItemListComp associateActivityList;
-    protected NoteListItems noteListItems;
+	protected AdvancedPreviewBeanForm<Lead> previewForm;
+	protected SimpleLead lead;
+	protected LeadCampaignListComp associateCampaignList;
+	protected EventRelatedItemListComp associateActivityList;
+	protected NoteListItems noteListItems;
 
-    protected void initRelatedComponent() {
-        associateCampaignList = new LeadCampaignListComp();
-        noteListItems = new NoteListItems("Notes");
-        associateActivityList = new EventRelatedItemListComp(true);
-    }
+	protected void initRelatedComponent() {
+		associateCampaignList = new LeadCampaignListComp();
+		noteListItems = new NoteListItems("Notes");
+		associateActivityList = new EventRelatedItemListComp(true);
+	}
 
-    public void previewItem(SimpleLead lead) {
-        this.lead = lead;
-        previewForm.setItemDataSource(new BeanItem<Lead>(lead));
-        displayActivities();
-        displayNotes();
-        displayCampaigns();
-    }
+	public void previewItem(SimpleLead lead) {
+		this.lead = lead;
+		previewForm.setItemDataSource(new BeanItem<Lead>(lead));
+		displayActivities();
+		displayNotes();
+		displayCampaigns();
+	}
 
-    public SimpleLead getLead() {
-        return lead;
-    }
-    
-    private void displayCampaigns() {
-        associateCampaignList.displayCampaigns(lead);
-    }
-    
-    private void displayNotes() {
-        noteListItems.showNotes(CrmTypeConstants.LEAD, lead.getId());
-    }
-    
-    public void displayActivities() {
-        EventSearchCriteria criteria = new EventSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.LEAD));
-        criteria.setTypeid(new NumberSearchField(lead.getId()));
-        associateActivityList.setSearchCriteria(criteria);
-    }
+	public SimpleLead getLead() {
+		return lead;
+	}
 
-    public EventRelatedItemListComp getAssociateActivityList() {
-        return associateActivityList;
-    }
+	private void displayCampaigns() {
+		associateCampaignList.displayCampaigns(lead);
+	}
 
-    public LeadCampaignListComp getAssociateCampaignList() {
-        return associateCampaignList;
-    }
-    
-    
+	private void displayNotes() {
+		noteListItems.showNotes(CrmTypeConstants.LEAD, lead.getId());
+	}
 
-    public AdvancedPreviewBeanForm<Lead> getPreviewForm() {
-        return previewForm;
-    }
+	public void displayActivities() {
+		EventSearchCriteria criteria = new EventSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+		criteria.setType(new StringSearchField(SearchField.AND,
+				CrmTypeConstants.LEAD));
+		criteria.setTypeid(new NumberSearchField(lead.getId()));
+		associateActivityList.setSearchCriteria(criteria);
+	}
 
-    protected class LeadFormFieldFactory extends DefaultFormViewFieldFactory {
+	public EventRelatedItemListComp getAssociateActivityList() {
+		return associateActivityList;
+	}
 
-        @Override
-        protected Field onCreateField(Item item, Object propertyId,
-                Component uiContext) {
-            if (propertyId.equals("firstname")) {
-                if (lead.getTitle() == null) {
-                    return new FormViewField(lead.getFirstname());
-                } else {
-                    return new FormViewField(lead.getTitle()
-                            + lead.getFirstname());
-                }
-            } else if (propertyId.equals("website")) {
-            	return new DefaultFormViewFieldFactory.FormUrlLinkViewField(lead.getWebsite());
-            } else if (propertyId.equals("email")) {
-                return new FormEmailLinkViewField(lead.getEmail());
-            } else if (propertyId.equals("accountid")) {
-                FormLinkViewField field = new FormLinkViewField(lead
-                        .getAccountname(), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+	public LeadCampaignListComp getAssociateCampaignList() {
+		return associateCampaignList;
+	}
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                    }
-                });
+	public AdvancedPreviewBeanForm<Lead> getPreviewForm() {
+		return previewForm;
+	}
 
-                return field;
-            } else if (propertyId.equals("assignuser")) {
-                return new FormLinkViewField(lead.getAssignUserFullName(), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        // TODO Auto-generated method stub
-                    }
-                });
-            }
+	protected class LeadFormFieldFactory extends DefaultFormViewFieldFactory {
 
-            return super.onCreateField(item, propertyId, uiContext);
-        }
-    }
+		@Override
+		protected Field onCreateField(Item item, Object propertyId,
+				Component uiContext) {
+			if (propertyId.equals("firstname")) {
+				if (lead.getTitle() == null) {
+					return new FormViewField(lead.getFirstname());
+				} else {
+					return new FormViewField(lead.getTitle()
+							+ lead.getFirstname());
+				}
+			} else if (propertyId.equals("website")) {
+				return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
+						lead.getWebsite());
+			} else if (propertyId.equals("email")) {
+				return new FormEmailLinkViewField(lead.getEmail());
+			} else if (propertyId.equals("accountid")) {
+				FormLinkViewField field = new FormLinkViewField(
+						lead.getAccountname(), new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-    public static class ReadView extends LeadPreviewBuilder {
+							@Override
+							public void buttonClick(ClickEvent event) {
+							}
+						});
 
-        private static final long serialVersionUID = 1L;
-        private VerticalLayout leadInformationLayout;
-        private VerticalLayout relatedItemsContainer;
-        private ReadViewLayout leadAddLayout;
+				return field;
+			} else if (propertyId.equals("assignuser")) {
+				return new FormLinkViewField(lead.getAssignUserFullName(),
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+							}
+						});
+			}
 
-        public ReadView() {
-            leadAddLayout = new ReadViewLayout(new ThemeResource("icons/18/crm/lead.png"));
-            this.addComponent(leadAddLayout);
+			return super.onCreateField(item, propertyId, uiContext);
+		}
+	}
 
-            initRelatedComponent();
+	public static class ReadView extends LeadPreviewBuilder {
 
-            previewForm = new AdvancedPreviewBeanForm<Lead>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadInformationLayout());
-                    this.setFormFieldFactory(new LeadFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                    leadAddLayout.setTitle(lead.getLeadName());
-                }
+		private static final long serialVersionUID = 1L;
+		private VerticalLayout leadInformationLayout;
+		private VerticalLayout relatedItemsContainer;
+		private ReadViewLayout leadAddLayout;
 
-                @Override
-                protected void doPrint() {
-                    // Create a window that contains what you want to print
-                    Window window = new Window("Window to Print");
+		public ReadView() {
+			leadAddLayout = new ReadViewLayout(new ThemeResource(
+					"icons/22/crm/lead.png"));
+			this.addComponent(leadAddLayout);
 
-                    LeadPreviewBuilder printView = new LeadPreviewBuilder.PrintView();
-                    printView.previewItem(lead);
-                    window.addComponent(printView);
+			initRelatedComponent();
 
-                    // Add the printing window as a new application-level window
-                    getApplication().addWindow(window);
+			previewForm = new AdvancedPreviewBeanForm<Lead>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadInformationLayout());
+					this.setFormFieldFactory(new LeadFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+					leadAddLayout.setTitle(lead.getLeadName());
+				}
 
-                    // Open it as a popup window with no decorations
-                    getWindow().open(new ExternalResource(window.getURL()),
-                            "_blank", 1100, 200, // Width and height 
-                            Window.BORDER_NONE); // No decorations
+				@Override
+				protected void doPrint() {
+					// Create a window that contains what you want to print
+					Window window = new Window("Window to Print");
 
-                    // Print automatically when the window opens.
-                    // This call will block until the print dialog exits!
-                    window.executeJavaScript("print();");
+					LeadPreviewBuilder printView = new LeadPreviewBuilder.PrintView();
+					printView.previewItem(lead);
+					window.addComponent(printView);
 
-                    // Close the window automatically after printing
-                    window.executeJavaScript("self.close();");
-                }
+					// Add the printing window as a new application-level window
+					getApplication().addWindow(window);
 
-                @Override
-                protected void showHistory() {
-                    LeadHistoryLogWindow historyLog = new LeadHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.LEAD, lead.getId());
-                    getWindow().addWindow(historyLog);
-                }
-            };
-            
-            final Layout optionalActionControls = PreviewFormControlsGenerator2
+					// Open it as a popup window with no decorations
+					getWindow().open(new ExternalResource(window.getURL()),
+							"_blank", 1100, 200, // Width and height
+							Window.BORDER_NONE); // No decorations
+
+					// Print automatically when the window opens.
+					// This call will block until the print dialog exits!
+					window.executeJavaScript("print();");
+
+					// Close the window automatically after printing
+					window.executeJavaScript("self.close();");
+				}
+
+				@Override
+				protected void showHistory() {
+					LeadHistoryLogWindow historyLog = new LeadHistoryLogWindow(
+							ModuleNameConstants.CRM, CrmTypeConstants.LEAD,
+							lead.getId());
+					getWindow().addWindow(historyLog);
+				}
+			};
+
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_LEAD);
-			
-            leadAddLayout.addControlButtons(optionalActionControls);
-			
-            leadInformationLayout = new VerticalLayout();
-           
-            leadInformationLayout.addStyleName("main-info");
-			
+
+			leadAddLayout.addControlButtons(optionalActionControls);
+
+			leadInformationLayout = new VerticalLayout();
+
+			leadInformationLayout.addStyleName("main-info");
+
 			final Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_LEAD);
 			actionControls.addStyleName("control-buttons");
 			leadInformationLayout.addComponent(actionControls);
-            
-            leadInformationLayout.addComponent(previewForm);
-            leadInformationLayout.addComponent(noteListItems);
 
-            leadAddLayout.addTab(leadInformationLayout, "Lead Information");
+			leadInformationLayout.addComponent(previewForm);
+			leadInformationLayout.addComponent(noteListItems);
 
-            relatedItemsContainer = new VerticalLayout();
-            relatedItemsContainer.setMargin(true);
-            leadAddLayout.addTab(relatedItemsContainer, "More Information");
-            leadAddLayout
-			.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+			leadAddLayout.addTab(leadInformationLayout, "Lead Information");
+
+			relatedItemsContainer = new VerticalLayout();
+			relatedItemsContainer.setMargin(true);
+			leadAddLayout.addTab(relatedItemsContainer, "More Information");
+			leadAddLayout
+					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+						@Override
+						public void tabChanged(final TabChangedEvent event) {
+							final Button btn = event.getSource();
+							final String caption = btn.getCaption();
+							if ("Lead Information".equals(caption)) {
+
+							} else if ("More Information".equals(caption)) {
+								relatedItemsContainer
+										.addComponent(associateActivityList);
+								relatedItemsContainer
+										.addComponent(associateCampaignList);
+							}
+							leadAddLayout.selectTab(caption);
+						}
+					});
+
+		}
+	}
+
+	public static class PrintView extends LeadPreviewBuilder {
+
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<Lead>() {
 				@Override
-				public void tabChanged(final TabChangedEvent event) {
-					final Button btn = event.getSource();
-					final String caption = btn.getCaption();
-					if ("Lead Information".equals(caption)) {
-
-					} else if ("More Information".equals(caption)) {
-						 relatedItemsContainer.addComponent(associateActivityList);
-				         relatedItemsContainer.addComponent(associateCampaignList);
-					}
-					leadAddLayout.selectTab(caption);
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new LeadFormFieldFactory());
+					super.setItemDataSource(newDataSource);
 				}
-			});
+			};
+			initRelatedComponent();
 
-            
-        }
-    }
+			this.addComponent(previewForm);
+		}
 
-    public static class PrintView extends LeadPreviewBuilder {
+		class FormLayoutFactory extends LeadFormLayoutFactory {
 
-        public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<Lead>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new FormLayoutFactory());
-                    this.setFormFieldFactory(new LeadFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                }
-            };
-            initRelatedComponent();
+			private static final long serialVersionUID = 1L;
 
-            this.addComponent(previewForm);
-        }
+			public FormLayoutFactory() {
+				super(lead.getLeadName());
+			}
 
-        class FormLayoutFactory extends LeadFormLayoutFactory {
+			@Override
+			protected Layout createTopPanel() {
+				return null;
+			}
 
-            private static final long serialVersionUID = 1L;
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				relatedItemsPanel.setWidth("100%");
 
-            public FormLayoutFactory() {
-                super(lead.getLeadName());
-            }
+				relatedItemsPanel.addComponent(noteListItems);
 
-            @Override
-            protected Layout createTopPanel() {
-                return null;
-            }
+				relatedItemsPanel.addComponent(associateActivityList);
+				relatedItemsPanel.addComponent(associateCampaignList);
 
-            @Override
-            protected Layout createBottomPanel() {
-                VerticalLayout relatedItemsPanel = new VerticalLayout();
-                relatedItemsPanel.setWidth("100%");
-
-                relatedItemsPanel.addComponent(noteListItems);
-
-                relatedItemsPanel.addComponent(associateActivityList);
-                relatedItemsPanel.addComponent(associateCampaignList);
-
-                return relatedItemsPanel;
-            }
-        }
-    }
+				return relatedItemsPanel;
+			}
+		}
+	}
 }

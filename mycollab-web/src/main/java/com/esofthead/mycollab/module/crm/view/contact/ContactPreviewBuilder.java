@@ -14,7 +14,6 @@ import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
@@ -141,7 +140,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
 		public ReadView() {
 			contactAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/18/crm/account.png"));
+					"icons/22/crm/contact.png"));
 			this.addComponent(contactAddLayout);
 
 			initRelatedComponent();
