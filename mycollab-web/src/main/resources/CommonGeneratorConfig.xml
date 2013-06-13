@@ -59,6 +59,9 @@
 
         <table schema="mycollab" tableName="m_audit_log"
             domainObjectName="AuditLog" />
+
+        <table schema="mycollab" tableName="s_save_search_result"
+            domainObjectName="SaveSearchResult" />
     </context>
 
 </generatorConfiguration>
