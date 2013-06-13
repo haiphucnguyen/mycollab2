@@ -68,6 +68,7 @@ public class OpportunitySearchPanel extends
 		Label searchtitle = new Label("Search Opportunities");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
 		Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {

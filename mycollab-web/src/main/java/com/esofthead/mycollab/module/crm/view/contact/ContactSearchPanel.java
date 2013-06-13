@@ -63,6 +63,7 @@ public class ContactSearchPanel extends
 		Label searchtitle = new Label("Search Contacts");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
 		Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {
