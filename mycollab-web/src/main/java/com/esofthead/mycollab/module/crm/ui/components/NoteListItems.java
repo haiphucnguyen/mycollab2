@@ -234,6 +234,7 @@ public class NoteListItems extends Depot {
 			commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(
 					AppContext.getSpringBean(CommentService.class),
 					CommentRowDisplayHandler.class);
+			commentList.setDisplayEmptyListText(false);
 			commentList.setWidth("1050px");
 			noteContentLayout.addComponent(commentList);
 			noteContentLayout.setComponentAlignment(commentList,
@@ -311,6 +312,7 @@ public class NoteListItems extends Depot {
 
 		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
 				noteService, NoteRowDisplayHandler.class);
+		noteList.setDisplayEmptyListText(false);
 		noteList.setStyleName("noteList");
 		contentContainer.addComponent(noteList);
 		displayNotes();

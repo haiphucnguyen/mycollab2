@@ -29,6 +29,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 	private LazyLoadWrapper contentWrapper;
 	private VerticalLayout contentLayout;
 	private boolean isLazyLoadComponent = false;
+	private boolean isDisplayEmptyListText = true;
 
 	public BeanList(Object parentComponent, SearchService searchService,
 			Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
@@ -60,6 +61,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 	public BeanList(SearchService searchService,
 			Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
 		this(null, searchService, rowDisplayHandler);
+	}
+
+	public void setDisplayEmptyListText(boolean isDisplayEmptyListText) {
+		this.isDisplayEmptyListText = isDisplayEmptyListText;
 	}
 
 	public void insertItemOnTop(T item) {
@@ -125,7 +130,8 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 		contentLayout.removeAllComponents();
 
 		try {
-			if (currentListData == null || currentListData.size() == 0) {
+			if ((currentListData == null || currentListData.size() == 0)
+					&& isDisplayEmptyListText) {
 				Label noItemLbl = new Label("<<No item>>");
 				final VerticalLayout widgetFooter = new VerticalLayout();
 				widgetFooter.addStyleName("widget-footer");
