@@ -67,6 +67,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 		Label searchtitle = new Label("Search Leads");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
 		Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {

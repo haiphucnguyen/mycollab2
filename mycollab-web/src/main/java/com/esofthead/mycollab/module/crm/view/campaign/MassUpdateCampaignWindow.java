@@ -101,19 +101,17 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
 				
+				informationLayout.addComponent(propertyId.equals("assignuser"), field,
+						"Assigned to", 0, 0);
+				
 	            informationLayout.addComponent(propertyId.equals("status"), field,
-	                    "Status", 0, 0);
+	                    "Status", 0, 1);
 	            
 	            informationLayout.addComponent(propertyId.equals("type"), field,
-	                    "Type", 1, 0);
+	                    "Type", 1, 1);
 	            
-	            if (propertyId.equals("assignuser")) {
-	                informationLayout.addComponent(field, "Assigned to", 0, 1 , 1 , "100%", Alignment.TOP_RIGHT);
-	            }
-	            
-	            if (propertyId.equals("currencyid")) {
-	            	campaignGoal.addComponent(field, "Currency", 0, 0);
-	            }
+	            campaignGoal.addComponent(propertyId.equals("currencyid"), field,
+						"Currency", 0, 0);
 			}
 		}
 	}

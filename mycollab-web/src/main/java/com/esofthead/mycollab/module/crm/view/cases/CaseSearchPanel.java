@@ -209,7 +209,8 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 		Label searchtitle = new Label("Search Cases");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
-
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+		
 		Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -271,6 +272,13 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
 
+			myItemCheckbox = new CheckBox(
+					LocalizationHelper
+							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
+			myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
+			
 			final Button cancelBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
