@@ -24,8 +24,8 @@ public abstract class BugDisplayWidget extends Depot {
 	public static int MAX_ITEM_DISPLAY = 5;
 
 	protected BugSearchCriteria searchCriteria;
-	private final BeanList<BugService, BugSearchCriteria, SimpleBug> dataList;
-	private final Button moreBtn;
+	private BeanList<BugService, BugSearchCriteria, SimpleBug> dataList;
+	private Button moreBtn;
 
 	public BugDisplayWidget(
 			final String title,
@@ -35,27 +35,8 @@ public abstract class BugDisplayWidget extends Depot {
 		dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
 				AppContext.getSpringBean(BugService.class), rowDisplayHandler);
 		bodyContent.addComponent(dataList);
-
-		moreBtn = new Button("More ...", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new BugEvent.GotoList(BugDisplayWidget.this,
-								new BugScreenData.Search(
-										constructMoreDisplayFilter())));
-			}
-		});
-		moreBtn.setStyleName(UIConstants.THEME_LINK);
-		moreBtn.setVisible(false);
-		final VerticalLayout widgetFooter = new VerticalLayout();
-		widgetFooter.addStyleName("widget-footer");
-		widgetFooter.setWidth("100%");
-		widgetFooter.addComponent(moreBtn);
-		widgetFooter.setComponentAlignment(moreBtn, Alignment.TOP_RIGHT);
-		bodyContent.addComponent(widgetFooter);
 		bodyContent.setStyleName(UIConstants.BUG_LIST);
+		
 	}
 
 	protected abstract BugSearchParameter constructMoreDisplayFilter();
@@ -65,6 +46,25 @@ public abstract class BugDisplayWidget extends Depot {
 		final SearchRequest<BugSearchCriteria> searchRequest = new SearchRequest<BugSearchCriteria>(
 				searchCriteria, 0, BugDisplayWidget.MAX_ITEM_DISPLAY);
 		final int displayItemsCount = dataList.setSearchRequest(searchRequest);
-		moreBtn.setVisible((displayItemsCount == BugDisplayWidget.MAX_ITEM_DISPLAY));
+		if (displayItemsCount == BugDisplayWidget.MAX_ITEM_DISPLAY) {
+			moreBtn = new Button("More ...", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					EventBus.getInstance().fireEvent(
+							new BugEvent.GotoList(BugDisplayWidget.this,
+									new BugScreenData.Search(
+											constructMoreDisplayFilter())));
+				}
+			});
+			moreBtn.setStyleName(UIConstants.THEME_LINK);
+			final VerticalLayout widgetFooter = new VerticalLayout();
+			widgetFooter.addStyleName("widget-footer");
+			widgetFooter.setWidth("100%");
+			widgetFooter.addComponent(moreBtn);
+			widgetFooter.setComponentAlignment(moreBtn, Alignment.TOP_RIGHT);
+			bodyContent.addComponent(widgetFooter);
+		}
 	}
 }
