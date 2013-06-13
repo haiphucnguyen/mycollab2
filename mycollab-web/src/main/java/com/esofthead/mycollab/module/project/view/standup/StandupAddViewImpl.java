@@ -30,8 +30,9 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 	}
 
 	@Override
-	public void editItem(StandupReportWithBLOBs StandupReport) {
-		editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(StandupReport));
+	public void editItem(StandupReportWithBLOBs standupReport) {
+		editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(
+				standupReport));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<StandupReportWithBLOBs> {
