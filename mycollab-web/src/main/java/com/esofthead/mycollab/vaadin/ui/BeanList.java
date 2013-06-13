@@ -5,8 +5,10 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -19,9 +21,9 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	private static Logger log = LoggerFactory.getLogger(BeanList.class);
 	private static final long serialVersionUID = 1L;
-	
+
 	protected SearchService searchService;
-	
+
 	private Object parentComponent;
 	private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
 	private LazyLoadWrapper contentWrapper;
@@ -122,22 +124,35 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 	public void loadItems(List<T> currentListData) {
 		contentLayout.removeAllComponents();
 
-		int i = 0;
 		try {
-			for (T item : currentListData) {
-				RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
+			if (currentListData == null || currentListData.size() == 0) {
+				Label noItemLbl = new Label("<<No item>>");
+				final VerticalLayout widgetFooter = new VerticalLayout();
+				widgetFooter.addStyleName("widget-footer");
+				widgetFooter.setWidth("100%");
+				widgetFooter.addComponent(noItemLbl);
+				widgetFooter.setComponentAlignment(noItemLbl,
+						Alignment.TOP_RIGHT);
+				contentLayout.addComponent(widgetFooter);
+			} else {
+				int i = 0;
+				for (T item : currentListData) {
+					RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
 
-				Component row = rowHandler.generateRow(item, i);
-				if (row != null) {
-					if (isLazyLoadComponent) {
-						contentLayout.addComponent(new LazyLoadWrapper(row));
-					} else {
-						contentLayout.addComponent(row);
+					Component row = rowHandler.generateRow(item, i);
+					if (row != null) {
+						if (isLazyLoadComponent) {
+							contentLayout
+									.addComponent(new LazyLoadWrapper(row));
+						} else {
+							contentLayout.addComponent(row);
+						}
 					}
-				}
 
-				i++;
+					i++;
+				}
 			}
+
 		} catch (Exception e) {
 			log.error("Error while generate column display", e);
 		}

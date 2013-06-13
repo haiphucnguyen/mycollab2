@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.Collection;
+
+import org.vaadin.addon.customfield.CustomField;
+
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
@@ -12,14 +16,14 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import java.util.Collection;
-import org.vaadin.addon.customfield.CustomField;
 
 @ViewComponent
 public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
@@ -61,8 +65,15 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Meeting>(EditForm.this))
-                        .createButtonControls();
+            	final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<Meeting>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
             }
 
             @Override
@@ -72,7 +83,7 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 
             @Override
             protected Layout createBottomPanel() {
-                return createButtonControls();
+                return null;
             }
         }
 

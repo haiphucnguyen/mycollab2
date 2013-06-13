@@ -97,7 +97,6 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
 
 				return formLayout;
 			}
-//			status, type, assign user, currency
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
 				
@@ -105,13 +104,17 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
 						"Assigned to", 0, 0);
 				
 	            informationLayout.addComponent(propertyId.equals("status"), field,
-	                    "Status", 0, 1);
+	                    "Status", 1, 0);
 	            
-	            informationLayout.addComponent(propertyId.equals("type"), field,
-	                    "Type", 1, 1);
+	            if(propertyId.equals("type")){
+	            	informationLayout.addComponent(field,"Type", 0, 1 , 2 , "297px", Alignment.TOP_LEFT);
+	            }
 	            
-	            campaignGoal.addComponent(propertyId.equals("currencyid"), field,
-						"Currency", 0, 0);
+	            if(propertyId.equals("currencyid")) {
+	            	campaignGoal.addComponent(field,
+						"Currency", 0, 0, "297px");
+	            }
+	            
 			}
 		}
 	}

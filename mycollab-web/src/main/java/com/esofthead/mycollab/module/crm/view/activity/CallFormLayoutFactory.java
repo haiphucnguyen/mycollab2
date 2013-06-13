@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -24,22 +24,17 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout callAddLayout = new AddViewLayout(title,
+		AddViewLayout2 callAddLayout = new AddViewLayout2(title,
 				new ThemeResource("icons/48/crm/call.png"));
 
 		Layout topPanel = createTopPanel();
-
 		if (topPanel != null) {
-			callAddLayout.addTopControls(topPanel);
+			
+			callAddLayout.addControlButtons(topPanel);
 		}
 
 		informationLayout = new CallInformationLayout();
 		callAddLayout.addBody(informationLayout.getLayout());
-
-		Layout bottomPanel = createBottomPanel();
-		if (bottomPanel != null) {
-			callAddLayout.addBottomControls(bottomPanel);
-		}
 
 		return callAddLayout;
 	}

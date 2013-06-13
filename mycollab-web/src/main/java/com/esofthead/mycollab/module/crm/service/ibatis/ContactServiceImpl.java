@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -34,10 +40,6 @@ import com.esofthead.mycollab.module.crm.domain.ContactOpportunityExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -113,10 +115,4 @@ public class ContactServiceImpl extends DefaultService<Integer, Contact, Contact
         ex.createCriteria().andContactidEqualTo(associateCase.getContactid()).andCaseidEqualTo(associateCase.getCaseid());
         contactCaseMapper.deleteByExample(ex);
     }
-
-	@Override
-	public void updateBySearchCriteria(Contact value,
-			ContactSearchCriteria searchCriteria) {
-		contactMapperExt.upateContactBySearchCriteria(value, searchCriteria);
-	}
 }

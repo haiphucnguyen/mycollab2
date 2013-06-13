@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
@@ -34,10 +40,6 @@ import com.esofthead.mycollab.module.crm.domain.OpportunityLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -115,10 +117,4 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
         ex.createCriteria().andOpportunityidEqualTo(associateLead.getOpportunityid()).andLeadidEqualTo(associateLead.getLeadid());
         opportunityLeadMapper.deleteByExample(ex);
     }
-
-	@Override
-	public void updateBySearchCriteria(Opportunity value,
-			OpportunitySearchCriteria searchCriteria) {
-		opportunityMapperExt.upateOpportunityBySearchCriteria(value, searchCriteria);
-	}
 }

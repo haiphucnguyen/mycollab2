@@ -1,11 +1,9 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -25,21 +23,15 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout meetingLayout = new AddViewLayout(title,
+		AddViewLayout2 meetingLayout = new AddViewLayout2(title,
 				new ThemeResource("icons/48/crm/meeting.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {
-			meetingLayout.addTopControls(topPanel);
+			meetingLayout.addControlButtons(topPanel);
 		}
-
 		informationLayout = new MeetingInformationLayout();
 		meetingLayout.addBody(informationLayout.getLayout());
-
-		Layout bottomPanel = createBottomPanel();
-		if (bottomPanel != null) {
-			meetingLayout.addBottomControls(bottomPanel);
-		}
 
 		return meetingLayout;
 	}

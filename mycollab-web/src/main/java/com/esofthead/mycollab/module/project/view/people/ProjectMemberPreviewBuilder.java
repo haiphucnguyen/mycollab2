@@ -230,7 +230,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 				this.projectMember));
 	}
 
-	private class UserTaskDepot extends Depot {
+	protected class UserTaskDepot extends Depot {
 		private static final long serialVersionUID = 1L;
 
 		private PopupButton taskListFilterControl;
@@ -388,7 +388,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		}
 	}
 
-	private class UserBugDepot extends Depot {
+	protected class UserBugDepot extends Depot {
 		private static final long serialVersionUID = 1L;
 		private PopupButton bugActionControl;
 		private BugTableDisplay bugDisplay;
@@ -542,7 +542,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		}
 	}
 
-	private class UserStandupReportDepot extends VerticalLayout {
+	protected class UserStandupReportDepot extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		public UserStandupReportDepot() {

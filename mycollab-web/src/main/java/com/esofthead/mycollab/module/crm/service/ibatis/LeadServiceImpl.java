@@ -16,6 +16,10 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -27,9 +31,6 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -57,10 +58,4 @@ public class LeadServiceImpl extends DefaultService<Integer, Lead, LeadSearchCri
     public SimpleLead findLeadById(int leadId) {
         return leadMapperExt.findLeadById(leadId);
     }
-
-	@Override
-	public void updateBySearchCriteria(Lead value,
-			LeadSearchCriteria searchCriteria) {
-		leadMapperExt.upateLeadBySearchCriteria(value, searchCriteria);
-	}
 }
