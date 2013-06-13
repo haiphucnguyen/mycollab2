@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -66,8 +67,15 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<CallWithBLOBs>(EditForm.this))
-                        .createButtonControls();
+            	final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<CallWithBLOBs>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
             }
 
             @Override
@@ -77,7 +85,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 
             @Override
             protected Layout createBottomPanel() {
-                return createButtonControls();
+                return null;
             }
         }
 
