@@ -34,20 +34,20 @@ public class ItemTimeLoggingSearchPanel extends
 	@Override
 	public void attach() {
 		super.attach();
-		createAdvancedSearchLayout();
+		this.createAdvancedSearchLayout();
 	}
 
 	private void createAdvancedSearchLayout() {
-		BugAdvancedSearchLayout layout = new BugAdvancedSearchLayout();
+		final BugAdvancedSearchLayout layout = new BugAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label(
+		final Label searchtitle = new Label(
 				LocalizationHelper
 						.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
@@ -69,7 +69,7 @@ public class ItemTimeLoggingSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return ItemTimeLoggingSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
@@ -87,30 +87,31 @@ public class ItemTimeLoggingSearchPanel extends
 			}
 
 			gridLayout.getLayout().setWidth("100%");
+			gridLayout.getLayout().setSpacing(true);
 
-			dateRangeField = (DateRangeField) gridLayout.addComponent(
+			this.dateRangeField = (DateRangeField) gridLayout.addComponent(
 					new DateRangeField(new HorizontalLayout(), dateFieldWidth),
 					null, 0, 0);
-			dateRangeField.setDateFormat(AppContext.getDateFormat());
+			this.dateRangeField.setDateFormat(AppContext.getDateFormat());
 
-			userField = (ProjectMemberListSelect) gridLayout.addComponent(
+			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
 					new ProjectMemberListSelect(), "User", 1, 0);
-			userField.setWidth(nameFieldWidth);
+			this.userField.setWidth(nameFieldWidth);
 
 			return gridLayout.getLayout();
 		}
 
 		@Override
 		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
+			final HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 
-			Button searchBtn = new Button(
+			final Button searchBtn = new Button(
 					LocalizationHelper
 							.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL),
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							BugAdvancedSearchLayout.this.callSearchAction();
 						}
 					});
@@ -118,14 +119,16 @@ public class ItemTimeLoggingSearchPanel extends
 			buttonControls.addComponent(searchBtn);
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
-			Button clearBtn = new Button(
+			final Button clearBtn = new Button(
 					LocalizationHelper
 							.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL),
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(ClickEvent event) {
-							userField.setValue(null);
-							dateRangeField.setDefaultValue();
+						public void buttonClick(final ClickEvent event) {
+							BugAdvancedSearchLayout.this.userField
+									.setValue(null);
+							BugAdvancedSearchLayout.this.dateRangeField
+									.setDefaultValue();
 						}
 					});
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -136,22 +139,23 @@ public class ItemTimeLoggingSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new ItemTimeLoggingSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(
-					CurrentProjectVariables.getProjectId()));
+			ItemTimeLoggingSearchPanel.this.searchCriteria = new ItemTimeLoggingSearchCriteria();
+			ItemTimeLoggingSearchPanel.this.searchCriteria
+					.setProjectId(new NumberSearchField(CurrentProjectVariables
+							.getProjectId()));
 
-			searchCriteria.setRangeDate(dateRangeField
-					.getRangeSearchValue());
+			ItemTimeLoggingSearchPanel.this.searchCriteria
+					.setRangeDate(this.dateRangeField.getRangeSearchValue());
 
-			Collection<String> types = (Collection<String>) userField
+			final Collection<String> types = (Collection<String>) this.userField
 					.getValue();
 
 			if (types != null && types.size() > 0) {
-				searchCriteria.setLogUsers(new SetSearchField(
-						SearchField.AND, types));
+				ItemTimeLoggingSearchPanel.this.searchCriteria
+						.setLogUsers(new SetSearchField(SearchField.AND, types));
 			}
 
-			return searchCriteria;
+			return ItemTimeLoggingSearchPanel.this.searchCriteria;
 		}
 	}
 }

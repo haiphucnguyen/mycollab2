@@ -42,115 +42,120 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	private PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
-	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
+	private final ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
-	private Button exportBtn;
-	private ItemTimeLoggingService itemTimeLoggingService;
+	private final Button exportBtn;
+	private final ItemTimeLoggingService itemTimeLoggingService;
 	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
 			new FieldExportColumn("logUserFullName", "User"),
 			new FieldExportColumn("type", "Summary", 70),
 			new FieldExportColumn("createdtime", "Created Time"),
 			new FieldExportColumn("logvalue", "Hours"), };
 
-	private Label lbTimeRange;
+	private final Label lbTimeRange;
 
 	public TimeTrackingListViewImpl() {
 
 		this.setSpacing(true);
-		this.setMargin(false, true, true, true);
+		this.setMargin(true);
 
-		itemTimeLoggingService = AppContext
+		this.itemTimeLoggingService = AppContext
 				.getSpringBean(ItemTimeLoggingService.class);
 
-		Label titleLbl = new Label(
+		final Label titleLbl = new Label(
 				LocalizationHelper
 						.getMessage(TimeTrackingI18nEnum.TIME_RECORD_HEADER));
 		titleLbl.setStyleName("h2");
 		this.addComponent(titleLbl);
 
-		itemTimeLoggingPanel = new ItemTimeLoggingSearchPanel();
-		itemTimeLoggingPanel
+		this.itemTimeLoggingPanel = new ItemTimeLoggingSearchPanel();
+		this.itemTimeLoggingPanel
 				.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
 					@Override
-					public void onSearch(ItemTimeLoggingSearchCriteria criteria) {
-						setSearchCriteria(criteria);
+					public void onSearch(
+							final ItemTimeLoggingSearchCriteria criteria) {
+						TimeTrackingListViewImpl.this
+								.setSearchCriteria(criteria);
 					}
 				});
-		this.addComponent(itemTimeLoggingPanel);
+		this.addComponent(this.itemTimeLoggingPanel);
 
-		HorizontalLayout headerLayout = new HorizontalLayout();
+		final HorizontalLayout headerLayout = new HorizontalLayout();
 		headerLayout.setWidth("100%");
-		lbTimeRange = new Label("", Label.CONTENT_XHTML);
-		headerLayout.addComponent(lbTimeRange);
-		headerLayout.setComponentAlignment(lbTimeRange, Alignment.MIDDLE_LEFT);
-		headerLayout.setExpandRatio(lbTimeRange, 1.0f);
+		this.lbTimeRange = new Label("", Label.CONTENT_XHTML);
+		headerLayout.addComponent(this.lbTimeRange);
+		headerLayout.setComponentAlignment(this.lbTimeRange,
+				Alignment.MIDDLE_LEFT);
+		headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
 
-		exportBtn = new Button(
+		this.exportBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
-		exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
-		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		headerLayout.addComponent(exportBtn);
-		exportBtn.addListener(new Button.ClickListener() {
+		this.exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
+		this.exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		headerLayout.addComponent(this.exportBtn);
+		this.exportBtn.addListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				String title = "Time of Project "
+			public void buttonClick(final ClickEvent event) {
+				final String title = "Time of Project "
 						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 								.getProject().getName() != null) ? CurrentProjectVariables
 								.getProject().getName() : "");
-				Resource res = new StreamResource(
+				final Resource res = new StreamResource(
 						new ExportTimeLoggingStreamResource(
 								title,
-								EXPORT_COLUMNS,
+								TimeTrackingListViewImpl.EXPORT_COLUMNS,
 								AppContext
 										.getSpringBean(ItemTimeLoggingService.class),
-								itemTimeLogginSearchCriteria),
+								TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria),
 						"timeLogging_list.xls", AppContext.getApplication());
 				AppContext.getApplication().getMainWindow().open(res, "_blank");
 			}
 		});
-		headerLayout.setComponentAlignment(exportBtn, Alignment.MIDDLE_RIGHT);
+		headerLayout.setComponentAlignment(this.exportBtn,
+				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerLayout);
 
-		initUI();
+		this.initUI();
 	}
 
 	private void setTimeRange() {
-		RangeDateSearchField rangeField = itemTimeLogginSearchCriteria
+		final RangeDateSearchField rangeField = this.itemTimeLogginSearchCriteria
 				.getRangeDate();
 
-		String fromDate = AppContext.formatDate(rangeField.getFrom());
-		String toDate = AppContext.formatDate(rangeField.getTo());
+		final String fromDate = AppContext.formatDate(rangeField.getFrom());
+		final String toDate = AppContext.formatDate(rangeField.getTo());
 
-		Double totalHour = itemTimeLoggingService
-				.getTotalHoursByCriteria(itemTimeLogginSearchCriteria);
+		final Double totalHour = this.itemTimeLoggingService
+				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
 
 		if (totalHour != null && totalHour > 0) {
-			lbTimeRange.setValue(LocalizationHelper.getMessage(
+			this.lbTimeRange.setValue(LocalizationHelper.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
 					fromDate, toDate, totalHour));
 		} else {
-			lbTimeRange.setValue(LocalizationHelper.getMessage(
+			this.lbTimeRange.setValue(LocalizationHelper.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
 		}
 	}
 
 	private void initUI() {
-		tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+		this.tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 				AppContext.getSpringBean(ItemTimeLoggingService.class),
 				SimpleItemTimeLogging.class, new String[] { "logUserFullName",
 						"summary", "createdtime", "logvalue" }, new String[] {
 						"User", "Summary", "Created Time", "Hours" });
 
-		tableItem.addGeneratedColumn("logUserFullName",
+		this.tableItem.addGeneratedColumn("logUserFullName",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							final Object itemId, Object columnId) {
-						final SimpleItemTimeLogging monitorItem = tableItem
+					public com.vaadin.ui.Component generateCell(
+							final Table source, final Object itemId,
+							final Object columnId) {
+						final SimpleItemTimeLogging monitorItem = TimeTrackingListViewImpl.this.tableItem
 								.getBeanByIndex(itemId);
 
 						return new ProjectUserLink(monitorItem.getLoguser(),
@@ -159,125 +164,143 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					}
 				});
 
-		tableItem.addGeneratedColumn("summary", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+		this.tableItem.addGeneratedColumn("summary",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final SimpleItemTimeLogging itemLogging = tableItem
-						.getBeanByIndex(itemId);
+					@Override
+					public com.vaadin.ui.Component generateCell(
+							final Table source, final Object itemId,
+							final Object columnId) {
+						final SimpleItemTimeLogging itemLogging = TimeTrackingListViewImpl.this.tableItem
+								.getBeanByIndex(itemId);
 
-				ButtonLink b = null;
+						ButtonLink b = null;
 
-				if (itemLogging.getType().equals(MonitorTypeConstants.PRJ_BUG)) {
+						if (itemLogging.getType().equals(
+								MonitorTypeConstants.PRJ_BUG)) {
 
-					b = new ButtonLink(itemLogging.getSummary(),
-							new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
+							b = new ButtonLink(itemLogging.getSummary(),
+									new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
 
-								@Override
-								public void buttonClick(Button.ClickEvent event) {
-									EventBus.getInstance().fireEvent(
-											new BugEvent.GotoRead(this,
-													itemLogging.getTypeid()));
+										@Override
+										public void buttonClick(
+												final Button.ClickEvent event) {
+											EventBus.getInstance()
+													.fireEvent(
+															new BugEvent.GotoRead(
+																	this,
+																	itemLogging
+																			.getTypeid()));
+										}
+									});
+							b.setIcon(new ThemeResource(
+									"icons/16/project/bug.png"));
+
+							if (BugStatusConstants.CLOSE.equals(itemLogging
+									.getStatus())) {
+								b.addStyleName(UIConstants.LINK_COMPLETED);
+							} else if (itemLogging.getDueDate() != null
+									&& (itemLogging.getDueDate()
+											.before(new GregorianCalendar()
+													.getTime()))) {
+								b.addStyleName(UIConstants.LINK_OVERDUE);
+							}
+						} else if (itemLogging.getType().equals(
+								MonitorTypeConstants.PRJ_TASK)) {
+
+							b = new ButtonLink(itemLogging.getSummary(),
+									new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
+
+										@Override
+										public void buttonClick(
+												final Button.ClickEvent event) {
+											EventBus.getInstance()
+													.fireEvent(
+															new TaskEvent.GotoRead(
+																	this,
+																	itemLogging
+																			.getTypeid()));
+										}
+									});
+							b.setIcon(new ThemeResource(
+									"icons/16/project/task.png"));
+
+							if (itemLogging.getPercentageComplete() != null
+									&& 100d == itemLogging
+											.getPercentageComplete()) {
+								b.addStyleName(UIConstants.LINK_COMPLETED);
+							} else {
+								if ("Pending".equals(itemLogging.getStatus())) {
+									b.addStyleName(UIConstants.LINK_PENDING);
+								} else if (itemLogging.getDueDate() != null
+										&& (itemLogging.getDueDate()
+												.before(new GregorianCalendar()
+														.getTime()))) {
+									b.addStyleName(UIConstants.LINK_OVERDUE);
 								}
-							});
-					b.setIcon(new ThemeResource("icons/16/project/bug.png"));
-
-					if (BugStatusConstants.CLOSE.equals(itemLogging.getStatus())) {
-						b.addStyleName(UIConstants.LINK_COMPLETED);
-					} else if (itemLogging.getDueDate() != null
-							&& (itemLogging.getDueDate()
-									.before(new GregorianCalendar().getTime()))) {
-						b.addStyleName(UIConstants.LINK_OVERDUE);
-					}
-				} else if (itemLogging.getType().equals(
-						MonitorTypeConstants.PRJ_TASK)) {
-
-					b = new ButtonLink(itemLogging.getSummary(),
-							new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
-
-								@Override
-								public void buttonClick(Button.ClickEvent event) {
-									EventBus.getInstance().fireEvent(
-											new TaskEvent.GotoRead(this,
-													itemLogging.getTypeid()));
-								}
-							});
-					b.setIcon(new ThemeResource("icons/16/project/task.png"));
-
-					if (itemLogging.getPercentageComplete() != null
-							&& 100d == itemLogging.getPercentageComplete()) {
-						b.addStyleName(UIConstants.LINK_COMPLETED);
-					} else {
-						if ("Pending".equals(itemLogging.getStatus())) {
-							b.addStyleName(UIConstants.LINK_PENDING);
-						} else if (itemLogging.getDueDate() != null
-								&& (itemLogging.getDueDate()
-										.before(new GregorianCalendar()
-												.getTime()))) {
-							b.addStyleName(UIConstants.LINK_OVERDUE);
+							}
 						}
+
+						b.addStyleName("link");
+						b.addStyleName(UIConstants.WORD_WRAP);
+						b.setWidth("100%");
+
+						return b;
+
 					}
-				}
+				});
 
-				b.addStyleName("link");
-				b.addStyleName(UIConstants.WORD_WRAP);
-				b.setWidth("100%");
-
-				return b;
-
-			}
-		});
-
-		tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
+		this.tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleItemTimeLogging monitorItem = tableItem
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
+				final SimpleItemTimeLogging monitorItem = TimeTrackingListViewImpl.this.tableItem
 						.getBeanByIndex(itemId);
-				Label l = new Label();
+				final Label l = new Label();
 				l.setValue(AppContext.formatDateTime(monitorItem
 						.getCreatedtime()));
 				return l;
 			}
 		});
 
-		tableItem.addGeneratedColumn("logvalue", new ColumnGenerator() {
+		this.tableItem.addGeneratedColumn("logvalue", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleItemTimeLogging itemTimeLogging = tableItem
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
+				final SimpleItemTimeLogging itemTimeLogging = TimeTrackingListViewImpl.this.tableItem
 						.getBeanByIndex(itemId);
-				Label l = new Label();
+				final Label l = new Label();
 				l.setValue(itemTimeLogging.getLogvalue());
 				return l;
 			}
 		});
 
-		tableItem.setWidth("100%");
+		this.tableItem.setWidth("100%");
 
-		tableItem.setColumnExpandRatio("type", 1.0f);
-		tableItem.setColumnWidth("logUserFullName",
+		this.tableItem.setColumnExpandRatio("type", 1.0f);
+		this.tableItem.setColumnWidth("logUserFullName",
 				UIConstants.TABLE_EX_LABEL_WIDTH);
-		tableItem
-				.setColumnWidth("createdtime", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("logvalue", UIConstants.TABLE_S_LABEL_WIDTH);
+		this.tableItem.setColumnWidth("createdtime",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		this.tableItem.setColumnWidth("logvalue",
+				UIConstants.TABLE_S_LABEL_WIDTH);
 
-		this.addComponent(tableItem);
+		this.addComponent(this.tableItem);
 	}
 
 	@Override
-	public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
+	public void setSearchCriteria(
+			final ItemTimeLoggingSearchCriteria searchCriteria) {
 		this.itemTimeLogginSearchCriteria = searchCriteria;
-		tableItem.setSearchCriteria(searchCriteria);
-		setTimeRange();
+		this.tableItem.setSearchCriteria(searchCriteria);
+		this.setTimeRange();
 	}
 
 }

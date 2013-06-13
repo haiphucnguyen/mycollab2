@@ -12,7 +12,9 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 
@@ -24,14 +26,15 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 
 	public StandupAddViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.setMargin(true);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
 	}
 
 	@Override
-	public void editItem(StandupReportWithBLOBs StandupReport) {
-		editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(StandupReport));
+	public void editItem(final StandupReportWithBLOBs StandupReport) {
+		this.editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(
+				StandupReport));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<StandupReportWithBLOBs> {
@@ -39,7 +42,7 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -56,18 +59,25 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<StandupReportWithBLOBs>(
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<StandupReportWithBLOBs>(
 						EditForm.this)).createButtonControls(true, false, true);
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -76,12 +86,13 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("whatlastday")
 						|| propertyId.equals("whattoday")
 						|| propertyId.equals("whatproblem")) {
-					RichTextArea richText = new RichTextArea();
+					final RichTextArea richText = new RichTextArea();
 					richText.setWidth("500px");
 					return richText;
 				}
@@ -92,7 +103,7 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 
 	@Override
 	public HasEditFormHandlers<StandupReportWithBLOBs> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 
 }

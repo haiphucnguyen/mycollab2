@@ -293,11 +293,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	line-height: 18px;
 }
 
-.v-ratingstars-wrapper {
-	border: 0px !important;
-	padding: 0px !important;
-}
-
 .clear {
 	clear: both;
 }
@@ -1473,7 +1468,7 @@ input.v-textfield-errorField {
 }
 .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
 	padding: 5px 10px 5px 5px;
-	border-width: 1px 1px 0px;
+	border-width: 1px;
 	border-style: solid;
 	border-color: #a9a9a9;
 	border-radius: 3px 3px 0px 0px;
@@ -1540,13 +1535,18 @@ input.v-textfield-errorField {
 .depotComp .depotContent.empty {
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
+.depotComp .depotContent .v-table-header-wrap {
+	border-top: none;
+}
 
 .depotComp .depotContent .taskdisplay-component>.v-csslayout-margin {
 	padding-left: 30px;
 }
 
 .depotContent.bordered {
-	border: 1px solid rgb(169, 169, 169);
+	border-color: rgb(169, 169, 169);
+	border-style: solid;
+	border-width: 0px 1px 1px 1px;
 	background-color: rgb(245, 245, 245);
 }
 
@@ -1562,7 +1562,9 @@ input.v-textfield-errorField {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	background-color: rgb(245, 245, 245);
-	border: 1px solid rgb(169, 169, 169);
+	border-color: rgb(169, 169, 169);
+	border-style: solid;
+	border-width: 0px 1px 1px 1px;
 }
 .bug-list .widget-footer .v-verticallayout-margin {
 	padding: 5px;
@@ -1806,8 +1808,8 @@ input.v-textfield-errorField {
 /* End Tabsheet Styles */
 
 /* Activity Stream Channel */
-.depotComp.activity-panel .header-wrapper {
-	border-bottom: 1px solid #a9a9a9;
+.popupContent .v-window-contents .v-lazyloadingwrapper > .v-verticallayout > div > div:first-child > div > div.activity-stream > .v-csslayout-margin {
+	border-width: 1px;
 }
 .activity-stream {
 	background-color: #F7F7F7;
@@ -2402,7 +2404,7 @@ div.v-splitbutton, div.v-splitbutton .v-button {
 
 .widget-row >.v-csslayout-margin {
 	background-color: rgb(247, 247, 247);
-	border-width: 1px 1px 0px 1px;
+	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 	padding: 3px 5px 0px;
@@ -2636,8 +2638,27 @@ div.v-lazyloadingwrapper-loading {
 
 .report-row-block>.v-csslayout-margin {
 	padding: 5px 5px 0px;
-/* 	border: 1px solid #b7b7b7; */
-/* 	background-color: #f3f3f3; */
+}
+.addViewLayout .standup-edit-layout .h2 {
+	border-bottom: none;
+}
+.standupreport-list-header > .v-csslayout-margin {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 1px solid rgb(169, 169, 169);
+	border-radius: 3px 3px 0px 0px;
+	background: url(grad-light-top2.png) repeat-x left top rgb(228, 228, 228);
+	padding: 3px 10px 3px 18px;
+}
+.standupreport-list-content {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+	background-color: rgb(245, 245, 245);
 }
 /* End StandUp Report List */
 
@@ -2908,7 +2929,7 @@ table.legendBox .legendBoxContent .v-csslayout-container > div {
 	*display: inline;
 }
 .chart-wrapper > .v-csslayout-margin {
-	border-width: 1px 1px 0px;
+	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: #a9a9a9;
 	-moz-box-sizing: border-box;
@@ -3511,4 +3532,39 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border-width: 1px 0px 1px 0px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
+}
+
+/* Related Bugs Component */
+.relatedbug-comp-header {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+.addViewLayout .addViewBottomControls .relatedbug-comp .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
+	border-width: 1px;
+	border-radius: 3px 3px 0px 0px;
+}
+
+/* Rating Stars */
+div.v-ratingstars-wrapper {
+	border: 0px;
+	padding: 0px;
+	background-color: transparent;
+}
+div.v-ratingstars {
+	background-color: transparent;
+}
+.v-ratingstars-wrapper-tiny div.v-ratingstars-star {
+	background-image: url("icons/star_12x11.png");
+}
+div.v-ratingstars-star {
+	background-image: url("icons/star_19x18.png");
+}
+.v-ratingstars-wrapper-tiny div.v-ratingstars-bar {
+	background-image: url("icons/star_bg_12x11.gif");
+}
+div.v-ratingstars-bar {
+	background-image: url("icons/star_bg_19x18.gif");
+	border-right: none;
 }

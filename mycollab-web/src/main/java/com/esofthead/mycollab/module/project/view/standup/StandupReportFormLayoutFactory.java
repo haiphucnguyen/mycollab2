@@ -23,88 +23,93 @@ public abstract class StandupReportFormLayoutFactory implements
 
 	private LazyLoadWrapper whatProblemField;
 
-	private String title;
+	private final String title;
 
-	public StandupReportFormLayoutFactory(String title) {
+	public StandupReportFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout reportAddLayout = new AddViewLayout(title,
+		final AddViewLayout reportAddLayout = new AddViewLayout(this.title,
 				new ThemeResource("icons/48/project/standup.png"));
 
-		reportAddLayout.addTopControls(createTopPanel());
+		reportAddLayout.addTopControls(this.createTopPanel());
 
-		HorizontalLayout mainLayout = new HorizontalLayout();
+		final HorizontalLayout mainLayout = new HorizontalLayout();
 		mainLayout.setSpacing(true);
 		mainLayout.setWidth("100%");
 
-		VerticalLayout layoutField = new VerticalLayout();
+		final VerticalLayout layoutField = new VerticalLayout();
+		layoutField.addStyleName("standup-edit-layout");
 		layoutField.setWidth("500px");
-		Label whatYesterdayLbl = new Label("What I did in the last day/week");
+		final Label whatYesterdayLbl = new Label(
+				"What I did in the last day/week");
 		whatYesterdayLbl.setStyleName("h2");
 		layoutField.addComponent(whatYesterdayLbl);
-		whatYesterdayField = new LazyLoadWrapper();
-		layoutField.addComponent(whatYesterdayField);
+		this.whatYesterdayField = new LazyLoadWrapper();
+		layoutField.addComponent(this.whatYesterdayField);
 
-		Label whatTodayLbl = new Label("What I will do today/week");
+		final Label whatTodayLbl = new Label("What I will do today/week");
 		whatTodayLbl.setStyleName("h2");
 		layoutField.addComponent(whatTodayLbl);
-		whatTodayField = new LazyLoadWrapper();
-		layoutField.addComponent(whatTodayField);
+		this.whatTodayField = new LazyLoadWrapper();
+		layoutField.addComponent(this.whatTodayField);
 
-		Label roadblockLbl = new Label(
+		final Label roadblockLbl = new Label(
 				"Do you have roadblocks? If you have questions or you need help, please write your questions or needs here");
 		roadblockLbl.addStyleName("h2");
 		roadblockLbl.addStyleName(UIConstants.WORD_WRAP);
 		layoutField.addComponent(roadblockLbl);
-		whatProblemField = new LazyLoadWrapper();
-		layoutField.addComponent(whatProblemField);
+		this.whatProblemField = new LazyLoadWrapper();
+		layoutField.addComponent(this.whatProblemField);
 
 		mainLayout.addComponent(layoutField);
 
-		VerticalLayout instructionLayout = new VerticalLayout();
+		final VerticalLayout instructionLayout = new VerticalLayout();
 		instructionLayout.setStyleName("instructionStandupBox");
 		instructionLayout.setSpacing(true);
 
-		Label instruct1Lbl = new Label("A stand-up meeting (or simply \"stand-up\") is a daily team-meeting held to provide a status update to the team members. The \"semi-real-time\" status allows participants to know about potential challenges as well as to coordinate efforts to resolve difficult and/or time-consuming issues.");
-		
+		final Label instruct1Lbl = new Label(
+				"A stand-up meeting (or simply \"stand-up\") is a daily team-meeting held to provide a status update to the team members. The \"semi-real-time\" status allows participants to know about potential challenges as well as to coordinate efforts to resolve difficult and/or time-consuming issues.");
+
 		instruct1Lbl.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl);
-		
-		Label instruct1Lbl2 = new Label("With MyCollab standup meeting page, you do not need to attend a real time meeting involve all project members at once, this tool is convenient for distributed team works in different timezone where people can put his standup report at their appropriate time.");
+
+		final Label instruct1Lbl2 = new Label(
+				"With MyCollab standup meeting page, you do not need to attend a real time meeting involve all project members at once, this tool is convenient for distributed team works in different timezone where people can put his standup report at their appropriate time.");
 		instruct1Lbl2.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl2);
-		
+
 		if (ScreenSize.hasSupport1280Pixels()) {
 			instructionLayout.setWidth("300px");
 			instructionLayout.setHeight("300px");
 		} else if (ScreenSize.hasSupport1024Pixels()) {
 			instructionLayout.setWidth("150px");
 		}
-		
+
 		instruct1Lbl.setWidth("85%");
 		instruct1Lbl2.setWidth("85%");
-		
+
 		mainLayout.addComponent(instructionLayout);
-		mainLayout.setComponentAlignment(instructionLayout, Alignment.MIDDLE_CENTER);
+		mainLayout.setComponentAlignment(instructionLayout,
+				Alignment.MIDDLE_CENTER);
 
 		reportAddLayout.addBody(mainLayout);
 
-		reportAddLayout.addBottomControls(createBottomPanel());
+		reportAddLayout.addBottomControls(this.createBottomPanel());
 
 		return reportAddLayout;
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
+	public void attachField(final Object propertyId, final Field field) {
 		if (propertyId.equals("whatlastday")) {
-			whatYesterdayField.setLazyLoadComponent(field);
+			this.whatYesterdayField.setLazyLoadComponent(field);
 		} else if (propertyId.equals("whattoday")) {
-			whatTodayField.setLazyLoadComponent(field);
+			this.whatTodayField.setLazyLoadComponent(field);
 		} else if (propertyId.equals("whatproblem")) {
-			whatProblemField.setLazyLoadComponent(field);
+			this.whatProblemField.setLazyLoadComponent(field);
 		}
 	}
 
