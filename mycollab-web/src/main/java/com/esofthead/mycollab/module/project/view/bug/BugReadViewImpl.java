@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -349,7 +350,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							AttachmentConstants.PROJECT_BUG_TYPE,
 							BugReadViewImpl.this.bug.getId());
 				} else if (propertyId.equals("components")) {
-					if (BugReadViewImpl.this.bug.getComponents() != null) {
+					List<Component> components = BugReadViewImpl.this.bug
+							.getComponents();
+					if (components != null && components.size() > 0) {
 						final FormContainerViewField componentContainer = new FormContainerViewField();
 						for (final Component component : BugReadViewImpl.this.bug
 								.getComponents()) {
@@ -377,49 +380,60 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						return componentContainer;
 					}
 				} else if (propertyId.equals("affectedVersions")) {
-					final FormContainerViewField componentContainer = new FormContainerViewField();
-					for (final Version version : BugReadViewImpl.this.bug
-							.getAffectedVersions()) {
-						final Button versionLink = new Button(
-								version.getVersionname(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
+					List<Version> affectedVersions = BugReadViewImpl.this.bug
+							.getAffectedVersions();
+					if (affectedVersions != null && affectedVersions.size() > 0) {
+						final FormContainerViewField componentContainer = new FormContainerViewField();
+						for (final Version version : BugReadViewImpl.this.bug
+								.getAffectedVersions()) {
+							final Button versionLink = new Button(
+									version.getVersionname(),
+									new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
 
-									@Override
-									public void buttonClick(
-											final ClickEvent event) {
-										EventBus.getInstance().fireEvent(
-												new BugVersionEvent.GotoRead(
-														BugReadViewImpl.this,
-														version.getId()));
-									}
-								});
-						componentContainer.addComponentField(versionLink);
-						versionLink.setStyleName("link");
+										@Override
+										public void buttonClick(
+												final ClickEvent event) {
+											EventBus.getInstance()
+													.fireEvent(
+															new BugVersionEvent.GotoRead(
+																	BugReadViewImpl.this,
+																	version.getId()));
+										}
+									});
+							componentContainer.addComponentField(versionLink);
+							versionLink.setStyleName("link");
+						}
+						return componentContainer;
 					}
-					return componentContainer;
 				} else if (propertyId.equals("fixedVersions")) {
-					final FormContainerViewField componentContainer = new FormContainerViewField();
-					for (final Version version : BugReadViewImpl.this.bug
-							.getFixedVersions()) {
-						final Button versionLink = new Button(
-								version.getVersionname(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
+					List<Version> fixedVersions = BugReadViewImpl.this.bug
+							.getFixedVersions();
+					if (fixedVersions != null && fixedVersions.size() > 0) {
+						final FormContainerViewField componentContainer = new FormContainerViewField();
+						for (final Version version : BugReadViewImpl.this.bug
+								.getFixedVersions()) {
+							final Button versionLink = new Button(
+									version.getVersionname(),
+									new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
 
-									@Override
-									public void buttonClick(
-											final ClickEvent event) {
-										EventBus.getInstance().fireEvent(
-												new BugVersionEvent.GotoRead(
-														BugReadViewImpl.this,
-														version.getId()));
-									}
-								});
-						componentContainer.addComponentField(versionLink);
-						versionLink.setStyleName("link");
+										@Override
+										public void buttonClick(
+												final ClickEvent event) {
+											EventBus.getInstance()
+													.fireEvent(
+															new BugVersionEvent.GotoRead(
+																	BugReadViewImpl.this,
+																	version.getId()));
+										}
+									});
+							componentContainer.addComponentField(versionLink);
+							versionLink.setStyleName("link");
+						}
+						return componentContainer;
 					}
-					return componentContainer;
+
 				} else if (propertyId.equals("milestoneName")) {
 					if (BugReadViewImpl.this.bug.getMilestoneid() != null) {
 						final FormLinkViewField componentContainer = new FormLinkViewField(

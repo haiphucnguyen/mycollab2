@@ -33,7 +33,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		public FormAttachmentDisplayField(final String type, final int typeid) {
 			final Component comp = AttachmentDisplayComponent
 					.getAttachmentDisplayComponent(type, typeid);
-			if (comp == null) {
+			if (comp == null || !(comp instanceof AttachmentDisplayComponent)) {
 				final Label l = new Label("&nbsp;", Label.CONTENT_XHTML);
 				setCompositionRoot(l);
 			} else {
