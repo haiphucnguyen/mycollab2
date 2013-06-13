@@ -3349,6 +3349,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout-margin {
 	padding: 5px 8px 5px 10px;
 }
+.addview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout .v-horizontallayout-margin {
+	padding: 0px;
+} 
 .addview-layout-body .depotComp {
 	margin-top: 0px;
 }
