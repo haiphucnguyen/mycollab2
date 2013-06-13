@@ -50,4 +50,8 @@
     <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
 
     
+
+    <inherits name="org.vaadin.dontpush.widgetset.DontPushOzoneWidgetset" />
+
+    <inherits name="org.vaadin.overlay.OverlaysWidgetset" />
 </module>

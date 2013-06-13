@@ -15,9 +15,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -194,25 +191,25 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			final HorizontalLayout actionControls = new ProjectPreviewFormControlsGenerator<Milestone>(
 					previewForm).createButtonControls();
 
-			final Button reportBtn = new Button(null,
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							// TODO Auto-generated method stub
-
-						}
-
-					});
-			reportBtn.setIcon(new ThemeResource(
-					"icons/16/project/release_note.png"));
-			reportBtn.setStyleName("link");
-			reportBtn.setDescription("Display Report View");
-
-			actionControls.addComponent(reportBtn);
-			actionControls.setComponentAlignment(reportBtn,
-					Alignment.MIDDLE_LEFT);
+//			final Button reportBtn = new Button(null,
+//					new Button.ClickListener() {
+//						private static final long serialVersionUID = 1L;
+//
+//						@Override
+//						public void buttonClick(final ClickEvent event) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//					});
+//			reportBtn.setIcon(new ThemeResource(
+//					"icons/16/project/release_note.png"));
+//			reportBtn.setStyleName("link");
+//			reportBtn.setDescription("Display Report View");
+//
+//			actionControls.addComponent(reportBtn);
+//			actionControls.setComponentAlignment(reportBtn,
+//					Alignment.MIDDLE_LEFT);
 
 			final VerticalLayout marginLayout = new VerticalLayout();
 			marginLayout.setMargin(false);

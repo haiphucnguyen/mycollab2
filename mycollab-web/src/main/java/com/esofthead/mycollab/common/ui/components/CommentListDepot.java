@@ -45,6 +45,7 @@ public class CommentListDepot extends Depot {
 			commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(
 					AppContext.getSpringBean(CommentService.class),
 					CommentRowDisplayHandler.class);
+			commentList.setDisplayEmptyListText(false);
 			this.addComponent(commentList);
 		}
 

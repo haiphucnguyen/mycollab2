@@ -37,6 +37,7 @@ public class TaskGroupDisplayWidget
 	public TaskGroupDisplayWidget() {
 		super(null, AppContext.getSpringBean(ProjectTaskListService.class),
 				TaskListRowDisplayHandler.class, true);
+		this.setDisplayEmptyListText(false);
 	}
 
 	public static class TaskListRowDisplayHandler implements
