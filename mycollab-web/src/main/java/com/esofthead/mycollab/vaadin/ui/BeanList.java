@@ -132,7 +132,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 				widgetFooter.setWidth("100%");
 				widgetFooter.addComponent(noItemLbl);
 				widgetFooter.setComponentAlignment(noItemLbl,
-						Alignment.TOP_RIGHT);
+						Alignment.MIDDLE_CENTER);
 				contentLayout.addComponent(widgetFooter);
 			} else {
 				int i = 0;

@@ -48,102 +48,6 @@ public class BugDashboardViewImpl extends AbstractView implements
 		this.initUI();
 	}
 
-	@Override
-	public void attach() {
-		this.leftColumn.removeAllComponents();
-		this.rightColumn.removeAllComponents();
-
-		final SimpleProject project = CurrentProjectVariables.getProject();
-
-		final MyBugListWidget myBugListWidget = new MyBugListWidget();
-		final LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
-				myBugListWidget);
-		this.leftColumn.addComponent(myBugsWidgetWrapper);
-		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
-		myBugsSearchCriteria
-				.setProjectId(new NumberSearchField(project.getId()));
-		myBugsSearchCriteria.setStatuses(new SetSearchField<String>(
-				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
-						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
-						BugStatusConstants.TESTPENDING }));
-		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
-				.getUsername()));
-
-		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
-
-		final DueBugWidget dueBugWidget = new DueBugWidget();
-		final LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(
-				dueBugWidget);
-		this.leftColumn.addComponent(dueBugWidgetWrapper);
-		final BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
-		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
-		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
-				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
-						.getTime()));
-		dueDefectsCriteria.setStatuses(new SetSearchField<String>(
-				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
-						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
-						BugStatusConstants.TESTPENDING }));
-		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
-
-		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
-		final LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
-				updateBugWidget);
-		this.leftColumn.addComponent(updateBugWidgetWrapper);
-
-		// Unresolved by assignee
-		final UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
-		final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
-		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
-				project.getId()));
-		unresolvedByAssigneeSearchCriteria
-				.setStatuses(new SetSearchField<String>(SearchField.AND,
-						new String[] { BugStatusConstants.INPROGRESS,
-								BugStatusConstants.OPEN,
-								BugStatusConstants.REOPENNED }));
-		unresolvedByAssigneeWidget
-				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-		this.rightColumn.addComponent(new LazyLoadWrapper(
-				unresolvedByAssigneeWidget));
-
-		// Unresolve by priority widget
-		final UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
-		final BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
-		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
-				project.getId()));
-		unresolvedByPrioritySearchCriteria
-				.setStatuses(new SetSearchField<String>(SearchField.AND,
-						new String[] { BugStatusConstants.INPROGRESS,
-								BugStatusConstants.OPEN,
-								BugStatusConstants.REOPENNED }));
-		unresolvedByPriorityWidget
-				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-		this.rightColumn.addComponent(new LazyLoadWrapper(
-				unresolvedByPriorityWidget));
-
-		// bug chart
-		final BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
-		recentDefectsCriteria.setProjectId(new NumberSearchField(project
-				.getId()));
-		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
-
-		final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
-		chartSearchCriteria.setProjectId(new NumberSearchField(
-				CurrentProjectVariables.getProjectId()));
-		BugChartComponent bugChartComponent = null;
-		if (ScreenSize.hasSupport1024Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300,
-					200);
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
-					200);
-		} else {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
-					200);
-		}
-		this.rightColumn.addComponent(bugChartComponent);
-	}
-
 	private void initUI() {
 		final VerticalLayout headerWrapper = new VerticalLayout();
 		headerWrapper.setWidth("100%");
@@ -272,14 +176,113 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		this.rightColumn = new VerticalLayout();
 		this.rightColumn.setSpacing(true);
+		
+		body.addComponent(this.rightColumn);
+		body.setComponentAlignment(this.rightColumn, Alignment.TOP_RIGHT);
+
+		this.addComponent(body);
+	}
+
+	@Override
+	public void displayDashboard() {
+		this.leftColumn.removeAllComponents();
+		this.rightColumn.removeAllComponents();
+		
 		if (ScreenSize.hasSupport1024Pixels()) {
 			this.rightColumn.setWidth("310px");
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			this.rightColumn.setWidth("400px");
 		}
-		body.addComponent(this.rightColumn);
-		body.setComponentAlignment(this.rightColumn, Alignment.TOP_RIGHT);
 
-		this.addComponent(body);
+		final SimpleProject project = CurrentProjectVariables.getProject();
+
+		final MyBugListWidget myBugListWidget = new MyBugListWidget();
+		final LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
+				myBugListWidget);
+		this.leftColumn.addComponent(myBugsWidgetWrapper);
+		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
+		myBugsSearchCriteria
+				.setProjectId(new NumberSearchField(project.getId()));
+		myBugsSearchCriteria.setStatuses(new SetSearchField<String>(
+				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
+						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
+						BugStatusConstants.TESTPENDING }));
+		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
+				.getUsername()));
+
+		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
+
+		final DueBugWidget dueBugWidget = new DueBugWidget();
+		final LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(
+				dueBugWidget);
+		this.leftColumn.addComponent(dueBugWidgetWrapper);
+		final BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
+		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
+		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
+				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
+						.getTime()));
+		dueDefectsCriteria.setStatuses(new SetSearchField<String>(
+				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
+						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
+						BugStatusConstants.TESTPENDING }));
+		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
+
+		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
+		final LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
+				updateBugWidget);
+		this.leftColumn.addComponent(updateBugWidgetWrapper);
+
+		// Unresolved by assignee
+		final UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
+		final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
+				project.getId()));
+		unresolvedByAssigneeSearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
+		unresolvedByAssigneeWidget
+				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+		this.rightColumn.addComponent(new LazyLoadWrapper(
+				unresolvedByAssigneeWidget));
+
+		// Unresolve by priority widget
+		final UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
+		final BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
+		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
+				project.getId()));
+		unresolvedByPrioritySearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
+		unresolvedByPriorityWidget
+				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
+		this.rightColumn.addComponent(new LazyLoadWrapper(
+				unresolvedByPriorityWidget));
+
+		// bug chart
+		final BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
+		recentDefectsCriteria.setProjectId(new NumberSearchField(project
+				.getId()));
+		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
+
+		final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+		chartSearchCriteria.setProjectId(new NumberSearchField(
+				CurrentProjectVariables.getProjectId()));
+		BugChartComponent bugChartComponent = null;
+		if (ScreenSize.hasSupport1024Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300,
+					200);
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+					200);
+		} else {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+					200);
+		}
+		this.rightColumn.addComponent(bugChartComponent);
+
 	}
 }

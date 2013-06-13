@@ -36,6 +36,18 @@ public class MainWindowContainer extends Window implements View {
 	private final UriFragmentUtility urifu;
 
 	public MainWindowContainer() {
+		this.addListener(new Window.ResizeListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void windowResized(ResizeEvent e) {
+				log.debug("Application size is changed. New value is: "
+						+ MainWindowContainer.this.getBrowserWindowWidth());
+				ScreenSize.setWidth(MainWindowContainer.this
+						.getBrowserWindowWidth());
+			}
+		});
+		
 		urifu = new UriFragmentUtility();
 
 		urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
@@ -65,17 +77,6 @@ public class MainWindowContainer extends Window implements View {
 		ControllerRegistry.addController(new ShellController(this));
 
 		this.setImmediate(true);
-		this.addListener(new Window.ResizeListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void windowResized(ResizeEvent e) {
-				log.debug("Application size is changed. New value is: "
-						+ MainWindowContainer.this.getBrowserWindowWidth());
-				ScreenSize.setWidth(MainWindowContainer.this
-						.getBrowserWindowWidth());
-			}
-		});
 		content = new Content();
 		this.setContent(content);
 		content.setSizeFull();
