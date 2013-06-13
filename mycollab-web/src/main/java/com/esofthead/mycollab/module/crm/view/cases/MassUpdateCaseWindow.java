@@ -16,42 +16,45 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs>{
+public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 	private static final long serialVersionUID = 1L;
-	private CaseWithBLOBs cases;
+	private final CaseWithBLOBs cases;
 	private final EditForm updateForm;
-	private ReadViewLayout caseAddLayout;
-	private VerticalLayout layout;
+	private final ReadViewLayout caseAddLayout;
+	private final VerticalLayout layout;
 
-	public MassUpdateCaseWindow(String title,CaseListPresenter presenter) {
+	public MassUpdateCaseWindow(final String title,
+			final CaseListPresenter presenter) {
 		super(title, presenter);
-		
+
 		this.setWidth("1000px");
-		
+
 		this.setIcon(new ThemeResource("icons/18/crm/case.png"));
-		
-		caseAddLayout = new ReadViewLayout(null);
 
-		cases = new CaseWithBLOBs();
+		this.caseAddLayout = new ReadViewLayout(null, false);
 
-		layout = getLayout();
+		this.cases = new CaseWithBLOBs();
 
-		updateForm = new EditForm();
+		this.layout = this.getLayout();
 
-		updateForm.setItemDataSource(new BeanItem<CaseWithBLOBs>(cases));
+		this.updateForm = new EditForm();
 
-		caseAddLayout.addComponent(updateForm);
+		this.updateForm.setItemDataSource(new BeanItem<CaseWithBLOBs>(
+				this.cases));
 
-		this.addComponent(caseAddLayout);
+		this.caseAddLayout.addBody(this.updateForm);
+
+		this.addComponent(this.caseAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Contact> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			setFormFieldFactory(new CaseEditFormFieldFactory(cases));
+		public void setItemDataSource(final Item newDataSource) {
+			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
+			this.setFormFieldFactory(new CaseEditFormFieldFactory(
+					MassUpdateCaseWindow.this.cases));
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -63,51 +66,54 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs>{
 
 			@Override
 			public Layout getLayout() {
-				VerticalLayout formLayout = new VerticalLayout();
+				final VerticalLayout formLayout = new VerticalLayout();
 
-				Label organizationHeader = new Label("Case Information");
+				final Label organizationHeader = new Label("Case Information");
 				organizationHeader.setStyleName("h2");
 				formLayout.addComponent(organizationHeader);
 
-				informationLayout = new GridFormLayoutHelper(2, 6, "100%",
+				this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
 						"167px", Alignment.MIDDLE_LEFT);
 
-				informationLayout.getLayout().setWidth("100%");
-				informationLayout.getLayout().setMargin(false);
-				informationLayout.getLayout().setSpacing(false);
-				informationLayout.getLayout()
-						.addStyleName("colored-gridlayout");
-				formLayout.addComponent(informationLayout.getLayout());
+				this.informationLayout.getLayout().setWidth("100%");
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().setSpacing(false);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				formLayout.addComponent(this.informationLayout.getLayout());
 
-				formLayout.addComponent(layout);
-				formLayout.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
+				formLayout.addComponent(MassUpdateCaseWindow.this.layout);
 
 				return formLayout;
 			}
-//			 priority, status, account name, origin, type,  reason, assignuser
+
+			// priority, status, account name, origin, type, reason, assignuser
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
-				 if (propertyId.equals("priority")) {
-		                informationLayout.addComponent(field, "Priority", 0, 0);
-		            } else if (propertyId.equals("status")) {
-		                informationLayout.addComponent(field, "Status", 1, 0);
-		            } else if (propertyId.equals("accountid")) {
-		                informationLayout.addComponent(field, "Account Name", 0, 1);
-		            }else if (propertyId.equals("origin")) {
-		                informationLayout.addComponent(field, "Origin", 1, 1);
-		            } else if (propertyId.equals("type")) {
-		                informationLayout.addComponent(field, "Type", 0, 2);
-		            } else if (propertyId.equals("reason")) {
-		                informationLayout.addComponent(field, "Reason", 1, 2);
-		            }else if (propertyId.equals("assignuser")) {
-		                informationLayout.addComponent(field, "Assigned User", 0, 3 , 2 , "297px", Alignment.TOP_LEFT);
-		            }
+				if (propertyId.equals("priority")) {
+					this.informationLayout
+							.addComponent(field, "Priority", 0, 0);
+				} else if (propertyId.equals("status")) {
+					this.informationLayout.addComponent(field, "Status", 1, 0);
+				} else if (propertyId.equals("accountid")) {
+					this.informationLayout.addComponent(field, "Account Name",
+							0, 1);
+				} else if (propertyId.equals("origin")) {
+					this.informationLayout.addComponent(field, "Origin", 1, 1);
+				} else if (propertyId.equals("type")) {
+					this.informationLayout.addComponent(field, "Type", 0, 2);
+				} else if (propertyId.equals("reason")) {
+					this.informationLayout.addComponent(field, "Reason", 1, 2);
+				} else if (propertyId.equals("assignuser")) {
+					this.informationLayout.addComponent(field, "Assigned User",
+							0, 3, 2, "297px", Alignment.TOP_LEFT);
+				}
 			}
 		}
 	}
 
 	@Override
 	protected CaseWithBLOBs getItem() {
-		return cases;
+		return this.cases;
 	}
 }

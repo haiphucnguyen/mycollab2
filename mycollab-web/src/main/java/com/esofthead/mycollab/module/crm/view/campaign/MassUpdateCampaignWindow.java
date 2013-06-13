@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.view.contact.ContactEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -17,42 +16,46 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs> {
+public class MassUpdateCampaignWindow extends
+		MassUpdateWindow<CampaignWithBLOBs> {
 	private static final long serialVersionUID = 1L;
-	private CampaignWithBLOBs campaign;
+	private final CampaignWithBLOBs campaign;
 	private final EditForm updateForm;
-	private ReadViewLayout campaginAddLayout;
-	private VerticalLayout layout;
+	private final ReadViewLayout campaginAddLayout;
+	private final VerticalLayout layout;
 
-	public MassUpdateCampaignWindow(String title,CampaignListPresenter presenter) {
+	public MassUpdateCampaignWindow(final String title,
+			final CampaignListPresenter presenter) {
 		super(title, presenter);
-		
+
 		this.setWidth("1000px");
-		
+
 		this.setIcon(new ThemeResource("icons/18/crm/campaign.png"));
-		
-		campaginAddLayout = new ReadViewLayout(null);
 
-		campaign = new CampaignWithBLOBs();
+		this.campaginAddLayout = new ReadViewLayout(null, false);
 
-		layout = getLayout();
+		this.campaign = new CampaignWithBLOBs();
 
-		updateForm = new EditForm();
+		this.layout = this.getLayout();
 
-		updateForm.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
+		this.updateForm = new EditForm();
 
-		campaginAddLayout.addComponent(updateForm);
+		this.updateForm.setItemDataSource(new BeanItem<CampaignWithBLOBs>(
+				this.campaign));
 
-		this.addComponent(campaginAddLayout);
+		this.campaginAddLayout.addBody(this.updateForm);
+
+		this.addComponent(this.campaginAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Contact> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			setFormFieldFactory(new CampaignEditFormFieldFactory(campaign));
+		public void setItemDataSource(final Item newDataSource) {
+			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
+			this.setFormFieldFactory(new CampaignEditFormFieldFactory(
+					MassUpdateCampaignWindow.this.campaign));
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -65,62 +68,66 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
 
 			@Override
 			public Layout getLayout() {
-				VerticalLayout formLayout = new VerticalLayout();
+				final VerticalLayout formLayout = new VerticalLayout();
 
-				Label organizationHeader = new Label("Campaign Information");
+				final Label organizationHeader = new Label(
+						"Campaign Information");
 				organizationHeader.setStyleName("h2");
 				formLayout.addComponent(organizationHeader);
 
-				informationLayout = new GridFormLayoutHelper(2, 6, "100%",
+				this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
 						"167px", Alignment.MIDDLE_LEFT);
 
-				informationLayout.getLayout().setWidth("100%");
-				informationLayout.getLayout().setMargin(false);
-				informationLayout.getLayout().setSpacing(false);
-				informationLayout.getLayout()
-						.addStyleName("colored-gridlayout");
-				formLayout.addComponent(informationLayout.getLayout());
+				this.informationLayout.getLayout().setWidth("100%");
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().setSpacing(false);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				formLayout.addComponent(this.informationLayout.getLayout());
 
-				campaignGoal = new GridFormLayoutHelper(2, 6, "100%", "167px",
-						Alignment.MIDDLE_LEFT);
-				Label campaignMoreInfo = new Label("Campaign Goal");
+				this.campaignGoal = new GridFormLayoutHelper(2, 6, "100%",
+						"167px", Alignment.MIDDLE_LEFT);
+				final Label campaignMoreInfo = new Label("Campaign Goal");
 				campaignMoreInfo.setStyleName("h2");
 				formLayout.addComponent(campaignMoreInfo);
-				campaignGoal.getLayout().setWidth("100%");
-				campaignGoal.getLayout().setMargin(false);
-				campaignGoal.getLayout().setSpacing(false);
-				campaignGoal.getLayout().addStyleName("colored-gridlayout");
-				formLayout.addComponent(campaignGoal.getLayout());
+				this.campaignGoal.getLayout().setWidth("100%");
+				this.campaignGoal.getLayout().setMargin(false);
+				this.campaignGoal.getLayout().setSpacing(false);
+				this.campaignGoal.getLayout()
+						.addStyleName("colored-gridlayout");
+				formLayout.addComponent(this.campaignGoal.getLayout());
 
-				formLayout.addComponent(layout);
-				formLayout.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
+				formLayout.addComponent(MassUpdateCampaignWindow.this.layout);
 
 				return formLayout;
 			}
+
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
-				
-				informationLayout.addComponent(propertyId.equals("assignuser"), field,
-						"Assigned to", 0, 0);
-				
-	            informationLayout.addComponent(propertyId.equals("status"), field,
-	                    "Status", 1, 0);
-	            
-	            if(propertyId.equals("type")){
-	            	informationLayout.addComponent(field,"Type", 0, 1 , 2 , "297px", Alignment.TOP_LEFT);
-	            }
-	            
-	            if(propertyId.equals("currencyid")) {
-	            	campaignGoal.addComponent(field,
-						"Currency", 0, 0, "297px");
-	            }
-	            
+
+				this.informationLayout.addComponent(
+						propertyId.equals("assignuser"), field, "Assigned to",
+						0, 0);
+
+				this.informationLayout.addComponent(
+						propertyId.equals("status"), field, "Status", 1, 0);
+
+				if (propertyId.equals("type")) {
+					this.informationLayout.addComponent(field, "Type", 0, 1, 2,
+							"297px", Alignment.TOP_LEFT);
+				}
+
+				if (propertyId.equals("currencyid")) {
+					this.campaignGoal.addComponent(field, "Currency", 0, 0,
+							"297px");
+				}
+
 			}
 		}
 	}
 
 	@Override
 	protected CampaignWithBLOBs getItem() {
-		return campaign;
+		return this.campaign;
 	}
 }

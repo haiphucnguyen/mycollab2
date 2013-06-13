@@ -16,20 +16,22 @@ public class AddViewLayout extends CustomLayout {
 	public AddViewLayout(final String title, final Resource resource) {
 		super("addView");
 
-		icon = new Embedded();
-		icon.setSource(resource);
-		this.addComponent(icon, "addViewHeaderIcon");
-		titleLbl = new Label();
-		titleLbl.setStyleName("headerName");
-		titleLbl.setSizeUndefined();
-		titleLbl.setImmediate(true);
+		this.icon = new Embedded();
+		this.setTitleIcon(resource);
+		this.addComponent(this.icon, "addViewHeaderIcon");
+		this.titleLbl = new Label();
+		this.titleLbl.setStyleName("headerName");
+		this.titleLbl.setSizeUndefined();
+		this.titleLbl.setImmediate(true);
 
-		this.addComponent(titleLbl, "addViewHeaderTitle");
+		this.addComponent(this.titleLbl, "addViewHeaderTitle");
 
 		if (title == null) {
-			setTitle("Undefined");
+			if (resource != null) {
+				this.setTitle("Undefined");
+			}
 		} else {
-			setTitle(title);
+			this.setTitle(title);
 		}
 	}
 
@@ -46,7 +48,7 @@ public class AddViewLayout extends CustomLayout {
 	}
 
 	public void addTitleStyleName(final String styleName) {
-		titleLbl.addStyleName(styleName);
+		this.titleLbl.addStyleName(styleName);
 	}
 
 	public void addTopControls(final ComponentContainer topControls) {
@@ -54,7 +56,13 @@ public class AddViewLayout extends CustomLayout {
 	}
 
 	public void setTitle(final String title) {
-		titleLbl.setValue(title);
+		this.titleLbl.setValue(title);
+	}
+
+	public void setTitleIcon(final Resource resource) {
+		if (resource != null) {
+			this.icon.setSource(resource);
+		}
 	}
 
 }

@@ -41,32 +41,18 @@ public class GridFormLayoutHelper implements Serializable {
 		this.defaultCaptionWidth = defaultCaptionWidth;
 		this.captionAlignment = captionAlignment;
 
-		layout = new GridLayout(2 * columns, rows);
-		layout.setMargin(true, false, false, false);
-		layout.setSpacing(false);
+		this.layout = new GridLayout(2 * columns, rows);
+		this.layout.setMargin(true, false, false, false);
+		this.layout.setSpacing(false);
 
-		// layout.setRowExpandRatio(0, 0);
-
-		// for (int i = 0; i < columns; i++) {
-		// Label captionL = new Label("");
-		// captionL.setWidth(defaultCaptionWidth);
-		// captionL.setHeight("1px");
-		// layout.addComponent(captionL, 2 * i, 0);
-		//
-		// Label captionS = new Label("");
-		// captionS.setWidth("5px");
-		// captionS.setHeight("1px");
-		// layout.addComponent(captionS, 2 * i + 1, 0);
-		// }
-
-		layout.setRowExpandRatio(0, 0);
+		this.layout.setRowExpandRatio(0, 0);
 	}
 
 	public Component addComponent(final boolean condition, final Field field,
 			final String caption, final int columns, final int rows) {
 		if (condition) {
-			return addComponent(field, caption, columns, rows,
-					fieldControlWidth);
+			return this.addComponent(field, caption, columns, rows,
+					this.fieldControlWidth);
 		} else {
 			return null;
 		}
@@ -76,8 +62,8 @@ public class GridFormLayoutHelper implements Serializable {
 			final String caption, final int columns, final int rows,
 			final Alignment alignment) {
 		if (condition) {
-			return addComponent(field, caption, columns, rows,
-					fieldControlWidth, alignment);
+			return this.addComponent(field, caption, columns, rows,
+					this.fieldControlWidth, alignment);
 		} else {
 			return null;
 		}
@@ -87,7 +73,7 @@ public class GridFormLayoutHelper implements Serializable {
 			final Component field, final String caption, final int columns,
 			final int rows, final int colspan) {
 		if (condition) {
-			return addComponent(field, caption, columns, rows, colspan);
+			return this.addComponent(field, caption, columns, rows, colspan);
 		} else {
 			return null;
 		}
@@ -95,26 +81,27 @@ public class GridFormLayoutHelper implements Serializable {
 
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows) {
-		return addComponent(field, caption, columns, rows, fieldControlWidth);
+		return this.addComponent(field, caption, columns, rows,
+				this.fieldControlWidth);
 	}
 
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows, final Alignment alignment) {
-		return addComponent(field, caption, columns, rows, fieldControlWidth,
-				alignment);
+		return this.addComponent(field, caption, columns, rows,
+				this.fieldControlWidth, alignment);
 	}
 
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows, final int colspan) {
-		return addComponent(field, caption, columns, rows, colspan,
-				fieldControlWidth, captionAlignment);
+		return this.addComponent(field, caption, columns, rows, colspan,
+				this.fieldControlWidth, this.captionAlignment);
 	}
 
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows, final int colspan,
 			final int rowspan) {
-		return addComponent(field, caption, columns, rows, colspan, rowspan,
-				captionAlignment);
+		return this.addComponent(field, caption, columns, rows, colspan,
+				rowspan, this.captionAlignment);
 	}
 
 	public Component addComponent(final Component field, final String caption,
@@ -123,18 +110,18 @@ public class GridFormLayoutHelper implements Serializable {
 		if (caption != null) {
 			final Label l = new Label(caption + ":");
 			l.setSizeUndefined();
-			layout.addComponent(l, 2 * columns, rows);
-			layout.setComponentAlignment(l, alignment);
+			this.layout.addComponent(l, 2 * columns, rows);
+			this.layout.setComponentAlignment(l, alignment);
 
-			layout.addComponent(field, 2 * columns + 1, rows, 2 * (columns
+			this.layout.addComponent(field, 2 * columns + 1, rows, 2 * (columns
 					+ colspan - 1) + 1, rows + rowspan);
-			layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+			this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 			field.setCaption(null);
 			return field;
 		}
-		layout.addComponent(field, 2 * columns, rows,
-				2 * (columns + colspan - 1) + 1, rows + rowspan);
-		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+		this.layout.addComponent(field, 2 * columns, rows, 2 * (columns
+				+ colspan - 1) + 1, rows + rowspan);
+		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		field.setCaption(null);
 		field.setWidth("100%");
 		return field;
@@ -143,8 +130,8 @@ public class GridFormLayoutHelper implements Serializable {
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows, final int colspan,
 			final String width) {
-		return addComponent(field, caption, columns, rows, colspan, width,
-				captionAlignment);
+		return this.addComponent(field, caption, columns, rows, colspan, width,
+				this.captionAlignment);
 	}
 
 	public Component addComponent(final Component field, final String caption,
@@ -156,14 +143,14 @@ public class GridFormLayoutHelper implements Serializable {
 			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
 			captionWrapper.setStyleName("gridform-caption");
-			captionWrapper.setWidth(defaultCaptionWidth);
+			captionWrapper.setWidth(this.defaultCaptionWidth);
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
 			}
 			if (rows == 0) {
 				captionWrapper.addStyleName("first-row");
 			}
-			layout.addComponent(captionWrapper, 2 * columns, rows);
+			this.layout.addComponent(captionWrapper, 2 * columns, rows);
 			captionWrapper.setHeight("100%");
 		}
 		final HorizontalLayout fieldWrapper = new HorizontalLayout();
@@ -176,17 +163,17 @@ public class GridFormLayoutHelper implements Serializable {
 		if (rows == 0) {
 			fieldWrapper.addStyleName("first-row");
 		}
-		layout.addComponent(fieldWrapper, 2 * columns + 1, rows, 2 * (columns
-				+ colspan - 1) + 1, rows);
-		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+		this.layout.addComponent(fieldWrapper, 2 * columns + 1, rows,
+				2 * (columns + colspan - 1) + 1, rows);
+		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		return field;
 	}
 
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows, final int colspan,
 			final String width, final String height) {
-		return addComponent(field, caption, columns, rows, colspan, width,
-				height, captionAlignment);
+		return this.addComponent(field, caption, columns, rows, colspan, width,
+				height, this.captionAlignment);
 	}
 
 	public Component addComponent(final Component field, final String caption,
@@ -194,12 +181,12 @@ public class GridFormLayoutHelper implements Serializable {
 			final String width, final String height, final Alignment alignment) {
 		final Label l = new Label(caption + ":");
 		l.setSizeUndefined();
-		layout.addComponent(l, 2 * columns, rows);
-		layout.setComponentAlignment(l, alignment);
+		this.layout.addComponent(l, 2 * columns, rows);
+		this.layout.setComponentAlignment(l, alignment);
 
-		layout.addComponent(field, 2 * columns + 1, rows, 2 * (columns
+		this.layout.addComponent(field, 2 * columns + 1, rows, 2 * (columns
 				+ colspan - 1) + 1, rows);
-		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		field.setCaption(null);
 		field.setWidth(width);
 		return field;
@@ -207,8 +194,8 @@ public class GridFormLayoutHelper implements Serializable {
 
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows, final String width) {
-		return addComponent(field, caption, columns, rows, width,
-				captionAlignment);
+		return this.addComponent(field, caption, columns, rows, width,
+				this.captionAlignment);
 	}
 
 	public Component addComponent(final Component field, final String caption,
@@ -220,7 +207,7 @@ public class GridFormLayoutHelper implements Serializable {
 			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
 			captionWrapper.setComponentAlignment(l, alignment);
-			captionWrapper.setWidth(defaultCaptionWidth);
+			captionWrapper.setWidth(this.defaultCaptionWidth);
 			captionWrapper.setHeight("100%");
 			captionWrapper.setStyleName("gridform-caption");
 			if (columns == 0) {
@@ -229,7 +216,7 @@ public class GridFormLayoutHelper implements Serializable {
 			if (rows == 0) {
 				captionWrapper.addStyleName("first-row");
 			}
-			layout.addComponent(captionWrapper, 2 * columns, rows);
+			this.layout.addComponent(captionWrapper, 2 * columns, rows);
 		}
 		final HorizontalLayout fieldWrapper = new HorizontalLayout();
 		fieldWrapper.setStyleName("gridform-field");
@@ -240,16 +227,16 @@ public class GridFormLayoutHelper implements Serializable {
 		if (rows == 0) {
 			fieldWrapper.addStyleName("first-row");
 		}
-		layout.addComponent(fieldWrapper, 2 * columns + 1, rows);
-		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+		this.layout.addComponent(fieldWrapper, 2 * columns + 1, rows);
+		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		return field;
 	}
 
 	public Component getComponent(final int column, final int row) {
-		return layout.getComponent(2 * column + 1, row);
+		return this.layout.getComponent(2 * column + 1, row);
 	}
 
 	public GridLayout getLayout() {
-		return layout;
+		return this.layout;
 	}
 }

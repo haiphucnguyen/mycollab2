@@ -3420,7 +3420,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border-bottom: 1px solid #a9a9a9;
 }
 .task-list .colored-gridlayout .v-gridlayout-margin {
-	border-width: 1px 1px 0px 1px;
+	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 }

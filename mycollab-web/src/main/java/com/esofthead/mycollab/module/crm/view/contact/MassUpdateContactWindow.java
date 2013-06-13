@@ -18,40 +18,42 @@ import com.vaadin.ui.VerticalLayout;
 public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 	private static final long serialVersionUID = 1L;
 
-	private Contact contact;
+	private final Contact contact;
 	private final EditForm updateForm;
-	private ReadViewLayout contactAddLayout;
-	private VerticalLayout layout;
+	private final ReadViewLayout contactAddLayout;
+	private final VerticalLayout layout;
 
-	public MassUpdateContactWindow(String title, ContactListPresenter presenter) {
+	public MassUpdateContactWindow(final String title,
+			final ContactListPresenter presenter) {
 		super(title, presenter);
-		
+
 		this.setWidth("1000px");
-		
+
 		this.setIcon(new ThemeResource("icons/18/crm/contact.png"));
-		
-		contactAddLayout = new ReadViewLayout(null);
 
-		contact = new Contact();
+		this.contactAddLayout = new ReadViewLayout(null, false);
 
-		layout = getLayout();
+		this.contact = new Contact();
 
-		updateForm = new EditForm();
+		this.layout = this.getLayout();
 
-		updateForm.setItemDataSource(new BeanItem<Contact>(contact));
+		this.updateForm = new EditForm();
 
-		contactAddLayout.addComponent(updateForm);
+		this.updateForm.setItemDataSource(new BeanItem<Contact>(this.contact));
 
-		this.addComponent(contactAddLayout);
+		this.contactAddLayout.addBody(this.updateForm);
+
+		this.addComponent(this.contactAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Contact> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			setFormFieldFactory(new ContactEditFormFieldFactory(contact));
+		public void setItemDataSource(final Item newDataSource) {
+			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
+			this.setFormFieldFactory(new ContactEditFormFieldFactory(
+					MassUpdateContactWindow.this.contact));
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -64,35 +66,36 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 
 			@Override
 			public Layout getLayout() {
-				VerticalLayout formLayout = new VerticalLayout();
+				final VerticalLayout formLayout = new VerticalLayout();
 
-				Label organizationHeader = new Label("Contact Information");
+				final Label organizationHeader = new Label(
+						"Contact Information");
 				organizationHeader.setStyleName("h2");
 				formLayout.addComponent(organizationHeader);
 
-				informationLayout = new GridFormLayoutHelper(2, 6, "100%",
+				this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
 						"167px", Alignment.MIDDLE_LEFT);
 
-				informationLayout.getLayout().setWidth("100%");
-				informationLayout.getLayout().setMargin(false);
-				informationLayout.getLayout().setSpacing(false);
-				informationLayout.getLayout()
-						.addStyleName("colored-gridlayout");
-				formLayout.addComponent(informationLayout.getLayout());
+				this.informationLayout.getLayout().setWidth("100%");
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().setSpacing(false);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				formLayout.addComponent(this.informationLayout.getLayout());
 
-				addressLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
-						Alignment.MIDDLE_LEFT);
-				Label addressHeader = new Label("Address Information");
+				this.addressLayout = new GridFormLayoutHelper(2, 6, "100%",
+						"167px", Alignment.MIDDLE_LEFT);
+				final Label addressHeader = new Label("Address Information");
 				addressHeader.setStyleName("h2");
 				formLayout.addComponent(addressHeader);
-				addressLayout.getLayout().setWidth("100%");
-				addressLayout.getLayout().setMargin(false);
-				addressLayout.getLayout().setSpacing(false);
-				addressLayout.getLayout().addStyleName("colored-gridlayout");
-				formLayout.addComponent(addressLayout.getLayout());
+				this.addressLayout.getLayout().setWidth("100%");
+				this.addressLayout.getLayout().setMargin(false);
+				this.addressLayout.getLayout().setSpacing(false);
+				this.addressLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				formLayout.addComponent(this.addressLayout.getLayout());
 
-				formLayout.addComponent(layout);
-				formLayout.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
+				formLayout.addComponent(MassUpdateContactWindow.this.layout);
 
 				return formLayout;
 			}
@@ -100,32 +103,36 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("accountId")) {
-					informationLayout.addComponent(field, "Account", 0, 0);
+					this.informationLayout.addComponent(field, "Account", 0, 0);
 				} else if (propertyId.equals("title")) {
-					informationLayout.addComponent(field, "Title", 1, 0);
+					this.informationLayout.addComponent(field, "Title", 1, 0);
 				} else if (propertyId.equals("leadsource")) {
-					informationLayout.addComponent(field, "Leader Source", 0, 1);
+					this.informationLayout.addComponent(field, "Leader Source",
+							0, 1);
 				} else if (propertyId.equals("assignuser")) {
-					informationLayout.addComponent(field, "Assign User", 1, 1);
-				}else if (propertyId.equals("iscallable")) {
-					informationLayout.addComponent(field, "Callable", 0, 2, 2,
-							"100%", Alignment.TOP_LEFT);
+					this.informationLayout.addComponent(field, "Assign User",
+							1, 1);
+				} else if (propertyId.equals("iscallable")) {
+					this.informationLayout.addComponent(field, "Callable", 0,
+							2, 2, "100%", Alignment.TOP_LEFT);
 				} else if (propertyId.equals("primcity")) {
-					addressLayout.addComponent(field, "City", 0, 0);
+					this.addressLayout.addComponent(field, "City", 0, 0);
 				} else if (propertyId.equals("primstate")) {
-					addressLayout.addComponent(field, "State", 1, 0);
+					this.addressLayout.addComponent(field, "State", 1, 0);
 				} else if (propertyId.equals("primpostalcode")) {
-					addressLayout.addComponent(field, "Postal Code", 0, 1);
+					this.addressLayout.addComponent(field, "Postal Code", 0, 1);
 				} else if (propertyId.equals("primcountry")) {
-					addressLayout.addComponent(field, "Country", 1, 1);
+					this.addressLayout.addComponent(field, "Country", 1, 1);
 				} else if (propertyId.equals("othercity")) {
-					addressLayout.addComponent(field, "Other City", 0, 2);
+					this.addressLayout.addComponent(field, "Other City", 0, 2);
 				} else if (propertyId.equals("otherstate")) {
-					addressLayout.addComponent(field, "Other State", 1, 2);
+					this.addressLayout.addComponent(field, "Other State", 1, 2);
 				} else if (propertyId.equals("otherpostalcode")) {
-					addressLayout.addComponent(field, "Other Postal Code", 0, 3);
+					this.addressLayout.addComponent(field, "Other Postal Code",
+							0, 3);
 				} else if (propertyId.equals("othercountry")) {
-					addressLayout.addComponent(field, "Other Country", 1, 3);
+					this.addressLayout.addComponent(field, "Other Country", 1,
+							3);
 				}
 			}
 		}
@@ -133,6 +140,6 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 
 	@Override
 	protected Contact getItem() {
-		return contact;
+		return this.contact;
 	}
 }

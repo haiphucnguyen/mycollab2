@@ -20,39 +20,41 @@ import com.vaadin.ui.VerticalLayout;
 public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 	private static final long serialVersionUID = 1L;
 
-	private Account account;
+	private final Account account;
 	private final EditForm updateForm;
-	private ReadViewLayout accountAddLayout;
-	private VerticalLayout layout;
+	private final ReadViewLayout accountAddLayout;
+	private final VerticalLayout layout;
 
-	public MassUpdateAccountWindow(String title, AccountListPresenter presenter) {
+	public MassUpdateAccountWindow(final String title,
+			final AccountListPresenter presenter) {
 		super(title, presenter);
 		this.setWidth("1000px");
-		
+
 		this.setIcon(new ThemeResource("icons/18/account.png"));
-		
-		accountAddLayout = new ReadViewLayout(null);
 
-		account = new Account();
+		this.accountAddLayout = new ReadViewLayout(null, false);
 
-		layout = getLayout();
+		this.account = new Account();
 
-		updateForm = new EditForm();
+		this.layout = this.getLayout();
 
-		updateForm.setItemDataSource(new BeanItem<Account>(account));
+		this.updateForm = new EditForm();
 
-		accountAddLayout.addComponent(updateForm);
+		this.updateForm.setItemDataSource(new BeanItem<Account>(this.account));
 
-		this.addComponent(accountAddLayout);
+		this.accountAddLayout.addBody(this.updateForm);
+
+		this.addComponent(this.accountAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Account> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			setFormLayoutFactory(new MassUpdateAccountFormLayoutFactory());
-			setFormFieldFactory(new AccountEditFormFieldFactory(account));
+		public void setItemDataSource(final Item newDataSource) {
+			this.setFormLayoutFactory(new MassUpdateAccountFormLayoutFactory());
+			this.setFormFieldFactory(new AccountEditFormFieldFactory(
+					MassUpdateAccountWindow.this.account));
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -65,123 +67,110 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 
 			@Override
 			public Layout getLayout() {
-				VerticalLayout formLayout = new VerticalLayout();
+				final VerticalLayout formLayout = new VerticalLayout();
 
-				Label organizationHeader = new Label("Account Information");
+				final Label organizationHeader = new Label(
+						"Account Information");
 				organizationHeader.setStyleName("h2");
 				formLayout.addComponent(organizationHeader);
 
-				informationLayout = new GridFormLayoutHelper(2, 6, "100%",
+				this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
 						"167px", Alignment.MIDDLE_LEFT);
 
-				informationLayout.getLayout().setWidth("100%");
-				informationLayout.getLayout().setMargin(false);
-				informationLayout.getLayout().setSpacing(false);
-				informationLayout.getLayout()
-						.addStyleName("colored-gridlayout");
-				formLayout.addComponent(informationLayout.getLayout());
+				this.informationLayout.getLayout().setWidth("100%");
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().setSpacing(false);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				formLayout.addComponent(this.informationLayout.getLayout());
 
-				addressLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
-						Alignment.MIDDLE_LEFT);
-				Label addressHeader = new Label("Address Information");
+				this.addressLayout = new GridFormLayoutHelper(2, 6, "100%",
+						"167px", Alignment.MIDDLE_LEFT);
+				final Label addressHeader = new Label("Address Information");
 				addressHeader.setStyleName("h2");
 				formLayout.addComponent(addressHeader);
-				addressLayout.getLayout().setWidth("100%");
-				addressLayout.getLayout().setMargin(false);
-				addressLayout.getLayout().setSpacing(false);
-				addressLayout.getLayout().addStyleName("colored-gridlayout");
-				formLayout.addComponent(addressLayout.getLayout());
+				this.addressLayout.getLayout().setWidth("100%");
+				this.addressLayout.getLayout().setMargin(false);
+				this.addressLayout.getLayout().setSpacing(false);
+				this.addressLayout.getLayout().addStyleName(
+						"colored-gridlayout");
+				formLayout.addComponent(this.addressLayout.getLayout());
 
-				formLayout.addComponent(layout);
-				formLayout.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
+				formLayout.addComponent(MassUpdateAccountWindow.this.layout);
 
 				return formLayout;
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
-				informationLayout.addComponent(propertyId.equals("industry"),
-						field, LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_INDUSTRY), 0,
-						1);
+			public void attachField(final Object propertyId, final Field field) {
+				this.informationLayout.addComponent(propertyId
+						.equals("industry"), field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_INDUSTRY), 0, 0);
 
-				informationLayout.addComponent(propertyId.equals("type"),
+				this.informationLayout.addComponent(propertyId.equals("type"),
 						field, LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_TYPE), 1, 1);
-				informationLayout.addComponent(propertyId.equals("ownership"),
-						field, LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_OWNERSHIP), 0,
-						2);
+								.getMessage(AccountI18nEnum.FORM_TYPE), 1, 0);
+				this.informationLayout.addComponent(propertyId
+						.equals("ownership"), field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_OWNERSHIP), 0, 1);
 
-				informationLayout.addComponent(propertyId.equals("assignuser"),
-						field, LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_ASSIGNED_TO),
-						1, 2);
+				this.informationLayout.addComponent(propertyId
+						.equals("assignuser"), field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_ASSIGNED_TO), 1, 1);
 
-				addressLayout.addComponent(propertyId.equals("city"), field,
-						LocalizationHelper
+				this.addressLayout.addComponent(propertyId.equals("city"),
+						field, LocalizationHelper
 								.getMessage(AccountI18nEnum.FORM_BILLING_CITY),
-						0, 1);
+						0, 0);
 
-				addressLayout
-						.addComponent(
-								propertyId.equals("shippingcity"),
-								field,
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_CITY),
-								1, 1);
+				this.addressLayout.addComponent(propertyId
+						.equals("shippingcity"), field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_SHIPPING_CITY), 1, 0);
 
-				addressLayout
+				this.addressLayout
 						.addComponent(
 								propertyId.equals("state"),
 								field,
 								LocalizationHelper
 										.getMessage(AccountI18nEnum.FORM_BILLING_STATE),
-								0, 2);
+								0, 1);
 
-				addressLayout
+				this.addressLayout
 						.addComponent(
 								propertyId.equals("postalcode"),
 								field,
 								LocalizationHelper
 										.getMessage(AccountI18nEnum.FORM_BILLING_POSTAL_CODE),
-								1, 2);
+								1, 1);
 
-				addressLayout
+				this.addressLayout
 						.addComponent(
 								propertyId.equals("billingcountry"),
 								field,
 								LocalizationHelper
 										.getMessage(AccountI18nEnum.FORM_BILLING_COUNTRY),
-								0, 3);
-				addressLayout
-						.addComponent(
-								propertyId.equals("shippingcountry"),
-								field,
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY),
-								1, 3);
+								0, 2);
+				this.addressLayout.addComponent(propertyId
+						.equals("shippingcountry"), field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY), 1,
+						2);
 
-				addressLayout
-						.addComponent(
-								propertyId.equals("shippingstate"),
-								field,
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_STATE),
-								0, 4);
-				addressLayout
+				this.addressLayout.addComponent(propertyId
+						.equals("shippingstate"), field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_SHIPPING_STATE), 0, 3);
+				this.addressLayout
 						.addComponent(
 								propertyId.equals("shippingpostalcode"),
 								field,
 								LocalizationHelper
 										.getMessage(AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE),
-								1, 4);
+								1, 3);
 			}
 		}
 	}
 
 	@Override
 	protected Account getItem() {
-		return account;
+		return this.account;
 	}
 }
