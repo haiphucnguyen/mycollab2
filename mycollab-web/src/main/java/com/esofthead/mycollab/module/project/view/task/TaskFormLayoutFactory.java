@@ -36,7 +36,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout taskAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/task.png"));
+				new ThemeResource("icons/24/project/task.png"));
 
 		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
 			taskAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));

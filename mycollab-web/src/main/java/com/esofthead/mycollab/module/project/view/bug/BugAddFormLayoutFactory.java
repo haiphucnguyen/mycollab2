@@ -23,7 +23,7 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout bugAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/bug.png"));
+				new ThemeResource("icons/24/project/bug.png"));
 
 		bugAddLayout.addTopControls(this.createTopPanel());
 

@@ -27,37 +27,37 @@ public abstract class ProjectFormViewLayoutFactory implements
 		@Override
 		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("homepage")) {
-				moreInfoLayout.addComponent(field, "Home Page", 0, 0,
+				this.moreInfoLayout.addComponent(field, "Home Page", 0, 0,
 						Alignment.TOP_LEFT);
 			} else if (propertyId.equals("projectstatus")) {
-				moreInfoLayout.addComponent(field, "Status", 1, 0,
+				this.moreInfoLayout.addComponent(field, "Status", 1, 0,
 						Alignment.TOP_LEFT);
 			} else if (propertyId.equals("planstartdate")) {
-				moreInfoLayout.addComponent(field, "Plan Start Date", 0, 1,
-						Alignment.TOP_LEFT);
+				this.moreInfoLayout.addComponent(field, "Plan Start Date", 0,
+						1, Alignment.TOP_LEFT);
 			} else if (propertyId.equals("currencyid")) {
-				moreInfoLayout.addComponent(field, "Currency", 1, 1,
+				this.moreInfoLayout.addComponent(field, "Currency", 1, 1,
 						Alignment.TOP_LEFT);
 			} else if (propertyId.equals("planenddate")) {
-				moreInfoLayout.addComponent(field, "Plan End Date", 0, 2,
+				this.moreInfoLayout.addComponent(field, "Plan End Date", 0, 2,
 						Alignment.TOP_LEFT);
 			} else if (propertyId.equals("defaultbillingrate")) {
-				moreInfoLayout.addComponent(field, "Rate", 1, 2,
+				this.moreInfoLayout.addComponent(field, "Rate", 1, 2,
 						Alignment.TOP_LEFT);
 			} else if (propertyId.equals("actualstartdate")) {
-				moreInfoLayout.addComponent(field, "Actual Start Date", 0, 3,
-						Alignment.TOP_LEFT);
+				this.moreInfoLayout.addComponent(field, "Actual Start Date", 0,
+						3, Alignment.TOP_LEFT);
 			} else if (propertyId.equals("targetbudget")) {
-				moreInfoLayout.addComponent(field, "Target Budget", 1, 3,
+				this.moreInfoLayout.addComponent(field, "Target Budget", 1, 3,
 						Alignment.TOP_LEFT);
 			} else if (propertyId.equals("actualenddate")) {
-				moreInfoLayout.addComponent(field, "Actual End Date", 0, 4,
-						Alignment.TOP_LEFT);
+				this.moreInfoLayout.addComponent(field, "Actual End Date", 0,
+						4, Alignment.TOP_LEFT);
 			} else if (propertyId.equals("actualbudget")) {
-				moreInfoLayout.addComponent(field, "Actual Budget", 1, 4,
+				this.moreInfoLayout.addComponent(field, "Actual Budget", 1, 4,
 						Alignment.TOP_LEFT);
 			} else if (propertyId.equals("description")) {
-				moreInfoLayout
+				this.moreInfoLayout
 						.addComponent(field, "Description", 0, 5, 2,
 								UIConstants.DEFAULT_2XCONTROL_WIDTH,
 								Alignment.TOP_LEFT);
@@ -69,12 +69,12 @@ public abstract class ProjectFormViewLayoutFactory implements
 			final VerticalLayout layout = new VerticalLayout();
 			layout.addStyleName("colored-gridlayout");
 
-			moreInfoLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
-					Alignment.MIDDLE_LEFT);
-			moreInfoLayout.getLayout().setWidth("100%");
-			moreInfoLayout.getLayout().setMargin(false);
-			layout.addComponent(moreInfoLayout.getLayout());
-			layout.setComponentAlignment(moreInfoLayout.getLayout(),
+			this.moreInfoLayout = new GridFormLayoutHelper(2, 6, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+			this.moreInfoLayout.getLayout().setWidth("100%");
+			this.moreInfoLayout.getLayout().setMargin(false);
+			layout.addComponent(this.moreInfoLayout.getLayout());
+			layout.setComponentAlignment(this.moreInfoLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 			return layout;
 		}
@@ -92,7 +92,7 @@ public abstract class ProjectFormViewLayoutFactory implements
 
 	@Override
 	public void attachField(final Object propertyId, final Field field) {
-		projectInformationLayout.attachField(propertyId, field);
+		this.projectInformationLayout.attachField(propertyId, field);
 	}
 
 	protected abstract Layout createBottomPanel();
@@ -101,16 +101,16 @@ public abstract class ProjectFormViewLayoutFactory implements
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout projectAddLayout = new AddViewLayout(title,
-				new ThemeResource("icons/48/project/project.png"));
+		final AddViewLayout projectAddLayout = new AddViewLayout(this.title,
+				new ThemeResource("icons/24/project/project.png"));
 
-		projectInformationLayout = new ProjectInformationLayout();
+		this.projectInformationLayout = new ProjectInformationLayout();
 
-		projectAddLayout.addTopControls(createTopPanel());
+		projectAddLayout.addTopControls(this.createTopPanel());
 
-		projectAddLayout.addBody(projectInformationLayout.getLayout());
+		projectAddLayout.addBody(this.projectInformationLayout.getLayout());
 
-		projectAddLayout.addBottomControls(createBottomPanel());
+		projectAddLayout.addBottomControls(this.createBottomPanel());
 
 		return projectAddLayout;
 	}

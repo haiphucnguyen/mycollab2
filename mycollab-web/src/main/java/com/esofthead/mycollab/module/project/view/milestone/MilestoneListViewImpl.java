@@ -61,8 +61,14 @@ public class MilestoneListViewImpl extends AbstractView implements
 		titleLbl.addStyleName("h2");
 		// header.setMargin(true, true, false, true);
 		header.setWidth("100%");
+		final Embedded icon = new Embedded();
+		icon.setSource(new ThemeResource("icons/24/project/phase.png"));
+		header.addComponent(icon);
+		header.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
 		header.addComponent(titleLbl);
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
+		header.setExpandRatio(titleLbl, 1.0f);
+		header.setSpacing(true);
 
 		this.createBtn = new Button(
 				LocalizationHelper.getMessage(TaskI18nEnum.NEW_PHASE_ACTION),

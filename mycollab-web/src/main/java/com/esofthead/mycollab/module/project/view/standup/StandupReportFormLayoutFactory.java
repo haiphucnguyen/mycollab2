@@ -32,7 +32,7 @@ public abstract class StandupReportFormLayoutFactory implements
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout reportAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/standup.png"));
+				new ThemeResource("icons/24/project/standup.png"));
 
 		reportAddLayout.addTopControls(this.createTopPanel());
 

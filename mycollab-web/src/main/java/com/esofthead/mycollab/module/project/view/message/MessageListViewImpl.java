@@ -271,9 +271,16 @@ public class MessageListViewImpl extends AbstractView implements
 			this.messagePanelBody = new HorizontalLayout();
 			final Label headerLbl = new Label("Messages");
 			headerLbl.setStyleName("h2");
+			final Embedded icon = new Embedded();
+			icon.setSource(new ThemeResource("icons/24/project/message.png"));
 			final HorizontalLayout layoutHeader = new HorizontalLayout();
 			layoutHeader.setStyleName("message-toppanel-header");
+			layoutHeader.addComponent(icon);
 			layoutHeader.addComponent(headerLbl);
+			layoutHeader.setExpandRatio(headerLbl, 1.0f);
+			layoutHeader
+					.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
+			layoutHeader.setSpacing(true);
 			layoutHeader.setWidth("100%");
 			this.addComponent(layoutHeader);
 			this.messageSearchPanel.setWidth("320px");

@@ -31,7 +31,7 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout componentAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/version.png"));
+				new ThemeResource("icons/24/project/version.png"));
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {

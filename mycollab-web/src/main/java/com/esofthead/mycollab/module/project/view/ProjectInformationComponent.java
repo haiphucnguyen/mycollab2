@@ -15,10 +15,12 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -265,17 +267,23 @@ public class ProjectInformationComponent extends VerticalLayout {
 		this.project = CurrentProjectVariables.getProject();
 
 		this.projectInfoHeader.removeAllComponents();
+		this.projectInfoHeader.setSpacing(true);
+		final Embedded icon = new Embedded();
+		icon.setSource(new ThemeResource("icons/24/project/dashboard.png"));
 		final Label projectName = new Label(this.project.getName());
 		projectName.setStyleName(UIConstants.PROJECT_NAME);
 		projectName.setSizeUndefined();
 		final Label projectShortname = new Label("("
 				+ this.project.getShortname() + ")");
 		projectShortname.setStyleName(UIConstants.PROJECT_SHORT_NAME);
+		this.projectInfoHeader.addComponent(icon);
 		this.projectInfoHeader.addComponent(projectName);
+		this.projectInfoHeader.setComponentAlignment(projectName,
+				Alignment.MIDDLE_LEFT);
 		this.projectInfoHeader.addComponent(projectShortname);
 		this.projectInfoHeader.setExpandRatio(projectShortname, 1.0f);
 		this.projectInfoHeader.setComponentAlignment(projectShortname,
-				Alignment.TOP_LEFT);
+				Alignment.MIDDLE_LEFT);
 
 		this.prjDisplay.show();
 	}

@@ -23,7 +23,7 @@ public abstract class ProjectRoleFormLayoutFactory implements
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout userAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/user/group.png"));
+				new ThemeResource("icons/24/project/group.png"));
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {

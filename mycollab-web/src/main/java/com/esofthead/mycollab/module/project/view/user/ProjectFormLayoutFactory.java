@@ -33,7 +33,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout projectAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/project.png"));
+				new ThemeResource("icons/24/project/project.png"));
 
 		this.projectInformationLayout = new ProjectInformationLayout();
 

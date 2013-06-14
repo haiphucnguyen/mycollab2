@@ -23,7 +23,7 @@ public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout accountAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/problem.png"));
+				new ThemeResource("icons/24/project/problem.png"));
 
 		accountAddLayout.addTopControls(this.createTopPanel());
 

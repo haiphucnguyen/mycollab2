@@ -33,7 +33,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout accountAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/tasklist.png"));
+				new ThemeResource("icons/24/project/task.png"));
 
 		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
 			accountAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));

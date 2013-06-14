@@ -1009,7 +1009,7 @@ input.v-textfield-errorField {
 }
 
 .addViewHeader {
-	padding: 10px 10px 15px;
+	padding: 10px 10px 10px;
 	background: url('icons/grad-light-top2.png') repeat-x left top rgb(227, 227, 227);
 	border-radius: 3px 3px 0px 0px;
 	border-bottom: 1px solid rgb(169, 169, 169);
@@ -1021,7 +1021,7 @@ input.v-textfield-errorField {
 
 .addViewHeader .addViewHeaderRight {
 	float: right;
-	min-height: 48px;
+	min-height: 24px;
 }
 
 .addViewHeaderIcon,.addViewHeaderTitle {
@@ -1031,7 +1031,8 @@ input.v-textfield-errorField {
 .addViewLayout .addViewHeader .headerName {
 	font-size: 16px;
 	font-weight: bold;
-	margin-top: 15px;
+	margin-top: 3px;
+	margin-left: 5px;
 	max-width: 700px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -1367,7 +1368,6 @@ input.v-textfield-errorField {
 
 .projectinfo-header .project-shortname {
 	color: gray;
-	padding-left: 5px;
 }
 
 .v-horizontallayout-projectinfo-footer .v-horizontallayout-margin {
@@ -1465,6 +1465,9 @@ input.v-textfield-errorField {
 /* Depot */
 .depotComp {
 	margin-top: 20px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
 	padding: 5px 10px 5px 5px;
@@ -2665,8 +2668,22 @@ div.v-lazyloadingwrapper-loading {
 	box-sizing: border-box;
 	border: 1px solid rgb(169, 169, 169);
 	border-radius: 3px 3px 0px 0px;
-	background: url(grad-light-top2.png) repeat-x left top rgb(228, 228, 228);
+	background: url("icons/grad-light-top2.png") repeat-x left top rgb(228, 228, 228);
 	padding: 3px 10px 3px 18px;
+}
+.standupreport-list-header .v-popupbutton {
+	background: none;
+	border: none;
+}
+.standupreport-list-header .v-popupbutton > .v-button-wrap {
+	background: none;
+}
+.standupreport-list-header .v-popupbutton:active > .v-button-wrap {
+	border: none;
+}
+.standupreport-list-header .v-popupbutton > .v-button-wrap > .v-button-caption {
+	font-weight: bold;
+	font-size: 14px;
 }
 .standupreport-list-content {
 	-moz-box-sizing: border-box;
@@ -2676,6 +2693,22 @@ div.v-lazyloadingwrapper-loading {
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 	background-color: rgb(245, 245, 245);
+}
+.standupreport-list-content .depotComp {
+	margin: 0px;
+}
+.standupreport-list-content .depotComp .header-wrapper {
+	background-color: rgb(245, 245, 245);
+	
+}
+.standupreport-list-content .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
+	border-width: 1px 0px 1px 0px;
+}
+.standupreport-list-content .depotComp.first-report .v-csslayout-header-wrapper > .v-csslayout-margin {
+	border-width: 0px 0px 1px 0px;
+}
+.standupreport-list-content .depotComp .depotContent .v-verticallayout-margin {
+	padding: 10px 0px 0px 10px;
 }
 /* End StandUp Report List */
 
@@ -3493,7 +3526,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	box-sizing: border-box;
 	border: 1px solid rgb(169, 169, 169);
 	border-radius: 3px 3px 0px 0px;
-	background: url(grad-light-top2.png) repeat-x left top rgb(245, 245, 245);
+	background: url("icons/grad-light-top2.png") repeat-x left top rgb(245, 245, 245);
 }
 .bugdashboard-header-top {
 	border-radius: 3px 3px 0px 0px;
@@ -3509,7 +3542,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 7px 10px 7px 18px;
 	border: 1px solid rgb(169, 169, 169);
 	border-radius: 3px;
-	background: url(grad-light-top2.png) repeat-x left top rgb(228, 228, 228);
+	background: url("icons/grad-light-top2.png") repeat-x left top rgb(228, 228, 228);
 }
 .taskadd-popup {
 	-moz-box-sizing: border-box;

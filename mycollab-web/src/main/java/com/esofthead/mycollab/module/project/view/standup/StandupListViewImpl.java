@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.project.view.standup;
 import java.util.Date;
 import java.util.List;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -41,7 +43,8 @@ public class StandupListViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	private Label titleLbl;
-	private final VerticalLayout reportContent;
+	private PopupButton dateChooser;
+	// private final VerticalLayout reportContent;
 	private final StandupStyleCalendarExp standupCalendar = new StandupStyleCalendarExp();
 
 	private final BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
@@ -51,25 +54,19 @@ public class StandupListViewImpl extends AbstractView implements
 		this.setMargin(true);
 		this.constructHeader();
 
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-		layout.addStyleName("standupreport-list-content");
-		this.reportContent = new VerticalLayout();
-		this.reportContent.setWidth("100%");
-		this.reportContent.setSpacing(true);
-		layout.addComponent(this.reportContent);
-		layout.setExpandRatio(this.reportContent, 1.0f);
+		// this.reportContent = new VerticalLayout();
+		// this.reportContent.setWidth("100%");
 
-		layout.addComponent(this.standupCalendar);
-		this.addComponent(layout);
+		// layout.addComponent(this.standupCalendar);
+		// this.addComponent(layout);
 		this.addCalendarEvent();
 		this.getListReport();
 
 		this.reportInDay = new BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport>(
 				AppContext.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
-		this.reportContent.addComponent(this.reportInDay);
+		this.reportInDay.addStyleName("standupreport-list-content");
+		this.addComponent(this.reportInDay);
 	}
 
 	private RangeDateSearchField getRangeDateSearchField(final Date date1,
@@ -97,6 +94,10 @@ public class StandupListViewImpl extends AbstractView implements
 						StandupListViewImpl.this.standupCalendar
 								.setLabelTime(AppContext
 										.formatDate(selectedDate));
+						StandupListViewImpl.this.dateChooser
+								.setCaption(AppContext.formatDate(selectedDate));
+						StandupListViewImpl.this.dateChooser
+								.setPopupVisible(false);
 					}
 				});
 
@@ -185,9 +186,15 @@ public class StandupListViewImpl extends AbstractView implements
 		this.reportInDay.setSearchCriteria(searchCriteria);
 
 		if (searchCriteria.getOnDate() != null) {
-			this.titleLbl.setValue("StandUp Report for "
-					+ AppContext.formatDate(searchCriteria.getOnDate()
-							.getValue()));
+			// this.titleLbl.setValue("StandUp Report for "
+			// + AppContext.formatDate(searchCriteria.getOnDate()
+			// .getValue()));
+			this.dateChooser.setCaption(AppContext.formatDate(searchCriteria
+					.getOnDate().getValue()));
+			this.standupCalendar.getStyleCalendar().setShowingDate(
+					searchCriteria.getOnDate().getValue());
+			this.standupCalendar.setLabelTime(AppContext
+					.formatDate(searchCriteria.getOnDate().getValue()));
 		}
 	}
 
@@ -201,11 +208,23 @@ public class StandupListViewImpl extends AbstractView implements
 		header.setWidth("100%");
 		headerWrapper.addComponent(header);
 
-		this.titleLbl = new Label("StandUp Reports");
+		final HorizontalLayout headerLeft = new HorizontalLayout();
+		headerLeft.setSpacing(true);
+
+		this.titleLbl = new Label("StandUp Reports for: ");
 		this.titleLbl.addStyleName("h2");
-		header.addComponent(this.titleLbl);
-		header.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_RIGHT);
-		header.setExpandRatio(this.titleLbl, 1.0f);
+
+		headerLeft.addComponent(this.titleLbl);
+
+		this.dateChooser = new PopupButton("Choose date to view reports");
+		this.dateChooser.addComponent(this.standupCalendar);
+		headerLeft.addComponent(this.dateChooser);
+		headerLeft.setComponentAlignment(this.dateChooser,
+				Alignment.BOTTOM_RIGHT);
+
+		header.addComponent(headerLeft);
+		header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
+		header.setExpandRatio(headerLeft, 1.0f);
 
 		final Button addNewReport = new Button("Add/Edit Report",
 				new Button.ClickListener() {
@@ -233,7 +252,11 @@ public class StandupListViewImpl extends AbstractView implements
 		@Override
 		public Component generateRow(final SimpleStandupReport obj,
 				final int rowIndex) {
-			return new StandupReportDepot(obj);
+			final StandupReportDepot singleReport = new StandupReportDepot(obj);
+			if (rowIndex == 0) {
+				singleReport.addStyleName("first-report");
+			}
+			return singleReport;
 		}
 
 	}

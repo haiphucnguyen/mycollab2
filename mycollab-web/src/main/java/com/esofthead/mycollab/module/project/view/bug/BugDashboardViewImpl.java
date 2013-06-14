@@ -27,10 +27,12 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -61,9 +63,13 @@ public class BugDashboardViewImpl extends AbstractView implements
 		final Label title = new Label(
 				LocalizationHelper.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
+		final Embedded icon = new Embedded();
+		icon.setSource(new ThemeResource("icons/24/project/bug.png"));
+		header.addComponent(icon);
 		header.addComponent(title);
-		header.setExpandRatio(title, 0.5f);
+		header.setExpandRatio(title, 1.0f);
 		header.setComponentAlignment(title, Alignment.MIDDLE_LEFT);
+		header.setSpacing(true);
 
 		final Button createBugBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
@@ -176,7 +182,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		this.rightColumn = new VerticalLayout();
 		this.rightColumn.setSpacing(true);
-		
+
 		body.addComponent(this.rightColumn);
 		body.setComponentAlignment(this.rightColumn, Alignment.TOP_RIGHT);
 
@@ -187,7 +193,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 	public void displayDashboard() {
 		this.leftColumn.removeAllComponents();
 		this.rightColumn.removeAllComponents();
-		
+
 		if (ScreenSize.hasSupport1024Pixels()) {
 			this.rightColumn.setWidth("310px");
 		} else if (ScreenSize.hasSupport1280Pixels()) {

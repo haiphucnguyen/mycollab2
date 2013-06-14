@@ -92,7 +92,7 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout milestoneAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/48/project/milestone.png"));
+				new ThemeResource("icons/24/project/phase.png"));
 
 		final Layout topLayout = this.createTopPanel();
 		if (topLayout != null) {
