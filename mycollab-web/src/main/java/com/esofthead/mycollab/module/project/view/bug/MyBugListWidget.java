@@ -42,7 +42,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 			layout.setWidth("100%");
 			layout.setSpacing(false);
 			layout.addComponent(new Embedded(null, new ThemeResource(
-					"icons/22/project/bug.png")), 0, 0, 0, 1);
+					"icons/16/project/bug.png")), 0, 0, 0, 1);
 
 			ButtonLink defectLink = new ButtonLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"

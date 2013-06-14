@@ -43,7 +43,7 @@ public class DueBugWidget extends BugDisplayWidget {
 			layout.setWidth("100%");
 			layout.setSpacing(false);
 			layout.addComponent(new Embedded(null, new ThemeResource(
-					"icons/22/project/bug.png")), 0, 0, 0, 3);
+					"icons/16/project/bug.png")), 0, 0, 0, 3);
 
 			final ButtonLink defectLink = new ButtonLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"
