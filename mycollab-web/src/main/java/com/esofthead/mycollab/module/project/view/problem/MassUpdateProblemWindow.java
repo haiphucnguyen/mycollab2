@@ -85,7 +85,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 
 				return formLayout;
 			}
-//			Raised By, Assign To, Date Due, Status, Consequence, Probability
+//			Raised By, Assign To, Date Due, Status, Probability
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("raisedbyuser")) {

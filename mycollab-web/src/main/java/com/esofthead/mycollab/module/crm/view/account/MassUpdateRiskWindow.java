@@ -99,6 +99,8 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk>{
 					this.informationLayout.addComponent(field, "Date due", 1, 1);
 				} else if (propertyId.equals("probalitity")) {
 					this.informationLayout.addComponent(field, "Probality", 0, 2);
+				} else if (propertyId.equals("status")) {
+					this.informationLayout.addComponent(field, "Status", 1, 2);
 				}
 			}
 		}
