@@ -30,7 +30,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -221,13 +220,13 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 		mainLayout.addComponent(header);
 
-		final HorizontalLayout layoutExport = new HorizontalLayout();
-		layoutExport.setSpacing(true);
-		layoutExport.setWidth("100%");
-
-		final Label lbEmpty = new Label("");
-		layoutExport.addComponent(lbEmpty);
-		layoutExport.setExpandRatio(lbEmpty, 1.0f);
+		// final HorizontalLayout layoutExport = new HorizontalLayout();
+		// layoutExport.setSpacing(true);
+		// layoutExport.setWidth("100%");
+		//
+		// final Label lbEmpty = new Label("");
+		// layoutExport.addComponent(lbEmpty);
+		// layoutExport.setExpandRatio(lbEmpty, 1.0f);
 
 		final Button exportBtn = new Button("Export",
 				new Button.ClickListener() {
@@ -261,9 +260,10 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
-		layoutExport.addComponent(exportBtn);
+		header.addComponent(exportBtn);
+		header.setComponentAlignment(exportBtn, Alignment.MIDDLE_RIGHT);
 
-		mainLayout.addComponent(layoutExport);
+		// mainLayout.addComponent(layoutExport);
 		mainLayout.setWidth("100%");
 		this.addComponent(headerWrapper);
 		this.taskLists = new TaskGroupDisplayWidget();

@@ -2613,8 +2613,16 @@ div.v-lazyloadingwrapper-loading {
 .report-row-header {
 	text-align: center;
 	font-weight: bold;
-	background: url("icons/report-header.png") no-repeat center center
-		transparent;
+/* 	background: url("icons/report-header.png") no-repeat center center */
+/* 		transparent; */
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 1px 1px 0px 0px;
+	border-style: solid;
+	border-color: rgb(204, 204, 204);
+	border-radius: 0px 3px 0px 0px;
+	background-color: rgb(228, 228, 228);
 }
 
 .instructionStandupBox {
@@ -2634,6 +2642,15 @@ div.v-lazyloadingwrapper-loading {
 }
 .report-row-block {
 	height: 100%;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.report-row-block.special-col {
+	border-width: 0px 1px 0px 1px;
+	border-style: solid;
+	border-color: rgb(204, 204, 204);
+	background-color: rgb(212, 223, 239);
 }
 
 .report-row-block>.v-csslayout-margin {
@@ -3492,7 +3509,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 7px 10px 7px 18px;
 	border: 1px solid rgb(169, 169, 169);
 	border-radius: 3px;
-	background: url(grad-light-top2.png) repeat-x left top rgb(245, 245, 245);
+	background: url(grad-light-top2.png) repeat-x left top rgb(228, 228, 228);
 }
 .taskadd-popup {
 	-moz-box-sizing: border-box;

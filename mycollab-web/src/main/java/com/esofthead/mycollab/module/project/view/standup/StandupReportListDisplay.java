@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -27,32 +28,32 @@ public class StandupReportListDisplay
 			RowDisplayHandler<SimpleStandupReport> {
 
 		@Override
-		public Component generateRow(SimpleStandupReport obj, int rowIndex) {
-			VerticalLayout layout = new VerticalLayout();
+		public Component generateRow(final SimpleStandupReport obj,
+				final int rowIndex) {
+			final VerticalLayout layout = new VerticalLayout();
 			layout.setWidth("100%");
-			layout.setSpacing(true);
 			layout.setMargin(true, false, true, false);
 
-			VerticalLayout reportHeader = new VerticalLayout();
-			Label reportDateLbl = new Label(AppContext.formatDate(obj
+			final VerticalLayout reportHeader = new VerticalLayout();
+			final Label reportDateLbl = new Label(AppContext.formatDate(obj
 					.getForday()));
 			reportDateLbl.setWidth("120px");
 			reportHeader.addComponent(reportDateLbl);
 			reportHeader.addStyleName(UIConstants.REPORT_ROW_HEADER);
-			reportHeader.setWidth("100%");
+			reportHeader.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			reportHeader.setHeight("25px");
 			reportHeader.setComponentAlignment(reportDateLbl,
-					Alignment.MIDDLE_CENTER);
+					Alignment.MIDDLE_LEFT);
 
 			layout.addComponent(reportHeader);
 
-			HorizontalLayout reportContent = new HorizontalLayout();
+			final HorizontalLayout reportContent = new HorizontalLayout();
 			reportContent.setStyleName("report-row-content");
 
-			CssLayout report1 = new CssLayout();
-			String prevText = "<b>What I did in the last day/week</b><p>"
+			final CssLayout report1 = new CssLayout();
+			final String prevText = "<b>What I did in the last day/week</b><p>"
 					+ obj.getWhatlastday() + "</p>";
-			Label prevLbl = new Label(prevText);
+			final Label prevLbl = new Label(prevText);
 			prevLbl.setContentMode(Label.CONTENT_XHTML);
 			report1.addComponent(prevLbl);
 			report1.setSizeFull();
@@ -60,21 +61,22 @@ public class StandupReportListDisplay
 			reportContent.addComponent(report1);
 			reportContent.setExpandRatio(report1, 1.0f);
 
-			CssLayout report2 = new CssLayout();
-			String todayText = "<b>What I will do today/week</b><p>"
+			final CssLayout report2 = new CssLayout();
+			final String todayText = "<b>What I will do today/week</b><p>"
 					+ obj.getWhattoday() + "</p>";
-			Label todatLbl = new Label(todayText);
+			final Label todatLbl = new Label(todayText);
 			todatLbl.setContentMode(Label.CONTENT_XHTML);
 			report2.addComponent(todatLbl);
 			report2.setSizeFull();
 			report2.setStyleName(UIConstants.REPORT_ROW_BLOCK);
+			report2.addStyleName("special-col");
 			reportContent.addComponent(report2);
 			reportContent.setExpandRatio(report2, 1.0f);
 
-			CssLayout report3 = new CssLayout();
-			String issueText = "<b>Do you have roadblocks?</b><p>"
+			final CssLayout report3 = new CssLayout();
+			final String issueText = "<b>Do you have roadblocks?</b><p>"
 					+ obj.getWhatproblem() + "</p>";
-			Label issueLbl = new Label(issueText);
+			final Label issueLbl = new Label(issueText);
 			issueLbl.setContentMode(Label.CONTENT_XHTML);
 			report3.addComponent(issueLbl);
 			report3.setWidth("100%");
