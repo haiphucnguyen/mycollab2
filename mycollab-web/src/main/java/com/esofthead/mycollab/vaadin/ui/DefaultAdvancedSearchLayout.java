@@ -40,9 +40,12 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 	protected abstract void clearFields();
 
 	public ComponentContainer constructFooter() {
+		HorizontalLayout footerLayout = new HorizontalLayout();
+		footerLayout.setWidth("100%");
+		
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
-
+		
 		final Button searchBtn = new Button(
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH),
 				new Button.ClickListener() {
@@ -53,8 +56,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 					}
 				});
-
-		buttonControls.addComponent(searchBtn);
+		UiUtils.addComponent(buttonControls, searchBtn,Alignment.MIDDLE_CENTER);
 		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 		final Button clearBtn = new Button(
@@ -66,7 +68,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 					}
 				});
 		clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		buttonControls.addComponent(clearBtn);
+		UiUtils.addComponent(buttonControls, clearBtn ,Alignment.MIDDLE_CENTER);
 
 		final Button basicSearchBtn = new Button(
 				LocalizationHelper
@@ -79,15 +81,20 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 					}
 				});
 		basicSearchBtn.setStyleName("link");
-		UiUtils.addComponent(buttonControls, basicSearchBtn,
-				Alignment.MIDDLE_CENTER);
+		UiUtils.addComponent(buttonControls, basicSearchBtn,Alignment.MIDDLE_CENTER);
 
+		UiUtils.addComponent(footerLayout, buttonControls, Alignment.MIDDLE_RIGHT);
+		footerLayout.setExpandRatio(buttonControls, 2.0f);
+		
+		HorizontalLayout saveSearchLayout = new HorizontalLayout();
+		saveSearchLayout.setSpacing(true);
+		
 		Label saveSearchLbl = new Label("Save Search As");
-		UiUtils.addComponent(buttonControls, saveSearchLbl,
+		UiUtils.addComponent(saveSearchLayout, saveSearchLbl,
 				Alignment.MIDDLE_RIGHT);
 
 		final TextField saveSearchValue = new TextField();
-		UiUtils.addComponent(buttonControls, saveSearchValue,
+		UiUtils.addComponent(saveSearchLayout, saveSearchValue,
 				Alignment.MIDDLE_RIGHT);
 
 		Button saveSearchBtn = new Button("Save", new Button.ClickListener() {
@@ -111,10 +118,13 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 			}
 		});
-		UiUtils.addComponent(buttonControls, saveSearchBtn,
+		UiUtils.addComponent(saveSearchLayout, saveSearchBtn,
 				Alignment.MIDDLE_RIGHT);
 
-		return buttonControls;
-
+		
+		UiUtils.addComponent(footerLayout, saveSearchLayout, Alignment.MIDDLE_RIGHT);
+		footerLayout.setExpandRatio(saveSearchLayout, 1.0f);
+		
+		return footerLayout;
 	}
 }
