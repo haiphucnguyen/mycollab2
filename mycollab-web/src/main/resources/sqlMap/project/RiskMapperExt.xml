@@ -117,4 +117,18 @@
                 refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
         </trim>
     </select>
+    
+    <!-- Here for Mass Update -->
+    <update id="updateBySearchCriteria" parameterType="map">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.RiskMapper.massUpdateWithSessionSql" />
+
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
+    </update>
 </mapper>

@@ -124,6 +124,7 @@ public class HistoryLogComponent extends VerticalLayout {
 
                     header.addComponent(userLink);
                     header.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
+                    
                     String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
                     Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromNow(DateTimeUtils.getDateByStringWithFormat(strDate, formatW3C)));
                     header.addComponent(lbDate);

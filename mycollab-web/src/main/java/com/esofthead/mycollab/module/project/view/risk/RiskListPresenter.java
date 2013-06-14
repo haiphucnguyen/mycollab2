@@ -8,9 +8,11 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.view.account.MassUpdateRiskWindow;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
@@ -22,6 +24,7 @@ import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -34,7 +37,8 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class RiskListPresenter extends AbstractPresenter<RiskListView>
-		implements ListPresenter<RiskSearchCriteria> {
+		implements ListPresenter<RiskSearchCriteria>,
+		MassUpdatePresenter<Risk>{
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -169,6 +173,11 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
+						} else if ("massUpdate".equals(id)) {
+							MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(
+									"Mass Update Risk",
+									RiskListPresenter.this);
+							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
 				});
@@ -257,5 +266,27 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 			doSearch(searchCriteria);
 		}
 
+	}
+
+	@Override
+	public void massUpdate(Risk value) {
+		if (!isSelectAll) {
+			Collection<SimpleRisk> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleRisk item : currentDataList) {
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
+			}
+
+			if (keyList.size() > 0) {
+				riskService.massUpdateWithSession(value, keyList);
+				doSearch(searchCriteria);
+			}
+		} else {
+			riskService.updateBySearchCriteria(value,searchCriteria);
+			doSearch(searchCriteria);
+		}
 	}
 }

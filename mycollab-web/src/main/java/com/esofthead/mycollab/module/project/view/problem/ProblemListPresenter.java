@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProblemService;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -34,7 +36,8 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
-		implements ListPresenter<ProblemSearchCriteria> {
+		implements ListPresenter<ProblemSearchCriteria> ,
+		MassUpdatePresenter<Problem>{
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -168,6 +171,11 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
+						}else if ("massUpdate".equals(id)) {
+							MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
+									"Mass Update Problems",
+									ProblemListPresenter.this);
+							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
 				});
@@ -257,5 +265,27 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 			doSearch(searchCriteria);
 		}
 
+	}
+
+	@Override
+	public void massUpdate(Problem value) {
+		if (!isSelectAll) {
+			Collection<SimpleProblem> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleProblem item : currentDataList) {
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
+			}
+
+			if (keyList.size() > 0) {
+				problemService.massUpdateWithSession(value, keyList);
+				doSearch(searchCriteria);
+			}
+		} else {
+			problemService.updateBySearchCriteria(value,searchCriteria);
+			doSearch(searchCriteria);
+		}
 	}
 }

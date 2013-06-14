@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -99,17 +100,19 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(true);
-			basicSearchBody.addComponent(new Label("Name"));
-			nameField = new TextField();
+			basicSearchBody.setSpacing(false);
+			
+			nameField = createSeachSupportTextField(new TextField(),
+					"NameFieldOfBasicSearch");
+
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
-			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
-					Alignment.MIDDLE_CENTER);
-
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
+			
+			final Button searchBtn = new Button();
+			searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+			searchBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -117,19 +120,29 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 					RiskBasicSearchLayout.this.callSearchAction();
 					}
 			});
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			basicSearchBody.addComponent(searchBtn);
+			UiUtils.addComponent(basicSearchBody, searchBtn,
+					Alignment.MIDDLE_LEFT);
+			
+			myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
 
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+			cancelBtn.setStyleName(UIConstants.THEME_LINK);
+			cancelBtn.addStyleName("cancel-button");
+			cancelBtn.setWidth("55px");
+			cancelBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					nameField.setValue("");
 				}
 			});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			basicSearchBody.addComponent(clearBtn);
+			UiUtils.addComponent(basicSearchBody, cancelBtn,
+					Alignment.MIDDLE_CENTER);
 			return basicSearchBody;
 		}
 
