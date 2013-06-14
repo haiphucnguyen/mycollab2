@@ -37,20 +37,25 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 	}
 
 	abstract public static class SearchLayout<S extends SearchCriteria> extends
-			CustomLayout{
-		private GenericSearchPanel<S> searchPanel;
+			CustomLayout {
+		protected GenericSearchPanel<S> searchPanel;
+
 		public SearchLayout(GenericSearchPanel<S> parent, String layoutName) {
 			super(layoutName);
 			this.searchPanel = parent;
 		}
+
 		public void callSearchAction() {
 			S searchCriteria = fillupSearchCriteria();
 			searchPanel.notifySearchHandler(searchCriteria);
 		}
-		public TextField createSeachSupportTextField(final TextField textField,String keyField) {
-			textField.addShortcutListener(new ShortcutListener(keyField, ShortcutAction.KeyCode.ENTER, null) {
+
+		public TextField createSeachSupportTextField(final TextField textField,
+				String keyField) {
+			textField.addShortcutListener(new ShortcutListener(keyField,
+					ShortcutAction.KeyCode.ENTER, null) {
 				public void handleAction(Object sender, Object target) {
-					if(target==textField){ 
+					if (target == textField) {
 						SearchLayout.this.callSearchAction();
 					}
 				}
@@ -58,11 +63,15 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 			});
 			return textField;
 		}
+
 		@SuppressWarnings("hiding")
-		public <S extends ListSelect> S createSeachSupportComboBox(final S textField) {
-			textField.addShortcutListener(new ShortcutListener(String.valueOf(textField.hashCode()), ShortcutAction.KeyCode.ENTER, null) {
+		public <S extends ListSelect> S createSeachSupportComboBox(
+				final S textField) {
+			textField.addShortcutListener(new ShortcutListener(String
+					.valueOf(textField.hashCode()),
+					ShortcutAction.KeyCode.ENTER, null) {
 				public void handleAction(Object sender, Object target) {
-					if(target==textField){ 
+					if (target == textField) {
 						SearchLayout.this.callSearchAction();
 					}
 				}
@@ -70,7 +79,6 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 			});
 			return textField;
 		}
-		
 
 		abstract protected S fillupSearchCriteria();
 	}
@@ -85,7 +93,7 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 			this.initLayout();
 		}
 
-		private void initLayout() {
+		protected void initLayout() {
 			ComponentContainer header = constructHeader();
 			ComponentContainer body = constructBody();
 			this.addComponent(header, "basicSearchHeader");
@@ -106,7 +114,7 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 			initLayout();
 		}
 
-		public void initLayout() {
+		protected void initLayout() {
 			ComponentContainer header = constructHeader();
 			ComponentContainer body = constructBody();
 			ComponentContainer footer = constructFooter();

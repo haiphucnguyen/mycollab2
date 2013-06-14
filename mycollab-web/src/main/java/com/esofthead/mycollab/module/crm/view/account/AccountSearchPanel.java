@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -14,7 +15,8 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -33,9 +35,10 @@ import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 public class AccountSearchPanel extends
-		GenericSearchPanel<AccountSearchCriteria> {
+		DefaultGenericSearchPanel<AccountSearchCriteria> {
+
 	public class AccountAdvancedSearchLayout extends
-			AdvancedSearchLayout<AccountSearchCriteria> {
+			DefaultAdvancedSearchLayout<AccountSearchCriteria> {
 
 		private TextField nameField;
 		private TextField websiteField;
@@ -48,7 +51,7 @@ public class AccountSearchPanel extends
 		private UserListSelect userField;
 
 		public AccountAdvancedSearchLayout() {
-			super(AccountSearchPanel.this);
+			super(AccountSearchPanel.this, CrmTypeConstants.ACCOUNT);
 		}
 
 		@Override
@@ -105,62 +108,6 @@ public class AccountSearchPanel extends
 					"Assigned User", 2, 2);
 			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
-		}
-
-		@Override
-		public ComponentContainer constructFooter() {
-			final HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-
-			final Button searchBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH),
-					new Button.ClickListener() {
-						@SuppressWarnings({ "unchecked", "rawtypes" })
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							AccountAdvancedSearchLayout.this.callSearchAction();
-
-						}
-					});
-
-			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-
-			final Button clearBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR),
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							nameField.setValue("");
-							websiteField.setValue("");
-							anyPhoneField.setValue("");
-							anyMailField.setValue("");
-							anyAddressField.setValue("");
-							cityField.setValue("");
-							industryField.setValue(null);
-							typeField.setValue(null);
-							userField.setValue(null);
-						}
-					});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(clearBtn);
-
-			final Button basicSearchBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_BASIC_SEARCH),
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							createBasicSearchLayout();
-
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-			return buttonControls;
 		}
 
 		@Override
@@ -224,6 +171,19 @@ public class AccountSearchPanel extends
 			}
 
 			return searchCriteria;
+		}
+
+		@Override
+		protected void clearFields() {
+			nameField.setValue("");
+			websiteField.setValue("");
+			anyPhoneField.setValue("");
+			anyMailField.setValue("");
+			anyAddressField.setValue("");
+			cityField.setValue("");
+			industryField.setValue(null);
+			typeField.setValue(null);
+			userField.setValue(null);
 		}
 	}
 
@@ -294,7 +254,7 @@ public class AccountSearchPanel extends
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							createAdvancedSearchLayout();
+							moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -326,22 +286,6 @@ public class AccountSearchPanel extends
 		}
 	}
 
-	@Override
-	public void attach() {
-		super.attach();
-		createBasicSearchLayout();
-	}
-
-	private void createAdvancedSearchLayout() {
-		final AccountAdvancedSearchLayout layout = new AccountAdvancedSearchLayout();
-		setCompositionRoot(layout);
-	}
-
-	private void createBasicSearchLayout() {
-		final AccountBasicSearchLayout layout = new AccountBasicSearchLayout();
-		setCompositionRoot(layout);
-	}
-
 	private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
@@ -368,6 +312,16 @@ public class AccountSearchPanel extends
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
 		return layout;
+	}
+
+	@Override
+	protected BasicSearchLayout<AccountSearchCriteria> createBasicSearchLayout() {
+		return new AccountBasicSearchLayout();
+	}
+
+	@Override
+	protected AdvancedSearchLayout<AccountSearchCriteria> createAdvancedSearchLayout() {
+		return new AccountAdvancedSearchLayout();
 	}
 
 }
