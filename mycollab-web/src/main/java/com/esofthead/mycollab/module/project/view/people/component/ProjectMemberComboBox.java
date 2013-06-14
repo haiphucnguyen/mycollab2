@@ -8,8 +8,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
 
 public class ProjectMemberComboBox extends ComboBox {
@@ -19,7 +19,7 @@ public class ProjectMemberComboBox extends ComboBox {
 	@SuppressWarnings("unchecked")
 	public ProjectMemberComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
 
 		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
@@ -36,21 +36,19 @@ public class ProjectMemberComboBox extends ComboBox {
 
 	public ProjectMemberComboBox(List<SimpleProjectMember> userList) {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
 		loadUserList(userList);
 	}
 
 	private void loadUserList(List<SimpleProjectMember> memberList) {
-		BeanContainer<String, SimpleProjectMember> beanItem = new BeanContainer<String, SimpleProjectMember>(
-				SimpleProjectMember.class);
-		beanItem.setBeanIdProperty("username");
 
 		for (SimpleProjectMember member : memberList) {
-			beanItem.addBean(member);
+			this.addItem(member.getUsername());
+			this.setItemCaption(member.getUsername(),
+					member.getMemberFullName());
+			this.setItemIcon(member.getUsername(), UserAvatarControlFactory
+					.getResource(member.getUsername(), 16));
 		}
-
-		this.setContainerDataSource(beanItem);
-		this.setItemCaptionPropertyId("memberFullName");
 	}
 
 }

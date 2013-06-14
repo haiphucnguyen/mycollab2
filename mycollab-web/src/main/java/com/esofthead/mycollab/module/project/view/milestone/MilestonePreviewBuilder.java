@@ -219,7 +219,6 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			milestoneInformation.addComponent(marginLayout);
 
 			tabContainer = new TabSheet();
-			// tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 			tabContainer.setWidth("100%");
 			tabContainer.setHeight(Sizeable.SIZE_UNDEFINED, 0);
 
