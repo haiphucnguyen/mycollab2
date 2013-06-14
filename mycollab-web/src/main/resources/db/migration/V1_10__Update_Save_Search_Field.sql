@@ -1,0 +1,1 @@
+ALTER TABLE `s_save_search_result` ADD COLUMN `queryName` TEXT NOT NULL ;
