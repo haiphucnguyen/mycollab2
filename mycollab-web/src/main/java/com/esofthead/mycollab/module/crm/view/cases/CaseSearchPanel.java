@@ -297,7 +297,7 @@ public class CaseSearchPanel extends
 	}
 
 	@Override
-	protected AdvancedSearchLayout<CaseSearchCriteria> createAdvancedSearchLayout() {
+	protected SearchLayout<CaseSearchCriteria> createAdvancedSearchLayout() {
 		return new CaseAdvancedSearchLayout();
 	}
 }

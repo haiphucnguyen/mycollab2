@@ -302,7 +302,7 @@ public class CampaignSearchPanel extends
 	}
 
 	@Override
-	protected AdvancedSearchLayout<CampaignSearchCriteria> createAdvancedSearchLayout() {
+	protected SearchLayout<CampaignSearchCriteria> createAdvancedSearchLayout() {
 		return new CampaignAdvancedSearchLayout();
 	}
 }

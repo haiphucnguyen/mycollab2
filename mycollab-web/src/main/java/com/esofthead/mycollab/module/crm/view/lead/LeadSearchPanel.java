@@ -36,7 +36,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteria> {
+public class LeadSearchPanel extends
+		DefaultGenericSearchPanel<LeadSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	protected LeadSearchCriteria searchCriteria;
@@ -44,6 +45,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 	public LeadSearchPanel() {
 		searchCriteria = new LeadSearchCriteria();
 	}
+
 	private HorizontalLayout createSearchTopPanel() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
@@ -66,7 +68,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 		createAccountBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
+		createAccountBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_LEAD));
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
 		return layout;
@@ -91,15 +94,16 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 		public ComponentContainer constructBody() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
-			
-			nameField = this.createSeachSupportTextField(new TextField(), "nameFieldOfSearch");
+
+			nameField = this.createSeachSupportTextField(new TextField(),
+					"nameFieldOfSearch");
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(layout, nameField,Alignment.MIDDLE_CENTER);
-			
+			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
+
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
-				.newResource("icons/16/search_white.png"));
+					.newResource("icons/16/search_white.png"));
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
@@ -107,9 +111,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 					LeadBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			UiUtils.addComponent(layout, searchBtn,
-					Alignment.MIDDLE_LEFT);
-			
+			UiUtils.addComponent(layout, searchBtn, Alignment.MIDDLE_LEFT);
+
 			myItemCheckbox = new CheckBox(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
@@ -128,8 +131,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 					nameField.setValue("");
 				}
 			});
-			UiUtils.addComponent(layout, cancelBtn,
-					Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, cancelBtn, Alignment.MIDDLE_CENTER);
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
 
@@ -147,20 +149,19 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			searchCriteria = new LeadSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(
-					SearchField.AND, AppContext.getAccountId()));
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(nameField.getValue()
-					.toString().trim())) {
+			if (StringUtil.isNotNullOrEmpty(nameField.getValue().toString()
+					.trim())) {
 				searchCriteria.setLeadName(new StringSearchField(
 						SearchField.AND, (String) nameField.getValue()));
 			}
 
 			if (myItemCheckbox.booleanValue()) {
-				searchCriteria
-						.setAssignUsers(new SetSearchField<String>(
-								SearchField.AND,
-								new String[] { AppContext.getUsername() }));
+				searchCriteria.setAssignUsers(new SetSearchField<String>(
+						SearchField.AND, new String[] { AppContext
+								.getUsername() }));
 			} else {
 				searchCriteria.setAssignUsers(null);
 			}
@@ -168,7 +169,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 		}
 	}
 
-	private class LeadAdvancedSearchLayout extends DefaultAdvancedSearchLayout<LeadSearchCriteria> {
+	private class LeadAdvancedSearchLayout extends
+			DefaultAdvancedSearchLayout<LeadSearchCriteria> {
 
 		private TextField firstnameField;
 		private TextField lastnameField;
@@ -197,14 +199,14 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 		@Override
 		public ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4,
-			"90px");
-			
+					"90px");
+
 			if (ScreenSize.hasSupport1024Pixels()) {
-				gridLayout = new GridFormLayoutHelper(3, 4, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-				"90px");
-			} else if (ScreenSize.hasSupport1280Pixels()) {
 				gridLayout = new GridFormLayoutHelper(3, 4,
-				"90px");
+						UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+						"90px");
+			} else if (ScreenSize.hasSupport1280Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 4, "90px");
 			}
 
 			firstnameField = (TextField) gridLayout.addComponent(
@@ -233,7 +235,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 					"State", 2, 2);
 			userField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assigned User", 2, 3);
-			
+
 			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
 		}
@@ -241,28 +243,26 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 		@Override
 		protected LeadSearchCriteria fillupSearchCriteria() {
 			searchCriteria = new LeadSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(
-					SearchField.AND, AppContext.getAccountId()));
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) firstnameField
-					.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) firstnameField.getValue())) {
 				searchCriteria.setFirstname(new StringSearchField(
-						SearchField.AND, ((String) firstnameField
-								.getValue()).trim()));
+						SearchField.AND, ((String) firstnameField.getValue())
+								.trim()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) lastnameField
-					.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) lastnameField.getValue())) {
 				searchCriteria.setLastname(new StringSearchField(
-						SearchField.AND, ((String) lastnameField
-								.getValue()).trim()));
+						SearchField.AND, ((String) lastnameField.getValue())
+								.trim()));
 			}
 
 			if (StringUtil.isNotNullOrEmpty((String) accountnameField
 					.getValue())) {
 				searchCriteria.setAccountName(new StringSearchField(
-						SearchField.AND, ((String) accountnameField
-								.getValue()).trim()));
+						SearchField.AND, ((String) accountnameField.getValue())
+								.trim()));
 			}
 
 			Collection<String> statuses = (Collection<String>) statusField
@@ -272,25 +272,20 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 						SearchField.AND, statuses));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) anyEmailField
-					.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) anyEmailField.getValue())) {
 				searchCriteria.setAnyEmail(new StringSearchField(
-						SearchField.AND, (String) anyEmailField
-								.getValue()));
+						SearchField.AND, (String) anyEmailField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) anyAddressField
-					.getValue())) {
+			if (StringUtil
+					.isNotNullOrEmpty((String) anyAddressField.getValue())) {
 				searchCriteria.setAnyAddress(new StringSearchField(
-						SearchField.AND, (String) anyAddressField
-								.getValue()));
+						SearchField.AND, (String) anyAddressField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) countryField
-					.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) countryField.getValue())) {
 				searchCriteria.setAnyCountry(new StringSearchField(
-						SearchField.AND, (String) countryField
-								.getValue()));
+						SearchField.AND, (String) countryField.getValue()));
 			}
 
 			Collection<String> sources = (Collection<String>) sourceField
@@ -300,21 +295,17 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 						SearchField.AND, sources));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) anyPhoneField
-					.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) anyPhoneField.getValue())) {
 				searchCriteria.setAnyPhone(new StringSearchField(
-						SearchField.AND, (String) anyPhoneField
-								.getValue()));
+						SearchField.AND, (String) anyPhoneField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) cityField
-					.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) cityField.getValue())) {
 				searchCriteria.setAnyCity(new StringSearchField(
 						SearchField.AND, (String) cityField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) stateField
-					.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) stateField.getValue())) {
 				searchCriteria.setAnyState(new StringSearchField(
 						SearchField.AND, (String) stateField.getValue()));
 			}
@@ -322,9 +313,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 			Collection<String> users = (Collection<String>) userField
 					.getValue();
 			if (users != null && users.size() > 0) {
-				searchCriteria
-						.setAssignUsers(new SetSearchField<String>(
-								SetSearchField.AND, users));
+				searchCriteria.setAssignUsers(new SetSearchField<String>(
+						SetSearchField.AND, users));
 			}
 
 			return searchCriteria;
@@ -351,7 +341,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 		@Override
 		public void loadSaveSearchToField(String value) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 
@@ -360,8 +350,9 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 	protected BasicSearchLayout<LeadSearchCriteria> createBasicSearchLayout() {
 		return new LeadBasicSearchLayout();
 	}
+
 	@Override
-	protected AdvancedSearchLayout<LeadSearchCriteria> createAdvancedSearchLayout() {
+	protected SearchLayout<LeadSearchCriteria> createAdvancedSearchLayout() {
 		return new LeadAdvancedSearchLayout();
 	}
 }

@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.common.service.ibatis;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +9,18 @@ import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.service.DefaultService;
 
 @Service
-public class SaveSearchResultServiceImpl extends
-		DefaultCrudService<Integer, SaveSearchResultWithBLOBs> implements
-		SaveSearchResultService<SaveSearchResultCriteria> {
+public class SaveSearchResultServiceImpl
+		extends
+		DefaultService<Integer, SaveSearchResultWithBLOBs, SaveSearchResultCriteria>
+		implements SaveSearchResultService {
 
 	@Autowired
 	private SaveSearchResultMapper saveSearchResultMapper;
-	
+
 	@Autowired
 	private SaveSearchResultMapperExt saveSearchResultMapperExt;
 
@@ -29,10 +29,8 @@ public class SaveSearchResultServiceImpl extends
 		return saveSearchResultMapper;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<SaveSearchResultWithBLOBs> getListSaveSearchResult(
-			SaveSearchResultCriteria searchCriteria) {
-		return saveSearchResultMapperExt.getListSaveSearchResult(searchCriteria);
+	public ISearchableDAO<SaveSearchResultCriteria> getSearchMapper() {
+		return saveSearchResultMapperExt;
 	}
 }

@@ -293,7 +293,7 @@ public class OpportunitySearchPanel extends
 		@Override
 		public void loadSaveSearchToField(String value) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 
@@ -304,7 +304,7 @@ public class OpportunitySearchPanel extends
 	}
 
 	@Override
-	protected AdvancedSearchLayout<OpportunitySearchCriteria> createAdvancedSearchLayout() {
+	protected SearchLayout<OpportunitySearchCriteria> createAdvancedSearchLayout() {
 		return new OpportunityAdvancedSearchLayout();
 	}
 }

@@ -328,7 +328,7 @@ public class AccountSearchPanel extends
 	}
 
 	@Override
-	protected AdvancedSearchLayout<AccountSearchCriteria> createAdvancedSearchLayout() {
+	protected SearchLayout<AccountSearchCriteria> createAdvancedSearchLayout() {
 		return new AccountAdvancedSearchLayout();
 	}
 

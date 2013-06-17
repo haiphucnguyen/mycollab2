@@ -357,7 +357,7 @@ public class ContactSearchPanel extends
 		@Override
 		public void loadSaveSearchToField(String value) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 
@@ -368,7 +368,7 @@ public class ContactSearchPanel extends
 	}
 
 	@Override
-	protected AdvancedSearchLayout<ContactSearchCriteria> createAdvancedSearchLayout() {
+	protected SearchLayout<ContactSearchCriteria> createAdvancedSearchLayout() {
 		return new ContactAdvancedSearchLayout();
 	}
 }

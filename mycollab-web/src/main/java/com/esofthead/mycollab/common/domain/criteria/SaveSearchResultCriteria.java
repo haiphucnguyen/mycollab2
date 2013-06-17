@@ -10,8 +10,6 @@ public class SaveSearchResultCriteria extends SearchCriteria {
 	private StringSearchField type;
 
 	private StringSearchField createUser;
-	
-	private StringSearchField queryName;
 
 	public NumberSearchField getsAccountId() {
 		return sAccountId;
@@ -35,13 +33,5 @@ public class SaveSearchResultCriteria extends SearchCriteria {
 
 	public void setCreateUser(StringSearchField createUser) {
 		this.createUser = createUser;
-	}
-
-	public StringSearchField getQueryName() {
-		return queryName;
-	}
-
-	public void setQueryName(StringSearchField queryName) {
-		this.queryName = queryName;
 	}
 }
