@@ -353,6 +353,12 @@ public class ContactSearchPanel extends
 			cityField.setValue("");
 			leadSourceField.setValue(null);
 		}
+
+		@Override
+		public void loadSaveSearchToField(String value) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 	@SuppressWarnings("unchecked")

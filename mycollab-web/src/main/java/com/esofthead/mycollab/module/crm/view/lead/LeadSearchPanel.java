@@ -347,6 +347,12 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 			stateField.setValue("");
 			userField.setValue(null);
 		}
+
+		@Override
+		public void loadSaveSearchToField(String value) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 	@SuppressWarnings("unchecked")
