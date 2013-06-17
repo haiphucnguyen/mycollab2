@@ -220,6 +220,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						});
 				assignBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
+				assignBtn.setIcon(new ThemeResource("icons/16/assign.png"));
+
 				assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				buttonControls.addComponent(assignBtn);
 				buttonControls.setComponentAlignment(assignBtn,
@@ -237,6 +239,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 												BugReadViewImpl.this.bug));
 							}
 						});
+				editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
 				editBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
 				editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -289,6 +292,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 										});
 							}
 						});
+				deleteBtn.setIcon(new ThemeResource("icons/16/delete2.png"));
 				deleteBtn.setEnabled(CurrentProjectVariables
 						.canAccess(ProjectRolePermissionCollections.BUGS));
 				deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -476,7 +480,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						final Label lbPriority = new Label(
 								BugReadViewImpl.this.bug.getPriority());
 
-						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField(
+								false);
 						containerField.addComponentField(iconEmbedded);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);

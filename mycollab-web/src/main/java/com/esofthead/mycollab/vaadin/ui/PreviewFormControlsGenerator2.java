@@ -106,23 +106,23 @@ public class PreviewFormControlsGenerator2 {
 		HorizontalLayout editButtons = new HorizontalLayout();
 		editButtons.setSpacing(true);
 
-		Button backBtn,editBtn, deleteBtn, cloneBtn;
+		Button backBtn, editBtn, deleteBtn, cloneBtn;
 		backBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            public void buttonClick(ClickEvent event) {
-                T item = ((BeanItem<T>) previewForm.getItemDataSource())
-                        .getBean();
-                previewForm.fireCancelForm(item);
-            }
-        });
-        backBtn.setIcon(new ThemeResource("icons/16/back.png"));
-        backBtn.setDescription("Back to list");
-        backBtn.setStyleName("link");
-        layout.addComponent(backBtn);
-        layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
-        
+			public void buttonClick(ClickEvent event) {
+				T item = ((BeanItem<T>) previewForm.getItemDataSource())
+						.getBean();
+				previewForm.fireCancelForm(item);
+			}
+		});
+		backBtn.setIcon(new ThemeResource("icons/16/back.png"));
+		backBtn.setDescription("Back to list");
+		backBtn.setStyleName("link");
+		layout.addComponent(backBtn);
+		layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
+
 		editBtn = new Button(GenericForm.EDIT_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -135,6 +135,7 @@ public class PreviewFormControlsGenerator2 {
 						previewForm.fireEditForm(item);
 					}
 				});
+		editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
 		editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(editBtn);
 		editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
@@ -151,6 +152,7 @@ public class PreviewFormControlsGenerator2 {
 						previewForm.fireDeleteForm(item);
 					}
 				});
+		deleteBtn.setIcon(new ThemeResource("icons/16/delete2.png"));
 		deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
@@ -167,6 +169,7 @@ public class PreviewFormControlsGenerator2 {
 						previewForm.fireCloneForm(item);
 					}
 				});
+		cloneBtn.setIcon(new ThemeResource("icons/16/clone.png"));
 		cloneBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(cloneBtn);
 		editButtons.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);
@@ -180,7 +183,7 @@ public class PreviewFormControlsGenerator2 {
 			boolean canWrite = AppContext.canWrite(permissionItem);
 			boolean canAccess = AppContext.canAccess(permissionItem);
 
-			 backBtn.setEnabled(canRead);
+			backBtn.setEnabled(canRead);
 			editBtn.setEnabled(canWrite);
 			cloneBtn.setEnabled(canWrite);
 			deleteBtn.setEnabled(canAccess);
