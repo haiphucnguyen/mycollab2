@@ -36,28 +36,39 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				final Component uiContext) {
 			if (propertyId.equals("startdate")) {
 				return new DefaultFormViewFieldFactory.FormDateViewField(
-						milestone.getStartdate());
+						MilestonePreviewBuilder.this.milestone.getStartdate());
 			} else if (propertyId.equals("enddate")) {
 				return new DefaultFormViewFieldFactory.FormDateViewField(
-						milestone.getEnddate());
+						MilestonePreviewBuilder.this.milestone.getEnddate());
 			} else if (propertyId.equals("owner")) {
-				return new ProjectUserFormLinkField(milestone.getOwner(),
-						milestone.getOwnerFullName());
+				return new ProjectUserFormLinkField(
+						MilestonePreviewBuilder.this.milestone.getOwner(),
+						MilestonePreviewBuilder.this.milestone
+								.getOwnerFullName());
 			} else if (propertyId.equals("description")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						milestone.getDescription(), Label.CONTENT_XHTML);
+						MilestonePreviewBuilder.this.milestone.getDescription(),
+						Label.CONTENT_XHTML);
 			} else if (propertyId.equals("numOpenTasks")) {
 				final FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
 
 				final ProgressIndicator progressTask = new ProgressIndicator(
-						new Float((float) (milestone.getNumTasks() - milestone
-								.getNumOpenTasks()) / milestone.getNumTasks()));
+						new Float(
+								(float) (MilestonePreviewBuilder.this.milestone
+										.getNumTasks() - MilestonePreviewBuilder.this.milestone
+										.getNumOpenTasks())
+										/ MilestonePreviewBuilder.this.milestone
+												.getNumTasks()));
 				progressTask.setPollingInterval(1000000000);
 				progressTask.setWidth("120px");
 				taskComp.addComponentField(progressTask);
-				final Label taskNumber = new Label("("
-						+ milestone.getNumOpenTasks() + "/"
-						+ milestone.getNumTasks() + ")");
+				final Label taskNumber = new Label(
+						"("
+								+ MilestonePreviewBuilder.this.milestone
+										.getNumOpenTasks()
+								+ "/"
+								+ MilestonePreviewBuilder.this.milestone
+										.getNumTasks() + ")");
 				taskNumber.setWidth("90px");
 				taskComp.addComponentField(taskNumber);
 				return taskComp;
@@ -65,14 +76,22 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				final FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
 
 				final ProgressIndicator progressBug = new ProgressIndicator(
-						new Float((float) (milestone.getNumBugs() - milestone
-								.getNumOpenBugs()) / milestone.getNumBugs()));
+						new Float(
+								(float) (MilestonePreviewBuilder.this.milestone
+										.getNumBugs() - MilestonePreviewBuilder.this.milestone
+										.getNumOpenBugs())
+										/ MilestonePreviewBuilder.this.milestone
+												.getNumBugs()));
 				progressBug.setPollingInterval(1000000000);
 				progressBug.setWidth("120px");
 				bugComp.addComponentField(progressBug);
-				final Label bugNumber = new Label("("
-						+ milestone.getNumOpenBugs() + "/"
-						+ milestone.getNumBugs() + ")");
+				final Label bugNumber = new Label(
+						"("
+								+ MilestonePreviewBuilder.this.milestone
+										.getNumOpenBugs()
+								+ "/"
+								+ MilestonePreviewBuilder.this.milestone
+										.getNumBugs() + ")");
 				bugNumber.setWidth("90px");
 				bugComp.addComponentField(bugNumber);
 				return bugComp;
@@ -87,7 +106,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(milestone.getName());
+				super(PrintView.this.milestone.getName());
 			}
 
 			@Override
@@ -95,11 +114,15 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.setWidth("100%");
 
-				relatedItemsPanel.addComponent(associateTaskGroupListComp);
-				relatedItemsPanel.addComponent(associateBugListComp);
-				associateCommentListComp = new CommentDisplay(true);
-				associateCommentListComp.setMargin(true);
-				relatedItemsPanel.addComponent(associateCommentListComp);
+				relatedItemsPanel
+						.addComponent(PrintView.this.associateTaskGroupListComp);
+				relatedItemsPanel
+						.addComponent(PrintView.this.associateBugListComp);
+				PrintView.this.associateCommentListComp = new CommentDisplay(
+						true);
+				PrintView.this.associateCommentListComp.setMargin(true);
+				relatedItemsPanel
+						.addComponent(PrintView.this.associateCommentListComp);
 
 				return relatedItemsPanel;
 			}
@@ -113,19 +136,19 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<Milestone>() {
+			this.previewForm = new AdvancedPreviewBeanForm<Milestone>() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					setFormLayoutFactory(new FormLayoutFactory());
-					setFormFieldFactory(new MilestoneFormFieldFactory());
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new MilestoneFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 				}
 			};
-			initRelatedComponents();
+			this.initRelatedComponents();
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 		}
 	}
 
@@ -137,16 +160,14 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 		private final AddViewLayout milestoneAddLayout;
 
 		public ReadView() {
-			milestoneAddLayout = new AddViewLayout("",
-					MyCollabResource
-				.newResource(
-					"icons/48/project/milestone.png"));
-			milestoneAddLayout.addStyleName(UIConstants.PREVIEW);
-			this.addComponent(milestoneAddLayout);
+			this.milestoneAddLayout = new AddViewLayout("",
+					MyCollabResource.newResource("icons/24/project/phase.png"));
+			this.milestoneAddLayout.addStyleName(UIConstants.PREVIEW);
+			this.addComponent(this.milestoneAddLayout);
 
-			initRelatedComponents();
+			this.initRelatedComponents();
 
-			previewForm = new AdvancedPreviewBeanForm<Milestone>() {
+			this.previewForm = new AdvancedPreviewBeanForm<Milestone>() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -155,15 +176,16 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 					final Window window = new Window("Window to Print");
 
 					final MilestonePreviewBuilder printView = new MilestonePreviewBuilder.PrintView();
-					printView.previewItem(milestone);
+					printView.previewItem(ReadView.this.milestone);
 					window.addComponent(printView);
 
 					// Add the printing window as a new application-level window
-					getApplication().addWindow(window);
+					this.getApplication().addWindow(window);
 
 					// Open it as a popup window with no decorations
-					getWindow().open(new ExternalResource(window.getURL()),
-							"_blank", 1100, 200, // Width and height
+					this.getWindow().open(
+							new ExternalResource(window.getURL()), "_blank",
+							1100, 200, // Width and height
 							Window.BORDER_NONE); // No decorations
 
 					// Print automatically when the window opens.
@@ -176,10 +198,11 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					setFormLayoutFactory(new MilestoneFormLayoutFactory.MilestoneInformationLayout());
-					setFormFieldFactory(new MilestoneFormFieldFactory());
+					this.setFormLayoutFactory(new MilestoneFormLayoutFactory.MilestoneInformationLayout());
+					this.setFormFieldFactory(new MilestoneFormFieldFactory());
 					super.setItemDataSource(newDataSource);
-					milestoneAddLayout.setTitle(milestone.getName());
+					ReadView.this.milestoneAddLayout
+							.setTitle(ReadView.this.milestone.getName());
 				}
 
 				@Override
@@ -188,31 +211,32 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				}
 			};
 
-			milestoneInformation = new VerticalLayout();
-			milestoneInformation.setMargin(false);
+			this.milestoneInformation = new VerticalLayout();
+			this.milestoneInformation.setMargin(false);
 			final HorizontalLayout actionControls = new ProjectPreviewFormControlsGenerator<Milestone>(
-					previewForm).createButtonControls();
+					this.previewForm).createButtonControls();
 
 			final VerticalLayout marginLayout = new VerticalLayout();
 			marginLayout.setMargin(false);
-			milestoneAddLayout.addTopControls(actionControls);
-			marginLayout.addComponent(previewForm);
+			this.milestoneAddLayout.addTopControls(actionControls);
+			marginLayout.addComponent(this.previewForm);
 
-			milestoneInformation.addComponent(marginLayout);
+			this.milestoneInformation.addComponent(marginLayout);
 
-			tabContainer = new TabSheet();
-			tabContainer.setWidth("100%");
-			tabContainer.setHeight(Sizeable.SIZE_UNDEFINED, 0);
+			this.tabContainer = new TabSheet();
+			this.tabContainer.setWidth("100%");
+			this.tabContainer.setHeight(Sizeable.SIZE_UNDEFINED, 0);
 
-			associateCommentListComp = new CommentDisplay(true);
-			associateCommentListComp.setMargin(true);
-			tabContainer.addTab(associateCommentListComp, "Comments");
-			tabContainer.addTab(associateTaskGroupListComp, "Related Tasks");
-			tabContainer.addTab(associateBugListComp, "Related Bugs");
+			this.associateCommentListComp = new CommentDisplay(true);
+			this.associateCommentListComp.setMargin(true);
+			this.tabContainer.addTab(this.associateCommentListComp, "Comments");
+			this.tabContainer.addTab(this.associateTaskGroupListComp,
+					"Related Tasks");
+			this.tabContainer.addTab(this.associateBugListComp, "Related Bugs");
 
-			milestoneInformation.addComponent(tabContainer);
+			this.milestoneInformation.addComponent(this.tabContainer);
 
-			milestoneAddLayout.addBody(milestoneInformation);
+			this.milestoneAddLayout.addBody(this.milestoneInformation);
 		}
 	}
 
@@ -227,37 +251,38 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 	protected MilestoneTaskGroupListComp associateTaskGroupListComp;
 
 	private void displayBugs() {
-		associateBugListComp.displayBugs(milestone);
+		this.associateBugListComp.displayBugs(this.milestone);
 	}
 
 	private void displayComments() {
-		associateCommentListComp.loadComments(
-				CommentTypeConstants.PRJ_MILESTONE, milestone.getId());
+		this.associateCommentListComp.loadComments(
+				CommentTypeConstants.PRJ_MILESTONE, this.milestone.getId());
 	}
 
 	private void displayTaskGroups() {
-		associateTaskGroupListComp.displayTakLists(milestone);
+		this.associateTaskGroupListComp.displayTakLists(this.milestone);
 	}
 
 	public SimpleMilestone getMilestone() {
-		return milestone;
+		return this.milestone;
 	}
 
 	public AdvancedPreviewBeanForm<Milestone> getPreviewForm() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	protected void initRelatedComponents() {
-		associateBugListComp = new MilestoneBugListComp();
-		associateTaskGroupListComp = new MilestoneTaskGroupListComp();
+		this.associateBugListComp = new MilestoneBugListComp();
+		this.associateTaskGroupListComp = new MilestoneTaskGroupListComp();
 	}
 
 	public void previewItem(final SimpleMilestone item) {
-		milestone = item;
-		previewForm.setItemDataSource(new BeanItem<Milestone>(milestone));
+		this.milestone = item;
+		this.previewForm.setItemDataSource(new BeanItem<Milestone>(
+				this.milestone));
 
-		displayComments();
-		displayTaskGroups();
-		displayBugs();
+		this.displayComments();
+		this.displayTaskGroups();
+		this.displayBugs();
 	}
 }
