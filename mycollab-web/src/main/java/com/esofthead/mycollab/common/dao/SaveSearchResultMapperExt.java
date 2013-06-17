@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.common.dao;
 
+import java.util.List;
 
-public interface SaveSearchResultMapperExt extends SaveSearchResultMapper{
-	public abstract String[] getListQueryName(String type);
-	public abstract String getQueryTextByName(String name, String type);
+import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+
+public interface SaveSearchResultMapperExt<S extends SearchCriteria> extends SaveSearchResultMapper{
+	public abstract List<SaveSearchResultWithBLOBs> getListSaveSearchResult(S searchCriteria);
 }
