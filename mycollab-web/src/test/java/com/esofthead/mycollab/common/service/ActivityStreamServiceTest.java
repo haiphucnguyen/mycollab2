@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/service-test-context.xml" })
+@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class ActivityStreamServiceTest extends ServiceTest {
 
 	@Autowired

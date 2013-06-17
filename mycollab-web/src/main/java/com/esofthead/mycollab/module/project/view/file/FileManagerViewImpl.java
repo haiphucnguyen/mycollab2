@@ -30,15 +30,15 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
+import com.vaadin.ui.TreeTable;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 @ViewComponent
@@ -46,7 +46,7 @@ public class FileManagerViewImpl extends AbstractView implements
 		FileManagerView {
 	private static final long serialVersionUID = 1L;
 
-	private Tree folderTree;
+	private TreeTable folderTree;
 	private ResourceTableDisplay resourceTable;
 	private String projectPath;
 
@@ -55,6 +55,7 @@ public class FileManagerViewImpl extends AbstractView implements
 	private ResourceService resourceService;
 
 	public FileManagerViewImpl() {
+		this.setWidth("100%");
 		resourceService = AppContext.getSpringBean(ResourceService.class);
 
 		HorizontalLayout menuBar = new HorizontalLayout();
@@ -111,13 +112,18 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		this.addComponent(menuBar);
 
-		HorizontalSplitPanel resourceContainer = new HorizontalSplitPanel();
+		HorizontalLayout resourceContainer = new HorizontalLayout();
 		resourceContainer.setSizeFull();
 
-		folderTree = new Tree();
+		folderTree = new TreeTable();
 		folderTree.setMultiSelect(false);
 		folderTree.setImmediate(true);
-		folderTree.setItemCaptionMode(Tree.ITEM_CAPTION_MODE_EXPLICIT);
+		folderTree.addContainerProperty("Name", String.class, "");
+		folderTree.addContainerProperty("Date Modified", String.class, "");
+		folderTree.setColumnWidth("Date Modified",
+				UIConstants.TABLE_DATE_TIME_WIDTH);
+		folderTree.setColumnExpandRatio("Name", 1.0f);
+		folderTree.setWidth("300px");
 
 		resourceContainer.addComponent(folderTree);
 
@@ -136,7 +142,12 @@ public class FileManagerViewImpl extends AbstractView implements
 				if (subFolders != null) {
 					for (Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
-						folderTree.addItem(subFolder);
+						folderTree.addItem(
+								new Object[] {
+										subFolder.getName(),
+										AppContext.formatDateTime(subFolder
+												.getCreated().getTime()) },
+								subFolder);
 						folderTree.setItemIcon(subFolder, new ThemeResource(
 								"icons/16/ecm/folder_close.png"));
 						folderTree.setItemCaption(subFolder,
@@ -175,8 +186,9 @@ public class FileManagerViewImpl extends AbstractView implements
 		});
 
 		resourceTable = new ResourceTableDisplay();
-		resourceTable.setWidth("800px");
+		resourceTable.setWidth("100%");
 		resourceContainer.addComponent(resourceTable);
+		resourceContainer.setExpandRatio(resourceTable, 1.0f);
 
 		this.addComponent(resourceContainer);
 	}
@@ -200,12 +212,15 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			for (Folder subFolder : childs) {
 				baseFolder.addChild(subFolder);
-				folderTree.addItem(subFolder);
+				folderTree.addItem(
+						new Object[] {
+								subFolder.getName(),
+								AppContext.formatDateTime(subFolder
+										.getCreated().getTime()) }, subFolder);
 				folderTree.setItemCaption(subFolder, subFolder.getName());
 				folderTree.setParent(subFolder, baseFolder);
 				if (foldername.equals(subFolder.getName())) {
-					folderTree.expandItem(subFolder);
-					folderTree.setValue(subFolder);
+					folderTree.setCollapsed(subFolder, false);
 					displayResourcesInTable(subFolder);
 					baseFolder = subFolder;
 				} else {
@@ -216,7 +231,7 @@ public class FileManagerViewImpl extends AbstractView implements
 		} else {
 			for (Folder subFolder : childs) {
 				if (foldername.equals(subFolder.getName())) {
-					folderTree.expandItem(subFolder);
+					folderTree.setCollapsed(subFolder, false);
 					folderTree.setValue(subFolder);
 					displayResourcesInTable(subFolder);
 					baseFolder = subFolder;
@@ -234,11 +249,12 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		baseFolder = new Folder();
 		baseFolder.setPath(projectPath);
-		folderTree.addItem(baseFolder);
+		folderTree.addItem(new Object[] { baseFolder.getName(), "" },
+				baseFolder);
 		folderTree.setItemCaption(baseFolder, CurrentProjectVariables
 				.getProject().getName());
 
-		folderTree.expandItem(baseFolder);
+		folderTree.setCollapsed(baseFolder, false);
 		displayResourcesInTable(baseFolder);
 	}
 
@@ -290,12 +306,19 @@ public class FileManagerViewImpl extends AbstractView implements
 												folderVal,
 												AppContext.getUsername());
 								baseFolder.addChild(newFolder);
-								folderTree.addItem(newFolder);
+								folderTree.addItem(
+										new Object[] {
+												newFolder.getName(),
+												AppContext
+														.formatDateTime(newFolder
+																.getCreated()
+																.getTime()) },
+										newFolder);
 								folderTree.setItemCaption(newFolder,
 										newFolder.getName());
 								folderTree.setParent(newFolder, baseFolder);
-								if (!folderTree.isExpanded(baseFolder)) {
-									folderTree.expandItem(baseFolder);
+								if (folderTree.isCollapsed(baseFolder)) {
+									folderTree.setCollapsed(baseFolder, false);
 								}
 								AddNewFolderWindow.this.close();
 
@@ -362,6 +385,7 @@ public class FileManagerViewImpl extends AbstractView implements
 						resourceService.saveContent(content, contentStream);
 						UploadContentWindow.this.close();
 						displayResourcesInTable(baseFolder);
+						UploadContentWindow.this.close();
 					} else {
 						AppContext
 								.getApplication()
