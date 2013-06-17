@@ -7,9 +7,9 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -30,7 +30,8 @@ public class MassUpdateCampaignWindow extends
 
 		this.setWidth("1000px");
 
-		this.setIcon(new ThemeResource("icons/18/crm/campaign.png"));
+		this.setIcon(MyCollabResource
+				.newResource("icons/18/crm/campaign.png"));
 
 		this.campaginAddLayout = new ReadViewLayout(null, false);
 

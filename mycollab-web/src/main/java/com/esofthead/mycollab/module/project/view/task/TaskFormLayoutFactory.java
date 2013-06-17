@@ -11,7 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -36,7 +36,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout taskAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/24/project/task.png"));
+				MyCollabResource.newResource("icons/24/project/task.png"));
 
 		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
 			taskAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));

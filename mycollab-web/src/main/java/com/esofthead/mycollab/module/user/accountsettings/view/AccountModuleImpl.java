@@ -12,9 +12,9 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -120,7 +120,8 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 	private static class MenuButton extends Button {
 		public MenuButton(String caption, String iconResource) {
 			super(caption);
-			this.setIcon(new ThemeResource("icons/22/user/" + iconResource));
+			this.setIcon(MyCollabResource
+				.newResource("icons/22/user/" + iconResource));
 			this.setStyleName("link");
 		}
 	}

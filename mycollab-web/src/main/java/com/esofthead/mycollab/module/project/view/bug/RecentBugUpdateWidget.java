@@ -20,7 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -43,8 +43,10 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 			final GridLayout layout = new GridLayout(2, 4);
 			layout.setWidth("100%");
 			layout.setSpacing(false);
-			layout.addComponent(new Embedded(null, new ThemeResource(
-					"icons/16/project/bug.png")), 0, 0, 0, 1);
+			layout.addComponent(
+					new Embedded(null, MyCollabResource
+							.newResource("icons/16/project/bug.png")), 0, 0, 0,
+					1);
 
 			final ButtonLink defectLink = new ButtonLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"

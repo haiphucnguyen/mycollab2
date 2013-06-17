@@ -16,8 +16,8 @@ import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -87,7 +87,8 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 									new AttachmentPreviewWindow(previewResource));
 				}
 			});
-			previewBtn.setIcon(new ThemeResource("icons/16/search.png"));
+			previewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/search.png"));
 			previewBtn.setStyleName("link");
 			attachmentLayout.addComponent(previewBtn);
 		}
@@ -131,7 +132,8 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 			}
 		});
-		trashBtn.setIcon(new ThemeResource("icons/16/trash.png"));
+		trashBtn.setIcon(MyCollabResource
+				.newResource("icons/16/trash.png"));
 		trashBtn.setStyleName("link");
 		attachmentLayout.addComponent(trashBtn);
 
@@ -146,7 +148,8 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 						.open(downloadResource, "_self");
 			}
 		});
-		downloadBtn.setIcon(new ThemeResource("icons/16/download.png"));
+		downloadBtn.setIcon(MyCollabResource
+				.newResource("icons/16/download.png"));
 		downloadBtn.setStyleName("link");
 		attachmentLayout.addComponent(downloadBtn);
 		return attachmentLayout;

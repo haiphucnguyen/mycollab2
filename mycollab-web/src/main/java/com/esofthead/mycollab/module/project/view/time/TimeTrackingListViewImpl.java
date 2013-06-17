@@ -25,9 +25,9 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -90,7 +90,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 		this.exportBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
-		this.exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
+		this.exportBtn.setIcon(MyCollabResource
+				.newResource("icons/16/export_excel.png"));
 		this.exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		headerLayout.addComponent(this.exportBtn);
 		this.exportBtn.addListener(new Button.ClickListener() {
@@ -195,8 +196,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 																			.getTypeid()));
 										}
 									});
-							b.setIcon(new ThemeResource(
-									"icons/16/project/bug.png"));
+							b.setIcon(MyCollabResource
+									.newResource("icons/16/project/bug.png"));
 
 							if (BugStatusConstants.CLOSE.equals(itemLogging
 									.getStatus())) {
@@ -225,8 +226,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 																			.getTypeid()));
 										}
 									});
-							b.setIcon(new ThemeResource(
-									"icons/16/project/task.png"));
+							b.setIcon(MyCollabResource
+									.newResource("icons/16/project/task.png"));
 
 							if (itemLogging.getPercentageComplete() != null
 									&& 100d == itemLogging

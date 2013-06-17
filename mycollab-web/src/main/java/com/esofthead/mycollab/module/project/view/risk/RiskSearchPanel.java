@@ -17,7 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -70,7 +70,8 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 					}
 				});
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.RISKS));
 
@@ -101,28 +102,29 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		public ComponentContainer constructBody() {
 			HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
-			
+
 			nameField = createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
 
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
-			
+
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search_white.png"));
 			searchBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void buttonClick(ClickEvent event) {
 					RiskBasicSearchLayout.this.callSearchAction();
-					}
+				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
-			
+
 			myItemCheckbox = new CheckBox("My Items");
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
@@ -149,8 +151,8 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			searchCriteria = new RiskSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(
-					SearchField.AND, project.getId()));
+			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+					project.getId()));
 			searchCriteria.setRiskname(new StringSearchField(nameField
 					.getValue().toString().trim()));
 

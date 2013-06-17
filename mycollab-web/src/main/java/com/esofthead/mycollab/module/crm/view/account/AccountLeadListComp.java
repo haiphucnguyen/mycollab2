@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -57,7 +57,8 @@ public class AccountLeadListComp extends
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Lead");
-		controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
+		controlsBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecordGreen.png"));
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
 		controlsBtn
@@ -86,7 +87,7 @@ public class AccountLeadListComp extends
 						controlsBtn.setPopupVisible(false);
 					}
 				});
-		selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
+		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);
 
@@ -147,7 +148,8 @@ public class AccountLeadListComp extends
 							}
 						});
 				editBtn.setStyleName("link");
-				editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+				editBtn.setIcon(MyCollabResource
+						.newResource("icons/16/edit.png"));
 				controlLayout.addComponent(editBtn);
 
 				final Button deleteBtn = new Button(null,
@@ -196,7 +198,8 @@ public class AccountLeadListComp extends
 							}
 						});
 				deleteBtn.setStyleName("link");
-				deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
+				deleteBtn.setIcon(MyCollabResource
+						.newResource("icons/16/delete.png"));
 				controlLayout.addComponent(deleteBtn);
 				return controlLayout;
 			}

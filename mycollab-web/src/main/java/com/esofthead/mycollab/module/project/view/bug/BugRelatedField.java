@@ -26,9 +26,10 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
@@ -82,8 +83,8 @@ public class BugRelatedField extends CustomField {
 		layoutAdd.addComponent(itemField);
 		layoutAdd.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded(null, new ThemeResource(
-				"icons/16/browseItem.png"));
+		browseBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/browseItem.png"));
 		browseBtn.addListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -96,8 +97,8 @@ public class BugRelatedField extends CustomField {
 		layoutAdd.addComponent(browseBtn);
 		layoutAdd.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		clearBtn = new Embedded(null, new ThemeResource(
-				"icons/16/clearItem.png"));
+		clearBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -121,7 +122,8 @@ public class BugRelatedField extends CustomField {
 
 		btnRelate = new Button("Relate");
 		btnRelate.setStyleName(UIConstants.THEME_BLUE_LINK);
-		btnRelate.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		btnRelate.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 
 		ProjectMemberService memberService = AppContext
 				.getSpringBean(ProjectMemberService.class);
@@ -130,10 +132,13 @@ public class BugRelatedField extends CustomField {
 				CurrentProjectVariables.getProjectId());
 
 		if (member != null) {
-			btnRelate.setEnabled((member.getIsadmin()
-					|| (AppContext.getUsername().equals(bean.getAssignuser()))
-					|| (AppContext.getUsername().equals(bean.getLogby()))) && CurrentProjectVariables
-					.canWrite(ProjectRolePermissionCollections.BUGS));
+			btnRelate
+					.setEnabled((member.getIsadmin()
+							|| (AppContext.getUsername().equals(bean
+									.getAssignuser())) || (AppContext
+								.getUsername().equals(bean.getLogby())))
+							&& CurrentProjectVariables
+									.canWrite(ProjectRolePermissionCollections.BUGS));
 		}
 
 		btnRelate.addListener(new Button.ClickListener() {
@@ -141,7 +146,8 @@ public class BugRelatedField extends CustomField {
 			@Override
 			public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
 				if (!itemField.getValue().toString().trim().equals("")
-						&& relatedBean != null && !relatedBean.getSummary().equals(bean.getSummary())) {
+						&& relatedBean != null
+						&& !relatedBean.getSummary().equals(bean.getSummary())) {
 					SimpleRelatedBug relatedBug = new SimpleRelatedBug();
 					relatedBug.setBugid(bean.getId());
 					relatedBug.setRelatedid(relatedBean.getId());
@@ -149,28 +155,43 @@ public class BugRelatedField extends CustomField {
 					relatedBug.setComment(txtComment.getValue().toString());
 					relatedBugService.saveWithSession(relatedBug,
 							AppContext.getUsername());
-					
+
 					SimpleRelatedBug oppositeRelation = new SimpleRelatedBug();
 					oppositeRelation.setBugid(relatedBean.getId());
 					oppositeRelation.setRelatedid(bean.getId());
-					oppositeRelation.setComment(txtComment.getValue().toString());
-					
-					if (comboRelation.getValue().toString().equals(BugRelationConstants.PARENT)) {
-						oppositeRelation.setRelatetype(BugRelationConstants.CHILD);
-					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.CHILD)) {
-						oppositeRelation.setRelatetype(BugRelationConstants.PARENT);
-					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.RELATED)) {
-						oppositeRelation.setRelatetype(BugRelationConstants.RELATED);
-					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.BEFORE)) {
-						oppositeRelation.setRelatetype(BugRelationConstants.AFTER);
-					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.AFTER)) {
-						oppositeRelation.setRelatetype(BugRelationConstants.BEFORE);
-					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.DUPLICATED)) {
-						oppositeRelation.setRelatetype(BugRelationConstants.DUPLICATED);
-						BugService bugService = AppContext.getSpringBean(BugService.class);
+					oppositeRelation.setComment(txtComment.getValue()
+							.toString());
+
+					if (comboRelation.getValue().toString()
+							.equals(BugRelationConstants.PARENT)) {
+						oppositeRelation
+								.setRelatetype(BugRelationConstants.CHILD);
+					} else if (comboRelation.getValue().toString()
+							.equals(BugRelationConstants.CHILD)) {
+						oppositeRelation
+								.setRelatetype(BugRelationConstants.PARENT);
+					} else if (comboRelation.getValue().toString()
+							.equals(BugRelationConstants.RELATED)) {
+						oppositeRelation
+								.setRelatetype(BugRelationConstants.RELATED);
+					} else if (comboRelation.getValue().toString()
+							.equals(BugRelationConstants.BEFORE)) {
+						oppositeRelation
+								.setRelatetype(BugRelationConstants.AFTER);
+					} else if (comboRelation.getValue().toString()
+							.equals(BugRelationConstants.AFTER)) {
+						oppositeRelation
+								.setRelatetype(BugRelationConstants.BEFORE);
+					} else if (comboRelation.getValue().toString()
+							.equals(BugRelationConstants.DUPLICATED)) {
+						oppositeRelation
+								.setRelatetype(BugRelationConstants.DUPLICATED);
+						BugService bugService = AppContext
+								.getSpringBean(BugService.class);
 						bean.setStatus(BugStatusConstants.WONFIX);
 						bean.setResolution(BugResolutionConstants.DUPLICATE);
-						bugService.updateWithSession(bean, AppContext.getUsername());
+						bugService.updateWithSession(bean,
+								AppContext.getUsername());
 					}
 					relatedBugService.saveWithSession(oppositeRelation,
 							AppContext.getUsername());
@@ -244,35 +265,34 @@ public class BugRelatedField extends CustomField {
 						});
 
 				if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
-					ThemeResource iconPriority = new ThemeResource(
-							BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+					Resource iconPriority = MyCollabResource
+							.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 
 					if (BugPriorityStatusConstants.PRIORITY_BLOCKER.equals(bug
 							.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_CRITICAL
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_MAJOR
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_MINOR
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_TRIVIAL
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
 					}
 
 					b.setIcon(iconPriority);
 				}
 
-				
 				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
@@ -298,41 +318,51 @@ public class BugRelatedField extends CustomField {
 					@Override
 					public void buttonClick(
 							com.vaadin.ui.Button.ClickEvent event) {
-						ConfirmDialog
-								.show(AppContext.getApplication()
-										.getMainWindow(),
-										"Please Confirm:",
-										"Are you sure to remove this relationship?",
-										"Yes", "No",
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
+						ConfirmDialog.show(AppContext.getApplication()
+								.getMainWindow(), "Please Confirm:",
+								"Are you sure to remove this relationship?",
+								"Yes", "No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-											@Override
-											public void onClose(
-													ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													
-													BugRelatedSearchCriteria relateBugIdCriteria = new BugRelatedSearchCriteria();
-													relateBugIdCriteria.setBugId(new NumberSearchField(relatedItem.getBugid()));
-													relateBugIdCriteria.setRelatedId(new NumberSearchField(relatedItem.getRelatedid()));
-													
-													relatedBugService.removeByCriteria(relateBugIdCriteria);
-													
-													BugRelatedSearchCriteria relateIdCriteria = new BugRelatedSearchCriteria();
-													relateIdCriteria.setBugId(new NumberSearchField(relatedItem.getRelatedid()));
-													relateIdCriteria.setRelatedId(new NumberSearchField(relatedItem.getBugid()));
-													
-													relatedBugService.removeByCriteria(relateIdCriteria);
-													
-													BugRelatedField.this
-															.setCriteria();
-												}
-											}
-										});
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+
+											BugRelatedSearchCriteria relateBugIdCriteria = new BugRelatedSearchCriteria();
+											relateBugIdCriteria
+													.setBugId(new NumberSearchField(
+															relatedItem
+																	.getBugid()));
+											relateBugIdCriteria
+													.setRelatedId(new NumberSearchField(
+															relatedItem
+																	.getRelatedid()));
+
+											relatedBugService
+													.removeByCriteria(relateBugIdCriteria);
+
+											BugRelatedSearchCriteria relateIdCriteria = new BugRelatedSearchCriteria();
+											relateIdCriteria
+													.setBugId(new NumberSearchField(
+															relatedItem
+																	.getRelatedid()));
+											relateIdCriteria
+													.setRelatedId(new NumberSearchField(
+															relatedItem
+																	.getBugid()));
+
+											relatedBugService
+													.removeByCriteria(relateIdCriteria);
+
+											BugRelatedField.this.setCriteria();
+										}
+									}
+								});
 					}
 				});
 				deleteBtn.setStyleName("link");
-				deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
+				deleteBtn.setIcon(MyCollabResource
+						.newResource("icons/16/delete.png"));
 				relatedItem.setExtraData(deleteBtn);
 
 				ProjectMemberService memberService = AppContext

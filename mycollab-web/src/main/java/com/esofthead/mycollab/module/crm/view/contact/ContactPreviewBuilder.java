@@ -17,12 +17,12 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -139,8 +139,8 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 		private ReadViewLayout contactAddLayout;
 
 		public ReadView() {
-			contactAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/22/crm/contact.png"));
+			contactAddLayout = new ReadViewLayout(
+					MyCollabResource.newResource("icons/22/crm/contact.png"));
 			this.addComponent(contactAddLayout);
 
 			initRelatedComponent();
@@ -148,7 +148,8 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<Contact>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout(true));
+					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout(
+							true));
 					this.setFormFieldFactory(new ContactFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					contactAddLayout.setTitle(contact.getContactName());
@@ -188,32 +189,32 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				}
 			};
 
-			final Layout optionalActionControls = PreviewFormControlsGenerator2 
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_CONTACT);
-			
+
 			contactAddLayout.addControlButtons(optionalActionControls);
-			
+
 			contactInformation = new VerticalLayout();
 			contactInformation.addStyleName("main-info");
-			
+
 			final Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_CONTACT);
 			actionControls.addStyleName("control-buttons");
 			contactInformation.addComponent(actionControls);
-			
+
 			contactInformation.addComponent(previewForm);
-			
+
 			contactInformation.addComponent(noteListItems);
 
 			contactAddLayout.addTab(contactInformation, "Contact Information");
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
-			
+
 			contactAddLayout.addTab(relatedItemsContainer, "More Information");
-			
+
 			this.addComponent(contactAddLayout);
 
 			contactAddLayout
@@ -226,8 +227,10 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 							if ("Contact Information".equals(caption)) {
 
 							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer.addComponent(associateActivityList);
-								relatedItemsContainer.addComponent(associateOpportunityList);
+								relatedItemsContainer
+										.addComponent(associateActivityList);
+								relatedItemsContainer
+										.addComponent(associateOpportunityList);
 							}
 							contactAddLayout.selectTab(caption);
 						}

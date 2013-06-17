@@ -8,9 +8,9 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -30,7 +30,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 		super(title, presenter);
 		this.setWidth("1000px");
 
-		this.setIcon(new ThemeResource("icons/18/account.png"));
+		this.setIcon(MyCollabResource.newResource("icons/18/account.png"));
 
 		this.accountAddLayout = new ReadViewLayout(null, false);
 

@@ -18,7 +18,7 @@ import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLi
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -145,8 +145,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 					.isEnableAdd());
 			CompTimeLogSheet.this.btnAdd
 					.setStyleName(UIConstants.THEME_BLUE_LINK);
-			CompTimeLogSheet.this.btnAdd.setIcon(new ThemeResource(
-					"icons/16/addRecord.png"));
+			CompTimeLogSheet.this.btnAdd.setIcon(MyCollabResource
+					.newResource("icons/16/addRecord.png"));
 			addLayout.addComponent(CompTimeLogSheet.this.btnAdd);
 			addLayout.setComponentAlignment(CompTimeLogSheet.this.btnAdd,
 					Alignment.MIDDLE_LEFT);
@@ -260,8 +260,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 										}
 									});
 							deleteBtn.setStyleName("link");
-							deleteBtn.setIcon(new ThemeResource(
-									"icons/16/delete.png"));
+							deleteBtn.setIcon(MyCollabResource
+									.newResource("icons/16/delete.png"));
 							itemTimeLogging.setExtraData(deleteBtn);
 
 							final ProjectMemberService memberService = AppContext

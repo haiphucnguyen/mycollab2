@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -31,7 +31,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout userAddLayout = new AddViewLayout(title,
-				new ThemeResource("icons/48/user/user.png"));
+				MyCollabResource.newResource("icons/48/user/user.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

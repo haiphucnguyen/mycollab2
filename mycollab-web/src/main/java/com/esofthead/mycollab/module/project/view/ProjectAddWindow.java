@@ -17,12 +17,12 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
@@ -66,8 +66,9 @@ public class ProjectAddWindow extends Window {
 			@Override
 			public Layout getLayout() {
 				AddViewLayout projectAddLayout = new AddViewLayout(
-						"New Project", new ThemeResource(
-								"icons/48/project/project.png"));
+						"New Project",
+						MyCollabResource
+								.newResource("icons/48/project/project.png"));
 				informationLayout = new GridFormLayoutHelper(2, 4);
 
 				projectAddLayout.addBody(informationLayout.getLayout());
@@ -76,7 +77,7 @@ public class ProjectAddWindow extends Window {
 				buttonControls.setSpacing(true);
 				buttonControls.setMargin(true);
 				buttonControls.setStyleName("addNewControl");
-				
+
 				Button saveBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
@@ -123,7 +124,6 @@ public class ProjectAddWindow extends Window {
 				buttonControls.addComponent(closeBtn);
 				buttonControls.setComponentAlignment(closeBtn,
 						Alignment.MIDDLE_CENTER);
-				
 
 				projectAddLayout.addBottomControls(buttonControls);
 				return projectAddLayout;

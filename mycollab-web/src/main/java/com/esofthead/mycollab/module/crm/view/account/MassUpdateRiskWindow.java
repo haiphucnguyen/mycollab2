@@ -8,31 +8,32 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public class MassUpdateRiskWindow extends MassUpdateWindow<Risk>{
+public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 	private static final long serialVersionUID = 1L;
 
 	private final Risk risk;
 	private final EditForm updateForm;
 	private ReadViewLayout riskAddLayout;
 	private VerticalLayout layout;
-	
+
 	public MassUpdateRiskWindow(String title,
 			MassUpdatePresenter<Risk> massUpdatePresenter) {
 		super(title, massUpdatePresenter);
 		this.setWidth("1000px");
-		
-		this.setIcon(new ThemeResource("icons/22/project/menu_risk.png"));
-		
-		riskAddLayout = new ReadViewLayout(null,false);
+
+		this.setIcon(MyCollabResource
+				.newResource("icons/22/project/menu_risk.png"));
+
+		riskAddLayout = new ReadViewLayout(null, false);
 
 		risk = new Risk();
 
@@ -80,31 +81,39 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk>{
 				informationLayout.getLayout()
 						.addStyleName("colored-gridlayout");
 				formLayout.addComponent(informationLayout.getLayout());
-				
+
 				formLayout.addComponent(layout);
-				formLayout.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
+				formLayout
+						.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
 
 				return formLayout;
 			}
-//			Raised By, Assign To, Date Due, Status, Consequence, Probability
+
+			// Raised By, Assign To, Date Due, Status, Consequence, Probability
 			@Override
 			public void attachField(Object propertyId, Field field) {
 				if (propertyId.equals("raisedbyuser")) {
-					this.informationLayout.addComponent(field, "Raised by", 0, 0);
-				}else if (propertyId.equals("assigntouser")) {
-					this.informationLayout.addComponent(field, "Assigned to", 1, 0);
+					this.informationLayout.addComponent(field, "Raised by", 0,
+							0);
+				} else if (propertyId.equals("assigntouser")) {
+					this.informationLayout.addComponent(field, "Assigned to",
+							1, 0);
 				} else if (propertyId.equals("consequence")) {
-					this.informationLayout.addComponent(field, "Consequence", 0, 1);
+					this.informationLayout.addComponent(field, "Consequence",
+							0, 1);
 				} else if (propertyId.equals("datedue")) {
-					this.informationLayout.addComponent(field, "Date due", 1, 1);
+					this.informationLayout
+							.addComponent(field, "Date due", 1, 1);
 				} else if (propertyId.equals("probalitity")) {
-					this.informationLayout.addComponent(field, "Probality", 0, 2);
+					this.informationLayout.addComponent(field, "Probality", 0,
+							2);
 				} else if (propertyId.equals("status")) {
 					this.informationLayout.addComponent(field, "Status", 1, 2);
 				}
 			}
 		}
 	}
+
 	@Override
 	protected Risk getItem() {
 		return this.risk;

@@ -4,8 +4,8 @@ import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -32,7 +32,7 @@ public abstract class StandupReportFormLayoutFactory implements
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout reportAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/24/project/standup.png"));
+				MyCollabResource.newResource("icons/24/project/standup.png"));
 
 		reportAddLayout.addTopControls(this.createTopPanel());
 

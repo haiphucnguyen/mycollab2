@@ -13,9 +13,9 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -269,7 +269,8 @@ public class ProjectInformationComponent extends VerticalLayout {
 		this.projectInfoHeader.removeAllComponents();
 		this.projectInfoHeader.setSpacing(true);
 		final Embedded icon = new Embedded();
-		icon.setSource(new ThemeResource("icons/24/project/dashboard.png"));
+		icon.setSource(MyCollabResource
+				.newResource("icons/24/project/dashboard.png"));
 		final Label projectName = new Label(this.project.getName());
 		projectName.setStyleName(UIConstants.PROJECT_NAME);
 		projectName.setSizeUndefined();

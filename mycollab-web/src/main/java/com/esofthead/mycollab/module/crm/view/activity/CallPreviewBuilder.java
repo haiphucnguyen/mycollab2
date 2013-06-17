@@ -12,10 +12,10 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -112,7 +112,9 @@ public class CallPreviewBuilder extends VerticalLayout {
 		private ReadViewLayout callAddLayout;
 
 		public ReadView() {
-			callAddLayout = new ReadViewLayout(new ThemeResource(
+			callAddLayout = new ReadViewLayout(
+					MyCollabResource
+				.newResource(
 					"icons/22/crm/call.png"));
 			this.addComponent(callAddLayout);
 			initRelatedComponent();

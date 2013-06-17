@@ -7,7 +7,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -92,7 +92,8 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout milestoneAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/24/project/phase.png"));
+				MyCollabResource
+				.newResource("icons/24/project/phase.png"));
 
 		final Layout topLayout = this.createTopPanel();
 		if (topLayout != null) {

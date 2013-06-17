@@ -11,10 +11,10 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -77,7 +77,9 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 		private final ReadViewLayout meetingAddLayout;
 
 		public ReadView() {
-			meetingAddLayout = new ReadViewLayout(new ThemeResource(
+			meetingAddLayout = new ReadViewLayout(
+					MyCollabResource
+				.newResource(
 					"icons/22/crm/meeting.png"));
 			this.addComponent(meetingAddLayout);	
 

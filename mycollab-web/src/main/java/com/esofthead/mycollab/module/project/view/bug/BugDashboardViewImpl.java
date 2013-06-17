@@ -26,8 +26,8 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -64,7 +64,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 				LocalizationHelper.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
 		final Embedded icon = new Embedded();
-		icon.setSource(new ThemeResource("icons/24/project/bug.png"));
+		icon.setSource(MyCollabResource.newResource("icons/24/project/bug.png"));
 		header.addComponent(icon);
 		header.addComponent(title);
 		header.setExpandRatio(title, 1.0f);

@@ -15,7 +15,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -52,8 +52,8 @@ public class EventRelatedItemListComp extends
 							fireNewRelatedItem("task");
 						}
 					});
-			newTaskBtn
-					.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
+			newTaskBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecordGreen.png"));
 			newTaskBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_TASK));
 			newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -66,8 +66,8 @@ public class EventRelatedItemListComp extends
 							fireNewRelatedItem("call");
 						}
 					});
-			newCallBtn
-					.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
+			newCallBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecordGreen.png"));
 			newCallBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_CALL));
 			newCallBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -80,8 +80,8 @@ public class EventRelatedItemListComp extends
 							fireNewRelatedItem("call");
 						}
 					});
-			newMeetingBtn.setIcon(new ThemeResource(
-					"icons/16/addRecordGreen.png"));
+			newMeetingBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecordGreen.png"));
 			newMeetingBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_MEETING));
 			newMeetingBtn.addStyleName(UIConstants.THEME_BLUE_LINK);

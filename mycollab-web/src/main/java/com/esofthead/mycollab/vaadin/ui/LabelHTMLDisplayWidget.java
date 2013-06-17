@@ -1,16 +1,16 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 @SuppressWarnings("serial")
-public class LabelHTMLDisplayWidget extends HorizontalLayout
-		implements LayoutClickListener {
+public class LabelHTMLDisplayWidget extends HorizontalLayout implements
+		LayoutClickListener {
 	private final LabelStringGenerator menuLinkGenerator = new BugDescriptionLinkLabelStringGenerator();
 	private final Label lbDes;
 	private boolean hasShowLess;
@@ -21,18 +21,21 @@ public class LabelHTMLDisplayWidget extends HorizontalLayout
 
 	public LabelHTMLDisplayWidget(String content) {
 		description = content;
-		ThemeResource iconPlus = new ThemeResource("icons/16/plus.png");
-		ThemeResource iconMinus = new ThemeResource("icons/16/minus.png");
+		Resource iconPlus = MyCollabResource.newResource("icons/16/plus.png");
+		Resource iconMinus = MyCollabResource.newResource("icons/16/minus.png");
 
 		String contentLabel = menuLinkGenerator.handleText(content);
 		lbDes = new Label(description, Label.CONTENT_XHTML);
 		if (contentLabel != null && contentLabel.length() > NUM_CUT) {
 
 			hasShowLess = true;
-			pathIconPlus = " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
-					+ iconPlus.getResourceId() + "\" />";
-			pathIconMinus = " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
-					+ iconMinus.getResourceId() + "\" />";
+			// TODO: Solve the path icons
+			// pathIconPlus =
+			// " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
+			// + iconPlus.getResourceId() + "\" />";
+			// pathIconMinus =
+			// " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
+			// + iconMinus.getResourceId() + "\" />";
 			;
 			contentLabel += " " + pathIconPlus;
 			lbDes.setValue(contentLabel);

@@ -46,9 +46,9 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -122,7 +122,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private static class MenuButton extends Button {
 		public MenuButton(String caption, String iconResource) {
 			super(caption);
-			this.setIcon(new ThemeResource("icons/22/project/" + iconResource));
+			this.setIcon(MyCollabResource.newResource("icons/22/project/"
+					+ iconResource));
 			this.setStyleName("link");
 		}
 	}
@@ -345,7 +346,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				.canWrite(ProjectRolePermissionCollections.PROJECT));
 		SplitButtonExt controlsBtn = new SplitButtonExt(editProjectBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+		controlsBtn.setIcon(MyCollabResource.newResource("icons/16/edit.png"));
 
 		Button selectBtn = new Button(
 				LocalizationHelper
@@ -358,7 +359,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				});
 		selectBtn.setEnabled(CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.PROJECT));
-		selectBtn.setIcon(new ThemeResource("icons/16/view.png"));
+		selectBtn.setIcon(MyCollabResource.newResource("icons/16/view.png"));
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);
 

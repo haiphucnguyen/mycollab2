@@ -11,10 +11,10 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -84,8 +84,8 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 		private ReadViewLayout assignmentAddLayout;
 
 		public ReadView() {
-			assignmentAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/22/crm/task.png"));
+			assignmentAddLayout = new ReadViewLayout(
+					MyCollabResource.newResource("icons/22/crm/task.png"));
 			this.addComponent(assignmentAddLayout);
 			initRelatedComponent();
 
@@ -139,21 +139,22 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 							RolePermissionCollections.CRM_TASK);
 
 			assignmentAddLayout.addControlButtons(optionalActionControls);
-			
+
 			assignmentInformation = new VerticalLayout();
 			assignmentInformation.addStyleName("main-info");
-			
+
 			final Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_TASK);
 			actionControls.addStyleName("control-buttons");
 			assignmentInformation.addComponent(actionControls);
-			
+
 			assignmentInformation.addComponent(previewForm);
 			assignmentInformation.addComponent(noteListItems);
 
-			assignmentAddLayout.addTab(assignmentInformation, "Assignment Information");
-			
+			assignmentAddLayout.addTab(assignmentInformation,
+					"Assignment Information");
+
 			this.addComponent(assignmentAddLayout);
 		}
 	}

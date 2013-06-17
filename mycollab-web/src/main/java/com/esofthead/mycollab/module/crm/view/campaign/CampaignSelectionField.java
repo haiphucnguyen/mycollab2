@@ -8,18 +8,18 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
-public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs> implements
-		FieldSelection {
+public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs>
+		implements FieldSelection {
 
 	private HorizontalLayout layout;
 
@@ -38,8 +38,8 @@ public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs> impl
 		campaignName = new TextField();
 		layout.addComponent(campaignName);
 
-		browseBtn = new Embedded(null, new ThemeResource(
-				"icons/16/browseItem.png"));
+		browseBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 		browseBtn.addListener(new MouseEvents.ClickListener() {
@@ -48,14 +48,15 @@ public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs> impl
 			public void click(ClickEvent event) {
 				CampaignSelectionWindow campaignWindow = new CampaignSelectionWindow(
 						CampaignSelectionField.this);
-				UIHelper.addWindowToRoot(CampaignSelectionField.this, campaignWindow);
+				UIHelper.addWindowToRoot(CampaignSelectionField.this,
+						campaignWindow);
 				campaignWindow.show();
 
 			}
 		});
 
-		clearBtn = new Embedded(null, new ThemeResource(
-				"icons/16/clearItem.png"));
+		clearBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override

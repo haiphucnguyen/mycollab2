@@ -6,7 +6,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -35,7 +35,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 accountAddLayout = new AddViewLayout2(title,
-				new ThemeResource("icons/22/crm/account.png"));
+				MyCollabResource.newResource("icons/22/crm/account.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

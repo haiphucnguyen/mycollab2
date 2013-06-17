@@ -90,11 +90,6 @@ public class TaskGroupAddWindow extends Window {
 
 			@Override
 			public Layout getLayout() {
-				// final AddViewLayout taskListAddLayout = new AddViewLayout(
-				// LocalizationHelper
-				// .getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE),
-				// new ThemeResource("icons/48/project/tasklist.png"));
-
 				final VerticalLayout taskListAddLayout = new VerticalLayout();
 				taskListAddLayout.setMargin(false);
 				taskListAddLayout.setWidth("100%");

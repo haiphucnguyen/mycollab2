@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -17,7 +17,7 @@ public class AddViewLayout2 extends CssLayout {
 	private final Label titleLbl;
 	private final VerticalLayout body;
 
-	public AddViewLayout2(final String title, final ThemeResource icon) {
+	public AddViewLayout2(final String title, final Resource icon) {
 		// this.setSizeFull();
 		setStyleName("addview-layout");
 

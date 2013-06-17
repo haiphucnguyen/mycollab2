@@ -23,15 +23,16 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -72,7 +73,7 @@ public class TaskTableDisplay extends
 						});
 
 				if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
-					ThemeResource iconPriority = TaskPriorityComboBox
+					Resource iconPriority = TaskPriorityComboBox
 							.getIconResourceByPriority(task.getPriority());
 					Embedded icon = new Embedded(null, iconPriority);
 					taskName.addComponent(icon);
@@ -302,8 +303,8 @@ public class TaskTableDisplay extends
 						.canAccess(ProjectRolePermissionCollections.TASKS));
 				filterBtnLayout.addComponent(deleteBtn);
 
-				taskSettingPopupBtn.setIcon(new ThemeResource(
-						"icons/12/project/task_menu.png"));
+				taskSettingPopupBtn.setIcon(MyCollabResource
+						.newResource("icons/12/project/task_menu.png"));
 				taskSettingPopupBtn.setStyleName("link");
 				taskSettingPopupBtn.addComponent(filterBtnLayout);
 				return taskSettingPopupBtn;

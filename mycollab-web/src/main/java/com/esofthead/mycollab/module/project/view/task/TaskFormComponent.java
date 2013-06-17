@@ -16,7 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
@@ -82,7 +82,7 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 							AttachmentConstants.PROJECT_TASK_TYPE, task.getId());
 				} else if (propertyId.equals("priority")) {
 					if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
-						ThemeResource iconPriority = TaskPriorityComboBox
+						Resource iconPriority = TaskPriorityComboBox
 								.getIconResourceByPriority(task.getPriority());
 						Embedded iconEmbedded = new Embedded(null, iconPriority);
 						Label lbPriority = new Label(task.getPriority());

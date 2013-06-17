@@ -15,7 +15,7 @@ import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -41,8 +41,10 @@ public class MyBugListWidget extends BugDisplayWidget {
 			GridLayout layout = new GridLayout(2, 4);
 			layout.setWidth("100%");
 			layout.setSpacing(false);
-			layout.addComponent(new Embedded(null, new ThemeResource(
-					"icons/16/project/bug.png")), 0, 0, 0, 1);
+			layout.addComponent(
+					new Embedded(null, MyCollabResource
+							.newResource("icons/16/project/bug.png")), 0, 0, 0,
+					1);
 
 			ButtonLink defectLink = new ButtonLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"
@@ -84,8 +86,8 @@ public class MyBugListWidget extends BugDisplayWidget {
 			hLayoutAssigneeInfo.setComponentAlignment(assignee,
 					Alignment.MIDDLE_CENTER);
 
-			ProjectUserLink userLink = new ProjectUserLink(
-					obj.getAssignuser(), obj.getAssignuserFullName(), false, true);
+			ProjectUserLink userLink = new ProjectUserLink(obj.getAssignuser(),
+					obj.getAssignuserFullName(), false, true);
 			hLayoutAssigneeInfo.addComponent(userLink);
 			hLayoutAssigneeInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);
@@ -94,7 +96,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);
 			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
-			if((rowIndex + 1) % 2 != 0) {
+			if ((rowIndex + 1) % 2 != 0) {
 				rowLayout.addStyleName("odd");
 			}
 			rowLayout.setWidth("100%");

@@ -12,8 +12,8 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -61,7 +61,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 								projectNewWindow);
 					}
 				});
-		createProjectBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createProjectBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(createProjectBtn);
 		header.setComponentAlignment(createProjectBtn, Alignment.MIDDLE_RIGHT);

@@ -22,12 +22,12 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
@@ -52,7 +52,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 	protected EventRelatedItemListComp associateActivityList;
 
 	protected NoteListItems noteListItems;
-	
+
 	protected class AccountFormFieldFactory extends DefaultFormViewFieldFactory {
 
 		private static final long serialVersionUID = 1L;
@@ -135,8 +135,8 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 		private final ReadViewLayout accountAddLayout;
 
 		public ReadView() {
-			accountAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/22/crm/account.png"));
+			accountAddLayout = new ReadViewLayout(
+					MyCollabResource.newResource("icons/22/crm/account.png"));
 			this.addComponent(accountAddLayout);
 
 			initRelatedComponent();
@@ -199,7 +199,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 							RolePermissionCollections.CRM_ACCOUNT);
 			actionControls.addStyleName("control-buttons");
 			accountInformation.addComponent(actionControls);
-			
+
 			accountInformation.addComponent(previewForm);
 			accountInformation.addComponent(noteListItems);
 
@@ -221,11 +221,16 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 							if ("Account Information".equals(caption)) {
 
 							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer.addComponent(associateActivityList);
-								relatedItemsContainer.addComponent(associateContactList);
-								relatedItemsContainer.addComponent(associateOpportunityList);
-								relatedItemsContainer.addComponent(associateCaseList);
-								relatedItemsContainer.addComponent(associateLeadList);
+								relatedItemsContainer
+										.addComponent(associateActivityList);
+								relatedItemsContainer
+										.addComponent(associateContactList);
+								relatedItemsContainer
+										.addComponent(associateOpportunityList);
+								relatedItemsContainer
+										.addComponent(associateCaseList);
+								relatedItemsContainer
+										.addComponent(associateLeadList);
 							}
 							accountAddLayout.selectTab(caption);
 						}

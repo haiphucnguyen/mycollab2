@@ -20,11 +20,11 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -136,7 +136,8 @@ public class FileManagerViewImpl extends AbstractView implements
 				List<Folder> subFolders = resourceService
 						.getSubFolders(expandFolder.getPath());
 
-				folderTree.setItemIcon(expandFolder, new ThemeResource(
+				folderTree.setItemIcon(expandFolder, MyCollabResource
+				.newResource(
 						"icons/16/ecm/folder_open.png"));
 
 				if (subFolders != null) {
@@ -148,7 +149,8 @@ public class FileManagerViewImpl extends AbstractView implements
 										AppContext.formatDateTime(subFolder
 												.getCreated().getTime()) },
 								subFolder);
-						folderTree.setItemIcon(subFolder, new ThemeResource(
+						folderTree.setItemIcon(subFolder, MyCollabResource
+				.newResource(
 								"icons/16/ecm/folder_close.png"));
 						folderTree.setItemCaption(subFolder,
 								subFolder.getName());
@@ -164,7 +166,8 @@ public class FileManagerViewImpl extends AbstractView implements
 			@Override
 			public void nodeCollapse(CollapseEvent event) {
 				Folder collapseFolder = (Folder) event.getItemId();
-				folderTree.setItemIcon(collapseFolder, new ThemeResource(
+				folderTree.setItemIcon(collapseFolder, MyCollabResource
+				.newResource(
 						"icons/16/ecm/folder_close.png"));
 				List<Folder> childs = collapseFolder.getChilds();
 				for (Folder subFolder : childs) {
@@ -224,7 +227,8 @@ public class FileManagerViewImpl extends AbstractView implements
 					displayResourcesInTable(subFolder);
 					baseFolder = subFolder;
 				} else {
-					folderTree.setItemIcon(subFolder, new ThemeResource(
+					folderTree.setItemIcon(subFolder, MyCollabResource
+				.newResource(
 							"icons/16/ecm/folder_close.png"));
 				}
 			}
@@ -466,7 +470,8 @@ public class FileManagerViewImpl extends AbstractView implements
 					filterBtnLayout.setMargin(true);
 					filterBtnLayout.setSpacing(true);
 					filterBtnLayout.setWidth("100px");
-					resourceSettingPopupBtn.setIcon(new ThemeResource(
+					resourceSettingPopupBtn.setIcon(MyCollabResource
+				.newResource(
 							"icons/12/project/task_menu.png"));
 					resourceSettingPopupBtn.setStyleName("link");
 					resourceSettingPopupBtn.addComponent(filterBtnLayout);
@@ -491,10 +496,12 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					com.vaadin.terminal.Resource iconResource = null;
 					if (resource instanceof Content) {
-						iconResource = new ThemeResource(
+						iconResource = MyCollabResource
+				.newResource(
 								"icons/16/ecm/file.png");
 					} else {
-						iconResource = new ThemeResource(
+						iconResource = MyCollabResource
+				.newResource(
 								"icons/16/ecm/folder_close.png");
 					}
 					Embedded iconEmbed = new Embedded(null, iconResource);

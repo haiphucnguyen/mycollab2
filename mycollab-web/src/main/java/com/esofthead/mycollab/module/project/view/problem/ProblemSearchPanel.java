@@ -17,7 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -72,7 +72,8 @@ public class ProblemSearchPanel extends
 					}
 				});
 		createProblemBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createProblemBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createProblemBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		createProblemBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
@@ -102,17 +103,18 @@ public class ProblemSearchPanel extends
 		public ComponentContainer constructBody() {
 			HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
-			
+
 			nameField = createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
 
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
-			
+
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search_white.png"));
 			searchBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -123,7 +125,7 @@ public class ProblemSearchPanel extends
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
-			
+
 			myItemCheckbox = new CheckBox("My Items");
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
@@ -150,11 +152,11 @@ public class ProblemSearchPanel extends
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			searchCriteria = new ProblemSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(
-					SearchField.AND, project.getId()));
+			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+					project.getId()));
 
-			searchCriteria.setProblemname(new StringSearchField(
-					nameField.getValue().toString().trim()));
+			searchCriteria.setProblemname(new StringSearchField(nameField
+					.getValue().toString().trim()));
 
 			if (myItemCheckbox.booleanValue()) {
 				searchCriteria.setAssignToUser(new StringSearchField(

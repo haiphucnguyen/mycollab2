@@ -20,9 +20,9 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -124,8 +124,9 @@ public class ProfileReadViewImpl extends AbstractView implements
 			@Override
 			public Layout getLayout() {
 				AddViewLayout accountAddLayout = new AddViewLayout(AppContext
-						.getSession().getDisplayName(), new ThemeResource(
-						"icons/48/user/profile.png"));
+						.getSession().getDisplayName(),
+						MyCollabResource
+								.newResource("icons/48/user/profile.png"));
 				accountAddLayout.setWidth("550px");
 				VerticalLayout layout = new VerticalLayout();
 				layout.setSpacing(true);

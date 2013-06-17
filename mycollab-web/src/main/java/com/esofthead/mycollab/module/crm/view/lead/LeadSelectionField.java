@@ -8,10 +8,10 @@ import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -38,7 +38,8 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 		leadName = new TextField();
 		layout.addComponent(leadName);
 
-		browseBtn = new Embedded(null, new ThemeResource(
+		browseBtn = new Embedded(null, MyCollabResource
+				.newResource(
 				"icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
@@ -55,7 +56,9 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 			}
 		});
 
-		clearBtn = new Embedded(null, new ThemeResource(
+		clearBtn = new Embedded(null,
+				MyCollabResource
+				.newResource(
 				"icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;

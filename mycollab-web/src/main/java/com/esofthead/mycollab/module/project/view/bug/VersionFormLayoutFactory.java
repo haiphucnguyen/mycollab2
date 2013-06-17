@@ -7,7 +7,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -31,7 +31,8 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout componentAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/24/project/version.png"));
+				MyCollabResource
+				.newResource("icons/24/project/version.png"));
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {
