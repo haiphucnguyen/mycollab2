@@ -53,7 +53,6 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
-//		buttonControls.setWidth("700px");
 		
 		final Button searchBtn = new Button(
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH),
