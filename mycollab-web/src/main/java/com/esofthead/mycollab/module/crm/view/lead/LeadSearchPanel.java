@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -16,7 +17,8 @@ import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -34,7 +36,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
+public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	protected LeadSearchCriteria searchCriteria;
@@ -42,23 +44,6 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 	public LeadSearchPanel() {
 		searchCriteria = new LeadSearchCriteria();
 	}
-
-	@Override
-	public void attach() {
-		super.attach();
-		createBasicSearchLayout();
-	}
-
-	private void createBasicSearchLayout() {
-		LeadBasicSearchLayout layout = new LeadBasicSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private void createAdvancedSearchLayout() {
-		LeadAdvancedSearchLayout layout = new LeadAdvancedSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
 	private HorizontalLayout createSearchTopPanel() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
@@ -148,7 +133,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							LeadSearchPanel.this.createAdvancedSearchLayout();
+							moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -181,8 +166,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	private class LeadAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class LeadAdvancedSearchLayout extends DefaultAdvancedSearchLayout<LeadSearchCriteria> {
 
 		private TextField firstnameField;
 		private TextField lastnameField;
@@ -199,9 +183,8 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 		private TextField stateField;
 		private UserListSelect userField;
 
-		@SuppressWarnings("unchecked")
 		public LeadAdvancedSearchLayout() {
-			super(LeadSearchPanel.this);
+			super(LeadSearchPanel.this, CrmTypeConstants.LEAD);
 		}
 
 		@Override
@@ -254,59 +237,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 		}
 
 		@Override
-		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					LeadAdvancedSearchLayout.this.callSearchAction();
-				}
-			});
-
-			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					firstnameField.setValue("");
-					lastnameField.setValue("");
-					accountnameField.setValue("");
-					statusField.setValue(null);
-
-					anyEmailField.setValue("");
-					anyAddressField.setValue("");
-					countryField.setValue(null);
-					sourceField.setValue(null);
-
-					anyPhoneField.setValue("");
-					cityField.setValue("");
-					stateField.setValue("");
-					userField.setValue(null);
-				}
-			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(clearBtn);
-
-			Button basicSearchBtn = new Button("Basic Search",
-					new Button.ClickListener() {
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							LeadSearchPanel.this.createBasicSearchLayout();
-
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-			return buttonControls;
-		}
-
-		@Override
-		protected SearchCriteria fillupSearchCriteria() {
+		protected LeadSearchCriteria fillupSearchCriteria() {
 			searchCriteria = new LeadSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(
 					SearchField.AND, AppContext.getAccountId()));
@@ -396,5 +327,33 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 
 			return searchCriteria;
 		}
+
+		@Override
+		protected void clearFields() {
+			firstnameField.setValue("");
+			lastnameField.setValue("");
+			accountnameField.setValue("");
+			statusField.setValue(null);
+
+			anyEmailField.setValue("");
+			anyAddressField.setValue("");
+			countryField.setValue(null);
+			sourceField.setValue(null);
+
+			anyPhoneField.setValue("");
+			cityField.setValue("");
+			stateField.setValue("");
+			userField.setValue(null);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected BasicSearchLayout<LeadSearchCriteria> createBasicSearchLayout() {
+		return new LeadBasicSearchLayout();
+	}
+	@Override
+	protected AdvancedSearchLayout<LeadSearchCriteria> createAdvancedSearchLayout() {
+		return new LeadAdvancedSearchLayout();
 	}
 }

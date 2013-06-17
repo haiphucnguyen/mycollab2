@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -17,7 +18,8 @@ import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -36,24 +38,7 @@ import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 public class ContactSearchPanel extends
-		GenericSearchPanel<ContactSearchCriteria> {
-
-	protected ContactSearchCriteria searchCriteria;
-
-	@Override
-	public void attach() {
-		createBasicSearchLayout();
-	}
-
-	private void createBasicSearchLayout() {
-		ContactBasicSearchLayout layout = new ContactBasicSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private void createAdvancedSearchLayout() {
-		ContactAdvancedSearchLayout layout = new ContactAdvancedSearchLayout();
-		this.setCompositionRoot(layout);
-	}
+	DefaultGenericSearchPanel<ContactSearchCriteria> {
 
 	private HorizontalLayout createSearchTopPanel() {
 		HorizontalLayout layout = new HorizontalLayout();
@@ -154,8 +139,7 @@ public class ContactSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							ContactSearchPanel.this
-									.createAdvancedSearchLayout();
+							moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -166,7 +150,7 @@ public class ContactSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new ContactSearchCriteria();
+			final ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(
 					SearchField.AND, AppContext.getAccountId()));
 			if (StringUtil.isNotNullOrEmpty(nameField.getValue()
@@ -188,8 +172,7 @@ public class ContactSearchPanel extends
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	private class ContactAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class ContactAdvancedSearchLayout extends DefaultAdvancedSearchLayout<ContactSearchCriteria> {
 
 		private static final long serialVersionUID = 1L;
 		private TextField firstnameField;
@@ -205,9 +188,8 @@ public class ContactSearchPanel extends
 		private TextField cityField;
 		private LeadSourceListSelect leadSourceField;
 
-		@SuppressWarnings("unchecked")
 		public ContactAdvancedSearchLayout() {
-			super(ContactSearchPanel.this);
+			super(ContactSearchPanel.this, CrmTypeConstants.CONTACT);
 		}
 
 		@Override
@@ -215,7 +197,6 @@ public class ContactSearchPanel extends
 			return createSearchTopPanel();
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4,
@@ -260,60 +241,9 @@ public class ContactSearchPanel extends
 			
 			return gridLayout.getLayout();
 		}
-
 		@Override
-		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				@SuppressWarnings({ "unchecked" })
-				@Override
-				public void buttonClick(ClickEvent event) {
-					ContactAdvancedSearchLayout.this.callSearchAction();
-				}
-			});
-
-			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					firstnameField.setValue("");
-					lastnameField.setValue("");
-					accountnameField.setValue("");
-					assignUserField.setValue(null);
-					anyEmailField.setValue("");
-					anyAddressField.setValue("");
-					stateField.setValue("");
-					countryField.setValue(null);
-					anyPhoneField.setValue("");
-					postalCodeField.setValue("");
-					cityField.setValue("");
-					leadSourceField.setValue(null);
-				}
-			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(clearBtn);
-
-			Button basicSearchBtn = new Button("Basic Search",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							ContactSearchPanel.this.createBasicSearchLayout();
-
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-			return buttonControls;
-		}
-
-		@Override
-		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new ContactSearchCriteria();
+		protected ContactSearchCriteria fillupSearchCriteria() {
+			final ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(
 					SearchField.AND, AppContext.getAccountId()));
 
@@ -402,5 +332,32 @@ public class ContactSearchPanel extends
 			}
 			return searchCriteria;
 		}
+
+		@Override
+		protected void clearFields() {
+			firstnameField.setValue("");
+			lastnameField.setValue("");
+			accountnameField.setValue("");
+			assignUserField.setValue(null);
+			anyEmailField.setValue("");
+			anyAddressField.setValue("");
+			stateField.setValue("");
+			countryField.setValue(null);
+			anyPhoneField.setValue("");
+			postalCodeField.setValue("");
+			cityField.setValue("");
+			leadSourceField.setValue(null);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected BasicSearchLayout<ContactSearchCriteria> createBasicSearchLayout() {
+		return new ContactBasicSearchLayout();
+	}
+
+	@Override
+	protected AdvancedSearchLayout<ContactSearchCriteria> createAdvancedSearchLayout() {
+		return new ContactAdvancedSearchLayout();
 	}
 }

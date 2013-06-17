@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -18,7 +19,8 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -37,27 +39,12 @@ import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 public class OpportunitySearchPanel extends
-		GenericSearchPanel<OpportunitySearchCriteria> {
+	DefaultGenericSearchPanel<OpportunitySearchCriteria> {
 
 	protected OpportunitySearchCriteria searchCriteria;
 
 	public OpportunitySearchPanel() {
 		searchCriteria = new OpportunitySearchCriteria();
-	}
-
-	@Override
-	public void attach() {
-		createBasicSearchLayout();
-	}
-
-	private void createBasicSearchLayout() {
-		OpportunityBasicSearchLayout layout = new OpportunityBasicSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private void createAdvancedSearchLayout() {
-		OpportunityAdvancedSearchLayout layout = new OpportunityAdvancedSearchLayout();
-		this.setCompositionRoot(layout);
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
@@ -156,8 +143,7 @@ public class OpportunitySearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							OpportunitySearchPanel.this
-									.createAdvancedSearchLayout();
+							moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -193,7 +179,7 @@ public class OpportunitySearchPanel extends
 		}
 	}
 
-	private class OpportunityAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class OpportunityAdvancedSearchLayout extends DefaultAdvancedSearchLayout<OpportunitySearchCriteria> {
 
 		private static final long serialVersionUID = 1L;
 		private TextField opportunityNameField;
@@ -205,7 +191,7 @@ public class OpportunitySearchPanel extends
 
 		@SuppressWarnings("unchecked")
 		public OpportunityAdvancedSearchLayout() {
-			super(OpportunitySearchPanel.this);
+			super(OpportunitySearchPanel.this , CrmTypeConstants.OPPORTUNITY);
 		}
 
 		@Override
@@ -246,52 +232,7 @@ public class OpportunitySearchPanel extends
 		}
 
 		@Override
-		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					OpportunityAdvancedSearchLayout.this.callSearchAction();
-				}
-			});
-
-			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					opportunityNameField.setValue("");
-					accountField.clearValue();
-					nextStepField.setValue("");
-					userField.setValue(null);
-					stageField.setValue(null);
-					sourceField.setValue(null);
-				}
-			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(clearBtn);
-
-			Button basicSearchBtn = new Button("Basic Search",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							OpportunitySearchPanel.this
-									.createBasicSearchLayout();
-
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-
-			return buttonControls;
-		}
-
-		@Override
-		protected SearchCriteria fillupSearchCriteria() {
+		protected OpportunitySearchCriteria fillupSearchCriteria() {
 			searchCriteria = new OpportunitySearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(
 					SearchField.AND, AppContext.getAccountId()));
@@ -344,5 +285,26 @@ public class OpportunitySearchPanel extends
 			}
 			return searchCriteria;
 		}
+
+		@Override
+		protected void clearFields() {
+			opportunityNameField.setValue("");
+			accountField.clearValue();
+			nextStepField.setValue("");
+			userField.setValue(null);
+			stageField.setValue(null);
+			sourceField.setValue(null);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected BasicSearchLayout<OpportunitySearchCriteria> createBasicSearchLayout() {
+		return new OpportunityBasicSearchLayout();
+	}
+
+	@Override
+	protected AdvancedSearchLayout<OpportunitySearchCriteria> createAdvancedSearchLayout() {
+		return new OpportunityAdvancedSearchLayout();
 	}
 }
