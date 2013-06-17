@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
@@ -17,7 +18,8 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -34,7 +36,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
-public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
+public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	private CaseSearchCriteria searchCriteria;
@@ -42,29 +44,10 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 	public CaseSearchPanel() {
 		super();
 	}
+	private class CaseAdvancedSearchLayout extends DefaultAdvancedSearchLayout<CaseSearchCriteria> {
 
-	@Override
-	public void attach() {
-		super.attach();
-		createBasicSearchLayout();
-	}
-
-	private void createBasicSearchLayout() {
-		CaseBasicSearchLayout layout = new CaseBasicSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private void createAdvancedSearchLayout() {
-		CaseAdvancedSearchLayout layout = new CaseAdvancedSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	@SuppressWarnings("rawtypes")
-	private class CaseAdvancedSearchLayout extends AdvancedSearchLayout {
-
-		@SuppressWarnings("unchecked")
 		public CaseAdvancedSearchLayout() {
-			super(CaseSearchPanel.this);
+			super(CaseSearchPanel.this, CrmTypeConstants.CASE);
 		}
 
 		private static final long serialVersionUID = 1L;
@@ -111,53 +94,8 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 			return gridLayout.getLayout();
 		}
 
-		@SuppressWarnings("serial")
 		@Override
-		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					CaseAdvancedSearchLayout.this.callSearchAction();
-				}
-			});
-
-			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					numberField.setValue("");
-					subjectField.setValue("");
-					accountField.clearValue();
-					statusField.setValue(null);
-					userField.setValue(null);
-					priorityField.setValue(null);
-				}
-			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(clearBtn);
-
-			Button basicSearchBtn = new Button("Basic Search",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							CaseSearchPanel.this.createBasicSearchLayout();
-
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-
-			return buttonControls;
-		}
-
-		@Override
-		protected SearchCriteria fillupSearchCriteria() {
+		protected CaseSearchCriteria fillupSearchCriteria() {
 			searchCriteria = new CaseSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(
 					SearchField.AND, AppContext.getAccountId()));
@@ -198,6 +136,16 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 								SearchField.AND, priorities));
 			}
 			return searchCriteria;
+		}
+
+		@Override
+		protected void clearFields() {
+			numberField.setValue("");
+			subjectField.setValue("");
+			accountField.clearValue();
+			statusField.setValue(null);
+			userField.setValue(null);
+			priorityField.setValue(null);
 		}
 	}
 
@@ -298,7 +246,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							CaseSearchPanel.this.createAdvancedSearchLayout();
+							moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -330,5 +278,16 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 			}
 			return searchCriteria;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected BasicSearchLayout<CaseSearchCriteria> createBasicSearchLayout() {
+		return new CaseBasicSearchLayout();
+	}
+
+	@Override
+	protected AdvancedSearchLayout<CaseSearchCriteria> createAdvancedSearchLayout() {
+		return new CaseAdvancedSearchLayout();
 	}
 }

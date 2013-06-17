@@ -87,6 +87,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 						previewForm.fireEditForm(item);
 					}
 				});
+		editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
 		editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(editBtn);
 		editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
@@ -103,6 +104,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 						previewForm.fireDeleteForm(item);
 					}
 				});
+		deleteBtn.setIcon(new ThemeResource("icons/16/delete2.png"));
 		deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
@@ -119,6 +121,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 						previewForm.fireCloneForm(item);
 					}
 				});
+		cloneBtn.setIcon(new ThemeResource("icons/16/clone.png"));
 		cloneBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(cloneBtn);
 		editButtons.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);

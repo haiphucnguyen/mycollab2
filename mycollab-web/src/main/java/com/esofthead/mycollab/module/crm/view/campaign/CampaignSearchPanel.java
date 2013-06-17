@@ -10,16 +10,17 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.view.activity.EventTableDisplay;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -38,30 +39,14 @@ import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 public class CampaignSearchPanel extends
-		GenericSearchPanel<CampaignSearchCriteria> {
+	DefaultGenericSearchPanel<CampaignSearchCriteria> {
 
 	protected CampaignSearchCriteria searchCriteria;
 
 	public CampaignSearchPanel() {
 		searchCriteria = new CampaignSearchCriteria();
 	}
-
-	@Override
-	public void attach() {
-		super.attach();
-		createBasicSearchLayout();
-	}
-
-	private void createBasicSearchLayout() {
-		CampaignBasicSearchLayout layout = new CampaignBasicSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private void createAdvancedSearchLayout() {
-		CampaignAdvancedSearchLayout layout = new CampaignAdvancedSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
+	
 	private HorizontalLayout createSearchTopPanel() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
@@ -151,8 +136,7 @@ public class CampaignSearchPanel extends
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(ClickEvent event) {
-							CampaignSearchPanel.this
-									.createAdvancedSearchLayout();
+							moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -185,8 +169,7 @@ public class CampaignSearchPanel extends
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	private class CampaignAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class CampaignAdvancedSearchLayout extends DefaultAdvancedSearchLayout<CampaignSearchCriteria> {
 
 		private TextField nameField;
 		private DateSelectionField startDateField;
@@ -195,9 +178,8 @@ public class CampaignSearchPanel extends
 		private CampaignStatusListSelect statusField;
 		private UserListSelect assignUserField;
 
-		@SuppressWarnings("unchecked")
 		public CampaignAdvancedSearchLayout() {
-			super(CampaignSearchPanel.this);
+			super(CampaignSearchPanel.this, CrmTypeConstants.CAMPAIGN);
 		}
 
 		@Override
@@ -240,52 +222,9 @@ public class CampaignSearchPanel extends
 			
 			return gridLayout.getLayout();
 		}
-
+		
 		@Override
-		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				@SuppressWarnings({ })
-				@Override
-				public void buttonClick(ClickEvent event) {
-					CampaignAdvancedSearchLayout.this.callSearchAction();
-				}
-			});
-
-			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					nameField.setValue("");
-					startDateField.setDefaultSelection();
-					endDateField.setDefaultSelection();
-					typeField.setValue(null);
-					statusField.setValue(null);
-					assignUserField.setValue(null);
-				}
-			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(clearBtn);
-
-			Button basicSearchBtn = new Button("Basic Search",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							CampaignSearchPanel.this.createBasicSearchLayout();
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-			return buttonControls;
-		}
-
-		@Override
-		protected SearchCriteria fillupSearchCriteria() {
+		protected CampaignSearchCriteria fillupSearchCriteria() {
 			searchCriteria = new CampaignSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(
 					SearchField.AND, AppContext.getAccountId()));
@@ -340,5 +279,26 @@ public class CampaignSearchPanel extends
 			}
 			return searchCriteria;
 		}
+
+		@Override
+		protected void clearFields() {
+			nameField.setValue("");
+			startDateField.setDefaultSelection();
+			endDateField.setDefaultSelection();
+			typeField.setValue(null);
+			statusField.setValue(null);
+			assignUserField.setValue(null);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected BasicSearchLayout<CampaignSearchCriteria> createBasicSearchLayout() {
+		return new CampaignBasicSearchLayout();
+	}
+
+	@Override
+	protected AdvancedSearchLayout<CampaignSearchCriteria> createAdvancedSearchLayout() {
+		return new CampaignAdvancedSearchLayout();
 	}
 }

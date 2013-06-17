@@ -191,26 +191,6 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			final HorizontalLayout actionControls = new ProjectPreviewFormControlsGenerator<Milestone>(
 					previewForm).createButtonControls();
 
-//			final Button reportBtn = new Button(null,
-//					new Button.ClickListener() {
-//						private static final long serialVersionUID = 1L;
-//
-//						@Override
-//						public void buttonClick(final ClickEvent event) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//
-//					});
-//			reportBtn.setIcon(new ThemeResource(
-//					"icons/16/project/release_note.png"));
-//			reportBtn.setStyleName("link");
-//			reportBtn.setDescription("Display Report View");
-//
-//			actionControls.addComponent(reportBtn);
-//			actionControls.setComponentAlignment(reportBtn,
-//					Alignment.MIDDLE_LEFT);
-
 			final VerticalLayout marginLayout = new VerticalLayout();
 			marginLayout.setMargin(false);
 			milestoneAddLayout.addTopControls(actionControls);

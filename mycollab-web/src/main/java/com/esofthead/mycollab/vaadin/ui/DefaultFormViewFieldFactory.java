@@ -96,9 +96,13 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		private final HorizontalLayout layout;
 
 		public FormContainerHorizontalViewField() {
+			this(true);
+		}
+
+		public FormContainerHorizontalViewField(boolean spacing) {
 			layout = new HorizontalLayout();
 			layout.setWidth("100%");
-			layout.setSpacing(true);
+			layout.setSpacing(spacing);
 			setCompositionRoot(layout);
 		}
 
