@@ -71,7 +71,7 @@ a {
 
 .v-button .v-icon,.v-nativebutton .v-icon {
 	vertical-align: top;
-	margin: 0px;
+	margin: 0px 5px 0px 0px;
 }
 
 div.v-button-link {
@@ -862,7 +862,7 @@ input.v-textfield-errorField {
 }
 
 .customLoginForm #loginForm input.v-textfield,.forgotPwdForm #loginForm input.v-textfield
-	{
+{
 	font-size: 17px !important;
 	height: 35px;
 }
@@ -872,7 +872,8 @@ input.v-textfield-errorField {
 	background: #FFFFFF;
 	border-color: #BBB;
 	border-radius: 3px;
-	padding: .2em;
+	padding: 0em 0.2em;
+	line-height: 35px !important;
 	color: #4a4a4a;
 }
 
