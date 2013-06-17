@@ -8,6 +8,8 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.AdvancedSearchLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.thoughtworks.xstream.XStream;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -15,6 +17,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
@@ -36,10 +39,15 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 	public abstract ComponentContainer constructHeader();
 
 	public abstract ComponentContainer constructBody();
+	
+	public abstract void loadSaveSearchToField(String value);
 
 	protected abstract void clearFields();
-
+	
 	public ComponentContainer constructFooter() {
+		VerticalLayout layout = new VerticalLayout();
+		layout.setSpacing(true);
+		
 		HorizontalLayout footerLayout = new HorizontalLayout();
 		footerLayout.setWidth("100%");
 		
@@ -84,12 +92,12 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		UiUtils.addComponent(buttonControls, basicSearchBtn,Alignment.MIDDLE_CENTER);
 
 		UiUtils.addComponent(footerLayout, buttonControls, Alignment.MIDDLE_RIGHT);
-		footerLayout.setExpandRatio(buttonControls, 2.0f);
+		footerLayout.setExpandRatio(buttonControls, 3.0f);
 		
 		HorizontalLayout saveSearchLayout = new HorizontalLayout();
 		saveSearchLayout.setSpacing(true);
 		
-		Label saveSearchLbl = new Label("Save Search As");
+		Label saveSearchLbl = new Label("Save Search As ");
 		UiUtils.addComponent(saveSearchLayout, saveSearchLbl,
 				Alignment.MIDDLE_RIGHT);
 
@@ -118,13 +126,46 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 			}
 		});
+		saveSearchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		UiUtils.addComponent(saveSearchLayout, saveSearchBtn,
 				Alignment.MIDDLE_RIGHT);
 
-		
 		UiUtils.addComponent(footerLayout, saveSearchLayout, Alignment.MIDDLE_RIGHT);
 		footerLayout.setExpandRatio(saveSearchLayout, 1.0f);
 		
-		return footerLayout;
+		HorizontalLayout bottomLayout = new HorizontalLayout();
+		bottomLayout.setWidth("100%");
+		
+		HorizontalLayout bottomLayout1 = new HorizontalLayout();
+		bottomLayout1.setSpacing(true);
+		HorizontalLayout bottomLayout2 = new HorizontalLayout();
+		bottomLayout2.setSpacing(true);
+		
+		Label saveSearchLable =  new Label("Save Search Result ");
+		UiUtils.addComponent(bottomLayout2, saveSearchLable, Alignment.MIDDLE_CENTER);
+		
+		final ValueComboBox saveResult = new ValueComboBox();
+		UiUtils.addComponent(bottomLayout2, saveResult, Alignment.MIDDLE_CENTER);
+		// Here for Load- data ValueComboBox
+		if(saveSearchResultService == null) saveSearchResultService = AppContext.getSpringBean(SaveSearchResultService.class);
+		saveResult.loadData(saveSearchResultService.getListQueryName(type));
+		saveResult.addListener(new Property.ValueChangeListener() {
+		    public void valueChange(ValueChangeEvent event) {
+		    	String name = (String) saveResult.getValue();
+		    	loadSaveSearchToField(saveSearchResultService.getQueryTextByName(name, type));
+		    }
+		});
+		saveResult.setImmediate(true);
+		
+		
+		UiUtils.addComponent(bottomLayout, bottomLayout1, Alignment.MIDDLE_CENTER);
+		bottomLayout.setExpandRatio(bottomLayout1, 19.0f);
+		UiUtils.addComponent(bottomLayout, bottomLayout2, Alignment.MIDDLE_LEFT);
+		bottomLayout.setExpandRatio(bottomLayout2, 1.0f);
+		
+		layout.addComponent(footerLayout);
+		UiUtils.addComponent(layout, bottomLayout, Alignment.MIDDLE_RIGHT);
+		
+		return layout;
 	}
 }

@@ -147,6 +147,12 @@ public class CaseSearchPanel extends
 			userField.setValue(null);
 			priorityField.setValue(null);
 		}
+
+		@Override
+		public void loadSaveSearchToField(String value) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 	private HorizontalLayout createSearchTopPanel() {

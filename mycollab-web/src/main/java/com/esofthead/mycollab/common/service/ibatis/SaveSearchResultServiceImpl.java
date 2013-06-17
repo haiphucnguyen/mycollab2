@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.dao.SaveSearchResultMapper;
+import com.esofthead.mycollab.common.dao.SaveSearchResultMapperExt;
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -16,10 +17,23 @@ public class SaveSearchResultServiceImpl extends
 
 	@Autowired
 	private SaveSearchResultMapper saveSearchResultMapper;
+	
+	@Autowired
+	private SaveSearchResultMapperExt saveSearchResultMapperExt;
 
 	@Override
 	public ICrudGenericDAO<Integer, SaveSearchResultWithBLOBs> getCrudMapper() {
 		return saveSearchResultMapper;
+	}
+
+	@Override
+	public String[] getListQueryName(String type) {
+		return saveSearchResultMapperExt.getListQueryName(type);
+	}
+
+	@Override
+	public String getQueryTextByName(String name, String type) {
+		return saveSearchResultMapperExt.getQueryTextByName(name, type);
 	}
 
 }

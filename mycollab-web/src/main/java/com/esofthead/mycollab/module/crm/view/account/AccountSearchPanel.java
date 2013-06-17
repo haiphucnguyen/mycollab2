@@ -185,6 +185,12 @@ public class AccountSearchPanel extends
 			typeField.setValue(null);
 			userField.setValue(null);
 		}
+
+		@Override
+		public void loadSaveSearchToField(String value) {
+			// TODO Auto-generated method stub
+			System.out.println(value);
+		}
 	}
 
 	private class AccountBasicSearchLayout extends

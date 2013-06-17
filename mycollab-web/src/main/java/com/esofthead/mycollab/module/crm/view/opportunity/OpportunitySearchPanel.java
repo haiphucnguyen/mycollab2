@@ -289,6 +289,12 @@ public class OpportunitySearchPanel extends
 			stageField.setValue(null);
 			sourceField.setValue(null);
 		}
+
+		@Override
+		public void loadSaveSearchToField(String value) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 	@SuppressWarnings("unchecked")

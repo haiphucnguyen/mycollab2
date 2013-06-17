@@ -69,6 +69,12 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.common.dao.SaveSearchResultMapper" />
     </bean>
+    
+    <bean id="saveSearchResultMapperExt" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.common.dao.SaveSearchResultMapperExt" />
+    </bean>
 
     <bean id="relayEmailMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />

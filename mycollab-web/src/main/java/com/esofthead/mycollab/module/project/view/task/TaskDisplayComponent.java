@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -77,7 +78,8 @@ public class TaskDisplayComponent extends CssLayout {
 					new Label(), "Description", 0, 0, 2, "100%",
 					Alignment.TOP_RIGHT);
 			descLbl.setContentMode(Label.CONTENT_XHTML);
-			descLbl.setValue(this.taskList.getDescription());
+			descLbl.setValue(StringUtil.preStringFormat(this.taskList
+					.getDescription()));
 
 			this.layoutHelper.addComponent(
 					new ProjectUserFormLinkField(this.taskList.getOwner(),
