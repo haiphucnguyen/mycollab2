@@ -1,8 +1,14 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
+import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.AdvancedSearchLayout;
 import com.esofthead.mycollab.web.AppContext;
@@ -23,10 +29,11 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		extends AdvancedSearchLayout<S> {
 
-	private SaveSearchResultService saveSearchResultService;
+	private SaveSearchResultService<SaveSearchResultCriteria> saveSearchResultService;
 
 	protected String type;
 
+	@SuppressWarnings("unchecked")
 	public DefaultAdvancedSearchLayout(DefaultGenericSearchPanel<S> parent,
 			String type) {
 		super(parent);
@@ -44,6 +51,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 	protected abstract void clearFields();
 	
+	@SuppressWarnings("unchecked")
 	public ComponentContainer constructFooter() {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
@@ -148,11 +156,23 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		UiUtils.addComponent(bottomLayout2, saveResult, Alignment.MIDDLE_CENTER);
 		// Here for Load- data ValueComboBox
 		if(saveSearchResultService == null) saveSearchResultService = AppContext.getSpringBean(SaveSearchResultService.class);
-		saveResult.loadData(saveSearchResultService.getListQueryName(type));
+		SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
+		searchCriteria.setType(new StringSearchField(type));
+		searchCriteria.setCreateUser(new StringSearchField(AppContext.getUsername()));
+		searchCriteria.setsAccountId(new NumberSearchField(AppContext.getAccountId()));
+		
+		List<SaveSearchResultWithBLOBs> result = saveSearchResultService.getListSaveSearchResult(searchCriteria);
+		List<String> data = new ArrayList<String>();
+		for(SaveSearchResultWithBLOBs item : result){
+			data.add(item.getQueryname());
+		}
+		
+		saveResult.loadData((String[]) data.toArray());
+		
 		saveResult.addListener(new Property.ValueChangeListener() {
 		    public void valueChange(ValueChangeEvent event) {
 		    	String name = (String) saveResult.getValue();
-		    	loadSaveSearchToField(saveSearchResultService.getQueryTextByName(name, type));
+		    	//loadSaveSearchToField(saveSearchResultService.getQueryTextByName(name, type));
 		    }
 		});
 		saveResult.setImmediate(true);
