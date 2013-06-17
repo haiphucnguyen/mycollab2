@@ -28,43 +28,46 @@ import com.vaadin.ui.VerticalLayout;
 public class UnresolvedBugsByAssigneeWidget extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	private IBugReportDisplayContainer componentLayout;
+	private final IBugReportDisplayContainer componentLayout;
 	private BugSearchCriteria bugSearchCriteria;
 
 	public UnresolvedBugsByAssigneeWidget(
-			IBugReportDisplayContainer componentLayout) {
+			final IBugReportDisplayContainer componentLayout) {
 		super("Unresolved by assignee", new VerticalLayout());
 
 		this.componentLayout = componentLayout;
+		this.setContentBorder(true);
+		((VerticalLayout) this.bodyContent).setSpacing(true);
 	}
 
-	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
+	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
 		this.bugSearchCriteria = searchCriteria;
 		this.bodyContent.removeAllComponents();
-		BugService bugService = AppContext.getSpringBean(BugService.class);
-		int totalCount = bugService.getTotalCount(searchCriteria);
-		List<GroupItem> groupItems = bugService
+		final BugService bugService = AppContext
+				.getSpringBean(BugService.class);
+		final int totalCount = bugService.getTotalCount(searchCriteria);
+		final List<GroupItem> groupItems = bugService
 				.getAssignedDefectsSummary(searchCriteria);
 		if (!groupItems.isEmpty()) {
-			for (GroupItem item : groupItems) {
-				HorizontalLayout assigneeLayout = new HorizontalLayout();
+			for (final GroupItem item : groupItems) {
+				final HorizontalLayout assigneeLayout = new HorizontalLayout();
 				assigneeLayout.setSpacing(true);
 
-				String assignUser = item.getGroupid();
-				String assignUserFullName = (item.getGroupid() == null) ? "Undefnined"
+				final String assignUser = item.getGroupid();
+				final String assignUserFullName = (item.getGroupid() == null) ? "Undefnined"
 						: item.getGroupname();
-				BugAssigneeButton userLbl = new BugAssigneeButton(assignUser,
-						assignUserFullName);
+				final BugAssigneeButton userLbl = new BugAssigneeButton(
+						assignUser, assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
-				ProgressIndicator indicator = new ProgressIndicator(new Float(
-						(float) item.getValue() / totalCount));
+				final ProgressIndicator indicator = new ProgressIndicator(
+						new Float((float) item.getValue() / totalCount));
 				indicator.setPollingInterval(1000000000);
 				assigneeLayout.addComponent(indicator);
 
-				Label progressLbl = new Label("(" + item.getValue() + "/"
+				final Label progressLbl = new Label("(" + item.getValue() + "/"
 						+ totalCount + ")");
 				assigneeLayout.addComponent(progressLbl);
-				bodyContent.addComponent(assigneeLayout);
+				this.bodyContent.addComponent(assigneeLayout);
 			}
 
 		}
@@ -79,11 +82,14 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
-					bugSearchCriteria.setAssignuser(new StringSearchField(
-							SearchField.AND, assignee));
-					componentLayout.displayBugListWidget(assigneeFullName
-							+ " Bugs List", bugSearchCriteria);
+				public void buttonClick(final ClickEvent event) {
+					UnresolvedBugsByAssigneeWidget.this.bugSearchCriteria
+							.setAssignuser(new StringSearchField(
+									SearchField.AND, assignee));
+					UnresolvedBugsByAssigneeWidget.this.componentLayout
+							.displayBugListWidget(
+									assigneeFullName + " Bugs List",
+									UnresolvedBugsByAssigneeWidget.this.bugSearchCriteria);
 				}
 			});
 
