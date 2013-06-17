@@ -56,17 +56,17 @@ public abstract class MultiSelectComp extends CustomField {
 
 		content.addComponent(this.componentsDisplay);
 		content.setComponentAlignment(this.componentsDisplay,
-				Alignment.TOP_RIGHT);
+				Alignment.MIDDLE_LEFT);
 
 		this.componentPopupSelection.addStyleName("nonPopupIndicator");
 		this.componentPopupSelection.addStyleName(UIConstants.SELECT_BG);
 		this.componentPopupSelection.setWidth("23px");
 		content.addComponent(this.componentPopupSelection);
 		content.setComponentAlignment(this.componentPopupSelection,
-				Alignment.TOP_LEFT);
+				Alignment.MIDDLE_LEFT);
 
-		content.setWidth("100%");
-		content.setExpandRatio(this.componentsDisplay, 1.0f);
+		// content.setWidth("100%");
+		// content.setExpandRatio(this.componentsDisplay, 1.0f);
 
 		this.setCompositionRoot(content);
 	}

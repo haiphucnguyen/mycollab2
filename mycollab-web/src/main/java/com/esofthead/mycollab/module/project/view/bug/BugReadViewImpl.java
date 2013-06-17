@@ -482,6 +482,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField(
 								false);
 						containerField.addComponentField(iconEmbedded);
+						containerField.getLayout().setComponentAlignment(
+								iconEmbedded, Alignment.MIDDLE_LEFT);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
 						return containerField;
@@ -499,6 +501,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
+						containerField.getLayout().setComponentAlignment(
+								iconEmbedded, Alignment.MIDDLE_LEFT);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
 						return containerField;

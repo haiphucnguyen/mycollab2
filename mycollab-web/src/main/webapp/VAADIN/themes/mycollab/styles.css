@@ -2747,7 +2747,7 @@ div.v-lazyloadingwrapper-loading {
 /* Filter Select */
 .v-filterselect .v-icon {
 	float: left;
-	margin-top: 3px !important;
+	margin-top: 0px !important;
 }
 
 .v-button-link .v-icon,.v-button-borderless .v-icon {
