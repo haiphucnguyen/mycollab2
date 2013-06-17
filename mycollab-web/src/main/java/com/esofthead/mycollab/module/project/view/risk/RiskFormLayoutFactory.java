@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.project.view.risk;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -23,7 +23,7 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout riskAddLayout = new AddViewLayout(this.title,
-				new ThemeResource("icons/24/project/risk.png"));
+				MyCollabResource.newResource("icons/24/project/risk.png"));
 
 		riskAddLayout.addTopControls(this.createTopPanel());
 

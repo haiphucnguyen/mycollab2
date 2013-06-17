@@ -22,9 +22,9 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -88,7 +88,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		this.taskGroupSelection.addStyleName("link");
 		this.taskGroupSelection.addStyleName("h2");
 		final Embedded icon = new Embedded();
-		icon.setSource(new ThemeResource("icons/24/project/task.png"));
+		icon.setSource(MyCollabResource
+				.newResource("icons/24/project/task.png"));
 		header.addComponent(icon);
 		header.addComponent(this.taskGroupSelection);
 		header.setExpandRatio(this.taskGroupSelection, 1.0f);
@@ -171,8 +172,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				});
 		newTaskListBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.TASKS));
-		newTaskListBtn.setIcon(new ThemeResource(
-				"icons/16/project/new_task_list.png"));
+		newTaskListBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/new_task_list.png"));
 		newTaskListBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION));
 		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -188,8 +189,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		});
 		this.reOrderBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.TASKS));
-		this.reOrderBtn.setIcon(new ThemeResource(
-				"icons/16/project/reorder.png"));
+		this.reOrderBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/reorder.png"));
 		this.reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.reOrderBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.REODER_TASKGROUP_ACTION));
@@ -216,8 +217,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				.canRead(ProjectRolePermissionCollections.TASKS));
 		showGanttChartBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.DISPLAY_GANTT_CHART_ACTION));
-		showGanttChartBtn.setIcon(new ThemeResource(
-				"icons/16/project/gantt_chart.png"));
+		showGanttChartBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/gantt_chart.png"));
 		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(showGanttChartBtn);
 		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
@@ -260,7 +261,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 								"_blank");
 					}
 				});
-		exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
+		exportBtn.setIcon(MyCollabResource
+				.newResource("icons/16/export_excel.png"));
 		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));

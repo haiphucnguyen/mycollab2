@@ -17,12 +17,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberMultiSelectField;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -118,7 +116,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 		btnSave.setEnabled(isEnableAdd());
 		btnSave.setStyleName(UIConstants.THEME_BLUE_LINK);
-		btnSave.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		btnSave.setIcon(MyCollabResource.newResource("icons/16/addRecord.png"));
 
 		layoutAdd.addComponent(btnSave);
 		layoutAdd.setComponentAlignment(btnSave, Alignment.MIDDLE_LEFT);
@@ -196,7 +194,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 					}
 				});
 				deleteBtn.setStyleName("link");
-				deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
+				deleteBtn.setIcon(MyCollabResource
+						.newResource("icons/16/delete.png"));
 				monitorItem.setExtraData(deleteBtn);
 
 				ProjectMemberService memberService = AppContext

@@ -27,7 +27,8 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -57,8 +58,8 @@ public class BugTableDisplay extends
 				final SimpleBug bug = BugTableDisplay.this
 						.getBeanByIndex(itemId);
 				final PopupButton bugSettingBtn = new PopupButton();
-				bugSettingBtn.setIcon(new ThemeResource(
-						"icons/12/project/task_menu.png"));
+				bugSettingBtn.setIcon(MyCollabResource
+						.newResource("icons/12/project/task_menu.png"));
 				bugSettingBtn.setStyleName("link");
 
 				final ContextMenu menu = new ContextMenu();
@@ -263,35 +264,34 @@ public class BugTableDisplay extends
 						});
 
 				if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
-					ThemeResource iconPriority = new ThemeResource(
-							BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+					Resource iconPriority = MyCollabResource
+							.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 
 					if (BugPriorityStatusConstants.PRIORITY_BLOCKER.equals(bug
 							.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_CRITICAL
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_MAJOR
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_MINOR
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
 					} else if (BugPriorityStatusConstants.PRIORITY_TRIVIAL
 							.equals(bug.getPriority())) {
-						iconPriority = new ThemeResource(
-								BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
 					}
 
 					b.setIcon(iconPriority);
 				}
 
-				
 				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
@@ -314,25 +314,25 @@ public class BugTableDisplay extends
 				final SimpleBug bug = BugTableDisplay.this
 						.getBeanByIndex(itemId);
 
-				ThemeResource iconPriority = new ThemeResource(
-						BugSeverityConstants.MAJOR_IMG);
+				Resource iconPriority = MyCollabResource
+						.newResource(BugSeverityConstants.MAJOR_IMG);
 				if (StringUtil.isNotNullOrEmpty(bug.getSeverity())) {
 
 					if (BugSeverityConstants.CRITICAL.equals(bug.getSeverity())) {
-						iconPriority = new ThemeResource(
-								BugSeverityConstants.CRITICAL_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugSeverityConstants.CRITICAL_IMG);
 					} else if (BugSeverityConstants.MAJOR.equals(bug
 							.getSeverity())) {
-						iconPriority = new ThemeResource(
-								BugSeverityConstants.MAJOR_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugSeverityConstants.MAJOR_IMG);
 					} else if (BugSeverityConstants.MINOR.equals(bug
 							.getSeverity())) {
-						iconPriority = new ThemeResource(
-								BugSeverityConstants.MINOR_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugSeverityConstants.MINOR_IMG);
 					} else if (BugSeverityConstants.TRIVIAL.equals(bug
 							.getSeverity())) {
-						iconPriority = new ThemeResource(
-								BugSeverityConstants.TRIVIAL_IMG);
+						iconPriority = MyCollabResource
+								.newResource(BugSeverityConstants.TRIVIAL_IMG);
 					}
 
 				}

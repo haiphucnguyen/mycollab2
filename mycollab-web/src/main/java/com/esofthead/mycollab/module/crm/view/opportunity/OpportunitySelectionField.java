@@ -8,17 +8,17 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
-public class OpportunitySelectionField extends FieldWrapper<Opportunity> implements
-		FieldSelection {
+public class OpportunitySelectionField extends FieldWrapper<Opportunity>
+		implements FieldSelection {
 	private static final long serialVersionUID = 1L;
 
 	private HorizontalLayout layout;
@@ -38,8 +38,8 @@ public class OpportunitySelectionField extends FieldWrapper<Opportunity> impleme
 		opportunityName = new TextField();
 		layout.addComponent(opportunityName);
 
-		browseBtn = new Embedded(null, new ThemeResource(
-				"icons/16/browseItem.png"));
+		browseBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 		browseBtn.addListener(new MouseEvents.ClickListener() {
@@ -49,14 +49,15 @@ public class OpportunitySelectionField extends FieldWrapper<Opportunity> impleme
 			public void click(ClickEvent event) {
 				OpportunitySelectionWindow opportunityWindow = new OpportunitySelectionWindow(
 						OpportunitySelectionField.this);
-				UIHelper.addWindowToRoot(OpportunitySelectionField.this, opportunityWindow);
+				UIHelper.addWindowToRoot(OpportunitySelectionField.this,
+						opportunityWindow);
 				opportunityWindow.show();
 
 			}
 		});
 
-		clearBtn = new Embedded(null, new ThemeResource(
-				"icons/16/clearItem.png"));
+		clearBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -81,9 +82,11 @@ public class OpportunitySelectionField extends FieldWrapper<Opportunity> impleme
 							.getProperty().getValue());
 					OpportunityService opportunityService = AppContext
 							.getSpringBean(OpportunityService.class);
-					SimpleOpportunity opportunity = opportunityService.findOpportunityById(opportunityId);
+					SimpleOpportunity opportunity = opportunityService
+							.findOpportunityById(opportunityId);
 					if (opportunity != null) {
-						opportunityName.setValue(opportunity.getOpportunityname());
+						opportunityName.setValue(opportunity
+								.getOpportunityname());
 					}
 				} catch (Exception e) {
 

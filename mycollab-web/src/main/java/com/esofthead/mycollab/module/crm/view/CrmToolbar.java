@@ -22,8 +22,8 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -138,7 +138,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final NavigatorItemListener listener = new NavigatorItemListener();
 		final Button homeBtn = new Button(null, listener);
 		homeBtn.setStyleName("link");
-		homeBtn.setIcon(new ThemeResource("icons/16/home.png"));
+		homeBtn.setIcon(MyCollabResource.newResource("icons/16/home.png"));
 		addComponent(homeBtn);
 
 		final Button accountList = new Button(
@@ -221,7 +221,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newAccountBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-		newAccountBtn.setIcon(new ThemeResource("icons/18/crm/account.png"));
+		newAccountBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/account.png"));
 		addBtnLayout.addComponent(newAccountBtn);
 
 		final ButtonLink newContactBtn = new ButtonLink(
@@ -230,7 +231,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newContactBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		newContactBtn.setIcon(new ThemeResource("icons/18/crm/contact.png"));
+		newContactBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/contact.png"));
 		addBtnLayout.addComponent(newContactBtn);
 
 		final ButtonLink newCampaignBtn = new ButtonLink(
@@ -239,7 +241,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newCampaignBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
-		newCampaignBtn.setIcon(new ThemeResource("icons/18/crm/campaign.png"));
+		newCampaignBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/campaign.png"));
 		addBtnLayout.addComponent(newCampaignBtn);
 
 		final ButtonLink newOpportunityBtn = new ButtonLink(
@@ -248,8 +251,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newOpportunityBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
-		newOpportunityBtn.setIcon(new ThemeResource(
-				"icons/18/crm/opportunity.png"));
+		newOpportunityBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/opportunity.png"));
 		addBtnLayout.addComponent(newOpportunityBtn);
 
 		final ButtonLink newLeadBtn = new ButtonLink(
@@ -258,7 +261,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newLeadBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
-		newLeadBtn.setIcon(new ThemeResource("icons/18/crm/lead.png"));
+		newLeadBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/lead.png"));
 		addBtnLayout.addComponent(newLeadBtn);
 
 		final ButtonLink newCaseBtn = new ButtonLink(
@@ -267,7 +271,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newCaseBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CASE));
-		newCaseBtn.setIcon(new ThemeResource("icons/18/crm/case.png"));
+		newCaseBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/case.png"));
 		addBtnLayout.addComponent(newCaseBtn);
 
 		final ButtonLink newTaskBtn = new ButtonLink(
@@ -276,7 +281,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newTaskBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_TASK));
-		newTaskBtn.setIcon(new ThemeResource("icons/18/crm/task.png"));
+		newTaskBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/task.png"));
 		addBtnLayout.addComponent(newTaskBtn);
 
 		final ButtonLink newCallBtn = new ButtonLink(
@@ -285,7 +291,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newCallBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
-		newCallBtn.setIcon(new ThemeResource("icons/18/crm/call.png"));
+		newCallBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/call.png"));
 		addBtnLayout.addComponent(newCallBtn);
 
 		final ButtonLink newMeetingBtn = new ButtonLink(
@@ -294,7 +301,8 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		newMeetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
-		newMeetingBtn.setIcon(new ThemeResource("icons/18/crm/meeting.png"));
+		newMeetingBtn.setIcon(MyCollabResource
+				.newResource("icons/18/crm/meeting.png"));
 		addBtnLayout.addComponent(newMeetingBtn);
 
 		addBtn.addComponent(addBtnLayout);

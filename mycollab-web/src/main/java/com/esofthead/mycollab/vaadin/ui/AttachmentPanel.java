@@ -23,7 +23,7 @@ import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ImageUtil;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -71,7 +71,7 @@ public class AttachmentPanel extends VerticalLayout implements
 				}
 			}
 		});
-		removeBtn.setIcon(new ThemeResource("icons/16/trash.png"));
+		removeBtn.setIcon(MyCollabResource.newResource("icons/16/trash.png"));
 		removeBtn.setStyleName("link");
 
 		Embedded fileIcon = new Embedded(null,
@@ -128,19 +128,19 @@ public class AttachmentPanel extends VerticalLayout implements
 
 							int imgHeight = bufferedImage.getHeight();
 							int imgWidth = bufferedImage.getWidth();
-							
+
 							BufferedImage scaledImage = null;
-							
+
 							float scale;
 							float destWidth = 974;
 							float destHeight = 718;
-							
-							float scaleX = Math.min(destHeight/imgHeight, 1);
-							float scaleY = Math.min(destWidth/imgWidth, 1);
+
+							float scaleX = Math.min(destHeight / imgHeight, 1);
+							float scaleY = Math.min(destWidth / imgWidth, 1);
 							scale = Math.min(scaleX, scaleY);
-							scaledImage = ImageUtil.scaleImage(
-									bufferedImage, scale);
-							
+							scaledImage = ImageUtil.scaleImage(bufferedImage,
+									scale);
+
 							ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 							ImageIO.write(scaledImage, fileExt, outStream);
 							contentService.saveContent(
@@ -150,9 +150,11 @@ public class AttachmentPanel extends VerticalLayout implements
 											.toByteArray()));
 						} catch (IOException e) {
 							e.printStackTrace();
-							contentService.saveContent(AppContext.getAccountId(),
+							contentService.saveContent(
+									AppContext.getAccountId(),
 									filePath,
-									new FileInputStream(fileStores.get(fileName)));
+									new FileInputStream(fileStores
+											.get(fileName)));
 						}
 					} else {
 						contentService.saveContent(AppContext.getAccountId(),

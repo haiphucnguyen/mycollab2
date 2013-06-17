@@ -4,7 +4,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -24,7 +24,8 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 meetingLayout = new AddViewLayout2(title,
-				new ThemeResource("icons/48/crm/meeting.png"));
+				MyCollabResource
+				.newResource("icons/48/crm/meeting.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

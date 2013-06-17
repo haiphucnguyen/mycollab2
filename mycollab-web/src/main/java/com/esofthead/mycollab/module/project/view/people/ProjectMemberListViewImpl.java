@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -71,7 +71,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.USERS));
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 
 		this.addComponent(createBtn);
 		this.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
@@ -146,7 +147,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 								});
 			}
 		});
-		btnDelete.setIcon(new ThemeResource("icons/12/project/icon_x.png"));
+		btnDelete.setIcon(MyCollabResource
+				.newResource("icons/12/project/icon_x.png"));
 		btnDelete.setStyleName("link");
 		layoutButtonDelete.addComponent(btnDelete);
 

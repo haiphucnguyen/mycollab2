@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -149,7 +149,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 	public Layout getLayout() {
 		informationLayout = new ContactInformationLayout(false);
 		final AddViewLayout2 contactAddLayout = new AddViewLayout2(title,
-				new ThemeResource("icons/22/crm/contact.png"));
+				MyCollabResource.newResource("icons/22/crm/contact.png"));
 
 		final Layout topPanel = createTopPanel();
 		if (topPanel != null) {

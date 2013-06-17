@@ -25,9 +25,9 @@ import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -239,7 +239,8 @@ public class StandupListViewImpl extends AbstractView implements
 					}
 				});
 		addNewReport.setStyleName(UIConstants.THEME_BLUE_LINK);
-		addNewReport.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		addNewReport.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 
 		header.addComponent(addNewReport);
 

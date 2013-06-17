@@ -24,7 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -63,7 +63,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 								new LeadEvent.GotoAdd(this, null));
 					}
 				});
-		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createAccountBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
@@ -97,7 +98,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 			
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+			searchBtn.setIcon(MyCollabResource
+				.newResource("icons/16/search_white.png"));
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override

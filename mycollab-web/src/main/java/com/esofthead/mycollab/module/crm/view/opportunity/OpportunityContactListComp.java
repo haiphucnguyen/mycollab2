@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
@@ -75,7 +75,8 @@ public class OpportunityContactListComp extends
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Contact");
-		controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
+		controlsBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecordGreen.png"));
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
 					@Override
@@ -98,7 +99,7 @@ public class OpportunityContactListComp extends
 						controlsBtn.setPopupVisible(false);
 					}
 				});
-		selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
+		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);
 		controlsBtn.setEnabled(AppContext
@@ -156,7 +157,8 @@ public class OpportunityContactListComp extends
 					}
 				});
 				editBtn.setStyleName("link");
-				editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+				editBtn.setIcon(MyCollabResource
+						.newResource("icons/16/edit.png"));
 				controlLayout.addComponent(editBtn);
 
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
@@ -165,9 +167,10 @@ public class OpportunityContactListComp extends
 						ConfirmDialog.show(
 								AppContext.getApplication().getMainWindow(),
 								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE,
+										.getMessage(
+												GenericI18Enum.DELETE_DIALOG_TITLE,
 												ApplicationProperties
-												.getString(ApplicationProperties.SITE_NAME)),
+														.getString(ApplicationProperties.SITE_NAME)),
 								LocalizationHelper
 										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
 								LocalizationHelper
@@ -199,7 +202,8 @@ public class OpportunityContactListComp extends
 					}
 				});
 				deleteBtn.setStyleName("link");
-				deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
+				deleteBtn.setIcon(MyCollabResource
+						.newResource("icons/16/delete.png"));
 				controlLayout.addComponent(deleteBtn);
 				return controlLayout;
 			}

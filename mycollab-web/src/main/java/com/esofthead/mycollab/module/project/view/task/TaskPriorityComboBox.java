@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.ComboBox;
 
 public class TaskPriorityComboBox extends ComboBox {
@@ -32,30 +33,34 @@ public class TaskPriorityComboBox extends ComboBox {
 
 		this.setContainerDataSource(ic);
 
-		this.setItemIcon(PRIORITY_HIGHT, new ThemeResource(PRIORITY_HIGHT_IMG));
-		this.setItemIcon(PRIORITY_LOW, new ThemeResource(PRIORITY_LOW_IMG));
+		this.setItemIcon(PRIORITY_HIGHT,
+				MyCollabResource.newResource(PRIORITY_HIGHT_IMG));
+		this.setItemIcon(PRIORITY_LOW,
+				MyCollabResource.newResource(PRIORITY_LOW_IMG));
 		this.setItemIcon(PRIORITY_MEDIUM,
-				new ThemeResource(PRIORITY_MEDIUM_IMG));
-		this.setItemIcon(PRIORITY_NONE, new ThemeResource(PRIORITY_NONE_IMG));
+				MyCollabResource.newResource(PRIORITY_MEDIUM_IMG));
+		this.setItemIcon(PRIORITY_NONE,
+				MyCollabResource.newResource(PRIORITY_NONE_IMG));
 		this.setItemIcon(PRIORITY_URGENT,
-				new ThemeResource(PRIORITY_URGENT_IMG));
+				MyCollabResource.newResource(PRIORITY_URGENT_IMG));
 
 		this.setNullSelectionAllowed(false);
 		this.setValue(this.getItemIds().iterator().next());
 	}
 
-	public static ThemeResource getIconResourceByPriority(String priority) {
-		ThemeResource iconPriority = new ThemeResource(PRIORITY_MEDIUM_IMG);
+	public static Resource getIconResourceByPriority(String priority) {
+		Resource iconPriority = MyCollabResource
+				.newResource(PRIORITY_MEDIUM_IMG);
 		if (PRIORITY_HIGHT.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_HIGHT_IMG);
+			iconPriority = MyCollabResource.newResource(PRIORITY_HIGHT_IMG);
 		} else if (PRIORITY_LOW.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_LOW_IMG);
+			iconPriority = MyCollabResource.newResource(PRIORITY_LOW_IMG);
 		} else if (PRIORITY_MEDIUM.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_MEDIUM_IMG);
+			iconPriority = MyCollabResource.newResource(PRIORITY_MEDIUM_IMG);
 		} else if (PRIORITY_NONE.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_NONE_IMG);
+			iconPriority = MyCollabResource.newResource(PRIORITY_NONE_IMG);
 		} else if (PRIORITY_URGENT.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_URGENT_IMG);
+			iconPriority = MyCollabResource.newResource(PRIORITY_URGENT_IMG);
 		}
 		return iconPriority;
 	}

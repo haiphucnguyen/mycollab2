@@ -15,7 +15,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -43,7 +43,8 @@ public class AccountOpportunityListComp extends
 						fireNewRelatedItem("");
 					}
 				});
-		newBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
+		newBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecordGreen.png"));
 		newBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		newBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));

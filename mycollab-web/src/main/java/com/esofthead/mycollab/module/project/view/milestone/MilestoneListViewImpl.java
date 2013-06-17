@@ -21,7 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -62,7 +62,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 		// header.setMargin(true, true, false, true);
 		header.setWidth("100%");
 		final Embedded icon = new Embedded();
-		icon.setSource(new ThemeResource("icons/24/project/phase.png"));
+		icon.setSource(MyCollabResource
+				.newResource("icons/24/project/phase.png"));
 		header.addComponent(icon);
 		header.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
 		header.addComponent(titleLbl);
@@ -94,8 +95,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		final HorizontalLayout closedHeaderLayout = new HorizontalLayout();
 		closedHeaderLayout.setSpacing(true);
-		final Embedded embeddClosed = new Embedded(null, new ThemeResource(
-				"icons/16/project/phase_closed.png"));
+		final Embedded embeddClosed = new Embedded(null,
+				MyCollabResource
+						.newResource("icons/16/project/phase_closed.png"));
 		closedHeaderLayout.addComponent(embeddClosed);
 		closedHeaderLayout.setComponentAlignment(embeddClosed,
 				Alignment.MIDDLE_CENTER);
@@ -112,8 +114,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		final HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
 		inProgressHeaderLayout.setSpacing(true);
-		final Embedded embeddInProgress = new Embedded(null, new ThemeResource(
-				"icons/16/project/phase_progress.png"));
+		final Embedded embeddInProgress = new Embedded(null,
+				MyCollabResource
+						.newResource("icons/16/project/phase_progress.png"));
 		inProgressHeaderLayout.addComponent(embeddInProgress);
 		inProgressHeaderLayout.setComponentAlignment(embeddInProgress,
 				Alignment.MIDDLE_CENTER);
@@ -131,8 +134,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		final HorizontalLayout futureHeaderLayout = new HorizontalLayout();
 		futureHeaderLayout.setSpacing(true);
-		final Embedded embeddFuture = new Embedded(null, new ThemeResource(
-				"icons/16/project/phase_future.png"));
+		final Embedded embeddFuture = new Embedded(null,
+				MyCollabResource
+						.newResource("icons/16/project/phase_future.png"));
 		futureHeaderLayout.addComponent(embeddFuture);
 		futureHeaderLayout.setComponentAlignment(embeddFuture,
 				Alignment.MIDDLE_CENTER);

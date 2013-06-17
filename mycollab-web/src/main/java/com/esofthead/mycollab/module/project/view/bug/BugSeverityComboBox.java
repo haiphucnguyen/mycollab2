@@ -4,8 +4,9 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.ComboBox;
 
 /**
@@ -26,23 +27,32 @@ public class BugSeverityComboBox extends ComboBox {
 
 		this.setContainerDataSource(ic);
 
-		this.setItemIcon(BugSeverityConstants.CRITICAL, new ThemeResource(BugSeverityConstants.CRITICAL_IMG));
-		this.setItemIcon(BugSeverityConstants.MAJOR, new ThemeResource(BugSeverityConstants.MAJOR_IMG));
-		this.setItemIcon(BugSeverityConstants.MINOR, new ThemeResource(BugSeverityConstants.MINOR_IMG));
-		this.setItemIcon(BugSeverityConstants.TRIVIAL, new ThemeResource(BugSeverityConstants.TRIVIAL_IMG));
+		this.setItemIcon(BugSeverityConstants.CRITICAL,
+				MyCollabResource.newResource(BugSeverityConstants.CRITICAL_IMG));
+		this.setItemIcon(BugSeverityConstants.MAJOR,
+				MyCollabResource.newResource(BugSeverityConstants.MAJOR_IMG));
+		this.setItemIcon(BugSeverityConstants.MINOR,
+				MyCollabResource.newResource(BugSeverityConstants.MINOR_IMG));
+		this.setItemIcon(BugSeverityConstants.TRIVIAL,
+				MyCollabResource.newResource(BugSeverityConstants.TRIVIAL_IMG));
 		this.setNullSelectionAllowed(false);
 	}
 
-	public static ThemeResource getIconResourceBySeverity(String severity) {
-		ThemeResource iconseverity = new ThemeResource(BugSeverityConstants.MINOR_IMG);
+	public static Resource getIconResourceBySeverity(String severity) {
+		Resource iconseverity = MyCollabResource
+				.newResource(BugSeverityConstants.MINOR_IMG);
 		if (BugSeverityConstants.CRITICAL.equals(severity)) {
-			iconseverity = new ThemeResource(BugSeverityConstants.CRITICAL_IMG);
+			iconseverity = MyCollabResource
+					.newResource(BugSeverityConstants.CRITICAL_IMG);
 		} else if (BugSeverityConstants.MAJOR.equals(severity)) {
-			iconseverity = new ThemeResource(BugSeverityConstants.MAJOR_IMG);
+			iconseverity = MyCollabResource
+					.newResource(BugSeverityConstants.MAJOR_IMG);
 		} else if (BugSeverityConstants.MINOR.equals(severity)) {
-			iconseverity = new ThemeResource(BugSeverityConstants.MINOR_IMG);
+			iconseverity = MyCollabResource
+					.newResource(BugSeverityConstants.MINOR_IMG);
 		} else if (BugSeverityConstants.TRIVIAL.equals(severity)) {
-			iconseverity = new ThemeResource(BugSeverityConstants.TRIVIAL_IMG);
+			iconseverity = MyCollabResource
+					.newResource(BugSeverityConstants.TRIVIAL_IMG);
 		}
 		return iconseverity;
 	}

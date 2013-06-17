@@ -37,10 +37,10 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -129,8 +129,8 @@ public class MessageListViewImpl extends AbstractView implements
 				commentCountLbl.setSizeUndefined();
 				commentNotification.addComponent(commentCountLbl);
 				final Embedded commentIcon = new Embedded();
-				commentIcon.setSource(new ThemeResource(
-						"icons/16/project/message.png"));
+				commentIcon.setSource(MyCollabResource
+						.newResource("icons/16/project/message.png"));
 				commentNotification.addComponent(commentIcon);
 
 				notification.addComponent(commentNotification);
@@ -145,8 +145,8 @@ public class MessageListViewImpl extends AbstractView implements
 				attachmentCountLbl.setSizeUndefined();
 				attachmentNotification.addComponent(attachmentCountLbl);
 				final Embedded attachmentIcon = new Embedded();
-				attachmentIcon.setSource(new ThemeResource(
-						"icons/16/attachment.png"));
+				attachmentIcon.setSource(MyCollabResource
+						.newResource("icons/16/attachment.png"));
 				attachmentNotification.addComponent(attachmentIcon);
 
 				notification.addComponent(attachmentNotification);
@@ -251,7 +251,8 @@ public class MessageListViewImpl extends AbstractView implements
 				}
 			});
 			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search_white.png"));
 			basicSearchBody.addComponent(searchBtn);
 
 			this.setCompositionRoot(basicSearchBody);
@@ -272,7 +273,8 @@ public class MessageListViewImpl extends AbstractView implements
 			final Label headerLbl = new Label("Messages");
 			headerLbl.setStyleName("h2");
 			final Embedded icon = new Embedded();
-			icon.setSource(new ThemeResource("icons/24/project/message.png"));
+			icon.setSource(MyCollabResource
+					.newResource("icons/24/project/message.png"));
 			final HorizontalLayout layoutHeader = new HorizontalLayout();
 			layoutHeader.setStyleName("message-toppanel-header");
 			layoutHeader.addComponent(icon);
@@ -418,8 +420,8 @@ public class MessageListViewImpl extends AbstractView implements
 			createMessageBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 			createMessageBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			createMessageBtn
-					.setIcon(new ThemeResource("icons/16/addRecord.png"));
+			createMessageBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecord.png"));
 			createMessageBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 

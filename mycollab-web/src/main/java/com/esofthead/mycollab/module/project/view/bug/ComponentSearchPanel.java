@@ -19,7 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -78,7 +78,8 @@ public class ComponentSearchPanel extends
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 
 		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
 
@@ -143,10 +144,10 @@ public class ComponentSearchPanel extends
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			searchCriteria = new ComponentSearchCriteria();
-			searchCriteria.setProjectid(new NumberSearchField(
-					SearchField.AND, project.getId()));
-			searchCriteria.setComponentName(new StringSearchField(
-					nameField.getValue().toString().trim()));
+			searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
+					project.getId()));
+			searchCriteria.setComponentName(new StringSearchField(nameField
+					.getValue().toString().trim()));
 			return searchCriteria;
 		}
 	}

@@ -8,8 +8,8 @@ import org.vaadin.hene.splitbutton.SplitButton;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -22,10 +22,10 @@ public class SelectionOptionButton extends SplitButton implements
 	private boolean isSelected = false;
 	@SuppressWarnings("rawtypes")
 	private final HasSelectableItemHandlers selectableItemHandlers;
-	private static Resource selectIcon = new ThemeResource(
-			"icons/16/checkbox.png");
-	private static Resource unSelectIcon = new ThemeResource(
-			"icons/16/checkbox_empty.png");
+	private static Resource selectIcon = MyCollabResource
+			.newResource("icons/16/checkbox.png");
+	private static Resource unSelectIcon = MyCollabResource
+			.newResource("icons/16/checkbox_empty.png");
 	private Set<SelectionOptionHandler> handlers;
 	private final Button selectAllBtn;
 	private final Button selectThisPageBtn;

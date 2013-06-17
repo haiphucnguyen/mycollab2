@@ -31,7 +31,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
@@ -255,7 +255,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 								if (StringUtil
 										.isNotNullOrEmpty(PrintView.this.task
 												.getPriority())) {
-									final ThemeResource iconPriority = TaskPriorityComboBox
+									final Resource iconPriority = TaskPriorityComboBox
 											.getIconResourceByPriority(PrintView.this.task
 													.getPriority());
 									final Embedded iconEmbedded = new Embedded(

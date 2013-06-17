@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -45,7 +45,7 @@ public class PreviewFormControlsGenerator<T> {
 				previewForm.fireCancelForm(item);
 			}
 		});
-		backBtn.setIcon(new ThemeResource("icons/16/back.png"));
+		backBtn.setIcon(MyCollabResource.newResource("icons/16/back.png"));
 		backBtn.setDescription("Back to list");
 		backBtn.setStyleName("link");
 		layout.addComponent(backBtn);
@@ -66,7 +66,7 @@ public class PreviewFormControlsGenerator<T> {
 						previewForm.fireEditForm(item);
 					}
 				});
-		editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+		editBtn.setIcon(MyCollabResource.newResource("icons/16/edit.png"));
 		editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(editBtn);
 		editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
@@ -83,7 +83,7 @@ public class PreviewFormControlsGenerator<T> {
 						previewForm.fireDeleteForm(item);
 					}
 				});
-		deleteBtn.setIcon(new ThemeResource("icons/16/delete2.png"));
+		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
 		deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
@@ -100,7 +100,7 @@ public class PreviewFormControlsGenerator<T> {
 						previewForm.fireCloneForm(item);
 					}
 				});
-		cloneBtn.setIcon(new ThemeResource("icons/16/clone.png"));
+		cloneBtn.setIcon(MyCollabResource.newResource("icons/16/clone.png"));
 		cloneBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(cloneBtn);
 		editButtons.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);
@@ -108,70 +108,6 @@ public class PreviewFormControlsGenerator<T> {
 		layout.addComponent(editButtons);
 		layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
 		layout.setExpandRatio(editButtons, 1.0f);
-
-		// previousItem = new Button(null, new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// T item = ((BeanItem<T>) previewForm.getItemDataSource())
-		// .getBean();
-		// previewForm.fireGotoPrevious(item);
-		// }
-		// });
-
-		// previousItem.setIcon(new ThemeResource("icons/16/previous.png"));
-		// previousItem.setStyleName("link");
-		// previousItem.setDescription("Show previous item");
-		// layout.addComponent(previousItem);
-		// layout.setComponentAlignment(previousItem, Alignment.MIDDLE_RIGHT);
-		//
-		// nextItemBtn = new Button(null, new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// T item = ((BeanItem<T>) previewForm.getItemDataSource())
-		// .getBean();
-		// previewForm.fireGotoNextItem(item);
-		// }
-		// });
-
-		// nextItemBtn.setIcon(new ThemeResource("icons/16/next.png"));
-		// nextItemBtn.setStyleName("link");
-		// nextItemBtn.setDescription("Show next item");
-		// layout.addComponent(nextItemBtn);
-		// layout.setComponentAlignment(nextItemBtn, Alignment.MIDDLE_RIGHT);
-		//
-		//
-		// historyBtn = new Button(null, new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// previewForm.showHistory();
-		// }
-		// });
-		// historyBtn.setIcon(new ThemeResource("icons/16/history.png"));
-		// historyBtn.setStyleName("link");
-		// historyBtn.setDescription("Show history log");
-		// layout.addComponent(historyBtn);
-		// layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
-		//
-		// printBtn = new Button(null, new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// previewForm.doPrint();
-		// }
-		// });
-
-		// printBtn.setIcon(new ThemeResource("icons/16/print.png"));
-		// printBtn.setStyleName("link");
-		// printBtn.setDescription("Print this page");
-		// layout.addComponent(printBtn);
-		// layout.setComponentAlignment(printBtn, Alignment.MIDDLE_RIGHT);
 
 		if (permissionItem != null) {
 			boolean canRead = AppContext.canRead(permissionItem);

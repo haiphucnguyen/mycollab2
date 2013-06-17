@@ -36,9 +36,10 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -146,7 +147,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				final AddViewLayout bugAddLayout = new AddViewLayout("[Issue "
 						+ BugReadViewImpl.this.bug.getBugkey() + "#]: "
 						+ BugReadViewImpl.this.bug.getSummary(),
-						new ThemeResource("icons/24/project/bug.png"));
+						MyCollabResource
+								.newResource("icons/24/project/bug.png"));
 
 				if (BugStatusConstants.CLOSE.equals(BugReadViewImpl.this.bug
 						.getStatus())) {
@@ -170,8 +172,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				createAccountBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
 				createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-				createAccountBtn.setIcon(new ThemeResource(
-						"icons/16/addRecord.png"));
+				createAccountBtn.setIcon(MyCollabResource
+						.newResource("icons/16/addRecord.png"));
 
 				final HorizontalLayout headerRight = new HorizontalLayout();
 				headerRight.addComponent(createAccountBtn);
@@ -196,7 +198,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 								new BugEvent.GotoList(this, null));
 					}
 				});
-				backBtn.setIcon(new ThemeResource("icons/16/back.png"));
+				backBtn.setIcon(MyCollabResource
+						.newResource("icons/16/back.png"));
 				backBtn.setDescription("Back to list");
 				backBtn.setStyleName("link");
 				topPanel.addComponent(backBtn);
@@ -219,7 +222,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						});
 				assignBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
-				assignBtn.setIcon(new ThemeResource("icons/16/assign.png"));
+				assignBtn.setIcon(MyCollabResource
+						.newResource("icons/16/assign.png"));
 
 				assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				buttonControls.addComponent(assignBtn);
@@ -238,7 +242,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 												BugReadViewImpl.this.bug));
 							}
 						});
-				editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+				editBtn.setIcon(MyCollabResource
+						.newResource("icons/16/edit.png"));
 				editBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
 				editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -291,7 +296,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 										});
 							}
 						});
-				deleteBtn.setIcon(new ThemeResource("icons/16/delete2.png"));
+				deleteBtn.setIcon(MyCollabResource
+						.newResource("icons/16/delete2.png"));
 				deleteBtn.setEnabled(CurrentProjectVariables
 						.canAccess(ProjectRolePermissionCollections.BUGS));
 				deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -471,7 +477,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("priority")) {
 					if (StringUtil.isNotNullOrEmpty(BugReadViewImpl.this.bug
 							.getPriority())) {
-						final ThemeResource iconPriority = BugPriorityComboBox
+						final Resource iconPriority = BugPriorityComboBox
 								.getIconResourceByPriority(BugReadViewImpl.this.bug
 										.getPriority());
 						final Embedded iconEmbedded = new Embedded(null,
@@ -491,7 +497,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("severity")) {
 					if (StringUtil.isNotNullOrEmpty(BugReadViewImpl.this.bug
 							.getSeverity())) {
-						final ThemeResource iconPriority = BugSeverityComboBox
+						final Resource iconPriority = BugSeverityComboBox
 								.getIconResourceBySeverity(BugReadViewImpl.this.bug
 										.getSeverity());
 						final Embedded iconEmbedded = new Embedded(null,

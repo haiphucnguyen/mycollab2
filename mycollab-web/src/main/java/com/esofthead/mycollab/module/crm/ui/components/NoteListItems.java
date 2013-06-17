@@ -30,6 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -307,7 +308,8 @@ public class NoteListItems extends Depot {
 		});
 
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		contentContainer.addComponent(createBtn);
 
 		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(

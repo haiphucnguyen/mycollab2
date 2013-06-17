@@ -9,7 +9,7 @@ import org.vaadin.risto.stylecalendar.DateOptionsGenerator;
 import org.vaadin.risto.stylecalendar.StyleCalendar;
 
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -38,21 +38,25 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 		setDateOptionsGenerator();
 
 		btnShowNextYear = new Button();
-		btnShowNextYear.setIcon(new ThemeResource("icons/16/cal_year_next.png"));
+		btnShowNextYear.setIcon(MyCollabResource
+				.newResource("icons/16/cal_year_next.png"));
 		btnShowNextYear.setStyleName("link");
-		
+
 		btnShowNextMonth = new Button();
-		btnShowNextMonth.setIcon(new ThemeResource("icons/16/cal_month_next.png"));
+		btnShowNextMonth.setIcon(MyCollabResource
+				.newResource("icons/16/cal_month_next.png"));
 		btnShowNextMonth.setStyleName("link");
-		
-		btnShowPreviousMonth  = new Button();
-		btnShowPreviousMonth.setIcon(new ThemeResource("icons/16/cal_month_pre.png"));
+
+		btnShowPreviousMonth = new Button();
+		btnShowPreviousMonth.setIcon(MyCollabResource
+				.newResource("icons/16/cal_month_pre.png"));
 		btnShowPreviousMonth.setStyleName("link");
-		
-		btnShowPreviousYear  = new Button();
-		btnShowPreviousYear.setIcon(new ThemeResource("icons/16/cal_year_pre.png"));
+
+		btnShowPreviousYear = new Button();
+		btnShowPreviousYear.setIcon(MyCollabResource
+				.newResource("icons/16/cal_year_pre.png"));
 		btnShowPreviousYear.setStyleName("link");
-		
+
 		lbSelectedDate.setValue(AppContext.formatDate(new Date()));
 		lbSelectedDate.addStyleName("calendarDateLabel");
 		lbSelectedDate.setWidth("80");
@@ -136,7 +140,8 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 					Calendar c1 = Calendar.getInstance();
 					c1.setTime(redDate);
 
-					if (dateEquals(date, redDate) && dateIsTodayOrBefore(redDate)) {
+					if (dateEquals(date, redDate)
+							&& dateIsTodayOrBefore(redDate)) {
 						return "red";
 					}
 				}
@@ -166,7 +171,7 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 
 		return ((c1.get(Calendar.DATE) == c2.get(Calendar.DATE))
 				&& (c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH)) && (c1
-				.get(Calendar.YEAR) == c2.get(Calendar.YEAR)));
+					.get(Calendar.YEAR) == c2.get(Calendar.YEAR)));
 	}
 
 	public StyleCalendar getStyleCalendar() {

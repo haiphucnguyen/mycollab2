@@ -10,11 +10,11 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -137,7 +137,9 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 		private final AddViewLayout milestoneAddLayout;
 
 		public ReadView() {
-			milestoneAddLayout = new AddViewLayout("", new ThemeResource(
+			milestoneAddLayout = new AddViewLayout("",
+					MyCollabResource
+				.newResource(
 					"icons/48/project/milestone.png"));
 			milestoneAddLayout.addStyleName(UIConstants.PREVIEW);
 			this.addComponent(milestoneAddLayout);

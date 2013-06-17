@@ -6,10 +6,10 @@ import com.esofthead.mycollab.module.file.FileStorageConfig;
 import com.esofthead.mycollab.module.file.S3StorageConfig;
 import com.esofthead.mycollab.module.file.StorageSetting;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.FileResource;
 import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 
@@ -42,8 +42,8 @@ public class UserAvatarControlFactory {
 		Resource avatarRes = null;
 
 		if (username == null) {
-			return new ThemeResource("icons/default_user_avatar_" + size
-					+ ".png");
+			return MyCollabResource.newResource("icons/default_user_avatar_"
+					+ size + ".png");
 		}
 
 		if (StorageSetting.isFileStorage()) {
@@ -52,8 +52,9 @@ public class UserAvatarControlFactory {
 				avatarRes = new FileResource(avatarFile,
 						AppContext.getApplication());
 			} else {
-				avatarRes = new ThemeResource("icons/default_user_avatar_"
-						+ size + ".png");
+				avatarRes = MyCollabResource
+						.newResource("icons/default_user_avatar_" + size
+								+ ".png");
 			}
 
 		} else if (StorageSetting.isS3Storage()) {

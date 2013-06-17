@@ -23,9 +23,9 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
@@ -145,8 +145,8 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				HorizontalLayout attachmentField = new HorizontalLayout();
 				Embedded attachmentIcon = new Embedded();
-				attachmentIcon.setSource(new ThemeResource(
-						"icons/16/attachment.png"));
+				attachmentIcon.setSource(MyCollabResource
+						.newResource("icons/16/attachment.png"));
 				attachmentField.addComponent(attachmentIcon);
 
 				Label lbAttachment = new Label("Attachment: ");

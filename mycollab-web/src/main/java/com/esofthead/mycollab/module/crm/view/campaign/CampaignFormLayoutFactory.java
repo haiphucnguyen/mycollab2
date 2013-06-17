@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -23,7 +23,7 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 campaignFormLayout = new AddViewLayout2(title,
-				new ThemeResource("icons/22/crm/campaign.png"));
+				MyCollabResource.newResource("icons/22/crm/campaign.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

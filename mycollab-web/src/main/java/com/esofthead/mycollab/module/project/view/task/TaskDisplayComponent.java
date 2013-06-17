@@ -29,7 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -214,7 +214,8 @@ public class TaskDisplayComponent extends CssLayout {
 		});
 		this.createTaskBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.TASKS));
-		this.createTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		this.createTaskBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		this.createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		final VerticalLayout taskGroupFooter = new VerticalLayout();
 		taskGroupFooter.setMargin(true);

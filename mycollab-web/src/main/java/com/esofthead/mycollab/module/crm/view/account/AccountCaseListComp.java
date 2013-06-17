@@ -16,7 +16,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 
@@ -47,7 +47,8 @@ public class AccountCaseListComp extends
 						fireNewRelatedItem("");
 					}
 				});
-		newBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
+		newBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecordGreen.png"));
 		newBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		newBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CASE));

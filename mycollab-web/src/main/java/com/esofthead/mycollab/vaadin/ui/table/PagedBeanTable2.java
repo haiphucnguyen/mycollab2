@@ -18,13 +18,13 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -357,9 +357,12 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		}
 
 		if (sortColumnId != null && !sortColumnId.equals("")) {
-			tableItem.setColumnIcon(sortColumnId,
-					isAscending ? new ThemeResource("icons/16/arrow_down.png")
-							: new ThemeResource("icons/16/arrow_up.png"));
+			tableItem.setColumnIcon(
+					sortColumnId,
+					isAscending ? MyCollabResource
+							.newResource("icons/16/arrow_down.png")
+							: MyCollabResource
+									.newResource("icons/16/arrow_up.png"));
 		}
 
 		tableItem.addListener(new Table.HeaderClickListener() {

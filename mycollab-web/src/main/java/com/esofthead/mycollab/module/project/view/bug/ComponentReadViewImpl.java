@@ -24,11 +24,11 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -189,8 +189,8 @@ public class ComponentReadViewImpl extends AbstractView implements
 								FormLayoutFactory.this.displaySimpleView();
 							}
 						});
-				simpleDisplay.setIcon(new ThemeResource(
-						"icons/16/project/list_display.png"));
+				simpleDisplay.setIcon(MyCollabResource
+						.newResource("icons/16/project/list_display.png"));
 
 				this.viewGroup.addButton(simpleDisplay);
 
@@ -203,8 +203,9 @@ public class ComponentReadViewImpl extends AbstractView implements
 								FormLayoutFactory.this.displayAdvancedView();
 							}
 						});
-				advanceDisplay.setIcon(new ThemeResource(
-						"icons/16/project/bug_advanced_display.png"));
+				advanceDisplay
+						.setIcon(MyCollabResource
+								.newResource("icons/16/project/bug_advanced_display.png"));
 				this.viewGroup.addButton(advanceDisplay);
 				header.addComponent(this.viewGroup);
 				header.setComponentAlignment(this.viewGroup,

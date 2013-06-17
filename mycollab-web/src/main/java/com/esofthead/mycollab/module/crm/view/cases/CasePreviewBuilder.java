@@ -20,12 +20,12 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -37,169 +37,173 @@ import com.vaadin.ui.Window;
 @SuppressWarnings("serial")
 public class CasePreviewBuilder extends VerticalLayout {
 
-    protected SimpleCase cases;
-    protected AdvancedPreviewBeanForm<CaseWithBLOBs> previewForm;
-    protected CaseContactListComp associateContactList;
-    protected NoteListItems noteListItems;
-    protected EventRelatedItemListComp associateActivityList;
+	protected SimpleCase cases;
+	protected AdvancedPreviewBeanForm<CaseWithBLOBs> previewForm;
+	protected CaseContactListComp associateContactList;
+	protected NoteListItems noteListItems;
+	protected EventRelatedItemListComp associateActivityList;
 
-    protected void initRelatedComponent() {
-        associateContactList = new CaseContactListComp();
-        associateActivityList = new EventRelatedItemListComp(true);
-        noteListItems = new NoteListItems("Notes");
-    }
+	protected void initRelatedComponent() {
+		associateContactList = new CaseContactListComp();
+		associateActivityList = new EventRelatedItemListComp(true);
+		noteListItems = new NoteListItems("Notes");
+	}
 
-    public void previewItem(SimpleCase item) {
-        cases = item;
-        previewForm.setItemDataSource(new BeanItem<SimpleCase>(cases));
-        displayActivities();
-        displayContacts();
-    }
-    
-    public void displayActivities() {
-        EventSearchCriteria criteria = new EventSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.CASE));
-        criteria.setTypeid(new NumberSearchField(cases.getId()));
-        associateActivityList.setSearchCriteria(criteria);
-    }
-    
-    private void displayContacts() {
-        associateContactList.displayContacts(cases);
-    }
+	public void previewItem(SimpleCase item) {
+		cases = item;
+		previewForm.setItemDataSource(new BeanItem<SimpleCase>(cases));
+		displayActivities();
+		displayContacts();
+	}
 
-    public EventRelatedItemListComp getAssociateActivityList() {
-        return associateActivityList;
-    }
+	public void displayActivities() {
+		EventSearchCriteria criteria = new EventSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+		criteria.setType(new StringSearchField(SearchField.AND,
+				CrmTypeConstants.CASE));
+		criteria.setTypeid(new NumberSearchField(cases.getId()));
+		associateActivityList.setSearchCriteria(criteria);
+	}
 
-    public CaseContactListComp getAssociateContactList() {
-        return associateContactList;
-    }
+	private void displayContacts() {
+		associateContactList.displayContacts(cases);
+	}
 
-    public SimpleCase getCase() {
-        return cases;
-    }
+	public EventRelatedItemListComp getAssociateActivityList() {
+		return associateActivityList;
+	}
 
-    public AdvancedPreviewBeanForm<CaseWithBLOBs> getPreviewForm() {
-        return previewForm;
-    }
+	public CaseContactListComp getAssociateContactList() {
+		return associateContactList;
+	}
 
-    protected class CaseFormFieldFactory extends DefaultFormViewFieldFactory {
+	public SimpleCase getCase() {
+		return cases;
+	}
 
-        @Override
-        protected Field onCreateField(Item item, Object propertyId,
-                Component uiContext) {
-            if (propertyId.equals("accountid")) {
-                return new FormLinkViewField(cases.getAccountName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+	public AdvancedPreviewBeanForm<CaseWithBLOBs> getPreviewForm() {
+		return previewForm;
+	}
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new AccountEvent.GotoRead(this,
-                                        cases.getAccountid()));
+	protected class CaseFormFieldFactory extends DefaultFormViewFieldFactory {
 
-                            }
-                        });
-            } else if (propertyId.equals("email")) {
-                return new FormEmailLinkViewField(cases.getEmail());
-            } else if (propertyId.equals("assignuser")) {
-                return new FormLinkViewField(cases.getAssignUserFullName(), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+		@Override
+		protected Field onCreateField(Item item, Object propertyId,
+				Component uiContext) {
+			if (propertyId.equals("accountid")) {
+				return new FormLinkViewField(cases.getAccountName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        // TODO Auto-generated method stub
-                    }
-                });
-            }
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new AccountEvent.GotoRead(this, cases
+												.getAccountid()));
 
-            return null;
-        }
-    }
-    
-    public static class ReadView extends CasePreviewBuilder {
+							}
+						});
+			} else if (propertyId.equals("email")) {
+				return new FormEmailLinkViewField(cases.getEmail());
+			} else if (propertyId.equals("assignuser")) {
+				return new FormLinkViewField(cases.getAssignUserFullName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-        private VerticalLayout caseInformationLayout;
-        private VerticalLayout relatedItemsContainer;
-        private ReadViewLayout caseAddLayout;
+							@Override
+							public void buttonClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+							}
+						});
+			}
 
-        public ReadView() {
-            caseAddLayout = new ReadViewLayout(new ThemeResource("icons/22/crm/case.png"));
-            this.addComponent(caseAddLayout);
-            initRelatedComponent();
+			return null;
+		}
+	}
 
-            previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new CaseFormLayoutFactory.CaseInformationLayout());
-                    this.setFormFieldFactory(new CaseFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                    caseAddLayout.setTitle(cases.getSubject());
-                }
+	public static class ReadView extends CasePreviewBuilder {
 
-                @Override
-                protected void doPrint() {
-                    // Create a window that contains what you want to print
-                    Window window = new Window("Window to Print");
+		private VerticalLayout caseInformationLayout;
+		private VerticalLayout relatedItemsContainer;
+		private ReadViewLayout caseAddLayout;
 
-                    CasePreviewBuilder printView = new CasePreviewBuilder.PrintView();
-                    printView.previewItem(cases);
-                    window.addComponent(printView);
+		public ReadView() {
+			caseAddLayout = new ReadViewLayout(
+					MyCollabResource.newResource("icons/22/crm/case.png"));
+			this.addComponent(caseAddLayout);
+			initRelatedComponent();
 
-                    // Add the printing window as a new application-level window
-                    getApplication().addWindow(window);
+			previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new CaseFormLayoutFactory.CaseInformationLayout());
+					this.setFormFieldFactory(new CaseFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+					caseAddLayout.setTitle(cases.getSubject());
+				}
 
-                    // Open it as a popup window with no decorations
-                    getWindow().open(new ExternalResource(window.getURL()),
-                            "_blank", 1100, 200, // Width and height 
-                            Window.BORDER_NONE); // No decorations
+				@Override
+				protected void doPrint() {
+					// Create a window that contains what you want to print
+					Window window = new Window("Window to Print");
 
-                    // Print automatically when the window opens.
-                    // This call will block until the print dialog exits!
-                    window.executeJavaScript("print();");
+					CasePreviewBuilder printView = new CasePreviewBuilder.PrintView();
+					printView.previewItem(cases);
+					window.addComponent(printView);
 
-                    // Close the window automatically after printing
-                    window.executeJavaScript("self.close();");
-                }
+					// Add the printing window as a new application-level window
+					getApplication().addWindow(window);
 
-                @Override
-                protected void showHistory() {
-                    AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CASE, cases.getId());
-                    getWindow().addWindow(historyLog);
-                }
-            };
+					// Open it as a popup window with no decorations
+					getWindow().open(new ExternalResource(window.getURL()),
+							"_blank", 1100, 200, // Width and height
+							Window.BORDER_NONE); // No decorations
 
-            final Layout optionalActionControls = PreviewFormControlsGenerator2
+					// Print automatically when the window opens.
+					// This call will block until the print dialog exits!
+					window.executeJavaScript("print();");
+
+					// Close the window automatically after printing
+					window.executeJavaScript("self.close();");
+				}
+
+				@Override
+				protected void showHistory() {
+					AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
+							ModuleNameConstants.CRM, CrmTypeConstants.CASE,
+							cases.getId());
+					getWindow().addWindow(historyLog);
+				}
+			};
+
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_CASE);
 
-            caseAddLayout.addControlButtons(optionalActionControls);
-			
-            caseInformationLayout = new VerticalLayout();
-            caseInformationLayout.addStyleName("main-info");
-            
-            final Layout actionControls = PreviewFormControlsGenerator2
+			caseAddLayout.addControlButtons(optionalActionControls);
+
+			caseInformationLayout = new VerticalLayout();
+			caseInformationLayout.addStyleName("main-info");
+
+			final Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_CASE);
 			actionControls.addStyleName("control-buttons");
 			caseInformationLayout.addComponent(actionControls);
-			
-            caseInformationLayout.addComponent(previewForm);
-            caseInformationLayout.addComponent(noteListItems);
 
-            caseAddLayout.addTab(caseInformationLayout,"Case Information");
+			caseInformationLayout.addComponent(previewForm);
+			caseInformationLayout.addComponent(noteListItems);
 
-            relatedItemsContainer = new VerticalLayout();
-            relatedItemsContainer.setMargin(true);
-            
-            
-            caseAddLayout.addTab(relatedItemsContainer,  "More Information");
-            
-            this.addComponent(caseAddLayout);
+			caseAddLayout.addTab(caseInformationLayout, "Case Information");
 
-            caseAddLayout
+			relatedItemsContainer = new VerticalLayout();
+			relatedItemsContainer.setMargin(true);
+
+			caseAddLayout.addTab(relatedItemsContainer, "More Information");
+
+			this.addComponent(caseAddLayout);
+
+			caseAddLayout
 					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
 
 						@Override
@@ -209,59 +213,61 @@ public class CasePreviewBuilder extends VerticalLayout {
 							if ("Case Information".equals(caption)) {
 
 							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer.addComponent(associateActivityList);
-					            relatedItemsContainer.addComponent(associateContactList);
+								relatedItemsContainer
+										.addComponent(associateActivityList);
+								relatedItemsContainer
+										.addComponent(associateContactList);
 							}
 							caseAddLayout.selectTab(caption);
 						}
 					});
-        }
-    }
+		}
+	}
 
-    /**
+	/**
      *
      */
-    public static class PrintView extends CasePreviewBuilder {
+	public static class PrintView extends CasePreviewBuilder {
 
-        public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new FormLayoutFactory());
-                    this.setFormFieldFactory(new CaseFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                }
-            };
-            initRelatedComponent();
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new CaseFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+				}
+			};
+			initRelatedComponent();
 
-            this.addComponent(previewForm);
-        }
+			this.addComponent(previewForm);
+		}
 
-        class FormLayoutFactory extends AccountFormLayoutFactory {
+		class FormLayoutFactory extends AccountFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            public FormLayoutFactory() {
-                super(cases.getSubject());
-            }
+			public FormLayoutFactory() {
+				super(cases.getSubject());
+			}
 
-            @Override
-            protected Layout createTopPanel() {
-                return null;
-            }
+			@Override
+			protected Layout createTopPanel() {
+				return null;
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                VerticalLayout relatedItemsPanel = new VerticalLayout();
-                relatedItemsPanel.setWidth("100%");
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				relatedItemsPanel.setWidth("100%");
 
-                relatedItemsPanel.addComponent(noteListItems);
+				relatedItemsPanel.addComponent(noteListItems);
 
-                relatedItemsPanel.addComponent(associateActivityList);
-                relatedItemsPanel.addComponent(associateContactList);
+				relatedItemsPanel.addComponent(associateActivityList);
+				relatedItemsPanel.addComponent(associateContactList);
 
-                return relatedItemsPanel;
-            }
-        }
-    }
+				return relatedItemsPanel;
+			}
+		}
+	}
 }

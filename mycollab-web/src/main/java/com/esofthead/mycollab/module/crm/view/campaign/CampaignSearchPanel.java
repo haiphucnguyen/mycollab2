@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.vaadin.terminal.ThemeResource;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -39,14 +39,14 @@ import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 public class CampaignSearchPanel extends
-	DefaultGenericSearchPanel<CampaignSearchCriteria> {
+		DefaultGenericSearchPanel<CampaignSearchCriteria> {
 
 	protected CampaignSearchCriteria searchCriteria;
 
 	public CampaignSearchPanel() {
 		searchCriteria = new CampaignSearchCriteria();
 	}
-	
+
 	private HorizontalLayout createSearchTopPanel() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
@@ -66,9 +66,11 @@ public class CampaignSearchPanel extends
 
 					}
 				});
-		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createAccountBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
+		createAccountBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
 		return layout;
@@ -94,30 +96,31 @@ public class CampaignSearchPanel extends
 		public ComponentContainer constructBody() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
-			nameField = this.createSeachSupportTextField(new TextField(), "NameFieldOfBasicSearch");
-			
+			nameField = this.createSeachSupportTextField(new TextField(),
+					"NameFieldOfBasicSearch");
+
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(layout, nameField,Alignment.MIDDLE_CENTER);
-			
+			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
+
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search_white.png"));
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					CampaignBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			UiUtils.addComponent(layout, searchBtn,
-					Alignment.MIDDLE_LEFT);
-			
+			UiUtils.addComponent(layout, searchBtn, Alignment.MIDDLE_LEFT);
+
 			myItemCheckbox = new CheckBox(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
 			myItemCheckbox.setWidth("75px");
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
-			
+
 			final Button cancelBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
@@ -129,8 +132,7 @@ public class CampaignSearchPanel extends
 					nameField.setValue("");
 				}
 			});
-			UiUtils.addComponent(layout, cancelBtn,
-					Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, cancelBtn, Alignment.MIDDLE_CENTER);
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
@@ -148,20 +150,19 @@ public class CampaignSearchPanel extends
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			searchCriteria = new CampaignSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(
-					SearchField.AND, AppContext.getAccountId()));
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(nameField.getValue()
-					.toString().trim())) {
+			if (StringUtil.isNotNullOrEmpty(nameField.getValue().toString()
+					.trim())) {
 				searchCriteria.setCampaignName(new StringSearchField(
 						SearchField.AND, (String) nameField.getValue()));
 			}
 
 			if (myItemCheckbox.booleanValue()) {
-				searchCriteria
-						.setAssignUsers(new SetSearchField<String>(
-								SearchField.AND,
-								new String[] { AppContext.getUsername() }));
+				searchCriteria.setAssignUsers(new SetSearchField<String>(
+						SearchField.AND, new String[] { AppContext
+								.getUsername() }));
 			} else {
 				searchCriteria.setAssignUsers(null);
 			}
@@ -169,7 +170,8 @@ public class CampaignSearchPanel extends
 		}
 	}
 
-	private class CampaignAdvancedSearchLayout extends DefaultAdvancedSearchLayout<CampaignSearchCriteria> {
+	private class CampaignAdvancedSearchLayout extends
+			DefaultAdvancedSearchLayout<CampaignSearchCriteria> {
 
 		private TextField nameField;
 		private DateSelectionField startDateField;
@@ -189,18 +191,18 @@ public class CampaignSearchPanel extends
 
 		@Override
 		public ComponentContainer constructBody() {
-			
+
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
-			"90px");
-			
+					"90px");
+
 			if (ScreenSize.hasSupport1024Pixels()) {
-				gridLayout = new GridFormLayoutHelper(3, 3, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-				"90px");
-			} else if (ScreenSize.hasSupport1280Pixels()) {
 				gridLayout = new GridFormLayoutHelper(3, 3,
-				"90px");
+						UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+						"90px");
+			} else if (ScreenSize.hasSupport1280Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 3, "90px");
 			}
-			
+
 			nameField = (TextField) gridLayout.addComponent(new TextField(),
 					"Name", 0, 0);
 			startDateField = (DateSelectionField) gridLayout.addComponent(
@@ -217,30 +219,27 @@ public class CampaignSearchPanel extends
 					new CampaignStatusListSelect(), "Status", 1, 1);
 			assignUserField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assign User", 2, 1);
-			
+
 			gridLayout.getLayout().setSpacing(true);
-			
+
 			return gridLayout.getLayout();
 		}
-		
+
 		@Override
 		protected CampaignSearchCriteria fillupSearchCriteria() {
 			searchCriteria = new CampaignSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(
-					SearchField.AND, AppContext.getAccountId()));
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) nameField
-					.getValue())) {
-				searchCriteria.setCampaignName(new StringSearchField(
-						SearchField.AND,
-						((String) nameField.getValue()).trim()));
+			if (StringUtil.isNotNullOrEmpty((String) nameField.getValue())) {
+				searchCriteria
+						.setCampaignName(new StringSearchField(SearchField.AND,
+								((String) nameField.getValue()).trim()));
 			}
 
 			SearchField startDate = startDateField.getValue();
-			if (startDate != null
-					&& (startDate instanceof DateSearchField)) {
-				searchCriteria
-						.setStartDate((DateSearchField) startDate);
+			if (startDate != null && (startDate instanceof DateSearchField)) {
+				searchCriteria.setStartDate((DateSearchField) startDate);
 			} else if (startDate != null
 					&& (startDate instanceof RangeDateSearchField)) {
 				searchCriteria
@@ -273,9 +272,8 @@ public class CampaignSearchPanel extends
 			Collection<String> assignUsers = (Collection<String>) assignUserField
 					.getValue();
 			if (assignUsers != null && assignUsers.size() > 0) {
-				searchCriteria
-						.setAssignUsers(new SetSearchField<String>(
-								SearchField.AND, assignUsers));
+				searchCriteria.setAssignUsers(new SetSearchField<String>(
+						SearchField.AND, assignUsers));
 			}
 			return searchCriteria;
 		}
