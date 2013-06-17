@@ -225,14 +225,6 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 		mainLayout.addComponent(header);
 
-		// final HorizontalLayout layoutExport = new HorizontalLayout();
-		// layoutExport.setSpacing(true);
-		// layoutExport.setWidth("100%");
-		//
-		// final Label lbEmpty = new Label("");
-		// layoutExport.addComponent(lbEmpty);
-		// layoutExport.setExpandRatio(lbEmpty, 1.0f);
-
 		final Button exportBtn = new Button("Export",
 				new Button.ClickListener() {
 

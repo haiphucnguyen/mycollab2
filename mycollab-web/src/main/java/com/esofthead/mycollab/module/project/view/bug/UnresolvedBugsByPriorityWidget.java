@@ -28,66 +28,71 @@ import com.vaadin.ui.VerticalLayout;
 public class UnresolvedBugsByPriorityWidget extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	private IBugReportDisplayContainer componentLayout;
+	private final IBugReportDisplayContainer componentLayout;
 	private BugSearchCriteria bugSearchCriteria;
 
 	public UnresolvedBugsByPriorityWidget(
-			IBugReportDisplayContainer componentLayout) {
+			final IBugReportDisplayContainer componentLayout) {
 		super("Unresolved by Priority", new VerticalLayout());
 
 		this.componentLayout = componentLayout;
+		this.setContentBorder(true);
+		((VerticalLayout) this.bodyContent).setSpacing(true);
 	}
 
-	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
+	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
 		this.bugSearchCriteria = searchCriteria;
 		this.bodyContent.removeAllComponents();
-		BugService bugService = AppContext.getSpringBean(BugService.class);
-		int totalCount = bugService.getTotalCount(searchCriteria);
-		List<GroupItem> groupItems = bugService
+		final BugService bugService = AppContext
+				.getSpringBean(BugService.class);
+		final int totalCount = bugService.getTotalCount(searchCriteria);
+		final List<GroupItem> groupItems = bugService
 				.getPrioritySummary(searchCriteria);
-		BugPriorityClickListener listener = new BugPriorityClickListener();
+		final BugPriorityClickListener listener = new BugPriorityClickListener();
 
 		if (!groupItems.isEmpty()) {
-			for (String status : ProjectDataTypeFactory.getBugPriorityList()) {
+			for (final String status : ProjectDataTypeFactory
+					.getBugPriorityList()) {
 				boolean isFound = false;
-				for (GroupItem item : groupItems) {
+				for (final GroupItem item : groupItems) {
 					if (status.equals(item.getGroupid())) {
 						isFound = true;
-						HorizontalLayout priorityLayout = new HorizontalLayout();
+						final HorizontalLayout priorityLayout = new HorizontalLayout();
 						priorityLayout.setSpacing(true);
-						Button userLbl = new Button(status, listener);
+						final Button userLbl = new Button(status, listener);
 						userLbl.setWidth("110px");
 						userLbl.setStyleName("link");
 
 						priorityLayout.addComponent(userLbl);
-						ProgressIndicator indicator = new ProgressIndicator(
+						final ProgressIndicator indicator = new ProgressIndicator(
 								new Float((float) item.getValue() / totalCount));
 						indicator.setPollingInterval(1000000000);
 						priorityLayout.addComponent(indicator);
 
-						Label progressLbl = new Label("(" + item.getValue()
-								+ "/" + totalCount + ")");
+						final Label progressLbl = new Label("("
+								+ item.getValue() + "/" + totalCount + ")");
 						priorityLayout.addComponent(progressLbl);
-						bodyContent.addComponent(priorityLayout);
+						this.bodyContent.addComponent(priorityLayout);
 						continue;
 					}
 				}
 
 				if (!isFound) {
-					HorizontalLayout priorityLayout = new HorizontalLayout();
+					final HorizontalLayout priorityLayout = new HorizontalLayout();
 					priorityLayout.setSpacing(true);
-					Button userLbl = new Button(status, listener);
+					final Button userLbl = new Button(status, listener);
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
-					ProgressIndicator indicator = new ProgressIndicator(0f);
+					final ProgressIndicator indicator = new ProgressIndicator(
+							0f);
 					indicator.setPollingInterval(1000000000);
 					priorityLayout.addComponent(indicator);
 
-					Label progressLbl = new Label("(" + 0 + "/" + totalCount
-							+ ")");
+					final Label progressLbl = new Label("(" + 0 + "/"
+							+ totalCount + ")");
 					priorityLayout.addComponent(progressLbl);
-					bodyContent.addComponent(priorityLayout);
+					this.bodyContent.addComponent(priorityLayout);
 				}
 			}
 
@@ -98,11 +103,15 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void buttonClick(ClickEvent event) {
-			String caption = event.getButton().getCaption();
-			bugSearchCriteria.setPriorities(new SetSearchField<String>(
-					SearchField.AND, new String[] { caption }));
-			componentLayout.displayBugListWidget(caption, bugSearchCriteria);
+		public void buttonClick(final ClickEvent event) {
+			final String caption = event.getButton().getCaption();
+			UnresolvedBugsByPriorityWidget.this.bugSearchCriteria
+					.setPriorities(new SetSearchField<String>(SearchField.AND,
+							new String[] { caption }));
+			UnresolvedBugsByPriorityWidget.this.componentLayout
+					.displayBugListWidget(
+							caption,
+							UnresolvedBugsByPriorityWidget.this.bugSearchCriteria);
 		}
 
 	}
