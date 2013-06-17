@@ -109,7 +109,9 @@ div.v-button-link {
 	border-radius: 0px;
 	margin: 0px;
 }
-
+.v-textarea {
+	overflow: auto;
+}
 .v-label.overdue {
 	color: red;
 }
@@ -1829,6 +1831,10 @@ input.v-textfield-errorField {
 	padding: 5px;
 }
 
+.v-tabsheet-tabsheetpanel .activity-panel .v-lazyloadingwrapper > .v-verticallayout > div > div:first-child .activity-stream >.v-csslayout-margin {
+	border-width: 1px;
+}
+
 .stream-content>.v-csslayout-margin {
 	padding-top: 3px;
 }
@@ -2996,6 +3002,8 @@ table.legendBox .legendBoxContent .v-csslayout-container > div {
 	margin-bottom: 15px;
 	font-size: 13px;
 	vertical-align: top;
+	width: 290px;
+	margin-right: 11px;
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption {

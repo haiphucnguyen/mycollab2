@@ -146,7 +146,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				final AddViewLayout bugAddLayout = new AddViewLayout("[Issue "
 						+ BugReadViewImpl.this.bug.getBugkey() + "#]: "
 						+ BugReadViewImpl.this.bug.getSummary(),
-						new ThemeResource("icons/48/project/bug.png"));
+						new ThemeResource("icons/24/project/bug.png"));
 
 				if (BugStatusConstants.CLOSE.equals(BugReadViewImpl.this.bug
 						.getStatus())) {
@@ -175,7 +175,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 				final HorizontalLayout headerRight = new HorizontalLayout();
 				headerRight.addComponent(createAccountBtn);
-				headerRight.setMargin(true);
 				bugAddLayout.addHeaderRight(headerRight);
 
 				final HorizontalLayout topPanel = new HorizontalLayout();
@@ -350,7 +349,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							AttachmentConstants.PROJECT_BUG_TYPE,
 							BugReadViewImpl.this.bug.getId());
 				} else if (propertyId.equals("components")) {
-					List<Component> components = BugReadViewImpl.this.bug
+					final List<Component> components = BugReadViewImpl.this.bug
 							.getComponents();
 					if (components != null && components.size() > 0) {
 						final FormContainerViewField componentContainer = new FormContainerViewField();
@@ -380,7 +379,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						return componentContainer;
 					}
 				} else if (propertyId.equals("affectedVersions")) {
-					List<Version> affectedVersions = BugReadViewImpl.this.bug
+					final List<Version> affectedVersions = BugReadViewImpl.this.bug
 							.getAffectedVersions();
 					if (affectedVersions != null && affectedVersions.size() > 0) {
 						final FormContainerViewField componentContainer = new FormContainerViewField();
@@ -407,7 +406,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						return componentContainer;
 					}
 				} else if (propertyId.equals("fixedVersions")) {
-					List<Version> fixedVersions = BugReadViewImpl.this.bug
+					final List<Version> fixedVersions = BugReadViewImpl.this.bug
 							.getFixedVersions();
 					if (fixedVersions != null && fixedVersions.size() > 0) {
 						final FormContainerViewField componentContainer = new FormContainerViewField();
