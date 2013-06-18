@@ -10,13 +10,11 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.thoughtworks.xstream.XStream;
 import com.vaadin.data.util.BeanContainer;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -59,7 +57,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 	public abstract ComponentContainer constructBody();
 
-	public abstract void loadSaveSearchToField(String value);
+	public abstract void loadSaveSearchToField(S value);
 
 	protected abstract void clearFields();
 
@@ -195,7 +193,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			List<SaveSearchResultWithBLOBs> result = saveSearchResultService
 					.findPagableListByCriteria(new SearchRequest<SaveSearchResultCriteria>(
 							searchCriteria, 0, Integer.MAX_VALUE));
-			BeanContainer<String, SaveSearchResultWithBLOBs> beanItem = new BeanContainer<String, SaveSearchResultWithBLOBs>(
+			final BeanContainer<String, SaveSearchResultWithBLOBs> beanItem = new BeanContainer<String, SaveSearchResultWithBLOBs>(
 					SaveSearchResultWithBLOBs.class);
 			beanItem.setBeanIdProperty("id");
 
@@ -205,6 +203,23 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 			this.setContainerDataSource(beanItem);
 			this.setItemCaptionPropertyId("queryname");
+			
+			this.addListener(new ValueChangeListener() {
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent event) {
+					Object itemId = SavedSearchResultComboBox.this.getValue();
+					SaveSearchResultWithBLOBs data = beanItem.getItem(itemId).getBean();
+					
+					String queryText = data.getQuerytext();
+					XStream xstream = new XStream();
+					S value = (S) xstream.fromXML(queryText);
+					loadSaveSearchToField(value);
+				}
+			});
+			this.setImmediate(true);
+			
 		}
+		
 	}
 }

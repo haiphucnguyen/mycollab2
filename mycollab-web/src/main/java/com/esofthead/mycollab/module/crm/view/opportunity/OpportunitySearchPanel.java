@@ -289,11 +289,10 @@ public class OpportunitySearchPanel extends
 			stageField.setValue(null);
 			sourceField.setValue(null);
 		}
-
 		@Override
-		public void loadSaveSearchToField(String value) {
+		public void loadSaveSearchToField(OpportunitySearchCriteria value) {
 			// TODO Auto-generated method stub
-
+			
 		}
 	}
 

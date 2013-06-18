@@ -147,9 +147,8 @@ public class CaseSearchPanel extends
 			userField.setValue(null);
 			priorityField.setValue(null);
 		}
-
 		@Override
-		public void loadSaveSearchToField(String value) {
+		public void loadSaveSearchToField(CaseSearchCriteria value) {
 			// TODO Auto-generated method stub
 			
 		}

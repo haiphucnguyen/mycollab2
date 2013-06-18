@@ -337,11 +337,10 @@ public class LeadSearchPanel extends
 			stateField.setValue("");
 			userField.setValue(null);
 		}
-
 		@Override
-		public void loadSaveSearchToField(String value) {
+		public void loadSaveSearchToField(LeadSearchCriteria value) {
 			// TODO Auto-generated method stub
-
+			
 		}
 	}
 

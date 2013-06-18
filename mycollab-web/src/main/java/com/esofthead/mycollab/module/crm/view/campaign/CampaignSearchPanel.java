@@ -287,9 +287,8 @@ public class CampaignSearchPanel extends
 			statusField.setValue(null);
 			assignUserField.setValue(null);
 		}
-
 		@Override
-		public void loadSaveSearchToField(String value) {
+		public void loadSaveSearchToField(CampaignSearchCriteria value) {
 			// TODO Auto-generated method stub
 			
 		}
