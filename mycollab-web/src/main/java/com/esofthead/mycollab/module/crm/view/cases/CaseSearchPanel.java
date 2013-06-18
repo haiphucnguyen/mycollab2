@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -147,10 +148,23 @@ public class CaseSearchPanel extends
 			userField.setValue(null);
 			priorityField.setValue(null);
 		}
+
 		@Override
-		public void loadSaveSearchToField(CaseSearchCriteria value) {
-			// TODO Auto-generated method stub
-			
+		protected void loadSaveSearchToField(CaseSearchCriteria value) {
+			// case thieu numberField
+			if (value.getSubject() != null)
+				subjectField.setValue(value.getSubject().getValue());
+			if (value.getAccountName() != null)
+				accountField.setValue(value.getAccountName().getValue());
+			if (value.getStatuses() != null)
+				statusField.setValue(Arrays.asList((Object[])value.getStatuses().values));
+
+			if (value.getAssignUsers() != null)
+				userField
+						.setValue(Arrays.asList((Object[])value.getAssignUsers().values));
+			if (value.getPriorities() != null)
+				priorityField
+						.setValue(Arrays.asList((Object[])value.getPriorities().values));
 		}
 	}
 

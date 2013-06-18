@@ -46,8 +46,4 @@ class UserListSelect extends ListSelect {
 
 		this.setRows(4);
 	}
-	
-	public List<SimpleUser> getListUser(){
-		return userList;
-	}
 }

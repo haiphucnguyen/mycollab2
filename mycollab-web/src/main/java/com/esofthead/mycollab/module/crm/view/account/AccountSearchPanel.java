@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -13,7 +13,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -150,6 +149,12 @@ public class AccountSearchPanel extends
 				searchCriteria.setAnyMail(new StringSearchField(
 						SearchField.AND, (String) anyMailField.getValue()));
 			}
+			
+			if (StringUtil
+					.isNotNullOrEmpty((String) cityField.getValue())) {
+				searchCriteria.setAnyCity(new StringSearchField(
+						SearchField.AND, (String) cityField.getValue()));
+			}
 
 			final Collection<String> industries = (Collection<String>) industryField
 					.getValue();
@@ -187,34 +192,29 @@ public class AccountSearchPanel extends
 			typeField.setValue(null);
 			userField.setValue(null);
 		}
-		
+
 		@Override
-		public void loadSaveSearchToField(AccountSearchCriteria value) {
-			if(value!=null){
-				nameField.setValue(value.getAccountname());
-				websiteField.setValue(value.getWebsite());
-				anyPhoneField.setValue(value.getAnyPhone());
-				anyMailField.setValue(value.getAnyMail());
-				anyAddressField.setValue(value.getAnyAddress());
-				cityField.setValue(value.getAnyCity());
-				
-				Object[] userString = value.getIndustries().values;
-				for(Object str : userString){
-					industryField.setValue(str);
+		protected void loadSaveSearchToField(AccountSearchCriteria value) {
+			if (value != null) {
+				if (value.getAccountname()!=null) nameField.setValue(value.getAccountname().getValue());
+				if (value.getWebsite()!=null) websiteField.setValue(value.getWebsite().getValue());
+				if (value.getAnyPhone()!=null) anyPhoneField.setValue(value.getAnyPhone().getValue());
+				if (value.getAnyMail()!=null) anyMailField.setValue(value.getAnyMail().getValue());
+				if (value.getAnyAddress()!=null) anyAddressField.setValue(value.getAnyAddress().getValue());
+				if (value.getAnyCity()!=null) cityField.setValue(value.getAnyCity().getValue());
+
+				if(value.getIndustries()!=null){
+					Object[] userString = value.getIndustries().values;
+					industryField.setValue(Arrays.asList(userString));
 				}
-				
-				//industryField.setValue(value.getIndustries().values);
-				
-//				typeField.loadData(value.getTypes().values);
-//				
-//				String[] userString = value.getAssignUsers().values;
-//				
-//				
-//				
-//				
-//				userField.loadData(value.getAssignUser().val)
-//				
-//				
+				if(value.getTypes()!=null){
+					Object[] typeObj = value.getTypes().values;
+					typeField.setValue(Arrays.asList(typeObj));
+				}
+				if(value.getAssignUsers()!=null){
+					Object[] userObj = value.getAssignUsers().values;
+					userField.setValue(Arrays.asList(userObj));
+				}
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -354,9 +355,29 @@ public class ContactSearchPanel extends
 			leadSourceField.setValue(null);
 		}
 		@Override
-		public void loadSaveSearchToField(ContactSearchCriteria value) {
-			// TODO Auto-generated method stub
+		protected void loadSaveSearchToField(ContactSearchCriteria value) {
+			if (value.getFirstname()!=null) firstnameField.setValue(value.getFirstname().getValue());
+			if (value.getLastname() != null) lastnameField.setValue(value.getLastname().getValue());
+			if (value.getAccountName()!=null) accountnameField.setValue(value.getAccountName().getValue());
+			if (value.getAnyEmail() !=null) anyEmailField.setValue(value.getAnyEmail().getValue());
+			if (value.getAnyAddress()!=null) anyAddressField.setValue(value.getAnyAddress().getValue());
+			if (value.getAnyState()!=null) stateField.setValue(value.getAnyState().getValue());
+			if (value.getAnyPhone()!=null) anyPhoneField.setValue(value.getAnyPhone().getValue());
+			if (value.getAnyPostalCode()!=null) postalCodeField.setValue(value.getAnyPostalCode().getValue());
+			if (value.getAnyCity()!=null) cityField.setValue(value.getAnyCity().getValue());
+			if(value.getAssignUsers()!=null){
+				Object[] assignUser = value.getAssignUsers().values;
+				assignUserField.setValue(Arrays.asList(assignUser));
+			}
+			if(value.getCountries()!=null){
+				Object[] conField = value.getCountries().values;
+				countryField.setValue(Arrays.asList(conField));
+			}
 			
+			if(value.getLeadSources()!=null){
+				Object[] leadField = value.getLeadSources().values;
+				leadSourceField.setValue(Arrays.asList(leadField));
+			}
 		}
 	}
 
