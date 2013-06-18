@@ -76,7 +76,7 @@ public class CampaignAccountListComp extends
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Account");
 		controlsBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecordGreen.png"));
+				.newResource("icons/16/addRecord.png"));
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
 					@Override

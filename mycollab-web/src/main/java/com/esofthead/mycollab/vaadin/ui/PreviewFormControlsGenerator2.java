@@ -137,7 +137,7 @@ public class PreviewFormControlsGenerator2 {
 						previewForm.fireEditForm(item);
 					}
 				});
-		editBtn.setIcon(MyCollabResource.newResource("icons/16/edit.png"));
+		editBtn.setIcon(MyCollabResource.newResource("icons/16/edit_white.png"));
 		editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		editButtons.addComponent(editBtn);
 		editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);

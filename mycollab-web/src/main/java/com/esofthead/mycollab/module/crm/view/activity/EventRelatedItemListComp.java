@@ -53,7 +53,7 @@ public class EventRelatedItemListComp extends
 						}
 					});
 			newTaskBtn.setIcon(MyCollabResource
-					.newResource("icons/16/addRecordGreen.png"));
+					.newResource("icons/16/addRecord.png"));
 			newTaskBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_TASK));
 			newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -67,7 +67,7 @@ public class EventRelatedItemListComp extends
 						}
 					});
 			newCallBtn.setIcon(MyCollabResource
-					.newResource("icons/16/addRecordGreen.png"));
+					.newResource("icons/16/addRecord.png"));
 			newCallBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_CALL));
 			newCallBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -81,7 +81,7 @@ public class EventRelatedItemListComp extends
 						}
 					});
 			newMeetingBtn.setIcon(MyCollabResource
-					.newResource("icons/16/addRecordGreen.png"));
+					.newResource("icons/16/addRecord.png"));
 			newMeetingBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_MEETING));
 			newMeetingBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
