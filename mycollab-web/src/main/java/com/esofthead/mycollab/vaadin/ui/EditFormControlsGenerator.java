@@ -2,6 +2,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -47,6 +48,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
 							}
 						}
 					});
+			saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			layout.addComponent(saveBtn);
 			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
@@ -70,6 +72,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
 							}
 						}
 					});
+			saveAndNewBtn.setIcon(MyCollabResource.newResource("icons/16/save_new.png"));
 			saveAndNewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			layout.addComponent(saveAndNewBtn);
 			layout.setComponentAlignment(saveAndNewBtn, Alignment.MIDDLE_CENTER);
@@ -86,6 +89,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
 									.fireCancelForm();
 						}
 					});
+			cancelBtn.setIcon(MyCollabResource.newResource("icons/16/cancel.png"));
 			cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			layout.addComponent(cancelBtn);
 			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);

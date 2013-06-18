@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.vaadin.ui.ResourceResolver;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.Resource;
 
 /**
  * 
@@ -16,6 +18,8 @@ import com.esofthead.mycollab.vaadin.ui.ResourceResolver;
 public class ProjectResources {
 
 	private static final Map<String, String> resourceLinks;
+
+	private static final Map<String, Resource> resources;
 
 	static {
 		resourceLinks = new HashMap<String, String>();
@@ -39,9 +43,35 @@ public class ProjectResources {
 				.getResourceLink("icons/16/project/component.png"));
 		resourceLinks.put(ProjectContants.BUG_VERSION, ResourceResolver
 				.getResourceLink("icons/16/project/version.png"));
+
+		resources = new HashMap<String, Resource>();
+		resources.put(ProjectContants.PROJECT,
+				MyCollabResource.newResource("icons/16/project/project.png"));
+		resources.put(ProjectContants.MESSAGE,
+				MyCollabResource.newResource("icons/16/project/message.png"));
+		resources.put(ProjectContants.MILESTONE,
+				MyCollabResource.newResource("icons/16/project/milestone.png"));
+		resources.put(ProjectContants.PROBLEM,
+				MyCollabResource.newResource("icons/16/project/problem.png"));
+		resources.put(ProjectContants.RISK,
+				MyCollabResource.newResource("icons/16/project/risk.png"));
+		resources.put(ProjectContants.TASK,
+				MyCollabResource.newResource("icons/16/project/task.png"));
+		resources.put(ProjectContants.TASK_LIST,
+				MyCollabResource.newResource("icons/16/project/tasklist.png"));
+		resources.put(ProjectContants.BUG,
+				MyCollabResource.newResource("icons/16/project/bug.png"));
+		resources.put(ProjectContants.BUG_COMPONENT,
+				MyCollabResource.newResource("icons/16/project/component.png"));
+		resources.put(ProjectContants.BUG_VERSION,
+				MyCollabResource.newResource("icons/16/project/version.png"));
 	}
 
 	public static String getResourceLink(String type) {
 		return resourceLinks.get(type);
+	}
+
+	public static Resource getResource(String type) {
+		return resources.get(type);
 	}
 }

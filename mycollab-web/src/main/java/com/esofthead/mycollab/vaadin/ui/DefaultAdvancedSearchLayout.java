@@ -2,6 +2,8 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.List;
 
+import org.eclipse.jetty.util.log.Log;
+
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
@@ -10,13 +12,11 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.thoughtworks.xstream.XStream;
 import com.vaadin.data.util.BeanContainer;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -33,6 +33,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 	private SaveSearchResultService saveSearchResultService;
 
+	private TextField saveSearchValue;
 	protected String type;
 
 	public DefaultAdvancedSearchLayout(DefaultGenericSearchPanel<S> parent,
@@ -59,7 +60,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 	public abstract ComponentContainer constructBody();
 
-	public abstract void loadSaveSearchToField(String value);
+	protected abstract void loadSaveSearchToField(S value);
 
 	protected abstract void clearFields();
 
@@ -120,12 +121,15 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		UiUtils.addComponent(saveSearchLayout, saveSearchLbl,
 				Alignment.MIDDLE_RIGHT);
 
-		final TextField saveSearchValue = new TextField();
+		saveSearchValue = new TextField();
 		UiUtils.addComponent(saveSearchLayout, saveSearchValue,
 				Alignment.MIDDLE_RIGHT);
 
+		final SavedSearchResultComboBox saveResult = new SavedSearchResultComboBox();
+		
 		Button saveSearchBtn = new Button("Save", new Button.ClickListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void buttonClick(ClickEvent event) {
 				S searchCriteria = fillupSearchCriteria();
@@ -139,8 +143,18 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 					searchResult.setType(type);
 					searchResult.setQueryname((String) saveSearchValue
 							.getValue());
-					saveSearchResultService.saveWithSession(searchResult,
-							AppContext.getUsername());
+					try{
+						saveSearchResultService.saveWithSession(searchResult,
+								AppContext.getUsername());
+						getWindow().showNotification("You created successfull searchItem.");
+						clearFields();
+						saveResult.contructComboBox();
+						saveResult.setValue(null);
+						saveResult.setValue("");
+					}catch(Exception e){
+						Log.debug("Error while save search result:" + e.getMessage());
+					}
+					
 				}
 
 			}
@@ -165,7 +179,6 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		UiUtils.addComponent(bottomLayout2, saveSearchLable,
 				Alignment.MIDDLE_CENTER);
 
-		final SavedSearchResultComboBox saveResult = new SavedSearchResultComboBox();
 		UiUtils.addComponent(bottomLayout2, saveResult, Alignment.MIDDLE_CENTER);
 
 		UiUtils.addComponent(bottomLayout, bottomLayout1,
@@ -181,10 +194,30 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 	}
 
 	private class SavedSearchResultComboBox extends ComboBox {
+		BeanContainer<String, SaveSearchResultWithBLOBs> beanItem;
 		public SavedSearchResultComboBox() {
 			this.setImmediate(true);
 			this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
+			contructComboBox();
+			
+			this.addListener(new ValueChangeListener() {
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent event) {
+					Object itemId = SavedSearchResultComboBox.this.getValue();
+					SaveSearchResultWithBLOBs data = beanItem.getItem(itemId).getBean();
+					
+					saveSearchValue.setValue("");
+					String queryText = data.getQuerytext();
+					XStream xstream = new XStream();
+					S value = (S) xstream.fromXML(queryText);
+					loadSaveSearchToField(value);
+				}
+			});
+			this.setImmediate(true);
+		}
+		public void contructComboBox(){
 			SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
 			searchCriteria.setType(new StringSearchField(type));
 			searchCriteria.setCreateUser(new StringSearchField(AppContext
@@ -195,7 +228,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			List<SaveSearchResultWithBLOBs> result = saveSearchResultService
 					.findPagableListByCriteria(new SearchRequest<SaveSearchResultCriteria>(
 							searchCriteria, 0, Integer.MAX_VALUE));
-			BeanContainer<String, SaveSearchResultWithBLOBs> beanItem = new BeanContainer<String, SaveSearchResultWithBLOBs>(
+			beanItem = new BeanContainer<String, SaveSearchResultWithBLOBs>(
 					SaveSearchResultWithBLOBs.class);
 			beanItem.setBeanIdProperty("id");
 
@@ -206,5 +239,6 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			this.setContainerDataSource(beanItem);
 			this.setItemCaptionPropertyId("queryname");
 		}
+		
 	}
 }

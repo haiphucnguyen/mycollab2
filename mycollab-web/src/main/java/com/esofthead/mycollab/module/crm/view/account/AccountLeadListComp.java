@@ -58,7 +58,7 @@ public class AccountLeadListComp extends
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Lead");
 		controlsBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecordGreen.png"));
+				.newResource("icons/16/addRecord.png"));
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
 		controlsBtn

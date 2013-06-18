@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -291,9 +292,23 @@ public class OpportunitySearchPanel extends
 		}
 
 		@Override
-		public void loadSaveSearchToField(String value) {
-			// TODO Auto-generated method stub
-
+		protected void loadSaveSearchToField(OpportunitySearchCriteria value) {
+			if (value.getOpportunityName() != null)
+				opportunityNameField.setValue(value.getOpportunityName()
+						.getValue());
+			if (value.getAccountName() != null)
+				accountField.setValue(value.getAccountName().getValue());
+			if (value.getNextStep() != null)
+				nextStepField.setValue(value.getNextStep().getValue());
+			if (value.getAssignUsers() != null)
+				userField
+						.setValue(Arrays.asList((Object[])value.getAssignUsers().values));
+			if (value.getSalesStages() != null)
+				stageField
+						.setValue(Arrays.asList((Object[])value.getSalesStages().values));
+			if (value.getLeadSources() != null)
+				sourceField
+						.setValue(Arrays.asList((Object[])value.getLeadSources().values));
 		}
 	}
 

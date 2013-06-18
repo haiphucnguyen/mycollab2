@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
@@ -289,9 +290,29 @@ public class CampaignSearchPanel extends
 		}
 
 		@Override
-		public void loadSaveSearchToField(String value) {
-			// TODO Auto-generated method stub
+		protected void loadSaveSearchToField(CampaignSearchCriteria value) {
+			if (value.getCampaignName() != null)
+				nameField.setValue(value.getCampaignName().getValue());
 			
+			
+			if (value.getStartDateRange() != null)
+				startDateField.setData(value.getStartDateRange().getFrom());
+			if (value.getStartDateRange() != null)
+				endDateField.setData(value.getStartDateRange().getTo());
+
+			if(value.getTypes()!=null){
+				Object[] typeF = value.getTypes().values;
+				typeField.setValue(Arrays.asList(typeF));
+			}
+			if(value.getStatuses()!=null){
+				Object[] statusF = value.getStatuses().values;
+				statusField.setValue(Arrays.asList(statusF));
+			}
+			
+			if(value.getAssignUsers()!=null){
+				Object[] assign = value.getAssignUsers().values;
+				assignUserField.setValue(Arrays.asList(assign));
+			}
 		}
 	}
 

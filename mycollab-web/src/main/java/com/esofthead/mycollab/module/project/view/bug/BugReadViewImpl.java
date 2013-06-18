@@ -243,7 +243,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							}
 						});
 				editBtn.setIcon(MyCollabResource
-						.newResource("icons/16/edit.png"));
+						.newResource("icons/16/edit_white.png"));
 				editBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
 				editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

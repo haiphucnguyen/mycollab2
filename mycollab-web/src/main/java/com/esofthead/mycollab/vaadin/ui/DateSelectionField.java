@@ -62,7 +62,7 @@ public class DateSelectionField extends GridLayout{
         this.addComponent(dateSelectionBox, 0, 0);
     }
 	
-	private void setComponentByValue(ValueChangeEvent event) {
+	public void setComponentByValue(ValueChangeEvent event) {
 		
 		removeAllDatefield();
 		

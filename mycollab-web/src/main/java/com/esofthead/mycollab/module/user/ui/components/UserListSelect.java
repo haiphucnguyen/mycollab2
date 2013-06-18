@@ -14,7 +14,7 @@ import com.vaadin.ui.ListSelect;
 
 public @SuppressWarnings("serial")
 class UserListSelect extends ListSelect {
-
+	private List<SimpleUser> userList;
 	public UserListSelect() {
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
 		this.setMultiSelect(true);
@@ -30,10 +30,13 @@ class UserListSelect extends ListSelect {
 				AppContext.getAccountId()));
 
 		UserService userService = AppContext.getSpringBean(UserService.class);
-		List<SimpleUser> userList = userService
+		 userList = userService
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-
+		loadData(userList);
+	}
+	
+	public void loadData(List<SimpleUser> userList){
 		for (SimpleUser user : userList) {
 			this.addItem(user.getUsername());
 			this.setItemCaption(user.getUsername(), user.getDisplayName());

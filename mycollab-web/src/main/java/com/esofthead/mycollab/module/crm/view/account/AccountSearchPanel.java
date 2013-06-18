@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -148,6 +149,12 @@ public class AccountSearchPanel extends
 				searchCriteria.setAnyMail(new StringSearchField(
 						SearchField.AND, (String) anyMailField.getValue()));
 			}
+			
+			if (StringUtil
+					.isNotNullOrEmpty((String) cityField.getValue())) {
+				searchCriteria.setAnyCity(new StringSearchField(
+						SearchField.AND, (String) cityField.getValue()));
+			}
 
 			final Collection<String> industries = (Collection<String>) industryField
 					.getValue();
@@ -187,9 +194,28 @@ public class AccountSearchPanel extends
 		}
 
 		@Override
-		public void loadSaveSearchToField(String value) {
-			// TODO Auto-generated method stub
-			System.out.println(value);
+		protected void loadSaveSearchToField(AccountSearchCriteria value) {
+			if (value != null) {
+				if (value.getAccountname()!=null) nameField.setValue(value.getAccountname().getValue());
+				if (value.getWebsite()!=null) websiteField.setValue(value.getWebsite().getValue());
+				if (value.getAnyPhone()!=null) anyPhoneField.setValue(value.getAnyPhone().getValue());
+				if (value.getAnyMail()!=null) anyMailField.setValue(value.getAnyMail().getValue());
+				if (value.getAnyAddress()!=null) anyAddressField.setValue(value.getAnyAddress().getValue());
+				if (value.getAnyCity()!=null) cityField.setValue(value.getAnyCity().getValue());
+
+				if(value.getIndustries()!=null){
+					Object[] userString = value.getIndustries().values;
+					industryField.setValue(Arrays.asList(userString));
+				}
+				if(value.getTypes()!=null){
+					Object[] typeObj = value.getTypes().values;
+					typeField.setValue(Arrays.asList(typeObj));
+				}
+				if(value.getAssignUsers()!=null){
+					Object[] userObj = value.getAssignUsers().values;
+					userField.setValue(Arrays.asList(userObj));
+				}
+			}
 		}
 	}
 

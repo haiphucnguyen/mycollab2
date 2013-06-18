@@ -44,7 +44,7 @@ public class AccountOpportunityListComp extends
 					}
 				});
 		newBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecordGreen.png"));
+				.newResource("icons/16/addRecord.png"));
 		newBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		newBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
