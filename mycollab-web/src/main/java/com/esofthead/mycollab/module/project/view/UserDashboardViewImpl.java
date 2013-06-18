@@ -8,7 +8,9 @@ import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
 import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -16,6 +18,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -34,19 +37,34 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	public UserDashboardViewImpl() {
 		this.setSpacing(true);
-		this.setMargin(true);
+		this.setMargin(false, false, true, false);
+		this.setWidth("1130px");
+
+		final CssLayout headerWrapper = new CssLayout();
+		headerWrapper.setWidth("100%");
+		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
 
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
-		header.setMargin(false, false, false, true);
-		header.addStyleName("project-feed-header");
+		header.setMargin(false);
+		header.setSpacing(true);
+		header.addStyleName("projectfeed-hdr");
 
-		final Label searchtitle = new Label(
-				LocalizationHelper
-						.getMessage(ProjectCommonI18nEnum.DASHBOARD_TITLE));
-		searchtitle.setStyleName(Reindeer.LABEL_H1);
-		header.addComponent(searchtitle);
-		header.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+		header.addComponent(UserAvatarControlFactory
+				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 64));
+
+		final VerticalLayout headerContent = new VerticalLayout();
+		headerContent.addStyleName("projectfeed-hdr-content");
+
+		final Label headerLabel = new Label(AppContext.getSession()
+				.getDisplayName());
+		headerLabel.setStyleName(Reindeer.LABEL_H1);
+
+		final HorizontalLayout headerContentTop = new HorizontalLayout();
+		headerContentTop.setSpacing(true);
+		headerContentTop.addComponent(headerLabel);
+		headerContentTop.setComponentAlignment(headerLabel,
+				Alignment.MIDDLE_LEFT);
 
 		final Button createProjectBtn = new Button(
 				LocalizationHelper
@@ -64,26 +82,46 @@ public class UserDashboardViewImpl extends AbstractView implements
 		createProjectBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		header.addComponent(createProjectBtn);
-		header.setComponentAlignment(createProjectBtn, Alignment.MIDDLE_RIGHT);
+		headerContentTop.addComponent(createProjectBtn);
+		headerContentTop.setComponentAlignment(createProjectBtn,
+				Alignment.MIDDLE_LEFT);
 
-		this.addComponent(header);
+		final HorizontalLayout headerContentBottom = new HorizontalLayout();
+		headerContentBottom.setSpacing(true);
+		final ButtonLink userTasks = new ButtonLink("My Tasks (" + "0" + ")");
+		final ButtonLink userBugs = new ButtonLink("My Bugs (" + "0" + ")");
+		userTasks.setIcon(MyCollabResource
+				.newResource("icons/16/project/task.png"));
+		userTasks.removeStyleName("wordWrap");
+		userBugs.setIcon(MyCollabResource
+				.newResource("icons/16/project/bug.png"));
+		userBugs.removeStyleName("wordWrap");
+		headerContentBottom.addComponent(userTasks);
+		headerContentBottom.addComponent(userBugs);
+
+		headerContent.addComponent(headerContentTop);
+		headerContent.addComponent(headerContentBottom);
+
+		header.addComponent(headerContent);
+		header.setExpandRatio(headerContent, 1.0f);
+		headerWrapper.addComponent(header);
+
+		this.addComponent(headerWrapper);
 
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
-		layout.setMargin(true);
+		layout.setMargin(false, false, true, false);
 
 		final VerticalLayout leftPanel = new VerticalLayout();
-		this.myProjectListComponent = new MyProjectListComponent();
-		this.taskStatusComponent = new TaskStatusComponent();
-		leftPanel.addComponent(this.myProjectListComponent);
-		leftPanel.addComponent(new LazyLoadWrapper(this.taskStatusComponent));
+		this.activityStreamComponent = new ActivityStreamComponent();
+		leftPanel.addComponent(this.activityStreamComponent);
 
 		final VerticalLayout rightPanel = new VerticalLayout();
-		this.activityStreamComponent = new ActivityStreamComponent();
-
-		rightPanel.addComponent(this.activityStreamComponent);
+		this.myProjectListComponent = new MyProjectListComponent();
+		this.taskStatusComponent = new TaskStatusComponent();
+		rightPanel.addComponent(this.myProjectListComponent);
+		rightPanel.addComponent(new LazyLoadWrapper(this.taskStatusComponent));
 
 		layout.addComponent(leftPanel);
 		layout.addComponent(rightPanel);

@@ -17,16 +17,16 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class MyProjectListComponent extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -38,17 +38,18 @@ public class MyProjectListComponent extends Depot {
 				.getMessage(ProjectCommonI18nEnum.MY_PROJECTS_TITLE),
 				new VerticalLayout());
 
-		projectList = new ProjectPagedList();
-		this.bodyContent.addComponent(new LazyLoadWrapper(projectList));
+		this.projectList = new ProjectPagedList();
+		this.bodyContent.addComponent(new LazyLoadWrapper(this.projectList));
 		this.addStyleName("activity-panel");
+		this.addStyleName("myprojectlist");
 		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
-	public void showProjects(List<Integer> prjKeys) {
-		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+	public void showProjects(final List<Integer> prjKeys) {
+		final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));
-		projectList.setSearchCriteria(searchCriteria);
+		this.projectList.setSearchCriteria(searchCriteria);
 	}
 
 	static class ProjectPagedList extends
@@ -59,26 +60,27 @@ public class MyProjectListComponent extends Depot {
 		public ProjectPagedList() {
 			super(ProjectRowDisplayHandler.class, Integer.MAX_VALUE);
 
-			projectService = AppContext.getSpringBean(ProjectService.class);
+			this.projectService = AppContext
+					.getSpringBean(ProjectService.class);
 		}
 
 		@Override
 		public void doSearch() {
-			totalCount = Integer.MAX_VALUE;
+			this.totalCount = Integer.MAX_VALUE;
 
-			List<SimpleProject> currentListData = projectService
-					.findPagableListByCriteria(searchRequest);
-			listContainer.removeAllComponents();
+			final List<SimpleProject> currentListData = this.projectService
+					.findPagableListByCriteria(this.searchRequest);
+			this.listContainer.removeAllComponents();
 			int i = 0;
 			try {
-				for (SimpleProject item : currentListData) {
-					AbstractBeanPagedList.RowDisplayHandler<SimpleProject> rowHandler = rowDisplayHandler
+				for (final SimpleProject item : currentListData) {
+					final AbstractBeanPagedList.RowDisplayHandler<SimpleProject> rowHandler = this.rowDisplayHandler
 							.newInstance();
-					Component row = rowHandler.generateRow(item, i);
-					listContainer.addComponent(row);
+					final Component row = rowHandler.generateRow(item, i);
+					this.listContainer.addComponent(row);
 					i++;
 				}
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				throw new MyCollabException(e);
 			}
 		}
@@ -88,22 +90,30 @@ public class MyProjectListComponent extends Depot {
 			DefaultBeanPagedList.RowDisplayHandler<SimpleProject> {
 
 		@Override
-		public Component generateRow(final SimpleProject project, int rowIndex) {
-			CssLayout layout = new CssLayout();
+		public Component generateRow(final SimpleProject project,
+				final int rowIndex) {
+			final CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 
-			CssLayout header = new CssLayout();
+			final CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
+			header.setWidth("100%");
 
-			HorizontalLayout projectLayout = new HorizontalLayout();
+			final HorizontalLayout projectLayout = new HorizontalLayout();
 			projectLayout.setWidth("100%");
-			ButtonLink projectLink = new ButtonLink(project.getName(),
+			projectLayout.addStyleName("project-status");
+
+			final CssLayout linkWrapper = new CssLayout();
+			linkWrapper.setWidth("145px");
+			linkWrapper.setHeight("100%");
+			linkWrapper.addStyleName("projectlink-wrapper");
+			final ButtonLink projectLink = new ButtonLink(project.getName(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							EventBus.getInstance().fireEvent(
 									new ProjectEvent.GotoMyProject(this,
 											new PageActionChain(
@@ -111,14 +121,56 @@ public class MyProjectListComponent extends Depot {
 															project.getId()))));
 						}
 					});
-			projectLayout.addComponent(projectLink);
+			linkWrapper.addComponent(projectLink);
+			projectLayout.addComponent(linkWrapper);
 
-			VerticalLayout projectStatusLayout = new VerticalLayout();
-			projectStatusLayout.addComponent(new Label(project
-					.getNumOpenTasks() + "/" + project.getNumTasks()));
-			projectStatusLayout.addComponent(new Label(project
-					.getNumOpenTasks() + "/" + project.getNumBugs()));
+			final VerticalLayout projectStatusLayout = new VerticalLayout();
+			projectStatusLayout.setSpacing(true);
+
+			final HorizontalLayout taskStatus = new HorizontalLayout();
+			taskStatus.setWidth("100%");
+			taskStatus.setSpacing(true);
+			// final ProgressIndicator progressTask = new ProgressIndicator(
+			// new Float((float) (project.getNumTasks() - project
+			// .getNumOpenTasks()) / project.getNumTasks()));
+			// progressTask.setPollingInterval(1000000000);
+			// progressTask.setWidth("100%");
+			// taskStatus.addComponent(progressTask);
+			// taskStatus.setExpandRatio(progressTask, 1.0f);
+			// final Label taskStatusLabel = new Label(project.getNumOpenTasks()
+			// + "/" + project.getNumTasks());
+			// taskStatusLabel.setWidth("90px");
+			final ProgressBar progressTask = new ProgressBar(
+					project.getNumTasks(), project.getNumOpenTasks());
+			progressTask.setWidth("100%");
+			taskStatus.addComponent(progressTask);
+			projectStatusLayout.addComponent(taskStatus);
+
+			final HorizontalLayout bugStatus = new HorizontalLayout();
+			bugStatus.setWidth("100%");
+			bugStatus.setSpacing(true);
+			// final ProgressIndicator progressBug = new ProgressIndicator(
+			// new Float((float) (project.getNumBugs() - project
+			// .getNumOpenBugs()) / project.getNumBugs()));
+			// progressBug.setPollingInterval(1000000000);
+			// progressBug.setWidth("100%");
+			// bugStatus.addComponent(progressBug);
+			// bugStatus.setExpandRatio(progressBug, 1.0f);
+			// final Label bugStatusLabel = new Label(project.getNumOpenTasks()
+			// + "/" + project.getNumBugs());
+			// bugStatusLabel.setWidth("90px");
+			// bugStatus.addComponent(bugStatusLabel);
+			final ProgressBar progressBug = new ProgressBar(
+					project.getNumBugs(), project.getNumOpenBugs());
+			progressBug.setWidth("100%");
+			bugStatus.addComponent(progressBug);
+			projectStatusLayout.addComponent(bugStatus);
+
 			projectLayout.addComponent(projectStatusLayout);
+			projectStatusLayout.setWidth("100%");
+
+			projectLayout.setExpandRatio(projectStatusLayout, 1.0f);
+
 			header.addComponent(projectLayout);
 
 			layout.addComponent(header);
