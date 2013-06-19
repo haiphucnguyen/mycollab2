@@ -1896,10 +1896,10 @@ input.v-textfield-errorField {
 }
 .date-wrapper {
 	background-color: rgb(212, 223, 239);
-	font-size: 13px;
+	font-size: 11px;
 }
 .date-wrapper > .v-csslayout-margin {
-	padding: 5px;
+	padding: 0px 5px;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
@@ -2554,11 +2554,13 @@ div.v-lazyloadingwrapper-loading {
 
 /* Progress Indicator */
 .v-progressindicator-wrapper {
-	height: 15px;
+	height: 18px;
+	background: none no-repeat 0 0 rgb(245, 245, 245);
 }
 
 .v-progressindicator-indicator {
-	height: 15px;
+	height: 18px;
+	background: none no-repeat 0 0 rgb(169, 193, 229);
 }
 /* End Progress Indicator */
 

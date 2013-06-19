@@ -43,11 +43,11 @@ public class ActivityStreamPanel extends Depot {
 			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
 		private static final long serialVersionUID = 1L;
 
-		private ActivityStreamService activityStreamService;
+		private final ActivityStreamService activityStreamService;
 
 		public CrmActivityStreamPagedList() {
 			super(null, 20);
-			activityStreamService = AppContext
+			this.activityStreamService = AppContext
 					.getSpringBean(ActivityStreamService.class);
 
 		}
@@ -113,10 +113,13 @@ public class ActivityStreamPanel extends Depot {
 									activityStream.getNamefield());
 					final Label activityLink = new Label(content,
 							Label.CONTENT_XHTML);
-
-					listContainer.addComponent(activityLink);
+					final CssLayout streamWrapper = new CssLayout();
+					streamWrapper.setWidth("100%");
+					streamWrapper.addStyleName("stream-wrapper");
+					streamWrapper.addComponent(activityLink);
+					this.listContainer.addComponent(streamWrapper);
 				}
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				throw new MyCollabException(e);
 			}
 		}
@@ -128,18 +131,19 @@ public class ActivityStreamPanel extends Depot {
 
 	public ActivityStreamPanel() {
 		super("Activity Channels", new VerticalLayout(), "100%");
-		activityStreamList = new CrmActivityStreamPagedList();
+		this.activityStreamList = new CrmActivityStreamPagedList();
 
-		activityStreamList.addStyleName("stream-list");
-		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		addStyleName("activity-panel");
-		((VerticalLayout) bodyContent).setMargin(false);
+		this.activityStreamList.addStyleName("stream-list");
+		this.bodyContent.addComponent(new LazyLoadWrapper(
+				this.activityStreamList));
+		this.addStyleName("activity-panel");
+		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
 	public void display() {
 		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
 				new String[] { ModuleNameConstants.CRM }));
-		activityStreamList.setSearchCriteria(searchCriteria);
+		this.activityStreamList.setSearchCriteria(searchCriteria);
 	}
 }

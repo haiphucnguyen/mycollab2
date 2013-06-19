@@ -45,9 +45,10 @@ public class ProjectActivityStreamComponent extends Depot {
 
 	public ProjectActivityStreamComponent() {
 		super("Project Feeds", new VerticalLayout());
-		activityStreamList = new ProjectActivityStreamPagedList();
-		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		((VerticalLayout) bodyContent).setMargin(false);
+		this.activityStreamList = new ProjectActivityStreamPagedList();
+		this.bodyContent.addComponent(new LazyLoadWrapper(
+				this.activityStreamList));
+		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
 	public void showProjectFeeds() {
@@ -57,7 +58,7 @@ public class ProjectActivityStreamComponent extends Depot {
 
 		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
 				CurrentProjectVariables.getProjectId()));
-		activityStreamList.setSearchCriteria(searchCriteria);
+		this.activityStreamList.setSearchCriteria(searchCriteria);
 	}
 
 	static class ProjectActivityStreamPagedList
@@ -65,11 +66,11 @@ public class ProjectActivityStreamComponent extends Depot {
 			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
 		private static final long serialVersionUID = 1L;
 
-		private ActivityStreamService activityStreamService;
+		private final ActivityStreamService activityStreamService;
 
 		public ProjectActivityStreamPagedList() {
 			super(null, 20);
-			activityStreamService = AppContext
+			this.activityStreamService = AppContext
 					.getSpringBean(ActivityStreamService.class);
 
 		}
@@ -158,9 +159,13 @@ public class ProjectActivityStreamComponent extends Depot {
 
 					final Label actionLbl = new Label(content,
 							Label.CONTENT_XHTML);
-					listContainer.addComponent(actionLbl);
+					final CssLayout streamWrapper = new CssLayout();
+					streamWrapper.setWidth("100%");
+					streamWrapper.addStyleName("stream-wrapper");
+					streamWrapper.addComponent(actionLbl);
+					this.listContainer.addComponent(streamWrapper);
 				}
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				throw new MyCollabException(e);
 			}
 		}
