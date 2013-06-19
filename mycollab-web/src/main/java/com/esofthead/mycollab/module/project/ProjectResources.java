@@ -42,6 +42,8 @@ public class ProjectResources {
 				.newResourceLink("icons/16/project/component.png"));
 		resourceLinks.put(ProjectContants.BUG_VERSION, MyCollabResource
 				.newResourceLink("icons/16/project/version.png"));
+		resourceLinks.put(ProjectContants.STANDUP, MyCollabResource
+				.newResourceLink("icons/16/project/standup.png"));
 
 		resources = new HashMap<String, Resource>();
 		resources.put(ProjectContants.PROJECT,
@@ -64,6 +66,8 @@ public class ProjectResources {
 				MyCollabResource.newResource("icons/16/project/component.png"));
 		resources.put(ProjectContants.BUG_VERSION,
 				MyCollabResource.newResource("icons/16/project/version.png"));
+		resources.put(ProjectContants.STANDUP,
+				MyCollabResource.newResource("icons/16/project/standup.png"));
 	}
 
 	public static String getResourceLink(String type) {

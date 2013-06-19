@@ -115,7 +115,7 @@ public class ProjectRoleSearchPanel extends
 					ProjectRoleBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(searchBtn);
 
 			Button clearBtn = new Button("Clear", new Button.ClickListener() {
@@ -126,7 +126,7 @@ public class ProjectRoleSearchPanel extends
 					nameField.setValue("");
 				}
 			});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
 		}
