@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -47,33 +48,41 @@ public class ActivityStreamComponent extends Depot {
 		public ProjectActivityStreamPagedList() {
 			super(null, 20);
 
-			projectService = AppContext.getSpringBean(ProjectService.class);
+			this.projectService = AppContext
+					.getSpringBean(ProjectService.class);
 		}
 
 		@Override
 		public void doSearch() {
-			totalCount = projectService.getTotalActivityStream(searchRequest
-					.getSearchCriteria());
-			totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-			if (searchRequest.getCurrentPage() > totalPage) {
-				searchRequest.setCurrentPage(totalPage);
+			this.totalCount = this.projectService
+					.getTotalActivityStream(this.searchRequest
+							.getSearchCriteria());
+			this.totalPage = (this.totalCount - 1)
+					/ this.searchRequest.getNumberOfItems() + 1;
+			if (this.searchRequest.getCurrentPage() > this.totalPage) {
+				this.searchRequest.setCurrentPage(this.totalPage);
 			}
 
-			setCurrentPage(currentPage);
-			setTotalPage(totalPage);
+			this.setCurrentPage(this.currentPage);
+			this.setTotalPage(this.totalPage);
 
-			final List<ProjectActivityStream> currentListData = projectService
-					.getProjectActivityStreams(searchRequest);
-			listContainer.removeAllComponents();
+			final List<ProjectActivityStream> currentListData = this.projectService
+					.getProjectActivityStreams(this.searchRequest);
+			this.listContainer.removeAllComponents();
 
 			Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
 
 			try {
 				for (final ProjectActivityStream activityStream : currentListData) {
-					Date itemCreatedDate = activityStream.getCreatedtime();
+					final Date itemCreatedDate = activityStream
+							.getCreatedtime();
 					if (!DateUtils.isSameDay(currentDate, itemCreatedDate)) {
-						listContainer.addComponent(new Label(AppContext
+						final CssLayout dateWrapper = new CssLayout();
+						dateWrapper.setWidth("100%");
+						dateWrapper.addStyleName("date-wrapper");
+						dateWrapper.addComponent(new Label(AppContext
 								.formatDate(itemCreatedDate)));
+						this.listContainer.addComponent(dateWrapper);
 						currentDate = itemCreatedDate;
 					}
 
@@ -143,7 +152,11 @@ public class ActivityStreamComponent extends Depot {
 
 					final Label activityLink = new Label(content,
 							Label.CONTENT_XHTML);
-					listContainer.addComponent(activityLink);
+					final CssLayout streamWrapper = new CssLayout();
+					streamWrapper.setWidth("100%");
+					streamWrapper.addStyleName("stream-wrapper");
+					streamWrapper.addComponent(activityLink);
+					this.listContainer.addComponent(streamWrapper);
 				}
 			} catch (final Exception e) {
 				throw new MyCollabException(e);
@@ -158,10 +171,12 @@ public class ActivityStreamComponent extends Depot {
 	public ActivityStreamComponent() {
 		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
 				new VerticalLayout());
-		activityStreamList = new ProjectActivityStreamPagedList();
-		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		addStyleName("activity-panel");
-		((VerticalLayout) bodyContent).setMargin(false);
+		this.activityStreamList = new ProjectActivityStreamPagedList();
+		this.bodyContent.addComponent(new LazyLoadWrapper(
+				this.activityStreamList));
+		this.addStyleName("activity-panel");
+		this.addStyleName("project-activity-panel");
+		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
 	public void showFeeds(final List<Integer> prjKeys) {
@@ -170,7 +185,7 @@ public class ActivityStreamComponent extends Depot {
 				new String[] { ModuleNameConstants.PRJ }));
 		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
 				.toArray(new Integer[0])));
-		activityStreamList.setSearchCriteria(searchCriteria);
+		this.activityStreamList.setSearchCriteria(searchCriteria);
 
 	}
 }
