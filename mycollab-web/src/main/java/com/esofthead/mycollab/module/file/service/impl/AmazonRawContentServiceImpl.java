@@ -14,7 +14,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.S3StorageConfig;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
-public class AmazonService implements RawContentService {
+public class AmazonRawContentServiceImpl implements RawContentService {
 
 	private static final int BUFFER_SIZE = 1024;
 

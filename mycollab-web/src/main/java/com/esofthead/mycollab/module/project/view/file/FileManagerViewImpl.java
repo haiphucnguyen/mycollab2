@@ -93,8 +93,11 @@ public class FileManagerViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				if (baseFolder != null
 						&& !projectPath.equals(baseFolder.getPath())) {
-					ConfirmDialog.show(FileManagerViewImpl.this.getWindow(),
-							"", new ConfirmDialog.Listener() {
+					ConfirmDialog.show(
+							FileManagerViewImpl.this.getWindow(),
+							"Are you sure to delete folder "
+									+ baseFolder.getName() + " ?",
+							new ConfirmDialog.Listener() {
 								private static final long serialVersionUID = 1L;
 
 								@Override
@@ -137,8 +140,7 @@ public class FileManagerViewImpl extends AbstractView implements
 						.getSubFolders(expandFolder.getPath());
 
 				folderTree.setItemIcon(expandFolder, MyCollabResource
-				.newResource(
-						"icons/16/ecm/folder_open.png"));
+						.newResource("icons/16/ecm/folder_open.png"));
 
 				if (subFolders != null) {
 					for (Folder subFolder : subFolders) {
@@ -150,8 +152,7 @@ public class FileManagerViewImpl extends AbstractView implements
 												.getCreated().getTime()) },
 								subFolder);
 						folderTree.setItemIcon(subFolder, MyCollabResource
-				.newResource(
-								"icons/16/ecm/folder_close.png"));
+								.newResource("icons/16/ecm/folder_close.png"));
 						folderTree.setItemCaption(subFolder,
 								subFolder.getName());
 						folderTree.setParent(subFolder, expandFolder);
@@ -167,8 +168,7 @@ public class FileManagerViewImpl extends AbstractView implements
 			public void nodeCollapse(CollapseEvent event) {
 				Folder collapseFolder = (Folder) event.getItemId();
 				folderTree.setItemIcon(collapseFolder, MyCollabResource
-				.newResource(
-						"icons/16/ecm/folder_close.png"));
+						.newResource("icons/16/ecm/folder_close.png"));
 				List<Folder> childs = collapseFolder.getChilds();
 				for (Folder subFolder : childs) {
 					folderTree.removeItem(subFolder);
@@ -228,8 +228,7 @@ public class FileManagerViewImpl extends AbstractView implements
 					baseFolder = subFolder;
 				} else {
 					folderTree.setItemIcon(subFolder, MyCollabResource
-				.newResource(
-							"icons/16/ecm/folder_close.png"));
+							.newResource("icons/16/ecm/folder_close.png"));
 				}
 			}
 		} else {
@@ -471,8 +470,7 @@ public class FileManagerViewImpl extends AbstractView implements
 					filterBtnLayout.setSpacing(true);
 					filterBtnLayout.setWidth("100px");
 					resourceSettingPopupBtn.setIcon(MyCollabResource
-				.newResource(
-							"icons/12/project/task_menu.png"));
+							.newResource("icons/12/project/task_menu.png"));
 					resourceSettingPopupBtn.setStyleName("link");
 					resourceSettingPopupBtn.addComponent(filterBtnLayout);
 					return resourceSettingPopupBtn;
@@ -497,12 +495,10 @@ public class FileManagerViewImpl extends AbstractView implements
 					com.vaadin.terminal.Resource iconResource = null;
 					if (resource instanceof Content) {
 						iconResource = MyCollabResource
-				.newResource(
-								"icons/16/ecm/file.png");
+								.newResource("icons/16/ecm/file.png");
 					} else {
 						iconResource = MyCollabResource
-				.newResource(
-								"icons/16/ecm/folder_close.png");
+								.newResource("icons/16/ecm/folder_close.png");
 					}
 					Embedded iconEmbed = new Embedded(null, iconResource);
 
