@@ -18,11 +18,6 @@
         <if test="searchCriteria.opportunityName != null">
             <![CDATA[${searchCriteria.opportunityName.operation} m_crm_opportunity.opportunityName like '%${searchCriteria.opportunityName.value}%']]>
         </if>
-        <if test="searchCriteria.accountName != null">
-            <![CDATA[
-            ${searchCriteria.accountName.operation}
-            m_crm_account.accountName like '%${searchCriteria.accountName.value}%']]>
-        </if>
         <if test="searchCriteria.accountId != null">
             <![CDATA[
                 ${searchCriteria.accountId.operation} m_crm_opportunity.accountid = #{searchCriteria.accountId.value,javaType=INTEGER}
@@ -48,7 +43,8 @@
             ]]>
         </if>
         <if test="searchCriteria.assignUsers != null">
-            ${searchCriteria.assignUsers.operation} m_crm_opportunity.assignUser IN
+            ${searchCriteria.assignUsers.operation}
+            m_crm_opportunity.assignUser IN
             <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="assignUser" open="(" separator=",">
                 #{assignUser}
@@ -63,16 +59,20 @@
             ]]>
         </if>
         <if test="searchCriteria.salesStages != null">
-            ${searchCriteria.salesStages.operation} m_crm_opportunity.salesStage IN
+            ${searchCriteria.salesStages.operation}
+            m_crm_opportunity.salesStage IN
             <foreach item="salesStage" open="(" close=")"
-                collection="searchCriteria.salesStages.values" separator=",">
+                collection="searchCriteria.salesStages.values"
+                separator=",">
                 #{salesStage}
             </foreach>
         </if>
         <if test="searchCriteria.leadSources != null">
-            ${searchCriteria.leadSources.operation} m_crm_opportunity.source IN
+            ${searchCriteria.leadSources.operation}
+            m_crm_opportunity.source IN
             <foreach item="source" open="(" close=")"
-                collection="searchCriteria.leadSources.values" separator=",">
+                collection="searchCriteria.leadSources.values"
+                separator=",">
                 #{source}
             </foreach>
         </if>
@@ -86,15 +86,6 @@
 
         <if test="searchCriteria.opportunityName != null">
             <![CDATA[${searchCriteria.opportunityName.operation} m_crm_opportunity.opportunityName like '%${searchCriteria.opportunityName.value}%']]>
-        </if>
-        <if test="searchCriteria.accountName != null">
-            <![CDATA[
-            ${searchCriteria.accountName.operation}
-            (SELECT COUNT(*)
-            FROM m_crm_account 
-            WHERE m_crm_opportunity.accountid = m_crm_account.id 
-                AND m_crm_account.accountName like '%${searchCriteria.accountName.value}%') > 0
-                ]]>
         </if>
         <if test="searchCriteria.accountId != null">
             <![CDATA[
@@ -133,7 +124,8 @@
             ]]>
         </if>
         <if test="searchCriteria.assignUsers != null">
-            ${searchCriteria.assignUsers.operation} m_crm_opportunity.assignUser IN
+            ${searchCriteria.assignUsers.operation}
+            m_crm_opportunity.assignUser IN
             <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="assignUser" open="(" separator=",">
                 #{assignUser}
@@ -148,16 +140,20 @@
             ]]>
         </if>
         <if test="searchCriteria.salesStages != null">
-            ${searchCriteria.salesStages.operation} m_crm_opportunity.salesStage IN
+            ${searchCriteria.salesStages.operation}
+            m_crm_opportunity.salesStage IN
             <foreach item="salesStage" open="(" close=")"
-                collection="searchCriteria.salesStages.values" separator=",">
+                collection="searchCriteria.salesStages.values"
+                separator=",">
                 #{salesStage}
             </foreach>
         </if>
         <if test="searchCriteria.leadSources != null">
-            ${searchCriteria.leadSources.operation} m_crm_opportunity.source IN
+            ${searchCriteria.leadSources.operation}
+            m_crm_opportunity.source IN
             <foreach item="source" open="(" close=")"
-                collection="searchCriteria.leadSources.values" separator=",">
+                collection="searchCriteria.leadSources.values"
+                separator=",">
                 #{source}
             </foreach>
         </if>
@@ -205,7 +201,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_crm_opportunity.lastUpdatedTime DESC
         ]]>
@@ -286,7 +283,7 @@
         </if>
         GROUP BY m_crm_opportunity.source
     </select>
-    
+
     <!-- Here for Mass Update -->
     <update id="updateBySearchCriteria" parameterType="map">
         <include
@@ -300,5 +297,5 @@
             </trim>
         </if>
     </update>
-    
+
 </mapper>

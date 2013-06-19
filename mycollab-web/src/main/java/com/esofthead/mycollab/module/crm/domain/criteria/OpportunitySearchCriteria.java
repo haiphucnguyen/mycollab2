@@ -24,7 +24,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 public class OpportunitySearchCriteria extends SearchCriteria {
 
     private StringSearchField opportunityName;
-    private StringSearchField accountName;
     private StringSearchField campaignName;
     private SetSearchField<String> assignUsers;
     private StringSearchField assignUserName;
@@ -42,14 +41,6 @@ public class OpportunitySearchCriteria extends SearchCriteria {
 
     public void setOpportunityName(StringSearchField opportunityName) {
         this.opportunityName = opportunityName;
-    }
-
-    public StringSearchField getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(StringSearchField accountName) {
-        this.accountName = accountName;
     }
 
     public StringSearchField getCampaignName() {

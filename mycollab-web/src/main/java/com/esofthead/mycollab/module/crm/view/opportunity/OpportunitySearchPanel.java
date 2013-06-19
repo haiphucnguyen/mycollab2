@@ -247,9 +247,9 @@ public class OpportunitySearchPanel extends
 			}
 
 			SimpleAccount account = accountField.getAccount();
-			if (StringUtil.isNotNullOrEmpty(account.getAccountname())) {
-				searchCriteria.setAccountName(new StringSearchField(
-						SearchField.AND, account.getAccountname()));
+			if (account.getId() != null) {
+				searchCriteria.setAccountId(new NumberSearchField(
+						SearchField.AND, account.getId()));
 			}
 
 			if (StringUtil.isNotNullOrEmpty((String) nextStepField.getValue())) {
@@ -296,19 +296,19 @@ public class OpportunitySearchPanel extends
 			if (value.getOpportunityName() != null)
 				opportunityNameField.setValue(value.getOpportunityName()
 						.getValue());
-			if (value.getAccountName() != null)
-				accountField.setValue(value.getAccountName().getValue());
-			if (value.getNextStep() != null)
-				nextStepField.setValue(value.getNextStep().getValue());
+			if (value.getAccountId() != null)
+				// accountField.setValue(value.getAccountName().getValue());
+				if (value.getNextStep() != null)
+					nextStepField.setValue(value.getNextStep().getValue());
 			if (value.getAssignUsers() != null)
-				userField
-						.setValue(Arrays.asList((Object[])value.getAssignUsers().values));
+				userField.setValue(Arrays.asList((Object[]) value
+						.getAssignUsers().values));
 			if (value.getSalesStages() != null)
-				stageField
-						.setValue(Arrays.asList((Object[])value.getSalesStages().values));
+				stageField.setValue(Arrays.asList((Object[]) value
+						.getSalesStages().values));
 			if (value.getLeadSources() != null)
-				sourceField
-						.setValue(Arrays.asList((Object[])value.getLeadSources().values));
+				sourceField.setValue(Arrays.asList((Object[]) value
+						.getLeadSources().values));
 		}
 	}
 

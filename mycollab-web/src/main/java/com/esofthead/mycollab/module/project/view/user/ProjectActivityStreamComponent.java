@@ -14,9 +14,11 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -33,6 +35,58 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ProjectActivityStreamComponent extends Depot {
+	private static final long serialVersionUID = 1L;
+
+	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+
+	public ProjectActivityStreamComponent() {
+		super("Project Feeds", new VerticalLayout());
+		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
+				AppContext.getSpringBean(ActivityStreamService.class),
+				ActivityStreamRowDisplayHandler.class, 20);
+		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+		addStyleName("activity-panel");
+		((VerticalLayout) bodyContent).setMargin(false);
+	}
+
+	public void showProjectFeeds() {
+		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.PRJ }));
+
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
+				CurrentProjectVariables.getProjectId()));
+		activityStreamList.setSearchCriteria(searchCriteria);
+	}
+
+	static class ProjectActivityStreamPagedList
+			extends
+			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
+		private ActivityStreamService activityStreamService;
+
+		public ProjectActivityStreamPagedList() {
+			super(null, 20);
+			activityStreamService = AppContext
+					.getSpringBean(ActivityStreamService.class);
+
+		}
+
+		@Override
+		public void doSearch() {
+			this.totalCount = this.activityStreamService
+					.getTotalCount(this.searchRequest.getSearchCriteria());
+			this.totalPage = (this.totalCount - 1)
+					/ this.searchRequest.getNumberOfItems() + 1;
+			if (this.searchRequest.getCurrentPage() > this.totalPage) {
+				this.searchRequest.setCurrentPage(this.totalPage);
+			}
+
+			this.setCurrentPage(this.currentPage);
+			this.setTotalPage(this.totalPage);
+
+		}
+	}
+
 	public static class ActivityStreamRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
@@ -108,29 +162,5 @@ public class ProjectActivityStreamComponent extends Depot {
 			layout.addComponent(body);
 			return layout;
 		}
-	}
-
-	private static final long serialVersionUID = 1L;
-
-	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
-
-	public ProjectActivityStreamComponent() {
-		super("Project Feeds", new VerticalLayout());
-		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
-				AppContext.getSpringBean(ActivityStreamService.class),
-				ActivityStreamRowDisplayHandler.class, 10);
-		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		addStyleName("activity-panel");
-		((VerticalLayout) bodyContent).setMargin(false);
-	}
-
-	public void showProjectFeeds() {
-		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-				new String[] { ModuleNameConstants.PRJ }));
-
-		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
-				CurrentProjectVariables.getProjectId()));
-		activityStreamList.setSearchCriteria(searchCriteria);
 	}
 }
