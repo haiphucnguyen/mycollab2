@@ -20,12 +20,15 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public class MyProjectListComponent extends Depot {
@@ -108,6 +111,8 @@ public class MyProjectListComponent extends Depot {
 			linkWrapper.setWidth("145px");
 			linkWrapper.setHeight("100%");
 			linkWrapper.addStyleName("projectlink-wrapper");
+			final HorizontalLayout linkIconFix = new HorizontalLayout();
+			linkIconFix.setWidth("100%");
 			final ButtonLink projectLink = new ButtonLink(project.getName(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -121,7 +126,14 @@ public class MyProjectListComponent extends Depot {
 															project.getId()))));
 						}
 					});
-			linkWrapper.addComponent(projectLink);
+			final Embedded projectIcon = new Embedded();
+			projectIcon.setSource(MyCollabResource
+					.newResource("icons/16/project/project.png"));
+			linkIconFix.addComponent(projectIcon);
+			linkIconFix.addComponent(projectLink);
+			linkIconFix.setExpandRatio(projectLink, 1.0f);
+			projectLink.setWidth("100%");
+			linkWrapper.addComponent(linkIconFix);
 			projectLayout.addComponent(linkWrapper);
 
 			final VerticalLayout projectStatusLayout = new VerticalLayout();
@@ -130,40 +142,35 @@ public class MyProjectListComponent extends Depot {
 			final HorizontalLayout taskStatus = new HorizontalLayout();
 			taskStatus.setWidth("100%");
 			taskStatus.setSpacing(true);
-			// final ProgressIndicator progressTask = new ProgressIndicator(
-			// new Float((float) (project.getNumTasks() - project
-			// .getNumOpenTasks()) / project.getNumTasks()));
-			// progressTask.setPollingInterval(1000000000);
-			// progressTask.setWidth("100%");
-			// taskStatus.addComponent(progressTask);
-			// taskStatus.setExpandRatio(progressTask, 1.0f);
-			// final Label taskStatusLabel = new Label(project.getNumOpenTasks()
-			// + "/" + project.getNumTasks());
-			// taskStatusLabel.setWidth("90px");
+			final Label taskLbl = new Label("Tasks :");
+			final Embedded taskIcon = new Embedded();
+			taskIcon.setSource(MyCollabResource
+					.newResource("icons/16/project/task.png"));
+			taskStatus.addComponent(taskIcon);
+			taskLbl.setWidth("40px");
+			taskStatus.addComponent(taskLbl);
 			final ProgressBar progressTask = new ProgressBar(
 					project.getNumTasks(), project.getNumOpenTasks());
 			progressTask.setWidth("100%");
 			taskStatus.addComponent(progressTask);
+			taskStatus.setExpandRatio(progressTask, 1.0f);
 			projectStatusLayout.addComponent(taskStatus);
 
 			final HorizontalLayout bugStatus = new HorizontalLayout();
 			bugStatus.setWidth("100%");
 			bugStatus.setSpacing(true);
-			// final ProgressIndicator progressBug = new ProgressIndicator(
-			// new Float((float) (project.getNumBugs() - project
-			// .getNumOpenBugs()) / project.getNumBugs()));
-			// progressBug.setPollingInterval(1000000000);
-			// progressBug.setWidth("100%");
-			// bugStatus.addComponent(progressBug);
-			// bugStatus.setExpandRatio(progressBug, 1.0f);
-			// final Label bugStatusLabel = new Label(project.getNumOpenTasks()
-			// + "/" + project.getNumBugs());
-			// bugStatusLabel.setWidth("90px");
-			// bugStatus.addComponent(bugStatusLabel);
+			final Label bugLbl = new Label("Bugs :");
+			final Embedded bugIcon = new Embedded();
+			bugIcon.setSource(MyCollabResource
+					.newResource("icons/16/project/bug.png"));
+			bugStatus.addComponent(bugIcon);
+			bugLbl.setWidth("40px");
+			bugStatus.addComponent(bugLbl);
 			final ProgressBar progressBug = new ProgressBar(
 					project.getNumBugs(), project.getNumOpenBugs());
 			progressBug.setWidth("100%");
 			bugStatus.addComponent(progressBug);
+			bugStatus.setExpandRatio(progressBug, 1.0f);
 			projectStatusLayout.addComponent(bugStatus);
 
 			projectLayout.addComponent(projectStatusLayout);

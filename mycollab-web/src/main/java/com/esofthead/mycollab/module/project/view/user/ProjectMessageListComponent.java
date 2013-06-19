@@ -10,10 +10,10 @@ import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ResourceResolver;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -45,8 +45,8 @@ public class ProjectMessageListComponent extends Depot {
 							.generateProjectMemberFullLink(
 									message.getProjectid(),
 									message.getPosteduser()), message
-							.getFullPostedUserName(), ResourceResolver
-							.getResourceLink("icons/16/project/message.png"),
+							.getFullPostedUserName(), MyCollabResource
+							.newResourceLink("icons/16/project/message.png"),
 					ProjectLinkBuilder.WebLinkGenerator
 							.generateMessagePreviewFullLink(
 									message.getProjectid(), message.getId(),
