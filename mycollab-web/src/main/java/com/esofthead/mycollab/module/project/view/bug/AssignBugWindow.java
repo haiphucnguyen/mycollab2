@@ -36,18 +36,21 @@ import com.vaadin.ui.Window;
  */
 public class AssignBugWindow extends Window {
 	private static final long serialVersionUID = 1L;
-	private SimpleBug bug;
-	private EditForm editForm;
-	private IBugCallbackStatusComp callbackForm;
+	private final SimpleBug bug;
+	private final EditForm editForm;
+	private final IBugCallbackStatusComp callbackForm;
 
-	public AssignBugWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
+	public AssignBugWindow(final IBugCallbackStatusComp callbackForm,
+			final SimpleBug bug) {
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");
-		editForm = new EditForm();
-		this.addComponent(editForm);
-		editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-		center();
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		((VerticalLayout) this.getContent()).setMargin(false, false, true,
+				false);
+		this.center();
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
@@ -56,7 +59,7 @@ public class AssignBugWindow extends Window {
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -69,22 +72,28 @@ public class AssignBugWindow extends Window {
 
 			@Override
 			public Layout getLayout() {
-				VerticalLayout layout = new VerticalLayout();
-				informationLayout = new GridFormLayoutHelper(2, 6);
-				informationLayout.getLayout().setWidth("800px");
+				final VerticalLayout layout = new VerticalLayout();
+				this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
+						"167px", Alignment.MIDDLE_LEFT);
+				this.informationLayout.getLayout().setWidth("100%");
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
 
-				layout.addComponent(informationLayout.getLayout());
+				layout.addComponent(this.informationLayout.getLayout());
 
-				HorizontalLayout controlsBtn = new HorizontalLayout();
+				final HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
+				controlsBtn.setMargin(true, false, true, false);
 				layout.addComponent(controlsBtn);
 
-				Button cancelBtn = new Button("Cancel",
+				final Button cancelBtn = new Button("Cancel",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(Button.ClickEvent event) {
+							public void buttonClick(
+									final Button.ClickEvent event) {
 								AssignBugWindow.this.close();
 							}
 						});
@@ -93,26 +102,28 @@ public class AssignBugWindow extends Window {
 				controlsBtn.setComponentAlignment(cancelBtn,
 						Alignment.MIDDLE_LEFT);
 
-				Button approveBtn = new Button("Assign",
+				final Button approveBtn = new Button("Assign",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(Button.ClickEvent event) {
+							public void buttonClick(
+									final Button.ClickEvent event) {
 
 								// Save bug status and assignee
-								BugService bugService = AppContext
+								final BugService bugService = AppContext
 										.getSpringBean(BugService.class);
-								bugService.updateWithSession(bug,
+								bugService.updateWithSession(
+										AssignBugWindow.this.bug,
 										AppContext.getUsername());
 
 								// Save comment
-								String commentValue = (String) commentArea
+								final String commentValue = (String) EditForm.this.commentArea
 										.getValue();
 								if (commentValue != null
 										&& !commentValue.trim().equals("")) {
-									Comment comment = new Comment();
-									comment.setComment((String) commentArea
+									final Comment comment = new Comment();
+									comment.setComment((String) EditForm.this.commentArea
 											.getValue());
 									comment.setCreatedtime(new GregorianCalendar()
 											.getTime());
@@ -121,16 +132,18 @@ public class AssignBugWindow extends Window {
 									comment.setSaccountid(AppContext
 											.getAccountId());
 									comment.setType(CommentTypeConstants.PRJ_BUG);
-									comment.setTypeid(bug.getId());
+									comment.setTypeid(AssignBugWindow.this.bug
+											.getId());
 
-									CommentService commentService = AppContext
+									final CommentService commentService = AppContext
 											.getSpringBean(CommentService.class);
 									commentService.saveWithSession(comment,
 											AppContext.getUsername());
 								}
 
 								AssignBugWindow.this.close();
-								callbackForm.refreshBugItem();
+								AssignBugWindow.this.callbackForm
+										.refreshBugItem();
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -145,12 +158,13 @@ public class AssignBugWindow extends Window {
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
+			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("assignuser")) {
-					informationLayout.addComponent(field, "Assign User", 0, 0);
+					this.informationLayout.addComponent(field, "Assign User",
+							0, 0);
 				} else if (propertyId.equals("comment")) {
-					informationLayout.addComponent(field, "Comments", 0, 1, 2,
-							UIConstants.DEFAULT_2XCONTROL_WIDTH);
+					this.informationLayout.addComponent(field, "Comments", 0,
+							1, 2, "100%", Alignment.MIDDLE_LEFT);
 				}
 			}
 		}
@@ -160,14 +174,15 @@ public class AssignBugWindow extends Window {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("comment")) {
-					commentArea = new RichTextArea();
-					commentArea.setNullRepresentation("");
-					return commentArea;
+					EditForm.this.commentArea = new RichTextArea();
+					EditForm.this.commentArea.setNullRepresentation("");
+					return EditForm.this.commentArea;
 				}
 
 				return null;
