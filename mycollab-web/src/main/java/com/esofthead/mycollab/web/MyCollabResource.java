@@ -22,8 +22,14 @@ public abstract class MyCollabResource {
 
 	protected abstract Resource generateResource(String resourceId);
 
+	protected abstract String generateResourceLink(String resourceId);
+
 	public static Resource newResource(String resourceId) {
 		return impl.generateResource(resourceId);
+	}
+
+	public static String newResourceLink(String resourceId) {
+		return impl.generateResourceLink(resourceId);
 	}
 
 	public static class S3Resource extends MyCollabResource {
@@ -35,6 +41,11 @@ public abstract class MyCollabResource {
 			return new ExternalResource(String.format(S3_ASSETS, resourceId));
 		}
 
+		@Override
+		protected String generateResourceLink(String resourceId) {
+			return String.format(S3_ASSETS, resourceId);
+		}
+
 	}
 
 	public static class VaadinThemeResource extends MyCollabResource {
@@ -42,6 +53,11 @@ public abstract class MyCollabResource {
 		@Override
 		protected Resource generateResource(String resourceId) {
 			return new ThemeResource(resourceId);
+		}
+
+		@Override
+		protected String generateResourceLink(String resourceId) {
+			return AppContext.getSiteUrl() + "assets/" + resourceId;
 		}
 
 	}
