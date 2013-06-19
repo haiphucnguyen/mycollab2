@@ -38,6 +38,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 	private SaveSearchResultService saveSearchResultService;
 
 	private TextField saveSearchValue;
+	private SavedSearchResultComboBox saveResult;
 	protected String type;
 
 	public DefaultAdvancedSearchLayout(DefaultGenericSearchPanel<S> parent,
@@ -129,7 +130,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		UiUtils.addComponent(saveSearchLayout, saveSearchValue,
 				Alignment.MIDDLE_RIGHT);
 
-		final SavedSearchResultComboBox saveResult = new SavedSearchResultComboBox();
+		saveResult = new SavedSearchResultComboBox();
 
 		Button saveSearchBtn = new Button("Save", new Button.ClickListener() {
 
@@ -154,7 +155,8 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 							"You created successfully searchItem.");
 					saveSearchValue.setValue("");
 
-					saveResult.addNewSearchResult(searchResult);
+					saveResult.contructComboBox();
+					saveResult.setValue(searchResult.getId());
 				}
 
 			}
@@ -202,23 +204,23 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 			contructComboBox();
 
-			SavedSearchResultComboBox.this.setContainerDataSource(beanItem);
-			SavedSearchResultComboBox.this
-					.setItemCaptionPropertyId("queryname");
-
 			this.addListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(
 						com.vaadin.data.Property.ValueChangeEvent event) {
 					Object itemId = SavedSearchResultComboBox.this.getValue();
-					SaveSearchResultWithBLOBs data = beanItem.getItem(itemId)
-							.getBean();
+					if (saveResult != null)
+						itemId = saveResult.getValue();
+					if (itemId != null) {
+						SaveSearchResultWithBLOBs data = beanItem.getItem(
+								itemId).getBean();
 
-					saveSearchValue.setValue("");
-					String queryText = data.getQuerytext();
-					XStream xstream = new XStream();
-					S value = (S) xstream.fromXML(queryText);
-					loadSaveSearchToField(value);
+						saveSearchValue.setValue("");
+						String queryText = data.getQuerytext();
+						XStream xstream = new XStream();
+						S value = (S) xstream.fromXML(queryText);
+						loadSaveSearchToField(value);
+					}
 				}
 			});
 			this.setImmediate(true);
@@ -242,12 +244,18 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			for (SaveSearchResultWithBLOBs searchResult : result) {
 				beanItem.addBean(searchResult);
 			}
-
+			if (saveResult != null) {
+				saveResult.setContainerDataSource(beanItem);
+				saveResult.setItemCaptionPropertyId("queryname");
+			} else {
+				this.setContainerDataSource(beanItem);
+				this.setItemCaptionPropertyId("queryname");
+			}
 		}
 
 		public void addNewSearchResult(SaveSearchResultWithBLOBs result) {
-//			((BeanContainer<String, SaveSearchResultWithBLOBs>) (this
-//					.getContainerDataSource())).addItem(result);
+			// ((BeanContainer<String, SaveSearchResultWithBLOBs>) (this
+			// .getContainerDataSource())).addItem(result);
 			beanItem.addItem(result);
 		}
 
