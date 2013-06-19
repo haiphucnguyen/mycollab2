@@ -13,14 +13,13 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 public class UnresolvedBugsByAssigneeWidget2 extends Depot {
@@ -34,21 +33,22 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					bugSearchCriteria.setAssignuser(new StringSearchField(
-							SearchField.AND, assignee));
+					UnresolvedBugsByAssigneeWidget2.this.bugSearchCriteria
+							.setAssignuser(new StringSearchField(
+									SearchField.AND, assignee));
 					final BugSearchParameter param = new BugSearchParameter(
 							"Unresolved Bug List of " + assigneeFullName,
-							bugSearchCriteria);
+							UnresolvedBugsByAssigneeWidget2.this.bugSearchCriteria);
 					EventBus.getInstance().fireEvent(
 							new BugEvent.GotoList(this,
 									new BugScreenData.Search(param)));
 				}
 			});
 
-			setStyleName("link");
+			this.setStyleName("link");
 			this.setWidth("110px");
-			addStyleName(UIConstants.WORD_WRAP);
-			setIcon(UserAvatarControlFactory.getResource(assignee, 16));
+			this.addStyleName(UIConstants.WORD_WRAP);
+			this.setIcon(UserAvatarControlFactory.getResource(assignee, 16));
 		}
 	}
 
@@ -60,13 +60,13 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 		super(LocalizationHelper
 				.getMessage(BugI18nEnum.UNRESOLVED_BY_ASSIGNEE_WIDGET_TITLE),
 				new VerticalLayout());
-		setContentBorder(true);
-		((VerticalLayout) bodyContent).setSpacing(true);
+		this.setContentBorder(true);
+		((VerticalLayout) this.bodyContent).setSpacing(true);
 	}
 
 	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
-		bugSearchCriteria = searchCriteria;
-		bodyContent.removeAllComponents();
+		this.bugSearchCriteria = searchCriteria;
+		this.bodyContent.removeAllComponents();
 		final BugService bugService = AppContext
 				.getSpringBean(BugService.class);
 		final int totalCount = bugService.getTotalCount(searchCriteria);
@@ -76,6 +76,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 			for (final GroupItem item : groupItems) {
 				final HorizontalLayout assigneeLayout = new HorizontalLayout();
 				assigneeLayout.setSpacing(true);
+				assigneeLayout.setWidth("100%");
 
 				final String assignUser = item.getGroupid();
 				final String assignUserFullName = (item.getGroupid() == null) ? "Undefined"
@@ -83,15 +84,12 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				final BugAssigneeButton userLbl = new BugAssigneeButton(
 						assignUser, assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
-				final ProgressIndicator indicator = new ProgressIndicator(
-						new Float((float) item.getValue() / totalCount));
-				indicator.setPollingInterval(1000000000);
+				final ProgressBar indicator = new ProgressBar(totalCount,
+						item.getValue());
+				indicator.setWidth("100%");
 				assigneeLayout.addComponent(indicator);
-
-				final Label progressLbl = new Label("(" + item.getValue() + "/"
-						+ totalCount + ")");
-				assigneeLayout.addComponent(progressLbl);
-				bodyContent.addComponent(assigneeLayout);
+				assigneeLayout.setExpandRatio(indicator, 1.0f);
+				this.bodyContent.addComponent(assigneeLayout);
 			}
 
 		}

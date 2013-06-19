@@ -21,8 +21,9 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -35,25 +36,26 @@ import com.vaadin.ui.TextField;
 public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
+	private final EditForm editForm;
 	private Task task;
 	private FormAttachmentUploadField attachmentUploadField;
 
 	public TaskAddViewImpl() {
 		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+		this.setMargin(true);
 	}
 
 	@Override
-	public void editItem(Task item) {
+	public void editItem(final Task item) {
 		this.task = item;
-		editForm.setItemDataSource(new BeanItem<Task>(task));
+		this.editForm.setItemDataSource(new BeanItem<Task>(this.task));
 	}
 
 	@Override
 	public AttachmentUploadField getAttachUploadField() {
-		return attachmentUploadField;
+		return this.attachmentUploadField;
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Task> {
@@ -61,8 +63,8 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
+		public void setItemDataSource(final Item newDataSource,
+				final Collection<?> propertyIds) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource, propertyIds);
@@ -73,23 +75,31 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super((task.getId() == null) ? "Create Task" : task
-						.getTaskname());
+				super(
+						(TaskAddViewImpl.this.task.getId() == null) ? "Create Task"
+								: TaskAddViewImpl.this.task.getTaskname());
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Task>(EditForm.this))
-						.createButtonControls();
+				final HorizontalLayout controlPanel = new HorizontalLayout();
+				final Layout controlButtons = (new EditFormControlsGenerator<Task>(
+						EditForm.this)).createButtonControls();
+				controlButtons.setSizeUndefined();
+				controlPanel.addComponent(controlButtons);
+				controlPanel.setWidth("100%");
+				controlPanel.setComponentAlignment(controlButtons,
+						Alignment.MIDDLE_CENTER);
+				return controlPanel;
 			}
 
 			@Override
 			protected Layout createTopPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return createButtonControls();
+				return this.createButtonControls();
 			}
 		}
 
@@ -98,18 +108,19 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("tasklistid")) {
 					return new ProjectTaskListComboBox();
 				} else if (propertyId.equals("notes")) {
-					RichTextArea richTextArea = new RichTextArea();
+					final RichTextArea richTextArea = new RichTextArea();
 					richTextArea.setNullRepresentation("");
 					return richTextArea;
 				} else if ("name".equals(propertyId)) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");
@@ -119,13 +130,14 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 				} else if ("priority".equals(propertyId)) {
 					return new TaskPriorityComboBox();
 				} else if (propertyId.equals("id")) {
-					attachmentUploadField = new FormAttachmentUploadField();
-					if (task.getId() != null) {
-						attachmentUploadField.getAttachments(
-								AttachmentConstants.PROJECT_TASK_TYPE,
-								task.getId());
+					TaskAddViewImpl.this.attachmentUploadField = new FormAttachmentUploadField();
+					if (TaskAddViewImpl.this.task.getId() != null) {
+						TaskAddViewImpl.this.attachmentUploadField
+								.getAttachments(
+										AttachmentConstants.PROJECT_TASK_TYPE,
+										TaskAddViewImpl.this.task.getId());
 					}
-					return attachmentUploadField;
+					return TaskAddViewImpl.this.attachmentUploadField;
 				}
 				return null;
 			}
@@ -134,6 +146,6 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 
 	@Override
 	public HasEditFormHandlers<Task> getEditFormHandlers() {
-		return editForm;
+		return this.editForm;
 	}
 }

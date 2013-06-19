@@ -13,12 +13,11 @@ import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -59,19 +58,18 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 						isFound = true;
 						final HorizontalLayout priorityLayout = new HorizontalLayout();
 						priorityLayout.setSpacing(true);
+						priorityLayout.setWidth("100%");
 						final Button userLbl = new Button(status, listener);
 						userLbl.setWidth("110px");
 						userLbl.setStyleName("link");
 
 						priorityLayout.addComponent(userLbl);
-						final ProgressIndicator indicator = new ProgressIndicator(
-								new Float((float) item.getValue() / totalCount));
-						indicator.setPollingInterval(1000000000);
+						final ProgressBar indicator = new ProgressBar(
+								totalCount, item.getValue());
+						indicator.setWidth("100%");
 						priorityLayout.addComponent(indicator);
+						priorityLayout.setExpandRatio(indicator, 1.0f);
 
-						final Label progressLbl = new Label("("
-								+ item.getValue() + "/" + totalCount + ")");
-						priorityLayout.addComponent(progressLbl);
 						this.bodyContent.addComponent(priorityLayout);
 						continue;
 					}
@@ -80,18 +78,16 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 				if (!isFound) {
 					final HorizontalLayout priorityLayout = new HorizontalLayout();
 					priorityLayout.setSpacing(true);
+					priorityLayout.setWidth("100%");
 					final Button userLbl = new Button(status, listener);
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
-					final ProgressIndicator indicator = new ProgressIndicator(
-							0f);
-					indicator.setPollingInterval(1000000000);
+					final ProgressBar indicator = new ProgressBar(totalCount, 0);
+					indicator.setWidth("100%");
 					priorityLayout.addComponent(indicator);
+					priorityLayout.setExpandRatio(indicator, 1.0f);
 
-					final Label progressLbl = new Label("(" + 0 + "/"
-							+ totalCount + ")");
-					priorityLayout.addComponent(progressLbl);
 					this.bodyContent.addComponent(priorityLayout);
 				}
 			}

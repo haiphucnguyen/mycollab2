@@ -12,13 +12,12 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -52,6 +51,7 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 			for (final GroupItem item : groupItems) {
 				final HorizontalLayout assigneeLayout = new HorizontalLayout();
 				assigneeLayout.setSpacing(true);
+				assigneeLayout.setWidth("100%");
 
 				final String assignUser = item.getGroupid();
 				final String assignUserFullName = (item.getGroupid() == null) ? "Undefnined"
@@ -59,14 +59,12 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 				final BugAssigneeButton userLbl = new BugAssigneeButton(
 						assignUser, assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
-				final ProgressIndicator indicator = new ProgressIndicator(
-						new Float((float) item.getValue() / totalCount));
-				indicator.setPollingInterval(1000000000);
+				final ProgressBar indicator = new ProgressBar(totalCount,
+						item.getValue());
+				indicator.setWidth("100%");
 				assigneeLayout.addComponent(indicator);
+				assigneeLayout.setExpandRatio(indicator, 1.0f);
 
-				final Label progressLbl = new Label("(" + item.getValue() + "/"
-						+ totalCount + ")");
-				assigneeLayout.addComponent(progressLbl);
 				this.bodyContent.addComponent(assigneeLayout);
 			}
 

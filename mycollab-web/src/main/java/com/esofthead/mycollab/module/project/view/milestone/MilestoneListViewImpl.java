@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -32,7 +33,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -200,41 +200,19 @@ public class MilestoneListViewImpl extends AbstractView implements
 		layoutHelper.addComponent(new ProjectUserLink(milestone.getOwner(), "",
 				false, true), "Assignee", 0, 2, Alignment.MIDDLE_LEFT);
 
-		final HorizontalLayout taskComp = new HorizontalLayout();
-		taskComp.setWidth("100%");
-		taskComp.setSpacing(true);
-		final ProgressIndicator progressTask = new ProgressIndicator(new Float(
-				(float) (milestone.getNumTasks() - milestone.getNumOpenTasks())
-						/ milestone.getNumTasks()));
-		progressTask.setPollingInterval(1000000000);
+		final ProgressBar progressTask = new ProgressBar(
+				milestone.getNumTasks(), milestone.getNumOpenTasks());
 		progressTask.setWidth("100%");
-		taskComp.addComponent(progressTask);
-		final Label taskNumber = new Label("(" + milestone.getNumOpenTasks()
-				+ "/" + milestone.getNumTasks() + ")");
-		taskNumber.setWidth("90px");
-		taskComp.addComponent(taskNumber);
-		taskComp.setExpandRatio(progressTask, 1.0f);
-		// taskComp.setComponentAlignment(taskNumber, Alignment.MIDDLE_CENTER);
 
-		layoutHelper.addComponent(taskComp, "Tasks", 0, 3,
+		layoutHelper.addComponent(progressTask, "Tasks", 0, 3,
 				Alignment.MIDDLE_LEFT);
 
-		final HorizontalLayout bugComp = new HorizontalLayout();
-		bugComp.setWidth("100%");
-		bugComp.setSpacing(true);
-		final ProgressIndicator progressBug = new ProgressIndicator(new Float(
-				(float) (milestone.getNumBugs() - milestone.getNumOpenBugs())
-						/ milestone.getNumBugs()));
-		progressBug.setPollingInterval(1000000000);
+		final ProgressBar progressBug = new ProgressBar(milestone.getNumBugs(),
+				milestone.getNumOpenBugs());
 		progressBug.setWidth("100%");
-		bugComp.addComponent(progressBug);
-		final Label bugNumber = new Label("(" + milestone.getNumOpenBugs()
-				+ "/" + milestone.getNumBugs() + ")");
-		bugNumber.setWidth("90px");
-		bugComp.addComponent(bugNumber);
-		bugComp.setExpandRatio(progressBug, 1.0f);
 
-		layoutHelper.addComponent(bugComp, "Bugs", 0, 4, Alignment.MIDDLE_LEFT);
+		layoutHelper.addComponent(progressBug, "Bugs", 0, 4,
+				Alignment.MIDDLE_LEFT);
 		final GridLayout milestoneInfoLayout = layoutHelper.getLayout();
 		milestoneInfoLayout.setWidth("100%");
 		milestoneInfoLayout.setMargin(false);

@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -20,9 +21,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -132,16 +131,10 @@ public class MilestoneAddViewImpl extends AbstractView implements
 					final int numTasks = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumTasks() : 0;
 
-					final ProgressIndicator progressTask = new ProgressIndicator(
-							new Float((float) (numTasks - numOpenTask)
-									/ numTasks));
-					progressTask.setPollingInterval(1000000000);
-					progressTask.setWidth("120px");
+					final ProgressBar progressTask = new ProgressBar(numTasks,
+							numOpenTask);
+					progressTask.setWidth("100%");
 					taskComp.addComponentField(progressTask);
-					final Label taskNumber = new Label("(" + numOpenTask + "/"
-							+ numTasks + ")");
-					taskNumber.setWidth("90px");
-					taskComp.addComponentField(taskNumber);
 					return taskComp;
 				} else if (propertyId.equals("numOpenBugs")) {
 					final FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
@@ -150,16 +143,10 @@ public class MilestoneAddViewImpl extends AbstractView implements
 					final int numBugs = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumBugs() : 0;
 
-					final ProgressIndicator progressBug = new ProgressIndicator(
-							new Float((float) (numBugs - numOpenBugs) / numBugs));
-					progressBug.setPollingInterval(1000000000);
-					progressBug.setWidth("120px");
+					final ProgressBar progressBug = new ProgressBar(numBugs,
+							numOpenBugs);
+					progressBug.setWidth("100%");
 					bugComp.addComponentField(progressBug);
-
-					final Label bugNumber = new Label("(" + numOpenBugs + "/"
-							+ numBugs + ")");
-					bugNumber.setWidth("90px");
-					bugComp.addComponentField(bugNumber);
 					return bugComp;
 				}
 

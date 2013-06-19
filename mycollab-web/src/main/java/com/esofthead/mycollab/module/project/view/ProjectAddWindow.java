@@ -33,17 +33,17 @@ import com.vaadin.ui.Window;
 public class ProjectAddWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private Project project;
-	private EditForm editForm;
+	private final Project project;
+	private final EditForm editForm;
 
 	public ProjectAddWindow() {
 		this.setWidth("900px");
-		center();
+		this.center();
 
-		project = new Project();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-		editForm.setItemDataSource(new BeanItem<Project>(project));
+		this.project = new Project();
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+		this.editForm.setItemDataSource(new BeanItem<Project>(this.project));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Project> {
@@ -51,7 +51,7 @@ public class ProjectAddWindow extends Window {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -65,31 +65,39 @@ public class ProjectAddWindow extends Window {
 
 			@Override
 			public Layout getLayout() {
-				AddViewLayout projectAddLayout = new AddViewLayout(
+				final AddViewLayout projectAddLayout = new AddViewLayout(
 						"New Project",
 						MyCollabResource
 								.newResource("icons/48/project/project.png"));
-				informationLayout = new GridFormLayoutHelper(2, 4);
+				this.informationLayout = new GridFormLayoutHelper(2, 4, "100%",
+						"167px", Alignment.MIDDLE_LEFT);
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().setSpacing(false);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
 
-				projectAddLayout.addBody(informationLayout.getLayout());
+				projectAddLayout.addBody(this.informationLayout.getLayout());
 
-				HorizontalLayout buttonControls = new HorizontalLayout();
+				final HorizontalLayout buttonControls = new HorizontalLayout();
 				buttonControls.setSpacing(true);
 				buttonControls.setMargin(true);
 				buttonControls.setStyleName("addNewControl");
 
-				Button saveBtn = new Button(
+				final Button saveBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
-								ProjectService projectService = AppContext
+							public void buttonClick(final ClickEvent event) {
+								final ProjectService projectService = AppContext
 										.getSpringBean(ProjectService.class);
-								project.setSaccountid(AppContext.getAccountId());
-								projectService.saveWithSession(project,
+								ProjectAddWindow.this.project
+										.setSaccountid(AppContext
+												.getAccountId());
+								projectService.saveWithSession(
+										ProjectAddWindow.this.project,
 										AppContext.getUsername());
 
 								EventBus.getInstance()
@@ -98,7 +106,8 @@ public class ProjectAddWindow extends Window {
 														this,
 														new PageActionChain(
 																new ProjectScreenData.Goto(
-																		project.getId()))));
+																		ProjectAddWindow.this.project
+																				.getId()))));
 								ProjectAddWindow.this.close();
 							}
 
@@ -108,14 +117,14 @@ public class ProjectAddWindow extends Window {
 				buttonControls.setComponentAlignment(saveBtn,
 						Alignment.MIDDLE_CENTER);
 
-				Button closeBtn = new Button(
+				final Button closeBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								ProjectAddWindow.this.close();
 							}
 
@@ -130,24 +139,27 @@ public class ProjectAddWindow extends Window {
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
+			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("name")) {
-					informationLayout.addComponent(field, "Project Name", 0, 0);
+					this.informationLayout.addComponent(field, "Project Name",
+							0, 0);
 				} else if (propertyId.equals("homepage")) {
-					informationLayout.addComponent(field, "Home Page", 1, 0);
+					this.informationLayout.addComponent(field, "Home Page", 1,
+							0);
 				} else if (propertyId.equals("shortname")) {
-					informationLayout.addComponent(field, "Short Name", 0, 1);
+					this.informationLayout.addComponent(field, "Short Name", 0,
+							1);
 				} else if (propertyId.equals("projectstatus")) {
-					informationLayout.addComponent(field, "Status", 1, 1);
+					this.informationLayout.addComponent(field, "Status", 1, 1);
 				} else if (propertyId.equals("planstartdate")) {
-					informationLayout.addComponent(field, "Plan Start Date", 0,
-							2);
+					this.informationLayout.addComponent(field,
+							"Plan Start Date", 0, 2);
 				} else if (propertyId.equals("planenddate")) {
-					informationLayout
-							.addComponent(field, "Plan End Date", 1, 2);
+					this.informationLayout.addComponent(field, "Plan End Date",
+							1, 2);
 				} else if (propertyId.equals("description")) {
-					informationLayout.addComponent(field, "Description", 0, 3,
-							2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
+					this.informationLayout.addComponent(field, "Description",
+							0, 3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
 				}
 
 			}
@@ -158,29 +170,30 @@ public class ProjectAddWindow extends Window {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("description")) {
-					RichTextArea field = new RichTextArea();
+					final RichTextArea field = new RichTextArea();
 					field.setHeight("350px");
 					return field;
 				} else if (propertyId.equals("projectstatus")) {
-					ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
+					final ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
 					projectCombo.setRequired(true);
 					projectCombo
 							.setRequiredError("Please enter a project status");
-					if (project.getProjectstatus() == null) {
-						project.setProjectstatus("Open");
+					if (ProjectAddWindow.this.project.getProjectstatus() == null) {
+						ProjectAddWindow.this.project.setProjectstatus("Open");
 					}
 					return projectCombo;
 				} else if (propertyId.equals("shortname")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a project short name");
 					return tf;
 				} else if (propertyId.equals("name")) {
-					TextField tf = new TextField();
+					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");

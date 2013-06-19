@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFo
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -20,7 +21,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -52,48 +52,21 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			} else if (propertyId.equals("numOpenTasks")) {
 				final FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
 
-				final ProgressIndicator progressTask = new ProgressIndicator(
-						new Float(
-								(float) (MilestonePreviewBuilder.this.milestone
-										.getNumTasks() - MilestonePreviewBuilder.this.milestone
-										.getNumOpenTasks())
-										/ MilestonePreviewBuilder.this.milestone
-												.getNumTasks()));
-				progressTask.setPollingInterval(1000000000);
-				progressTask.setWidth("120px");
+				final ProgressBar progressTask = new ProgressBar(
+						MilestonePreviewBuilder.this.milestone.getNumTasks(),
+						MilestonePreviewBuilder.this.milestone
+								.getNumOpenTasks());
+				progressTask.setWidth("100%");
 				taskComp.addComponentField(progressTask);
-				final Label taskNumber = new Label(
-						"("
-								+ MilestonePreviewBuilder.this.milestone
-										.getNumOpenTasks()
-								+ "/"
-								+ MilestonePreviewBuilder.this.milestone
-										.getNumTasks() + ")");
-				taskNumber.setWidth("90px");
-				taskComp.addComponentField(taskNumber);
 				return taskComp;
 			} else if (propertyId.equals("numOpenBugs")) {
 				final FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
 
-				final ProgressIndicator progressBug = new ProgressIndicator(
-						new Float(
-								(float) (MilestonePreviewBuilder.this.milestone
-										.getNumBugs() - MilestonePreviewBuilder.this.milestone
-										.getNumOpenBugs())
-										/ MilestonePreviewBuilder.this.milestone
-												.getNumBugs()));
-				progressBug.setPollingInterval(1000000000);
-				progressBug.setWidth("120px");
+				final ProgressBar progressBug = new ProgressBar(
+						MilestonePreviewBuilder.this.milestone.getNumBugs(),
+						MilestonePreviewBuilder.this.milestone.getNumOpenBugs());
+				progressBug.setWidth("100%");
 				bugComp.addComponentField(progressBug);
-				final Label bugNumber = new Label(
-						"("
-								+ MilestonePreviewBuilder.this.milestone
-										.getNumOpenBugs()
-								+ "/"
-								+ MilestonePreviewBuilder.this.milestone
-										.getNumBugs() + ")");
-				bugNumber.setWidth("90px");
-				bugComp.addComponentField(bugNumber);
 				return bugComp;
 			}
 			return null;

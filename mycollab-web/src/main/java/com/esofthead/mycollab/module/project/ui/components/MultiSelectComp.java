@@ -22,7 +22,7 @@ public abstract class MultiSelectComp extends CustomField {
 
 	private final TextField componentsDisplay;
 	private final MultipleItemsPopupSelection componentPopupSelection;
-	private String displayName;
+	private final String displayName;
 	protected boolean isClicked = false;
 	protected final HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
 
@@ -33,7 +33,12 @@ public abstract class MultiSelectComp extends CustomField {
 	protected List dataList = new ArrayList();
 
 	public MultiSelectComp() {
+		this("", "195px");
+	}
+
+	public MultiSelectComp(final String displayName, final String width) {
 		this.setWidth("100%");
+		this.displayName = displayName;
 		final HorizontalLayout content = new HorizontalLayout();
 		content.setSpacing(false);
 
@@ -41,7 +46,7 @@ public abstract class MultiSelectComp extends CustomField {
 		this.componentsDisplay.setNullRepresentation("");
 		this.componentsDisplay.setReadOnly(true);
 		this.componentsDisplay.addStyleName("noBorderRight");
-		this.componentsDisplay.setWidth("195px");
+		this.componentsDisplay.setWidth("100%");
 
 		this.componentPopupSelection = new MultipleItemsPopupSelection();
 		this.componentPopupSelection.addListener(new Button.ClickListener() {
@@ -65,20 +70,14 @@ public abstract class MultiSelectComp extends CustomField {
 		content.setComponentAlignment(this.componentPopupSelection,
 				Alignment.MIDDLE_LEFT);
 
-		// content.setWidth("100%");
-		// content.setExpandRatio(this.componentsDisplay, 1.0f);
+		content.setWidth(width);
+		content.setExpandRatio(this.componentsDisplay, 1.0f);
 
 		this.setCompositionRoot(content);
 	}
 
-	public MultiSelectComp(final String displayName, final String width) {
-		this(displayName);
-		this.componentsDisplay.setWidth(width);
-	}
-
 	public MultiSelectComp(final String displayName) {
-		this();
-		this.displayName = displayName;
+		this(displayName, "195px");
 	}
 
 	public void resetComp() {
