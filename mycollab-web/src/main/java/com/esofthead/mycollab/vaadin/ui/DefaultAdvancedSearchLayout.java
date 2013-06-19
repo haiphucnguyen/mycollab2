@@ -2,7 +2,8 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.List;
 
-import org.eclipse.jetty.util.log.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
@@ -30,6 +31,9 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		extends SearchLayout<S> {
+
+	private static Logger log = LoggerFactory
+			.getLogger(DefaultAdvancedSearchLayout.class);
 
 	private SaveSearchResultService saveSearchResultService;
 
@@ -126,7 +130,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				Alignment.MIDDLE_RIGHT);
 
 		final SavedSearchResultComboBox saveResult = new SavedSearchResultComboBox();
-		
+
 		Button saveSearchBtn = new Button("Save", new Button.ClickListener() {
 
 			@SuppressWarnings("deprecation")
@@ -143,18 +147,14 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 					searchResult.setType(type);
 					searchResult.setQueryname((String) saveSearchValue
 							.getValue());
-					try{
-						saveSearchResultService.saveWithSession(searchResult,
-								AppContext.getUsername());
-						getWindow().showNotification("You created successfull searchItem.");
-						clearFields();
-						saveResult.contructComboBox();
-						saveResult.setValue(null);
-						saveResult.setValue("");
-					}catch(Exception e){
-						Log.debug("Error while save search result:" + e.getMessage());
-					}
-					
+
+					saveSearchResultService.saveWithSession(searchResult,
+							AppContext.getUsername());
+					getWindow().showNotification(
+							"You created successfully searchItem.");
+					saveSearchValue.setValue("");
+
+					saveResult.addNewSearchResult(searchResult);
 				}
 
 			}
@@ -195,19 +195,25 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 	private class SavedSearchResultComboBox extends ComboBox {
 		BeanContainer<String, SaveSearchResultWithBLOBs> beanItem;
+
 		public SavedSearchResultComboBox() {
 			this.setImmediate(true);
 			this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
 			contructComboBox();
-			
+
+			SavedSearchResultComboBox.this.setContainerDataSource(beanItem);
+			SavedSearchResultComboBox.this
+					.setItemCaptionPropertyId("queryname");
+
 			this.addListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(
 						com.vaadin.data.Property.ValueChangeEvent event) {
 					Object itemId = SavedSearchResultComboBox.this.getValue();
-					SaveSearchResultWithBLOBs data = beanItem.getItem(itemId).getBean();
-					
+					SaveSearchResultWithBLOBs data = beanItem.getItem(itemId)
+							.getBean();
+
 					saveSearchValue.setValue("");
 					String queryText = data.getQuerytext();
 					XStream xstream = new XStream();
@@ -217,7 +223,8 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			});
 			this.setImmediate(true);
 		}
-		public void contructComboBox(){
+
+		public void contructComboBox() {
 			SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
 			searchCriteria.setType(new StringSearchField(type));
 			searchCriteria.setCreateUser(new StringSearchField(AppContext
@@ -236,9 +243,13 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				beanItem.addBean(searchResult);
 			}
 
-			this.setContainerDataSource(beanItem);
-			this.setItemCaptionPropertyId("queryname");
 		}
-		
+
+		public void addNewSearchResult(SaveSearchResultWithBLOBs result) {
+//			((BeanContainer<String, SaveSearchResultWithBLOBs>) (this
+//					.getContainerDataSource())).addItem(result);
+			beanItem.addItem(result);
+		}
+
 	}
 }
