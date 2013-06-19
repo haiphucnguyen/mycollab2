@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 public class Migrate {
 	private static String BASE_PATH = "/Users/haiphucnguyen/Downloads/mycollab";
-	private static AmazonService amazonService = new AmazonService();
+	private static AmazonRawContentServiceImpl amazonRawContentServiceImpl = new AmazonRawContentServiceImpl();
 
 	public static void main(String[] args) throws FileNotFoundException {
 		File legacyFolder = new File(BASE_PATH);
@@ -22,7 +22,7 @@ public class Migrate {
 				String contentPath = childFile.getAbsolutePath().substring(
 						BASE_PATH.length() + 1);
 				System.out.println("Put file " + contentPath + " to s3");
-				amazonService.saveContent(contentPath, new FileInputStream(
+				amazonRawContentServiceImpl.saveContent(contentPath, new FileInputStream(
 						childFile));
 			}
 		}

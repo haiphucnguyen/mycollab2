@@ -23,7 +23,7 @@ relaymail.password=esofthead321
 error.sendTo=<Your email>
 
 storageSystem=<file or s3>
-content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl
+content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl
 s3.key=
 s3.secretKey=
 s3.bucket=

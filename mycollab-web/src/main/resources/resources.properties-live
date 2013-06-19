@@ -25,7 +25,7 @@ relaymail.password=UuOSSS2jNGKITx5-OyxySQ
 relaymail.isTLS=false
 
 storageSystem=s3
-content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl
+content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl
 s3.key=AKIAJKX7POSGEJ4VRIDQ
 s3.secretKey=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
 s3.bucket=mycollab
@@ -33,7 +33,7 @@ s3.downloadurl=https://s3.amazonaws.com/mycollab/
 
 error.sendTo=hainguyen@esofthead.com
 
-content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl
+content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl
 
 cdn.url=http://app.mycollab.com/assets/images/email/
 app.url=http://%s.mycollab.com/

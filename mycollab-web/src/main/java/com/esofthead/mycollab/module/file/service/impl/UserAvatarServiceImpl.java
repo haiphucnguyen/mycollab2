@@ -21,13 +21,14 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 	private ContentService contentService;
 
 	private static final int PIXELS_100 = 100;
+	private static final int PIXELS_64 = 64;
 	private static final int PIXELS_48 = 48;
 	private static final int PIXELS_32 = 32;
 	private static final int PIXELS_24 = 24;
 	private static final int PIXELS_16 = 16;
 
-	private static final int[] SUPPORT_SIZES = { PIXELS_100, PIXELS_48,
-			PIXELS_32, PIXELS_24, PIXELS_16 };
+	private static final int[] SUPPORT_SIZES = { PIXELS_100, PIXELS_64,
+			PIXELS_48, PIXELS_32, PIXELS_24, PIXELS_16 };
 
 	@Override
 	public void uploadAvatar(BufferedImage image, String username) {
