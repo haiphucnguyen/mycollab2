@@ -32,89 +32,91 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
-public class OpportunityServiceTest extends ServiceTest{
+@ContextConfiguration(locations = { "classpath:META-INF/spring/service-test-context.xml" })
+public class OpportunityServiceTest extends ServiceTest {
 
-    @Autowired
-    protected OpportunityService opportunityService;
+	@Autowired
+	protected OpportunityService opportunityService;
 
-    @DataSet
-    @Test
-    public void testSearchByCriteria() {
-        Assert.assertEquals(
-                2,
-                opportunityService.findPagableListByCriteria(
-                new SearchRequest<OpportunitySearchCriteria>(
-                getCriteria(), 0, 2)).size());
-    }
+	@DataSet
+	@Test
+	public void testSearchByCriteria() {
+		Assert.assertEquals(
+				2,
+				opportunityService.findPagableListByCriteria(
+						new SearchRequest<OpportunitySearchCriteria>(
+								getCriteria(), 0, 2)).size());
+	}
 
-    @DataSet
-    @Test
-    public void testGetTotalCount() {
-        Assert.assertEquals(2, opportunityService.getTotalCount(getCriteria()));
-    }
+	@DataSet
+	@Test
+	public void testGetTotalCount() {
+		Assert.assertEquals(2, opportunityService.getTotalCount(getCriteria()));
+	}
 
-    private OpportunitySearchCriteria getCriteria() {
-        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setAccountName(new StringSearchField(SearchField.AND,
-                "esofthead"));
-        criteria.setAssignUserName(new StringSearchField(SearchField.AND,
-                "Nguyen"));
-        criteria.setCampaignName(new StringSearchField(SearchField.AND, "yz"));
-        criteria.setOpportunityName(new StringSearchField(SearchField.AND, "aa"));
-        criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
-        return criteria;
-    }
+	private OpportunitySearchCriteria getCriteria() {
+		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setAccountId(new NumberSearchField(SearchField.AND, 1));
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
+				"Nguyen"));
+		criteria.setCampaignName(new StringSearchField(SearchField.AND, "yz"));
+		criteria.setOpportunityName(new StringSearchField(SearchField.AND, "aa"));
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
+		return criteria;
+	}
 
-    @Test
-    @DataSet
-    public void testSearchLeadSources() {
-        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setLeadSources(new SetSearchField<String>(SearchField.AND, new String[]{"Cold Call", "Employee"}));
-        Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                opportunityService.findPagableListByCriteria(
-                new SearchRequest<OpportunitySearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchLeadSources() {
+		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setLeadSources(new SetSearchField<String>(SearchField.AND,
+				new String[] { "Cold Call", "Employee" }));
+		Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				opportunityService.findPagableListByCriteria(
+						new SearchRequest<OpportunitySearchCriteria>(criteria,
+								0, Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchSalesState() {
-        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setSalesStages(new SetSearchField<String>(SearchField.AND, new String[]{"1", "2"}));
-        Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                opportunityService.findPagableListByCriteria(
-                new SearchRequest<OpportunitySearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchSalesState() {
+		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setSalesStages(new SetSearchField<String>(SearchField.AND,
+				new String[] { "1", "2" }));
+		Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				opportunityService.findPagableListByCriteria(
+						new SearchRequest<OpportunitySearchCriteria>(criteria,
+								0, Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAssignUsers() {
-        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[]{"hai", "linh"}));
-        Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                opportunityService.findPagableListByCriteria(
-                new SearchRequest<OpportunitySearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAssignUsers() {
+		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND,
+				new String[] { "hai", "linh" }));
+		Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				opportunityService.findPagableListByCriteria(
+						new SearchRequest<OpportunitySearchCriteria>(criteria,
+								0, Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchNextStep() {
-        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setNextStep(new StringSearchField(SearchField.AND, "ABC"));
-        Assert.assertEquals(1, opportunityService.getTotalCount(criteria));
-        Assert.assertEquals(
-                1,
-                opportunityService.findPagableListByCriteria(
-                new SearchRequest<OpportunitySearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchNextStep() {
+		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setNextStep(new StringSearchField(SearchField.AND, "ABC"));
+		Assert.assertEquals(1, opportunityService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				opportunityService.findPagableListByCriteria(
+						new SearchRequest<OpportunitySearchCriteria>(criteria,
+								0, Integer.MAX_VALUE)).size());
+	}
 }

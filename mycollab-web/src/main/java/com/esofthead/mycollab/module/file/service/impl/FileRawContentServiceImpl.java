@@ -11,7 +11,7 @@ import org.apache.commons.io.FileUtils;
 import com.esofthead.mycollab.module.file.FileStorageConfig;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
-public class RawContentServiceImpl implements RawContentService {
+public class FileRawContentServiceImpl implements RawContentService {
 
 	private static final int BUFFER_SIZE = 1024;
 

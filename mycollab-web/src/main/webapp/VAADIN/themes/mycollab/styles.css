@@ -1885,6 +1885,25 @@ input.v-textfield-errorField {
 .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout .activity-stream {
 	background-color: rgb(247, 247, 247);
 }
+.stream-wrapper {
+	background-color: rgb(245, 245, 245);
+}
+.stream-wrapper > .v-csslayout-margin {
+	padding: 5px;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+}
+.date-wrapper {
+	background-color: rgb(212, 223, 239);
+	font-size: 13px;
+}
+.date-wrapper > .v-csslayout-margin {
+	padding: 5px;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+}
 /* End Activity Stream Channel */
 
 /* Start Email Form */
