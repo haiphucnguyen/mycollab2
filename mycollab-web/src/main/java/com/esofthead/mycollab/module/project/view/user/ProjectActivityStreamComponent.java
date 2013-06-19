@@ -4,14 +4,20 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.apache.commons.lang3.time.DateUtils;
+
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
@@ -19,13 +25,11 @@ import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -37,15 +41,12 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+	private final ProjectActivityStreamPagedList activityStreamList;
 
 	public ProjectActivityStreamComponent() {
 		super("Project Feeds", new VerticalLayout());
-		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
-				AppContext.getSpringBean(ActivityStreamService.class),
-				ActivityStreamRowDisplayHandler.class, 20);
+		activityStreamList = new ProjectActivityStreamPagedList();
 		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);
 	}
 
@@ -62,6 +63,8 @@ public class ProjectActivityStreamComponent extends Depot {
 	static class ProjectActivityStreamPagedList
 			extends
 			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
+		private static final long serialVersionUID = 1L;
+
 		private ActivityStreamService activityStreamService;
 
 		public ProjectActivityStreamPagedList() {
@@ -84,83 +87,82 @@ public class ProjectActivityStreamComponent extends Depot {
 			this.setCurrentPage(this.currentPage);
 			this.setTotalPage(this.totalPage);
 
-		}
-	}
+			final List<SimpleActivityStream> currentListData = this.activityStreamService
+					.findPagableListByCriteria(this.searchRequest);
+			this.listContainer.removeAllComponents();
 
-	public static class ActivityStreamRowDisplayHandler implements
-			DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
+			Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
 
-		@Override
-		public Component generateRow(final SimpleActivityStream activityStream,
-				final int rowIndex) {
-			final CssLayout layout = new CssLayout();
-			layout.setWidth("100%");
-			layout.setStyleName("activity-stream");
+			try {
+				for (final SimpleActivityStream activityStream : currentListData) {
+					final Date itemCreatedDate = activityStream
+							.getCreatedtime();
 
-			if ((rowIndex + 1) % 2 != 0) {
-				layout.addStyleName("odd");
+					if (!DateUtils.isSameDay(currentDate, itemCreatedDate)) {
+						final CssLayout dateWrapper = new CssLayout();
+						dateWrapper.setWidth("100%");
+						dateWrapper.addStyleName("date-wrapper");
+						dateWrapper.addComponent(new Label(AppContext
+								.formatDate(itemCreatedDate)));
+						this.listContainer.addComponent(dateWrapper);
+						currentDate = itemCreatedDate;
+					}
+					String content = "";
+
+					if (ActivityStreamConstants.ACTION_CREATE
+							.equals(activityStream.getAction())) {
+						content = LocalizationHelper
+								.getMessage(
+										ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
+										UserAvatarControlFactory.getLink(
+												activityStream.getCreateduser(),
+												16),
+										ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
+												activityStream.getExtratypeid(),
+												activityStream.getCreateduser()),
+										activityStream.getCreatedUserFullName(),
+										LocalizationHelper
+												.getMessage(ProjectLocalizationTypeMap
+														.getType(activityStream
+																.getType())),
+										ProjectResources
+												.getResourceLink(activityStream
+														.getType()),
+										ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
+												activityStream.getExtratypeid(),
+												activityStream.getType(),
+												activityStream.getTypeid()),
+										activityStream.getNamefield());
+					} else if (ActivityStreamConstants.ACTION_UPDATE
+							.equals(activityStream.getAction())) {
+						content = LocalizationHelper
+								.getMessage(
+										ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
+										UserAvatarControlFactory.getLink(
+												activityStream.getCreateduser(),
+												16),
+										activityStream.getCreatedUserFullName(),
+										LocalizationHelper
+												.getMessage(ProjectLocalizationTypeMap
+														.getType(activityStream
+																.getType())),
+										ProjectResources
+												.getResourceLink(activityStream
+														.getType()),
+										ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
+												activityStream.getExtratypeid(),
+												activityStream.getType(),
+												activityStream.getTypeid()),
+										activityStream.getNamefield());
+					}
+
+					final Label actionLbl = new Label(content,
+							Label.CONTENT_XHTML);
+					listContainer.addComponent(actionLbl);
+				}
+			} catch (Exception e) {
+				throw new MyCollabException(e);
 			}
-
-			final CssLayout header = new CssLayout();
-			header.setStyleName("stream-content");
-			String content = "";
-
-			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
-					.getAction())) {
-				content = LocalizationHelper
-						.getMessage(
-								ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
-								UserAvatarControlFactory.getLink(
-										activityStream.getCreateduser(), 16),
-								ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
-										activityStream.getExtratypeid(),
-										activityStream.getCreateduser()),
-								activityStream.getCreatedUserFullName(),
-								LocalizationHelper
-										.getMessage(ProjectLocalizationTypeMap
-												.getType(activityStream
-														.getType())),
-								ProjectResources.getResourceLink(activityStream
-										.getType()),
-								ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
-										activityStream.getExtratypeid(),
-										activityStream.getType(),
-										activityStream.getTypeid()),
-								activityStream.getNamefield());
-			} else if (ActivityStreamConstants.ACTION_UPDATE
-					.equals(activityStream.getAction())) {
-				content = LocalizationHelper
-						.getMessage(
-								ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
-								UserAvatarControlFactory.getLink(
-										activityStream.getCreateduser(), 16),
-								activityStream.getCreatedUserFullName(),
-								LocalizationHelper
-										.getMessage(ProjectLocalizationTypeMap
-												.getType(activityStream
-														.getType())),
-								ProjectResources.getResourceLink(activityStream
-										.getType()),
-								ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
-										activityStream.getExtratypeid(),
-										activityStream.getType(),
-										activityStream.getTypeid()),
-								activityStream.getNamefield());
-			}
-
-			final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
-			header.addComponent(actionLbl);
-			layout.addComponent(header);
-
-			final CssLayout body = new CssLayout();
-			body.setStyleName("activity-date");
-			final Label dateLbl = new Label(
-					DateTimeUtils.getStringDateFromNow(activityStream
-							.getCreatedtime()));
-			body.addComponent(dateLbl);
-
-			layout.addComponent(body);
-			return layout;
 		}
 	}
 }
