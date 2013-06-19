@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
@@ -296,9 +297,12 @@ public class OpportunitySearchPanel extends
 			if (value.getOpportunityName() != null)
 				opportunityNameField.setValue(value.getOpportunityName()
 						.getValue());
-			if (value.getAccountId() != null)
-				// accountField.setValue(value.getAccountName().getValue());
-				if (value.getNextStep() != null)
+			if (value.getAccountId() != null){
+				AccountService accountService = AppContext.getSpringBean(AccountService.class);
+				SimpleAccount account = accountService.findAccountById((Integer)value.getAccountId().getValue());
+				accountField.setAccount(account);
+			}
+			if (value.getNextStep() != null)
 					nextStepField.setValue(value.getNextStep().getValue());
 			if (value.getAssignUsers() != null)
 				userField.setValue(Arrays.asList((Object[]) value

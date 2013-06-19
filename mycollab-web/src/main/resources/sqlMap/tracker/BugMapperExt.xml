@@ -33,12 +33,15 @@
     </resultMap>
 
     <sql id="queryTotalCountSearchCriteria">
-        <if test="searchCriteria.assignuser != null and searchCriteria.assignuser.value != null">
+        <if
+            test="searchCriteria.assignuser != null and searchCriteria.assignuser.value != null">
             ${searchCriteria.assignuser.operation}
             m_tracker_bug.assignuser=#{searchCriteria.assignuser.value}
         </if>
-        <if test="searchCriteria.assignuser != null and searchCriteria.assignuser.value == null">
-            ${searchCriteria.assignuser.operation} m_tracker_bug.assignuser IS
+        <if
+            test="searchCriteria.assignuser != null and searchCriteria.assignuser.value == null">
+            ${searchCriteria.assignuser.operation}
+            m_tracker_bug.assignuser IS
             NULL
         </if>
 
@@ -57,31 +60,40 @@
         <if test="searchCriteria.updatedDate != null">
             ${searchCriteria.updatedDate.operation}
             CAST(m_tracker_bug.lastUpdatedTime AS DATE )
-            ${searchCriteria.updatedDate.comparision} #{searchCriteria.updatedDate.value}
+            ${searchCriteria.updatedDate.comparision}
+            #{searchCriteria.updatedDate.value}
         </if>
         <if test="searchCriteria.dueDate != null">
-            ${searchCriteria.dueDate.operation} CAST(m_tracker_bug.duedate AS
-            DATE ) ${searchCriteria.dueDate.comparision} #{searchCriteria.dueDate.value}
+            ${searchCriteria.dueDate.operation}
+            CAST(m_tracker_bug.duedate AS
+            DATE )
+            ${searchCriteria.dueDate.comparision}
+            #{searchCriteria.dueDate.value}
         </if>
         <if test="searchCriteria.resolvedDate != null">
             ${searchCriteria.resolvedDate.operation}
             CAST(m_tracker_bug.resolveddate AS DATE )
-            ${searchCriteria.resolvedDate.comparision} #{searchCriteria.resolvedDate.value}
+            ${searchCriteria.resolvedDate.comparision}
+            #{searchCriteria.resolvedDate.value}
         </if>
         <if test="searchCriteria.updatedDateRange != null">
             ${searchCriteria.updatedDateRange.operation}
             CAST(m_tracker_bug.lastUpdatedTime AS DATE ) BETWEEN
-            #{searchCriteria.updatedDateRange.from} AND #{searchCriteria.updatedDateRange.to}
+            #{searchCriteria.updatedDateRange.from} AND
+            #{searchCriteria.updatedDateRange.to}
         </if>
         <if test="searchCriteria.dueDateRange != null">
-            ${searchCriteria.dueDateRange.operation} CAST(m_tracker_bug.duedate
-            AS DATE ) BETWEEN #{searchCriteria.dueDateRange.from} AND
+            ${searchCriteria.dueDateRange.operation}
+            CAST(m_tracker_bug.duedate
+            AS DATE ) BETWEEN
+            #{searchCriteria.dueDateRange.from} AND
             #{searchCriteria.dueDateRange.to}
         </if>
         <if test="searchCriteria.resolvedDateRange != null">
             ${searchCriteria.resolvedDateRange.operation}
             CAST(m_tracker_bug.resolveddate AS DATE ) BETWEEN
-            #{searchCriteria.resolvedDateRange.from} AND #{searchCriteria.resolvedDateRange.to}
+            #{searchCriteria.resolvedDateRange.from} AND
+            #{searchCriteria.resolvedDateRange.to}
         </if>
 
         <if test="searchCriteria.environment != null">
@@ -99,7 +111,8 @@
 
         <if test="searchCriteria.affectedversionids != null">
             ${searchCriteria.affectedversionids.operation}
-            <foreach close=")" collection="searchCriteria.affectedversionids.values"
+            <foreach close=")"
+                collection="searchCriteria.affectedversionids.values"
                 item="affectedversion" open="(" separator="OR">
 
             <![CDATA[
@@ -114,8 +127,9 @@
 
         <if test="searchCriteria.fixedversionids != null">
             ${searchCriteria.fixedversionids.operation}
-            <foreach close=")" collection="searchCriteria.fixedversionids.values"
-                item="fixedversion" open="(" separator="OR">
+            <foreach close=")"
+                collection="searchCriteria.fixedversionids.values" item="fixedversion"
+                open="(" separator="OR">
 
                 <![CDATA[
                 (SELECT COUNT(*) 
@@ -164,7 +178,8 @@
         </if>
 
         <if test="searchCriteria.priorities != null">
-            ${searchCriteria.priorities.operation} m_tracker_bug.priority IN
+            ${searchCriteria.priorities.operation}
+            m_tracker_bug.priority IN
             <foreach close=")" collection="searchCriteria.priorities.values"
                 item="priorityitem" open="(" separator=",">
                 #{priorityitem}
@@ -180,7 +195,8 @@
         </if>
 
         <if test="searchCriteria.resolutions != null">
-            ${searchCriteria.resolutions.operation} m_tracker_bug.resolution IN
+            ${searchCriteria.resolutions.operation}
+            m_tracker_bug.resolution IN
             <foreach close=")" collection="searchCriteria.resolutions.values"
                 item="resolutionitem" open="(" separator=",">
                 #{resolutionitem}
@@ -188,7 +204,8 @@
         </if>
 
         <if test="searchCriteria.severities != null">
-            ${searchCriteria.severities.operation} m_tracker_bug.severity IN
+            ${searchCriteria.severities.operation}
+            m_tracker_bug.severity IN
             <foreach close=")" collection="searchCriteria.severities.values"
                 item="severityitem" open="(" separator=",">
                 #{severityitem}
@@ -196,7 +213,8 @@
         </if>
 
         <if test="searchCriteria.milestoneIds != null">
-            ${searchCriteria.milestoneIds.operation} m_tracker_bug.milestoneId IN
+            ${searchCriteria.milestoneIds.operation}
+            m_tracker_bug.milestoneId IN
             <foreach close=")" collection="searchCriteria.milestoneIds.values"
                 item="milestoneitem" open="(" separator=",">
                 #{milestoneitem}
@@ -205,12 +223,15 @@
     </sql>
 
     <sql id="querySearchCriteria">
-        <if test="searchCriteria.assignuser != null and searchCriteria.assignuser.value != null">
+        <if
+            test="searchCriteria.assignuser != null and searchCriteria.assignuser.value != null">
             ${searchCriteria.assignuser.operation}
             m_tracker_bug.assignuser=#{searchCriteria.assignuser.value}
         </if>
-        <if test="searchCriteria.assignuser != null and searchCriteria.assignuser.value == null">
-            ${searchCriteria.assignuser.operation} m_tracker_bug.assignuser IS
+        <if
+            test="searchCriteria.assignuser != null and searchCriteria.assignuser.value == null">
+            ${searchCriteria.assignuser.operation}
+            m_tracker_bug.assignuser IS
             NULL
         </if>
 
@@ -229,31 +250,40 @@
         <if test="searchCriteria.updatedDate != null">
             ${searchCriteria.updatedDate.operation}
             CAST(m_tracker_bug.lastUpdatedTime AS DATE )
-            ${searchCriteria.updatedDate.comparision} #{searchCriteria.updatedDate.value}
+            ${searchCriteria.updatedDate.comparision}
+            #{searchCriteria.updatedDate.value}
         </if>
         <if test="searchCriteria.dueDate != null">
-            ${searchCriteria.dueDate.operation} CAST(m_tracker_bug.duedate AS
-            DATE ) ${searchCriteria.dueDate.comparision} #{searchCriteria.dueDate.value}
+            ${searchCriteria.dueDate.operation}
+            CAST(m_tracker_bug.duedate AS
+            DATE )
+            ${searchCriteria.dueDate.comparision}
+            #{searchCriteria.dueDate.value}
         </if>
         <if test="searchCriteria.resolvedDate != null">
             ${searchCriteria.resolvedDate.operation}
             CAST(m_tracker_bug.resolveddate AS DATE )
-            ${searchCriteria.resolvedDate.comparision} #{searchCriteria.resolvedDate.value}
+            ${searchCriteria.resolvedDate.comparision}
+            #{searchCriteria.resolvedDate.value}
         </if>
         <if test="searchCriteria.updatedDateRange != null">
             ${searchCriteria.updatedDateRange.operation}
             CAST(m_tracker_bug.lastUpdatedTime AS DATE ) BETWEEN
-            #{searchCriteria.updatedDateRange.from} AND #{searchCriteria.updatedDateRange.to}
+            #{searchCriteria.updatedDateRange.from} AND
+            #{searchCriteria.updatedDateRange.to}
         </if>
         <if test="searchCriteria.dueDateRange != null">
-            ${searchCriteria.dueDateRange.operation} CAST(m_tracker_bug.duedate
-            AS DATE ) BETWEEN #{searchCriteria.dueDateRange.from} AND
+            ${searchCriteria.dueDateRange.operation}
+            CAST(m_tracker_bug.duedate
+            AS DATE ) BETWEEN
+            #{searchCriteria.dueDateRange.from} AND
             #{searchCriteria.dueDateRange.to}
         </if>
         <if test="searchCriteria.resolvedDateRange != null">
             ${searchCriteria.resolvedDateRange.operation}
             CAST(m_tracker_bug.resolveddate AS DATE ) BETWEEN
-            #{searchCriteria.resolvedDateRange.from} AND #{searchCriteria.resolvedDateRange.to}
+            #{searchCriteria.resolvedDateRange.from} AND
+            #{searchCriteria.resolvedDateRange.to}
         </if>
 
         <if test="searchCriteria.environment != null">
@@ -271,7 +301,8 @@
 
         <if test="searchCriteria.affectedversionids != null">
             ${searchCriteria.affectedversionids.operation}
-            <foreach close=")" collection="searchCriteria.affectedversionids.values"
+            <foreach close=")"
+                collection="searchCriteria.affectedversionids.values"
                 item="affectedversion" open="(" separator="OR">
 
             <![CDATA[
@@ -286,8 +317,9 @@
 
         <if test="searchCriteria.fixedversionids != null">
             ${searchCriteria.fixedversionids.operation}
-            <foreach close=")" collection="searchCriteria.fixedversionids.values"
-                item="fixedversion" open="(" separator="OR">
+            <foreach close=")"
+                collection="searchCriteria.fixedversionids.values" item="fixedversion"
+                open="(" separator="OR">
 
                 <![CDATA[
                 (SELECT COUNT(*) 
@@ -336,7 +368,8 @@
         </if>
 
         <if test="searchCriteria.priorities != null">
-            ${searchCriteria.priorities.operation} m_tracker_bug.priority IN
+            ${searchCriteria.priorities.operation}
+            m_tracker_bug.priority IN
             <foreach close=")" collection="searchCriteria.priorities.values"
                 item="priorityitem" open="(" separator=",">
                 #{priorityitem}
@@ -352,7 +385,8 @@
         </if>
 
         <if test="searchCriteria.resolutions != null">
-            ${searchCriteria.resolutions.operation} m_tracker_bug.resolution IN
+            ${searchCriteria.resolutions.operation}
+            m_tracker_bug.resolution IN
             <foreach close=")" collection="searchCriteria.resolutions.values"
                 item="resolutionitem" open="(" separator=",">
                 #{resolutionitem}
@@ -360,14 +394,16 @@
         </if>
 
         <if test="searchCriteria.severities != null">
-            ${searchCriteria.severities.operation} m_tracker_bug.severity IN
+            ${searchCriteria.severities.operation}
+            m_tracker_bug.severity IN
             <foreach close=")" collection="searchCriteria.severities.values"
                 item="severityitem" open="(" separator=",">
                 #{severityitem}
             </foreach>
         </if>
         <if test="searchCriteria.milestoneIds != null">
-            ${searchCriteria.milestoneIds.operation} m_tracker_bug.milestoneId IN
+            ${searchCriteria.milestoneIds.operation}
+            m_tracker_bug.milestoneId IN
             <foreach close=")" collection="searchCriteria.milestoneIds.values"
                 item="milestoneitem" open="(" separator=",">
                 #{milestoneitem}
@@ -452,9 +488,19 @@
                 <include
                     refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
             </trim>
+            <include refid="orderStatement" />
         </if>
-        ORDER BY m_tracker_bug.lastUpdatedTime DESC
     </select>
+
+    <sql id="orderStatement">
+        ORDER BY
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection},
+        </if>
+        <![CDATA[
+            m_tracker_bug.lastUpdatedTime DESC
+        ]]>
+    </sql>
 
     <select id="getStatusSummary" parameterType="BugSearchCriteria"
         resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap">

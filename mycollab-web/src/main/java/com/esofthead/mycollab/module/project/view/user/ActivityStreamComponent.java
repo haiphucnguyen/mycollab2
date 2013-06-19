@@ -24,10 +24,10 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ResourceResolver;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -112,8 +112,8 @@ public class ActivityStreamComponent extends Depot {
 												activityStream.getType(),
 												activityStream.getTypeid()),
 										activityStream.getNamefield(),
-										ResourceResolver
-												.getResourceLink("icons/16/project/project.png"),
+										MyCollabResource
+												.newResourceLink("icons/16/project/project.png"),
 										ProjectLinkBuilder.WebLinkGenerator.generateProjectFullLink(
 												activityStream.getProjectId(),
 												ProjectLinkBuilder.DEFAULT_PREFIX_PARAM),
@@ -142,8 +142,8 @@ public class ActivityStreamComponent extends Depot {
 												activityStream.getType(),
 												activityStream.getTypeid()),
 										activityStream.getNamefield(),
-										ResourceResolver
-												.getResourceLink("icons/16/project/project.png"),
+										MyCollabResource
+												.newResourceLink("icons/16/project/project.png"),
 										ProjectLinkBuilder.WebLinkGenerator.generateProjectFullLink(
 												activityStream.getProjectId(),
 												ProjectLinkBuilder.DEFAULT_PREFIX_PARAM),

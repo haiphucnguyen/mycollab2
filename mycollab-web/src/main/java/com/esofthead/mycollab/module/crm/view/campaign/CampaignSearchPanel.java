@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -19,6 +21,7 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.DateSelectionComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -28,11 +31,14 @@ import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -302,7 +308,21 @@ public class CampaignSearchPanel extends
 				endDateField.setData(value.getEndDateRange().getTo());
 
 			// TODO Problem Here -- How to show selectDateField
-			if (value.getStartDate() != null);
+			if (value.getStartDate() != null){
+				DateTimeSearchField date = value.getStartDate();
+				startDateField.setImmediate(true);
+				startDateField.setRows(2);
+				DateField strDate = new DateField();
+				strDate.setImmediate(true);
+				strDate.setValue(date.getValue());
+				strDate.setDateFormat(AppContext.getDateFormat());
+				startDateField.removeAllDatefield();
+				startDateField.addComponent(strDate, 0, 1);
+				if (date.getComparision().equals(DateTimeSearchField.GREATERTHAN) || date.getComparision().equals(DateTimeSearchField.GREATERTHANEQUAL)){
+					startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.AFTER);
+				}
+				// more code here
+			}
 			if (value.getEndDate() != null);
 			
 			if(value.getTypes()!=null){

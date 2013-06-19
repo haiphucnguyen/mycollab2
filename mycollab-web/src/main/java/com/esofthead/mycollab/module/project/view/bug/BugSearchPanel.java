@@ -139,7 +139,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 							.notifySearchHandler(BugSearchPanel.this.searchCriteria);
 				}
 			});
-
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(searchBtn);
 
 			final Button cancelBtn = new Button("Clear");
@@ -150,6 +150,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 					BugBasicSearchLayout.this.nameField.setValue("");
 				}
 			});
+			cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(cancelBtn);
 
 			final Button advancedSearchBtn = new Button("Advanced Search",
@@ -300,7 +301,6 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 			final Button searchBtn = new Button("Search",
 					new Button.ClickListener() {
-						@SuppressWarnings("unchecked")
 						@Override
 						public void buttonClick(final ClickEvent event) {
 							BugAdvancedSearchLayout.this.callSearchAction();
@@ -308,7 +308,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 					});
 
 			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 			final Button clearBtn = new Button("Clear",
 					new Button.ClickListener() {
@@ -341,7 +341,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 									.setValue(true);
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			buttonControls.addComponent(clearBtn);
 
 			final Button basicSearchBtn = new Button("Basic Search",

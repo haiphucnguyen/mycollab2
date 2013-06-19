@@ -117,7 +117,7 @@ public class ItemTimeLoggingSearchPanel extends
 					});
 
 			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 			final Button clearBtn = new Button(
 					LocalizationHelper
@@ -131,7 +131,7 @@ public class ItemTimeLoggingSearchPanel extends
 									.setDefaultValue();
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			buttonControls.addComponent(clearBtn);
 
 			return buttonControls;

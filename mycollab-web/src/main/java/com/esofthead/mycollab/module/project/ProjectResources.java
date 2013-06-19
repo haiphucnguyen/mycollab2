@@ -7,7 +7,6 @@ package com.esofthead.mycollab.module.project;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.esofthead.mycollab.vaadin.ui.ResourceResolver;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 
@@ -23,26 +22,28 @@ public class ProjectResources {
 
 	static {
 		resourceLinks = new HashMap<String, String>();
-		resourceLinks.put(ProjectContants.PROJECT, ResourceResolver
-				.getResourceLink("icons/16/project/project.png"));
-		resourceLinks.put(ProjectContants.MESSAGE, ResourceResolver
-				.getResourceLink("icons/16/project/message.png"));
-		resourceLinks.put(ProjectContants.MILESTONE, ResourceResolver
-				.getResourceLink("icons/16/project/milestone.png"));
-		resourceLinks.put(ProjectContants.PROBLEM, ResourceResolver
-				.getResourceLink("icons/16/project/problem.png"));
+		resourceLinks.put(ProjectContants.PROJECT, MyCollabResource
+				.newResourceLink("icons/16/project/project.png"));
+		resourceLinks.put(ProjectContants.MESSAGE, MyCollabResource
+				.newResourceLink("icons/16/project/message.png"));
+		resourceLinks.put(ProjectContants.MILESTONE, MyCollabResource
+				.newResourceLink("icons/16/project/milestone.png"));
+		resourceLinks.put(ProjectContants.PROBLEM, MyCollabResource
+				.newResourceLink("icons/16/project/problem.png"));
 		resourceLinks.put(ProjectContants.RISK,
-				ResourceResolver.getResourceLink("icons/16/project/risk.png"));
+				MyCollabResource.newResourceLink("icons/16/project/risk.png"));
 		resourceLinks.put(ProjectContants.TASK,
-				ResourceResolver.getResourceLink("icons/16/project/task.png"));
-		resourceLinks.put(ProjectContants.TASK_LIST, ResourceResolver
-				.getResourceLink("icons/16/project/tasklist.png"));
+				MyCollabResource.newResourceLink("icons/16/project/task.png"));
+		resourceLinks.put(ProjectContants.TASK_LIST, MyCollabResource
+				.newResourceLink("icons/16/project/tasklist.png"));
 		resourceLinks.put(ProjectContants.BUG,
-				ResourceResolver.getResourceLink("icons/16/project/bug.png"));
-		resourceLinks.put(ProjectContants.BUG_COMPONENT, ResourceResolver
-				.getResourceLink("icons/16/project/component.png"));
-		resourceLinks.put(ProjectContants.BUG_VERSION, ResourceResolver
-				.getResourceLink("icons/16/project/version.png"));
+				MyCollabResource.newResourceLink("icons/16/project/bug.png"));
+		resourceLinks.put(ProjectContants.BUG_COMPONENT, MyCollabResource
+				.newResourceLink("icons/16/project/component.png"));
+		resourceLinks.put(ProjectContants.BUG_VERSION, MyCollabResource
+				.newResourceLink("icons/16/project/version.png"));
+		resourceLinks.put(ProjectContants.STANDUP, MyCollabResource
+				.newResourceLink("icons/16/project/standup.png"));
 
 		resources = new HashMap<String, Resource>();
 		resources.put(ProjectContants.PROJECT,
@@ -65,6 +66,8 @@ public class ProjectResources {
 				MyCollabResource.newResource("icons/16/project/component.png"));
 		resources.put(ProjectContants.BUG_VERSION,
 				MyCollabResource.newResource("icons/16/project/version.png"));
+		resources.put(ProjectContants.STANDUP,
+				MyCollabResource.newResource("icons/16/project/standup.png"));
 	}
 
 	public static String getResourceLink(String type) {
