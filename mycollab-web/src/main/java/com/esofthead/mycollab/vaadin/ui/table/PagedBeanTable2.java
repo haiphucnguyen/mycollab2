@@ -479,6 +479,10 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 			return new ArrayList<T>(itemIds);
 		}
 	}
+	
+	public List<T> getAllDataList(SearchRequest<S> searRequest){
+		return (List<T>) searchService.findPagableListByCriteria(searchRequest);
+	}
 
 	private void pageChange(final int currentPage) {
 		if (searchRequest != null) {

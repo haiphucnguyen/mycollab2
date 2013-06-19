@@ -249,11 +249,11 @@ public class CampaignSearchPanel extends
 
 			SearchField endDate = endDateField.getValue();
 			if (endDate != null && (endDate instanceof DateSearchField)) {
-				searchCriteria.setStartDate((DateSearchField) endDate);
+				searchCriteria.setEndDate((DateSearchField) endDate);
 			} else if (endDate != null
 					&& (endDate instanceof RangeDateSearchField)) {
 				searchCriteria
-						.setStartDateRange((RangeDateSearchField) endDate);
+						.setEndDateRange((RangeDateSearchField) endDate);
 			}
 
 			Collection<String> types = (Collection<String>) typeField
@@ -294,12 +294,17 @@ public class CampaignSearchPanel extends
 			if (value.getCampaignName() != null)
 				nameField.setValue(value.getCampaignName().getValue());
 			
-			
+			// TODO Problem Here -- How to load startDateRange to comboBox
 			if (value.getStartDateRange() != null)
 				startDateField.setData(value.getStartDateRange().getFrom());
-			if (value.getStartDateRange() != null)
-				endDateField.setData(value.getStartDateRange().getTo());
+				
+			if (value.getEndDateRange() != null)
+				endDateField.setData(value.getEndDateRange().getTo());
 
+			// TODO Problem Here -- How to show selectDateField
+			if (value.getStartDate() != null);
+			if (value.getEndDate() != null);
+			
 			if(value.getTypes()!=null){
 				Object[] typeF = value.getTypes().values;
 				typeField.setValue(Arrays.asList(typeF));

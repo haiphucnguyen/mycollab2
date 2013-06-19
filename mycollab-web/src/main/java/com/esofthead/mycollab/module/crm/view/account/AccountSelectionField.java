@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.List;
+
 import org.vaadin.addon.customfield.FieldWrapper;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
@@ -74,6 +76,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 				try {
 					AccountService accountService = AppContext
 							.getSpringBean(AccountService.class);
+					
 					Integer accountId = Integer.parseInt((String) event
 							.getProperty().getValue());
 					SimpleAccount account = accountService
@@ -94,12 +97,12 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 		AccountSelectionField.this.getWrappedField().setValue(null);
 		this.account = new SimpleAccount();
 	}
-
+	
 	public void setAccount(SimpleAccount account) {
 		this.account = account;
 		accountName.setValue(account.getAccountname());
 	}
-
+	
 	public SimpleAccount getAccount() {
 		return account;
 	}

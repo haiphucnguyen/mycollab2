@@ -252,12 +252,5 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				this.setItemCaptionPropertyId("queryname");
 			}
 		}
-
-		public void addNewSearchResult(SaveSearchResultWithBLOBs result) {
-			// ((BeanContainer<String, SaveSearchResultWithBLOBs>) (this
-			// .getContainerDataSource())).addItem(result);
-			beanItem.addItem(result);
-		}
-
 	}
 }

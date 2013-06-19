@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -299,8 +298,8 @@ public class OpportunitySearchPanel extends
 						.getValue());
 			if (value.getAccountId() != null)
 				// accountField.setValue(value.getAccountName().getValue());
-			if (value.getNextStep() != null)
-				nextStepField.setValue(value.getNextStep().getValue());
+				if (value.getNextStep() != null)
+					nextStepField.setValue(value.getNextStep().getValue());
 			if (value.getAssignUsers() != null)
 				userField.setValue(Arrays.asList((Object[]) value
 						.getAssignUsers().values));
