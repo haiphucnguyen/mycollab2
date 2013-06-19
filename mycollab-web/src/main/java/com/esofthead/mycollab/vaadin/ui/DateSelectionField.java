@@ -36,6 +36,30 @@ public class DateSelectionField extends GridLayout{
 	
 	DateSelectionComboBox dateSelectionBox;
 	
+	public DateField getDateStart() {
+		return dateStart;
+	}
+
+	public void setDateStart(DateField dateStart) {
+		this.dateStart = dateStart;
+	}
+
+	public DateField getDateEnd() {
+		return dateEnd;
+	}
+
+	public void setDateEnd(DateField dateEnd) {
+		this.dateEnd = dateEnd;
+	}
+
+	public DateSelectionComboBox getDateSelectionBox() {
+		return dateSelectionBox;
+	}
+
+	public void setDateSelectionBox(DateSelectionComboBox dateSelectionBox) {
+		this.dateSelectionBox = dateSelectionBox;
+	}
+
 	public DateSelectionField(String width) {
 		this();
 		dateSelectionBox.setWidth(width);
@@ -56,18 +80,19 @@ public class DateSelectionField extends GridLayout{
 			
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				setComponentByValue(event);
+				String filterStr = (String) event.getProperty().getValue();
+				filterStr = (filterStr != null) ? filterStr : "";
+				
+				setComponentByValue(filterStr);
 			}
 		});
         this.addComponent(dateSelectionBox, 0, 0);
     }
 	
-	public void setComponentByValue(ValueChangeEvent event) {
+	public void setComponentByValue(String filterStr) {
 		
 		removeAllDatefield();
 		
-		String filterStr = (String) event.getProperty().getValue();
-		filterStr = (filterStr != null) ? filterStr : "";
 		if (filterStr.equals(DateSelectionComboBox.EQUAL)) {
 			addOneDate();
 		} else if (filterStr.equals(DateSelectionComboBox.NOTON)) {
@@ -237,7 +262,7 @@ public class DateSelectionField extends GridLayout{
 		}
 	}
 	
-	private void removeAllDatefield() {
+	public void removeAllDatefield() {
 		for (int i = 0; i < this.getColumns(); i++) {
 			removeComponent(i, 1);
 		}
