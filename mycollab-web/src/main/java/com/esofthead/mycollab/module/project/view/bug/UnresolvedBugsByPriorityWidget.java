@@ -65,7 +65,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 
 						priorityLayout.addComponent(userLbl);
 						final ProgressBar indicator = new ProgressBar(
-								totalCount, item.getValue());
+								totalCount, item.getValue(), false);
 						indicator.setWidth("100%");
 						priorityLayout.addComponent(indicator);
 						priorityLayout.setExpandRatio(indicator, 1.0f);
@@ -83,7 +83,8 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
-					final ProgressBar indicator = new ProgressBar(totalCount, 0);
+					final ProgressBar indicator = new ProgressBar(totalCount,
+							0, false);
 					indicator.setWidth("100%");
 					priorityLayout.addComponent(indicator);
 					priorityLayout.setExpandRatio(indicator, 1.0f);
