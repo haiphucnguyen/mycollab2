@@ -2,9 +2,6 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
@@ -31,9 +28,6 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		extends SearchLayout<S> {
-
-	private static Logger log = LoggerFactory
-			.getLogger(DefaultAdvancedSearchLayout.class);
 
 	private SaveSearchResultService saveSearchResultService;
 
@@ -69,57 +63,58 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 	protected abstract void clearFields();
 
-	private HorizontalLayout createButtonControls(){
-		 HorizontalLayout buttonControls = new HorizontalLayout();
-		 buttonControls.setSpacing(true);
-		 final Button searchBtn = new Button(
-					LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH),
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							DefaultAdvancedSearchLayout.this.callSearchAction();
-						}
-					});
-			UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_CENTER);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+	private HorizontalLayout createButtonControls() {
+		HorizontalLayout buttonControls = new HorizontalLayout();
+		buttonControls.setSpacing(true);
+		final Button searchBtn = new Button(
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH),
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						DefaultAdvancedSearchLayout.this.callSearchAction();
+					}
+				});
+		UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_CENTER);
+		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-			final Button clearBtn = new Button(
-					LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR),
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							clearFields();
-						}
-					});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_CENTER);
-			final Button basicSearchBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_BASIC_SEARCH),
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							((DefaultGenericSearchPanel<S>) DefaultAdvancedSearchLayout.this.searchPanel)
-									.moveToBasicSearchLayout();
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-			return buttonControls;
+		final Button clearBtn = new Button(
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR),
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						clearFields();
+					}
+				});
+		clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_CENTER);
+		final Button basicSearchBtn = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.BUTTON_BASIC_SEARCH),
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						((DefaultGenericSearchPanel<S>) DefaultAdvancedSearchLayout.this.searchPanel)
+								.moveToBasicSearchLayout();
+					}
+				});
+		basicSearchBtn.setStyleName("link");
+		UiUtils.addComponent(buttonControls, basicSearchBtn,
+				Alignment.MIDDLE_CENTER);
+		return buttonControls;
 	}
-	
-	private HorizontalLayout createSaveSearchControls(){
+
+	private HorizontalLayout createSaveSearchControls() {
 		HorizontalLayout saveSearchControls = new HorizontalLayout();
 		Label saveSearchLbl = new Label("Save Search As ");
-		UiUtils.addComponent(saveSearchControls, saveSearchLbl, Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(saveSearchControls, saveSearchLbl,
+				Alignment.MIDDLE_RIGHT);
 
 		saveSearchValue = new TextField();
-		UiUtils.addComponent(saveSearchControls, saveSearchValue, Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(saveSearchControls, saveSearchValue,
+				Alignment.MIDDLE_RIGHT);
 
 		saveResultComboBox = new SavedSearchResultComboBox();
 		Button saveSearchBtn = new Button("Save", new Button.ClickListener() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void buttonClick(ClickEvent event) {
 				S searchCriteria = fillupSearchCriteria();
@@ -136,54 +131,58 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 					saveSearchResultService.saveWithSession(searchResult,
 							AppContext.getUsername());
-					getWindow().showNotification(
-							"Query saved successfully.");
+					getWindow().showNotification("Query saved successfully.");
 					saveSearchValue.setValue("");
 
-					BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox.getBeanIteam();
+					BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox
+							.getBeanIteam();
 					beanData.addBean(searchResult);
 					saveResultComboBox.setContainerDataSource(beanData);
 					saveResultComboBox.setItemCaptionPropertyId("queryname");
-					
+
 					saveResultComboBox.setValue(searchResult.getId());
 				}
 
 			}
 		});
 		saveSearchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		UiUtils.addComponent(saveSearchControls, saveSearchBtn,Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(saveSearchControls, saveSearchBtn,
+				Alignment.MIDDLE_RIGHT);
 		return saveSearchControls;
 	}
-	
-	public ComponentContainer constructFooter() {		
-//------Define VerticalLayout for footerLayout ------------------
+
+	public ComponentContainer constructFooter() {
+		// ------Define VerticalLayout for footerLayout ------------------
 		VerticalLayout footerLayout = new VerticalLayout();
 		footerLayout.setSpacing(true);
 		footerLayout.setMargin(false, true, false, false);
-//------Define & contruct TopfooterLayout ------------------------
+		// ------Define & contruct TopfooterLayout ------------------------
 		HorizontalLayout topfooterLayout = new HorizontalLayout();
 		topfooterLayout.setWidth("100%");
-		
+
 		HorizontalLayout buttonControls = createButtonControls();
-		UiUtils.addComponent(topfooterLayout, buttonControls, Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(topfooterLayout, buttonControls,
+				Alignment.MIDDLE_RIGHT);
 		topfooterLayout.setExpandRatio(buttonControls, 4.0f);
-		
+
 		HorizontalLayout saveSearchControls = createSaveSearchControls();
 		saveSearchControls.setSpacing(true);
-		UiUtils.addComponent(topfooterLayout, saveSearchControls, Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(topfooterLayout, saveSearchControls,
+				Alignment.MIDDLE_RIGHT);
 		topfooterLayout.setExpandRatio(saveSearchControls, 1.0f);
-		
+
 		footerLayout.addComponent(topfooterLayout);
-//------Define & contruct bottomfooterLayout ---------------------- 
+		// ------Define & contruct bottomfooterLayout ----------------------
 		HorizontalLayout bottomFooterLayout = new HorizontalLayout();
 		bottomFooterLayout.setSpacing(true);
-		
+
 		Label saveSearchLable = new Label("Save Search Result ");
 		bottomFooterLayout.addComponent(saveSearchLable);
 		bottomFooterLayout.addComponent(saveResultComboBox);
-		
+
 		footerLayout.addComponent(bottomFooterLayout);
-		footerLayout.setComponentAlignment(bottomFooterLayout, Alignment.MIDDLE_RIGHT);
+		footerLayout.setComponentAlignment(bottomFooterLayout,
+				Alignment.MIDDLE_RIGHT);
 		return footerLayout;
 	}
 
@@ -239,8 +238,8 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			this.setContainerDataSource(beanItem);
 			this.setItemCaptionPropertyId("queryname");
 		}
-		
-		public BeanContainer<String, SaveSearchResultWithBLOBs> getBeanIteam(){
+
+		public BeanContainer<String, SaveSearchResultWithBLOBs> getBeanIteam() {
 			return beanItem;
 		}
 	}

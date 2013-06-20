@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
@@ -40,7 +39,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
