@@ -85,7 +85,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 						assignUser, assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
 				final ProgressBar indicator = new ProgressBar(totalCount,
-						item.getValue(), false);
+						totalCount - item.getValue(), false);
 				indicator.setWidth("100%");
 				assigneeLayout.addComponent(indicator);
 				assigneeLayout.setExpandRatio(indicator, 1.0f);
