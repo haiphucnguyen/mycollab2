@@ -326,32 +326,25 @@ public class CampaignSearchPanel extends
 		protected void loadSaveSearchToField(CampaignSearchCriteria value) {
 			if (value.getCampaignName() != null)
 				nameField.setValue(value.getCampaignName().getValue());
-			// TODO Problem Here -- How to load startDateRange to comboBox
+			
+			// Here Load DateField ------------------
 			if (value.getStartDateRange() != null){
 				loadDateTimeRangeField(value.getStartDateRange(), startDateField);
-			}else if(value.getStartDate() == null){
+			}else if(value.getStartDate() != null){
+				loadDateTimeField(value.getStartDate(),startDateField);
+			}else{
 				startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
 				startDateField.removeAllDatefield();
 			}
 			if (value.getEndDateRange() != null){
 				loadDateTimeRangeField(value.getEndDateRange(), endDateField);
-			}else if(value.getEndDate()== null){
-				endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
-				endDateField.removeAllDatefield();
-			}
-			// TODO Problem Here -- How to show selectDateField
-			if (value.getStartDate()!=null){
-				loadDateTimeField(value.getStartDate(),startDateField);
-			}else if(value.getStartDateRange() == null){
-				startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
-				startDateField.removeAllDatefield();
-			}
-			if(value.getEndDate()!=null){
+			}else if(value.getEndDate() != null){
 				loadDateTimeField(value.getEndDate(), endDateField);
-			}else if(value.getEndDateRange() == null){
+			}else{
 				endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
 				endDateField.removeAllDatefield();
 			}
+			
 			if(value.getTypes()!=null){
 				Object[] typeF = value.getTypes().values;
 				typeField.setValue(Arrays.asList(typeF));
