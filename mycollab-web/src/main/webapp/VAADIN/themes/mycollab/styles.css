@@ -2676,6 +2676,15 @@ div.v-lazyloadingwrapper-loading {
 	border-color: rgb(204, 204, 204);
 	background-color: rgb(229, 239, 240);
 }
+.report-row-content > div > div:first-child + div {
+	border-width: 0px 1px 0px 1px;
+	border-style: solid;
+	border-color: rgb(204, 204, 204);
+	background-color: rgb(212, 223, 239);
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .report-row-block {
 	height: 100%;
 	-moz-box-sizing: border-box;
@@ -2683,14 +2692,11 @@ div.v-lazyloadingwrapper-loading {
 	box-sizing: border-box;
 }
 .report-row-block.special-col {
-	border-width: 0px 1px 0px 1px;
-	border-style: solid;
-	border-color: rgb(204, 204, 204);
-	background-color: rgb(212, 223, 239);
+	
 }
 
 .report-row-block>.v-csslayout-margin {
-	padding: 5px 5px 0px;
+	padding: 5px 8px 0px;
 }
 .addViewLayout .standup-edit-layout .h2 {
 	border-bottom: none;
