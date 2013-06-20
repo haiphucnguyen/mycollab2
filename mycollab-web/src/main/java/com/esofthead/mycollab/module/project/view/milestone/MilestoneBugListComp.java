@@ -34,7 +34,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 	public MilestoneBugListComp() {
 		this.setMargin(true);
-		constructHeader();
+		this.constructHeader();
 	}
 
 	private void constructHeader() {
@@ -49,7 +49,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		header.setExpandRatio(taskGroupSelection, 1.0f);
 		header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
 
-		viewGroup = new ToggleButtonGroup();
+		this.viewGroup = new ToggleButtonGroup();
 
 		final Button simpleDisplay = new Button(null,
 				new Button.ClickListener() {
@@ -57,13 +57,13 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						displaySimpleView();
+						MilestoneBugListComp.this.displaySimpleView();
 					}
 				});
 		simpleDisplay.setIcon(MyCollabResource
 				.newResource("icons/16/project/list_display.png"));
 
-		viewGroup.addButton(simpleDisplay);
+		this.viewGroup.addButton(simpleDisplay);
 
 		final Button advanceDisplay = new Button(null,
 				new Button.ClickListener() {
@@ -71,27 +71,28 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						displayAdvancedView();
+						MilestoneBugListComp.this.displayAdvancedView();
 					}
 				});
 		advanceDisplay.setIcon(MyCollabResource
 				.newResource("icons/16/project/bug_advanced_display.png"));
-		viewGroup.addButton(advanceDisplay);
-		header.addComponent(viewGroup);
-		header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
+		this.viewGroup.addButton(advanceDisplay);
+		header.addComponent(this.viewGroup);
+		header.setComponentAlignment(this.viewGroup, Alignment.MIDDLE_RIGHT);
 		this.addComponent(header);
 	}
 
 	private void displayAdvancedView() {
 
-		if (getComponentCount() > 1) {
-			removeComponent(getComponent(1));
+		if (this.getComponentCount() > 1) {
+			this.removeComponent(this.getComponent(1));
 		}
 
 		final HorizontalLayout bodyLayout = new HorizontalLayout();
-		bodyLayout.setSpacing(true);
+		bodyLayout.setSpacing(false);
 		bodyLayout.setWidth("100%");
 		final VerticalLayout leftColumn = new VerticalLayout();
+		leftColumn.setMargin(false, true, false, false);
 		bodyLayout.addComponent(leftColumn);
 		bodyLayout.setExpandRatio(leftColumn, 1.0f);
 		final VerticalLayout rightColumn = new VerticalLayout();
@@ -106,7 +107,8 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		unresolvedByPrioritySearchCriteria
-				.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
+				.setMilestoneIds(new SetSearchField<Integer>(this.milestone
+						.getId()));
 		unresolvedByPrioritySearchCriteria
 				.setStatuses(new SetSearchField<String>(SearchField.AND,
 						new String[] { BugStatusConstants.INPROGRESS,
@@ -124,7 +126,8 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		unresolvedByAssigneeSearchCriteria
-				.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
+				.setMilestoneIds(new SetSearchField<Integer>(this.milestone
+						.getId()));
 		unresolvedByAssigneeSearchCriteria
 				.setStatuses(new SetSearchField<String>(SearchField.AND,
 						new String[] { BugStatusConstants.INPROGRESS,
@@ -137,7 +140,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		chartSearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		chartSearchCriteria.setMilestoneIds(new SetSearchField<Integer>(
-				milestone.getId()));
+				this.milestone.getId()));
 		BugChartComponent bugChartComponent = null;
 		bugChartComponent = new BugChartComponent(chartSearchCriteria, "400px",
 				"200px");
@@ -150,8 +153,8 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	@Override
 	public void displayBugListWidget(final String title,
 			final BugSearchCriteria criteria) {
-		if (getComponentCount() > 1) {
-			removeComponent(getComponent(1));
+		if (this.getComponentCount() > 1) {
+			this.removeComponent(this.getComponent(1));
 		}
 		final BugListWidget bugListWidget = new BugListWidget(title,
 				"Back to milestone dashboard", criteria, this);
@@ -161,24 +164,25 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 	@Override
 	public void displayBugReports() {
-		viewGroup.setDefaultSelectionByIndex(1);
-		displayAdvancedView();
+		this.viewGroup.setDefaultSelectionByIndex(1);
+		this.displayAdvancedView();
 	}
 
 	public void displayBugs(final Milestone milestone) {
 		this.milestone = milestone;
-		displayBugReports();
+		this.displayBugReports();
 	}
 
 	private void displaySimpleView() {
-		if (getComponentCount() > 1) {
-			removeComponent(getComponent(1));
+		if (this.getComponentCount() > 1) {
+			this.removeComponent(this.getComponent(1));
 		}
 
 		final BugSearchCriteria criteria = new BugSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
 				.getProjectId()));
-		criteria.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
+		criteria.setMilestoneIds(new SetSearchField<Integer>(this.milestone
+				.getId()));
 
 		final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
 		this.addComponent(new LazyLoadWrapper(displayWidget));

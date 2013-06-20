@@ -177,6 +177,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		this.leftColumn = new VerticalLayout();
 		this.leftColumn.setSpacing(true);
+		this.leftColumn.setMargin(false, true, false, false);
 		body.addComponent(this.leftColumn);
 		body.setExpandRatio(this.leftColumn, 1.0f);
 

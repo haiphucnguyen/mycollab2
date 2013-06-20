@@ -111,10 +111,10 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
-		layout.setSpacing(true);
 		layout.setMargin(false, false, true, false);
 
 		final VerticalLayout leftPanel = new VerticalLayout();
+		leftPanel.setMargin(false, true, false, false);
 		this.activityStreamComponent = new ActivityStreamComponent();
 		leftPanel.addComponent(this.activityStreamComponent);
 
