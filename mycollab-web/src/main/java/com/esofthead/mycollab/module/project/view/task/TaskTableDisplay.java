@@ -6,8 +6,11 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -23,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
@@ -289,13 +293,38 @@ public class TaskTableDisplay extends
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								ProjectTaskService projectTaskService = AppContext
-										.getSpringBean(ProjectTaskService.class);
-								projectTaskService.removeWithSession(
-										task.getId(), AppContext.getUsername());
-								fireTableEvent(new TableClickEvent(
-										TaskTableDisplay.this, task,
-										"deleteTask"));
+								ConfirmDialog.show(
+										TaskTableDisplay.this.getWindow(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														ApplicationProperties
+																.getString(ApplicationProperties.SITE_NAME)),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
+
+											@Override
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													ProjectTaskService projectTaskService = AppContext
+															.getSpringBean(ProjectTaskService.class);
+													projectTaskService.removeWithSession(
+															task.getId(),
+															AppContext
+																	.getUsername());
+													fireTableEvent(new TableClickEvent(
+															TaskTableDisplay.this,
+															task, "deleteTask"));
+												}
+											}
+										});
 							}
 						});
 				deleteBtn.setStyleName("link");
