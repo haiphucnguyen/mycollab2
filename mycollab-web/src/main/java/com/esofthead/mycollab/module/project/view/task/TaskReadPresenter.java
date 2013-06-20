@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogFactory;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -66,7 +67,8 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 						// ConfirmDialog();
 						// ((VerticalLayout) warningDialog.getContent())
 						// .setMargin(false);
-						// warningDialog.show();
+						// warningDialog.
+						ConfirmDialog.setFactory(new ConfirmDialogFactory());
 						ConfirmDialog.show(
 								AppContext.getApplication().getMainWindow(),
 								LocalizationHelper

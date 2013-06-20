@@ -3689,3 +3689,13 @@ div.v-ratingstars-bar {
 	width: 100%;
 	color: black;
 }
+/* Confirm Dialog */
+.custom-dialog div.v-panel-content-light {
+	border: none;
+}
+.custom-dialog .v-panel-nocaption {
+	border: none;
+}
+.custom-dialog .v-panel-deco {
+	border: none;
+}
