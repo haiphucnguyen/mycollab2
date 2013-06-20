@@ -52,6 +52,12 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 			PutObjectRequest request = new PutObjectRequest(
 					S3StorageConfig.getBucket(), objectPath, tmpFile);
+
+			ObjectMetadata metaData = new ObjectMetadata();
+			metaData.setCacheControl("max-age=8640000");
+
+			request.setMetadata(metaData);
+
 			s3client.putObject(request
 					.withCannedAcl(CannedAccessControlList.PublicRead));
 
