@@ -59,7 +59,6 @@ public class MilestoneListViewImpl extends AbstractView implements
 		final HorizontalLayout header = new HorizontalLayout();
 		final Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
-		// header.setMargin(true, true, false, true);
 		header.setWidth("100%");
 		final Embedded icon = new Embedded();
 		icon.setSource(MyCollabResource

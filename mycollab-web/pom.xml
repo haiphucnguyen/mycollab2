@@ -11,7 +11,7 @@
     </parent>
     <packaging>war</packaging>
     <properties>
-        <vaadinVersion>6.8.11</vaadinVersion>
+        <vaadinVersion>6.8.12</vaadinVersion>
         <gwtversion>2.3.0</gwtversion>
         <jettyVersion>8.1.11.v20130520</jettyVersion>
     </properties>
