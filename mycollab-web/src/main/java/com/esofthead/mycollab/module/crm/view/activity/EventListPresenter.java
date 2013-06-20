@@ -130,7 +130,7 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 													ApplicationProperties
 															.getString(ApplicationProperties.SITE_NAME)),
 									LocalizationHelper
-											.getMessage(GenericI18Enum.DELETE_DIALOG_MESSAGE),
+											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
 									LocalizationHelper
 											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 									LocalizationHelper

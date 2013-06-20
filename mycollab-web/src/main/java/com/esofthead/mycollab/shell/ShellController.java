@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.shell;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.module.user.view.ForgotPasswordPresenter;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
@@ -25,7 +22,7 @@ import com.esofthead.mycollab.web.AppContext;
 public class ShellController implements IController {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(ShellController.class);
+
 	private final MainWindowContainer container;
 
 	public ShellController(MainWindowContainer container) {
@@ -79,14 +76,16 @@ public class ShellController implements IController {
 						if (loginView.getParent() == null
 								|| loginView.getParent() == container) {
 							((MainWindowContainer) container)
+									.setAutoLogin(false);
+							((MainWindowContainer) container)
 									.setMainContent(loginView);
 						} else {
 							presenter.go(container, null);
 						}
 
 						AppContext.clearSession();
-						ControllerRegistry.addController(
-								new ShellController(container));
+						ControllerRegistry.addController(new ShellController(
+								container));
 					}
 				});
 

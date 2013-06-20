@@ -100,7 +100,8 @@ public class MessageReadViewImpl extends AbstractView implements
 				messageLayout.setStyleName("message");
 				messageLayout.setWidth("100%");
 				messageLayout.addComponent(UserAvatarControlFactory
-						.createUserAvatarLink(message.getPosteduser(),
+						.createUserAvatarButtonLink(
+								message.getPostedUserAvatarId(),
 								message.getFullPostedUserName()));
 
 				CssLayout rowLayout = new CssLayout();

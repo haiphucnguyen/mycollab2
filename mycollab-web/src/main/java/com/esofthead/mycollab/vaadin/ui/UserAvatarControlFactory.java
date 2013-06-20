@@ -66,9 +66,10 @@ public class UserAvatarControlFactory {
 		return avatarRes;
 	}
 
-	public static Button createUserAvatarLink(String username, String fullName) {
+	public static Button createUserAvatarButtonLink(String userAvatarId,
+			String fullName) {
 		Button button = new Button();
-		button.setIcon(createAvatarResource(username, 48));
+		button.setIcon(createAvatarResource(userAvatarId, 48));
 		button.setStyleName("link");
 		return button;
 	}

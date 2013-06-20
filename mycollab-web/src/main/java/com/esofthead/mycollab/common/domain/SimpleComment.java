@@ -6,6 +6,8 @@ import java.util.List;
 public class SimpleComment extends Comment {
 
     private static final long serialVersionUID = 1L;
+    
+    private String ownerAvatarId;
     private String ownerFullName;
     private List<Attachment> attachments;
     
@@ -18,7 +20,15 @@ public class SimpleComment extends Comment {
         this.ownerFullName = ownerFullName;
     }
 
-    public List<Attachment> getAttachments() {
+    public String getOwnerAvatarId() {
+		return ownerAvatarId;
+	}
+
+	public void setOwnerAvatarId(String ownerAvatarId) {
+		this.ownerAvatarId = ownerAvatarId;
+	}
+
+	public List<Attachment> getAttachments() {
         return attachments;
     }
 
