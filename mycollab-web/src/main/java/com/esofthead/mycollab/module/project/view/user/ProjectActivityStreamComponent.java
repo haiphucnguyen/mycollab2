@@ -115,8 +115,9 @@ public class ProjectActivityStreamComponent extends Depot {
 						content = LocalizationHelper
 								.getMessage(
 										ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
-										UserAvatarControlFactory.getLink(
-												activityStream.getCreateduser(),
+										UserAvatarControlFactory.getAvatarLink(
+												activityStream
+														.getCreatedUserAvatarId(),
 												16),
 										ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
 												activityStream.getExtratypeid(),
@@ -139,8 +140,9 @@ public class ProjectActivityStreamComponent extends Depot {
 						content = LocalizationHelper
 								.getMessage(
 										ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
-										UserAvatarControlFactory.getLink(
-												activityStream.getCreateduser(),
+										UserAvatarControlFactory.getAvatarLink(
+												activityStream
+														.getCreatedUserAvatarId(),
 												16),
 										activityStream.getCreatedUserFullName(),
 										LocalizationHelper

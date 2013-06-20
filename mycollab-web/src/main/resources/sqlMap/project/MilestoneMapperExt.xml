@@ -4,6 +4,8 @@
     <resultMap id="MilestoneResult"
         extends="com.esofthead.mycollab.module.project.dao.MilestoneMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.project.domain.SimpleMilestone">
+        <result column="ownerAvatarId" jdbcType="VARCHAR"
+            property="ownerAvatarId" />
         <result column="ownerFullName" jdbcType="VARCHAR"
             property="ownerFullName" />
         <result column="numOpenTasks" jdbcType="INTEGER"
@@ -40,6 +42,7 @@
             SELECT m_prj_milestone.id, m_prj_milestone.name, m_prj_milestone.description, m_prj_milestone.startdate, m_prj_milestone.enddate, 
                    m_prj_milestone.owner, m_prj_milestone.status, m_prj_milestone.projectid, m_prj_milestone.status, m_prj_milestone.createdTime, 
                    m_prj_milestone.lastUpdatedTime, m_prj_milestone.sAccountId,
+                   s_user.avatarId AS ownerAvatarId,
                    concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS ownerFullName,
                    (SELECT COUNT(*) FROM m_prj_task, m_prj_task_list WHERE m_prj_task.tasklistid=m_prj_task_list.id AND m_prj_task_list.milestoneId=m_prj_milestone.id) AS numTasks,
                    (SELECT COUNT(*) FROM m_prj_task, m_prj_task_list WHERE m_prj_task.tasklistid=m_prj_task_list.id AND m_prj_task.status='Open' AND m_prj_task_list.milestoneId=m_prj_milestone.id) AS numOpenTasks,

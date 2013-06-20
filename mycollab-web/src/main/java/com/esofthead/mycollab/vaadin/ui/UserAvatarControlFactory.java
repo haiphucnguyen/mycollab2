@@ -14,40 +14,41 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 
 public class UserAvatarControlFactory {
-	public static Embedded createUserAvatarEmbeddedControl(String username,
+	public static Embedded createUserAvatarEmbeddedComponent(String avatarId,
 			int size) {
 		Embedded embedded = new Embedded(null);
-		embedded.setSource(getResource(username, size));
+		embedded.setSource(createAvatarResource(avatarId, size));
 		return embedded;
 
 	}
 
-	public static String getLink(String username, int size) {
-		if (username == null) {
+	public static String getAvatarLink(String userAvatarId, int size) {
+		if (userAvatarId == null) {
 			return "";
 		}
 
 		String link = "";
 
 		if (StorageSetting.isFileStorage()) {
-			link = AppContext.getSiteUrl() + "avatar/" + username + "/" + size;
+			link = AppContext.getSiteUrl() + "avatar/" + userAvatarId + "/"
+					+ size;
 		} else if (StorageSetting.isS3Storage()) {
-			link = S3StorageConfig.getAvatarLink(username, size);
+			link = S3StorageConfig.getAvatarLink(userAvatarId, size);
 		}
 
 		return link;
 	}
 
-	public static Resource getResource(String username, int size) {
+	public static Resource createAvatarResource(String avatarId, int size) {
 		Resource avatarRes = null;
 
-		if (username == null) {
+		if (avatarId == null) {
 			return MyCollabResource.newResource("icons/default_user_avatar_"
 					+ size + ".png");
 		}
 
 		if (StorageSetting.isFileStorage()) {
-			File avatarFile = FileStorageConfig.getAvatarFile(username, size);
+			File avatarFile = FileStorageConfig.getAvatarFile(avatarId, size);
 			if (avatarFile != null) {
 				avatarRes = new FileResource(avatarFile,
 						AppContext.getApplication());
@@ -59,7 +60,7 @@ public class UserAvatarControlFactory {
 
 		} else if (StorageSetting.isS3Storage()) {
 			avatarRes = new ExternalResource(S3StorageConfig.getAvatarLink(
-					username, size));
+					avatarId, size));
 		}
 
 		return avatarRes;
@@ -67,7 +68,7 @@ public class UserAvatarControlFactory {
 
 	public static Button createUserAvatarLink(String username, String fullName) {
 		Button button = new Button();
-		button.setIcon(getResource(username, 48));
+		button.setIcon(createAvatarResource(username, 48));
 		button.setStyleName("link");
 		return button;
 	}

@@ -6,6 +6,9 @@
         extends="com.esofthead.mycollab.common.dao.ActivityStreamMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.common.domain.SimpleActivityStream">
 
+        <result column="createdUserAvatarId" jdbcType="VARCHAR"
+            property="createdUserAvatarId" />
+
         <result column="createdUserFullName" jdbcType="VARCHAR"
             property="createdUserFullName" />
 
@@ -16,14 +19,16 @@
 
     <sql id="querySearchCriteria">
         <if test="searchCriteria.moduleSet != null">
-            ${searchCriteria.moduleSet.operation} s_activitystream.module IN
+            ${searchCriteria.moduleSet.operation}
+            s_activitystream.module IN
             <foreach close=")" collection="searchCriteria.moduleSet.values"
                 item="module" open="(" separator=",">
                 #{module}
             </foreach>
         </if>
         <if test="searchCriteria.extraTypeIds != null">
-            ${searchCriteria.extraTypeIds.operation} s_activitystream.extraTypeId IN
+            ${searchCriteria.extraTypeIds.operation}
+            s_activitystream.extraTypeId IN
             <foreach close=")" collection="searchCriteria.extraTypeIds.values"
                 item="extraTypeId" open="(" separator=",">
                 #{extraTypeId}
@@ -39,6 +44,7 @@
                m_comment.createdTime as comment_createdTime, m_comment.type as comment_type, m_comment.typeid as comment_typeid,
                m_comment.sAccountId as comment_sAccountId, 
                concat(comment_user.firstname, ' ', LTRIM(IFNULL(comment_user.middlename || ' ', '')), comment_user.lastname) as comment_ownerFullName,
+               s_user.avatarId AS createdUserAvatarId,
                concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as createdUserFullName
         FROM s_activitystream
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
@@ -63,7 +69,9 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             s_activitystream.createdTime DESC
         ]]>

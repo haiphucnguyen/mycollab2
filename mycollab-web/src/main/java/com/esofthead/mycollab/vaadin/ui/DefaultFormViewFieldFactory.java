@@ -282,8 +282,9 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	public static class UserLinkViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
-		public UserLinkViewField(final String username, final String fullName) {
-			final UserLink l = new UserLink(username, fullName);
+		public UserLinkViewField(final String username, String userAvatarId,
+				final String fullName) {
+			final UserLink l = new UserLink(username, userAvatarId, fullName);
 			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			setCompositionRoot(l);
 		}

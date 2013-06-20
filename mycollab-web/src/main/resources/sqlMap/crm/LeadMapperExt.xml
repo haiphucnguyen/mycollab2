@@ -4,8 +4,13 @@
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.LeadMapper.ResultMapWithBLOBs"
         id="SimpleLeadResult" type="com.esofthead.mycollab.module.crm.domain.SimpleLead">
+        
+         <result column="assignUserAvatarId" jdbcType="VARCHAR"
+            property="assignUserAvatarId" />
+            
         <result column="assignUserFullName" jdbcType="VARCHAR"
             property="assignUserFullName" />
+            
         <result column="campaignName" jdbcType="VARCHAR"
             property="campaignName" />
     </resultMap>
@@ -244,7 +249,9 @@
                m_crm_lead.primState, m_crm_lead.primCity, m_crm_lead.primPostalCode, m_crm_lead.primCountry, m_crm_lead.description,
                m_crm_lead.otherAddress, m_crm_lead.otherState, m_crm_lead.otherCity, m_crm_lead.otherPostalCode, m_crm_lead.otherCountry,
                m_crm_lead.email, m_crm_lead.createdTime, m_crm_lead.createdUser, m_crm_lead.sAccountId, m_crm_lead.assignUser, m_crm_lead.status, 
-               m_crm_lead.source, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName, 
+               m_crm_lead.source,
+               s_user.avatarId AS assignUserAvatarId, 
+               concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName, 
                concat (m_crm_lead.firstname, ' ', m_crm_lead.lastname) AS leadName,
                m_crm_campaign.campaignName, m_crm_lead.website, m_crm_lead.lastUpdatedTime, m_crm_lead.noemployees
 

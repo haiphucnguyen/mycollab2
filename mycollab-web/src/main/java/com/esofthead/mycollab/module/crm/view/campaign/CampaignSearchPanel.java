@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -39,6 +40,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -292,108 +294,64 @@ public class CampaignSearchPanel extends
 			statusField.setValue(null);
 			assignUserField.setValue(null);
 		}
-
+		private void loadDateTimeField(DateTimeSearchField dateField, DateSelectionField selectDateField){
+			if (dateField.getComparision().equals(DateTimeSearchField.GREATERTHAN)){
+				selectDateField.getDateSelectionBox().setValue(DateSelectionComboBox.AFTER);
+			}else if(dateField.getComparision().equals(DateTimeSearchField.EQUAL)){
+				selectDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
+			}else if(dateField.getComparision().equals(DateTimeSearchField.LESSTHAN)){
+				selectDateField.getDateSelectionBox().setValue(DateSelectionComboBox.BEFORE);
+			}else if(dateField.getComparision().equals(DateTimeSearchField.NOTEQUAL)){
+				selectDateField.getDateSelectionBox().setValue(DateSelectionComboBox.NOTON);
+			}
+			selectDateField.setImmediate(true);
+			selectDateField.setRows(2);
+			DateField strDate = new DateField();
+			strDate.setImmediate(true);
+			strDate.setValue(dateField.getValue());
+			strDate.setDateFormat(AppContext.getDateFormat());
+			selectDateField.removeAllDatefield();
+			selectDateField.addComponent(strDate, 0, 1);
+		}
+		private void loadDateTimeRangeField(RangeDateTimeSearchField rangeDateField, DateSelectionField selectDateField){
+			selectDateField.removeAllDatefield();				
+			selectDateField.addRangeDate();			
+			selectDateField.getDateSelectionBox().setValue(DateSelectionComboBox.ISBETWEEN);				
+			selectDateField.getDateStart().setValue(rangeDateField.getFrom());
+			selectDateField.getDateStart().setDateFormat(AppContext.getDateFormat());
+			selectDateField.getDateEnd().setValue(rangeDateField.getTo());
+			selectDateField.getDateEnd().setDateFormat(AppContext.getDateFormat());
+		}
 		@Override
 		protected void loadSaveSearchToField(CampaignSearchCriteria value) {
 			if (value.getCampaignName() != null)
 				nameField.setValue(value.getCampaignName().getValue());
-			
 			// TODO Problem Here -- How to load startDateRange to comboBox
 			if (value.getStartDateRange() != null){
-				startDateField.setRows(2);
-				DateField strDate = startDateField.getDateStart();
-				DateField endDate = startDateField.getDateEnd();
-				
-				if(strDate==null){
-					strDate = new DateField();
-					strDate.setValue(new Date());
-				}
-				if(endDate==null){
-					endDate = new DateField();
-					endDate.setValue(new Date());
-				}
-				
-				HorizontalLayout hLayout = new HorizontalLayout();
-				hLayout.setSpacing(true);
-				hLayout.addComponent(strDate);
-				hLayout.addComponent(endDate);
-				startDateField.addComponent(hLayout, 0, 1);
-				
-//				startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.ISBETWEEN);
-				
-//				startDateField.removeAllDatefield();
-//				startDateField.addRangeDate(startDateField);
-//				startDateField.getDateStart().setValue(value.getStartDateRange().getFrom());
-//				startDateField.getDateStart().setDateFormat(AppContext.getDateFormat());
-//				
-//				startDateField.getDateEnd().setValue(value.getStartDateRange().getTo());
-//				startDateField.getDateEnd().setDateFormat(AppContext.getDateFormat());
-			}else{
+				loadDateTimeRangeField(value.getStartDateRange(), startDateField);
+			}else if(value.getStartDate() == null){
 				startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
 				startDateField.removeAllDatefield();
 			}
-				
-//			if (value.getEndDateRange() != null){
-//				endDateField.addRangeDate(endDateField);
-//				endDateField.getDateStart().setValue(value.getEndDateRange().getFrom());
-//				endDateField.getDateStart().setDateFormat(AppContext.getDateFormat());
-//				
-//				endDateField.getDateEnd().setValue(value.getEndDateRange().getTo());
-//				endDateField.getDateEnd().setDateFormat(AppContext.getDateFormat());
-//				
-//				endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.ISBETWEEN);
-//			}else{
-//				endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
-//				endDateField.removeAllDatefield();
-//			}
-			// TODO Problem Here -- How to show selectDateField
-			if (value.getStartDate() != null){
-				DateTimeSearchField date = value.getStartDate();
-				if (date.getComparision().equals(DateTimeSearchField.GREATERTHAN)){
-					startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.AFTER);
-				}else if(date.getComparision().equals(DateTimeSearchField.EQUAL)){
-					startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
-				}else if(date.getComparision().equals(DateTimeSearchField.LESSTHAN)){
-					startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.BEFORE);
-				}else if(date.getComparision().equals(DateTimeSearchField.NOTEQUAL)){
-					startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.NOTON);
-				}
-				startDateField.setImmediate(true);
-				startDateField.setRows(2);
-				DateField strDate = new DateField();
-				strDate.setImmediate(true);
-				strDate.setValue(date.getValue());
-				strDate.setDateFormat(AppContext.getDateFormat());
-				startDateField.removeAllDatefield();
-				startDateField.addComponent(strDate, 0, 1);
-			}else{
-				startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
-				startDateField.removeAllDatefield();
-			}
-			if (value.getEndDate() != null){
-				DateTimeSearchField date = value.getEndDate();
-				if (date.getComparision().equals(DateTimeSearchField.GREATERTHAN)){
-					endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.AFTER);
-				}else if(date.getComparision().equals(DateTimeSearchField.EQUAL)){
-					endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
-				}else if(date.getComparision().equals(DateTimeSearchField.LESSTHAN)){
-					endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.BEFORE);
-				}else if(date.getComparision().equals(DateTimeSearchField.NOTEQUAL)){
-					endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.NOTON);
-				}
-				endDateField.setImmediate(true);
-				endDateField.setRows(2);
-				DateField strDate = new DateField();
-				strDate.setImmediate(true);
-				strDate.setValue(date.getValue());
-				strDate.setDateFormat(AppContext.getDateFormat());
-				endDateField.removeAllDatefield();
-				endDateField.addComponent(strDate, 0, 1);
-			}else{
+			if (value.getEndDateRange() != null){
+				loadDateTimeRangeField(value.getEndDateRange(), endDateField);
+			}else if(value.getEndDate()== null){
 				endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
 				endDateField.removeAllDatefield();
 			}
-			
+			// TODO Problem Here -- How to show selectDateField
+			if (value.getStartDate()!=null){
+				loadDateTimeField(value.getStartDate(),startDateField);
+			}else if(value.getStartDateRange() == null){
+				startDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
+				startDateField.removeAllDatefield();
+			}
+			if(value.getEndDate()!=null){
+				loadDateTimeField(value.getEndDate(), endDateField);
+			}else if(value.getEndDateRange() == null){
+				endDateField.getDateSelectionBox().setValue(DateSelectionComboBox.EQUAL);
+				endDateField.removeAllDatefield();
+			}
 			if(value.getTypes()!=null){
 				Object[] typeF = value.getTypes().values;
 				typeField.setValue(Arrays.asList(typeF));

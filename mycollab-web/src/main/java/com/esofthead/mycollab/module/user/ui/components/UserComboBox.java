@@ -44,8 +44,10 @@ public class UserComboBox extends ComboBox {
 		for (SimpleUser user : userList) {
 			this.addItem(user.getUsername());
 			this.setItemCaption(user.getUsername(), user.getDisplayName());
-			this.setItemIcon(user.getUsername(), UserAvatarControlFactory
-					.getResource(user.getUsername(), 16));
+			this.setItemIcon(
+					user.getUsername(),
+					UserAvatarControlFactory.createAvatarResource(
+							user.getAvatarid(), 16));
 		}
 	}
 }

@@ -6,6 +6,7 @@ public class SimpleMessage extends Message {
     private int commentsCount;
     private String projectName;
     private String messageCategoryName;
+    private String postedUserAvatarId;
     private String fullPostedUserName;
 
     public int getCommentsCount() {
@@ -38,5 +39,13 @@ public class SimpleMessage extends Message {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+
+	public String getPostedUserAvatarId() {
+		return postedUserAvatarId;
+	}
+
+	public void setPostedUserAvatarId(String postedUserAvatarId) {
+		this.postedUserAvatarId = postedUserAvatarId;
 	}
 }

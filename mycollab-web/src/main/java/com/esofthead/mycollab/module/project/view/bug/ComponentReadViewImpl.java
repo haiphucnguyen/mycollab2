@@ -87,6 +87,8 @@ public class ComponentReadViewImpl extends AbstractView implements
 				return new ProjectUserFormLinkField(
 						ComponentReadViewImpl.this.component.getUserlead(),
 						ComponentReadViewImpl.this.component
+								.getUserLeadAvatarId(),
+						ComponentReadViewImpl.this.component
 								.getUserLeadFullName());
 			}
 			return null;

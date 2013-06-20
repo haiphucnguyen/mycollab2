@@ -4,6 +4,7 @@
     <resultMap id="SimpleTaskListResult"
         extends="com.esofthead.mycollab.module.project.dao.TaskListMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.project.domain.SimpleTaskList">
+
         <result column="milestoneName" jdbcType="VARCHAR"
             property="milestoneName" />
 
@@ -14,6 +15,9 @@
             property="numOpenTasks" />
 
         <result column="numAllTasks" jdbcType="INTEGER" property="numAllTasks" />
+
+        <result column="ownerAvatarId" jdbcType="VARCHAR"
+            property="ownerAvatarId" />
 
         <result column="ownerFullName" jdbcType="VARCHAR"
             property="ownerFullName" />
@@ -31,16 +35,19 @@
         </if>
 
         <if test="searchCriteria.projectId != null">
-            ${searchCriteria.projectId.operation} m_prj_task_list.projectid =
+            ${searchCriteria.projectId.operation}
+            m_prj_task_list.projectid =
             #{searchCriteria.projectId.value,javaType=INTEGER}
         </if>
 
         <if test="searchCriteria.status != null">
-            ${searchCriteria.status.operation} m_prj_task_list.status =
+            ${searchCriteria.status.operation}
+            m_prj_task_list.status =
             #{searchCriteria.status.value}
         </if>
         <if test='searchCriteria.milestoneIds != null'>
-            ${searchCriteria.milestoneIds.operation} m_prj_task_list.milestoneId IN
+            ${searchCriteria.milestoneIds.operation}
+            m_prj_task_list.milestoneId IN
             <foreach close=")" collection="searchCriteria.milestoneIds.values"
                 item="milestoneid" open="(" separator="OR">
                 #{milestoneid}
@@ -53,6 +60,7 @@
                     m_prj_task_list.projectid, m_prj_task_list.createdTime, m_prj_task_list.lastUpdatedTime, 
                     m_prj_task_list.sAccountId, m_prj_task_list.milestoneId, m_prj_task_list.groupIndex,
                     m_prj_task_list.owner, m_prj_task_list.status, m_prj_milestone.name AS milestoneName,
+                    s_user.avatarId AS ownerAvatarId,
                     concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS ownerFullName,
                     m_prj_task.id AS subTask_id, m_prj_task.taskname AS subTask_taskname, m_prj_task.percentagecomplete AS subTask_percentagecomplete, 
                     m_prj_task.startdate AS subTask_startdate, m_prj_task.enddate AS subTask_enddate, m_prj_task.priority AS subTask_priority, 
@@ -62,7 +70,7 @@
                     m_prj_task.remainEstimate AS subTask_remainEstimate, m_prj_task.tasklistid AS subTask_tasklistid, 
                     m_prj_task.createdTime AS subTask_createdTime, m_prj_task.lastUpdatedTime AS subTask_lastUpdatedTime, 
                     m_prj_task.assignUser AS subTask_assignUser, m_prj_task.sAccountId AS subTask_sAccountId, m_prj_task.status AS subTask_status,
-                     m_prj_task.taskkey AS subTask_taskkey,
+                     m_prj_task.taskkey AS subTask_taskkey, taskUser.avatarId AS subTask_assignUserAvatarId,
                     concat(taskUser.firstname, ' ', LTRIM(concat(IFNULL(taskUser.middlename, ''), ' ')), taskUser.lastname) AS subTask_assignUserFullName,
                     (SELECT AVG(task.percentagecomplete) FROM m_prj_task AS task WHERE m_prj_task_list.id = task.tasklistid) AS percentageComplete,
                     (SELECT COUNT(task_all.id) FROM  m_prj_task AS task_all WHERE m_prj_task_list.id = task_all.tasklistid) AS numAllTasks,
@@ -91,7 +99,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_prj_task_list.groupIndex, m_prj_task_list.lastUpdatedTime DESC
         ]]>

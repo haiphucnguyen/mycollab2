@@ -197,8 +197,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 				new Label(AppContext.formatDate(milestone.getEnddate())),
 				"End Date", 0, 1, Alignment.MIDDLE_LEFT);
 
-		layoutHelper.addComponent(new ProjectUserLink(milestone.getOwner(), "",
-				false, true), "Assignee", 0, 2, Alignment.MIDDLE_LEFT);
+		layoutHelper.addComponent(new ProjectUserLink(milestone.getOwner(),
+				milestone.getOwnerAvatarId(), "", false, true), "Assignee", 0,
+				2, Alignment.MIDDLE_LEFT);
 
 		final ProgressBar progressTask = new ProgressBar(
 				milestone.getNumTasks(), milestone.getNumOpenTasks());

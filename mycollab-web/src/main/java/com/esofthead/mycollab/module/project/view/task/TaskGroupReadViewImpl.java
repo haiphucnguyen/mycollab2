@@ -109,6 +109,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 						return new ProjectUserFormLinkField(
 								TaskGroupReadViewImpl.this.taskList.getOwner(),
 								TaskGroupReadViewImpl.this.taskList
+										.getOwnerAvatarId(),
+								TaskGroupReadViewImpl.this.taskList
 										.getOwnerFullName());
 					} else if (propertyId.equals("percentageComplete")) {
 						final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
@@ -243,6 +245,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 							} else if (propertyId.equals("owner")) {
 								return new ProjectUserFormLinkField(
 										PrintView.this.taskList.getOwner(),
+										PrintView.this.taskList
+												.getOwnerAvatarId(),
 										PrintView.this.taskList
 												.getOwnerFullName());
 							} else if (propertyId.equals("percentageComplete")) {

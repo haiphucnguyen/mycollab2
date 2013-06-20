@@ -38,7 +38,7 @@ public class DueBugWidget extends BugDisplayWidget {
 			BeanList.RowDisplayHandler<SimpleBug> {
 
 		@Override
-		public Component generateRow(final SimpleBug obj, final int rowIndex) {
+		public Component generateRow(final SimpleBug bug, final int rowIndex) {
 			final GridLayout layout = new GridLayout(2, 4);
 			layout.setWidth("100%");
 			layout.setSpacing(false);
@@ -49,20 +49,20 @@ public class DueBugWidget extends BugDisplayWidget {
 
 			final ButtonLink defectLink = new ButtonLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"
-					+ obj.getBugkey() + "]: " + obj.getSummary(),
+					+ bug.getBugkey() + "]: " + bug.getSummary(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final Button.ClickEvent event) {
 							EventBus.getInstance().fireEvent(
-									new BugEvent.GotoRead(this, obj.getId()));
+									new BugEvent.GotoRead(this, bug.getId()));
 						}
 					});
 			defectLink.setWidth("100%");
 
-			if (obj.getDuedate() != null
-					&& (obj.getDuedate().before(new GregorianCalendar()
+			if (bug.getDuedate() != null
+					&& (bug.getDuedate().before(new GregorianCalendar()
 							.getTime()))) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
@@ -71,13 +71,13 @@ public class DueBugWidget extends BugDisplayWidget {
 			layout.setColumnExpandRatio(1, 1.0f);
 
 			final LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
-					obj.getDescription());
+					bug.getDescription());
 			descInfo.setWidth("100%");
 			layout.addComponent(descInfo);
 
 			final Label dateInfo = new Label("Due on "
-					+ AppContext.formatDate(obj.getDuedate()) + ". Status: "
-					+ obj.getStatus());
+					+ AppContext.formatDate(bug.getDuedate()) + ". Status: "
+					+ bug.getStatus());
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			layout.addComponent(dateInfo, 1, 2);
 
@@ -90,8 +90,8 @@ public class DueBugWidget extends BugDisplayWidget {
 					Alignment.MIDDLE_CENTER);
 
 			final ProjectUserLink userLink = new ProjectUserLink(
-					obj.getAssignuser(), obj.getAssignuserFullName(), false,
-					true);
+					bug.getAssignuser(), bug.getAssignUserAvatarId(),
+					bug.getAssignuserFullName(), false, true);
 			hLayoutDateInfo.addComponent(userLink);
 			hLayoutDateInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);

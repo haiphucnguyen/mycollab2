@@ -28,6 +28,8 @@
         type="com.esofthead.mycollab.module.project.domain.ProjectActivityStream">
         <result column="projectId" jdbcType="INTEGER" property="projectId" />
         <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+        <result column="createdUserAvatarId" jdbcType="VARCHAR"
+            property="createdUserAvatarId" />
         <result column="createdUserFullName" jdbcType="VARCHAR"
             property="createdUserFullName" />
     </resultMap>
@@ -63,10 +65,12 @@
         <if test="searchCriteria.projectStatus != null">
             ${searchCriteria.projectStatus.operation}
             m_prj_project.projectStatus
-            like '%${searchCriteria.projectStatus.value}%'
+            like
+            '%${searchCriteria.projectStatus.value}%'
         </if>
         <if test="searchCriteria.projectType != null">
-            ${searchCriteria.projectType.operation} m_prj_project.projectType
+            ${searchCriteria.projectType.operation}
+            m_prj_project.projectType
             like
             '%${searchCriteria.projectType.value}%'
         </if>
@@ -118,7 +122,8 @@
             '%${searchCriteria.projectStatus.value}%'
         </if>
         <if test="searchCriteria.projectType != null">
-            ${searchCriteria.projectType.operation} m_prj_project.projectType
+            ${searchCriteria.projectType.operation}
+            m_prj_project.projectType
             like
             '%${searchCriteria.projectType.value}%'
         </if>
@@ -208,6 +213,7 @@
         SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, 
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField, s_activitystream.extraTypeId,
                s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
+               s_user.avatarId AS createdUserAvatarId,
                s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName
         FROM s_activitystream
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)

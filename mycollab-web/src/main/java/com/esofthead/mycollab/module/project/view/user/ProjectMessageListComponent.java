@@ -40,8 +40,9 @@ public class ProjectMessageListComponent extends Depot {
 
 			final String content = LocalizationHelper.getMessage(
 					ProjectCommonI18nEnum.FEED_PROJECT_MESSAGE_TITLE,
-					UserAvatarControlFactory.getLink(message.getPosteduser(),
-							16), ProjectLinkBuilder.WebLinkGenerator
+					UserAvatarControlFactory.getAvatarLink(
+							message.getPostedUserAvatarId(), 16),
+					ProjectLinkBuilder.WebLinkGenerator
 							.generateProjectMemberFullLink(
 									message.getProjectid(),
 									message.getPosteduser()), message

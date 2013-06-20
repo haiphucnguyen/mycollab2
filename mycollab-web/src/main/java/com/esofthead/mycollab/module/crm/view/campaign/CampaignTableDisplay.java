@@ -20,130 +20,139 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
+public class CampaignTableDisplay
+		extends
+		PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
 
-    public CampaignTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
-        super(AppContext.getSpringBean(CampaignService.class),
-                SimpleCampaign.class, visibleColumns, columnHeaders);
+	public CampaignTableDisplay(final String[] visibleColumns,
+			String[] columnHeaders) {
+		super(AppContext.getSpringBean(CampaignService.class),
+				SimpleCampaign.class, visibleColumns, columnHeaders);
 
-        this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        SimpleCampaign campaign = CampaignTableDisplay.this
-                                .getBeanByIndex(itemId);
-                        CampaignTableDisplay.this.fireSelectItemEvent(campaign);
-                        fireTableEvent(new TableClickEvent(
-                                CampaignTableDisplay.this, campaign,
-                                "selected"));
-                    }
-                });
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						SimpleCampaign campaign = CampaignTableDisplay.this
+								.getBeanByIndex(itemId);
+						CampaignTableDisplay.this.fireSelectItemEvent(campaign);
+						fireTableEvent(new TableClickEvent(
+								CampaignTableDisplay.this, campaign, "selected"));
+					}
+				});
 
-                SimpleCampaign campaign = CampaignTableDisplay.this.getBeanByIndex(itemId);
-                campaign.setExtraData(cb);
-                return cb;
-            }
-        });
+				SimpleCampaign campaign = CampaignTableDisplay.this
+						.getBeanByIndex(itemId);
+				campaign.setExtraData(cb);
+				return cb;
+			}
+		});
 
-        this.addGeneratedColumn("campaignname", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		this.addGeneratedColumn("campaignname", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleCampaign campaign = CampaignTableDisplay.this
-                        .getBeanByIndex(itemId);
-                Button b = new Button(campaign.getCampaignname(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleCampaign campaign = CampaignTableDisplay.this
+						.getBeanByIndex(itemId);
+				Button b = new Button(campaign.getCampaignname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                fireTableEvent(new TableClickEvent(CampaignTableDisplay.this, campaign, "campaignname"));
-                            }
-                        });
-                b.setStyleName("link");
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								fireTableEvent(new TableClickEvent(
+										CampaignTableDisplay.this, campaign,
+										"campaignname"));
+							}
+						});
+				b.setStyleName("link");
 
-                if ("Complete".equals(campaign.getStatus())) {
-                    b.addStyleName(UIConstants.LINK_COMPLETED);
-                } else {
-                    if (campaign.getEnddate() != null && (campaign.getEnddate().before(new GregorianCalendar().getTime()))) {
-                        b.addStyleName(UIConstants.LINK_OVERDUE);
-                    }
-                }
-                return b;
+				if ("Complete".equals(campaign.getStatus())) {
+					b.addStyleName(UIConstants.LINK_COMPLETED);
+				} else {
+					if (campaign.getEnddate() != null
+							&& (campaign.getEnddate()
+									.before(new GregorianCalendar().getTime()))) {
+						b.addStyleName(UIConstants.LINK_OVERDUE);
+					}
+				}
+				return b;
 
-            }
-        });
-        
-        this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+			}
+		});
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-            	final SimpleCampaign campaign = CampaignTableDisplay.this
-                .getBeanByIndex(itemId);
-                UserLink b = new UserLink(campaign.getAssignuser(), campaign.getAssignUserFullName());
-                return b;
+		this.addGeneratedColumn("assignUserFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-            }
-        });
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							final Object itemId, Object columnId) {
+						final SimpleCampaign campaign = CampaignTableDisplay.this
+								.getBeanByIndex(itemId);
+						UserLink b = new UserLink(campaign.getAssignuser(),
+								campaign.getAssignUserAvatarId(), campaign
+										.getAssignUserFullName());
+						return b;
 
-        this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+					}
+				});
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                final SimpleCampaign campaign = CampaignTableDisplay.this
-                        .getBeanByIndex(itemId);
-                Label l = new Label();
+		this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-                l.setValue(AppContext.formatDate(campaign.getStartdate()));
-                return l;
-            }
-        });
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleCampaign campaign = CampaignTableDisplay.this
+						.getBeanByIndex(itemId);
+				Label l = new Label();
 
-        this.addGeneratedColumn("enddate", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+				l.setValue(AppContext.formatDate(campaign.getStartdate()));
+				return l;
+			}
+		});
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                final SimpleCampaign campaign = CampaignTableDisplay.this
-                        .getBeanByIndex(itemId);
-                Label l = new Label();
+		this.addGeneratedColumn("enddate", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-                l.setValue(AppContext.formatDate(campaign.getEnddate()));
-                return l;
-            }
-        });
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleCampaign campaign = CampaignTableDisplay.this
+						.getBeanByIndex(itemId);
+				Label l = new Label();
 
-        this.setWidth("100%");
+				l.setValue(AppContext.formatDate(campaign.getEnddate()));
+				return l;
+			}
+		});
 
-        this.setColumnExpandRatio("campaignname", 1.0f);
-        this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-        this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-        this.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);
-        this.setColumnWidth("expectedrevenue",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-        this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
-        this.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
-        this.setColumnWidth("assignUserFullName",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-    }
+		this.setWidth("100%");
+
+		this.setColumnExpandRatio("campaignname", 1.0f);
+		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
+		this.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);
+		this.setColumnWidth("expectedrevenue", UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
+		this.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
+		this.setColumnWidth("assignUserFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+	}
 }

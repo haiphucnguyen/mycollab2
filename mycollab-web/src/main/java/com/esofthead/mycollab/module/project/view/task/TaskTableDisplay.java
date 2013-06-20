@@ -318,10 +318,11 @@ public class TaskTableDisplay extends
 					@Override
 					public com.vaadin.ui.Component generateCell(Table source,
 							final Object itemId, Object columnId) {
-						final SimpleTask account = TaskTableDisplay.this
+						final SimpleTask task = TaskTableDisplay.this
 								.getBeanByIndex(itemId);
-						return new ProjectUserLink(account.getAssignuser(),
-								account.getAssignUserFullName(), true, true);
+						return new ProjectUserLink(task.getAssignuser(), task
+								.getAssignUserAvatarId(), task
+								.getAssignUserFullName(), true, true);
 
 					}
 				});

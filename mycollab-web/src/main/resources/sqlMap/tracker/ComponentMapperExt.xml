@@ -6,7 +6,8 @@
         type="com.esofthead.mycollab.module.tracker.domain.SimpleComponent"
         extends="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.ResultMapWithBLOBs"
         id="SimpleComponentResult">
-
+        <result column="userLeadAvatarId" jdbcType="VARCHAR"
+            property="userLeadAvatarId" />
         <result column="userLeadFullName" jdbcType="VARCHAR"
             property="userLeadFullName" />
         <result column="numOpenBugs" jdbcType="INTEGER" property="numOpenBugs" />
@@ -15,7 +16,9 @@
 
     <sql id="querySearchCriteria">
         <if test="searchCriteria.projectid != null">
-            ${searchCriteria.projectid.operation} m_tracker_component.projectid = #{searchCriteria.projectid.value,javaType=INTEGER}
+            ${searchCriteria.projectid.operation}
+            m_tracker_component.projectid =
+            #{searchCriteria.projectid.value,javaType=INTEGER}
         </if>
         <if test="searchCriteria.componentName != null">
           <![CDATA[
@@ -32,6 +35,7 @@
           SELECT m_tracker_component.id, m_tracker_component.projectid, m_tracker_component.componentname, 
                 m_tracker_component.userlead, m_tracker_component.description, 
                 m_tracker_component.sAccountId, m_tracker_component.lastUpdatedTime, m_tracker_component.createdTime,
+                s_user.avatarId AS userLeadAvatarId,
                concat(s_user.firstname,  ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS userLeadFullName,
                (SELECT COUNT(*) 
                         FROM m_tracker_bug, m_tracker_bug_related_item 

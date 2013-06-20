@@ -81,10 +81,10 @@ public class TaskDisplayComponent extends CssLayout {
 			descLbl.setValue(StringUtil.preStringFormat(this.taskList
 					.getDescription()));
 
-			this.layoutHelper.addComponent(
-					new ProjectUserFormLinkField(this.taskList.getOwner(),
-							this.taskList.getOwnerFullName()),
-					"Responsible User", 0, 1, Alignment.TOP_RIGHT);
+			this.layoutHelper.addComponent(new ProjectUserFormLinkField(
+					this.taskList.getOwner(), this.taskList.getOwnerAvatarId(),
+					this.taskList.getOwnerFullName()), "Responsible User", 0,
+					1, Alignment.TOP_RIGHT);
 
 			final DefaultFormViewFieldFactory.FormLinkViewField milestoneLink = new DefaultFormViewFieldFactory.FormLinkViewField(
 					this.taskList.getMilestoneName(),

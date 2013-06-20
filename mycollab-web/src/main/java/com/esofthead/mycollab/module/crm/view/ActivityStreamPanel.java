@@ -98,9 +98,9 @@ public class ActivityStreamPanel extends Depot {
 
 					final String content = LocalizationHelper
 							.getMessage(action, UserAvatarControlFactory
-									.getLink(activityStream.getCreateduser(),
-											16), activityStream
-									.getCreatedUserFullName(),
+									.getAvatarLink(activityStream
+											.getCreatedUserAvatarId(), 16),
+									activityStream.getCreatedUserFullName(),
 									LocalizationHelper
 											.getMessage(CrmLocalizationTypeMap
 													.getType(activityStream

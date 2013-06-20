@@ -5,6 +5,7 @@ public class GroupItem {
     private String groupid;
     private String groupname;
     private int value;
+    private String extraValue;
 
     public String getGroupid() {
         return groupid;
@@ -29,4 +30,12 @@ public class GroupItem {
     public void setGroupname(String groupname) {
         this.groupname = groupname;
     }
+
+	public String getExtraValue() {
+		return extraValue;
+	}
+
+	public void setExtraValue(String extraValue) {
+		this.extraValue = extraValue;
+	}
 }

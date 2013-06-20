@@ -6,8 +6,14 @@
         extends="com.esofthead.mycollab.module.project.dao.ProblemMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.project.domain.SimpleProblem">
 
+        <result column="raisedByUserAvatarId" jdbcType="VARCHAR"
+            property="raisedByUserAvatarId" />
+
         <result column="raisedByUserFullName" jdbcType="VARCHAR"
             property="raisedByUserFullName" />
+
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
+            property="assignUserAvatarId" />
 
         <result column="assignedUserFullName" jdbcType="VARCHAR"
             property="assignedUserFullName" />
@@ -57,7 +63,9 @@
                  m_prj_problem.actualstartdate, m_prj_problem.actualenddate, 
                  m_prj_problem.createdTime, m_prj_problem.lastUpdatedTime, m_prj_problem.type, m_prj_problem.typeid,
                  m_prj_problem.level, m_prj_problem.resolution, m_prj_problem.problemsource, m_prj_problem.state,
+                 raisedUser.avatarId AS raisedByUserAvatarId,
                  concat(raisedUser.firstname, ' ', LTRIM(concat(IFNULL(raisedUser.middlename, ''), ' ')), raisedUser.lastname) AS raisedByUserFullName,
+                 assignedUser.avatarId AS assignUserAvatarId,
                  concat(assignedUser.firstname, ' ', LTRIM(concat(IFNULL(assignedUser.middlename, ''), ' ')), assignedUser.lastname) AS assignedUserFullName 
                  
           FROM m_prj_problem
@@ -83,7 +91,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_prj_problem.lastUpdatedTime DESC
         ]]>
@@ -134,8 +143,8 @@
                 refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.querySearchCriteria" />
         </trim>
     </select>
-	
-	 <!-- Here for Mass Update -->
+
+    <!-- Here for Mass Update -->
     <update id="updateBySearchCriteria" parameterType="map">
         <include
             refid="com.esofthead.mycollab.module.project.dao.ProblemMapper.massUpdateWithSessionSql" />

@@ -62,7 +62,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 	private void displayUserAvatar() {
 		userAvatar.removeAllComponents();
 		Embedded cropField = UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 100);
+				.createUserAvatarEmbeddedComponent(
+						AppContext.getUserAvatarId(), 100);
 		userAvatar.addComponent(cropField);
 
 		final UploadField avatarUploadField = new UploadField() {

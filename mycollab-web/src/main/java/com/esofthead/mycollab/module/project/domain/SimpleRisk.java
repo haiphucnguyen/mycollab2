@@ -5,7 +5,11 @@ public class SimpleRisk extends Risk {
 
 	private String risksource;
 
+	private String raisedByUserAvatarId;
+
 	private String raisedByUserFullName;
+
+	private String assignToUserAvatarId;
 
 	private String assignedToUserFullName;
 
@@ -31,5 +35,21 @@ public class SimpleRisk extends Risk {
 
 	public void setRisksource(String risksource) {
 		this.risksource = risksource;
+	}
+
+	public String getRaisedByUserAvatarId() {
+		return raisedByUserAvatarId;
+	}
+
+	public void setRaisedByUserAvatarId(String raisedByUserAvatarId) {
+		this.raisedByUserAvatarId = raisedByUserAvatarId;
+	}
+
+	public String getAssignToUserAvatarId() {
+		return assignToUserAvatarId;
+	}
+
+	public void setAssignToUserAvatarId(String assignToUserAvatarId) {
+		this.assignToUserAvatarId = assignToUserAvatarId;
 	}
 }

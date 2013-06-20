@@ -15,6 +15,7 @@ import java.util.List;
 public class SimpleTaskList extends TaskList {
 	private static final long serialVersionUID = 1L;
 	private String milestoneName;
+	private String ownerAvatarId;
 	private String ownerFullName;
 	private List<SimpleTask> subTasks = new ArrayList<SimpleTask>();
 	private double percentageComplete;
@@ -124,5 +125,13 @@ public class SimpleTaskList extends TaskList {
 
 	public void setNumAllTasks(int numAllTasks) {
 		this.numAllTasks = numAllTasks;
+	}
+
+	public String getOwnerAvatarId() {
+		return ownerAvatarId;
+	}
+
+	public void setOwnerAvatarId(String ownerAvatarId) {
+		this.ownerAvatarId = ownerAvatarId;
 	}
 }

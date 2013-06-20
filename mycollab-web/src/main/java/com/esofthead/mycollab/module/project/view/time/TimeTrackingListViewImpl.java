@@ -156,11 +156,12 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					public com.vaadin.ui.Component generateCell(
 							final Table source, final Object itemId,
 							final Object columnId) {
-						final SimpleItemTimeLogging monitorItem = TimeTrackingListViewImpl.this.tableItem
+						final SimpleItemTimeLogging timeItem = TimeTrackingListViewImpl.this.tableItem
 								.getBeanByIndex(itemId);
 
-						return new ProjectUserLink(monitorItem.getLoguser(),
-								monitorItem.getLogUserFullName(), true, true);
+						return new ProjectUserLink(timeItem.getLoguser(),
+								timeItem.getLogUserAvatarId(), timeItem
+										.getLogUserFullName(), true, true);
 
 					}
 				});

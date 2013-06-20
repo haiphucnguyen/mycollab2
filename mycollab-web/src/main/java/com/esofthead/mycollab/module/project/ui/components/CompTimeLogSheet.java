@@ -2,8 +2,6 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -40,9 +38,6 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 	private AddTimeInvest investTimeLayout;
 	private UpdateTimeRemain updateTimeRemainLayout;
-
-	private static Logger log = LoggerFactory
-			.getLogger(CompFollowersSheet.class);
 
 	protected CompTimeLogSheet(final V bean) {
 		this.bean = bean;
@@ -172,12 +167,13 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 						public com.vaadin.ui.Component generateCell(
 								final Table source, final Object itemId,
 								final Object columnId) {
-							final SimpleItemTimeLogging monitorItem = CompTimeLogSheet.this.tableItem
+							final SimpleItemTimeLogging timeLoggingItem = CompTimeLogSheet.this.tableItem
 									.getBeanByIndex(itemId);
 
-							return new ProjectUserLink(
-									monitorItem.getLoguser(), monitorItem
-											.getLogUserFullName(), true, true);
+							return new ProjectUserLink(timeLoggingItem
+									.getLoguser(), timeLoggingItem
+									.getLogUserAvatarId(), timeLoggingItem
+									.getLogUserFullName(), true, true);
 
 						}
 					});

@@ -18,10 +18,19 @@
 package com.esofthead.mycollab.module.crm.domain;
 
 public class SimpleAccount extends Account {
+	private static final long serialVersionUID = 1L;
+
+	private String assignUserAvatarId;
 
 	private String assignUserFullName;
 
-	private String billingCountry;
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
+	}
 
 	public String getAssignUserFullName() {
 		return assignUserFullName;
@@ -31,12 +40,4 @@ public class SimpleAccount extends Account {
 		this.assignUserFullName = assignUserFullName;
 	}
 
-	public String getBillingCountry() {
-		return billingCountry;
-	}
-
-	public void setBillingCountry(String billingCountry) {
-		this.billingCountry = billingCountry;
-	}
-	
 }

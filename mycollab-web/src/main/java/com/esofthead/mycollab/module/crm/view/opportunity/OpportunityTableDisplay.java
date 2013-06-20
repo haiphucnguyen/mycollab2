@@ -23,135 +23,149 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-public class OpportunityTableDisplay extends PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
+public class OpportunityTableDisplay
+		extends
+		PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
 
-    public OpportunityTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
-        super(AppContext.getSpringBean(OpportunityService.class),
-                SimpleOpportunity.class, visibleColumns, columnHeaders);
+	public OpportunityTableDisplay(final String[] visibleColumns,
+			String[] columnHeaders) {
+		super(AppContext.getSpringBean(OpportunityService.class),
+				SimpleOpportunity.class, visibleColumns, columnHeaders);
 
-        this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        SimpleOpportunity opportunity = OpportunityTableDisplay.this
-                                .getBeanByIndex(itemId);
-                        OpportunityTableDisplay.this.fireSelectItemEvent(opportunity);
-                        fireTableEvent(new TableClickEvent(OpportunityTableDisplay.this, opportunity, "selected"));
-                    }
-                });
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						SimpleOpportunity opportunity = OpportunityTableDisplay.this
+								.getBeanByIndex(itemId);
+						OpportunityTableDisplay.this
+								.fireSelectItemEvent(opportunity);
+						fireTableEvent(new TableClickEvent(
+								OpportunityTableDisplay.this, opportunity,
+								"selected"));
+					}
+				});
 
-                SimpleOpportunity opportunity = OpportunityTableDisplay.this
-                        .getBeanByIndex(itemId);
-                opportunity.setExtraData(cb);
-                return cb;
-            }
-        });
+				SimpleOpportunity opportunity = OpportunityTableDisplay.this
+						.getBeanByIndex(itemId);
+				opportunity.setExtraData(cb);
+				return cb;
+			}
+		});
 
-        this.addGeneratedColumn("opportunityname", new Table.ColumnGenerator() {
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleOpportunity opportunity = OpportunityTableDisplay.this
-                        .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+		this.addGeneratedColumn("opportunityname", new Table.ColumnGenerator() {
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final SimpleOpportunity opportunity = OpportunityTableDisplay.this
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                fireTableEvent(new TableClickEvent(OpportunityTableDisplay.this, opportunity, "opportunityname"));
-                            }
-                        });
-                
-                if ("Closed Won".equals(opportunity.getSalesstage()) || "Closed Lost".equals(opportunity.getSalesstage())) {
-                    b.addStyleName(UIConstants.LINK_COMPLETED);
-                } else {
-                    if (opportunity.getExpectedcloseddate() != null && (opportunity.getExpectedcloseddate().before(new GregorianCalendar().getTime()))) {
-                        b.addStyleName(UIConstants.LINK_OVERDUE);
-                    }
-                }
-                
-                return b;
-            }
-        });
-        
-        this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								fireTableEvent(new TableClickEvent(
+										OpportunityTableDisplay.this,
+										opportunity, "opportunityname"));
+							}
+						});
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-            	 final SimpleOpportunity opportunity = OpportunityTableDisplay.this
-                 .getBeanByIndex(itemId);
-                UserLink b = new UserLink(opportunity.getAssignuser(), opportunity.getAssignUserFullName());
-                return b;
+				if ("Closed Won".equals(opportunity.getSalesstage())
+						|| "Closed Lost".equals(opportunity.getSalesstage())) {
+					b.addStyleName(UIConstants.LINK_COMPLETED);
+				} else {
+					if (opportunity.getExpectedcloseddate() != null
+							&& (opportunity.getExpectedcloseddate()
+									.before(new GregorianCalendar().getTime()))) {
+						b.addStyleName(UIConstants.LINK_OVERDUE);
+					}
+				}
 
-            }
-        });
+				return b;
+			}
+		});
 
-        this.addGeneratedColumn("accountName", new Table.ColumnGenerator() {
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleOpportunity opportunity = OpportunityTableDisplay.this
-                        .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(opportunity.getAccountName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+		this.addGeneratedColumn("assignUserFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new AccountEvent.GotoRead(this,
-                                        opportunity.getAccountid()));
-                            }
-                        });
-                return b;
-            }
-        });
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							final Object itemId, Object columnId) {
+						final SimpleOpportunity opportunity = OpportunityTableDisplay.this
+								.getBeanByIndex(itemId);
+						UserLink b = new UserLink(opportunity.getAssignuser(),
+								opportunity.getAssignUserAvatarId(),
+								opportunity.getAssignUserFullName());
+						return b;
 
-        this.addGeneratedColumn("expectedcloseddate",
-                new Table.ColumnGenerator() {
-                    private static final long serialVersionUID = 1L;
+					}
+				});
 
-                    @Override
-                    public com.vaadin.ui.Component generateCell(Table source,
-                            Object itemId, Object columnId) {
-                        final SimpleOpportunity opportunity = OpportunityTableDisplay.this
-                                .getBeanByIndex(itemId);
-                        Label l = new Label();
-                        l.setValue(AppContext.formatDateTime(opportunity
-                                .getExpectedcloseddate()));
-                        return l;
-                    }
-                });
+		this.addGeneratedColumn("accountName", new Table.ColumnGenerator() {
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final SimpleOpportunity opportunity = OpportunityTableDisplay.this
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(opportunity.getAccountName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-        this.setWidth("100%");
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new AccountEvent.GotoRead(this,
+												opportunity.getAccountid()));
+							}
+						});
+				return b;
+			}
+		});
 
-        this.setColumnExpandRatio("opportunityname", 1.0f);
+		this.addGeneratedColumn("expectedcloseddate",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-        this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-        this.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
-        this.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
-        this.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
-        
-        this.setColumnWidth("expectedcloseddate",
-                UIConstants.TABLE_DATE_TIME_WIDTH);
-        this.setColumnWidth("assignUserFullName",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-        this.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
-    }
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							Object itemId, Object columnId) {
+						final SimpleOpportunity opportunity = OpportunityTableDisplay.this
+								.getBeanByIndex(itemId);
+						Label l = new Label();
+						l.setValue(AppContext.formatDateTime(opportunity
+								.getExpectedcloseddate()));
+						return l;
+					}
+				});
+
+		this.setWidth("100%");
+
+		this.setColumnExpandRatio("opportunityname", 1.0f);
+
+		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		this.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
+		this.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
+		this.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
+
+		this.setColumnWidth("expectedcloseddate",
+				UIConstants.TABLE_DATE_TIME_WIDTH);
+		this.setColumnWidth("assignUserFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
+	}
 }

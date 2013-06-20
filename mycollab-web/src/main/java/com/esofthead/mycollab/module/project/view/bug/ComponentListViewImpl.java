@@ -121,7 +121,7 @@ public class ComponentListViewImpl extends AbstractView implements
 																.getId()));
 									}
 								});
-						
+
 						return b;
 
 					}
@@ -137,6 +137,7 @@ public class ComponentListViewImpl extends AbstractView implements
 						final SimpleComponent bugComponent = tableItem
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(bugComponent.getUserlead(),
+								bugComponent.getUserLeadAvatarId(),
 								bugComponent.getUserLeadFullName());
 
 					}
@@ -166,10 +167,11 @@ public class ComponentListViewImpl extends AbstractView implements
 
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
-		
+
 		Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.COMPONENTS));
-        
+		deleteBtn.setEnabled(CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.COMPONENTS));
+
 		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");
 		tableActionControls.addOptionItem("export", "Export");

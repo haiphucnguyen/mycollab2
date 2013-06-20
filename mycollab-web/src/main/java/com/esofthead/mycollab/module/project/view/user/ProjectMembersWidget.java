@@ -51,32 +51,34 @@ public class ProjectMembersWidget extends Depot {
 			BeanList.RowDisplayHandler<SimpleProjectMember> {
 
 		@Override
-		public Component generateRow(SimpleProjectMember obj, int rowIndex) {
+		public Component generateRow(SimpleProjectMember member, int rowIndex) {
 			CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
-			header.addComponent(new ProjectUserLink(obj.getUsername(), obj
-					.getMemberFullName(), false, true));
+			header.addComponent(new ProjectUserLink(member.getUsername(),
+					member.getMemberAvatarId(), member.getMemberFullName(),
+					false, true));
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
-			
+
 			Label memberRole = new Label();
 			memberRole.setContentMode(Label.CONTENT_XHTML);
 			String textRole = "";
-			if (obj.getIsadmin() != null && obj.getIsadmin() == Boolean.TRUE) {
+			if (member.getIsadmin() != null
+					&& member.getIsadmin() == Boolean.TRUE) {
 				textRole = "<a style=\"color: #b00000;\"> Project Admin </a>";
 			} else {
-				textRole = obj.getRoleName();
+				textRole = member.getRoleName();
 			}
-			textRole  += " - Joined from "
-					+ DateTimeUtils.getStringDateFromNow(obj.getJoindate());
+			textRole += " - Joined from "
+					+ DateTimeUtils.getStringDateFromNow(member.getJoindate());
 			memberRole.setValue(textRole);
-			
+
 			body.addComponent(memberRole);
 			layout.addComponent(body);
 			return layout;
