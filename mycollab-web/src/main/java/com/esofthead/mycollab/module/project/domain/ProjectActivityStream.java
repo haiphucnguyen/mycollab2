@@ -14,6 +14,7 @@ public class ProjectActivityStream extends ActivityStream {
 	private static final long serialVersionUID = 1L;
 	private int projectId;
     private String projectName;
+    private String createdUserAvatarId;
     private String createdUserFullName;
 
     public int getProjectId() {
@@ -32,7 +33,15 @@ public class ProjectActivityStream extends ActivityStream {
         this.projectName = projectName;
     }
 
-    public String getCreatedUserFullName() {
+    public String getCreatedUserAvatarId() {
+		return createdUserAvatarId;
+	}
+
+	public void setCreatedUserAvatarId(String createdUserAvatarId) {
+		this.createdUserAvatarId = createdUserAvatarId;
+	}
+
+	public String getCreatedUserFullName() {
         return createdUserFullName;
     }
 

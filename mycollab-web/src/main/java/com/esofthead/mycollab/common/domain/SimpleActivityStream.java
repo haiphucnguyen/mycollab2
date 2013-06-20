@@ -5,6 +5,8 @@ import java.util.List;
 public class SimpleActivityStream extends ActivityStream {
 
     private static final long serialVersionUID = 1L;
+    
+    private String createdUserAvatarId;
     private String createdUserFullName;
     private List<SimpleComment> comments;
 
@@ -16,7 +18,15 @@ public class SimpleActivityStream extends ActivityStream {
         this.comments = comments;
     }
 
-    public String getCreatedUserFullName() {
+    public String getCreatedUserAvatarId() {
+		return createdUserAvatarId;
+	}
+
+	public void setCreatedUserAvatarId(String createdUserAvatarId) {
+		this.createdUserAvatarId = createdUserAvatarId;
+	}
+
+	public String getCreatedUserFullName() {
         return createdUserFullName;
     }
 

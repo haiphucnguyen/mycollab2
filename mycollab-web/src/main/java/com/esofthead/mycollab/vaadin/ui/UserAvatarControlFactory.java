@@ -22,17 +22,18 @@ public class UserAvatarControlFactory {
 
 	}
 
-	public static String getLink(String username, int size) {
-		if (username == null) {
+	public static String getAvatarLink(String userAvatarId, int size) {
+		if (userAvatarId == null) {
 			return "";
 		}
 
 		String link = "";
 
 		if (StorageSetting.isFileStorage()) {
-			link = AppContext.getSiteUrl() + "avatar/" + username + "/" + size;
+			link = AppContext.getSiteUrl() + "avatar/" + userAvatarId + "/"
+					+ size;
 		} else if (StorageSetting.isS3Storage()) {
-			link = S3StorageConfig.getAvatarLink(username, size);
+			link = S3StorageConfig.getAvatarLink(userAvatarId, size);
 		}
 
 		return link;

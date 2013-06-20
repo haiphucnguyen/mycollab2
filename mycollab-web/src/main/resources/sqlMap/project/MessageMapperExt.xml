@@ -8,6 +8,8 @@
             jdbcType="INTEGER" />
         <result column="messageCategoryName" property="messageCategoryName"
             jdbcType="VARCHAR" />
+        <result column="postedUserAvatarId" property="postedUserAvatarId"
+            jdbcType="VARCHAR" />
         <result column="fullPostedUserName" property="fullPostedUserName"
             jdbcType="VARCHAR" />
         <result column="projectName" property="projectName"
@@ -20,14 +22,16 @@
             #{searchCriteria.id.value,javaType=INTEGER}
         </if>
         <if test="searchCriteria.projectids != null">
-            ${searchCriteria.projectids.operation} m_prj_message.projectid IN
+            ${searchCriteria.projectids.operation}
+            m_prj_message.projectid IN
             <foreach close=")" collection="searchCriteria.projectids.values"
                 item="projectid" open="(" separator="OR">
                 #{projectid.value,javaType=INTEGER}
             </foreach>
         </if>
         <if test="searchCriteria.category != null">
-            ${searchCriteria.category.operation} m_prj_message.category =
+            ${searchCriteria.category.operation}
+            m_prj_message.category =
             #{searchCriteria.category.value,javaType=VARCHAR}
         </if>
         <if test="searchCriteria.title != null">
@@ -51,7 +55,7 @@
                     WHERE m_comment.type='Project-Message' AND m_comment.typeid=m_prj_message.id) AS commentsCount,
               m_prj_message.createdTime, m_prj_message.lastUpdatedTime, m_prj_message.isStick,
               concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS fullPostedUserName,
-              m_prj_project.name AS projectName
+              m_prj_project.name AS projectName, s_user.avatarId AS postedUserAvatarId
               FROM m_prj_message
                 LEFT OUTER JOIN s_user ON (m_prj_message.posteduser = s_user.username)
                 LEFT OUTER JOIN m_prj_project ON (m_prj_message.projectid=m_prj_project.id)
