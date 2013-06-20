@@ -86,7 +86,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						(ProjectMemberAddViewImpl.this.user.getId() == null) ? "Create Project Member"
 								: ((SimpleProjectMember) ProjectMemberAddViewImpl.this.user)
 										.getMemberFullName(),
-						UserAvatarControlFactory.getResource(null, 48));
+						UserAvatarControlFactory.getResource(null, 24));
 			}
 
 			private Layout createButtonControls() {

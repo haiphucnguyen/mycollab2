@@ -14,11 +14,13 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -29,24 +31,24 @@ public final class MainView extends AbstractView {
 	private final CssLayout bodyLayout;
 
 	public MainView() {
-		setSizeFull();
-		this.addComponent(createTopMenu());
-		bodyLayout = new CssLayout();
-		bodyLayout.addStyleName("main-body");
-		bodyLayout.setWidth("100%");
-		bodyLayout.setHeight("100%");
-		this.addComponent(bodyLayout);
-		setExpandRatio(bodyLayout, 1.0f);
-		this.addComponent(createFooter());
-		setSizeFull();
+		this.setSizeFull();
+		this.addComponent(this.createTopMenu());
+		this.bodyLayout = new CssLayout();
+		this.bodyLayout.addStyleName("main-body");
+		this.bodyLayout.setWidth("100%");
+		this.bodyLayout.setHeight("100%");
+		this.addComponent(this.bodyLayout);
+		this.setExpandRatio(this.bodyLayout, 1.0f);
+		this.addComponent(this.createFooter());
+		this.setSizeFull();
 		ControllerRegistry.addController(new MainViewController(this));
 	}
 
 	public void addModule(final IModule module) {
 		ModuleHelper.setCurrentModule(module);
-		bodyLayout.removeAllComponents();
+		this.bodyLayout.removeAllComponents();
 		final LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
-		bodyLayout.addComponent(comp);
+		this.bodyLayout.addComponent(comp);
 	}
 
 	private CustomLayout createFooter() {
@@ -103,8 +105,10 @@ public final class MainView extends AbstractView {
 		layout.addComponent(serviceMenu, "serviceMenu");
 
 		final HorizontalLayout accountLayout = new HorizontalLayout();
-		accountLayout.addComponent(UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 24));
+		final Embedded userAvatar = UserAvatarControlFactory
+				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 24);
+		accountLayout.addComponent(userAvatar);
+		accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
 
 		final PopupButton accountMenu = new PopupButton(AppContext.getSession()
 				.getDisplayName());
