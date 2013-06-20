@@ -68,7 +68,7 @@ public class ProjectAddWindow extends Window {
 				final AddViewLayout projectAddLayout = new AddViewLayout(
 						"New Project",
 						MyCollabResource
-								.newResource("icons/48/project/project.png"));
+								.newResource("icons/24/project/project.png"));
 				this.informationLayout = new GridFormLayoutHelper(2, 4, "100%",
 						"167px", Alignment.MIDDLE_LEFT);
 				this.informationLayout.getLayout().setMargin(false);

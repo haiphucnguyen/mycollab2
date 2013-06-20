@@ -109,7 +109,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 				super(PrintView.this.projectMember.getMemberFullName(),
 						UserAvatarControlFactory.createAvatarResource(
 								PrintView.this.projectMember
-										.getMemberAvatarId(), 48));
+										.getMemberAvatarId(), 24));
 			}
 
 			@Override
@@ -157,7 +157,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 							.setTitleIcon(UserAvatarControlFactory
 									.createAvatarResource(
 											ReadView.this.projectMember
-													.getMemberAvatarId(), 48));
+													.getMemberAvatarId(), 24));
 					ReadView.this.standupReportViewLayout.removeAllComponents();
 					ReadView.this.basicInformationLayout.removeAllComponents();
 					ReadView.this.standupReportViewLayout
