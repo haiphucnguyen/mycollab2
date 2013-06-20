@@ -27,7 +27,6 @@ public class ProjectSummaryViewImpl extends AbstractView implements
 
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
-		layout.setSpacing(true);
 		this.addComponent(layout);
 
 		final VerticalLayout leftPanel = new VerticalLayout();
@@ -40,6 +39,7 @@ public class ProjectSummaryViewImpl extends AbstractView implements
 		layout.addComponent(leftPanel);
 
 		final VerticalLayout rightPanel = new VerticalLayout();
+		rightPanel.setMargin(false, false, false, true);
 		rightPanel.setSpacing(true);
 		layout.addComponent(rightPanel);
 

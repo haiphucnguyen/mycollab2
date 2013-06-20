@@ -41,27 +41,32 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
 	public TaskReadPresenter() {
 		super(TaskReadView.class);
-		bind();
+		this.bind();
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		this.view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<Task>() {
 
 					@Override
-					public void onAssign(Task data) {
+					public void onAssign(final Task data) {
 						AppContext.getApplication().getMainWindow()
 								.addWindow(new AssignTaskWindow(data));
 					}
 
 					@Override
-					public void onEdit(Task data) {
+					public void onEdit(final Task data) {
 						EventBus.getInstance().fireEvent(
 								new TaskEvent.GotoEdit(this, data));
 					}
 
 					@Override
 					public void onDelete(final Task data) {
+						// final ConfirmDialog warningDialog = new
+						// ConfirmDialog();
+						// ((VerticalLayout) warningDialog.getContent())
+						// .setMargin(false);
+						// warningDialog.show();
 						ConfirmDialog.show(
 								AppContext.getApplication().getMainWindow(),
 								LocalizationHelper
@@ -79,9 +84,10 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 									private static final long serialVersionUID = 1L;
 
 									@Override
-									public void onClose(ConfirmDialog dialog) {
+									public void onClose(
+											final ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											ProjectTaskService taskService = AppContext
+											final ProjectTaskService taskService = AppContext
 													.getSpringBean(ProjectTaskService.class);
 											taskService.removeWithSession(
 													data.getId(),
@@ -96,8 +102,8 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void onClone(Task data) {
-						Task cloneData = (Task) data.copy();
+					public void onClone(final Task data) {
+						final Task cloneData = (Task) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new TaskEvent.GotoEdit(this, cloneData));
@@ -112,23 +118,25 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void gotoNext(Task data) {
-						ProjectTaskService taskService = AppContext
+					public void gotoNext(final Task data) {
+						final ProjectTaskService taskService = AppContext
 								.getSpringBean(ProjectTaskService.class);
 
-						TaskSearchCriteria criteria = new TaskSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						final TaskSearchCriteria criteria = new TaskSearchCriteria();
+						final SimpleProject project = (SimpleProject) AppContext
 								.getVariable("project");
 						criteria.setProjectid(new NumberSearchField(
 								SearchField.AND, project.getId()));
 						criteria.setId(new NumberSearchField(data.getId(),
 								NumberSearchField.GREATER));
-						Integer nextId = taskService.getNextItemKey(criteria);
+						final Integer nextId = taskService
+								.getNextItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(
 									new TaskEvent.GotoRead(this, nextId));
 						} else {
-							view.getWindow()
+							TaskReadPresenter.this.view
+									.getWindow()
 									.showNotification(
 											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
@@ -140,23 +148,25 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Task data) {
-						ProjectTaskService taskService = AppContext
+					public void gotoPrevious(final Task data) {
+						final ProjectTaskService taskService = AppContext
 								.getSpringBean(ProjectTaskService.class);
 
-						TaskSearchCriteria criteria = new TaskSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						final TaskSearchCriteria criteria = new TaskSearchCriteria();
+						final SimpleProject project = (SimpleProject) AppContext
 								.getVariable("project");
 						criteria.setProjectid(new NumberSearchField(
 								SearchField.AND, project.getId()));
 						criteria.setId(new NumberSearchField(data.getId(),
 								NumberSearchField.LESSTHAN));
-						Integer nextId = taskService.getNextItemKey(criteria);
+						final Integer nextId = taskService
+								.getNextItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(
 									new TaskEvent.GotoRead(this, nextId));
 						} else {
-							view.getWindow()
+							TaskReadPresenter.this.view
+									.getWindow()
 									.showNotification(
 											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
@@ -169,21 +179,22 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 	}
 
 	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+	protected void onGo(final ComponentContainer container,
+			final ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.TASKS)) {
-			TaskContainer taskContainer = (TaskContainer) container;
+			final TaskContainer taskContainer = (TaskContainer) container;
 			taskContainer.removeAllComponents();
 
-			taskContainer.addComponent(view.getWidget());
+			taskContainer.addComponent(this.view.getWidget());
 			if (data.getParams() instanceof Integer) {
-				ProjectTaskService taskService = AppContext
+				final ProjectTaskService taskService = AppContext
 						.getSpringBean(ProjectTaskService.class);
-				SimpleTask task = taskService.findTaskById((Integer) data
+				final SimpleTask task = taskService.findTaskById((Integer) data
 						.getParams());
-				view.previewItem(task);
+				this.view.previewItem(task);
 
-				ProjectBreadcrumb breadCrumb = ViewManager
+				final ProjectBreadcrumb breadCrumb = ViewManager
 						.getView(ProjectBreadcrumb.class);
 				breadCrumb.gotoTaskRead(task);
 			}
