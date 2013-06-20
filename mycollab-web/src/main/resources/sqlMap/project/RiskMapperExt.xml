@@ -4,10 +4,19 @@
     <resultMap
         extends="com.esofthead.mycollab.module.project.dao.RiskMapper.ResultMapWithBLOBs"
         id="RiskResult" type="com.esofthead.mycollab.module.project.domain.SimpleRisk">
+
         <result column="risksource" property="risksource"
             jdbcType="VARCHAR" />
+
+        <result column="raisedByUserAvatarId" property="raisedByUserAvatarId"
+            jdbcType="VARCHAR" />
+
         <result column="raisedByUserFullName" property="raisedByUserFullName"
             jdbcType="VARCHAR" />
+
+        <result column="assignToUserAvatarId" property="assignToUserAvatarId"
+            jdbcType="VARCHAR" />
+
         <result column="assignedToUserFullName" property="assignedToUserFullName"
             jdbcType="VARCHAR" />
     </resultMap>
@@ -19,24 +28,29 @@
         </if>
 
         <if test="searchCriteria.riskname != null">
-            ${searchCriteria.riskname.operation} m_prj_risk.riskname
+            ${searchCriteria.riskname.operation}
+            m_prj_risk.riskname
             LIKE
             '%${searchCriteria.riskname.value}%'
         </if>
         <if test="searchCriteria.projectId != null">
-            ${searchCriteria.projectId.operation} m_prj_risk.projectid =
+            ${searchCriteria.projectId.operation}
+            m_prj_risk.projectid =
             #{searchCriteria.projectId.value,javaType=INTEGER}
         </if>
         <if test="searchCriteria.raisedByUser != null">
-            ${searchCriteria.raisedByUser.operation} m_prj_risk.raisedbyuser =
+            ${searchCriteria.raisedByUser.operation}
+            m_prj_risk.raisedbyuser =
             #{searchCriteria.raisedByUser.value}
         </if>
         <if test="searchCriteria.assignToUser != null">
-            ${searchCriteria.assignToUser.operation} m_prj_risk.assigntouser =
+            ${searchCriteria.assignToUser.operation}
+            m_prj_risk.assigntouser =
             #{searchCriteria.assignToUser.value}
         </if>
         <if test="searchCriteria.isCompleted != null">
-            ${searchCriteria.isCompleted.operation} m_prj_risk.status IS
+            ${searchCriteria.isCompleted.operation}
+            m_prj_risk.status IS
             ${searchCriteria.isCompleted.value}
         </if>
     </sql>
@@ -47,7 +61,9 @@
                  m_prj_risk.assigntouser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised, 
                  m_prj_risk.datedue, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.level,
                  m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime, m_prj_risk.type, m_prj_risk.typeid,
+                 raisedUser.avatarId AS raisedByUserAvatarId,
                  concat(raisedUser.firstname, ' ', LTRIM(concat(IFNULL(raisedUser.middlename, ''), ' ')), raisedUser.lastname) AS raisedByUserFullName,
+                 assignedUser.avatarId AS assignToUserAvatarId,
                  concat(assignedUser.firstname, ' ', LTRIM(concat(IFNULL(assignedUser.middlename, ''), ' ')), assignedUser.lastname) AS assignedToUserFullName 
           FROM m_prj_risk
               LEFT OUTER JOIN s_user as raisedUser ON (m_prj_risk.raisedbyuser=raisedUser.username)
@@ -69,7 +85,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
              m_prj_risk.lastUpdatedTime DESC
         ]]>
@@ -117,7 +134,7 @@
                 refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
         </trim>
     </select>
-    
+
     <!-- Here for Mass Update -->
     <update id="updateBySearchCriteria" parameterType="map">
         <include

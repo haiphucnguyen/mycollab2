@@ -77,6 +77,8 @@ public class ProblemReadViewImpl extends AbstractView implements
 								ProblemReadViewImpl.this.problem
 										.getRaisedbyuser(),
 								ProblemReadViewImpl.this.problem
+										.getRaisedByUserAvatarId(),
+								ProblemReadViewImpl.this.problem
 										.getRaisedByUserFullName());
 					} else if (propertyId.equals("level")) {
 						final RatingStars tinyRs = new RatingStars();
@@ -92,6 +94,8 @@ public class ProblemReadViewImpl extends AbstractView implements
 						return new ProjectUserFormLinkField(
 								ProblemReadViewImpl.this.problem
 										.getAssigntouser(),
+								ProblemReadViewImpl.this.problem
+										.getAssignUserAvatarId(),
 								ProblemReadViewImpl.this.problem
 										.getAssignedUserFullName());
 					} else if (propertyId.equals("description")) {
@@ -186,11 +190,15 @@ public class ProblemReadViewImpl extends AbstractView implements
 										PrintView.this.problem
 												.getRaisedbyuser(),
 										PrintView.this.problem
+												.getRaisedByUserAvatarId(),
+										PrintView.this.problem
 												.getRaisedByUserFullName());
 							} else if (propertyId.equals("assigntouser")) {
 								return new ProjectUserFormLinkField(
 										PrintView.this.problem
 												.getAssigntouser(),
+										PrintView.this.problem
+												.getAssignUserAvatarId(),
 										PrintView.this.problem
 												.getAssignedUserFullName());
 							} else if (propertyId.equals("level")) {

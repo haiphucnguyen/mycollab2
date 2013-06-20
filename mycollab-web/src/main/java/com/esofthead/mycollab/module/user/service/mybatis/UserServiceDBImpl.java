@@ -135,7 +135,8 @@ public class UserServiceDBImpl extends
 			BufferedImage imageBuff;
 			try {
 				imageBuff = ImageIO.read(imageResourceStream);
-				userAvatarService.uploadAvatar(imageBuff, record.getUsername());
+				userAvatarService.uploadAvatar(imageBuff, record.getUsername(),
+						null);
 			} catch (IOException e) {
 				log.error("Error while set default avatar to user", e);
 			}
@@ -173,10 +174,6 @@ public class UserServiceDBImpl extends
 
 	@Override
 	public void updateUserAccount(SimpleUser record) {
-		if (record.getPassword() != null) {
-			record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record
-					.getPassword()));
-		}
 
 		userMapper.updateByPrimaryKeySelective(record);
 
@@ -201,7 +198,7 @@ public class UserServiceDBImpl extends
 			String subdomain, boolean isPasswordEncrypt) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
-		
+
 		boolean isSupportSubDomain = ApplicationProperties
 				.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
 		if (isSupportSubDomain) {
@@ -297,6 +294,8 @@ public class UserServiceDBImpl extends
 		userAccountEx.createCriteria().andUsernameEqualTo(username)
 				.andAccountidEqualTo(accountId);
 		userAccountMapper.deleteByExample(userAccountEx);
+
+		// TODO: if user does not belong to any account then remove this user
 	}
 
 	@Override

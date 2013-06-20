@@ -349,10 +349,12 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("assignuserFullName")) {
 					return new ProjectUserFormLinkField(
 							BugReadViewImpl.this.bug.getAssignuser(),
+							BugReadViewImpl.this.bug.getAssignUserAvatarId(),
 							BugReadViewImpl.this.bug.getAssignuserFullName());
 				} else if (propertyId.equals("loguserFullName")) {
 					return new ProjectUserFormLinkField(
 							BugReadViewImpl.this.bug.getLogby(),
+							BugReadViewImpl.this.bug.getLoguserAvatarId(),
 							BugReadViewImpl.this.bug.getLoguserFullName());
 				} else if (propertyId.equals("id")) {
 					return new FormAttachmentDisplayField(

@@ -11,7 +11,11 @@
             jdbcType="INTEGER" />
         <result column="taskListName" property="taskListName"
             jdbcType="VARCHAR" />
+        <result column="assignUserAvatarId" property="assignUserAvatarId"
+            jdbcType="VARCHAR" />
         <result column="assignUserFullName" property="assignUserFullName"
+            jdbcType="VARCHAR" />
+        <result column="logByAvatarId" property="logByAvatarId"
             jdbcType="VARCHAR" />
         <result column="logByFullName" property="logByFullName"
             jdbcType="VARCHAR" />
@@ -101,7 +105,9 @@
                  m_prj_task.tasklistid, m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.assignUser, m_prj_task.sAccountId,
                  m_prj_task_list.name AS taskListName, m_prj_project.name AS projectName, m_prj_task.status,
                  m_prj_task.logBy, m_prj_task.taskkey,
+                 s_user.avatarId AS assignUserAvatarId,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
+                 log_user.avatarId AS logByAvatarId,
                  concat(log_user.firstname, ' ', LTRIM(concat(IFNULL(log_user.middlename, ''), ' ')), log_user.lastname) AS logByFullName
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id) 
@@ -113,7 +119,9 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_prj_task.startdate DESC, m_prj_task.enddate DESC
         ]]>
@@ -176,6 +184,7 @@
     <select id="getMaxKey" parameterType="java.lang.Integer"
         resultType="java.lang.Integer">
         SELECT MAX(taskkey) FROM m_prj_task
-        WHERE m_prj_task.projectid=#{projectId, javaType=INTEGER}
+        WHERE
+        m_prj_task.projectid=#{projectId, javaType=INTEGER}
     </select>
 </mapper>

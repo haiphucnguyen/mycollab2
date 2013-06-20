@@ -25,6 +25,8 @@ public class SimpleOpportunity extends Opportunity {
 	private String accountName;
 
 	private String campaignName;
+	
+	private String assignUserAvatarId;
 
 	private String assignUserFullName;
 	
@@ -61,5 +63,13 @@ public class SimpleOpportunity extends Opportunity {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
 	}
 }

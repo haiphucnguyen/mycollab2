@@ -7,8 +7,11 @@ import java.io.InputStream;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.CopyObjectRequest;
+import com.amazonaws.services.s3.model.CopyObjectResult;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -86,6 +89,55 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static void main(String[] args) {
+		AmazonS3 s3client = S3StorageConfig.getS3Client();
+
+		try {
+			ObjectListing listObjects = s3client.listObjects(
+					S3StorageConfig.getBucket(), "");
+			for (S3ObjectSummary objectSummary : listObjects
+					.getObjectSummaries()) {
+				System.out.println("Key: " + objectSummary.getKey());
+
+				ObjectMetadata metaData = new ObjectMetadata();
+				metaData.setCacheControl("max-age=8640000");
+				String key = objectSummary.getKey();
+				String contentType = "";
+				int lastIndex = key.lastIndexOf(".");
+				if (lastIndex >= 0) {
+					String suffix = key.substring(lastIndex + 1);
+
+					if (suffix.equalsIgnoreCase("jpg")) {
+						contentType = "image/jpg";
+					} else if (suffix.equalsIgnoreCase("png")) {
+						contentType = "image/png";
+					} else if (suffix.equals("zip")) {
+						contentType = "application/zip";
+					}
+
+					System.out
+							.println("Suffix: " + suffix + "--" + contentType);
+					if (contentType != "") {
+						metaData.setContentType(contentType);
+					}
+				}
+
+				CopyObjectRequest request = new CopyObjectRequest(
+						S3StorageConfig.getBucket(), objectSummary.getKey(),
+						S3StorageConfig.getBucket(), objectSummary.getKey());
+				request.withNewObjectMetadata(metaData)
+						.withCannedAccessControlList(
+								CannedAccessControlList.PublicRead);
+				CopyObjectResult result = s3client.copyObject(request);
+				System.out.println("Result: " + result + "---");
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 }

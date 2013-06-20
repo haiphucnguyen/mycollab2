@@ -8,7 +8,9 @@ public class SimpleTask extends Task {
 	private static final long serialVersionUID = 1L;
 	private String projectName;
 	private String taskListName;
+	private String assignUserAvatarId;
 	private String assignUserFullName;
+	private String logByAvatarId;
 	private String logByFullName;
 	private int numComments;
 	private String comment;
@@ -64,6 +66,22 @@ public class SimpleTask extends Task {
 			return false;
 		}
 
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
+	}
+
+	public String getLogByAvatarId() {
+		return logByAvatarId;
+	}
+
+	public void setLogByAvatarId(String logByAvatarId) {
+		this.logByAvatarId = logByAvatarId;
 	}
 
 	public void setComment(String comment) {

@@ -69,8 +69,8 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		previewBox.setWidth("100%");
 		previewBox.setHeight(SIZE_UNDEFINED, 0);
 
-		Resource defaultPhoto = UserAvatarControlFactory.getResource(
-				AppContext.getUsername(), 100);
+		Resource defaultPhoto = UserAvatarControlFactory.createAvatarResource(
+				AppContext.getUserAvatarId(), 100);
 		previewImage = new Embedded(null, defaultPhoto);
 		previewImage.setWidth("100px");
 		previewBox.addComponent(previewImage);
@@ -112,7 +112,8 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 						UserAvatarService userAvatarService = AppContext
 								.getSpringBean(UserAvatarService.class);
 						userAvatarService.uploadAvatar(image,
-								AppContext.getUsername());
+								AppContext.getUsername(),
+								AppContext.getUserAvatarId());
 						EventBus.getInstance().fireEvent(
 								new ProfileEvent.GotoProfileView(
 										ProfilePhotoUploadViewImpl.this, null));

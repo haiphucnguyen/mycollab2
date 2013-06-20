@@ -203,6 +203,8 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 								return new ProjectUserFormLinkField(
 										PrintView.this.task.getAssignuser(),
 										PrintView.this.task
+												.getAssignUserAvatarId(),
+										PrintView.this.task
 												.getAssignUserFullName());
 							} else if (propertyId.equals("taskListName")) {
 								return new DefaultFormViewFieldFactory.FormViewField(

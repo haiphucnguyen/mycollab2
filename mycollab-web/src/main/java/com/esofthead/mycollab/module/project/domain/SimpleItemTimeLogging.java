@@ -5,18 +5,20 @@ import java.util.Date;
 public class SimpleItemTimeLogging extends ItemTimeLogging {
 	private static final long serialVersionUID = 1L;
 
+	private String logUserAvatarId;
+
 	private String logUserFullName;
-	
+
 	private String projectName;
-	
+
 	private String projectShortName;
-	
+
 	private String summary;
-	
+
 	private Double percentageComplete;
-	
+
 	private String status;
-	
+
 	private Date dueDate;
 
 	public String getLogUserFullName() {
@@ -73,5 +75,13 @@ public class SimpleItemTimeLogging extends ItemTimeLogging {
 
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
+	}
+
+	public String getLogUserAvatarId() {
+		return logUserAvatarId;
+	}
+
+	public void setLogUserAvatarId(String logUserAvatarId) {
+		this.logUserAvatarId = logUserAvatarId;
 	}
 }

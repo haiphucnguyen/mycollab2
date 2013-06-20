@@ -22,6 +22,8 @@ import com.esofthead.mycollab.common.domain.Currency;
 public class SimpleCampaign extends CampaignWithBLOBs {
 	private static final long serialVersionUID = 1L;
 	
+	private String assignUserAvatarId;
+	
 	private String assignUserFullName;
 	
 	private Currency currency;
@@ -32,6 +34,14 @@ public class SimpleCampaign extends CampaignWithBLOBs {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
 	}
 
 	public Currency getCurrency() {

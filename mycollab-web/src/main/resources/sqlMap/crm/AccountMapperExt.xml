@@ -5,6 +5,8 @@
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.AccountMapper.ResultMapWithBLOBs"
         id="SimpleAccountResult" type="com.esofthead.mycollab.module.crm.domain.SimpleAccount">
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
+            property="assignUserAvatarId" />
         <result column="assignUserFullName" jdbcType="VARCHAR"
             property="assignUserFullName" />
     </resultMap>
@@ -30,8 +32,8 @@
         </if>
         <if test="searchCriteria.types != null">
             ${searchCriteria.types.operation} m_crm_account.type IN
-            <foreach close=")" collection="searchCriteria.types.values" item="type"
-                open="(" separator=",">
+            <foreach close=")" collection="searchCriteria.types.values"
+                item="type" open="(" separator=",">
                 #{type}
             </foreach>
         </if>
@@ -166,6 +168,7 @@
                m_crm_account.shippingCountry, m_crm_account.shippingState, m_crm_account.numemployees, m_crm_account.createdTime,
                m_crm_account.lastUpdatedTime,
                m_crm_account.createdUser, m_crm_account.sAccountId, m_crm_account.assignUser, m_crm_account.type, m_crm_account.industry,
+               s_user.avatarId AS assignUserAvatarId, 
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
         FROM m_crm_account
             LEFT OUTER JOIN s_user ON m_crm_account.assignUser = s_user.username

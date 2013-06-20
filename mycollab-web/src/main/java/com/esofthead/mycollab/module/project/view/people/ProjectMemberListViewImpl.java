@@ -92,7 +92,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		HorizontalLayout blockTop = new HorizontalLayout();
 		blockTop.setSpacing(true);
 		Embedded memberAvatar = UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(member.getUsername(), 100);
+				.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(),
+						100);
 		blockTop.addComponent(memberAvatar);
 
 		VerticalLayout memberInfo = new VerticalLayout();

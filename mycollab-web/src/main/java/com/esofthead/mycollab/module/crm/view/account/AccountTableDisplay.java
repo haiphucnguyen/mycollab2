@@ -105,7 +105,8 @@ public class AccountTableDisplay extends
 				final SimpleAccount account = AccountTableDisplay.this
 						.getBeanByIndex(itemId);
 				final UserLink b = new UserLink(account.getAssignuser(),
-						account.getAssignUserFullName());
+						account.getAssignUserAvatarId(), account
+								.getAssignUserFullName());
 				return b;
 
 			}

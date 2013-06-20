@@ -11,10 +11,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class SimpleAuditLog extends AuditLog {
+	private static final long serialVersionUID = 1L;
 
-    private List<AuditChangeItem> changeItems;
+	private List<AuditChangeItem> changeItems;
     
     private String postedUserFullName;
+    
+    private String postedUserAvatarId;
 
     public SimpleAuditLog() {
     }
@@ -36,7 +39,15 @@ public class SimpleAuditLog extends AuditLog {
         this.postedUserFullName = postedUserFullName;
     }
 
-    private void setChangeItems() {
+    public String getPostedUserAvatarId() {
+		return postedUserAvatarId;
+	}
+
+	public void setPostedUserAvatarId(String postedUserAvatarId) {
+		this.postedUserAvatarId = postedUserAvatarId;
+	}
+
+	private void setChangeItems() {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                 .newInstance();
         builderFactory.setIgnoringComments(true);

@@ -113,7 +113,7 @@ public class ProblemListViewImpl extends AbstractView implements
 												.getId()));
 							}
 						});
-				
+
 				if ("Closed".equals(problem.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else {
@@ -138,7 +138,8 @@ public class ProblemListViewImpl extends AbstractView implements
 						final SimpleProblem problem = tableItem
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(problem.getAssigntouser(),
-								problem.getAssignedUserFullName(), true, true);
+								problem.getAssignUserAvatarId(), problem
+										.getAssignedUserFullName(), true, true);
 
 					}
 				});
@@ -196,8 +197,9 @@ public class ProblemListViewImpl extends AbstractView implements
 		layout.addComponent(selectOptionButton);
 
 		Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROBLEMS));
-        
+		deleteBtn.setEnabled(CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.PROBLEMS));
+
 		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");
 		tableActionControls.addOptionItem("export", "Export");

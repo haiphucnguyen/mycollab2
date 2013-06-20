@@ -10,6 +10,8 @@ public class SimpleBug extends BugWithBLOBs {
 
 	private static final long serialVersionUID = 1L;
 	private String loguserFullName;
+	private String loguserAvatarId;
+	private String assignUserAvatarId;
 	private String assignuserFullName;
 	private String projectname;
 	private List<Version> affectedVersions;
@@ -89,6 +91,23 @@ public class SimpleBug extends BugWithBLOBs {
 
 	public String getMilestoneName() {
 		return milestoneName;
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
+	}
+	
+
+	public String getLoguserAvatarId() {
+		return loguserAvatarId;
+	}
+
+	public void setLoguserAvatarId(String loguserAvatarId) {
+		this.loguserAvatarId = loguserAvatarId;
 	}
 
 	public boolean isOverdue() {

@@ -51,7 +51,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 		header.addStyleName("projectfeed-hdr");
 
 		header.addComponent(UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 64));
+				.createUserAvatarEmbeddedComponent(
+						AppContext.getUserAvatarId(), 64));
 
 		final VerticalLayout headerContent = new VerticalLayout();
 		headerContent.addStyleName("projectfeed-hdr-content");

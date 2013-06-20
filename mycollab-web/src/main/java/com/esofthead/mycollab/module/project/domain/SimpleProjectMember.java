@@ -13,6 +13,8 @@ import com.esofthead.mycollab.common.domain.PermissionMap;
 public class SimpleProjectMember extends ProjectMember {
 	private static final long serialVersionUID = 1L;
 
+	private String memberAvatarId;
+	
 	private String memberFullName;
 
 	private String roleName;
@@ -81,5 +83,13 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getMemberAvatarId() {
+		return memberAvatarId;
+	}
+
+	public void setMemberAvatarId(String memberAvatarId) {
+		this.memberAvatarId = memberAvatarId;
 	}
 }

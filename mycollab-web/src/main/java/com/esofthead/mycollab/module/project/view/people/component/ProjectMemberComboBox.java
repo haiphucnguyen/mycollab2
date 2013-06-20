@@ -46,8 +46,10 @@ public class ProjectMemberComboBox extends ComboBox {
 			this.addItem(member.getUsername());
 			this.setItemCaption(member.getUsername(),
 					member.getMemberFullName());
-			this.setItemIcon(member.getUsername(), UserAvatarControlFactory
-					.getResource(member.getUsername(), 16));
+			this.setItemIcon(
+					member.getUsername(),
+					UserAvatarControlFactory.createAvatarResource(
+							member.getMemberAvatarId(), 16));
 		}
 	}
 

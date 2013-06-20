@@ -46,7 +46,8 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 
 				if (propertyId.equals("assignuser")) {
 					return new ProjectUserFormLinkField(task.getAssignuser(),
-							task.getAssignUserFullName());
+							task.getAssignUserAvatarId(), task
+									.getAssignUserFullName());
 				} else if (propertyId.equals("taskListName")) {
 					return new DefaultFormViewFieldFactory.FormViewField(task
 							.getTaskListName());

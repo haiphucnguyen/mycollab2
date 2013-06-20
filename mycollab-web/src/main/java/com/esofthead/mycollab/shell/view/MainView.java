@@ -106,7 +106,8 @@ public final class MainView extends AbstractView {
 
 		final HorizontalLayout accountLayout = new HorizontalLayout();
 		final Embedded userAvatar = UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 24);
+				.createUserAvatarEmbeddedComponent(
+						AppContext.getUserAvatarId(), 24);
 		accountLayout.addComponent(userAvatar);
 		accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
 

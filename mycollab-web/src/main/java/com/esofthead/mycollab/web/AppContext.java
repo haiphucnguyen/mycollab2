@@ -175,6 +175,10 @@ public class AppContext implements Serializable {
 		return getInstance().session.getUsername();
 	}
 
+	public static String getUserAvatarId() {
+		return getInstance().session.getAvatarid();
+	}
+
 	public static UserPreference getUserPreference() {
 		return getInstance().userPreference;
 	}

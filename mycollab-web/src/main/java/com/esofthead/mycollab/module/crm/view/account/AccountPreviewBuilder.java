@@ -65,6 +65,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 						account.getEmail());
 			} else if (propertyId.equals("assignuser")) {
 				return new UserLinkViewField(account.getAssignuser(),
+						account.getAssignUserAvatarId(),
 						account.getAssignUserFullName());
 			} else if (propertyId.equals("website")) {
 				return new DefaultFormViewFieldFactory.FormUrlLinkViewField(

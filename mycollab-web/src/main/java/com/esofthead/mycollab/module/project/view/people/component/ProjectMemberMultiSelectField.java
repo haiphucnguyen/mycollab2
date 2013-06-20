@@ -45,21 +45,23 @@ public class ProjectMemberMultiSelectField extends MultiSelectComp {
 			Object itemComp = dataList.get(i);
 			String itemName = "";
 			String username = "";
-			if (displayName != "") {
-				try {
-					itemName = (String) PropertyUtils.getProperty(itemComp,
-							displayName);
-					username = (String) PropertyUtils.getProperty(itemComp,
-							"username");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				itemName = (String) dataList.get(i);
+			String userAvatarId = "";
+
+			try {
+				itemName = (String) PropertyUtils.getProperty(itemComp,
+						displayName);
+				username = (String) PropertyUtils.getProperty(itemComp,
+						"username");
+				userAvatarId = (String) PropertyUtils.getProperty(itemComp,
+						"memberAvatarId");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+
 			final CheckBox chkItem = new CheckBox(itemName);
 			chkItem.setImmediate(true);
-			chkItem.setIcon(UserAvatarControlFactory.getResource(username, 16));
+			chkItem.setIcon(UserAvatarControlFactory.createAvatarResource(
+					userAvatarId, 16));
 			chkItem.addListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(

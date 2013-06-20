@@ -136,6 +136,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 						final SimpleRisk risk = tableItem
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(risk.getAssigntouser(), risk
+								.getAssignToUserAvatarId(), risk
 								.getAssignedToUserFullName(), true, true);
 
 					}
@@ -194,13 +195,13 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 		layout.addComponent(selectOptionButton);
 
 		Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.RISKS));
-        
+		deleteBtn.setEnabled(CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.RISKS));
+
 		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");
 		tableActionControls.addOptionItem("export", "Export");
 		tableActionControls.addOptionItem("massUpdate", "Mass Update");
-
 
 		layout.addComponent(tableActionControls);
 		layout.addComponent(selectedItemsNumberLabel);

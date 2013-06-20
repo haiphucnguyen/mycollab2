@@ -44,6 +44,8 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				return new ProjectUserFormLinkField(
 						MilestonePreviewBuilder.this.milestone.getOwner(),
 						MilestonePreviewBuilder.this.milestone
+								.getOwnerAvatarId(),
+						MilestonePreviewBuilder.this.milestone
 								.getOwnerFullName());
 			} else if (propertyId.equals("description")) {
 				return new DefaultFormViewFieldFactory.FormViewField(

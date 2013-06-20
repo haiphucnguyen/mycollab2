@@ -8,8 +8,14 @@
         <result column="loguserFullName" jdbcType="VARCHAR"
             property="loguserFullName" />
 
+        <result column="loguserAvatarId" jdbcType="VARCHAR"
+            property="loguserAvatarId" />
+
         <result column="assignuserFullName" jdbcType="VARCHAR"
             property="assignuserFullName" />
+
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
+            property="assignUserAvatarId" />
 
         <result column="projectname" jdbcType="VARCHAR" property="projectname" />
 
@@ -427,7 +433,9 @@
                  m_tracker_bug.resolveddate, m_tracker_bug.sAccountId, m_tracker_bug.description, m_tracker_bug.estimateTime,
                  m_tracker_bug.estimateRemainTime, m_tracker_bug.milestoneId, bugkey, milestone.name as milestoneName,
                  concat(assignuserTbl.firstname, ' ', LTRIM(concat(IFNULL(assignuserTbl.middlename, ''), ' ')), assignuserTbl.lastname) as assignuserFullName,
+                 assignuserTbl.avatarId AS assignUserAvatarId,
                  concat(loguserTbl.firstname, ' ', LTRIM(concat(IFNULL(loguserTbl.middlename, ''), ' ')), loguserTbl.lastname) as loguserFullName,
+                 loguserTbl.avatarId AS loguserAvatarId,
                  m_prj_project.name as projectname, 
                  affectedversion.id as affectedversion_id, affectedversion.projectid as affectedversion_projectid, 
                  affectedversion.description as affectedversion_description, affectedversion.duedate as affectedversion_duedate, 
@@ -637,6 +645,7 @@
         <![CDATA[
         SELECT m_tracker_bug.assignuser AS groupid,
             COUNT(IFNULL(m_tracker_bug.assignuser, '')) AS value,
+            s_user.avatarId AS extraValue,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as groupname
         FROM m_tracker_bug
             LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser = s_user.username)
@@ -746,8 +755,10 @@
 
     <select id="getMaxKey" parameterType="java.lang.Integer"
         resultType="java.lang.Integer">
-        SELECT MAX(bugkey) FROM m_tracker_bug
-        WHERE
-        m_tracker_bug.projectid=#{projectId, javaType=INTEGER}
+        <![CDATA[
+        SELECT MAX(bugkey) 
+            FROM m_tracker_bug
+            WHERE m_tracker_bug.projectid=#{projectId, javaType=INTEGER}
+        ]]>
     </select>
 </mapper>

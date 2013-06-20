@@ -7,7 +7,6 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -32,7 +31,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
 	private static final long serialVersionUID = 1L;
 	protected SimpleRisk risk;
-	protected AdvancedPreviewBeanForm<Risk> previewForm;
+	protected AdvancedPreviewBeanForm<SimpleRisk> previewForm;
 
 	public RiskReadViewImpl() {
 		super();
@@ -44,7 +43,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 	@Override
 	public void previewItem(final SimpleRisk item) {
 		this.risk = item;
-		this.previewForm.setItemDataSource(new BeanItem<Risk>(item));
+		this.previewForm.setItemDataSource(new BeanItem<SimpleRisk>(item));
 	}
 
 	@Override
@@ -53,11 +52,11 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 	}
 
 	@Override
-	public HasPreviewFormHandlers<Risk> getPreviewFormHandlers() {
+	public HasPreviewFormHandlers<SimpleRisk> getPreviewFormHandlers() {
 		return this.previewForm;
 	}
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Risk> {
+	private class PreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -89,6 +88,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 						return new ProjectUserFormLinkField(
 								RiskReadViewImpl.this.risk.getRaisedbyuser(),
 								RiskReadViewImpl.this.risk
+										.getRaisedByUserAvatarId(),
+								RiskReadViewImpl.this.risk
 										.getRaisedByUserFullName());
 					} else if (propertyId.equals("response")) {
 						return new FormViewField(RiskReadViewImpl.this.risk
@@ -96,6 +97,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 					} else if (propertyId.equals("assigntouser")) {
 						return new ProjectUserFormLinkField(
 								RiskReadViewImpl.this.risk.getAssigntouser(),
+								RiskReadViewImpl.this.risk
+										.getAssignToUserAvatarId(),
 								RiskReadViewImpl.this.risk
 										.getAssignedToUserFullName());
 					}
@@ -149,7 +152,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new ProjectPreviewFormControlsGenerator<Risk>(
+				return (new ProjectPreviewFormControlsGenerator<SimpleRisk>(
 						PreviewForm.this))
 						.createButtonControls(ProjectRolePermissionCollections.RISKS);
 			}
@@ -169,7 +172,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 	public static class PrintView extends RiskReadViewImpl {
 
 		public PrintView() {
-			this.previewForm = new AdvancedPreviewBeanForm<Risk>() {
+			this.previewForm = new AdvancedPreviewBeanForm<SimpleRisk>() {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new RiskReadViewImpl.PrintView.FormLayoutFactory());
@@ -200,10 +203,14 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 								return new ProjectUserFormLinkField(
 										PrintView.this.risk.getRaisedbyuser(),
 										PrintView.this.risk
+												.getRaisedByUserAvatarId(),
+										PrintView.this.risk
 												.getRaisedByUserFullName());
 							} else if (propertyId.equals("assigntouser")) {
 								return new ProjectUserFormLinkField(
 										PrintView.this.risk.getAssigntouser(),
+										PrintView.this.risk
+												.getAssignToUserAvatarId(),
 										PrintView.this.risk
 												.getAssignedToUserFullName());
 							} else if (propertyId.equals("response")) {

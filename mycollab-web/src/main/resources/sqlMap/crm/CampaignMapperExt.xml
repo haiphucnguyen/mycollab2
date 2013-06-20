@@ -4,8 +4,13 @@
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.CampaignMapper.ResultMapWithBLOBs"
         id="SimpleCampaignResult" type="com.esofthead.mycollab.module.crm.domain.SimpleCampaign">
+        
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
+            property="assignUserAvatarId" />
+            
         <result column="assignUserFullName" jdbcType="VARCHAR"
             property="assignUserFullName" />
+            
         <association property="currency"
             resultMap="com.esofthead.mycollab.common.dao.CurrencyMapper.BaseResultMap"
             columnPrefix="curr_"></association>
@@ -180,6 +185,7 @@
                m_crm_campaign.expectedCost, m_crm_campaign.objective, m_crm_campaign.description, m_crm_campaign.impression, m_crm_campaign.createdTime, 
                m_crm_campaign.createdUser, m_crm_campaign.sAccountId, m_crm_campaign.status, m_crm_campaign.type, m_crm_campaign.assignUser,
                m_crm_campaign.lastUpdatedTime,
+               s_user.avatarId AS assignUserAvatarId,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
                s_currency.id, s_currency.name AS curr_name, s_currency.isocode AS curr_isocode, 
                s_currency.symbol AS curr_symbol, s_currency.conversionrate AS curr_conversionrate

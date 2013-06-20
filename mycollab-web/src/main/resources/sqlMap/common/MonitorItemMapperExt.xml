@@ -6,6 +6,9 @@
         id="MonitorItemResult" type="com.esofthead.mycollab.common.domain.SimpleMonitorItem">
         <result column="userFullname" jdbcType="VARCHAR"
             property="userFullname" />
+
+        <result column="userAvatarId" jdbcType="VARCHAR"
+            property="userAvatarId" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -26,6 +29,7 @@
     <sql id="selectItem">
         <![CDATA[
           SELECT m_monitor_item.id, m_monitor_item.user, m_monitor_item.monitor_date, m_monitor_item.type, m_monitor_item.typeid, 
+                 changeUser.avatarId AS userAvatarId,
                  concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename + ' ', '')), changeUser.lastname) as userFullname
             FROM m_monitor_item
               LEFT OUTER JOIN s_user AS changeUser ON (m_monitor_item.user=changeUser.username)
@@ -48,7 +52,9 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_monitor_item.monitor_date DESC
         ]]>

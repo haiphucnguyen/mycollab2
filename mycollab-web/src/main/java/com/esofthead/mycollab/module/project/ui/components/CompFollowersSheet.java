@@ -2,8 +2,6 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
@@ -38,9 +36,6 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 	protected MonitorItemService monitorItemService;
 	protected V bean;
 	protected Button btnSave;
-
-	private static Logger log = LoggerFactory
-			.getLogger(CompFollowersSheet.class);
 
 	protected CompFollowersSheet(V bean) {
 		this.bean = bean;
@@ -138,7 +133,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 						.getBeanByIndex(itemId);
 
 				return new ProjectUserLink(monitorItem.getUser(), monitorItem
-						.getUserFullname(), true, true);
+						.getUserAvatarId(), monitorItem.getUserFullname(),
+						true, true);
 
 			}
 		});

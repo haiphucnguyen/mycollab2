@@ -38,15 +38,15 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Risk>() {
+				new DefaultPreviewFormHandler<SimpleRisk>() {
 					@Override
-					public void onEdit(Risk data) {
+					public void onEdit(SimpleRisk data) {
 						EventBus.getInstance().fireEvent(
 								new RiskEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Risk data) {
+					public void onDelete(final SimpleRisk data) {
 
 						ConfirmDialog.show(
 								view.getWindow(),
@@ -81,7 +81,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					}
 
 					@Override
-					public void onClone(Risk data) {
+					public void onClone(SimpleRisk data) {
 						Risk cloneData = (Risk) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
@@ -95,7 +95,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					}
 
 					@Override
-					public void gotoNext(Risk data) {
+					public void gotoNext(SimpleRisk data) {
 						RiskService riskeService = AppContext
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
@@ -122,7 +122,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Risk data) {
+					public void gotoPrevious(SimpleRisk data) {
 						RiskService riskeService = AppContext
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();

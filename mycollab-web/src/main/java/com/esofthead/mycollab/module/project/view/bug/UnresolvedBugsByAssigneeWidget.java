@@ -57,7 +57,7 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 				final String assignUserFullName = (item.getGroupid() == null) ? "Undefnined"
 						: item.getGroupname();
 				final BugAssigneeButton userLbl = new BugAssigneeButton(
-						assignUser, assignUserFullName);
+						assignUser, item.getExtraValue(), assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
 				final ProgressBar indicator = new ProgressBar(totalCount,
 						totalCount - item.getValue(), false);
@@ -75,7 +75,7 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 		private static final long serialVersionUID = 1L;
 
 		public BugAssigneeButton(final String assignee,
-				final String assigneeFullName) {
+				final String assigneeAvatarId, final String assigneeFullName) {
 			super(assigneeFullName, new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -94,7 +94,8 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 			this.setStyleName("link");
 			this.setWidth("110px");
 			this.addStyleName(UIConstants.WORD_WRAP);
-			this.setIcon(UserAvatarControlFactory.getResource(assignee, 16));
+			this.setIcon(UserAvatarControlFactory.createAvatarResource(
+					assigneeAvatarId, 16));
 		}
 	}
 }
