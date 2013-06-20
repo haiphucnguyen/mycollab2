@@ -83,6 +83,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 										MilestoneListViewImpl.this, null));
 					}
 				});
+		this.createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		this.createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(this.createBtn);
 		header.setComponentAlignment(this.createBtn, Alignment.MIDDLE_RIGHT);
