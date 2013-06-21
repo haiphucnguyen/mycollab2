@@ -446,7 +446,9 @@ public class FileManagerViewImpl extends AbstractView implements
 										+ UploadContentWindow.this.uploadField
 												.getFileName());
 								FileManagerViewImpl.this.resourceService
-										.saveContent(content, contentStream);
+										.saveContent(content,
+												AppContext.getUsername(),
+												contentStream);
 								UploadContentWindow.this.close();
 								FileManagerViewImpl.this
 										.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);

@@ -8,6 +8,7 @@ public class Resource {
 	protected Calendar created;
 	protected String path = "";
 	protected long size = 0;
+	protected String createdUser;
 
 	public String getCreatedBy() {
 		return createdBy;
@@ -52,5 +53,13 @@ public class Resource {
 	public String getName() {
 		int index = path.lastIndexOf("/");
 		return path.substring(index + 1);
+	}
+
+	public String getCreatedUser() {
+		return createdUser;
+	}
+
+	public void setCreatedUser(String createdUser) {
+		this.createdUser = createdUser;
 	}
 }

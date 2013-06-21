@@ -37,7 +37,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void saveContent(final Content content) {
+	public void saveContent(final Content content, final String createdUser) {
 		log.debug("Save content {} {}", content, jcrTemplate);
 		jcrTemplate.execute(new JcrCallback() {
 
@@ -83,8 +83,10 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 								}
 							} else {
 								// add node
-								childNode = JcrUtils.getOrAddFolder(parentNode,
-										pathStr[i]);
+								childNode = JcrUtils.getOrAddNode(parentNode,
+										pathStr[i], "mycollab:folder");
+								childNode.setProperty("mycollab:createdUser",
+										createdUser);
 							}
 							parentNode = childNode;
 						}
@@ -97,6 +99,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						addNode.setProperty("jcr:title", content.getTitle());
 						addNode.setProperty("jcr:description",
 								content.getDescription());
+						addNode.setProperty("mycollab:createdUser", createdUser);
 						session.save();
 					} catch (Exception e) {
 						log.debug("error in convertToNode Method"
@@ -110,7 +113,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void createFolder(final Folder folder) {
+	public void createFolder(final Folder folder, final String createdUser) {
 		log.debug("Save content {} {}", folder, jcrTemplate);
 		jcrTemplate.execute(new JcrCallback() {
 
@@ -145,8 +148,10 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						} else { // add node
 							log.debug("Create new folder {} of sub node {}",
 									pathStr[i], parentNode.getPath());
-							childNode = JcrUtils.getOrAddFolder(parentNode,
-									pathStr[i]);
+							childNode = JcrUtils.getOrAddNode(parentNode,
+									pathStr[i], "mycollab:folder");
+							childNode.setProperty("mycollab:createdUser",
+									createdUser);
 							session.save();
 						}
 
@@ -167,7 +172,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 
 	private static boolean isNodeFolder(Node node) {
 		try {
-			return node.isNodeType("nt:folder");
+			System.out.println(node.getPrimaryNodeType().getName());
+			return node.isNodeType("mycollab:folder");
 		} catch (RepositoryException e) {
 			return false;
 		}
@@ -206,7 +212,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						return convertNodeToFolder(node);
 					} else {
 						throw new MyCollabException(
-								"Resource does not have type be nt:folder or mycollab:content. Its path is "
+								"Resource does not have type be mycollab:folder or mycollab:content. Its path is "
 										+ node.getPath());
 					}
 				}
@@ -257,7 +263,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 								Content content = convertNodeToContent(childNode);
 								resources.add(content);
 							} else {
-								String errorString = "Node %s has type not mycollab:content or nt:folder";
+								String errorString = "Node %s has type not mycollab:content or mycollab:folder";
 								log.error(String.format(errorString,
 										childNode.getPath()));
 							}
@@ -266,7 +272,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						return resources;
 					} else {
 						throw new ContentException(
-								"Do not support any node type except nt:folder. The current node has type "
+								"Do not support any node type except mycollab:folder. The current node has type "
 										+ node.getPrimaryNodeType().getName());
 					}
 				}
@@ -287,7 +293,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				Node rootNode = session.getRootNode();
 				Node node = getNode(rootNode, path);
 				if (node != null) {
-					if (node.isNodeType("nt:folder")) {
+					if (node.isNodeType("mycollab:folder")) {
 						List<Folder> folders = new ArrayList<Folder>();
 						NodeIterator childNodes = node.getNodes();
 						while (childNodes.hasNext()) {
@@ -301,7 +307,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						return folders;
 					} else {
 						throw new ContentException(
-								"Do not support any node type except nt:folder. The current node has type "
+								"Do not support any node type except mycollab:folder. The current node has type "
 										+ node.getPrimaryNodeType().getName());
 					}
 				}
