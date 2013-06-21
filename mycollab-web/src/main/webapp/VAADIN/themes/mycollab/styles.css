@@ -1899,7 +1899,7 @@ input.v-textfield-errorField {
 	border-color: rgb(169, 169, 169);
 }
 .date-wrapper {
-	background-color: rgb(212, 223, 239);
+	background: url('icons/timehdr-bg.png') no-repeat left top rgb(212, 223, 239);
 	font-size: 11px;
 }
 .date-wrapper > .v-csslayout-margin {
@@ -1907,6 +1907,7 @@ input.v-textfield-errorField {
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
+	color: white;
 }
 /* End Activity Stream Channel */
 
