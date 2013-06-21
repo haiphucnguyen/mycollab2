@@ -23,15 +23,15 @@ public class Demo {
 
 		ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
 
-		jcrDao.removeResource("/a/b/d");
-		
+//		jcrDao.removeResource("/a/b/d");
+
 		Folder pageContent = new Folder();
 		pageContent.setPath("/a/b/d");
 
 		jcrDao.createFolder(pageContent, "baohan");
 
-		Resource content = jcrDao.getResource("/a/b/d");
-		System.out.println(content);
+		Resource content = jcrDao.getResource("a/b/d");
+		System.out.println(content.getCreatedUser());
 		// System.out.println("CONTENT " + content);
 		//
 		// jcrDao.removeContent("example/a/b");
