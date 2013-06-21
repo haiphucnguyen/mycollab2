@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -43,7 +44,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
 					@Override
 					public void onDelete(final Meeting data) {
-						ConfirmDialog.show(
+						ConfirmDialogExt.show(
 								view.getWindow(),
 								LocalizationHelper
 										.getMessage(

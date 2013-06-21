@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -128,7 +129,7 @@ public class ComponentListPresenter extends
 					@Override
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
-							ConfirmDialog.show(
+							ConfirmDialogExt.show(
 									view.getWindow(),
 									LocalizationHelper
 											.getMessage(

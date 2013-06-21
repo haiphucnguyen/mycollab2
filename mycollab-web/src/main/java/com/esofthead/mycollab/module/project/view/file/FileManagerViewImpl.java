@@ -7,6 +7,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -15,6 +16,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -93,10 +95,19 @@ public class FileManagerViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				if (baseFolder != null
 						&& !projectPath.equals(baseFolder.getPath())) {
-					ConfirmDialog.show(
+					ConfirmDialogExt.show(
 							FileManagerViewImpl.this.getWindow(),
+							LocalizationHelper
+									.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											ApplicationProperties
+													.getString(ApplicationProperties.SITE_NAME)),
 							"Are you sure to delete folder "
 									+ baseFolder.getName() + " ?",
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 							new ConfirmDialog.Listener() {
 								private static final long serialVersionUID = 1L;
 

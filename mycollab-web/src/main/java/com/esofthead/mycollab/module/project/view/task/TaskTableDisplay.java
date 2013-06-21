@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
@@ -293,7 +294,7 @@ public class TaskTableDisplay extends
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								ConfirmDialog.show(
+								ConfirmDialogExt.show(
 										TaskTableDisplay.this.getWindow(),
 										LocalizationHelper
 												.getMessage(

@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -162,7 +163,7 @@ public class CaseContactListComp extends
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						ConfirmDialog.show(
+						ConfirmDialogExt.show(
 								AppContext.getApplication().getMainWindow(),
 								LocalizationHelper
 										.getMessage(

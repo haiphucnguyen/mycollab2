@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -257,7 +258,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialog.show(
+								ConfirmDialogExt.show(
 										AppContext.getApplication()
 												.getMainWindow(),
 										LocalizationHelper

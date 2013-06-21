@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -195,7 +196,7 @@ public class TaskGroupDisplayWidget
 				@Override
 				public void buttonClick(ClickEvent event) {
 					taskListActionControl.setPopupVisible(false);
-					ConfirmDialog.show(
+					ConfirmDialogExt.show(
 							TaskListDepot.this.getWindow(),
 							LocalizationHelper
 									.getMessage(

@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -131,7 +132,7 @@ public class BugTableDisplay extends
 										new BugEvent.GotoEdit(
 												BugTableDisplay.this, bug));
 							} else if ("delete".equals(value)) {
-								ConfirmDialog.show(
+								ConfirmDialogExt.show(
 										BugTableDisplay.this.getWindow(),
 										LocalizationHelper
 												.getMessage(

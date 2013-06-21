@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -123,7 +124,7 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 					@Override
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
-							ConfirmDialog.show(
+							ConfirmDialogExt.show(
 									view.getWindow(),
 									LocalizationHelper
 											.getMessage(
@@ -302,7 +303,7 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 				doSearch(searchCriteria);
 			}
 		} else {
-			accountService.updateBySearchCriteria(value,searchCriteria);
+			accountService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}
