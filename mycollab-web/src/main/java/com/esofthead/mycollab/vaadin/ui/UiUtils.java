@@ -23,23 +23,23 @@ public class UiUtils {
 
 			if ("mp3".equalsIgnoreCase(suffix)
 					|| "wav".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/audio.png";
+				themeLink = "icons/16/filetypes/audio.png";
 			} else if ("bmp".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/bmp.png";
+				themeLink = "icons/16/filetypes/bmp.png";
 			} else if ("xls".equalsIgnoreCase(suffix)
 					|| "xlsx".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/excel.png";
+				themeLink = "icons/16/filetypes/excel.png";
 			} else if ("gz".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/gz.png";
+				themeLink = "icons/16/filetypes/gz.png";
 			} else if ("html".equalsIgnoreCase(suffix)
 					|| "xhtml".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/html.png";
+				themeLink = "icons/16/filetypes/html.png";
 			} else if ("jpg".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/jpg.png";
+				themeLink = "icons/16/filetypes/jpg.png";
 			} else if ("png".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/png.png";
+				themeLink = "icons/16/filetypes/png.png";
 			} else if ("pdf".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/pdf.png";
+				themeLink = "icons/16/filetypes/pdf.png";
 			} else if ("ppt".equalsIgnoreCase(suffix)
 					|| "pptx".equalsIgnoreCase(suffix)
 					|| "pps".equalsIgnoreCase(suffix)
@@ -47,34 +47,34 @@ public class UiUtils {
 					|| "pptm".equalsIgnoreCase(suffix)
 					|| "potx".equalsIgnoreCase(suffix)
 					|| "potm".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/ppt.png";
+				themeLink = "icons/16/filetypes/ppt.png";
 			} else if ("psd".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/psd.png";
+				themeLink = "icons/16/filetypes/psd.png";
 			} else if ("rar".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/rar.png";
+				themeLink = "icons/16/filetypes/rar.png";
 			} else if ("svg".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/svg.png";
+				themeLink = "icons/16/filetypes/svg.png";
 			} else if ("tar".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/tar.png";
+				themeLink = "icons/16/filetypes/tar.png";
 			} else if ("tiff".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/tiff.png";
+				themeLink = "icons/16/filetypes/tiff.png";
 			} else if ("txt".equalsIgnoreCase(suffix)
 					|| "rtf".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/txt.png";
+				themeLink = "icons/16/filetypes/txt.png";
 			} else if ("doc".equalsIgnoreCase(suffix)
 					|| "docx".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/word.png";
+				themeLink = "icons/16/filetypes/word.png";
 			} else if ("zip".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/zip.png";
+				themeLink = "icons/16/filetypes/zip.png";
 			} else if ("odt".equalsIgnoreCase(suffix)
 					|| "odg".equalsIgnoreCase(suffix)
 					|| "otp".equalsIgnoreCase(suffix)) {
-				themeLink = "icons/22/filetypes/document.png";
+				themeLink = "icons/16/filetypes/document.png";
 			} else {
-				themeLink = "icons/22/filetypes/blank.png";
+				themeLink = "icons/16/filetypes/blank.png";
 			}
 		} else {
-			themeLink = "icons/22/filetypes/blank.png";
+			themeLink = "icons/16/filetypes/blank.png";
 		}
 
 		return MyCollabResource.newResource(themeLink);

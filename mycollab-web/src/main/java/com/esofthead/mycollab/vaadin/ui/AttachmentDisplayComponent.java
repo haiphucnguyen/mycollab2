@@ -88,7 +88,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 				}
 			});
 			previewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/search.png"));
+				.newResource("icons/16/preview.png"));
 			previewBtn.setStyleName("link");
 			attachmentLayout.addComponent(previewBtn);
 		}
