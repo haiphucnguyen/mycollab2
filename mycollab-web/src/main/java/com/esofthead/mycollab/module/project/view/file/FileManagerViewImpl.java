@@ -48,210 +48,241 @@ public class FileManagerViewImpl extends AbstractView implements
 		FileManagerView {
 	private static final long serialVersionUID = 1L;
 
-	private TreeTable folderTree;
-	private ResourceTableDisplay resourceTable;
+	private final TreeTable folderTree;
+	private final ResourceTableDisplay resourceTable;
 	private String projectPath;
+	private final FileSearchPanel fileSearchPanel;
 
 	private Folder baseFolder;
 
-	private ResourceService resourceService;
+	private final ResourceService resourceService;
 
 	public FileManagerViewImpl() {
 		this.setWidth("100%");
-		resourceService = AppContext.getSpringBean(ResourceService.class);
+		this.setSpacing(true);
+		this.setMargin(false, true, true, true);
+		this.resourceService = AppContext.getSpringBean(ResourceService.class);
 
-		HorizontalLayout menuBar = new HorizontalLayout();
+		final HorizontalLayout menuBar = new HorizontalLayout();
+		menuBar.setSpacing(true);
+		menuBar.addStyleName("control-buttons");
 
-		Button addFolderBtn = new Button("Add Folder",
+		final Button addFolderBtn = new Button("Add Folder",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
-						if (folderTree.getValue() != null) {
-							baseFolder = (Folder) folderTree.getValue();
+					public void buttonClick(final ClickEvent event) {
+						if (FileManagerViewImpl.this.folderTree.getValue() != null) {
+							FileManagerViewImpl.this.baseFolder = (Folder) FileManagerViewImpl.this.folderTree
+									.getValue();
 						}
-						
+
 						FileManagerViewImpl.this.getWindow().addWindow(
 								new AddNewFolderWindow());
 					}
 				});
+		addFolderBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		menuBar.addComponent(addFolderBtn);
 
-		Button uploadBtn = new Button("Upload", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button uploadBtn = new Button("Upload",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				FileManagerViewImpl.this.getWindow().addWindow(
-						new UploadContentWindow());
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						FileManagerViewImpl.this.getWindow().addWindow(
+								new UploadContentWindow());
 
-			}
-		});
+					}
+				});
+		uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(uploadBtn);
 
-		Button deleteBtn = new Button("Delete", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button deleteBtn = new Button("Delete",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (baseFolder != null
-						&& !projectPath.equals(baseFolder.getPath())) {
-					ConfirmDialogExt.show(
-							FileManagerViewImpl.this.getWindow(),
-							LocalizationHelper
-									.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											ApplicationProperties
-													.getString(ApplicationProperties.SITE_NAME)),
-							"Are you sure to delete folder "
-									+ baseFolder.getName() + " ?",
-							LocalizationHelper
-									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-							new ConfirmDialog.Listener() {
-								private static final long serialVersionUID = 1L;
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						if (FileManagerViewImpl.this.baseFolder != null
+								&& !FileManagerViewImpl.this.projectPath
+										.equals(FileManagerViewImpl.this.baseFolder
+												.getPath())) {
+							ConfirmDialogExt.show(
+									FileManagerViewImpl.this.getWindow(),
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.DELETE_DIALOG_TITLE,
+													ApplicationProperties
+															.getString(ApplicationProperties.SITE_NAME)),
+									"Are you sure to delete folder "
+											+ FileManagerViewImpl.this.baseFolder
+													.getName() + " ?",
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+									new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
 
-								@Override
-								public void onClose(ConfirmDialog dialog) {
-									// TODO Auto-generated method stub
+										@Override
+										public void onClose(
+												final ConfirmDialog dialog) {
+											// TODO Auto-generated method stub
 
-								}
-							});
-				}
+										}
+									});
+						}
 
-			}
-		});
-
+					}
+				});
+		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(deleteBtn);
 
-		this.addComponent(menuBar);
+		this.fileSearchPanel = new FileSearchPanel(menuBar);
 
-		HorizontalLayout resourceContainer = new HorizontalLayout();
+		this.addComponent(this.fileSearchPanel);
+
+		final HorizontalLayout resourceContainer = new HorizontalLayout();
 		resourceContainer.setSizeFull();
 
-		folderTree = new TreeTable();
-		folderTree.setMultiSelect(false);
-		folderTree.setImmediate(true);
-		folderTree.addContainerProperty("Name", String.class, "");
-		folderTree.addContainerProperty("Date Modified", String.class, "");
-		folderTree.setColumnWidth("Date Modified",
+		this.folderTree = new TreeTable();
+		this.folderTree.setMultiSelect(false);
+		this.folderTree.setImmediate(true);
+		this.folderTree.addContainerProperty("Name", String.class, "");
+		this.folderTree.addContainerProperty("Date Modified", String.class, "");
+		this.folderTree.setColumnWidth("Date Modified",
 				UIConstants.TABLE_DATE_TIME_WIDTH);
-		folderTree.setColumnExpandRatio("Name", 1.0f);
-		folderTree.setWidth("300px");
+		this.folderTree.setColumnExpandRatio("Name", 1.0f);
+		this.folderTree.setWidth("300px");
 
-		resourceContainer.addComponent(folderTree);
+		resourceContainer.addComponent(this.folderTree);
 
-		folderTree.addListener(new Tree.ExpandListener() {
+		this.folderTree.addListener(new Tree.ExpandListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void nodeExpand(ExpandEvent event) {
-				Folder expandFolder = (Folder) event.getItemId();
-				List<Folder> subFolders = resourceService
+			public void nodeExpand(final ExpandEvent event) {
+				final Folder expandFolder = (Folder) event.getItemId();
+				final List<Folder> subFolders = FileManagerViewImpl.this.resourceService
 						.getSubFolders(expandFolder.getPath());
 
-				folderTree.setItemIcon(expandFolder, MyCollabResource
-						.newResource("icons/16/ecm/folder_open.png"));
+				FileManagerViewImpl.this.folderTree.setItemIcon(expandFolder,
+						MyCollabResource
+								.newResource("icons/16/ecm/folder_open.png"));
 
 				if (subFolders != null) {
-					for (Folder subFolder : subFolders) {
+					for (final Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
-						folderTree.addItem(
+						FileManagerViewImpl.this.folderTree.addItem(
 								new Object[] {
 										subFolder.getName(),
 										AppContext.formatDateTime(subFolder
 												.getCreated().getTime()) },
 								subFolder);
-						folderTree.setItemIcon(subFolder, MyCollabResource
-								.newResource("icons/16/ecm/folder_close.png"));
-						folderTree.setItemCaption(subFolder,
-								subFolder.getName());
-						folderTree.setParent(subFolder, expandFolder);
+						FileManagerViewImpl.this.folderTree.setItemIcon(
+								subFolder,
+								MyCollabResource
+										.newResource("icons/16/ecm/folder_close.png"));
+						FileManagerViewImpl.this.folderTree.setItemCaption(
+								subFolder, subFolder.getName());
+						FileManagerViewImpl.this.folderTree.setParent(
+								subFolder, expandFolder);
 					}
 				}
 			}
 		});
 
-		folderTree.addListener(new Tree.CollapseListener() {
+		this.folderTree.addListener(new Tree.CollapseListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void nodeCollapse(CollapseEvent event) {
-				Folder collapseFolder = (Folder) event.getItemId();
-				folderTree.setItemIcon(collapseFolder, MyCollabResource
-						.newResource("icons/16/ecm/folder_close.png"));
-				List<Folder> childs = collapseFolder.getChilds();
-				for (Folder subFolder : childs) {
-					folderTree.removeItem(subFolder);
+			public void nodeCollapse(final CollapseEvent event) {
+				final Folder collapseFolder = (Folder) event.getItemId();
+				FileManagerViewImpl.this.folderTree.setItemIcon(collapseFolder,
+						MyCollabResource
+								.newResource("icons/16/ecm/folder_close.png"));
+				final List<Folder> childs = collapseFolder.getChilds();
+				for (final Folder subFolder : childs) {
+					FileManagerViewImpl.this.folderTree.removeItem(subFolder);
 				}
 
 				childs.clear();
 			}
 		});
 
-		folderTree.addListener(new ItemClickEvent.ItemClickListener() {
+		this.folderTree.addListener(new ItemClickEvent.ItemClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void itemClick(ItemClickEvent event) {
-				baseFolder = (Folder) event.getItemId();
-				displayResourcesInTable(baseFolder);
+			public void itemClick(final ItemClickEvent event) {
+				FileManagerViewImpl.this.baseFolder = (Folder) event
+						.getItemId();
+				FileManagerViewImpl.this
+						.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
 			}
 		});
 
-		resourceTable = new ResourceTableDisplay();
-		resourceTable.setWidth("100%");
-		resourceContainer.addComponent(resourceTable);
-		resourceContainer.setExpandRatio(resourceTable, 1.0f);
+		this.resourceTable = new ResourceTableDisplay();
+		this.resourceTable.setWidth("100%");
+
+		final VerticalLayout rightColumn = new VerticalLayout();
+		rightColumn.setWidth("100%");
+		rightColumn.setMargin(false, false, false, true);
+		rightColumn.addComponent(this.resourceTable);
+
+		resourceContainer.addComponent(rightColumn);
+		resourceContainer.setExpandRatio(rightColumn, 1.0f);
 
 		this.addComponent(resourceContainer);
 	}
 
-	private void displayResourcesInTable(Folder folder) {
-		List<Resource> resources = resourceService.getResources(folder
-				.getPath());
-		resourceTable.setContainerDataSource(new BeanItemContainer<Resource>(
-				Resource.class, resources));
-		resourceTable.setVisibleColumns(new String[] { "uuid", "path", "size",
-				"created", "createdBy" });
-		resourceTable.setColumnHeaders(new String[] { "", "Name", "Size",
+	private void displayResourcesInTable(final Folder folder) {
+		final List<Resource> resources = this.resourceService
+				.getResources(folder.getPath());
+		this.resourceTable
+				.setContainerDataSource(new BeanItemContainer<Resource>(
+						Resource.class, resources));
+		this.resourceTable.setVisibleColumns(new String[] { "uuid", "path",
+				"size", "created", "createdBy" });
+		this.resourceTable.setColumnHeaders(new String[] { "", "Name", "Size",
 				"Created", "By" });
 
 	}
 
-	private void displayResourcesInTable(String foldername) {
-		List<Folder> childs = baseFolder.getChilds();
+	private void displayResourcesInTable(final String foldername) {
+		List<Folder> childs = this.baseFolder.getChilds();
 		if (childs == null) {
-			childs = resourceService.getSubFolders(baseFolder.getPath());
+			childs = this.resourceService.getSubFolders(this.baseFolder
+					.getPath());
 
-			for (Folder subFolder : childs) {
-				baseFolder.addChild(subFolder);
-				folderTree.addItem(
+			for (final Folder subFolder : childs) {
+				this.baseFolder.addChild(subFolder);
+				this.folderTree.addItem(
 						new Object[] {
 								subFolder.getName(),
 								AppContext.formatDateTime(subFolder
 										.getCreated().getTime()) }, subFolder);
-				folderTree.setItemCaption(subFolder, subFolder.getName());
-				folderTree.setParent(subFolder, baseFolder);
+				this.folderTree.setItemCaption(subFolder, subFolder.getName());
+				this.folderTree.setParent(subFolder, this.baseFolder);
 				if (foldername.equals(subFolder.getName())) {
-					folderTree.setCollapsed(subFolder, false);
-					displayResourcesInTable(subFolder);
-					baseFolder = subFolder;
+					this.folderTree.setCollapsed(subFolder, false);
+					this.displayResourcesInTable(subFolder);
+					this.baseFolder = subFolder;
 				} else {
-					folderTree.setItemIcon(subFolder, MyCollabResource
+					this.folderTree.setItemIcon(subFolder, MyCollabResource
 							.newResource("icons/16/ecm/folder_close.png"));
 				}
 			}
 		} else {
-			for (Folder subFolder : childs) {
+			for (final Folder subFolder : childs) {
 				if (foldername.equals(subFolder.getName())) {
-					folderTree.setCollapsed(subFolder, false);
-					folderTree.setValue(subFolder);
-					displayResourcesInTable(subFolder);
-					baseFolder = subFolder;
+					this.folderTree.setCollapsed(subFolder, false);
+					this.folderTree.setValue(subFolder);
+					this.displayResourcesInTable(subFolder);
+					this.baseFolder = subFolder;
 				}
 			}
 		}
@@ -259,20 +290,20 @@ public class FileManagerViewImpl extends AbstractView implements
 
 	@Override
 	public void displayProjectFiles() {
-		folderTree.removeAllItems();
-		int projectId = CurrentProjectVariables.getProjectId();
-		projectPath = String.format("%d/project/%d", AppContext.getAccountId(),
-				projectId);
+		this.folderTree.removeAllItems();
+		final int projectId = CurrentProjectVariables.getProjectId();
+		this.projectPath = String.format("%d/project/%d",
+				AppContext.getAccountId(), projectId);
 
-		baseFolder = new Folder();
-		baseFolder.setPath(projectPath);
-		folderTree.addItem(new Object[] { baseFolder.getName(), "" },
-				baseFolder);
-		folderTree.setItemCaption(baseFolder, CurrentProjectVariables
+		this.baseFolder = new Folder();
+		this.baseFolder.setPath(this.projectPath);
+		this.folderTree.addItem(new Object[] { this.baseFolder.getName(), "" },
+				this.baseFolder);
+		this.folderTree.setItemCaption(this.baseFolder, CurrentProjectVariables
 				.getProject().getName());
 
-		folderTree.setCollapsed(baseFolder, false);
-		displayResourcesInTable(baseFolder);
+		this.folderTree.setCollapsed(this.baseFolder, false);
+		this.displayResourcesInTable(this.baseFolder);
 	}
 
 	/**
@@ -284,46 +315,49 @@ public class FileManagerViewImpl extends AbstractView implements
 	private class AddNewFolderWindow extends Window {
 		private static final long serialVersionUID = 1L;
 
-		private TextField folderName;
+		private final TextField folderName;
 
 		public AddNewFolderWindow() {
 			this.setWidth("500px");
 			this.setModal(true);
 			this.setCaption("New Folder");
-			center();
+			this.center();
 
-			HorizontalLayout layout = new HorizontalLayout();
+			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
 			layout.addComponent(new Label("Enter folder name: "));
 
-			folderName = new TextField();
-			layout.addComponent(folderName);
+			this.folderName = new TextField();
+			layout.addComponent(this.folderName);
 
 			this.addComponent(layout);
 
-			HorizontalLayout controlsLayout = new HorizontalLayout();
+			final HorizontalLayout controlsLayout = new HorizontalLayout();
 
-			Button saveBtn = new Button(
+			final Button saveBtn = new Button(
 					LocalizationHelper
 							.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 
-							String folderVal = (String) folderName.getValue();
+							final String folderVal = (String) AddNewFolderWindow.this.folderName
+									.getValue();
 							if (folderVal != null
 									&& !folderVal.trim().equals("")) {
 								// TODO: check folder name with valid characters
-								String baseFolderPath = (baseFolder == null) ? projectPath
-										: baseFolder.getPath();
-								Folder newFolder = resourceService
+								final String baseFolderPath = (FileManagerViewImpl.this.baseFolder == null) ? FileManagerViewImpl.this.projectPath
+										: FileManagerViewImpl.this.baseFolder
+												.getPath();
+								final Folder newFolder = FileManagerViewImpl.this.resourceService
 										.createNewFolder(baseFolderPath,
 												folderVal,
 												AppContext.getUsername());
-								baseFolder.addChild(newFolder);
-								folderTree.addItem(
+								FileManagerViewImpl.this.baseFolder
+										.addChild(newFolder);
+								FileManagerViewImpl.this.folderTree.addItem(
 										new Object[] {
 												newFolder.getName(),
 												AppContext
@@ -331,11 +365,18 @@ public class FileManagerViewImpl extends AbstractView implements
 																.getCreated()
 																.getTime()) },
 										newFolder);
-								folderTree.setItemCaption(newFolder,
-										newFolder.getName());
-								folderTree.setParent(newFolder, baseFolder);
-								if (folderTree.isCollapsed(baseFolder)) {
-									folderTree.setCollapsed(baseFolder, false);
+								FileManagerViewImpl.this.folderTree
+										.setItemCaption(newFolder,
+												newFolder.getName());
+								FileManagerViewImpl.this.folderTree.setParent(
+										newFolder,
+										FileManagerViewImpl.this.baseFolder);
+								if (FileManagerViewImpl.this.folderTree
+										.isCollapsed(FileManagerViewImpl.this.baseFolder)) {
+									FileManagerViewImpl.this.folderTree
+											.setCollapsed(
+													FileManagerViewImpl.this.baseFolder,
+													false);
 								}
 								AddNewFolderWindow.this.close();
 
@@ -344,14 +385,14 @@ public class FileManagerViewImpl extends AbstractView implements
 					});
 			controlsLayout.addComponent(saveBtn);
 
-			Button cancelBtn = new Button(
+			final Button cancelBtn = new Button(
 					LocalizationHelper
 							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							AddNewFolderWindow.this.close();
 
 						}
@@ -365,65 +406,73 @@ public class FileManagerViewImpl extends AbstractView implements
 	private class UploadContentWindow extends Window {
 		private static final long serialVersionUID = 1L;
 
-		private GridFormLayoutHelper layoutHelper;
-		private TextArea descField;
-		private SingleFileUploadField uploadField;
+		private final GridFormLayoutHelper layoutHelper;
+		private final TextArea descField;
+		private final SingleFileUploadField uploadField;
 
 		public UploadContentWindow() {
 			super("Upload Content");
 			this.setWidth("500px");
 			this.setModal(true);
 
-			layoutHelper = new GridFormLayoutHelper(1, 2);
+			this.layoutHelper = new GridFormLayoutHelper(1, 2);
 
-			uploadField = (SingleFileUploadField) layoutHelper.addComponent(
-					new SingleFileUploadField(), "File", 0, 0);
-			descField = (TextArea) layoutHelper.addComponent(new TextArea(),
-					"Description", 0, 1);
+			this.uploadField = (SingleFileUploadField) this.layoutHelper
+					.addComponent(new SingleFileUploadField(), "File", 0, 0);
+			this.descField = (TextArea) this.layoutHelper.addComponent(
+					new TextArea(), "Description", 0, 1);
 
-			this.addComponent(layoutHelper.getLayout());
+			this.addComponent(this.layoutHelper.getLayout());
 
-			HorizontalLayout controlsLayout = new HorizontalLayout();
+			final HorizontalLayout controlsLayout = new HorizontalLayout();
 			controlsLayout.setWidth("100%");
 
-			Button uploadBtn = new Button("Upload", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button uploadBtn = new Button("Upload",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					// TODO Auto-generated method stub
-					InputStream contentStream = uploadField
-							.getContentAsStream();
-					if (contentStream != null) {
-						Content content = new Content();
-						content.setDescription((String) descField.getValue());
-						content.setPath(baseFolder.getPath() + "/"
-								+ uploadField.getFileName());
-						resourceService.saveContent(content, contentStream);
-						UploadContentWindow.this.close();
-						displayResourcesInTable(baseFolder);
-						UploadContentWindow.this.close();
-					} else {
-						AppContext
-								.getApplication()
-								.getMainWindow()
-								.showNotification(
-										"It seems you did not attach file yet!");
-					}
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							// TODO Auto-generated method stub
+							final InputStream contentStream = UploadContentWindow.this.uploadField
+									.getContentAsStream();
+							if (contentStream != null) {
+								final Content content = new Content();
+								content.setDescription((String) UploadContentWindow.this.descField
+										.getValue());
+								content.setPath(FileManagerViewImpl.this.baseFolder
+										.getPath()
+										+ "/"
+										+ UploadContentWindow.this.uploadField
+												.getFileName());
+								FileManagerViewImpl.this.resourceService
+										.saveContent(content, contentStream);
+								UploadContentWindow.this.close();
+								FileManagerViewImpl.this
+										.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+								UploadContentWindow.this.close();
+							} else {
+								AppContext
+										.getApplication()
+										.getMainWindow()
+										.showNotification(
+												"It seems you did not attach file yet!");
+							}
 
-				}
-			});
+						}
+					});
 
 			controlsLayout.addComponent(uploadBtn);
 
-			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button cancelBtn = new Button("Cancel",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					UploadContentWindow.this.close();
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							UploadContentWindow.this.close();
+						}
+					});
 			controlsLayout.addComponent(cancelBtn);
 
 			this.addComponent(controlsLayout);
@@ -438,17 +487,17 @@ public class FileManagerViewImpl extends AbstractView implements
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
 
-					PopupButton resourceSettingPopupBtn = new PopupButton();
-					VerticalLayout filterBtnLayout = new VerticalLayout();
+					final PopupButton resourceSettingPopupBtn = new PopupButton();
+					final VerticalLayout filterBtnLayout = new VerticalLayout();
 
-					Button renameBtn = new Button("Rename",
+					final Button renameBtn = new Button("Rename",
 							new Button.ClickListener() {
 
 								@Override
-								public void buttonClick(ClickEvent event) {
+								public void buttonClick(final ClickEvent event) {
 									// TODO Auto-generated method stub
 
 								}
@@ -456,11 +505,11 @@ public class FileManagerViewImpl extends AbstractView implements
 					renameBtn.setStyleName("link");
 					filterBtnLayout.addComponent(renameBtn);
 
-					Button downloadBtn = new Button("Download",
+					final Button downloadBtn = new Button("Download",
 							new Button.ClickListener() {
 
 								@Override
-								public void buttonClick(ClickEvent event) {
+								public void buttonClick(final ClickEvent event) {
 									// TODO Auto-generated method stub
 
 								}
@@ -468,11 +517,11 @@ public class FileManagerViewImpl extends AbstractView implements
 					downloadBtn.setStyleName("link");
 					filterBtnLayout.addComponent(downloadBtn);
 
-					Button deleteBtn = new Button("Delete",
+					final Button deleteBtn = new Button("Delete",
 							new Button.ClickListener() {
 
 								@Override
-								public void buttonClick(ClickEvent event) {
+								public void buttonClick(final ClickEvent event) {
 									// TODO Auto-generated method stub
 
 								}
@@ -495,16 +544,16 @@ public class FileManagerViewImpl extends AbstractView implements
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					String path = resource.getPath();
-					int pathIndex = path.lastIndexOf("/");
+					final int pathIndex = path.lastIndexOf("/");
 					if (pathIndex > -1) {
 						path = path.substring(pathIndex + 1);
 					}
-					HorizontalLayout resourceLabel = new HorizontalLayout();
+					final HorizontalLayout resourceLabel = new HorizontalLayout();
 
 					com.vaadin.terminal.Resource iconResource = null;
 					if (resource instanceof Content) {
@@ -514,20 +563,21 @@ public class FileManagerViewImpl extends AbstractView implements
 						iconResource = MyCollabResource
 								.newResource("icons/16/ecm/folder_close.png");
 					}
-					Embedded iconEmbed = new Embedded(null, iconResource);
+					final Embedded iconEmbed = new Embedded(null, iconResource);
 
 					resourceLabel.addComponent(iconEmbed);
 					resourceLabel.setComponentAlignment(iconEmbed,
 							Alignment.MIDDLE_CENTER);
 
-					ButtonLink resourceLink = new ButtonLink(path,
+					final ButtonLink resourceLink = new ButtonLink(path,
 							new Button.ClickListener() {
 
 								@Override
-								public void buttonClick(ClickEvent event) {
+								public void buttonClick(final ClickEvent event) {
 									if (resource instanceof Folder) {
-										displayResourcesInTable(resource
-												.getName());
+										FileManagerViewImpl.this
+												.displayResourcesInTable(resource
+														.getName());
 									}
 
 								}
@@ -544,9 +594,9 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.addGeneratedColumn("created", new Table.ColumnGenerator() {
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
-					Resource resource = ResourceTableDisplay.this
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
+					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					return new Label(AppContext.formatDateTime(resource
 							.getCreated().getTime()));
@@ -556,9 +606,9 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.addGeneratedColumn("size", new Table.ColumnGenerator() {
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
-					Resource resource = ResourceTableDisplay.this
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
+					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					return new Label(resource.getSize() + "");
 				}
@@ -567,9 +617,9 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.addGeneratedColumn("createdBy", new Table.ColumnGenerator() {
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
-					Resource resource = ResourceTableDisplay.this
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
+					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					return new Label(resource.getCreatedBy());
 				}
@@ -582,7 +632,7 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.setColumnWidth("created", UIConstants.TABLE_DATE_TIME_WIDTH);
 		}
 
-		private Resource getResource(Object itemId) {
+		private Resource getResource(final Object itemId) {
 			final Container container = this.getContainerDataSource();
 			final BeanItem<Resource> item = (BeanItem<Resource>) container
 					.getItem(itemId);

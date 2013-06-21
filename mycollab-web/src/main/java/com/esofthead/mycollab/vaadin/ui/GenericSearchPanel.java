@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -11,9 +14,6 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SuppressWarnings("serial")
 public class GenericSearchPanel<S extends SearchCriteria> extends
 		CustomComponent implements HasSearchHandlers<S> {
@@ -21,16 +21,16 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 	private List<SearchHandler<S>> handers;
 
 	@Override
-	public void addSearchHandler(SearchHandler<S> handler) {
-		if (handers == null) {
-			handers = new ArrayList<SearchHandler<S>>();
+	public void addSearchHandler(final SearchHandler<S> handler) {
+		if (this.handers == null) {
+			this.handers = new ArrayList<SearchHandler<S>>();
 		}
-		handers.add(handler);
+		this.handers.add(handler);
 	}
 
-	public void notifySearchHandler(S criteria) {
-		if (handers != null) {
-			for (SearchHandler<S> handler : handers) {
+	public void notifySearchHandler(final S criteria) {
+		if (this.handers != null) {
+			for (final SearchHandler<S> handler : this.handers) {
 				handler.onSearch(criteria);
 			}
 		}
@@ -40,21 +40,24 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 			CustomLayout {
 		protected GenericSearchPanel<S> searchPanel;
 
-		public SearchLayout(GenericSearchPanel<S> parent, String layoutName) {
+		public SearchLayout(final GenericSearchPanel<S> parent,
+				final String layoutName) {
 			super(layoutName);
 			this.searchPanel = parent;
 		}
 
 		public void callSearchAction() {
-			S searchCriteria = fillupSearchCriteria();
-			searchPanel.notifySearchHandler(searchCriteria);
+			final S searchCriteria = this.fillupSearchCriteria();
+			this.searchPanel.notifySearchHandler(searchCriteria);
 		}
 
 		public TextField createSeachSupportTextField(final TextField textField,
-				String keyField) {
+				final String keyField) {
 			textField.addShortcutListener(new ShortcutListener(keyField,
 					ShortcutAction.KeyCode.ENTER, null) {
-				public void handleAction(Object sender, Object target) {
+				@Override
+				public void handleAction(final Object sender,
+						final Object target) {
 					if (target == textField) {
 						SearchLayout.this.callSearchAction();
 					}
@@ -70,7 +73,9 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 			textField.addShortcutListener(new ShortcutListener(String
 					.valueOf(textField.hashCode()),
 					ShortcutAction.KeyCode.ENTER, null) {
-				public void handleAction(Object sender, Object target) {
+				@Override
+				public void handleAction(final Object sender,
+						final Object target) {
 					if (target == textField) {
 						SearchLayout.this.callSearchAction();
 					}
@@ -86,18 +91,20 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 	abstract public static class BasicSearchLayout<S extends SearchCriteria>
 			extends SearchLayout<S> {
 		private static final long serialVersionUID = 1L;
+		protected ComponentContainer header;
+		protected ComponentContainer body;
 
-		public BasicSearchLayout(GenericSearchPanel<S> parent) {
+		public BasicSearchLayout(final GenericSearchPanel<S> parent) {
 			super(parent, "basicSearch");
-			setStyleName("basicSearchLayout");
+			this.setStyleName("basicSearchLayout");
 			this.initLayout();
 		}
 
 		protected void initLayout() {
-			ComponentContainer header = constructHeader();
-			ComponentContainer body = constructBody();
-			this.addComponent(header, "basicSearchHeader");
-			this.addComponent(body, "basicSearchBody");
+			this.header = this.constructHeader();
+			this.body = this.constructBody();
+			this.addComponent(this.header, "basicSearchHeader");
+			this.addComponent(this.body, "basicSearchBody");
 		}
 
 		abstract public ComponentContainer constructHeader();
@@ -108,19 +115,23 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 	abstract public static class AdvancedSearchLayout<S extends SearchCriteria>
 			extends SearchLayout<S> {
 
-		public AdvancedSearchLayout(GenericSearchPanel<S> parent) {
+		protected ComponentContainer header;
+		protected ComponentContainer body;
+		protected ComponentContainer footer;
+
+		public AdvancedSearchLayout(final GenericSearchPanel<S> parent) {
 			super(parent, "advancedSearch");
-			setStyleName("advancedSearchLayout");
-			initLayout();
+			this.setStyleName("advancedSearchLayout");
+			this.initLayout();
 		}
 
 		protected void initLayout() {
-			ComponentContainer header = constructHeader();
-			ComponentContainer body = constructBody();
-			ComponentContainer footer = constructFooter();
-			this.addComponent(header, "advSearchHeader");
-			this.addComponent(body, "advSearchBody");
-			this.addComponent(footer, "advSearchFooter");
+			this.header = this.constructHeader();
+			this.body = this.constructBody();
+			this.footer = this.constructFooter();
+			this.addComponent(this.header, "advSearchHeader");
+			this.addComponent(this.body, "advSearchBody");
+			this.addComponent(this.footer, "advSearchFooter");
 		}
 
 		public abstract ComponentContainer constructHeader();

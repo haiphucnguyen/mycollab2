@@ -666,6 +666,10 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	padding: 3px 5px 3px 15px;
 }
 
+.basicSearchHeader .v-horizontallayout-control-buttons .v-horizontallayout-margin {
+	padding: 0px;
+}
+
 .basicSearch .basicSearchHeader .h2 {
 	padding-top: 0px;
 	font-size: 12px;
