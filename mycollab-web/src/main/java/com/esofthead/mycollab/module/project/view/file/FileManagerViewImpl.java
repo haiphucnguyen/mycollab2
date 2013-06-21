@@ -68,7 +68,10 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						baseFolder = (Folder) folderTree.getValue();
+						if (folderTree.getValue() != null) {
+							baseFolder = (Folder) folderTree.getValue();
+						}
+						
 						FileManagerViewImpl.this.getWindow().addWindow(
 								new AddNewFolderWindow());
 					}
