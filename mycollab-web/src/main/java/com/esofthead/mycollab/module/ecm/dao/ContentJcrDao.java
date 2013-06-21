@@ -8,9 +8,9 @@ import com.esofthead.mycollab.module.ecm.domain.Resource;
 
 public interface ContentJcrDao {
 
-	void saveContent(Content content);
+	void saveContent(Content content, String createdUser);
 
-	void createFolder(Folder folder);
+	void createFolder(Folder folder, String createdUser);
 
 	Resource getResource(String path);
 
