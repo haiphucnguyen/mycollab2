@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -128,6 +129,7 @@ public class TaskAddPopup extends CustomComponent {
 						}
 					}
 				});
+		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(saveBtn);
 		controlsLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);

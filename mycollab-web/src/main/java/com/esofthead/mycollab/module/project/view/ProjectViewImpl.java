@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.file.FileManagerPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
-import com.esofthead.mycollab.module.project.view.milestone.MilestoneListViewImpl;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
@@ -342,7 +341,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				});
 		controlsBtn = new SplitButtonExt(quickActionBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.setIcon(MyCollabResource.newResource("icons/16/edit.png"));
+		controlsBtn.setIcon(MyCollabResource.newResource("icons/16/project/quick_action.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
 		popupButtonsControl.setWidth("150px");
@@ -426,7 +425,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		editProjectBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROJECT));
 		editProjectBtn.setIcon(MyCollabResource
-				.newResource("icons/16/edit.png"));
+				.newResource("icons/16/project/edit_project_green.png"));
 		editProjectBtn.setStyleName("link");
 		popupButtonsControl.addComponent(editProjectBtn);
 

@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -67,7 +68,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 
 			public FormLayoutFactory() {
 				super(
-						(MilestoneAddViewImpl.this.milestone.getId() == null) ? "Create Milestone"
+						(MilestoneAddViewImpl.this.milestone.getId() == null) ? "Create Phase"
 								: MilestoneAddViewImpl.this.milestone.getName());
 			}
 
@@ -112,8 +113,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 						MilestoneAddViewImpl.this.milestone
 								.setStatus("In Progress");
 					}
-					return new ValueComboBox(false, "In Progress", "Future",
-							"Closed");
+					return new ProgressStatusComboBox();
 				} else if (propertyId.equals("name")) {
 					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
@@ -152,6 +152,20 @@ public class MilestoneAddViewImpl extends AbstractView implements
 
 				return null;
 			}
+		}
+	}
+
+	private static class ProgressStatusComboBox extends ValueComboBox {
+		private static final long serialVersionUID = 1L;
+
+		public ProgressStatusComboBox() {
+			super(false, "In Progress", "Future", "Closed");
+			this.setItemIcon("In Progress", MyCollabResource
+					.newResource("icons/16/project/phase_progress.png"));
+			this.setItemIcon("Future", MyCollabResource
+					.newResource("icons/16/project/phase_future.png"));
+			this.setItemIcon("Closed", MyCollabResource
+					.newResource("icons/16/project/phase_closed.png"));
 		}
 	}
 
