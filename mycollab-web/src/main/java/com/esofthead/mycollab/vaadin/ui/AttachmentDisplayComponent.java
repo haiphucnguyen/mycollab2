@@ -143,7 +143,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Resource downloadResource = StreamDownloadResourceFactory
-						.getStreamResource(attachment.getDocumentpath());
+						.getAccountStreamResource(attachment.getDocumentpath());
 				AppContext.getApplication().getMainWindow()
 						.open(downloadResource, "_self");
 			}

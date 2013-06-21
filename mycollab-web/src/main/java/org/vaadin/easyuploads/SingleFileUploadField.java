@@ -1,5 +1,8 @@
 package org.vaadin.easyuploads;
 
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.vaadin.ui.Embedded;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 public class SingleFileUploadField extends UploadField {
@@ -16,10 +19,15 @@ public class SingleFileUploadField extends UploadField {
 		// TODO Auto-generated method stub
 
 		String filename = getLastFileName();
-		String mimeType = getLastMimeType();
-		long filesize = getLastFileSize();
+//		String mimeType = getLastMimeType();
+//		long filesize = getLastFileSize();
 
-		getRootLayout().addComponent(new Label(filename));
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.addComponent(new Embedded(null, UiUtils
+				.getFileIconResource(filename)));
+		layout.addComponent(new Label(filename));
+
+		getRootLayout().addComponent(layout);
 		upload.setVisible(false);
 	}
 

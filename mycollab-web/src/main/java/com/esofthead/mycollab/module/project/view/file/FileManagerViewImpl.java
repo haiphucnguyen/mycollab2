@@ -13,12 +13,14 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -499,7 +501,9 @@ public class FileManagerViewImpl extends AbstractView implements
 			uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlsLayout.addComponent(uploadBtn);
 
-			final Button cancelBtn = new Button("Cancel",
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -530,6 +534,9 @@ public class FileManagerViewImpl extends AbstractView implements
 				public Object generateCell(final Table source,
 						final Object itemId, final Object columnId) {
 
+					final Resource resource = ResourceTableDisplay.this
+							.getResource(itemId);
+
 					final PopupButton resourceSettingPopupBtn = new PopupButton();
 					final VerticalLayout filterBtnLayout = new VerticalLayout();
 
@@ -538,7 +545,8 @@ public class FileManagerViewImpl extends AbstractView implements
 
 								@Override
 								public void buttonClick(final ClickEvent event) {
-									// TODO Auto-generated method stub
+									resourceSettingPopupBtn
+											.setPopupVisible(false);
 
 								}
 							});
@@ -550,7 +558,17 @@ public class FileManagerViewImpl extends AbstractView implements
 
 								@Override
 								public void buttonClick(final ClickEvent event) {
-									// TODO Auto-generated method stub
+									if (resource instanceof Content) {
+										resourceSettingPopupBtn
+												.setPopupVisible(false);
+										com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+												.getStreamResource(((Content) resource)
+														.getPath());
+										AppContext
+												.getApplication()
+												.getMainWindow()
+												.open(downloadResource, "_self");
+									}
 
 								}
 							});
@@ -562,7 +580,33 @@ public class FileManagerViewImpl extends AbstractView implements
 
 								@Override
 								public void buttonClick(final ClickEvent event) {
-									// TODO Auto-generated method stub
+									resourceSettingPopupBtn
+											.setPopupVisible(false);
+									ConfirmDialogExt.show(
+											FileManagerViewImpl.this
+													.getWindow(),
+											LocalizationHelper
+													.getMessage(
+															GenericI18Enum.DELETE_DIALOG_TITLE,
+															ApplicationProperties
+																	.getString(ApplicationProperties.SITE_NAME)),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+											new ConfirmDialog.Listener() {
+												private static final long serialVersionUID = 1L;
+
+												@Override
+												public void onClose(
+														ConfirmDialog dialog) {
+													if (dialog.isConfirmed()) {
+
+													}
+												}
+											});
 
 								}
 							});
@@ -597,8 +641,9 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					com.vaadin.terminal.Resource iconResource = null;
 					if (resource instanceof Content) {
-						iconResource = MyCollabResource
-								.newResource("icons/16/ecm/file.png");
+						iconResource = UiUtils
+								.getFileIconResource(((Content) resource)
+										.getPath());
 					} else {
 						iconResource = MyCollabResource
 								.newResource("icons/16/ecm/folder_close.png");
