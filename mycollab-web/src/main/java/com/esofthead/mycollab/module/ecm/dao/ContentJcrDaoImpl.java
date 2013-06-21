@@ -325,6 +325,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			content.setTitle(node.getProperty("jcr:title").getString());
 			content.setDescription(node.getProperty("jcr:description")
 					.getString());
+			content.setCreatedUser(node.getProperty("mycollab:createdUser")
+					.getString());
 			String contentPath = node.getPath();
 			if (contentPath.startsWith("/")) {
 				contentPath = contentPath.substring(1);
@@ -344,6 +346,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			Folder folder = new Folder();
 			folder.setCreated(node.getProperty("jcr:created").getDate());
 			folder.setCreatedBy(node.getProperty("jcr:createdBy").getString());
+			folder.setCreatedUser(node.getProperty("mycollab:createdUser")
+					.getString());
 
 			String folderPath = node.getPath();
 			if (folderPath.startsWith("/")) {
