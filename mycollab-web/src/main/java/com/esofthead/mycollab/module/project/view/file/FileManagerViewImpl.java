@@ -83,6 +83,8 @@ public class FileManagerViewImpl extends AbstractView implements
 								new AddNewFolderWindow());
 					}
 				});
+		addFolderBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		addFolderBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		menuBar.addComponent(addFolderBtn);
@@ -98,6 +100,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					}
 				});
+		uploadBtn.setIcon(MyCollabResource.newResource("icons/16/upload.png"));
 		uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(uploadBtn);
 
@@ -139,6 +142,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					}
 				});
+		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
 		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(deleteBtn);
 
@@ -247,7 +251,7 @@ public class FileManagerViewImpl extends AbstractView implements
 				.setContainerDataSource(new BeanItemContainer<Resource>(
 						Resource.class, resources));
 		this.resourceTable.setVisibleColumns(new String[] { "uuid", "path",
-				"size", "created", "createdBy" });
+				"size", "created", "createdUser" });
 		this.resourceTable.setColumnHeaders(new String[] { "", "Name", "Size",
 				"Created", "By" });
 

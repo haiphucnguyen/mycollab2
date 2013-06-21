@@ -69,7 +69,7 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 		PropertyDefinitionTemplate createdUserPropertyTemplate = manager
 				.createPropertyDefinitionTemplate();
 		createdUserPropertyTemplate.setMultiple(false);
-		createdUserPropertyTemplate.setName("createdUser");
+		createdUserPropertyTemplate.setName("mycollab:createdUser");
 		createdUserPropertyTemplate.setMandatory(true);
 		createdUserPropertyTemplate.setRequiredType(PropertyType.STRING);
 		contentTypeTemplate.getPropertyDefinitionTemplates().add(
@@ -78,7 +78,7 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 		PropertyDefinitionTemplate lastModifiedUserPropertyTemplate = manager
 				.createPropertyDefinitionTemplate();
 		lastModifiedUserPropertyTemplate.setMultiple(false);
-		lastModifiedUserPropertyTemplate.setName("lastModifiedUser");
+		lastModifiedUserPropertyTemplate.setName("mycollab:lastModifiedUser");
 		lastModifiedUserPropertyTemplate.setMandatory(true);
 		lastModifiedUserPropertyTemplate.setRequiredType(PropertyType.STRING);
 		contentTypeTemplate.getPropertyDefinitionTemplates().add(
@@ -100,9 +100,9 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 				.setDeclaredSuperTypeNames(new String[] { NodeType.NT_FOLDER });
 		contentTypeTemplate.setQueryable(true);
 		contentTypeTemplate.setOrderableChildNodes(false);
-//		log.debug("PROERTY {} {}",
-//				contentTypeTemplate.getDeclaredPropertyDefinitions().length,
-//				contentTypeTemplate.getDeclaredChildNodeDefinitions().length);
+		// log.debug("PROERTY {} {}",
+		// contentTypeTemplate.getDeclaredPropertyDefinitions().length,
+		// contentTypeTemplate.getDeclaredChildNodeDefinitions().length);
 
 		PropertyDefinitionTemplate createdPropertyTemplate = manager
 				.createPropertyDefinitionTemplate();

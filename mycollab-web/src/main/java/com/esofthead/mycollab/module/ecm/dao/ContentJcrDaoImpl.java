@@ -100,10 +100,10 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						addNode.setProperty("jcr:description",
 								content.getDescription());
 						addNode.setProperty("mycollab:createdUser", createdUser);
+						addNode.setProperty("mycollab:lastModifiedUser", createdUser);
 						session.save();
 					} catch (Exception e) {
-						log.debug("error in convertToNode Method"
-								+ e.getMessage());
+						log.error("error in convertToNode Method", e);
 					}
 				}
 				return null;
