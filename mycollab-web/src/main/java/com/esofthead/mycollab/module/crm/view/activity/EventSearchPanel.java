@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -33,27 +32,24 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 	@Override
 	public void attach() {
 		super.attach();
-		createBasicSearchLayout();
+		this.createBasicSearchLayout();
 	}
 
 	private void createBasicSearchLayout() {
-		EventBasicSearchLayout layout = new EventBasicSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private void createAdvancedSearchLayout() {
-		EventAdvancedSearchLayout layout = new EventAdvancedSearchLayout();
+		final EventBasicSearchLayout layout = new EventBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Events");
+		final Label searchtitle = new Label("Events");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+		layout.setExpandRatio(searchtitle, 1.0f);
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
@@ -68,20 +64,20 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
 					@Override
 					public void splitButtonClick(
-							SplitButton.SplitButtonClickEvent event) {
+							final SplitButton.SplitButtonClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.TaskAdd(this, null));
 					}
 				});
 
-		VerticalLayout btnControlsLayout = new VerticalLayout();
+		final VerticalLayout btnControlsLayout = new VerticalLayout();
 		btnControlsLayout.setWidth("150px");
 		controlsBtn.addComponent(btnControlsLayout);
 
-		Button createMeetingBtn = new Button("Create Meeting",
+		final Button createMeetingBtn = new Button("Create Meeting",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void buttonClick(final Button.ClickEvent event) {
 						controlsBtn.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.MeetingAdd(this, null));
@@ -91,10 +87,10 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		btnControlsLayout.addComponent(createMeetingBtn);
 		createMeetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
-		Button createCallBtn = new Button("Create Call",
+		final Button createCallBtn = new Button("Create Call",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void buttonClick(final Button.ClickEvent event) {
 						controlsBtn.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.CallAdd(this, null));
@@ -122,47 +118,47 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return EventSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(false);
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setSpacing(true);
 			basicSearchBody.addComponent(new Label("Subject"));
 
-			nameField = new TextField();
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
+			this.nameField = new TextField();
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
-			Button searchBtn = new Button();
+			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(Button.ClickEvent event) {
+				public void buttonClick(final Button.ClickEvent event) {
 					EventBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
 
-			myItemCheckbox = new CheckBox("My Items");
-			myItemCheckbox.setWidth("75px");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+			this.myItemCheckbox = new CheckBox("My Items");
+			this.myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			Button cancelBtn = new Button("Clear");
+			final Button cancelBtn = new Button("Clear");
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.setWidth("55px");
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					nameField.setValue("");
+				public void buttonClick(final Button.ClickEvent event) {
+					EventBasicSearchLayout.this.nameField.setValue("");
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
@@ -172,82 +168,11 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new EventSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
-			return searchCriteria;
-		}
-	}
-
-	@SuppressWarnings({ "rawtypes", "serial" })
-	private class EventAdvancedSearchLayout extends AdvancedSearchLayout {
-
-		@SuppressWarnings("unchecked")
-		public EventAdvancedSearchLayout() {
-			super(EventSearchPanel.this);
-		}
-
-		@Override
-		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
-		}
-
-		@Override
-		public ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
-
-			return gridLayout.getLayout();
-		}
-
-		@Override
-		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				@SuppressWarnings({ "unchecked", "rawtypes" })
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					EventAdvancedSearchLayout.this.callSearchAction();
-				}
-			});
-
-			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(MyCollabResource
-					.newResource("icons/16/search_white.png"));
-
-			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-				}
-			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			clearBtn.addStyleName("cancel-button");
-			buttonControls.addComponent(clearBtn);
-
-			Button basicSearchBtn = new Button("Basic Search",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(Button.ClickEvent event) {
-							EventSearchPanel.this.createBasicSearchLayout();
-
-						}
-					});
-			basicSearchBtn.setStyleName("link");
-			UiUtils.addComponent(buttonControls, basicSearchBtn,
-					Alignment.MIDDLE_CENTER);
-			return buttonControls;
-		}
-
-		@Override
-		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new EventSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
-			return searchCriteria;
+			EventSearchPanel.this.searchCriteria = new EventSearchCriteria();
+			EventSearchPanel.this.searchCriteria
+					.setSaccountid(new NumberSearchField(SearchField.AND,
+							AppContext.getAccountId()));
+			return EventSearchPanel.this.searchCriteria;
 		}
 	}
 }

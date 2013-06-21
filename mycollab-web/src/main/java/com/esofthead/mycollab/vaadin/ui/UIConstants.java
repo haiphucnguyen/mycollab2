@@ -16,7 +16,9 @@ public class UIConstants {
 	public static final int TABLE_EMAIL_WIDTH = 200;
 	public static final int TABLE_DATE_WIDTH = 110;
 	public static final int TABLE_DATE_TIME_WIDTH = 140;
+	public static final String COLORED_GRIDLAYOUT = "colored-gridlayout";
 	public static final String FORM_CONTAINER_VIEW = "form-container";
+	public static final String TABLE_ACTION_CONTROLS = "table-actionctls";
 	public static final String THEME_BLUE_LINK = "bluebtn";
 	public static final String THEME_LINK = "link";
 	public static final String THEME_ROUND_BUTTON = "round-border";

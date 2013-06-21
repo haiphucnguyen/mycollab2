@@ -24,6 +24,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -37,7 +38,7 @@ public class VersionSearchPanel extends
 		GenericSearchPanel<VersionSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
+	private final SimpleProject project;
 	protected VersionSearchCriteria searchCriteria;
 
 	public VersionSearchPanel() {
@@ -47,7 +48,7 @@ public class VersionSearchPanel extends
 	@Override
 	public void attach() {
 		super.attach();
-		createBasicSearchLayout();
+		this.createBasicSearchLayout();
 	}
 
 	private void createBasicSearchLayout() {
@@ -56,21 +57,29 @@ public class VersionSearchPanel extends
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Versions");
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(searchtitle);
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/24/project/version.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
-		Button createBtn = new Button(
+		final Label versionTitle = new Label("Versions");
+		versionTitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(versionTitle);
+		layout.setComponentAlignment(versionTitle, Alignment.MIDDLE_LEFT);
+		layout.setExpandRatio(versionTitle, 1.0f);
+
+		final Button createBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void buttonClick(final Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugVersionEvent.GotoAdd(this, null));
 					}
@@ -102,41 +111,44 @@ public class VersionSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return VersionSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
 			basicSearchBody.addComponent(new Label("Name"));
-			nameField = new TextField();
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
+			this.nameField = new TextField();
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
-			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+			this.myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button searchBtn = new Button("Search",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					VersionBasicSearchLayout.this.callSearchAction();
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							VersionBasicSearchLayout.this.callSearchAction();
+						}
+					});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(searchBtn);
 
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button clearBtn = new Button("Clear",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					nameField.setValue("");
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							VersionBasicSearchLayout.this.nameField
+									.setValue("");
+						}
+					});
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
@@ -144,12 +156,14 @@ public class VersionSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new VersionSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(
-					SearchField.AND, project.getId()));
-			searchCriteria.setVersionname(new StringSearchField(
-					nameField.getValue().toString().trim()));
-			return searchCriteria;
+			VersionSearchPanel.this.searchCriteria = new VersionSearchCriteria();
+			VersionSearchPanel.this.searchCriteria
+					.setProjectId(new NumberSearchField(SearchField.AND,
+							VersionSearchPanel.this.project.getId()));
+			VersionSearchPanel.this.searchCriteria
+					.setVersionname(new StringSearchField(this.nameField
+							.getValue().toString().trim()));
+			return VersionSearchPanel.this.searchCriteria;
 		}
 	}
 

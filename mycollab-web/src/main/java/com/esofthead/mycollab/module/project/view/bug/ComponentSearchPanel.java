@@ -24,6 +24,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -37,7 +38,7 @@ public class ComponentSearchPanel extends
 		GenericSearchPanel<ComponentSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
+	private final SimpleProject project;
 	protected ComponentSearchCriteria searchCriteria;
 
 	public ComponentSearchPanel() {
@@ -47,7 +48,7 @@ public class ComponentSearchPanel extends
 	@Override
 	public void attach() {
 		super.attach();
-		createBasicSearchLayout();
+		this.createBasicSearchLayout();
 	}
 
 	private void createBasicSearchLayout() {
@@ -56,21 +57,29 @@ public class ComponentSearchPanel extends
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Components");
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(searchtitle);
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/24/project/component.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
-		Button createBtn = new Button(
+		final Label componenttitle = new Label("Components");
+		componenttitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(componenttitle);
+		layout.setExpandRatio(componenttitle, 1.0f);
+		layout.setComponentAlignment(componenttitle, Alignment.MIDDLE_LEFT);
+
+		final Button createBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_COMPONENT_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void buttonClick(final Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugComponentEvent.GotoAdd(this, null));
 					}
@@ -101,41 +110,45 @@ public class ComponentSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return ComponentSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
 			basicSearchBody.addComponent(new Label("Name"));
-			nameField = new TextField();
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
+			this.nameField = new TextField();
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
-			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+			this.myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button searchBtn = new Button("Search",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					ComponentBasicSearchCriteria.this.callSearchAction();
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							ComponentBasicSearchCriteria.this
+									.callSearchAction();
+						}
+					});
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(searchBtn);
 
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button clearBtn = new Button("Clear",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					nameField.setValue("");
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							ComponentBasicSearchCriteria.this.nameField
+									.setValue("");
+						}
+					});
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
@@ -143,12 +156,14 @@ public class ComponentSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new ComponentSearchCriteria();
-			searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
-					project.getId()));
-			searchCriteria.setComponentName(new StringSearchField(nameField
-					.getValue().toString().trim()));
-			return searchCriteria;
+			ComponentSearchPanel.this.searchCriteria = new ComponentSearchCriteria();
+			ComponentSearchPanel.this.searchCriteria
+					.setProjectid(new NumberSearchField(SearchField.AND,
+							ComponentSearchPanel.this.project.getId()));
+			ComponentSearchPanel.this.searchCriteria
+					.setComponentName(new StringSearchField(this.nameField
+							.getValue().toString().trim()));
+			return ComponentSearchPanel.this.searchCriteria;
 		}
 	}
 

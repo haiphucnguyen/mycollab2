@@ -52,69 +52,72 @@ public class ComponentListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ComponentListViewImpl() {
-		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
 
-		componentSearchPanel = new ComponentSearchPanel();
-		this.addComponent(componentSearchPanel);
+		this.componentSearchPanel = new ComponentSearchPanel();
+		this.addComponent(this.componentSearchPanel);
 
-		componentListLayout = new VerticalLayout();
-		componentListLayout.setSpacing(true);
-		this.addComponent(componentListLayout);
+		this.componentListLayout = new VerticalLayout();
+		this.addComponent(this.componentListLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<ComponentService, ComponentSearchCriteria, SimpleComponent>(
+		this.tableItem = new PagedBeanTable2<ComponentService, ComponentSearchCriteria, SimpleComponent>(
 				AppContext.getSpringBean(ComponentService.class),
 				SimpleComponent.class, new String[] { "selected",
 						"componentname", "userLeadFullName", "description" },
 				new String[] { "", "Name", "Lead Name", "Description" });
 
-		tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						SimpleComponent component = tableItem
-								.getBeanByIndex(itemId);
-						tableItem.fireSelectItemEvent(component);
-
-					}
-				});
-
-				SimpleComponent component = tableItem.getBeanByIndex(itemId);
-				component.setExtraData(cb);
-				return cb;
-			}
-		});
-
-		tableItem.addGeneratedColumn("componentname",
+		this.tableItem.addGeneratedColumn("selected",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							final Object itemId, Object columnId) {
-						final SimpleComponent bugComponent = tableItem
+					public Object generateCell(final Table source,
+							final Object itemId, final Object columnId) {
+						final CheckBox cb = new CheckBox("", false);
+						cb.setImmediate(true);
+						cb.addListener(new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(
+									final Button.ClickEvent event) {
+								final SimpleComponent component = ComponentListViewImpl.this.tableItem
+										.getBeanByIndex(itemId);
+								ComponentListViewImpl.this.tableItem
+										.fireSelectItemEvent(component);
+
+							}
+						});
+
+						final SimpleComponent component = ComponentListViewImpl.this.tableItem
 								.getBeanByIndex(itemId);
-						ButtonLink b = new ButtonLink(bugComponent
+						component.setExtraData(cb);
+						return cb;
+					}
+				});
+
+		this.tableItem.addGeneratedColumn("componentname",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(
+							final Table source, final Object itemId,
+							final Object columnId) {
+						final SimpleComponent bugComponent = ComponentListViewImpl.this.tableItem
+								.getBeanByIndex(itemId);
+						final ButtonLink b = new ButtonLink(bugComponent
 								.getComponentname(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
 									public void buttonClick(
-											Button.ClickEvent event) {
+											final Button.ClickEvent event) {
 										EventBus.getInstance().fireEvent(
 												new BugComponentEvent.GotoRead(
 														this, bugComponent
@@ -127,14 +130,15 @@ public class ComponentListViewImpl extends AbstractView implements
 					}
 				});
 
-		tableItem.addGeneratedColumn("userLeadFullName",
+		this.tableItem.addGeneratedColumn("userLeadFullName",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							final Object itemId, Object columnId) {
-						final SimpleComponent bugComponent = tableItem
+					public com.vaadin.ui.Component generateCell(
+							final Table source, final Object itemId,
+							final Object columnId) {
+						final SimpleComponent bugComponent = ComponentListViewImpl.this.tableItem
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(bugComponent.getUserlead(),
 								bugComponent.getUserLeadAvatarId(),
@@ -143,77 +147,82 @@ public class ComponentListViewImpl extends AbstractView implements
 					}
 				});
 
-		tableItem.setColumnExpandRatio("componentname", 1);
-		tableItem.setColumnWidth("userLeadFullName",
+		this.tableItem.setColumnExpandRatio("componentname", 1);
+		this.tableItem.setColumnWidth("userLeadFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem
-				.setColumnWidth("description", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		this.tableItem.setColumnWidth("description",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		this.tableItem.setColumnWidth("selected",
+				UIConstants.TABLE_CONTROL_WIDTH);
 
-		tableItem.setWidth("100%");
+		this.tableItem.setWidth("100%");
 
-		componentListLayout.addComponent(constructTableActionControls());
-		componentListLayout.addComponent(tableItem);
+		this.componentListLayout.addComponent(this
+				.constructTableActionControls());
+		this.componentListLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<ComponentSearchCriteria> getSearchHandlers() {
-		return componentSearchPanel;
+		return this.componentSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		Button deleteBtn = new Button("Delete");
+		final Button deleteBtn = new Button("Delete");
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.COMPONENTS));
 
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls.addOptionItem("mail", "Mail");
+		this.tableActionControls.addOptionItem("export", "Export");
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 		return layout;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setVisible(true);
+		this.selectedItemsNumberLabel.setValue("Selected: "
+				+ numOfSelectedItems);
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setVisible(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<SimpleComponent> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<ComponentSearchCriteria, SimpleComponent> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 }

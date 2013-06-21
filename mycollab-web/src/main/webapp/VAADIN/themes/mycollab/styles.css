@@ -599,7 +599,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 /* Advanced Search Template */
 .advSearch {
 	background-color: #F5F5F5;
-	margin: 10px 0px;
+	margin: 10px 0px 0px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 0px;
@@ -648,7 +648,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
 	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
 	background-color: #F3F3F3;
-	margin: 10px 0px;
+	margin: 10px 0px 0px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 0px;
@@ -3709,4 +3709,18 @@ div.v-ratingstars-bar {
 }
 .custom-dialog .v-panel-deco {
 	border: none;
+}
+
+/*Table Action Controls */
+.table-actionctls {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 0px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+	background-color: rgb(245, 245, 245);
+}
+.table-actionctls .v-horizontallayout-margin {
+	padding: 5px 6px 5px 14px;
 }

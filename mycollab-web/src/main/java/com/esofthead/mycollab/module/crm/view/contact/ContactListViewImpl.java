@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -43,23 +44,21 @@ public class ContactListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ContactListViewImpl() {
-		this.setSpacing(true);
 
-		contactSearchPanel = new ContactSearchPanel();
-		this.addComponent(contactSearchPanel);
+		this.contactSearchPanel = new ContactSearchPanel();
+		this.addComponent(this.contactSearchPanel);
 
-		contactListLayout = new VerticalLayout();
-		contactListLayout.setSpacing(true);
-		this.addComponent(contactListLayout);
+		this.contactListLayout = new VerticalLayout();
+		this.addComponent(this.contactListLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new ContactTableDisplay(
+			this.tableItem = new ContactTableDisplay(
 					new String[] { "selected", "contactName", "title",
 							"accountName", "email" },
 					new String[] {
@@ -73,7 +72,7 @@ public class ContactListViewImpl extends AbstractView implements
 							LocalizationHelper
 									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new ContactTableDisplay(
+			this.tableItem = new ContactTableDisplay(
 					new String[] { "selected", "contactName", "title",
 							"accountName", "email", "officephone" },
 					new String[] {
@@ -90,7 +89,7 @@ public class ContactListViewImpl extends AbstractView implements
 									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER) });
 		}
 
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -98,8 +97,9 @@ public class ContactListViewImpl extends AbstractView implements
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleContact contact = (SimpleContact) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleContact contact = (SimpleContact) event
+								.getData();
 						if ("contactName".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new ContactEvent.GotoRead(
@@ -114,78 +114,81 @@ public class ContactListViewImpl extends AbstractView implements
 					}
 				});
 
-		contactListLayout.addComponent(constructTableActionControls());
-		contactListLayout.addComponent(tableItem);
+		this.contactListLayout
+				.addComponent(this.constructTableActionControls());
+		this.contactListLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<ContactSearchCriteria> getSearchHandlers() {
-		return contactSearchPanel;
+		return this.contactSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
 		System.out.println("constructTableActionControls: ");
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		Button deleteBtn = new Button(
+		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_CONTACT));
 
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail",
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		tableActionControls.addOptionItem("export",
+		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
-		
-		tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
-		
-		tableActionControls.setVisible(false);
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
+
+		this.tableActionControls.setVisible(false);
+
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 		return layout;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue(LocalizationHelper
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setVisible(true);
+		this.selectedItemsNumberLabel.setValue(LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
 						numOfSelectedItems));
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setVisible(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<SimpleContact> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<ContactSearchCriteria, SimpleContact> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 }

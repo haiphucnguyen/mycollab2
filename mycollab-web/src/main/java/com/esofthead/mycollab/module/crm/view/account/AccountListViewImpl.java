@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -42,68 +43,69 @@ public class AccountListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public AccountListViewImpl() {
-		setSpacing(true);
+		// setSpacing(true);
 
-		accountSearchPanel = new AccountSearchPanel();
-		this.addComponent(accountSearchPanel);
+		this.accountSearchPanel = new AccountSearchPanel();
+		this.addComponent(this.accountSearchPanel);
 
-		accountListLayout = new VerticalLayout();
-		accountListLayout.setSpacing(true);
-		this.addComponent(accountListLayout);
+		this.accountListLayout = new VerticalLayout();
+		// accountListLayout.setSpacing(true);
+		this.addComponent(this.accountListLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	private ComponentContainer constructTableActionControls() {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layout.setSpacing(true);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		selectOptionButton.setSizeUndefined();
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		this.selectOptionButton.setSizeUndefined();
+		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail",
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		tableActionControls.addOptionItem("export",
+		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
-		tableActionControls.addOptionItem("massUpdate", LocalizationHelper
+		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
-		tableActionControls.setVisible(false);
+		this.tableActionControls.setVisible(false);
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 
-		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 		return layout;
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setVisible(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public void enableActionControls(final int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue(LocalizationHelper
+		this.tableActionControls.setVisible(true);
+		this.selectedItemsNumberLabel.setValue(LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
 						numOfSelectedItems));
 	}
 
 	private void generateDisplayTable() {
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new AccountTableDisplay(
+			this.tableItem = new AccountTableDisplay(
 					new String[] { "selected", "accountname", "phoneoffice",
 							"email", "assignUserFullName" },
 					new String[] {
@@ -117,7 +119,7 @@ public class AccountListViewImpl extends AbstractView implements
 							LocalizationHelper
 									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new AccountTableDisplay(
+			this.tableItem = new AccountTableDisplay(
 					new String[] { "selected", "accountname", "city",
 							"phoneoffice", "email", "assignUserFullName" },
 					new String[] {
@@ -134,7 +136,7 @@ public class AccountListViewImpl extends AbstractView implements
 									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		}
 
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					private static final long serialVersionUID = 1L;
 
@@ -156,32 +158,33 @@ public class AccountListViewImpl extends AbstractView implements
 					}
 				});
 
-		accountListLayout.addComponent(constructTableActionControls());
-		accountListLayout.addComponent(tableItem);
+		this.accountListLayout
+				.addComponent(this.constructTableActionControls());
+		this.accountListLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
-		return accountSearchPanel;
+		return this.accountSearchPanel;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 }

@@ -32,6 +32,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -64,7 +65,7 @@ public class CaseSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return CaseSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
@@ -80,19 +81,20 @@ public class CaseSearchPanel extends
 				gridLayout = new GridFormLayoutHelper(3, 3, "90px");
 			}
 
-			numberField = (TextField) gridLayout.addComponent(new TextField(),
-					"Number", 0, 0);
-			subjectField = (TextField) gridLayout.addComponent(new TextField(),
-					"Subject", 1, 0);
-			accountField = (AccountSelectionField) gridLayout.addComponent(
-					new AccountSelectionField(), "Account", 2, 0);
+			this.numberField = (TextField) gridLayout.addComponent(
+					new TextField(), "Number", 0, 0);
+			this.subjectField = (TextField) gridLayout.addComponent(
+					new TextField(), "Subject", 1, 0);
+			this.accountField = (AccountSelectionField) gridLayout
+					.addComponent(new AccountSelectionField(), "Account", 2, 0);
 
-			statusField = (CaseStatusListSelect) gridLayout.addComponent(
+			this.statusField = (CaseStatusListSelect) gridLayout.addComponent(
 					new CaseStatusListSelect(), "Status", 0, 1);
-			userField = (UserListSelect) gridLayout.addComponent(
+			this.userField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assigned to", 1, 1);
-			priorityField = (CasePriorityListSelect) gridLayout.addComponent(
-					new CasePriorityListSelect(), "Priority", 2, 1);
+			this.priorityField = (CasePriorityListSelect) gridLayout
+					.addComponent(new CasePriorityListSelect(), "Priority", 2,
+							1);
 
 			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
@@ -100,90 +102,109 @@ public class CaseSearchPanel extends
 
 		@Override
 		protected CaseSearchCriteria fillupSearchCriteria() {
-			searchCriteria = new CaseSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
+			CaseSearchPanel.this.searchCriteria = new CaseSearchCriteria();
+			CaseSearchPanel.this.searchCriteria
+					.setSaccountid(new NumberSearchField(SearchField.AND,
+							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) subjectField.getValue())) {
-				searchCriteria.setSubject(new StringSearchField(
-						SearchField.AND, ((String) subjectField.getValue())
-								.trim()));
+			if (StringUtil.isNotNullOrEmpty((String) this.subjectField
+					.getValue())) {
+				CaseSearchPanel.this.searchCriteria
+						.setSubject(new StringSearchField(SearchField.AND,
+								((String) this.subjectField.getValue()).trim()));
 			}
 
-			SimpleAccount account = accountField.getAccount();
+			final SimpleAccount account = this.accountField.getAccount();
 			if (StringUtil.isNotNullOrEmpty(account.getAccountname())) {
-				searchCriteria.setAccountName(new StringSearchField(
-						SearchField.AND, account.getAccountname()));
+				CaseSearchPanel.this.searchCriteria
+						.setAccountName(new StringSearchField(SearchField.AND,
+								account.getAccountname()));
 			}
 
-			Collection<String> statuses = (Collection<String>) statusField
+			final Collection<String> statuses = (Collection<String>) this.statusField
 					.getValue();
 			if (statuses != null && statuses.size() > 0) {
-				searchCriteria.setStatuses(new SetSearchField<String>(
-						SearchField.AND, statuses));
+				CaseSearchPanel.this.searchCriteria
+						.setStatuses(new SetSearchField<String>(
+								SearchField.AND, statuses));
 			}
 
-			Collection<String> assignUsers = (Collection<String>) userField
+			final Collection<String> assignUsers = (Collection<String>) this.userField
 					.getValue();
 			if (assignUsers != null && assignUsers.size() > 0) {
-				searchCriteria.setAssignUsers(new SetSearchField<String>(
-						SearchField.AND, assignUsers));
+				CaseSearchPanel.this.searchCriteria
+						.setAssignUsers(new SetSearchField<String>(
+								SearchField.AND, assignUsers));
 			}
 
-			Collection<String> priorities = (Collection<String>) priorityField
+			final Collection<String> priorities = (Collection<String>) this.priorityField
 					.getValue();
 			if (priorities != null && priorities.size() > 0) {
-				searchCriteria.setPriorities(new SetSearchField<String>(
-						SearchField.AND, priorities));
+				CaseSearchPanel.this.searchCriteria
+						.setPriorities(new SetSearchField<String>(
+								SearchField.AND, priorities));
 			}
-			return searchCriteria;
+			return CaseSearchPanel.this.searchCriteria;
 		}
 
 		@Override
 		protected void clearFields() {
-			numberField.setValue("");
-			subjectField.setValue("");
-			accountField.clearValue();
-			statusField.setValue(null);
-			userField.setValue(null);
-			priorityField.setValue(null);
+			this.numberField.setValue("");
+			this.subjectField.setValue("");
+			this.accountField.clearValue();
+			this.statusField.setValue(null);
+			this.userField.setValue(null);
+			this.priorityField.setValue(null);
 		}
 
 		@Override
-		protected void loadSaveSearchToField(CaseSearchCriteria value) {
+		protected void loadSaveSearchToField(final CaseSearchCriteria value) {
 			// case thieu numberField
-			if (value.getSubject() != null)
-				subjectField.setValue(value.getSubject().getValue());
-			if (value.getAccountName() != null)
-				accountField.setValue(value.getAccountName().getValue());
-			if (value.getStatuses() != null)
-				statusField.setValue(Arrays.asList((Object[])value.getStatuses().values));
+			if (value.getSubject() != null) {
+				this.subjectField.setValue(value.getSubject().getValue());
+			}
+			if (value.getAccountName() != null) {
+				this.accountField.setValue(value.getAccountName().getValue());
+			}
+			if (value.getStatuses() != null) {
+				this.statusField.setValue(Arrays.asList((Object[]) value
+						.getStatuses().values));
+			}
 
-			if (value.getAssignUsers() != null)
-				userField
-						.setValue(Arrays.asList((Object[])value.getAssignUsers().values));
-			if (value.getPriorities() != null)
-				priorityField
-						.setValue(Arrays.asList((Object[])value.getPriorities().values));
+			if (value.getAssignUsers() != null) {
+				this.userField.setValue(Arrays.asList((Object[]) value
+						.getAssignUsers().values));
+			}
+			if (value.getPriorities() != null) {
+				this.priorityField.setValue(Arrays.asList((Object[]) value
+						.getPriorities().values));
+			}
 		}
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Cases");
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/22/crm/case.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
+		final Label searchtitle = new Label("Cases");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setExpandRatio(searchtitle, 1.0f);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		Button createAccountBtn = new Button("Create",
+		final Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoAdd(this, null));
 					}
@@ -212,22 +233,22 @@ public class CaseSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return CaseSearchPanel.this.createSearchTopPanel();
 		}
 
 		@SuppressWarnings("serial")
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
 
-			subjectField = this.createSeachSupportTextField(new TextField(),
-					"subjectFieldName");
-			subjectField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, subjectField,
+			this.subjectField = this.createSeachSupportTextField(
+					new TextField(), "subjectFieldName");
+			this.subjectField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.subjectField,
 					Alignment.MIDDLE_CENTER);
-			subjectField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, subjectField,
+			this.subjectField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.subjectField,
 					Alignment.MIDDLE_CENTER);
 
 			final Button searchBtn = new Button();
@@ -237,18 +258,18 @@ public class CaseSearchPanel extends
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					CaseBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
 
-			myItemCheckbox = new CheckBox(
+			this.myItemCheckbox = new CheckBox(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
-			myItemCheckbox.setWidth("75px");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+			this.myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
 			final Button cancelBtn = new Button(
@@ -258,19 +279,19 @@ public class CaseSearchPanel extends
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(ClickEvent event) {
-					subjectField.setValue("");
+				public void buttonClick(final ClickEvent event) {
+					CaseBasicSearchLayout.this.subjectField.setValue("");
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
 					Alignment.MIDDLE_CENTER);
-			Button advancedSearchBtn = new Button("Advanced Search",
+			final Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							moveToAdvancedSearchLayout();
+						public void buttonClick(final ClickEvent event) {
+							CaseSearchPanel.this.moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -281,25 +302,27 @@ public class CaseSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new CaseSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
+			CaseSearchPanel.this.searchCriteria = new CaseSearchCriteria();
+			CaseSearchPanel.this.searchCriteria
+					.setSaccountid(new NumberSearchField(SearchField.AND,
+							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(subjectField.getValue().toString()
-					.trim())) {
-				searchCriteria.setSubject(new StringSearchField(
-						SearchField.AND, ((String) subjectField.getValue())
-								.trim()));
+			if (StringUtil.isNotNullOrEmpty(this.subjectField.getValue()
+					.toString().trim())) {
+				CaseSearchPanel.this.searchCriteria
+						.setSubject(new StringSearchField(SearchField.AND,
+								((String) this.subjectField.getValue()).trim()));
 			}
 
-			if (myItemCheckbox.booleanValue()) {
-				searchCriteria.setAssignUsers(new SetSearchField<String>(
-						SearchField.AND, new String[] { AppContext
-								.getUsername() }));
+			if (this.myItemCheckbox.booleanValue()) {
+				CaseSearchPanel.this.searchCriteria
+						.setAssignUsers(new SetSearchField<String>(
+								SearchField.AND, new String[] { AppContext
+										.getUsername() }));
 			} else {
-				searchCriteria.setAssignUsers(null);
+				CaseSearchPanel.this.searchCriteria.setAssignUsers(null);
 			}
-			return searchCriteria;
+			return CaseSearchPanel.this.searchCriteria;
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -42,23 +43,21 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public CaseListViewImpl() {
-		this.setSpacing(true);
 
-		searchPanel = new CaseSearchPanel();
-		this.addComponent(searchPanel);
+		this.searchPanel = new CaseSearchPanel();
+		this.addComponent(this.searchPanel);
 
-		listLayout = new VerticalLayout();
-		listLayout.setSpacing(true);
-		this.addComponent(listLayout);
+		this.listLayout = new VerticalLayout();
+		this.addComponent(this.listLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new CaseTableDisplay(
+			this.tableItem = new CaseTableDisplay(
 					new String[] { "selected", "subject", "accountName",
 							"priority", "status", "assignUserFullName" },
 					new String[] {
@@ -74,7 +73,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 							LocalizationHelper
 									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new CaseTableDisplay(
+			this.tableItem = new CaseTableDisplay(
 					new String[] { "selected", "subject", "accountName",
 							"priority", "status", "assignUserFullName",
 							"createdtime" },
@@ -94,7 +93,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 									.getMessage(CrmCommonI18nEnum.TABLE_CREATED_DATE_HEADER) });
 		}
 
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -102,8 +101,8 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleCase cases = (SimpleCase) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleCase cases = (SimpleCase) event.getData();
 						if ("subject".equals(event.getFieldName())) {
 							EventBus.getInstance()
 									.fireEvent(
@@ -117,76 +116,78 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 					}
 				});
 
-		listLayout.addComponent(constructTableActionControls());
-		listLayout.addComponent(tableItem);
+		this.listLayout.addComponent(this.constructTableActionControls());
+		this.listLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<CaseSearchCriteria> getSearchHandlers() {
-		return searchPanel;
+		return this.searchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		Button deleteBtn = new Button(
+		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail",
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		tableActionControls.addOptionItem("export",
+		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
-		tableActionControls.addOptionItem("massUpdate",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
-		
-		tableActionControls.setVisible(false);
+		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		this.tableActionControls.setVisible(false);
+
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 		return layout;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue(LocalizationHelper
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setVisible(true);
+		this.selectedItemsNumberLabel.setValue(LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
 						numOfSelectedItems));
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setVisible(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<SimpleCase> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<CaseSearchCriteria, SimpleCase> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 }

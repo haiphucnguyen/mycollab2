@@ -23,6 +23,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -32,7 +33,7 @@ public class ProblemSearchPanel extends
 		GenericSearchPanel<ProblemSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
+	private final SimpleProject project;
 	protected ProblemSearchCriteria searchCriteria;
 
 	public ProblemSearchPanel() {
@@ -42,7 +43,7 @@ public class ProblemSearchPanel extends
 	@Override
 	public void attach() {
 		super.attach();
-		createBasicSearchLayout();
+		this.createBasicSearchLayout();
 	}
 
 	private void createBasicSearchLayout() {
@@ -51,22 +52,30 @@ public class ProblemSearchPanel extends
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Problems");
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(searchtitle);
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/24/project/problem.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
-		Button createProblemBtn = new Button(
+		final Label problemtitle = new Label("Problems");
+		problemtitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(problemtitle);
+		layout.setExpandRatio(problemtitle, 1.0f);
+		layout.setComponentAlignment(problemtitle, Alignment.MIDDLE_LEFT);
+
+		final Button createProblemBtn = new Button(
 				LocalizationHelper
 						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new ProblemEvent.GotoAdd(this, null));
 					}
@@ -96,19 +105,19 @@ public class ProblemSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return ProblemSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
 
-			nameField = createSeachSupportTextField(new TextField(),
+			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
 
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
 			final Button searchBtn = new Button();
@@ -119,15 +128,15 @@ public class ProblemSearchPanel extends
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					ProblemBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
 
-			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+			this.myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
 			final Button cancelBtn = new Button(
@@ -141,7 +150,7 @@ public class ProblemSearchPanel extends
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					nameField.setValue("");
+					ProblemBasicSearchLayout.this.nameField.setValue("");
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
@@ -151,20 +160,23 @@ public class ProblemSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new ProblemSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-					project.getId()));
+			ProblemSearchPanel.this.searchCriteria = new ProblemSearchCriteria();
+			ProblemSearchPanel.this.searchCriteria
+					.setProjectId(new NumberSearchField(SearchField.AND,
+							ProblemSearchPanel.this.project.getId()));
 
-			searchCriteria.setProblemname(new StringSearchField(nameField
-					.getValue().toString().trim()));
+			ProblemSearchPanel.this.searchCriteria
+					.setProblemname(new StringSearchField(this.nameField
+							.getValue().toString().trim()));
 
-			if (myItemCheckbox.booleanValue()) {
-				searchCriteria.setAssignToUser(new StringSearchField(
-						SearchField.AND, AppContext.getUsername()));
+			if (this.myItemCheckbox.booleanValue()) {
+				ProblemSearchPanel.this.searchCriteria
+						.setAssignToUser(new StringSearchField(SearchField.AND,
+								AppContext.getUsername()));
 			} else {
-				searchCriteria.setAssignToUser(null);
+				ProblemSearchPanel.this.searchCriteria.setAssignToUser(null);
 			}
-			return searchCriteria;
+			return ProblemSearchPanel.this.searchCriteria;
 		}
 	}
 }

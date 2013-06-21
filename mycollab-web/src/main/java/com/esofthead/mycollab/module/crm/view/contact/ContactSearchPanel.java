@@ -32,6 +32,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -42,21 +43,28 @@ public class ContactSearchPanel extends
 		DefaultGenericSearchPanel<ContactSearchCriteria> {
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Contacts");
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/22/crm/contact.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
+		final Label searchtitle = new Label("Contacts");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setExpandRatio(searchtitle, 1.0f);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		Button createAccountBtn = new Button("Create",
+		final Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoAdd(this, null));
 					}
@@ -86,38 +94,39 @@ public class ContactSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return ContactSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout layout = new HorizontalLayout();
+			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
 			// layout.addComponent(new Label("Name"));
-			nameField = this.createSeachSupportTextField(new TextField(),
+			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(layout, this.nameField,
+					Alignment.MIDDLE_CENTER);
 
-			Button searchBtn = new Button();
+			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					ContactBasicSearchLayout.this.callSearchAction();
 				}
 			});
 
 			UiUtils.addComponent(layout, searchBtn, Alignment.MIDDLE_LEFT);
 
-			myItemCheckbox = new CheckBox(
+			this.myItemCheckbox = new CheckBox(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
-			myItemCheckbox.setWidth("75px");
-			UiUtils.addComponent(layout, myItemCheckbox,
+			this.myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(layout, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
 			// UiUtils.addComponent(layout, myItemCheckbox,
@@ -130,21 +139,22 @@ public class ContactSearchPanel extends
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(ClickEvent event) {
-					nameField.setValue("");
+				public void buttonClick(final ClickEvent event) {
+					ContactBasicSearchLayout.this.nameField.setValue("");
 				}
 			});
 			UiUtils.addComponent(layout, cancelBtn, Alignment.MIDDLE_CENTER);
 
-			Button advancedSearchBtn = new Button(
+			final Button advancedSearchBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_ADVANCED_SEARCH),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							moveToAdvancedSearchLayout();
+						public void buttonClick(final ClickEvent event) {
+							ContactSearchPanel.this
+									.moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -158,14 +168,14 @@ public class ContactSearchPanel extends
 			final ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 					AppContext.getAccountId()));
-			if (StringUtil.isNotNullOrEmpty(nameField.getValue().toString()
-					.trim())) {
-				searchCriteria
-						.setContactName(new StringSearchField(SearchField.AND,
-								nameField.getValue().toString().trim()));
+			if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
+					.toString().trim())) {
+				searchCriteria.setContactName(new StringSearchField(
+						SearchField.AND, this.nameField.getValue().toString()
+								.trim()));
 			}
 
-			if (myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.booleanValue()) {
 				searchCriteria.setAssignUsers(new SetSearchField<String>(
 						SearchField.AND, new String[] { AppContext
 								.getUsername() }));
@@ -199,7 +209,7 @@ public class ContactSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return ContactSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
@@ -215,44 +225,45 @@ public class ContactSearchPanel extends
 				gridLayout = new GridFormLayoutHelper(3, 4, "90px");
 			}
 
-			firstnameField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(),
+			this.firstnameField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(),
 							"firstnameField"), "First Name", 0, 0);
-			lastnameField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(),
+			this.lastnameField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(),
 							"lastnameField"), "Last Name", 0, 1);
-			accountnameField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(),
+			this.accountnameField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(),
 							"accountnameField"), "Account Name", 0, 2);
-			assignUserField = (UserListSelect) gridLayout.addComponent(
-					createSeachSupportComboBox(new UserListSelect()),
+			this.assignUserField = (UserListSelect) gridLayout.addComponent(
+					this.createSeachSupportComboBox(new UserListSelect()),
 					"Assign User", 0, 3);
 
-			anyEmailField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(),
+			this.anyEmailField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(),
 							"anyEmailField"), "Any Email", 1, 0);
-			anyAddressField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(),
+			this.anyAddressField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(),
 							"anyAddressField"), "Any Address", 1, 1);
-			stateField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(), "stateField"),
-					"State", 1, 2);
-			countryField = (CountryListSelect) gridLayout.addComponent(
-					createSeachSupportComboBox(new CountryListSelect()),
+			this.stateField = (TextField) gridLayout.addComponent(
+					this.createSeachSupportTextField(new TextField(),
+							"stateField"), "State", 1, 2);
+			this.countryField = (CountryListSelect) gridLayout.addComponent(
+					this.createSeachSupportComboBox(new CountryListSelect()),
 					"Country", 1, 3);
 
-			anyPhoneField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(),
+			this.anyPhoneField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(),
 							"anyPhoneField"), "Any Phone", 2, 0);
-			cityField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(), "cityField"),
+			this.cityField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(), "cityField"),
 					"City", 2, 1);
-			postalCodeField = (TextField) gridLayout.addComponent(
-					createSeachSupportTextField(new TextField(),
+			this.postalCodeField = (TextField) gridLayout.addComponent(this
+					.createSeachSupportTextField(new TextField(),
 							"postalCodeField"), "Postal Code", 2, 2);
-			leadSourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					createSeachSupportComboBox(new LeadSourceListSelect()),
-					"Lead Source", 2, 3);
+			this.leadSourceField = (LeadSourceListSelect) gridLayout
+					.addComponent(
+							this.createSeachSupportComboBox(new LeadSourceListSelect()),
+							"Lead Source", 2, 3);
 
 			gridLayout.getLayout().setSpacing(true);
 
@@ -265,72 +276,81 @@ public class ContactSearchPanel extends
 			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 					AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) firstnameField.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) this.firstnameField
+					.getValue())) {
 				searchCriteria.setFirstname(new StringSearchField(
-						SearchField.AND, ((String) firstnameField.getValue())
-								.trim()));
+						SearchField.AND, ((String) this.firstnameField
+								.getValue()).trim()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) lastnameField.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) this.lastnameField
+					.getValue())) {
 				searchCriteria.setLastname(new StringSearchField(
-						SearchField.AND, ((String) lastnameField.getValue())
-								.trim()));
+						SearchField.AND, ((String) this.lastnameField
+								.getValue()).trim()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) accountnameField
+			if (StringUtil.isNotNullOrEmpty((String) this.accountnameField
 					.getValue())) {
 				searchCriteria.setAccountName(new StringSearchField(
-						SearchField.AND, ((String) accountnameField.getValue())
-								.trim()));
+						SearchField.AND, ((String) this.accountnameField
+								.getValue()).trim()));
 			}
 
-			Collection<String> assignUsers = (Collection<String>) assignUserField
+			final Collection<String> assignUsers = (Collection<String>) this.assignUserField
 					.getValue();
 			if (assignUsers != null && assignUsers.size() > 0) {
 				searchCriteria.setAssignUsers(new SetSearchField<String>(
 						SearchField.AND, assignUsers));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) anyEmailField.getValue())) {
-				searchCriteria.setAnyEmail(new StringSearchField(
-						SearchField.AND, (String) anyEmailField.getValue()));
+			if (StringUtil.isNotNullOrEmpty((String) this.anyEmailField
+					.getValue())) {
+				searchCriteria
+						.setAnyEmail(new StringSearchField(SearchField.AND,
+								(String) this.anyEmailField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) this.anyAddressField
+					.getValue())) {
+				searchCriteria.setAnyAddress(new StringSearchField(
+						SearchField.AND, (String) this.anyAddressField
+								.getValue()));
 			}
 
 			if (StringUtil
-					.isNotNullOrEmpty((String) anyAddressField.getValue())) {
-				searchCriteria.setAnyAddress(new StringSearchField(
-						SearchField.AND, (String) anyAddressField.getValue()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) stateField.getValue())) {
+					.isNotNullOrEmpty((String) this.stateField.getValue())) {
 				searchCriteria.setAnyState(new StringSearchField(
-						SearchField.AND, (String) stateField.getValue()));
+						SearchField.AND, (String) this.stateField.getValue()));
 			}
 
-			Collection<String> countries = (Collection<String>) countryField
+			final Collection<String> countries = (Collection<String>) this.countryField
 					.getValue();
 			if (countries != null && countries.size() > 0) {
 				searchCriteria.setCountries(new SetSearchField<String>(
 						SearchField.AND, countries));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) anyPhoneField.getValue())) {
-				searchCriteria.setAnyPhone(new StringSearchField(
-						SearchField.AND, (String) anyPhoneField.getValue()));
+			if (StringUtil.isNotNullOrEmpty((String) this.anyPhoneField
+					.getValue())) {
+				searchCriteria
+						.setAnyPhone(new StringSearchField(SearchField.AND,
+								(String) this.anyPhoneField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) cityField.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) this.cityField.getValue())) {
 				searchCriteria.setAnyCity(new StringSearchField(
-						SearchField.AND, (String) cityField.getValue()));
+						SearchField.AND, (String) this.cityField.getValue()));
 			}
 
-			if (StringUtil
-					.isNotNullOrEmpty((String) postalCodeField.getValue())) {
+			if (StringUtil.isNotNullOrEmpty((String) this.postalCodeField
+					.getValue())) {
 				searchCriteria.setAnyPostalCode(new StringSearchField(
-						SearchField.AND, (String) postalCodeField.getValue()));
+						SearchField.AND, (String) this.postalCodeField
+								.getValue()));
 			}
 
-			Collection<String> leadSources = (Collection<String>) leadSourceField
+			final Collection<String> leadSources = (Collection<String>) this.leadSourceField
 					.getValue();
 			if (leadSources != null && leadSources.size() > 0) {
 				searchCriteria.setLeadSources(new SetSearchField<String>(
@@ -341,42 +361,63 @@ public class ContactSearchPanel extends
 
 		@Override
 		protected void clearFields() {
-			firstnameField.setValue("");
-			lastnameField.setValue("");
-			accountnameField.setValue("");
-			assignUserField.setValue(null);
-			anyEmailField.setValue("");
-			anyAddressField.setValue("");
-			stateField.setValue("");
-			countryField.setValue(null);
-			anyPhoneField.setValue("");
-			postalCodeField.setValue("");
-			cityField.setValue("");
-			leadSourceField.setValue(null);
+			this.firstnameField.setValue("");
+			this.lastnameField.setValue("");
+			this.accountnameField.setValue("");
+			this.assignUserField.setValue(null);
+			this.anyEmailField.setValue("");
+			this.anyAddressField.setValue("");
+			this.stateField.setValue("");
+			this.countryField.setValue(null);
+			this.anyPhoneField.setValue("");
+			this.postalCodeField.setValue("");
+			this.cityField.setValue("");
+			this.leadSourceField.setValue(null);
 		}
+
 		@Override
-		protected void loadSaveSearchToField(ContactSearchCriteria value) {
-			if (value.getFirstname()!=null) firstnameField.setValue(value.getFirstname().getValue());
-			if (value.getLastname() != null) lastnameField.setValue(value.getLastname().getValue());
-			if (value.getAccountName()!=null) accountnameField.setValue(value.getAccountName().getValue());
-			if (value.getAnyEmail() !=null) anyEmailField.setValue(value.getAnyEmail().getValue());
-			if (value.getAnyAddress()!=null) anyAddressField.setValue(value.getAnyAddress().getValue());
-			if (value.getAnyState()!=null) stateField.setValue(value.getAnyState().getValue());
-			if (value.getAnyPhone()!=null) anyPhoneField.setValue(value.getAnyPhone().getValue());
-			if (value.getAnyPostalCode()!=null) postalCodeField.setValue(value.getAnyPostalCode().getValue());
-			if (value.getAnyCity()!=null) cityField.setValue(value.getAnyCity().getValue());
-			if(value.getAssignUsers()!=null){
-				Object[] assignUser = value.getAssignUsers().values;
-				assignUserField.setValue(Arrays.asList(assignUser));
+		protected void loadSaveSearchToField(final ContactSearchCriteria value) {
+			if (value.getFirstname() != null) {
+				this.firstnameField.setValue(value.getFirstname().getValue());
 			}
-			if(value.getCountries()!=null){
-				Object[] conField = value.getCountries().values;
-				countryField.setValue(Arrays.asList(conField));
+			if (value.getLastname() != null) {
+				this.lastnameField.setValue(value.getLastname().getValue());
 			}
-			
-			if(value.getLeadSources()!=null){
-				Object[] leadField = value.getLeadSources().values;
-				leadSourceField.setValue(Arrays.asList(leadField));
+			if (value.getAccountName() != null) {
+				this.accountnameField.setValue(value.getAccountName()
+						.getValue());
+			}
+			if (value.getAnyEmail() != null) {
+				this.anyEmailField.setValue(value.getAnyEmail().getValue());
+			}
+			if (value.getAnyAddress() != null) {
+				this.anyAddressField.setValue(value.getAnyAddress().getValue());
+			}
+			if (value.getAnyState() != null) {
+				this.stateField.setValue(value.getAnyState().getValue());
+			}
+			if (value.getAnyPhone() != null) {
+				this.anyPhoneField.setValue(value.getAnyPhone().getValue());
+			}
+			if (value.getAnyPostalCode() != null) {
+				this.postalCodeField.setValue(value.getAnyPostalCode()
+						.getValue());
+			}
+			if (value.getAnyCity() != null) {
+				this.cityField.setValue(value.getAnyCity().getValue());
+			}
+			if (value.getAssignUsers() != null) {
+				final Object[] assignUser = value.getAssignUsers().values;
+				this.assignUserField.setValue(Arrays.asList(assignUser));
+			}
+			if (value.getCountries() != null) {
+				final Object[] conField = value.getCountries().values;
+				this.countryField.setValue(Arrays.asList(conField));
+			}
+
+			if (value.getLeadSources() != null) {
+				final Object[] leadField = value.getLeadSources().values;
+				this.leadSourceField.setValue(Arrays.asList(leadField));
 			}
 		}
 	}

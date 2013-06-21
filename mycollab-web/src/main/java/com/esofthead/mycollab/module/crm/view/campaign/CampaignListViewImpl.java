@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -34,30 +35,28 @@ import com.vaadin.ui.VerticalLayout;
 public class CampaignListViewImpl extends AbstractView implements
 		CampaignListView {
 
-	private CampaignSearchPanel campaignSearchPanel;
+	private final CampaignSearchPanel campaignSearchPanel;
 	private SelectionOptionButton selectOptionButton;
 	private CampaignTableDisplay tableItem;
-	private VerticalLayout campainListLayout;
+	private final VerticalLayout campainListLayout;
 	private PopupButtonControl tableActionControls;
-	private Label selectedItemsNumberLabel = new Label();
+	private final Label selectedItemsNumberLabel = new Label();
 
 	public CampaignListViewImpl() {
-		this.setSpacing(true);
 
-		campaignSearchPanel = new CampaignSearchPanel();
-		this.addComponent(campaignSearchPanel);
+		this.campaignSearchPanel = new CampaignSearchPanel();
+		this.addComponent(this.campaignSearchPanel);
 
-		campainListLayout = new VerticalLayout();
-		campainListLayout.setSpacing(true);
-		this.addComponent(campainListLayout);
+		this.campainListLayout = new VerticalLayout();
+		this.addComponent(this.campainListLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new CampaignTableDisplay(
+			this.tableItem = new CampaignTableDisplay(
 					new String[] { "selected", "campaignname", "status",
 							"type", "enddate", "assignUserFullName" },
 					new String[] {
@@ -73,7 +72,7 @@ public class CampaignListViewImpl extends AbstractView implements
 							LocalizationHelper
 									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new CampaignTableDisplay(
+			this.tableItem = new CampaignTableDisplay(
 					new String[] { "selected", "campaignname", "status",
 							"type", "expectedrevenue", "enddate",
 							"assignUserFullName" },
@@ -93,7 +92,7 @@ public class CampaignListViewImpl extends AbstractView implements
 									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		}
 
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -101,8 +100,8 @@ public class CampaignListViewImpl extends AbstractView implements
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleCampaign campaign = (SimpleCampaign) event
+					public void handle(final TableClickEvent event) {
+						final SimpleCampaign campaign = (SimpleCampaign) event
 								.getData();
 						if ("campaignname".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
@@ -113,76 +112,79 @@ public class CampaignListViewImpl extends AbstractView implements
 					}
 				});
 
-		campainListLayout.addComponent(constructTableActionControls());
-		campainListLayout.addComponent(tableItem);
+		this.campainListLayout
+				.addComponent(this.constructTableActionControls());
+		this.campainListLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<CampaignSearchCriteria> getSearchHandlers() {
-		return campaignSearchPanel;
+		return this.campaignSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		Button deleteBtn = new Button(
+		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_CAMPAIGN));
 
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail",
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		tableActionControls.addOptionItem("export",
+		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
-		tableActionControls.addOptionItem("massUpdate", LocalizationHelper
+		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
-		
-		tableActionControls.setVisible(false);
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		this.tableActionControls.setVisible(false);
+
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 		return layout;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue(LocalizationHelper
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setVisible(true);
+		this.selectedItemsNumberLabel.setValue(LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
 						numOfSelectedItems));
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setVisible(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<SimpleCampaign> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 }

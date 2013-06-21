@@ -36,6 +36,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -46,9 +47,15 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 	private final SimpleProject project;
 	protected BugSearchCriteria searchCriteria;
+	protected Label bugtitle;
 
 	public BugSearchPanel() {
+		this("Bugs");
+	}
+
+	public BugSearchPanel(final String title) {
 		this.project = CurrentProjectVariables.getProject();
+		this.bugtitle = new Label(title);
 	}
 
 	@Override
@@ -72,9 +79,16 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		final Label searchtitle = new Label("Search Bugs");
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(searchtitle);
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/24/project/bug.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
+		this.bugtitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(this.bugtitle);
+		layout.setExpandRatio(this.bugtitle, 1.0f);
+		layout.setComponentAlignment(this.bugtitle, Alignment.MIDDLE_LEFT);
 
 		final Button createAccountBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
@@ -96,6 +110,10 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
 		return layout;
+	}
+
+	public void setBugTitle(final String title) {
+		this.bugtitle.setValue(title);
 	}
 
 	@SuppressWarnings("rawtypes")

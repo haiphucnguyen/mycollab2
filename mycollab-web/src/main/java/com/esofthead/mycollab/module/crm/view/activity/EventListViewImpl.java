@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -39,23 +40,21 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public EventListViewImpl() {
-		this.setSpacing(true);
 
-		eventSearchPanel = new EventSearchPanel();
-		this.addComponent(eventSearchPanel);
+		this.eventSearchPanel = new EventSearchPanel();
+		this.addComponent(this.eventSearchPanel);
 
-		eventListLayout = new VerticalLayout();
-		eventListLayout.setSpacing(true);
-		this.addComponent(eventListLayout);
+		this.eventListLayout = new VerticalLayout();
+		this.addComponent(this.eventListLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new EventTableDisplay(
+			this.tableItem = new EventTableDisplay(
 					new String[] { "selected", "status", "eventType",
 							"subject", "endDate" },
 					new String[] {
@@ -69,7 +68,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 							LocalizationHelper
 									.getMessage(TaskI18nEnum.TABLE_END_DATE_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new EventTableDisplay(
+			this.tableItem = new EventTableDisplay(
 					new String[] { "selected", "status", "eventType",
 							"subject", "startDate", "endDate" },
 					new String[] {
@@ -86,7 +85,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 									.getMessage(TaskI18nEnum.TABLE_END_DATE_HEADER) });
 		}
 
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -94,8 +93,9 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleEvent simpleEvent = (SimpleEvent) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleEvent simpleEvent = (SimpleEvent) event
+								.getData();
 						if ("Task".equals(simpleEvent.getEventType())) {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskRead(this,
@@ -112,69 +112,71 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 					}
 				});
 
-		eventListLayout.addComponent(constructTableActionControls());
-		eventListLayout.addComponent(tableItem);
+		this.eventListLayout.addComponent(this.constructTableActionControls());
+		this.eventListLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<EventSearchCriteria> getSearchHandlers() {
-		return eventSearchPanel;
+		return this.eventSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		tableActionControls = new PopupButtonControl("delete",
+		this.tableActionControls = new PopupButtonControl("delete",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
-		tableActionControls.addOptionItem("mail",
+		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		tableActionControls.addOptionItem("export",
+		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
-		tableActionControls.setVisible(false);
+		this.tableActionControls.setVisible(false);
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 		return layout;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue(LocalizationHelper
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setVisible(true);
+		this.selectedItemsNumberLabel.setValue(LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
 						numOfSelectedItems));
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectedItemsNumberLabel.setValue("");
-		selectOptionButton.setSelectedChecbox(false);
+		this.tableActionControls.setVisible(false);
+		this.selectedItemsNumberLabel.setValue("");
+		this.selectOptionButton.setSelectedChecbox(false);
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<SimpleEvent> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<EventSearchCriteria, SimpleEvent> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 }

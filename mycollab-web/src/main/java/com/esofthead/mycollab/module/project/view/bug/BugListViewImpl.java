@@ -32,22 +32,15 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private final BugSearchPanel bugSearchPanel;
 	private BugTableDisplay tableItem;
 	private final VerticalLayout bugListLayout;
-	private final Label titleLbl;
 	private Button exportBtn;
 
 	public BugListViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(true);
-
-		this.titleLbl = new Label();
-		this.titleLbl.setStyleName("h2");
-		this.addComponent(this.titleLbl);
+		this.setMargin(false, true, true, true);
 
 		this.bugSearchPanel = new BugSearchPanel();
 		this.addComponent(this.bugSearchPanel);
 
 		this.bugListLayout = new VerticalLayout();
-		this.bugListLayout.setSpacing(true);
 		this.addComponent(this.bugListLayout);
 
 		this.generateDisplayTable();
@@ -120,6 +113,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
 		final Label lbEmpty = new Label("");
 		layout.addComponent(lbEmpty);
@@ -153,6 +147,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 	@Override
 	public void setTitle(final String title) {
-		this.titleLbl.setValue(title);
+		if (this.bugSearchPanel != null) {
+			this.bugSearchPanel.setBugTitle(title);
+		}
 	}
 }
