@@ -53,7 +53,7 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 		public Layout getLayout() {
 			final VerticalLayout layout = new VerticalLayout();
 
-			final Label organizationHeader = new Label("Milestone Information");
+			final Label organizationHeader = new Label("Phase Information");
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 

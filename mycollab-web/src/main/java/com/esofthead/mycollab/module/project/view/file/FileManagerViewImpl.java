@@ -484,7 +484,7 @@ public class FileManagerViewImpl extends AbstractView implements
 					filterBtnLayout.setSpacing(true);
 					filterBtnLayout.setWidth("100px");
 					resourceSettingPopupBtn.setIcon(MyCollabResource
-							.newResource("icons/12/project/task_menu.png"));
+							.newResource("icons/16/item_settings.png"));
 					resourceSettingPopupBtn.setStyleName("link");
 					resourceSettingPopupBtn.addComponent(filterBtnLayout);
 					return resourceSettingPopupBtn;
@@ -576,7 +576,7 @@ public class FileManagerViewImpl extends AbstractView implements
 			});
 
 			this.setColumnExpandRatio("path", 1);
-			this.setColumnWidth("uuid", 30);
+			this.setColumnWidth("uuid", 22);
 			this.setColumnWidth("createdBy", UIConstants.TABLE_X_LABEL_WIDTH);
 			this.setColumnWidth("size", UIConstants.TABLE_S_LABEL_WIDTH);
 			this.setColumnWidth("created", UIConstants.TABLE_DATE_TIME_WIDTH);

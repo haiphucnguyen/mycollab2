@@ -334,7 +334,7 @@ public class TaskTableDisplay extends
 				filterBtnLayout.addComponent(deleteBtn);
 
 				taskSettingPopupBtn.setIcon(MyCollabResource
-						.newResource("icons/12/project/task_menu.png"));
+						.newResource("icons/16/item_settings.png"));
 				taskSettingPopupBtn.setStyleName("link");
 				taskSettingPopupBtn.addComponent(filterBtnLayout);
 				return taskSettingPopupBtn;
@@ -358,7 +358,7 @@ public class TaskTableDisplay extends
 				});
 
 		this.setColumnExpandRatio("taskname", 1);
-		this.setColumnWidth("id", 30);
+		this.setColumnWidth("id", 22);
 		this.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);

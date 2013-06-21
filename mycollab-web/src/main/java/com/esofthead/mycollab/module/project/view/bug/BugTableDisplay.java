@@ -64,7 +64,7 @@ public class BugTableDisplay extends
 						.getBeanByIndex(itemId);
 				final PopupButton bugSettingBtn = new PopupButton();
 				bugSettingBtn.setIcon(MyCollabResource
-						.newResource("icons/12/project/task_menu.png"));
+						.newResource("icons/16/item_settings.png"));
 				bugSettingBtn.setStyleName("link");
 
 				final ContextMenu menu = new ContextMenu();
@@ -398,7 +398,7 @@ public class BugTableDisplay extends
 		this.setColumnExpandRatio("summary", 1.0f);
 		this.setColumnWidth("assignuserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("id", 30);
+		this.setColumnWidth("id", 22);
 		this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
 		this.setColumnWidth("duedate", UIConstants.TABLE_DATE_WIDTH);
