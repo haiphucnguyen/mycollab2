@@ -27,6 +27,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -318,21 +319,31 @@ public class FileManagerViewImpl extends AbstractView implements
 		private final TextField folderName;
 
 		public AddNewFolderWindow() {
-			this.setWidth("500px");
+			((VerticalLayout) this.getContent()).setWidth(
+					Sizeable.SIZE_UNDEFINED, 0);
 			this.setModal(true);
 			this.setCaption("New Folder");
 			this.center();
 
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
-			layout.addComponent(new Label("Enter folder name: "));
+			layout.setSizeUndefined();
+			final Label captionLbl = new Label("Enter folder name: ");
+			layout.addComponent(captionLbl);
+			layout.setComponentAlignment(captionLbl, Alignment.MIDDLE_LEFT);
 
 			this.folderName = new TextField();
 			layout.addComponent(this.folderName);
+			layout.setComponentAlignment(this.folderName, Alignment.MIDDLE_LEFT);
+			layout.setExpandRatio(this.folderName, 1.0f);
 
 			this.addComponent(layout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(layout,
+					Alignment.MIDDLE_CENTER);
 
 			final HorizontalLayout controlsLayout = new HorizontalLayout();
+			controlsLayout.setSpacing(true);
+			controlsLayout.setMargin(true, false, false, false);
 
 			final Button saveBtn = new Button(
 					LocalizationHelper
@@ -371,6 +382,11 @@ public class FileManagerViewImpl extends AbstractView implements
 								FileManagerViewImpl.this.folderTree.setParent(
 										newFolder,
 										FileManagerViewImpl.this.baseFolder);
+								FileManagerViewImpl.this.folderTree
+										.setItemIcon(
+												newFolder,
+												MyCollabResource
+														.newResource("icons/16/ecm/folder_close.png"));
 								if (FileManagerViewImpl.this.folderTree
 										.isCollapsed(FileManagerViewImpl.this.baseFolder)) {
 									FileManagerViewImpl.this.folderTree
@@ -383,6 +399,7 @@ public class FileManagerViewImpl extends AbstractView implements
 							}
 						}
 					});
+			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlsLayout.addComponent(saveBtn);
 
 			final Button cancelBtn = new Button(
@@ -397,9 +414,14 @@ public class FileManagerViewImpl extends AbstractView implements
 
 						}
 					});
+			cancelBtn.addStyleName(UIConstants.THEME_LINK);
 			controlsLayout.addComponent(cancelBtn);
+			controlsLayout.setComponentAlignment(cancelBtn,
+					Alignment.MIDDLE_RIGHT);
 
 			this.addComponent(controlsLayout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(
+					controlsLayout, Alignment.MIDDLE_CENTER);
 		}
 	}
 
@@ -413,19 +435,26 @@ public class FileManagerViewImpl extends AbstractView implements
 		public UploadContentWindow() {
 			super("Upload Content");
 			this.setWidth("500px");
+			((VerticalLayout) this.getContent()).setMargin(false, false, true,
+					false);
 			this.setModal(true);
 
-			this.layoutHelper = new GridFormLayoutHelper(1, 2);
+			this.layoutHelper = new GridFormLayoutHelper(1, 2, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
 
 			this.uploadField = (SingleFileUploadField) this.layoutHelper
 					.addComponent(new SingleFileUploadField(), "File", 0, 0);
 			this.descField = (TextArea) this.layoutHelper.addComponent(
 					new TextArea(), "Description", 0, 1);
 
+			this.layoutHelper.getLayout().setWidth("100%");
+			this.layoutHelper.getLayout().setMargin(false);
+			this.layoutHelper.getLayout().addStyleName("colored-gridlayout");
 			this.addComponent(this.layoutHelper.getLayout());
 
 			final HorizontalLayout controlsLayout = new HorizontalLayout();
-			controlsLayout.setWidth("100%");
+			controlsLayout.setSpacing(true);
+			controlsLayout.setMargin(true, false, false, false);
 
 			final Button uploadBtn = new Button("Upload",
 					new Button.ClickListener() {
@@ -461,7 +490,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 						}
 					});
-
+			uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlsLayout.addComponent(uploadBtn);
 
 			final Button cancelBtn = new Button("Cancel",
@@ -473,9 +502,14 @@ public class FileManagerViewImpl extends AbstractView implements
 							UploadContentWindow.this.close();
 						}
 					});
+			cancelBtn.addStyleName(UIConstants.THEME_LINK);
 			controlsLayout.addComponent(cancelBtn);
+			controlsLayout.setComponentAlignment(cancelBtn,
+					Alignment.MIDDLE_RIGHT);
 
 			this.addComponent(controlsLayout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(
+					controlsLayout, Alignment.MIDDLE_CENTER);
 		}
 
 	}
