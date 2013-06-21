@@ -102,7 +102,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 		try {
 			ObjectListing listObjects = s3client.listObjects("mycollab_assets",
-					"");
+					"icons/16/filetypes");
 			for (S3ObjectSummary objectSummary : listObjects
 					.getObjectSummaries()) {
 				System.out.println("Key: " + objectSummary.getKey());
