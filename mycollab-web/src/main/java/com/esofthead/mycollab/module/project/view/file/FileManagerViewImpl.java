@@ -617,7 +617,9 @@ public class FileManagerViewImpl extends AbstractView implements
 												public void onClose(
 														ConfirmDialog dialog) {
 													if (dialog.isConfirmed()) {
-
+														resourceService
+																.removeResource(resource
+																		.getPath());
 													}
 												}
 											});

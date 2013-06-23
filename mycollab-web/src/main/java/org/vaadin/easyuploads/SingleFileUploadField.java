@@ -16,11 +16,8 @@ public class SingleFileUploadField extends UploadField {
 
 	@Override
 	protected void updateDisplay() {
-		// TODO Auto-generated method stub
-
+//		super.updateDisplay();
 		String filename = getLastFileName();
-		// String mimeType = getLastMimeType();
-		// long filesize = getLastFileSize();
 
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.addComponent(new Embedded(null, UiUtils
