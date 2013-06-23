@@ -28,6 +28,17 @@ public class StreamDownloadResourceFactory {
 					"Do not support storage system setting. Accept file or s3 only");
 		}
 	}
+	
+	public static Resource getStreamFolderResource(String documentPath) {
+		if (StorageSetting.isFileStorage()) {
+			return new StreamFolderDownloadResource(documentPath);
+		} else if (StorageSetting.isS3Storage()) {
+			return new S3StreamDownloadResource(documentPath);
+		} else {
+			throw new MyCollabException(
+					"Do not support storage system setting. Accept file or s3 only");
+		}
+	}
 
 	public static Resource getImagePreviewResource(String documentPath) {
 		if (StorageSetting.isFileStorage()) {

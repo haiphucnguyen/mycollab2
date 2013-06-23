@@ -19,8 +19,8 @@ public class SingleFileUploadField extends UploadField {
 		// TODO Auto-generated method stub
 
 		String filename = getLastFileName();
-//		String mimeType = getLastMimeType();
-//		long filesize = getLastFileSize();
+		// String mimeType = getLastMimeType();
+		// long filesize = getLastFileSize();
 
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.addComponent(new Embedded(null, UiUtils
@@ -33,5 +33,9 @@ public class SingleFileUploadField extends UploadField {
 
 	public String getFileName() {
 		return getLastFileName();
+	}
+
+	public long getFileSize() {
+		return getLastFileSize();
 	}
 }

@@ -253,9 +253,9 @@ public class FileManagerViewImpl extends AbstractView implements
 				.setContainerDataSource(new BeanItemContainer<Resource>(
 						Resource.class, resources));
 		this.resourceTable.setVisibleColumns(new String[] { "uuid", "path",
-				"size", "created", "createdUser" });
-		this.resourceTable.setColumnHeaders(new String[] { "", "Name", "Size",
-				"Created", "By" });
+				"size", "created" });
+		this.resourceTable.setColumnHeaders(new String[] { "", "Name",
+				"Size (Kb)", "Created" });
 
 	}
 
@@ -480,6 +480,9 @@ public class FileManagerViewImpl extends AbstractView implements
 										+ "/"
 										+ UploadContentWindow.this.uploadField
 												.getFileName());
+								content.setSize(Double.parseDouble(""
+										+ UploadContentWindow.this.uploadField
+												.getFileSize()));
 								FileManagerViewImpl.this.resourceService
 										.saveContent(content,
 												AppContext.getUsername(),
@@ -527,6 +530,7 @@ public class FileManagerViewImpl extends AbstractView implements
 	@SuppressWarnings("serial")
 	private class ResourceTableDisplay extends Table {
 		public ResourceTableDisplay() {
+
 			this.addGeneratedColumn("uuid", new Table.ColumnGenerator() {
 				private static final long serialVersionUID = 1L;
 
@@ -568,6 +572,8 @@ public class FileManagerViewImpl extends AbstractView implements
 												.getApplication()
 												.getMainWindow()
 												.open(downloadResource, "_self");
+									} else {
+
 									}
 
 								}
@@ -695,24 +701,26 @@ public class FileManagerViewImpl extends AbstractView implements
 						final Object itemId, final Object columnId) {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
-					return new Label(resource.getSize() + "");
+					return new Label(Math.round(resource.getSize() / 1024) + "");
 				}
 			});
 
-			this.addGeneratedColumn("createdBy", new Table.ColumnGenerator() {
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final Resource resource = ResourceTableDisplay.this
-							.getResource(itemId);
-					return new Label(resource.getCreatedBy());
-				}
-			});
+			// this.addGeneratedColumn("createdBy", new Table.ColumnGenerator()
+			// {
+			//
+			// @Override
+			// public Object generateCell(final Table source,
+			// final Object itemId, final Object columnId) {
+			// final Resource resource = ResourceTableDisplay.this
+			// .getResource(itemId);
+			// return new Label(resource.getCreatedBy());
+			// }
+			// });
 
 			this.setColumnExpandRatio("path", 1);
 			this.setColumnWidth("uuid", 22);
-			this.setColumnWidth("createdBy", UIConstants.TABLE_X_LABEL_WIDTH);
+			// this.setColumnWidth("createdBy",
+			// UIConstants.TABLE_X_LABEL_WIDTH);
 			this.setColumnWidth("size", UIConstants.TABLE_S_LABEL_WIDTH);
 			this.setColumnWidth("created", UIConstants.TABLE_DATE_TIME_WIDTH);
 		}

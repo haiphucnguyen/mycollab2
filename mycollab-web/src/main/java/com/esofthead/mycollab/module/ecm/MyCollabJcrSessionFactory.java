@@ -84,6 +84,15 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 		contentTypeTemplate.getPropertyDefinitionTemplates().add(
 				lastModifiedUserPropertyTemplate);
 
+		PropertyDefinitionTemplate sizePropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		sizePropertyTemplate.setMultiple(false);
+		sizePropertyTemplate.setName("mycollab:size");
+		sizePropertyTemplate.setMandatory(true);
+		sizePropertyTemplate.setRequiredType(PropertyType.DOUBLE);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				sizePropertyTemplate);
+
 		return contentTypeTemplate;
 	}
 

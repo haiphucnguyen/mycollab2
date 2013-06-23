@@ -100,7 +100,9 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						addNode.setProperty("jcr:description",
 								content.getDescription());
 						addNode.setProperty("mycollab:createdUser", createdUser);
-						addNode.setProperty("mycollab:lastModifiedUser", createdUser);
+						addNode.setProperty("mycollab:lastModifiedUser",
+								createdUser);
+						addNode.setProperty("mycollab:size", content.getSize());
 						session.save();
 					} catch (Exception e) {
 						log.error("error in convertToNode Method", e);
@@ -325,6 +327,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			content.setTitle(node.getProperty("jcr:title").getString());
 			content.setDescription(node.getProperty("jcr:description")
 					.getString());
+			content.setSize(node.getProperty("mycollab:size").getDouble());
 			content.setCreatedUser(node.getProperty("mycollab:createdUser")
 					.getString());
 			String contentPath = node.getPath();
