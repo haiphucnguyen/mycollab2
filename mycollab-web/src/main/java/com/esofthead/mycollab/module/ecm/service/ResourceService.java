@@ -18,4 +18,6 @@ public interface ResourceService {
 	void saveContent(Content content, String createdUser, InputStream refStream);
 
 	void removeResource(String path);
+
+	InputStream getContantStream(String path);
 }

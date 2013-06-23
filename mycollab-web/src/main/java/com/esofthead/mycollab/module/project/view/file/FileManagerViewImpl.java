@@ -562,6 +562,8 @@ public class FileManagerViewImpl extends AbstractView implements
 
 								@Override
 								public void buttonClick(final ClickEvent event) {
+									resourceSettingPopupBtn
+											.setPopupVisible(false);
 									if (resource instanceof Content) {
 										resourceSettingPopupBtn
 												.setPopupVisible(false);
@@ -573,7 +575,13 @@ public class FileManagerViewImpl extends AbstractView implements
 												.getMainWindow()
 												.open(downloadResource, "_self");
 									} else {
-
+										com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+												.getStreamFolderResource(((Folder) resource)
+														.getPath());
+										AppContext
+												.getApplication()
+												.getMainWindow()
+												.open(downloadResource, "_self");
 									}
 
 								}

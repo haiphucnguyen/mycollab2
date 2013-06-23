@@ -61,4 +61,9 @@ public class ResourceServiceImpl implements ResourceService {
 
 		rawContentService.removeContent(path);
 	}
+
+	@Override
+	public InputStream getContantStream(String path) {
+		return rawContentService.getContent(path);
+	}
 }

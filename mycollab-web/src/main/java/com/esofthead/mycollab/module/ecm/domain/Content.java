@@ -3,9 +3,8 @@ package com.esofthead.mycollab.module.ecm.domain;
 import java.util.Calendar;
 
 public class Content extends Resource {
-	private String title="";
-	private String description="";
-	private String path="";
+	private String title = "";
+	private String description = "";
 	private Calendar lastModified;
 	private String lastModifiedBy;
 
@@ -23,14 +22,6 @@ public class Content extends Resource {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	public Calendar getLastModified() {

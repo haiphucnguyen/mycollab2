@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 
 public class StreamDownloadResourceFactory {
 	public static Resource getAccountStreamResource(String documentPath) {
@@ -28,10 +29,11 @@ public class StreamDownloadResourceFactory {
 					"Do not support storage system setting. Accept file or s3 only");
 		}
 	}
-	
+
 	public static Resource getStreamFolderResource(String documentPath) {
 		if (StorageSetting.isFileStorage()) {
-			return new StreamFolderDownloadResource(documentPath);
+			return new StreamResource(new StreamFolderDownloadResource(
+					documentPath), "out.zip", AppContext.getApplication());
 		} else if (StorageSetting.isS3Storage()) {
 			return new S3StreamDownloadResource(documentPath);
 		} else {
