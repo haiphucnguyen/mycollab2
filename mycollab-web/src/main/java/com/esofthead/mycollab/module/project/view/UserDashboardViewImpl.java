@@ -29,11 +29,13 @@ public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
 	private static final long serialVersionUID = 1L;
 
-	private final MyProjectListComponent myProjectListComponent;
+	private ButtonLink followingTicketsLink;
 
-	private final ActivityStreamComponent activityStreamComponent;
+	private MyProjectListComponent myProjectListComponent;
 
-	private final TaskStatusComponent taskStatusComponent;
+	private ActivityStreamComponent activityStreamComponent;
+
+	private TaskStatusComponent taskStatusComponent;
 
 	public UserDashboardViewImpl() {
 		this.setSpacing(true);
@@ -89,15 +91,16 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 		final HorizontalLayout headerContentBottom = new HorizontalLayout();
 		headerContentBottom.setSpacing(true);
-		final ButtonLink userTasks = new ButtonLink("My Tasks (" + "0" + ")");
-		final ButtonLink userBugs = new ButtonLink("My Bugs (" + "0" + ")");
-		userTasks.setIcon(MyCollabResource
+		followingTicketsLink = new ButtonLink("My Following Tickets (" + "0"
+				+ ")");
+		final ButtonLink userBugs = new ButtonLink("My Time (" + "0" + ")");
+		followingTicketsLink.setIcon(MyCollabResource
 				.newResource("icons/16/project/task.png"));
-		userTasks.removeStyleName("wordWrap");
+		followingTicketsLink.removeStyleName("wordWrap");
 		userBugs.setIcon(MyCollabResource
 				.newResource("icons/16/project/bug.png"));
 		userBugs.removeStyleName("wordWrap");
-		headerContentBottom.addComponent(userTasks);
+		headerContentBottom.addComponent(followingTicketsLink);
 		headerContentBottom.addComponent(userBugs);
 
 		headerContent.addComponent(headerContentTop);
@@ -142,6 +145,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 		}
 
 		this.taskStatusComponent.showProjectTasksByStatus();
+
+		// show following ticket numbers
 
 	}
 }

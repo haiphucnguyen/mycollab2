@@ -29,6 +29,7 @@
     <sql id="selectItem">
         <![CDATA[
           SELECT m_monitor_item.id, m_monitor_item.user, m_monitor_item.monitor_date, m_monitor_item.type, m_monitor_item.typeid, 
+                 m_monitor_item.extratypeid,
                  changeUser.avatarId AS userAvatarId,
                  concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename + ' ', '')), changeUser.lastname) as userFullname
             FROM m_monitor_item

@@ -18,6 +18,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -50,10 +51,17 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/24/project/file.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
 		final Label searchtitle = new Label("Files");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+		layout.setExpandRatio(searchtitle, 1.0f);
 
 		if (this.menuBar != null) {
 			UiUtils.addComponent(layout, this.menuBar, Alignment.MIDDLE_RIGHT);
