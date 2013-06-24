@@ -1,14 +1,17 @@
 package com.esofthead.mycollab.module.project.dao;
 
-import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.module.project.domain.FollowingTicket;
+import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 
 public interface ProjectMapperExt extends ISearchableDAO<ProjectSearchCriteria> {
 
@@ -25,4 +28,11 @@ public interface ProjectMapperExt extends ISearchableDAO<ProjectSearchCriteria> 
 	SimpleProject findProjectById(int projectId);
 
 	String getSubdomainOfProject(int projectId);
+
+	int getTotalFollowingTickets(
+			@Param("searchCriteria") MonitorSearchCriteria searchRequest);
+
+	List<FollowingTicket> getProjectFollowingTickets(
+			@Param("searchCriteria") MonitorSearchCriteria searchRequest,
+			RowBounds rowBounds);
 }

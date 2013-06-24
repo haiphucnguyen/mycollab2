@@ -30,6 +30,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -195,10 +196,12 @@ public class ProblemListViewImpl extends AbstractView implements
 	}
 
 	private ComponentContainer constructTableActionControls() {
+		final CssLayout layoutWrapper = new CssLayout();
+		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layout.setSpacing(true);
+		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
@@ -217,7 +220,7 @@ public class ProblemListViewImpl extends AbstractView implements
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
-		return layout;
+		return layoutWrapper;
 	}
 
 	@Override

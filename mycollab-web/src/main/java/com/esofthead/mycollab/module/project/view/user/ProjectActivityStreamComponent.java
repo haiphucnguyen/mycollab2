@@ -46,12 +46,13 @@ public class ProjectActivityStreamComponent extends Depot {
 	public ProjectActivityStreamComponent() {
 		super("Project Feeds", new VerticalLayout());
 		this.activityStreamList = new ProjectActivityStreamPagedList();
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
 		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
 	public void showProjectFeeds() {
+		this.bodyContent.removeAllComponents();
+		this.bodyContent.addComponent(new LazyLoadWrapper(
+				this.activityStreamList));
 		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
 				new String[] { ModuleNameConstants.PRJ }));

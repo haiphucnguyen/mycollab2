@@ -34,6 +34,19 @@
             property="createdUserFullName" />
     </resultMap>
 
+    <resultMap id="FollowingTicketResult"
+        type="com.esofthead.mycollab.module.project.domain.FollowingTicket">
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+        <result column="assignUser" jdbcType="VARCHAR" property="assignUser" />
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
+            property="assignUserAvatarId" />
+        <result column="assignUserFullName" jdbcType="VARCHAR"
+            property="assignUserFullName" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+    </resultMap>
+
     <sql id="querySearchCriteria">
         <if test="searchCriteria.username != null">
             <![CDATA[
@@ -244,6 +257,47 @@
                 1=1
                 <include
                     refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
+    </select>
+
+    <sql id="selectFollowingTicket">
+        <![CDATA[
+        SELECT 'Task' as type, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
+            m_prj_task.taskname AS summary, m_prj_task.assignUser AS assignUser,
+            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
+            s_user.avatarId AS assignUserAvatarId
+               
+        FROM m_monitor_item
+            LEFT OUTER JOIN m_prj_task ON (m_monitor_item.type='Project-Task' AND m_monitor_item.typeid=m_prj_task.id)
+            LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=m_monitor_item.extraTypeId)
+            LEFT OUTER JOIN s_user ON (s_user.username=m_prj_task.assignUser)
+        ]]>
+    </sql>
+
+    <select id="getProjectFollowingTickets" parameterType="MonitorSearchCriteria"
+        resultMap="FollowingTicketResult">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectFollowingTicket" />
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
+            </trim>
+            <include
+                refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.orderStatement" />
+        </if>
+    </select>
+
+    <select id="getTotalFollowingTickets" resultType="int"
+        parameterType="MonitorSearchCriteria">
+        SELECT count(*) as totalCount FROM m_monitor_item
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
             </trim>
         </if>
     </select>

@@ -31,6 +31,7 @@ import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -56,17 +57,17 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 	public TimeTrackingListViewImpl() {
 
-		this.setSpacing(true);
-		this.setMargin(true);
+		// this.setSpacing(true);
+		this.setMargin(false, true, true, true);
 
 		this.itemTimeLoggingService = AppContext
 				.getSpringBean(ItemTimeLoggingService.class);
 
-		final Label titleLbl = new Label(
-				LocalizationHelper
-						.getMessage(TimeTrackingI18nEnum.TIME_RECORD_HEADER));
-		titleLbl.setStyleName("h2");
-		this.addComponent(titleLbl);
+		// final Label titleLbl = new Label(
+		// LocalizationHelper
+		// .getMessage(TimeTrackingI18nEnum.TIME_RECORD_HEADER));
+		// titleLbl.setStyleName("h2");
+		// this.addComponent(titleLbl);
 
 		this.itemTimeLoggingPanel = new ItemTimeLoggingSearchPanel();
 		this.itemTimeLoggingPanel
@@ -80,8 +81,13 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				});
 		this.addComponent(this.itemTimeLoggingPanel);
 
+		final CssLayout headerWrapper = new CssLayout();
+		headerWrapper.setWidth("100%");
+		headerWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+
 		final HorizontalLayout headerLayout = new HorizontalLayout();
 		headerLayout.setWidth("100%");
+		headerWrapper.addComponent(headerLayout);
 		this.lbTimeRange = new Label("", Label.CONTENT_XHTML);
 		headerLayout.addComponent(this.lbTimeRange);
 		headerLayout.setComponentAlignment(this.lbTimeRange,
@@ -116,7 +122,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		});
 		headerLayout.setComponentAlignment(this.exportBtn,
 				Alignment.MIDDLE_RIGHT);
-		this.addComponent(headerLayout);
+		this.addComponent(headerWrapper);
 
 		this.initUI();
 	}

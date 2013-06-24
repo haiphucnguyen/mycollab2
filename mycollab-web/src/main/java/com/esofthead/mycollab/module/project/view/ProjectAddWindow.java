@@ -8,7 +8,6 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -17,7 +16,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -28,6 +26,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class ProjectAddWindow extends Window {
@@ -43,7 +42,10 @@ public class ProjectAddWindow extends Window {
 		this.project = new Project();
 		this.editForm = new EditForm();
 		this.addComponent(this.editForm);
+		this.setCaption("New Project");
 		this.editForm.setItemDataSource(new BeanItem<Project>(this.project));
+		((VerticalLayout) this.getContent()).setMargin(false, false, true,
+				false);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Project> {
@@ -65,18 +67,19 @@ public class ProjectAddWindow extends Window {
 
 			@Override
 			public Layout getLayout() {
-				final AddViewLayout projectAddLayout = new AddViewLayout(
-						"New Project",
-						MyCollabResource
-								.newResource("icons/24/project/project.png"));
+
+				final VerticalLayout projectAddLayout = new VerticalLayout();
+
 				this.informationLayout = new GridFormLayoutHelper(2, 4, "100%",
 						"167px", Alignment.MIDDLE_LEFT);
+				this.informationLayout.getLayout().setWidth("100%");
 				this.informationLayout.getLayout().setMargin(false);
 				this.informationLayout.getLayout().setSpacing(false);
 				this.informationLayout.getLayout().addStyleName(
 						"colored-gridlayout");
 
-				projectAddLayout.addBody(this.informationLayout.getLayout());
+				projectAddLayout.addComponent(this.informationLayout
+						.getLayout());
 
 				final HorizontalLayout buttonControls = new HorizontalLayout();
 				buttonControls.setSpacing(true);
@@ -134,7 +137,9 @@ public class ProjectAddWindow extends Window {
 				buttonControls.setComponentAlignment(closeBtn,
 						Alignment.MIDDLE_CENTER);
 
-				projectAddLayout.addBottomControls(buttonControls);
+				projectAddLayout.addComponent(buttonControls);
+				projectAddLayout.setComponentAlignment(buttonControls,
+						Alignment.MIDDLE_CENTER);
 				return projectAddLayout;
 			}
 
@@ -159,7 +164,7 @@ public class ProjectAddWindow extends Window {
 							1, 2);
 				} else if (propertyId.equals("description")) {
 					this.informationLayout.addComponent(field, "Description",
-							0, 3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
+							0, 3, 2, "100%", Alignment.MIDDLE_LEFT);
 				}
 
 			}

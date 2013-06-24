@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -122,10 +123,12 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 	}
 
 	private ComponentContainer constructTableActionControls() {
+		final CssLayout layoutWrapper = new CssLayout();
+		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
-		layout.setWidth("100%");
-		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
@@ -142,7 +145,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
-		return layout;
+		return layoutWrapper;
 	}
 
 	@Override
