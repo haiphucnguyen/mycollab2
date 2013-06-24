@@ -6,6 +6,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -16,7 +17,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 
 	private static final long serialVersionUID = 1L;
 	private String title;
-	private LeadInformationLayout leadInformation;
+	private LeadEditInformationLayout leadInformation;
 
 	public LeadFormLayoutFactory(String title) {
 		this.title = title;
@@ -25,13 +26,12 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 leadAddLayout = new AddViewLayout2(title,
-				MyCollabResource
-				.newResource("icons/22/crm/lead.png"));
+				MyCollabResource.newResource("icons/22/crm/lead.png"));
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {
 			leadAddLayout.addControlButtons(topPanel);
 		}
-		leadInformation = new LeadInformationLayout();
+		leadInformation = new LeadEditInformationLayout();
 		leadAddLayout.addBody(leadInformation.getLayout());
 		return leadAddLayout;
 	}
@@ -45,13 +45,13 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 		leadInformation.attachField(propertyId, field);
 	}
 
-	public static class LeadInformationLayout implements IFormLayoutFactory {
+	private static abstract class LeadGenericInformationLayout implements
+			IFormLayoutFactory {
 		private static final long serialVersionUID = 1L;
 		protected VerticalLayout layout;
 		protected GridFormLayoutHelper informationLayout;
 		protected GridFormLayoutHelper addressLayout;
 		protected GridFormLayoutHelper descLayout;
-		private HorizontalLayout prefixFirstNameBox;
 
 		@Override
 		public Layout getLayout() {
@@ -70,10 +70,11 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 
 			layout.addComponent(informationLayout.getLayout());
 
-			prefixFirstNameBox = new HorizontalLayout();
-			prefixFirstNameBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			informationLayout.addComponent(prefixFirstNameBox, "First Name", 0,
-					0);
+			Component firstnameBox = createFirstNameBox();
+			if (firstnameBox != null) {
+				informationLayout
+						.addComponent(firstnameBox, "First Name", 0, 0);
+			}
 
 			Label addressHeader = new Label("Address Information");
 			addressHeader.setStyleName("h2");
@@ -98,15 +99,10 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 			return layout;
 		}
 
+		protected abstract Component createFirstNameBox();
+
 		@Override
 		public void attachField(Object propertyId, Field field) {
-			if (propertyId.equals("prefixname")) {
-				prefixFirstNameBox.addComponent(field, 0);
-			} else if (propertyId.equals("firstname")) {
-				prefixFirstNameBox.addComponent(field);
-				field.setWidth("195px");
-			}
-
 			informationLayout.addComponent(propertyId.equals("lastname"),
 					field, "Last Name", 0, 1);
 			informationLayout.addComponent(propertyId.equals("title"), field,
@@ -166,5 +162,56 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 						Alignment.TOP_LEFT);
 			}
 		}
+
+	}
+
+	public static class LeadEditInformationLayout extends
+			LeadGenericInformationLayout {
+		private static final long serialVersionUID = 1L;
+
+		private HorizontalLayout firstNameBox;
+
+		@Override
+		protected Component createFirstNameBox() {
+			firstNameBox = new HorizontalLayout();
+			firstNameBox.setDebugId("Firstnamebox");
+			firstNameBox.setSpacing(true);
+			firstNameBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			return firstNameBox;
+		}
+
+		@Override
+		public void attachField(Object propertyId, Field field) {
+			if (propertyId.equals("prefixname")) {
+				firstNameBox.addComponent(field, 0);
+			} else if (propertyId.equals("firstname")) {
+				firstNameBox.addComponent(field);
+				field.setWidth("100%");
+				firstNameBox.setExpandRatio(field, 1.0f);
+			} else {
+				super.attachField(propertyId, field);
+			}
+		}
+
+	}
+
+	public static class LeadReadInformationLayout extends
+			LeadGenericInformationLayout {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected Component createFirstNameBox() {
+			return null;
+		}
+
+		@Override
+		public void attachField(Object propertyId, Field field) {
+			if (propertyId.equals("firstname")) {
+				informationLayout.addComponent(field, "First Name", 0, 0);
+			} else {
+				super.attachField(propertyId, field);
+			}
+		}
+
 	}
 }
