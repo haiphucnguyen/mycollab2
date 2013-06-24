@@ -39,12 +39,12 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.FollowingTicketsScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
@@ -82,6 +82,7 @@ public class ProjectController implements IController {
 		this.container = container;
 		bindProjectEvents();
 		bindFollowingTicketEvents();
+		bindTimeTrackingEvents();
 		bindRiskEvents();
 		bindProblemEvents();
 		bindTaskListEvents();
@@ -148,10 +149,30 @@ public class ProjectController implements IController {
 							@Override
 							public void handle(
 									FollowingTicketEvent.GotoMyFollowingItems event) {
-								ProjectView projectView = ViewManager
-										.getView(ProjectView.class);
-								FollowingTicketsScreenData.GotoMyFollowingItems data = new FollowingTicketsScreenData.GotoMyFollowingItems();
-								projectView.gotoTaskList(data);
+								FollowingTicketPresenter presenter = PresenterResolver
+										.getPresenter(FollowingTicketPresenter.class);
+								presenter.go(container, null);
+							}
+						});
+	}
+
+	private void bindTimeTrackingEvents() {
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<TimeTrackingEvent.GotoTimeTrackingView>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return TimeTrackingEvent.GotoTimeTrackingView.class;
+							}
+
+							@Override
+							public void handle(
+									TimeTrackingEvent.GotoTimeTrackingView event) {
+								TimeTrackingPresenter presenter = PresenterResolver
+										.getPresenter(TimeTrackingPresenter.class);
+								presenter.go(container, null);
 							}
 						});
 	}

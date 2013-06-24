@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.events.FollowingTicketEvent;
+import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
@@ -38,6 +39,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	private ButtonLink followingTicketsLink;
+
+	private ButtonLink timeTrackingLink;
 
 	private MyProjectListComponent myProjectListComponent;
 
@@ -101,7 +104,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 		headerContentBottom.setSpacing(true);
 		followingTicketsLink = new ButtonLink("My Following Tickets (" + "0"
 				+ ")");
-		final ButtonLink userBugs = new ButtonLink("My Time (" + "0" + ")");
+
 		followingTicketsLink.setIcon(MyCollabResource
 				.newResource("icons/16/project/task.png"));
 		followingTicketsLink.removeStyleName("wordWrap");
@@ -117,11 +120,22 @@ public class UserDashboardViewImpl extends AbstractView implements
 			}
 		});
 
-		userBugs.setIcon(MyCollabResource
+		timeTrackingLink = new ButtonLink("Time Tracking");
+		timeTrackingLink.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new TimeTrackingEvent.GotoTimeTrackingView(
+								UserDashboardViewImpl.this, null));
+			}
+		});
+		timeTrackingLink.setIcon(MyCollabResource
 				.newResource("icons/16/project/bug.png"));
-		userBugs.removeStyleName("wordWrap");
+		timeTrackingLink.removeStyleName("wordWrap");
 		headerContentBottom.addComponent(followingTicketsLink);
-		headerContentBottom.addComponent(userBugs);
+		headerContentBottom.addComponent(timeTrackingLink);
 
 		headerContent.addComponent(headerContentTop);
 		headerContent.addComponent(headerContentBottom);
