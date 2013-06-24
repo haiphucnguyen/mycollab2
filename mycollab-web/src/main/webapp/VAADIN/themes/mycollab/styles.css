@@ -1385,6 +1385,10 @@ input.v-textfield-errorField {
 }
 .projectfeed-hdr-wrapper > .v-csslayout-margin {
 	padding: 8px 8px 10px 8px;
+	border-radius: 0px 0px 3px 3px;
+	border-width: 0px 1px 2px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
 }
 /* .project-feed-header .h1 { */
 /* 	border-bottom: 1px solid #B7B7B7; */
@@ -3721,6 +3725,6 @@ div.v-ratingstars-bar {
 	border-color: rgb(169, 169, 169);
 	background-color: rgb(245, 245, 245);
 }
-.table-actionctls .v-horizontallayout-margin {
+.table-actionctls > .v-csslayout-margin {
 	padding: 5px 6px 5px 14px;
 }
