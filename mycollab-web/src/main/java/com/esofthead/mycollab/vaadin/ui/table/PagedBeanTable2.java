@@ -52,9 +52,8 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 	private int totalPage = 1;
 	private int currentViewCount;
 	private int totalCount;
-	private Button first, previous, next, last;
-	private Label totalPagesLabel;
-	private TextField currentPageTextField;
+	private Button first, previous1, previous2, next1, next2, last, current;
+	private Label ss1,ss2;
 	private ComboBox itemsPerPageSelect;
 	private Set<SelectableItemHandler<T>> selectableHandlers;
 	private Set<PagableHandler> pagableHandlers;
@@ -66,6 +65,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 	private Table tableItem;
 	private Object columnExpandId;
 	private Object sortColumnId;
+	private HorizontalLayout pageManagement;
 	private boolean isAscending = true;
 	private final Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
 	private final Map<Object, Integer> columnWidths = new HashMap<Object, Integer>();
@@ -121,25 +121,17 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 		listenerSet.add(listener);
 	}
-
-	private void checkButtonStatus() {
-		if (this.currentPage == 1) {
-			this.previous.setEnabled(false);
-			this.first.setEnabled(false);
-		} else {
-			this.previous.setEnabled(true);
-			this.first.setEnabled(true);
-		}
-
-		if (this.currentPage == totalPage) {
-			this.last.setEnabled(false);
-			this.next.setEnabled(false);
-		} else {
-			this.last.setEnabled(true);
-			this.next.setEnabled(true);
-		}
+	private void addStylePagingButton(){
+		if(first !=null) first.addStyleName("buttonPaging");
+		if(last !=null)last.addStyleName("buttonPaging");
+		if(ss1 !=null)ss1.addStyleName("buttonPaging");
+		if(ss2 !=null)ss2.addStyleName("buttonPaging");
+		if(next1 !=null)next1.addStyleName("buttonPaging");
+		if(next2 !=null)next2.addStyleName("buttonPaging");
+		if(previous2 !=null)previous2.addStyleName("buttonPaging");
+		if(previous1 !=null)previous1.addStyleName("buttonPaging");
+		if(current !=null) current.addStyleName("buttonPaging");
 	}
-
 	private CssLayout createControls() {
 		final Label itemsPerPageLabel = new Label("Items per page:");
 		itemsPerPageSelect = new ComboBox();
@@ -148,8 +140,6 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		itemsPerPageSelect.addItem("10");
 		itemsPerPageSelect.addItem("25");
 		itemsPerPageSelect.addItem("50");
-		itemsPerPageSelect.addItem("100");
-		itemsPerPageSelect.addItem("600");
 		itemsPerPageSelect.select(displayNumItems);
 		itemsPerPageSelect.setImmediate(true);
 		itemsPerPageSelect.setNullSelectionAllowed(false);
@@ -166,29 +156,6 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 			}
 		});
 
-		final Label pageLabel = new Label("Page:&nbsp;", Label.CONTENT_XHTML);
-		currentPageTextField = new TextField();
-		currentPageTextField.setValue(String.valueOf(currentPage));
-		currentPageTextField.addValidator(new IntegerValidator(null));
-		final Label separatorLabel = new Label("&nbsp;/&nbsp;",
-				Label.CONTENT_XHTML);
-		totalPagesLabel = new Label(String.valueOf(totalPage),
-				Label.CONTENT_XHTML);
-		currentPageTextField.setStyleName(Reindeer.TEXTFIELD_SMALL);
-		currentPageTextField.setImmediate(true);
-		currentPageTextField.addListener(new Property.ValueChangeListener() {
-			private static final long serialVersionUID = -2255853716069800092L;
-
-			@Override
-			public void valueChange(
-					final com.vaadin.data.Property.ValueChangeEvent event) {
-			}
-		});
-		pageLabel.setWidth(null);
-		currentPageTextField.setWidth("20px");
-		separatorLabel.setWidth(null);
-		totalPagesLabel.setWidth(null);
-
 		final CssLayout controlBarWrapper = new CssLayout();
 		controlBarWrapper.setStyleName("listControl");
 		controlBarWrapper.setWidth("100%");
@@ -198,60 +165,24 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		controlBarWrapper.addComponent(controlBar);
 
 		final HorizontalLayout pageSize = new HorizontalLayout();
-		final HorizontalLayout pageManagement = new HorizontalLayout();
-		first = new ButtonLink("<<", new ClickListener() {
-			private static final long serialVersionUID = -355520120491283992L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				pageChange(1);
-			}
-		});
-		previous = new ButtonLink("<", new ClickListener() {
-			private static final long serialVersionUID = -355520120491283992L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				pageChange(PagedBeanTable2.this.currentPage - 1);
-			}
-		});
-		next = new ButtonLink(">", new ClickListener() {
-			private static final long serialVersionUID = -1927138212640638452L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				pageChange(PagedBeanTable2.this.currentPage + 1);
-			}
-		});
-		last = new ButtonLink(">>", new ClickListener() {
-			private static final long serialVersionUID = -355520120491283992L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				pageChange(PagedBeanTable2.this.totalPage);
-			}
-		});
-
+		pageManagement = new HorizontalLayout();
+		
 		itemsPerPageLabel.addStyleName("pagedtable-itemsperpagecaption");
 		itemsPerPageSelect.addStyleName("pagedtable-itemsperpagecombobox");
-		pageLabel.addStyleName("pagedtable-pagecaption");
-		currentPageTextField.addStyleName("pagedtable-pagefield");
-		separatorLabel.addStyleName("pagedtable-separator");
-		totalPagesLabel.addStyleName("pagedtable-total");
 		first.addStyleName("pagedtable-first");
-		previous.addStyleName("pagedtable-previous");
-		next.addStyleName("pagedtable-next");
+		previous1.addStyleName("pagedtable-previous");
+		previous2.addStyleName("pagedtable-previous");
+		next1.addStyleName("pagedtable-next");
+		next2.addStyleName("pagedtable-next");
 		last.addStyleName("pagedtable-last");
 
 		itemsPerPageLabel.addStyleName("pagedtable-label");
 		itemsPerPageSelect.addStyleName("pagedtable-combobox");
-		pageLabel.addStyleName("pagedtable-label");
-		currentPageTextField.addStyleName("pagedtable-label");
-		separatorLabel.addStyleName("pagedtable-label");
-		totalPagesLabel.addStyleName("pagedtable-label");
 		first.addStyleName("pagedtable-button");
-		previous.addStyleName("pagedtable-button");
-		next.addStyleName("pagedtable-button");
+		previous1.addStyleName("pagedtable-button");
+		previous2.addStyleName("pagedtable-button");
+		next1.addStyleName("pagedtable-button");
+		next2.addStyleName("pagedtable-button");
 		last.addStyleName("pagedtable-button");
 
 		pageSize.addComponent(itemsPerPageLabel);
@@ -260,25 +191,13 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		pageSize.setComponentAlignment(itemsPerPageSelect,
 				Alignment.MIDDLE_LEFT);
 		pageSize.setSpacing(true);
-		pageManagement.addComponent(first);
-		pageManagement.addComponent(previous);
-		pageManagement.addComponent(pageLabel);
-		pageManagement.addComponent(currentPageTextField);
-		pageManagement.addComponent(separatorLabel);
-		pageManagement.addComponent(totalPagesLabel);
-		pageManagement.addComponent(next);
-		pageManagement.addComponent(last);
-		pageManagement.setComponentAlignment(first, Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(previous, Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(pageLabel, Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(currentPageTextField,
-				Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(separatorLabel,
-				Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(totalPagesLabel,
-				Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(next, Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(last, Alignment.MIDDLE_LEFT);
+		
+		//TODO : handle all button here
+		addStylePagingButton();
+		current.removeStyleName("buttonPaging");
+		
+		handleAddComponent(pageManagement);
+		
 		pageManagement.setWidth(null);
 		pageManagement.setSpacing(true);
 		controlBar.addComponent(pageSize);
@@ -290,7 +209,53 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 		return controlBarWrapper;
 	}
-
+	private void handelBackEndAddComponent(HorizontalLayout page, int i){
+		if(totalPage == i){
+		}else if(totalPage == i+1){
+			page.addComponent(last);
+		}else if(totalPage == i+2){
+			page.addComponent(next1);
+			page.addComponent(last);
+		}else if(totalPage == i+3){
+			page.addComponent(next1);
+			page.addComponent(next2);
+			page.addComponent(last);
+		}else if(totalPage >= i+4){
+			page.addComponent(next1);
+			page.addComponent(next2);
+			page.addComponent(ss2);
+			page.addComponent(last);
+		}
+	}
+	private void handleAddComponent(HorizontalLayout page){
+		page.removeAllComponents();
+		if(currentPage ==1){
+			page.addComponent(current);
+			handelBackEndAddComponent(page, currentPage);
+		}else if (currentPage == 2){
+			page.addComponent(first);
+			page.addComponent(current);
+			handelBackEndAddComponent(page, currentPage);
+		}else if (currentPage == 3){
+			page.addComponent(first);
+			page.addComponent(previous1);
+			page.addComponent(current);
+			handelBackEndAddComponent(page, currentPage);
+		}else if (currentPage == 4){
+			page.addComponent(first);
+			page.addComponent(previous2);
+			page.addComponent(previous1);
+			page.addComponent(current);
+			handelBackEndAddComponent(page, currentPage);
+		}else if (currentPage ==5){
+			page.addComponent(first);
+			page.addComponent(ss1);
+			page.addComponent(previous2);
+			page.addComponent(previous1);
+			page.addComponent(current);
+			handelBackEndAddComponent(page, currentPage);
+		}
+	}
 	@Override
 	public int currentViewCount() {
 		return currentViewCount;
@@ -318,12 +283,79 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 			searchRequest.setCurrentPage(totalPage);
 		}
 
+		final int currentPage = getCurrentPage();
 		if (totalPage > 1) {
+			// Define button layout
+			ss1 = new Label("...");
+			ss2 = new Label("...");
+			
+			current = new ButtonLink(""+currentPage, new ClickListener() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void buttonClick(ClickEvent event) {
+					pageChange(currentPage);
+				}
+			});
+			
+			first = new ButtonLink("1", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					pageChange(1);
+				}
+			});
+			
+			previous1 = new ButtonLink(""+ (currentPage - 1), new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					pageChange(currentPage - 1);
+				}
+			});
+			previous2 = new ButtonLink(""+ (currentPage - 2), new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					pageChange(currentPage - 2);
+				}
+			});
+			next1 = new ButtonLink(""+ (currentPage+1), new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					pageChange(currentPage + 1);
+				}
+			});
+			next2 = new ButtonLink(""+ (currentPage+2), new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					pageChange(currentPage + 2);
+				}
+			});
+			last = new ButtonLink(""+ totalPage, new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					pageChange(PagedBeanTable2.this.totalPage);
+				}
+			});
+			
+			addStylePagingButton();
+			current.removeStyleName("buttonPaging");
+			
 			if (getComponentCount() == 0 || getComponentCount() == 1) {
 				this.addComponent(createControls());
+			}else{
+				handleAddComponent(pageManagement);
 			}
-			this.setCurrentPage(currentPage);
-			this.setTotalPage(totalPage);
+			
 		} else {
 			if (getComponentCount() == 2) {
 				removeComponent(getComponent(1));
@@ -424,6 +456,14 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 	}
 
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
 	public void fireSelectItemEvent(final T item) {
 		if (selectableHandlers != null) {
 			for (final SelectableItemHandler<T> handler : selectableHandlers) {
@@ -510,23 +550,11 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		columnWidths.put(propertyId, width);
 	}
 
-	private void setCurrentPage(final int currentPage) {
-		this.currentPage = currentPage;
-		currentPageTextField.setValue(currentPage);
-		checkButtonStatus();
-	}
-
 	@Override
 	public void setSearchCriteria(final S searchCriteria) {
 		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
 				displayNumItems);
 		doSearch();
-	}
-
-	private void setTotalPage(final int totalPage) {
-		this.totalPage = totalPage;
-		totalPagesLabel.setValue(String.valueOf(totalPage));
-		checkButtonStatus();
 	}
 
 	@Override
