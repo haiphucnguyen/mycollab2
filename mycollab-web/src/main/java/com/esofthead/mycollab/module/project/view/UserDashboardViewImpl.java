@@ -2,6 +2,11 @@ package com.esofthead.mycollab.module.project.view;
 
 import java.util.List;
 
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
@@ -147,6 +152,15 @@ public class UserDashboardViewImpl extends AbstractView implements
 		this.taskStatusComponent.showProjectTasksByStatus();
 
 		// show following ticket numbers
-
+		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+		searchCriteria.setUser(new StringSearchField(SearchField.AND,
+				AppContext.getUsername()));
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+				.toArray(new Integer[0])));
+		MonitorItemService monitorService = AppContext
+				.getSpringBean(MonitorItemService.class);
+		int followingItemsCount = monitorService.getTotalCount(searchCriteria);
+		followingTicketsLink.setCaption("My Following Tickets ("
+				+ followingItemsCount + ")");
 	}
 }
