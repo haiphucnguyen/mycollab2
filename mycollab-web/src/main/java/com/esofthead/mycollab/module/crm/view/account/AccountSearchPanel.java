@@ -196,25 +196,34 @@ public class AccountSearchPanel extends
 		@Override
 		protected void loadSaveSearchToField(AccountSearchCriteria value) {
 			if (value != null) {
-				if (value.getAccountname()!=null) nameField.setValue(value.getAccountname().getValue());
+				if (value.getAccountname()!=null){
+					nameField.setValue(value.getAccountname().getValue());
+				}else nameField.setValue("");
 				if (value.getWebsite()!=null) websiteField.setValue(value.getWebsite().getValue());
+				else websiteField.setValue("");
 				if (value.getAnyPhone()!=null) anyPhoneField.setValue(value.getAnyPhone().getValue());
+				else anyPhoneField.setValue("");
 				if (value.getAnyMail()!=null) anyMailField.setValue(value.getAnyMail().getValue());
+				else anyMailField.setValue("");
 				if (value.getAnyAddress()!=null) anyAddressField.setValue(value.getAnyAddress().getValue());
+				else anyAddressField.setValue("");
 				if (value.getAnyCity()!=null) cityField.setValue(value.getAnyCity().getValue());
+				else cityField.setValue("");
 
 				if(value.getIndustries()!=null){
 					Object[] userString = value.getIndustries().values;
 					industryField.setValue(Arrays.asList(userString));
+				}else{
+					industryField.setValue(null);
 				}
 				if(value.getTypes()!=null){
 					Object[] typeObj = value.getTypes().values;
 					typeField.setValue(Arrays.asList(typeObj));
-				}
+				}else typeField.setValue(null);
 				if(value.getAssignUsers()!=null){
 					Object[] userObj = value.getAssignUsers().values;
 					userField.setValue(Arrays.asList(userObj));
-				}
+				}else userField.setValue(null);
 			}
 		}
 	}
