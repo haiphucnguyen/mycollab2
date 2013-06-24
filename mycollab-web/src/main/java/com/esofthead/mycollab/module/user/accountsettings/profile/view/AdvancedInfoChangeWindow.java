@@ -23,90 +23,105 @@ public class AdvancedInfoChangeWindow extends Window {
 	private TextField txtWebsite;
 	private TextField txtCompany;
 	private CountryComboBox cboCountry;
-	
-	private User user;
-	
-	public AdvancedInfoChangeWindow(User user) {
+
+	private final User user;
+
+	public AdvancedInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		this.setHeight("250px");
-		initUI();
-		center();
+		// this.setHeight("250px");
+		this.initUI();
+		this.center();
 		this.setCaption("Change your advanced information");
+		((VerticalLayout) this.getContent()).setMargin(false, false, true,
+				false);
 	}
-	
+
 	private void initUI() {
-		
-		VerticalLayout mainLayout = new VerticalLayout();
+
+		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
-		
-		GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 4,
-				UIConstants.DEFAULT_CONTROL_WIDTH,
-				"150px");
-		
-		txtWebsite = (TextField) passInfo.addComponent(new TextField(), "Website", 0, 0);
-		txtCompany = (TextField) passInfo.addComponent(new TextField(), "Company", 0, 1);
-		cboCountry = (CountryComboBox) passInfo.addComponent(new CountryComboBox(), "Country", 0, 2);
-		
-		txtWebsite.setValue(user.getWebsite() == null ? "" : user.getWebsite());
-		txtCompany.setValue(user.getCompany() == null ? "" : user.getCompany());
-		cboCountry.setValue(user.getCountry() == null ? "" : user.getCountry());
-		
+
+		final GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 4,
+				"100%", "150px", Alignment.MIDDLE_LEFT);
+
+		this.txtWebsite = (TextField) passInfo.addComponent(new TextField(),
+				"Website", 0, 0);
+		this.txtCompany = (TextField) passInfo.addComponent(new TextField(),
+				"Company", 0, 1);
+		this.cboCountry = (CountryComboBox) passInfo.addComponent(
+				new CountryComboBox(), "Country", 0, 2);
+
+		this.txtWebsite.setValue(this.user.getWebsite() == null ? ""
+				: this.user.getWebsite());
+		this.txtCompany.setValue(this.user.getCompany() == null ? ""
+				: this.user.getCompany());
+		this.cboCountry.setValue(this.user.getCountry() == null ? ""
+				: this.user.getCountry());
+
+		passInfo.getLayout().setMargin(false);
+		passInfo.getLayout().setWidth("100%");
+		passInfo.getLayout().addStyleName("colored-gridlayout");
 		mainLayout.addComponent(passInfo.getLayout());
-		mainLayout.setComponentAlignment(passInfo.getLayout(), Alignment.TOP_LEFT);
-		
-		Label lbSpace = new Label();
+		mainLayout.setComponentAlignment(passInfo.getLayout(),
+				Alignment.TOP_LEFT);
+
+		final Label lbSpace = new Label();
 		mainLayout.addComponent(lbSpace);
 		mainLayout.setExpandRatio(lbSpace, 1.0f);
-		
-		HorizontalLayout hlayoutControls = new HorizontalLayout();
+
+		final HorizontalLayout hlayoutControls = new HorizontalLayout();
 		hlayoutControls.setSpacing(true);
 		hlayoutControls.setMargin(true);
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button cancelBtn = new Button("Cancel",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				AdvancedInfoChangeWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						AdvancedInfoChangeWindow.this.close();
+					}
+				});
 
 		cancelBtn.setStyleName("link");
 		hlayoutControls.addComponent(cancelBtn);
-		hlayoutControls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
-		
-		Button sendBtn = new Button("Save", new Button.ClickListener() {
+		hlayoutControls.setComponentAlignment(cancelBtn,
+				Alignment.MIDDLE_CENTER);
+
+		final Button sendBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				changePassword();
+			public void buttonClick(final ClickEvent event) {
+				AdvancedInfoChangeWindow.this.changePassword();
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		hlayoutControls.addComponent(sendBtn);
 		hlayoutControls.setComponentAlignment(sendBtn, Alignment.MIDDLE_CENTER);
-		
+
 		mainLayout.addComponent(hlayoutControls);
-		mainLayout.setComponentAlignment(hlayoutControls, Alignment.MIDDLE_RIGHT);
-		
+		mainLayout.setComponentAlignment(hlayoutControls,
+				Alignment.MIDDLE_RIGHT);
+
 		this.setModal(true);
 		this.setContent(mainLayout);
 	}
-	
-	private void changePassword() {
-		user.setWebsite((String) txtWebsite.getValue());
-		user.setCompany((String) txtCompany.getValue());
-		user.setCountry((String) cboCountry.getValue());
 
-		UserService userService = AppContext.getSpringBean(UserService.class);
-		userService.updateWithSession(user, AppContext.getUsername());
-		
+	private void changePassword() {
+		this.user.setWebsite((String) this.txtWebsite.getValue());
+		this.user.setCompany((String) this.txtCompany.getValue());
+		this.user.setCountry((String) this.cboCountry.getValue());
+
+		final UserService userService = AppContext
+				.getSpringBean(UserService.class);
+		userService.updateWithSession(this.user, AppContext.getUsername());
+
 		EventBus.getInstance().fireEvent(
-				new ProfileEvent.GotoProfileView(
-						AdvancedInfoChangeWindow.this, null));
+				new ProfileEvent.GotoProfileView(AdvancedInfoChangeWindow.this,
+						null));
 		AdvancedInfoChangeWindow.this.close();
 	}
 }

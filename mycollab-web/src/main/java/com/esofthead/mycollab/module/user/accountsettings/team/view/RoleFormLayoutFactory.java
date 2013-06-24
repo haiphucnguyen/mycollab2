@@ -7,7 +7,9 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -19,28 +21,28 @@ import com.vaadin.ui.VerticalLayout;
  */
 public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
-	private String title;
+	private final String title;
 	private RoleInformationLayout userInformationLayout;
 
-	public RoleFormLayoutFactory(String title) {
+	public RoleFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout userAddLayout = new AddViewLayout(title,
+		final AddViewLayout userAddLayout = new AddViewLayout(this.title,
 				MyCollabResource.newResource("icons/48/user/group.png"));
 
-		Layout topPanel = createTopPanel();
+		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {
 			userAddLayout.addTopControls(topPanel);
 		}
 
-		userInformationLayout = new RoleInformationLayout();
-		userInformationLayout.getLayout().setWidth("100%");
-		userAddLayout.addBody(userInformationLayout.getLayout());
+		this.userInformationLayout = new RoleInformationLayout();
+		this.userInformationLayout.getLayout().setWidth("100%");
+		userAddLayout.addBody(this.userInformationLayout.getLayout());
 
-		Layout bottomPanel = createBottomPanel();
+		final Layout bottomPanel = this.createBottomPanel();
 		if (bottomPanel != null) {
 			userAddLayout.addBottomControls(bottomPanel);
 		}
@@ -53,8 +55,8 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
-		userInformationLayout.attachField(propertyId, field);
+	public void attachField(final Object propertyId, final Field field) {
+		this.userInformationLayout.attachField(propertyId, field);
 	}
 
 	public static class RoleInformationLayout implements IFormLayoutFactory {
@@ -63,25 +65,29 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 
 		@Override
 		public Layout getLayout() {
-			VerticalLayout layout = new VerticalLayout();
-			Label organizationHeader = new Label("Role Information");
+			final VerticalLayout layout = new VerticalLayout();
+			final Label organizationHeader = new Label("Role Information");
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(6, 2);
-			informationLayout.getLayout().setWidth("100%");
+			this.informationLayout = new GridFormLayoutHelper(6, 2, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+			this.informationLayout.getLayout().setWidth("100%");
+			this.informationLayout.getLayout().setMargin(false);
+			this.informationLayout.getLayout().addStyleName(
+					UIConstants.COLORED_GRIDLAYOUT);
 
-			layout.addComponent(informationLayout.getLayout());
+			layout.addComponent(this.informationLayout.getLayout());
 			return layout;
 		}
 
 		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("rolename")) {
-				informationLayout.addComponent(field, "Role Name", 0, 0);
+				this.informationLayout.addComponent(field, "Role Name", 0, 0);
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 1, 2,
-						"100%");
+				this.informationLayout.addComponent(field, "Description", 0, 1,
+						2, "100%");
 			}
 		}
 	}

@@ -21,6 +21,7 @@ import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -110,10 +111,12 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	}
 
 	private ComponentContainer constructTableActionControls() {
+		final CssLayout layoutWrapper = new CssLayout();
+		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
-		layout.setWidth("100%");
-		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addComponent(layout);
 
 		final Label lbEmpty = new Label("");
 		layout.addComponent(lbEmpty);
@@ -127,7 +130,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 		this.exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 		layout.addComponent(this.exportBtn);
-		return layout;
+		return layoutWrapper;
 	}
 
 	@Override
