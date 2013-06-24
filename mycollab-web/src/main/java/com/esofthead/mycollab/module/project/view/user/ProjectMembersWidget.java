@@ -35,12 +35,13 @@ public class ProjectMembersWidget extends Depot {
 		memberList = new BeanList<ProjectMemberService, ProjectMemberSearchCriteria, SimpleProjectMember>(
 				AppContext.getSpringBean(ProjectMemberService.class),
 				MemberRowDisplayHandler.class);
-		this.bodyContent.addComponent(new LazyLoadWrapper(memberList));
 		this.addStyleName("activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
 	public void showInformation() {
+		this.bodyContent.removeAllComponents();
+		this.bodyContent.addComponent(new LazyLoadWrapper(memberList));
 		ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
