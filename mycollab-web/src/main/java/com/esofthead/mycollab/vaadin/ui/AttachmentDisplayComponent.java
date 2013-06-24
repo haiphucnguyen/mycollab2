@@ -88,7 +88,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 				}
 			});
 			previewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/search.png"));
+				.newResource("icons/16/preview.png"));
 			previewBtn.setStyleName("link");
 			attachmentLayout.addComponent(previewBtn);
 		}
@@ -143,7 +143,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Resource downloadResource = StreamDownloadResourceFactory
-						.getStreamResource(attachment.getDocumentpath());
+						.getAccountStreamResource(attachment.getDocumentpath());
 				AppContext.getApplication().getMainWindow()
 						.open(downloadResource, "_self");
 			}

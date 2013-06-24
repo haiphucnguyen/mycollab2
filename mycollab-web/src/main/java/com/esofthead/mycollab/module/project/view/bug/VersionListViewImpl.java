@@ -54,71 +54,74 @@ public class VersionListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public VersionListViewImpl() {
-		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
 
-		componentSearchPanel = new VersionSearchPanel();
-		this.addComponent(componentSearchPanel);
+		this.componentSearchPanel = new VersionSearchPanel();
+		this.addComponent(this.componentSearchPanel);
 
-		componentListLayout = new VerticalLayout();
-		componentListLayout.setSpacing(true);
-		this.addComponent(componentListLayout);
+		this.componentListLayout = new VerticalLayout();
+		this.addComponent(this.componentListLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<VersionService, VersionSearchCriteria, Version>(
+		this.tableItem = new PagedBeanTable2<VersionService, VersionSearchCriteria, Version>(
 				AppContext.getSpringBean(VersionService.class), Version.class,
 				new String[] { "selected", "versionname", "description" },
 				new String[] { "", "Name", "Description" });
 
-		tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						Version version = tableItem.getBeanByIndex(itemId);
-						tableItem.fireSelectItemEvent(version);
-
-					}
-				});
-
-				Version version = tableItem.getBeanByIndex(itemId);
-				version.setExtraData(cb);
-				return cb;
-			}
-		});
-
-		tableItem.addGeneratedColumn("versionname",
+		this.tableItem.addGeneratedColumn("selected",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public Component generateCell(Table source,
-							final Object itemId, Object columnId) {
-						final Version bugVersion = tableItem
+					public Object generateCell(final Table source,
+							final Object itemId, final Object columnId) {
+						final CheckBox cb = new CheckBox("", false);
+						cb.setImmediate(true);
+						cb.addListener(new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(
+									final Button.ClickEvent event) {
+								final Version version = VersionListViewImpl.this.tableItem
+										.getBeanByIndex(itemId);
+								VersionListViewImpl.this.tableItem
+										.fireSelectItemEvent(version);
+
+							}
+						});
+
+						final Version version = VersionListViewImpl.this.tableItem
 								.getBeanByIndex(itemId);
-						ButtonLink b = new ButtonLink(bugVersion
+						version.setExtraData(cb);
+						return cb;
+					}
+				});
+
+		this.tableItem.addGeneratedColumn("versionname",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Component generateCell(final Table source,
+							final Object itemId, final Object columnId) {
+						final Version bugVersion = VersionListViewImpl.this.tableItem
+								.getBeanByIndex(itemId);
+						final ButtonLink b = new ButtonLink(bugVersion
 								.getVersionname(), new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(Button.ClickEvent event) {
+							public void buttonClick(
+									final Button.ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new BugVersionEvent.GotoRead(this,
 												bugVersion.getId()));
 							}
 						});
-						
 
 						if (bugVersion.getDuedate() != null
 								&& (bugVersion.getDuedate()
@@ -131,74 +134,80 @@ public class VersionListViewImpl extends AbstractView implements
 					}
 				});
 
-		tableItem.setColumnExpandRatio("versionname", 1);
-		tableItem
-				.setColumnWidth("description", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		this.tableItem.setColumnExpandRatio("versionname", 1);
+		this.tableItem.setColumnWidth("description",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		this.tableItem.setColumnWidth("selected",
+				UIConstants.TABLE_CONTROL_WIDTH);
 
-		tableItem.setWidth("100%");
+		this.tableItem.setWidth("100%");
 
-		componentListLayout.addComponent(constructTableActionControls());
-		componentListLayout.addComponent(tableItem);
+		this.componentListLayout.addComponent(this
+				.constructTableActionControls());
+		this.componentListLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<VersionSearchCriteria> getSearchHandlers() {
-		return componentSearchPanel;
+		return this.componentSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
+		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.VERSIONS));
-		
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+		final Button deleteBtn = new Button("Delete");
+		deleteBtn.setEnabled(CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.VERSIONS));
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls.addOptionItem("mail", "Mail");
+		this.tableActionControls.addOptionItem("export", "Export");
+
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 		return layout;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setVisible(true);
+		this.selectedItemsNumberLabel.setValue("Selected: "
+				+ numOfSelectedItems);
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setVisible(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<Version> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<VersionSearchCriteria, Version> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 }

@@ -31,6 +31,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -44,24 +45,31 @@ public class LeadSearchPanel extends
 	protected LeadSearchCriteria searchCriteria;
 
 	public LeadSearchPanel() {
-		searchCriteria = new LeadSearchCriteria();
+		this.searchCriteria = new LeadSearchCriteria();
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Leads");
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/22/crm/lead.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
+		final Label searchtitle = new Label("Leads");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setExpandRatio(searchtitle, 1.0f);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		Button createAccountBtn = new Button("Create",
+		final Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoAdd(this, null));
 					}
@@ -88,18 +96,19 @@ public class LeadSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return LeadSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout layout = new HorizontalLayout();
+			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
 
-			nameField = this.createSeachSupportTextField(new TextField(),
+			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"nameFieldOfSearch");
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(layout, this.nameField,
+					Alignment.MIDDLE_CENTER);
 
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
@@ -108,17 +117,17 @@ public class LeadSearchPanel extends
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					LeadBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			UiUtils.addComponent(layout, searchBtn, Alignment.MIDDLE_LEFT);
 
-			myItemCheckbox = new CheckBox(
+			this.myItemCheckbox = new CheckBox(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
-			myItemCheckbox.setWidth("75px");
-			UiUtils.addComponent(layout, myItemCheckbox,
+			this.myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(layout, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
 			final Button cancelBtn = new Button(
@@ -128,17 +137,17 @@ public class LeadSearchPanel extends
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
-				public void buttonClick(ClickEvent event) {
-					nameField.setValue("");
+				public void buttonClick(final ClickEvent event) {
+					LeadBasicSearchLayout.this.nameField.setValue("");
 				}
 			});
 			UiUtils.addComponent(layout, cancelBtn, Alignment.MIDDLE_CENTER);
-			Button advancedSearchBtn = new Button("Advanced Search",
+			final Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							moveToAdvancedSearchLayout();
+						public void buttonClick(final ClickEvent event) {
+							LeadSearchPanel.this.moveToAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -149,24 +158,27 @@ public class LeadSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new LeadSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
+			LeadSearchPanel.this.searchCriteria = new LeadSearchCriteria();
+			LeadSearchPanel.this.searchCriteria
+					.setSaccountid(new NumberSearchField(SearchField.AND,
+							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(nameField.getValue().toString()
-					.trim())) {
-				searchCriteria.setLeadName(new StringSearchField(
-						SearchField.AND, (String) nameField.getValue()));
+			if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
+					.toString().trim())) {
+				LeadSearchPanel.this.searchCriteria
+						.setLeadName(new StringSearchField(SearchField.AND,
+								(String) this.nameField.getValue()));
 			}
 
-			if (myItemCheckbox.booleanValue()) {
-				searchCriteria.setAssignUsers(new SetSearchField<String>(
-						SearchField.AND, new String[] { AppContext
-								.getUsername() }));
+			if (this.myItemCheckbox.booleanValue()) {
+				LeadSearchPanel.this.searchCriteria
+						.setAssignUsers(new SetSearchField<String>(
+								SearchField.AND, new String[] { AppContext
+										.getUsername() }));
 			} else {
-				searchCriteria.setAssignUsers(null);
+				LeadSearchPanel.this.searchCriteria.setAssignUsers(null);
 			}
-			return searchCriteria;
+			return LeadSearchPanel.this.searchCriteria;
 		}
 	}
 
@@ -194,7 +206,7 @@ public class LeadSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return LeadSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
@@ -210,31 +222,31 @@ public class LeadSearchPanel extends
 				gridLayout = new GridFormLayoutHelper(3, 4, "90px");
 			}
 
-			firstnameField = (TextField) gridLayout.addComponent(
+			this.firstnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "First Name", 0, 0);
-			lastnameField = (TextField) gridLayout.addComponent(
+			this.lastnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Last Name", 0, 1);
-			accountnameField = (TextField) gridLayout.addComponent(
+			this.accountnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Account Name", 0, 2);
-			statusField = (LeadStatusListSelect) gridLayout.addComponent(
+			this.statusField = (LeadStatusListSelect) gridLayout.addComponent(
 					new LeadStatusListSelect(), "Status", 0, 3);
 
-			anyEmailField = (TextField) gridLayout.addComponent(
+			this.anyEmailField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Email", 1, 0);
-			anyAddressField = (TextField) gridLayout.addComponent(
+			this.anyAddressField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Address", 1, 1);
-			countryField = (CountryComboBox) gridLayout.addComponent(
+			this.countryField = (CountryComboBox) gridLayout.addComponent(
 					new CountryComboBox(), "Country", 1, 2);
-			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
+			this.sourceField = (LeadSourceListSelect) gridLayout.addComponent(
 					new LeadSourceListSelect(), "Source", 1, 3);
 
-			anyPhoneField = (TextField) gridLayout.addComponent(
+			this.anyPhoneField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Phone", 2, 0);
-			cityField = (TextField) gridLayout.addComponent(new TextField(),
-					"City", 2, 1);
-			stateField = (TextField) gridLayout.addComponent(new TextField(),
-					"State", 2, 2);
-			userField = (UserListSelect) gridLayout.addComponent(
+			this.cityField = (TextField) gridLayout.addComponent(
+					new TextField(), "City", 2, 1);
+			this.stateField = (TextField) gridLayout.addComponent(
+					new TextField(), "State", 2, 2);
+			this.userField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assigned User", 2, 3);
 
 			gridLayout.getLayout().setSpacing(true);
@@ -243,136 +255,167 @@ public class LeadSearchPanel extends
 
 		@Override
 		protected LeadSearchCriteria fillupSearchCriteria() {
-			searchCriteria = new LeadSearchCriteria();
-			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-					AppContext.getAccountId()));
+			LeadSearchPanel.this.searchCriteria = new LeadSearchCriteria();
+			LeadSearchPanel.this.searchCriteria
+					.setSaccountid(new NumberSearchField(SearchField.AND,
+							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) firstnameField.getValue())) {
-				searchCriteria.setFirstname(new StringSearchField(
-						SearchField.AND, ((String) firstnameField.getValue())
-								.trim()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) lastnameField.getValue())) {
-				searchCriteria.setLastname(new StringSearchField(
-						SearchField.AND, ((String) lastnameField.getValue())
-								.trim()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) accountnameField
+			if (StringUtil.isNotNullOrEmpty((String) this.firstnameField
 					.getValue())) {
-				searchCriteria.setAccountName(new StringSearchField(
-						SearchField.AND, ((String) accountnameField.getValue())
-								.trim()));
+				LeadSearchPanel.this.searchCriteria
+						.setFirstname(new StringSearchField(SearchField.AND,
+								((String) this.firstnameField.getValue())
+										.trim()));
 			}
 
-			Collection<String> statuses = (Collection<String>) statusField
+			if (StringUtil.isNotNullOrEmpty((String) this.lastnameField
+					.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setLastname(new StringSearchField(SearchField.AND,
+								((String) this.lastnameField.getValue()).trim()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) this.accountnameField
+					.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setAccountName(new StringSearchField(SearchField.AND,
+								((String) this.accountnameField.getValue())
+										.trim()));
+			}
+
+			final Collection<String> statuses = (Collection<String>) this.statusField
 					.getValue();
 			if (statuses != null && statuses.size() > 0) {
-				searchCriteria.setStatuses(new SetSearchField<String>(
-						SearchField.AND, statuses));
+				LeadSearchPanel.this.searchCriteria
+						.setStatuses(new SetSearchField<String>(
+								SearchField.AND, statuses));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) anyEmailField.getValue())) {
-				searchCriteria.setAnyEmail(new StringSearchField(
-						SearchField.AND, (String) anyEmailField.getValue()));
+			if (StringUtil.isNotNullOrEmpty((String) this.anyEmailField
+					.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setAnyEmail(new StringSearchField(SearchField.AND,
+								(String) this.anyEmailField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) this.anyAddressField
+					.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setAnyAddress(new StringSearchField(SearchField.AND,
+								(String) this.anyAddressField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) this.countryField
+					.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setAnyCountry(new StringSearchField(SearchField.AND,
+								(String) this.countryField.getValue()));
+			}
+
+			final Collection<String> sources = (Collection<String>) this.sourceField
+					.getValue();
+			if (sources != null && sources.size() > 0) {
+				LeadSearchPanel.this.searchCriteria
+						.setSources(new SetSearchField<String>(SearchField.AND,
+								sources));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) this.anyPhoneField
+					.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setAnyPhone(new StringSearchField(SearchField.AND,
+								(String) this.anyPhoneField.getValue()));
+			}
+
+			if (StringUtil.isNotNullOrEmpty((String) this.cityField.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setAnyCity(new StringSearchField(SearchField.AND,
+								(String) this.cityField.getValue()));
 			}
 
 			if (StringUtil
-					.isNotNullOrEmpty((String) anyAddressField.getValue())) {
-				searchCriteria.setAnyAddress(new StringSearchField(
-						SearchField.AND, (String) anyAddressField.getValue()));
+					.isNotNullOrEmpty((String) this.stateField.getValue())) {
+				LeadSearchPanel.this.searchCriteria
+						.setAnyState(new StringSearchField(SearchField.AND,
+								(String) this.stateField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) countryField.getValue())) {
-				searchCriteria.setAnyCountry(new StringSearchField(
-						SearchField.AND, (String) countryField.getValue()));
-			}
-
-			Collection<String> sources = (Collection<String>) sourceField
-					.getValue();
-			if (sources != null && sources.size() > 0) {
-				searchCriteria.setSources(new SetSearchField<String>(
-						SearchField.AND, sources));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) anyPhoneField.getValue())) {
-				searchCriteria.setAnyPhone(new StringSearchField(
-						SearchField.AND, (String) anyPhoneField.getValue()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) cityField.getValue())) {
-				searchCriteria.setAnyCity(new StringSearchField(
-						SearchField.AND, (String) cityField.getValue()));
-			}
-
-			if (StringUtil.isNotNullOrEmpty((String) stateField.getValue())) {
-				searchCriteria.setAnyState(new StringSearchField(
-						SearchField.AND, (String) stateField.getValue()));
-			}
-
-			Collection<String> users = (Collection<String>) userField
+			final Collection<String> users = (Collection<String>) this.userField
 					.getValue();
 			if (users != null && users.size() > 0) {
-				searchCriteria.setAssignUsers(new SetSearchField<String>(
-						SetSearchField.AND, users));
+				LeadSearchPanel.this.searchCriteria
+						.setAssignUsers(new SetSearchField<String>(
+								SearchField.AND, users));
 			}
 
-			return searchCriteria;
+			return LeadSearchPanel.this.searchCriteria;
 		}
 
 		@Override
 		protected void clearFields() {
-			firstnameField.setValue("");
-			lastnameField.setValue("");
-			accountnameField.setValue("");
-			statusField.setValue(null);
+			this.firstnameField.setValue("");
+			this.lastnameField.setValue("");
+			this.accountnameField.setValue("");
+			this.statusField.setValue(null);
 
-			anyEmailField.setValue("");
-			anyAddressField.setValue("");
-			countryField.setValue(null);
-			sourceField.setValue(null);
+			this.anyEmailField.setValue("");
+			this.anyAddressField.setValue("");
+			this.countryField.setValue(null);
+			this.sourceField.setValue(null);
 
-			anyPhoneField.setValue("");
-			cityField.setValue("");
-			stateField.setValue("");
-			userField.setValue(null);
+			this.anyPhoneField.setValue("");
+			this.cityField.setValue("");
+			this.stateField.setValue("");
+			this.userField.setValue(null);
 		}
 
 		@Override
-		protected void loadSaveSearchToField(LeadSearchCriteria value) {
-			if (value.getFirstname() != null)
-				firstnameField.setValue(value.getFirstname().getValue());
-			if (value.getLastname() != null)
-				lastnameField.setValue(value.getLastname().getValue());
-			if (value.getAccountName() != null)
-				accountnameField.setValue(value.getAccountName().getValue());
-			if (value.getAnyEmail() != null)
-				anyEmailField.setValue(value.getAnyEmail().getValue());
-			if (value.getAnyAddress() != null)
-				anyAddressField.setValue(value.getAnyAddress().getValue());
-
-			if (value.getAnyCountry() != null)
-				countryField.setValue(value.getAnyCountry().getValue());
-			if (value.getAnyState() != null){
-				stateField.setValue(value.getAnyState().getValue());
+		protected void loadSaveSearchToField(final LeadSearchCriteria value) {
+			if (value.getFirstname() != null) {
+				this.firstnameField.setValue(value.getFirstname().getValue());
+			}
+			if (value.getLastname() != null) {
+				this.lastnameField.setValue(value.getLastname().getValue());
+			}
+			if (value.getAccountName() != null) {
+				this.accountnameField.setValue(value.getAccountName()
+						.getValue());
+			}
+			if (value.getAnyEmail() != null) {
+				this.anyEmailField.setValue(value.getAnyEmail().getValue());
+			}
+			if (value.getAnyAddress() != null) {
+				this.anyAddressField.setValue(value.getAnyAddress().getValue());
 			}
 
-			if (value.getSources() != null){
-				sourceField.setValue(Arrays.asList((Object[])value.getSources().values));
+			if (value.getAnyCountry() != null) {
+				this.countryField.setValue(value.getAnyCountry().getValue());
 			}
-				
-			if (value.getAnyPhone() != null)
-				anyPhoneField.setValue(value.getAnyPhone().getValue());
-			if (value.getAnyCity() != null)
-				cityField.setValue(value.getAnyCity().getValue());
-			
-			if (value.getStatuses() != null)
-				statusField.setValue(Arrays.asList((Object[])value.getStatuses().values));
-			
-			if (value.getAssignUsers() != null)
-				userField
-						.setValue(Arrays.asList((Object[])value.getAssignUsers().values));
+			if (value.getAnyState() != null) {
+				this.stateField.setValue(value.getAnyState().getValue());
+			}
+
+			if (value.getSources() != null) {
+				this.sourceField.setValue(Arrays.asList((Object[]) value
+						.getSources().values));
+			}
+
+			if (value.getAnyPhone() != null) {
+				this.anyPhoneField.setValue(value.getAnyPhone().getValue());
+			}
+			if (value.getAnyCity() != null) {
+				this.cityField.setValue(value.getAnyCity().getValue());
+			}
+
+			if (value.getStatuses() != null) {
+				this.statusField.setValue(Arrays.asList((Object[]) value
+						.getStatuses().values));
+			}
+
+			if (value.getAssignUsers() != null) {
+				this.userField.setValue(Arrays.asList((Object[]) value
+						.getAssignUsers().values));
+			}
 		}
 	}
 

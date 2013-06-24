@@ -18,6 +18,10 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.file.FileManagerPresenter;
@@ -37,6 +41,7 @@ import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -55,7 +60,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -78,6 +83,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private UserGroupPresenter userPresenter;
 	private StandupPresenter standupPresenter;
 	private final ProjectBreadcrumb breadCrumb;
+	private SplitButtonExt controlsBtn;
 
 	public ProjectViewImpl() {
 		this.setStyleName("projectDashboardView");
@@ -110,13 +116,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		root.setExpandRatio(mySpaceArea, 1.0f);
 		root.setWidth("100%");
 		buildComponents();
-		showWelcomeScreen();
 		this.addComponent(root);
-	}
-
-	private void showWelcomeScreen() {
-		mySpaceArea.addComponent(new Label("Welcome"));
-
 	}
 
 	private static class MenuButton extends Button {
@@ -332,36 +332,104 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		breadCrumb.setProject(project);
 		breadCrumb.initBreadcrumb();
 
+		Button quickActionBtn = new Button("Quick Action",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(true);
+					}
+				});
+		controlsBtn = new SplitButtonExt(quickActionBtn);
+		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.setIcon(MyCollabResource.newResource("icons/16/project/quick_action.png"));
+
+		VerticalLayout popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setWidth("150px");
+
+		Button createPhaseBtn = new Button("Create Phase",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new MilestoneEvent.GotoAdd(
+										ProjectViewImpl.this, null));
+					}
+				});
+		createPhaseBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.MILESTONES));
+		createPhaseBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/milestone.png"));
+		createPhaseBtn.setStyleName("link");
+		popupButtonsControl.addComponent(createPhaseBtn);
+
+		Button createBugBtn = new Button("Create Bug",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoAdd(this, null));
+					}
+				});
+		createBugBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
+		createBugBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/bug.png"));
+		createBugBtn.setStyleName("link");
+		popupButtonsControl.addComponent(createBugBtn);
+
+		Button createRiskBtn = new Button("Create Risk",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new RiskEvent.GotoAdd(this, null));
+					}
+				});
+		createRiskBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.RISKS));
+		createRiskBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/risk.png"));
+		createRiskBtn.setStyleName("link");
+		popupButtonsControl.addComponent(createRiskBtn);
+
+		Button createProblemBtn = new Button("Create Problem",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new ProblemEvent.GotoAdd(this, null));
+					}
+				});
+		createProblemBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
+		createProblemBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/problem.png"));
+		createProblemBtn.setStyleName("link");
+		popupButtonsControl.addComponent(createProblemBtn);
+
 		Button editProjectBtn = new Button(
 				LocalizationHelper
 						.getMessage(ProjectCommonI18nEnum.EDIT_PROJECT_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(false);
 						dashboardPresenter.go(ProjectViewImpl.this,
 								new ProjectScreenData.Edit(project));
 					}
 				});
 		editProjectBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROJECT));
-		SplitButtonExt controlsBtn = new SplitButtonExt(editProjectBtn);
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.setIcon(MyCollabResource.newResource("icons/16/edit.png"));
+		editProjectBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/edit_project_green.png"));
+		editProjectBtn.setStyleName("link");
+		popupButtonsControl.addComponent(editProjectBtn);
 
-		Button selectBtn = new Button(
-				LocalizationHelper
-						.getMessage(ProjectCommonI18nEnum.VIEW_PROJECT_DETAIL_ACTION),
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						dashboardPresenter.go(ProjectViewImpl.this, null);
-					}
-				});
-		selectBtn.setEnabled(CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.PROJECT));
-		selectBtn.setIcon(MyCollabResource.newResource("icons/16/view.png"));
-		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
+		controlsBtn.addComponent(popupButtonsControl);
 
 		topPanel.addComponent(controlsBtn);
 		topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);

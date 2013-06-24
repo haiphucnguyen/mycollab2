@@ -4,7 +4,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
-import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
@@ -23,14 +22,16 @@ public class Demo {
 				"META-INF/spring/user-context.xml");
 
 		ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
-		
+
+//		jcrDao.removeResource("/a/b/d");
+
 		Folder pageContent = new Folder();
 		pageContent.setPath("/a/b/d");
 
-		jcrDao.createFolder(pageContent);
+		jcrDao.createFolder(pageContent, "baohan");
 
-		Resource content = jcrDao.getResource("/a/b/d");
-		System.out.println(content);
+		Resource content = jcrDao.getResource("a/b/d");
+		System.out.println(content.getCreatedUser());
 		// System.out.println("CONTENT " + content);
 		//
 		// jcrDao.removeContent("example/a/b");

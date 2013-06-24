@@ -23,6 +23,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -31,7 +32,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
+	private final SimpleProject project;
 	protected RiskSearchCriteria searchCriteria;
 
 	public RiskSearchPanel() {
@@ -41,7 +42,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 	@Override
 	public void attach() {
 		super.attach();
-		createBasicSearchLayout();
+		this.createBasicSearchLayout();
 	}
 
 	private void createBasicSearchLayout() {
@@ -50,21 +51,28 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Risks");
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(searchtitle);
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/24/project/risk.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
-		Button createBtn = new Button(
+		final Label risktitle = new Label("Risks");
+		risktitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(risktitle);
+		layout.setExpandRatio(risktitle, 1.0f);
+		layout.setComponentAlignment(risktitle, Alignment.MIDDLE_LEFT);
+		final Button createBtn = new Button(
 				LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new RiskEvent.GotoAdd(this, null));
 					}
@@ -95,19 +103,19 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return RiskSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
 
-			nameField = createSeachSupportTextField(new TextField(),
+			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
 
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
 			final Button searchBtn = new Button();
@@ -118,15 +126,15 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					RiskBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
 
-			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+			this.myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
 			final Button cancelBtn = new Button(
@@ -140,7 +148,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					nameField.setValue("");
+					RiskBasicSearchLayout.this.nameField.setValue("");
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
@@ -150,19 +158,22 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new RiskSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-					project.getId()));
-			searchCriteria.setRiskname(new StringSearchField(nameField
-					.getValue().toString().trim()));
+			RiskSearchPanel.this.searchCriteria = new RiskSearchCriteria();
+			RiskSearchPanel.this.searchCriteria
+					.setProjectId(new NumberSearchField(SearchField.AND,
+							RiskSearchPanel.this.project.getId()));
+			RiskSearchPanel.this.searchCriteria
+					.setRiskname(new StringSearchField(this.nameField
+							.getValue().toString().trim()));
 
-			if (myItemCheckbox.booleanValue()) {
-				searchCriteria.setAssignToUser(new StringSearchField(
-						SearchField.AND, AppContext.getUsername()));
+			if (this.myItemCheckbox.booleanValue()) {
+				RiskSearchPanel.this.searchCriteria
+						.setAssignToUser(new StringSearchField(SearchField.AND,
+								AppContext.getUsername()));
 			} else {
-				searchCriteria.setAssignToUser(null);
+				RiskSearchPanel.this.searchCriteria.setAssignToUser(null);
 			}
-			return searchCriteria;
+			return RiskSearchPanel.this.searchCriteria;
 		}
 	}
 

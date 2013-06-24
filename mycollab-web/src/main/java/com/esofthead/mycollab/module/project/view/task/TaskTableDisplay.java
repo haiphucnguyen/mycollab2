@@ -6,8 +6,11 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -18,11 +21,13 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
@@ -289,13 +294,38 @@ public class TaskTableDisplay extends
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								ProjectTaskService projectTaskService = AppContext
-										.getSpringBean(ProjectTaskService.class);
-								projectTaskService.removeWithSession(
-										task.getId(), AppContext.getUsername());
-								fireTableEvent(new TableClickEvent(
-										TaskTableDisplay.this, task,
-										"deleteTask"));
+								ConfirmDialogExt.show(
+										TaskTableDisplay.this.getWindow(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														ApplicationProperties
+																.getString(ApplicationProperties.SITE_NAME)),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
+
+											@Override
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													ProjectTaskService projectTaskService = AppContext
+															.getSpringBean(ProjectTaskService.class);
+													projectTaskService.removeWithSession(
+															task.getId(),
+															AppContext
+																	.getUsername());
+													fireTableEvent(new TableClickEvent(
+															TaskTableDisplay.this,
+															task, "deleteTask"));
+												}
+											}
+										});
 							}
 						});
 				deleteBtn.setStyleName("link");
@@ -304,7 +334,7 @@ public class TaskTableDisplay extends
 				filterBtnLayout.addComponent(deleteBtn);
 
 				taskSettingPopupBtn.setIcon(MyCollabResource
-						.newResource("icons/12/project/task_menu.png"));
+						.newResource("icons/16/item_settings.png"));
 				taskSettingPopupBtn.setStyleName("link");
 				taskSettingPopupBtn.addComponent(filterBtnLayout);
 				return taskSettingPopupBtn;
@@ -328,7 +358,7 @@ public class TaskTableDisplay extends
 				});
 
 		this.setColumnExpandRatio("taskname", 1);
-		this.setColumnWidth("id", 30);
+		this.setColumnWidth("id", 22);
 		this.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);

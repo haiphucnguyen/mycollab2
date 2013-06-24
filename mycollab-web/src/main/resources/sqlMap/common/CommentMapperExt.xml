@@ -6,8 +6,12 @@
         extends="com.esofthead.mycollab.common.dao.CommentMapper.BaseResultMap"
         type="com.esofthead.mycollab.common.domain.SimpleComment">
 
+        <result column="ownerAvatarId" jdbcType="VARCHAR"
+            property="ownerAvatarId" />
+
         <result column="ownerFullName" jdbcType="VARCHAR"
             property="ownerFullName" />
+
         <collection property="attachments" javaType="ArrayList"
             columnPrefix="attach_"
             resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap"
@@ -27,6 +31,7 @@
         <![CDATA[
             SELECT m_comment.id, m_comment.comment, m_comment.createdUser, m_comment.createdTime, 
                    m_comment.type, m_comment.typeId, m_comment.sAccountId,
+                   s_user.avatarId AS ownerAvatarId,
                    concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as ownerFullName,
                    m_attachment.id AS attach_id, m_attachment.type AS attach_type, m_attachment.documentpath AS attach_documentpath, 
                    m_attachment.createdTime AS attach_createdTime, m_attachment.lastUpdatedTime AS attach_lastUpdatedTime, 
@@ -39,7 +44,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             createdTime DESC
         ]]>

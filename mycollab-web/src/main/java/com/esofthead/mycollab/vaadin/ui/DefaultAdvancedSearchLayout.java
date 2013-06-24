@@ -205,10 +205,28 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				Integer itemId = (Integer) saveResultComboBox.getValue();
 				if(itemId != null){
 					BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox.getBeanIteam();
-					String captionStr = saveResultComboBox.getCaption();
-					BeanItem<SaveSearchResultWithBLOBs> beanSearch = beanData.getItem(captionStr);
-					SaveSearchResultWithBLOBs record = (SaveSearchResultWithBLOBs) beanSearch.getItemProperty(itemId);
-					saveSearchResultService.updateWithSession(record, AppContext.getUsername());
+					
+					String captionStr = saveResultComboBox.getItemCaption(itemId);
+					S searchCriteria = fillupSearchCriteria();
+					
+					SaveSearchResultWithBLOBs searchResult = new SaveSearchResultWithBLOBs();
+					searchResult.setSaveuser(AppContext.getUsername());
+					searchResult.setSaccountid(AppContext.getAccountId());
+					XStream stream = new XStream();
+					searchResult.setQuerytext(stream.toXML(searchCriteria));
+					searchResult.setType(type);
+					searchResult.setId(itemId);
+					searchResult.setQueryname(captionStr);
+					
+					saveSearchResultService.updateWithSession(searchResult, AppContext.getUsername());
+					getWindow().showNotification("Updated successfully.");
+					
+					beanData.removeItem(itemId);
+					beanData.addBean(searchResult);
+					saveResultComboBox.setContainerDataSource(beanData);
+					saveResultComboBox.setItemCaptionPropertyId("queryname");
+					
+					saveResultComboBox.setValue(searchResult.getId());
 				}
 			}
 		});
@@ -223,8 +241,9 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 											GenericI18Enum.DELETE_DIALOG_TITLE,
 											ApplicationProperties
 													.getString(ApplicationProperties.SITE_NAME)),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.DELETE_DIALOG_MESSAGE),
+//							LocalizationHelper
+//									.getMessage(GenericI18Enum.DELETE_DIALOG_MESSAGE),
+										"Do you want to delete record ?" ,
 							LocalizationHelper
 									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 							LocalizationHelper
@@ -243,6 +262,9 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 										beanData.removeItem(itemDelete);
 										saveResultComboBox.setContainerDataSource(beanData);
 										saveResultComboBox.setItemCaptionPropertyId("queryname");
+										
+										clearFields();
+										saveResultComboBox.setValue(null);
 									}
 								}
 						}); //end confirm Dialog

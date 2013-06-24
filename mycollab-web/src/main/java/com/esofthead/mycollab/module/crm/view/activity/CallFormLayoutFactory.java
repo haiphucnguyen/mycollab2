@@ -25,7 +25,7 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 callAddLayout = new AddViewLayout2(title,
-				MyCollabResource.newResource("icons/48/crm/call.png"));
+				MyCollabResource.newResource("icons/22/crm/call.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

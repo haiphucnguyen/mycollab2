@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.ecm;
 
 import javax.jcr.PropertyType;
+import javax.jcr.RepositoryException;
+import javax.jcr.nodetype.NoSuchNodeTypeException;
 import javax.jcr.nodetype.NodeType;
 import javax.jcr.nodetype.NodeTypeManager;
 import javax.jcr.nodetype.NodeTypeTemplate;
@@ -40,8 +42,14 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 
 		NodeTypeManager manager = (NodeTypeManager) getSession().getWorkspace()
 				.getNodeTypeManager();
-		NodeType hierachyNode = manager.getNodeType(NodeType.NT_HIERARCHY_NODE);
 
+		manager.registerNodeType(createMyCollabContentType(manager), true);
+		manager.registerNodeType(createMyCollabFolderType(manager), true);
+	}
+
+	private NodeTypeTemplate createMyCollabContentType(NodeTypeManager manager)
+			throws NoSuchNodeTypeException, RepositoryException {
+		NodeType hierachyNode = manager.getNodeType(NodeType.NT_HIERARCHY_NODE);
 		// Create content node type
 		NodeTypeTemplate contentTypeTemplate = manager
 				.createNodeTypeTemplate(hierachyNode);
@@ -58,16 +66,61 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 				contentTypeTemplate.getDeclaredPropertyDefinitions().length,
 				contentTypeTemplate.getDeclaredChildNodeDefinitions().length);
 
-//		PropertyDefinitionTemplate pathPropertyTemplate = manager
-//				.createPropertyDefinitionTemplate();
-//		pathPropertyTemplate.setMultiple(false);
-//		pathPropertyTemplate.setName("path");
-//		pathPropertyTemplate.setMandatory(true);
-//		pathPropertyTemplate.setRequiredType(PropertyType.STRING);
-//		contentTypeTemplate.getPropertyDefinitionTemplates().add(
-//				pathPropertyTemplate);
+		PropertyDefinitionTemplate createdUserPropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		createdUserPropertyTemplate.setMultiple(false);
+		createdUserPropertyTemplate.setName("mycollab:createdUser");
+		createdUserPropertyTemplate.setMandatory(true);
+		createdUserPropertyTemplate.setRequiredType(PropertyType.STRING);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				createdUserPropertyTemplate);
 
-		manager.registerNodeType(contentTypeTemplate, true);
+		PropertyDefinitionTemplate lastModifiedUserPropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		lastModifiedUserPropertyTemplate.setMultiple(false);
+		lastModifiedUserPropertyTemplate.setName("mycollab:lastModifiedUser");
+		lastModifiedUserPropertyTemplate.setMandatory(true);
+		lastModifiedUserPropertyTemplate.setRequiredType(PropertyType.STRING);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				lastModifiedUserPropertyTemplate);
 
+		PropertyDefinitionTemplate sizePropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		sizePropertyTemplate.setMultiple(false);
+		sizePropertyTemplate.setName("mycollab:size");
+		sizePropertyTemplate.setMandatory(true);
+		sizePropertyTemplate.setRequiredType(PropertyType.DOUBLE);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				sizePropertyTemplate);
+
+		return contentTypeTemplate;
+	}
+
+	private NodeTypeTemplate createMyCollabFolderType(NodeTypeManager manager)
+			throws NoSuchNodeTypeException, RepositoryException {
+		// Create content node type
+		NodeTypeTemplate contentTypeTemplate = manager.createNodeTypeTemplate();
+
+		contentTypeTemplate.setAbstract(false);
+		contentTypeTemplate.setMixin(false);
+		contentTypeTemplate.setName("mycollab:folder");
+		contentTypeTemplate.setPrimaryItemName("folder");
+		contentTypeTemplate
+				.setDeclaredSuperTypeNames(new String[] { NodeType.NT_FOLDER });
+		contentTypeTemplate.setQueryable(true);
+		contentTypeTemplate.setOrderableChildNodes(false);
+		// log.debug("PROERTY {} {}",
+		// contentTypeTemplate.getDeclaredPropertyDefinitions().length,
+		// contentTypeTemplate.getDeclaredChildNodeDefinitions().length);
+
+		PropertyDefinitionTemplate createdPropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		createdPropertyTemplate.setMultiple(false);
+		createdPropertyTemplate.setName("mycollab:createdUser");
+		createdPropertyTemplate.setMandatory(true);
+		createdPropertyTemplate.setRequiredType(PropertyType.STRING);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				createdPropertyTemplate);
+		return contentTypeTemplate;
 	}
 }

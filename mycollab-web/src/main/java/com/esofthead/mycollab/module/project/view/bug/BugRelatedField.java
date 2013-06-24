@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
@@ -318,7 +319,7 @@ public class BugRelatedField extends CustomField {
 					@Override
 					public void buttonClick(
 							com.vaadin.ui.Button.ClickEvent event) {
-						ConfirmDialog.show(AppContext.getApplication()
+						ConfirmDialogExt.show(AppContext.getApplication()
 								.getMainWindow(), "Please Confirm:",
 								"Are you sure to remove this relationship?",
 								"Yes", "No", new ConfirmDialog.Listener() {

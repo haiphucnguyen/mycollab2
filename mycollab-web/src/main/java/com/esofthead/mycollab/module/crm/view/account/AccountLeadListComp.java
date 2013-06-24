@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -158,43 +159,44 @@ public class AccountLeadListComp extends
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialog.show(
-										AppContext.getApplication()
+								ConfirmDialogExt
+										.show(AppContext.getApplication()
 												.getMainWindow(),
-										LocalizationHelper
-												.getMessage(
-														GenericI18Enum.DELETE_DIALOG_TITLE,
-														ApplicationProperties
-																.getString(ApplicationProperties.SITE_NAME)),
-										LocalizationHelper
-												.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
+												LocalizationHelper
+														.getMessage(
+																GenericI18Enum.DELETE_DIALOG_TITLE,
+																ApplicationProperties
+																		.getString(ApplicationProperties.SITE_NAME)),
+												LocalizationHelper
+														.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+												new ConfirmDialog.Listener() {
+													private static final long serialVersionUID = 1L;
 
-											@Override
-											public void onClose(
-													final ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													final AccountService accountService = AppContext
-															.getSpringBean(AccountService.class);
-													final AccountLead associateLead = new AccountLead();
-													associateLead
-															.setAccountid(account
-																	.getId());
-													associateLead
-															.setLeadid(lead
-																	.getId());
-													accountService
-															.removeAccountLeadRelationship(associateLead);
-													AccountLeadListComp.this
-															.refresh();
-												}
-											}
-										});
+													@Override
+													public void onClose(
+															final ConfirmDialog dialog) {
+														if (dialog
+																.isConfirmed()) {
+															final AccountService accountService = AppContext
+																	.getSpringBean(AccountService.class);
+															final AccountLead associateLead = new AccountLead();
+															associateLead
+																	.setAccountid(account
+																			.getId());
+															associateLead
+																	.setLeadid(lead
+																			.getId());
+															accountService
+																	.removeAccountLeadRelationship(associateLead);
+															AccountLeadListComp.this
+																	.refresh();
+														}
+													}
+												});
 							}
 						});
 				deleteBtn.setStyleName("link");

@@ -33,26 +33,27 @@ public class CallPreviewBuilder extends VerticalLayout {
 	protected SimpleCall call;
 
 	protected void initRelatedComponent() {
-		noteListItems = new NoteListItems("Notes");
+		this.noteListItems = new NoteListItems("Notes");
 	}
 
-	public void previewItem(SimpleCall item) {
-		call = item;
-		previewForm.setItemDataSource(new BeanItem<CallWithBLOBs>(call));
+	public void previewItem(final SimpleCall item) {
+		this.call = item;
+		this.previewForm.setItemDataSource(new BeanItem<CallWithBLOBs>(
+				this.call));
 
-		displayNotes();
+		this.displayNotes();
 	}
 
 	private void displayNotes() {
-		noteListItems.showNotes(CrmTypeConstants.CALL, call.getId());
+		this.noteListItems.showNotes(CrmTypeConstants.CALL, this.call.getId());
 	}
 
 	public AdvancedPreviewBeanForm<SimpleCall> getPreviewForm() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	public SimpleCall getCall() {
-		return call;
+		return this.call;
 	}
 
 	protected class CallFormFieldFactory extends DefaultFormViewFieldFactory {
@@ -60,29 +61,32 @@ public class CallPreviewBuilder extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected Field onCreateField(Item item, Object propertyId,
-				Component uiContext) {
+		protected Field onCreateField(final Item item, final Object propertyId,
+				final Component uiContext) {
 			if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(call.getAssignUserFullName(),
+				return new FormLinkViewField(
+						CallPreviewBuilder.this.call.getAssignUserFullName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 							}
 						});
 			} else if (propertyId.equals("type")) {
-				return new RelatedReadItemField(call);
+				return new RelatedReadItemField(CallPreviewBuilder.this.call);
 			} else if (propertyId.equals("status")) {
-				String value = call.getStatus() + " " + call.getCalltype();
-				FormViewField field = new FormViewField(value);
+				final String value = CallPreviewBuilder.this.call.getStatus()
+						+ " " + CallPreviewBuilder.this.call.getCalltype();
+				final FormViewField field = new FormViewField(value);
 				return field;
 			} else if (propertyId.equals("durationinseconds")) {
-				Integer duration = call.getDurationinseconds();
+				final Integer duration = CallPreviewBuilder.this.call
+						.getDurationinseconds();
 				if (duration != null && duration != 0) {
-					int hours = duration / 3600;
-					int minutes = (duration % 3600) / 60;
-					StringBuffer value = new StringBuffer();
+					final int hours = duration / 3600;
+					final int minutes = (duration % 3600) / 60;
+					final StringBuffer value = new StringBuffer();
 					if (hours == 1) {
 						value.append("1 hour ");
 					} else if (hours >= 2) {
@@ -98,8 +102,9 @@ public class CallPreviewBuilder extends VerticalLayout {
 					return new FormViewField("");
 				}
 			} else if (propertyId.equals("startdate")) {
-				return new FormViewField(AppContext.formatDateTime(call
-						.getStartdate()));
+				return new FormViewField(
+						AppContext.formatDateTime(CallPreviewBuilder.this.call
+								.getStartdate()));
 			}
 
 			return null;
@@ -108,41 +113,41 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 	public static class ReadView extends CallPreviewBuilder {
 
-		private VerticalLayout callInformation;
-		private ReadViewLayout callAddLayout;
+		private final VerticalLayout callInformation;
+		private final ReadViewLayout callAddLayout;
 
 		public ReadView() {
-			callAddLayout = new ReadViewLayout(
-					MyCollabResource
-				.newResource(
-					"icons/22/crm/call.png"));
-			this.addComponent(callAddLayout);
-			initRelatedComponent();
+			this.callAddLayout = new ReadViewLayout(
+					MyCollabResource.newResource("icons/22/crm/call.png"));
+			this.addComponent(this.callAddLayout);
+			this.initRelatedComponent();
 
-			previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
+			this.previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new CallFormLayoutFactory.CallInformationLayout());
 					this.setFormFieldFactory(new CallFormFieldFactory());
 					super.setItemDataSource(newDataSource);
-					callAddLayout.setTitle(call.getSubject());
+					ReadView.this.callAddLayout.setTitle(ReadView.this.call
+							.getSubject());
 				}
 
 				@Override
 				protected void doPrint() {
 					// Create a window that contains what you want to print
-					Window window = new Window("Window to Print");
+					final Window window = new Window("Window to Print");
 
-					CallPreviewBuilder printView = new CallPreviewBuilder.PrintView();
-					printView.previewItem(call);
+					final CallPreviewBuilder printView = new CallPreviewBuilder.PrintView();
+					printView.previewItem(ReadView.this.call);
 					window.addComponent(printView);
 
 					// Add the printing window as a new application-level window
-					getApplication().addWindow(window);
+					this.getApplication().addWindow(window);
 
 					// Open it as a popup window with no decorations
-					getWindow().open(new ExternalResource(window.getURL()),
-							"_blank", 1100, 200, // Width and height
+					this.getWindow().open(
+							new ExternalResource(window.getURL()), "_blank",
+							1100, 200, // Width and height
 							Window.BORDER_NONE); // No decorations
 
 					// Print automatically when the window opens.
@@ -155,33 +160,32 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 				@Override
 				protected void showHistory() {
-					CallHistoryLogWindow historyLog = new CallHistoryLogWindow(
+					final CallHistoryLogWindow historyLog = new CallHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.CALL,
-							call.getId());
-					getWindow().addWindow(historyLog);
+							ReadView.this.call.getId());
+					this.getWindow().addWindow(historyLog);
 				}
 			};
 
 			final Layout optionalActionControls = PreviewFormControlsGenerator2
-					.createFormOptionalControls(previewForm,
+					.createFormOptionalControls(this.previewForm,
 							RolePermissionCollections.CRM_CALL);
 
-			callAddLayout.addControlButtons(optionalActionControls);
+			this.callAddLayout.addControlButtons(optionalActionControls);
 
-			callInformation = new VerticalLayout();
-			callInformation.addStyleName("main-info");
-			callInformation.setMargin(true);
+			this.callInformation = new VerticalLayout();
+			this.callInformation.addStyleName("main-info");
 
 			final Layout actionControls = PreviewFormControlsGenerator2
-					.createFormControls(previewForm,
+					.createFormControls(this.previewForm,
 							RolePermissionCollections.CRM_CALL);
 			actionControls.addStyleName("control-buttons");
-			callInformation.addComponent(actionControls);
-			
-			callInformation.addComponent(previewForm);
-			callInformation.addComponent(noteListItems);
-			
-			callAddLayout.addTab(callInformation, "Call Information");
+			this.callInformation.addComponent(actionControls);
+
+			this.callInformation.addComponent(this.previewForm);
+			this.callInformation.addComponent(this.noteListItems);
+
+			this.callAddLayout.addTab(this.callInformation, "Call Information");
 		}
 	}
 
@@ -193,17 +197,17 @@ public class CallPreviewBuilder extends VerticalLayout {
 	public static class PrintView extends CallPreviewBuilder {
 
 		public PrintView() {
-			initRelatedComponent();
-			previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
+			this.initRelatedComponent();
+			this.previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new FormLayoutFactory());
 					this.setFormFieldFactory(new CallFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 				}
 			};
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 		}
 
 		class FormLayoutFactory extends CallFormLayoutFactory {
@@ -211,7 +215,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(call.getSubject());
+				super(PrintView.this.call.getSubject());
 			}
 
 			@Override
@@ -221,10 +225,10 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 			@Override
 			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.setWidth("100%");
 
-				relatedItemsPanel.addComponent(noteListItems);
+				relatedItemsPanel.addComponent(PrintView.this.noteListItems);
 				return relatedItemsPanel;
 			}
 		}

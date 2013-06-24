@@ -42,13 +42,14 @@ public class ResourceServiceImpl implements ResourceService {
 		folder.setPath(folderPath);
 		folder.setCreatedBy(createdBy);
 		folder.setCreated(new GregorianCalendar());
-		contentJcrDao.createFolder(folder);
+		contentJcrDao.createFolder(folder, createdBy);
 		return folder;
 	}
 
 	@Override
-	public void saveContent(Content content, InputStream refStream) {
-		contentJcrDao.saveContent(content);
+	public void saveContent(Content content, String createdUser,
+			InputStream refStream) {
+		contentJcrDao.saveContent(content, createdUser);
 
 		String contentPath = content.getPath();
 		rawContentService.saveContent(contentPath, refStream);
@@ -59,5 +60,10 @@ public class ResourceServiceImpl implements ResourceService {
 		contentJcrDao.removeResource(path);
 
 		rawContentService.removeContent(path);
+	}
+
+	@Override
+	public InputStream getContantStream(String path) {
+		return rawContentService.getContent(path);
 	}
 }

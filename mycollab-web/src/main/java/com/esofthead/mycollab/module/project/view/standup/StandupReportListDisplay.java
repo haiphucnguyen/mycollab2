@@ -86,12 +86,11 @@ public class StandupReportListDisplay
 			reportContent.setExpandRatio(report3, 1.0f);
 
 			reportContent.setWidth("100%");
-			reportContent.setSpacing(true);
+			// reportContent.setSpacing(true);
 
 			layout.addComponent(reportContent);
 			return layout;
 		}
-
 	}
 
 }

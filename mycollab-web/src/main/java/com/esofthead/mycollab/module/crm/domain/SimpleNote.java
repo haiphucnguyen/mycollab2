@@ -7,11 +7,20 @@ import java.util.List;
 public class SimpleNote extends Note {
 
     private static final long serialVersionUID = 1L;
+    private String createdUserAvatarId;
     private String createUserFullName;
     private List<Attachment> attachments;
     private List<SimpleComment> comments;
 
-    public String getCreateUserFullName() {
+    public String getCreatedUserAvatarId() {
+		return createdUserAvatarId;
+	}
+
+	public void setCreatedUserAvatarId(String createdUserAvatarId) {
+		this.createdUserAvatarId = createdUserAvatarId;
+	}
+
+	public String getCreateUserFullName() {
         return createUserFullName;
     }
 

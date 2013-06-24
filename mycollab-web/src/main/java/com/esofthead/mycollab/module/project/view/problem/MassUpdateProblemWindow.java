@@ -30,7 +30,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 		this.setWidth("1000px");
 
 		this.setIcon(MyCollabResource
-				.newResource("icons/48/project/problem.png"));
+				.newResource("icons/24/project/problem.png"));
 
 		this.accountAddLayout = new ReadViewLayout(null, false);
 

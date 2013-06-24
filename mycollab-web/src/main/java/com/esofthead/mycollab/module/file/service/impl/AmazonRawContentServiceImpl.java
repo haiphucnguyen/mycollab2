@@ -52,6 +52,12 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 			PutObjectRequest request = new PutObjectRequest(
 					S3StorageConfig.getBucket(), objectPath, tmpFile);
+
+			ObjectMetadata metaData = new ObjectMetadata();
+			metaData.setCacheControl("max-age=8640000");
+
+			request.setMetadata(metaData);
+
 			s3client.putObject(request
 					.withCannedAcl(CannedAccessControlList.PublicRead));
 
@@ -95,8 +101,8 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		AmazonS3 s3client = S3StorageConfig.getS3Client();
 
 		try {
-			ObjectListing listObjects = s3client.listObjects(
-					S3StorageConfig.getBucket(), "");
+			ObjectListing listObjects = s3client.listObjects("mycollab_assets",
+					"icons");
 			for (S3ObjectSummary objectSummary : listObjects
 					.getObjectSummaries()) {
 				System.out.println("Key: " + objectSummary.getKey());
@@ -125,8 +131,8 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 				}
 
 				CopyObjectRequest request = new CopyObjectRequest(
-						S3StorageConfig.getBucket(), objectSummary.getKey(),
-						S3StorageConfig.getBucket(), objectSummary.getKey());
+						"mycollab_assets", objectSummary.getKey(),
+						"mycollab_assets", objectSummary.getKey());
 				request.withNewObjectMetadata(metaData)
 						.withCannedAccessControlList(
 								CannedAccessControlList.PublicRead);

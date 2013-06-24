@@ -6,10 +6,13 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.contextmenu.ContextMenu;
 import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItem;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
@@ -22,11 +25,13 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
@@ -59,7 +64,7 @@ public class BugTableDisplay extends
 						.getBeanByIndex(itemId);
 				final PopupButton bugSettingBtn = new PopupButton();
 				bugSettingBtn.setIcon(MyCollabResource
-						.newResource("icons/12/project/task_menu.png"));
+						.newResource("icons/16/item_settings.png"));
 				bugSettingBtn.setStyleName("link");
 
 				final ContextMenu menu = new ContextMenu();
@@ -127,11 +132,37 @@ public class BugTableDisplay extends
 										new BugEvent.GotoEdit(
 												BugTableDisplay.this, bug));
 							} else if ("delete".equals(value)) {
-								BugService bugService = AppContext
-										.getSpringBean(BugService.class);
-								bugService.removeWithSession(bug.getId(),
-										AppContext.getUsername());
-								refresh();
+								ConfirmDialogExt.show(
+										BugTableDisplay.this.getWindow(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														ApplicationProperties
+																.getString(ApplicationProperties.SITE_NAME)),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
+
+											@Override
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													BugService bugService = AppContext
+															.getSpringBean(BugService.class);
+													bugService.removeWithSession(
+															bug.getId(),
+															AppContext
+																	.getUsername());
+													refresh();
+												}
+											}
+										});
+
 							}
 						}
 
@@ -150,8 +181,7 @@ public class BugTableDisplay extends
 						menu.show(event.getClientX() - 25, event.getClientY());
 						menu.removeAllItems();
 
-						ContextMenuItem editMenuItem = menu.addItem("Edit",
-								"action", "edit");
+						menu.addItem("Edit", "action", "edit");
 
 						ContextMenuItem statusMenuItem = menu.addItem("Status");
 						if (BugStatusConstants.OPEN.equals(bug.getStatus())
@@ -234,7 +264,6 @@ public class BugTableDisplay extends
 						return new ProjectUserLink(bug.getAssignuser(), bug
 								.getAssignUserAvatarId(), bug
 								.getAssignuserFullName(), true, true);
-
 					}
 				});
 
@@ -369,7 +398,7 @@ public class BugTableDisplay extends
 		this.setColumnExpandRatio("summary", 1.0f);
 		this.setColumnWidth("assignuserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("id", 30);
+		this.setColumnWidth("id", 22);
 		this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
 		this.setColumnWidth("duedate", UIConstants.TABLE_DATE_WIDTH);

@@ -30,6 +30,8 @@ public class MainWindowContainer extends Window implements View {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(MainWindowContainer.class);
+	
+	private boolean isAutoLogin;
 
 	private final Content content;
 
@@ -84,7 +86,8 @@ public class MainWindowContainer extends Window implements View {
 
 		log.debug("Initial fragement: " + urifu.getFragment());
 
-		setDefaultView(true);
+		isAutoLogin = true;
+		setDefaultView();
 	}
 
 	public void setMainContent(ComponentContainer newContent) {
@@ -136,7 +139,7 @@ public class MainWindowContainer extends Window implements View {
 		urifu.setFragment(fragement, false);
 	}
 
-	private final void setDefaultView(final boolean isAutoLogin) {
+	private final void setDefaultView() {
 		final LoginPresenter presenter = PresenterResolver
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.getView();
@@ -169,6 +172,14 @@ public class MainWindowContainer extends Window implements View {
 
 		this.setStyleName("loginView");
 		this.setMainContent(loginView.getWidget());
+	}
+
+	public boolean isAutoLogin() {
+		return isAutoLogin;
+	}
+
+	public void setAutoLogin(boolean isAutoLogin) {
+		this.isAutoLogin = isAutoLogin;
 	}
 
 	@Override

@@ -59,7 +59,6 @@ public class MilestoneListViewImpl extends AbstractView implements
 		final HorizontalLayout header = new HorizontalLayout();
 		final Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
-		// header.setMargin(true, true, false, true);
 		header.setWidth("100%");
 		final Embedded icon = new Embedded();
 		icon.setSource(MyCollabResource
@@ -83,6 +82,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 										MilestoneListViewImpl.this, null));
 					}
 				});
+		this.createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		this.createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(this.createBtn);
 		header.setComponentAlignment(this.createBtn, Alignment.MIDDLE_RIGHT);

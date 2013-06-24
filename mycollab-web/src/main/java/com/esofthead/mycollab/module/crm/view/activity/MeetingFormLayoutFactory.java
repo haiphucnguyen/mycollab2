@@ -25,7 +25,7 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 	public Layout getLayout() {
 		AddViewLayout2 meetingLayout = new AddViewLayout2(title,
 				MyCollabResource
-				.newResource("icons/48/crm/meeting.png"));
+				.newResource("icons/22/crm/meeting.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

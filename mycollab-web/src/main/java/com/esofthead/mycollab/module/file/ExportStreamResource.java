@@ -38,6 +38,12 @@ public abstract class ExportStreamResource implements
 		this.headerNames = headerNames;
 	}
 	
+	/**
+	 * 
+	 * @author haiphucnguyen
+	 *
+	 * @param <S>
+	 */
 	public static class AllItems<S extends SearchCriteria> extends
 			ExportStreamResource {
 		private static final long serialVersionUID = 1L;
@@ -144,6 +150,11 @@ public abstract class ExportStreamResource implements
 		}
 	}
 
+	/**
+	 * 
+	 * @author haiphucnguyen
+	 *
+	 */
 	public static class ListData extends ExportStreamResource {
 		private static final long serialVersionUID = 1L;
 		private List data;

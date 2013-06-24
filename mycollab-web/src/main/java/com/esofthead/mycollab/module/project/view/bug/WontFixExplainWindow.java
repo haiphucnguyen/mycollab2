@@ -5,7 +5,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
@@ -14,7 +13,6 @@ import com.esofthead.mycollab.module.project.view.people.component.ProjectMember
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -42,20 +40,22 @@ import com.vaadin.ui.Window;
 @SuppressWarnings("serial")
 public class WontFixExplainWindow extends Window {
 
-	private SimpleBug bug;
-	private EditForm editForm;
+	private final SimpleBug bug;
+	private final EditForm editForm;
 	private VersionMultiSelectField fixedVersionSelect;
-	private IBugCallbackStatusComp callbackForm;
+	private final IBugCallbackStatusComp callbackForm;
 
-	public WontFixExplainWindow(IBugCallbackStatusComp callbackForm,
-			SimpleBug bug) {
+	public WontFixExplainWindow(final IBugCallbackStatusComp callbackForm,
+			final SimpleBug bug) {
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");
-		editForm = new EditForm();
-		this.addComponent(editForm);
-		editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-		center();
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		this.center();
+		((VerticalLayout) this.getContent()).setMargin(false, false, true,
+				false);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
@@ -64,7 +64,7 @@ public class WontFixExplainWindow extends Window {
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
@@ -77,20 +77,25 @@ public class WontFixExplainWindow extends Window {
 
 			@Override
 			public Layout getLayout() {
-				VerticalLayout layout = new VerticalLayout();
-				informationLayout = new GridFormLayoutHelper(2, 6);
-				informationLayout.getLayout().setWidth("800px");
+				final VerticalLayout layout = new VerticalLayout();
+				this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
+						"167px", Alignment.MIDDLE_LEFT);
+				this.informationLayout.getLayout().setWidth("100%");
+				this.informationLayout.getLayout().setMargin(false);
+				this.informationLayout.getLayout().addStyleName(
+						"colored-gridlayout");
 
-				layout.addComponent(informationLayout.getLayout());
+				layout.addComponent(this.informationLayout.getLayout());
 
-				HorizontalLayout controlsBtn = new HorizontalLayout();
+				final HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
+				controlsBtn.setMargin(true, true, false, false);
 				layout.addComponent(controlsBtn);
 
-				Button cancelBtn = new Button("Cancel",
+				final Button cancelBtn = new Button("Cancel",
 						new Button.ClickListener() {
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								WontFixExplainWindow.this.close();
 							}
 						});
@@ -99,32 +104,34 @@ public class WontFixExplainWindow extends Window {
 				controlsBtn.setComponentAlignment(cancelBtn,
 						Alignment.MIDDLE_LEFT);
 
-				Button wonFixBtn = new Button("Won't Fix",
+				final Button wonFixBtn = new Button("Won't Fix",
 						new Button.ClickListener() {
 							@SuppressWarnings("unchecked")
 							@Override
-							public void buttonClick(ClickEvent event) {
-								bug.setStatus(BugStatusConstants.WONFIX);
+							public void buttonClick(final ClickEvent event) {
+								WontFixExplainWindow.this.bug
+										.setStatus(BugStatusConstants.WONFIX);
 
-								BugRelatedItemService bugRelatedItemService = AppContext
+								final BugRelatedItemService bugRelatedItemService = AppContext
 										.getSpringBean(BugRelatedItemService.class);
 								bugRelatedItemService.updateFixedVersionsOfBug(
-										bug.getId(),
-										(List<Version>) fixedVersionSelect
+										WontFixExplainWindow.this.bug.getId(),
+										WontFixExplainWindow.this.fixedVersionSelect
 												.getSelectedItems());
 
 								// Save bug status and assignee
-								BugService bugService = AppContext
+								final BugService bugService = AppContext
 										.getSpringBean(BugService.class);
-								bugService.updateWithSession(bug,
+								bugService.updateWithSession(
+										WontFixExplainWindow.this.bug,
 										AppContext.getUsername());
 
 								// Save comment
-								String commentValue = (String) commentArea
+								final String commentValue = (String) EditForm.this.commentArea
 										.getValue();
 								if (commentValue != null
 										&& !commentValue.trim().equals("")) {
-									Comment comment = new Comment();
+									final Comment comment = new Comment();
 									comment.setComment(commentValue);
 									comment.setCreatedtime(new GregorianCalendar()
 											.getTime());
@@ -133,15 +140,17 @@ public class WontFixExplainWindow extends Window {
 									comment.setSaccountid(AppContext
 											.getAccountId());
 									comment.setType(CommentTypeConstants.PRJ_BUG);
-									comment.setTypeid(bug.getId());
+									comment.setTypeid(WontFixExplainWindow.this.bug
+											.getId());
 
-									CommentService commentService = AppContext
+									final CommentService commentService = AppContext
 											.getSpringBean(CommentService.class);
 									commentService.saveWithSession(comment,
 											AppContext.getUsername());
 
 									WontFixExplainWindow.this.close();
-									callbackForm.refreshBugItem();
+									WontFixExplainWindow.this.callbackForm
+											.refreshBugItem();
 								} else {
 									AppContext
 											.getApplication()
@@ -168,17 +177,19 @@ public class WontFixExplainWindow extends Window {
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
+			public void attachField(final Object propertyId, final Field field) {
 				if (propertyId.equals("resolution")) {
-					informationLayout.addComponent(field, "Resolution", 0, 0);
+					this.informationLayout.addComponent(field, "Resolution", 0,
+							0);
 				} else if (propertyId.equals("assignuser")) {
-					informationLayout.addComponent(field, "Assign User", 0, 1);
+					this.informationLayout.addComponent(field, "Assign User",
+							0, 1);
 				} else if (propertyId.equals("fixedVersions")) {
-					informationLayout.addComponent(field, "Fixed Versions", 0,
-							2);
+					this.informationLayout.addComponent(field,
+							"Fixed Versions", 0, 2);
 				} else if (propertyId.equals("comment")) {
-					informationLayout.addComponent(field, "Comments", 0, 3, 2,
-							UIConstants.DEFAULT_2XCONTROL_WIDTH);
+					this.informationLayout.addComponent(field, "Comments", 0,
+							3, 2, "100%", Alignment.MIDDLE_LEFT);
 				}
 			}
 		}
@@ -188,23 +199,26 @@ public class WontFixExplainWindow extends Window {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId,
+					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("resolution")) {
 					return new BugResolutionComboBox();
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("fixedVersions")) {
-					fixedVersionSelect = new VersionMultiSelectField("227px");
-					if (bug.getFixedVersions().size() > 0) {
-						fixedVersionSelect.setSelectedItems(bug
-								.getFixedVersions());
+					WontFixExplainWindow.this.fixedVersionSelect = new VersionMultiSelectField(
+							"227px");
+					if (WontFixExplainWindow.this.bug.getFixedVersions().size() > 0) {
+						WontFixExplainWindow.this.fixedVersionSelect
+								.setSelectedItems(WontFixExplainWindow.this.bug
+										.getFixedVersions());
 					}
-					return fixedVersionSelect;
+					return WontFixExplainWindow.this.fixedVersionSelect;
 				} else if (propertyId.equals("comment")) {
-					commentArea = new RichTextArea();
-					commentArea.setNullRepresentation("");
-					return commentArea;
+					EditForm.this.commentArea = new RichTextArea();
+					EditForm.this.commentArea.setNullRepresentation("");
+					return EditForm.this.commentArea;
 				}
 
 				return null;
