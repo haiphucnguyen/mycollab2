@@ -631,7 +631,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 .advSearch .advSearchFooterContainer .advSearchFooter div:first-child {
 	margin: 0px auto;
-	display: block;
+/* 	display: block; */
 }
 .advSearchFooter > .v-horizontallayout .v-horizontallayout-margin {
 	padding: 0px 0px 5px;

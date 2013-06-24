@@ -2,6 +2,11 @@ package com.esofthead.mycollab.module.project.view;
 
 import java.util.List;
 
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
@@ -29,11 +34,13 @@ public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
 	private static final long serialVersionUID = 1L;
 
-	private final MyProjectListComponent myProjectListComponent;
+	private ButtonLink followingTicketsLink;
 
-	private final ActivityStreamComponent activityStreamComponent;
+	private MyProjectListComponent myProjectListComponent;
 
-	private final TaskStatusComponent taskStatusComponent;
+	private ActivityStreamComponent activityStreamComponent;
+
+	private TaskStatusComponent taskStatusComponent;
 
 	public UserDashboardViewImpl() {
 		this.setSpacing(true);
@@ -89,15 +96,16 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 		final HorizontalLayout headerContentBottom = new HorizontalLayout();
 		headerContentBottom.setSpacing(true);
-		final ButtonLink userTasks = new ButtonLink("My Tasks (" + "0" + ")");
-		final ButtonLink userBugs = new ButtonLink("My Bugs (" + "0" + ")");
-		userTasks.setIcon(MyCollabResource
+		followingTicketsLink = new ButtonLink("My Following Tickets (" + "0"
+				+ ")");
+		final ButtonLink userBugs = new ButtonLink("My Time (" + "0" + ")");
+		followingTicketsLink.setIcon(MyCollabResource
 				.newResource("icons/16/project/task.png"));
-		userTasks.removeStyleName("wordWrap");
+		followingTicketsLink.removeStyleName("wordWrap");
 		userBugs.setIcon(MyCollabResource
 				.newResource("icons/16/project/bug.png"));
 		userBugs.removeStyleName("wordWrap");
-		headerContentBottom.addComponent(userTasks);
+		headerContentBottom.addComponent(followingTicketsLink);
 		headerContentBottom.addComponent(userBugs);
 
 		headerContent.addComponent(headerContentTop);
@@ -143,5 +151,16 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 		this.taskStatusComponent.showProjectTasksByStatus();
 
+		// show following ticket numbers
+		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+		searchCriteria.setUser(new StringSearchField(SearchField.AND,
+				AppContext.getUsername()));
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+				.toArray(new Integer[0])));
+		MonitorItemService monitorService = AppContext
+				.getSpringBean(MonitorItemService.class);
+		int followingItemsCount = monitorService.getTotalCount(searchCriteria);
+		followingTicketsLink.setCaption("My Following Tickets ("
+				+ followingItemsCount + ")");
 	}
 }

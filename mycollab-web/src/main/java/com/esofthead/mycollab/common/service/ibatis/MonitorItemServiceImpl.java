@@ -2,7 +2,6 @@ package com.esofthead.mycollab.common.service.ibatis;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,23 +11,29 @@ import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.MonitorItemExample;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.MonitorItemService;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.service.DefaultService;
 
 @Service
 public class MonitorItemServiceImpl extends
-		DefaultCrudService<Integer, MonitorItem> implements MonitorItemService {
+		DefaultService<Integer, MonitorItem, MonitorSearchCriteria> implements
+		MonitorItemService {
 
 	@Autowired
 	private MonitorItemMapper monitorItemMapper;
-	
+
 	@Autowired
 	private MonitorItemMapperExt monitorItemMapperExt;
 
 	@Override
 	public ICrudGenericDAO<Integer, MonitorItem> getCrudMapper() {
 		return monitorItemMapper;
+	}
+
+	@Override
+	public ISearchableDAO<MonitorSearchCriteria> getSearchMapper() {
+		return monitorItemMapperExt;
 	}
 
 	@Override
@@ -77,16 +82,6 @@ public class MonitorItemServiceImpl extends
 	}
 
 	@Override
-	public List findPagableListByCriteria(
-			SearchRequest<MonitorSearchCriteria> searchRequest) {
-		return monitorItemMapperExt.findPagableListByCriteria(
-                searchRequest.getSearchCriteria(),
-                new RowBounds((searchRequest.getCurrentPage() - 1)
-                * searchRequest.getNumberOfItems(), searchRequest
-                .getNumberOfItems()));
-	}
-
-	@Override
 	public Integer getNextItemKey(MonitorSearchCriteria arg0) {
 		return null;
 	}
@@ -97,12 +92,7 @@ public class MonitorItemServiceImpl extends
 	}
 
 	@Override
-	public int getTotalCount(MonitorSearchCriteria searchCriterial) {
-		return monitorItemMapperExt.getTotalCount(searchCriterial);
-	}
-
-	@Override
 	public void removeByCriteria(MonitorSearchCriteria arg0) {
-		
+
 	}
 }
