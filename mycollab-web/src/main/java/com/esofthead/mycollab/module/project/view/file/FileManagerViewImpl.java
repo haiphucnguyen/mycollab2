@@ -304,7 +304,8 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(this.projectPath);
-		this.folderTree.addItem(new Object[] { this.baseFolder.getName(), "" },
+		this.folderTree.addItem(new Object[] {
+				CurrentProjectVariables.getProject().getName(), "" },
 				this.baseFolder);
 		this.folderTree.setItemCaption(this.baseFolder, CurrentProjectVariables
 				.getProject().getName());
