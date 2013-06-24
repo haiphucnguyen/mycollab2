@@ -31,7 +31,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -256,6 +256,7 @@ public class NoteListItems extends Depot {
 	private static final long serialVersionUID = 1L;
 	private String type;
 	private Integer typeid;
+	private VerticalLayout noteListContainer;
 	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
 
 	private final NoteService noteService;
@@ -289,6 +290,9 @@ public class NoteListItems extends Depot {
 	}
 
 	private void displayNotes() {
+		noteListContainer.removeAllComponents();
+		noteListContainer.addComponent(new LazyLoadWrapper(noteList));
+
 		final NoteSearchCriteria searchCriteria = new NoteSearchCriteria();
 		searchCriteria.setType(new StringSearchField(SearchField.AND, type));
 		searchCriteria.setTypeid(new NumberSearchField(typeid));
@@ -317,7 +321,9 @@ public class NoteListItems extends Depot {
 				noteService, NoteRowDisplayHandler.class);
 		noteList.setDisplayEmptyListText(false);
 		noteList.setStyleName("noteList");
-		contentContainer.addComponent(noteList);
+
+		noteListContainer = new VerticalLayout();
+		contentContainer.addComponent(noteListContainer);
 		displayNotes();
 	}
 
