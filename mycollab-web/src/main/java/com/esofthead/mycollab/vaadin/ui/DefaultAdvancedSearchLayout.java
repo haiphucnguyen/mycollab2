@@ -300,12 +300,12 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		HorizontalLayout buttonControls = createButtonControls();
 		UiUtils.addComponent(topfooterLayout, buttonControls, Alignment.MIDDLE_RIGHT);
 		buttonControls.setMargin(false, true, false, false);
-		topfooterLayout.setExpandRatio(buttonControls, 4.0f);
+		topfooterLayout.setExpandRatio(buttonControls, 3.0f);
 		
 		saveSearchControls = createSaveSearchControls();
 		saveSearchControls.setSpacing(true);
-		saveSearchControls.setMargin(false, false, false, true);
-		UiUtils.addComponent(topfooterLayout, saveSearchControls, Alignment.MIDDLE_LEFT);
+		saveSearchControls.setMargin(false, true, false, true);
+		UiUtils.addComponent(topfooterLayout, saveSearchControls, Alignment.MIDDLE_RIGHT);
 		topfooterLayout.setExpandRatio(saveSearchControls, 1.0f);
 		
 		footerLayout.addComponent(topfooterLayout);
