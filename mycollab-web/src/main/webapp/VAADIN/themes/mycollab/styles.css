@@ -599,7 +599,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 /* Advanced Search Template */
 .advSearch {
 	background-color: #F5F5F5;
-	margin: 10px 0px;
+	margin: 10px 0px 0px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 0px;
@@ -631,7 +631,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 .advSearch .advSearchFooterContainer .advSearchFooter div:first-child {
 	margin: 0px auto;
-	display: block;
+/* 	display: block; */
 }
 .advSearchFooter > .v-horizontallayout .v-horizontallayout-margin {
 	padding: 0px 0px 5px;
@@ -648,7 +648,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
 	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
 	background-color: #F3F3F3;
-	margin: 10px 0px;
+	margin: 10px 0px 0px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 0px;
@@ -664,6 +664,10 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 .basicSearchHeader .v-horizontallayout .v-horizontallayout-margin {
 	padding: 3px 5px 3px 15px;
+}
+
+.basicSearchHeader .v-horizontallayout-control-buttons .v-horizontallayout-margin {
+	padding: 0px;
 }
 
 .basicSearch .basicSearchHeader .h2 {
@@ -1895,7 +1899,7 @@ input.v-textfield-errorField {
 	border-color: rgb(169, 169, 169);
 }
 .date-wrapper {
-	background-color: rgb(212, 223, 239);
+	background: url('icons/timehdr-bg.png') no-repeat left top rgb(212, 223, 239);
 	font-size: 11px;
 }
 .date-wrapper > .v-csslayout-margin {
@@ -1903,6 +1907,7 @@ input.v-textfield-errorField {
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
+	color: white;
 }
 /* End Activity Stream Channel */
 
@@ -2676,6 +2681,15 @@ div.v-lazyloadingwrapper-loading {
 	border-color: rgb(204, 204, 204);
 	background-color: rgb(229, 239, 240);
 }
+.report-row-content > div > div:first-child + div {
+	border-width: 0px 1px 0px 1px;
+	border-style: solid;
+	border-color: rgb(204, 204, 204);
+	background-color: rgb(212, 223, 239);
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .report-row-block {
 	height: 100%;
 	-moz-box-sizing: border-box;
@@ -2683,14 +2697,11 @@ div.v-lazyloadingwrapper-loading {
 	box-sizing: border-box;
 }
 .report-row-block.special-col {
-	border-width: 0px 1px 0px 1px;
-	border-style: solid;
-	border-color: rgb(204, 204, 204);
-	background-color: rgb(212, 223, 239);
+	
 }
 
 .report-row-block>.v-csslayout-margin {
-	padding: 5px 5px 0px;
+	padding: 5px 8px 0px;
 }
 .addViewLayout .standup-edit-layout .h2 {
 	border-bottom: none;
@@ -3688,4 +3699,28 @@ div.v-ratingstars-bar {
 	text-align: center;
 	width: 100%;
 	color: black;
+}
+/* Confirm Dialog */
+.custom-dialog div.v-panel-content-light {
+	border: none;
+}
+.custom-dialog .v-panel-nocaption {
+	border: none;
+}
+.custom-dialog .v-panel-deco {
+	border: none;
+}
+
+/*Table Action Controls */
+.table-actionctls {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-width: 0px 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+	background-color: rgb(245, 245, 245);
+}
+.table-actionctls .v-horizontallayout-margin {
+	padding: 5px 6px 5px 14px;
 }
