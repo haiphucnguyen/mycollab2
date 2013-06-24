@@ -52,11 +52,14 @@ public class CasePreviewBuilder extends VerticalLayout {
 	public void previewItem(SimpleCase item) {
 		cases = item;
 		previewForm.setItemDataSource(new BeanItem<SimpleCase>(cases));
-		displayActivities();
-		displayContacts();
+		displayNotes();
 	}
 
-	public void displayActivities() {
+	protected void displayNotes() {
+		noteListItems.showNotes(CrmTypeConstants.CASE, cases.getId());
+	}
+
+	protected void displayActivities() {
 		EventSearchCriteria criteria = new EventSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
@@ -65,7 +68,7 @@ public class CasePreviewBuilder extends VerticalLayout {
 		associateActivityList.setSearchCriteria(criteria);
 	}
 
-	private void displayContacts() {
+	protected void displayContacts() {
 		associateContactList.displayContacts(cases);
 	}
 
@@ -126,6 +129,8 @@ public class CasePreviewBuilder extends VerticalLayout {
 		private VerticalLayout caseInformationLayout;
 		private VerticalLayout relatedItemsContainer;
 		private ReadViewLayout caseAddLayout;
+
+		private boolean isLoadedRelateItem = false;
 
 		public ReadView() {
 			caseAddLayout = new ReadViewLayout(
@@ -198,6 +203,8 @@ public class CasePreviewBuilder extends VerticalLayout {
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
+			relatedItemsContainer.addComponent(associateActivityList);
+			relatedItemsContainer.addComponent(associateContactList);
 
 			caseAddLayout.addTab(relatedItemsContainer, "More Information");
 
@@ -210,18 +217,24 @@ public class CasePreviewBuilder extends VerticalLayout {
 						public void tabChanged(final TabChangedEvent event) {
 							final Button btn = event.getSource();
 							final String caption = btn.getCaption();
-							if ("Case Information".equals(caption)) {
-
-							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer
-										.addComponent(associateActivityList);
-								relatedItemsContainer
-										.addComponent(associateContactList);
+							if ("More Information".equals(caption)) {
+								if (!isLoadedRelateItem) {
+									displayActivities();
+									displayContacts();
+									isLoadedRelateItem = true;
+								}
 							}
-							caseAddLayout.selectTab(caption);
 						}
 					});
 		}
+
+		@Override
+		public void previewItem(SimpleCase item) {
+			super.previewItem(item);
+			isLoadedRelateItem = false;
+			caseAddLayout.selectTab("Case Information");
+		}
+
 	}
 
 	/**
@@ -241,6 +254,13 @@ public class CasePreviewBuilder extends VerticalLayout {
 			initRelatedComponent();
 
 			this.addComponent(previewForm);
+		}
+
+		@Override
+		public void previewItem(SimpleCase item) {
+			super.previewItem(item);
+			displayActivities();
+			displayContacts();
 		}
 
 		class FormLayoutFactory extends AccountFormLayoutFactory {
