@@ -16,10 +16,19 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -32,6 +41,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
+import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -41,13 +51,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.PermissionFlag;
-
-import java.util.GregorianCalendar;
-import java.util.List;
-import org.apache.ibatis.session.RowBounds;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -93,8 +96,7 @@ public class ProjectServiceImpl extends
 
 		// add client role to project
 		ProjectRole clientRole = createProjectRole(projectid,
-				record.getSaccountid(), "Client",
-				"Default role for client");
+				record.getSaccountid(), "Client", "Default role for client");
 		int clientRoleId = projectRoleService.saveWithSession(clientRole,
 				username);
 
@@ -104,15 +106,19 @@ public class ProjectServiceImpl extends
 			String permissionName = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
 
 			if (permissionName.equals(ProjectRolePermissionCollections.USERS)
-					|| permissionName.equals(ProjectRolePermissionCollections.ROLES)
-					|| permissionName.equals(ProjectRolePermissionCollections.MESSAGES)) {
-				permissionMapClient.addPath(
-						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-						PermissionFlag.NO_ACCESS);
+					|| permissionName
+							.equals(ProjectRolePermissionCollections.ROLES)
+					|| permissionName
+							.equals(ProjectRolePermissionCollections.MESSAGES)) {
+				permissionMapClient
+						.addPath(
+								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+								PermissionFlag.NO_ACCESS);
 			} else {
-				permissionMapClient.addPath(
-						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-						PermissionFlag.READ_ONLY);
+				permissionMapClient
+						.addPath(
+								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+								PermissionFlag.READ_ONLY);
 			}
 		}
 		projectRoleService.savePermission(projectid, clientRoleId,
@@ -124,39 +130,41 @@ public class ProjectServiceImpl extends
 				"Default role for consultant");
 		int consultantRoleId = projectRoleService.saveWithSession(
 				consultantRole, username);
-		
+
 		PermissionMap permissionMapConsultant = new PermissionMap();
 		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
 
 			String permissionName = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
 
 			if (permissionName.equals(ProjectRolePermissionCollections.USERS)
-					|| permissionName.equals(ProjectRolePermissionCollections.ROLES)) {
-				permissionMapConsultant.addPath(
-						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-						PermissionFlag.READ_ONLY);
+					|| permissionName
+							.equals(ProjectRolePermissionCollections.ROLES)) {
+				permissionMapConsultant
+						.addPath(
+								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+								PermissionFlag.READ_ONLY);
 			} else {
-				permissionMapConsultant.addPath(
-						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-						PermissionFlag.ACCESS);
+				permissionMapConsultant
+						.addPath(
+								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+								PermissionFlag.ACCESS);
 			}
 		}
 		projectRoleService.savePermission(projectid, consultantRoleId,
 				permissionMapConsultant);
 
-		
 		// add admin role to project
 		ProjectRole adminRole = createProjectRole(projectid,
 				record.getSaccountid(), "Admin", "Default role for admin");
 		int adminRoleId = projectRoleService.saveWithSession(adminRole,
 				username);
-		
+
 		PermissionMap permissionMapAdmin = new PermissionMap();
 		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
 
 			permissionMapAdmin.addPath(
-						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-						PermissionFlag.ACCESS);
+					ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+					PermissionFlag.ACCESS);
 		}
 		projectRoleService.savePermission(projectid, adminRoleId,
 				permissionMapAdmin);
@@ -211,5 +219,20 @@ public class ProjectServiceImpl extends
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<FollowingTicket> getProjectFollowingTickets(
+			SearchRequest<MonitorSearchCriteria> searchRequest) {
+		return projectMapperExt.getProjectFollowingTickets(
+				searchRequest.getSearchCriteria(),
+				new RowBounds((searchRequest.getCurrentPage() - 1)
+						* searchRequest.getNumberOfItems(), searchRequest
+						.getNumberOfItems()));
+	}
+
+	@Override
+	public int getTotalFollowingTickets(MonitorSearchCriteria searchCriteria) {
+		return projectMapperExt.getTotalFollowingTickets(searchCriteria);
 	}
 }

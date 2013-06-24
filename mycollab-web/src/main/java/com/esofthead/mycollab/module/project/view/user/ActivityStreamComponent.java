@@ -174,14 +174,17 @@ public class ActivityStreamComponent extends Depot {
 		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
 				new VerticalLayout());
 		this.activityStreamList = new ProjectActivityStreamPagedList();
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
+
 		this.addStyleName("activity-panel");
 		this.addStyleName("project-activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
 	public void showFeeds(final List<Integer> prjKeys) {
+		this.bodyContent.removeAllComponents();
+		this.bodyContent.addComponent(new LazyLoadWrapper(
+				this.activityStreamList));
+
 		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
 				new String[] { ModuleNameConstants.PRJ }));

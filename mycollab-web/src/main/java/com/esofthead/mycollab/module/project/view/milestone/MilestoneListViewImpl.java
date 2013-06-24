@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -235,16 +236,16 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		for (final SimpleMilestone milestone : milestones) {
 			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
-				this.inProgressContainer.addComponent(this
-						.constructMilestoneBox(milestone));
+				this.inProgressContainer.addComponent(new LazyLoadWrapper(this
+						.constructMilestoneBox(milestone)));
 			} else if (SimpleMilestone.STATUS_FUTURE.equals(milestone
 					.getStatus())) {
-				this.futureContainer.addComponent(this
-						.constructMilestoneBox(milestone));
+				this.futureContainer.addComponent(new LazyLoadWrapper(this
+						.constructMilestoneBox(milestone)));
 			} else if (SimpleMilestone.STATUS_CLOSE.equals(milestone
 					.getStatus())) {
-				this.closeContainer.addComponent(this
-						.constructMilestoneBox(milestone));
+				this.closeContainer.addComponent(new LazyLoadWrapper(this
+						.constructMilestoneBox(milestone)));
 			}
 		}
 

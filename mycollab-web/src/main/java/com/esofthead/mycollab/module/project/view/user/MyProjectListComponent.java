@@ -42,13 +42,14 @@ public class MyProjectListComponent extends Depot {
 				new VerticalLayout());
 
 		this.projectList = new ProjectPagedList();
-		this.bodyContent.addComponent(new LazyLoadWrapper(this.projectList));
 		this.addStyleName("activity-panel");
 		this.addStyleName("myprojectlist");
 		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
 	public void showProjects(final List<Integer> prjKeys) {
+		this.bodyContent.removeAllComponents();
+		this.bodyContent.addComponent(new LazyLoadWrapper(this.projectList));
 		final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));

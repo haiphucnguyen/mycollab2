@@ -92,10 +92,10 @@ public class LeadPreviewBuilder extends VerticalLayout {
 		protected Field onCreateField(Item item, Object propertyId,
 				Component uiContext) {
 			if (propertyId.equals("firstname")) {
-				if (lead.getTitle() == null) {
+				if (lead.getPrefixname() == null) {
 					return new FormViewField(lead.getFirstname());
 				} else {
-					return new FormViewField(lead.getTitle()
+					return new FormViewField(lead.getPrefixname() + " "
 							+ lead.getFirstname());
 				}
 			} else if (propertyId.equals("website")) {
@@ -137,9 +137,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
 		public ReadView() {
 			leadAddLayout = new ReadViewLayout(
-					MyCollabResource
-				.newResource(
-					"icons/22/crm/lead.png"));
+					MyCollabResource.newResource("icons/22/crm/lead.png"));
 			this.addComponent(leadAddLayout);
 
 			initRelatedComponent();
@@ -147,7 +145,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<Lead>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadInformationLayout());
+					this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadReadInformationLayout());
 					this.setFormFieldFactory(new LeadFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					leadAddLayout.setTitle(lead.getLeadName());

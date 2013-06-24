@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.project.events.FollowingTicketEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
@@ -38,6 +39,7 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
@@ -79,6 +81,8 @@ public class ProjectController implements IController {
 	public ProjectController(ProjectModule container) {
 		this.container = container;
 		bindProjectEvents();
+		bindFollowingTicketEvents();
+		bindTimeTrackingEvents();
 		bindRiskEvents();
 		bindProblemEvents();
 		bindTaskListEvents();
@@ -129,6 +133,48 @@ public class ProjectController implements IController {
 								(PageActionChain) event.getData());
 					}
 				});
+	}
+
+	private void bindFollowingTicketEvents() {
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<FollowingTicketEvent.GotoMyFollowingItems>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return FollowingTicketEvent.GotoMyFollowingItems.class;
+							}
+
+							@Override
+							public void handle(
+									FollowingTicketEvent.GotoMyFollowingItems event) {
+								FollowingTicketPresenter presenter = PresenterResolver
+										.getPresenter(FollowingTicketPresenter.class);
+								presenter.go(container, null);
+							}
+						});
+	}
+
+	private void bindTimeTrackingEvents() {
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<TimeTrackingEvent.GotoTimeTrackingView>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return TimeTrackingEvent.GotoTimeTrackingView.class;
+							}
+
+							@Override
+							public void handle(
+									TimeTrackingEvent.GotoTimeTrackingView event) {
+								TimeTrackingPresenter presenter = PresenterResolver
+										.getPresenter(TimeTrackingPresenter.class);
+								presenter.go(container, null);
+							}
+						});
 	}
 
 	private void bindTaskListEvents() {
