@@ -21,7 +21,6 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmLocalizationTypeMap;
-import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -37,10 +36,31 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ActivityStreamPanel extends Depot {
+	private static final long serialVersionUID = 1L;
+
+	private final CrmActivityStreamPagedList activityStreamList;
+
+	public ActivityStreamPanel() {
+		super("Activity Channels", new VerticalLayout(), "100%");
+		this.activityStreamList = new CrmActivityStreamPagedList();
+
+		this.activityStreamList.addStyleName("stream-list");
+		this.bodyContent.addComponent(new LazyLoadWrapper(
+				this.activityStreamList));
+		this.addStyleName("activity-panel");
+		((VerticalLayout) this.bodyContent).setMargin(false);
+	}
+
+	public void display() {
+		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.CRM }));
+		this.activityStreamList.setSearchCriteria(searchCriteria);
+	}
 
 	static class CrmActivityStreamPagedList
 			extends
-			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
+			AbstractBeanPagedList<ActivityStreamSearchCriteria, SimpleActivityStream> {
 		private static final long serialVersionUID = 1L;
 
 		private final ActivityStreamService activityStreamService;
@@ -53,13 +73,25 @@ public class ActivityStreamPanel extends Depot {
 		}
 
 		@Override
-		public void doSearch() {
+		protected void doSearch() {
 			this.totalCount = this.activityStreamService
 					.getTotalCount(this.searchRequest.getSearchCriteria());
 			this.totalPage = (this.totalCount - 1)
 					/ this.searchRequest.getNumberOfItems() + 1;
 			if (this.searchRequest.getCurrentPage() > this.totalPage) {
 				this.searchRequest.setCurrentPage(this.totalPage);
+			}
+
+			if (this.totalPage > 1) {
+				// Define button layout
+				if (this.controlBarWrapper != null) {
+					this.removeComponent(this.controlBarWrapper);
+				}
+				this.addComponent(this.createPageControls());
+			} else {
+				if (this.getComponentCount() == 2) {
+					this.removeComponent(this.getComponent(1));
+				}
 			}
 
 			this.setCurrentPage(this.currentPage);
@@ -123,27 +155,15 @@ public class ActivityStreamPanel extends Depot {
 				throw new MyCollabException(e);
 			}
 		}
-	}
 
-	private static final long serialVersionUID = 1L;
+		@Override
+		protected int queryTotalCount() {
+			return 0;
+		}
 
-	private final CrmActivityStreamPagedList activityStreamList;
-
-	public ActivityStreamPanel() {
-		super("Activity Channels", new VerticalLayout(), "100%");
-		this.activityStreamList = new CrmActivityStreamPagedList();
-
-		this.activityStreamList.addStyleName("stream-list");
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
-		this.addStyleName("activity-panel");
-		((VerticalLayout) this.bodyContent).setMargin(false);
-	}
-
-	public void display() {
-		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-				new String[] { ModuleNameConstants.CRM }));
-		this.activityStreamList.setSearchCriteria(searchCriteria);
+		@Override
+		protected List<SimpleActivityStream> queryCurrentData() {
+			return null;
+		}
 	}
 }

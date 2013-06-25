@@ -27,10 +27,10 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -61,6 +61,67 @@ import de.steinwedel.vaadin.MessageBox.ButtonType;
 @ViewComponent
 public class MessageListViewImpl extends AbstractView implements
 		MessageListView, HasEditFormHandlers<Message> {
+
+	private static final long serialVersionUID = 8433776359091397422L;
+	private final DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
+
+	private Set<EditFormHandler<Message>> editFormHandlers;
+
+	private MessageSearchCriteria searchCriteria;
+
+	private final TopMessagePanel topMessagePanel;
+
+	public MessageListViewImpl() {
+		super();
+		this.setMargin(true);
+		this.setWidth("100%");
+		this.topMessagePanel = new TopMessagePanel();
+		this.topMessagePanel.setWidth("100%");
+
+		this.topMessagePanel.getSearchHandlers().addSearchHandler(
+				new SearchHandler<MessageSearchCriteria>() {
+					@Override
+					public void onSearch(final MessageSearchCriteria criteria) {
+						MessageListViewImpl.this.tableItem
+								.setSearchCriteria(criteria);
+					}
+				});
+		this.addComponent(this.topMessagePanel);
+		this.tableItem = new DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage>(
+				AppContext.getSpringBean(MessageService.class),
+				new MessageRowDisplayHandler());
+		this.tableItem.setStyleName("message-list");
+		this.addComponent(this.tableItem);
+	}
+
+	@Override
+	public void addFormHandler(final EditFormHandler<Message> handler) {
+		if (this.editFormHandlers == null) {
+			this.editFormHandlers = new HashSet<EditFormHandler<Message>>();
+		}
+		this.editFormHandlers.add(handler);
+	}
+
+	private void fireSaveItem(final Message message) {
+		if (this.editFormHandlers != null) {
+			for (final EditFormHandler<Message> handler : this.editFormHandlers) {
+				handler.onSave(message);
+			}
+		}
+	}
+
+	@Override
+	public HasEditFormHandlers<Message> getEditFormHandlers() {
+		return this;
+	}
+
+	@Override
+	public void setCriteria(final MessageSearchCriteria criteria) {
+		this.searchCriteria = criteria;
+		this.topMessagePanel.createBasicLayout();
+		this.tableItem.setSearchCriteria(this.searchCriteria);
+
+	}
 
 	private class MessageRowDisplayHandler implements
 			RowDisplayHandler<SimpleMessage> {
@@ -434,66 +495,5 @@ public class MessageListViewImpl extends AbstractView implements
 		public HasSearchHandlers<MessageSearchCriteria> getSearchHandlers() {
 			return this.messageSearchPanel;
 		}
-	}
-
-	private static final long serialVersionUID = 8433776359091397422L;
-	private final PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
-
-	private Set<EditFormHandler<Message>> editFormHandlers;
-
-	private MessageSearchCriteria searchCriteria;
-
-	private final TopMessagePanel topMessagePanel;
-
-	public MessageListViewImpl() {
-		super();
-		this.setMargin(true);
-		this.setWidth("100%");
-		this.topMessagePanel = new TopMessagePanel();
-		this.topMessagePanel.setWidth("100%");
-
-		this.topMessagePanel.getSearchHandlers().addSearchHandler(
-				new SearchHandler<MessageSearchCriteria>() {
-					@Override
-					public void onSearch(final MessageSearchCriteria criteria) {
-						MessageListViewImpl.this.tableItem
-								.setSearchCriteria(criteria);
-					}
-				});
-		this.addComponent(this.topMessagePanel);
-		this.tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
-				AppContext.getSpringBean(MessageService.class),
-				new MessageRowDisplayHandler());
-		this.tableItem.setStyleName("message-list");
-		this.addComponent(this.tableItem);
-	}
-
-	@Override
-	public void addFormHandler(final EditFormHandler<Message> handler) {
-		if (this.editFormHandlers == null) {
-			this.editFormHandlers = new HashSet<EditFormHandler<Message>>();
-		}
-		this.editFormHandlers.add(handler);
-	}
-
-	private void fireSaveItem(final Message message) {
-		if (this.editFormHandlers != null) {
-			for (final EditFormHandler<Message> handler : this.editFormHandlers) {
-				handler.onSave(message);
-			}
-		}
-	}
-
-	@Override
-	public HasEditFormHandlers<Message> getEditFormHandlers() {
-		return this;
-	}
-
-	@Override
-	public void setCriteria(final MessageSearchCriteria criteria) {
-		this.searchCriteria = criteria;
-		this.topMessagePanel.createBasicLayout();
-		this.tableItem.setSearchCriteria(this.searchCriteria);
-
 	}
 }

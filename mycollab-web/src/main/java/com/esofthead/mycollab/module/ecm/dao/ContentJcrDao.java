@@ -19,4 +19,6 @@ public interface ContentJcrDao {
 	List<Resource> getResources(String path);
 
 	List<Folder> getSubFolders(String path);
+	
+	List<Resource> searchResourcesByName(String resourceName);
 }

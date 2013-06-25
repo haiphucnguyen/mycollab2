@@ -39,6 +39,34 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ActivityStreamComponent extends Depot {
 
+	private static final long serialVersionUID = 1L;
+
+	private final ProjectActivityStreamPagedList activityStreamList;
+
+	public ActivityStreamComponent() {
+		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
+				new VerticalLayout());
+		this.activityStreamList = new ProjectActivityStreamPagedList();
+
+		this.addStyleName("activity-panel");
+		this.addStyleName("project-activity-panel");
+		((VerticalLayout) this.bodyContent).setMargin(false);
+	}
+
+	public void showFeeds(final List<Integer> prjKeys) {
+		this.bodyContent.removeAllComponents();
+		this.bodyContent.addComponent(new LazyLoadWrapper(
+				this.activityStreamList));
+
+		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.PRJ }));
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+				.toArray(new Integer[0])));
+		this.activityStreamList.setSearchCriteria(searchCriteria);
+
+	}
+
 	static class ProjectActivityStreamPagedList
 			extends
 			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
@@ -53,7 +81,7 @@ public class ActivityStreamComponent extends Depot {
 		}
 
 		@Override
-		public void doSearch() {
+		protected void doSearch() {
 			this.totalCount = this.projectService
 					.getTotalActivityStream(this.searchRequest
 							.getSearchCriteria());
@@ -63,8 +91,16 @@ public class ActivityStreamComponent extends Depot {
 				this.searchRequest.setCurrentPage(this.totalPage);
 			}
 
-			this.setCurrentPage(this.currentPage);
-			this.setTotalPage(this.totalPage);
+			if (totalPage > 1) {
+				if (this.controlBarWrapper != null) {
+					this.removeComponent(this.controlBarWrapper);
+				}
+				this.addComponent(this.createPageControls());
+			} else {
+				if (getComponentCount() == 2) {
+					removeComponent(getComponent(1));
+				}
+			}
 
 			final List<ProjectActivityStream> currentListData = this.projectService
 					.getProjectActivityStreams(this.searchRequest);
@@ -164,33 +200,15 @@ public class ActivityStreamComponent extends Depot {
 				throw new MyCollabException(e);
 			}
 		}
-	}
 
-	private static final long serialVersionUID = 1L;
+		@Override
+		protected int queryTotalCount() {
+			return 0;
+		}
 
-	private final ProjectActivityStreamPagedList activityStreamList;
-
-	public ActivityStreamComponent() {
-		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
-				new VerticalLayout());
-		this.activityStreamList = new ProjectActivityStreamPagedList();
-
-		this.addStyleName("activity-panel");
-		this.addStyleName("project-activity-panel");
-		((VerticalLayout) this.bodyContent).setMargin(false);
-	}
-
-	public void showFeeds(final List<Integer> prjKeys) {
-		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
-
-		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-				new String[] { ModuleNameConstants.PRJ }));
-		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
-				.toArray(new Integer[0])));
-		this.activityStreamList.setSearchCriteria(searchCriteria);
-
+		@Override
+		protected List<ProjectActivityStream> queryCurrentData() {
+			return null;
+		}
 	}
 }

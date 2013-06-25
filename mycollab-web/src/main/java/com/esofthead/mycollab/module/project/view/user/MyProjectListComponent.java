@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.List;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -13,9 +12,8 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.web.AppContext;
@@ -57,41 +55,21 @@ public class MyProjectListComponent extends Depot {
 	}
 
 	static class ProjectPagedList extends
-			AbstractBeanPagedList<ProjectSearchCriteria, SimpleProject> {
+			BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> {
 		private static final long serialVersionUID = 1L;
 		private final ProjectService projectService;
 
 		public ProjectPagedList() {
-			super(ProjectRowDisplayHandler.class, Integer.MAX_VALUE);
+			super(null, AppContext.getSpringBean(ProjectService.class),
+					ProjectRowDisplayHandler.class);
 
 			this.projectService = AppContext
 					.getSpringBean(ProjectService.class);
 		}
-
-		@Override
-		public void doSearch() {
-			this.totalCount = Integer.MAX_VALUE;
-
-			final List<SimpleProject> currentListData = this.projectService
-					.findPagableListByCriteria(this.searchRequest);
-			this.listContainer.removeAllComponents();
-			int i = 0;
-			try {
-				for (final SimpleProject item : currentListData) {
-					final AbstractBeanPagedList.RowDisplayHandler<SimpleProject> rowHandler = this.rowDisplayHandler
-							.newInstance();
-					final Component row = rowHandler.generateRow(item, i);
-					this.listContainer.addComponent(row);
-					i++;
-				}
-			} catch (final Exception e) {
-				throw new MyCollabException(e);
-			}
-		}
 	}
 
 	public static class ProjectRowDisplayHandler implements
-			DefaultBeanPagedList.RowDisplayHandler<SimpleProject> {
+			BeanList.RowDisplayHandler<SimpleProject> {
 
 		@Override
 		public Component generateRow(final SimpleProject project,

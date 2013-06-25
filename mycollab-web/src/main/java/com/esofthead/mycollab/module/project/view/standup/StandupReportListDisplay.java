@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.project.view.standup;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Sizeable;
@@ -16,7 +16,7 @@ import com.vaadin.ui.VerticalLayout;
 
 public class StandupReportListDisplay
 		extends
-		PagedBeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> {
+		DefaultBeanPagedList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> {
 	private static final long serialVersionUID = 1L;
 
 	public StandupReportListDisplay() {
