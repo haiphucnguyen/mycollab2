@@ -39,7 +39,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		extends VerticalLayout implements IPagedBeanTable<S, T> {
 	private static final long serialVersionUID = 1L;
 
-	protected int displayNumItems = 3;
+	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
 	protected List<T> currentListData;
 
 	protected LazyLoadWrapper tableLazyLoadContainer;
