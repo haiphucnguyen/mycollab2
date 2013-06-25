@@ -227,11 +227,15 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
 		#2599c8;
 	border: 1px solid #093768;
-	color: #FFFFFF !important;
+	color: #FFFFFF;
 	text-shadow: 1px 1px 0px #1570cd;
 	border-radius: 3px;
 	margin-right: 4px;
 	padding: 3px 13px;
+}
+
+.v-upload .v-button {
+	color: rgb(69, 69, 69);
 }
 
 .v-button.bluebtn:active .v-button-wrap {
@@ -683,6 +687,10 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	padding: 10px 15px;
 }
 
+.basicSearch .basicSearchBody .v-horizontallayout-search-comp .v-horizontallayout-margin {
+	padding: 0px;
+}
+
 .basicSearch .basicSearchBody .v-label {
 	line-height: 24px;
 }
@@ -696,7 +704,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .v-button.search-icon-button .v-button-wrap {
-	padding: 3px 3px 3px 6px;
+	padding: 3px 0px 3px 6px;
 }
 
 .basicSearch .basicSearchBody .v-button-link.cancel-button {
@@ -1154,6 +1162,17 @@ input.v-textfield-errorField {
 }
 .accountViewContainer .userInfoContainer .addViewBody .info-block-header .h2 {
 	border: none;
+	padding: 0px;
+}
+
+.account-dashboard .addViewLayout .depot-title .v-label-h2 {
+	padding: 0px 0px 0px 18px;
+}
+
+.account-dashboard .addViewLayout .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
 }
 
 .accountViewContainer .userInfoContainer .addViewBody .info-block-header > .v-csslayout-margin {
@@ -1216,6 +1235,10 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-width: 1px 0px 0px 1px;
 	background-color: #FFF;
+}
+
+.account-dashboard .addViewLayout .v-label-h2 {
+	padding: 0.67em 0.67em 0.33em;
 }
 
 /* End Account Settings */
@@ -3169,6 +3192,11 @@ table.legendBox .legendBoxContent .v-csslayout-container > div {
 	width: 33%;
 	background-color: #f7f7f7;
 	padding: 0px 0px 15px;
+}
+
+.milestone-view-body > div > div > div > div:first-child > div > div > .milestone-box {
+	border-top: none;
+	margin-top: 0px;
 }
 
 .in-progress-milestones,.future-milestones {

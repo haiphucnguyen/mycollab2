@@ -50,7 +50,6 @@ public class AccountListViewImpl extends AbstractView implements
 		this.addComponent(this.accountSearchPanel);
 
 		this.accountListLayout = new VerticalLayout();
-		// accountListLayout.setSpacing(true);
 		this.addComponent(this.accountListLayout);
 
 		this.generateDisplayTable();

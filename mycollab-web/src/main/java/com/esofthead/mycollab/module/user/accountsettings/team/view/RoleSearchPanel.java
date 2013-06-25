@@ -42,23 +42,25 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Roles");
+		final Label searchtitle = new Label("Roles");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button createBtn = new Button("Create",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new RoleEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void buttonClick(final Button.ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new RoleEvent.GotoAdd(this, null));
+					}
+				});
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
@@ -82,53 +84,67 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return RoleSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(true);
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.addComponent(new Label("Name"));
-			nameField = new TextField();
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
-					Alignment.MIDDLE_CENTER);
+			basicSearchBody.setSpacing(true);
 
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
+			final HorizontalLayout searchComp = new HorizontalLayout();
+			searchComp.addStyleName("search-comp");
+			this.nameField = new TextField();
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			searchComp.addComponent(this.nameField);
+
+			final Button searchBtn = new Button();
+			searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search_white.png"));
+			searchBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(Button.ClickEvent event) {
+				public void buttonClick(final Button.ClickEvent event) {
 					RoleBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			basicSearchBody.addComponent(searchBtn);
+			// searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchComp.addComponent(searchBtn);
+			basicSearchBody.addComponent(searchComp);
 
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button clearBtn = new Button("Clear",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					nameField.setValue("");
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							RoleBasicSearchLayout.this.nameField.setValue("");
+						}
+					});
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.addStyleName("cancel-button");
+			// clearBtn.setWidth("55px");
 			basicSearchBody.addComponent(clearBtn);
+			basicSearchBody.setComponentAlignment(clearBtn,
+					Alignment.MIDDLE_LEFT);
 			return basicSearchBody;
 		}
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new RoleSearchCriteria();
-			searchCriteria.setsAccountId(new NumberSearchField(AppContext
-					.getAccountId()));
-			if (StringUtil.isNotNullOrEmpty((String) nameField.getValue())) {
-				searchCriteria.setRoleName(new StringSearchField(
-						SearchField.AND, (String) nameField.getValue()));
+			RoleSearchPanel.this.searchCriteria = new RoleSearchCriteria();
+			RoleSearchPanel.this.searchCriteria
+					.setsAccountId(new NumberSearchField(AppContext
+							.getAccountId()));
+			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
+				RoleSearchPanel.this.searchCriteria
+						.setRoleName(new StringSearchField(SearchField.AND,
+								(String) this.nameField.getValue()));
 			}
-			return searchCriteria;
+			return RoleSearchPanel.this.searchCriteria;
 		}
 	}
 }

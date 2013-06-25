@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
@@ -16,15 +18,16 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 /**
  * 
@@ -42,23 +45,22 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public RoleListViewImpl() {
-		this.setSpacing(true);
 
-		searchPanel = new RoleSearchPanel();
-		this.addComponent(searchPanel);
+		this.searchPanel = new RoleSearchPanel();
+		this.addComponent(this.searchPanel);
 
-		listLayout = new VerticalLayout();
-		listLayout.setSpacing(true);
-		this.addComponent(listLayout);
+		this.listLayout = new VerticalLayout();
+		this.addComponent(this.listLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new RoleTableDisplay(new String[] { "selected", "rolename",
-				"description" }, new String[] { "", "Name", "Description" });
+		this.tableItem = new RoleTableDisplay(new String[] { "selected",
+				"rolename", "description" }, new String[] { "", "Name",
+				"Description" });
 
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					private static final long serialVersionUID = 1L;
 
@@ -68,8 +70,8 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						Role role = (Role) event.getData();
+					public void handle(final TableClickEvent event) {
+						final Role role = (Role) event.getData();
 						if ("rolename".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new RoleEvent.GotoRead(
@@ -78,63 +80,68 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 					}
 				});
 
-		listLayout.addComponent(constructTableActionControls());
-		listLayout.addComponent(tableItem);
+		this.listLayout.addComponent(this.constructTableActionControls());
+		this.listLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<RoleSearchCriteria> getSearchHandlers() {
-		return searchPanel;
+		return this.searchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final CssLayout layoutWrapper = new CssLayout();
+		layoutWrapper.setWidth("100%");
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addComponent(layout);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+		this.tableActionControls = new PopupButtonControl("delete", "Delete");
+		this.tableActionControls.addOptionItem("mail", "Mail");
+		this.tableActionControls.addOptionItem("export", "Export");
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
-		return layout;
+		return layoutWrapper;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setEnabled(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setEnabled(true);
+		this.selectedItemsNumberLabel.setValue("Selected: "
+				+ numOfSelectedItems);
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setEnabled(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setEnabled(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<Role> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<RoleSearchCriteria, Role> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 }
