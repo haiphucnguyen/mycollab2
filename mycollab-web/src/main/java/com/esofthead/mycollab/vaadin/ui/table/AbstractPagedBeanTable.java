@@ -213,6 +213,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			}
 		}
 	}
+
 	private CssLayout createControls() {
 		controlBarWrapper = new CssLayout();
 		controlBarWrapper.setStyleName("listControl");
@@ -225,8 +226,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		pageManagement = new HorizontalLayout();
 
 		// defined layout here ---------------------------
-		
-		if (currentPage > 1){
+
+		if (currentPage > 1) {
 			final Button firstLink = new ButtonLink("1", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -238,78 +239,83 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			firstLink.addStyleName("buttonPaging");
 			pageManagement.addComponent(firstLink);
 		}
-		if (currentPage >= 5){
+		if (currentPage >= 5) {
 			Label ss1 = new Label("...");
 			ss1.addStyleName("buttonPaging");
 			pageManagement.addComponent(ss1);
 		}
-		if(currentPage > 3){
-			final Button previous2 = new ButtonLink("" + (currentPage - 2), new ClickListener() {
-				private static final long serialVersionUID = 1L;
+		if (currentPage > 3) {
+			final Button previous2 = new ButtonLink("" + (currentPage - 2),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(currentPage - 2);
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							pageChange(currentPage - 2);
+						}
+					});
 			previous2.addStyleName("buttonPaging");
 			pageManagement.addComponent(previous2);
 		}
-		if(currentPage > 2){
-			final Button previous1 = new ButtonLink("" + (currentPage - 1), new ClickListener() {
-				private static final long serialVersionUID = 1L;
+		if (currentPage > 2) {
+			final Button previous1 = new ButtonLink("" + (currentPage - 1),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(currentPage - 1);
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							pageChange(currentPage - 1);
+						}
+					});
 			previous1.addStyleName("buttonPaging");
 			pageManagement.addComponent(previous1);
 		}
-		//Here add current ButtonLink
-		final Button current = new ButtonLink("" + currentPage, new ClickListener() {
-			private static final long serialVersionUID = 1L;
+		// Here add current ButtonLink
+		final Button current = new ButtonLink("" + currentPage,
+				new ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				pageChange(currentPage);
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						pageChange(currentPage);
+					}
+				});
 		current.addStyleName("buttonPagingcurrent");
-		
+
 		pageManagement.addComponent(current);
 		int range = totalPage - currentPage;
-		if (range >= 1){
-			final Button next1 = new ButtonLink("" + (currentPage + 1), new ClickListener() {
-				private static final long serialVersionUID = 1L;
+		if (range >= 1) {
+			final Button next1 = new ButtonLink("" + (currentPage + 1),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(currentPage + 1);
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							pageChange(currentPage + 1);
+						}
+					});
 			next1.addStyleName("buttonPaging");
 			pageManagement.addComponent(next1);
 		}
-		if (range >= 2){
-			final Button next2 = new ButtonLink("" + (currentPage + 2), new ClickListener() {
-				private static final long serialVersionUID = 1L;
+		if (range >= 2) {
+			final Button next2 = new ButtonLink("" + (currentPage + 2),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(currentPage + 2);
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							pageChange(currentPage + 2);
+						}
+					});
 			next2.addStyleName("buttonPaging");
 			pageManagement.addComponent(next2);
 		}
-		if (range >= 4){
+		if (range >= 4) {
 			Label ss2 = new Label("...");
 			ss2.addStyleName("buttonPaging");
 			pageManagement.addComponent(ss2);
 		}
-		if (range >= 3){
+		if (range >= 3) {
 			Button last = new ButtonLink("" + totalPage, new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -330,6 +336,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		return controlBarWrapper;
 	}
+
 	abstract protected int queryTotalCount();
 
 	abstract protected List<T> queryCurrentData();
