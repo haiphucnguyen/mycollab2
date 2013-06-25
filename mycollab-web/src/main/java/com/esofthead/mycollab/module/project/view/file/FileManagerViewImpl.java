@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -33,6 +34,8 @@ import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -469,7 +472,6 @@ public class FileManagerViewImpl extends AbstractView implements
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							// TODO Auto-generated method stub
 							final InputStream contentStream = UploadContentWindow.this.uploadField
 									.getContentAsStream();
 							if (contentStream != null) {
@@ -680,8 +682,10 @@ public class FileManagerViewImpl extends AbstractView implements
 										FileManagerViewImpl.this
 												.displayResourcesInTable(resource
 														.getName());
+									}else if(resource instanceof Content){
+										FileDownloadWindow downloadFileWindow = new FileDownloadWindow((Content)resource);
+										getWindow().addWindow(downloadFileWindow);
 									}
-
 								}
 							});
 
@@ -716,18 +720,6 @@ public class FileManagerViewImpl extends AbstractView implements
 				}
 			});
 
-			// this.addGeneratedColumn("createdBy", new Table.ColumnGenerator()
-			// {
-			//
-			// @Override
-			// public Object generateCell(final Table source,
-			// final Object itemId, final Object columnId) {
-			// final Resource resource = ResourceTableDisplay.this
-			// .getResource(itemId);
-			// return new Label(resource.getCreatedBy());
-			// }
-			// });
-
 			this.setColumnExpandRatio("path", 1);
 			this.setColumnWidth("uuid", 22);
 			// this.setColumnWidth("createdBy",
@@ -741,6 +733,67 @@ public class FileManagerViewImpl extends AbstractView implements
 			final BeanItem<Resource> item = (BeanItem<Resource>) container
 					.getItem(itemId);
 			return (item != null) ? item.getBean() : null;
+		}
+	}
+	protected class FileDownloadWindow extends Window{
+		private static final long serialVersionUID = 1L;
+		private Content content;
+		public FileDownloadWindow(Content content){
+			super(content.getName());
+			this.setWidth("400px");
+			center();
+			
+			this.content = content;
+			constructBody();
+		}
+		private void constructBody(){
+			final VerticalLayout layout = new VerticalLayout();
+			Embedded iconEmbed = new Embedded();
+			iconEmbed.setSource(MyCollabResource.newResource("icons/page_white.png"));
+			UiUtils.addComponent(layout, iconEmbed, Alignment.MIDDLE_CENTER);
+			
+			if (content.getDescription()!=null) {
+				Label des = new Label("Description: " + content.getDescription());
+				UiUtils.addComponent(layout, des, Alignment.MIDDLE_CENTER);
+			}
+			Label author = new Label("Created by: " + content.getCreatedBy());
+			UiUtils.addComponent(layout, author, Alignment.MIDDLE_CENTER);
+			
+			Label size = new Label("Size: "+ content.getSize() + "KB");
+			UiUtils.addComponent(layout, size, Alignment.MIDDLE_CENTER);
+			
+			Label dateCreate = new Label("Date created: "+AppContext.formatDate(content.getCreated().getTime()));
+			UiUtils.addComponent(layout, dateCreate, Alignment.MIDDLE_CENTER);
+			
+			HorizontalLayout buttonControls = new HorizontalLayout();
+			buttonControls.setSpacing(true);
+			Button download = new Button("Download", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void buttonClick(ClickEvent event) {
+					com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+							.getStreamResource(content.getPath());
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.open(downloadResource, "_self");
+				}
+			});
+			download.addStyleName(UIConstants.THEME_BLUE_LINK);
+			UiUtils.addComponent(buttonControls, download, Alignment.MIDDLE_CENTER);
+			
+			Button cancle = new Button("Cancel", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void buttonClick(ClickEvent event) {
+					FileDownloadWindow.this.close();
+				}
+			});
+			cancle.addStyleName(UIConstants.THEME_BLUE_LINK);
+			
+			UiUtils.addComponent(buttonControls, cancle, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, buttonControls, Alignment.MIDDLE_CENTER);
+			this.addComponent(layout);
 		}
 	}
 }
