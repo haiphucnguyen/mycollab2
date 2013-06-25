@@ -3807,21 +3807,22 @@ div.v-ratingstars-bar {
 }
 
 div.v-button-link.buttonPaging {
-    background: url("icons/sprite-vert2.png") no-repeat -10px -10px transparent;
-   
+    background: url("icons/sprite-vert2-blue.png") no-repeat -10px -8px transparent;
+    color: white;   
 }
-div.v-button-link.buttonPaging:hover {
-	background: url("icons/sprite-vert1.png") no-repeat scroll -10px -10px transparent;
-    background-color: transparent;
-/*     background-image: url("icons/sprite-vert1.png"); */
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-position: -10px -10px;
-    background-clip: border-box;
-    background-origin: padding-box;
-    background-size: auto auto;
+div.v-button-link.buttonPaging .v-button-wrap {
+	width: 23px;
+	padding: 4px 0px 3px;
+	text-align: center;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
+	text-align: center;
+	padding: 0px;
+}
+div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
+	background: url("icons/sprite-vert1-blue.png") no-repeat -10px -10px transparent;
     
-}
-div.v-button-link.buttonPagingcurrent {
-	 background: url("icons/sprite-vert1.png") no-repeat -10px -10px transparent;
 }
