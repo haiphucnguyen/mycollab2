@@ -158,7 +158,7 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.addComponent(field);
 		field.setCaption(null);
 		field.setWidth(width);
-		field.setHeight("100%");
+		// field.setHeight("100%");
 		fieldWrapper.setWidth("100%");
 		if (rows == 0) {
 			fieldWrapper.addStyleName("first-row");

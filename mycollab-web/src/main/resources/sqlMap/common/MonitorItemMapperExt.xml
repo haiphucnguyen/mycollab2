@@ -22,7 +22,17 @@
         </if>
 
         <if test="searchCriteria.user != null ">
-            <![CDATA[${searchCriteria.user.operation} m_monitor_item.type = #{searchCriteria.user.value} ]]>
+            <![CDATA[${searchCriteria.user.operation} m_monitor_item.user = #{searchCriteria.user.value} ]]>
+        </if>
+
+        <if test="searchCriteria.extraTypeIds != null ">
+            ${searchCriteria.extraTypeIds.operation}
+            m_monitor_item.extratypeid IN
+            <foreach close=")" collection="searchCriteria.extraTypeIds.values"
+                item="extraTypeId" open="(" separator=",">
+                #{extraTypeId}
+            </foreach>
+
         </if>
     </sql>
 

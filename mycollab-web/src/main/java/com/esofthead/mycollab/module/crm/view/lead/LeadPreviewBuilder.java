@@ -48,16 +48,14 @@ public class LeadPreviewBuilder extends VerticalLayout {
 	public void previewItem(SimpleLead lead) {
 		this.lead = lead;
 		previewForm.setItemDataSource(new BeanItem<Lead>(lead));
-		displayActivities();
 		displayNotes();
-		displayCampaigns();
 	}
 
 	public SimpleLead getLead() {
 		return lead;
 	}
 
-	private void displayCampaigns() {
+	protected void displayCampaigns() {
 		associateCampaignList.displayCampaigns(lead);
 	}
 
@@ -65,7 +63,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 		noteListItems.showNotes(CrmTypeConstants.LEAD, lead.getId());
 	}
 
-	public void displayActivities() {
+	protected void displayActivities() {
 		EventSearchCriteria criteria = new EventSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
@@ -92,10 +90,10 @@ public class LeadPreviewBuilder extends VerticalLayout {
 		protected Field onCreateField(Item item, Object propertyId,
 				Component uiContext) {
 			if (propertyId.equals("firstname")) {
-				if (lead.getTitle() == null) {
+				if (lead.getPrefixname() == null) {
 					return new FormViewField(lead.getFirstname());
 				} else {
-					return new FormViewField(lead.getTitle()
+					return new FormViewField(lead.getPrefixname() + " "
 							+ lead.getFirstname());
 				}
 			} else if (propertyId.equals("website")) {
@@ -135,11 +133,11 @@ public class LeadPreviewBuilder extends VerticalLayout {
 		private VerticalLayout relatedItemsContainer;
 		private ReadViewLayout leadAddLayout;
 
+		private boolean isLoadedRelateItem = false;
+
 		public ReadView() {
 			leadAddLayout = new ReadViewLayout(
-					MyCollabResource
-				.newResource(
-					"icons/22/crm/lead.png"));
+					MyCollabResource.newResource("icons/22/crm/lead.png"));
 			this.addComponent(leadAddLayout);
 
 			initRelatedComponent();
@@ -147,7 +145,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<Lead>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadInformationLayout());
+					this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadReadInformationLayout());
 					this.setFormFieldFactory(new LeadFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					leadAddLayout.setTitle(lead.getLeadName());
@@ -210,6 +208,8 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
+			relatedItemsContainer.addComponent(associateActivityList);
+			relatedItemsContainer.addComponent(associateCampaignList);
 			leadAddLayout.addTab(relatedItemsContainer, "More Information");
 			leadAddLayout
 					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
@@ -217,19 +217,25 @@ public class LeadPreviewBuilder extends VerticalLayout {
 						public void tabChanged(final TabChangedEvent event) {
 							final Button btn = event.getSource();
 							final String caption = btn.getCaption();
-							if ("Lead Information".equals(caption)) {
-
-							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer
-										.addComponent(associateActivityList);
-								relatedItemsContainer
-										.addComponent(associateCampaignList);
+							if ("More Information".equals(caption)) {
+								if (!isLoadedRelateItem) {
+									displayActivities();
+									displayCampaigns();
+									isLoadedRelateItem = true;
+								}
 							}
-							leadAddLayout.selectTab(caption);
 						}
 					});
 
 		}
+
+		@Override
+		public void previewItem(SimpleLead lead) {
+			super.previewItem(lead);
+			isLoadedRelateItem = false;
+			leadAddLayout.selectTab("Lead Information");
+		}
+
 	}
 
 	public static class PrintView extends LeadPreviewBuilder {
@@ -274,5 +280,13 @@ public class LeadPreviewBuilder extends VerticalLayout {
 				return relatedItemsPanel;
 			}
 		}
+
+		@Override
+		public void previewItem(SimpleLead lead) {
+			super.previewItem(lead);
+			displayActivities();
+			displayCampaigns();
+		}
+
 	}
 }

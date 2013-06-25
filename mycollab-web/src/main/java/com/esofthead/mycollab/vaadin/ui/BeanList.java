@@ -63,6 +63,12 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 		this(null, searchService, rowDisplayHandler);
 	}
 
+	public BeanList(SearchService searchService,
+			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
+			boolean isLazyLoadComponent) {
+		this(null, searchService, rowDisplayHandler, isLazyLoadComponent);
+	}
+
 	public void setDisplayEmptyListText(boolean isDisplayEmptyListText) {
 		this.isDisplayEmptyListText = isDisplayEmptyListText;
 	}

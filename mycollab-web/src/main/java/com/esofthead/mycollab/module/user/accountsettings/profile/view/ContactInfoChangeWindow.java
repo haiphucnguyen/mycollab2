@@ -34,83 +34,90 @@ public class ContactInfoChangeWindow extends Window {
 	private TextField txtFaceBook;
 	private TextField txtTwitter;
 	private TextField txtSkype;
-	private Validator validation;
+	private final Validator validation;
 
-	private User user;
+	private final User user;
 
-	public ContactInfoChangeWindow(User user) {
+	public ContactInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		this.setHeight("300px");
-		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
-		initUI();
-		center();
+		// this.setHeight("300px");
+		this.validation = AppContext
+				.getSpringBean(LocalValidatorFactoryBean.class);
+		this.initUI();
+		this.center();
 		this.setCaption("Change your contact information");
+		((VerticalLayout) this.getContent()).setMargin(false, false, true,
+				false);
 	}
 
 	private void initUI() {
 
-		VerticalLayout mainLayout = new VerticalLayout();
+		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
-		GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 6,
-				UIConstants.DEFAULT_CONTROL_WIDTH, "150px");
+		final GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 6,
+				"100%", "150px", Alignment.MIDDLE_LEFT);
 
-		txtWorkPhone = (TextField) passInfo.addComponent(new TextField(),
+		this.txtWorkPhone = (TextField) passInfo.addComponent(new TextField(),
 				"Work phone", 0, 0);
-		txtHomePhone = (TextField) passInfo.addComponent(new TextField(),
+		this.txtHomePhone = (TextField) passInfo.addComponent(new TextField(),
 				"Home phone", 0, 1);
-		txtFaceBook = (TextField) passInfo.addComponent(new TextField(),
+		this.txtFaceBook = (TextField) passInfo.addComponent(new TextField(),
 				"Facebook", 0, 2);
-		txtTwitter = (TextField) passInfo.addComponent(new TextField(),
+		this.txtTwitter = (TextField) passInfo.addComponent(new TextField(),
 				"Twitter", 0, 3);
-		txtSkype = (TextField) passInfo.addComponent(new TextField(), "Skype",
-				0, 4);
+		this.txtSkype = (TextField) passInfo.addComponent(new TextField(),
+				"Skype", 0, 4);
 
-		txtWorkPhone.setValue(user.getWorkphone() == null ? "" : user
-				.getWorkphone());
-		txtHomePhone.setValue(user.getHomephone() == null ? "" : user
-				.getHomephone());
-		txtFaceBook.setValue(user.getFacebookaccount() == null ? "" : user
-				.getFacebookaccount());
-		txtTwitter.setValue(user.getTwitteraccount() == null ? "" : user
-				.getTwitteraccount());
-		txtSkype.setValue(user.getSkypecontact() == null ? "" : user
-				.getSkypecontact());
+		this.txtWorkPhone.setValue(this.user.getWorkphone() == null ? ""
+				: this.user.getWorkphone());
+		this.txtHomePhone.setValue(this.user.getHomephone() == null ? ""
+				: this.user.getHomephone());
+		this.txtFaceBook.setValue(this.user.getFacebookaccount() == null ? ""
+				: this.user.getFacebookaccount());
+		this.txtTwitter.setValue(this.user.getTwitteraccount() == null ? ""
+				: this.user.getTwitteraccount());
+		this.txtSkype.setValue(this.user.getSkypecontact() == null ? ""
+				: this.user.getSkypecontact());
 
+		passInfo.getLayout().setMargin(false);
+		passInfo.getLayout().setWidth("100%");
+		passInfo.getLayout().addStyleName("colored-gridlayout");
 		mainLayout.addComponent(passInfo.getLayout());
 		mainLayout.setComponentAlignment(passInfo.getLayout(),
 				Alignment.TOP_LEFT);
 
-		Label lbSpace = new Label();
+		final Label lbSpace = new Label();
 		mainLayout.addComponent(lbSpace);
 		mainLayout.setExpandRatio(lbSpace, 1.0f);
 
-		HorizontalLayout hlayoutControls = new HorizontalLayout();
+		final HorizontalLayout hlayoutControls = new HorizontalLayout();
 		hlayoutControls.setSpacing(true);
 		hlayoutControls.setMargin(true);
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button cancelBtn = new Button("Cancel",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				ContactInfoChangeWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						ContactInfoChangeWindow.this.close();
+					}
+				});
 
 		cancelBtn.setStyleName("link");
 		hlayoutControls.addComponent(cancelBtn);
 		hlayoutControls.setComponentAlignment(cancelBtn,
 				Alignment.MIDDLE_CENTER);
 
-		Button sendBtn = new Button("Save", new Button.ClickListener() {
+		final Button sendBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				changePassword();
+			public void buttonClick(final ClickEvent event) {
+				ContactInfoChangeWindow.this.changePassword();
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -125,32 +132,33 @@ public class ContactInfoChangeWindow extends Window {
 		this.setContent(mainLayout);
 	}
 
-	public boolean validateForm(Object data) {
+	public boolean validateForm(final Object data) {
 
-		Set<ConstraintViolation<Object>> violations = validation.validate(data);
+		final Set<ConstraintViolation<Object>> violations = this.validation
+				.validate(data);
 		if (violations.size() > 0) {
-			StringBuilder errorMsg = new StringBuilder();
+			final StringBuilder errorMsg = new StringBuilder();
 
 			for (@SuppressWarnings("rawtypes")
-			ConstraintViolation violation : violations) {
+			final ConstraintViolation violation : violations) {
 				errorMsg.append(violation.getMessage()).append("<br/>");
 
 				if (violation.getPropertyPath() != null
 						&& !violation.getPropertyPath().toString().equals("")) {
 					if (violation.getPropertyPath().toString()
 							.equals("workphone")) {
-						txtWorkPhone.addStyleName("errorField");
+						this.txtWorkPhone.addStyleName("errorField");
 					}
 
 					if (violation.getPropertyPath().toString()
 							.equals("homephone")) {
-						txtHomePhone.addStyleName("errorField");
+						this.txtHomePhone.addStyleName("errorField");
 					}
 				}
 
 			}
 
-			MessageBox mb = new MessageBox(AppContext.getApplication()
+			final MessageBox mb = new MessageBox(AppContext.getApplication()
 					.getMainWindow(), "Error!", MessageBox.Icon.ERROR,
 					errorMsg.toString(), new MessageBox.ButtonConfig(
 							ButtonType.OK, "Ok"));
@@ -164,19 +172,19 @@ public class ContactInfoChangeWindow extends Window {
 
 	private void changePassword() {
 
-		txtWorkPhone.removeStyleName("errorField");
-		txtHomePhone.removeStyleName("errorField");
-		
-		user.setWorkphone((String) txtWorkPhone.getValue());
-		user.setHomephone((String) txtHomePhone.getValue());
-		user.setFacebookaccount((String) txtFaceBook.getValue());
-		user.setTwitteraccount((String) txtTwitter.getValue());
-		user.setSkypecontact((String) txtSkype.getValue());
+		this.txtWorkPhone.removeStyleName("errorField");
+		this.txtHomePhone.removeStyleName("errorField");
 
-		if (validateForm(user)) {
-			UserService userService = AppContext
+		this.user.setWorkphone((String) this.txtWorkPhone.getValue());
+		this.user.setHomephone((String) this.txtHomePhone.getValue());
+		this.user.setFacebookaccount((String) this.txtFaceBook.getValue());
+		this.user.setTwitteraccount((String) this.txtTwitter.getValue());
+		this.user.setSkypecontact((String) this.txtSkype.getValue());
+
+		if (this.validateForm(this.user)) {
+			final UserService userService = AppContext
 					.getSpringBean(UserService.class);
-			userService.updateWithSession(user, AppContext.getUsername());
+			userService.updateWithSession(this.user, AppContext.getUsername());
 
 			EventBus.getInstance().fireEvent(
 					new ProfileEvent.GotoProfileView(

@@ -22,10 +22,55 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class MilestonePreviewBuilder extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+
+	protected SimpleMilestone milestone;
+	protected AdvancedPreviewBeanForm<Milestone> previewForm;
+
+	protected CommentDisplay associateCommentListComp;
+
+	protected MilestoneBugListComp associateBugListComp;
+
+	protected MilestoneTaskGroupListComp associateTaskGroupListComp;
+
+	protected void displayBugs() {
+		this.associateBugListComp.displayBugs(this.milestone);
+	}
+
+	private void displayComments() {
+		this.associateCommentListComp.loadComments(
+				CommentTypeConstants.PRJ_MILESTONE, this.milestone.getId());
+	}
+
+	protected void displayTaskGroups() {
+		this.associateTaskGroupListComp.displayTakLists(this.milestone);
+	}
+
+	public SimpleMilestone getMilestone() {
+		return this.milestone;
+	}
+
+	public AdvancedPreviewBeanForm<Milestone> getPreviewForm() {
+		return this.previewForm;
+	}
+
+	protected void initRelatedComponents() {
+		this.associateBugListComp = new MilestoneBugListComp();
+		this.associateTaskGroupListComp = new MilestoneTaskGroupListComp();
+	}
+
+	public void previewItem(final SimpleMilestone item) {
+		this.milestone = item;
+		this.previewForm.setItemDataSource(new BeanItem<Milestone>(
+				this.milestone));
+		this.displayComments();
+	}
+
 	protected class MilestoneFormFieldFactory extends
 			DefaultFormViewFieldFactory {
 
@@ -76,6 +121,24 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 	}
 
 	public static class PrintView extends MilestonePreviewBuilder {
+		private static final long serialVersionUID = 1L;
+
+		public PrintView() {
+			this.previewForm = new AdvancedPreviewBeanForm<Milestone>() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void setItemDataSource(final Item newDataSource) {
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new MilestoneFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+				}
+			};
+			this.initRelatedComponents();
+
+			this.addComponent(this.previewForm);
+		}
+
 		class FormLayoutFactory extends MilestoneFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
@@ -108,22 +171,12 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			}
 		}
 
-		private static final long serialVersionUID = 1L;
+		@Override
+		public void previewItem(SimpleMilestone item) {
+			super.previewItem(item);
 
-		public PrintView() {
-			this.previewForm = new AdvancedPreviewBeanForm<Milestone>() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new FormLayoutFactory());
-					this.setFormFieldFactory(new MilestoneFormFieldFactory());
-					super.setItemDataSource(newDataSource);
-				}
-			};
-			this.initRelatedComponents();
-
-			this.addComponent(this.previewForm);
+			displayTaskGroups();
+			displayBugs();
 		}
 	}
 
@@ -133,6 +186,9 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 		private final TabSheet tabContainer;
 		private final VerticalLayout milestoneInformation;
 		private final AddViewLayout milestoneAddLayout;
+
+		private boolean isLoadedRelateBugs = false;
+		private boolean isLoadedRelateTasks = false;
 
 		public ReadView() {
 			this.milestoneAddLayout = new AddViewLayout("",
@@ -209,55 +265,41 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 					"Related Tasks");
 			this.tabContainer.addTab(this.associateBugListComp, "Related Bugs");
 
+			this.tabContainer
+					.addListener(new TabSheet.SelectedTabChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void selectedTabChange(
+								SelectedTabChangeEvent event) {
+							if (event.getTabSheet().getSelectedTab() == associateTaskGroupListComp) {
+								if (!isLoadedRelateTasks) {
+									displayTaskGroups();
+									isLoadedRelateTasks = true;
+								}
+
+							} else if (event.getTabSheet().getSelectedTab() == associateBugListComp) {
+								if (!isLoadedRelateBugs) {
+									displayBugs();
+									isLoadedRelateBugs = true;
+								}
+							}
+
+						}
+					});
+
 			this.milestoneInformation.addComponent(this.tabContainer);
 
 			this.milestoneAddLayout.addBody(this.milestoneInformation);
 		}
+
+		@Override
+		public void previewItem(SimpleMilestone item) {
+			super.previewItem(item);
+			isLoadedRelateBugs = false;
+			isLoadedRelateTasks = false;
+			tabContainer.setSelectedTab(0);
+		}
 	}
 
-	private static final long serialVersionUID = 1L;
-	protected SimpleMilestone milestone;
-	protected AdvancedPreviewBeanForm<Milestone> previewForm;
-
-	protected CommentDisplay associateCommentListComp;
-
-	protected MilestoneBugListComp associateBugListComp;
-
-	protected MilestoneTaskGroupListComp associateTaskGroupListComp;
-
-	private void displayBugs() {
-		this.associateBugListComp.displayBugs(this.milestone);
-	}
-
-	private void displayComments() {
-		this.associateCommentListComp.loadComments(
-				CommentTypeConstants.PRJ_MILESTONE, this.milestone.getId());
-	}
-
-	private void displayTaskGroups() {
-		this.associateTaskGroupListComp.displayTakLists(this.milestone);
-	}
-
-	public SimpleMilestone getMilestone() {
-		return this.milestone;
-	}
-
-	public AdvancedPreviewBeanForm<Milestone> getPreviewForm() {
-		return this.previewForm;
-	}
-
-	protected void initRelatedComponents() {
-		this.associateBugListComp = new MilestoneBugListComp();
-		this.associateTaskGroupListComp = new MilestoneTaskGroupListComp();
-	}
-
-	public void previewItem(final SimpleMilestone item) {
-		this.milestone = item;
-		this.previewForm.setItemDataSource(new BeanItem<Milestone>(
-				this.milestone));
-
-		this.displayComments();
-		this.displayTaskGroups();
-		this.displayBugs();
-	}
 }

@@ -97,12 +97,13 @@ public class ProjectTaskStatusComponent extends Depot {
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
 				AppContext.getSpringBean(ProjectGenericTaskService.class),
 				TaskRowDisplayHandler.class, 10);
-		bodyContent.addComponent(new LazyLoadWrapper(taskList));
 		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);
 	}
 
 	public void showProjectTasksByStatus() {
+		bodyContent.removeAllComponents();
+		bodyContent.addComponent(new LazyLoadWrapper(taskList));
 		final ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
 		searchCriteria.setsAccountId(new NumberSearchField(AppContext
 				.getAccountId()));

@@ -24,111 +24,122 @@ public class PasswordChangeWindow extends Window {
 
 	private PasswordField txtNewPassword;
 	private PasswordField txtConfirmPassword;
-	
-	private User user;
-	
-	public PasswordChangeWindow(User user) {
+
+	private final User user;
+
+	public PasswordChangeWindow(final User user) {
 		this.setWidth("500px");
-		this.setHeight("270px");
-		initUI();
-		center();
+		// this.setHeight("270px");
+		this.initUI();
+		this.center();
 		this.user = user;
 		this.setCaption("Change your password");
 	}
-	
+
 	private void initUI() {
-		
-		VerticalLayout mainLayout = new VerticalLayout();
+
+		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
-		
-		Label lbInstruct1 = new Label("* Passwords are case-sensitive and must be at least 6 characters.");
+
+		final Label lbInstruct1 = new Label(
+				"* Passwords are case-sensitive and must be at least 6 characters.");
 		mainLayout.addComponent(lbInstruct1);
 		mainLayout.setComponentAlignment(lbInstruct1, Alignment.MIDDLE_LEFT);
-		
-		Label lbInstruct2 = new Label("* A good password should contain a mix of capital and lower-case letters, numbers and symbols.");
+
+		final Label lbInstruct2 = new Label(
+				"* A good password should contain a mix of capital and lower-case letters, numbers and symbols.");
 		mainLayout.addComponent(lbInstruct2);
 		mainLayout.setComponentAlignment(lbInstruct2, Alignment.MIDDLE_LEFT);
-		
-		GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 3,
-				UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-				"150px");
-		
-		txtNewPassword = (PasswordField) passInfo.addComponent(new PasswordField(), "New password", 0, 0);
-		txtConfirmPassword = (PasswordField) passInfo.addComponent(new PasswordField(), "Confirm new password", 0, 1);
-		
+
+		final GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 3,
+				UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION, "150px");
+
+		this.txtNewPassword = (PasswordField) passInfo.addComponent(
+				new PasswordField(), "New password", 0, 0);
+		this.txtConfirmPassword = (PasswordField) passInfo.addComponent(
+				new PasswordField(), "Confirm new password", 0, 1);
+
+		passInfo.getLayout().setSpacing(true);
 		mainLayout.addComponent(passInfo.getLayout());
-		mainLayout.setComponentAlignment(passInfo.getLayout(), Alignment.MIDDLE_CENTER);
-		
-		Label lbSpace = new Label();
+		mainLayout.setComponentAlignment(passInfo.getLayout(),
+				Alignment.MIDDLE_CENTER);
+
+		final Label lbSpace = new Label();
 		mainLayout.addComponent(lbSpace);
 		mainLayout.setExpandRatio(lbSpace, 1.0f);
-		
-		HorizontalLayout hlayoutControls = new HorizontalLayout();
-		
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				PasswordChangeWindow.this.close();
-			}
-		});
+		final HorizontalLayout hlayoutControls = new HorizontalLayout();
+
+		final Button cancelBtn = new Button("Cancel",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						PasswordChangeWindow.this.close();
+					}
+				});
 
 		cancelBtn.setStyleName("link");
 		hlayoutControls.addComponent(cancelBtn);
 		hlayoutControls.setSpacing(true);
 		hlayoutControls.setMargin(true);
-		hlayoutControls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
-		
-		Button sendBtn = new Button("Save", new Button.ClickListener() {
+		hlayoutControls.setComponentAlignment(cancelBtn,
+				Alignment.MIDDLE_CENTER);
+
+		final Button sendBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				changePassword();
+			public void buttonClick(final ClickEvent event) {
+				PasswordChangeWindow.this.changePassword();
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		hlayoutControls.addComponent(sendBtn);
 		hlayoutControls.setComponentAlignment(sendBtn, Alignment.MIDDLE_CENTER);
-		
+
 		mainLayout.addComponent(hlayoutControls);
-		mainLayout.setComponentAlignment(hlayoutControls, Alignment.MIDDLE_RIGHT);
-		
+		mainLayout.setComponentAlignment(hlayoutControls,
+				Alignment.MIDDLE_RIGHT);
+
 		this.setModal(true);
 		this.setContent(mainLayout);
 	}
-	
-	private void showMessage(String title, String message) {
-		MessageBox mb = new MessageBox(AppContext.getApplication()
-				.getMainWindow(), title, MessageBox.Icon.WARN,
-				message,
+
+	private void showMessage(final String title, final String message) {
+		final MessageBox mb = new MessageBox(AppContext.getApplication()
+				.getMainWindow(), title, MessageBox.Icon.WARN, message,
 				new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
 		mb.show();
 	}
-	
+
 	private void changePassword() {
-		
-		txtNewPassword.removeStyleName("errorField");
-		txtConfirmPassword.removeStyleName("errorField");
-		
-		if (!txtNewPassword.getValue().equals(txtConfirmPassword.getValue())) {
-			showMessage("Warning!", "Your new password is not matching with confirm password, please check it again.");
-			txtNewPassword.addStyleName("errorField");
-			txtConfirmPassword.addStyleName("errorField");
+
+		this.txtNewPassword.removeStyleName("errorField");
+		this.txtConfirmPassword.removeStyleName("errorField");
+
+		if (!this.txtNewPassword.getValue().equals(
+				this.txtConfirmPassword.getValue())) {
+			this.showMessage(
+					"Warning!",
+					"Your new password is not matching with confirm password, please check it again.");
+			this.txtNewPassword.addStyleName("errorField");
+			this.txtConfirmPassword.addStyleName("errorField");
 			return;
 		}
-		
-		user.setPassword((String) txtNewPassword.getValue());
-		
-		UserService userService = AppContext.getSpringBean(UserService.class);
-		userService.updateWithSession(user, AppContext.getUsername());
-		
+
+		this.user.setPassword((String) this.txtNewPassword.getValue());
+
+		final UserService userService = AppContext
+				.getSpringBean(UserService.class);
+		userService.updateWithSession(this.user, AppContext.getUsername());
+
 		EventBus.getInstance().fireEvent(
-				new ProfileEvent.GotoProfileView(
-						PasswordChangeWindow.this, null));
+				new ProfileEvent.GotoProfileView(PasswordChangeWindow.this,
+						null));
 		PasswordChangeWindow.this.close();
 	}
 }

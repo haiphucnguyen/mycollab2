@@ -26,6 +26,7 @@ import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -49,17 +50,18 @@ public class AccountListViewImpl extends AbstractView implements
 		this.addComponent(this.accountSearchPanel);
 
 		this.accountListLayout = new VerticalLayout();
-		// accountListLayout.setSpacing(true);
 		this.addComponent(this.accountListLayout);
 
 		this.generateDisplayTable();
 	}
 
 	private ComponentContainer constructTableActionControls() {
+		final CssLayout layoutWrapper = new CssLayout();
+		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layout.setSpacing(true);
+		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		this.selectOptionButton.setSizeUndefined();
@@ -85,7 +87,7 @@ public class AccountListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 
 		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
-		return layout;
+		return layoutWrapper;
 	}
 
 	@Override

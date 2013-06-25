@@ -53,17 +53,19 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 	public void previewItem(SimpleOpportunity item) {
 		this.opportunity = item;
 		previewForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
+		displayNotes();
+	}
 
-		displayActivities();
-		displayContacts();
-		displayLeads();
+	protected void displayNotes() {
+		noteListItems.showNotes(CrmTypeConstants.OPPORTUNITY,
+				opportunity.getId());
 	}
 
 	public SimpleOpportunity getOpportunity() {
 		return opportunity;
 	}
 
-	public void displayActivities() {
+	protected void displayActivities() {
 		EventSearchCriteria criteria = new EventSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
@@ -72,11 +74,11 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 		associateActivityList.setSearchCriteria(criteria);
 	}
 
-	private void displayContacts() {
+	protected void displayContacts() {
 		associateContactList.displayContacts(opportunity);
 	}
 
-	private void displayLeads() {
+	protected void displayLeads() {
 		associateLeadList.displayLeads(opportunity);
 	}
 
@@ -101,6 +103,8 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 		private VerticalLayout opportunityInformationLayout;
 		private VerticalLayout relatedItemsContainer;
 		private ReadViewLayout opportunityAddLayout;
+
+		private boolean isLoadedRelateItem = false;
 
 		public ReadView() {
 			opportunityAddLayout = new ReadViewLayout(
@@ -178,6 +182,10 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
+			relatedItemsContainer.addComponent(associateActivityList);
+			relatedItemsContainer.addComponent(associateContactList);
+			relatedItemsContainer.addComponent(associateLeadList);
+
 			opportunityAddLayout.addTab(relatedItemsContainer,
 					"More Information");
 			opportunityAddLayout
@@ -186,19 +194,22 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 						public void tabChanged(final TabChangedEvent event) {
 							final Button btn = event.getSource();
 							final String caption = btn.getCaption();
-							if ("Opportunity Information".equals(caption)) {
 
-							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer
-										.addComponent(associateActivityList);
-								relatedItemsContainer
-										.addComponent(associateContactList);
-								relatedItemsContainer
-										.addComponent(associateLeadList);
+							if ("More Information".equals(caption)) {
+								displayActivities();
+								displayContacts();
+								displayLeads();
+								isLoadedRelateItem = true;
 							}
-							opportunityAddLayout.selectTab(caption);
 						}
 					});
+		}
+
+		@Override
+		public void previewItem(SimpleOpportunity item) {
+			super.previewItem(item);
+			isLoadedRelateItem = false;
+			opportunityAddLayout.selectTab("Opportunity Information");
 		}
 	}
 
@@ -246,6 +257,14 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
 				return relatedItemsPanel;
 			}
+		}
+
+		@Override
+		public void previewItem(SimpleOpportunity item) {
+			super.previewItem(item);
+			displayActivities();
+			displayContacts();
+			displayLeads();
 		}
 	}
 

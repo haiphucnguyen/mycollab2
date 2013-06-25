@@ -7,7 +7,9 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -20,28 +22,28 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 
-	private String title;
+	private final String title;
 	private UserInformationLayout userInformationLayout;
 
-	public ProfileFormLayoutFactory(String title) {
+	public ProfileFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout userAddLayout = new AddViewLayout(title,
+		final AddViewLayout userAddLayout = new AddViewLayout(this.title,
 				MyCollabResource.newResource("icons/48/user/user.png"));
 
-		Layout topPanel = createTopPanel();
+		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {
 			userAddLayout.addTopControls(topPanel);
 		}
 
-		userInformationLayout = new UserInformationLayout();
-		userInformationLayout.getLayout().setWidth("100%");
-		userAddLayout.addBody(userInformationLayout.getLayout());
+		this.userInformationLayout = new UserInformationLayout();
+		this.userInformationLayout.getLayout().setWidth("100%");
+		userAddLayout.addBody(this.userInformationLayout.getLayout());
 
-		Layout bottomPanel = createBottomPanel();
+		final Layout bottomPanel = this.createBottomPanel();
 		if (bottomPanel != null) {
 			userAddLayout.addBottomControls(bottomPanel);
 		}
@@ -54,8 +56,8 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
-		userInformationLayout.attachField(propertyId, field);
+	public void attachField(final Object propertyId, final Field field) {
+		this.userInformationLayout.attachField(propertyId, field);
 	}
 
 	public static class UserInformationLayout implements IFormLayoutFactory {
@@ -66,70 +68,94 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 
 		@Override
 		public Layout getLayout() {
-			VerticalLayout layout = new VerticalLayout();
-			Label organizationHeader = new Label("Basic User Information");
+			final VerticalLayout layout = new VerticalLayout();
+			final Label organizationHeader = new Label("Basic User Information");
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			basicInformationLayout = new GridFormLayoutHelper(2, 7);
-			basicInformationLayout.getLayout().setWidth("100%");
+			this.basicInformationLayout = new GridFormLayoutHelper(2, 7,
+					"100%", "167px", Alignment.MIDDLE_LEFT);
+			this.basicInformationLayout.getLayout().setWidth("100%");
+			this.basicInformationLayout.getLayout().setMargin(false);
+			this.basicInformationLayout.getLayout().addStyleName(
+					UIConstants.COLORED_GRIDLAYOUT);
 
-			layout.addComponent(basicInformationLayout.getLayout());
+			layout.addComponent(this.basicInformationLayout.getLayout());
 
-			Label contactHeader = new Label("Contact User Information");
+			final Label contactHeader = new Label("Contact User Information");
 			contactHeader.setStyleName("h2");
 			layout.addComponent(contactHeader);
 
-			contactInformationLayout = new GridFormLayoutHelper(2, 6);
-			contactInformationLayout.getLayout().setWidth("100%");
+			this.contactInformationLayout = new GridFormLayoutHelper(2, 3,
+					"100%", "167px", Alignment.MIDDLE_LEFT);
+			this.contactInformationLayout.getLayout().setWidth("100%");
+			this.contactInformationLayout.getLayout().setMargin(false);
+			this.contactInformationLayout.getLayout().addStyleName(
+					UIConstants.COLORED_GRIDLAYOUT);
 
-			layout.addComponent(contactInformationLayout.getLayout());
+			layout.addComponent(this.contactInformationLayout.getLayout());
 
-			Label advancedHeader = new Label("Advanced User Information");
+			final Label advancedHeader = new Label("Advanced User Information");
 			advancedHeader.setStyleName("h2");
 			layout.addComponent(advancedHeader);
 
-			advancedInformationLayout = new GridFormLayoutHelper(2, 2);
-			advancedInformationLayout.getLayout().setWidth("100%");
+			this.advancedInformationLayout = new GridFormLayoutHelper(2, 2,
+					"100%", "167px", Alignment.MIDDLE_LEFT);
+			this.advancedInformationLayout.getLayout().setWidth("100%");
+			this.advancedInformationLayout.getLayout().setMargin(false);
+			this.advancedInformationLayout.getLayout().addStyleName(
+					UIConstants.COLORED_GRIDLAYOUT);
 
-			layout.addComponent(advancedInformationLayout.getLayout());
+			layout.addComponent(this.advancedInformationLayout.getLayout());
 			return layout;
 		}
 
 		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(final Object propertyId, final Field field) {
 			if (propertyId.equals("firstname")) {
-				basicInformationLayout.addComponent(field, "First Name", 0, 0);
+				this.basicInformationLayout.addComponent(field, "First Name",
+						0, 0);
 			} else if (propertyId.equals("lastname")) {
-				basicInformationLayout.addComponent(field, "Last Name", 0, 1);
+				this.basicInformationLayout.addComponent(field, "Last Name", 0,
+						1);
 			} else if (propertyId.equals("nickname")) {
-				basicInformationLayout.addComponent(field, "Nick Name", 1, 0);
+				this.basicInformationLayout.addComponent(field, "Nick Name", 1,
+						0);
 			} else if (propertyId.equals("dateofbirth")) {
-				basicInformationLayout.addComponent(field, "Birthday", 1, 1);
+				this.basicInformationLayout.addComponent(field, "Birthday", 1,
+						1);
 			} else if (propertyId.equals("email")) {
-				basicInformationLayout.addComponent(field, "Email", 0, 2);
+				this.basicInformationLayout.addComponent(field, "Email", 0, 2);
 			} else if (propertyId.equals("timezone")) {
-				basicInformationLayout.addComponent(field, "Timezone", 0, 3);
+				this.basicInformationLayout.addComponent(field, "Timezone", 0,
+						3, 2, "262px", Alignment.MIDDLE_LEFT);
 			} else if (propertyId.equals("isAdmin")) {
-				basicInformationLayout.addComponent(field, "Is Admin", 1, 2);
+				this.basicInformationLayout.addComponent(field, "Is Admin", 1,
+						2);
 			} else if (propertyId.equals("company")) {
-				advancedInformationLayout.addComponent(field, "Company", 0, 0);
+				this.advancedInformationLayout.addComponent(field, "Company",
+						0, 0);
 			} else if (propertyId.equals("country")) {
-				advancedInformationLayout.addComponent(field, "Country", 0, 1);
+				this.advancedInformationLayout.addComponent(field, "Country",
+						0, 1, 2, "262px", Alignment.MIDDLE_LEFT);
 			} else if (propertyId.equals("website")) {
-				advancedInformationLayout.addComponent(field, "Website", 1, 0);
+				this.advancedInformationLayout.addComponent(field, "Website",
+						1, 0);
 			} else if (propertyId.equals("workphone")) {
-				contactInformationLayout
-						.addComponent(field, "Work phone", 0, 0);
+				this.contactInformationLayout.addComponent(field, "Work phone",
+						0, 0);
 			} else if (propertyId.equals("homephone")) {
-				contactInformationLayout
-						.addComponent(field, "Home phone", 0, 1);
+				this.contactInformationLayout.addComponent(field, "Home phone",
+						0, 1);
 			} else if (propertyId.equals("facebookaccount")) {
-				contactInformationLayout.addComponent(field, "Facebook", 1, 0);
+				this.contactInformationLayout.addComponent(field, "Facebook",
+						1, 0);
 			} else if (propertyId.equals("twitteraccount")) {
-				contactInformationLayout.addComponent(field, "Twitter", 1, 1);
+				this.contactInformationLayout.addComponent(field, "Twitter", 1,
+						1);
 			} else if (propertyId.equals("skypecontact")) {
-				contactInformationLayout.addComponent(field, "Skype", 0, 2);
+				this.contactInformationLayout.addComponent(field, "Skype", 0,
+						2, 2, "262px", Alignment.MIDDLE_LEFT);
 			}
 		}
 	}

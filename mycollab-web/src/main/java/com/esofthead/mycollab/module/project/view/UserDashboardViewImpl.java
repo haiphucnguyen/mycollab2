@@ -2,11 +2,19 @@ package com.esofthead.mycollab.module.project.view;
 
 import java.util.List;
 
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.events.FollowingTicketEvent;
+import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
 import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -22,6 +30,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
@@ -31,11 +40,15 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	private ButtonLink followingTicketsLink;
 
+	private ButtonLink timeTrackingLink;
+
 	private MyProjectListComponent myProjectListComponent;
 
 	private ActivityStreamComponent activityStreamComponent;
 
 	private TaskStatusComponent taskStatusComponent;
+
+	private List<Integer> prjKeys;
 
 	public UserDashboardViewImpl() {
 		this.setSpacing(true);
@@ -93,15 +106,39 @@ public class UserDashboardViewImpl extends AbstractView implements
 		headerContentBottom.setSpacing(true);
 		followingTicketsLink = new ButtonLink("My Following Tickets (" + "0"
 				+ ")");
-		final ButtonLink userBugs = new ButtonLink("My Time (" + "0" + ")");
+
 		followingTicketsLink.setIcon(MyCollabResource
-				.newResource("icons/16/project/task.png"));
+				.newResource("icons/16/follow.png"));
 		followingTicketsLink.removeStyleName("wordWrap");
-		userBugs.setIcon(MyCollabResource
-				.newResource("icons/16/project/bug.png"));
-		userBugs.removeStyleName("wordWrap");
+		followingTicketsLink.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (prjKeys != null) {
+					EventBus.getInstance().fireEvent(
+							new FollowingTicketEvent.GotoMyFollowingItems(
+									UserDashboardViewImpl.this, prjKeys));
+				}
+			}
+		});
+
+		timeTrackingLink = new ButtonLink("Time Tracking");
+		timeTrackingLink.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new TimeTrackingEvent.GotoTimeTrackingView(
+								UserDashboardViewImpl.this, null));
+			}
+		});
+		timeTrackingLink.setIcon(MyCollabResource
+				.newResource("icons/16/project/time_tracking.png"));
+		timeTrackingLink.removeStyleName("wordWrap");
 		headerContentBottom.addComponent(followingTicketsLink);
-		headerContentBottom.addComponent(userBugs);
+		headerContentBottom.addComponent(timeTrackingLink);
 
 		headerContent.addComponent(headerContentTop);
 		headerContent.addComponent(headerContentBottom);
@@ -137,16 +174,28 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public void display() {
 		final ProjectService prjService = AppContext
 				.getSpringBean(ProjectService.class);
-		final List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
-				.getUsername());
+		prjKeys = prjService.getUserProjectKeys(AppContext.getUsername());
 		if (prjKeys != null && !prjKeys.isEmpty()) {
 			this.activityStreamComponent.showFeeds(prjKeys);
 			this.myProjectListComponent.showProjects(prjKeys);
+			displayFollowingTicketsCount();
 		}
 
 		this.taskStatusComponent.showProjectTasksByStatus();
 
-		// show following ticket numbers
+	}
 
+	private void displayFollowingTicketsCount() {
+		// show following ticket numbers
+		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+		searchCriteria.setUser(new StringSearchField(SearchField.AND,
+				AppContext.getUsername()));
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+				.toArray(new Integer[0])));
+		MonitorItemService monitorService = AppContext
+				.getSpringBean(MonitorItemService.class);
+		int followingItemsCount = monitorService.getTotalCount(searchCriteria);
+		followingTicketsLink.setCaption("My Following Tickets ("
+				+ followingItemsCount + ")");
 	}
 }

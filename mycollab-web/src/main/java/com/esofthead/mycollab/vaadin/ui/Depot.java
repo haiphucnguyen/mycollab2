@@ -83,7 +83,7 @@ public class Depot extends VerticalLayout {
 
 		final CustomComponent customComp = new CustomComponent(this.bodyContent);
 		customComp.setWidth("100%");
-		this.bodyContent.setStyleName("depotContent");
+		this.bodyContent.addStyleName("depotContent");
 
 		this.addComponent(customComp);
 		this.setComponentAlignment(customComp, Alignment.TOP_CENTER);

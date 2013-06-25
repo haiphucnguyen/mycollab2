@@ -76,9 +76,83 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 		}
 	}
 
-	/**
-     *
-     */
+	protected void displayActivities() {
+		final EventSearchCriteria criteria = new EventSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+		criteria.setType(new StringSearchField(SearchField.AND,
+				CrmTypeConstants.ACCOUNT));
+		criteria.setTypeid(new NumberSearchField(account.getId()));
+		associateActivityList.setSearchCriteria(criteria);
+	}
+
+	protected void displayAssociateCaseList() {
+		final CaseSearchCriteria criteria = new CaseSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setAccountId(new NumberSearchField(account.getId()));
+		associateCaseList.setSearchCriteria(criteria);
+	}
+
+	protected void displayAssociateLeadList() {
+		associateLeadList.displayLeads(account);
+	}
+
+	protected void displayAssociateOpportunityList() {
+		final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+				.getId()));
+		associateOpportunityList.setSearchCriteria(criteria);
+	}
+
+	protected void displayNotes() {
+		noteListItems.showNotes(CrmTypeConstants.ACCOUNT, account.getId());
+	}
+
+	public SimpleAccount getAccount() {
+		return account;
+	}
+
+	public EventRelatedItemListComp getAssociateActivityList() {
+		return associateActivityList;
+	}
+
+	public AccountCaseListComp getAssociateCaseList() {
+		return associateCaseList;
+	}
+
+	public AccountContactListComp getAssociateContactList() {
+		return associateContactList;
+	}
+
+	public AccountLeadListComp getAssociateLeadList() {
+		return associateLeadList;
+	}
+
+	public AccountOpportunityListComp getAssociateOpportunityList() {
+		return associateOpportunityList;
+	}
+
+	public AdvancedPreviewBeanForm<Account> getPreviewForm() {
+		return previewForm;
+	}
+
+	protected void initRelatedComponent() {
+		associateContactList = new AccountContactListComp();
+		associateActivityList = new EventRelatedItemListComp(true);
+		associateOpportunityList = new AccountOpportunityListComp();
+		associateLeadList = new AccountLeadListComp();
+		associateCaseList = new AccountCaseListComp();
+		noteListItems = new NoteListItems("Notes");
+	}
+
+	public void previewItem(final SimpleAccount item) {
+		account = item;
+		previewForm.setItemDataSource(new BeanItem<Account>(account));
+		displayNotes();
+	}
+
 	public static class PrintView extends AccountPreviewBuilder {
 		class FormLayoutFactory extends AccountFormLayoutFactory {
 
@@ -126,6 +200,17 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 			this.addComponent(previewForm);
 		}
+
+		@Override
+		public void previewItem(SimpleAccount item) {
+			super.previewItem(item);
+			displayActivities();
+			associateContactList.displayContacts(account);
+			displayAssociateCaseList();
+			displayAssociateOpportunityList();
+			displayAssociateLeadList();
+		}
+
 	}
 
 	public static class ReadView extends AccountPreviewBuilder {
@@ -134,6 +219,8 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 		private final VerticalLayout accountInformation;
 		private final VerticalLayout relatedItemsContainer;
 		private final ReadViewLayout accountAddLayout;
+
+		private boolean isLoadedRelateItem = false;
 
 		public ReadView() {
 			accountAddLayout = new ReadViewLayout(
@@ -208,6 +295,12 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
+			relatedItemsContainer.addComponent(associateActivityList);
+			relatedItemsContainer.addComponent(associateContactList);
+			relatedItemsContainer.addComponent(associateOpportunityList);
+			relatedItemsContainer.addComponent(associateCaseList);
+			relatedItemsContainer.addComponent(associateLeadList);
+
 			accountAddLayout.addTab(relatedItemsContainer, "More Information");
 
 			this.addComponent(accountAddLayout);
@@ -219,106 +312,30 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 						public void tabChanged(final TabChangedEvent event) {
 							final Button btn = event.getSource();
 							final String caption = btn.getCaption();
-							if ("Account Information".equals(caption)) {
 
-							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer
-										.addComponent(associateActivityList);
-								relatedItemsContainer
-										.addComponent(associateContactList);
-								relatedItemsContainer
-										.addComponent(associateOpportunityList);
-								relatedItemsContainer
-										.addComponent(associateCaseList);
-								relatedItemsContainer
-										.addComponent(associateLeadList);
+							if ("More Information".equals(caption)) {
+								if (!isLoadedRelateItem) {
+									displayActivities();
+									associateContactList
+											.displayContacts(account);
+									displayAssociateCaseList();
+									displayAssociateOpportunityList();
+									displayAssociateLeadList();
+									isLoadedRelateItem = true;
+								}
+
 							}
-							accountAddLayout.selectTab(caption);
 						}
 					});
 		}
+
+		@Override
+		public void previewItem(SimpleAccount item) {
+			super.previewItem(item);
+			isLoadedRelateItem = false;
+			accountAddLayout.selectTab("Account Information");
+		}
+
 	}
 
-	public void displayActivities() {
-		final EventSearchCriteria criteria = new EventSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-		criteria.setType(new StringSearchField(SearchField.AND,
-				CrmTypeConstants.ACCOUNT));
-		criteria.setTypeid(new NumberSearchField(account.getId()));
-		associateActivityList.setSearchCriteria(criteria);
-	}
-
-	private void displayAssociateCaseList() {
-		final CaseSearchCriteria criteria = new CaseSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(account.getId()));
-		associateCaseList.setSearchCriteria(criteria);
-	}
-
-	private void displayAssociateLeadList() {
-		associateLeadList.displayLeads(account);
-	}
-
-	private void displayAssociateOpportunityList() {
-		final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		associateOpportunityList.setSearchCriteria(criteria);
-	}
-
-	private void displayNotes() {
-		noteListItems.showNotes(CrmTypeConstants.ACCOUNT, account.getId());
-	}
-
-	public SimpleAccount getAccount() {
-		return account;
-	}
-
-	public EventRelatedItemListComp getAssociateActivityList() {
-		return associateActivityList;
-	}
-
-	public AccountCaseListComp getAssociateCaseList() {
-		return associateCaseList;
-	}
-
-	public AccountContactListComp getAssociateContactList() {
-		return associateContactList;
-	}
-
-	public AccountLeadListComp getAssociateLeadList() {
-		return associateLeadList;
-	}
-
-	public AccountOpportunityListComp getAssociateOpportunityList() {
-		return associateOpportunityList;
-	}
-
-	public AdvancedPreviewBeanForm<Account> getPreviewForm() {
-		return previewForm;
-	}
-
-	protected void initRelatedComponent() {
-		associateContactList = new AccountContactListComp();
-		associateActivityList = new EventRelatedItemListComp(true);
-		associateOpportunityList = new AccountOpportunityListComp();
-		associateLeadList = new AccountLeadListComp();
-		associateCaseList = new AccountCaseListComp();
-		noteListItems = new NoteListItems("Notes");
-	}
-
-	public void previewItem(final SimpleAccount item) {
-		account = item;
-		previewForm.setItemDataSource(new BeanItem<Account>(account));
-
-		displayNotes();
-		displayActivities();
-		associateContactList.displayContacts(account);
-		displayAssociateCaseList();
-		displayAssociateOpportunityList();
-		displayAssociateLeadList();
-	}
 }

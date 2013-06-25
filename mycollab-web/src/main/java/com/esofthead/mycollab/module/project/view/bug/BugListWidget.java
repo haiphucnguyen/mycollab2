@@ -12,8 +12,8 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.VerticalLayout;
 
 public class BugListWidget extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -21,28 +21,34 @@ public class BugListWidget extends Depot {
 	private BugSearchCriteria bugSearchCriteria;
 	private BugTableDisplay tableItem;
 
-	public BugListWidget(String title, String backBtnLabel,
-			BugSearchCriteria bugSearchCriteria,
+	public BugListWidget(final String title, final String backBtnLabel,
+			final BugSearchCriteria bugSearchCriteria,
 			final IBugReportDisplayContainer bugReportDisplayContainer) {
 		super(title, new VerticalLayout());
 
-		VerticalLayout contentLayout = (VerticalLayout) this.bodyContent;
+		final VerticalLayout contentLayout = (VerticalLayout) this.bodyContent;
 		contentLayout.setSpacing(true);
 		contentLayout.setWidth("100%");
 
-		Button backToBugReportsBtn = new Button(backBtnLabel,
+		final Button backToBugReportsBtn = new Button(backBtnLabel,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						bugReportDisplayContainer.displayBugReports();
 					}
 				});
-		contentLayout.addComponent(backToBugReportsBtn);
-		backToBugReportsBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		// contentLayout.addComponent(backToBugReportsBtn);
+		final VerticalLayout backBtnWrapper = new VerticalLayout();
+		backBtnWrapper.setMargin(false, false, true, false);
 
-		tableItem = new BugTableDisplay(
+		backToBugReportsBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		backBtnWrapper.addComponent(backToBugReportsBtn);
+
+		this.addComponentAsFirst(backBtnWrapper);
+
+		this.tableItem = new BugTableDisplay(
 				new String[] { "id", "summary", "assignuserFullName",
 						"severity", "resolution", "duedate" },
 				new String[] {
@@ -57,7 +63,7 @@ public class BugListWidget extends Depot {
 								.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
 						LocalizationHelper
 								.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
-		tableItem
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					private static final long serialVersionUID = 1L;
 
@@ -67,8 +73,8 @@ public class BugListWidget extends Depot {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleBug bug = (SimpleBug) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleBug bug = (SimpleBug) event.getData();
 						if ("summary".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new BugEvent.GotoRead(BugListWidget.this,
@@ -77,14 +83,14 @@ public class BugListWidget extends Depot {
 					}
 				});
 
-		tableItem.setWidth("100%");
-		contentLayout.addComponent(tableItem);
+		this.tableItem.setWidth("100%");
+		contentLayout.addComponent(this.tableItem);
 
-		setSearchCriteria(bugSearchCriteria);
+		this.setSearchCriteria(bugSearchCriteria);
 	}
 
-	private void setSearchCriteria(BugSearchCriteria searchCriteria) {
+	private void setSearchCriteria(final BugSearchCriteria searchCriteria) {
 		this.bugSearchCriteria = searchCriteria;
-		tableItem.setSearchCriteria(bugSearchCriteria);
+		this.tableItem.setSearchCriteria(this.bugSearchCriteria);
 	}
 }

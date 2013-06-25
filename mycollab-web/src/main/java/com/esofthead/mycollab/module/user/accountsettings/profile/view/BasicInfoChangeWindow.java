@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
-import java.util.Date;
-
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -33,83 +31,90 @@ public class BasicInfoChangeWindow extends Window {
 	private DateComboboxSelectionField birthdayField;
 	private TimeZoneSelection timeZoneField;
 
-	private User user;
+	private final User user;
 
-	public BasicInfoChangeWindow(User user) {
+	public BasicInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		this.setHeight("350px");
-		initUI();
-		center();
+		// this.setHeight("350px");
+		this.initUI();
+		this.center();
 		this.setCaption("Change your basic information");
+		((VerticalLayout) this.getContent()).setMargin(false, false, true,
+				false);
 	}
-	
 
 	private void initUI() {
 
-		VerticalLayout mainLayout = new VerticalLayout();
+		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
-		GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 5,
-				UIConstants.DEFAULT_CONTROL_WIDTH, "150px");
+		final GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 5,
+				"100%", "150px", Alignment.MIDDLE_LEFT);
 
-		txtFirstName = (TextField) passInfo.addComponent(new TextField(),
+		this.txtFirstName = (TextField) passInfo.addComponent(new TextField(),
 				"First Name", 0, 0);
-		txtLastName = (TextField) passInfo.addComponent(new TextField(),
+		this.txtLastName = (TextField) passInfo.addComponent(new TextField(),
 				"Last Name", 0, 1);
-		txtLastName.setRequired(true);
-		txtEmail = (TextField) passInfo.addComponent(new TextField(), "Email",
-				0, 2);
-		txtEmail.setRequired(true);
-		birthdayField = (DateComboboxSelectionField) passInfo.addComponent(new DateComboboxSelectionField(),
-				"Birthday", 0, 3);
-		birthdayField.setDate(user.getDateofbirth());
+		this.txtLastName.setRequired(true);
+		this.txtEmail = (TextField) passInfo.addComponent(new TextField(),
+				"Email", 0, 2);
+		this.txtEmail.setRequired(true);
+		this.birthdayField = (DateComboboxSelectionField) passInfo
+				.addComponent(new DateComboboxSelectionField(), "Birthday", 0,
+						3);
+		this.birthdayField.setDate(this.user.getDateofbirth());
 
-		
-		timeZoneField = (TimeZoneSelection) passInfo.addComponent(new TimeZoneSelection(),
-				"TimeZone", 0, 4);
-		timeZoneField.setTimeZone(TimezoneMapper.getTimezone(user.getTimezone()));
-		
-		txtFirstName.setValue(user.getFirstname() == null ? "" : user
-				.getFirstname());
-		txtLastName.setValue(user.getLastname() == null ? "" : user
-				.getLastname());
-		txtEmail.setValue(user.getEmail() == null ? "" : user.getEmail());
-		birthdayField.setValue(user.getDateofbirth());
+		this.timeZoneField = (TimeZoneSelection) passInfo.addComponent(
+				new TimeZoneSelection(), "TimeZone", 0, 4);
+		this.timeZoneField.setTimeZone(TimezoneMapper.getTimezone(this.user
+				.getTimezone()));
 
+		this.txtFirstName.setValue(this.user.getFirstname() == null ? ""
+				: this.user.getFirstname());
+		this.txtLastName.setValue(this.user.getLastname() == null ? ""
+				: this.user.getLastname());
+		this.txtEmail.setValue(this.user.getEmail() == null ? "" : this.user
+				.getEmail());
+		this.birthdayField.setValue(this.user.getDateofbirth());
+
+		passInfo.getLayout().setMargin(false);
+		passInfo.getLayout().setWidth("100%");
+		passInfo.getLayout().addStyleName("colored-gridlayout");
 		mainLayout.addComponent(passInfo.getLayout());
 		mainLayout.setComponentAlignment(passInfo.getLayout(),
 				Alignment.TOP_LEFT);
 
-		Label lbSpace = new Label();
+		final Label lbSpace = new Label();
 		mainLayout.addComponent(lbSpace);
 		mainLayout.setExpandRatio(lbSpace, 1.0f);
 
-		HorizontalLayout hlayoutControls = new HorizontalLayout();
+		final HorizontalLayout hlayoutControls = new HorizontalLayout();
 		hlayoutControls.setSpacing(true);
 		hlayoutControls.setMargin(true);
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button cancelBtn = new Button("Cancel",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				BasicInfoChangeWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						BasicInfoChangeWindow.this.close();
+					}
+				});
 
 		cancelBtn.setStyleName("link");
 		hlayoutControls.addComponent(cancelBtn);
 		hlayoutControls.setComponentAlignment(cancelBtn,
 				Alignment.MIDDLE_CENTER);
 
-		Button sendBtn = new Button("Save", new Button.ClickListener() {
+		final Button sendBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
-				changePassword();
+			public void buttonClick(final ClickEvent event) {
+				BasicInfoChangeWindow.this.changePassword();
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -124,8 +129,8 @@ public class BasicInfoChangeWindow extends Window {
 		this.setContent(mainLayout);
 	}
 
-	private void showMessage(String title, String message) {
-		MessageBox mb = new MessageBox(AppContext.getApplication()
+	private void showMessage(final String title, final String message) {
+		final MessageBox mb = new MessageBox(AppContext.getApplication()
 				.getMainWindow(), title, MessageBox.Icon.WARN, message,
 				new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
 		mb.show();
@@ -133,37 +138,38 @@ public class BasicInfoChangeWindow extends Window {
 
 	private void changePassword() {
 
-		txtLastName.removeStyleName("errorField");
-		txtEmail.removeStyleName("errorField");
+		this.txtLastName.removeStyleName("errorField");
+		this.txtEmail.removeStyleName("errorField");
 
-		if (txtLastName.getValue().equals("")) {
-			showMessage("Warning!", "The last name must be not null!");
-			txtLastName.addStyleName("errorField");
+		if (this.txtLastName.getValue().equals("")) {
+			this.showMessage("Warning!", "The last name must be not null!");
+			this.txtLastName.addStyleName("errorField");
 			return;
 		}
 
-		if (txtEmail.getValue().equals("")) {
-			showMessage("Warning!", "The email must be not null!");
-			txtLastName.addStyleName("errorField");
+		if (this.txtEmail.getValue().equals("")) {
+			this.showMessage("Warning!", "The email must be not null!");
+			this.txtLastName.addStyleName("errorField");
 			return;
 		}
 
-		user.setFirstname((String) txtFirstName.getValue());
-		user.setLastname((String) txtLastName.getValue());
-		user.setEmail((String) txtEmail.getValue());
-		user.setDateofbirth((Date) birthdayField.getDate());
-		user.setTimezone(timeZoneField.getTimeZone().getId());
+		this.user.setFirstname((String) this.txtFirstName.getValue());
+		this.user.setLastname((String) this.txtLastName.getValue());
+		this.user.setEmail((String) this.txtEmail.getValue());
+		this.user.setDateofbirth(this.birthdayField.getDate());
+		this.user.setTimezone(this.timeZoneField.getTimeZone().getId());
 
 		AppContext.removeVariable(AppContext.USER_TIMEZONE);
-		AppContext.putVariable(AppContext.USER_TIMEZONE, timeZoneField.getTimeZone().getTimezone());
-		
-		
-		UserService userService = AppContext.getSpringBean(UserService.class);
-		userService.updateWithSession(user, AppContext.getUsername());
-		
+		AppContext.putVariable(AppContext.USER_TIMEZONE, this.timeZoneField
+				.getTimeZone().getTimezone());
+
+		final UserService userService = AppContext
+				.getSpringBean(UserService.class);
+		userService.updateWithSession(this.user, AppContext.getUsername());
+
 		EventBus.getInstance().fireEvent(
-				new ProfileEvent.GotoProfileView(
-						BasicInfoChangeWindow.this, null));
+				new ProfileEvent.GotoProfileView(BasicInfoChangeWindow.this,
+						null));
 		BasicInfoChangeWindow.this.close();
 	}
 }

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.hene.splitbutton.SplitButton;
 
+import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -18,6 +19,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -45,6 +47,10 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
+		Embedded iconComp = new Embedded();
+		iconComp.setSource(MyCollabResource
+				.newResource("icons/22/crm/event.png"));
+		layout.addComponent(iconComp);
 		final Label searchtitle = new Label("Events");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
@@ -124,8 +130,8 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(true);
-			basicSearchBody.addComponent(new Label("Subject"));
+			// basicSearchBody.setSpacing(true);
+			// basicSearchBody.addComponent(new Label("Subject"));
 
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
