@@ -22,7 +22,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Embedded;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
@@ -32,22 +32,35 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		FollowingTicketView {
 	private static final long serialVersionUID = 1L;
 
-	private FollowingTicketTable ticketTable;
+	private final FollowingTicketTable ticketTable;
 
 	public FollowingTicketViewImpl() {
-		this.addComponent(new Label("Display tickets"));
+		this.setSpacing(true);
+		this.setMargin(false, false, true, false);
+		this.setWidth("1130px");
+		final CssLayout headerWrapper = new CssLayout();
+		headerWrapper.setWidth("100%");
+		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
+		final Label layoutHeader = new Label("Display tickets");
+		layoutHeader.addStyleName("h2");
+		headerWrapper.addComponent(layoutHeader);
+		this.addComponent(headerWrapper);
 
-		ticketTable = new FollowingTicketTable();
-		this.addComponent(ticketTable);
+		final Button backBtn = new Button("Back to Work Board");
+		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		this.addComponent(backBtn);
+
+		this.ticketTable = new FollowingTicketTable();
+		this.addComponent(this.ticketTable);
 	}
 
 	@Override
-	public void displayFollowingTicket(List<Integer> prjKeys) {
-		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+	public void displayFollowingTicket(final List<Integer> prjKeys) {
+		final MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
 				.toArray(new Integer[0])));
 		searchCriteria.setUser(new StringSearchField(AppContext.getUsername()));
-		ticketTable.setSearchCriteria(searchCriteria);
+		this.ticketTable.setSearchCriteria(searchCriteria);
 
 	}
 
@@ -62,35 +75,37 @@ public class FollowingTicketViewImpl extends AbstractView implements
 					"projectName", "assignUser" }, new String[] { "Summary",
 					"Project", "Assignee" });
 
-			projectService = AppContext.getSpringBean(ProjectService.class);
+			this.projectService = AppContext
+					.getSpringBean(ProjectService.class);
 
 			this.addGeneratedColumn("summary", new ColumnGenerator() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
 					final FollowingTicket ticket = FollowingTicketTable.this
 							.getBeanByIndex(itemId);
-					ButtonLink ticketLink = new ButtonLink(ticket.getSummary());
+					final ButtonLink ticketLink = new ButtonLink(ticket
+							.getSummary());
 					ticketLink.addListener(new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							if ("Bug".equals(ticket.getType())) {
-								int projectId = ticket.getProjectId();
-								int bugId = ticket.getTypeId();
-								PageActionChain chain = new PageActionChain(
+								final int projectId = ticket.getProjectId();
+								final int bugId = ticket.getTypeId();
+								final PageActionChain chain = new PageActionChain(
 										new ProjectScreenData.Goto(projectId),
 										new BugScreenData.Read(bugId));
 								EventBus.getInstance().fireEvent(
 										new ProjectEvent.GotoMyProject(this,
 												chain));
 							} else if ("Task".equals(ticket.getType())) {
-								int projectId = ticket.getProjectId();
-								int taskId = ticket.getTypeId();
-								PageActionChain chain = new PageActionChain(
+								final int projectId = ticket.getProjectId();
+								final int taskId = ticket.getTypeId();
+								final PageActionChain chain = new PageActionChain(
 										new ProjectScreenData.Goto(projectId),
 										new TaskScreenData.Read(taskId));
 								EventBus.getInstance().fireEvent(
@@ -119,13 +134,15 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 		@Override
 		protected int queryTotalCount() {
-			return projectService.getTotalFollowingTickets(searchRequest
-					.getSearchCriteria());
+			return this.projectService
+					.getTotalFollowingTickets(this.searchRequest
+							.getSearchCriteria());
 		}
 
 		@Override
 		protected List<FollowingTicket> queryCurrentData() {
-			return projectService.getProjectFollowingTickets(searchRequest);
+			return this.projectService
+					.getProjectFollowingTickets(this.searchRequest);
 		}
 
 	}
