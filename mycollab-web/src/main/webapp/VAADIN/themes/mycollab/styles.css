@@ -2450,6 +2450,14 @@ div.v-splitbutton, div.v-splitbutton .v-button {
 	margin: 0px;
 }
 
+.xbreadcrumbs li > div.xbreadcrumbbutton {
+	margin-top: 3px;
+}
+
+.xbreadcrumbs li > div.xbreadcrumbbutton.v-button-xbreadcrumbbutton-home {
+	margin: 0px;
+}
+
 .xbreadcrumbs .v-link a span,.xbreadcrumbbutton .v-button-caption {
 	font-size: 13px !important;
 }
@@ -3827,4 +3835,3 @@ div.v-ratingstars-bar {
 	position:relative;
 	top:1px;
 }
-

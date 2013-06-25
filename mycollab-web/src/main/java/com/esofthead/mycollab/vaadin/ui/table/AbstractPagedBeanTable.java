@@ -39,7 +39,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		extends VerticalLayout implements IPagedBeanTable<S, T> {
 	private static final long serialVersionUID = 1L;
 
-	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
+	protected int displayNumItems = 3;
 
 	protected Button first, previous1, previous2, next1, next2, last, current;
 	protected Label ss1, ss2;
@@ -58,6 +58,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	protected int currentViewCount;
 	protected int totalCount;
 	protected Table tableItem;
+	protected CssLayout controlBarWrapper;
 	protected Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> mapEventListener;
 	protected Set<SelectableItemHandler<T>> selectableHandlers;
 	protected Set<PagableHandler> pagableHandlers;
@@ -238,8 +239,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	}
 
 	private CssLayout createControls() {
-
-		final CssLayout controlBarWrapper = new CssLayout();
+		controlBarWrapper = new CssLayout();
 		controlBarWrapper.setStyleName("listControl");
 		controlBarWrapper.setWidth("100%");
 
@@ -249,6 +249,68 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		pageManagement = new HorizontalLayout();
 
+		// defined layout here ---------------------------
+		ss1 = new Label("...");
+		ss2 = new Label("...");
+
+		current = new ButtonLink("" + currentPage, new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				pageChange(currentPage);
+			}
+		});
+
+		first = new ButtonLink("1", new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				pageChange(1);
+			}
+		});
+
+		previous1 = new ButtonLink("" + (currentPage - 1), new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				pageChange(currentPage - 1);
+			}
+		});
+		previous2 = new ButtonLink("" + (currentPage - 2), new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				pageChange(currentPage - 2);
+			}
+		});
+		next1 = new ButtonLink("" + (currentPage + 1), new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				pageChange(currentPage + 1);
+			}
+		});
+		next2 = new ButtonLink("" + (currentPage + 2), new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				pageChange(currentPage + 2);
+			}
+		});
+		last = new ButtonLink("" + totalPage, new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				pageChange(AbstractPagedBeanTable.this.totalPage);
+			}
+		});
 		first.addStyleName("pagedtable-first");
 		previous1.addStyleName("pagedtable-previous");
 		previous2.addStyleName("pagedtable-previous");
@@ -266,7 +328,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		addStylePagingButton();
 		current.removeStyleName("buttonPaging");
 
-		handleAddComponent(pageManagement);
+		handleAddComponent(pageManagement, currentPage);
 
 		pageManagement.setWidth(null);
 		pageManagement.setSpacing(true);
@@ -277,53 +339,27 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		return controlBarWrapper;
 	}
 
-	private void handelBackEndAddComponent(HorizontalLayout page, int i) {
-		if (totalPage == i) {
-		} else if (totalPage == i + 1) {
-			page.addComponent(last);
-		} else if (totalPage == i + 2) {
-			page.addComponent(next1);
-			page.addComponent(last);
-		} else if (totalPage == i + 3) {
-			page.addComponent(next1);
-			page.addComponent(next2);
-			page.addComponent(last);
-		} else if (totalPage >= i + 4) {
-			page.addComponent(next1);
-			page.addComponent(next2);
-			page.addComponent(ss2);
-			page.addComponent(last);
-		}
-	}
-
-	private void handleAddComponent(HorizontalLayout page) {
+	private void handleAddComponent(HorizontalLayout page, int currentPage) {
 		page.removeAllComponents();
-		if (currentPage == 1) {
-			page.addComponent(current);
-			handelBackEndAddComponent(page, currentPage);
-		} else if (currentPage == 2) {
-			page.addComponent(first);
-			page.addComponent(current);
-			handelBackEndAddComponent(page, currentPage);
-		} else if (currentPage == 3) {
-			page.addComponent(first);
-			page.addComponent(previous1);
-			page.addComponent(current);
-			handelBackEndAddComponent(page, currentPage);
-		} else if (currentPage == 4) {
-			page.addComponent(first);
-			page.addComponent(previous2);
-			page.addComponent(previous1);
-			page.addComponent(current);
-			handelBackEndAddComponent(page, currentPage);
-		} else if (currentPage == 5) {
-			page.addComponent(first);
+		int first = 1, pre1 = currentPage - 1, pre2 = currentPage - 2;
+		if (first < currentPage)
+			page.addComponent(this.first);
+		if (currentPage >= 5)
 			page.addComponent(ss1);
+		if (first < pre2)
 			page.addComponent(previous2);
+		if (first < pre1)
 			page.addComponent(previous1);
-			page.addComponent(current);
-			handelBackEndAddComponent(page, currentPage);
-		}
+		page.addComponent(current);
+		int range = totalPage - currentPage;
+		if (range >= 1)
+			page.addComponent(this.next1);
+		if (range >= 2)
+			page.addComponent(this.next2);
+		if (range >= 4)
+			page.addComponent(ss2);
+		if (range >= 3)
+			page.addComponent(last);
 	}
 
 	abstract protected int queryTotalCount();
@@ -339,79 +375,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		if (totalPage > 1) {
 			// Define button layout
-			ss1 = new Label("...");
-			ss2 = new Label("...");
-
-			current = new ButtonLink("" + currentPage, new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					pageChange(currentPage);
-				}
-			});
-
-			first = new ButtonLink("1", new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(1);
-				}
-			});
-
-			previous1 = new ButtonLink("" + (currentPage - 1),
-					new ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							pageChange(currentPage - 1);
-						}
-					});
-			previous2 = new ButtonLink("" + (currentPage - 2),
-					new ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							pageChange(currentPage - 2);
-						}
-					});
-			next1 = new ButtonLink("" + (currentPage + 1), new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(currentPage + 1);
-				}
-			});
-			next2 = new ButtonLink("" + (currentPage + 2), new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(currentPage + 2);
-				}
-			});
-			last = new ButtonLink("" + totalPage, new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(AbstractPagedBeanTable.this.totalPage);
-				}
-			});
-
-			addStylePagingButton();
-			current.removeStyleName("buttonPaging");
-
-			if (getComponentCount() == 0 || getComponentCount() == 1) {
-				this.addComponent(createControls());
-			} else {
-				handleAddComponent(pageManagement);
-			}
-
+			if (controlBarWrapper != null)
+				this.removeComponent(controlBarWrapper);
+			this.addComponent(createControls());
 		} else {
 			if (getComponentCount() == 2) {
 				removeComponent(getComponent(1));
