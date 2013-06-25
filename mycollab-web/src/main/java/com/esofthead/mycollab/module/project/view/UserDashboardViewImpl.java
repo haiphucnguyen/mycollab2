@@ -48,6 +48,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	private TaskStatusComponent taskStatusComponent;
 
+	private List<Integer> prjKeys;
+
 	public UserDashboardViewImpl() {
 		this.setSpacing(true);
 		this.setMargin(false, false, true, false);
@@ -106,17 +108,18 @@ public class UserDashboardViewImpl extends AbstractView implements
 				+ ")");
 
 		followingTicketsLink.setIcon(MyCollabResource
-				.newResource("icons/16/project/task.png"));
+				.newResource("icons/16/follow.png"));
 		followingTicketsLink.removeStyleName("wordWrap");
 		followingTicketsLink.addListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new FollowingTicketEvent.GotoMyFollowingItems(
-								UserDashboardViewImpl.this, null));
-
+				if (prjKeys != null) {
+					EventBus.getInstance().fireEvent(
+							new FollowingTicketEvent.GotoMyFollowingItems(
+									UserDashboardViewImpl.this, prjKeys));
+				}
 			}
 		});
 
@@ -132,7 +135,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 			}
 		});
 		timeTrackingLink.setIcon(MyCollabResource
-				.newResource("icons/16/project/bug.png"));
+				.newResource("icons/16/project/time_tracking.png"));
 		timeTrackingLink.removeStyleName("wordWrap");
 		headerContentBottom.addComponent(followingTicketsLink);
 		headerContentBottom.addComponent(timeTrackingLink);
@@ -171,15 +174,18 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public void display() {
 		final ProjectService prjService = AppContext
 				.getSpringBean(ProjectService.class);
-		final List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
-				.getUsername());
+		prjKeys = prjService.getUserProjectKeys(AppContext.getUsername());
 		if (prjKeys != null && !prjKeys.isEmpty()) {
 			this.activityStreamComponent.showFeeds(prjKeys);
 			this.myProjectListComponent.showProjects(prjKeys);
+			displayFollowingTicketsCount();
 		}
 
 		this.taskStatusComponent.showProjectTasksByStatus();
 
+	}
+
+	private void displayFollowingTicketsCount() {
 		// show following ticket numbers
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setUser(new StringSearchField(SearchField.AND,

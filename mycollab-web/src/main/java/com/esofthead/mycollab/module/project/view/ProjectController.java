@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
@@ -45,6 +46,7 @@ import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.FollowingTicketsScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
@@ -151,7 +153,11 @@ public class ProjectController implements IController {
 									FollowingTicketEvent.GotoMyFollowingItems event) {
 								FollowingTicketPresenter presenter = PresenterResolver
 										.getPresenter(FollowingTicketPresenter.class);
-								presenter.go(container, null);
+								presenter
+										.go(container,
+												new FollowingTicketsScreenData.GotoMyFollowingItems(
+														(List<Integer>) event
+																.getData()));
 							}
 						});
 	}
