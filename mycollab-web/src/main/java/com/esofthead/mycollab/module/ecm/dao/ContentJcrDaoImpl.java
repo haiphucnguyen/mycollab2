@@ -368,10 +368,10 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 
 	@Override
 	public List<Resource> searchResourcesByName(String resourceName) {
-		return jcrTemplate.execute(new JcrCallback() {
+		return jcrTemplate.execute(new JcrCallback<List<Resource>>() {
 
 			@Override
-			public Object doInJcr(Session session) throws IOException,
+			public List<Resource> doInJcr(Session session) throws IOException,
 					RepositoryException {
 				log.debug("WORDSPACE: " + session.getWorkspace().getName());
 				QueryManager queryManager = session.getWorkspace()
