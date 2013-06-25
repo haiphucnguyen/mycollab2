@@ -124,8 +124,8 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(true);
-			basicSearchBody.addComponent(new Label("Subject"));
+			// basicSearchBody.setSpacing(true);
+			// basicSearchBody.addComponent(new Label("Subject"));
 
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.domain;
 
+import java.util.Date;
+
 public class FollowingTicket {
 
 	private int projectId;
@@ -8,6 +10,8 @@ public class FollowingTicket {
 
 	private String type;
 
+	private int typeId;
+
 	private String summary;
 
 	private String assignUser;
@@ -15,6 +19,8 @@ public class FollowingTicket {
 	private String assignUserAvatarId;
 
 	private String assignUserFullName;
+
+	private Date monitorDate;
 
 	public int getProjectId() {
 		return projectId;
@@ -70,5 +76,21 @@ public class FollowingTicket {
 
 	public void setAssignUserAvatarId(String assignUserAvatarId) {
 		this.assignUserAvatarId = assignUserAvatarId;
+	}
+
+	public Date getMonitorDate() {
+		return monitorDate;
+	}
+
+	public void setMonitorDate(Date monitorDate) {
+		this.monitorDate = monitorDate;
+	}
+
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
 	}
 }

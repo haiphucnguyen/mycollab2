@@ -86,7 +86,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 			contactHeader.setStyleName("h2");
 			layout.addComponent(contactHeader);
 
-			this.contactInformationLayout = new GridFormLayoutHelper(2, 6,
+			this.contactInformationLayout = new GridFormLayoutHelper(2, 3,
 					"100%", "167px", Alignment.MIDDLE_LEFT);
 			this.contactInformationLayout.getLayout().setWidth("100%");
 			this.contactInformationLayout.getLayout().setMargin(false);
@@ -128,7 +128,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 				this.basicInformationLayout.addComponent(field, "Email", 0, 2);
 			} else if (propertyId.equals("timezone")) {
 				this.basicInformationLayout.addComponent(field, "Timezone", 0,
-						3);
+						3, 2, "262px", Alignment.MIDDLE_LEFT);
 			} else if (propertyId.equals("isAdmin")) {
 				this.basicInformationLayout.addComponent(field, "Is Admin", 1,
 						2);
@@ -137,7 +137,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 						0, 0);
 			} else if (propertyId.equals("country")) {
 				this.advancedInformationLayout.addComponent(field, "Country",
-						0, 1);
+						0, 1, 2, "262px", Alignment.MIDDLE_LEFT);
 			} else if (propertyId.equals("website")) {
 				this.advancedInformationLayout.addComponent(field, "Website",
 						1, 0);
@@ -154,8 +154,8 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 				this.contactInformationLayout.addComponent(field, "Twitter", 1,
 						1);
 			} else if (propertyId.equals("skypecontact")) {
-				this.contactInformationLayout
-						.addComponent(field, "Skype", 0, 2);
+				this.contactInformationLayout.addComponent(field, "Skype", 0,
+						2, 2, "262px", Alignment.MIDDLE_LEFT);
 			}
 		}
 	}

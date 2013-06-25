@@ -40,7 +40,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	private static final long serialVersionUID = 1L;
 
 	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
-
 	protected Button first, previous1, previous2, next1, next2, last, current;
 	protected Label ss1, ss2;
 	protected List<T> currentListData;
