@@ -227,11 +227,15 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
 		#2599c8;
 	border: 1px solid #093768;
-	color: #FFFFFF !important;
+	color: #FFFFFF;
 	text-shadow: 1px 1px 0px #1570cd;
 	border-radius: 3px;
 	margin-right: 4px;
 	padding: 3px 13px;
+}
+
+.v-upload .v-button {
+	color: rgb(69, 69, 69);
 }
 
 .v-button.bluebtn:active .v-button-wrap {
@@ -683,6 +687,10 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	padding: 10px 15px;
 }
 
+.basicSearch .basicSearchBody .v-horizontallayout-search-comp .v-horizontallayout-margin {
+	padding: 0px;
+}
+
 .basicSearch .basicSearchBody .v-label {
 	line-height: 24px;
 }
@@ -696,7 +704,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .v-button.search-icon-button .v-button-wrap {
-	padding: 3px 3px 3px 6px;
+	padding: 3px 0px 3px 6px;
 }
 
 .basicSearch .basicSearchBody .v-button-link.cancel-button {
@@ -1154,6 +1162,17 @@ input.v-textfield-errorField {
 }
 .accountViewContainer .userInfoContainer .addViewBody .info-block-header .h2 {
 	border: none;
+	padding: 0px;
+}
+
+.account-dashboard .addViewLayout .depot-title .v-label-h2 {
+	padding: 0px 0px 0px 18px;
+}
+
+.account-dashboard .addViewLayout .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
 }
 
 .accountViewContainer .userInfoContainer .addViewBody .info-block-header > .v-csslayout-margin {
@@ -1216,6 +1235,10 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-width: 1px 0px 0px 1px;
 	background-color: #FFF;
+}
+
+.account-dashboard .addViewLayout .v-label-h2 {
+	padding: 0.67em 0.67em 0.33em;
 }
 
 /* End Account Settings */
@@ -3179,6 +3202,11 @@ table.legendBox .legendBoxContent .v-csslayout-container > div {
 	padding: 0px 0px 15px;
 }
 
+.milestone-view-body > div > div > div > div:first-child > div > div > .milestone-box {
+	border-top: none;
+	margin-top: 0px;
+}
+
 .in-progress-milestones,.future-milestones {
 	border-left: 1px solid #d7d7d7;
 }
@@ -3778,32 +3806,22 @@ div.v-ratingstars-bar {
 	padding: 5px 6px 5px 14px;
 }
 
-.buttonPaging {
-	-moz-box-shadow:inset 0px 0px 7px 0px #bbdaf7;
-	-webkit-box-shadow:inset 0px 0px 7px 0px #bbdaf7;
-	box-shadow:inset 0px 0px 7px 0px #bbdaf7;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
-	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
-	background-color:#79bbff;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:4px;
-	border:1px solid #84bbf3;
-	display:inline-block;
-	color:#444;
-	font-family:arial;
-	font-size:12px;
-	font-weight:bold;
-	padding:2px 2px;
-	text-decoration:none;
-	text-shadow:1px 1px 0px #528ecc;
-}.buttonPaging:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
-	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
-	background-color:#378de5;
-}.buttonPaging:active {
-	position:relative;
-	top:1px;
+div.v-button-link.buttonPaging {
+    background: url("icons/sprite-vert2.png") no-repeat -10px -10px transparent;
+   
+}
+div.v-button-link.buttonPaging:hover {
+	background: url("icons/sprite-vert1.png") no-repeat scroll -10px -10px transparent;
+    background-color: transparent;
+/*     background-image: url("icons/sprite-vert1.png"); */
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: -10px -10px;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+    
+}
+div.v-button-link.buttonPagingcurrent {
+	 background: url("icons/sprite-vert1.png") no-repeat -10px -10px transparent;
 }
