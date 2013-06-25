@@ -24,14 +24,14 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
@@ -39,7 +39,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		extends VerticalLayout implements IPagedBeanTable<S, T> {
 	private static final long serialVersionUID = 1L;
 
-	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
+	protected int displayNumItems = 3;
 	protected List<T> currentListData;
 
 	protected LazyLoadWrapper tableLazyLoadContainer;
@@ -73,40 +73,40 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		this.columnHeaders = columnHeaders;
 		this.type = type;
 
-		setStyleName("list-view");
+		this.setStyleName("list-view");
 	}
 
 	@Override
 	public void addSelectableItemHandler(final SelectableItemHandler<T> handler) {
-		if (selectableHandlers == null) {
-			selectableHandlers = new HashSet<SelectableItemHandler<T>>();
+		if (this.selectableHandlers == null) {
+			this.selectableHandlers = new HashSet<SelectableItemHandler<T>>();
 		}
-		selectableHandlers.add(handler);
+		this.selectableHandlers.add(handler);
 	}
 
 	@Override
 	public int currentViewCount() {
-		return currentViewCount;
+		return this.currentViewCount;
 	}
 
 	@Override
 	public int totalItemsCount() {
-		return totalCount;
+		return this.totalCount;
 	}
 
 	@Override
 	public void addPagableHandler(final PagableHandler handler) {
-		if (pagableHandlers == null) {
-			pagableHandlers = new HashSet<PagableHandler>();
+		if (this.pagableHandlers == null) {
+			this.pagableHandlers = new HashSet<PagableHandler>();
 		}
-		pagableHandlers.add(handler);
+		this.pagableHandlers.add(handler);
 
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getCurrentDataList() {
-		final BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) tableItem
+		final BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) this.tableItem
 				.getContainerDataSource();
 		final Collection<T> itemIds = containerDataSource.getItemIds();
 		if (itemIds instanceof List) {
@@ -119,15 +119,15 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	@Override
 	public void addTableListener(
 			final ApplicationEventListener<? extends ApplicationEvent> listener) {
-		if (mapEventListener == null) {
-			mapEventListener = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
+		if (this.mapEventListener == null) {
+			this.mapEventListener = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
 		}
 
-		Set<ApplicationEventListener<?>> listenerSet = mapEventListener
+		Set<ApplicationEventListener<?>> listenerSet = this.mapEventListener
 				.get(listener.getEventType());
 		if (listenerSet == null) {
 			listenerSet = new LinkedHashSet<ApplicationEventListener<?>>();
-			mapEventListener.put(listener.getEventType(), listenerSet);
+			this.mapEventListener.put(listener.getEventType(), listenerSet);
 		}
 
 		listenerSet.add(listener);
@@ -136,48 +136,48 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	@Override
 	public void addGeneratedColumn(final Object id,
 			final ColumnGenerator generatedColumn) {
-		columnGenerators.put(id, generatedColumn);
+		this.columnGenerators.put(id, generatedColumn);
 	}
 
 	@Override
 	public void setColumnExpandRatio(final Object propertyId,
 			final float expandRation) {
-		columnExpandId = propertyId;
+		this.columnExpandId = propertyId;
 	}
 
 	@Override
 	public void setColumnWidth(final Object propertyId, final int width) {
-		columnWidths.put(propertyId, width);
+		this.columnWidths.put(propertyId, width);
 	}
 
 	@Override
 	public void setSearchCriteria(final S searchCriteria) {
-		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
-				displayNumItems);
-		doSearch();
+		this.searchRequest = new SearchRequest<S>(searchCriteria,
+				this.currentPage, this.displayNumItems);
+		this.doSearch();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public T getBeanByIndex(final Object itemId) {
-		final Container container = tableItem.getContainerDataSource();
+		final Container container = this.tableItem.getContainerDataSource();
 		final BeanItem<T> item = (BeanItem<T>) container.getItem(itemId);
 		return (item == null) ? null : item.getBean();
 	}
 
 	@Override
 	public void refresh() {
-		doSearch();
+		this.doSearch();
 	}
 
 	protected void pageChange(final int currentPage) {
-		if (searchRequest != null) {
+		if (this.searchRequest != null) {
 			this.currentPage = currentPage;
-			searchRequest.setCurrentPage(currentPage);
-			doSearch();
+			this.searchRequest.setCurrentPage(currentPage);
+			this.doSearch();
 
-			if (pagableHandlers != null) {
-				for (final PagableHandler handler : pagableHandlers) {
+			if (this.pagableHandlers != null) {
+				for (final PagableHandler handler : this.pagableHandlers) {
 					handler.move(currentPage);
 				}
 			}
@@ -187,14 +187,14 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	protected void fireTableEvent(final ApplicationEvent event) {
 
 		final Class<? extends ApplicationEvent> eventType = event.getClass();
-		if (mapEventListener == null) {
+		if (this.mapEventListener == null) {
 			return;
 		}
 
-		final Set<ApplicationEventListener<?>> eventSet = mapEventListener
+		final Set<ApplicationEventListener<?>> eventSet = this.mapEventListener
 				.get(eventType);
 		if (eventSet != null) {
-			final Iterator<ApplicationEventListener<?>> listenerSet = mapEventListener
+			final Iterator<ApplicationEventListener<?>> listenerSet = this.mapEventListener
 					.get(eventType).iterator();
 
 			while (listenerSet.hasNext()) {
@@ -207,134 +207,142 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	}
 
 	public void fireSelectItemEvent(final T item) {
-		if (selectableHandlers != null) {
-			for (final SelectableItemHandler<T> handler : selectableHandlers) {
+		if (this.selectableHandlers != null) {
+			for (final SelectableItemHandler<T> handler : this.selectableHandlers) {
 				handler.onSelect(item);
 			}
 		}
 	}
 
 	private CssLayout createControls() {
-		controlBarWrapper = new CssLayout();
-		controlBarWrapper.setStyleName("listControl");
-		controlBarWrapper.setWidth("100%");
+		this.controlBarWrapper = new CssLayout();
+		this.controlBarWrapper.setStyleName("listControl");
+		this.controlBarWrapper.setWidth("100%");
 
 		final HorizontalLayout controlBar = new HorizontalLayout();
 		controlBar.setWidth("100%");
-		controlBarWrapper.addComponent(controlBar);
+		this.controlBarWrapper.addComponent(controlBar);
 
-		pageManagement = new HorizontalLayout();
+		this.pageManagement = new HorizontalLayout();
 
 		// defined layout here ---------------------------
 
-		if (currentPage > 1) {
+		if (this.currentPage > 1) {
 			final Button firstLink = new ButtonLink("1", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					pageChange(1);
+					AbstractPagedBeanTable.this.pageChange(1);
 				}
 			});
 			firstLink.addStyleName("buttonPaging");
-			pageManagement.addComponent(firstLink);
+			this.pageManagement.addComponent(firstLink);
 		}
-		if (currentPage >= 5) {
-			Label ss1 = new Label("...");
+		if (this.currentPage >= 5) {
+			final Label ss1 = new Label("...");
 			ss1.addStyleName("buttonPaging");
-			pageManagement.addComponent(ss1);
+			this.pageManagement.addComponent(ss1);
 		}
-		if (currentPage > 3) {
-			final Button previous2 = new ButtonLink("" + (currentPage - 2),
-					new ClickListener() {
+		if (this.currentPage > 3) {
+			final Button previous2 = new ButtonLink(
+					"" + (this.currentPage - 2), new ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							pageChange(currentPage - 2);
+							AbstractPagedBeanTable.this
+									.pageChange(AbstractPagedBeanTable.this.currentPage - 2);
 						}
 					});
 			previous2.addStyleName("buttonPaging");
-			pageManagement.addComponent(previous2);
+			this.pageManagement.addComponent(previous2);
 		}
-		if (currentPage > 2) {
-			final Button previous1 = new ButtonLink("" + (currentPage - 1),
-					new ClickListener() {
+		if (this.currentPage > 2) {
+			final Button previous1 = new ButtonLink(
+					"" + (this.currentPage - 1), new ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							pageChange(currentPage - 1);
+							AbstractPagedBeanTable.this
+									.pageChange(AbstractPagedBeanTable.this.currentPage - 1);
 						}
 					});
 			previous1.addStyleName("buttonPaging");
-			pageManagement.addComponent(previous1);
+			this.pageManagement.addComponent(previous1);
 		}
 		// Here add current ButtonLink
-		final Button current = new ButtonLink("" + currentPage,
+		final Button current = new ButtonLink("" + this.currentPage,
 				new ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
-						pageChange(currentPage);
+					public void buttonClick(final ClickEvent event) {
+						AbstractPagedBeanTable.this
+								.pageChange(AbstractPagedBeanTable.this.currentPage);
 					}
 				});
+		current.addStyleName("buttonPaging");
 		current.addStyleName("buttonPagingcurrent");
 
-		pageManagement.addComponent(current);
-		int range = totalPage - currentPage;
+		this.pageManagement.addComponent(current);
+		final int range = this.totalPage - this.currentPage;
 		if (range >= 1) {
-			final Button next1 = new ButtonLink("" + (currentPage + 1),
+			final Button next1 = new ButtonLink("" + (this.currentPage + 1),
 					new ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							pageChange(currentPage + 1);
+							AbstractPagedBeanTable.this
+									.pageChange(AbstractPagedBeanTable.this.currentPage + 1);
 						}
 					});
 			next1.addStyleName("buttonPaging");
-			pageManagement.addComponent(next1);
+			this.pageManagement.addComponent(next1);
 		}
 		if (range >= 2) {
-			final Button next2 = new ButtonLink("" + (currentPage + 2),
+			final Button next2 = new ButtonLink("" + (this.currentPage + 2),
 					new ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							pageChange(currentPage + 2);
+							AbstractPagedBeanTable.this
+									.pageChange(AbstractPagedBeanTable.this.currentPage + 2);
 						}
 					});
 			next2.addStyleName("buttonPaging");
-			pageManagement.addComponent(next2);
+			this.pageManagement.addComponent(next2);
 		}
 		if (range >= 4) {
-			Label ss2 = new Label("...");
+			final Label ss2 = new Label("...");
 			ss2.addStyleName("buttonPaging");
-			pageManagement.addComponent(ss2);
+			this.pageManagement.addComponent(ss2);
 		}
 		if (range >= 3) {
-			Button last = new ButtonLink("" + totalPage, new ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button last = new ButtonLink("" + this.totalPage,
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					pageChange(AbstractPagedBeanTable.this.totalPage);
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AbstractPagedBeanTable.this
+									.pageChange(AbstractPagedBeanTable.this.totalPage);
+						}
+					});
 			last.addStyleName("buttonPaging");
-			pageManagement.addComponent(last);
+			this.pageManagement.addComponent(last);
 		}
 
-		pageManagement.setWidth(null);
-		pageManagement.setSpacing(true);
-		controlBar.addComponent(pageManagement);
-		controlBar
-				.setComponentAlignment(pageManagement, Alignment.MIDDLE_RIGHT);
+		this.pageManagement.setWidth(null);
+		this.pageManagement.setSpacing(true);
+		controlBar.addComponent(this.pageManagement);
+		controlBar.setComponentAlignment(this.pageManagement,
+				Alignment.MIDDLE_RIGHT);
 
-		return controlBarWrapper;
+		return this.controlBarWrapper;
 	}
 
 	abstract protected int queryTotalCount();
@@ -342,58 +350,61 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	abstract protected List<T> queryCurrentData();
 
 	protected void doSearch() {
-		totalCount = queryTotalCount();
-		totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-		if (searchRequest.getCurrentPage() > totalPage) {
-			searchRequest.setCurrentPage(totalPage);
+		this.totalCount = this.queryTotalCount();
+		this.totalPage = (this.totalCount - 1)
+				/ this.searchRequest.getNumberOfItems() + 1;
+		if (this.searchRequest.getCurrentPage() > this.totalPage) {
+			this.searchRequest.setCurrentPage(this.totalPage);
 		}
 
-		if (totalPage > 1) {
+		if (this.totalPage > 1) {
 			// Define button layout
-			if (controlBarWrapper != null)
-				this.removeComponent(controlBarWrapper);
-			this.addComponent(createControls());
+			if (this.controlBarWrapper != null) {
+				this.removeComponent(this.controlBarWrapper);
+			}
+			this.addComponent(this.createControls());
 		} else {
-			if (getComponentCount() == 2) {
-				removeComponent(getComponent(1));
+			if (this.getComponentCount() == 2) {
+				this.removeComponent(this.getComponent(1));
 			}
 		}
 
-		currentListData = queryCurrentData();
-		currentViewCount = currentListData.size();
+		this.currentListData = this.queryCurrentData();
+		this.currentViewCount = this.currentListData.size();
 
-		tableItem = new Table();
-		tableItem.setWidth("100%");
-		final CustomComponent tableWrap = new CustomComponent(tableItem);
-		tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
-		tableItem.addStyleName("striped");
-		tableItem.setSortDisabled(true);
+		this.tableItem = new Table();
+		this.tableItem.setWidth("100%");
+		final CustomComponent tableWrap = new CustomComponent(this.tableItem);
+		this.tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
+		this.tableItem.addStyleName("striped");
+		this.tableItem.setSortDisabled(true);
 
 		// set column generator
-		for (final Object propertyId : columnGenerators.keySet()) {
-			tableItem.addGeneratedColumn(propertyId,
-					columnGenerators.get(propertyId));
+		for (final Object propertyId : this.columnGenerators.keySet()) {
+			this.tableItem.addGeneratedColumn(propertyId,
+					this.columnGenerators.get(propertyId));
 		}
 
 		// set column width
-		for (final Object propertyId : columnWidths.keySet()) {
-			tableItem.setColumnWidth(propertyId, columnWidths.get(propertyId));
+		for (final Object propertyId : this.columnWidths.keySet()) {
+			this.tableItem.setColumnWidth(propertyId,
+					this.columnWidths.get(propertyId));
 		}
 
-		if (columnExpandId != null && !columnExpandId.equals("")) {
-			tableItem.setColumnExpandRatio(columnExpandId, 1.0f);
+		if (this.columnExpandId != null && !this.columnExpandId.equals("")) {
+			this.tableItem.setColumnExpandRatio(this.columnExpandId, 1.0f);
 		}
 
-		if (sortColumnId != null && !sortColumnId.equals("")) {
-			tableItem.setColumnIcon(
-					sortColumnId,
-					isAscending ? MyCollabResource
+		if (this.sortColumnId != null && !this.sortColumnId.equals("")) {
+			this.tableItem.setColumnIcon(
+					this.sortColumnId,
+					this.isAscending ? MyCollabResource
 							.newResource("icons/16/arrow_down.png")
 							: MyCollabResource
 									.newResource("icons/16/arrow_up.png"));
 		}
 
-		tableItem.addListener(new Table.HeaderClickListener() {
+		this.tableItem.addListener(new Table.HeaderClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -404,17 +415,18 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 					return;
 				}
 
-				if (searchRequest != null) {
-					sortColumnId = propertyId;
+				if (AbstractPagedBeanTable.this.searchRequest != null) {
+					AbstractPagedBeanTable.this.sortColumnId = propertyId;
 
-					final S searchCriteria = searchRequest.getSearchCriteria();
+					final S searchCriteria = AbstractPagedBeanTable.this.searchRequest
+							.getSearchCriteria();
 					if (searchCriteria.getOrderByField() == null) {
 						searchCriteria.setOrderByField(propertyId);
 						searchCriteria.setSortDirection(SearchCriteria.DESC);
-						isAscending = false;
+						AbstractPagedBeanTable.this.isAscending = false;
 					} else if (propertyId.equals(searchCriteria
 							.getOrderByField())) {
-						isAscending = !isAscending;
+						AbstractPagedBeanTable.this.isAscending = !AbstractPagedBeanTable.this.isAscending;
 						searchCriteria
 								.setSortDirection(searchCriteria
 										.getSortDirection().equals(
@@ -423,7 +435,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 					} else {
 						searchCriteria.setOrderByField(propertyId);
 						searchCriteria.setSortDirection(SearchCriteria.DESC);
-						isAscending = false;
+						AbstractPagedBeanTable.this.isAscending = false;
 					}
 
 					AbstractPagedBeanTable.this
@@ -432,23 +444,23 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			}
 		});
 
-		final BeanItemContainer<T> container = new BeanItemContainer<T>(type,
-				currentListData);
-		tableItem.setPageLength(0);
-		tableItem.setContainerDataSource(container);
-		tableItem.setVisibleColumns(visibleColumns);
-		tableItem.setColumnHeaders(columnHeaders);
-		tableItem.setWidth("100%");
+		final BeanItemContainer<T> container = new BeanItemContainer<T>(
+				this.type, this.currentListData);
+		this.tableItem.setPageLength(0);
+		this.tableItem.setContainerDataSource(container);
+		this.tableItem.setVisibleColumns(this.visibleColumns);
+		this.tableItem.setColumnHeaders(this.columnHeaders);
+		this.tableItem.setWidth("100%");
 
-		if (getComponentCount() > 0) {
-			final Component component0 = getComponent(0);
+		if (this.getComponentCount() > 0) {
+			final Component component0 = this.getComponent(0);
 			if (component0 instanceof LazyLoadWrapper) {
-				replaceComponent(component0, tableLazyLoadContainer);
+				this.replaceComponent(component0, this.tableLazyLoadContainer);
 			} else {
-				this.addComponent(tableLazyLoadContainer, 0);
+				this.addComponent(this.tableLazyLoadContainer, 0);
 			}
 		} else {
-			this.addComponent(tableLazyLoadContainer, 0);
+			this.addComponent(this.tableLazyLoadContainer, 0);
 		}
 
 	}
