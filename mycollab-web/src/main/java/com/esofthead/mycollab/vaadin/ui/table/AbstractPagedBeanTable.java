@@ -39,7 +39,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		extends VerticalLayout implements IPagedBeanTable<S, T> {
 	private static final long serialVersionUID = 1L;
 
-	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
+	protected int displayNumItems = 3;
 
 	protected Button first, previous1, previous2, next1, next2, last, current;
 	protected Label ss1, ss2;
