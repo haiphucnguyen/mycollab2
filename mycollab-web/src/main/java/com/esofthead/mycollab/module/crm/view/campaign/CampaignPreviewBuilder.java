@@ -56,13 +56,14 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 		this.campaign = campaign;
 		previewForm
 				.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
-		displayActivities();
-		displayAccounts();
-		displayContacts();
-		displayLeads();
+		displayNotes();
 	}
 
-	private void displayActivities() {
+	protected void displayNotes() {
+		noteListItems.showNotes(CrmTypeConstants.CAMPAIGN, campaign.getId());
+	}
+
+	protected void displayActivities() {
 		EventSearchCriteria criteria = new EventSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
@@ -71,15 +72,15 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 		associateActivityList.setSearchCriteria(criteria);
 	}
 
-	private void displayAccounts() {
+	protected void displayAccounts() {
 		associateAccountList.displayAccounts(campaign);
 	}
 
-	private void displayContacts() {
+	protected void displayContacts() {
 		associateContactList.displayContacts(campaign);
 	}
 
-	private void displayLeads() {
+	protected void displayLeads() {
 		associateLeadList.displayLeads(campaign);
 	}
 
@@ -147,13 +148,13 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 		private VerticalLayout relatedItemsContainer;
 		private ReadViewLayout campaignAddLayout;
 
+		private boolean isLoadedRelateItem = false;
+
 		public ReadView() {
 			campaignAddLayout = new ReadViewLayout(
-					MyCollabResource
-				.newResource(
-					"icons/22/crm/campaign.png"));
+					MyCollabResource.newResource("icons/22/crm/campaign.png"));
 			this.addComponent(campaignAddLayout);
-			
+
 			initRelatedComponent();
 
 			previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
@@ -205,43 +206,56 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 			campaignAddLayout.addControlButtons(optionalActionControls);
 
 			campaignInformationLayout = new VerticalLayout();
-			
+
 			campaignInformationLayout.addStyleName("main-info");
-			
+
 			final Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_CAMPAIGN);
 			actionControls.addStyleName("control-buttons");
 			campaignInformationLayout.addComponent(actionControls);
-			
+
 			campaignInformationLayout.addComponent(previewForm);
 			campaignInformationLayout.addComponent(noteListItems);
-			
-			campaignAddLayout.addTab(campaignInformationLayout, "Contact Information");
+
+			campaignAddLayout.addTab(campaignInformationLayout,
+					"Campaign Information");
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
+			relatedItemsContainer.addComponent(associateActivityList);
+			relatedItemsContainer.addComponent(associateAccountList);
+			relatedItemsContainer.addComponent(associateContactList);
+			relatedItemsContainer.addComponent(associateLeadList);
 			campaignAddLayout.addTab(relatedItemsContainer, "More Information");
 
 			campaignAddLayout
-			.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
 
-				@Override
-				public void tabChanged(final TabChangedEvent event) {
-					final Button btn = event.getSource();
-					final String caption = btn.getCaption();
-					if ("Account Information".equals(caption)) {
-
-					} else if ("More Information".equals(caption)) {
-						relatedItemsContainer.addComponent(associateActivityList);
-						relatedItemsContainer.addComponent(associateAccountList);
-						relatedItemsContainer.addComponent(associateContactList);
-						relatedItemsContainer.addComponent(associateLeadList);
-					}
-					campaignAddLayout.selectTab(caption);
-				}
-			});
+						@Override
+						public void tabChanged(final TabChangedEvent event) {
+							final Button btn = event.getSource();
+							final String caption = btn.getCaption();
+							if ("More Information".equals(caption)) {
+								if (!isLoadedRelateItem) {
+									displayActivities();
+									displayAccounts();
+									displayContacts();
+									displayLeads();
+									isLoadedRelateItem = true;
+								}
+							}
+						}
+					});
 		}
+
+		@Override
+		public void previewItem(SimpleCampaign campaign) {
+			super.previewItem(campaign);
+			isLoadedRelateItem = false;
+			campaignAddLayout.selectTab("Campaign Information");
+		}
+
 	}
 
 	public static class PrintView extends CampaignPreviewBuilder {
@@ -286,6 +300,15 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 
 				return relatedItemsPanel;
 			}
+		}
+
+		@Override
+		public void previewItem(SimpleCampaign campaign) {
+			super.previewItem(campaign);
+			displayActivities();
+			displayAccounts();
+			displayContacts();
+			displayLeads();
 		}
 	}
 }
