@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -136,15 +137,19 @@ public class ProblemSearchPanel extends
 					Alignment.MIDDLE_LEFT);
 
 			this.myItemCheckbox = new CheckBox("My Items");
+			this.myItemCheckbox.setWidth("75px");
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
+
+			final Separator separator = new Separator();
+			UiUtils.addComponent(basicSearchBody, separator,
+					Alignment.MIDDLE_LEFT);
 
 			final Button cancelBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.setWidth("55px");
 			cancelBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 

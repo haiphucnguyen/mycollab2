@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -129,6 +130,10 @@ public class ContactSearchPanel extends
 			UiUtils.addComponent(layout, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
+			final Separator separator1 = new Separator();
+
+			UiUtils.addComponent(layout, separator1, Alignment.MIDDLE_LEFT);
+
 			// UiUtils.addComponent(layout, myItemCheckbox,
 			// Alignment.MIDDLE_CENTER);
 
@@ -144,6 +149,10 @@ public class ContactSearchPanel extends
 				}
 			});
 			UiUtils.addComponent(layout, cancelBtn, Alignment.MIDDLE_CENTER);
+
+			final Separator separator2 = new Separator();
+
+			UiUtils.addComponent(layout, separator2, Alignment.MIDDLE_LEFT);
 
 			final Button advancedSearchBtn = new Button(
 					LocalizationHelper

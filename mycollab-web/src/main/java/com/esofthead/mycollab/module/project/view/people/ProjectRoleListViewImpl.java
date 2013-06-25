@@ -29,6 +29,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -51,138 +52,153 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ProjectRoleListViewImpl() {
-		this.setSpacing(true);
 
-		searchPanel = new ProjectRoleSearchPanel();
-		this.addComponent(searchPanel);
+		this.searchPanel = new ProjectRoleSearchPanel();
+		this.addComponent(this.searchPanel);
 
-		listLayout = new VerticalLayout();
-		listLayout.setSpacing(true);
-		this.addComponent(listLayout);
+		this.listLayout = new VerticalLayout();
+		this.addComponent(this.listLayout);
 
-		generateDisplayTable();
+		this.generateDisplayTable();
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, ProjectRole>(
+		this.tableItem = new PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, ProjectRole>(
 				AppContext.getSpringBean(ProjectRoleService.class),
 				ProjectRole.class, new String[] { "selected", "rolename",
 						"description" }, new String[] { "", "Name",
 						"Description" });
 
-		tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
+		this.tableItem.addGeneratedColumn("selected",
+				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						ProjectRole role = tableItem.getBeanByIndex(itemId);
-						tableItem.fireSelectItemEvent(role);
-					}
-				});
-
-				ProjectRole role = tableItem.getBeanByIndex(itemId);
-				role.setExtraData(cb);
-				return cb;
-			}
-		});
-
-		tableItem.addGeneratedColumn("rolename", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final ProjectRole role = tableItem.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(role.getRolename(),
-						new Button.ClickListener() {
+					public Object generateCell(final Table source,
+							final Object itemId, final Object columnId) {
+						final CheckBox cb = new CheckBox("", false);
+						cb.setImmediate(true);
+						cb.addListener(new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new ProjectRoleEvent.GotoRead(
-												ProjectRoleListViewImpl.this,
-												role.getId()));
+							public void buttonClick(
+									final Button.ClickEvent event) {
+								final ProjectRole role = ProjectRoleListViewImpl.this.tableItem
+										.getBeanByIndex(itemId);
+								ProjectRoleListViewImpl.this.tableItem
+										.fireSelectItemEvent(role);
 							}
 						});
-				return b;
 
-			}
-		});
+						final ProjectRole role = ProjectRoleListViewImpl.this.tableItem
+								.getBeanByIndex(itemId);
+						role.setExtraData(cb);
+						return cb;
+					}
+				});
 
-		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		tableItem.setColumnExpandRatio("rolename", 1);
-		tableItem
-				.setColumnWidth("description", UIConstants.TABLE_X_LABEL_WIDTH);
+		this.tableItem.addGeneratedColumn("rolename",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-		listLayout.addComponent(constructTableActionControls());
-		listLayout.addComponent(tableItem);
+					@Override
+					public com.vaadin.ui.Component generateCell(
+							final Table source, final Object itemId,
+							final Object columnId) {
+						final ProjectRole role = ProjectRoleListViewImpl.this.tableItem
+								.getBeanByIndex(itemId);
+						final ButtonLink b = new ButtonLink(role.getRolename(),
+								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void buttonClick(
+											final Button.ClickEvent event) {
+										EventBus.getInstance()
+												.fireEvent(
+														new ProjectRoleEvent.GotoRead(
+																ProjectRoleListViewImpl.this,
+																role.getId()));
+									}
+								});
+						return b;
+
+					}
+				});
+
+		this.tableItem.setColumnWidth("selected",
+				UIConstants.TABLE_CONTROL_WIDTH);
+		this.tableItem.setColumnExpandRatio("rolename", 1);
+		this.tableItem.setColumnWidth("description",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+
+		this.listLayout.addComponent(this.constructTableActionControls());
+		this.listLayout.addComponent(this.tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<ProjectRoleSearchCriteria> getSearchHandlers() {
-		return searchPanel;
+		return this.searchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final CssLayout layoutWrapper = new CssLayout();
+		layoutWrapper.setWidth("100%");
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		layoutWrapper.addComponent(layout);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
-		
-		Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.ROLES));
+		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		layout.addComponent(this.selectOptionButton);
 
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+		final Button deleteBtn = new Button("Delete");
+		deleteBtn.setEnabled(CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.ROLES));
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls.addOptionItem("mail", "Mail");
+		this.tableActionControls.addOptionItem("export", "Export");
+
+		layout.addComponent(this.tableActionControls);
+		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
-		return layout;
+		return layoutWrapper;
 	}
 
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setEnabled(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	public void enableActionControls(final int numOfSelectedItems) {
+		this.tableActionControls.setEnabled(true);
+		this.selectedItemsNumberLabel.setValue("Selected: "
+				+ numOfSelectedItems);
 	}
 
 	@Override
 	public void disableActionControls() {
-		tableActionControls.setEnabled(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
+		this.tableActionControls.setEnabled(false);
+		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectedItemsNumberLabel.setValue("");
 	}
 
 	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
+		return this.selectOptionButton;
 	}
 
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+		return this.tableActionControls;
 	}
 
 	@Override
 	public HasSelectableItemHandlers<ProjectRole> getSelectableItemHandlers() {
-		return tableItem;
+		return this.tableItem;
 	}
 
 	@Override
 	public IPagedBeanTable<ProjectRoleSearchCriteria, ProjectRole> getPagedBeanTable() {
-		return tableItem;
+		return this.tableItem;
 	}
 }

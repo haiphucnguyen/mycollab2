@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.hene.splitbutton.SplitButton;
 
-import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -11,6 +10,7 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -47,7 +47,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Embedded iconComp = new Embedded();
+		final Embedded iconComp = new Embedded();
 		iconComp.setSource(MyCollabResource
 				.newResource("icons/22/crm/event.png"));
 		layout.addComponent(iconComp);
@@ -157,10 +157,13 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
+			final Separator separator1 = new Separator();
+			UiUtils.addComponent(basicSearchBody, separator1,
+					Alignment.MIDDLE_LEFT);
+
 			final Button cancelBtn = new Button("Clear");
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.setWidth("55px");
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final Button.ClickEvent event) {
