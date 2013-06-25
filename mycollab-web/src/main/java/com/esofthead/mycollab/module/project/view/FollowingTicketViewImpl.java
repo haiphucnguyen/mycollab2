@@ -11,11 +11,13 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
@@ -41,12 +43,24 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
-		final Label layoutHeader = new Label("Display tickets");
+		final Label layoutHeader = new Label("Your Following Tickets");
 		layoutHeader.addStyleName("h2");
 		headerWrapper.addComponent(layoutHeader);
 		this.addComponent(headerWrapper);
 
 		final Button backBtn = new Button("Back to Work Board");
+		backBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoProjectModule(
+								FollowingTicketViewImpl.this, null));
+
+			}
+		});
+
 		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		this.addComponent(backBtn);
 
@@ -124,6 +138,51 @@ public class FollowingTicketViewImpl extends AbstractView implements
 								.newResource("icons/16/project/task.png"));
 					}
 					return ticketLink;
+				}
+			});
+
+			this.addGeneratedColumn("projectName", new ColumnGenerator() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					final FollowingTicket ticket = FollowingTicketTable.this
+							.getBeanByIndex(itemId);
+					final ButtonLink projectLink = new ButtonLink(ticket
+							.getProjectName());
+					projectLink.addListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							final int projectId = ticket.getProjectId();
+							PageActionChain chain = new PageActionChain(
+									new ProjectScreenData.Goto(projectId));
+							EventBus.getInstance()
+									.fireEvent(
+											new ProjectEvent.GotoMyProject(
+													this, chain));
+						}
+					});
+					projectLink.setIcon(MyCollabResource
+							.newResource("icons/16/project/project.png"));
+					return projectLink;
+				}
+			});
+
+			this.addGeneratedColumn("assignUser", new ColumnGenerator() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					final FollowingTicket ticket = FollowingTicketTable.this
+							.getBeanByIndex(itemId);
+					UserLink userLink = new UserLink(ticket.getAssignUser(),
+							ticket.getAssignUserAvatarId(), ticket
+									.getAssignUserFullName());
+					return userLink;
 				}
 			});
 
