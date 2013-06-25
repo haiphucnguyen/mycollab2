@@ -3779,29 +3779,31 @@ div.v-ratingstars-bar {
 }
 
 .buttonPaging {
-	line-height: 23px;
-	width: 23px;
-	display: block;
-	text-decoration: none;
-	    -moz-text-blink: none;
-	    -moz-text-decoration-color: -moz-use-text-color;
-	    -moz-text-decoration-line: none;
-	    -moz-text-decoration-style: solid;
-	text-align: center;
-	height: 23px;
+	-moz-box-shadow:inset 0px 0px 7px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 0px 7px 0px #bbdaf7;
+	box-shadow:inset 0px 0px 7px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+	background-color:#79bbff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:4px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	color:#444;
+	font-family:arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:2px 2px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #528ecc;
 }.buttonPaging:hover {
-	    background: url("img/sprite-vert2.png") no-repeat scroll -10px -10px transparent;
-        background-color: transparent;
-        background-image: url("img/sprite-vert2.png");
-        background-repeat: no-repeat;
-        background-attachment: scroll;
-        background-position: -10px -10px;
-        background-clip: border-box;
-        background-origin: padding-box;
-        background-size: auto auto;
-}
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
+	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+	background-color:#378de5;
 }.buttonPaging:active {
 	position:relative;
 	top:1px;
 }
-
