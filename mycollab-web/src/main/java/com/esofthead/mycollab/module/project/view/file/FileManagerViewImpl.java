@@ -752,18 +752,26 @@ public class FileManagerViewImpl extends AbstractView implements
 			iconEmbed.setSource(MyCollabResource.newResource("icons/page_white.png"));
 			UiUtils.addComponent(layout, iconEmbed, Alignment.MIDDLE_CENTER);
 			
+			GridFormLayoutHelper info = new GridFormLayoutHelper(1, 4, "100%", "80px",
+					Alignment.MIDDLE_LEFT);
+			info.getLayout().setWidth("100%");
+			info.getLayout().setMargin(false);
+			info.getLayout().setSpacing(false);
+			
 			if (content.getDescription()!=null) {
-				Label des = new Label("Description: " + content.getDescription());
-				UiUtils.addComponent(layout, des, Alignment.MIDDLE_CENTER);
+				Label desvalue = new Label(content.getDescription());
+				info.addComponent(desvalue, "Description", 0, 0);
 			}
-			Label author = new Label("Created by: " + content.getCreatedBy());
-			UiUtils.addComponent(layout, author, Alignment.MIDDLE_CENTER);
+			Label author = new Label(content.getCreatedBy());
+			info.addComponent(author, "Created by", 0, 1);
+		
+			Label size = new Label(content.getSize() + "KB");
+			info.addComponent(size,"Size", 0, 2);
 			
-			Label size = new Label("Size: "+ content.getSize() + "KB");
-			UiUtils.addComponent(layout, size, Alignment.MIDDLE_CENTER);
+			Label dateCreate = new Label(AppContext.formatDate(content.getCreated().getTime()));
+			info.addComponent(dateCreate,"Date created", 0, 3);
 			
-			Label dateCreate = new Label("Date created: "+AppContext.formatDate(content.getCreated().getTime()));
-			UiUtils.addComponent(layout, dateCreate, Alignment.MIDDLE_CENTER);
+			layout.addComponent(info.getLayout());
 			
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
