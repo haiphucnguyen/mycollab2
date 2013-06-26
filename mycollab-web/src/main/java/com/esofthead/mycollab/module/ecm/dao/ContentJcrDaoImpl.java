@@ -401,6 +401,9 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					RepositoryException {
 				Node rootNode = session.getRootNode();
 				Node currentNode = getNode(rootNode, oldPath);
+				if (getNode(rootNode, newPath)!=null){
+					throw new ContentException("Folder/file has already existed.");
+				}
 				if (currentNode != null) {
 					currentNode.getSession().move(currentNode.getPath(),
 							"/" + newPath);

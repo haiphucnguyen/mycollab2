@@ -22,4 +22,6 @@ public interface ResourceService {
 	InputStream getContantStream(String path);
 
 	void rename(String oldPath, String newPath);
+	
+	List<Resource> searchResourcesByName(String resourceName);
 }

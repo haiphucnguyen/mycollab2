@@ -71,4 +71,9 @@ public class ResourceServiceImpl implements ResourceService {
 		contentJcrDao.rename(oldPath, newPath);
 		rawContentService.rename(oldPath, newPath);
 	}
+
+	@Override
+	public List<Resource> searchResourcesByName(String resourceName) {
+		return contentJcrDao.searchResourcesByName(resourceName);
+	}
 }

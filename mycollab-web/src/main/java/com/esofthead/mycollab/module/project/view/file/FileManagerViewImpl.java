@@ -12,6 +12,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
@@ -872,21 +873,22 @@ public class FileManagerViewImpl extends AbstractView implements
 							oldPath.lastIndexOf("/") + 1);
 					final String newNameValue = (String) newName.getValue();
 					String newPath = parentPath + newNameValue;
-					service.rename(oldPath, newPath);
-					// reset layout
-					FileManagerViewImpl.this
-							.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
-
-					// Set item caption for sub folder of base folder in
-					// folderTree
-					List<Folder> childs = baseFolder.getChilds();
-					for (Folder folder : childs) {
-						if (folder.getName().equals(resource.getName())) {
-							folderTree.setItemCaption(folder, newNameValue);
+					try{
+						service.rename(oldPath, newPath);
+						// reset layout
+						FileManagerViewImpl.this
+								.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+						// Set item caption for sub folder of base folder in folderTree
+						List<Folder> childs = baseFolder.getChilds();
+						for (Folder folder : childs) {
+							if (folder.getName().equals(resource.getName())) {
+								folderTree.setItemCaption(folder, newNameValue);
+							}
 						}
+						RenameResourceWindow.this.close();
+					}catch(ContentException e){
+						getWindow().showNotification(e.getMessage());
 					}
-
-					RenameResourceWindow.this.close();
 				}
 			});
 			save.addStyleName(UIConstants.THEME_BLUE_LINK);
