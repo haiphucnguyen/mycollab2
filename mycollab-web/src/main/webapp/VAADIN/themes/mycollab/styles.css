@@ -2372,7 +2372,7 @@ div.v-splitbutton, div.v-splitbutton .v-button {
 }
 
 .v-buttongroup .v-button-left {
-	border-radius: 20px 0px 0px 20px;
+	border-radius: 3px 0px 0px 3px;
 }
 
 .v-buttongroup .v-button.v-button-left .v-button-wrap {
@@ -2398,7 +2398,7 @@ div.v-splitbutton, div.v-splitbutton .v-button {
 }
 
 .v-buttongroup .v-button.v-button-right {
-	border-radius: 0px 20px 20px 0px;
+	border-radius: 0px 3px 3px 0px;
 	border-left: 1px solid rgb(129, 129, 129);
 }
 
@@ -3671,7 +3671,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	background-color: rgb(228, 228, 228);
 }
 .bugdashboard-header-top > .v-csslayout-margin {
-	padding: 3px 10px 3px 18px;
+	padding: 5px 10px 5px 18px;
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
 
