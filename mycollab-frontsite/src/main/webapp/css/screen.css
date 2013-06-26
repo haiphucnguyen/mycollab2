@@ -964,6 +964,7 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 130%;
 	margin-bottom: 15px;
 	letter-spacing: 0.3px;
+	text-align: justify;
 }
 
 .home-followup {
@@ -990,9 +991,9 @@ h1, h2, h3, h4, h5, h6 {
  }
  
 .home-box2-coll {
- 	width: 306px;
+ 	width: 316px;
  	float: left;
- 	padding: 20px 30px;
+ 	padding: 20px 25px;
  	text-align: center;
  	clear: inherit;
  }
@@ -1020,6 +1021,7 @@ h1, h2, h3, h4, h5, h6 {
 	text-align: left;
 	margin-bottom: 10px;
 	line-height: 130%;
+	text-align: justify;
 }
 
 .home-button-3 {
@@ -1047,7 +1049,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Privacy style */
 #privacy-content {
 	width: 1100px;
-	margin: 0 auto;
+	margin: 0 auto 20px;
 	border: solid 1px #ababab;
 	background: url("../images/home_banner_bg.jpg") no-repeat top center;
 }
@@ -1080,14 +1082,21 @@ h1, h2, h3, h4, h5, h6 {
 
 .pri-mid {
 	padding: 0px 30px;
+	background: url("../images/home_border.png") no-repeat bottom center;
+	height: 460px;
+	margin-bottom: 20px;
 }
 
 .pri-mid-left {
 	width: 650px;
-	border: solid 1px #ababab;
-	background-color: #FFF;
 	float: left;
 	background: url("../images/pri_border_mid.png") no-repeat bottom center transparent;
+}
+
+.pri-mid-left-cnt {
+	border: solid 1px #ababab;
+	margin-bottom: 17px;
+	background-color: #FFF;
 }
 
 .pri-mid-left h2 {
@@ -1103,6 +1112,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0px 20px 10px 20px;
 	font-size: 14px;
 	color: #000;
+	text-align: justify;
 }
 
 .pri-mid-right {
@@ -1119,4 +1129,58 @@ h1, h2, h3, h4, h5, h6 {
 	clear: both;
 }
 
+.pri-bottom {
+	padding: 0px 30px;
+}
+
+.pri-bott-coll {
+	float: left;
+    padding-left: 0px;
+    width: 490px;
+}
+
+.pri-coll-1 {
+	padding-right: 60px;
+}
+
+.pri-bott-block h2 {
+	color: #242424;
+    font-size: 15px;
+    font-weight: normal;
+    height: 32px;
+    margin-bottom: 10px;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+.pri-bott-block p {
+	font-size: 14px;
+	color: #5f5c5c;
+	padding-bottom: 10px;
+	text-align:justify;
+}
+
+.pri-bott-text {
+	padding-bottom: 75px!important;
+}
+
+.pri-aggrerate {
+	background: url("../images/pri_aggre.png") no-repeat left center transparent;
+}
+
+.pri-links {
+	background: url("../images/pri_link.png") no-repeat left center transparent;
+}
+
+.pri-cookie {
+	background: url("../images/pri_cookie.png") no-repeat left center transparent;
+}
+
+.pri-protect {
+	background: url("../images/pri_protect.png") no-repeat left center transparent;
+}
+
+.clear {
+	clear: both;
+}
 /* End Privacy style */
