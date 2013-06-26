@@ -830,6 +830,8 @@ public class FileManagerViewImpl extends AbstractView implements
 		private void constructBody(){
 			final VerticalLayout layout = new VerticalLayout();
 			HorizontalLayout topRename = new HorizontalLayout();
+			topRename.setSpacing(true);
+			topRename.setMargin(true);
 			
 			Label label = new Label("Enter new name: ");
 			UiUtils.addComponent(topRename, label, Alignment.MIDDLE_LEFT);
@@ -838,6 +840,9 @@ public class FileManagerViewImpl extends AbstractView implements
 			UiUtils.addComponent(topRename, newName, Alignment.MIDDLE_LEFT);
 			
 			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
+			
+			HorizontalLayout controlButton = new HorizontalLayout();
+			controlButton.setSpacing(true);
 			Button save = new Button("Save", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 				@Override
@@ -848,7 +853,9 @@ public class FileManagerViewImpl extends AbstractView implements
 					service.rename(oldPath, newPath);
 				}
 			});
-			UiUtils.addComponent(layout, save, Alignment.MIDDLE_CENTER);
+			save.addStyleName(UIConstants.THEME_BLUE_LINK);
+			
+			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
 			
 			Button cancel = new Button("Cancel", new ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -857,7 +864,9 @@ public class FileManagerViewImpl extends AbstractView implements
 					RenameWindowResource.this.close();
 				}
 			});
-			UiUtils.addComponent(layout, cancel, Alignment.MIDDLE_CENTER);
+			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
+			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
 			this.addComponent(layout);
 		}
 	}
