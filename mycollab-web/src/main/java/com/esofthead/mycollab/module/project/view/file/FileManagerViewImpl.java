@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.module.project.view.file;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
+
+import javax.jcr.Node;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
@@ -852,6 +855,12 @@ public class FileManagerViewImpl extends AbstractView implements
 					String parentPath = oldPath.substring(0, oldPath.lastIndexOf("/")+1);
 					String newPath = parentPath + (String) newName.getValue();
 					service.rename(oldPath, newPath);
+					// reset layout 
+					
+					String work = baseFolder.getPath().substring(baseFolder.getPath().lastIndexOf("/")+1, baseFolder.getPath().length());
+					FileManagerViewImpl.this.folderTree.setValue(work);
+					
+					RenameWindowResource.this.close();
 				}
 			});
 			save.addStyleName(UIConstants.THEME_BLUE_LINK);
