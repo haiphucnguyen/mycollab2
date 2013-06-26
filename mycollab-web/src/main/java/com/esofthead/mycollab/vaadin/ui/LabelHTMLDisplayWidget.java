@@ -21,22 +21,14 @@ public class LabelHTMLDisplayWidget extends HorizontalLayout implements
 
 	public LabelHTMLDisplayWidget(String content) {
 		description = content;
-		Resource iconPlus = MyCollabResource.newResource("icons/16/plus.png");
-		Resource iconMinus = MyCollabResource.newResource("icons/16/minus.png");
 
 		String contentLabel = menuLinkGenerator.handleText(content);
 		lbDes = new Label(description, Label.CONTENT_XHTML);
 		if (contentLabel != null && contentLabel.length() > NUM_CUT) {
-
 			hasShowLess = true;
-			// TODO: Solve the path icons
-			// pathIconPlus =
-			// " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
-			// + iconPlus.getResourceId() + "\" />";
-			// pathIconMinus =
-			// " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
-			// + iconMinus.getResourceId() + "\" />";
-			;
+			pathIconPlus = " <img class='plus-btn' src=\"VAADIN/themes/mycollab/icons/16/plus.png\" />";
+			pathIconMinus = " <img class='plus-btn' src=\"VAADIN/themes/mycollab/icons/16/minus.png\" />";
+
 			contentLabel += " " + pathIconPlus;
 			lbDes.setValue(contentLabel);
 			lbDes.addStyleName(UIConstants.LABEL_CLICKABLE);
