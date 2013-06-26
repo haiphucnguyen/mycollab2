@@ -844,7 +844,7 @@ public class FileManagerViewImpl extends AbstractView implements
 				public void buttonClick(ClickEvent event) {
 					String oldPath = resource.getPath();
 					String parentPath = oldPath.substring(0, oldPath.lastIndexOf("/")+1);
-					String newPath = "/" + parentPath + (String) newName.getValue();
+					String newPath = parentPath + (String) newName.getValue();
 					service.rename(oldPath, newPath);
 				}
 			});
