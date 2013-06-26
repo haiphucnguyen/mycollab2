@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.CopyObjectResult;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -149,6 +150,10 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	@Override
 	public void rename(String oldPath, String newPath) {
 		AmazonS3 s3client = S3StorageConfig.getS3Client();
+		CopyObjectRequest copyRequest = new CopyObjectRequest(S3StorageConfig.getBucket(), oldPath, S3StorageConfig.getBucket(), newPath);
+		s3client.copyObject(copyRequest);
+		
+		DeleteObjectRequest deleteRequest = new DeleteObjectRequest(S3StorageConfig.getBucket(), oldPath);
+		s3client.deleteObject(deleteRequest);
 	}
-
 }
