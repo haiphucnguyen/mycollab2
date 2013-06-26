@@ -5,8 +5,10 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -22,6 +24,12 @@ public class TimeTrackingViewImpl extends AbstractView implements
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
+
+		Embedded timeIcon = new Embedded();
+		timeIcon.setSource(MyCollabResource
+				.newResource("icons/24/time_tracking.png"));
+		headerWrapper.addComponent(timeIcon);
+
 		final Label layoutHeader = new Label("Your Time Reporting");
 		layoutHeader.addStyleName("h2");
 		headerWrapper.addComponent(layoutHeader);

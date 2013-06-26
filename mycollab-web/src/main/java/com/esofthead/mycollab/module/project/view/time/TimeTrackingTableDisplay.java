@@ -5,15 +5,13 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
@@ -67,9 +65,9 @@ public class TimeTrackingTableDisplay
 								@Override
 								public void buttonClick(
 										final Button.ClickEvent event) {
-									EventBus.getInstance().fireEvent(
-											new BugEvent.GotoRead(this,
-													itemLogging.getTypeid()));
+									fireTableEvent(new TableClickEvent(
+											TimeTrackingTableDisplay.this,
+											itemLogging, "summary"));
 								}
 							});
 					b.setIcon(MyCollabResource
@@ -92,9 +90,9 @@ public class TimeTrackingTableDisplay
 								@Override
 								public void buttonClick(
 										final Button.ClickEvent event) {
-									EventBus.getInstance().fireEvent(
-											new TaskEvent.GotoRead(this,
-													itemLogging.getTypeid()));
+									fireTableEvent(new TableClickEvent(
+											TimeTrackingTableDisplay.this,
+											itemLogging, "summary"));
 								}
 							});
 					b.setIcon(MyCollabResource
@@ -155,7 +153,7 @@ public class TimeTrackingTableDisplay
 
 		this.setWidth("100%");
 
-		this.setColumnExpandRatio("type", 1.0f);
+		this.setColumnExpandRatio("summary", 1.0f);
 		this.setColumnWidth("logUserFullName", UIConstants.TABLE_EX_LABEL_WIDTH);
 		this.setColumnWidth("createdtime", UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("logvalue", UIConstants.TABLE_S_LABEL_WIDTH);
