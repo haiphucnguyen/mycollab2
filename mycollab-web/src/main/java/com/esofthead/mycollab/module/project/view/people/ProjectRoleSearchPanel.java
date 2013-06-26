@@ -28,7 +28,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class ProjectRoleSearchPanel extends
 		GenericSearchPanel<ProjectRoleSearchCriteria> {
 	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
+	private final SimpleProject project;
 	protected ProjectRoleSearchCriteria searchCriteria;
 
 	public ProjectRoleSearchPanel() {
@@ -38,7 +38,7 @@ public class ProjectRoleSearchPanel extends
 	@Override
 	public void attach() {
 		super.attach();
-		createBasicSearchLayout();
+		this.createBasicSearchLayout();
 	}
 
 	private void createBasicSearchLayout() {
@@ -47,21 +47,22 @@ public class ProjectRoleSearchPanel extends
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
+		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Roles");
+		final Label searchtitle = new Label("Roles");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		Button createBtn = new Button(
+		final Button createBtn = new Button(
 				LocalizationHelper.getMessage(PeopleI18nEnum.NEW_ROLE_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void buttonClick(final Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new ProjectRoleEvent.GotoAdd(this, null));
 					}
@@ -91,41 +92,45 @@ public class ProjectRoleSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
+			return ProjectRoleSearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
 			basicSearchBody.addComponent(new Label("Name"));
-			nameField = new TextField();
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
+			this.nameField = new TextField();
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
-			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+			this.myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button searchBtn = new Button("Search",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					ProjectRoleBasicSearchLayout.this.callSearchAction();
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							ProjectRoleBasicSearchLayout.this
+									.callSearchAction();
+						}
+					});
 			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(searchBtn);
 
-			Button clearBtn = new Button("Clear", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button clearBtn = new Button("Clear",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					nameField.setValue("");
-				}
-			});
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							ProjectRoleBasicSearchLayout.this.nameField
+									.setValue("");
+						}
+					});
 			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
@@ -133,10 +138,11 @@ public class ProjectRoleSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			searchCriteria = new ProjectRoleSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-					project.getId()));
-			return searchCriteria;
+			ProjectRoleSearchPanel.this.searchCriteria = new ProjectRoleSearchCriteria();
+			ProjectRoleSearchPanel.this.searchCriteria
+					.setProjectId(new NumberSearchField(SearchField.AND,
+							ProjectRoleSearchPanel.this.project.getId()));
+			return ProjectRoleSearchPanel.this.searchCriteria;
 		}
 	}
 

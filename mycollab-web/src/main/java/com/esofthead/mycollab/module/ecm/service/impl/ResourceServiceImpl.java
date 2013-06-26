@@ -58,12 +58,17 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public void removeResource(String path) {
 		contentJcrDao.removeResource(path);
-
 		rawContentService.removeContent(path);
 	}
 
 	@Override
 	public InputStream getContantStream(String path) {
 		return rawContentService.getContent(path);
+	}
+
+	@Override
+	public void rename(String oldPath, String newPath) {
+		// TODO Auto-generated method stub
+
 	}
 }

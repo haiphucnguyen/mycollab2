@@ -12,6 +12,8 @@ public interface ContentJcrDao {
 
 	void createFolder(Folder folder, String createdUser);
 
+	void rename(String oldPath, String newPath);
+
 	Resource getResource(String path);
 
 	void removeResource(String path);
@@ -19,4 +21,6 @@ public interface ContentJcrDao {
 	List<Resource> getResources(String path);
 
 	List<Folder> getSubFolders(String path);
+
+	List<Resource> searchResourcesByName(String resourceName);
 }

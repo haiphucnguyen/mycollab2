@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.ecm;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -32,6 +34,9 @@ public class Demo {
 
 		Resource content = jcrDao.getResource("a/b/d");
 		System.out.println(content.getCreatedUser());
+		
+		List<Resource> resources = jcrDao.searchResourcesByName("d");
+		System.out.println("Resources: " + (resources != null));
 		// System.out.println("CONTENT " + content);
 		//
 		// jcrDao.removeContent("example/a/b");

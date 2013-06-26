@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.FileStorageConfig;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
@@ -73,7 +74,15 @@ public class FileRawContentServiceImpl implements RawContentService {
 				}
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new MyCollabException(e);
+		}
+	}
+
+	@Override
+	public void rename(String oldPath, String newPath) {
+		File file = new File(FileStorageConfig.baseContentFolder, oldPath);
+		if (file.exists()) {
+			file.renameTo(new File(newPath));
 		}
 	}
 }

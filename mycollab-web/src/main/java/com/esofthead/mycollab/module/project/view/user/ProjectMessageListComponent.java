@@ -80,7 +80,7 @@ public class ProjectMessageListComponent extends Depot {
 
 		messageList = new DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage>(
 				AppContext.getSpringBean(MessageService.class),
-				MessageRowDisplayHandler.class, 5);
+				new MessageRowDisplayHandler(), 5);
 		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);
 	}

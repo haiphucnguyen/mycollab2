@@ -694,6 +694,9 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 .basicSearch .basicSearchBody .v-label {
 	line-height: 24px;
 }
+.basicSearch .basicSearchBody .v-label.separator {
+	line-height: 16px;
+}
 .basicSearch .basicSearchBody input {
 	border-radius: 3px 0px 0px 3px;
 }
@@ -709,12 +712,12 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 .basicSearch .basicSearchBody .v-button-link.cancel-button {
 	color: rgb(69, 69, 69);
-	padding: 0px 5px;
-	border-style: solid;
-	border-color: #a9a9a9;
-	border-width: 0px 1px;
-	border-radius: 0px;
-	margin: 0px 5px;
+	padding: 0px 3px;
+/* 	border-style: solid; */
+/* 	border-color: #a9a9a9; */
+/* 	border-width: 0px 1px; */
+/* 	border-radius: 0px; */
+/* 	margin: 0px 5px; */
 	text-align: center;
 }
 
@@ -1150,6 +1153,10 @@ input.v-textfield-errorField {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border-bottom: 1px solid rgb(169, 169, 169);
+}
+
+.avatar-pass-wrapper .v-upload .v-button {
+	color: white;
 }
 
 .accountViewContainer .userInfoContainer .addViewBody .info-block-header {
@@ -3825,4 +3832,12 @@ div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
 div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	background: url("icons/sprite-vert1-blue.png") no-repeat -10px -10px transparent;
     
+}
+
+.v-label.separator {
+	border-right: 1px solid rgb(169, 169, 169);
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	margin-right: 3px;
 }

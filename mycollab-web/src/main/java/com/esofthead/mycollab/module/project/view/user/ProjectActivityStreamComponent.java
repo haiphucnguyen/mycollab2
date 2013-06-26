@@ -86,8 +86,16 @@ public class ProjectActivityStreamComponent extends Depot {
 				this.searchRequest.setCurrentPage(this.totalPage);
 			}
 
-			this.setCurrentPage(this.currentPage);
-			this.setTotalPage(this.totalPage);
+			if (totalPage > 1) {
+				if (this.controlBarWrapper != null) {
+					this.removeComponent(this.controlBarWrapper);
+				}
+				this.addComponent(this.createPageControls());
+			} else {
+				if (getComponentCount() == 2) {
+					removeComponent(getComponent(1));
+				}
+			}
 
 			final List<SimpleActivityStream> currentListData = this.activityStreamService
 					.findPagableListByCriteria(this.searchRequest);
@@ -171,6 +179,16 @@ public class ProjectActivityStreamComponent extends Depot {
 			} catch (final Exception e) {
 				throw new MyCollabException(e);
 			}
+		}
+
+		@Override
+		protected int queryTotalCount() {
+			return 0;
+		}
+
+		@Override
+		protected List<ProjectActivityStream> queryCurrentData() {
+			return null;
 		}
 	}
 }

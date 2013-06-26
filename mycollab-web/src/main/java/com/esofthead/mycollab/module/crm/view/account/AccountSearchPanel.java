@@ -19,6 +19,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -202,33 +203,55 @@ public class AccountSearchPanel extends
 		@Override
 		protected void loadSaveSearchToField(final AccountSearchCriteria value) {
 			if (value != null) {
-				if (value.getAccountname()!=null){
-					nameField.setValue(value.getAccountname().getValue());
-				}else nameField.setValue("");
-				if (value.getWebsite()!=null) websiteField.setValue(value.getWebsite().getValue());
-				else websiteField.setValue("");
-				if (value.getAnyPhone()!=null) anyPhoneField.setValue(value.getAnyPhone().getValue());
-				else anyPhoneField.setValue("");
-				if (value.getAnyMail()!=null) anyMailField.setValue(value.getAnyMail().getValue());
-				else anyMailField.setValue("");
-				if (value.getAnyAddress()!=null) anyAddressField.setValue(value.getAnyAddress().getValue());
-				else anyAddressField.setValue("");
-				if (value.getAnyCity()!=null) cityField.setValue(value.getAnyCity().getValue());
-				else cityField.setValue("");
-				if(value.getIndustries()!=null){
-					Object[] userString = value.getIndustries().values;
-					industryField.setValue(Arrays.asList(userString));
-				}else{
-					industryField.setValue(null);
+				if (value.getAccountname() != null) {
+					this.nameField.setValue(value.getAccountname().getValue());
+				} else {
+					this.nameField.setValue("");
 				}
-				if(value.getTypes()!=null){
-					Object[] typeObj = value.getTypes().values;
-					typeField.setValue(Arrays.asList(typeObj));
-				}else typeField.setValue(null);
-				if(value.getAssignUsers()!=null){
-					Object[] userObj = value.getAssignUsers().values;
-					userField.setValue(Arrays.asList(userObj));
-				}else userField.setValue(null);
+				if (value.getWebsite() != null) {
+					this.websiteField.setValue(value.getWebsite().getValue());
+				} else {
+					this.websiteField.setValue("");
+				}
+				if (value.getAnyPhone() != null) {
+					this.anyPhoneField.setValue(value.getAnyPhone().getValue());
+				} else {
+					this.anyPhoneField.setValue("");
+				}
+				if (value.getAnyMail() != null) {
+					this.anyMailField.setValue(value.getAnyMail().getValue());
+				} else {
+					this.anyMailField.setValue("");
+				}
+				if (value.getAnyAddress() != null) {
+					this.anyAddressField.setValue(value.getAnyAddress()
+							.getValue());
+				} else {
+					this.anyAddressField.setValue("");
+				}
+				if (value.getAnyCity() != null) {
+					this.cityField.setValue(value.getAnyCity().getValue());
+				} else {
+					this.cityField.setValue("");
+				}
+				if (value.getIndustries() != null) {
+					final Object[] userString = value.getIndustries().values;
+					this.industryField.setValue(Arrays.asList(userString));
+				} else {
+					this.industryField.setValue(null);
+				}
+				if (value.getTypes() != null) {
+					final Object[] typeObj = value.getTypes().values;
+					this.typeField.setValue(Arrays.asList(typeObj));
+				} else {
+					this.typeField.setValue(null);
+				}
+				if (value.getAssignUsers() != null) {
+					final Object[] userObj = value.getAssignUsers().values;
+					this.userField.setValue(Arrays.asList(userObj));
+				} else {
+					this.userField.setValue(null);
+				}
 			}
 		}
 	}
@@ -280,12 +303,16 @@ public class AccountSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
+			final Separator separator1 = new Separator();
+
+			UiUtils.addComponent(basicSearchBody, separator1,
+					Alignment.MIDDLE_LEFT);
+
 			final Button cancelBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.setWidth("55px");
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
@@ -294,6 +321,10 @@ public class AccountSearchPanel extends
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
 					Alignment.MIDDLE_CENTER);
+
+			final Separator separator2 = new Separator();
+			UiUtils.addComponent(basicSearchBody, separator2,
+					Alignment.MIDDLE_LEFT);
 
 			final Button advancedSearchBtn = new Button(
 					LocalizationHelper

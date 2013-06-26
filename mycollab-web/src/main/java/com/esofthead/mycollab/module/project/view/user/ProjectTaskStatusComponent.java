@@ -96,7 +96,7 @@ public class ProjectTaskStatusComponent extends Depot {
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
 				AppContext.getSpringBean(ProjectGenericTaskService.class),
-				TaskRowDisplayHandler.class, 10);
+				new TaskRowDisplayHandler(), 10);
 		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);
 	}

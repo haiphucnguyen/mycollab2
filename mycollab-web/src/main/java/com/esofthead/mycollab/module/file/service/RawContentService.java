@@ -8,4 +8,6 @@ public interface RawContentService {
 	InputStream getContent(String objectPath);
 	
 	void removeContent(String objectPath);
+	
+	void rename(String oldPath, String newPath);
 }

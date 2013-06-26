@@ -9,6 +9,9 @@ import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.nodetype.NodeType;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryManager;
+import javax.jcr.query.QueryResult;
 
 import org.apache.jackrabbit.commons.JcrUtils;
 import org.slf4j.Logger;
@@ -361,5 +364,36 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
+	}
+
+	@Override
+	public List<Resource> searchResourcesByName(String resourceName) {
+		return jcrTemplate.execute(new JcrCallback<List<Resource>>() {
+
+			@Override
+			public List<Resource> doInJcr(Session session) throws IOException,
+					RepositoryException {
+				log.debug("WORDSPACE: " + session.getWorkspace().getName());
+				QueryManager queryManager = session.getWorkspace()
+						.getQueryManager();
+
+				String expression = "select * from [nt:base] AS folder where name(folder)= 'd' ";
+				Query query = queryManager.createQuery(expression,
+						Query.JCR_SQL2);
+				QueryResult result = query.execute();
+				NodeIterator nodes = result.getNodes();
+				while (nodes.hasNext()) {
+					Node node = nodes.nextNode();
+					System.out.println("A: " + node.getName());
+				}
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public void rename(String oldPath, String newPath) {
+		// TODO Auto-generated method stub
+		
 	}
 }

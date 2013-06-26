@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -272,6 +273,11 @@ public class CaseSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
+			final Separator separator1 = new Separator();
+
+			UiUtils.addComponent(basicSearchBody, separator1,
+					Alignment.MIDDLE_LEFT);
+
 			final Button cancelBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
@@ -285,6 +291,12 @@ public class CaseSearchPanel extends
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
 					Alignment.MIDDLE_CENTER);
+
+			final Separator separator2 = new Separator();
+
+			UiUtils.addComponent(basicSearchBody, separator2,
+					Alignment.MIDDLE_LEFT);
+
 			final Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;

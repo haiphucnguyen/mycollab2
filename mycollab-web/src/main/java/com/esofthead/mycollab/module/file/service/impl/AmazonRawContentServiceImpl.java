@@ -146,4 +146,9 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 	}
 
+	@Override
+	public void rename(String oldPath, String newPath) {
+		AmazonS3 s3client = S3StorageConfig.getS3Client();
+	}
+
 }
