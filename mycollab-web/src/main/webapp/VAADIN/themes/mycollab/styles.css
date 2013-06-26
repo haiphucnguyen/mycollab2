@@ -2005,16 +2005,16 @@ input.v-textfield-errorField {
 .v-button.v-button-round-border {
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#fcfcfc;
-	-moz-border-radius: 20px;
-	-webkit-border-radius: 20px;
-	border-radius: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 	border: 1px solid rgb(143, 143, 143);
 	display: inline-block;
 	color: rgb(34, 34, 34);
 	font-family: arial;
 	font-size: 13px;
 	font-weight: bold;
-	padding: 2px 10px;
+	padding: 3px 13px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #ffffff;
 }

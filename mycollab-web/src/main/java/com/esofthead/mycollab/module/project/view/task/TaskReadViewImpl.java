@@ -32,6 +32,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Resource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
@@ -268,6 +269,10 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 									final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 									containerField
 											.addComponentField(iconEmbedded);
+									containerField.getLayout()
+											.setComponentAlignment(
+													iconEmbedded,
+													Alignment.MIDDLE_LEFT);
 									lbPriority.setWidth("220px");
 									containerField
 											.addComponentField(lbPriority);
