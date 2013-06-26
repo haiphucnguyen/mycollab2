@@ -25,6 +25,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
@@ -43,6 +44,10 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
+		Embedded followIcon = new Embedded();
+		followIcon.setSource(MyCollabResource
+				.newResource("icons/24/follow.png"));
+		headerWrapper.addComponent(followIcon);
 		final Label layoutHeader = new Label("Your Following Tickets");
 		layoutHeader.addStyleName("h2");
 		headerWrapper.addComponent(layoutHeader);
