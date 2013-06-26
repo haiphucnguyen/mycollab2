@@ -625,6 +625,11 @@ public class FileManagerViewImpl extends AbstractView implements
 														resourceService
 																.removeResource(resource
 																		.getPath());
+														
+														FileManagerViewImpl.this.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+													
+														FileManagerViewImpl.this.folderTree.setCollapsed(baseFolder, true);
+														FileManagerViewImpl.this.folderTree.setCollapsed(baseFolder, false);
 													}
 												}
 											});
@@ -853,13 +858,13 @@ public class FileManagerViewImpl extends AbstractView implements
 				public void buttonClick(ClickEvent event) {
 					String oldPath = resource.getPath();
 					String parentPath = oldPath.substring(0, oldPath.lastIndexOf("/")+1);
-					String newPath = parentPath + (String) newName.getValue();
+					final String newNameValue = (String) newName.getValue();
+					String newPath = parentPath + newNameValue;
 					service.rename(oldPath, newPath);
 					// reset layout 
-					
-					String work = baseFolder.getPath().substring(baseFolder.getPath().lastIndexOf("/")+1, baseFolder.getPath().length());
-					FileManagerViewImpl.this.folderTree.setValue(work);
-					
+						FileManagerViewImpl.this.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+						FileManagerViewImpl.this.folderTree.setCollapsed(baseFolder, true);
+						FileManagerViewImpl.this.folderTree.setCollapsed(baseFolder, false);
 					RenameWindowResource.this.close();
 				}
 			});
