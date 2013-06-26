@@ -258,43 +258,44 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialogExt.show(
-										AppContext.getApplication()
+								ConfirmDialogExt
+										.show(AppContext.getApplication()
 												.getMainWindow(),
-										LocalizationHelper
-												.getMessage(
-														GenericI18Enum.DELETE_DIALOG_TITLE,
-														ApplicationProperties
-																.getString(ApplicationProperties.SITE_NAME)),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
+												LocalizationHelper
+														.getMessage(
+																GenericI18Enum.DELETE_DIALOG_TITLE,
+																ApplicationProperties
+																		.getString(ApplicationProperties.SITE_NAME)),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+												new ConfirmDialog.Listener() {
+													private static final long serialVersionUID = 1L;
 
-											@Override
-											public void onClose(
-													final ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													final BugService bugService = AppContext
-															.getSpringBean(BugService.class);
-													bugService
-															.removeWithSession(
-																	BugReadViewImpl.this.bug
-																			.getId(),
-																	AppContext
-																			.getUsername());
-													EventBus.getInstance()
-															.fireEvent(
-																	new BugEvent.GotoList(
-																			BugReadViewImpl.this,
-																			BugReadViewImpl.this.bug));
-												}
-											}
-										});
+													@Override
+													public void onClose(
+															final ConfirmDialog dialog) {
+														if (dialog
+																.isConfirmed()) {
+															final BugService bugService = AppContext
+																	.getSpringBean(BugService.class);
+															bugService
+																	.removeWithSession(
+																			BugReadViewImpl.this.bug
+																					.getId(),
+																			AppContext
+																					.getUsername());
+															EventBus.getInstance()
+																	.fireEvent(
+																			new BugEvent.GotoList(
+																					BugReadViewImpl.this,
+																					BugReadViewImpl.this.bug));
+														}
+													}
+												});
 							}
 						});
 				deleteBtn.setIcon(MyCollabResource
@@ -488,13 +489,14 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						final Label lbPriority = new Label(
 								BugReadViewImpl.this.bug.getPriority());
 
-						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField(
-								false);
+						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
 						containerField.getLayout().setComponentAlignment(
 								iconEmbedded, Alignment.MIDDLE_LEFT);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
+						containerField.getLayout().setExpandRatio(lbPriority,
+								1.0f);
 						return containerField;
 					}
 				} else if (propertyId.equals("severity")) {
@@ -514,6 +516,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 								iconEmbedded, Alignment.MIDDLE_LEFT);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
+						containerField.getLayout().setExpandRatio(lbPriority,
+								1.0f);
 						return containerField;
 					}
 				}
@@ -658,7 +662,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 													BugReadViewImpl.this.bug));
 						}
 					});
-			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			// reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			navButton.addButton(reopenBtn);
 
 			this.bugWorkflowControl.addComponent(navButton);

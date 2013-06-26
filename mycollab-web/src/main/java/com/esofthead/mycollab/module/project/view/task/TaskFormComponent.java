@@ -17,6 +17,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.Resource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
@@ -32,71 +33,89 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 	private SimpleTask task;
 
 	@Override
-	public void setItemDataSource(Item newDataSource) {
-		BeanItem<SimpleTask> beanItem = (BeanItem<SimpleTask>) newDataSource;
-		task = beanItem.getBean();
+	public void setItemDataSource(final Item newDataSource) {
+		final BeanItem<SimpleTask> beanItem = (BeanItem<SimpleTask>) newDataSource;
+		this.task = beanItem.getBean();
 
-		this.setFormLayoutFactory(getFormLayoutFactory());
+		this.setFormLayoutFactory(this.getFormLayoutFactory());
 		this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					Component uiContext) {
+			protected Field onCreateField(final Item item,
+					final Object propertyId, final Component uiContext) {
 
 				if (propertyId.equals("assignuser")) {
-					return new ProjectUserFormLinkField(task.getAssignuser(),
-							task.getAssignUserAvatarId(), task
-									.getAssignUserFullName());
+					return new ProjectUserFormLinkField(
+							TaskFormComponent.this.task.getAssignuser(),
+							TaskFormComponent.this.task.getAssignUserAvatarId(),
+							TaskFormComponent.this.task.getAssignUserFullName());
 				} else if (propertyId.equals("taskListName")) {
-					return new DefaultFormViewFieldFactory.FormViewField(task
-							.getTaskListName());
+					return new DefaultFormViewFieldFactory.FormViewField(
+							TaskFormComponent.this.task.getTaskListName());
 				} else if (propertyId.equals("startdate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(task.getStartdate()));
+							AppContext.formatDate(TaskFormComponent.this.task
+									.getStartdate()));
 				} else if (propertyId.equals("enddate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(task.getEnddate()));
+							AppContext.formatDate(TaskFormComponent.this.task
+									.getEnddate()));
 				} else if (propertyId.equals("actualstartdate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(task.getActualstartdate()));
+							AppContext.formatDate(TaskFormComponent.this.task
+									.getActualstartdate()));
 				} else if (propertyId.equals("actualenddate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(task.getActualenddate()));
+							AppContext.formatDate(TaskFormComponent.this.task
+									.getActualenddate()));
 				} else if (propertyId.equals("deadline")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(task.getDeadline()));
+							AppContext.formatDate(TaskFormComponent.this.task
+									.getDeadline()));
 				} else if (propertyId.equals("tasklistid")) {
 					return new DefaultFormViewFieldFactory.FormLinkViewField(
-							task.getTaskListName(), new Button.ClickListener() {
+							TaskFormComponent.this.task.getTaskListName(),
+							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
 								@Override
-								public void buttonClick(Button.ClickEvent event) {
+								public void buttonClick(
+										final Button.ClickEvent event) {
 									EventBus.getInstance().fireEvent(
 											new TaskListEvent.GotoRead(this,
-													task.getTasklistid()));
+													TaskFormComponent.this.task
+															.getTasklistid()));
 								}
 							});
 				} else if (propertyId.equals("id")) {
 					return new FormAttachmentDisplayField(
-							AttachmentConstants.PROJECT_TASK_TYPE, task.getId());
+							AttachmentConstants.PROJECT_TASK_TYPE,
+							TaskFormComponent.this.task.getId());
 				} else if (propertyId.equals("priority")) {
-					if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
-						Resource iconPriority = TaskPriorityComboBox
-								.getIconResourceByPriority(task.getPriority());
-						Embedded iconEmbedded = new Embedded(null, iconPriority);
-						Label lbPriority = new Label(task.getPriority());
+					if (StringUtil.isNotNullOrEmpty(TaskFormComponent.this.task
+							.getPriority())) {
+						final Resource iconPriority = TaskPriorityComboBox
+								.getIconResourceByPriority(TaskFormComponent.this.task
+										.getPriority());
+						final Embedded iconEmbedded = new Embedded(null,
+								iconPriority);
+						final Label lbPriority = new Label(
+								TaskFormComponent.this.task.getPriority());
 
-						FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
+						containerField.getLayout().setComponentAlignment(
+								iconEmbedded, Alignment.MIDDLE_LEFT);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
+						containerField.getLayout().setExpandRatio(lbPriority,
+								1.0f);
 						return containerField;
 					}
 				} else if (propertyId.equals("notes")) {
-					return new FormViewField(task.getNotes(),
-							Label.CONTENT_XHTML);
+					return new FormViewField(TaskFormComponent.this.task
+							.getNotes(), Label.CONTENT_XHTML);
 				}
 				return null;
 			}
@@ -106,12 +125,12 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 
 	@Override
 	protected void doPrint() {
-		taskDoPrint();
+		this.taskDoPrint();
 	}
 
 	@Override
 	protected void showHistory() {
-		taskShowHistory();
+		this.taskShowHistory();
 	}
 
 	abstract protected void taskDoPrint();
