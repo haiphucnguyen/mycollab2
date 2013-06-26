@@ -17,6 +17,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
 
 public class TimeTrackingTableDisplay
@@ -119,6 +120,32 @@ public class TimeTrackingTableDisplay
 
 				return b;
 
+			}
+		});
+
+		this.addGeneratedColumn("projectName", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final SimpleItemTimeLogging itemLogging = TimeTrackingTableDisplay.this
+						.getBeanByIndex(itemId);
+				ButtonLink projectLink = new ButtonLink(itemLogging
+						.getProjectName(), new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						fireTableEvent(new TableClickEvent(
+								TimeTrackingTableDisplay.this, itemLogging,
+								"projectName"));
+
+					}
+				});
+				projectLink.setIcon(MyCollabResource
+						.newResource("icons/16/project/project.png"));
+				return projectLink;
 			}
 		});
 

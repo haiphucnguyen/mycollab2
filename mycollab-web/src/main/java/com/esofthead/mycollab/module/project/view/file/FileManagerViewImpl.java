@@ -555,7 +555,8 @@ public class FileManagerViewImpl extends AbstractView implements
 								public void buttonClick(final ClickEvent event) {
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
-									RenameWindowResource renameWindow = new RenameWindowResource(resource, resourceService);
+									RenameResourceWindow renameWindow = new RenameResourceWindow(
+											resource, resourceService);
 									getWindow().addWindow(renameWindow);
 								}
 							});
@@ -625,6 +626,18 @@ public class FileManagerViewImpl extends AbstractView implements
 														resourceService
 																.removeResource(resource
 																		.getPath());
+
+														FileManagerViewImpl.this
+																.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+
+														FileManagerViewImpl.this.folderTree
+																.setCollapsed(
+																		baseFolder,
+																		true);
+														FileManagerViewImpl.this.folderTree
+																.setCollapsed(
+																		baseFolder,
+																		false);
 													}
 												}
 											});
@@ -816,62 +829,76 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.addComponent(layout);
 		}
 	}
-	
-	protected class RenameWindowResource extends Window {
+
+	protected class RenameResourceWindow extends Window {
 		private static final long serialVersionUID = 1L;
 		private Resource resource;
 		private ResourceService service;
-		public RenameWindowResource(Resource resource ,ResourceService service){
+
+		public RenameResourceWindow(Resource resource, ResourceService service) {
 			super("Rename folder/file");
 			center();
 			this.setWidth("400px");
-			
+
 			this.service = service;
 			this.resource = resource;
 			constructBody();
 		}
-		private void constructBody(){
+
+		private void constructBody() {
 			final VerticalLayout layout = new VerticalLayout();
 			HorizontalLayout topRename = new HorizontalLayout();
 			topRename.setSpacing(true);
 			topRename.setMargin(true);
-			
+
 			Label label = new Label("Enter new name: ");
 			UiUtils.addComponent(topRename, label, Alignment.MIDDLE_LEFT);
-			
+
 			final TextField newName = new TextField();
 			newName.setWidth("150px");
 			UiUtils.addComponent(topRename, newName, Alignment.MIDDLE_LEFT);
-			
+
 			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
-			
+
 			HorizontalLayout controlButton = new HorizontalLayout();
 			controlButton.setSpacing(true);
 			Button save = new Button("Save", new ClickListener() {
 				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					String oldPath = resource.getPath();
-					String parentPath = oldPath.substring(0, oldPath.lastIndexOf("/")+1);
-					String newPath = parentPath + (String) newName.getValue();
+					String parentPath = oldPath.substring(0,
+							oldPath.lastIndexOf("/") + 1);
+					final String newNameValue = (String) newName.getValue();
+					String newPath = parentPath + newNameValue;
 					service.rename(oldPath, newPath);
-					// reset layout 
-					
-					String work = baseFolder.getPath().substring(baseFolder.getPath().lastIndexOf("/")+1, baseFolder.getPath().length());
-					FileManagerViewImpl.this.folderTree.setValue(work);
-					
-					RenameWindowResource.this.close();
+					// reset layout
+					FileManagerViewImpl.this
+							.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+
+					// Set item caption for sub folder of base folder in
+					// folderTree
+					List<Folder> childs = baseFolder.getChilds();
+					for (Folder folder : childs) {
+						if (folder.getName().equals(resource.getName())) {
+							folderTree.setItemCaption(folder, newNameValue);
+						}
+					}
+
+					RenameResourceWindow.this.close();
 				}
 			});
 			save.addStyleName(UIConstants.THEME_BLUE_LINK);
-			
+
 			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
-			
+
 			Button cancel = new Button("Cancel", new ClickListener() {
 				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
-					RenameWindowResource.this.close();
+					RenameResourceWindow.this.close();
 				}
 			});
 			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
