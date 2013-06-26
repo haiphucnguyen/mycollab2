@@ -1,17 +1,25 @@
 package com.esofthead.mycollab.module.project.view.time;
 
+import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
+import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -106,6 +114,35 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.tableItem = new TimeTrackingTableDisplay(new String[] {
 				"logUserFullName", "summary", "createdtime", "logvalue" },
 				new String[] { "User", "Summary", "Created Time", "Hours" });
+
+		this.tableItem
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
+
+					@Override
+					public void handle(final TableClickEvent event) {
+						final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
+								.getData();
+						if ("summary".equals(event.getFieldName())) {
+							if (MonitorTypeConstants.PRJ_BUG.equals(itemLogging
+									.getType())) {
+								EventBus.getInstance().fireEvent(
+										new BugEvent.GotoRead(this, itemLogging
+												.getTypeid()));
+							} else if (MonitorTypeConstants.PRJ_TASK
+									.equals(itemLogging.getType())) {
+								EventBus.getInstance().fireEvent(
+										new TaskEvent.GotoRead(this,
+												itemLogging.getTypeid()));
+							}
+						}
+					}
+				});
 
 		this.addComponent(this.tableItem);
 	}
