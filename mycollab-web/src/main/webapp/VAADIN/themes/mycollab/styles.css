@@ -2735,18 +2735,22 @@ div.v-lazyloadingwrapper-loading {
 	border-top: 1px solid rgb(169, 169, 169);
 }
 .report-row-header {
-	text-align: center;
+/* 	text-align: center; */
 	font-weight: bold;
 /* 	background: url("icons/report-header.png") no-repeat center center */
 /* 		transparent; */
+
+	background: url("icons/timehdr-bg.png") no-repeat left top transparent;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border-width: 1px 1px 0px 0px;
-	border-style: solid;
-	border-color: rgb(204, 204, 204);
-	border-radius: 0px 3px 0px 0px;
-	background-color: rgb(228, 228, 228);
+	padding-left: 15px;
+/* 	border-width: 1px 1px 0px 0px; */
+/* 	border-style: solid; */
+/* 	border-color: rgb(204, 204, 204); */
+/* 	border-radius: 0px 3px 0px 0px; */
+/* 	background-color: rgb(228, 228, 228); */
+	color: white;
 }
 
 .instructionStandupBox {
@@ -3814,7 +3818,7 @@ div.v-ratingstars-bar {
 }
 
 div.v-button-link.buttonPaging {
-    background: url("icons/sprite-vert2-blue.png") no-repeat -10px -8px transparent;
+    background: url("icons/sprite-vert2-light.png") no-repeat -10px -8px transparent;
     color: white;   
 }
 div.v-button-link.buttonPaging .v-button-wrap {
@@ -3830,7 +3834,7 @@ div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
 	padding: 0px;
 }
 div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
-	background: url("icons/sprite-vert1-blue.png") no-repeat -10px -10px transparent;
+	background: url("icons/sprite-vert1-light.png") no-repeat -10px -8px transparent;
     
 }
 
@@ -3840,4 +3844,17 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	margin-right: 3px;
+}
+
+/* Project Member ReadView */
+.project-member-readview .depotComp {
+	margin-top: 0px;
+}
+.project-member-readview .depotComp .header-wrapper {
+	border-radius: 0px;
+	background: none no-repeat 0 0 rgb(245, 245, 245);
+}
+.project-member-readview .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
+	border-width: 0px 0px 1px 0px;
+	border-radius: 0px;
 }
