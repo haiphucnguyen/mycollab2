@@ -391,9 +391,22 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 		});
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void rename(String oldPath, String newPath) {
-		// TODO Auto-generated method stub
-		
+	public void rename(final String oldPath, final String newPath) {
+		log.debug("Rename content {} {}", oldPath, newPath);
+		jcrTemplate.execute(new JcrCallback() {
+			@Override
+			public Object doInJcr(Session session) throws IOException,
+					RepositoryException {
+				Node rootNode = session.getRootNode(); 
+				Node currentNode = getNode(rootNode, oldPath);
+				if(currentNode!=null){
+					currentNode.getSession().move(currentNode.getPath(), newPath);
+					currentNode.getSession().save();
+				}
+				return null;
+			}
+		});
 	}
 }

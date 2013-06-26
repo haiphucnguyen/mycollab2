@@ -68,7 +68,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public void rename(String oldPath, String newPath) {
-		// TODO Auto-generated method stub
-
+		contentJcrDao.rename(oldPath, newPath);
+		rawContentService.rename(oldPath, newPath);
 	}
 }

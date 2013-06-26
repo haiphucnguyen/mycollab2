@@ -9,5 +9,5 @@ public interface RawContentService {
 	
 	void removeContent(String objectPath);
 	
-	void rename(String oldPath, String newPath);
+	void rename(String oldPath, String newName);
 }

@@ -552,7 +552,8 @@ public class FileManagerViewImpl extends AbstractView implements
 								public void buttonClick(final ClickEvent event) {
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
-
+									RenameWindowResource renameWindow = new RenameWindowResource(resource, resourceService);
+									getWindow().addWindow(renameWindow);
 								}
 							});
 					renameBtn.setStyleName("link");
@@ -809,6 +810,54 @@ public class FileManagerViewImpl extends AbstractView implements
 					Alignment.MIDDLE_CENTER);
 			UiUtils.addComponent(layout, buttonControls,
 					Alignment.MIDDLE_CENTER);
+			this.addComponent(layout);
+		}
+	}
+	
+	protected class RenameWindowResource extends Window {
+		private static final long serialVersionUID = 1L;
+		private Resource resource;
+		private ResourceService service;
+		public RenameWindowResource(Resource resource ,ResourceService service){
+			super("Rename folder/file");
+			center();
+			this.setWidth("500px");
+			
+			this.service = service;
+			this.resource = resource;
+			constructBody();
+		}
+		private void constructBody(){
+			final VerticalLayout layout = new VerticalLayout();
+			HorizontalLayout topRename = new HorizontalLayout();
+			
+			Label label = new Label("Enter new name: ");
+			UiUtils.addComponent(topRename, label, Alignment.MIDDLE_LEFT);
+			
+			final TextField newName = new TextField();
+			UiUtils.addComponent(topRename, newName, Alignment.MIDDLE_LEFT);
+			
+			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
+			Button save = new Button("Save", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void buttonClick(ClickEvent event) {
+					String oldPath = resource.getPath();
+					String parentPath = oldPath.substring(0, oldPath.lastIndexOf("/")+1);
+					String newPath = "/" + parentPath + (String) newName.getValue();
+					service.rename(oldPath, newPath);
+				}
+			});
+			UiUtils.addComponent(layout, save, Alignment.MIDDLE_CENTER);
+			
+			Button cancel = new Button("Cancel", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+				@Override
+				public void buttonClick(ClickEvent event) {
+					RenameWindowResource.this.close();
+				}
+			});
+			UiUtils.addComponent(layout, cancel, Alignment.MIDDLE_CENTER);
 			this.addComponent(layout);
 		}
 	}
