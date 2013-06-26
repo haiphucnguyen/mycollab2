@@ -821,7 +821,7 @@ public class FileManagerViewImpl extends AbstractView implements
 		public RenameWindowResource(Resource resource ,ResourceService service){
 			super("Rename folder/file");
 			center();
-			this.setWidth("500px");
+			this.setWidth("400px");
 			
 			this.service = service;
 			this.resource = resource;
@@ -837,6 +837,7 @@ public class FileManagerViewImpl extends AbstractView implements
 			UiUtils.addComponent(topRename, label, Alignment.MIDDLE_LEFT);
 			
 			final TextField newName = new TextField();
+			newName.setWidth("150px");
 			UiUtils.addComponent(topRename, newName, Alignment.MIDDLE_LEFT);
 			
 			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
