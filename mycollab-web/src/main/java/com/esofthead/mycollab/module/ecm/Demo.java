@@ -28,15 +28,21 @@ public class Demo {
 //		jcrDao.removeResource("/a/b/d");
 
 		Folder pageContent = new Folder();
-		pageContent.setPath("/a/b/d");
+		pageContent.setPath("a/b/d");
 
 		jcrDao.createFolder(pageContent, "baohan");
 
 		Resource content = jcrDao.getResource("a/b/d");
 		System.out.println(content.getCreatedUser());
 		
-		List<Resource> resources = jcrDao.searchResourcesByName("d");
-		System.out.println("Resources: " + (resources != null));
+		System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
+		
+		jcrDao.rename("a/b/d", "a/b/c");
+		System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
+		System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
+		
+//		List<Resource> resources = jcrDao.searchResourcesByName("d");
+//		System.out.println("Resources: " + (resources != null));
 		// System.out.println("CONTENT " + content);
 		//
 		// jcrDao.removeContent("example/a/b");
