@@ -120,16 +120,12 @@ public class BugDashboardViewImpl extends AbstractView implements
 		btnControlsLayout.addComponent(createVersionBtn);
 		controlsBtn.addComponent(btnControlsLayout);
 
-		header.addComponent(controlsBtn);
-
-		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-
 		headerTop.addComponent(header);
 		headerWrapper.addComponent(headerTop);
 
-		final VerticalLayout headerContent = new VerticalLayout();
-		headerContent.setWidth("100%");
-		headerContent.setMargin(true);
+		// final VerticalLayout headerContent = new VerticalLayout();
+		// headerContent.setWidth("100%");
+		// headerContent.setMargin(true);
 		final ButtonGroup navButton = new ButtonGroup();
 		final Button bugListBtn = new Button("Bugs",
 				new Button.ClickListener() {
@@ -164,10 +160,15 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		navButton.addButton(versionListBtn);
 
-		headerContent.addComponent(navButton);
-		headerContent.setComponentAlignment(navButton, Alignment.MIDDLE_CENTER);
+		header.addComponent(navButton);
+		header.setExpandRatio(navButton, 1.0f);
+		header.setComponentAlignment(navButton, Alignment.MIDDLE_CENTER);
 
-		headerWrapper.addComponent(headerContent);
+		header.addComponent(controlsBtn);
+		header.setExpandRatio(controlsBtn, 1.0f);
+		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
+
+		// headerWrapper.addComponent(headerContent);
 
 		this.addComponent(headerWrapper);
 

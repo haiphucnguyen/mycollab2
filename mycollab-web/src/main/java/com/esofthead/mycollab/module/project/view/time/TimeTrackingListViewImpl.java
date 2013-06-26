@@ -1,28 +1,17 @@
 package com.esofthead.mycollab.module.project.view.time;
 
-import java.util.GregorianCalendar;
-
-import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
-import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
-import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
-import com.esofthead.mycollab.module.tracker.BugStatusConstants;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -34,15 +23,13 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 
 @ViewComponent
 public class TimeTrackingListViewImpl extends AbstractView implements
 		TimeTrackingListView {
 	private static final long serialVersionUID = 1L;
 
-	private PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
+	private TimeTrackingTableDisplay tableItem;
 	private final ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
 	private final Button exportBtn;
@@ -56,18 +43,10 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private final Label lbTimeRange;
 
 	public TimeTrackingListViewImpl() {
-
-		// this.setSpacing(true);
 		this.setMargin(false, true, true, true);
 
 		this.itemTimeLoggingService = AppContext
 				.getSpringBean(ItemTimeLoggingService.class);
-
-		// final Label titleLbl = new Label(
-		// LocalizationHelper
-		// .getMessage(TimeTrackingI18nEnum.TIME_RECORD_HEADER));
-		// titleLbl.setStyleName("h2");
-		// this.addComponent(titleLbl);
 
 		this.itemTimeLoggingPanel = new ItemTimeLoggingSearchPanel();
 		this.itemTimeLoggingPanel
@@ -124,7 +103,11 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.initUI();
+		this.tableItem = new TimeTrackingTableDisplay(new String[] {
+				"logUserFullName", "summary", "createdtime", "logvalue" },
+				new String[] { "User", "Summary", "Created Time", "Hours" });
+
+		this.addComponent(this.tableItem);
 	}
 
 	private void setTimeRange() {
@@ -145,162 +128,6 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			this.lbTimeRange.setValue(LocalizationHelper.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
 		}
-	}
-
-	private void initUI() {
-		this.tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-				AppContext.getSpringBean(ItemTimeLoggingService.class),
-				SimpleItemTimeLogging.class, new String[] { "logUserFullName",
-						"summary", "createdtime", "logvalue" }, new String[] {
-						"User", "Summary", "Created Time", "Hours" });
-
-		this.tableItem.addGeneratedColumn("logUserFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleItemTimeLogging timeItem = TimeTrackingListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-
-						return new ProjectUserLink(timeItem.getLoguser(),
-								timeItem.getLogUserAvatarId(), timeItem
-										.getLogUserFullName(), true, true);
-
-					}
-				});
-
-		this.tableItem.addGeneratedColumn("summary",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleItemTimeLogging itemLogging = TimeTrackingListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-
-						ButtonLink b = null;
-
-						if (itemLogging.getType().equals(
-								MonitorTypeConstants.PRJ_BUG)) {
-
-							b = new ButtonLink(itemLogging.getSummary(),
-									new Button.ClickListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void buttonClick(
-												final Button.ClickEvent event) {
-											EventBus.getInstance()
-													.fireEvent(
-															new BugEvent.GotoRead(
-																	this,
-																	itemLogging
-																			.getTypeid()));
-										}
-									});
-							b.setIcon(MyCollabResource
-									.newResource("icons/16/project/bug.png"));
-
-							if (BugStatusConstants.CLOSE.equals(itemLogging
-									.getStatus())) {
-								b.addStyleName(UIConstants.LINK_COMPLETED);
-							} else if (itemLogging.getDueDate() != null
-									&& (itemLogging.getDueDate()
-											.before(new GregorianCalendar()
-													.getTime()))) {
-								b.addStyleName(UIConstants.LINK_OVERDUE);
-							}
-						} else if (itemLogging.getType().equals(
-								MonitorTypeConstants.PRJ_TASK)) {
-
-							b = new ButtonLink(itemLogging.getSummary(),
-									new Button.ClickListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void buttonClick(
-												final Button.ClickEvent event) {
-											EventBus.getInstance()
-													.fireEvent(
-															new TaskEvent.GotoRead(
-																	this,
-																	itemLogging
-																			.getTypeid()));
-										}
-									});
-							b.setIcon(MyCollabResource
-									.newResource("icons/16/project/task.png"));
-
-							if (itemLogging.getPercentageComplete() != null
-									&& 100d == itemLogging
-											.getPercentageComplete()) {
-								b.addStyleName(UIConstants.LINK_COMPLETED);
-							} else {
-								if ("Pending".equals(itemLogging.getStatus())) {
-									b.addStyleName(UIConstants.LINK_PENDING);
-								} else if (itemLogging.getDueDate() != null
-										&& (itemLogging.getDueDate()
-												.before(new GregorianCalendar()
-														.getTime()))) {
-									b.addStyleName(UIConstants.LINK_OVERDUE);
-								}
-							}
-						}
-
-						b.addStyleName("link");
-						b.addStyleName(UIConstants.WORD_WRAP);
-						b.setWidth("100%");
-
-						return b;
-
-					}
-				});
-
-		this.tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleItemTimeLogging monitorItem = TimeTrackingListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final Label l = new Label();
-				l.setValue(AppContext.formatDateTime(monitorItem
-						.getCreatedtime()));
-				return l;
-			}
-		});
-
-		this.tableItem.addGeneratedColumn("logvalue", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleItemTimeLogging itemTimeLogging = TimeTrackingListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final Label l = new Label();
-				l.setValue(itemTimeLogging.getLogvalue());
-				return l;
-			}
-		});
-
-		this.tableItem.setWidth("100%");
-
-		this.tableItem.setColumnExpandRatio("type", 1.0f);
-		this.tableItem.setColumnWidth("logUserFullName",
-				UIConstants.TABLE_EX_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("createdtime",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("logvalue",
-				UIConstants.TABLE_S_LABEL_WIDTH);
-
-		this.addComponent(this.tableItem);
 	}
 
 	@Override

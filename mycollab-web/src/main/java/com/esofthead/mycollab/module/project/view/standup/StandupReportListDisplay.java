@@ -37,11 +37,11 @@ public class StandupReportListDisplay
 			final VerticalLayout reportHeader = new VerticalLayout();
 			final Label reportDateLbl = new Label(AppContext.formatDate(obj
 					.getForday()));
-			reportDateLbl.setWidth("120px");
+			reportDateLbl.setWidth("111px");
 			reportHeader.addComponent(reportDateLbl);
 			reportHeader.addStyleName(UIConstants.REPORT_ROW_HEADER);
 			reportHeader.setWidth(Sizeable.SIZE_UNDEFINED, 0);
-			reportHeader.setHeight("25px");
+			reportHeader.setHeight("20px");
 			reportHeader.setComponentAlignment(reportDateLbl,
 					Alignment.MIDDLE_LEFT);
 

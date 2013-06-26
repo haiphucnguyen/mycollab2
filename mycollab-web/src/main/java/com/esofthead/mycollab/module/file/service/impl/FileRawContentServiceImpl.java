@@ -82,7 +82,7 @@ public class FileRawContentServiceImpl implements RawContentService {
 	public void rename(String oldPath, String newPath) {
 		File file = new File(FileStorageConfig.baseContentFolder, oldPath);
 		if (file.exists()) {
-			file.renameTo(new File(newPath));
+			file.renameTo(new File(FileStorageConfig.baseContentFolder + newPath));
 		}
 	}
 }

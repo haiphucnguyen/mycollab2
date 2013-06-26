@@ -131,6 +131,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		private final ReadViewLayout projectMemberReadViewLayout;
+		private final VerticalLayout assignmentViewLayout;
 		private final VerticalLayout standupReportViewLayout;
 		private final VerticalLayout basicInformationLayout;
 
@@ -138,9 +139,12 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			this.basicInformationLayout = new VerticalLayout();
 
 			this.projectMemberReadViewLayout = new ReadViewLayout(null);
+			this.projectMemberReadViewLayout
+					.addStyleName("project-member-readview");
 			this.addComponent(this.projectMemberReadViewLayout);
 
 			this.standupReportViewLayout = new VerticalLayout();
+			this.assignmentViewLayout = new VerticalLayout();
 
 			this.previewForm = new AdvancedPreviewBeanForm<ProjectMember>() {
 				private static final long serialVersionUID = 1L;
@@ -159,6 +163,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 											ReadView.this.projectMember
 													.getMemberAvatarId(), 24));
 					ReadView.this.standupReportViewLayout.removeAllComponents();
+					ReadView.this.assignmentViewLayout.removeAllComponents();
 					ReadView.this.basicInformationLayout.removeAllComponents();
 					ReadView.this.standupReportViewLayout
 							.addComponent(new UserStandupReportDepot());
@@ -171,9 +176,9 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 							.addComponent(controlButtons);
 					ReadView.this.basicInformationLayout
 							.addComponent(ReadView.this.previewForm);
-					ReadView.this.basicInformationLayout
+					ReadView.this.assignmentViewLayout
 							.addComponent(new UserTaskDepot());
-					ReadView.this.basicInformationLayout
+					ReadView.this.assignmentViewLayout
 							.addComponent(new UserBugDepot());
 				}
 
@@ -222,6 +227,9 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 
 			this.projectMemberReadViewLayout.addTab(
 					this.standupReportViewLayout, "Standup Reports");
+
+			this.projectMemberReadViewLayout.addTab(this.assignmentViewLayout,
+					"Assignments");
 
 		}
 	}
