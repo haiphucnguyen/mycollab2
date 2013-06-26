@@ -399,10 +399,11 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			@Override
 			public Object doInJcr(Session session) throws IOException,
 					RepositoryException {
-				Node rootNode = session.getRootNode(); 
+				Node rootNode = session.getRootNode();
 				Node currentNode = getNode(rootNode, oldPath);
-				if(currentNode!=null){
-					currentNode.getSession().move(currentNode.getPath(), newPath);
+				if (currentNode != null) {
+					currentNode.getSession().move(currentNode.getPath(),
+							"/" + newPath);
 					currentNode.getSession().save();
 				}
 				return null;
