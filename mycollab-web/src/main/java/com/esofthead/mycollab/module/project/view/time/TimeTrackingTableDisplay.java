@@ -182,7 +182,8 @@ public class TimeTrackingTableDisplay
 
 		this.setColumnExpandRatio("summary", 1.0f);
 		this.setColumnWidth("logUserFullName", UIConstants.TABLE_EX_LABEL_WIDTH);
-		this.setColumnWidth("createdtime", UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnWidth("projectName", UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
 		this.setColumnWidth("logvalue", UIConstants.TABLE_S_LABEL_WIDTH);
 	}
 

@@ -24,8 +24,10 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
@@ -44,13 +46,22 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
-		Embedded followIcon = new Embedded();
-		followIcon.setSource(MyCollabResource
-				.newResource("icons/24/follow.png"));
-		headerWrapper.addComponent(followIcon);
+
+		final HorizontalLayout header = new HorizontalLayout();
+		header.setWidth("100%");
+		header.setSpacing(true);
+
+		final Embedded timeIcon = new Embedded();
+		timeIcon.setSource(MyCollabResource.newResource("icons/24/follow.png"));
+		header.addComponent(timeIcon);
+		
 		final Label layoutHeader = new Label("Your Following Tickets");
 		layoutHeader.addStyleName("h2");
-		headerWrapper.addComponent(layoutHeader);
+		header.addComponent(layoutHeader);
+		header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
+		header.setExpandRatio(layoutHeader, 1.0f);
+		
+		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
 		final Button backBtn = new Button("Back to Work Board");

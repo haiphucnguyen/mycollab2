@@ -1,6 +1,11 @@
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -35,6 +40,9 @@ import com.vaadin.ui.PopupDateField;
 public class TimeTrackingViewImpl extends AbstractView implements
 		TimeTrackingView {
 	private static final long serialVersionUID = 1L;
+
+	private PopupDateField fromDateField;
+	private PopupDateField toDateField;
 
 	private TimeTrackingTableDisplay tableItem;
 
@@ -86,12 +94,12 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 		dateSelectionLayout.addComponent(new Label("From:  "));
 
-		final PopupDateField fromDateField = new PopupDateField();
+		fromDateField = new PopupDateField();
 		fromDateField.setResolution(DateField.RESOLUTION_DAY);
 		dateSelectionLayout.addComponent(fromDateField);
 
 		dateSelectionLayout.addComponent(new Label("  To:  "));
-		final PopupDateField toDateField = new PopupDateField();
+		toDateField = new PopupDateField();
 		toDateField.setResolution(DateField.RESOLUTION_DAY);
 		dateSelectionLayout.addComponent(toDateField);
 
@@ -101,8 +109,9 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						// TODO Auto-generated method stub
-
+						Date from = (Date) fromDateField.getValue();
+						Date to = (Date) toDateField.getValue();
+						searchTimeReporting(from, to);
 					}
 				});
 		queryBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -163,13 +172,23 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 	@Override
 	public void display() {
-		this.searchTimeReporting();
+		Calendar date = new GregorianCalendar();
+		date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		Date from = date.getTime();
+		date.add(Calendar.DATE, 6);
+		Date to = date.getTime();
+
+		fromDateField.setValue(from);
+		toDateField.setValue(to);
+		this.searchTimeReporting(from, to);
 	}
 
-	private void searchTimeReporting() {
+	private void searchTimeReporting(Date from, Date to) {
 		final ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
 		searchCriteria.setLogUsers(new SetSearchField<String>(SearchField.AND,
 				new String[] { AppContext.getUsername() }));
+		searchCriteria.setRangeDate(new RangeDateSearchField(from, to));
 		this.tableItem.setSearchCriteria(searchCriteria);
 	}
 
