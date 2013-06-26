@@ -662,7 +662,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 													BugReadViewImpl.this.bug));
 						}
 					});
-			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			// reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			navButton.addButton(reopenBtn);
 
 			this.bugWorkflowControl.addComponent(navButton);
