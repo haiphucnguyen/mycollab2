@@ -390,4 +390,10 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			}
 		});
 	}
+
+	@Override
+	public void rename(String oldPath, String newPath) {
+		// TODO Auto-generated method stub
+		
+	}
 }

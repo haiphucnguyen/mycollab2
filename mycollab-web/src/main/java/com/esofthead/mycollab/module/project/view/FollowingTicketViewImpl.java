@@ -86,8 +86,8 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 		public FollowingTicketTable() {
 			super(FollowingTicket.class, new String[] { "summary",
-					"projectName", "assignUser" }, new String[] { "Summary",
-					"Project", "Assignee" });
+					"projectName", "assignUser", "monitorDate" }, new String[] {
+					"Summary", "Project", "Assignee", "Monitor Date" });
 
 			this.projectService = AppContext
 					.getSpringBean(ProjectService.class);
@@ -183,6 +183,19 @@ public class FollowingTicketViewImpl extends AbstractView implements
 							ticket.getAssignUserAvatarId(), ticket
 									.getAssignUserFullName());
 					return userLink;
+				}
+			});
+
+			this.addGeneratedColumn("monitorDate", new ColumnGenerator() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Object generateCell(Table source, Object itemId,
+						Object columnId) {
+					final FollowingTicket ticket = FollowingTicketTable.this
+							.getBeanByIndex(itemId);
+					return new Label(AppContext.formatDate(ticket
+							.getMonitorDate()));
 				}
 			});
 
