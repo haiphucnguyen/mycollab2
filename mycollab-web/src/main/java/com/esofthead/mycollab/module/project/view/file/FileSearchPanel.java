@@ -1,12 +1,17 @@
 package com.esofthead.mycollab.module.project.view.file;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -17,12 +22,15 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
 public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
@@ -30,10 +38,18 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 	private final SimpleProject project;
 	protected FileSearchCriteria searchCriteria;
 	private ComponentContainer menuBar = null;
-
-	public FileSearchPanel(final ComponentContainer menuBar) {
+	private ResourceService resourceService;
+	private FileManagerViewImpl filemanager;
+	private HorizontalLayout basicSearchBody;
+	
+	public HorizontalLayout getBasicSearchBody() {
+		return basicSearchBody;
+	}
+	public FileSearchPanel(final ComponentContainer menuBar,FileManagerViewImpl filemanager) {
 		this.project = (SimpleProject) AppContext.getVariable("project");
 		this.menuBar = menuBar;
+		this.filemanager = filemanager;
+		this.resourceService = AppContext.getSpringBean(ResourceService.class);
 	}
 
 	@Override
@@ -90,7 +106,7 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructBody() {
-			final HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
@@ -109,7 +125,10 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					FileBasicSearchLayout.this.callSearchAction();
+					List<Resource> lst = resourceService.searchResourcesByName((String)nameField.getValue());
+//					reConstructBodyBottom(lst,10);
+					
+					filemanager.conStructBodyBottom(lst, 10);
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
@@ -155,5 +174,29 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 
 			return FileSearchPanel.this.searchCriteria;
 		}
+		
+//		private void reConstructBodyBottom(List<Resource> lst , int numberItem){
+//			filemanager.removeComponent(filemanager.getFolderTree());
+//			filemanager.removeComponent(filemanager.getResourceTable());
+//			
+//			final CssLayout bottomLayout = new CssLayout();
+//			
+//			Button backBtn = new Button("Back", new ClickListener() {
+//				private static final long serialVersionUID = 1L;
+//				@Override
+//				public void buttonClick(ClickEvent event) {
+//					//back to main window
+//				}
+//			});
+//			basicSearchBody.addComponent(backBtn);
+//			
+//			ButtonLink file = new ButtonLink("");
+//			file.setIcon(MyCollabResource.newResource("icons/16/ecm/folder_open.png"));
+//			
+//			bottomLayout.addComponent(file);
+//			
+//			filemanager.addComponent(bottomLayout);
+//		}
+		
 	}
 }
