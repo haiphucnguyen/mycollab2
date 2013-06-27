@@ -11,7 +11,6 @@ public class TourPage extends BasePage {
 
 	public TourPage(PageParameters parameters) {
 		super(parameters);
-
 		add(new Label("pagetitle", "Tour"));
 	}
 
