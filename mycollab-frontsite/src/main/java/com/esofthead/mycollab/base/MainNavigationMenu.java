@@ -35,6 +35,8 @@ public class MainNavigationMenu extends Panel {
 				final MarkupContainer link = listItem.getModelObject();
 				listItem.add(link);
 			}
+			
+			
 		};
 
 		add(listView);
@@ -46,6 +48,8 @@ public class MainNavigationMenu extends Panel {
 		ExternalLink signInLink = new ExternalLink("signIn",
 				"http://app.mycollab.com", "Sign In");
 		add(signInLink);
+		
+		
 
 		this.setRenderBodyOnly(true);
 	}

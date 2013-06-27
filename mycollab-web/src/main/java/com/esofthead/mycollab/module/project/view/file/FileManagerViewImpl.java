@@ -38,6 +38,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -152,8 +153,8 @@ public class FileManagerViewImpl extends AbstractView implements
 		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
 		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(deleteBtn);
-
-		this.fileSearchPanel = new FileSearchPanel(menuBar);
+		
+		this.fileSearchPanel = new FileSearchPanel(menuBar,this);
 
 		this.addComponent(this.fileSearchPanel);
 
@@ -908,5 +909,28 @@ public class FileManagerViewImpl extends AbstractView implements
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
 			this.addComponent(layout);
 		}
+	}
+
+	
+	protected void conStructBodyBottom(List<Resource> lst, int numberItem){
+		FileManagerViewImpl.this.removeComponent(FileManagerViewImpl.this.folderTree);
+		FileManagerViewImpl.this.removeComponent(FileManagerViewImpl.this.resourceTable);
+		final CssLayout bottomLayout = new CssLayout();
+		
+		Button backBtn = new Button("Back", new ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				//back to main window
+			}
+		});
+		fileSearchPanel.getBasicSearchBody().addComponent(backBtn);
+		
+		ButtonLink file = new ButtonLink("");
+		file.setIcon(MyCollabResource.newResource("icons/16/ecm/folder_open.png"));
+		
+		bottomLayout.addComponent(file);
+		
+		FileManagerViewImpl.this.addComponent(bottomLayout);
 	}
 }

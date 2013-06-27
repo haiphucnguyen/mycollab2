@@ -611,7 +611,7 @@ h1, h2, h3, h4, h5, h6 {
  */
 /* Header style */
 #header {
-	height: 32px;
+	height: 40px;
 	width: 100%;
 	border-bottom: solid 3px #81C8E8;
 	background-color: #2B98D8;
@@ -626,7 +626,7 @@ h1, h2, h3, h4, h5, h6 {
 .header-mid img {
 	float: left;
 	margin: 2px 0px 0px 0px;
-	height: 27px;
+	height: 35px;
 	width: auto;
 }
 
@@ -635,11 +635,11 @@ h1, h2, h3, h4, h5, h6 {
 	float: right;
 }
 .header-mid ul li {
-	line-height: 32px;
+	line-height: 40px;
 	display: inline-block;
 	padding: 0px 15px;
 	text-transform: uppercase;
-	height: 32px;
+	height: 40px;
 	transition: 0.5s;
 }
 .header-mid ul li a{	
@@ -653,8 +653,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .header-mid .btn-signin {
 	float: right;
-	line-height: 32px;
-	height: 32px;
+	line-height: 40px;
+	height: 40px;
 	font-size: 14px;
 	color: #FFF;
 	display:inline-block;
@@ -747,7 +747,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .col-style1 {
-	width: 214px;
+	width: 224px;
 	float: left;
 	display: inline-block;
 }
@@ -791,16 +791,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prig-description {
-	background-color: #ECF2F6;
+	background-color: #2B98D8;
 	height: 35px;
 	padding: 10px 3px 0px;
 	font-size: 14px;
 	line-height: 130%;
+	color: #FFF;
 }
 
 .pricing-button {
 	height: 50px;
-	background-color: #F1F1F1;
+	background-color: #2B98D8;
 	display: inline-block;
 	width: 100%;
 }
@@ -813,7 +814,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFF;
 	padding: 5px 0px 0px 0px;
 	margin: 6px auto 0px;
-	font-size: 12px;
+	font-size: 11px;
 	font-family: 'Arial';
 	font-weight: bold;
 }
@@ -848,7 +849,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prig-table tr:hover > td {
-	background-color: #FFF;
+	background-color: #5D6570 !important;
+	color: #FFF;
 }
 
 .prig-table tr td {
@@ -858,11 +860,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prig-mid-title {
-	width: 193px!important;
+	width: 203px!important;
 	text-align: left;
 	padding: 5px 0px 5px 20px;
 	font-size: 16px;
 	border-right: solid 1px #BCB8B8;
+}
+
+.prig-row-style-2 > td {
+	background-color: #CCC !important;	
 }
 
 .prig-bottom {
@@ -1248,11 +1254,11 @@ h1, h2, h3, h4, h5, h6 {
 .pri-bott-coll {
 	float: left;
     padding-left: 0px;
-    width: 490px;
+    width: 500px;
 }
 
 .pri-coll-1 {
-	padding-right: 60px;
+	padding-right: 35px;
 }
 
 .pri-bott-block h2 {

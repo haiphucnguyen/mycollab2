@@ -210,8 +210,9 @@ public class FollowingTicketViewImpl extends AbstractView implements
 						final Object itemId, final Object columnId) {
 					final FollowingTicket ticket = FollowingTicketTable.this
 							.getBeanByIndex(itemId);
-					return new Label(AppContext.formatDate(ticket
-							.getMonitorDate()));
+					Label lbl = new Label();
+					lbl.setValue(AppContext.formatDate(ticket.getMonitorDate()));
+					return lbl;
 				}
 			});
 

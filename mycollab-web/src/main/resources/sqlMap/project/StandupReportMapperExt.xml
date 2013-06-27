@@ -8,6 +8,8 @@
         type="com.esofthead.mycollab.module.project.domain.SimpleStandupReport">
         <result column="logByFullName" property="logByFullName"
             jdbcType="VARCHAR" />
+        <result column="logByAvatarId" property="logByAvatarId"
+            jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -29,7 +31,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
              m_prj_standup.forday DESC, logByFullName DESC
         ]]>
@@ -40,7 +43,8 @@
           SELECT m_prj_standup.id, m_prj_standup.sAccountId, m_prj_standup.projectId, m_prj_standup.forday, 
             m_prj_standup.logBy, m_prj_standup.createdTime, m_prj_standup.lastUpdatedTime, 
             m_prj_standup.whatlastday, m_prj_standup.whattoday, m_prj_standup.whatproblem, 
-            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logByFullName
+            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logByFullName,
+            s_user.avatarId AS logByAvatarId
           FROM m_prj_standup
             LEFT OUTER JOIN s_user ON ( m_prj_standup.logBy=s_user.username)
         ]]>
