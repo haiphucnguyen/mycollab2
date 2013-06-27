@@ -382,11 +382,18 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						Query.JCR_SQL2);
 				QueryResult result = query.execute();
 				NodeIterator nodes = result.getNodes();
+				List<Resource> resources = new ArrayList<Resource>();
 				while (nodes.hasNext()) {
 					Node node = nodes.nextNode();
-					System.out.println("A: " + node.getName());
+					if (isNodeFolder(node)) {
+						Folder folder = convertNodeToFolder(node);
+						resources.add(folder);
+					} else if (isNodeMyCollabContent(node)) {
+						Content content = convertNodeToContent(node);
+						resources.add(content);
+					}
 				}
-				return null;
+				return resources;
 			}
 		});
 	}
@@ -401,8 +408,9 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					RepositoryException {
 				Node rootNode = session.getRootNode();
 				Node currentNode = getNode(rootNode, oldPath);
-				if (getNode(rootNode, newPath)!=null){
-					throw new ContentException("Folder/file has already existed.");
+				if (getNode(rootNode, newPath) != null) {
+					throw new ContentException(
+							"Folder/file has already existed.");
 				}
 				if (currentNode != null) {
 					currentNode.getSession().move(currentNode.getPath(),

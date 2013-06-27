@@ -1,10 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
-import com.vaadin.terminal.Resource;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
