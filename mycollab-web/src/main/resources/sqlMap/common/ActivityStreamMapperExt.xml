@@ -18,6 +18,11 @@
     </resultMap>
 
     <sql id="querySearchCriteria">
+        <if test="searchCriteria.createdUser != null">
+            ${searchCriteria.createdUser.operation}
+            s_activitystream.createdUser =
+            #{searchCriteria.createdUser.value}
+        </if>
         <if test="searchCriteria.moduleSet != null">
             ${searchCriteria.moduleSet.operation}
             s_activitystream.module IN
