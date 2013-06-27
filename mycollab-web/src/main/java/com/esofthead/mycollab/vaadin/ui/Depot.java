@@ -26,10 +26,17 @@ public class Depot extends VerticalLayout {
 
 	public Depot(final String title, final ComponentContainer headerElement,
 			final ComponentContainer component) {
-		this(title, headerElement, component, "100%", "250px");
+		this(new Label(title), headerElement, component, "100%", "250px");
 	}
 
 	public Depot(final String title, final ComponentContainer headerElement,
+			final ComponentContainer component, final String headerWidth,
+			final String headerLeftWidth) {
+		this(new Label(title), headerElement, component, headerWidth,
+				headerLeftWidth);
+	}
+
+	public Depot(final Label titleLbl, final ComponentContainer headerElement,
 			final ComponentContainer component, final String headerWidth,
 			final String headerLeftWidth) {
 		this.setStyleName("depotComp");
@@ -54,7 +61,7 @@ public class Depot extends VerticalLayout {
 		this.addComponent(headerWrapper);
 
 		final VerticalLayout headerLeft = new VerticalLayout();
-		this.headerLbl = new Label(title);
+		this.headerLbl = titleLbl;
 		this.headerLbl.setStyleName("h2");
 		this.headerLbl.setWidth("100%");
 		headerLeft.addComponent(this.headerLbl);
@@ -91,13 +98,17 @@ public class Depot extends VerticalLayout {
 
 	public Depot(final String title, final ComponentContainer component,
 			final String headerWidth) {
-		this(title, null, component, headerWidth, "250px");
+		this(new Label(title), null, component, headerWidth, "250px");
 	}
 
 	public void addHeaderElement(final Component component) {
 		if (component != null) {
 			this.headerContent.addComponent(component);
 		}
+	}
+
+	public Label getHeaderLbl() {
+		return headerLbl;
 	}
 
 	public void setContentBorder(final boolean hasBorder) {

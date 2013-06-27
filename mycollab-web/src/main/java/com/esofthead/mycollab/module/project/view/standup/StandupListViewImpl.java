@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -44,7 +45,6 @@ public class StandupListViewImpl extends AbstractView implements
 
 	private Label titleLbl;
 	private PopupButton dateChooser;
-	// private final VerticalLayout reportContent;
 	private final StandupStyleCalendarExp standupCalendar = new StandupStyleCalendarExp();
 
 	private final BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
@@ -54,11 +54,6 @@ public class StandupListViewImpl extends AbstractView implements
 		this.setMargin(true);
 		this.constructHeader();
 
-		// this.reportContent = new VerticalLayout();
-		// this.reportContent.setWidth("100%");
-
-		// layout.addComponent(this.standupCalendar);
-		// this.addComponent(layout);
 		this.addCalendarEvent();
 		this.getListReport();
 
@@ -266,8 +261,16 @@ public class StandupListViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		public StandupReportDepot(final SimpleStandupReport report) {
-			super(report.getLogByFullName(), new VerticalLayout());
+			super("", new VerticalLayout());
 
+			String userLbl = "<img src=\"%s\" alt=\" \"/>&nbsp; %s";
+			this.getHeaderLbl().setValue(
+					String.format(
+							userLbl,
+							UserAvatarControlFactory.getAvatarLink(
+									report.getLogByAvatarId(), 16),
+							report.getLogByFullName()));
+			this.getHeaderLbl().setContentMode(Label.CONTENT_XHTML);
 			((VerticalLayout) this.bodyContent).setSpacing(true);
 			final Label whatYesterdayLbl = new Label(
 					"What I did in the last day/week");

@@ -50,6 +50,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 		this.setSpacing(true);
 		this.setMargin(false, false, true, false);
 		this.setWidth("1130px");
+		this.setHeight("100%");
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setStyleName("projectfeed-hdr-wrapper");

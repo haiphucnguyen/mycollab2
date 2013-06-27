@@ -54,13 +54,13 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		final Embedded timeIcon = new Embedded();
 		timeIcon.setSource(MyCollabResource.newResource("icons/24/follow.png"));
 		header.addComponent(timeIcon);
-		
+
 		final Label layoutHeader = new Label("Your Following Tickets");
 		layoutHeader.addStyleName("h2");
 		header.addComponent(layoutHeader);
 		header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
 		header.setExpandRatio(layoutHeader, 1.0f);
-		
+
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
@@ -210,13 +210,15 @@ public class FollowingTicketViewImpl extends AbstractView implements
 						Object columnId) {
 					final FollowingTicket ticket = FollowingTicketTable.this
 							.getBeanByIndex(itemId);
-					return new Label(AppContext.formatDate(ticket
-							.getMonitorDate()));
+					Label lbl = new Label();
+					lbl.setValue(AppContext.formatDate(ticket.getMonitorDate()));
+					return lbl;
 				}
 			});
 
 			this.setColumnWidth("projectName", UIConstants.TABLE_X_LABEL_WIDTH);
 			this.setColumnWidth("assignUser", UIConstants.TABLE_X_LABEL_WIDTH);
+			this.setColumnWidth("monitorDate", UIConstants.TABLE_DATE_WIDTH);
 			this.setColumnExpandRatio("summary", 1.0f);
 		}
 

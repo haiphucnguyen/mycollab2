@@ -206,10 +206,16 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		private static final long serialVersionUID = 1L;
 
 		public FormUrlLinkViewField(String url) {
-			url = (url == null) ? "" : url;
-			final Link link = new UrlLink(url);
-			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			setCompositionRoot(link);
+			if (url == null || url.trim().equals("")) {
+				Label lbl = new Label("&nbsp;");
+				lbl.setContentMode(Label.CONTENT_XHTML);
+				lbl.setWidth("100%");
+				setCompositionRoot(lbl);
+			} else {
+				final Link link = new UrlLink(url);
+				link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+				setCompositionRoot(link);
+			}
 		}
 
 		@Override
@@ -224,11 +230,17 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 		public FormUrlSocialNetworkLinkViewField(String caption,
 				String linkAccount) {
-			caption = (caption == null) ? "" : caption;
-			linkAccount = (linkAccount == null) ? "" : linkAccount;
-			final Link link = new SocialNetworkLink(caption, linkAccount);
-			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			setCompositionRoot(link);
+			if (caption == null || caption.trim().equals("")) {
+				Label lbl = new Label("&nbsp;");
+				lbl.setContentMode(Label.CONTENT_XHTML);
+				lbl.setWidth("100%");
+				setCompositionRoot(lbl);
+			} else {
+				linkAccount = (linkAccount == null) ? "" : linkAccount;
+				final Link link = new SocialNetworkLink(caption, linkAccount);
+				link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+				setCompositionRoot(link);
+			}
 		}
 
 		@Override
@@ -261,21 +273,6 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		@Override
 		public Class<?> getType() {
 			return String.class;
-		}
-	}
-
-	public static class LabelViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
-
-		public LabelViewField(final String value) {
-			final Label lbName = new Label(value);
-			lbName.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			setCompositionRoot(lbName);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return Object.class;
 		}
 	}
 

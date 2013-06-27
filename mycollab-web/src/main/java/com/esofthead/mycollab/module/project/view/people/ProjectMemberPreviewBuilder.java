@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.people;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.standup.StandupReportListDisplay;
 import com.esofthead.mycollab.module.project.view.task.TaskTableDisplay;
+import com.esofthead.mycollab.module.project.view.user.ProjectActivityStreamPagedList;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -38,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -176,6 +179,8 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 							.addComponent(controlButtons);
 					ReadView.this.basicInformationLayout
 							.addComponent(ReadView.this.previewForm);
+					ReadView.this.basicInformationLayout
+							.addComponent(new UserActivityStreamDepot());
 					ReadView.this.assignmentViewLayout
 							.addComponent(new UserTaskDepot());
 					ReadView.this.assignmentViewLayout
@@ -238,6 +243,14 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		this.projectMember = item;
 		this.previewForm.setItemDataSource(new BeanItem<ProjectMember>(
 				this.projectMember));
+	}
+
+	public SimpleProjectMember getProjectMember() {
+		return this.projectMember;
+	}
+
+	public AdvancedPreviewBeanForm<ProjectMember> getPreviewForm() {
+		return this.previewForm;
 	}
 
 	protected class UserTaskDepot extends Depot {
@@ -556,7 +569,6 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		public UserStandupReportDepot() {
-			// super("StandUp Reports", new VerticalLayout());
 			super();
 
 			final StandupReportListDisplay standupReportListDisplay = new StandupReportListDisplay();
@@ -571,11 +583,30 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		}
 	}
 
-	public SimpleProjectMember getProjectMember() {
-		return this.projectMember;
-	}
+	protected class UserActivityStreamDepot extends Depot {
+		private static final long serialVersionUID = 1L;
 
-	public AdvancedPreviewBeanForm<ProjectMember> getPreviewForm() {
-		return this.previewForm;
+		private ProjectActivityStreamPagedList activityStreamList;
+
+		public UserActivityStreamDepot() {
+			super("User Feeds", new VerticalLayout());
+
+			activityStreamList = new ProjectActivityStreamPagedList();
+			displayActivityStream();
+		}
+
+		private void displayActivityStream() {
+			this.bodyContent.removeAllComponents();
+			this.bodyContent.addComponent(new LazyLoadWrapper(
+					this.activityStreamList));
+			ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+			searchCriteria.setModuleSet(new SetSearchField<String>(
+					SearchField.AND, new String[] { ModuleNameConstants.PRJ }));
+			searchCriteria.setCreatedUser(new StringSearchField(
+					SearchField.AND, projectMember.getUsername()));
+			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
+					CurrentProjectVariables.getProjectId()));
+			this.activityStreamList.setSearchCriteria(searchCriteria);
+		}
 	}
 }

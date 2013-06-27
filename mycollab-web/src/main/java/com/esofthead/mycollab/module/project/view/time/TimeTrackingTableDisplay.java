@@ -164,20 +164,6 @@ public class TimeTrackingTableDisplay
 			}
 		});
 
-		this.addGeneratedColumn("logvalue", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleItemTimeLogging itemTimeLogging = TimeTrackingTableDisplay.this
-						.getBeanByIndex(itemId);
-				final Label l = new Label();
-				l.setValue(itemTimeLogging.getLogvalue());
-				return l;
-			}
-		});
-
 		this.setWidth("100%");
 
 		this.setColumnExpandRatio("summary", 1.0f);
