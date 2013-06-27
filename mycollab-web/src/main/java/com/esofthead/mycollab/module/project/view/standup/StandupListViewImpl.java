@@ -263,7 +263,7 @@ public class StandupListViewImpl extends AbstractView implements
 		public StandupReportDepot(final SimpleStandupReport report) {
 			super("", new VerticalLayout());
 
-			String userLbl = "<img src=\"%s\" alt=\" \"/>%s";
+			String userLbl = "<img src=\"%s\" alt=\" \"/>&nbsp; %s";
 			this.getHeaderLbl().setValue(
 					String.format(
 							userLbl,
