@@ -747,7 +747,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .col-style1 {
-	width: 215px;
+	width: 214px;
 	float: left;
 	display: inline-block;
 }
@@ -755,6 +755,7 @@ h1, h2, h3, h4, h5, h6 {
 .col-style1 h1 {
 	font-size: 22px;
 	padding: 35px 0px 5px 0px;
+	color:#118DEA;
 }
 
 .col-style2, .col-style3 {
@@ -846,6 +847,10 @@ h1, h2, h3, h4, h5, h6 {
 	border: solid 1px #BCB8B8;
 }
 
+.prig-table tr:hover > td {
+	background-color: #FFF;
+}
+
 .prig-table tr td {
 	width: 172px;
 	background-color: #FAFAFA;
@@ -874,6 +879,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .prig-bottom-cnt h2 {
 	background: url("../images/pricing_question.png") no-repeat left center transparent;
+}
+
+.prig-block-1 {
+	height: 182px;
+}
+
+.prig-block-2 {
+	height: 132px;
+}
+
+.prig-border-left {
+	border-left: solid 1px #ABABAB; 
 }
 
 .row-style1 {

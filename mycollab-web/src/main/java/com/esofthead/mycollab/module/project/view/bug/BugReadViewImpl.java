@@ -69,44 +69,47 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("description")) {
 					this.informationLayout.addComponent(field, "Description",
 							0, 1, 2, "100%");
+				} else if (propertyId.equals("environment")) {
+					this.informationLayout.addComponent(field, "Environment",
+							0, 2, 2, "100%");
 				} else if (propertyId.equals("status")) {
-					this.informationLayout.addComponent(field, "Status", 0, 2);
+					this.informationLayout.addComponent(field, "Status", 0, 3);
 				} else if (propertyId.equals("priority")) {
 					this.informationLayout
-							.addComponent(field, "Priority", 1, 2);
+							.addComponent(field, "Priority", 1, 3);
 				} else if (propertyId.equals("severity")) {
 					this.informationLayout
-							.addComponent(field, "Severity", 0, 3);
+							.addComponent(field, "Severity", 0, 4);
 				} else if (propertyId.equals("resolution")) {
 					this.informationLayout.addComponent(field, "Resolution", 1,
-							3);
+							4);
 				} else if (propertyId.equals("duedate")) {
-					this.informationLayout.addComponent(field, "Due Date", 0,
-							4, 2, "100%");
-				} else if (propertyId.equals("createdTime")) {
+					this.informationLayout
+							.addComponent(field, "Due Date", 0, 5);
+				} else if (propertyId.equals("createdtime")) {
 					this.informationLayout.addComponent(field, "Created Time",
-							1, 4);
+							1, 5);
 				} else if (propertyId.equals("loguserFullName")) {
 					this.informationLayout.addComponent(field, "Logged by", 0,
-							5);
+							6);
 				} else if (propertyId.equals("assignuserFullName")) {
 					this.informationLayout.addComponent(field, "Assigned to",
-							1, 5);
+							1, 6);
 				} else if (propertyId.equals("milestoneName")) {
-					this.informationLayout.addComponent(field, "Phase", 0, 6,
+					this.informationLayout.addComponent(field, "Phase", 0, 7,
 							2, "100%");
 				} else if (propertyId.equals("components")) {
 					this.informationLayout.addComponent(field, "Components", 0,
-							7, 2, "100%");
+							8, 2, "100%");
 				} else if (propertyId.equals("affectedVersions")) {
 					this.informationLayout.addComponent(field,
-							"Affected Versions", 0, 8, 2, "100%");
+							"Affected Versions", 0, 9, 2, "100%");
 				} else if (propertyId.equals("fixedVersions")) {
 					this.informationLayout.addComponent(field,
-							"Fixed Versions", 0, 9, 2, "100%");
+							"Fixed Versions", 0, 10, 2, "100%");
 				} else if (propertyId.equals("id")) {
 					this.informationLayout.addComponent(field, "Attachments",
-							0, 10, 2, "100%");
+							0, 11, 2, "100%");
 				}
 			}
 
@@ -324,7 +327,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 				bugAddLayout.addTopControls(topPanel);
 
-				this.informationLayout = new GridFormLayoutHelper(2, 11);
+				this.informationLayout = new GridFormLayoutHelper(2, 12);
 				this.informationLayout.getLayout().addStyleName(
 						"colored-gridlayout");
 				this.informationLayout.getLayout().setMargin(false);
@@ -348,6 +351,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				if (propertyId.equals("duedate")) {
 					return new FormDateViewField(
 							BugReadViewImpl.this.bug.getDuedate());
+				} else if (propertyId.equals("createdtime")) {
+					return new FormDateViewField(
+							BugReadViewImpl.this.bug.getCreatedtime());
 				} else if (propertyId.equals("assignuserFullName")) {
 					return new ProjectUserFormLinkField(
 							BugReadViewImpl.this.bug.getAssignuser(),
