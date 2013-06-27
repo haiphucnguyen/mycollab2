@@ -206,10 +206,16 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		private static final long serialVersionUID = 1L;
 
 		public FormUrlLinkViewField(String url) {
-			url = (url == null) ? "" : url;
-			final Link link = new UrlLink(url);
-			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			setCompositionRoot(link);
+			if (url == null || url.trim().equals("")) {
+				Label lbl = new Label("&nbsp;");
+				lbl.setContentMode(Label.CONTENT_XHTML);
+				lbl.setWidth("100%");
+				setCompositionRoot(lbl);
+			} else {
+				final Link link = new UrlLink(url);
+				link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+				setCompositionRoot(link);
+			}
 		}
 
 		@Override
