@@ -44,7 +44,6 @@ public class StandupListViewImpl extends AbstractView implements
 
 	private Label titleLbl;
 	private PopupButton dateChooser;
-	// private final VerticalLayout reportContent;
 	private final StandupStyleCalendarExp standupCalendar = new StandupStyleCalendarExp();
 
 	private final BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
@@ -53,12 +52,7 @@ public class StandupListViewImpl extends AbstractView implements
 		super();
 		this.setMargin(true);
 		this.constructHeader();
-
-		// this.reportContent = new VerticalLayout();
-		// this.reportContent.setWidth("100%");
-
-		// layout.addComponent(this.standupCalendar);
-		// this.addComponent(layout);
+		
 		this.addCalendarEvent();
 		this.getListReport();
 

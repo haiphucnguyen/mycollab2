@@ -11,7 +11,6 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -58,8 +57,6 @@ public class ProfileReadViewImpl extends AbstractView implements
 		this.formItem.setWidth("100%");
 		this.viewLayout.addComponent(this.formItem);
 		this.addComponent(this.viewLayout);
-
-		// this.viewLayout.addComponent(this.userAvatar);
 	}
 
 	private void displayUserAvatar() {
@@ -219,7 +216,6 @@ public class ProfileReadViewImpl extends AbstractView implements
 				this.advanceInformation.getLayout().setWidth("100%");
 				this.advanceInformation.getLayout().addStyleName(
 						"colored-gridlayout");
-				// }
 
 				layout.addComponent(basicInformationHeader);
 				layout.addComponent(this.basicInformation.getLayout());
@@ -321,18 +317,15 @@ public class ProfileReadViewImpl extends AbstractView implements
 		}
 
 		private class PreviewFormFieldFactory extends
-				DefaultEditFormFieldFactory {
+				DefaultFormViewFieldFactory {
 
 			@Override
 			protected Field onCreateField(final Item item,
 					final Object propertyId,
 					final com.vaadin.ui.Component uiContext) {
 				String value = "";
-				if (propertyId.equals("firstname")) {
-					value = PreviewForm.this.user.getFirstname();
-				} else if (propertyId.equals("lastname")) {
-					value = PreviewForm.this.user.getLastname();
-				} else if (propertyId.equals("email")) {
+
+				if (propertyId.equals("email")) {
 					return new DefaultFormViewFieldFactory.FormEmailLinkViewField(
 							PreviewForm.this.user.getEmail());
 				} else if (propertyId.equals("dateofbirth")) {
@@ -342,18 +335,11 @@ public class ProfileReadViewImpl extends AbstractView implements
 					value = TimezoneMapper.getTimezone(
 							PreviewForm.this.user.getTimezone())
 							.getDisplayName();
+					return new DefaultFormViewFieldFactory.FormViewField(value);
 				} else if (propertyId.equals("website")) {
 					value = PreviewForm.this.user.getWebsite();
 					return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
 							value);
-				} else if (propertyId.equals("company")) {
-					value = PreviewForm.this.user.getCompany();
-				} else if (propertyId.equals("country")) {
-					value = PreviewForm.this.user.getCountry();
-				} else if (propertyId.equals("workphone")) {
-					value = PreviewForm.this.user.getWorkphone();
-				} else if (propertyId.equals("homephone")) {
-					value = PreviewForm.this.user.getHomephone();
 				} else if (propertyId.equals("facebookaccount")) {
 					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
 							PreviewForm.this.user.getFacebookaccount(),
@@ -371,7 +357,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 									+ PreviewForm.this.user.getSkypecontact()
 									+ "?chat");
 				}
-				return new DefaultFormViewFieldFactory.LabelViewField(value);
+				return null;
 			}
 		}
 	}
