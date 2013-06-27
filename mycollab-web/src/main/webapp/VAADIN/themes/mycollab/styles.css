@@ -163,11 +163,17 @@ input.v-textfield[type="text"],.v-filterselect {
 	background-color: rgb(245, 245, 245);	
 }
 body div>input.v-filterselect-input[type="text"] {
-	height: 1.2em;
+	height: 16px;
+	line-height: 12px !important;
+	font-size: 12px !important;
 }
 
 .loginView {
 	overflow: auto;
+}
+
+.v-table-body-noselection {
+	height: 100% !important;
 }
 
 .v-button-wrap {

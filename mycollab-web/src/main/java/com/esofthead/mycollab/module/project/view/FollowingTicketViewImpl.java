@@ -22,9 +22,9 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -54,13 +54,13 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		final Embedded timeIcon = new Embedded();
 		timeIcon.setSource(MyCollabResource.newResource("icons/24/follow.png"));
 		header.addComponent(timeIcon);
-		
+
 		final Label layoutHeader = new Label("Your Following Tickets");
 		layoutHeader.addStyleName("h2");
 		header.addComponent(layoutHeader);
 		header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
 		header.setExpandRatio(layoutHeader, 1.0f);
-		
+
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
@@ -69,7 +69,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.GotoProjectModule(
 								FollowingTicketViewImpl.this, null));
@@ -161,8 +161,8 @@ public class FollowingTicketViewImpl extends AbstractView implements
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
 					final FollowingTicket ticket = FollowingTicketTable.this
 							.getBeanByIndex(itemId);
 					final ButtonLink projectLink = new ButtonLink(ticket
@@ -171,9 +171,9 @@ public class FollowingTicketViewImpl extends AbstractView implements
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							final int projectId = ticket.getProjectId();
-							PageActionChain chain = new PageActionChain(
+							final PageActionChain chain = new PageActionChain(
 									new ProjectScreenData.Goto(projectId));
 							EventBus.getInstance()
 									.fireEvent(
@@ -191,13 +191,13 @@ public class FollowingTicketViewImpl extends AbstractView implements
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
 					final FollowingTicket ticket = FollowingTicketTable.this
 							.getBeanByIndex(itemId);
-					UserLink userLink = new UserLink(ticket.getAssignUser(),
-							ticket.getAssignUserAvatarId(), ticket
-									.getAssignUserFullName());
+					final UserLink userLink = new UserLink(ticket
+							.getAssignUser(), ticket.getAssignUserAvatarId(),
+							ticket.getAssignUserFullName());
 					return userLink;
 				}
 			});
@@ -206,8 +206,8 @@ public class FollowingTicketViewImpl extends AbstractView implements
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Object generateCell(Table source, Object itemId,
-						Object columnId) {
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
 					final FollowingTicket ticket = FollowingTicketTable.this
 							.getBeanByIndex(itemId);
 					return new Label(AppContext.formatDate(ticket
@@ -217,6 +217,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 			this.setColumnWidth("projectName", UIConstants.TABLE_X_LABEL_WIDTH);
 			this.setColumnWidth("assignUser", UIConstants.TABLE_X_LABEL_WIDTH);
+			this.setColumnWidth("monitorDate", UIConstants.TABLE_DATE_WIDTH);
 			this.setColumnExpandRatio("summary", 1.0f);
 		}
 
