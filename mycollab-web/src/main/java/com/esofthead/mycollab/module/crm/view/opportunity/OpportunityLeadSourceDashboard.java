@@ -30,6 +30,8 @@ import com.vaadin.ui.ComponentContainer;
 public class OpportunityLeadSourceDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> {
 
+	private List<GroupItem> groupItems;
+	
 	public OpportunityLeadSourceDashboard() {
 		this(400, 265);
 	}
@@ -45,7 +47,7 @@ public class OpportunityLeadSourceDashboard extends
 		final OpportunityService opportunityService = AppContext
 				.getSpringBean(OpportunityService.class);
 
-		final List<GroupItem> groupItems = opportunityService
+		groupItems = opportunityService
 				.getLeadSourcesSummary(searchCriteria);
 
 		final String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
@@ -69,7 +71,22 @@ public class OpportunityLeadSourceDashboard extends
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		return PieChartDescriptionBox.createLegendBox(this, pieDataSet);
+		final DefaultPieDataset dataset = new DefaultPieDataset();
+		final String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
+		for (final String source : leadSources) {
+			boolean isFound = false;
+			for (final GroupItem item : groupItems) {
+				if (source.equals(item.getGroupid())) {
+					dataset.setValue(source, item.getCountNum());
+					isFound = true;
+					break;
+				}
+			}
+			if (!isFound) {
+				dataset.setValue(source, 0);
+			}
+		}
+		return PieChartDescriptionBox.createLegendBox(this, dataset);
 	}
 
 	@Override
