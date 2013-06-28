@@ -4,20 +4,21 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.user.dao.UserPreferenceMapper;
 import com.esofthead.mycollab.module.user.domain.UserPreference;
 import com.esofthead.mycollab.module.user.domain.UserPreferenceExample;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
-
-import java.util.GregorianCalendar;
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *

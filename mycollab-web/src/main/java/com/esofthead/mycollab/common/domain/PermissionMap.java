@@ -4,8 +4,9 @@
  */
 package com.esofthead.mycollab.common.domain;
 
-import com.esofthead.mycollab.module.user.PermissionFlag;
 import java.util.HashMap;
+
+import com.esofthead.mycollab.module.user.PermissionFlag;
 
 /**
  *

@@ -16,6 +16,15 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -24,20 +33,12 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/service-test-context.xml" })
+@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class AccountServiceTest extends ServiceTest {
 
 	@Autowired

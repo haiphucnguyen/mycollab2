@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -27,13 +29,10 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RelatedEditItemField extends CustomField implements FieldSelection {
 

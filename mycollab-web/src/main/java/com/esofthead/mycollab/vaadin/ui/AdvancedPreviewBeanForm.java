@@ -1,10 +1,11 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
-import java.util.HashSet;
-import java.util.Set;
 
 public class AdvancedPreviewBeanForm<T> extends GenericForm implements
         HasPreviewFormHandlers<T> {

@@ -4,9 +4,10 @@
  */
 package com.esofthead.mycollab.module.tracker.service;
 
+import java.util.List;
+
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
-import java.util.List;
 
 /**
  *

@@ -25,9 +25,10 @@ public class PieChartDescriptionBox {
 			final DefaultPieDataset pieDataSet) {
 		final CustomLayout boxWrapper = new CustomLayout("legendBox");
 		final CssLayout mainLayout = new CssLayout();
-		// mainLayout.addStyleName("border-box");
+
 		mainLayout.setSizeUndefined();
 		final List keys = pieDataSet.getKeys();
+
 		for (int i = 0; i < keys.size(); i++) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setMargin(false, false, false, true);

@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.usertracking;
 
-import com.esofthead.mycollab.usertracking.dao.IpCountryMapper;
-import com.esofthead.mycollab.usertracking.domain.IpCountry;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,9 +8,13 @@ import java.security.MessageDigest;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import com.esofthead.mycollab.usertracking.dao.IpCountryMapper;
+import com.esofthead.mycollab.usertracking.domain.IpCountry;
 
 public class IpCountryUpdater {
 

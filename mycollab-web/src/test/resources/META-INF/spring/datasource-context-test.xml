@@ -6,7 +6,8 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="dataSource" class="com.esofthead.mycollab.test.DataSourceFactoryBean" destroy-method="destroy" />
+    <bean id="dataSource" class="com.esofthead.mycollab.test.DataSourceFactoryBean"
+        destroy-method="destroy" />
 
     <bean id="txManager"
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -21,12 +22,13 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+        depends-on="dbMigration">
         <property name="dataSource" ref="dataSource" />
-
         <property name="typeAliasesPackage" value="com.esofthead.mycollab" />
-
+        <property name="typeAliasesSuperType"
+            value="com.esofthead.mycollab.core.arguments.SearchCriteria" />
+        <property name="typeHandlersPackage" value="com.esofthead.mybatis.plugin.ext" />
         <property name="mapperLocations" value="classpath*:sqlMap/**/*.xml" />
     </bean>
 

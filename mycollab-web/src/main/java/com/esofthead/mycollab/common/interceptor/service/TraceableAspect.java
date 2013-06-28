@@ -1,13 +1,9 @@
 package com.esofthead.mycollab.common.interceptor.service;
 
-import com.esofthead.mycollab.common.ActivityStreamConstants;
-import com.esofthead.mycollab.common.domain.ActivityStream;
-import com.esofthead.mycollab.common.service.ActivityStreamService;
-import com.esofthead.mycollab.web.AppContext;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -17,6 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.esofthead.mycollab.common.ActivityStreamConstants;
+import com.esofthead.mycollab.common.domain.ActivityStream;
+import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.web.AppContext;
 
 @Aspect
 @Component

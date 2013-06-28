@@ -1,8 +1,9 @@
 /*Domain class of table m_prj_standup*/
 package com.esofthead.mycollab.module.project.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 class StandupReport extends ValuedBean {
     /**

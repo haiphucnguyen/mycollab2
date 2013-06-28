@@ -1,10 +1,7 @@
 package com.esofthead.mycollab.module.project.view.file;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
-
-import javax.jcr.Node;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;

@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-import com.vaadin.ui.ComponentContainer;
 import java.io.Serializable;
+
+import com.vaadin.ui.ComponentContainer;
 
 public interface Presenter extends Serializable {
     

@@ -1,8 +1,9 @@
 /*Domain class of table s_save_search_result*/
 package com.esofthead.mycollab.common.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 class SaveSearchResult extends ValuedBean {
     /**

@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.crm.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.module.crm.domain.CaseExample;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface CaseMapper extends ICrudGenericDAO {
     /**

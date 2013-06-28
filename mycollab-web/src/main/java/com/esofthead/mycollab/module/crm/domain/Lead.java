@@ -1,8 +1,9 @@
 /*Domain class of table m_crm_lead*/
 package com.esofthead.mycollab.module.crm.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 public class Lead extends ValuedBean {
     /**

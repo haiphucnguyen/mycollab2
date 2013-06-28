@@ -16,13 +16,14 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import java.util.List;
 
 public interface ContactService extends
         IDefaultService<Integer, Contact, ContactSearchCriteria> {

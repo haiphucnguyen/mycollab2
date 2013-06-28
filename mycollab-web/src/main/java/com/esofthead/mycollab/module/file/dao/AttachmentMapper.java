@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.file.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.domain.AttachmentExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface AttachmentMapper extends ICrudGenericDAO {
     /**

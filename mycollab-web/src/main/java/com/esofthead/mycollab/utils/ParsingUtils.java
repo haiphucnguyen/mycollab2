@@ -1,11 +1,12 @@
 package com.esofthead.mycollab.utils;
 
-import com.esofthead.mycollab.common.domain.MailRecipientField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 
 public class ParsingUtils {
 
