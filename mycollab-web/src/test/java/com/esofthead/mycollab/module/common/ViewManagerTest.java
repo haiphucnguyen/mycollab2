@@ -1,11 +1,8 @@
 package com.esofthead.mycollab.module.common;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.esofthead.mycollab.module.common.view.InvalidSomeView;
-import com.esofthead.mycollab.module.common.view.SomeView;
-import com.esofthead.mycollab.module.common.view.SomeViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 
 public class ViewManagerTest {

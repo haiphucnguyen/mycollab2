@@ -16,13 +16,15 @@
  */
 package com.esofthead.mycollab.test;
 
-import com.esofthead.mycollab.test.module.DbUnitModule;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.esofthead.mycollab.test.module.DbUnitModule;
 
 public class EngroupClassRunner extends SpringJUnit4ClassRunner {
 

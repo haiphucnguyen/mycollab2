@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.file.service.impl;
 
-import com.esofthead.mycollab.module.file.service.ContentService;
-import com.esofthead.mycollab.module.file.service.RawContentService;
 import java.io.InputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.esofthead.mycollab.module.file.service.ContentService;
+import com.esofthead.mycollab.module.file.service.RawContentService;
 
 @Service
 public class ContentServiceImpl implements ContentService {

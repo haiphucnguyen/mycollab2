@@ -1,8 +1,9 @@
 package com.esofthead.mycollab.module.crm.domain;
 
+import java.util.List;
+
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.module.file.domain.Attachment;
-import java.util.List;
 
 public class SimpleNote extends Note {
 

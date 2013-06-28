@@ -1,8 +1,9 @@
 /*Domain class of table s_user_preference*/
 package com.esofthead.mycollab.module.user.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 public class UserPreference extends ValuedBean {
     /**

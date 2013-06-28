@@ -49,7 +49,8 @@ public class MainNavigationMenu extends Panel {
 				"http://app.mycollab.com", "Sign In");
 		add(signInLink);
 		
-		
+		//ExternalLink support = new ExternalLink("support", "mailto:sales@esofthead.com");
+		//add(support);
 
 		this.setRenderBodyOnly(true);
 	}

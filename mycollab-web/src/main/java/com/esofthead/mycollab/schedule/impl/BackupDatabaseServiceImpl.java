@@ -1,18 +1,14 @@
 package com.esofthead.mycollab.schedule.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.flyway.core.command.DbMigrate;
 //import com.esofthead.db.sqldump.DbConfiguration;
 //import com.esofthead.db.sqldump.DbExport;
-import com.esofthead.mycollab.common.ApplicationProperties;
-import com.googlecode.flyway.core.command.DbMigrate;
 
 @Service
 public class BackupDatabaseServiceImpl {

@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -9,9 +13,6 @@ import com.esofthead.mycollab.module.tracker.dao.QueryMapperExt;
 import com.esofthead.mycollab.module.tracker.domain.Query;
 import com.esofthead.mycollab.module.tracker.domain.criteria.QuerySearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.QueryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

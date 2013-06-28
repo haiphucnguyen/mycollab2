@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.user.view.component;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -13,7 +15,6 @@ import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
-import java.util.List;
 
 /**
  * 

@@ -1,20 +1,13 @@
 package com.esofthead.mycollab.module.ecm.dao;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/service-test-context.xml" })
+@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class ContentJcrDaoTest extends ServiceTest {
 
 //	@Autowired

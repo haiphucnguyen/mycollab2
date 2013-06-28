@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.crm.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.CampaignLeadExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface CampaignLeadMapper extends ICrudGenericDAO {
     /**

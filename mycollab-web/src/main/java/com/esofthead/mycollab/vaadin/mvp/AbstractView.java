@@ -1,17 +1,19 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
-import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.VerticalLayout;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public abstract class AbstractView extends VerticalLayout implements View,

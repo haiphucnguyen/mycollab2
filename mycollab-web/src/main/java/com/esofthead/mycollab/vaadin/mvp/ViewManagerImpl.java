@@ -1,14 +1,17 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+
 import net.sf.extcos.ComponentQuery;
 import net.sf.extcos.ComponentScanner;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 
 class ViewManagerImpl extends ViewManager {
 

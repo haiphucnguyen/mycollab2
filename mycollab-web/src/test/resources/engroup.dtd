@@ -118,6 +118,7 @@
     s_report_bug_issue*,
     s_role_permission*,
     s_roles*,
+    s_save_search_result*,
     s_user*,
     s_user_account*,
     s_user_account_invitation*,
@@ -1097,6 +1098,7 @@
     monitor_date CDATA #REQUIRED
     type CDATA #REQUIRED
     typeid CDATA #REQUIRED
+    extraTypeId CDATA #IMPLIED
 >
 
 <!ELEMENT m_pm_messages EMPTY>
@@ -1729,6 +1731,18 @@
     id CDATA #REQUIRED
 >
 
+<!ELEMENT s_save_search_result EMPTY>
+<!ATTLIST s_save_search_result
+    id CDATA #REQUIRED
+    saveUser CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
+    queryText CDATA #REQUIRED
+    type CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
+    queryName CDATA #REQUIRED
+>
+
 <!ELEMENT s_user EMPTY>
 <!ATTLIST s_user
     username CDATA #REQUIRED
@@ -1752,6 +1766,7 @@
     twitterAccount CDATA #IMPLIED
     skypeContact CDATA #IMPLIED
     registerStatus CDATA #IMPLIED
+    avatarId CDATA #REQUIRED
 >
 
 <!ELEMENT s_user_account EMPTY>

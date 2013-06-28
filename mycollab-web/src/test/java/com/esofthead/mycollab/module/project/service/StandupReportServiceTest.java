@@ -24,7 +24,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/service-test-context.xml" })
+@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class StandupReportServiceTest extends ServiceTest {
 	@Autowired
 	protected StandupReportService reportService;
