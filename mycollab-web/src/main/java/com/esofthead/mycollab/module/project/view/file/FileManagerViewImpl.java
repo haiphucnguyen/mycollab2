@@ -150,8 +150,8 @@ public class FileManagerViewImpl extends AbstractView implements
 		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
 		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(deleteBtn);
-		
-		this.fileSearchPanel = new FileSearchPanel(menuBar,this);
+
+		this.fileSearchPanel = new FileSearchPanel(menuBar, this);
 
 		this.addComponent(this.fileSearchPanel);
 
@@ -160,6 +160,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 		this.folderTree = new TreeTable();
 		this.folderTree.setMultiSelect(false);
+		this.folderTree.setSelectable(true);
 		this.folderTree.setImmediate(true);
 		this.folderTree.addContainerProperty("Name", String.class, "");
 		this.folderTree.addContainerProperty("Date Modified", String.class, "");
@@ -554,9 +555,11 @@ public class FileManagerViewImpl extends AbstractView implements
 								public void buttonClick(final ClickEvent event) {
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
-									RenameResourceWindow renameWindow = new RenameResourceWindow(
-											resource, resourceService);
-									getWindow().addWindow(renameWindow);
+									final RenameResourceWindow renameWindow = new RenameResourceWindow(
+											resource,
+											FileManagerViewImpl.this.resourceService);
+									ResourceTableDisplay.this.getWindow()
+											.addWindow(renameWindow);
 								}
 							});
 					renameBtn.setStyleName("link");
@@ -572,7 +575,7 @@ public class FileManagerViewImpl extends AbstractView implements
 									if (resource instanceof Content) {
 										resourceSettingPopupBtn
 												.setPopupVisible(false);
-										com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
 												.getStreamResource(((Content) resource)
 														.getPath());
 										AppContext
@@ -580,7 +583,7 @@ public class FileManagerViewImpl extends AbstractView implements
 												.getMainWindow()
 												.open(downloadResource, "_self");
 									} else {
-										com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
 												.getStreamFolderResource(((Folder) resource)
 														.getPath());
 										AppContext
@@ -620,9 +623,9 @@ public class FileManagerViewImpl extends AbstractView implements
 
 												@Override
 												public void onClose(
-														ConfirmDialog dialog) {
+														final ConfirmDialog dialog) {
 													if (dialog.isConfirmed()) {
-														resourceService
+														FileManagerViewImpl.this.resourceService
 																.removeResource(resource
 																		.getPath());
 
@@ -631,11 +634,11 @@ public class FileManagerViewImpl extends AbstractView implements
 
 														FileManagerViewImpl.this.folderTree
 																.setCollapsed(
-																		baseFolder,
+																		FileManagerViewImpl.this.baseFolder,
 																		true);
 														FileManagerViewImpl.this.folderTree
 																.setCollapsed(
-																		baseFolder,
+																		FileManagerViewImpl.this.baseFolder,
 																		false);
 													}
 												}
@@ -697,10 +700,10 @@ public class FileManagerViewImpl extends AbstractView implements
 												.displayResourcesInTable(resource
 														.getName());
 									} else if (resource instanceof Content) {
-										FileDownloadWindow downloadFileWindow = new FileDownloadWindow(
+										final FileDownloadWindow downloadFileWindow = new FileDownloadWindow(
 												(Content) resource);
-										getWindow().addWindow(
-												downloadFileWindow);
+										ResourceTableDisplay.this.getWindow()
+												.addWindow(downloadFileWindow);
 									}
 								}
 							});
@@ -754,55 +757,56 @@ public class FileManagerViewImpl extends AbstractView implements
 
 	protected class FileDownloadWindow extends Window {
 		private static final long serialVersionUID = 1L;
-		private Content content;
+		private final Content content;
 
-		public FileDownloadWindow(Content content) {
+		public FileDownloadWindow(final Content content) {
 			super(content.getName());
 			this.setWidth("400px");
-			center();
+			this.center();
 
 			this.content = content;
-			constructBody();
+			this.constructBody();
 		}
 
 		private void constructBody() {
 			final VerticalLayout layout = new VerticalLayout();
-			Embedded iconEmbed = new Embedded();
+			final Embedded iconEmbed = new Embedded();
 			iconEmbed.setSource(MyCollabResource
 					.newResource("icons/page_white.png"));
 			UiUtils.addComponent(layout, iconEmbed, Alignment.MIDDLE_CENTER);
 
-			GridFormLayoutHelper info = new GridFormLayoutHelper(1, 4, "100%",
-					"80px", Alignment.MIDDLE_LEFT);
+			final GridFormLayoutHelper info = new GridFormLayoutHelper(1, 4,
+					"100%", "80px", Alignment.MIDDLE_LEFT);
 			info.getLayout().setWidth("100%");
 			info.getLayout().setMargin(false);
 			info.getLayout().setSpacing(false);
 
-			if (content.getDescription() != null) {
-				Label desvalue = new Label(content.getDescription());
+			if (this.content.getDescription() != null) {
+				final Label desvalue = new Label(this.content.getDescription());
 				info.addComponent(desvalue, "Description", 0, 0);
 			}
-			Label author = new Label(content.getCreatedBy());
+			final Label author = new Label(this.content.getCreatedBy());
 			info.addComponent(author, "Created by", 0, 1);
 
-			Label size = new Label(content.getSize() + "KB");
+			final Label size = new Label(this.content.getSize() + "KB");
 			info.addComponent(size, "Size", 0, 2);
 
-			Label dateCreate = new Label(AppContext.formatDate(content
-					.getCreated().getTime()));
+			final Label dateCreate = new Label(
+					AppContext.formatDate(this.content.getCreated().getTime()));
 			info.addComponent(dateCreate, "Date created", 0, 3);
 
 			layout.addComponent(info.getLayout());
 
-			HorizontalLayout buttonControls = new HorizontalLayout();
+			final HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
-			Button download = new Button("Download", new ClickListener() {
+			final Button download = new Button("Download", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
-					com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-							.getStreamResource(content.getPath());
+				public void buttonClick(final ClickEvent event) {
+					final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+							.getStreamResource(FileDownloadWindow.this.content
+									.getPath());
 					AppContext.getApplication().getMainWindow()
 							.open(downloadResource, "_self");
 				}
@@ -811,11 +815,11 @@ public class FileManagerViewImpl extends AbstractView implements
 			UiUtils.addComponent(buttonControls, download,
 					Alignment.MIDDLE_CENTER);
 
-			Button cancle = new Button("Cancel", new ClickListener() {
+			final Button cancle = new Button("Cancel", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					FileDownloadWindow.this.close();
 				}
 			});
@@ -831,26 +835,27 @@ public class FileManagerViewImpl extends AbstractView implements
 
 	protected class RenameResourceWindow extends Window {
 		private static final long serialVersionUID = 1L;
-		private Resource resource;
-		private ResourceService service;
+		private final Resource resource;
+		private final ResourceService service;
 
-		public RenameResourceWindow(Resource resource, ResourceService service) {
+		public RenameResourceWindow(final Resource resource,
+				final ResourceService service) {
 			super("Rename folder/file");
-			center();
+			this.center();
 			this.setWidth("400px");
 
 			this.service = service;
 			this.resource = resource;
-			constructBody();
+			this.constructBody();
 		}
 
 		private void constructBody() {
 			final VerticalLayout layout = new VerticalLayout();
-			HorizontalLayout topRename = new HorizontalLayout();
+			final HorizontalLayout topRename = new HorizontalLayout();
 			topRename.setSpacing(true);
 			topRename.setMargin(true);
 
-			Label label = new Label("Enter new name: ");
+			final Label label = new Label("Enter new name: ");
 			UiUtils.addComponent(topRename, label, Alignment.MIDDLE_LEFT);
 
 			final TextField newName = new TextField();
@@ -859,33 +864,41 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
 
-			HorizontalLayout controlButton = new HorizontalLayout();
+			final HorizontalLayout controlButton = new HorizontalLayout();
 			controlButton.setSpacing(true);
-			Button save = new Button("Save", new ClickListener() {
+			final Button save = new Button("Save", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
-					String oldPath = resource.getPath();
-					String parentPath = oldPath.substring(0,
+				public void buttonClick(final ClickEvent event) {
+					final String oldPath = RenameResourceWindow.this.resource
+							.getPath();
+					final String parentPath = oldPath.substring(0,
 							oldPath.lastIndexOf("/") + 1);
 					final String newNameValue = (String) newName.getValue();
-					String newPath = parentPath + newNameValue;
-					try{
-						service.rename(oldPath, newPath);
+					final String newPath = parentPath + newNameValue;
+					try {
+						RenameResourceWindow.this.service.rename(oldPath,
+								newPath);
 						// reset layout
 						FileManagerViewImpl.this
 								.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
-						// Set item caption for sub folder of base folder in folderTree
-						List<Folder> childs = baseFolder.getChilds();
-						for (Folder folder : childs) {
-							if (folder.getName().equals(resource.getName())) {
-								folderTree.setItemCaption(folder, newNameValue);
+						// Set item caption for sub folder of base folder in
+						// folderTree
+						final List<Folder> childs = FileManagerViewImpl.this.baseFolder
+								.getChilds();
+						for (final Folder folder : childs) {
+							if (folder.getName().equals(
+									RenameResourceWindow.this.resource
+											.getName())) {
+								FileManagerViewImpl.this.folderTree
+										.setItemCaption(folder, newNameValue);
 							}
 						}
 						RenameResourceWindow.this.close();
-					}catch(ContentException e){
-						getWindow().showNotification(e.getMessage());
+					} catch (final ContentException e) {
+						RenameResourceWindow.this.getWindow().showNotification(
+								e.getMessage());
 					}
 				}
 			});
@@ -893,11 +906,11 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
 
-			Button cancel = new Button("Cancel", new ClickListener() {
+			final Button cancel = new Button("Cancel", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
+				public void buttonClick(final ClickEvent event) {
 					RenameResourceWindow.this.close();
 				}
 			});
@@ -908,26 +921,30 @@ public class FileManagerViewImpl extends AbstractView implements
 		}
 	}
 
-	
-	protected void conStructBodyBottom(List<Resource> lst, int numberItem){
-		FileManagerViewImpl.this.removeComponent(FileManagerViewImpl.this.folderTree);
-		FileManagerViewImpl.this.removeComponent(FileManagerViewImpl.this.resourceTable);
+	protected void conStructBodyBottom(final List<Resource> lst,
+			final int numberItem) {
+		FileManagerViewImpl.this
+				.removeComponent(FileManagerViewImpl.this.folderTree);
+		FileManagerViewImpl.this
+				.removeComponent(FileManagerViewImpl.this.resourceTable);
 		final CssLayout bottomLayout = new CssLayout();
-		
-		Button backBtn = new Button("Back", new ClickListener() {
+
+		final Button backBtn = new Button("Back", new ClickListener() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void buttonClick(ClickEvent event) {
-				//back to main window
+			public void buttonClick(final ClickEvent event) {
+				// back to main window
 			}
 		});
-		fileSearchPanel.getBasicSearchBody().addComponent(backBtn);
-		
-		ButtonLink file = new ButtonLink("");
-		file.setIcon(MyCollabResource.newResource("icons/16/ecm/folder_open.png"));
-		
+		this.fileSearchPanel.getBasicSearchBody().addComponent(backBtn);
+
+		final ButtonLink file = new ButtonLink("");
+		file.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/folder_open.png"));
+
 		bottomLayout.addComponent(file);
-		
+
 		FileManagerViewImpl.this.addComponent(bottomLayout);
 	}
 }
