@@ -9,6 +9,11 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -16,10 +21,16 @@ import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -35,7 +46,8 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -48,6 +60,7 @@ import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.TreeTable;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
 public class FileManagerViewImpl extends AbstractView implements
@@ -150,8 +163,8 @@ public class FileManagerViewImpl extends AbstractView implements
 		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
 		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(deleteBtn);
-		
-		this.fileSearchPanel = new FileSearchPanel(menuBar,this);
+
+		this.fileSearchPanel = new FileSearchPanel(menuBar);
 
 		this.addComponent(this.fileSearchPanel);
 
@@ -186,12 +199,13 @@ public class FileManagerViewImpl extends AbstractView implements
 				if (subFolders != null) {
 					for (final Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
-						FileManagerViewImpl.this.folderTree.addItem(
+						Object addItem = FileManagerViewImpl.this.folderTree.addItem(
 								new Object[] {
 										subFolder.getName(),
 										AppContext.formatDateTime(subFolder
 												.getCreated().getTime()) },
 								subFolder);
+
 						FileManagerViewImpl.this.folderTree.setItemIcon(
 								subFolder,
 								MyCollabResource
@@ -738,8 +752,6 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			this.setColumnExpandRatio("path", 1);
 			this.setColumnWidth("uuid", 22);
-			// this.setColumnWidth("createdBy",
-			// UIConstants.TABLE_X_LABEL_WIDTH);
 			this.setColumnWidth("size", UIConstants.TABLE_S_LABEL_WIDTH);
 			this.setColumnWidth("created", UIConstants.TABLE_DATE_TIME_WIDTH);
 		}
@@ -871,20 +883,27 @@ public class FileManagerViewImpl extends AbstractView implements
 							oldPath.lastIndexOf("/") + 1);
 					final String newNameValue = (String) newName.getValue();
 					String newPath = parentPath + newNameValue;
-					try{
+					try {
 						service.rename(oldPath, newPath);
 						// reset layout
 						FileManagerViewImpl.this
 								.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
-						// Set item caption for sub folder of base folder in folderTree
+						// Set item caption for sub folder of base folder in
+						// folderTree
 						List<Folder> childs = baseFolder.getChilds();
 						for (Folder folder : childs) {
 							if (folder.getName().equals(resource.getName())) {
+								folder.setPath(newPath);
+								folderTree.removeItem(folder);
+								folderTree.addItem(
+										new Object[] { folder.getName(), "" },
+										folder);
 								folderTree.setItemCaption(folder, newNameValue);
+								folderTree.setParent(folder, baseFolder);
 							}
 						}
 						RenameResourceWindow.this.close();
-					}catch(ContentException e){
+					} catch (ContentException e) {
 						getWindow().showNotification(e.getMessage());
 					}
 				}
@@ -907,27 +926,145 @@ public class FileManagerViewImpl extends AbstractView implements
 			this.addComponent(layout);
 		}
 	}
-
 	
-	protected void conStructBodyBottom(List<Resource> lst, int numberItem){
-		FileManagerViewImpl.this.removeComponent(FileManagerViewImpl.this.folderTree);
-		FileManagerViewImpl.this.removeComponent(FileManagerViewImpl.this.resourceTable);
-		final CssLayout bottomLayout = new CssLayout();
-		
-		Button backBtn = new Button("Back", new ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				//back to main window
+	class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
+		private static final long serialVersionUID = 1L;
+		private final SimpleProject project;
+		protected FileSearchCriteria searchCriteria;
+		private ComponentContainer menuBar = null;
+		private ResourceService resourceService;
+		private HorizontalLayout basicSearchBody;
+
+		public HorizontalLayout getBasicSearchBody() {
+			return basicSearchBody;
+		}
+
+		public FileSearchPanel(final ComponentContainer menuBar) {
+			this.project = (SimpleProject) AppContext.getVariable("project");
+			this.menuBar = menuBar;
+			this.resourceService = AppContext.getSpringBean(ResourceService.class);
+		}
+
+		@Override
+		public void attach() {
+			super.attach();
+			this.createBasicSearchLayout();
+		}
+
+		private void createBasicSearchLayout() {
+
+			this.setCompositionRoot(new FileBasicSearchLayout());
+		}
+
+		private HorizontalLayout createSearchTopPanel() {
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			layout.setSpacing(true);
+
+			final Embedded titleIcon = new Embedded();
+			titleIcon.setSource(MyCollabResource
+					.newResource("icons/24/project/file.png"));
+			layout.addComponent(titleIcon);
+			layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
+			final Label searchtitle = new Label("Files");
+			searchtitle.setStyleName(Reindeer.LABEL_H2);
+			layout.addComponent(searchtitle);
+			layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+			layout.setExpandRatio(searchtitle, 1.0f);
+
+			if (this.menuBar != null) {
+				UiUtils.addComponent(layout, this.menuBar, Alignment.MIDDLE_RIGHT);
 			}
-		});
-		fileSearchPanel.getBasicSearchBody().addComponent(backBtn);
-		
-		ButtonLink file = new ButtonLink("");
-		file.setIcon(MyCollabResource.newResource("icons/16/ecm/folder_open.png"));
-		
-		bottomLayout.addComponent(file);
-		
-		FileManagerViewImpl.this.addComponent(bottomLayout);
+
+			return layout;
+		}
+
+		@SuppressWarnings("rawtypes")
+		private class FileBasicSearchLayout extends BasicSearchLayout {
+
+			@SuppressWarnings("unchecked")
+			public FileBasicSearchLayout() {
+				super(FileSearchPanel.this);
+			}
+
+			private static final long serialVersionUID = 1L;
+			private TextField nameField;
+			private CheckBox myItemCheckbox;
+
+			@Override
+			public ComponentContainer constructHeader() {
+				return FileSearchPanel.this.createSearchTopPanel();
+			}
+
+			@Override
+			public ComponentContainer constructBody() {
+				basicSearchBody = new HorizontalLayout();
+				basicSearchBody.setSpacing(false);
+
+				this.nameField = this.createSeachSupportTextField(new TextField(),
+						"NameFieldOfBasicSearch");
+
+				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+				UiUtils.addComponent(basicSearchBody, this.nameField,
+						Alignment.MIDDLE_CENTER);
+
+				final Button searchBtn = new Button();
+				searchBtn.setStyleName("search-icon-button");
+				searchBtn.setIcon(MyCollabResource
+						.newResource("icons/16/search_white.png"));
+				searchBtn.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(new ProjectContentEvent.Search(FileSearchPanel.this, new String[]{}));
+					}
+				});
+				UiUtils.addComponent(basicSearchBody, searchBtn,
+						Alignment.MIDDLE_LEFT);
+
+				this.myItemCheckbox = new CheckBox("My Items");
+				this.myItemCheckbox.setWidth("75px");
+				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
+						Alignment.MIDDLE_CENTER);
+
+				final Separator separator = new Separator();
+				UiUtils.addComponent(basicSearchBody, separator,
+						Alignment.MIDDLE_LEFT);
+
+				final Button cancelBtn = new Button(
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+				cancelBtn.setStyleName(UIConstants.THEME_LINK);
+				cancelBtn.addStyleName("cancel-button");
+				cancelBtn.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						FileBasicSearchLayout.this.nameField.setValue("");
+					}
+				});
+				UiUtils.addComponent(basicSearchBody, cancelBtn,
+						Alignment.MIDDLE_CENTER);
+				return basicSearchBody;
+			}
+
+			@Override
+			protected SearchCriteria fillupSearchCriteria() {
+				FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
+				FileSearchPanel.this.searchCriteria
+						.setProjectId(new NumberSearchField(SearchField.AND,
+								FileSearchPanel.this.project.getId()));
+
+				FileSearchPanel.this.searchCriteria
+						.setFileName(new StringSearchField(this.nameField
+								.getValue().toString().trim()));
+
+				return FileSearchPanel.this.searchCriteria;
+			}
+
+		}
 	}
 }

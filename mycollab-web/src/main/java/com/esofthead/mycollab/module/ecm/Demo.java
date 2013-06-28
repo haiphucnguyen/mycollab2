@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.ecm;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -23,25 +25,25 @@ public class Demo {
 
 		ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
 
-//		jcrDao.removeResource("/a/b/d");
+		// jcrDao.removeResource("/a/b/d");
 
-		Folder pageContent = new Folder();
-		pageContent.setPath("a/b/d");
+//		Folder pageContent = new Folder();
+//		pageContent.setPath("a/b/d");
+//
+//		jcrDao.createFolder(pageContent, "baohan");
+//
+//		Resource content = jcrDao.getResource("a/b/d");
+//		System.out.println(content.getCreatedUser());
+//
+//		System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
+//
+//		jcrDao.rename("a/b/d", "a/b/c");
+//		System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
+//		System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
 
-		jcrDao.createFolder(pageContent, "baohan");
-
-		Resource content = jcrDao.getResource("a/b/d");
-		System.out.println(content.getCreatedUser());
-		
-		System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
-		
-		jcrDao.rename("a/b/d", "a/b/c");
-		System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
-		System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
-		
-//		List<Resource> resources = jcrDao.searchResourcesByName("d");
-//		System.out.println("Resources: " + (resources != null));
-		// System.out.println("CONTENT " + content);
+		List<Resource> resources = jcrDao.searchResourcesByName("c");
+		System.out.println("Resources: " + (resources != null));
+//		System.out.println("CONTENT " + content);
 		//
 		// jcrDao.removeContent("example/a/b");
 		// Content content2 = jcrDao.getContent("example/a/b");
