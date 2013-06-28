@@ -807,7 +807,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pricing-button a {
-	width: 107px;
+	width: 124px;
 	height: 31px;
 	background: url("../images/pricing_button.png") no-repeat center center;
 	display: block;
@@ -858,6 +858,10 @@ h1, h2, h3, h4, h5, h6 {
 	width: 172px;
 	background-color: #FAFAFA;
 	border-right: solid 1px #BCB8B8;
+}
+
+.prig-table tr td img {
+	padding-top: 8px;
 }
 
 .prig-mid-title {
