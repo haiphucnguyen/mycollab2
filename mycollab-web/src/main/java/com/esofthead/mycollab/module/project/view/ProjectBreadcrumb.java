@@ -696,11 +696,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoFileList() {
 		this.select(1);
 		this.addLink(new Button("Files"));
-		AppContext
-				.addFragment(
-						"project/file/list/"
-								+ UrlEncodeDecoder.encode(project.getId()),
-						"Files");
+		AppContext.addFragment(
+				"project/file/dashboard/"
+						+ UrlEncodeDecoder.encode(project.getId()), "Files");
 	}
 
 	public void gotoStandupList() {

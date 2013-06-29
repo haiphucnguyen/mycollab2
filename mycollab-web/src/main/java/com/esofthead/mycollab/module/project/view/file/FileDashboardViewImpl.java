@@ -63,8 +63,8 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
-public class FileManagerViewImpl extends AbstractView implements
-		FileManagerView {
+public class FileDashboardViewImpl extends AbstractView implements
+		FileDashboardView {
 	private static final long serialVersionUID = 1L;
 
 	private final TreeTable folderTree;
@@ -76,7 +76,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 	private final ResourceService resourceService;
 
-	public FileManagerViewImpl() {
+	public FileDashboardViewImpl() {
 		this.setWidth("100%");
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
@@ -92,12 +92,12 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						if (FileManagerViewImpl.this.folderTree.getValue() != null) {
-							FileManagerViewImpl.this.baseFolder = (Folder) FileManagerViewImpl.this.folderTree
+						if (FileDashboardViewImpl.this.folderTree.getValue() != null) {
+							FileDashboardViewImpl.this.baseFolder = (Folder) FileDashboardViewImpl.this.folderTree
 									.getValue();
 						}
 
-						FileManagerViewImpl.this.getWindow().addWindow(
+						FileDashboardViewImpl.this.getWindow().addWindow(
 								new AddNewFolderWindow());
 					}
 				});
@@ -113,7 +113,7 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						FileManagerViewImpl.this.getWindow().addWindow(
+						FileDashboardViewImpl.this.getWindow().addWindow(
 								new UploadContentWindow());
 
 					}
@@ -128,19 +128,19 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						if (FileManagerViewImpl.this.baseFolder != null
-								&& !FileManagerViewImpl.this.projectPath
-										.equals(FileManagerViewImpl.this.baseFolder
+						if (FileDashboardViewImpl.this.baseFolder != null
+								&& !FileDashboardViewImpl.this.projectPath
+										.equals(FileDashboardViewImpl.this.baseFolder
 												.getPath())) {
 							ConfirmDialogExt.show(
-									FileManagerViewImpl.this.getWindow(),
+									FileDashboardViewImpl.this.getWindow(),
 									LocalizationHelper
 											.getMessage(
 													GenericI18Enum.DELETE_DIALOG_TITLE,
 													ApplicationProperties
 															.getString(ApplicationProperties.SITE_NAME)),
 									"Are you sure to delete folder "
-											+ FileManagerViewImpl.this.baseFolder
+											+ FileDashboardViewImpl.this.baseFolder
 													.getName() + " ?",
 									LocalizationHelper
 											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
@@ -190,30 +190,30 @@ public class FileManagerViewImpl extends AbstractView implements
 			@Override
 			public void nodeExpand(final ExpandEvent event) {
 				final Folder expandFolder = (Folder) event.getItemId();
-				final List<Folder> subFolders = FileManagerViewImpl.this.resourceService
+				final List<Folder> subFolders = FileDashboardViewImpl.this.resourceService
 						.getSubFolders(expandFolder.getPath());
 
-				FileManagerViewImpl.this.folderTree.setItemIcon(expandFolder,
+				FileDashboardViewImpl.this.folderTree.setItemIcon(expandFolder,
 						MyCollabResource
 								.newResource("icons/16/ecm/folder_open.png"));
 
 				if (subFolders != null) {
 					for (final Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
-						Object addItem = FileManagerViewImpl.this.folderTree.addItem(
+						Object addItem = FileDashboardViewImpl.this.folderTree.addItem(
 								new Object[] {
 										subFolder.getName(),
 										AppContext.formatDateTime(subFolder
 												.getCreated().getTime()) },
 								subFolder);
 
-						FileManagerViewImpl.this.folderTree.setItemIcon(
+						FileDashboardViewImpl.this.folderTree.setItemIcon(
 								subFolder,
 								MyCollabResource
 										.newResource("icons/16/ecm/folder_close.png"));
-						FileManagerViewImpl.this.folderTree.setItemCaption(
+						FileDashboardViewImpl.this.folderTree.setItemCaption(
 								subFolder, subFolder.getName());
-						FileManagerViewImpl.this.folderTree.setParent(
+						FileDashboardViewImpl.this.folderTree.setParent(
 								subFolder, expandFolder);
 					}
 				}
@@ -226,12 +226,12 @@ public class FileManagerViewImpl extends AbstractView implements
 			@Override
 			public void nodeCollapse(final CollapseEvent event) {
 				final Folder collapseFolder = (Folder) event.getItemId();
-				FileManagerViewImpl.this.folderTree.setItemIcon(collapseFolder,
+				FileDashboardViewImpl.this.folderTree.setItemIcon(collapseFolder,
 						MyCollabResource
 								.newResource("icons/16/ecm/folder_close.png"));
 				final List<Folder> childs = collapseFolder.getChilds();
 				for (final Folder subFolder : childs) {
-					FileManagerViewImpl.this.folderTree.removeItem(subFolder);
+					FileDashboardViewImpl.this.folderTree.removeItem(subFolder);
 				}
 
 				childs.clear();
@@ -243,10 +243,10 @@ public class FileManagerViewImpl extends AbstractView implements
 
 			@Override
 			public void itemClick(final ItemClickEvent event) {
-				FileManagerViewImpl.this.baseFolder = (Folder) event
+				FileDashboardViewImpl.this.baseFolder = (Folder) event
 						.getItemId();
-				FileManagerViewImpl.this
-						.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+				FileDashboardViewImpl.this
+						.displayResourcesInTable(FileDashboardViewImpl.this.baseFolder);
 			}
 		});
 
@@ -384,16 +384,16 @@ public class FileManagerViewImpl extends AbstractView implements
 							if (folderVal != null
 									&& !folderVal.trim().equals("")) {
 								// TODO: check folder name with valid characters
-								final String baseFolderPath = (FileManagerViewImpl.this.baseFolder == null) ? FileManagerViewImpl.this.projectPath
-										: FileManagerViewImpl.this.baseFolder
+								final String baseFolderPath = (FileDashboardViewImpl.this.baseFolder == null) ? FileDashboardViewImpl.this.projectPath
+										: FileDashboardViewImpl.this.baseFolder
 												.getPath();
-								final Folder newFolder = FileManagerViewImpl.this.resourceService
+								final Folder newFolder = FileDashboardViewImpl.this.resourceService
 										.createNewFolder(baseFolderPath,
 												folderVal,
 												AppContext.getUsername());
-								FileManagerViewImpl.this.baseFolder
+								FileDashboardViewImpl.this.baseFolder
 										.addChild(newFolder);
-								FileManagerViewImpl.this.folderTree.addItem(
+								FileDashboardViewImpl.this.folderTree.addItem(
 										new Object[] {
 												newFolder.getName(),
 												AppContext
@@ -401,22 +401,22 @@ public class FileManagerViewImpl extends AbstractView implements
 																.getCreated()
 																.getTime()) },
 										newFolder);
-								FileManagerViewImpl.this.folderTree
+								FileDashboardViewImpl.this.folderTree
 										.setItemCaption(newFolder,
 												newFolder.getName());
-								FileManagerViewImpl.this.folderTree.setParent(
+								FileDashboardViewImpl.this.folderTree.setParent(
 										newFolder,
-										FileManagerViewImpl.this.baseFolder);
-								FileManagerViewImpl.this.folderTree
+										FileDashboardViewImpl.this.baseFolder);
+								FileDashboardViewImpl.this.folderTree
 										.setItemIcon(
 												newFolder,
 												MyCollabResource
 														.newResource("icons/16/ecm/folder_close.png"));
-								if (FileManagerViewImpl.this.folderTree
-										.isCollapsed(FileManagerViewImpl.this.baseFolder)) {
-									FileManagerViewImpl.this.folderTree
+								if (FileDashboardViewImpl.this.folderTree
+										.isCollapsed(FileDashboardViewImpl.this.baseFolder)) {
+									FileDashboardViewImpl.this.folderTree
 											.setCollapsed(
-													FileManagerViewImpl.this.baseFolder,
+													FileDashboardViewImpl.this.baseFolder,
 													false);
 								}
 								AddNewFolderWindow.this.close();
@@ -493,7 +493,7 @@ public class FileManagerViewImpl extends AbstractView implements
 								final Content content = new Content();
 								content.setDescription((String) UploadContentWindow.this.descField
 										.getValue());
-								content.setPath(FileManagerViewImpl.this.baseFolder
+								content.setPath(FileDashboardViewImpl.this.baseFolder
 										.getPath()
 										+ "/"
 										+ UploadContentWindow.this.uploadField
@@ -501,13 +501,13 @@ public class FileManagerViewImpl extends AbstractView implements
 								content.setSize(Double.parseDouble(""
 										+ UploadContentWindow.this.uploadField
 												.getFileSize()));
-								FileManagerViewImpl.this.resourceService
+								FileDashboardViewImpl.this.resourceService
 										.saveContent(content,
 												AppContext.getUsername(),
 												contentStream);
 								UploadContentWindow.this.close();
-								FileManagerViewImpl.this
-										.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+								FileDashboardViewImpl.this
+										.displayResourcesInTable(FileDashboardViewImpl.this.baseFolder);
 								UploadContentWindow.this.close();
 							} else {
 								AppContext
@@ -571,7 +571,7 @@ public class FileManagerViewImpl extends AbstractView implements
 											.setPopupVisible(false);
 									final RenameResourceWindow renameWindow = new RenameResourceWindow(
 											resource,
-											FileManagerViewImpl.this.resourceService);
+											FileDashboardViewImpl.this.resourceService);
 									ResourceTableDisplay.this.getWindow()
 											.addWindow(renameWindow);
 								}
@@ -619,7 +619,7 @@ public class FileManagerViewImpl extends AbstractView implements
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
 									ConfirmDialogExt.show(
-											FileManagerViewImpl.this
+											FileDashboardViewImpl.this
 													.getWindow(),
 											LocalizationHelper
 													.getMessage(
@@ -639,20 +639,20 @@ public class FileManagerViewImpl extends AbstractView implements
 												public void onClose(
 														final ConfirmDialog dialog) {
 													if (dialog.isConfirmed()) {
-														FileManagerViewImpl.this.resourceService
+														FileDashboardViewImpl.this.resourceService
 																.removeResource(resource
 																		.getPath());
 
-														FileManagerViewImpl.this
-																.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+														FileDashboardViewImpl.this
+																.displayResourcesInTable(FileDashboardViewImpl.this.baseFolder);
 
-														FileManagerViewImpl.this.folderTree
+														FileDashboardViewImpl.this.folderTree
 																.setCollapsed(
-																		FileManagerViewImpl.this.baseFolder,
+																		FileDashboardViewImpl.this.baseFolder,
 																		true);
-														FileManagerViewImpl.this.folderTree
+														FileDashboardViewImpl.this.folderTree
 																.setCollapsed(
-																		FileManagerViewImpl.this.baseFolder,
+																		FileDashboardViewImpl.this.baseFolder,
 																		false);
 													}
 												}
@@ -710,7 +710,7 @@ public class FileManagerViewImpl extends AbstractView implements
 								@Override
 								public void buttonClick(final ClickEvent event) {
 									if (resource instanceof Folder) {
-										FileManagerViewImpl.this
+										FileDashboardViewImpl.this
 												.displayResourcesInTable(resource
 														.getName());
 									} else if (resource instanceof Content) {
@@ -893,13 +893,13 @@ public class FileManagerViewImpl extends AbstractView implements
 						RenameResourceWindow.this.service.rename(oldPath,
 								newPath);
 						// reset layout
-						FileManagerViewImpl.this
-								.displayResourcesInTable(FileManagerViewImpl.this.baseFolder);
+						FileDashboardViewImpl.this
+								.displayResourcesInTable(FileDashboardViewImpl.this.baseFolder);
 
 						// Set item caption for sub folder of base folder in
 						// folderTree
 
-						final List<Folder> childs = FileManagerViewImpl.this.baseFolder
+						final List<Folder> childs = FileDashboardViewImpl.this.baseFolder
 								.getChilds();
 						for (final Folder folder : childs) {
 							if (folder.getName().equals(
@@ -951,7 +951,6 @@ public class FileManagerViewImpl extends AbstractView implements
 		private final SimpleProject project;
 		protected FileSearchCriteria searchCriteria;
 		private ComponentContainer menuBar = null;
-		private ResourceService resourceService;
 		private HorizontalLayout basicSearchBody;
 
 		public HorizontalLayout getBasicSearchBody() {
@@ -961,8 +960,6 @@ public class FileManagerViewImpl extends AbstractView implements
 		public FileSearchPanel(final ComponentContainer menuBar) {
 			this.project = (SimpleProject) AppContext.getVariable("project");
 			this.menuBar = menuBar;
-			this.resourceService = AppContext
-					.getSpringBean(ResourceService.class);
 		}
 
 		@Override
@@ -1039,9 +1036,14 @@ public class FileManagerViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new ProjectContentEvent.Search(
-										FileSearchPanel.this, new String[] {}));
+						EventBus.getInstance()
+								.fireEvent(
+										new ProjectContentEvent.Search(
+												FileSearchPanel.this,
+												new String[] {
+														baseFolder.getPath(),
+														(String) nameField
+																.getValue() }));
 					}
 				});
 				UiUtils.addComponent(basicSearchBody, searchBtn,

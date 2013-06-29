@@ -6,12 +6,12 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
-import com.esofthead.mycollab.module.project.view.file.FileManagerPresenter;
-import com.esofthead.mycollab.module.project.view.file.FileTrackingScreenData;
+import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
@@ -146,10 +146,10 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				TimeTrackingScreenData.Search.class)) {
 			presenter = PresenterResolver
 					.getPresenter(TimeTrackingPresenter.class);
-		} else if (ClassUtils.instanceOf(pageAction,
-				FileTrackingScreenData.Search.class)) {
-			presenter = PresenterResolver
-					.getPresenter(FileManagerPresenter.class);
+		} else if (ClassUtils
+				.instanceOf(pageAction, FileScreenData.GotoDashboard.class,
+						FileScreenData.Search.class)) {
+			presenter = PresenterResolver.getPresenter(FilePresenter.class);
 		} else {
 			throw new UnsupportedOperationException(
 					"Not support page action chain " + pageAction);

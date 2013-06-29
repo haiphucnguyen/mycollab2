@@ -33,6 +33,9 @@ import com.esofthead.mycollab.module.project.events.FollowingTicketEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
+import com.esofthead.mycollab.module.project.events.ProjectContentEvent.GotoDashboard;
+import com.esofthead.mycollab.module.project.events.ProjectContentEvent.Search;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
@@ -42,10 +45,12 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.FollowingTicketsScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
@@ -92,6 +97,7 @@ public class ProjectController implements IController {
 		bindBugEvents();
 		bindMessageEvents();
 		bindMilestoneEvents();
+		bindFileEvents();
 		bindStandupEvents();
 		bindUserGroupEvents();
 	}
@@ -980,6 +986,51 @@ public class ProjectController implements IController {
 								.gotoStandupReportView(new StandupScreenData.Search(
 										criteria));
 					}
+				});
+	}
+
+	private void bindFileEvents() {
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<ProjectContentEvent.GotoDashboard>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return ProjectContentEvent.GotoDashboard.class;
+							}
+
+							@Override
+							public void handle(GotoDashboard event) {
+								FilePresenter presenter = PresenterResolver
+										.getPresenter(FilePresenter.class);
+								ProjectView projectView = ViewManager
+										.getView(ProjectView.class);
+								presenter.go(projectView,
+										new FileScreenData.GotoDashboard());
+							}
+
+						});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProjectContentEvent.Search>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProjectContentEvent.Search.class;
+					}
+
+					@Override
+					public void handle(Search event) {
+						FilePresenter presenter = PresenterResolver
+								.getPresenter(FilePresenter.class);
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						presenter.go(projectView, new FileScreenData.Search(
+								(String[]) event.getData()));
+					}
+
 				});
 	}
 
