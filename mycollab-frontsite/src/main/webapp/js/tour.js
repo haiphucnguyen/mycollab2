@@ -3,7 +3,12 @@ $(document).ready(function(){
 	$('.content-1').show(0);
 	$('.items-1').addClass('item-active');
 	
-	// Event click menu left
+	// Redirect to pricing page
+	$('.free-trial').click(function(){
+		window.location = "/pricing";	
+	})
+	
+	// Event click on menu left
 	$('.tour-menu').click(function(){
 		$('.tour-menu').removeClass('item-active');
 		$(this).addClass('item-active');

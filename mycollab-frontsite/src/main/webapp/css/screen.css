@@ -640,7 +640,7 @@ h1, h2, h3, h4, h5, h6 {
 	text-transform: uppercase;
 	height: 50px;
 	transition: 0.5s;
-	margin: 0px -2px !important
+	margin: 0px -3px !important
 }
 .header-mid ul li a{	
 	color: #FFFFFF;
@@ -1411,6 +1411,7 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100px;
 	text-align: center;
 	left: 10px;
+	cursor: pointer;
 }
 
 .free-trial h2 {
