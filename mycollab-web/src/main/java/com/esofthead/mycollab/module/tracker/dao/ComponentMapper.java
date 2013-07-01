@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.tracker.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.ComponentExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface ComponentMapper extends ICrudGenericDAO {
     /**

@@ -1,8 +1,9 @@
 /*Domain class of table m_prj_project*/
 package com.esofthead.mycollab.module.project.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 public class Project extends ValuedBean {
     /**

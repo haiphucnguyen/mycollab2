@@ -25,15 +25,15 @@ public class PieChartDescriptionBox {
 			final DefaultPieDataset pieDataSet) {
 		final CustomLayout boxWrapper = new CustomLayout("legendBox");
 		final CssLayout mainLayout = new CssLayout();
-		// mainLayout.addStyleName("border-box");
+
 		mainLayout.setSizeUndefined();
 		final List keys = pieDataSet.getKeys();
+
 		for (int i = 0; i < keys.size(); i++) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setMargin(false, false, false, true);
 			layout.addStyleName("inline-block");
 			final Comparable key = (Comparable) keys.get(i);
-
 			final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
 					+ GenericChartWrapper.CHART_COLOR_STR[i
 							% GenericChartWrapper.CHART_COLOR_STR.length]
@@ -44,8 +44,8 @@ public class PieChartDescriptionBox {
 			final Button btnLink = new Button(
 					key
 							+ "("
-							+ String.valueOf(pieDataSet.getValue(key)
-									.intValue()) + ")",
+							+ String.valueOf(pieDataSet.getValue(key).intValue()) 
+							+ ")",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

@@ -1,18 +1,19 @@
 package com.esofthead.mycollab.module.crm.service;
 
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
-import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.EngroupClassRunner;
-import com.esofthead.mycollab.test.ServiceTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
+import com.esofthead.mycollab.test.DataSet;
+import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.ServiceTest;
+
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
+@ContextConfiguration(locations = {"classpath:META-INF/spring/service-context-test.xml"})
 public class TaskServiceTest extends ServiceTest{
 
     @Autowired

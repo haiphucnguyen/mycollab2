@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import java.util.List;
-
 import org.vaadin.addon.customfield.FieldWrapper;
 
 import com.esofthead.mycollab.module.crm.domain.Account;

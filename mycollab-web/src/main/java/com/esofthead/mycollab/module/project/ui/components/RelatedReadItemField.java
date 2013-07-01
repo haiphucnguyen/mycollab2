@@ -1,9 +1,10 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.vaadin.addon.customfield.CustomField;
+
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.vaadin.ui.Label;
 
 public class RelatedReadItemField extends CustomField {
 

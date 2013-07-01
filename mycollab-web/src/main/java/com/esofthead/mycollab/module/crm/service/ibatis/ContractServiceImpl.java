@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -10,9 +14,6 @@ import com.esofthead.mycollab.module.crm.dao.ContractMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Contract;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContractSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContractService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

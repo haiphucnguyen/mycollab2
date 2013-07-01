@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.common.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.common.domain.AuditLog;
 import com.esofthead.mycollab.common.domain.AuditLogExample;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface AuditLogMapper extends ICrudGenericDAO {
     /**

@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.user.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingAccountExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface BillingAccountMapper extends ICrudGenericDAO {
     /**

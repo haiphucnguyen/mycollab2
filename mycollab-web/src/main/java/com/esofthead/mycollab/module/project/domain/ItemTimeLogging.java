@@ -1,8 +1,9 @@
 /*Domain class of table m_prj_time_logging*/
 package com.esofthead.mycollab.module.project.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 public class ItemTimeLogging extends ValuedBean {
     /**

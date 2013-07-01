@@ -1,12 +1,13 @@
 package com.esofthead.mycollab.module.tracker.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface BugMapperExt extends ISearchableDAO<BugSearchCriteria> {
 

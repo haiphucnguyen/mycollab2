@@ -287,8 +287,9 @@
     <select id="getLeadSourcesSummary" parameterType="OpportunitySearchCriteria"
         resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap">
         SELECT m_crm_opportunity.source AS groupid,
-        COUNT(m_crm_opportunity.source) AS
-        value, '' as groupname
+        SUM((SELECT m_crm_opportunity.amount FROM m_crm_opportunity n WHERE n.id = m_crm_opportunity.id AND n.salesStage = 'Closed Won'))AS value,
+       	(SELECT count(*) FROM m_crm_opportunity mm WHERE m_crm_opportunity.source = mm.source) AS countNum,
+       	'' AS groupname
         FROM
         m_crm_opportunity
         <if test="searchCriteria != null">
@@ -296,6 +297,7 @@
                 1=1
                 <include
                     refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+                    <![CDATA[AND m_crm_opportunity.source <> '']]>
             </trim>
         </if>
         GROUP BY m_crm_opportunity.source

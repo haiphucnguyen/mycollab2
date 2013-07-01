@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.project.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TaskMapper extends ICrudGenericDAO {
     /**

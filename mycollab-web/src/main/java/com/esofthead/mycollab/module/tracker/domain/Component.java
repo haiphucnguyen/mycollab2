@@ -1,8 +1,9 @@
 /*Domain class of table m_tracker_component*/
 package com.esofthead.mycollab.module.tracker.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 public class Component extends ValuedBean {
     /**

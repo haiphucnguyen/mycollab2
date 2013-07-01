@@ -1,9 +1,10 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.vaadin.ui.ComponentContainer;
 
 public abstract class AbstractPresenter<V extends View> implements Presenter {
 

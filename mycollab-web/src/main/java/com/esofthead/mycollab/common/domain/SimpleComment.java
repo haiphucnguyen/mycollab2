@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.common.domain;
 
-import com.esofthead.mycollab.module.file.domain.Attachment;
 import java.util.List;
+
+import com.esofthead.mycollab.module.file.domain.Attachment;
 
 public class SimpleComment extends Comment {
 

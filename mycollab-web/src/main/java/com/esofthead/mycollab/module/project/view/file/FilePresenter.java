@@ -1,0 +1,39 @@
+package com.esofthead.mycollab.module.project.view.file;
+
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.view.ProjectView;
+import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.vaadin.ui.ComponentContainer;
+
+public class FilePresenter extends AbstractPresenter<FileContainer> {
+	private static final long serialVersionUID = 1L;
+
+	public FilePresenter() {
+		super(FileContainer.class);
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProjectView projectViewContainer = (ProjectView) container;
+		projectViewContainer.gotoSubView("Files");
+
+		view.removeAllComponents();
+		AbstractPresenter presenter = null;
+
+		if (data instanceof FileScreenData.GotoDashboard) {
+			presenter = PresenterResolver
+					.getPresenter(FileDashboardPresenter.class);
+		} else if (data instanceof FileScreenData.Search) {
+			presenter = PresenterResolver
+					.getPresenter(FileSearchResultPresenter.class);
+		} else {
+			throw new MyCollabException("No support screen data " + data);
+		}
+
+		presenter.go(view, data);
+	}
+
+}

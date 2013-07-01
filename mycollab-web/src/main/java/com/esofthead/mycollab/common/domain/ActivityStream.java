@@ -1,8 +1,9 @@
 /*Domain class of table s_activitystream*/
 package com.esofthead.mycollab.common.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
 public class ActivityStream extends ValuedBean {
     /**

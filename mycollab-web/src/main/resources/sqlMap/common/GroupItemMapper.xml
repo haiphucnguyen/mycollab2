@@ -11,5 +11,7 @@
         <result column="value" jdbcType="INTEGER" property="value" />
 
         <result column="extraValue" jdbcType="VARCHAR" property="extraValue" />
+        
+        <result column="countNum" jdbcType="INTEGER" property="countNum" />
     </resultMap>
 </mapper>

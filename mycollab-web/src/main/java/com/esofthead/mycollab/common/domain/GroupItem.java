@@ -6,7 +6,8 @@ public class GroupItem {
     private String groupname;
     private int value;
     private String extraValue;
-
+    private int countNum;
+    
     public String getGroupid() {
         return groupid;
     }
@@ -15,15 +16,23 @@ public class GroupItem {
         this.groupid = groupid;
     }
 
-    public int getValue() {
-        return value;
-    }
+	public int getValue() {
+		return value;
+	}
 
-    public void setValue(int value) {
-        this.value = value;
-    }
+	public void setValue(int value) {
+		this.value = value;
+	}
 
-    public String getGroupname() {
+	public int getCountNum() {
+		return countNum;
+	}
+
+	public void setCountNum(int countNum) {
+		this.countNum = countNum;
+	}
+
+	public String getGroupname() {
         return groupname;
     }
 

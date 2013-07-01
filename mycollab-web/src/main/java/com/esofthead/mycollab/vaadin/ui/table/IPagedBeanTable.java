@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui.table;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -7,7 +9,6 @@ import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
-import java.util.List;
 
 public interface IPagedBeanTable<S extends SearchCriteria, T>
         extends HasSelectableItemHandlers<T>, HasPagableHandlers, Component, IBeanTable {

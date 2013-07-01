@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.module.file.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.file.dao.AttachmentMapper;
@@ -7,9 +12,6 @@ import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.domain.AttachmentExample;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class AttachmentServiceImpl extends DefaultCrudService<Integer, Attachment> implements AttachmentService {

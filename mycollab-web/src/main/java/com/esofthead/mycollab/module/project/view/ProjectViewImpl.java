@@ -24,9 +24,10 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
-import com.esofthead.mycollab.module.project.view.file.FileManagerPresenter;
+import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
@@ -76,7 +77,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private MilestonePresenter milestonesPresenter;
 	private TaskPresenter taskPresenter;
 	private BugPresenter bugPresenter;
-	private FileManagerPresenter filePresenter;
+	private FilePresenter filePresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 	private TimeTrackingPresenter timePresenter;
@@ -181,7 +182,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							gotoRiskView(new RiskScreenData.Search(
 									searchCriteria));
 						} else if ("Files".equals(caption)) {
-							filePresenter.go(ProjectViewImpl.this, null);
+							filePresenter.go(ProjectViewImpl.this,
+									new FileScreenData.GotoDashboard());
 						} else if ("Problems".equals(caption)) {
 							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
@@ -315,8 +317,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectFileComponent() {
-		filePresenter = PresenterResolver
-				.getPresenter(FileManagerPresenter.class);
+		filePresenter = PresenterResolver.getPresenter(FilePresenter.class);
 		return filePresenter.getView();
 	}
 
@@ -341,7 +342,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				});
 		controlsBtn = new SplitButtonExt(quickActionBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.setIcon(MyCollabResource.newResource("icons/16/project/quick_action.png"));
+		controlsBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/quick_action.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
 		popupButtonsControl.setWidth("150px");

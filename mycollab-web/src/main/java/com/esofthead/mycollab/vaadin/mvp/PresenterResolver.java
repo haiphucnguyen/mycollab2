@@ -1,11 +1,12 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-import com.esofthead.mycollab.web.AppContext;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.web.AppContext;
 
 public class PresenterResolver {
 

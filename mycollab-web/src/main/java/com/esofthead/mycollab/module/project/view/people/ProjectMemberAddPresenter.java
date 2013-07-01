@@ -6,8 +6,6 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import java.util.GregorianCalendar;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
