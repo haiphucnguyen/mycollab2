@@ -1,113 +1,266 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-    <head></head>
-    <body>
-        <wicket:extend>
-            <div id="top-menu">
-                <div class="sub-header tour">
-                    <img alt="" src="images/icon_tour.png" />
-                    <h3 style="display: inline-block">
-                        A Tour of MyCollab<span>See what MyCollab has to offer.</span>
-                    </h3>
-                </div>
-            </div>
-            <div id="banner" class="hidden"></div>
-            <div id="content">
-                <div id="content-mid">
-                    <div class="home-mid">
-                        <div class="home-mid-content" style="padding: 25px 0">
-                            <div id="featured">
-                                <ul class="ui-tabs-nav">
-                                    <li class="ui-tabs-nav-item" id="nav-fragment-1"><a
-                                        href="#fragment-1"><img src="images/slides/image_1.jpg" alt="" />
-                                    </a></li>
-                                    <li class="ui-tabs-nav-item" id="nav-fragment-2"><a
-                                        href="#fragment-2"><img src="images/slides/image_2.jpg" alt="" />
-                                    </a></li>
-                                    <li class="ui-tabs-nav-item" id="nav-fragment-3"><a
-                                        href="#fragment-3"><img src="images/slides/image_3.jpg" alt="" />
-                                    </a></li>
-                                    <li class="ui-tabs-nav-item" id="nav-fragment-4"><a
-                                        href="#fragment-4"><img src="images/slides/image_1.jpg" alt="" />
-                                    </a></li>
-                                    <li class="ui-tabs-nav-item" id="nav-fragment-5"><a
-                                        href="#fragment-5"><img src="images/slides/image_2.jpg" alt="" />
-                                    </a></li>
-                                    <li class="ui-tabs-nav-item" id="nav-fragment-6"><a
-                                        href="#fragment-6"><img src="images/slides/image_3.jpg" alt="" />
-                                    </a></li>
-                                </ul>
+<head></head>
+<body>
+	<wicket:extend>
 
-                                <!-- First Content -->
-                                <div id="fragment-1" class="ui-tabs-panel" style="">
-                                    <img src="images/slides/image1.jpg" alt="" />
-                                    <div class="info">
-                                        some text some text some text some text some <br /> some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some <br />
-
-                                    </div>
-                                </div>
-
-                                <!-- Second Content -->
-                                <div id="fragment-2" class="ui-tabs-panel ui-tabs-hide" style="">
-                                    <img src="images/slides/image2.jpg" alt="" />
-                                    <div class="info">
-                                        some text some text some text some text some <br /> some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some <br />
-
-                                    </div>
-                                </div>
-
-                                <!-- Third Content -->
-                                <div id="fragment-3" class="ui-tabs-panel ui-tabs-hide" style="">
-                                    <img src="images/slides/image3.jpg" alt="" />
-                                    <div class="info">
-                                        some text some text some text some text some <br /> some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some <br />
-
-                                    </div>
-                                </div>
-
-                                <div id="fragment-4" class="ui-tabs-panel ui-tabs-hide" style="">
-                                    <img src="images/slides/image1.jpg" alt="" />
-                                    <div class="info">
-                                        some text some text some text some text some <br /> some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some <br />
-
-                                    </div>
-                                </div>
-                                <div id="fragment-5" class="ui-tabs-panel ui-tabs-hide" style="">
-                                    <img src="images/slides/image2.jpg" alt="" />
-                                    <div class="info">
-                                        some text some text some text some text some <br /> some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some <br />
-
-                                    </div>
-                                </div>
-                                <div id="fragment-6" class="ui-tabs-panel ui-tabs-hide" style="">
-                                    <img src="images/slides/image3.jpg" alt="" />
-                                    <div class="info">
-                                        some text some text some text some text some <br /> some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some text some text
-                                        some text some text some text some text some <br />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-		</wicket:extend>
-    </body>
+		<div id="banner" class="hidden"></div>
+		<div class="free-trial">
+			<h2>FREE TRIAL</h2>
+			<p>30-DAY<br/><span>At No Risk</span></p>
+			<p class="tour-arrow"></p>
+		</div>
+		<div id="tour-content">
+			<div class="tour-top">
+				<div class="tour-top-content">
+					<h1>
+						A TOUR OF MYCOLLAB<br /> <span class="tour-top-small">See
+						what MyCollab has to offer</span>
+					</h1>
+				</div>
+			</div>
+			<div class="tour-mid">
+				<div class="tour-mid-left">
+					<h2>HIGHLIGHT FEATURES</h2>
+					<ul>
+						<li class="items-1 tour-menu">Introduction</li>
+						<li class="items-2 tour-menu">Design your store</li>
+						<li class="items-3 tour-menu">Running your store</li>
+						<li class="items-4 tour-menu">Secure shopping cart</li>
+						<li class="items-5 tour-menu">Ecommerce hosting</li>
+						<li class="items-6 tour-menu">Marketing &amp; SEO</li>
+						<li class="items-7 tour-menu">Mobile commerce</li>
+						<li class="items-8 tour-menu">App Store</li>
+						<li class="items-9 tour-menu">Are you a designer?</li>
+						<li class="items-10 tour-menu">Full feature list</li>
+					</ul>
+				</div>
+				<div class="tour-mid-right">
+					<div class="content-1 tour-items">
+						<div class="intro-block">
+							<h1 class="tour-title">BLOCK WITH THUMBNAIL ON THE LEFT AND
+								TEXT SURROUNDING</h1>
+							<img alt="" src="images/tour_img_content1.jpg" />
+							<p>My Collab provides a reliable, secure shopping cart
+								solution for your ecommerce website. The shopping cart software
+								allows you to accept credit cards and PayPal payments by
+								integrating with over 50 payment gateways.</p>
+							<p>Credit card and order data is encrypted and secure.
+								Shopify is Level 1 PCI compliant and uses 128 bit SSL
+								certificates to keep order details secure.</p>
+							<p>Customer can pay for items in their ecommerce shopping
+								cart using VISA, MasterCard, AMEX or other credit cards in
+								addition to PayPal. Shopify uses a payment gateway to accept
+								credit card payments.</p>
+							<p>If you want to get your online store set up in minutes,
+								use PayPal to accept credit card payments. When you hit a high
+								payment volume, you can easily upgrade to another payment
+								gateway like Authorize.net or Stripe.</p>
+						</div>
+						<div class="intro-block">
+							<div class="block-2-1">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="block-2-2">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="intro-block-bottom">
+							<h1 class="tour-title">BLOCK WITH ONE COLUMN TEXT</h1>
+							<p>My Collab provides a reliable, secure shopping cart
+								solution for your ecommerce website. The shopping cart software
+								allows you to accept credit cards and PayPal payments by
+								integrating with over 50 payment gateways.</p>
+							<p>Credit card and order data is encrypted and secure.
+								Shopify is Level 1 PCI compliant and uses 128 bit SSL
+								certificates to keep order details secure.</p>
+							<p>
+								Customer can pay for items in their ecommerce shopping cart
+								using VISA, MasterCard, AMEX or other credit cards in addition
+								to PayPal. Shopify uses a payment gateway to accept credit card
+								payments.<br />If you want to get your online store set up in
+								minutes, use PayPal to accept credit card payments. When you hit
+								a high payment volume, you can easily upgrade to another payment
+								gateway like Authorize.net or Stripe.
+							</p>
+						</div>
+					</div>
+					
+					<div class="content-2 tour-items">
+						<div class="intro-block">
+							<div class="block-2-1">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="block-2-2">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="intro-block-bottom">
+							<h1 class="tour-title">BLOCK WITH ONE COLUMN TEXT</h1>
+							<p>My Collab provides a reliable, secure shopping cart
+								solution for your ecommerce website. The shopping cart software
+								allows you to accept credit cards and PayPal payments by
+								integrating with over 50 payment gateways.</p>
+							<p>Credit card and order data is encrypted and secure.
+								Shopify is Level 1 PCI compliant and uses 128 bit SSL
+								certificates to keep order details secure.</p>
+							<p>
+								Customer can pay for items in their ecommerce shopping cart
+								using VISA, MasterCard, AMEX or other credit cards in addition
+								to PayPal. Shopify uses a payment gateway to accept credit card
+								payments.<br />If you want to get your online store set up in
+								minutes, use PayPal to accept credit card payments. When you hit
+								a high payment volume, you can easily upgrade to another payment
+								gateway like Authorize.net or Stripe.
+							</p>
+						</div>
+					</div>
+					
+					<div class="content-3 tour-items">
+						<div class="intro-block">
+							<h1 class="tour-title">PAGE 3</h1>
+							<img alt="" src="images/tour_img_content1.jpg" />
+							<p>My Collab provides a reliable, secure shopping cart
+								solution for your ecommerce website. The shopping cart software
+								allows you to accept credit cards and PayPal payments by
+								integrating with over 50 payment gateways.</p>
+							<p>Credit card and order data is encrypted and secure.
+								Shopify is Level 1 PCI compliant and uses 128 bit SSL
+								certificates to keep order details secure.</p>
+							<p>Customer can pay for items in their ecommerce shopping
+								cart using VISA, MasterCard, AMEX or other credit cards in
+								addition to PayPal. Shopify uses a payment gateway to accept
+								credit card payments.</p>
+							<p>If you want to get your online store set up in minutes,
+								use PayPal to accept credit card payments. When you hit a high
+								payment volume, you can easily upgrade to another payment
+								gateway like Authorize.net or Stripe.</p>
+						</div>
+						<div class="intro-block">
+							<div class="block-2-1">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="block-2-2">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="intro-block-bottom">
+							<h1 class="tour-title">BLOCK WITH ONE COLUMN TEXT</h1>
+							<p>My Collab provides a reliable, secure shopping cart
+								solution for your ecommerce website. The shopping cart software
+								allows you to accept credit cards and PayPal payments by
+								integrating with over 50 payment gateways.</p>
+							<p>Credit card and order data is encrypted and secure.
+								Shopify is Level 1 PCI compliant and uses 128 bit SSL
+								certificates to keep order details secure.</p>
+							<p>
+								Customer can pay for items in their ecommerce shopping cart
+								using VISA, MasterCard, AMEX or other credit cards in addition
+								to PayPal. Shopify uses a payment gateway to accept credit card
+								payments.<br />If you want to get your online store set up in
+								minutes, use PayPal to accept credit card payments. When you hit
+								a high payment volume, you can easily upgrade to another payment
+								gateway like Authorize.net or Stripe.
+							</p>
+						</div>
+					</div>
+					
+					<div class="content-4 tour-items">
+						<div class="intro-block">
+							<h1 class="tour-title">PAGE 4</h1>
+							<img alt="" src="images/tour_img_content1.jpg" />
+							<p>My Collab provides a reliable, secure shopping cart
+								solution for your ecommerce website. The shopping cart software
+								allows you to accept credit cards and PayPal payments by
+								integrating with over 50 payment gateways.</p>
+							<p>Credit card and order data is encrypted and secure.
+								Shopify is Level 1 PCI compliant and uses 128 bit SSL
+								certificates to keep order details secure.</p>
+							<p>Customer can pay for items in their ecommerce shopping
+								cart using VISA, MasterCard, AMEX or other credit cards in
+								addition to PayPal. Shopify uses a payment gateway to accept
+								credit card payments.</p>
+							<p>If you want to get your online store set up in minutes,
+								use PayPal to accept credit card payments. When you hit a high
+								payment volume, you can easily upgrade to another payment
+								gateway like Authorize.net or Stripe.</p>
+						</div>
+						<div class="intro-block">
+							<div class="block-2-1">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="block-2-2">
+								<h1 class="tour-title">TWO COLUMS WITH TEXT AND IMAGE</h1>
+								<p>Set up rates for shipping your products based on product
+									weight or prices. Alternatively, Business and Unlimited plan
+									members can automatically calculate shipping rates from UPS,
+									USPS or FedEx in real-time.</p>
+								<img alt="" src="images/tour_img_content2.jpg" />
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="intro-block-bottom">
+							<h1 class="tour-title">BLOCK WITH ONE COLUMN TEXT</h1>
+							<p>My Collab provides a reliable, secure shopping cart
+								solution for your ecommerce website. The shopping cart software
+								allows you to accept credit cards and PayPal payments by
+								integrating with over 50 payment gateways.</p>
+							<p>Credit card and order data is encrypted and secure.
+								Shopify is Level 1 PCI compliant and uses 128 bit SSL
+								certificates to keep order details secure.</p>
+							<p>
+								Customer can pay for items in their ecommerce shopping cart
+								using VISA, MasterCard, AMEX or other credit cards in addition
+								to PayPal. Shopify uses a payment gateway to accept credit card
+								payments.<br />If you want to get your online store set up in
+								minutes, use PayPal to accept credit card payments. When you hit
+								a high payment volume, you can easily upgrade to another payment
+								gateway like Authorize.net or Stripe.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
 </html>

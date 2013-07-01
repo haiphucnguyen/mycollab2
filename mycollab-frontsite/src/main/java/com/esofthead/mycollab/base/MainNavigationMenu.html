@@ -2,35 +2,14 @@
 	<div id="header">
 		<div class="header-mid">
 			<a wicket:id="backHome"><img alt="Logo Mycollab" src="images/logo_small.png" /></a>
-			<a wicket:id="signIn" class="btn-signin" href="http://app.mycollab.com"></a>
 			<ul class="header-menu">
-				<li wicket:id="mainNav">
-					<a wicket:id="mainNavItem"><span wicket:id="itemLabel"></span></a>
-				</li>
+				<li><a wicket:id="tour"><span>TOUR</span></a></li>
+				<li><a wicket:id="support"><span>SUPPORT</span></a></li>
+				<li><a wicket:id="pricing_signup"><span>PRICING &amp; SIGNUP</span></a></li>
+				<li><a wicket:id="privacy"><span>PRIVACY</span></a></li>
+				<li><a wicket:id="signIn" href="http://app.mycollab.com"></a></li>
 			</ul> 
 			
 		</div>
 	</div>
 </wicket:panel>
-<!-- 
-<ul class="header-menu">
-	<li>
-		<a wicket:id="support"><span>SUPPORT</span></a>
-	</li>
-	<li>
-		<a wicket:id="pricing_signup"><span>PRICING &amp; SIGNUP</span></a>
-	</li>
-	<li>
-		<a wicket:id="privacy"><span>PRIVACY</span></a>
-	</li>
-	<li>
-		<a wicket:id="signIn" class="btn-signin" href="http://app.mycollab.com"></a>
-	</li>
-</ul>
-ExternalLink support = new ExternalLink("support", "mailto:sales@esofthead.com");
-add(support);
-BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>("pricing_signup", PricingPage.class);
-add(pricing);
-BookmarkablePageLink<Void> privacy = new BookmarkablePageLink<Void>("privacy", PrivacyPage.class);
-add(privacy);
- -->

@@ -643,8 +643,10 @@ h1, h2, h3, h4, h5, h6 {
 	transition: 0.5s;
 }
 .header-mid ul li a{	
-	font-size: 13px;
-	color: #FFF;
+	color: #FFFFFF;
+    display: block;
+    font-size: 13px;
+    height: 50px;
 }
 
 .header-mid ul li:hover {
@@ -1308,3 +1310,151 @@ h1, h2, h3, h4, h5, h6 {
 	clear: both;
 }
 /* End Privacy style */
+
+/* Tour style */
+#tour-content {
+	width: 1100px;
+	margin: 0 auto;
+	background: url("../images/home_banner_bg.jpg") no-repeat top center;
+}
+
+.tour-top {
+	text-align: center;
+	background: url("../images/home_border_2.png") no-repeat bottom center;
+	margin-bottom: 20px;
+}
+
+.tour-top-content {
+	background: url("../images/icon_tour.png") no-repeat top left transparent;
+	padding-left: 70px;
+	display: inline-block;
+	padding-bottom: 20px;
+}
+
+.tour-top h1 {
+	font-size: 35px;
+	color: #0173bd;
+	font-weight: normal;
+	padding-top: 40px;
+	padding-bottom: 10px;
+	text-align: left;
+}
+
+.tour-top .tour-top-small {
+	font-size: 22px;
+	padding-top: 8px;
+	display: block;
+}
+
+.tour-mid-left {
+	width: 240px;
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.tour-mid-left h2 {
+	font-size: 16px;
+	font-weight: normal;
+	background-color: #228bc9;
+	color: #FFF;
+	padding: 5px 0px 5px 20px;
+}
+
+.tour-mid-left ul li {
+	padding: 5px 0px 5px 45px;
+	font-size: 15px;
+	background: url("../images/tour_icon_design.png") no-repeat 20px 7px;
+	border-left: solid 1px #ababab;
+	border-right: solid 1px #ababab;
+	border-bottom: solid 1px #ababab;
+	
+}
+
+.tour-mid-left ul li:hover {
+	color: #FFF;
+	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #2B97D7;
+	cursor: pointer;
+}
+
+.item-active {
+	color: #FFF;
+	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #2B97D7 !important;
+	cursor: pointer;
+}
+
+.tour-mid-right {
+	float: right;
+	width: 840px;
+}
+
+.tour-title {
+	font-size: 16px;
+	font-weight: normal;
+	color: #228bc9;
+	padding-bottom: 5px;
+}
+
+.content-1 img {
+	float: left;
+	margin: 0px 10px 5px 0px;
+}
+
+.content-1 p {
+	font-size: 14px;
+	padding-bottom: 12px;
+	text-align: justify;
+}
+
+.intro-block {
+	border-bottom: solid 1px #ababab;
+	margin-bottom: 20px;
+	clear: both;
+}
+
+.intro-block-bottom {
+	margin-bottom: 20px;
+}
+
+.block-2-1 {
+	width: 400px;
+	float: left;
+	margin-right: 30px;
+}
+
+.block-2-2 {
+	float: right;
+	width: 400px;
+	padding-bottom: 10px; 
+}
+
+.free-trial {
+	position: absolute;
+	width: 100px;
+	text-align: center;
+	left: 10px;
+}
+
+.free-trial h2 {
+	background-color: #F59502;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.free-trial p {
+	color: #FFF;
+	background-color: #2B97D7;
+	
+}
+
+.tour-arrow {
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 20px solid #2B97D7;
+	background-color: transparent!important;
+}
+
+.free-trial p span {
+	font-size: 12px;
+}
+/* End Tour style */
