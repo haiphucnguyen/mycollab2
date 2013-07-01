@@ -55,7 +55,8 @@ public class OpportunityLeadSourceDashboard extends
 			boolean isFound = false;
 			for (final GroupItem item : groupItems) {
 				if (source.equals(item.getGroupid())) {
-					dataset.setValue(source, item.getValue());
+					if(item.getValue() != 0) dataset.setValue(source, item.getValue());
+					else dataset.setValue(source, item.getCountNum());
 					isFound = true;
 					break;
 				}
