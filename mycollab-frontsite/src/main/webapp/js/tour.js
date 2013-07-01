@@ -14,7 +14,7 @@ $(document).ready(function(){
 			items = classArray[0].split("-");
 			TourSlide(items[1]);
 		}
-	})	
+	})
 });
 
 //Fixed scroll
@@ -31,7 +31,7 @@ $(window).scroll(function(){
 	if ($(window).scrollTop() > 220) {
 		$menu_left.css({'position': 'fixed', 'top': '0px'}); 
 	} else {
-		$menu_left.css({'position': 'absolute', 'top': 'auto'});
+		$menu_left.css({'position': 'relative', 'top': 'auto'});
 	}
 });
 
@@ -39,7 +39,7 @@ $(window).scroll(function(){
 function TourSlide($obj){
 	$('.tour-items').hide("slide", { direction: "left" }, 700);
 	setTimeout(function(){
-		$('.content-' + $obj).show("slide", { direction: "right" }, 800);
+		$('.content-' + $obj).show("slide", { direction: "right" }, 700);
 	}, 500);	
 	
 }
