@@ -2,10 +2,12 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -16,8 +18,10 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.CsvImportButton;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -42,6 +46,7 @@ public class AccountListViewImpl extends AbstractView implements
 	private final VerticalLayout accountListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private CsvImportButton<Account> importCsvButton;
 
 	public AccountListViewImpl() {
 		// setSpacing(true);
@@ -55,11 +60,13 @@ public class AccountListViewImpl extends AbstractView implements
 		this.generateDisplayTable();
 	}
 
+	@SuppressWarnings("unchecked")
 	private ComponentContainer constructTableActionControls() {
 		final CssLayout layoutWrapper = new CssLayout();
 		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 
@@ -86,10 +93,22 @@ public class AccountListViewImpl extends AbstractView implements
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 
+		importCsvButton = new CsvImportButton<Account>() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			protected void importToDB(Account value) {
+				AccountService accountService = AppContext
+						.getSpringBean(AccountService.class);
+				accountService.saveWithSession(value, AppContext.getUsername());
+			}
+		};
+		importCsvButton.setCaption("Import CSV");
+		UiUtils.addComponent(layout, importCsvButton, Alignment.MIDDLE_RIGHT);
+		
 		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 		return layoutWrapper;
 	}
-
+	
 	@Override
 	public void disableActionControls() {
 		this.tableActionControls.setVisible(false);
