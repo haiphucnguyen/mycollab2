@@ -8,6 +8,7 @@ import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -23,7 +24,8 @@ public class CrmModule extends AbstractView implements IModule {
 
 	public CrmModule() {
 		ControllerRegistry.addController(new CrmController(this));
-		CustomLayout container = new CustomLayout("crmContainer");
+		CustomLayout container = CustomLayoutLoader
+				.createLayout("crmContainer");
 		container.setStyleName("crmContainer");
 		container.setWidth("100%");
 

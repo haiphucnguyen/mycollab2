@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.ui.CustomLayout;
+import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressIndicator;
 
-public class ProgressBar extends CustomLayout {
+public class ProgressBar extends CustomLayoutExt {
 	private static final long serialVersionUID = 1L;
 	private final ProgressIndicator progressIndicator;
 	private final Label progressStatusLabel;

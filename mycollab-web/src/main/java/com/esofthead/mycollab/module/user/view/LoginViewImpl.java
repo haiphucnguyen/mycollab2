@@ -7,6 +7,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
@@ -35,7 +36,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 
 		public LoginForm() {
 			// this.setCaption("Login Form");
-			CustomLayout custom = new CustomLayout("loginForm");
+			CustomLayout custom = CustomLayoutLoader.createLayout("loginForm");
 			custom.addStyleName("customLoginForm");
 			usernameField = new TextField("Email address");
 			usernameField.setValue("hainguyen@esofthead.com");

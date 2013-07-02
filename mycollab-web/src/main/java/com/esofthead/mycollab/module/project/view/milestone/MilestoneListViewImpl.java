@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -91,7 +92,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
-		final CustomLayout bodyContent = new CustomLayout("milestoneView");
+		final CustomLayout bodyContent = CustomLayoutLoader.createLayout("milestoneView");
 		bodyContent.setWidth("100%");
 		bodyContent.setStyleName("milestone-view");
 

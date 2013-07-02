@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.dontpush.server.AtmosphereDontPushHandler;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -14,7 +15,9 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.vaadin.Application;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
 public class MyCollabApplication extends Application implements
@@ -80,7 +83,7 @@ public class MyCollabApplication extends Application implements
 		}
 
 		String pathInfo = request.getPathInfo();
-		if (pathInfo.equals("") || pathInfo.equals("/")) {
+		if ("".equals(pathInfo) || ("/").equals(pathInfo)) {
 			if (sessionData != null) {
 				String urlParam = request.getParameter("url");
 				if (urlParam != null && !urlParam.equals("")) {
@@ -163,5 +166,38 @@ public class MyCollabApplication extends Application implements
 
 	public void setInitialUrl(String initialUrl) {
 		this.initialUrl = initialUrl;
+	}
+
+	@Override
+	public Window getWindow(String name) {
+		Window w = super.getWindow(name);
+		if (w == null) {
+			if (name.startsWith("org.vaadin")) {
+				try {
+					Class<?> forName = Class.forName(name);
+					try {
+						Window newInstance = (Window) forName.newInstance();
+						w = newInstance;
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if (w != null) {
+				addWindow(w);
+				w.open(new ExternalResource(w.getURL()));
+			}
+			AtmosphereDontPushHandler a;
+			return w;
+		}
+		return w;
 	}
 }

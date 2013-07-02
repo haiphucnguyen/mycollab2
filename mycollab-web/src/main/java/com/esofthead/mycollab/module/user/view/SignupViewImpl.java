@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.EmailValidator;
@@ -147,7 +148,7 @@ public class SignupViewImpl extends AbstractView implements SignupView {
 
 		@Override
 		public Layout getLayout() {
-			SignupFormLayout = new CustomLayout("signupForm");
+			SignupFormLayout = CustomLayoutLoader.createLayout("signupForm");
 			SignupFormLayout.addStyleName("customSignUpForm");
 			return SignupFormLayout;
 		}

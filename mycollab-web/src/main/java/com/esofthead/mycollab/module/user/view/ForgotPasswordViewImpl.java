@@ -9,6 +9,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -34,7 +35,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 		private final TextField nameOrEmailField;
 
 		public ForgotPwdForm() {
-			CustomLayout customLayout = new CustomLayout("forgotPassword");
+			CustomLayout customLayout = CustomLayoutLoader.createLayout("forgotPassword");
 			customLayout.setStyleName("forgotPwdForm");
 
 			nameOrEmailField = new TextField("Username or email");
