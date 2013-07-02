@@ -145,7 +145,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 				Resource downloadResource = StreamDownloadResourceFactory
 						.getAccountStreamResource(attachment.getDocumentpath());
 				AppContext.getApplication().getMainWindow()
-						.open(downloadResource, "_self");
+						.open(downloadResource, "_blank");
 			}
 		});
 		downloadBtn.setIcon(MyCollabResource

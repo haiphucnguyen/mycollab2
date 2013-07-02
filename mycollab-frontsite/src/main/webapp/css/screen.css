@@ -637,7 +637,6 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 50px;
 	display: inline-block;
 	padding: 0px 15px;
-	text-transform: uppercase;
 	height: 50px;
 	transition: 0.5s;
 	margin: 0px -3px !important
@@ -645,12 +644,13 @@ h1, h2, h3, h4, h5, h6 {
 .header-mid ul li a{	
 	color: #FFFFFF;
     display: block;
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: bold;
     height: 50px;
 }
 
 .header-mid ul li:hover {
-	background-color: #1684c4;
+	background-color: #F78D13;
 }
 
 .header-mid .btn-signin {
@@ -1351,13 +1351,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .tour-mid-left ul li:hover {
 	color: #FFF;
-	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #2B97D7;
+	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #F78D13;
 	cursor: pointer;
 }
 
 .item-active {
 	color: #FFF;
-	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #2B97D7 !important;
+	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #F78D13 !important;
 	cursor: pointer;
 }
 
@@ -1437,3 +1437,257 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 12px;
 }
 /* End Tour style */
+
+/* Sign Up style */
+#signup-content {
+	width: 1100px;
+	margin: 0 auto;
+	border: solid 1px #ababab;
+	margin-bottom: 20px;
+	background: url("../images/home_banner_bg.jpg") no-repeat scroll center top transparent;
+}
+
+.sig-top {
+	border-top: solid 16px #228bc9;
+	text-align: center;
+	background: url("../images/home_border.png") no-repeat scroll center bottom transparent;
+	margin-bottom: 30px;
+}
+	
+.sig-top h1 {
+	font-size: 35px;
+    font-weight: normal;
+    line-height: 100%;
+    color: #228BC9;
+    padding: 20px 0px 10px;
+}
+
+.sig-top p {
+	color: #228BC9;
+    font-size: 22px;
+    padding-bottom: 30px;
+}
+
+.sig-mid {
+	padding: 0px 30px;
+}
+
+.sig-mid-left {
+	width: 530px;
+	margin-bottom: 30px;
+	float: left;
+}
+
+.mid-left-title {
+	text-align: center;
+	color: #0173bd;
+}
+
+.mid-left-title h1 {
+	font-size: 40px;
+	color: #0173bd;
+	font-weight: normal;
+}
+
+.mid-left-title p {
+	font-size: 20px;
+	padding: 10px 0px;
+	line-height: 200%;
+}
+
+.sig-left-ctn {
+	background-color: #FAFAFA;
+	padding-bottom: 20px;
+}
+
+.sig-left-ctn h1 {
+	background-color: #228bc9;
+	font-size: 16px;
+	font-weight: normal;
+	color: #FFF;
+	padding: 5px 0px 5px 20px;
+}
+
+.sig-mid-button {
+	background-color: #e2e1e1;
+	text-align: center;
+	padding: 20px 0px;
+}
+
+.btn-facbook {
+	border: none;
+	background: url("../images/signup_facebook.png") no-repeat transparent;
+	width: 236px;
+	height: 39px;
+	color: #FFF;
+	font-size: 17px;
+	font-weight: bold;
+	font-family: 'Arial';
+	padding-left: 30px;
+	margin-right: 10px;
+}
+
+.btn-google {
+	border: none;
+	background: url("../images/signup_google.png") no-repeat transparent;
+	width: 236px;
+	height: 39px;
+	color: #000;
+	font-size: 17px;
+	font-weight: bold;
+	font-family: 'Arial';
+	padding-left: 30px;
+}
+
+.sig-left-1 {
+	float: left;
+	padding-left: 20px;
+	width: 230px;
+	padding-right: 22px;
+}
+
+.sig-left-ctn p {
+	font-size: 14px;
+	line-height: 100%;
+	padding-top: 15px;
+	padding-bottom: 3px;
+}
+
+.sig-mid-left input[type="text"] {
+	height: 25px;
+	width: 225px;
+	font-size: 14px;
+	padding: 0px 5px;
+}
+
+.sig-mid-left input[type="password"] {
+	height: 25px;
+	width: 225px;
+	font-size: 14px;
+	padding: 0px 5px;
+}
+
+.timezone_input{
+	height: 25px;
+    padding: 0px 8px;
+    width: 237px;
+	cursor: pointer;
+	font-size: 14px;
+	border: 1px solid rgb(133, 133, 133);
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	background: url("../images/signup_selectbox.png") no-repeat center right transparent;
+	background-size: 10%; 
+}
+
+.timezone_value {
+	display: block;
+	width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#timezone_dropdown_hidden {
+	display: none;
+	height: 150px;
+	width: 237px;
+	box-shadow: 0px 0px 20px rgb(112, 112, 112);
+	position: absolute;
+	z-index: 100;
+	background-color: white;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.sig-left-chk {
+	clear: both;
+	padding: 15px 20px;
+	line-height: 110%;
+}
+
+.sig-left-chk a {
+	color: #0267a8;
+}
+
+.sig-left-chk label {
+	font-size: 13px;
+}
+
+.sig-left-chk input[type="checkbox"] {
+	margin: 0px;
+	padding: 0px;
+}
+
+.sig-mid-left input[type="submit"] {
+	font-size: 17px;
+	color: #FFF;
+	border-color: #116093;
+	border-radius: 5px;
+	padding: 8px 15px;
+	display: block;
+	margin: 0 auto;
+	cursor: pointer;
+	width: 170px;
+	height: 40px;
+	background-color: #228bc9;
+	margin-bottom: 26px;
+}
+
+.sig-mid-left input[type="submit"]:hover {
+	opacity: 0.7;
+}
+
+.sig-mid-right {
+	float: right;
+	width: 480px;
+	text-align: center;
+	background-color: #FAFAFA;
+}
+
+.sig-mid-right h1 {
+	font-size: 16px;
+	padding: 5px 20px;
+	color: #FFF;
+	font-weight: normal;
+	background-color: #228bc9;
+	margin-bottom: 25px;
+	text-align: left;
+}
+
+.sig-mid-right img {
+	width: 440px;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+.sig-right-block {
+	padding: 0px 20px;
+	text-align: left;
+}
+
+.sig-right-block h2 {
+	font-size: 13px;
+	font-weight: bold;
+	padding-left: 25px;
+	background: url("../images/pricing_question.png") no-repeat scroll left center transparent;
+}
+
+.sig-right-block p {
+	font-size: 12px;
+	padding-bottom: 15px;
+}
+
+.sig-subdomain {
+	background-color: #2B98D8;
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 25px;
+    margin-left: -100px;
+    margin-top: 1px;
+    padding-left: 4px;
+    position: absolute;
+    width: 95px;	
+}
+/* End Sign Up style */

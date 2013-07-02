@@ -171,7 +171,7 @@ public class MyCollabApplication extends Application implements
 	@Override
 	public Window getWindow(String name) {
 		Window w = super.getWindow(name);
-		if (w == null) {
+		if (w == null) { 
 			if (name.startsWith("org.vaadin")) {
 				try {
 					Class<?> forName = Class.forName(name);

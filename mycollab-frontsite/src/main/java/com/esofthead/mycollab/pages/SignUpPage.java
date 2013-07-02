@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
@@ -40,14 +41,17 @@ public class SignUpPage extends BasePage {
 		super(parameters);
 		final TextField<String> username = new TextField<String>(
 				"usernamefield", new Model<String>());
+		final TextField<String> firstname = new TextField<String>(
+				"firstnamefield", new Model<String>());
+		final TextField<String> lasttname = new TextField<String>(
+				"lastnamefield", new Model<String>());
+		final CheckBox receiveupdate = new CheckBox("receiveupdatefield", new Model<Boolean>());
 		final TextField<String> subdomain = new TextField<String>(
 				"subdomainfield", new Model<String>());
 		final PasswordTextField password = new PasswordTextField(
 				"passwordfield", new Model<String>());
 		final PasswordTextField cpassword = new PasswordTextField(
 				"cpasswordfield", new Model<String>());
-		final TextField<String> email = new TextField<String>("emailfield",
-				new Model<String>());
 		final HiddenField<String> timezone = new HiddenField<String>(
 				"timezonefield", new Model<String>());
 
@@ -62,13 +66,14 @@ public class SignUpPage extends BasePage {
 						"http://localhost:8080/mycollab-web/api/signup");
 
 				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+				nvps.add(new BasicNameValuePair("firstname", firstname.getModelObject()));
+				nvps.add(new BasicNameValuePair("lastname", lasttname.getModelObject()));
 				nvps.add(new BasicNameValuePair("username", username
 						.getModelObject()));
 				nvps.add(new BasicNameValuePair("subdomain", subdomain
 						.getModelObject()));
 				nvps.add(new BasicNameValuePair("password", password
 						.getModelObject()));
-				nvps.add(new BasicNameValuePair("email", email.getModelObject()));
 				nvps.add(new BasicNameValuePair("timezone", timezone
 						.getModelObject()));
 				nvps.add(new BasicNameValuePair("planId", parameters.get(
@@ -98,8 +103,11 @@ public class SignUpPage extends BasePage {
 		form.add(subdomain);
 		form.add(password);
 		form.add(cpassword);
-		form.add(email);
+		/*form.add(email);*/
 		form.add(timezone);
+		form.add(firstname);
+		form.add(lasttname);
+		form.add(receiveupdate);
 
 		RepeatingView timezoneAreaRepeat = new RepeatingView("arearepeat");
 		form.add(timezoneAreaRepeat);
@@ -124,13 +132,13 @@ public class SignUpPage extends BasePage {
 							.getDisplayName()));
 					timezoneItem.add(AttributeModifier.replace("data-tag",
 							new AbstractReadOnlyModel<String>() {
-								private static final long serialVersionUID = 1L;
+						private static final long serialVersionUID = 1L;
 
-								@Override
-								public String getObject() {
-									return oneTimezone.getId();
-								}
-							}));
+						@Override
+						public String getObject() {
+							return oneTimezone.getId();
+						}
+					}));
 				}
 			}
 		}

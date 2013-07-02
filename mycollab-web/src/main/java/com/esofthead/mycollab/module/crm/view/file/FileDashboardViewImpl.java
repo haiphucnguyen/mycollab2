@@ -1,7 +1,6 @@
-package com.esofthead.mycollab.module.project.view.file;
+package com.esofthead.mycollab.module.crm.view.file;
 
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -21,12 +20,8 @@ public class FileDashboardViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayProjectFiles() {
-		final int projectId = CurrentProjectVariables.getProjectId();
-		String rootPath = String.format("%d/project/%d",
-				AppContext.getAccountId(), projectId);
-		String rootName = CurrentProjectVariables.getProject().getName();
-		dashboardComponent.displayResources(rootPath, rootName);
+	public void displayFiles() {
+		String rootPath = String.format("%d/.crm", AppContext.getAccountId());
+		dashboardComponent.displayResources(rootPath, "Documents");
 	}
-
 }

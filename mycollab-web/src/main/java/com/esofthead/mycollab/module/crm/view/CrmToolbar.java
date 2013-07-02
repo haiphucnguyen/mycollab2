@@ -115,8 +115,10 @@ public class CrmToolbar extends CssLayout implements View {
 					caption)) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.MeetingAdd(this, null));
-			} else if ("File Manager".equals(caption)){
-				EventBus.getInstance().fireEvent(new FileEvent.GotoList(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new FileEvent.GotoDashboard(this, null));
 			}
 
 			addBtn.setPopupVisible(false);
@@ -211,8 +213,11 @@ public class CrmToolbar extends CssLayout implements View {
 		addComponent(activitiesList);
 
 		setStyleName("h-sidebar-menu");
-		
-		final Button fileBtn = new Button("File Manager", listener);
+
+		final Button fileBtn = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER),
+				listener);
 		fileBtn.setStyleName("link");
 		addComponent(fileBtn);
 
