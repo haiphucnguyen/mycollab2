@@ -32,6 +32,5 @@ public class FileDashboardPresenter extends
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}
-
 	}
 }

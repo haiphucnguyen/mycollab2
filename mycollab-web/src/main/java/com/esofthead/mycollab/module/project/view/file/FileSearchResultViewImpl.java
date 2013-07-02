@@ -178,7 +178,7 @@ public class FileSearchResultViewImpl extends AbstractView implements
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_self");
+												.open(downloadResource, "_blank");
 									} else {
 										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
 												.getStreamFolderResource(((Folder) resource)
@@ -186,7 +186,7 @@ public class FileSearchResultViewImpl extends AbstractView implements
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_self");
+												.open(downloadResource, "_blank");
 									}
 
 								}

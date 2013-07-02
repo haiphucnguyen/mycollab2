@@ -70,7 +70,7 @@ public class FileDownloadWindow extends Window {
 						.getStreamResource(FileDownloadWindow.this.content
 								.getPath());
 				AppContext.getApplication().getMainWindow()
-						.open(downloadResource, "_self");
+						.open(downloadResource, "_blank");
 			}
 		});
 		download.addStyleName(UIConstants.THEME_BLUE_LINK);
