@@ -367,7 +367,7 @@ public class FileDashboardComponent extends VerticalLayout {
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_self");
+												.open(downloadResource, "_blank");
 									} else {
 										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
 												.getStreamFolderResource(((Folder) resource)
@@ -375,7 +375,7 @@ public class FileDashboardComponent extends VerticalLayout {
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_self");
+												.open(downloadResource, "_blank");
 									}
 
 								}
