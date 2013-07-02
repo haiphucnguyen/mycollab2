@@ -650,7 +650,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header-mid ul li:hover {
-	background-color: #1684c4;
+	background-color: #F78D13;
 }
 
 .header-mid .btn-signin {
@@ -1351,13 +1351,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .tour-mid-left ul li:hover {
 	color: #FFF;
-	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #2B97D7;
+	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #F78D13;
 	cursor: pointer;
 }
 
 .item-active {
 	color: #FFF;
-	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #2B97D7 !important;
+	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #F78D13 !important;
 	cursor: pointer;
 }
 
@@ -1496,7 +1496,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-left-ctn {
-	border: solid 1px #cacaca;
+	background-color: #FAFAFA;
+	padding-bottom: 20px;
 }
 
 .sig-left-ctn h1 {
@@ -1546,7 +1547,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-left-ctn p {
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 100%;
 	padding-top: 15px;
 	padding-bottom: 3px;
@@ -1603,11 +1604,15 @@ h1, h2, h3, h4, h5, h6 {
 .sig-left-chk {
 	clear: both;
 	padding: 15px 20px;
-	line-height: 120%;
+	line-height: 110%;
 }
 
 .sig-left-chk a {
 	color: #0267a8;
+}
+
+.sig-left-chk label {
+	font-size: 13px;
 }
 
 .sig-left-chk input[type="checkbox"] {
@@ -1620,7 +1625,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFF;
 	border-color: #116093;
 	border-radius: 5px;
-	padding: 10px 15px;
+	padding: 8px 15px;
 	display: block;
 	margin: 0 auto;
 	cursor: pointer;
@@ -1629,6 +1634,7 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: #228bc9;
 	margin-bottom: 26px;
 }
+
 .sig-mid-left input[type="submit"]:hover {
 	opacity: 0.7;
 }
@@ -1636,9 +1642,8 @@ h1, h2, h3, h4, h5, h6 {
 .sig-mid-right {
 	float: right;
 	width: 480px;
-	border: solid 1px #ababab;
 	text-align: center;
-	background-color: #FFF;
+	background-color: #FAFAFA;
 }
 
 .sig-mid-right h1 {
@@ -1672,5 +1677,17 @@ h1, h2, h3, h4, h5, h6 {
 .sig-right-block p {
 	font-size: 12px;
 	padding-bottom: 15px;
+}
+
+.sig-subdomain {
+	background-color: #2B98D8;
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 25px;
+    margin-left: -100px;
+    margin-top: 1px;
+    padding-left: 4px;
+    position: absolute;
+    width: 95px;	
 }
 /* End Sign Up style */
