@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.module.crm.events.FileEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent.GotoHome;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -50,6 +51,7 @@ import com.esofthead.mycollab.module.crm.view.cases.CaseReadPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactAddPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
+import com.esofthead.mycollab.module.crm.view.file.FileDashboardPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
@@ -83,6 +85,7 @@ public class CrmController implements IController {
 		bindLeadEvents();
 		bindOpportunityEvents();
 		bindCasesEvents();
+		bindDocumentEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -570,6 +573,25 @@ public class CrmController implements IController {
 								.getPresenter(ContactReadPresenter.class);
 						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
+					}
+				});
+	}
+
+	private void bindDocumentEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<FileEvent.GotoDashboard>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return FileEvent.GotoDashboard.class;
+					}
+
+					@Override
+					public void handle(FileEvent.GotoDashboard event) {
+						FileDashboardPresenter presenter = PresenterResolver
+								.getPresenter(FileDashboardPresenter.class);
+						presenter.go(container, null);
 					}
 				});
 	}
