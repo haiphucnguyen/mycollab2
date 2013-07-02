@@ -42,6 +42,15 @@ import com.vaadin.ui.Window;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
+import ezvcard.parameters.AddressTypeParameter;
+import ezvcard.parameters.TelephoneTypeParameter;
+import ezvcard.types.AddressType;
+import ezvcard.types.BirthdayType;
+import ezvcard.types.EmailType;
+import ezvcard.types.KindType;
+import ezvcard.types.ProfileType;
+import ezvcard.types.StructuredNameType;
+import ezvcard.types.TelephoneType;
 
 @SuppressWarnings("serial")
 public abstract class ContactPreviewBuilder extends VerticalLayout {
@@ -149,6 +158,108 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 							@Override
 							public void buttonClick(ClickEvent event) {
 								VCard vcard = new VCard();
+
+								// Given is name
+								StructuredNameType name = new StructuredNameType();
+								if (contact.getFirstname() != null)
+									name.setFamily(contact.getLastname());
+								if (contact.getLastname() != null)
+									name.setGiven(contact.getFirstname());
+								vcard.setStructuredName(name);
+
+								if (contact.getEmail() != null) {
+									EmailType email = new EmailType();
+									email.setValue(contact.getEmail());
+									vcard.addEmail(email);
+								}
+								// Mapping Address ---------------------
+								AddressType otherAddress = new AddressType();
+								otherAddress.addType(AddressTypeParameter.WORK);
+								// Street address map to OtherAddress
+								if (contact.getOtheraddress() != null)
+									otherAddress.setStreetAddress(contact
+											.getOtheraddress());
+								if (contact.getOthercountry() != null)
+									otherAddress.setCountry(contact
+											.getOthercountry());
+								// city map to Region ----------------
+								if (contact.getOthercity() != null)
+									otherAddress.setRegion(contact
+											.getOthercity());
+								if (contact.getOtherpostalcode() != null)
+									otherAddress.setPostalCode(contact
+											.getOtherpostalcode());
+								// Sate map to Locality
+								if (contact.getOtherstate() != null)
+									otherAddress.setLocality(contact
+											.getOtherstate());
+								vcard.addAddress(otherAddress);
+
+								AddressType primAddress = new AddressType();
+								primAddress.addType(AddressTypeParameter.HOME);
+								// StreetAddress map to PrimAddress
+								if (contact.getPrimaddress() != null)
+									primAddress.setStreetAddress(contact
+											.getPrimaddress());
+								if (contact.getPrimcountry() != null)
+									primAddress.setCountry(contact
+											.getPrimcountry());
+								if (contact.getPrimcity() != null)
+									primAddress.setRegion(contact.getPrimcity());
+								if (contact.getPrimpostalcode() != null)
+									primAddress.setPostalCode(contact
+											.getPrimpostalcode());
+								if (contact.getPrimstate() != null)
+									primAddress.setLocality(contact
+											.getPrimstate());
+								vcard.addAddress(primAddress);
+
+								// Mapping Phone --------------------
+								if (contact.getHomephone() != null) {
+									TelephoneType homePhone = new TelephoneType();
+									homePhone
+											.addType(TelephoneTypeParameter.HOME);
+									homePhone.setPref(1);
+									homePhone.setText(contact.getHomephone());
+									vcard.addTelephoneNumber(homePhone);
+								}
+								if (contact.getOfficephone() != null) {
+									TelephoneType workPhone = new TelephoneType();
+									workPhone
+											.addType(TelephoneTypeParameter.WORK);
+									workPhone.setPref(2);
+									workPhone.setText(contact.getOfficephone());
+									vcard.addTelephoneNumber(workPhone);
+								}
+								if (contact.getMobile() != null) {
+									TelephoneType mobiePhone = new TelephoneType();
+									mobiePhone
+											.addType(TelephoneTypeParameter.MODEM);
+									mobiePhone.setPref(3);
+									vcard.addTelephoneNumber(contact
+											.getMobile());
+								}
+								// Map department -----------
+								if (contact.getDepartment() != null) {
+									KindType department = new KindType();
+									department.setValue("");
+									department.isOrg();
+									vcard.setKind(department);
+								}
+								// Map leadsource to Profile
+								if (contact.getLeadsource() != null) {
+									ProfileType profile = new ProfileType();
+									profile.setValue(contact.getLeadsource());
+									vcard.setProfile(profile);
+								}
+								// Map brithday ----------
+								if (contact.getBirthday() != null) {
+									BirthdayType birthday = new BirthdayType();
+									birthday.setDate(contact.getBirthday(),
+											false);
+									vcard.setBirthday(birthday);
+								}
+								// fax & contact.getIscallable()
 								final File vCardFile = new File(vcard
 										.getStructuredName().getGiven()
 										+ ".vcf");
