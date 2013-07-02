@@ -9,9 +9,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
@@ -20,9 +18,9 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -226,8 +224,8 @@ public class FileDashboardViewImpl extends AbstractView implements
 			@Override
 			public void nodeCollapse(final CollapseEvent event) {
 				final Folder collapseFolder = (Folder) event.getItemId();
-				FileDashboardViewImpl.this.folderTree.setItemIcon(collapseFolder,
-						MyCollabResource
+				FileDashboardViewImpl.this.folderTree.setItemIcon(
+						collapseFolder, MyCollabResource
 								.newResource("icons/16/ecm/folder_close.png"));
 				final List<Folder> childs = collapseFolder.getChilds();
 				for (final Folder subFolder : childs) {
@@ -404,9 +402,10 @@ public class FileDashboardViewImpl extends AbstractView implements
 								FileDashboardViewImpl.this.folderTree
 										.setItemCaption(newFolder,
 												newFolder.getName());
-								FileDashboardViewImpl.this.folderTree.setParent(
-										newFolder,
-										FileDashboardViewImpl.this.baseFolder);
+								FileDashboardViewImpl.this.folderTree
+										.setParent(
+												newFolder,
+												FileDashboardViewImpl.this.baseFolder);
 								FileDashboardViewImpl.this.folderTree
 										.setItemIcon(
 												newFolder,
@@ -1001,9 +1000,6 @@ public class FileDashboardViewImpl extends AbstractView implements
 			@Override
 			protected SearchCriteria fillupSearchCriteria() {
 				FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
-				FileSearchPanel.this.searchCriteria
-						.setProjectId(new NumberSearchField(SearchField.AND,
-								FileSearchPanel.this.project.getId()));
 
 				FileSearchPanel.this.searchCriteria
 						.setFileName(new StringSearchField(this.nameField
