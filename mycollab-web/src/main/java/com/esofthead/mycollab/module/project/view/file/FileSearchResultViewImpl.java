@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.view.file;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -115,15 +113,10 @@ public class FileSearchResultViewImpl extends AbstractView implements
 		final String header = "Search result of '%s'";
 		this.searchHeader.setValue(String.format(header, name));
 
-		final List<Resource> resourceList = new ArrayList<Resource>();
+		final List<Resource> resourceList = this.resourceService
+				.searchResourcesByName(name);
 
-		final Content content = new Content();
-		content.setDescription("AAA");
-		content.setPath("a/b/c/example.txt");
-		content.setSize(11d);
-		content.setTitle("aaa");
-		content.setCreated(Calendar.getInstance());
-		resourceList.add(content);
+		this.resourceTable.refreshRowCache();
 
 		this.resourceTable
 				.setContainerDataSource(new BeanItemContainer<Resource>(
