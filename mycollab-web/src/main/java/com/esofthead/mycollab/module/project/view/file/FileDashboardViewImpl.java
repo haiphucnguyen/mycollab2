@@ -14,7 +14,9 @@ public class FileDashboardViewImpl extends AbstractView implements
 	private FileDashboardComponent dashboardComponent;
 
 	public FileDashboardViewImpl() {
+		this.setWidth("100%");
 		dashboardComponent = new FileDashboardComponent();
+		dashboardComponent.setWidth("100%");
 		this.addComponent(dashboardComponent);
 	}
 
@@ -24,7 +26,7 @@ public class FileDashboardViewImpl extends AbstractView implements
 		String rootPath = String.format("%d/project/%d",
 				AppContext.getAccountId(), projectId);
 		String rootName = CurrentProjectVariables.getProject().getName();
-		dashboardComponent.displayProjectFiles(rootPath, rootName);
+		dashboardComponent.displayResources(rootPath, rootName);
 	}
 
 }

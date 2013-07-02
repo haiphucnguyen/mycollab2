@@ -303,7 +303,7 @@ public class FileDashboardComponent extends VerticalLayout {
 		}
 	}
 
-	public void displayProjectFiles(String rootPath, String rootFolderName) {
+	public void displayResources(String rootPath, String rootFolderName) {
 		this.folderTree.removeAllItems();
 		this.rootPath = rootPath;
 
