@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.file;
+package com.esofthead.mycollab.module.file.view.components;
 
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
