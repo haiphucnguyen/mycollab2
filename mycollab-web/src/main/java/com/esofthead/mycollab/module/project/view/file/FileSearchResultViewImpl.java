@@ -7,63 +7,86 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class FileSearchResultViewImpl extends AbstractView implements
 		FileSearchResultView {
 	private static final long serialVersionUID = 1L;
 
-	private Label searchHeader;
-	private VerticalLayout bodyLayout;
-	private ResourceService resourceService;
+	private final Label searchHeader;
+	private final VerticalLayout bodyLayout;
+	private final ResourceService resourceService;
 
 	public FileSearchResultViewImpl() {
-		resourceService = AppContext.getSpringBean(ResourceService.class);
+		this.resourceService = AppContext.getSpringBean(ResourceService.class);
 
-		HorizontalLayout headerLayout = new HorizontalLayout();
+		final CssLayout headerWrapper = new CssLayout();
+		headerWrapper.setWidth("100%");
+		headerWrapper.addStyleName(UIConstants.THEME_COMP_HEADER);
+
+		final HorizontalLayout headerLayout = new HorizontalLayout();
 		headerLayout.setWidth("100%");
-		this.addComponent(headerLayout);
+		headerLayout.setSpacing(true);
 
-		searchHeader = new Label();
-		headerLayout.addComponent(searchHeader);
-		headerLayout.setExpandRatio(searchHeader, 1.0f);
+		headerWrapper.addComponent(headerLayout);
+		this.addComponent(headerWrapper);
 
-		Button backButton = new Button("Back to dashboard",
+		final Embedded headerIcon = new Embedded();
+		headerIcon.setSource(MyCollabResource
+				.newResource("icons/16/search.png"));
+		headerLayout.addComponent(headerIcon);
+		headerLayout.setComponentAlignment(headerIcon, Alignment.MIDDLE_LEFT);
+
+		this.searchHeader = new Label();
+		headerLayout.addComponent(this.searchHeader);
+		headerLayout.setComponentAlignment(this.searchHeader,
+				Alignment.MIDDLE_LEFT);
+		headerLayout.setExpandRatio(this.searchHeader, 1.0f);
+
+		final Button backButton = new Button("Back to dashboard",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new ProjectContentEvent.GotoDashboard(
 										FileSearchResultViewImpl.this));
 
 					}
 				});
+		backButton.addStyleName(UIConstants.THEME_BLUE_LINK);
 		headerLayout.addComponent(backButton);
 
-		bodyLayout = new VerticalLayout();
-		this.addComponent(bodyLayout);
+		this.bodyLayout = new VerticalLayout();
+		this.bodyLayout.addStyleName(UIConstants.THEME_COMP_BODY);
+		this.addComponent(this.bodyLayout);
+		this.setMargin(true);
 	}
 
 	@Override
-	public void displaySearchResult(String basePath, String name) {
-		bodyLayout.removeAllComponents();
+	public void displaySearchResult(final String basePath, final String name) {
+		this.bodyLayout.removeAllComponents();
 
-		String header = "Search result of '%s'";
-		searchHeader.setValue(String.format(header, name));
+		final String header = "Search result of '%s'";
+		this.searchHeader.setValue(String.format(header, name));
 
-		List<Resource> resourceList = resourceService
+		final List<Resource> resourceList = this.resourceService
 				.searchResourcesByName(name);
-		for (Resource resource : resourceList) {
-			bodyLayout.addComponent(new Label(resource.getPath()));
+		for (final Resource resource : resourceList) {
+			this.bodyLayout.addComponent(new Label(resource.getPath()));
 		}
 	}
 

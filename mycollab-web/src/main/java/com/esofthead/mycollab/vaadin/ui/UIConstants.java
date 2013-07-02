@@ -20,6 +20,8 @@ public class UIConstants {
 	public static final String FORM_CONTAINER_VIEW = "form-container";
 	public static final String TABLE_ACTION_CONTROLS = "table-actionctls";
 	public static final String THEME_BLUE_LINK = "bluebtn";
+	public static final String THEME_COMP_BODY = "component-body";
+	public static final String THEME_COMP_HEADER = "component-header";
 	public static final String THEME_LINK = "link";
 	public static final String THEME_ROUND_BUTTON = "round-border";
 	public static final String THEME_NO_BORDER = "no-border";
