@@ -9,11 +9,13 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.EzVcard;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
@@ -30,6 +32,9 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+
+import ezvcard.VCard;
+import ezvcard.types.StructuredNameType;
 
 @SuppressWarnings("serial")
 public abstract class ContactPreviewBuilder extends VerticalLayout {
@@ -137,7 +142,85 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 		private VerticalLayout contactInformation;
 		private VerticalLayout relatedItemsContainer;
 		private ReadViewLayout contactAddLayout;
-
+		private EzVcardButtonDownload ezButton;
+		private EzVcardButtonImport ezButtonImport;
+		
+		@SuppressWarnings("unchecked")
+		private class EzVcardButtonDownload extends EzVcard<SimpleContact>{
+			public EzVcardButtonDownload() {
+				super("Download");
+			}
+			@Override
+			public SimpleContact createObjectForVcard() {
+				return contact;
+			}
+			@Override
+			public VCard createVcard(SimpleContact contact) {
+				VCard vcard = new VCard();
+				if(contact == null) return null;
+				else {
+					StructuredNameType name = new StructuredNameType(); // Name 
+					name.setFamily(contact.getFirstname());
+					name.setGiven(contact.getLastname());
+					vcard.setStructuredName(name);
+					
+					//TODO : more code & validator null
+//					AddressType address = new AddressType();  // Address
+//					address.setCountry(contact.getOthercountry());
+//					address.setPostalCode(contact.getOtherpostalcode());
+//					address.setStreetAddress(contact.getOtheraddress());
+//					vcard.addAddress(address);
+//					
+//					TelephoneType phone = new TelephoneType(contact.getOfficephone());
+//					phone.addType(TelephoneTypeParameter.WORK);  //office work
+//					phone.setPref(1);
+//					vcard.addTelephoneNumber(phone);
+//					
+//					phone = new TelephoneType(contact.getHomephone());
+//					phone.setPref(2);
+//					phone.addType(TelephoneTypeParameter.HOME); //home phone
+//					vcard.addTelephoneNumber(phone);
+//					
+//					phone = new TelephoneType(contact.getMobile());
+//					phone.setPref(3);
+//					phone.addType(TelephoneTypeParameter.CELL); //cell phone
+//					vcard.addTelephoneNumber(phone);
+//					
+//					EmailType email = new EmailType(contact.getEmail());  //email
+//					vcard.addEmail(email);
+					
+					return vcard;
+				}
+			}
+			@Override
+			public void convertVcardToObjectAndSaveToDataBase(VCard vcard) {}
+		}
+		@SuppressWarnings("unchecked")
+		private class EzVcardButtonImport extends EzVcard<SimpleContact>{
+			public EzVcardButtonImport() {
+				super("Import");
+			}
+			@Override
+			public SimpleContact createObjectForVcard() {
+				return null;
+			}
+			@Override
+			public VCard createVcard(SimpleContact object) {
+				return null;
+			}
+			@Override
+			public void convertVcardToObjectAndSaveToDataBase(VCard vcard) {
+				Contact newContact = new Contact();
+				newContact.setFirstname(vcard.getStructuredName().getFamily());
+				newContact.setLastname(vcard.getStructuredName().getGiven());
+				
+				//TODO : more code here
+				ContactService contactService = AppContext
+						.getSpringBean(ContactService.class);
+				contactService.saveWithSession(newContact, AppContext.getUsername());
+			}
+		}
+		
 		public ReadView() {
 			contactAddLayout = new ReadViewLayout(
 					MyCollabResource.newResource("icons/22/crm/contact.png"));
@@ -194,7 +277,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 							RolePermissionCollections.CRM_CONTACT);
 
 			contactAddLayout.addControlButtons(optionalActionControls);
-
+			
 			contactInformation = new VerticalLayout();
 			contactInformation.addStyleName("main-info");
 
@@ -215,6 +298,13 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
 			contactAddLayout.addTab(relatedItemsContainer, "More Information");
 
+			// Vcard button here ---------
+			ezButton = new EzVcardButtonDownload();
+			contactAddLayout.addControlButtons(ezButton);
+			
+			ezButtonImport = new EzVcardButtonImport();
+			contactAddLayout.addControlButtons(ezButtonImport);
+			
 			this.addComponent(contactAddLayout);
 
 			contactAddLayout

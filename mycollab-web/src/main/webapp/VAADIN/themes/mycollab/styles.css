@@ -3885,3 +3885,26 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	border-width: 0px 0px 1px 0px;
 	border-radius: 0px;
 }
+
+/* Generic Component */
+.v-csslayout-component-header > .v-csslayout-margin {
+	font-size: 13px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #a9a9a9;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: url('icons/grad-light-top2.png') repeat-x left top rgb(229, 229, 229);
+	border-radius: 3px 3px 0px 0px;
+	padding: 3px 5px 3px 15px;
+}
+.v-verticallayout-component-body {
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	border-color: #a9a9a9;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: none no-repeat left top rgb(245, 245, 245);
+}
