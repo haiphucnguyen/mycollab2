@@ -637,7 +637,6 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 50px;
 	display: inline-block;
 	padding: 0px 15px;
-	text-transform: uppercase;
 	height: 50px;
 	transition: 0.5s;
 	margin: 0px -3px !important
@@ -645,7 +644,8 @@ h1, h2, h3, h4, h5, h6 {
 .header-mid ul li a{	
 	color: #FFFFFF;
     display: block;
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: bold;
     height: 50px;
 }
 
@@ -1553,30 +1553,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-mid-left input[type="text"] {
-	height: 35px;
+	height: 25px;
 	width: 225px;
-	font-size: 15px;
+	font-size: 14px;
 	padding: 0px 5px;
 }
 
 .sig-mid-left input[type="password"] {
-	height: 35px;
+	height: 25px;
 	width: 225px;
-	font-size: 15px;
+	font-size: 14px;
 	padding: 0px 5px;
 }
 
 .timezone_input{
-	height: 35px;
-	width: 237px;
+	height: 25px;
+    padding: 0px 8px;
+    width: 237px;
 	cursor: pointer;
-	font-size: 15px;
+	font-size: 14px;
 	border: 1px solid rgb(133, 133, 133);
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	padding: 4px 8px;
 	background: url("../images/signup_selectbox.png") no-repeat center right transparent;
+	background-size: 10%; 
 }
 
 .timezone_value {
@@ -1601,7 +1602,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .sig-left-chk {
 	clear: both;
-	padding: 10px 20px;
+	padding: 15px 20px;
 	line-height: 120%;
 }
 
@@ -1626,7 +1627,7 @@ h1, h2, h3, h4, h5, h6 {
 	width: 170px;
 	height: 40px;
 	background-color: #228bc9;
-	margin-bottom: 20px;
+	margin-bottom: 26px;
 }
 .sig-mid-left input[type="submit"]:hover {
 	opacity: 0.7;
