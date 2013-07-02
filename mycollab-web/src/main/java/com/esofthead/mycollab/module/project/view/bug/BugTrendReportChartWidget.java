@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.ui.chart.TimeSeriesChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -93,7 +94,7 @@ public class BugTrendReportChartWidget extends
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		final CustomLayout boxWrapper = new CustomLayout("legendBox");
+		final CustomLayout boxWrapper = CustomLayoutLoader.createLayout("legendBox");
 		final CssLayout mainLayout = new CssLayout();
 		// mainLayout.addStyleName("border-box");
 		mainLayout.setSizeUndefined();

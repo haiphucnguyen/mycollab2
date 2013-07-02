@@ -386,8 +386,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				while (nodes.hasNext()) {
 					Node node = nodes.nextNode();
 					if (isNodeFolder(node)) {
-						Folder folder = convertNodeToFolder(node);
-						resources.add(folder);
+						// Folder folder = convertNodeToFolder(node);
+						// resources.add(folder);
 					} else if (isNodeMyCollabContent(node)) {
 						Content content = convertNodeToContent(node);
 						resources.add(content);

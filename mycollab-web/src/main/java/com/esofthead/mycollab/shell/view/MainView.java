@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -52,7 +53,7 @@ public final class MainView extends AbstractView {
 	}
 
 	private CustomLayout createFooter() {
-		final CustomLayout footer = new CustomLayout("footer");
+		final CustomLayout footer = CustomLayoutLoader.createLayout("footer");
 		final Button sendFeedback = new Button("Feedback");
 		sendFeedback.setStyleName(UIConstants.THEME_BLUE_LINK);
 		sendFeedback.addListener(new ClickListener() {
@@ -67,7 +68,7 @@ public final class MainView extends AbstractView {
 	}
 
 	private CustomLayout createTopMenu() {
-		final CustomLayout layout = new CustomLayout("topNavigation");
+		final CustomLayout layout = CustomLayoutLoader.createLayout("topNavigation");
 		layout.setStyleName("topNavigation");
 		layout.setHeight("40px");
 		layout.setWidth("100%");

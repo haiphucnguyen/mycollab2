@@ -55,11 +55,13 @@ public class AccountListViewImpl extends AbstractView implements
 		this.generateDisplayTable();
 	}
 
+	@SuppressWarnings("unchecked")
 	private ComponentContainer constructTableActionControls() {
 		final CssLayout layoutWrapper = new CssLayout();
 		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 

@@ -6,11 +6,11 @@ import java.util.List;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 
@@ -37,7 +37,7 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 	}
 
 	abstract public static class SearchLayout<S extends SearchCriteria> extends
-			CustomLayout {
+			CustomLayoutExt {
 		protected GenericSearchPanel<S> searchPanel;
 
 		public SearchLayout(final GenericSearchPanel<S> parent,

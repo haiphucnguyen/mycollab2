@@ -9,9 +9,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
@@ -20,9 +18,9 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -226,8 +224,8 @@ public class FileDashboardViewImpl extends AbstractView implements
 			@Override
 			public void nodeCollapse(final CollapseEvent event) {
 				final Folder collapseFolder = (Folder) event.getItemId();
-				FileDashboardViewImpl.this.folderTree.setItemIcon(collapseFolder,
-						MyCollabResource
+				FileDashboardViewImpl.this.folderTree.setItemIcon(
+						collapseFolder, MyCollabResource
 								.newResource("icons/16/ecm/folder_close.png"));
 				final List<Folder> childs = collapseFolder.getChilds();
 				for (final Folder subFolder : childs) {
@@ -404,9 +402,10 @@ public class FileDashboardViewImpl extends AbstractView implements
 								FileDashboardViewImpl.this.folderTree
 										.setItemCaption(newFolder,
 												newFolder.getName());
-								FileDashboardViewImpl.this.folderTree.setParent(
-										newFolder,
-										FileDashboardViewImpl.this.baseFolder);
+								FileDashboardViewImpl.this.folderTree
+										.setParent(
+												newFolder,
+												FileDashboardViewImpl.this.baseFolder);
 								FileDashboardViewImpl.this.folderTree
 										.setItemIcon(
 												newFolder,
@@ -767,84 +766,6 @@ public class FileDashboardViewImpl extends AbstractView implements
 		}
 	}
 
-	protected class FileDownloadWindow extends Window {
-		private static final long serialVersionUID = 1L;
-		private final Content content;
-
-		public FileDownloadWindow(final Content content) {
-			super(content.getName());
-			this.setWidth("400px");
-			this.center();
-
-			this.content = content;
-			this.constructBody();
-		}
-
-		private void constructBody() {
-			final VerticalLayout layout = new VerticalLayout();
-			final Embedded iconEmbed = new Embedded();
-			iconEmbed.setSource(MyCollabResource
-					.newResource("icons/page_white.png"));
-			UiUtils.addComponent(layout, iconEmbed, Alignment.MIDDLE_CENTER);
-
-			final GridFormLayoutHelper info = new GridFormLayoutHelper(1, 4,
-					"100%", "80px", Alignment.MIDDLE_LEFT);
-			info.getLayout().setWidth("100%");
-			info.getLayout().setMargin(false);
-			info.getLayout().setSpacing(false);
-
-			if (this.content.getDescription() != null) {
-				final Label desvalue = new Label(this.content.getDescription());
-				info.addComponent(desvalue, "Description", 0, 0);
-			}
-			final Label author = new Label(this.content.getCreatedBy());
-			info.addComponent(author, "Created by", 0, 1);
-
-			final Label size = new Label(this.content.getSize() + "KB");
-			info.addComponent(size, "Size", 0, 2);
-
-			final Label dateCreate = new Label(
-					AppContext.formatDate(this.content.getCreated().getTime()));
-			info.addComponent(dateCreate, "Date created", 0, 3);
-
-			layout.addComponent(info.getLayout());
-
-			final HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
-			final Button download = new Button("Download", new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-							.getStreamResource(FileDownloadWindow.this.content
-									.getPath());
-					AppContext.getApplication().getMainWindow()
-							.open(downloadResource, "_self");
-				}
-			});
-			download.addStyleName(UIConstants.THEME_BLUE_LINK);
-			UiUtils.addComponent(buttonControls, download,
-					Alignment.MIDDLE_CENTER);
-
-			final Button cancle = new Button("Cancel", new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					FileDownloadWindow.this.close();
-				}
-			});
-			cancle.addStyleName(UIConstants.THEME_BLUE_LINK);
-
-			UiUtils.addComponent(buttonControls, cancle,
-					Alignment.MIDDLE_CENTER);
-			UiUtils.addComponent(layout, buttonControls,
-					Alignment.MIDDLE_CENTER);
-			this.addComponent(layout);
-		}
-	}
-
 	protected class RenameResourceWindow extends Window {
 		private static final long serialVersionUID = 1L;
 		private final Resource resource;
@@ -1079,9 +1000,6 @@ public class FileDashboardViewImpl extends AbstractView implements
 			@Override
 			protected SearchCriteria fillupSearchCriteria() {
 				FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
-				FileSearchPanel.this.searchCriteria
-						.setProjectId(new NumberSearchField(SearchField.AND,
-								FileSearchPanel.this.project.getId()));
 
 				FileSearchPanel.this.searchCriteria
 						.setFileName(new StringSearchField(this.nameField

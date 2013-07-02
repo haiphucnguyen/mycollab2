@@ -1,12 +1,12 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 
-public class AddViewLayout extends CustomLayout {
+public class AddViewLayout extends CustomLayoutExt {
 
 	private static final long serialVersionUID = 1L;
 

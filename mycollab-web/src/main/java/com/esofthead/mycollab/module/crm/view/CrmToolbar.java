@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.module.crm.events.FileEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -114,6 +115,10 @@ public class CrmToolbar extends CssLayout implements View {
 					caption)) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.MeetingAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new FileEvent.GotoDashboard(this, null));
 			}
 
 			addBtn.setPopupVisible(false);
@@ -208,6 +213,13 @@ public class CrmToolbar extends CssLayout implements View {
 		addComponent(activitiesList);
 
 		setStyleName("h-sidebar-menu");
+
+		final Button fileBtn = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER),
+				listener);
+		fileBtn.setStyleName("link");
+		addComponent(fileBtn);
 
 		addBtn = new PopupButton("Add");
 		final GridLayout addBtnLayout = new GridLayout(3, 2);
