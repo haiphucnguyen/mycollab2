@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.jfree.data.general.DefaultPieDataset;
 
+import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -23,7 +24,7 @@ public class PieChartDescriptionBox {
 	public static ComponentContainer createLegendBox(
 			final PieChartWrapper pieChartHost,
 			final DefaultPieDataset pieDataSet) {
-		final CustomLayout boxWrapper = new CustomLayout("legendBox");
+		final CustomLayout boxWrapper = CustomLayoutLoader.createLayout("legendBox");
 		final CssLayout mainLayout = new CssLayout();
 
 		mainLayout.setSizeUndefined();

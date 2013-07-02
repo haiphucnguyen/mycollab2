@@ -95,11 +95,6 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>animator</artifactId>
-            <version>1.6.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
             <artifactId>stylecalendar</artifactId>
             <version>1.0</version>
         </dependency>
@@ -120,28 +115,8 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>toolbar</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
             <artifactId>contextmenu</artifactId>
             <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>contexthelp</artifactId>
-            <version>1.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>weelayout</artifactId>
-            <version>0.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>css-tools</artifactId>
-            <version>0.3</version>
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
@@ -175,16 +150,6 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>overlays</artifactId>
-            <version>0.9.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>refresher</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
             <artifactId>gwt-graphics</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -209,6 +174,12 @@
             <version>1.0.4</version>
         </dependency>
         <dependency>
+            <groupId>eu.infomas</groupId>
+            <artifactId>annotation-detector</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
             <version>2.4.8</version>
@@ -227,8 +198,7 @@
             <version>3.1-b01</version>
             <scope>provided</scope>
         </dependency>
-        <!-- <dependency> <groupId>com.carbonfive</groupId> <artifactId>db-migration</artifactId> 
-            <version>0.9.7</version> </dependency> -->
+
         <dependency>
             <groupId>com.googlecode.flyway</groupId>
             <artifactId>flyway-core</artifactId>
@@ -251,15 +221,10 @@
             <version>1.0.14</version>
         </dependency>
         <dependency>
-		   <groupId>com.googlecode.ez-vcard</groupId>
-		   <artifactId>ez-vcard</artifactId>
-		   <version>0.8.2</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>2.0</version>
-		</dependency>
+            <groupId>com.googlecode.ez-vcard</groupId>
+            <artifactId>ez-vcard</artifactId>
+            <version>0.8.2</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-svggen</artifactId>
@@ -335,6 +300,12 @@
             <version>${jettyVersion}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-websocket</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>fr.xebia.web</groupId>
@@ -384,6 +355,23 @@
             <version>2.1.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.googlecode.ez-vcard</groupId>
+            <artifactId>ez-vcard</artifactId>
+            <version>0.8.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <!-- GWT dependency -->
+        <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+            <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
+            <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
+            <scope>compile</scope> </dependency> -->
     </dependencies>
     <build>
         <plugins>
@@ -413,8 +401,7 @@
                     <!-- <execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> -->
-                        <!-- 
-                     <execution> <id>Common Artifacts Generator</id> 
+                    <!-- <execution> <id>Common Artifacts Generator</id> 
                         <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> -->
@@ -455,67 +442,21 @@
                 <goal>verify</goal> </goals> <configuration> <enumTypes> <enumType>com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum</enumType> 
                 <enumType>com.esofthead.mycollab.common.localization.GenericI18Enum</enumType> 
                 </enumTypes> </configuration> </execution> </executions> </plugin> -->
-                <!--  
-            <plugin>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-maven-plugin</artifactId>
-                <version>1.0.2</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <configuration>
-                        </configuration>
-                        <goals>
-                            <goal>update-widgetset</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-user</artifactId>
-                        <version>${gwtversion}</version>
-                        <scope>compile</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-dev</artifactId>
-                        <version>${gwtversion}</version>
-                        <scope>compile</scope>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwtversion}</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <configuration>
-                            <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                        </configuration>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-user</artifactId>
-                        <version>${gwtversion}</version>
-                        <scope>compile</scope>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-dev</artifactId>
-                        <version>${gwtversion}</version>
-                        <scope>compile</scope>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            -->
+            <!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
+                <version>1.0.2</version> <executions> <execution> <phase>prepare-package</phase> 
+                <configuration> </configuration> <goals> <goal>update-widgetset</goal> </goals> 
+                </execution> </executions> <dependencies> <dependency> <groupId>com.google.gwt</groupId> 
+                <artifactId>gwt-user</artifactId> <version>${gwtversion}</version> <scope>compile</scope> 
+                </dependency> <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> 
+                <version>${gwtversion}</version> <scope>compile</scope> </dependency> </dependencies> 
+                </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
+                <version>${gwtversion}</version> <executions> <execution> <phase>prepare-package</phase> 
+                <configuration> <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> </configuration> 
+                <goals> <goal>compile</goal> </goals> </execution> </executions> <dependencies> 
+                <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+                <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
+                <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
+                <scope>compile</scope> </dependency> </dependencies> </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
