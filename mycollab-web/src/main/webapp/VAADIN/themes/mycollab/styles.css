@@ -3889,7 +3889,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 /* Generic Component */
 .v-csslayout-component-header > .v-csslayout-margin {
 	font-size: 13px;
-	border-width: 1px;
+	border-width: 1px 1px 0px;
 	border-style: solid;
 	border-color: #a9a9a9;
 	-moz-box-sizing: border-box;

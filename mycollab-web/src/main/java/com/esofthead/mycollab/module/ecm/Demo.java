@@ -6,12 +6,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
+import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
 public class Demo {
-	public static void main(String[] args) throws Exception {
-		ApplicationContext context = new ClassPathXmlApplicationContext(
+	public static void main(final String[] args) throws Exception {
+		final ApplicationContext context = new ClassPathXmlApplicationContext(
 				"META-INF/spring/common-context.xml",
 				"META-INF/spring/core-context.xml",
 				"META-INF/spring/crm-context.xml",
@@ -23,27 +24,35 @@ public class Demo {
 				"META-INF/spring/tracker-context.xml",
 				"META-INF/spring/user-context.xml");
 
-		ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
+		final ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
 
 		// jcrDao.removeResource("/a/b/d");
 
-//		Folder pageContent = new Folder();
-//		pageContent.setPath("a/b/d");
-//
-//		jcrDao.createFolder(pageContent, "baohan");
-//
-//		Resource content = jcrDao.getResource("a/b/d");
-//		System.out.println(content.getCreatedUser());
-//
-//		System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
-//
-//		jcrDao.rename("a/b/d", "a/b/c");
-//		System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
-//		System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
+		final Folder pageContent = new Folder();
+		pageContent.setPath("a/b/d");
 
-		List<Resource> resources = jcrDao.searchResourcesByName("c");
-		System.out.println("Resources: " + (resources != null));
-//		System.out.println("CONTENT " + content);
+		jcrDao.createFolder(pageContent, "baohan");
+
+		final Content content = new Content();
+		content.setDescription("AAA");
+		content.setPath("a/b/c/example.txt");
+		content.setSize(11d);
+		content.setTitle("aaa");
+
+		jcrDao.saveContent(content, "nghitran");
+		//
+		// Resource content = jcrDao.getResource("a/b/d");
+		// System.out.println(content.getCreatedUser());
+		//
+		// System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
+		//
+		// jcrDao.rename("a/b/d", "a/b/c");
+		// System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
+		// System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
+
+		final List<Resource> resources = jcrDao.searchResourcesByName("a");
+		System.out.println("Resources: " + resources.size());
+		// System.out.println("CONTENT " + content);
 		//
 		// jcrDao.removeContent("example/a/b");
 		// Content content2 = jcrDao.getContent("example/a/b");
