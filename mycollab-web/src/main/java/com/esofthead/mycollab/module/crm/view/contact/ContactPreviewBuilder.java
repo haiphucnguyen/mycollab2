@@ -49,7 +49,6 @@ import ezvcard.types.BirthdayType;
 import ezvcard.types.EmailType;
 import ezvcard.types.NoteType;
 import ezvcard.types.OrganizationType;
-import ezvcard.types.ProfileType;
 import ezvcard.types.RawType;
 import ezvcard.types.StructuredNameType;
 import ezvcard.types.TelephoneType;
@@ -258,12 +257,6 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									OrganizationType department = new OrganizationType();
 									department.addValue(contact.getDepartment());
 									vcard.addOrganization(department);
-								}
-								// Map leadsource to Profile
-								if (contact.getLeadsource() != null) {
-									ProfileType profile = new ProfileType();
-									profile.setValue(contact.getLeadsource());
-									vcard.setProfile(profile);
 								}
 								// Map brithday ----------
 								if (contact.getBirthday() != null) {
