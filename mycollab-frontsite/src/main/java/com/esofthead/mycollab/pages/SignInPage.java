@@ -40,7 +40,7 @@ public class SignInPage extends BasePage {
 				// TODO Auto-generated method stub				
 				DefaultHttpClient httpClient = new DefaultHttpClient();
 				HttpPost postRequest = new HttpPost(
-						"http://localhost:8080/mycollab-web/api/signup");
+						"http://localhost:8080/mycollab-web/api/signin");
 				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 				nvps.add(new BasicNameValuePair("email", email.getModelObject()));
 				
@@ -52,7 +52,7 @@ public class SignInPage extends BasePage {
 					if (status.getStatusCode() == 200) {
 						// redirect to signup success page and ask user verify
 						// his signup by email
-						log.debug("Signup successfully. Status is "
+						log.debug("Signin successfully. Status is "
 								+ status.getReasonPhrase());
 					} else {
 						// inform error with user
