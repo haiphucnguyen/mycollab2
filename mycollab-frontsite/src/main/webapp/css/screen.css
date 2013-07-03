@@ -612,7 +612,6 @@ h1, h2, h3, h4, h5, h6 {
 #header {
 	height: 50px;
 	width: 100%;
-	border-bottom: solid 3px #81C8E8;
 	background-color: #2B98D8;
 	margin-bottom: 25px;
 }
@@ -633,6 +632,7 @@ h1, h2, h3, h4, h5, h6 {
 	list-style: none;
 	float: right;
 }
+
 .header-mid ul li {
 	line-height: 50px;
 	display: inline-block;
@@ -641,6 +641,7 @@ h1, h2, h3, h4, h5, h6 {
 	transition: 0.5s;
 	margin: 0px -3px !important
 }
+
 .header-mid ul li a{	
 	color: #FFFFFF;
     display: block;
@@ -1691,6 +1692,95 @@ h1, h2, h3, h4, h5, h6 {
     width: 95px;	
 }
 /* End Sign Up style */
+
+/* Sign In style */
+#signin-content {
+	width: 1100px;
+	margin: 0 auto;
+	background-color: #FFF;
+	box-shadow: 0px 0px 5px 5px #888888;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	background-color: #F4F4F4;
+}
+
+.signin-main {
+	width: 700px;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+
+.signin-main h1 {
+	font-size: 25px;
+	padding-left: 35px;
+	background: url("../images/signin_icon.png") no-repeat top left;
+	color: #228BC9;
+	margin-bottom: 20px;
+	border-bottom: solid 6px #E3E3E3;
+	padding-bottom: 15px;
+}
+
+.signin-subtitle {
+	font-size: 16px;
+	font-style: italic;
+	padding-bottom: 15px; 
+}
+
+.signin-box {
+	border: solid 1px #B48762;
+	border-radius: 5px;
+	margin-bottom: 40px;
+	display: inline-block;
+	width: 670px;
+	padding: 15px;
+}
+
+.signin-box [type="text"] {
+	height: 25px;
+	border-radius: 3px;
+	width: 400px;
+	font-size: 16px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.signin-box [type="submit"] {
+	background-color: #4196C7;
+	border-color: #506A75;
+	border-radius: 5px;
+	color: #FFF;
+	height: 28px;
+	width: 200px;
+	font-size: 15px;
+	float: right;
+	cursor: pointer;
+}
+
+.signin-lblemail {
+	padding-right: 5px;
+}
+
+.signin-radio {
+	padding: 20px 0px 0px;
+}
+
+.signin-btngo {
+	background-color: #BD7802;
+	border: #AB8358;
+	color: #FFF;
+	border-radius: 5px;
+	font-size: 11px;
+	padding: 2px 5px;
+	cursor: pointer;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+.signin-radio label {
+	display: inline-block;
+    font-size: 14px;
+}
+/* End Sign In style */
 
 /* Note */
 .develop {
