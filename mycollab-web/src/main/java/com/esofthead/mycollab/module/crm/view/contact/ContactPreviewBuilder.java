@@ -200,57 +200,59 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
 								AddressType primAddress = new AddressType();
 								primAddress.addType(AddressTypeParameter.HOME);
+
 								// StreetAddress map to PrimAddress
 								if (contact.getPrimaddress() != null)
 									primAddress.setStreetAddress(contact
 											.getPrimaddress());
+
 								if (contact.getPrimcountry() != null)
 									primAddress.setCountry(contact
 											.getPrimcountry());
+
 								if (contact.getPrimcity() != null)
 									primAddress.setRegion(contact.getPrimcity());
+
 								if (contact.getPrimpostalcode() != null)
 									primAddress.setPostalCode(contact
 											.getPrimpostalcode());
+
 								if (contact.getPrimstate() != null)
 									primAddress.setLocality(contact
 											.getPrimstate());
+
 								vcard.addAddress(primAddress);
 
 								// Mapping Phone --------------------
 								if (contact.getHomephone() != null) {
-									TelephoneType homePhone = new TelephoneType();
-									homePhone
-											.addType(TelephoneTypeParameter.HOME);
-									homePhone.setPref(1);
-									homePhone.setGroup("HOME");
-									homePhone.setText(contact.getHomephone());
-									vcard.addTelephoneNumber(homePhone);
+									vcard.addTelephoneNumber(
+											contact.getHomephone(),
+											TelephoneTypeParameter.HOME);
 								}
 								// OFFICE PHONE
 								if (contact.getOfficephone() != null) {
-									TelephoneType workPhone = new TelephoneType();
-									workPhone
-											.addType(TelephoneTypeParameter.WORK);
-									workPhone.setText(contact.getOfficephone());
-									workPhone.setGroup("WORK");
-									vcard.addTelephoneNumber(workPhone);
+									vcard.addTelephoneNumber(
+											contact.getOfficephone(),
+											TelephoneTypeParameter.WORK);
 								}
 								// MOBIE
 								if (contact.getMobile() != null) {
-									TelephoneType mobiePhone = new TelephoneType();
-									mobiePhone
-											.addType(TelephoneTypeParameter.MODEM);
-									mobiePhone.setGroup("WORK");
-									vcard.addTelephoneNumber(contact
-											.getMobile());
+									vcard.addTelephoneNumber(
+											contact.getMobile(),
+											TelephoneTypeParameter.CELL);
 								}
+
+								if (contact.getOtherphone() != null) {
+									vcard.addTelephoneNumber(
+											contact.getOtherphone(),
+											TelephoneTypeParameter.PAGER);
+								}
+
 								// FAX
 								if (contact.getFax() != null) {
 									TelephoneType fax = new TelephoneType();
 									fax.addType(TelephoneTypeParameter.FAX);
 									fax.setText(contact.getFax());
-									fax.setGroup("HOME");
 									vcard.addTelephoneNumber(fax);
 								}
 								// Map department -----------
@@ -265,7 +267,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									profile.setValue(contact.getLeadsource());
 									vcard.setProfile(profile);
 								}
-								// Map brithday ----------
+								// Map birthday ----------
 								if (contact.getBirthday() != null) {
 									BirthdayType birthday = new BirthdayType();
 									birthday.setDate(contact.getBirthday(),
@@ -324,7 +326,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 										+ ".vcf");
 								try {
 									Ezvcard.write(vcard)
-											.version(VCardVersion.V3_0)
+											.version(VCardVersion.V4_0)
 											.go(vCardFile);
 									getWindow()
 											.open(new FileStreamResource(
