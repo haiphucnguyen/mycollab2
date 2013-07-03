@@ -1492,17 +1492,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .mid-left-title p {
 	font-size: 20px;
-	padding: 10px 0px;
+	padding: 0px 0px 10px;
 	line-height: 200%;
 }
 
 .sig-left-ctn {
-	background-color: #FAFAFA;
+	background-color: #E8E8E8;
 	padding-bottom: 20px;
 }
 
 .sig-left-ctn h1 {
-	background-color: #228bc9;
+	background-color: #5D9119;
 	font-size: 16px;
 	font-weight: normal;
 	color: #FFF;
@@ -1510,7 +1510,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-mid-button {
-	background-color: #e2e1e1;
+	background-color: #C8C8C8;
 	text-align: center;
 	padding: 20px 0px;
 }
@@ -1578,7 +1578,7 @@ h1, h2, h3, h4, h5, h6 {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	background: url("../images/signup_selectbox.png") no-repeat center right transparent;
+	background: url("../images/signup_selectbox.png") no-repeat center right #FFF;
 	background-size: 10%; 
 }
 
@@ -1644,7 +1644,7 @@ h1, h2, h3, h4, h5, h6 {
 	float: right;
 	width: 480px;
 	text-align: center;
-	background-color: #FAFAFA;
+	background-color: #FFCC99;
 }
 
 .sig-mid-right h1 {
@@ -1652,7 +1652,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 5px 20px;
 	color: #FFF;
 	font-weight: normal;
-	background-color: #228bc9;
+	background-color: #5D9119;
 	margin-bottom: 25px;
 	text-align: left;
 }
@@ -1680,8 +1680,16 @@ h1, h2, h3, h4, h5, h6 {
 	padding-bottom: 15px;
 }
 
+.sig-right-block p a {
+	color: #0267A8;
+}
+
+.sig-right-block p a:hover {
+	text-decoration: underline;
+}
+
 .sig-subdomain {
-	background-color: #2B98D8;
+	background-color: #F78D13;
     color: #FFFFFF;
     font-size: 14px;
     height: 25px;
@@ -1754,6 +1762,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 15px;
 	float: right;
 	cursor: pointer;
+	padding-bottom: 3px;
 }
 
 .signin-lblemail {
