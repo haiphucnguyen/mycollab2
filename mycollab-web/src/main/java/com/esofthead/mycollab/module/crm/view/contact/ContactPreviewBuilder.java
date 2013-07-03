@@ -48,9 +48,12 @@ import ezvcard.types.AddressType;
 import ezvcard.types.BirthdayType;
 import ezvcard.types.EmailType;
 import ezvcard.types.KindType;
+import ezvcard.types.NoteType;
 import ezvcard.types.ProfileType;
+import ezvcard.types.RawType;
 import ezvcard.types.StructuredNameType;
 import ezvcard.types.TelephoneType;
+import ezvcard.types.TitleType;
 
 @SuppressWarnings("serial")
 public abstract class ContactPreviewBuilder extends VerticalLayout {
@@ -223,26 +226,33 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									homePhone.setText(contact.getHomephone());
 									vcard.addTelephoneNumber(homePhone);
 								}
+								// OFFICE PHONE
 								if (contact.getOfficephone() != null) {
 									TelephoneType workPhone = new TelephoneType();
 									workPhone
 											.addType(TelephoneTypeParameter.WORK);
-									workPhone.setPref(2);
 									workPhone.setText(contact.getOfficephone());
 									vcard.addTelephoneNumber(workPhone);
 								}
+								// MOBIE
 								if (contact.getMobile() != null) {
 									TelephoneType mobiePhone = new TelephoneType();
 									mobiePhone
 											.addType(TelephoneTypeParameter.MODEM);
-									mobiePhone.setPref(3);
 									vcard.addTelephoneNumber(contact
 											.getMobile());
+								}
+								// FAX
+								if (contact.getFax() != null) {
+									TelephoneType fax = new TelephoneType();
+									fax.addType(TelephoneTypeParameter.FAX);
+									fax.setText(contact.getFax());
+									vcard.addTelephoneNumber(fax);
 								}
 								// Map department -----------
 								if (contact.getDepartment() != null) {
 									KindType department = new KindType();
-									department.setValue("");
+									department.setValue(contact.getDepartment());
 									department.isOrg();
 									vcard.setKind(department);
 								}
@@ -259,13 +269,59 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 											false);
 									vcard.setBirthday(birthday);
 								}
-								// fax & contact.getIscallable()
+								if (contact.getDescription() != null) {
+									NoteType noteType = new NoteType();
+									noteType.setValue(contact.getDescription());
+									vcard.addNote(noteType);
+								}
+								// Map leadsource
+								if (contact.getLeadsource() != null) {
+									RawType leadsource = new RawType(
+											"leadsource");
+									leadsource.setValue(contact.getLeadsource());
+									vcard.addExtendedType(leadsource);
+								}
+								// Map assitance ---
+								if (contact.getAssistant() != null) {
+									RawType assistant = new RawType("Assistant");
+									assistant.setValue(contact.getAssistant());
+									vcard.addExtendedType(assistant);
+								}
+								// Map AssistantPhone
+								if (contact.getAssistantphone() != null) {
+									RawType assistantPhone = new RawType(
+											"AssistantPhone");
+									assistantPhone.setValue(contact
+											.getAssistantphone());
+									vcard.addExtendedType(assistantPhone);
+								}
+								// Map AssignUser
+								if (contact.getAssignuser() != null) {
+									RawType assignuser = new RawType(
+											"AssignUser");
+									assignuser.setValue(contact.getAssignuser());
+									vcard.addExtendedType(assignuser);
+								}
+								// Map Callable true/false
+								if (contact.getIscallable() != null) {
+									RawType bool = new RawType("Callable");
+									bool.setValue(contact.getIscallable()
+											.toString());
+									vcard.addExtendedType(bool);
+								}
+								// Map Tittle ----
+								if (contact.getTitle() != null) {
+									TitleType title = new TitleType(contact
+											.getTitle());
+									vcard.addExtendedType(title);
+								}
+
 								final File vCardFile = new File(vcard
 										.getStructuredName().getGiven()
 										+ ".vcf");
 								try {
 									Ezvcard.write(vcard)
-											.version(VCardVersion.V4_0)
+											.version(VCardVersion.V3_0)
 											.go(vCardFile);
 									getWindow()
 											.open(new FileStreamResource(

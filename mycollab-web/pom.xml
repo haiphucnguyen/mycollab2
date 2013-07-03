@@ -168,41 +168,16 @@
             <artifactId>confirmdialog</artifactId>
             <version>1.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.vaadin</groupId>
-            <artifactId>dontpush-addon-ozonelayer</artifactId>
-            <version>1.0.4</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.atmosphere</groupId>
-                    <artifactId>atmosphere-gwt-client</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.atmosphere</groupId>
-                    <artifactId>atmosphere-gwt-common</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.atmosphere</groupId>
-                    <artifactId>atmosphere-gwt-server</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.atmosphere</groupId>
-            <artifactId>atmosphere-gwt-client</artifactId>
-            <version>1.0.13</version>
-        </dependency>
-        <dependency>
-            <groupId>org.atmosphere</groupId>
-            <artifactId>atmosphere-gwt-common</artifactId>
-            <version>1.0.13</version>
-        </dependency>
-        <dependency>
-            <groupId>org.atmosphere</groupId>
-            <artifactId>atmosphere-gwt-server</artifactId>
-            <version>1.0.13</version>
-        </dependency>
-
+        <!-- <dependency> <groupId>org.vaadin</groupId> <artifactId>dontpush-addon-ozonelayer</artifactId> 
+            <version>1.0.4</version> <exclusions> <exclusion> <groupId>org.atmosphere</groupId> 
+            <artifactId>atmosphere-gwt-client</artifactId> </exclusion> <exclusion> <groupId>org.atmosphere</groupId> 
+            <artifactId>atmosphere-gwt-common</artifactId> </exclusion> <exclusion> <groupId>org.atmosphere</groupId> 
+            <artifactId>atmosphere-gwt-server</artifactId> </exclusion> </exclusions> 
+            </dependency> <dependency> <groupId>org.atmosphere</groupId> <artifactId>atmosphere-gwt-client</artifactId> 
+            <version>1.0.13</version> </dependency> <dependency> <groupId>org.atmosphere</groupId> 
+            <artifactId>atmosphere-gwt-common</artifactId> <version>1.0.13</version> 
+            </dependency> <dependency> <groupId>org.atmosphere</groupId> <artifactId>atmosphere-gwt-server</artifactId> 
+            <version>1.0.13</version> </dependency> -->
         <dependency>
             <groupId>eu.infomas</groupId>
             <artifactId>annotation-detector</artifactId>
@@ -398,10 +373,10 @@
         </dependency>
 
         <!-- GWT dependency -->
-        <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+         <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
             <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
             <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
-            <scope>compile</scope> </dependency> -->
+            <scope>compile</scope> </dependency> 
     </dependencies>
     <build>
         <plugins>
