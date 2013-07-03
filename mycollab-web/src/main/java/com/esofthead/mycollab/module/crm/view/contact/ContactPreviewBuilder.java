@@ -29,6 +29,7 @@ import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -65,62 +66,64 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 	protected NoteListItems noteListItems;
 
 	protected void initRelatedComponent() {
-		associateOpportunityList = new ContactOpportunityListComp();
-		associateActivityList = new EventRelatedItemListComp(true);
-		noteListItems = new NoteListItems("Notes");
+		this.associateOpportunityList = new ContactOpportunityListComp();
+		this.associateActivityList = new EventRelatedItemListComp(true);
+		this.noteListItems = new NoteListItems("Notes");
 	}
 
-	public void previewItem(SimpleContact item) {
-		contact = item;
-		previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
-		displayNotes();
-		displayActivities();
-		displayAssociateOpportunityList();
+	public void previewItem(final SimpleContact item) {
+		this.contact = item;
+		this.previewForm.setItemDataSource(new BeanItem<SimpleContact>(
+				this.contact));
+		this.displayNotes();
+		this.displayActivities();
+		this.displayAssociateOpportunityList();
 	}
 
 	public ContactOpportunityListComp getAssociateOpportunityList() {
-		return associateOpportunityList;
+		return this.associateOpportunityList;
 	}
 
 	public EventRelatedItemListComp getAssociateActivityList() {
-		return associateActivityList;
+		return this.associateActivityList;
 	}
 
 	public SimpleContact getContact() {
-		return contact;
+		return this.contact;
 	}
 
 	public AdvancedPreviewBeanForm<Contact> getPreviewForm() {
-		return previewForm;
+		return this.previewForm;
 	}
 
 	private void displayNotes() {
-		noteListItems.showNotes(CrmTypeConstants.CONTACT, contact.getId());
+		this.noteListItems.showNotes(CrmTypeConstants.CONTACT,
+				this.contact.getId());
 	}
 
 	public void displayActivities() {
-		EventSearchCriteria criteria = new EventSearchCriteria();
+		final EventSearchCriteria criteria = new EventSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.CONTACT));
-		criteria.setTypeid(new NumberSearchField(contact.getId()));
-		associateActivityList.setSearchCriteria(criteria);
+		criteria.setTypeid(new NumberSearchField(this.contact.getId()));
+		this.associateActivityList.setSearchCriteria(criteria);
 	}
 
 	private void displayAssociateOpportunityList() {
-		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setContactId(new NumberSearchField(SearchField.AND, contact
-				.getId()));
-		associateOpportunityList.displayOpportunities(contact);
+		criteria.setContactId(new NumberSearchField(SearchField.AND,
+				this.contact.getId()));
+		this.associateOpportunityList.displayOpportunities(this.contact);
 	}
 
 	protected class ContactFormFieldFactory extends DefaultFormViewFieldFactory {
 
 		@Override
-		protected Field onCreateField(Item item, Object propertyId,
-				Component uiContext) {
+		protected Field onCreateField(final Item item, final Object propertyId,
+				final Component uiContext) {
 			// if (propertyId.equals("accountId")) {
 			// return new FormLinkViewField(contact.getAccountName(),
 			// new Button.ClickListener() {
@@ -135,189 +138,267 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 			// }
 			// });
 			if (propertyId.equals("email")) {
-				return new FormEmailLinkViewField(contact.getEmail());
+				return new FormEmailLinkViewField(
+						ContactPreviewBuilder.this.contact.getEmail());
 			} else if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(contact.getAssignUserFullName(),
+				return new FormLinkViewField(
+						ContactPreviewBuilder.this.contact
+								.getAssignUserFullName(),
 						new Button.ClickListener() {
 							@Override
-							public void buttonClick(ClickEvent event) {
+							public void buttonClick(final ClickEvent event) {
 								// TODO Auto-generated method stub
 							}
 						});
 			} else if (propertyId.equals("iscallable")) {
-				if (contact.getIscallable() == null
-						|| Boolean.FALSE == contact.getIscallable()) {
+				if (ContactPreviewBuilder.this.contact.getIscallable() == null
+						|| Boolean.FALSE == ContactPreviewBuilder.this.contact
+								.getIscallable()) {
 					return new FormViewField("No");
 				} else {
 					return new FormViewField("Yes");
 				}
 			} else if (propertyId.equals("firstname")) {
-				FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
-				Label nameLbl = new Label(contact.getFirstname());
+				final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+				final Label nameLbl = new Label(
+						ContactPreviewBuilder.this.contact.getFirstname());
+				nameLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 				containerField.addComponentField(nameLbl);
-				Button vcardDownloadBtn = new Button("",
+				final Button vcardDownloadBtn = new Button("",
 						new Button.ClickListener() {
 
 							@Override
-							public void buttonClick(ClickEvent event) {
-								VCard vcard = new VCard();
+							public void buttonClick(final ClickEvent event) {
+								final VCard vcard = new VCard();
 
 								// Given is name
-								StructuredNameType name = new StructuredNameType();
-								if (contact.getFirstname() != null)
-									name.setFamily(contact.getLastname());
-								if (contact.getLastname() != null)
-									name.setGiven(contact.getFirstname());
+								final StructuredNameType name = new StructuredNameType();
+								if (ContactPreviewBuilder.this.contact
+										.getFirstname() != null) {
+									name.setFamily(ContactPreviewBuilder.this.contact
+											.getLastname());
+								}
+								if (ContactPreviewBuilder.this.contact
+										.getLastname() != null) {
+									name.setGiven(ContactPreviewBuilder.this.contact
+											.getFirstname());
+								}
 								vcard.setStructuredName(name);
 
-								if (contact.getEmail() != null) {
-									EmailType email = new EmailType();
-									email.setValue(contact.getEmail());
+								if (ContactPreviewBuilder.this.contact
+										.getEmail() != null) {
+									final EmailType email = new EmailType();
+									email.setValue(ContactPreviewBuilder.this.contact
+											.getEmail());
 									vcard.addEmail(email);
 								}
 								// Mapping Address ---------------------
-								AddressType otherAddress = new AddressType();
+								final AddressType otherAddress = new AddressType();
 								otherAddress.addType(AddressTypeParameter.WORK);
 								// Street address map to OtherAddress
-								if (contact.getOtheraddress() != null)
-									otherAddress.setStreetAddress(contact
-											.getOtheraddress());
-								if (contact.getOthercountry() != null)
-									otherAddress.setCountry(contact
-											.getOthercountry());
+								if (ContactPreviewBuilder.this.contact
+										.getOtheraddress() != null) {
+									otherAddress
+											.setStreetAddress(ContactPreviewBuilder.this.contact
+													.getOtheraddress());
+								}
+								if (ContactPreviewBuilder.this.contact
+										.getOthercountry() != null) {
+									otherAddress
+											.setCountry(ContactPreviewBuilder.this.contact
+													.getOthercountry());
+								}
 								// city map to Region ----------------
-								if (contact.getOthercity() != null)
-									otherAddress.setRegion(contact
-											.getOthercity());
-								if (contact.getOtherpostalcode() != null)
-									otherAddress.setPostalCode(contact
-											.getOtherpostalcode());
+								if (ContactPreviewBuilder.this.contact
+										.getOthercity() != null) {
+									otherAddress
+											.setRegion(ContactPreviewBuilder.this.contact
+													.getOthercity());
+								}
+								if (ContactPreviewBuilder.this.contact
+										.getOtherpostalcode() != null) {
+									otherAddress
+											.setPostalCode(ContactPreviewBuilder.this.contact
+													.getOtherpostalcode());
+								}
 								// Sate map to Locality
-								if (contact.getOtherstate() != null)
-									otherAddress.setLocality(contact
-											.getOtherstate());
+								if (ContactPreviewBuilder.this.contact
+										.getOtherstate() != null) {
+									otherAddress
+											.setLocality(ContactPreviewBuilder.this.contact
+													.getOtherstate());
+								}
 								vcard.addAddress(otherAddress);
 
-								AddressType primAddress = new AddressType();
+								final AddressType primAddress = new AddressType();
 								primAddress.addType(AddressTypeParameter.HOME);
 
 								// StreetAddress map to PrimAddress
-								if (contact.getPrimaddress() != null)
-									primAddress.setStreetAddress(contact
-											.getPrimaddress());
+								if (ContactPreviewBuilder.this.contact
+										.getPrimaddress() != null) {
+									primAddress
+											.setStreetAddress(ContactPreviewBuilder.this.contact
+													.getPrimaddress());
+								}
 
-								if (contact.getPrimcountry() != null)
-									primAddress.setCountry(contact
-											.getPrimcountry());
+								if (ContactPreviewBuilder.this.contact
+										.getPrimcountry() != null) {
+									primAddress
+											.setCountry(ContactPreviewBuilder.this.contact
+													.getPrimcountry());
+								}
 
-								if (contact.getPrimcity() != null)
-									primAddress.setRegion(contact.getPrimcity());
+								if (ContactPreviewBuilder.this.contact
+										.getPrimcity() != null) {
+									primAddress
+											.setRegion(ContactPreviewBuilder.this.contact
+													.getPrimcity());
+								}
 
-								if (contact.getPrimpostalcode() != null)
-									primAddress.setPostalCode(contact
-											.getPrimpostalcode());
+								if (ContactPreviewBuilder.this.contact
+										.getPrimpostalcode() != null) {
+									primAddress
+											.setPostalCode(ContactPreviewBuilder.this.contact
+													.getPrimpostalcode());
+								}
 
-								if (contact.getPrimstate() != null)
-									primAddress.setLocality(contact
-											.getPrimstate());
+								if (ContactPreviewBuilder.this.contact
+										.getPrimstate() != null) {
+									primAddress
+											.setLocality(ContactPreviewBuilder.this.contact
+													.getPrimstate());
+								}
 
 								vcard.addAddress(primAddress);
 
 								// Mapping Phone --------------------
-								if (contact.getHomephone() != null) {
+								if (ContactPreviewBuilder.this.contact
+										.getHomephone() != null) {
 									vcard.addTelephoneNumber(
-											contact.getHomephone(),
+											ContactPreviewBuilder.this.contact
+													.getHomephone(),
 											TelephoneTypeParameter.HOME);
 								}
 								// OFFICE PHONE
-								if (contact.getOfficephone() != null) {
+								if (ContactPreviewBuilder.this.contact
+										.getOfficephone() != null) {
 									vcard.addTelephoneNumber(
-											contact.getOfficephone(),
+											ContactPreviewBuilder.this.contact
+													.getOfficephone(),
 											TelephoneTypeParameter.WORK);
 								}
 								// MOBIE
-								if (contact.getMobile() != null) {
+								if (ContactPreviewBuilder.this.contact
+										.getMobile() != null) {
 									vcard.addTelephoneNumber(
-											contact.getMobile(),
+											ContactPreviewBuilder.this.contact
+													.getMobile(),
 											TelephoneTypeParameter.CELL);
 								}
 
-								if (contact.getOtherphone() != null) {
+								if (ContactPreviewBuilder.this.contact
+										.getOtherphone() != null) {
 									vcard.addTelephoneNumber(
-											contact.getOtherphone(),
+											ContactPreviewBuilder.this.contact
+													.getOtherphone(),
 											TelephoneTypeParameter.PAGER);
 								}
 
 								// FAX
-								if (contact.getFax() != null) {
-									TelephoneType fax = new TelephoneType();
+								if (ContactPreviewBuilder.this.contact.getFax() != null) {
+									final TelephoneType fax = new TelephoneType();
 									fax.addType(TelephoneTypeParameter.FAX);
-									fax.setText(contact.getFax());
+									fax.setText(ContactPreviewBuilder.this.contact
+											.getFax());
 									vcard.addTelephoneNumber(fax);
 								}
 								// Map department -----------
-								if (contact.getDepartment() != null) {
-									OrganizationType department = new OrganizationType();
-									department.addValue(contact.getDepartment());
+								if (ContactPreviewBuilder.this.contact
+										.getDepartment() != null) {
+									final OrganizationType department = new OrganizationType();
+									department
+											.addValue(ContactPreviewBuilder.this.contact
+													.getDepartment());
 									vcard.addOrganization(department);
 								}
 								// Map leadsource to Profile
-								if (contact.getLeadsource() != null) {
-									ProfileType profile = new ProfileType();
-									profile.setValue(contact.getLeadsource());
+								if (ContactPreviewBuilder.this.contact
+										.getLeadsource() != null) {
+									final ProfileType profile = new ProfileType();
+									profile.setValue(ContactPreviewBuilder.this.contact
+											.getLeadsource());
 									vcard.setProfile(profile);
 								}
 								// Map birthday ----------
-								if (contact.getBirthday() != null) {
-									BirthdayType birthday = new BirthdayType();
-									birthday.setDate(contact.getBirthday(),
-											false);
+								if (ContactPreviewBuilder.this.contact
+										.getBirthday() != null) {
+									final BirthdayType birthday = new BirthdayType();
+									birthday.setDate(
+											ContactPreviewBuilder.this.contact
+													.getBirthday(), false);
 									vcard.setBirthday(birthday);
 								}
-								if (contact.getDescription() != null) {
-									NoteType noteType = new NoteType();
-									noteType.setValue(contact.getDescription());
+								if (ContactPreviewBuilder.this.contact
+										.getDescription() != null) {
+									final NoteType noteType = new NoteType();
+									noteType.setValue(ContactPreviewBuilder.this.contact
+											.getDescription());
 									vcard.addNote(noteType);
 								}
 								// Map leadsource
-								if (contact.getLeadsource() != null) {
-									RawType leadsource = new RawType(
+								if (ContactPreviewBuilder.this.contact
+										.getLeadsource() != null) {
+									final RawType leadsource = new RawType(
 											"leadsource");
-									leadsource.setValue(contact.getLeadsource());
+									leadsource
+											.setValue(ContactPreviewBuilder.this.contact
+													.getLeadsource());
 									vcard.addExtendedType(leadsource);
 								}
 								// Map assitance ---
-								if (contact.getAssistant() != null) {
-									RawType assistant = new RawType("Assistant");
-									assistant.setValue(contact.getAssistant());
+								if (ContactPreviewBuilder.this.contact
+										.getAssistant() != null) {
+									final RawType assistant = new RawType(
+											"Assistant");
+									assistant
+											.setValue(ContactPreviewBuilder.this.contact
+													.getAssistant());
 									vcard.addExtendedType(assistant);
 								}
 								// Map AssistantPhone
-								if (contact.getAssistantphone() != null) {
-									RawType assistantPhone = new RawType(
+								if (ContactPreviewBuilder.this.contact
+										.getAssistantphone() != null) {
+									final RawType assistantPhone = new RawType(
 											"AssistantPhone");
-									assistantPhone.setValue(contact
-											.getAssistantphone());
+									assistantPhone
+											.setValue(ContactPreviewBuilder.this.contact
+													.getAssistantphone());
 									vcard.addExtendedType(assistantPhone);
 								}
 								// Map AssignUser
-								if (contact.getAssignuser() != null) {
-									RawType assignuser = new RawType(
+								if (ContactPreviewBuilder.this.contact
+										.getAssignuser() != null) {
+									final RawType assignuser = new RawType(
 											"AssignUser");
-									assignuser.setValue(contact.getAssignuser());
+									assignuser
+											.setValue(ContactPreviewBuilder.this.contact
+													.getAssignuser());
 									vcard.addExtendedType(assignuser);
 								}
 								// Map Callable true/false
-								if (contact.getIscallable() != null) {
-									RawType bool = new RawType("Callable");
-									bool.setValue(contact.getIscallable()
-											.toString());
+								if (ContactPreviewBuilder.this.contact
+										.getIscallable() != null) {
+									final RawType bool = new RawType("Callable");
+									bool.setValue(ContactPreviewBuilder.this.contact
+											.getIscallable().toString());
 									vcard.addExtendedType(bool);
 								}
 								// Map Tittle ----
-								if (contact.getTitle() != null) {
-									TitleType title = new TitleType(contact
-											.getTitle());
+								if (ContactPreviewBuilder.this.contact
+										.getTitle() != null) {
+									final TitleType title = new TitleType(
+											ContactPreviewBuilder.this.contact
+													.getTitle());
 									vcard.addExtendedType(title);
 								}
 
@@ -328,13 +409,15 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									Ezvcard.write(vcard)
 											.version(VCardVersion.V4_0)
 											.go(vCardFile);
-									getWindow()
+									ContactPreviewBuilder.this.getWindow()
 											.open(new FileStreamResource(
 													new FileInputStream(
 															vCardFile),
 													vCardFile.getName(),
-													getApplication()), "_blank");
-								} catch (IOException e) {
+													ContactPreviewBuilder.this
+															.getApplication()),
+													"_blank");
+								} catch (final IOException e) {
 									throw new MyCollabException(e);
 								}
 							}
@@ -343,7 +426,9 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 						.newResource("icons/12/vcard.png"));
 				containerField.addComponentField(vcardDownloadBtn);
 				containerField.getLayout().setComponentAlignment(
-						vcardDownloadBtn, Alignment.MIDDLE_RIGHT);
+						vcardDownloadBtn, Alignment.MIDDLE_LEFT);
+				containerField.getLayout().setExpandRatio(vcardDownloadBtn,
+						1.0f);
 				return containerField;
 			}
 
@@ -352,42 +437,44 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 	}
 
 	public static class ReadView extends ContactPreviewBuilder {
-		private VerticalLayout contactInformation;
-		private VerticalLayout relatedItemsContainer;
-		private ReadViewLayout contactAddLayout;
+		private final VerticalLayout contactInformation;
+		private final VerticalLayout relatedItemsContainer;
+		private final ReadViewLayout contactAddLayout;
 
 		public ReadView() {
-			contactAddLayout = new ReadViewLayout(
+			this.contactAddLayout = new ReadViewLayout(
 					MyCollabResource.newResource("icons/22/crm/contact.png"));
-			this.addComponent(contactAddLayout);
+			this.addComponent(this.contactAddLayout);
 
-			initRelatedComponent();
+			this.initRelatedComponent();
 
-			previewForm = new AdvancedPreviewBeanForm<Contact>() {
+			this.previewForm = new AdvancedPreviewBeanForm<Contact>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout(
 							true));
 					this.setFormFieldFactory(new ContactFormFieldFactory());
 					super.setItemDataSource(newDataSource);
-					contactAddLayout.setTitle(contact.getContactName());
+					ReadView.this.contactAddLayout
+							.setTitle(ReadView.this.contact.getContactName());
 				}
 
 				@Override
 				protected void doPrint() {
 					// Create a window that contains what you want to print
-					Window window = new Window("Window to Print");
+					final Window window = new Window("Window to Print");
 
-					ContactPreviewBuilder printView = new ContactPreviewBuilder.PrintView();
-					printView.previewItem(contact);
+					final ContactPreviewBuilder printView = new ContactPreviewBuilder.PrintView();
+					printView.previewItem(ReadView.this.contact);
 					window.addComponent(printView);
 
 					// Add the printing window as a new application-level window
-					getApplication().addWindow(window);
+					this.getApplication().addWindow(window);
 
 					// Open it as a popup window with no decorations
-					getWindow().open(new ExternalResource(window.getURL()),
-							"_blank", 1100, 200, // Width and height
+					this.getWindow().open(
+							new ExternalResource(window.getURL()), "_blank",
+							1100, 200, // Width and height
 							Window.BORDER_NONE); // No decorations
 
 					// Print automatically when the window opens.
@@ -400,42 +487,44 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
 				@Override
 				protected void showHistory() {
-					ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(
+					final ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
-							contact.getId());
-					getWindow().addWindow(historyLog);
+							ReadView.this.contact.getId());
+					this.getWindow().addWindow(historyLog);
 				}
 			};
 
 			final Layout optionalActionControls = PreviewFormControlsGenerator2
-					.createFormOptionalControls(previewForm,
+					.createFormOptionalControls(this.previewForm,
 							RolePermissionCollections.CRM_CONTACT);
 
-			contactAddLayout.addControlButtons(optionalActionControls);
+			this.contactAddLayout.addControlButtons(optionalActionControls);
 
-			contactInformation = new VerticalLayout();
-			contactInformation.addStyleName("main-info");
+			this.contactInformation = new VerticalLayout();
+			this.contactInformation.addStyleName("main-info");
 
 			final Layout actionControls = PreviewFormControlsGenerator2
-					.createFormControls(previewForm,
+					.createFormControls(this.previewForm,
 							RolePermissionCollections.CRM_CONTACT);
 			actionControls.addStyleName("control-buttons");
-			contactInformation.addComponent(actionControls);
+			this.contactInformation.addComponent(actionControls);
 
-			contactInformation.addComponent(previewForm);
+			this.contactInformation.addComponent(this.previewForm);
 
-			contactInformation.addComponent(noteListItems);
+			this.contactInformation.addComponent(this.noteListItems);
 
-			contactAddLayout.addTab(contactInformation, "Contact Information");
+			this.contactAddLayout.addTab(this.contactInformation,
+					"Contact Information");
 
-			relatedItemsContainer = new VerticalLayout();
-			relatedItemsContainer.setMargin(true);
+			this.relatedItemsContainer = new VerticalLayout();
+			this.relatedItemsContainer.setMargin(true);
 
-			contactAddLayout.addTab(relatedItemsContainer, "More Information");
+			this.contactAddLayout.addTab(this.relatedItemsContainer,
+					"More Information");
 
-			this.addComponent(contactAddLayout);
+			this.addComponent(this.contactAddLayout);
 
-			contactAddLayout
+			this.contactAddLayout
 					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
 
 						@Override
@@ -445,12 +534,12 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 							if ("Contact Information".equals(caption)) {
 
 							} else if ("More Information".equals(caption)) {
-								relatedItemsContainer
-										.addComponent(associateActivityList);
-								relatedItemsContainer
-										.addComponent(associateOpportunityList);
+								ReadView.this.relatedItemsContainer
+										.addComponent(ReadView.this.associateActivityList);
+								ReadView.this.relatedItemsContainer
+										.addComponent(ReadView.this.associateOpportunityList);
 							}
-							contactAddLayout.selectTab(caption);
+							ReadView.this.contactAddLayout.selectTab(caption);
 						}
 					});
 		}
@@ -459,17 +548,17 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 	public static class PrintView extends ContactPreviewBuilder {
 
 		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<Contact>() {
+			this.previewForm = new AdvancedPreviewBeanForm<Contact>() {
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new FormLayoutFactory());
 					this.setFormFieldFactory(new ContactFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 				}
 			};
-			initRelatedComponent();
+			this.initRelatedComponent();
 
-			this.addComponent(previewForm);
+			this.addComponent(this.previewForm);
 		}
 
 		class FormLayoutFactory extends ContactFormLayoutFactory {
@@ -477,7 +566,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(contact.getContactName());
+				super(PrintView.this.contact.getContactName());
 			}
 
 			@Override
@@ -487,12 +576,14 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
 			@Override
 			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.setWidth("100%");
 
-				relatedItemsPanel.addComponent(noteListItems);
-				relatedItemsPanel.addComponent(associateActivityList);
-				relatedItemsPanel.addComponent(associateOpportunityList);
+				relatedItemsPanel.addComponent(PrintView.this.noteListItems);
+				relatedItemsPanel
+						.addComponent(PrintView.this.associateActivityList);
+				relatedItemsPanel
+						.addComponent(PrintView.this.associateOpportunityList);
 
 				return relatedItemsPanel;
 			}
