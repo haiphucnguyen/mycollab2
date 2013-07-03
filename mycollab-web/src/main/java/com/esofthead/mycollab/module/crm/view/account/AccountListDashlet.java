@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -30,25 +32,9 @@ public class AccountListDashlet extends Depot {
 
 	public AccountListDashlet() {
 		super("My Accounts", new VerticalLayout());
-		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new AccountTableDisplay(
-					new String[] { "accountname", "email" },
-					new String[] {
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new AccountTableDisplay(
-					new String[] { "accountname", "phoneoffice", "email" },
-					new String[] {
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
-		}
+		tableItem = new AccountTableDisplay(Arrays.asList(
+				AccountTableFieldDef.accountname,
+				AccountTableFieldDef.phoneoffice, AccountTableFieldDef.email));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
