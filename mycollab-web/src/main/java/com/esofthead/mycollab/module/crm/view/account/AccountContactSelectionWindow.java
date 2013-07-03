@@ -25,7 +25,7 @@ public class AccountContactSelectionWindow extends
 		RelatedItemSelectionWindow<SimpleContact, ContactSearchCriteria> {
 
 	public AccountContactSelectionWindow(
-			AccountContactListComp associateContactList) {
+			final AccountContactListComp associateContactList) {
 		super("Select Contacts", associateContactList);
 
 		this.setWidth("900px");
@@ -33,7 +33,7 @@ public class AccountContactSelectionWindow extends
 
 	@Override
 	protected void initUI() {
-		tableItem = new ContactTableDisplay(
+		this.tableItem = new ContactTableDisplay(
 				new String[] { "selected", "contactName", "title",
 						"accountName", "officephone" },
 				new String[] {
@@ -46,29 +46,32 @@ public class AccountContactSelectionWindow extends
 								.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
 						LocalizationHelper
 								.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER) });
+		this.tableItem.addStyleName(UIConstants.LIMITED_HEIGHT_TABLE);
 
-		Button selectBtn = new Button("Select", new Button.ClickListener() {
+		final Button selectBtn = new Button("Select",
+				new Button.ClickListener() {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				close();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						AccountContactSelectionWindow.this.close();
+					}
+				});
 		selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-		ContactSimpleSearchPanel contactSimpleSearchPanel = new ContactSimpleSearchPanel();
+		final ContactSimpleSearchPanel contactSimpleSearchPanel = new ContactSimpleSearchPanel();
 		contactSimpleSearchPanel
 				.addSearchHandler(new SearchHandler<ContactSearchCriteria>() {
 
 					@Override
-					public void onSearch(ContactSearchCriteria criteria) {
-						tableItem.setSearchCriteria(criteria);
+					public void onSearch(final ContactSearchCriteria criteria) {
+						AccountContactSelectionWindow.this.tableItem
+								.setSearchCriteria(criteria);
 					}
 
 				});
 
 		this.bodyContent.addComponent(contactSimpleSearchPanel);
 		this.bodyContent.addComponent(selectBtn);
-		this.bodyContent.addComponent(tableItem);
+		this.bodyContent.addComponent(this.tableItem);
 	}
 }

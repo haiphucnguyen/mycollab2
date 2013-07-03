@@ -29,7 +29,6 @@ import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -162,8 +161,8 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 				final Label nameLbl = new Label(
 						ContactPreviewBuilder.this.contact.getFirstname());
-				nameLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 				containerField.addComponentField(nameLbl);
+				containerField.getLayout().setExpandRatio(nameLbl, 1.0f);
 				final Button vcardDownloadBtn = new Button("",
 						new Button.ClickListener() {
 
@@ -426,9 +425,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 						.newResource("icons/12/vcard.png"));
 				containerField.addComponentField(vcardDownloadBtn);
 				containerField.getLayout().setComponentAlignment(
-						vcardDownloadBtn, Alignment.MIDDLE_LEFT);
-				containerField.getLayout().setExpandRatio(vcardDownloadBtn,
-						1.0f);
+						vcardDownloadBtn, Alignment.TOP_RIGHT);
 				return containerField;
 			}
 

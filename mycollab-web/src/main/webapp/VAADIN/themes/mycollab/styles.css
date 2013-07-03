@@ -3911,3 +3911,8 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	box-sizing: border-box;
 	background: none no-repeat left top rgb(245, 245, 245);
 }
+
+.limited-height-table .v-table-body, .limited-height-table .v-table-body-noselection {
+	max-height: 450px;
+	overflow-x: hidden;
+}

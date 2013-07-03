@@ -28,6 +28,7 @@ public class UIConstants {
 	public static final String THEME_TAB_STYLE3 = "tab-style3";
 	public static final String LABEL_CLICKABLE = "clickable-label";
 	// public static final String LABEL_H2_NO_UNDERLINE = "h2-no-border"
+	public static final String LIMITED_HEIGHT_TABLE = "limited-height-table";
 	public static final String LINK_COMPLETED = "completed";
 	public static final String LINK_OVERDUE = "overdue";
 	public static final String LINK_PENDING = "pending";
