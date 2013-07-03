@@ -1,46 +1,49 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.WeakHashmapStack;
 import com.esofthead.mycollab.web.AppContext;
 
 public class PresenterResolver {
 
-    private static final String PRESENTER_VAL = "presenterMap";
-    private static Logger log = LoggerFactory.getLogger(PresenterResolver.class);
+	private static final String PRESENTER_VAL = "presenterMap";
+	private static Logger log = LoggerFactory
+			.getLogger(PresenterResolver.class);
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public static <P extends Presenter> P getPresenter(Class<P> presenterClass) {
-        Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>)AppContext.getVariable(PRESENTER_VAL);
-        if (presenterMap == null) {
-            presenterMap = new WeakHashMap<Class<?>, Object>();
-            AppContext.putVariable(PRESENTER_VAL, presenterMap);
-        }
-        P value = (P) presenterMap.get(presenterClass);
-        if (value == null) {
-            try {
-                value = (P) presenterClass.newInstance();
-                presenterMap.put(presenterClass, value);
-                return value;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            return value;
-        }
-    }
+		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
+				.getVariable(PRESENTER_VAL);
+		if (presenterMap == null) {
+			presenterMap = new WeakHashmapStack<Class<?>, Object>();
+			AppContext.putVariable(PRESENTER_VAL, presenterMap);
+		}
+		P value = (P) presenterMap.get(presenterClass);
+		if (value == null) {
+			try {
+				value = (P) presenterClass.newInstance();
+				presenterMap.put(presenterClass, value);
+				return value;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			return value;
+		}
+	}
 
-    public static void clearResources() {
-        @SuppressWarnings("unchecked")
-		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>)AppContext.getVariable(PRESENTER_VAL);
-        if (presenterMap != null) {
-           presenterMap.clear(); 
-           AppContext.removeVariable(PRESENTER_VAL);
-           log.debug("Remove presenter map");
-        }
-    }
+	public static void clearResources() {
+		@SuppressWarnings("unchecked")
+		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
+				.getVariable(PRESENTER_VAL);
+		if (presenterMap != null) {
+			presenterMap.clear();
+			AppContext.removeVariable(PRESENTER_VAL);
+			log.debug("Remove presenter map");
+		}
+	}
 }

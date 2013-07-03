@@ -68,7 +68,8 @@ public final class MainView extends AbstractView {
 	}
 
 	private CustomLayout createTopMenu() {
-		final CustomLayout layout = CustomLayoutLoader.createLayout("topNavigation");
+		final CustomLayout layout = CustomLayoutLoader
+				.createLayout("topNavigation");
 		layout.setStyleName("topNavigation");
 		layout.setHeight("40px");
 		layout.setWidth("100%");

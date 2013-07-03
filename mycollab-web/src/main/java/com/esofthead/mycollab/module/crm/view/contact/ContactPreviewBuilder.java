@@ -47,8 +47,8 @@ import ezvcard.parameters.TelephoneTypeParameter;
 import ezvcard.types.AddressType;
 import ezvcard.types.BirthdayType;
 import ezvcard.types.EmailType;
-import ezvcard.types.KindType;
 import ezvcard.types.NoteType;
+import ezvcard.types.OrganizationType;
 import ezvcard.types.ProfileType;
 import ezvcard.types.RawType;
 import ezvcard.types.StructuredNameType;
@@ -223,6 +223,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									homePhone
 											.addType(TelephoneTypeParameter.HOME);
 									homePhone.setPref(1);
+									homePhone.setGroup("HOME");
 									homePhone.setText(contact.getHomephone());
 									vcard.addTelephoneNumber(homePhone);
 								}
@@ -232,6 +233,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									workPhone
 											.addType(TelephoneTypeParameter.WORK);
 									workPhone.setText(contact.getOfficephone());
+									workPhone.setGroup("WORK");
 									vcard.addTelephoneNumber(workPhone);
 								}
 								// MOBIE
@@ -239,6 +241,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									TelephoneType mobiePhone = new TelephoneType();
 									mobiePhone
 											.addType(TelephoneTypeParameter.MODEM);
+									mobiePhone.setGroup("WORK");
 									vcard.addTelephoneNumber(contact
 											.getMobile());
 								}
@@ -247,14 +250,14 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									TelephoneType fax = new TelephoneType();
 									fax.addType(TelephoneTypeParameter.FAX);
 									fax.setText(contact.getFax());
+									fax.setGroup("HOME");
 									vcard.addTelephoneNumber(fax);
 								}
 								// Map department -----------
 								if (contact.getDepartment() != null) {
-									KindType department = new KindType();
-									department.setValue(contact.getDepartment());
-									department.isOrg();
-									vcard.setKind(department);
+									OrganizationType department = new OrganizationType();
+									department.addValue(contact.getDepartment());
+									vcard.addOrganization(department);
 								}
 								// Map leadsource to Profile
 								if (contact.getLeadsource() != null) {
