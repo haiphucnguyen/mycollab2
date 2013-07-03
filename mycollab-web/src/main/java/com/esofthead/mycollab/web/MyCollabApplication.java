@@ -5,11 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.atmosphere.cpr.AtmosphereResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.dontpush.server.AtmosphereDontPushHandler;
-import org.vaadin.dontpush.server.DontPushBroadcaster;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -73,12 +70,6 @@ public class MyCollabApplication extends Application implements
 			public void transactionEnd(Application application,
 					Object transactionData) {
 				// log.debug("Trx end");
-				if (transactionData instanceof DontPushBroadcaster) {
-					for (AtmosphereResource resource : ((DontPushBroadcaster) transactionData)
-							.getAtmosphereResources()) {
-						// log.debug("Send from atmosphere: " + resource);
-					}
-				}
 
 			}
 		});
@@ -222,7 +213,6 @@ public class MyCollabApplication extends Application implements
 				addWindow(w);
 				w.open(new ExternalResource(w.getURL()));
 			}
-			AtmosphereDontPushHandler a;
 			return w;
 		}
 		return w;
