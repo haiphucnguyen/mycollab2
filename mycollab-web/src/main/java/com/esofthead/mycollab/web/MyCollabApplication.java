@@ -5,9 +5,11 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.atmosphere.cpr.AtmosphereResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dontpush.server.AtmosphereDontPushHandler;
+import org.vaadin.dontpush.server.DontPushBroadcaster;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -15,6 +17,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.vaadin.Application;
+import com.vaadin.service.ApplicationContext.TransactionListener;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
 import com.vaadin.ui.Window;
@@ -55,6 +58,30 @@ public class MyCollabApplication extends Application implements
 		}
 		this.setMainWindow(new MainWindowContainer());
 		setInstance(this);
+
+		getContext().addTransactionListener(new TransactionListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void transactionStart(Application application,
+					Object transactionData) {
+				// log.debug("Trx start");
+
+			}
+
+			@Override
+			public void transactionEnd(Application application,
+					Object transactionData) {
+				// log.debug("Trx end");
+				if (transactionData instanceof DontPushBroadcaster) {
+					for (AtmosphereResource resource : ((DontPushBroadcaster) transactionData)
+							.getAtmosphereResources()) {
+						// log.debug("Send from atmosphere: " + resource);
+					}
+				}
+
+			}
+		});
 	}
 
 	public AppContext getSessionData() {
@@ -171,7 +198,7 @@ public class MyCollabApplication extends Application implements
 	@Override
 	public Window getWindow(String name) {
 		Window w = super.getWindow(name);
-		if (w == null) { 
+		if (w == null) {
 			if (name.startsWith("org.vaadin")) {
 				try {
 					Class<?> forName = Class.forName(name);
