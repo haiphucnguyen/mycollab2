@@ -56,4 +56,6 @@
     
 
     
+
+    <inherits name="org.tepi.listbuilder.gwt.ListBuilderWidgetset" />
 </module>

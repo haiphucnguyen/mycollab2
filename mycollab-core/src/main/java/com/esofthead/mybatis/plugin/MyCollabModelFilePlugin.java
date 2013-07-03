@@ -41,13 +41,13 @@ public class MyCollabModelFilePlugin extends
 			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
 			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
 
-//		if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
-//				|| "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
-//			String annotation = "@org.hibernate.validator.constraints.Length(max=%s, message=\"%s\")";
-//			annotation = String.format(annotation,
-//					introspectedColumn.getLength(), "Field value is too long");
-//			field.addAnnotation(annotation);
-//		}
+		if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
+				|| "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
+			String annotation = "@org.hibernate.validator.constraints.Length(max=%s, message=\"%s\")";
+			annotation = String.format(annotation,
+					introspectedColumn.getLength(), "Field value is too long");
+			field.addAnnotation(annotation);
+		}
 //
 //		if (!introspectedColumn.isNullable()
 //				&& !isPrimaryKeyOfTable(introspectedColumn, introspectedTable)

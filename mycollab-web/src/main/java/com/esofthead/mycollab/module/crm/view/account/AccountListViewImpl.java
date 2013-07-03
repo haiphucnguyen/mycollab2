@@ -30,6 +30,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class AccountListViewImpl extends AbstractView implements
@@ -55,7 +56,6 @@ public class AccountListViewImpl extends AbstractView implements
 		this.generateDisplayTable();
 	}
 
-	@SuppressWarnings("unchecked")
 	private ComponentContainer constructTableActionControls() {
 		final CssLayout layoutWrapper = new CssLayout();
 		layoutWrapper.setWidth("100%");
@@ -89,6 +89,22 @@ public class AccountListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 
 		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
+
+		Button customizeViewBtn = new Button("Customize View",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getWindow().addWindow(
+								new AccountListCustomizeWindow(tableItem));
+
+					}
+				});
+
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(customizeViewBtn);
+		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 		return layoutWrapper;
 	}
 
