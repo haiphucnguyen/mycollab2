@@ -47,10 +47,13 @@ import ezvcard.parameters.TelephoneTypeParameter;
 import ezvcard.types.AddressType;
 import ezvcard.types.BirthdayType;
 import ezvcard.types.EmailType;
-import ezvcard.types.KindType;
+import ezvcard.types.NoteType;
+import ezvcard.types.OrganizationType;
 import ezvcard.types.ProfileType;
+import ezvcard.types.RawType;
 import ezvcard.types.StructuredNameType;
 import ezvcard.types.TelephoneType;
+import ezvcard.types.TitleType;
 
 @SuppressWarnings("serial")
 public abstract class ContactPreviewBuilder extends VerticalLayout {
@@ -197,54 +200,66 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
 								AddressType primAddress = new AddressType();
 								primAddress.addType(AddressTypeParameter.HOME);
+
 								// StreetAddress map to PrimAddress
 								if (contact.getPrimaddress() != null)
 									primAddress.setStreetAddress(contact
 											.getPrimaddress());
+
 								if (contact.getPrimcountry() != null)
 									primAddress.setCountry(contact
 											.getPrimcountry());
+
 								if (contact.getPrimcity() != null)
 									primAddress.setRegion(contact.getPrimcity());
+
 								if (contact.getPrimpostalcode() != null)
 									primAddress.setPostalCode(contact
 											.getPrimpostalcode());
+
 								if (contact.getPrimstate() != null)
 									primAddress.setLocality(contact
 											.getPrimstate());
+
 								vcard.addAddress(primAddress);
 
 								// Mapping Phone --------------------
 								if (contact.getHomephone() != null) {
-									TelephoneType homePhone = new TelephoneType();
-									homePhone
-											.addType(TelephoneTypeParameter.HOME);
-									homePhone.setPref(1);
-									homePhone.setText(contact.getHomephone());
-									vcard.addTelephoneNumber(homePhone);
+									vcard.addTelephoneNumber(
+											contact.getHomephone(),
+											TelephoneTypeParameter.HOME);
 								}
+								// OFFICE PHONE
 								if (contact.getOfficephone() != null) {
-									TelephoneType workPhone = new TelephoneType();
-									workPhone
-											.addType(TelephoneTypeParameter.WORK);
-									workPhone.setPref(2);
-									workPhone.setText(contact.getOfficephone());
-									vcard.addTelephoneNumber(workPhone);
+									vcard.addTelephoneNumber(
+											contact.getOfficephone(),
+											TelephoneTypeParameter.WORK);
 								}
+								// MOBIE
 								if (contact.getMobile() != null) {
-									TelephoneType mobiePhone = new TelephoneType();
-									mobiePhone
-											.addType(TelephoneTypeParameter.MODEM);
-									mobiePhone.setPref(3);
-									vcard.addTelephoneNumber(contact
-											.getMobile());
+									vcard.addTelephoneNumber(
+											contact.getMobile(),
+											TelephoneTypeParameter.CELL);
+								}
+
+								if (contact.getOtherphone() != null) {
+									vcard.addTelephoneNumber(
+											contact.getOtherphone(),
+											TelephoneTypeParameter.PAGER);
+								}
+
+								// FAX
+								if (contact.getFax() != null) {
+									TelephoneType fax = new TelephoneType();
+									fax.addType(TelephoneTypeParameter.FAX);
+									fax.setText(contact.getFax());
+									vcard.addTelephoneNumber(fax);
 								}
 								// Map department -----------
 								if (contact.getDepartment() != null) {
-									KindType department = new KindType();
-									department.setValue("");
-									department.isOrg();
-									vcard.setKind(department);
+									OrganizationType department = new OrganizationType();
+									department.addValue(contact.getDepartment());
+									vcard.addOrganization(department);
 								}
 								// Map leadsource to Profile
 								if (contact.getLeadsource() != null) {
@@ -252,14 +267,60 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									profile.setValue(contact.getLeadsource());
 									vcard.setProfile(profile);
 								}
-								// Map brithday ----------
+								// Map birthday ----------
 								if (contact.getBirthday() != null) {
 									BirthdayType birthday = new BirthdayType();
 									birthday.setDate(contact.getBirthday(),
 											false);
 									vcard.setBirthday(birthday);
 								}
-								// fax & contact.getIscallable()
+								if (contact.getDescription() != null) {
+									NoteType noteType = new NoteType();
+									noteType.setValue(contact.getDescription());
+									vcard.addNote(noteType);
+								}
+								// Map leadsource
+								if (contact.getLeadsource() != null) {
+									RawType leadsource = new RawType(
+											"leadsource");
+									leadsource.setValue(contact.getLeadsource());
+									vcard.addExtendedType(leadsource);
+								}
+								// Map assitance ---
+								if (contact.getAssistant() != null) {
+									RawType assistant = new RawType("Assistant");
+									assistant.setValue(contact.getAssistant());
+									vcard.addExtendedType(assistant);
+								}
+								// Map AssistantPhone
+								if (contact.getAssistantphone() != null) {
+									RawType assistantPhone = new RawType(
+											"AssistantPhone");
+									assistantPhone.setValue(contact
+											.getAssistantphone());
+									vcard.addExtendedType(assistantPhone);
+								}
+								// Map AssignUser
+								if (contact.getAssignuser() != null) {
+									RawType assignuser = new RawType(
+											"AssignUser");
+									assignuser.setValue(contact.getAssignuser());
+									vcard.addExtendedType(assignuser);
+								}
+								// Map Callable true/false
+								if (contact.getIscallable() != null) {
+									RawType bool = new RawType("Callable");
+									bool.setValue(contact.getIscallable()
+											.toString());
+									vcard.addExtendedType(bool);
+								}
+								// Map Tittle ----
+								if (contact.getTitle() != null) {
+									TitleType title = new TitleType(contact
+											.getTitle());
+									vcard.addExtendedType(title);
+								}
+
 								final File vCardFile = new File(vcard
 										.getStructuredName().getGiven()
 										+ ".vcf");
