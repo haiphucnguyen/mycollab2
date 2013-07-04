@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.vaadin.easyuploads.SingleFileUploadField;
@@ -13,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -276,6 +278,7 @@ public class ContactImportWindow extends Window {
 		return bodyStep3Wapper;
 	}
 
+	@SuppressWarnings("unchecked")
 	private CssLayout constructBodyStep2() {
 		final CssLayout bodyStep2Wapper = new CssLayout();
 		bodyStep2Wapper.addStyleName(UIConstants.BORDER_BOX_2);
@@ -299,20 +302,31 @@ public class ContactImportWindow extends Window {
 
 		gridLayout.addComponent(new Label(), "Specify Format", 0, 0);
 
+		@SuppressWarnings("rawtypes")
+		BeanItemContainer<String> fileformatType = new BeanItemContainer(
+				String.class, Arrays.asList(fileType));
+
 		ComboBox fileformat = new ComboBox();
-		fileformat.addItem("CSV");
-		fileformat.addItem("VCF");
-		fileformat.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_ITEM);
+		fileformat.setContainerDataSource(fileformatType);
+		fileformat
+				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		fileformat.setValue("Vcard");
 		gridLayout.addComponent(fileformat, "File Type", 0, 1);
 
 		ComboBox encodingCombobox = new ComboBox();
-		encodingCombobox.setItemCaptionMode(1);
+		encodingCombobox
+				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 		encodingCombobox.addItem("UTF-8");
+		encodingCombobox.setValue("UTF-8");
 		gridLayout.addComponent(encodingCombobox, "Character Encoding", 0, 2);
 
 		ComboBox delimiterComboBox = new ComboBox();
-		delimiterComboBox.setItemCaptionMode(2);
+		delimiterComboBox
+				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 		delimiterComboBox.addItem(",(comma)");
+		delimiterComboBox.addItem("#,(sharp)");
+
+		delimiterComboBox.setValue(",(comma)");
 		gridLayout.addComponent(delimiterComboBox, "Delimiter", 0, 3);
 
 		CheckBox checkbox = new CheckBox();
