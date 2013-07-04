@@ -12,6 +12,8 @@ public class AccountListCustomizeWindow extends CustomizedTableWindow {
 
 	public AccountListCustomizeWindow(AbstractPagedBeanTable table) {
 		super(table);
+		table.getVisibleColumns();
+
 	}
 
 	protected Collection<TableViewField> getAvailableColumns() {
@@ -20,11 +22,6 @@ public class AccountListCustomizeWindow extends CustomizedTableWindow {
 				AccountTableFieldDef.email, AccountTableFieldDef.phoneoffice,
 				AccountTableFieldDef.website, AccountTableFieldDef.type,
 				AccountTableFieldDef.ownership, AccountTableFieldDef.fax);
-	}
-
-	protected Collection<String> getViewColumns() {
-		return Arrays.asList("accountname", "phoneoffice", "city", "email",
-				"assignUserFullName");
 	}
 
 	@Override

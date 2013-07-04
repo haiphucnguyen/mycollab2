@@ -30,7 +30,7 @@ public class CustomViewStoreServiceImpl extends
 		CustomViewStoreExample ex = new CustomViewStoreExample();
 		ex.createCriteria().andCreateduserEqualTo(username)
 				.andViewidEqualTo(viewId).andSaccountidEqualTo(accountId);
-		List<CustomViewStore> views = customViewStoreMapper.selectByExample(ex);
+		List<CustomViewStore> views = customViewStoreMapper.selectByExampleWithBLOBs(ex);
 		if (views != null && views.size() > 0) {
 			return views.get(0);
 		}

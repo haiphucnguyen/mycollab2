@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,12 +30,14 @@ public abstract class CustomizedTableWindow extends Window {
 	private final ListBuilder listBuilder;
 
 	private CustomViewStoreService customViewStoreService;
+	private AbstractPagedBeanTable tableItem;
 
 	public CustomizedTableWindow(final AbstractPagedBeanTable table) {
 		super("Customize View");
 		this.setWidth("800px");
 		this.center();
 
+		this.tableItem = table;
 		customViewStoreService = AppContext
 				.getSpringBean(CustomViewStoreService.class);
 
@@ -122,7 +125,12 @@ public abstract class CustomizedTableWindow extends Window {
 
 	abstract protected Collection<TableViewField> getAvailableColumns();
 
-	abstract protected Collection<String> getViewColumns();
+	protected Collection<String> getViewColumns() {
+		Object[] visibleColumns = tableItem.getVisibleColumns();
+		String[] copyArr = Arrays.copyOf(visibleColumns, visibleColumns.length,
+				String[].class);
+		return Arrays.asList(copyArr);
+	}
 
 	abstract protected String getViewId();
 

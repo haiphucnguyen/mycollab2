@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.poi.hssf.record.pivottable.ViewDefinitionRecord;
-
 import com.esofthead.mycollab.common.domain.CustomViewStore;
 import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -546,6 +544,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			this.addComponent(tableLazyLoadContainer, 0);
 		}
 
+	}
+
+	public Object[] getVisibleColumns() {
+		return tableItem.getVisibleColumns();
 	}
 
 }
