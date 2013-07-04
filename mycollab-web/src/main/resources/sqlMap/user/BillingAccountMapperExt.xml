@@ -12,7 +12,8 @@
                 property="billingtype" />
             <result column="billingPlan_numUsers" jdbcType="INTEGER"
                 property="numusers" />
-            <result column="billingPlan_volume" jdbcType="INTEGER" property="volume" />
+            <result column="billingPlan_volume" jdbcType="INTEGER"
+                property="volume" />
             <result column="billingPlan_numProjects" jdbcType="INTEGER"
                 property="numprojects" />
             <result column="billingPlan_pricing" jdbcType="DOUBLE"
@@ -21,22 +22,36 @@
                 property="description" />
             <result column="billingPlan_hasBugEnable" jdbcType="BIT"
                 property="hasbugenable" />
-            <result column="billingPlan_hasStandupMeetingEnable" jdbcType="BIT"
-                property="hasstandupmeetingenable" />
+            <result column="billingPlan_hasStandupMeetingEnable"
+                jdbcType="BIT" property="hasstandupmeetingenable" />
         </association>
     </resultMap>
 
     <select id="getBillingAccountById" resultMap="SimpleBillingAccountResult"
         parameterType="java.lang.Integer">
+        <![CDATA[
         SELECT s_account.id, s_account.createdTime, s_account.billingPlanId,
-            s_account.accountName, s_account.status, s_account.paymentMethod, s_account.pricing, s_account.pricingEffectFrom,
-            s_account.pricingEffectTo, 
-            s_billing_plan.id AS billingPlan_id, s_billing_plan.billingType AS billingPlan_billingType, s_billing_plan.numUsers AS billingPlan_numUsers, 
-            s_billing_plan.volume AS billingPlan_volume, s_billing_plan.numProjects AS billingPlan_numProjects, 
-            s_billing_plan.pricing AS billingPlan_pricing, s_billing_plan.description AS billingPlan_description, s_billing_plan.hasBugEnable AS billingPlan_hasBugEnable, 
+            s_account.accountName, s_account.status, s_account.paymentMethod, s_account.pricing,
+            s_account.pricingEffectFrom, s_account.pricingEffectTo,
+            s_billing_plan.id AS billingPlan_id, s_billing_plan.billingType AS
+            billingPlan_billingType, s_billing_plan.numUsers AS
+            billingPlan_numUsers, s_billing_plan.volume AS billingPlan_volume, 
+            s_billing_plan.numProjects AS billingPlan_numProjects,
+            s_billing_plan.pricing AS billingPlan_pricing, s_billing_plan.description AS billingPlan_description, s_billing_plan.hasBugEnable AS
+            billingPlan_hasBugEnable,
             s_billing_plan.hasStandupMeetingEnable AS billingPlan_hasStandupMeetingEnable
-        FROM s_account    
+        FROM s_account
             LEFT OUTER JOIN s_billing_plan ON (s_billing_plan.id=s_account.billingPlanId)
-            WHERE s_account.id = #{accountId,javaType=INTEGER}
+        WHERE s_account.id = #{accountId,javaType=INTEGER}
+        ]]>
+    </select>
+
+    <select id="getSubdomainsOfUser" resultType="java.lang.String"
+        parameterType="java.lang.String">
+        <![CDATA[
+        SELECT s_account.subdomain
+        FROM s_account, s_user_account
+        WHERE s_user_account.username=#{username} AND s_user_account.accountId=s_account.id
+        ]]>
     </select>
 </mapper>

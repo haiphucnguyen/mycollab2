@@ -4,12 +4,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="restApp" class="com.esofthead.mycollab.rest.server.RestApp">
-        <property name="statusService" ref="restletStatusService" />
         <property name="inboundRoot" ref="restRouter" />
-    </bean>
-
-    <bean id="restletStatusService" class="com.esofthead.mycollab.rest.server.RestletStatusService">
-        <property name="overwriting" value="true" />
     </bean>
 
     <bean id="restRouter" class="org.restlet.ext.spring.SpringRouter">

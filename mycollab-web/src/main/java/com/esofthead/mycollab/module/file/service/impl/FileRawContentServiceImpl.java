@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.FileStorageConfig;
@@ -15,6 +17,9 @@ import com.esofthead.mycollab.module.file.service.RawContentService;
 public class FileRawContentServiceImpl implements RawContentService {
 
 	private static final int BUFFER_SIZE = 1024;
+
+	private static Logger log = LoggerFactory
+			.getLogger(FileRawContentServiceImpl.class);
 
 	@Override
 	public void saveContent(String objectPath, InputStream stream) {
@@ -82,7 +87,16 @@ public class FileRawContentServiceImpl implements RawContentService {
 	public void rename(String oldPath, String newPath) {
 		File file = new File(FileStorageConfig.baseContentFolder, oldPath);
 		if (file.exists()) {
-			file.renameTo(new File(FileStorageConfig.baseContentFolder + newPath));
+			boolean result = file.renameTo(new File(
+					FileStorageConfig.baseContentFolder + "/" + newPath));
+			if (!result) {
+				log.error("Can not rename old path {} to new path {}", oldPath,
+						newPath);
+			}
+		} else {
+			log.error(
+					"Can not rename old path {} to new path {} because file is not existed",
+					oldPath, newPath);
 		}
 	}
 }

@@ -9,7 +9,6 @@ _gaq.push(['_trackPageview']);
 })();
 
 $(document).ready(function(){
-	$("#featured").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 5000, true);
 	
 	// Footer position
 	var window_height = $(window).height();

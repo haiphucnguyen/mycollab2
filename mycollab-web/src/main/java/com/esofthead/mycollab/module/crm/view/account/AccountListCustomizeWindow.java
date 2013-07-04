@@ -29,8 +29,12 @@ public class AccountListCustomizeWindow extends Window {
 	public AccountListCustomizeWindow(final AbstractPagedBeanTable table) {
 		super("Customize View");
 		this.setWidth("800px");
-
 		this.center();
+
+		final VerticalLayout body = new VerticalLayout();
+		body.setSpacing(true);
+		body.setSizeFull();
+		this.addComponent(body);
 
 		this.listBuilder = new ListBuilder();
 		this.listBuilder.setImmediate(true);
@@ -45,7 +49,7 @@ public class AccountListCustomizeWindow extends Window {
 				TableViewField.class, this.getAvailableColumns());
 		this.listBuilder.setContainerDataSource(container);
 		this.setSelectedViewColumns();
-		this.addComponent(this.listBuilder);
+		body.addComponent(this.listBuilder);
 
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		final Button saveBtn = new Button(
@@ -78,11 +82,8 @@ public class AccountListCustomizeWindow extends Window {
 		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		buttonControls.addComponent(cancelBtn);
 
-		this.addComponent(buttonControls);
-		final VerticalLayout thisContainer = (VerticalLayout) this.getContent();
-		thisContainer.setComponentAlignment(buttonControls,
-				Alignment.MIDDLE_CENTER);
-		thisContainer.setSpacing(true);
+		body.addComponent(buttonControls);
+		body.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
 	}
 
 	protected Collection<TableViewField> getAvailableColumns() {

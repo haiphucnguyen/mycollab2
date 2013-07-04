@@ -1497,7 +1497,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-left-ctn {
-	background-color: #E8E8E8;
+	background-color: #F7E3BF;
 	padding-bottom: 20px;
 }
 
@@ -1510,7 +1510,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-mid-button {
-	background-color: #C8C8C8;
+	background-color: #989898;
 	text-align: center;
 	padding: 20px 0px;
 }
@@ -1526,6 +1526,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Arial';
 	padding-left: 30px;
 	margin-right: 10px;
+	cursor: pointer;
 }
 
 .btn-google {
@@ -1538,6 +1539,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	font-family: 'Arial';
 	padding-left: 30px;
+	cursor: pointer;
 }
 
 .sig-left-1 {
@@ -1612,6 +1614,10 @@ h1, h2, h3, h4, h5, h6 {
 	color: #0267a8;
 }
 
+.sig-left-chk a:hover {
+	text-decoration: underline;
+}
+
 .sig-left-chk label {
 	font-size: 13px;
 }
@@ -1644,7 +1650,7 @@ h1, h2, h3, h4, h5, h6 {
 	float: right;
 	width: 480px;
 	text-align: center;
-	background-color: #FFCC99;
+	background-color: #E8E8E8;
 }
 
 .sig-mid-right h1 {
@@ -1689,7 +1695,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-subdomain {
-	background-color: #F78D13;
+	background-color: #F54B49;
     color: #FFFFFF;
     font-size: 14px;
     height: 25px;
@@ -1706,7 +1712,6 @@ h1, h2, h3, h4, h5, h6 {
 	width: 1100px;
 	margin: 0 auto;
 	background-color: #FFF;
-	box-shadow: 0px 0px 5px 5px #888888;
 	margin-bottom: 20px;
 	border-radius: 5px;
 	background-color: #F4F4F4;
@@ -1763,6 +1768,7 @@ h1, h2, h3, h4, h5, h6 {
 	float: right;
 	cursor: pointer;
 	padding-bottom: 3px;
+	font-family: 'Arial';
 }
 
 .signin-lblemail {
@@ -1790,6 +1796,45 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 14px;
 }
 /* End Sign In style */
+
+/* Term of service style */
+#term-content {
+	width: 1100px;
+	margin: 0 auto;
+	text-align: justify;
+	margin-bottom: 20px;
+}
+
+#term-content h1 {
+	font-size: 35px;
+	font-weight: normal;
+	color: #228BC9;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+.term-block h2 {
+	color: #228BC9;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+.term-block p {
+	padding-bottom: 10px;
+	font-size: 14px;
+}
+
+.term-block ol {
+	margin-left: 25px;
+	padding-bottom: 10px;
+}
+
+.term-block ol li {
+	list-style: lower-alpha;
+	font-size: 14px;
+}
+/* End Term of service style */
 
 /* Note */
 .develop {
