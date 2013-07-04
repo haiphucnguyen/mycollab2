@@ -52,6 +52,12 @@
             value="com.esofthead.mycollab.common.dao.CurrencyMapper" />
     </bean>
 
+    <bean id="customViewStoreMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.common.dao.CustomViewStoreMapper" />
+    </bean>
+
     <bean id="monitorItemMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
@@ -69,7 +75,7 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.common.dao.SaveSearchResultMapper" />
     </bean>
-    
+
     <bean id="saveSearchResultMapperExt" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
