@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -59,18 +61,12 @@ public class OpportunitySelectionWindow extends Window {
 	}
 
 	private void createOpportunityList() {
-		tableItem = new OpportunityTableDisplay(
-				new String[] { "opportunityname", "salesstage", "accountName",
-						"assignUserFullName" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(OpportunityI18nEnum.TABLE_SALE_STAGE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
+		tableItem = new OpportunityTableDisplay(Arrays.asList(
+				OpportunityTableFieldDef.opportunityName,
+				OpportunityTableFieldDef.saleStage,
+				OpportunityTableFieldDef.accountName,
+				OpportunityTableFieldDef.assignUser));
+
 		tableItem.setWidth("100%");
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

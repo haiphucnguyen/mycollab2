@@ -4,16 +4,16 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.localization.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 
 /**
@@ -35,16 +35,10 @@ public class ContactOpportunitySelectionWindow
 	@Override
 	protected void initUI() {
 		tableItem = new OpportunityTableDisplay(
-				new String[] { "selected", "opportunityname", "salesstage",
-						"expectedcloseddate" },
-				new String[] {
-						"",
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(OpportunityI18nEnum.TABLE_SALE_STAGE_HEADER),
-						LocalizationHelper
-								.getMessage(OpportunityI18nEnum.TABLE_CLOSE_DATE_HEADER) });
+				OpportunityTableFieldDef.selected, Arrays.asList(
+						OpportunityTableFieldDef.opportunityName,
+						OpportunityTableFieldDef.saleStage,
+						OpportunityTableFieldDef.expectedCloseDate));
 
 		Button selectBtn = new Button("Select", new Button.ClickListener() {
 
@@ -70,5 +64,4 @@ public class ContactOpportunitySelectionWindow
 		this.bodyContent.addComponent(selectBtn);
 		this.bodyContent.addComponent(tableItem);
 	}
-
 }

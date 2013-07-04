@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
@@ -16,6 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -31,10 +33,20 @@ public class OpportunityTableDisplay
 		extends
 		PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
 
-	public OpportunityTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+	public OpportunityTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public OpportunityTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		this(null, requiredColumn, displayColumns);
+
+	}
+
+	public OpportunityTableDisplay(String viewId,
+			TableViewField requiredColumn, List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(OpportunityService.class),
-				SimpleOpportunity.class, visibleColumns, columnHeaders);
+				SimpleOpportunity.class, viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -154,18 +166,5 @@ public class OpportunityTableDisplay
 				});
 
 		this.setWidth("100%");
-
-		this.setColumnExpandRatio("opportunityname", 1.0f);
-
-		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		this.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
-
-		this.setColumnWidth("expectedcloseddate",
-				UIConstants.TABLE_DATE_TIME_WIDTH);
-		this.setColumnWidth("assignUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
 	}
 }

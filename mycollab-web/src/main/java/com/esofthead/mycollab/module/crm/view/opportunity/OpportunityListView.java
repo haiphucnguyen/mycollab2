@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface OpportunityListView extends View {
+	public static final String VIEW_DEF_ID = "crm-opportunity-list";
 
 	IPagedBeanTable<OpportunitySearchCriteria, SimpleOpportunity> getPagedBeanTable();
 
