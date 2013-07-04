@@ -14,9 +14,11 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class AccountListCustomizeWindow extends Window {
@@ -27,9 +29,14 @@ public class AccountListCustomizeWindow extends Window {
 	public AccountListCustomizeWindow(final AbstractPagedBeanTable table) {
 		super("Customize View");
 		this.setWidth("800px");
-		this.setHeight("400px");
+		this.setHeight("300px");
 
 		center();
+
+		VerticalLayout body = new VerticalLayout();
+		body.setSpacing(true);
+		body.setSizeFull();
+		this.addComponent(body);
 
 		this.listBuilder = new ListBuilder("");
 		listBuilder.setImmediate(true);
@@ -45,7 +52,7 @@ public class AccountListCustomizeWindow extends Window {
 				TableViewField.class, getAvailableColumns());
 		listBuilder.setContainerDataSource(container);
 		setSelectedViewColumns();
-		this.addComponent(listBuilder);
+		body.addComponent(listBuilder);
 
 		HorizontalLayout buttonControls = new HorizontalLayout();
 		Button saveBtn = new Button(
@@ -78,7 +85,8 @@ public class AccountListCustomizeWindow extends Window {
 		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		buttonControls.addComponent(cancelBtn);
 
-		this.addComponent(buttonControls);
+		body.addComponent(buttonControls);
+		body.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
 	}
 
 	protected Collection<TableViewField> getAvailableColumns() {
