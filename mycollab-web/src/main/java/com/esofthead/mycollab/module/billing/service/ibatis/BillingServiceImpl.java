@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.billing.service.ibatis;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.module.user.PermissionFlag;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
+import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;
 import com.esofthead.mycollab.module.user.dao.BillingPlanMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.AccountSettings;
@@ -40,6 +42,9 @@ public class BillingServiceImpl implements BillingService {
 
 	@Autowired
 	private BillingAccountMapper billingAccountMapper;
+
+	@Autowired
+	private BillingAccountMapperExt billingAccountMapperExt;
 
 	@Autowired
 	private AccountSettingsMapper accountSettingMapper;
@@ -109,7 +114,7 @@ public class BillingServiceImpl implements BillingService {
 		user.setTimezone(timezoneId);
 		user.setUsername(username);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
-		
+
 		if (user.getFirstname() == null && user.getLastname() == null) {
 			user.setFirstname(username);
 			user.setLastname("");
@@ -151,6 +156,11 @@ public class BillingServiceImpl implements BillingService {
 		currency.setAccountid(accountid);
 		currency.setCurrencyid(1);
 		accountCurrencyMapper.insert(currency);
+	}
+
+	@Override
+	public List<String> getSubdomainsOfUser(String username) {
+		return billingAccountMapperExt.getSubdomainsOfUser(username);
 	}
 
 }

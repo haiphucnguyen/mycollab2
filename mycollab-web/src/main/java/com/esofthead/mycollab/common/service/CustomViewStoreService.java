@@ -5,7 +5,8 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 public interface CustomViewStoreService extends
 		ICrudService<Integer, CustomViewStore> {
-	CustomViewStore getViewLayoutDef(String username, String viewId);
+	CustomViewStore getViewLayoutDef(int accountId, String username,
+			String viewId);
 
 	void saveOrUpdateViewLayoutDef(CustomViewStore viewStore);
 }

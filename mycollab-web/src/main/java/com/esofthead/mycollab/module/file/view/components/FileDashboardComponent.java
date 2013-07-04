@@ -10,7 +10,6 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -54,7 +53,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 
-public class FileDashboardComponent extends VerticalLayout {
+public abstract class FileDashboardComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private final TreeTable folderTree;
 	private final ResourceTableDisplay resourceTable;
@@ -254,6 +253,8 @@ public class FileDashboardComponent extends VerticalLayout {
 		this.addComponent(resourceContainer);
 	}
 
+	abstract protected void doSearch(FileSearchCriteria searchCriteria);
+
 	private void displayResourcesInTable(final Folder folder) {
 		final List<Resource> resources = this.resourceService
 				.getResources(folder.getPath());
@@ -367,7 +368,8 @@ public class FileDashboardComponent extends VerticalLayout {
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_blank");
+												.open(downloadResource,
+														"_blank");
 									} else {
 										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
 												.getStreamFolderResource(((Folder) resource)
@@ -375,7 +377,8 @@ public class FileDashboardComponent extends VerticalLayout {
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_blank");
+												.open(downloadResource,
+														"_blank");
 									}
 
 								}
@@ -942,14 +945,8 @@ public class FileDashboardComponent extends VerticalLayout {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						// EventBus.getInstance()
-						// .fireEvent(
-						// new ProjectContentEvent.Search(
-						// FileSearchPanel.this,
-						// new String[] {
-						// baseFolder.getPath(),
-						// (String) nameField
-						// .getValue() }));
+						FileDashboardComponent.this
+								.doSearch((FileSearchCriteria) fillupSearchCriteria());
 					}
 				});
 				UiUtils.addComponent(basicSearchBody, searchBtn,
@@ -986,9 +983,10 @@ public class FileDashboardComponent extends VerticalLayout {
 			protected SearchCriteria fillupSearchCriteria() {
 				FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
 
-				FileSearchPanel.this.searchCriteria
-						.setFileName(new StringSearchField(this.nameField
-								.getValue().toString().trim()));
+				FileSearchPanel.this.searchCriteria.setFileName(this.nameField
+						.getValue().toString().trim());
+				FileSearchPanel.this.searchCriteria.setBaseFolder(baseFolder
+						.getPath());
 
 				return FileSearchPanel.this.searchCriteria;
 			}

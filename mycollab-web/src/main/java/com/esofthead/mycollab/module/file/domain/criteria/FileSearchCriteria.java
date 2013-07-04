@@ -1,26 +1,24 @@
 package com.esofthead.mycollab.module.file.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class FileSearchCriteria extends SearchCriteria {
-	private StringSearchField fileName;
-	private NumberSearchField id;
+	private String fileName;
+	private String baseFolder;
 
-	public StringSearchField getFileName() {
-		return this.fileName;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setFileName(final StringSearchField fileName) {
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
-	public void setId(final NumberSearchField id) {
-		this.id = id;
+	public String getBaseFolder() {
+		return baseFolder;
 	}
 
-	public NumberSearchField getId() {
-		return this.id;
+	public void setBaseFolder(String baseFolder) {
+		this.baseFolder = baseFolder;
 	}
 }
