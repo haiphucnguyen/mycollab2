@@ -612,7 +612,6 @@ h1, h2, h3, h4, h5, h6 {
 #header {
 	height: 50px;
 	width: 100%;
-	border-bottom: solid 3px #81C8E8;
 	background-color: #2B98D8;
 	margin-bottom: 25px;
 }
@@ -633,6 +632,7 @@ h1, h2, h3, h4, h5, h6 {
 	list-style: none;
 	float: right;
 }
+
 .header-mid ul li {
 	line-height: 50px;
 	display: inline-block;
@@ -641,6 +641,7 @@ h1, h2, h3, h4, h5, h6 {
 	transition: 0.5s;
 	margin: 0px -3px !important
 }
+
 .header-mid ul li a{	
 	color: #FFFFFF;
     display: block;
@@ -1491,17 +1492,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .mid-left-title p {
 	font-size: 20px;
-	padding: 10px 0px;
+	padding: 0px 0px 10px;
 	line-height: 200%;
 }
 
 .sig-left-ctn {
-	background-color: #FAFAFA;
+	background-color: #E8E8E8;
 	padding-bottom: 20px;
 }
 
 .sig-left-ctn h1 {
-	background-color: #228bc9;
+	background-color: #5D9119;
 	font-size: 16px;
 	font-weight: normal;
 	color: #FFF;
@@ -1509,7 +1510,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-mid-button {
-	background-color: #e2e1e1;
+	background-color: #C8C8C8;
 	text-align: center;
 	padding: 20px 0px;
 }
@@ -1577,7 +1578,7 @@ h1, h2, h3, h4, h5, h6 {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	background: url("../images/signup_selectbox.png") no-repeat center right transparent;
+	background: url("../images/signup_selectbox.png") no-repeat center right #FFF;
 	background-size: 10%; 
 }
 
@@ -1643,7 +1644,7 @@ h1, h2, h3, h4, h5, h6 {
 	float: right;
 	width: 480px;
 	text-align: center;
-	background-color: #FAFAFA;
+	background-color: #FFCC99;
 }
 
 .sig-mid-right h1 {
@@ -1651,7 +1652,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 5px 20px;
 	color: #FFF;
 	font-weight: normal;
-	background-color: #228bc9;
+	background-color: #5D9119;
 	margin-bottom: 25px;
 	text-align: left;
 }
@@ -1679,8 +1680,16 @@ h1, h2, h3, h4, h5, h6 {
 	padding-bottom: 15px;
 }
 
+.sig-right-block p a {
+	color: #0267A8;
+}
+
+.sig-right-block p a:hover {
+	text-decoration: underline;
+}
+
 .sig-subdomain {
-	background-color: #2B98D8;
+	background-color: #F78D13;
     color: #FFFFFF;
     font-size: 14px;
     height: 25px;
@@ -1691,6 +1700,96 @@ h1, h2, h3, h4, h5, h6 {
     width: 95px;	
 }
 /* End Sign Up style */
+
+/* Sign In style */
+#signin-content {
+	width: 1100px;
+	margin: 0 auto;
+	background-color: #FFF;
+	box-shadow: 0px 0px 5px 5px #888888;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	background-color: #F4F4F4;
+}
+
+.signin-main {
+	width: 700px;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+
+.signin-main h1 {
+	font-size: 25px;
+	padding-left: 35px;
+	background: url("../images/signin_icon.png") no-repeat top left;
+	color: #228BC9;
+	margin-bottom: 20px;
+	border-bottom: solid 6px #E3E3E3;
+	padding-bottom: 15px;
+}
+
+.signin-subtitle {
+	font-size: 16px;
+	font-style: italic;
+	padding-bottom: 15px; 
+}
+
+.signin-box {
+	border: solid 1px #B48762;
+	border-radius: 5px;
+	margin-bottom: 40px;
+	display: inline-block;
+	width: 670px;
+	padding: 15px;
+}
+
+.signin-box [type="text"] {
+	height: 25px;
+	border-radius: 3px;
+	width: 400px;
+	font-size: 16px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.signin-box [type="submit"] {
+	background-color: #4196C7;
+	border-color: #506A75;
+	border-radius: 5px;
+	color: #FFF;
+	height: 28px;
+	width: 200px;
+	font-size: 15px;
+	float: right;
+	cursor: pointer;
+	padding-bottom: 3px;
+}
+
+.signin-lblemail {
+	padding-right: 5px;
+}
+
+.signin-radio {
+	padding: 20px 0px 0px;
+}
+
+.signin-btngo {
+	background-color: #BD7802;
+	border: #AB8358;
+	color: #FFF;
+	border-radius: 5px;
+	font-size: 11px;
+	padding: 2px 5px;
+	cursor: pointer;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+.signin-radio label {
+	display: inline-block;
+    font-size: 14px;
+}
+/* End Sign In style */
 
 /* Note */
 .develop {

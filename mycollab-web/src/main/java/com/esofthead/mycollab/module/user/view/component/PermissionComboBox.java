@@ -13,7 +13,9 @@ import com.vaadin.ui.ComboBox;
  * @author haiphucnguyen
  */
 public class PermissionComboBox extends ComboBox {
-    public PermissionComboBox() {
+	private static final long serialVersionUID = 1L;
+
+	public PermissionComboBox() {
         super();
         this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
         this.setNullSelectionAllowed(false);

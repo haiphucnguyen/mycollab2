@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head></head>
+<body>
+	<wicket:extend>
+		<div id="signin-content">
+			<div class="signin-main">
+				<h1>Welcome Back!</h1>
+				<p class="signin-subtitle">Each company has its own login page ("domain")</p>
+				
+				<div class="signin-box">
+					<form method="post" wicket:id="signinform">
+						<label class="signin-lblemail">Email:</label>
+						<input id="email" type="text" wicket:id="emailfield" />
+						<input type="submit" value="Take me to my domain" />
+						<div class="signin-radio">
+							<table>
+								<tr>
+									<td><input id="signin-radio-1" type="radio" name="domain" value="" checked></td>
+									<td><label for="signin-radio-1">esofthead.com</label></td>
+									<td><input class="signin-btngo" type="button" value="GO"></td>
+								</tr>
+								<tr>
+									<td><input id="signin-radio-2" type="radio" name="domain" value=""></td>
+									<td><label for="signin-radio-2">mycollab.com</label></td>
+									<td><input class="signin-btngo" type="button" value="GO"></td>
+								</tr>
+								<tr>
+									<td><input id="signin-radio-3" type="radio" name="domain" value=""></td>
+									<td><label for="signin-radio-3">mycollab.com</label></td>
+									<td><input class="signin-btngo" type="button" value="GO"></td>
+								</tr>
+							</table>
+						</div> 
+					</form>
+				</div>
+			</div>
+		</div>
+		<style>
+		.mnu-signin {
+			background-color: #F78D13;
+		}
+		</style>
+	</wicket:extend>
+</body>
+</html>

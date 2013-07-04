@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import com.esofthead.mycollab.pages.HomePage;
 import com.esofthead.mycollab.pages.PricingPage;
 import com.esofthead.mycollab.pages.PrivacyPage;
+import com.esofthead.mycollab.pages.SignInPage;
 import com.esofthead.mycollab.pages.TourPage;
 
 public class MainNavigationMenu extends Panel {
@@ -32,10 +33,12 @@ public class MainNavigationMenu extends Panel {
 				"backHome", HomePage.class);
 		add(homePageLink);
 
-		ExternalLink signInLink = new ExternalLink("signIn",
+		/*ExternalLink signInLink = new ExternalLink("signIn",
 				"http://app.mycollab.com", "Sign In");
-		add(signInLink);
-
+		add(signInLink);*/
+		
+		BookmarkablePageLink<Void> signIn = new BookmarkablePageLink<Void>("signIn", SignInPage.class);
+		add(signIn);
 		BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>("tour", TourPage.class);
 		add(tour);
 		ExternalLink support = new ExternalLink("support", "mailto:sales@esofthead.com");

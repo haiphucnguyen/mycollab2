@@ -150,6 +150,11 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
+            <artifactId>listbuilder</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
             <artifactId>gwt-graphics</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -373,12 +378,10 @@
         </dependency>
 
         <!-- GWT dependency -->
-        <!-- 
-         <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+        <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
             <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
             <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
-            <scope>compile</scope> </dependency>
-            --> 
+            <scope>compile</scope> </dependency> -->
     </dependencies>
     <build>
         <plugins>

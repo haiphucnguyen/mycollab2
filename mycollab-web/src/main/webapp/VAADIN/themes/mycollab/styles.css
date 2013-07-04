@@ -3448,6 +3448,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .v-horizontallayout-gridform-caption .v-horizontallayout-margin, .readview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout-margin {
 	padding: 8px 5px 8px 18px;
 }
+.readview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout .v-horizontallayout-margin {
+	padding: 0px;
+}
 .readview-layout-body .v-gridlayout-margin .gridform-caption {
 	background-color: rgb(212, 223, 239);
 	border-left: 1px solid #a9a9a9;
@@ -3907,4 +3910,9 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	background: none no-repeat left top rgb(245, 245, 245);
+}
+
+.limited-height-table .v-table-body, .limited-height-table .v-table-body-noselection {
+	max-height: 450px;
+	overflow-x: hidden;
 }
