@@ -9,10 +9,6 @@ import org.vaadin.easyuploads.SingleFileUploadField;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -24,47 +20,47 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import ezvcard.parameters.AddressTypeParameter;
 import ezvcard.types.AddressType;
 import ezvcard.types.EmailType;
 import ezvcard.types.TelephoneType;
 
-public class ContactImportViewImpl extends AbstractView implements
-		ContactImportView {
+public class ContactImportWindow extends Window {
 	private static final long serialVersionUID = 1L;
-
 	public static final String[] fileType = { "CSV", "Vcard" };
 
 	private SingleFileUploadField uploadFile;
 
 	private List<SimpleContact> lstContact;
 
-	public ContactImportViewImpl() {
+	public ContactImportWindow() {
+		super("Import Contact");
+		center();
+		this.setWidth("950px");
+
+		VerticalLayout layout = constructBody();
+		this.addComponent(layout);
+	}
+
+	private VerticalLayout constructBody() {
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
-
-		final HorizontalLayout header = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-		Label label = new Label("Import Contact");
-		label.addStyleName("");
-		header.addComponent(label);
-		layout.addComponent(header);
 
 		final HorizontalLayout informationLayout = new HorizontalLayout();
 		informationLayout.setWidth("100%");
 		informationLayout.setSpacing(true);
 
-		HorizontalLayout step1Layout = constructBodyStep1();
-		HorizontalLayout step2Layout = constructBodyStep2();
-		HorizontalLayout step3Layout = constructBodyStep3();
+		CssLayout step1Layout = constructBodyStep1();
+		CssLayout step2Layout = constructBodyStep2();
+		CssLayout step3Layout = constructBodyStep3();
 
 		informationLayout.addComponent(step1Layout);
 		informationLayout.addComponent(step2Layout);
@@ -107,15 +103,13 @@ public class ContactImportViewImpl extends AbstractView implements
 		nextBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		UiUtils.addComponent(controlGroupBtn, nextBtn, Alignment.MIDDLE_CENTER);
 
-		Button cancleBtn = new Button("Cancle");
+		Button cancleBtn = new Button("Cancel");
 		cancleBtn.addListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ContactEvent.GotoList(ContactListViewImpl.class,
-								new ContactSearchCriteria()));
+				ContactImportWindow.this.close();
 			}
 		});
 		cancleBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -123,8 +117,7 @@ public class ContactImportViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 
 		UiUtils.addComponent(layout, controlGroupBtn, Alignment.MIDDLE_CENTER);
-
-		this.addComponent(layout);
+		return layout;
 	}
 
 	private SimpleContact convertVcardToContact(VCard vcard) {
@@ -140,7 +133,14 @@ public class ContactImportViewImpl extends AbstractView implements
 			if (vcard.getAddresses() != null) {
 				List<AddressType> lstAddress = vcard.getAddresses();
 				for (AddressType address : lstAddress) {
-					if (address.getTypes().equals(AddressTypeParameter.HOME)) {
+					String temp = "";
+					if (address != null
+							&& address.getTypes().toString() != null
+							&& address.getTypes().toString().length() > 6)
+						temp = address.getTypes().toString().substring(6);
+					String addressType = (temp.length() > 0) ? temp.substring(
+							0, temp.length() - 1) : "";
+					if (addressType.equals("home")) {
 						contact.setPrimaddress(address.getStreetAddress());
 						contact.setPrimcountry(address.getCountry());
 						contact.setPrimpostalcode(address.getPostalCode());
@@ -243,29 +243,49 @@ public class ContactImportViewImpl extends AbstractView implements
 		return contact;
 	}
 
-	private HorizontalLayout constructBodyStep3() {
+	private CssLayout constructBodyStep3() {
+		final CssLayout bodyStep3Wapper = new CssLayout();
+		bodyStep3Wapper.addStyleName(UIConstants.BORDER_BOX_2);
+		bodyStep3Wapper.setWidth("100%");
+
 		final HorizontalLayout layoutStep3 = new HorizontalLayout();
 
 		HorizontalLayout titleStep3 = new HorizontalLayout();
 		Label labelStep3 = new Label("Step 3:");
+		labelStep3.addStyleName("h3");
 		UiUtils.addComponent(titleStep3, labelStep3, Alignment.TOP_LEFT);
 		layoutStep3.addComponent(titleStep3);
 
 		VerticalLayout infoLayoutStep3 = new VerticalLayout();
 		infoLayoutStep3.setMargin(true);
 
-		layoutStep3.addComponent(infoLayoutStep3);
-		Label labelInfo = new Label("Duplicate Record Handling");
-		infoLayoutStep3.addComponent(labelInfo);
+		HorizontalLayout infoLayout = new HorizontalLayout();
+		infoLayout.setSpacing(true);
 
-		return layoutStep3;
+		infoLayoutStep3.addComponent(infoLayout);
+		layoutStep3.addComponent(infoLayoutStep3);
+
+		Label labelInfo = new Label("Duplicate Record Handling");
+		infoLayout.addComponent(labelInfo);
+
+		CheckBox checkbox = new CheckBox();
+		infoLayout.addComponent(checkbox);
+
+		bodyStep3Wapper.addComponent(layoutStep3);
+
+		return bodyStep3Wapper;
 	}
 
-	private HorizontalLayout constructBodyStep2() {
+	private CssLayout constructBodyStep2() {
+		final CssLayout bodyStep2Wapper = new CssLayout();
+		bodyStep2Wapper.addStyleName(UIConstants.BORDER_BOX_2);
+		bodyStep2Wapper.setWidth("100%");
+
 		final HorizontalLayout layoutStep2 = new HorizontalLayout();
 
 		HorizontalLayout titleStep2 = new HorizontalLayout();
 		Label labelStep2 = new Label("Step 2:");
+		labelStep2.addStyleName("h3");
 		UiUtils.addComponent(titleStep2, labelStep2, Alignment.TOP_LEFT);
 		layoutStep2.addComponent(titleStep2);
 
@@ -302,15 +322,24 @@ public class ContactImportViewImpl extends AbstractView implements
 		layoutStep2.addComponent(titleStep2);
 		layoutStep2.addComponent(informationStep2);
 
-		return layoutStep2;
+		bodyStep2Wapper.addComponent(layoutStep2);
+		return bodyStep2Wapper;
 	}
 
-	private HorizontalLayout constructBodyStep1() {
+	private CssLayout constructBodyStep1() {
+		final CssLayout step1bodyWapper = new CssLayout();
+		step1bodyWapper.setWidth("100%");
+		step1bodyWapper.setHeight("100%");
+		step1bodyWapper.addStyleName(UIConstants.BORDER_BOX_2);
+
 		final HorizontalLayout layoutStep1 = new HorizontalLayout();
 		layoutStep1.setSpacing(true);
+		layoutStep1.setHeight("100%");
 
 		HorizontalLayout titleStep1 = new HorizontalLayout();
 		Label labelStep1 = new Label("Step 1:");
+		labelStep1.addStyleName("h3");
+
 		UiUtils.addComponent(titleStep1, labelStep1, Alignment.TOP_LEFT);
 		layoutStep1.addComponent(titleStep1);
 
@@ -328,8 +357,8 @@ public class ContactImportViewImpl extends AbstractView implements
 
 		layoutStep1.addComponent(titleStep1);
 		layoutStep1.addComponent(informationStep1);
+		step1bodyWapper.addComponent(layoutStep1);
 
-		return layoutStep1;
+		return step1bodyWapper;
 	}
-
 }

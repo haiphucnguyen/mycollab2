@@ -46,7 +46,7 @@ public class ContactListViewImpl extends AbstractView implements
 	private final VerticalLayout contactListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
-	private ContactImportViewImpl contactImportView;
+	private ContactImportWindow contactImportWindow;
 
 	public ContactListViewImpl() {
 
@@ -134,6 +134,7 @@ public class ContactListViewImpl extends AbstractView implements
 		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 
@@ -169,9 +170,8 @@ public class ContactListViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				contactImportView = new ContactImportViewImpl();
-				ContactListViewImpl.this.removeAllComponents();
-				ContactListViewImpl.this.addComponent(contactImportView);
+				contactImportWindow = new ContactImportWindow();
+				getWindow().addWindow(contactImportWindow);
 			}
 		});
 		UiUtils.addComponent(layout, importBtn, Alignment.MIDDLE_RIGHT);
