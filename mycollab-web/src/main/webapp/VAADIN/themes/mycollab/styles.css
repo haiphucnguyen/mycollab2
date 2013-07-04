@@ -2896,6 +2896,15 @@ div.v-lazyloadingwrapper-loading {
 }
 /* End Border Box */
 
+/* Border Box 2 */
+.v-csslayout.border-box2 {
+	background-color: rgb(245, 245, 245);	
+}
+.v-csslayout.border-box2 > .v-csslayout-margin {
+	padding: 8px;
+	border: 1px solid rgb(169, 169, 169);
+}
+
 /* Filter Select */
 .v-filterselect .v-icon {
 	float: left;
@@ -3915,4 +3924,10 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .limited-height-table .v-table-body, .limited-height-table .v-table-body-noselection {
 	max-height: 450px;
 	overflow-x: hidden;
+}
+
+/* H3 Label */
+.v-label-h3 {
+	font-size: 13px;
+	font-weight: bold;
 }
