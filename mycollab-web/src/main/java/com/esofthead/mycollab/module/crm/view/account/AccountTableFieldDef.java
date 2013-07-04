@@ -45,4 +45,12 @@ public class AccountTableFieldDef {
 			LocalizationHelper.getMessage(AccountI18nEnum.FORM_TYPE), "type",
 			UIConstants.TABLE_X_LABEL_WIDTH);
 
+	public static TableViewField ownership = new TableViewField(
+			LocalizationHelper.getMessage(AccountI18nEnum.FORM_OWNERSHIP),
+			"ownership", UIConstants.TABLE_X_LABEL_WIDTH);
+
+	public static TableViewField fax = new TableViewField(
+			LocalizationHelper.getMessage(AccountI18nEnum.FORM_FAX), "fax",
+			UIConstants.TABLE_M_LABEL_WIDTH);
+
 }

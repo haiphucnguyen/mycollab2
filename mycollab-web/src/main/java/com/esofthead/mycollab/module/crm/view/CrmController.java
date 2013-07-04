@@ -31,8 +31,8 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
-import com.esofthead.mycollab.module.crm.events.FileEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent.GotoHome;
+import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
@@ -52,6 +52,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactAddPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileDashboardPresenter;
+import com.esofthead.mycollab.module.crm.view.file.FileSearchResultPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
@@ -62,6 +63,7 @@ import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.AssignmentScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.CallScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.MeetingScreenData;
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -579,19 +581,38 @@ public class CrmController implements IController {
 
 	private void bindDocumentEvents() {
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<FileEvent.GotoDashboard>() {
+				new ApplicationEventListener<DocumentEvent.GotoDashboard>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return FileEvent.GotoDashboard.class;
+						return DocumentEvent.GotoDashboard.class;
 					}
 
 					@Override
-					public void handle(FileEvent.GotoDashboard event) {
+					public void handle(DocumentEvent.GotoDashboard event) {
 						FileDashboardPresenter presenter = PresenterResolver
 								.getPresenter(FileDashboardPresenter.class);
 						presenter.go(container, null);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<DocumentEvent.Search>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return DocumentEvent.Search.class;
+					}
+
+					@Override
+					public void handle(DocumentEvent.Search event) {
+						FileSearchResultPresenter presenter = PresenterResolver
+								.getPresenter(FileSearchResultPresenter.class);
+						presenter.go(container,
+								new ScreenData<FileSearchCriteria>(
+										(FileSearchCriteria) event.getData()));
 					}
 				});
 	}

@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
-import com.esofthead.mycollab.module.crm.events.FileEvent;
+import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -118,7 +118,7 @@ public class CrmToolbar extends CssLayout implements View {
 			} else if (LocalizationHelper.getMessage(
 					CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
 				EventBus.getInstance().fireEvent(
-						new FileEvent.GotoDashboard(this, null));
+						new DocumentEvent.GotoDashboard(this, null));
 			}
 
 			addBtn.setPopupVisible(false);

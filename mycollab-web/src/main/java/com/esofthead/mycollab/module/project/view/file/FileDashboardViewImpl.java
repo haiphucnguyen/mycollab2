@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.file;
 
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -15,7 +16,16 @@ public class FileDashboardViewImpl extends AbstractView implements
 
 	public FileDashboardViewImpl() {
 		this.setWidth("100%");
-		dashboardComponent = new FileDashboardComponent();
+		dashboardComponent = new FileDashboardComponent() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void doSearch(FileSearchCriteria searchCriteria) {
+				// TODO Auto-generated method stub
+
+			}
+
+		};
 		dashboardComponent.setWidth("100%");
 		this.addComponent(dashboardComponent);
 	}
