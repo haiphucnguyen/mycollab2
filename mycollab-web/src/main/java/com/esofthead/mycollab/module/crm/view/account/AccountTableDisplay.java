@@ -34,8 +34,14 @@ public class AccountTableDisplay extends
 
 	public AccountTableDisplay(TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
+		this(null, requiredColumn, displayColumns);
+
+	}
+
+	public AccountTableDisplay(String viewId, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(AccountService.class),
-				SimpleAccount.class, requiredColumn, displayColumns);
+				SimpleAccount.class, viewId, requiredColumn, displayColumns);
 
 		addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -117,14 +123,6 @@ public class AccountTableDisplay extends
 
 			}
 		});
-
-		// setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		// setColumnExpandRatio("accountname", 1);
-		// setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
-		// setColumnWidth("phoneoffice", UIConstants.TABLE_M_LABEL_WIDTH);
-		// setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		// setColumnWidth("assignUserFullName",
-		// UIConstants.TABLE_X_LABEL_WIDTH);
 
 		this.setWidth("100%");
 	}

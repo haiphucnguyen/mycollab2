@@ -29,7 +29,13 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 	public PagedBeanTable2(final SearchService searchService,
 			final Class<T> type, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(type, requiredColumn, displayColumns);
+		this(searchService, type, null, requiredColumn, displayColumns);
+	}
+
+	public PagedBeanTable2(final SearchService searchService,
+			final Class<T> type, String viewId, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		super(type, viewId, requiredColumn, displayColumns);
 		this.searchService = searchService;
 	}
 
