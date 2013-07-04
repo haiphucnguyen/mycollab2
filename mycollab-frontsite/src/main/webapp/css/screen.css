@@ -1695,7 +1695,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-subdomain {
-	background-color: #EF2F36;
+	background-color: #F54B49;
     color: #FFFFFF;
     font-size: 14px;
     height: 25px;
@@ -1796,6 +1796,45 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 14px;
 }
 /* End Sign In style */
+
+/* Term of service style */
+#term-content {
+	width: 1100px;
+	margin: 0 auto;
+	text-align: justify;
+	margin-bottom: 20px;
+}
+
+#term-content h1 {
+	font-size: 35px;
+	font-weight: normal;
+	color: #228BC9;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+.term-block h2 {
+	color: #228BC9;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+.term-block p {
+	padding-bottom: 10px;
+	font-size: 14px;
+}
+
+.term-block ol {
+	margin-left: 25px;
+	padding-bottom: 10px;
+}
+
+.term-block ol li {
+	list-style: lower-alpha;
+	font-size: 14px;
+}
+/* End Term of service style */
 
 /* Note */
 .develop {

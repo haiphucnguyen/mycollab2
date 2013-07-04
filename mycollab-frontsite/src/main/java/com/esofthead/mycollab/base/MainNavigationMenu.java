@@ -17,26 +17,9 @@ public class MainNavigationMenu extends Panel {
 	public MainNavigationMenu(String id) {
 		super(id);
 
-		/*List<MarkupContainer> menus = createMenu();
-		ListView<MarkupContainer> listView = new ListView<MarkupContainer>(
-				"mainNav", menus) {
-			private static final long serialVersionUID = 1L;
-			@Override
-			protected void populateItem(final ListItem<MarkupContainer> listItem) {
-				final MarkupContainer link = listItem.getModelObject();
-				listItem.add(link);
-			}
-		};
-		add(listView);*/
-
 		BookmarkablePageLink<Void> homePageLink = new BookmarkablePageLink<Void>(
 				"backHome", HomePage.class);
-		add(homePageLink);
-
-		/*ExternalLink signInLink = new ExternalLink("signIn",
-				"http://app.mycollab.com", "Sign In");
-		add(signInLink);*/
-		
+		add(homePageLink);		
 		BookmarkablePageLink<Void> signIn = new BookmarkablePageLink<Void>("signIn", SignInPage.class);
 		add(signIn);
 		BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>("tour", TourPage.class);
@@ -50,20 +33,4 @@ public class MainNavigationMenu extends Panel {
 
 		this.setRenderBodyOnly(true);
 	}
-
-	/*private List<MarkupContainer> createMenu() {
-		List<MarkupContainer> menus = new ArrayList<MarkupContainer>();
-
-		menus.add(new BookmarkablePageLink<Void>("mainNavItem", TourPage.class)
-				.add(new Label("itemLabel", "Tour")));
-		menus.add(new ExternalLink("mainNavItem", "mailto:sales@esofthead.com")
-				.add(new Label("itemLabel", "Support")));
-		menus.add(new BookmarkablePageLink<Void>("mainNavItem",
-				PricingPage.class).add(new Label("itemLabel",
-				"Pricing & Signup")));
-		menus.add(new BookmarkablePageLink<Void>("mainNavItem",
-				PrivacyPage.class).add(new Label("itemLabel", "Privacy")));
-
-		return menus;
-	}*/
 }
