@@ -1497,7 +1497,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-left-ctn {
-	background-color: #FFCC99;
+	background-color: #F7E3BF;
 	padding-bottom: 20px;
 }
 
@@ -1614,6 +1614,10 @@ h1, h2, h3, h4, h5, h6 {
 	color: #0267a8;
 }
 
+.sig-left-chk a:hover {
+	text-decoration: underline;
+}
+
 .sig-left-chk label {
 	font-size: 13px;
 }
@@ -1691,7 +1695,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sig-subdomain {
-	background-color: #FF3300;
+	background-color: #EF2F36;
     color: #FFFFFF;
     font-size: 14px;
     height: 25px;
