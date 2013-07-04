@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
+import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -107,20 +109,9 @@ public class CampaignLeadListComp extends
 				.canWrite(RolePermissionCollections.CRM_LEAD));
 		addHeaderElement(controlsBtn);
 
-		tableItem = new LeadTableDisplay(
-				new String[] { "leadName", "status", "email", "officephone",
-						"id" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACTION_HEADER) });
+		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
+				LeadTableFieldDef.status, LeadTableFieldDef.email,
+				LeadTableFieldDef.phoneoffice));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

@@ -114,9 +114,11 @@ public abstract class CustomizedTableWindow extends Window {
 		final Collection<TableViewField> itemIds = container.getItemIds();
 		final List<TableViewField> selectedColumns = new ArrayList<TableViewField>();
 
-		for (final TableViewField viewField : itemIds) {
-			if (viewColumnIds.contains(viewField.getField())) {
-				selectedColumns.add(viewField);
+		for (String viewColumnId : viewColumnIds) {
+			for (final TableViewField viewField : itemIds) {
+				if (viewColumnId.equals(viewField.getField())) {
+					selectedColumns.add(viewField);
+				}
 			}
 		}
 

@@ -11,6 +11,8 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface LeadListView extends View {
 
+	public static String VIEW_DEF_ID = "crm-lead-list";
+	
     IPagedBeanTable<LeadSearchCriteria, SimpleLead> getPagedBeanTable();
 
     void enableActionControls(int numOfSelectedItem);

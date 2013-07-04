@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.List;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
@@ -12,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
@@ -27,10 +30,20 @@ import com.vaadin.ui.Table;
 public class LeadTableDisplay extends
 		PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> {
 
-	public LeadTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+	public LeadTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public LeadTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		this(null, requiredColumn, displayColumns);
+
+	}
+
+	public LeadTableDisplay(String viewId, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(LeadService.class), SimpleLead.class,
-				visibleColumns, columnHeaders);
+				viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -119,15 +132,5 @@ public class LeadTableDisplay extends
 		});
 
 		this.setWidth("100%");
-
-		this.setColumnExpandRatio("leadName", 1.0f);
-
-		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("title", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnExpandRatio("leadName", 1.0f);
-		this.setColumnWidth("officephone", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		this.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 	}
 }

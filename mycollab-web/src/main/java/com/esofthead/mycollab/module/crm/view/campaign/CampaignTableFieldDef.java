@@ -12,6 +12,14 @@ public interface CampaignTableFieldDef {
 
 	public static TableViewField action = new TableViewField("", "id");
 
+	public static TableViewField actualcost = new TableViewField(
+			LocalizationHelper.getMessage(CampaignI18nEnum.FORM_ACTUAL_COST),
+			"actualcost", UIConstants.TABLE_M_LABEL_WIDTH);
+
+	public static TableViewField budget = new TableViewField(
+			LocalizationHelper.getMessage(CampaignI18nEnum.FORM_BUDGET),
+			"budget", UIConstants.TABLE_M_LABEL_WIDTH);
+
 	public static TableViewField campaignname = new TableViewField(
 			LocalizationHelper.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
 			"campaignname", UIConstants.TABLE_X_LABEL_WIDTH);
@@ -23,6 +31,10 @@ public interface CampaignTableFieldDef {
 	public static TableViewField type = new TableViewField(
 			LocalizationHelper.getMessage(CampaignI18nEnum.FORM_TYPE), "type",
 			UIConstants.TABLE_S_LABEL_WIDTH);
+
+	public static TableViewField expectedCost = new TableViewField(
+			LocalizationHelper.getMessage(CampaignI18nEnum.FORM_EXPECTED_COST),
+			"expectedcost", UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField expectedRevenue = new TableViewField(
 			LocalizationHelper
@@ -40,4 +52,5 @@ public interface CampaignTableFieldDef {
 	public static TableViewField assignUser = new TableViewField(
 			LocalizationHelper.getMessage(CampaignI18nEnum.FORM_ASSIGN_USER),
 			"assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+
 }
