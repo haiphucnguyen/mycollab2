@@ -259,9 +259,18 @@ public class ContactImportWindow extends Window {
 		VerticalLayout infoLayoutStep3 = new VerticalLayout();
 		infoLayoutStep3.setMargin(true);
 
+		HorizontalLayout infoLayout = new HorizontalLayout();
+		infoLayout.setSpacing(true);
+
+		infoLayoutStep3.addComponent(infoLayout);
 		layoutStep3.addComponent(infoLayoutStep3);
+
 		Label labelInfo = new Label("Duplicate Record Handling");
-		infoLayoutStep3.addComponent(labelInfo);
+		infoLayout.addComponent(labelInfo);
+
+		CheckBox checkbox = new CheckBox();
+		infoLayout.addComponent(checkbox);
+
 		bodyStep3Wapper.addComponent(layoutStep3);
 
 		return bodyStep3Wapper;
@@ -322,11 +331,11 @@ public class ContactImportWindow extends Window {
 		step1bodyWapper.setWidth("100%");
 		step1bodyWapper.setHeight("100%");
 		step1bodyWapper.addStyleName(UIConstants.BORDER_BOX_2);
-		
+
 		final HorizontalLayout layoutStep1 = new HorizontalLayout();
 		layoutStep1.setSpacing(true);
 		layoutStep1.setHeight("100%");
-		
+
 		HorizontalLayout titleStep1 = new HorizontalLayout();
 		Label labelStep1 = new Label("Step 1:");
 		labelStep1.addStyleName("h3");
