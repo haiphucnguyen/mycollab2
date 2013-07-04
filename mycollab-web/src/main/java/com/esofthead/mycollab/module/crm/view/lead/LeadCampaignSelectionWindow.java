@@ -4,12 +4,16 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableDisplay;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -31,19 +35,11 @@ public class LeadCampaignSelectionWindow extends
 
 	@Override
 	protected void initUI() {
-		tableItem = new CampaignTableDisplay(
-				new String[] { "selected", "campaignname", "status", "type",
-						"enddate" },
-				new String[] {
-						"",
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_TYPE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_END_DATE_HEADER) });
+		tableItem = new CampaignTableDisplay(Arrays.asList(
+				CampaignTableFieldDef.selected,
+				CampaignTableFieldDef.campaignname,
+				CampaignTableFieldDef.status, CampaignTableFieldDef.type,
+				CampaignTableFieldDef.endDate));
 
 		Button selectBtn = new Button("Select", new Button.ClickListener() {
 

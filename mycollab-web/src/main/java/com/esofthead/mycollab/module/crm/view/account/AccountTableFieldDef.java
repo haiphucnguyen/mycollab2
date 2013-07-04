@@ -6,7 +6,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.LocalizationHelper;
 
-public class AccountTableFieldDef {
+public interface AccountTableFieldDef {
 
 	public static TableViewField selected = new TableViewField("", "selected",
 			UIConstants.TABLE_CONTROL_WIDTH);

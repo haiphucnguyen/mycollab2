@@ -10,18 +10,19 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface CampaignListView extends View {
+	public static String VIEW_DEF_ID = "crm-campaign-list";
 
-    void enableActionControls(int numOfSelectedItem);
+	void enableActionControls(int numOfSelectedItem);
 
-    void disableActionControls();
+	void disableActionControls();
 
-    HasSelectableItemHandlers<SimpleCampaign> getSelectableItemHandlers();
+	HasSelectableItemHandlers<SimpleCampaign> getSelectableItemHandlers();
 
-    HasSearchHandlers<CampaignSearchCriteria> getSearchHandlers();
+	HasSearchHandlers<CampaignSearchCriteria> getSearchHandlers();
 
-    HasSelectionOptionHandlers getOptionSelectionHandlers();
+	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
-    HasPopupActionHandlers getPopupActionHandlers();
+	HasPopupActionHandlers getPopupActionHandlers();
 
-    IPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable();
+	IPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable();
 }

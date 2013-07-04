@@ -12,8 +12,6 @@ public class AccountListCustomizeWindow extends CustomizedTableWindow {
 
 	public AccountListCustomizeWindow(AbstractPagedBeanTable table) {
 		super(table);
-		table.getVisibleColumns();
-
 	}
 
 	protected Collection<TableViewField> getAvailableColumns() {
@@ -28,5 +26,4 @@ public class AccountListCustomizeWindow extends CustomizedTableWindow {
 	protected String getViewId() {
 		return AccountListView.VIEW_DEF_ID;
 	}
-
 }

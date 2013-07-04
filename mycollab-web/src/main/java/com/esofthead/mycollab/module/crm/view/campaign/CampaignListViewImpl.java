@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -7,7 +9,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -25,6 +26,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -56,42 +58,14 @@ public class CampaignListViewImpl extends AbstractView implements
 
 	private void generateDisplayTable() {
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.tableItem = new CampaignTableDisplay(
-					new String[] { "selected", "campaignname", "status",
-							"type", "enddate", "assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_TYPE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_END_DATE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.tableItem = new CampaignTableDisplay(
-					new String[] { "selected", "campaignname", "status",
-							"type", "expectedrevenue", "enddate",
-							"assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_TYPE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EXPECTED_REVENUE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_END_DATE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
-		}
+		this.tableItem = new CampaignTableDisplay(CampaignListView.VIEW_DEF_ID,
+				CampaignTableFieldDef.selected, Arrays.asList(
+						CampaignTableFieldDef.campaignname,
+						CampaignTableFieldDef.status,
+						CampaignTableFieldDef.type,
+						CampaignTableFieldDef.expectedRevenue,
+						CampaignTableFieldDef.endDate,
+						CampaignTableFieldDef.assignUser));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -128,6 +102,7 @@ public class CampaignListViewImpl extends AbstractView implements
 		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 
@@ -153,6 +128,23 @@ public class CampaignListViewImpl extends AbstractView implements
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
+
+		Button customizeViewBtn = new Button("Customize View",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getWindow().addWindow(
+								new CampaignListCustomizeWindow(tableItem));
+
+					}
+				});
+
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(customizeViewBtn);
+		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 		return layoutWrapper;
 	}
 
