@@ -14,48 +14,48 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class AccountListCustomizeWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private ListBuilder listBuilder;
+	private final ListBuilder listBuilder;
 
 	public AccountListCustomizeWindow(final AbstractPagedBeanTable table) {
 		super("Customize View");
 		this.setWidth("800px");
-		this.setHeight("400px");
 
-		center();
+		this.center();
 
-		this.listBuilder = new ListBuilder("");
-		listBuilder.setImmediate(true);
-		listBuilder.setColumns(15);
-		listBuilder.setLeftColumnCaption("Available Columns");
-		listBuilder.setRightColumnCaption("View Columns");
-		listBuilder.setSizeFull();
+		this.listBuilder = new ListBuilder();
+		this.listBuilder.setImmediate(true);
+		this.listBuilder.setLeftColumnCaption("Available Columns");
+		this.listBuilder.setRightColumnCaption("View Columns");
+		this.listBuilder.setWidth("100%");
 
-		listBuilder
+		this.listBuilder
 				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_PROPERTY);
-		listBuilder.setItemCaptionPropertyId("desc");
-		BeanItemContainer<TableViewField> container = new BeanItemContainer<TableViewField>(
-				TableViewField.class, getAvailableColumns());
-		listBuilder.setContainerDataSource(container);
-		setSelectedViewColumns();
-		this.addComponent(listBuilder);
+		this.listBuilder.setItemCaptionPropertyId("desc");
+		final BeanItemContainer<TableViewField> container = new BeanItemContainer<TableViewField>(
+				TableViewField.class, this.getAvailableColumns());
+		this.listBuilder.setContainerDataSource(container);
+		this.setSelectedViewColumns();
+		this.addComponent(this.listBuilder);
 
-		HorizontalLayout buttonControls = new HorizontalLayout();
-		Button saveBtn = new Button(
+		final HorizontalLayout buttonControls = new HorizontalLayout();
+		final Button saveBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
-						List<TableViewField> selectedColumns = (List<TableViewField>) listBuilder
+					public void buttonClick(final ClickEvent event) {
+						final List<TableViewField> selectedColumns = (List<TableViewField>) AccountListCustomizeWindow.this.listBuilder
 								.getValue();
 						table.setTableViewFieldCollection(selectedColumns);
 						AccountListCustomizeWindow.this.close();
@@ -64,14 +64,14 @@ public class AccountListCustomizeWindow extends Window {
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		buttonControls.addComponent(saveBtn);
 
-		Button cancelBtn = new Button(
+		final Button cancelBtn = new Button(
 				LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						AccountListCustomizeWindow.this.close();
 					}
 				});
@@ -79,6 +79,10 @@ public class AccountListCustomizeWindow extends Window {
 		buttonControls.addComponent(cancelBtn);
 
 		this.addComponent(buttonControls);
+		final VerticalLayout thisContainer = (VerticalLayout) this.getContent();
+		thisContainer.setComponentAlignment(buttonControls,
+				Alignment.MIDDLE_CENTER);
+		thisContainer.setSpacing(true);
 	}
 
 	protected Collection<TableViewField> getAvailableColumns() {
@@ -89,20 +93,20 @@ public class AccountListCustomizeWindow extends Window {
 	}
 
 	private void setSelectedViewColumns() {
-		Collection<String> viewColumnIds = getViewColumns();
+		final Collection<String> viewColumnIds = this.getViewColumns();
 
-		BeanItemContainer<TableViewField> container = (BeanItemContainer<TableViewField>) listBuilder
+		final BeanItemContainer<TableViewField> container = (BeanItemContainer<TableViewField>) this.listBuilder
 				.getContainerDataSource();
-		Collection<TableViewField> itemIds = container.getItemIds();
-		List<TableViewField> selectedColumns = new ArrayList<TableViewField>();
+		final Collection<TableViewField> itemIds = container.getItemIds();
+		final List<TableViewField> selectedColumns = new ArrayList<TableViewField>();
 
-		for (TableViewField viewField : itemIds) {
+		for (final TableViewField viewField : itemIds) {
 			if (viewColumnIds.contains(viewField.getField())) {
 				selectedColumns.add(viewField);
 			}
 		}
 
-		listBuilder.setValue(selectedColumns);
+		this.listBuilder.setValue(selectedColumns);
 	}
 
 	protected Collection<String> getViewColumns() {
