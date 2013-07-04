@@ -36,19 +36,19 @@ public class Test {
 
 	public static void main(String[] args) throws ClientProtocolException,
 			IOException, JSONException {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost postRequest = new HttpPost(
-				"http://localhost:8182/mycollab-web/api/signup");
-
-		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-		nvps.add(new BasicNameValuePair("username", "username1"));
-		nvps.add(new BasicNameValuePair("password", "password1"));
-		nvps.add(new BasicNameValuePair("planId", "1"));
-		nvps.add(new BasicNameValuePair("email", "hainguyen@esofthead.com"));
-
-		postRequest.setEntity(new UrlEncodedFormEntity(nvps));
-		HttpResponse response = httpClient.execute(postRequest);
-		System.out.println(response.getEntity().getContent());
+//		DefaultHttpClient httpClient = new DefaultHttpClient();
+//		HttpPost postRequest = new HttpPost(
+//				"http://localhost:8080/mycollab-web/api/signup");
+//
+//		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+//		nvps.add(new BasicNameValuePair("username", "username1"));
+//		nvps.add(new BasicNameValuePair("password", "password1"));
+//		nvps.add(new BasicNameValuePair("planId", "1"));
+//		nvps.add(new BasicNameValuePair("email", "hainguyen@esofthead.com"));
+//
+//		postRequest.setEntity(new UrlEncodedFormEntity(nvps));
+//		HttpResponse response = httpClient.execute(postRequest);
+//		System.out.println(response.getEntity().getContent());
 
 		ClientResource clientResource = new ClientResource(
 				"http://localhost:8182/mycollab-web/api/signup");
@@ -62,10 +62,15 @@ public class Test {
 		form.set("email", "hainguyen@esofthead.com");
 		form.set("timezone", "UTC");
 		form.set("planId", "1");
-		String result = testResource.doPost(form);
-
-		if (result != null) {
-			System.out.println(result);
+		try {
+			String result = testResource.doPost(form);
+			if (result != null) {
+				System.out.println(result);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getClass());
+			e.printStackTrace();
 		}
+
 	}
 }
