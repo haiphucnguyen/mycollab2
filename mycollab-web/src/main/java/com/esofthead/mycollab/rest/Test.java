@@ -16,7 +16,7 @@ import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 
 import com.esofthead.mycollab.module.crm.domain.Customer;
-import com.esofthead.mycollab.rest.server.resource.SignupResource;
+import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 public class Test {
 	// public static void main(String[] args) throws Exception {
@@ -52,7 +52,7 @@ public class Test {
 
 		ClientResource clientResource = new ClientResource(
 				"http://localhost:8182/mycollab-web/api/signup");
-		SignupResource testResource = clientResource.wrap(SignupResource.class);
+		UserHubResource testResource = clientResource.wrap(UserHubResource.class);
 
 		// Retrieve the JSON value
 		Form form = new Form();

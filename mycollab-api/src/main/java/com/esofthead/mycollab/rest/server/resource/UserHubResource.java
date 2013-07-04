@@ -5,7 +5,7 @@ import org.restlet.resource.Post;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
-public interface SignupResource {
+public interface UserHubResource {
 	@Post("form")
 	abstract public String doPost(Form form) throws MyCollabException;
 }

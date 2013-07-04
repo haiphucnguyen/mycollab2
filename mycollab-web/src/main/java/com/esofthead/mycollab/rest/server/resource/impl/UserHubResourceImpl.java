@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.rest.server.resource.SignupResource;
+import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 @Component("restUserResource")
-public class SignupResourceImpl extends ServerResource implements
-		SignupResource {
+public class UserHubResourceImpl extends ServerResource implements
+		UserHubResource {
 	private static Logger log = LoggerFactory
-			.getLogger(SignupResourceImpl.class);
+			.getLogger(UserHubResourceImpl.class);
 
 	@Autowired
 	private BillingService billingService;
@@ -40,7 +40,7 @@ public class SignupResourceImpl extends ServerResource implements
 	public static void main(String[] args) throws Exception {
 		// Create the HTTP server and listen on port 8182
 		Server server = new Server(Protocol.HTTP, 8182,
-				SignupResourceImpl.class);
+				UserHubResourceImpl.class);
 		server.start();
 	}
 }
