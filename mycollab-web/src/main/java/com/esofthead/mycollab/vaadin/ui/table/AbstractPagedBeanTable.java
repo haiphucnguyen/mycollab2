@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.context.annotation.DependsOn;
+
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -42,38 +44,97 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
 	protected List<T> currentListData;
 
-	protected LazyLoadWrapper tableLazyLoadContainer;
-
-	protected Object sortColumnId;
 	protected HorizontalLayout pageManagement;
-	protected boolean isAscending = true;
 
-	protected Object columnExpandId;
+	protected boolean isAscending = true;
+	protected Object sortColumnId;
+
 	protected SearchRequest<S> searchRequest;
 	protected int currentPage = 1;
 	protected int totalPage = 1;
 	protected int currentViewCount;
 	protected int totalCount;
+
 	protected Table tableItem;
 	protected CssLayout controlBarWrapper;
+
 	protected Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> mapEventListener;
 	protected Set<SelectableItemHandler<T>> selectableHandlers;
 	protected Set<PagableHandler> pagableHandlers;
+
 	protected final Class<T> type;
 
-	protected final String[] visibleColumns;
-	protected final String[] columnHeaders;
+	private TableViewField requiredColumn;
+	private List<TableViewField> displayColumns;
 
 	protected final Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
-	protected final Map<Object, Integer> columnWidths = new HashMap<Object, Integer>();
 
+	@Deprecated
 	public AbstractPagedBeanTable(final Class<T> type,
 			final String[] visibleColumns, final String[] columnHeaders) {
-		this.visibleColumns = visibleColumns;
-		this.columnHeaders = columnHeaders;
+		this.displayColumns = new ArrayList<TableViewField>();
+		for (int i = 0; i < visibleColumns.length; i++) {
+			displayColumns.add(new TableViewField(columnHeaders[i],
+					visibleColumns[i]));
+		}
 		this.type = type;
 
 		this.setStyleName("list-view");
+	}
+
+	public AbstractPagedBeanTable(Class<T> type,
+			List<TableViewField> displayColumns) {
+		this(type, null, displayColumns);
+	}
+
+	public AbstractPagedBeanTable(Class<T> type, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		this.requiredColumn = requiredColumn;
+		this.displayColumns = displayColumns;
+		this.type = type;
+
+		this.setStyleName("list-view");
+	}
+
+	public void setTableViewFieldCollection(List<TableViewField> viewFields) {
+		this.displayColumns = viewFields;
+		setTableViewFieldCollection(displayColumns, true);
+	}
+
+	private void setTableViewFieldCollection(List<TableViewField> viewFields,
+			boolean requestRepaint) {
+		List<String> visibleColumnsCol = new ArrayList<String>();
+		List<String> columnHeadersCol = new ArrayList<String>();
+
+		if (requiredColumn != null) {
+			visibleColumnsCol.add(requiredColumn.getField());
+			columnHeadersCol.add(requiredColumn.getDesc());
+		}
+
+		for (int i = 0; i < viewFields.size(); i++) {
+			TableViewField viewField = viewFields.get(i);
+			visibleColumnsCol.add(viewField.getField());
+			columnHeadersCol.add(viewField.getDesc());
+
+			if (i == 0) {
+				this.tableItem.setColumnExpandRatio(viewField.getField(), 1.0f);
+			} else {
+				this.tableItem.setColumnWidth(viewField.getField(),
+						viewField.getDefaultWidth());
+			}
+		}
+
+		String[] visibleColumns = (String[]) visibleColumnsCol
+				.toArray(new String[0]);
+		String[] columnHeaders = (String[]) columnHeadersCol
+				.toArray(new String[0]);
+
+		this.tableItem.setVisibleColumns(visibleColumns);
+		this.tableItem.setColumnHeaders(columnHeaders);
+
+		if (requestRepaint) {
+			this.tableItem.requestRepaint();
+		}
 	}
 
 	@Override
@@ -140,14 +201,21 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	}
 
 	@Override
+	@Deprecated
 	public void setColumnExpandRatio(final Object propertyId,
 			final float expandRation) {
-		this.columnExpandId = propertyId;
+
 	}
 
 	@Override
 	public void setColumnWidth(final Object propertyId, final int width) {
-		this.columnWidths.put(propertyId, width);
+		if (this.displayColumns != null) {
+			for (TableViewField field : displayColumns) {
+				if (propertyId.equals(field.getField())) {
+					field.setDefaultWidth(width);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -375,7 +443,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		this.tableItem = new Table();
 		this.tableItem.setWidth("100%");
 		final CustomComponent tableWrap = new CustomComponent(this.tableItem);
-		this.tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
+		LazyLoadWrapper tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
 		this.tableItem.addStyleName("striped");
 		this.tableItem.setSortDisabled(true);
 
@@ -383,16 +451,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		for (final Object propertyId : this.columnGenerators.keySet()) {
 			this.tableItem.addGeneratedColumn(propertyId,
 					this.columnGenerators.get(propertyId));
-		}
-
-		// set column width
-		for (final Object propertyId : this.columnWidths.keySet()) {
-			this.tableItem.setColumnWidth(propertyId,
-					this.columnWidths.get(propertyId));
-		}
-
-		if (this.columnExpandId != null && !this.columnExpandId.equals("")) {
-			this.tableItem.setColumnExpandRatio(this.columnExpandId, 1.0f);
 		}
 
 		if (this.sortColumnId != null && !this.sortColumnId.equals("")) {
@@ -448,19 +506,18 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 				this.type, this.currentListData);
 		this.tableItem.setPageLength(0);
 		this.tableItem.setContainerDataSource(container);
-		this.tableItem.setVisibleColumns(this.visibleColumns);
-		this.tableItem.setColumnHeaders(this.columnHeaders);
+		setTableViewFieldCollection(this.displayColumns);
 		this.tableItem.setWidth("100%");
 
 		if (this.getComponentCount() > 0) {
 			final Component component0 = this.getComponent(0);
 			if (component0 instanceof LazyLoadWrapper) {
-				this.replaceComponent(component0, this.tableLazyLoadContainer);
+				this.replaceComponent(component0, tableLazyLoadContainer);
 			} else {
-				this.addComponent(this.tableLazyLoadContainer, 0);
+				this.addComponent(tableLazyLoadContainer, 0);
 			}
 		} else {
-			this.addComponent(this.tableLazyLoadContainer, 0);
+			this.addComponent(tableLazyLoadContainer, 0);
 		}
 
 	}

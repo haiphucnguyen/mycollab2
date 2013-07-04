@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -7,7 +9,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -25,12 +26,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class AccountListViewImpl extends AbstractView implements
@@ -124,37 +125,12 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.tableItem = new AccountTableDisplay(
-					new String[] { "selected", "accountname", "phoneoffice",
-							"email", "assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.tableItem = new AccountTableDisplay(
-					new String[] { "selected", "accountname", "city",
-							"phoneoffice", "email", "assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_CITY_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
-		}
+		this.tableItem = new AccountTableDisplay(AccountTableFieldDef.selected,
+				Arrays.asList(AccountTableFieldDef.accountname,
+						AccountTableFieldDef.city,
+						AccountTableFieldDef.phoneoffice,
+						AccountTableFieldDef.email,
+						AccountTableFieldDef.assignUser));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

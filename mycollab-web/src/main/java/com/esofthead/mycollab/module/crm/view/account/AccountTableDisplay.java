@@ -4,15 +4,17 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.List;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -26,10 +28,14 @@ public class AccountTableDisplay extends
 		PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> {
 	private static final long serialVersionUID = 1L;
 
-	public AccountTableDisplay(final String[] visibleColumns,
-			final String[] columnHeaders) {
+	public AccountTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public AccountTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(AccountService.class),
-				SimpleAccount.class, visibleColumns, columnHeaders);
+				SimpleAccount.class, requiredColumn, displayColumns);
 
 		addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -112,12 +118,13 @@ public class AccountTableDisplay extends
 			}
 		});
 
-		setColumnExpandRatio("accountname", 1);
-		setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
-		setColumnWidth("phoneoffice", UIConstants.TABLE_M_LABEL_WIDTH);
-		setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		// setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		// setColumnExpandRatio("accountname", 1);
+		// setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
+		// setColumnWidth("phoneoffice", UIConstants.TABLE_M_LABEL_WIDTH);
+		// setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+		// setColumnWidth("assignUserFullName",
+		// UIConstants.TABLE_X_LABEL_WIDTH);
 
 		this.setWidth("100%");
 	}
