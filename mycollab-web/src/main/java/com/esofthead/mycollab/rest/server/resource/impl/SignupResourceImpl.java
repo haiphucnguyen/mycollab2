@@ -5,6 +5,7 @@ import org.restlet.Server;
 import org.restlet.data.Form;
 import org.restlet.data.Protocol;
 import org.restlet.resource.Post;
+import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.rest.server.resource.SignupResource;
 
 @Component("restUserResource")
-public class SignupResourceImpl extends SignupResource {
+public class SignupResourceImpl extends ServerResource implements
+		SignupResource {
 	private static Logger log = LoggerFactory
 			.getLogger(SignupResourceImpl.class);
 
@@ -30,8 +32,8 @@ public class SignupResourceImpl extends SignupResource {
 		String email = form.getFirstValue("email");
 		String timezoneId = form.getFirstValue("timezone");
 		int planId = Integer.parseInt(form.getFirstValue("planId"));
-		billingService.registerAccount(subdomain, planId, username, password,
-				email, timezoneId);
+		// billingService.registerAccount(subdomain, planId, username, password,
+		// email, timezoneId);
 		return "aaa";
 	}
 
