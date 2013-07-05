@@ -72,13 +72,13 @@ public class BugSelectionWindow extends Window {
 						"assignuserFullName" },
 				new String[] {
 						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
+								.getMessage(BugI18nEnum.FORM_SUMMARY),
 						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
+								.getMessage(BugI18nEnum.FORM_SEVERITY),
 						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
+								.getMessage(BugI18nEnum.FORM_RESOLUTION),
 						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_ASSIGN_USER_HEADER) });
+								.getMessage(BugI18nEnum.FORM_ASSIGN_USER) });
 
 		tableItem.setWidth("100%");
 		tableItem.setColumnExpandRatio("summary", 1.0f);

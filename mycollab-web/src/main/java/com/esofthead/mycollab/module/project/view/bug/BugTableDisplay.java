@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -30,6 +31,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContaine
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -50,9 +52,20 @@ public class BugTableDisplay extends
 		IBugCallbackStatusComp {
 	private static final long serialVersionUID = 1L;
 
-	public BugTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
+	public BugTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public BugTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		this(null, requiredColumn, displayColumns);
+
+	}
+
+	public BugTableDisplay(String viewId, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(BugService.class), SimpleBug.class,
-				visibleColumns, columnHeaders);
+				viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("id", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -394,14 +407,6 @@ public class BugTableDisplay extends
 
 			}
 		});
-
-		this.setColumnExpandRatio("summary", 1.0f);
-		this.setColumnWidth("assignuserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("id", 22);
-		this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
-		this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("duedate", UIConstants.TABLE_DATE_WIDTH);
 
 		this.setWidth("100%");
 	}
