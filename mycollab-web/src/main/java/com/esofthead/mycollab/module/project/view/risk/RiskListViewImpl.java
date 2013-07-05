@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import com.esofthead.mycollab.module.crm.view.account.AccountListCustomizeWindow;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
@@ -25,6 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -63,9 +66,10 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	private void generateDisplayTable() {
 		this.tableItem = new PagedBeanTable2<RiskService, RiskSearchCriteria, SimpleRisk>(
 				AppContext.getSpringBean(RiskService.class), SimpleRisk.class,
-				new String[] { "selected", "riskname",
-						"assignedToUserFullName", "datedue", "level" },
-				new String[] { "", "Name", "Assigned to", "Due Date", "Level" });
+				RiskListView.VIEW_DEF_ID, RiskTableFieldDef.selected,
+				Arrays.asList(RiskTableFieldDef.name,
+						RiskTableFieldDef.assignUser,
+						RiskTableFieldDef.datedue, RiskTableFieldDef.rating));
 
 		this.tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -129,7 +133,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 			}
 		});
 
-		this.tableItem.addGeneratedColumn("assignedToUserFullName",
+		this.tableItem.addGeneratedColumn("assigntouser",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
@@ -198,6 +202,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 
@@ -217,6 +222,24 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindow().addWindow(new RiskListCustomizeWindow(tableItem));
+
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(customizeViewBtn);
+		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+
 		return layoutWrapper;
 	}
 

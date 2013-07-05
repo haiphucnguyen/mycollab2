@@ -67,7 +67,7 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("datedue")) {
 			this.informationLayout.addComponent(field, "Date due", 0, 4);
 		} else if (propertyId.equals("probalitity")) {
-			this.informationLayout.addComponent(field, "Probality", 1, 4);
+			this.informationLayout.addComponent(field, "Probability", 1, 4);
 		} else if (propertyId.equals("status")) {
 			this.informationLayout.addComponent(field, "Status", 0, 5);
 		} else if (propertyId.equals("level")) {

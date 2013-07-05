@@ -11,17 +11,19 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface RiskListView extends View {
 
-    void enableActionControls(int numOfSelectedItem);
+	public static final String VIEW_DEF_ID = "project-risk-list";
 
-    void disableActionControls();
+	void enableActionControls(int numOfSelectedItem);
 
-    HasSearchHandlers<RiskSearchCriteria> getSearchHandlers();
+	void disableActionControls();
 
-    HasSelectionOptionHandlers getOptionSelectionHandlers();
+	HasSearchHandlers<RiskSearchCriteria> getSearchHandlers();
 
-    HasPopupActionHandlers getPopupActionHandlers();
+	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
-    HasSelectableItemHandlers<SimpleRisk> getSelectableItemHandlers();
+	HasPopupActionHandlers getPopupActionHandlers();
 
-    IPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable();
+	HasSelectableItemHandlers<SimpleRisk> getSelectableItemHandlers();
+
+	IPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable();
 }
