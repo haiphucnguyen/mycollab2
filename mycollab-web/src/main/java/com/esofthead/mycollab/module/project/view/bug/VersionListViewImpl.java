@@ -141,12 +141,6 @@ public class VersionListViewImpl extends AbstractView implements
 					}
 				});
 
-		this.tableItem.setColumnExpandRatio("versionname", 1);
-		this.tableItem.setColumnWidth("description",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("selected",
-				UIConstants.TABLE_CONTROL_WIDTH);
-
 		this.tableItem.setWidth("100%");
 
 		this.componentListLayout.addComponent(this

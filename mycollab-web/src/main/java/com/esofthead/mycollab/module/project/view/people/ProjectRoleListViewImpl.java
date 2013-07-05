@@ -133,12 +133,6 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 					}
 				});
 
-		this.tableItem.setColumnWidth("selected",
-				UIConstants.TABLE_CONTROL_WIDTH);
-		this.tableItem.setColumnExpandRatio("rolename", 1);
-		this.tableItem.setColumnWidth("description",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-
 		this.listLayout.addComponent(this.constructTableActionControls());
 		this.listLayout.addComponent(this.tableItem);
 	}

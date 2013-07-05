@@ -217,9 +217,6 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 		tableItem.setWidth("100%");
 
-		tableItem.setColumnExpandRatio("user", 1.0f);
-		tableItem.setColumnWidth("monitorDate", UIConstants.TABLE_DATE_WIDTH);
-
 		this.addComponent(tableItem);
 		loadMonitorItems();
 	}

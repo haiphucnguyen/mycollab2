@@ -11,7 +11,6 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -82,9 +81,6 @@ public class RoleTableDisplay extends
 
 			}
 		});
-
-		this.setColumnExpandRatio("description", 1);
-		this.setColumnWidth("rolename", UIConstants.TABLE_X_LABEL_WIDTH);
 	}
 
 }

@@ -10,7 +10,8 @@ public interface BugTableFieldDef {
 	public static TableViewField selected = new TableViewField("", "selected",
 			UIConstants.TABLE_CONTROL_WIDTH);
 
-	public static TableViewField action = new TableViewField("", "id");
+	public static TableViewField action = new TableViewField("", "id",
+			UIConstants.TABLE_CONTROL_WIDTH);
 
 	public static TableViewField summary = new TableViewField(
 			LocalizationHelper.getMessage(BugI18nEnum.FORM_SUMMARY), "summary",

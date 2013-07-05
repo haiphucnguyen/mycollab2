@@ -10,22 +10,19 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
 
-public interface IPagedBeanTable<S extends SearchCriteria, T>
-        extends HasSelectableItemHandlers<T>, HasPagableHandlers, Component, IBeanTable {
+public interface IPagedBeanTable<S extends SearchCriteria, T> extends
+		HasSelectableItemHandlers<T>, HasPagableHandlers, Component, IBeanTable {
 
-    void setSearchCriteria(S searchCriteria);
+	void setSearchCriteria(S searchCriteria);
 
-    List<T> getCurrentDataList();
+	List<T> getCurrentDataList();
 
-    void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener);
+	void addTableListener(
+			ApplicationEventListener<? extends ApplicationEvent> listener);
 
-    void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
+	void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
 
-    void setColumnExpandRatio(Object propertyId, float expandRation);
+	T getBeanByIndex(Object itemId);
 
-    void setColumnWidth(Object propertyId, int width);
-    
-    T getBeanByIndex(Object itemId);
-    
-    void refresh();
+	void refresh();
 }

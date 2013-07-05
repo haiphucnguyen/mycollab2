@@ -82,10 +82,5 @@ public class MeetingTableDisplay extends
 
 			}
 		});
-
-		this.setColumnExpandRatio("subject", 1);
-		this.setColumnWidth("relatedTo", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("status", UIConstants.TABLE_S_LABEL_WIDTH);
-		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_TIME_WIDTH);
 	}
 }
