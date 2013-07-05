@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -128,18 +129,18 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 
-		Button customizeViewBtn = new Button("Customize View",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWindow().addWindow(
-								new LeadListCustomizeWindow(tableItem));
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindow().addWindow(new LeadListCustomizeWindow(tableItem));
 
-					}
-				});
-
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);

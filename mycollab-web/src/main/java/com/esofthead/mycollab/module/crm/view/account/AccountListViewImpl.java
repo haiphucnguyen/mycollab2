@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -89,18 +90,19 @@ public class AccountListViewImpl extends AbstractView implements
 
 		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 
-		Button customizeViewBtn = new Button("Customize View",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWindow().addWindow(
-								new AccountListCustomizeWindow(tableItem));
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindow()
+						.addWindow(new AccountListCustomizeWindow(tableItem));
 
-					}
-				});
-
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);

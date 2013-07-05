@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -130,7 +131,7 @@ public class CampaignListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 
-		Button customizeViewBtn = new Button("Customize View",
+		Button customizeViewBtn = new Button("",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -141,7 +142,10 @@ public class CampaignListViewImpl extends AbstractView implements
 
 					}
 				});
-
+		
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
