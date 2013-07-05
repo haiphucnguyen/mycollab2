@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
-import com.esofthead.mycollab.module.crm.view.account.AccountListCustomizeWindow;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
@@ -179,12 +178,6 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 				return tinyRs;
 			}
 		});
-
-		this.tableItem.setColumnExpandRatio("riskname", 1);
-		this.tableItem.setColumnWidth("assignedToUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("level", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
 
 		this.tableItem.setWidth("100%");
 

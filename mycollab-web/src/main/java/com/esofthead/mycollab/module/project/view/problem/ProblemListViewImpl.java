@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
@@ -25,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -64,9 +66,12 @@ public class ProblemListViewImpl extends AbstractView implements
 	private void generateDisplayTable() {
 		this.tableItem = new PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem>(
 				AppContext.getSpringBean(ProblemService.class),
-				SimpleProblem.class, new String[] { "selected", "issuename",
-						"assignedUserFullName", "datedue", "level" },
-				new String[] { "", "Name", "Assigned to", "Due Date", "Level" });
+				SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
+				ProblemTableFieldDef.selected, Arrays.asList(
+						ProblemTableFieldDef.name,
+						ProblemTableFieldDef.assignUser,
+						ProblemTableFieldDef.datedue,
+						ProblemTableFieldDef.rating));
 
 		this.tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -177,12 +182,6 @@ public class ProblemListViewImpl extends AbstractView implements
 			}
 		});
 
-		this.tableItem.setColumnExpandRatio("issuename", 1);
-		this.tableItem.setColumnWidth("assignedUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("level", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
-
 		this.tableItem.setWidth("100%");
 
 		this.problemListLayout
@@ -200,6 +199,7 @@ public class ProblemListViewImpl extends AbstractView implements
 		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 
@@ -220,6 +220,25 @@ public class ProblemListViewImpl extends AbstractView implements
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindow()
+						.addWindow(new ProblemListCustomizeWindow(tableItem));
+
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(customizeViewBtn);
+		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+
 		return layoutWrapper;
 	}
 
