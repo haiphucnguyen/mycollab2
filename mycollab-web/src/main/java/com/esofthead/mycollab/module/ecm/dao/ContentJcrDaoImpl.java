@@ -367,7 +367,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 	}
 
 	@Override
-	public List<Resource> searchResourcesByName(String resourceName) {
+	public List<Resource> searchResourcesByName(final String resourceName) {
 		return jcrTemplate.execute(new JcrCallback<List<Resource>>() {
 
 			@Override
@@ -377,7 +377,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				QueryManager queryManager = session.getWorkspace()
 						.getQueryManager();
 
-				String expression = "select * from [nt:base] AS folder where name(folder)= 'd' ";
+				String expression = "select * from [nt:base] AS folder where name(folder) LIKE '%%s%' ";
+				expression = String.format(expression, resourceName);
 				Query query = queryManager.createQuery(expression,
 						Query.JCR_SQL2);
 				QueryResult result = query.execute();
