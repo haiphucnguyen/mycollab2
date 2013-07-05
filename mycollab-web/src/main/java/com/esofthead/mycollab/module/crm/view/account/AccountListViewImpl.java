@@ -46,8 +46,6 @@ public class AccountListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public AccountListViewImpl() {
-		// setSpacing(true);
-
 		this.accountSearchPanel = new AccountSearchPanel();
 		this.addComponent(this.accountSearchPanel);
 

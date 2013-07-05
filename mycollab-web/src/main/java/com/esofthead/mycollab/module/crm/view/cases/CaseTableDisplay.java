@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import java.util.List;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
@@ -8,6 +10,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -20,10 +23,20 @@ import com.vaadin.ui.Table.ColumnGenerator;
 public class CaseTableDisplay extends
 		PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase> {
 
-	public CaseTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+	public CaseTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public CaseTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		this(null, requiredColumn, displayColumns);
+
+	}
+
+	public CaseTableDisplay(String viewId, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(CaseService.class), SimpleCase.class,
-				visibleColumns, columnHeaders);
+				viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -131,16 +144,6 @@ public class CaseTableDisplay extends
 				return l;
 			}
 		});
-
-		this.setColumnExpandRatio("subject", 1);
-		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		this.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("billingCountry", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("priority", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("assignUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
 
 		this.setWidth("100%");
 	}
