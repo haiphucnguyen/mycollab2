@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -8,7 +10,6 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -19,16 +20,15 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -62,37 +62,12 @@ public class ContactListViewImpl extends AbstractView implements
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.tableItem = new ContactTableDisplay(
-					new String[] { "selected", "contactName", "title",
-							"accountName", "email" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_TITLE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.tableItem = new ContactTableDisplay(
-					new String[] { "selected", "contactName", "title",
-							"accountName", "email", "officephone" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_TITLE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER) });
-		}
+		this.tableItem = new ContactTableDisplay(ContactListView.VIEW_DEF_ID,
+				ContactTableFieldDef.selected, Arrays.asList(
+						ContactTableFieldDef.name, ContactTableFieldDef.title,
+						ContactTableFieldDef.account,
+						ContactTableFieldDef.email,
+						ContactTableFieldDef.phoneOffice));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -138,7 +113,6 @@ public class ContactListViewImpl extends AbstractView implements
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 
-		System.out.println("constructTableActionControls: ");
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
@@ -160,12 +134,31 @@ public class ContactListViewImpl extends AbstractView implements
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
+		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 
-		Button importBtn = new Button("Import Contact");
-		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		importBtn.addListener(new ClickListener() {
+		HorizontalLayout buttonControls = new HorizontalLayout();
+		buttonControls.setSpacing(true);
+		layout.addComponent(buttonControls);
+
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindow()
+						.addWindow(new ContactListCustomizeWindow(tableItem));
+
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		buttonControls.addComponent(customizeViewBtn);
+
+		Button importBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -174,7 +167,10 @@ public class ContactListViewImpl extends AbstractView implements
 				getWindow().addWindow(contactImportWindow);
 			}
 		});
-		UiUtils.addComponent(layout, importBtn, Alignment.MIDDLE_RIGHT);
+		importBtn.setDescription("Import");
+		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		buttonControls.addComponent(importBtn);
 
 		return layoutWrapper;
 	}

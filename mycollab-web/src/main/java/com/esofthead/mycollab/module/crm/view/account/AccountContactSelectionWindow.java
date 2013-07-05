@@ -4,12 +4,15 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -33,19 +36,12 @@ public class AccountContactSelectionWindow extends
 
 	@Override
 	protected void initUI() {
-		this.tableItem = new ContactTableDisplay(
-				new String[] { "selected", "contactName", "title",
-						"accountName", "officephone" },
-				new String[] {
-						"",
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_TITLE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER) });
+		this.tableItem = new ContactTableDisplay(ContactTableFieldDef.selected,
+				Arrays.asList(ContactTableFieldDef.name,
+						ContactTableFieldDef.title,
+						ContactTableFieldDef.account,
+						ContactTableFieldDef.phoneOffice));
+
 		this.tableItem.addStyleName(UIConstants.LIMITED_HEIGHT_TABLE);
 
 		final Button selectBtn = new Button("Select",

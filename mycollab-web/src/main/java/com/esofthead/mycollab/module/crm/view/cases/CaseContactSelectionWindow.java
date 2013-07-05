@@ -4,15 +4,16 @@
  */
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 
 /**
@@ -31,19 +32,11 @@ public class CaseContactSelectionWindow extends
 
 	@Override
 	protected void initUI() {
-		tableItem = new ContactTableDisplay(
-				new String[] { "selected", "contactName", "email",
-						"officephone", "accountName" },
-				new String[] {
-						"",
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER) });
+		tableItem = new ContactTableDisplay(ContactTableFieldDef.selected,
+				Arrays.asList(ContactTableFieldDef.name,
+						ContactTableFieldDef.email,
+						ContactTableFieldDef.phoneOffice,
+						ContactTableFieldDef.account));
 
 		Button selectBtn = new Button("Select", new Button.ClickListener() {
 			@Override

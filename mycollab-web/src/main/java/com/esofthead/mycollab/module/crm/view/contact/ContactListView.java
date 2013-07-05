@@ -11,17 +11,19 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface ContactListView extends View {
 
-    IPagedBeanTable<ContactSearchCriteria, SimpleContact> getPagedBeanTable();
+	public static final String VIEW_DEF_ID = "crm-contact-list";
 
-    void enableActionControls(int numOfSelectedItem);
+	IPagedBeanTable<ContactSearchCriteria, SimpleContact> getPagedBeanTable();
 
-    void disableActionControls();
+	void enableActionControls(int numOfSelectedItem);
 
-    HasSelectableItemHandlers<SimpleContact> getSelectableItemHandlers();
+	void disableActionControls();
 
-    HasSearchHandlers<ContactSearchCriteria> getSearchHandlers();
+	HasSelectableItemHandlers<SimpleContact> getSelectableItemHandlers();
 
-    HasSelectionOptionHandlers getOptionSelectionHandlers();
+	HasSearchHandlers<ContactSearchCriteria> getSearchHandlers();
 
-    HasPopupActionHandlers getPopupActionHandlers();
+	HasSelectionOptionHandlers getOptionSelectionHandlers();
+
+	HasPopupActionHandlers getPopupActionHandlers();
 }
