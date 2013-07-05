@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.module.project.view.people.component.ProjectMember
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -120,8 +122,12 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 		tableItem = new PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem>(
 				AppContext.getSpringBean(MonitorItemService.class),
-				SimpleMonitorItem.class, new String[] { "user", "monitorDate",
-						"id" }, new String[] { "Name", "Monitor Date", "" });
+				SimpleMonitorItem.class, Arrays.asList(new TableViewField(
+						"Name", "user", UIConstants.TABLE_EX_LABEL_WIDTH),
+						new TableViewField("Created Date", "monitorDate",
+								UIConstants.TABLE_DATE_WIDTH),
+						new TableViewField("", "id",
+								UIConstants.TABLE_CONTROL_WIDTH)));
 
 		tableItem.addGeneratedColumn("user", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;

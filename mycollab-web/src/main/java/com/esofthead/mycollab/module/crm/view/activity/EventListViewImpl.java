@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
@@ -7,7 +9,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.TaskI18nEnum;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
@@ -54,37 +56,23 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.tableItem = new EventTableDisplay(
-					new String[] { "selected", "status", "eventType",
-							"subject", "endDate" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_TYPE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_END_DATE_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.tableItem = new EventTableDisplay(
-					new String[] { "selected", "status", "eventType",
-							"subject", "startDate", "endDate" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_TYPE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_END_DATE_HEADER) });
-		}
+		this.tableItem = new EventTableDisplay(new TableViewField("",
+				"selected", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
+				new TableViewField(LocalizationHelper
+						.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
+						"subject", UIConstants.TABLE_EX_LABEL_WIDTH),
+				new TableViewField(LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
+						"status", UIConstants.TABLE_S_LABEL_WIDTH),
+				new TableViewField(LocalizationHelper
+						.getMessage(TaskI18nEnum.TABLE_TYPE_HEADER),
+						"eventType", UIConstants.TABLE_S_LABEL_WIDTH),
+				new TableViewField(LocalizationHelper
+						.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
+						"startDate", UIConstants.TABLE_DATE_TIME_WIDTH),
+				new TableViewField(LocalizationHelper
+						.getMessage(TaskI18nEnum.TABLE_END_DATE_HEADER),
+						"endDate", UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

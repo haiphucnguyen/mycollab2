@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
@@ -13,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -27,10 +29,14 @@ public class EventTableDisplay extends
 		PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent> {
 	private static final long serialVersionUID = 1L;
 
-	public EventTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+	public EventTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public EventTableDisplay(TableViewField requireColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(EventService.class), SimpleEvent.class,
-				visibleColumns, columnHeaders);
+				requireColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -121,12 +127,5 @@ public class EventTableDisplay extends
 
 			}
 		});
-
-		this.setColumnExpandRatio("subject", 1);
-		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("eventType", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("startDate", UIConstants.TABLE_DATE_TIME_WIDTH);
-		this.setColumnWidth("endDate", UIConstants.TABLE_DATE_TIME_WIDTH);
 	}
 }

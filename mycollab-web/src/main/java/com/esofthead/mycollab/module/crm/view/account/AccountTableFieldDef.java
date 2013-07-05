@@ -29,7 +29,7 @@ public interface AccountTableFieldDef {
 	public static TableViewField email = new TableViewField(
 			LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-			"email");
+			"email", UIConstants.TABLE_EMAIL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
 			LocalizationHelper

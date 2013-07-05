@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.List;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -13,6 +15,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
@@ -27,10 +30,9 @@ public class CallTableDisplay extends
 		PagedBeanTable2<CallService, CallSearchCriteria, SimpleCall> {
 	private static final long serialVersionUID = 1L;
 
-	public CallTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+	public CallTableDisplay(List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(CallService.class), SimpleCall.class,
-				visibleColumns, columnHeaders);
+				displayColumns);
 
 		this.addGeneratedColumn("subject", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -77,8 +79,7 @@ public class CallTableDisplay extends
 								CallTableDisplay.this, call, "isClosed"));
 					}
 				});
-				b.setIcon(MyCollabResource
-				.newResource("icons/16/close.png"));
+				b.setIcon(MyCollabResource.newResource("icons/16/close.png"));
 				b.setStyleName("link");
 				b.setDescription("Close this call");
 				return b;

@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
@@ -14,6 +15,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -28,10 +30,9 @@ public class MeetingTableDisplay extends
 
 	private static final long serialVersionUID = 1L;
 
-	public MeetingTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+	public MeetingTableDisplay(List<TableViewField> displaycolumns) {
 		super(AppContext.getSpringBean(MeetingService.class),
-				SimpleMeeting.class, visibleColumns, columnHeaders);
+				SimpleMeeting.class, displaycolumns);
 
 		this.addGeneratedColumn("subject", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;

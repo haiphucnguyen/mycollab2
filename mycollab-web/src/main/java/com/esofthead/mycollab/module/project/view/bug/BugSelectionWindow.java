@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -53,39 +54,22 @@ public class BugSelectionWindow extends Window {
 		layout.addComponent(tableItem);
 		this.setContent(layout);
 	}
-	
+
 	public void show() {
 		searchCriteria = new BugSearchCriteria();
-		searchCriteria.setProjectId(new NumberSearchField(
-				SearchField.AND, CurrentProjectVariables.getProject().getId()));
+		searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+				CurrentProjectVariables.getProject().getId()));
 		tableItem.setSearchCriteria(searchCriteria);
 		center();
 	}
 
-	@SuppressWarnings("serial")
 	private void createAccountList() {
 
-		tableItem = new PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug>(
-				AppContext.getSpringBean(BugService.class),
-				SimpleBug.class,
-				new String[] { "summary", "severity", "resolution",
-						"assignuserFullName" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(BugI18nEnum.FORM_SUMMARY),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.FORM_SEVERITY),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.FORM_RESOLUTION),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.FORM_ASSIGN_USER) });
+		tableItem = new BugTableDisplay(Arrays.asList(BugTableFieldDef.summary,
+				BugTableFieldDef.severity, BugTableFieldDef.resolution,
+				BugTableFieldDef.assignUser));
 
 		tableItem.setWidth("100%");
-		tableItem.setColumnExpandRatio("summary", 1.0f);
-		tableItem.setColumnWidth("assignuserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
-		tableItem.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
 
 		tableItem.addGeneratedColumn("summary", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -99,7 +83,6 @@ public class BugSelectionWindow extends Window {
 				bugname = String.format(bugname, CurrentProjectVariables
 						.getProject().getShortname(), bug.getBugkey(), bug
 						.getSummary());
-				
 
 				ButtonLink b = new ButtonLink(bugname,
 						new Button.ClickListener() {
@@ -113,7 +96,6 @@ public class BugSelectionWindow extends Window {
 							}
 						});
 
-
 				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
@@ -121,7 +103,7 @@ public class BugSelectionWindow extends Window {
 								.getTime()))) {
 					b.addStyleName(UIConstants.LINK_OVERDUE);
 				}
-				
+
 				return b;
 
 			}

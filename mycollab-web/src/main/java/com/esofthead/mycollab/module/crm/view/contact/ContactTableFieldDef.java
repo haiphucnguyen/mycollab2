@@ -29,7 +29,7 @@ public interface ContactTableFieldDef {
 
 	public static TableViewField email = new TableViewField(
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_EMAIL), "email",
-			UIConstants.TABLE_M_LABEL_WIDTH);
+			UIConstants.TABLE_EMAIL_WIDTH);
 
 	public static TableViewField assistant = new TableViewField(
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_ASSISTANT),

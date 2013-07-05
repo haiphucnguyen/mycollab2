@@ -12,14 +12,6 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 	private final SearchService searchService;
 
-	@Deprecated
-	public PagedBeanTable2(final SearchService searchService,
-			final Class<T> type, final String[] visibleColumns,
-			final String[] columnHeaders) {
-		super(type, visibleColumns, columnHeaders);
-		this.searchService = searchService;
-	}
-
 	public PagedBeanTable2(final SearchService searchService,
 			final Class<T> type, List<TableViewField> displayColumns) {
 		super(type, displayColumns);

@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.user.domain.Role;
@@ -22,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -56,9 +59,12 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new RoleTableDisplay(new String[] { "selected",
-				"rolename", "description" }, new String[] { "", "Name",
-				"Description" });
+		this.tableItem = new RoleTableDisplay(Arrays.asList(new TableViewField(
+				"", "selected", UIConstants.TABLE_CONTROL_WIDTH),
+				new TableViewField("Name", "rolename",
+						UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
+						"Description", "description",
+						UIConstants.TABLE_EX_LABEL_WIDTH)));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
