@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -13,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -28,11 +30,20 @@ public class CampaignTableDisplay
 		extends
 		PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
 
-	public CampaignTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
-		super(AppContext.getSpringBean(CampaignService.class),
-				SimpleCampaign.class, visibleColumns, columnHeaders);
+	public CampaignTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
 
+	public CampaignTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		this(null, requiredColumn, displayColumns);
+
+	}
+
+	public CampaignTableDisplay(String viewId, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		super(AppContext.getSpringBean(CampaignService.class),
+				SimpleCampaign.class, viewId, requiredColumn, displayColumns);
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
@@ -144,15 +155,5 @@ public class CampaignTableDisplay
 		});
 
 		this.setWidth("100%");
-
-		this.setColumnExpandRatio("campaignname", 1.0f);
-		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);
-		this.setColumnWidth("expectedrevenue", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
-		this.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
-		this.setColumnWidth("assignUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
 	}
 }

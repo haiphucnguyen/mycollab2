@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.rest.server.resource.impl;
 
+import java.util.List;
+
 import org.restlet.Server;
 import org.restlet.data.Form;
 import org.restlet.data.Protocol;
@@ -10,15 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.rest.server.resource.SignupResource;
+import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 @Component("restUserResource")
-public class SignupResourceImpl extends ServerResource implements
-		SignupResource {
+public class UserHubResourceImpl extends ServerResource implements
+		UserHubResource {
 	private static Logger log = LoggerFactory
-			.getLogger(SignupResourceImpl.class);
+			.getLogger(UserHubResourceImpl.class);
 
 	@Autowired
 	private BillingService billingService;
@@ -32,15 +33,20 @@ public class SignupResourceImpl extends ServerResource implements
 		String email = form.getFirstValue("email");
 		String timezoneId = form.getFirstValue("timezone");
 		int planId = Integer.parseInt(form.getFirstValue("planId"));
-		// billingService.registerAccount(subdomain, planId, username, password,
-		// email, timezoneId);
-		throw new MyCollabException("aaa");
+		billingService.registerAccount(subdomain, planId, username, password,
+				email, timezoneId);
+		return "ok";
 	}
 
 	public static void main(String[] args) throws Exception {
 		// Create the HTTP server and listen on port 8182
 		Server server = new Server(Protocol.HTTP, 8182,
-				SignupResourceImpl.class);
+				UserHubResourceImpl.class);
 		server.start();
+	}
+
+	@Override
+	public List<String> getSubdomainsOfUser(String username) {
+		return billingService.getSubdomainsOfUser(username);
 	}
 }

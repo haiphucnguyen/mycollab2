@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -32,25 +34,9 @@ public class LeadListDashlet extends Depot {
 	public LeadListDashlet() {
 		super("My Leads", new VerticalLayout());
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new LeadTableDisplay(
-					new String[] { "leadName", "email" },
-					new String[] {
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new LeadTableDisplay(
-					new String[] { "leadName", "officephone", "email" },
-					new String[] {
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
-		}
+		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
+				LeadTableFieldDef.email, LeadTableFieldDef.phoneoffice));
+
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override

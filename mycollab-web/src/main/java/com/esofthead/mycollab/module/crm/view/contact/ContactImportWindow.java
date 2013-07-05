@@ -2,17 +2,27 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -28,6 +38,8 @@ import com.vaadin.ui.Window;
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
+import ezvcard.parameters.AddressTypeParameter;
+import ezvcard.parameters.TelephoneTypeParameter;
 import ezvcard.types.AddressType;
 import ezvcard.types.EmailType;
 import ezvcard.types.TelephoneType;
@@ -36,9 +48,9 @@ public class ContactImportWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	public static final String[] fileType = { "CSV", "Vcard" };
 
-	private SingleFileUploadField uploadFile;
+	private SingleFileUploadField uploadField;
 
-	private List<SimpleContact> lstContact;
+	private ComboBox fileformat;
 
 	public ContactImportWindow() {
 		super("Import Contact");
@@ -75,21 +87,74 @@ public class ContactImportWindow extends Window {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				final InputStream contentStream = uploadFile
+				final InputStream contentStream = uploadField
 						.getContentAsStream();
 				if (contentStream != null) {
-					try {
-						List<VCard> lstVcard = Ezvcard.parse(contentStream)
-								.all();
-						lstContact = new ArrayList<SimpleContact>();
-						for (VCard vcard : lstVcard) {
-							SimpleContact add = convertVcardToContact(vcard);
-							lstContact.add(add);
-						}
-						// Here we go lstContact here ----------
-						System.out.print("");
-					} catch (IOException e) {
-						throw new MyCollabException(e);
+					String filename = uploadField.getFileName();
+					String fileuploadType = filename.substring(
+							filename.indexOf(".") + 1, filename.length());
+					if (fileuploadType.equals("vcf")) {
+						ConfirmDialog
+								.show(ContactImportWindow.this.getParent()
+										.getWindow(),
+										"Message information",
+										"You choose a vcf file. This step will import to database. Do you want to do it?",
+										"Import", "Cancel",
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
+
+											@Override
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													try {
+														ContactService contactService = AppContext
+																.getSpringBean(ContactService.class);
+														List<VCard> lstVcard = Ezvcard
+																.parse(contentStream)
+																.all();
+														for (VCard vcard : lstVcard) {
+															SimpleContact add = convertVcardToContact(vcard);
+															add.setCreatedtime(new Date());
+															add.setSaccountid(AppContext
+																	.getAccountId());
+															contactService
+																	.saveWithSession(
+																			add,
+																			AppContext
+																					.getUsername());
+														}
+														ContactImportWindow.this
+																.getParent()
+																.showNotification(
+																		"Import successfully.");
+														ContactImportWindow.this
+																.close();
+														ContactSearchCriteria contactSearchCriteria = new ContactSearchCriteria();
+														contactSearchCriteria
+																.setSaccountid(new NumberSearchField(
+																		AppContext
+																				.getAccountId()));
+														contactSearchCriteria
+																.setContactName(new StringSearchField(
+																		""));
+														EventBus.getInstance()
+																.fireEvent(
+																		new ContactEvent.GotoList(
+																				ContactListView.class,
+																				new ContactSearchCriteria()));
+													} catch (IOException e) {
+														throw new MyCollabException(
+																e);
+													}
+												}
+											}
+										});
+					} else if (fileuploadType.equals("xls")) {
+
+					} else {
+						getWindow().showNotification(
+								"Please choose supported files.");
 					}
 				} else {
 					AppContext
@@ -126,30 +191,41 @@ public class ContactImportWindow extends Window {
 
 			// NAME
 			if (vcard.getStructuredName() != null) {
-				contact.setFirstname(vcard.getStructuredName().getFamily());
-				contact.setLastname(vcard.getStructuredName().getGiven());
+				if (vcard.getStructuredName().getFamily() != null)
+					contact.setFirstname(vcard.getStructuredName().getFamily());
+				else
+					contact.setFirstname("");
+				if (vcard.getStructuredName().getGiven() != null)
+					contact.setLastname(vcard.getStructuredName().getGiven());
+				else
+					contact.setLastname("");
+				String contactName = "";
+				if (contact.getFirstname() != null)
+					contactName += contact.getFirstname();
+				if (contact.getLastname() != null)
+					contactName += contact.getLastname();
+				contact.setContactName(contactName);
 			}
 			// ADDRESS
 			if (vcard.getAddresses() != null) {
 				List<AddressType> lstAddress = vcard.getAddresses();
 				for (AddressType address : lstAddress) {
-					String temp = "";
-					if (address != null
-							&& address.getTypes().toString() != null
-							&& address.getTypes().toString().length() > 6)
-						temp = address.getTypes().toString().substring(6);
-					String addressType = (temp.length() > 0) ? temp.substring(
-							0, temp.length() - 1) : "";
-					if (addressType.equals("home")) {
-						contact.setPrimaddress(address.getStreetAddress());
-						contact.setPrimcountry(address.getCountry());
-						contact.setPrimpostalcode(address.getPostalCode());
-						contact.setPrimstate(address.getLocality());
-					} else {
-						contact.setOtheraddress(address.getStreetAddress());
-						contact.setOthercountry(address.getCountry());
-						contact.setOtherpostalcode(address.getPostalCode());
-						contact.setOtherstate(address.getLocality());
+					Set<AddressTypeParameter> setPhoneType = address.getTypes();
+					for (Object object : setPhoneType.toArray()) {
+						int index = object.toString().indexOf("=");
+						String addressType = object.toString().substring(
+								index + 1, object.toString().length());
+						if (addressType.equals("home")) {
+							contact.setPrimaddress(address.getStreetAddress());
+							contact.setPrimcountry(address.getCountry());
+							contact.setPrimpostalcode(address.getPostalCode());
+							contact.setPrimstate(address.getLocality());
+						} else {
+							contact.setOtheraddress(address.getStreetAddress());
+							contact.setOthercountry(address.getCountry());
+							contact.setOtherpostalcode(address.getPostalCode());
+							contact.setOtherstate(address.getLocality());
+						}
 					}
 				}
 			}
@@ -176,22 +252,27 @@ public class ContactImportWindow extends Window {
 			// PHone
 			if (vcard.getTelephoneNumbers() != null) {
 				for (TelephoneType phone : vcard.getTelephoneNumbers()) {
-					String temp = "";
-					if (phone != null && phone.getTypes().toString() != null
-							&& phone.getTypes().toString().length() > 6)
-						temp = phone.getTypes().toString().substring(6);
-					String phoneType = (temp.length() > 0) ? temp.substring(0,
-							temp.length() - 1) : "";
-					if (phoneType.equals("home")) { // HOME
-						contact.setHomephone(phone.getText());
-					} else if (phoneType.equals("work")) { // Office
-						contact.setOfficephone(phone.getText());
-					} else if (phoneType.equals("cell")) { // Mobie
-						contact.setMobile(phone.getText());
-					} else if (phoneType.equals("pager")) { // OtherPhone
-						contact.setOtherphone(phone.getText());
-					} else if (phoneType.equals("fax")) { // FAX
-						contact.setFax(phone.getText());
+					Set<TelephoneTypeParameter> setPhoneType = phone.getTypes();
+					for (Object object : setPhoneType.toArray()) {
+						int index = object.toString().indexOf("=");
+						String phoneType = object.toString().substring(
+								index + 1, object.toString().length());
+						if (phoneType.equals("home")) { // HOME
+							contact.setHomephone((phone.getText() != null) ? phone
+									.getText() : phone.getUri().getNumber());
+						} else if (phoneType.equals("work")) { // Office
+							contact.setOfficephone((phone.getText() != null) ? phone
+									.getText() : phone.getUri().getNumber());
+						} else if (phoneType.equals("cell")) { // Mobie
+							contact.setMobile((phone.getText() != null) ? phone
+									.getText() : phone.getUri().getNumber());
+						} else if (phoneType.equals("pager")) { // OtherPhone
+							contact.setOtherphone((phone.getText() != null) ? phone
+									.getText() : phone.getUri().getNumber());
+						} else if (phoneType.equals("fax")) { // FAX
+							contact.setFax((phone.getText() != null) ? phone
+									.getText() : phone.getUri().getNumber());
+						}
 					}
 				}
 			}
@@ -276,6 +357,7 @@ public class ContactImportWindow extends Window {
 		return bodyStep3Wapper;
 	}
 
+	@SuppressWarnings("unchecked")
 	private CssLayout constructBodyStep2() {
 		final CssLayout bodyStep2Wapper = new CssLayout();
 		bodyStep2Wapper.addStyleName(UIConstants.BORDER_BOX_2);
@@ -299,20 +381,31 @@ public class ContactImportWindow extends Window {
 
 		gridLayout.addComponent(new Label(), "Specify Format", 0, 0);
 
-		ComboBox fileformat = new ComboBox();
-		fileformat.addItem("CSV");
-		fileformat.addItem("VCF");
-		fileformat.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_ITEM);
+		@SuppressWarnings("rawtypes")
+		BeanItemContainer<String> fileformatType = new BeanItemContainer(
+				String.class, Arrays.asList(fileType));
+
+		fileformat = new ComboBox();
+		fileformat.setContainerDataSource(fileformatType);
+		fileformat
+				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		fileformat.setValue("Vcard");
 		gridLayout.addComponent(fileformat, "File Type", 0, 1);
 
 		ComboBox encodingCombobox = new ComboBox();
-		encodingCombobox.setItemCaptionMode(1);
+		encodingCombobox
+				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 		encodingCombobox.addItem("UTF-8");
+		encodingCombobox.setValue("UTF-8");
 		gridLayout.addComponent(encodingCombobox, "Character Encoding", 0, 2);
 
 		ComboBox delimiterComboBox = new ComboBox();
-		delimiterComboBox.setItemCaptionMode(2);
+		delimiterComboBox
+				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 		delimiterComboBox.addItem(",(comma)");
+		delimiterComboBox.addItem("#,(sharp)");
+
+		delimiterComboBox.setValue(",(comma)");
 		gridLayout.addComponent(delimiterComboBox, "Delimiter", 0, 3);
 
 		CheckBox checkbox = new CheckBox();
@@ -349,8 +442,8 @@ public class ContactImportWindow extends Window {
 
 		informationStep1.addComponent(new Label("Select File"));
 
-		uploadFile = new SingleFileUploadField();
-		informationStep1.addComponent(uploadFile);
+		uploadField = new SingleFileUploadField();
+		informationStep1.addComponent(uploadField);
 
 		informationStep1.addComponent(new Label(
 				"Supported Files Type : VCF, CSV"));

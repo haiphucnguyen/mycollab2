@@ -4,15 +4,16 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
+import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 
 /**
@@ -31,19 +32,9 @@ public class AccountLeadSelectionWindow extends
 
 	@Override
 	protected void initUI() {
-		tableItem = new LeadTableDisplay(
-				new String[] { "selected", "title", "leadName", "email",
-						"officephone" },
-				new String[] {
-						"",
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_TITLE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER) });
+		tableItem = new LeadTableDisplay(LeadTableFieldDef.selected,
+				Arrays.asList(LeadTableFieldDef.title, LeadTableFieldDef.name,
+						LeadTableFieldDef.email, LeadTableFieldDef.phoneoffice));
 
 		Button selectBtn = new Button("Select", new Button.ClickListener() {
 

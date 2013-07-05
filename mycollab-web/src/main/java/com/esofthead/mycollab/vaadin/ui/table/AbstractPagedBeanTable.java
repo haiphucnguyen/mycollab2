@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.context.annotation.DependsOn;
-
+import com.esofthead.mycollab.common.domain.CustomViewStore;
+import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -19,7 +19,10 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -89,8 +92,29 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	public AbstractPagedBeanTable(Class<T> type, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
+		this(type, null, requiredColumn, displayColumns);
+	}
+
+	public AbstractPagedBeanTable(Class<T> type, String viewId,
+			TableViewField requiredColumn, List<TableViewField> displayColumns) {
+		if (viewId != null) {
+			CustomViewStoreService customViewStoreService = AppContext
+					.getSpringBean(CustomViewStoreService.class);
+			CustomViewStore viewLayoutDef = customViewStoreService
+					.getViewLayoutDef(AppContext.getAccountId(),
+							AppContext.getUsername(), viewId);
+			if (viewLayoutDef != null) {
+				XStream xstream = new XStream(new StaxDriver());
+				List<TableViewField> selectedColumns = (List<TableViewField>) xstream
+						.fromXML(viewLayoutDef.getViewinfo());
+				this.displayColumns = selectedColumns;
+			} else {
+				this.displayColumns = displayColumns;
+			}
+		} else {
+			this.displayColumns = displayColumns;
+		}
 		this.requiredColumn = requiredColumn;
-		this.displayColumns = displayColumns;
 		this.type = type;
 
 		this.setStyleName("list-view");
@@ -520,6 +544,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			this.addComponent(tableLazyLoadContainer, 0);
 		}
 
+	}
+
+	public Object[] getVisibleColumns() {
+		return tableItem.getVisibleColumns();
 	}
 
 }

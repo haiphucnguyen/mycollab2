@@ -1,11 +1,14 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.view.account.AccountListCustomizeWindow;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -30,6 +33,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class LeadListViewImpl extends AbstractView implements LeadListView {
@@ -56,42 +60,12 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.tableItem = new LeadTableDisplay(
-					new String[] { "selected", "leadName", "status",
-							"accountname", "email", "assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.tableItem = new LeadTableDisplay(
-					new String[] { "selected", "leadName", "status",
-							"accountname", "officephone", "email",
-							"assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
-		}
+		this.tableItem = new LeadTableDisplay(LeadListView.VIEW_DEF_ID,
+				LeadTableFieldDef.selected, Arrays.asList(
+						LeadTableFieldDef.name, LeadTableFieldDef.status,
+						LeadTableFieldDef.accountName,
+						LeadTableFieldDef.phoneoffice, LeadTableFieldDef.email,
+						LeadTableFieldDef.assignedUser));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -128,6 +102,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		layoutWrapper.setWidth("100%");
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 		layoutWrapper.addComponent(layout);
 
@@ -152,6 +127,23 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
+
+		Button customizeViewBtn = new Button("Customize View",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getWindow().addWindow(
+								new LeadListCustomizeWindow(tableItem));
+
+					}
+				});
+
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(customizeViewBtn);
+		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+
 		return layoutWrapper;
 	}
 

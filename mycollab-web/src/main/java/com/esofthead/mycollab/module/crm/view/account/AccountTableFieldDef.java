@@ -6,7 +6,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.LocalizationHelper;
 
-public class AccountTableFieldDef {
+public interface AccountTableFieldDef {
 
 	public static TableViewField selected = new TableViewField("", "selected",
 			UIConstants.TABLE_CONTROL_WIDTH);
@@ -44,5 +44,13 @@ public class AccountTableFieldDef {
 	public static TableViewField type = new TableViewField(
 			LocalizationHelper.getMessage(AccountI18nEnum.FORM_TYPE), "type",
 			UIConstants.TABLE_X_LABEL_WIDTH);
+
+	public static TableViewField ownership = new TableViewField(
+			LocalizationHelper.getMessage(AccountI18nEnum.FORM_OWNERSHIP),
+			"ownership", UIConstants.TABLE_X_LABEL_WIDTH);
+
+	public static TableViewField fax = new TableViewField(
+			LocalizationHelper.getMessage(AccountI18nEnum.FORM_FAX), "fax",
+			UIConstants.TABLE_M_LABEL_WIDTH);
 
 }

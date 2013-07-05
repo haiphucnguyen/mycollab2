@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.module.billing.ExistingDomainRegisterException;
 import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
-import com.esofthead.mycollab.rest.server.resource.SignupResource;
+import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
@@ -18,7 +18,7 @@ import com.esofthead.mycollab.test.ServiceTest;
 public class SignupTest extends ServiceTest {
 
 	@Autowired
-	private SignupResource restUserResource;
+	private UserHubResource restUserResource;
 
 	@org.junit.Test(expected = ExistingUserRegisterException.class)
 	@DataSet

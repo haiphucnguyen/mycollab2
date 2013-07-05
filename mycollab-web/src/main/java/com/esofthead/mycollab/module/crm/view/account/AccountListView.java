@@ -10,18 +10,19 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface AccountListView extends View {
+	public static final String VIEW_DEF_ID = "crm-account-list";
 
-    void enableActionControls(int numOfSelectedItem);
+	void enableActionControls(int numOfSelectedItem);
 
-    void disableActionControls();
+	void disableActionControls();
 
-    HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
+	HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
 
-    HasSelectionOptionHandlers getOptionSelectionHandlers();
+	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
-    HasPopupActionHandlers getPopupActionHandlers();
+	HasPopupActionHandlers getPopupActionHandlers();
 
-    HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers();
+	HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers();
 
-    IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable();
+	IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable();
 }

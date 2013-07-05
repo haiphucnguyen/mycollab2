@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableDisplay;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -99,28 +101,17 @@ public class LeadCampaignListComp extends
 						controlsBtn.setPopupVisible(false);
 					}
 				});
-		selectBtn.setIcon(MyCollabResource
-				.newResource("icons/16/select.png"));
+		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
 		addHeaderElement(controlsBtn);
 
-		tableItem = new CampaignTableDisplay(
-				new String[] { "campaignname", "status", "type", "enddate",
-						"id" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_TYPE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_END_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACTION_HEADER) });
+		tableItem = new CampaignTableDisplay(Arrays.asList(
+				CampaignTableFieldDef.campaignname,
+				CampaignTableFieldDef.status, CampaignTableFieldDef.type,
+				CampaignTableFieldDef.endDate, CampaignTableFieldDef.action));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -159,7 +150,7 @@ public class LeadCampaignListComp extends
 				});
 				editBtn.setStyleName("link");
 				editBtn.setIcon(MyCollabResource
-				.newResource("icons/16/edit.png"));
+						.newResource("icons/16/edit.png"));
 				controlLayout.addComponent(editBtn);
 
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
@@ -202,7 +193,7 @@ public class LeadCampaignListComp extends
 				});
 				deleteBtn.setStyleName("link");
 				deleteBtn.setIcon(MyCollabResource
-				.newResource("icons/16/delete.png"));
+						.newResource("icons/16/delete.png"));
 				controlLayout.addComponent(deleteBtn);
 				return controlLayout;
 			}

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -60,18 +62,10 @@ public class LeadSelectionWindow extends Window {
 
 	@SuppressWarnings("serial")
 	private void createLeadList() {
-		tableItem = new LeadTableDisplay(
-				new String[] { "leadName", "status", "assignUserFullName",
-						"accountname" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
+		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
+				LeadTableFieldDef.status, LeadTableFieldDef.assignedUser,
+				LeadTableFieldDef.accountName));
+
 		tableItem.setWidth("100%");
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -19,10 +20,10 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.localization.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -110,22 +111,13 @@ public class ContactOpportunityListComp extends
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 		addHeaderElement(controlsBtn);
 
-		tableItem = new OpportunityTableDisplay(
-				new String[] { "opportunityname", "salesstage", "amount",
-						"expectedcloseddate", "assignUserFullName", "id" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(OpportunityI18nEnum.TABLE_SALE_STAGE_HEADER),
-						LocalizationHelper
-								.getMessage(OpportunityI18nEnum.TABLE_AMOUNT_HEADER),
-						LocalizationHelper
-								.getMessage(OpportunityI18nEnum.TABLE_CLOSE_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACTION_HEADER) });
+		tableItem = new OpportunityTableDisplay(Arrays.asList(
+				OpportunityTableFieldDef.opportunityName,
+				OpportunityTableFieldDef.saleStage,
+				OpportunityTableFieldDef.amount,
+				OpportunityTableFieldDef.expectedCloseDate,
+				OpportunityTableFieldDef.assignUser,
+				OpportunityTableFieldDef.action));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

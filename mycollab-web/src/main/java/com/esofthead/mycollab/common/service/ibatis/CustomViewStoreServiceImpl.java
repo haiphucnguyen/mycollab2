@@ -25,11 +25,12 @@ public class CustomViewStoreServiceImpl extends
 	}
 
 	@Override
-	public CustomViewStore getViewLayoutDef(String username, String viewId) {
+	public CustomViewStore getViewLayoutDef(int accountId, String username,
+			String viewId) {
 		CustomViewStoreExample ex = new CustomViewStoreExample();
 		ex.createCriteria().andCreateduserEqualTo(username)
-				.andViewidEqualTo(viewId);
-		List<CustomViewStore> views = customViewStoreMapper.selectByExample(ex);
+				.andViewidEqualTo(viewId).andSaccountidEqualTo(accountId);
+		List<CustomViewStore> views = customViewStoreMapper.selectByExampleWithBLOBs(ex);
 		if (views != null && views.size() > 0) {
 			return views.get(0);
 		}
@@ -39,7 +40,8 @@ public class CustomViewStoreServiceImpl extends
 	@Override
 	public void saveOrUpdateViewLayoutDef(CustomViewStore viewStore) {
 		CustomViewStore viewLayoutDef = getViewLayoutDef(
-				viewStore.getCreateduser(), viewStore.getViewid());
+				viewStore.getSaccountid(), viewStore.getCreateduser(),
+				viewStore.getViewid());
 		if (viewLayoutDef != null) {
 			viewStore.setId(viewLayoutDef.getId());
 			updateWithSession(viewStore, viewStore.getCreateduser());

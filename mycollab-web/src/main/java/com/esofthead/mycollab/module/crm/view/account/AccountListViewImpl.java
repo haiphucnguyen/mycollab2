@@ -125,8 +125,9 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new AccountTableDisplay(AccountTableFieldDef.selected,
-				Arrays.asList(AccountTableFieldDef.accountname,
+		this.tableItem = new AccountTableDisplay(AccountListView.VIEW_DEF_ID,
+				AccountTableFieldDef.selected, Arrays.asList(
+						AccountTableFieldDef.accountname,
 						AccountTableFieldDef.city,
 						AccountTableFieldDef.phoneoffice,
 						AccountTableFieldDef.email,

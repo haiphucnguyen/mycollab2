@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -59,20 +61,11 @@ public class CampaignSelectionWindow extends Window {
 
 	@SuppressWarnings("serial")
 	private void createCampaignList() {
-		tableItem = new CampaignTableDisplay(
-				new String[] { "campaignname", "type", "status", "enddate",
-						"assignUserFullName" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_TYPE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_END_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
+		tableItem = new CampaignTableDisplay(Arrays.asList(
+				CampaignTableFieldDef.campaignname, CampaignTableFieldDef.type,
+				CampaignTableFieldDef.status, CampaignTableFieldDef.endDate,
+				CampaignTableFieldDef.assignUser));
+
 		tableItem.setWidth("100%");
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

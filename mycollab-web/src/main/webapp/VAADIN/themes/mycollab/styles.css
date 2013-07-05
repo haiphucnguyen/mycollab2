@@ -3926,6 +3926,18 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	overflow-x: hidden;
 }
 
+/* ListBuilder buttons */
+.v-listbuilder-buttons .v-button, .v-listbuilder-buttons .v-button.v-disabled, .v-listbuilder-buttons .v-button:active {
+	background: none;
+	border: none;
+}
+.v-listbuilder .v-listbuilder-buttons > .v-button > .v-button-wrap, .v-listbuilder .v-listbuilder-buttons > .v-disabled.v-button > .v-button-wrap {
+	padding: 0px 4px 0px 4px;
+	border: none;
+	background: none;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 /* H3 Label */
 .v-label-h3 {
 	font-size: 13px;
