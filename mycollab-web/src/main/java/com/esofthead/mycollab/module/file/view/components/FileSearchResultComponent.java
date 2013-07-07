@@ -13,8 +13,6 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
-import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -107,7 +105,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 		this.searchHeader.setValue(String.format(header, name));
 
 		final List<Resource> resourceList = this.resourceService
-				.searchResourcesByName(name);
+				.searchResourcesByName(basePath, name);
 
 		this.resourceTable.refreshRowCache();
 

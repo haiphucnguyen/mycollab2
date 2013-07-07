@@ -367,7 +367,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 	}
 
 	@Override
-	public List<Resource> searchResourcesByName(final String resourceName) {
+	public List<Resource> searchResourcesByName(final String baseFolderPath,
+			final String resourceName) {
 		return jcrTemplate.execute(new JcrCallback<List<Resource>>() {
 
 			@Override
@@ -377,18 +378,22 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				QueryManager queryManager = session.getWorkspace()
 						.getQueryManager();
 
-				String expression = "select * from [nt:base] AS folder where name(folder) LIKE '%%s%' ";
-				expression = String.format(expression, resourceName);
+				String expression = "select * from [nt:base] AS folder where ISDESCENDANTNODE(folder, [/"
+						+ baseFolderPath
+						+ "]) AND LOCALNAME(folder) LIKE '%"
+						+ resourceName + "%' ";
+				// expression = String.format(expression, resourceName);
 				Query query = queryManager.createQuery(expression,
 						Query.JCR_SQL2);
+				System.out.println(query.getStatement());
 				QueryResult result = query.execute();
 				NodeIterator nodes = result.getNodes();
 				List<Resource> resources = new ArrayList<Resource>();
 				while (nodes.hasNext()) {
 					Node node = nodes.nextNode();
 					if (isNodeFolder(node)) {
-						// Folder folder = convertNodeToFolder(node);
-						// resources.add(folder);
+//						Folder folder = convertNodeToFolder(node);
+//						resources.add(folder);
 					} else if (isNodeMyCollabContent(node)) {
 						Content content = convertNodeToContent(node);
 						resources.add(content);

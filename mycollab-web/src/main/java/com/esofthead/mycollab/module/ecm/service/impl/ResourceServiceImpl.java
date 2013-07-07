@@ -73,7 +73,9 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public List<Resource> searchResourcesByName(String resourceName) {
-		return contentJcrDao.searchResourcesByName(resourceName);
+	public List<Resource> searchResourcesByName(String baseFolderPath,
+			String resourceName) {
+		return contentJcrDao
+				.searchResourcesByName(baseFolderPath, resourceName);
 	}
 }

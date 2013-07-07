@@ -115,7 +115,7 @@ public class FileSearchResultViewImpl extends AbstractView implements
 		this.searchHeader.setValue(String.format(header, name));
 
 		final List<Resource> resourceList = this.resourceService
-				.searchResourcesByName(name);
+				.searchResourcesByName(basePath, name);
 
 		this.resourceTable.refreshRowCache();
 
@@ -178,7 +178,8 @@ public class FileSearchResultViewImpl extends AbstractView implements
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_blank");
+												.open(downloadResource,
+														"_blank");
 									} else {
 										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
 												.getStreamFolderResource(((Folder) resource)
@@ -186,7 +187,8 @@ public class FileSearchResultViewImpl extends AbstractView implements
 										AppContext
 												.getApplication()
 												.getMainWindow()
-												.open(downloadResource, "_blank");
+												.open(downloadResource,
+														"_blank");
 									}
 
 								}
