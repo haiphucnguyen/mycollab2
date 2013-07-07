@@ -10,6 +10,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -143,6 +144,27 @@ public class OpportunityTableDisplay
 								EventBus.getInstance().fireEvent(
 										new AccountEvent.GotoRead(this,
 												opportunity.getAccountid()));
+							}
+						});
+				return b;
+			}
+		});
+
+		this.addGeneratedColumn("campaignName", new Table.ColumnGenerator() {
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final SimpleOpportunity opportunity = OpportunityTableDisplay.this
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(opportunity.getCampaignName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new CampaignEvent.GotoRead(this,
+												opportunity.getCampaignid()));
 							}
 						});
 				return b;

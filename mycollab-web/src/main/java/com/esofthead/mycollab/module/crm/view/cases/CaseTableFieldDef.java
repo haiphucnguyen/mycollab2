@@ -36,19 +36,19 @@ public interface CaseTableFieldDef {
 			UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField reason = new TableViewField(
-			LocalizationHelper.getMessage(CaseI18nEnum.FORM_TYPE), "reason",
+			LocalizationHelper.getMessage(CaseI18nEnum.FORM_REASON), "reason",
 			UIConstants.TABLE_EX_LABEL_WIDTH);
 
 	public static TableViewField subject = new TableViewField(
-			LocalizationHelper.getMessage(CaseI18nEnum.FORM_TYPE), "subject",
-			UIConstants.TABLE_EX_LABEL_WIDTH);
+			LocalizationHelper.getMessage(CaseI18nEnum.FORM_SUBJECT),
+			"subject", UIConstants.TABLE_EX_LABEL_WIDTH);
 
 	public static TableViewField email = new TableViewField(
-			LocalizationHelper.getMessage(CaseI18nEnum.FORM_TYPE), "email",
+			LocalizationHelper.getMessage(CaseI18nEnum.FORM_EMAIL), "email",
 			UIConstants.TABLE_EMAIL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			LocalizationHelper.getMessage(CaseI18nEnum.FORM_TYPE),
+			LocalizationHelper.getMessage(CaseI18nEnum.FORM_ASSIGN_USER),
 			"assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField createdTime = new TableViewField(

@@ -152,6 +152,23 @@ public class ProblemListViewImpl extends AbstractView implements
 					}
 				});
 
+		this.tableItem.addGeneratedColumn("raisedByUserFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(
+							final Table source, final Object itemId,
+							final Object columnId) {
+						final SimpleProblem problem = ProblemListViewImpl.this.tableItem
+								.getBeanByIndex(itemId);
+						return new ProjectUserLink(problem.getAssigntouser(),
+								problem.getRaisedByUserAvatarId(), problem
+										.getRaisedByUserFullName(), true, true);
+
+					}
+				});
+
 		this.tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 

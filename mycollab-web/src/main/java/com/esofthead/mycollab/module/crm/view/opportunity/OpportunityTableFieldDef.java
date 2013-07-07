@@ -21,7 +21,7 @@ public interface OpportunityTableFieldDef {
 
 	public static TableViewField amount = new TableViewField(
 			LocalizationHelper.getMessage(OpportunityI18nEnum.FORM_AMOUNT),
-			"amount", UIConstants.TABLE_X_LABEL_WIDTH);
+			"amount", UIConstants.TABLE_S_LABEL_WIDTH);
 
 	public static TableViewField probability = new TableViewField(
 			LocalizationHelper.getMessage(OpportunityI18nEnum.FORM_PROBABILITY),
@@ -34,7 +34,7 @@ public interface OpportunityTableFieldDef {
 
 	public static TableViewField expectedCloseDate = new TableViewField(
 			LocalizationHelper.getMessage(OpportunityI18nEnum.FORM_CLOSE_DATE),
-			"expectedcloseddate", UIConstants.TABLE_X_LABEL_WIDTH);
+			"expectedcloseddate", UIConstants.TABLE_DATE_TIME_WIDTH);
 
 	public static TableViewField type = new TableViewField(
 			LocalizationHelper.getMessage(OpportunityI18nEnum.FORM_TYPE),
@@ -52,7 +52,7 @@ public interface OpportunityTableFieldDef {
 	public static TableViewField assignUser = new TableViewField(
 			LocalizationHelper.getMessage(OpportunityI18nEnum.FORM_ASSIGN_USER),
 			"assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
-	
+
 	public static TableViewField saleStage = new TableViewField(
 			LocalizationHelper.getMessage(OpportunityI18nEnum.FORM_SALE_STAGE),
 			"salesstage", UIConstants.TABLE_X_LABEL_WIDTH);

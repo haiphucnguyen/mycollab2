@@ -22,11 +22,11 @@ public interface ProblemTableFieldDef {
 
 	public static TableViewField raisedby = new TableViewField(
 			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_RAISED_BY),
-			"raisedbyuser", UIConstants.TABLE_X_LABEL_WIDTH);
+			"raisedByUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
 			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_ASSIGN_USER),
-			"assigntouser", UIConstants.TABLE_X_LABEL_WIDTH);
+			"assignedUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField datedue = new TableViewField(
 			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_DATE_DUE),

@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UrlLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -19,6 +20,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 
@@ -127,6 +129,23 @@ public class LeadTableDisplay extends
 				l.setResource(new ExternalResource("mailto:" + lead.getEmail()));
 				l.setCaption(lead.getEmail());
 				return l;
+
+			}
+		});
+
+		this.addGeneratedColumn("website", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleLead lead = LeadTableDisplay.this
+						.getBeanByIndex(itemId);
+				if (lead.getWebsite() != null) {
+					return new UrlLink(lead.getWebsite());
+				} else {
+					return new Label("");
+				}
 
 			}
 		});
