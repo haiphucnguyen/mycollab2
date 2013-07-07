@@ -3,8 +3,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -45,9 +43,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class BugRelatedField extends CustomField {
-
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(BugRelatedField.class);
 	private TextField itemField;
 	private Embedded browseBtn;
 	private Embedded clearBtn;
@@ -235,7 +231,7 @@ public class BugRelatedField extends CustomField {
 				SimpleRelatedBug.class, Arrays.asList(
 						new TableViewField("Bug Name", "bugName",
 								UIConstants.TABLE_EX_LABEL_WIDTH),
-						new TableViewField("Related Type", "relatedtype",
+						new TableViewField("Related Type", "relatetype",
 								UIConstants.TABLE_S_LABEL_WIDTH),
 						new TableViewField("Comment", "comment",
 								UIConstants.TABLE_EX_LABEL_WIDTH),

@@ -115,10 +115,11 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.addComponent(headerWrapper);
 
 		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
-				new TableViewField("User", "logUserFullName",
+				new TableViewField("Summary", "summary",
 						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"Summary", "summary", UIConstants.TABLE_X_LABEL_WIDTH),
-				new TableViewField("Created Time", "createdtime",
+						"User", "logUserFullName",
+						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+						"Created Time", "createdtime",
 						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
 						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH)));
 
