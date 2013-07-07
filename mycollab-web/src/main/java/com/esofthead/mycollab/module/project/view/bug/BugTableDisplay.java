@@ -280,6 +280,20 @@ public class BugTableDisplay extends
 					}
 				});
 
+		this.addGeneratedColumn("loguserFullName", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleBug bug = BugTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new ProjectUserLink(bug.getLogby(), bug
+						.getLoguserAvatarId(), bug.getLoguserFullName(), true,
+						true);
+			}
+		});
+
 		this.addGeneratedColumn("summary", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 

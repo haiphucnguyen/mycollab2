@@ -132,7 +132,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 			}
 		});
 
-		this.tableItem.addGeneratedColumn("assigntouser",
+		this.tableItem.addGeneratedColumn("assignedToUserFullName",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
@@ -145,6 +145,23 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 						return new ProjectUserLink(risk.getAssigntouser(), risk
 								.getAssignToUserAvatarId(), risk
 								.getAssignedToUserFullName(), true, true);
+
+					}
+				});
+
+		this.tableItem.addGeneratedColumn("raisedByUserFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(
+							final Table source, final Object itemId,
+							final Object columnId) {
+						final SimpleRisk risk = RiskListViewImpl.this.tableItem
+								.getBeanByIndex(itemId);
+						return new ProjectUserLink(risk.getRaisedbyuser(), risk
+								.getRaisedByUserAvatarId(), risk
+								.getRaisedByUserFullName(), true, true);
 
 					}
 				});
