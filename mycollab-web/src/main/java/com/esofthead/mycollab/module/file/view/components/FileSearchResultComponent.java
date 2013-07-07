@@ -44,11 +44,11 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 	private final ResourceService resourceService;
 	private final ResourceTableDisplay resourceTable;
 
+	private String rootFolder;
 	private String basePath;
 	private String searchString;
 
 	public FileSearchResultComponent() {
-
 		this.resourceService = AppContext.getSpringBean(ResourceService.class);
 
 		final CssLayout headerWrapper = new CssLayout();
@@ -97,7 +97,9 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 
 	abstract protected void backView();
 
-	public void displaySearchResult(final String basePath, final String name) {
+	public void displaySearchResult(final String rootFolder,
+			final String basePath, final String name) {
+		this.rootFolder = rootFolder;
 		this.basePath = basePath;
 		this.searchString = name;
 
@@ -112,10 +114,10 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 		this.resourceTable
 				.setContainerDataSource(new BeanItemContainer<Resource>(
 						Resource.class, resourceList));
-		this.resourceTable.setVisibleColumns(new String[] { "uuid", "path",
-				"size", "created" });
+		this.resourceTable.setVisibleColumns(new String[] { "uuid",
+				"createdUser", "path", "size", "created" });
 		this.resourceTable.setColumnHeaders(new String[] { "", "Name",
-				"Size (Kb)", "Created" });
+				"Enclosing Folder", "Size (Kb)", "Created" });
 	}
 
 	@SuppressWarnings("serial")
@@ -220,6 +222,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 
 														FileSearchResultComponent.this
 																.displaySearchResult(
+																		FileSearchResultComponent.this.rootFolder,
 																		FileSearchResultComponent.this.basePath,
 																		FileSearchResultComponent.this.searchString);
 													}
@@ -242,7 +245,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 				}
 			});
 
-			this.addGeneratedColumn("path", new Table.ColumnGenerator() {
+			this.addGeneratedColumn("createdUser", new Table.ColumnGenerator() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -294,6 +297,38 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 				}
 			});
 
+			this.addGeneratedColumn("path", new Table.ColumnGenerator() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Object generateCell(final Table source,
+						final Object itemId, final Object columnId) {
+					final Resource resource = ResourceTableDisplay.this
+							.getResource(itemId);
+					String path = resource.getPath();
+					int index = path.lastIndexOf("/");
+					if (index >= 0) {
+						path = path.substring(0, index);
+					}
+
+					if (rootFolder != null && path.startsWith(rootFolder)) {
+						path = path.substring(rootFolder.length());
+					}
+
+					Button pathLink = new Button(path,
+							new Button.ClickListener() {
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+					pathLink.setStyleName("link");
+					return pathLink;
+				}
+			});
+
 			this.addGeneratedColumn("created", new Table.ColumnGenerator() {
 
 				@Override
@@ -317,9 +352,10 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 				}
 			});
 
-			this.setColumnExpandRatio("path", 1);
+			this.setColumnExpandRatio("createdUser", 1);
 			this.setColumnWidth("uuid", 22);
 			this.setColumnWidth("size", UIConstants.TABLE_S_LABEL_WIDTH);
+			this.setColumnWidth("path", UIConstants.TABLE_EX_LABEL_WIDTH);
 			this.setColumnWidth("created", UIConstants.TABLE_DATE_TIME_WIDTH);
 		}
 
@@ -380,6 +416,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 								newPath);
 						// reset layout
 						FileSearchResultComponent.this.displaySearchResult(
+								FileSearchResultComponent.this.rootFolder,
 								FileSearchResultComponent.this.basePath,
 								FileSearchResultComponent.this.searchString);
 

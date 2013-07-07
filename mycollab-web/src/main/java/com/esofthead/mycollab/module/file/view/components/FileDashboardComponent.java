@@ -982,7 +982,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			@Override
 			protected SearchCriteria fillupSearchCriteria() {
 				FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
-
+				FileSearchPanel.this.searchCriteria.setRootFolder(rootPath);
 				FileSearchPanel.this.searchCriteria.setFileName(this.nameField
 						.getValue().toString().trim());
 				FileSearchPanel.this.searchCriteria.setBaseFolder(baseFolder

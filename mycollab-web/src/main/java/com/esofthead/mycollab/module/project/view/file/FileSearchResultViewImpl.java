@@ -13,7 +13,7 @@ public class FileSearchResultViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	private FileSearchResultComponent searchResultComp;
-	
+
 	public FileSearchResultViewImpl() {
 		searchResultComp = new FileSearchResultComponent() {
 			private static final long serialVersionUID = 1L;
@@ -31,8 +31,8 @@ public class FileSearchResultViewImpl extends AbstractView implements
 
 	@Override
 	public void displaySearchResult(FileSearchCriteria searchCriteria) {
-		searchResultComp.displaySearchResult(searchCriteria.getBaseFolder(),
-				searchCriteria.getFileName());
+		searchResultComp.displaySearchResult(searchCriteria.getRootFolder(),
+				searchCriteria.getBaseFolder(), searchCriteria.getFileName());
 	}
 
 }

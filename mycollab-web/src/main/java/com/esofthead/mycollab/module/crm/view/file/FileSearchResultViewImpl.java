@@ -31,8 +31,8 @@ public class FileSearchResultViewImpl extends AbstractView implements
 
 	@Override
 	public void displaySearchResult(FileSearchCriteria searchCriteria) {
-		searchResultComp.displaySearchResult(searchCriteria.getBaseFolder(),
-				searchCriteria.getFileName());
+		searchResultComp.displaySearchResult(searchCriteria.getRootFolder(),
+				searchCriteria.getBaseFolder(), searchCriteria.getFileName());
 	}
 
 }
