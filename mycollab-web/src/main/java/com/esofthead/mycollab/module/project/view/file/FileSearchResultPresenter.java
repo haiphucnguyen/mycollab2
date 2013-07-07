@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.file;
 
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -19,8 +20,8 @@ public class FileSearchResultPresenter extends
 		projectViewContainer.removeAllComponents();
 		projectViewContainer.addComponent(view);
 
-		String[] params = (String[]) data.getParams();
-		view.displaySearchResult(params[0], params[1]);
+		FileSearchCriteria params = (FileSearchCriteria) data.getParams();
+		view.displaySearchResult(params);
 	}
 
 }

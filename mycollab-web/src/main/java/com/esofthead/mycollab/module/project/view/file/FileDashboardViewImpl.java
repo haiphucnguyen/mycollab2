@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.project.view.file;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -21,7 +23,9 @@ public class FileDashboardViewImpl extends AbstractView implements
 
 			@Override
 			protected void doSearch(FileSearchCriteria searchCriteria) {
-				// TODO Auto-generated method stub
+				EventBus.getInstance().fireEvent(
+						new ProjectContentEvent.Search(FileDashboardViewImpl.this,
+								searchCriteria));
 
 			}
 
