@@ -31,8 +31,13 @@ public class CallTableDisplay extends
 	private static final long serialVersionUID = 1L;
 
 	public CallTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public CallTableDisplay(TableViewField requireColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(CallService.class), SimpleCall.class,
-				displayColumns);
+				requireColumn, displayColumns);
 
 		this.addGeneratedColumn("subject", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
