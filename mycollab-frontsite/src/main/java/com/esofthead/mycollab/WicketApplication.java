@@ -13,7 +13,9 @@ import com.esofthead.mycollab.pages.Error500Page;
 import com.esofthead.mycollab.pages.HomePage;
 import com.esofthead.mycollab.pages.PricingPage;
 import com.esofthead.mycollab.pages.PrivacyPage;
+import com.esofthead.mycollab.pages.SignInPage;
 import com.esofthead.mycollab.pages.SignUpPage;
+import com.esofthead.mycollab.pages.TermOfServicePage;
 import com.esofthead.mycollab.pages.TourPage;
 
 /**
@@ -40,19 +42,22 @@ public class WicketApplication extends WebApplication {
 
 		// add your configuration here
 
-		getMarkupSettings().setStripWicketTags(true);
+		this.getMarkupSettings().setStripWicketTags(true);
 
-		mountPage("/tour", TourPage.class);
-		mountPage("/pricing", PricingPage.class);
-		mountPage("/privacy", PrivacyPage.class);
-		mountPage("/signup", SignUpPage.class);
-		mountPage("/error404", Error404Page.class);
-		mountPage("/error500", Error500Page.class);
+		this.mountPage("/tour", TourPage.class);
+		this.mountPage("/pricing", PricingPage.class);
+		this.mountPage("/privacy", PrivacyPage.class);
+		this.mountPage("/signup", SignUpPage.class);
+		this.mountPage("/terms", TermOfServicePage.class);
+		this.mountPage("/signin", SignInPage.class);
+		this.mountPage("/error404", Error404Page.class);
+		this.mountPage("/error500", Error500Page.class);
 
-		getApplicationSettings().setInternalErrorPage(Error500Page.class);
-		getRequestCycleListeners().add(new AbstractRequestCycleListener() {
+		this.getApplicationSettings().setInternalErrorPage(Error500Page.class);
+		this.getRequestCycleListeners().add(new AbstractRequestCycleListener() {
 			@Override
-			public IRequestHandler onException(RequestCycle cycle, Exception e) {
+			public IRequestHandler onException(final RequestCycle cycle,
+					final Exception e) {
 				return new RenderPageRequestHandler(new PageProvider(
 						new Error500Page(e)));
 			}

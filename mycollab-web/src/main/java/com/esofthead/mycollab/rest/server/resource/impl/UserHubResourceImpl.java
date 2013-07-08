@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
+import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
+import com.esofthead.mycollab.rest.server.signup.ExistingUserRegisterException;
 import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 
 @Component("restUserResource")
@@ -42,7 +44,8 @@ public class UserHubResourceImpl extends ServerResource implements
 	public String doPost(final String subdomain, final String username,
 			final String password, final String email, final int planId,
 			final String firstname, final String lastname,
-			final String timezoneId) throws SubdomainExistedException {
+			final String timezoneId) throws SubdomainExistedException,
+			ExistingEmailRegisterException, ExistingUserRegisterException {
 		UserHubResourceImpl.log.debug("Start handling form request");
 		this.billingService.registerAccount(subdomain, planId, username,
 				password, email, timezoneId);
