@@ -21,7 +21,7 @@ public interface CaseTableFieldDef {
 
 	public static TableViewField account = new TableViewField(
 			LocalizationHelper.getMessage(CaseI18nEnum.FORM_ACCOUNT),
-			"accountName", UIConstants.TABLE_M_LABEL_WIDTH);
+			"accountName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField origin = new TableViewField(
 			LocalizationHelper.getMessage(CaseI18nEnum.FORM_ORIGIN), "origin",
