@@ -100,20 +100,15 @@ public class ContactImportWindow extends Window {
 	private String mapValueToContact(SimpleContact contact, String label,
 			String value) {
 		String errorStr = "";
-		switch (label) {
-		case "First Name":
+		if (label.equals("First Name")) {
 			contact.setFirstname(value);
-			break;
-		case "Last Name":
+		} else if (label.equals("Last Name")) {
 			contact.setLastname(value);
-			break;
-		case "Title":
+		} else if (label.equals("Title")) {
 			contact.setTitle(value);
-			break;
-		case "Department":
+		} else if (label.equals("Department")) {
 			contact.setDepartment(value);
-			break;
-		case "Email":
+		} else if (label.equals("Email")) {
 			InternetAddress emailAddr;
 			try {
 				emailAddr = new InternetAddress(value);
@@ -133,32 +128,23 @@ public class ContactImportWindow extends Window {
 				errorStr += "Email-address: '" + value
 						+ "' is invalid on Internet.";
 			}
-			break;
-		case "Assistant":
+		} else if (label.equals("Assistant")) {
 			contact.setAssistant(value);
-			break;
-		case "Assistant Phone":
+		} else if (label.equals("Assistant Phone")) {
 			contact.setAssistantphone(value);
-			break;
-		case "Leader Source":
+		} else if (label.equals("Leader Source")) {
 			contact.setLeadsource(value);
-			break;
-		case "Phone Office":
+		} else if (label.equals("Phone Office")) {
 			contact.setOfficephone(value);
-			break;
-		case "Mobile":
+		} else if (label.equals("Mobile")) {
 			contact.setMobile(value);
-			break;
-		case "Home phone":
+		} else if (label.equals("Home phone")) {
 			contact.setHomephone(value);
-			break;
-		case "Other Phone":
+		} else if (label.equals("Other Phone")) {
 			contact.setOfficephone(value);
-			break;
-		case "Fax":
+		} else if (label.equals("Fax")) {
 			contact.setFax(value);
-			break;
-		case "Birthday":
+		} else if (label.equals("Birthday")) {
 			try {
 				DateFormat formatter = new SimpleDateFormat(
 						AppContext.getDateFormat());
@@ -169,47 +155,33 @@ public class ContactImportWindow extends Window {
 				errorStr += "Can't parse value = \'" + value
 						+ "\' to DateType, please input follow mm/dd/yyyy.";
 			}
-			break;
-		case "Callable":
+		} else if (label.equals("Callable")) {
 			boolean val = (value.equals("true")) ? true : false;
 			contact.setIscallable(val);
-			break;
-		case "Assign User":
+		} else if (label.equals("Assign User")) {
 			contact.setAssignuser(value);
-			break;
-		case "Address":
+		} else if (label.equals("Address")) {
 			contact.setPrimaddress(value);
-			break;
-		case "City":
+		} else if (label.equals("City")) {
 			contact.setPrimcity(value);
-			break;
-		case "State":
+		} else if (label.equals("State")) {
 			contact.setPrimstate(value);
-			break;
-		case "Postal Code":
+		} else if (label.equals("Postal Code")) {
 			contact.setPrimpostalcode(value);
-			break;
-		case "Country":
+		} else if (label.equals("Country")) {
 			contact.setPrimcountry(value);
-			break;
-		case "Other Address":
+		} else if (label.equals("Other Address")) {
 			contact.setOtheraddress(value);
-			break;
-		case "Other City":
+		} else if (label.equals("Other City")) {
 			contact.setOthercity(value);
-			break;
-		case "Other State":
+		} else if (label.equals("Other State")) {
 			contact.setOtherstate(value);
-			break;
-		case "Other Postal Code":
+		} else if (label.equals("Other Postal Code")) {
 			contact.setOtherpostalcode(value);
-			break;
-		case "Other Country":
+		} else if (label.equals("Other Country")) {
 			contact.setOthercountry(value);
-			break;
-		case "Description":
+		} else if (label.equals("Description")) {
 			contact.setDescription(value);
-			break;
 		}
 		return errorStr;
 	}
