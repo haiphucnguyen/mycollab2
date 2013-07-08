@@ -36,7 +36,7 @@ public interface ContactTableFieldDef {
 			"assistant", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assistantPhone = new TableViewField(
-			LocalizationHelper.getMessage(ContactI18nEnum.FORM_ASSISTANT),
+			LocalizationHelper.getMessage(ContactI18nEnum.FORM_ASSISTANT_PHONE),
 			"assistantphone", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField phoneOffice = new TableViewField(

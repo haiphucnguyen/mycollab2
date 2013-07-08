@@ -61,6 +61,20 @@ public abstract class CustomizedTableWindow extends Window {
 		this.setSelectedViewColumns();
 		body.addComponent(this.listBuilder);
 
+		Button restoreLink = new Button("Restore to default",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+		restoreLink.setStyleName("link");
+		body.addComponent(restoreLink);
+		body.setComponentAlignment(restoreLink, Alignment.MIDDLE_RIGHT);
+
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		final Button saveBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
