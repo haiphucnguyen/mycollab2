@@ -3943,3 +3943,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	font-size: 13px;
 	font-weight: bold;
 }
+.v-popupbutton.link .v-popup-indicator {
+	width: 0px !important;
+}

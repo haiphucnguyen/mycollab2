@@ -3,6 +3,7 @@ package com.esofthead.mycollab.rest.server.resource.impl;
 import java.util.List;
 
 import org.restlet.Server;
+import org.restlet.data.Form;
 import org.restlet.data.Protocol;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.rest.server.resource.SubdomainExistedException;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
+import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
+import com.esofthead.mycollab.rest.server.signup.ExistingUserRegisterException;
+import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 
 @Component("restUserResource")
 public class UserHubResourceImpl extends ServerResource implements
@@ -32,17 +35,22 @@ public class UserHubResourceImpl extends ServerResource implements
 		server.start();
 	}
 
-	@Override
-	public List<String> getSubdomainsOfUser(final String username) {
-		return this.billingService.getSubdomainsOfUser(username);
-	}
+//	@Override
+//	public List<String> getSubdomainsOfUser(final String username) {
+//		return this.billingService.getSubdomainsOfUser(username);
+//	}
 
 	@Override
-	@Post
-	public String doPost(String subdomain, String username, String password,
-			String email, int planId, String firstname, String lastname,
-			String timezoneId) throws SubdomainExistedException {
+	@Post("form")
+	public String doPost(Form form) throws SubdomainExistedException,
+			ExistingEmailRegisterException, ExistingUserRegisterException {
 		UserHubResourceImpl.log.debug("Start handling form request");
+		String subdomain = form.getFirstValue("subdomain");
+		int planId = Integer.parseInt(form.getFirstValue("planId"));
+		String username = form.getFirstValue("username");
+		String password = form.getFirstValue("password");
+		String email = form.getFirstValue("email");
+		String timezoneId = form.getFirstValue("timezoneId");
 		this.billingService.registerAccount(subdomain, planId, username,
 				password, email, timezoneId);
 		String siteUrl = "";

@@ -3,11 +3,9 @@ package com.esofthead.mycollab.rest;
 import org.json.JSONException;
 import org.junit.runner.RunWith;
 import org.restlet.data.Form;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.esofthead.mycollab.rest.server.resource.SubdomainExistedException;
-import com.esofthead.mycollab.rest.server.resource.UserHubResource;
+import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
@@ -16,13 +14,10 @@ import com.esofthead.mycollab.test.ServiceTest;
 @ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class SignupTest extends ServiceTest {
 
-	@Autowired
-	private UserHubResource restUserResource;
-
 	@org.junit.Test(expected = SubdomainExistedException.class)
 	@DataSet
 	public void testSignupFailDuetoExistingUserRegister() throws JSONException {
-		Form form = new Form();
+		final Form form = new Form();
 		form.set("subdomain", "esofthead1");
 		form.set("username", "admin");
 		form.set("email", "baohan@esofthead.com");
@@ -37,7 +32,7 @@ public class SignupTest extends ServiceTest {
 	@DataSet
 	public void testSignupFailDuetoExistingDomainRegister()
 			throws JSONException {
-		Form form = new Form();
+		final Form form = new Form();
 		form.set("subdomain", "esofthead");
 		form.set("username", "hainguyen");
 		form.set("email", "baohan@esofthead.com");
@@ -51,7 +46,7 @@ public class SignupTest extends ServiceTest {
 	@org.junit.Test
 	@DataSet
 	public void testSignupSuccessfully() throws JSONException {
-		Form form = new Form();
+		final Form form = new Form();
 		form.set("subdomain", "esofthead1");
 		form.set("username", "hainguyen1");
 		form.set("email", "baohan@esofthead.com");

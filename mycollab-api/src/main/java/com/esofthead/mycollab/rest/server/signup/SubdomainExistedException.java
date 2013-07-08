@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.rest.server.resource;
+package com.esofthead.mycollab.rest.server.signup;
 
 import com.esofthead.mycollab.core.MyCollabException;
 

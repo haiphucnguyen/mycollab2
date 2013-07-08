@@ -1,14 +1,14 @@
 package com.esofthead.mycollab.rest.server.resource;
 
-import java.util.List;
-
+import org.restlet.data.Form;
 import org.restlet.resource.Post;
 
-public interface UserHubResource {
-	@Post
-	public String doPost(String subdomain, String username, String password,
-			String email, int planId, String firstname, String lastname,
-			String timezoneId) throws SubdomainExistedException;
+import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
+import com.esofthead.mycollab.rest.server.signup.ExistingUserRegisterException;
+import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 
-	List<String> getSubdomainsOfUser(String username);
+public interface UserHubResource {
+	@Post("form")
+	public String doPost(Form form) throws SubdomainExistedException,
+			ExistingEmailRegisterException, ExistingUserRegisterException;
 }

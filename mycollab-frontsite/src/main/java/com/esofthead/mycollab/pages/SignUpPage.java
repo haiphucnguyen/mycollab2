@@ -1,17 +1,5 @@
 package com.esofthead.mycollab.pages;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -26,6 +14,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,53 +76,31 @@ public class SignUpPage extends BasePage {
 
 			@Override
 			protected void onSubmit() {
-				final DefaultHttpClient httpClient = new DefaultHttpClient();
-				final HttpPost postRequest = new HttpPost(
+				final ClientResource clientResource = new ClientResource(
 						"http://localhost:8080/mycollab-web/api/signup");
-
-				final List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-				nvps.add(new BasicNameValuePair("firstname", firstname
-						.getModelObject()));
-				nvps.add(new BasicNameValuePair("lastname", lastname
-						.getModelObject()));
-				nvps.add(new BasicNameValuePair("username", username
-						.getModelObject()));
-				nvps.add(new BasicNameValuePair("subdomain", subdomain
-						.getModelObject()));
-				nvps.add(new BasicNameValuePair("email", email.getModelObject()));
-				nvps.add(new BasicNameValuePair("password", password
-						.getModelObject()));
-				nvps.add(new BasicNameValuePair("timezone", timezone
-						.getModelObject()));
-				nvps.add(new BasicNameValuePair("planId", parameters.get(
-						"planId").toString()));
+				final UserHubResource userResource = clientResource
+						.wrap(UserHubResource.class);
 
 				try {
-					postRequest.setEntity(new UrlEncodedFormEntity(nvps));
 
-					final HttpResponse response = httpClient
-							.execute(postRequest);
-					final StatusLine status = response.getStatusLine();
-					if (status.getStatusCode() == 200) {
-						// redirect to user's suddomain page
-						final HttpEntity entity = response.getEntity();
-						final String content = EntityUtils.toString(entity);
-						this.getRequestCycle()
-								.scheduleRequestHandlerAfterCurrent(
-										new RedirectRequestHandler(content));
+					Form form = new Form();
+					form.set("subdomain", subdomain.getModelObject());
+					form.set("planId", parameters.get("planId").toString());
+					form.set("username", username.getModelObject());
+					form.set("password", password.getModelObject());
+					form.set("email", email.getModelObject());
+					form.set("timezoneId", timezone.getModelObject());
+					form.set("firstname", firstname.getModelObject());
+					form.set("lastname", lastname.getModelObject());
 
-					} else {
-						// inform error with user
-					}
+					final String response = userResource.doPost(form);
+					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
+							new RedirectRequestHandler(response));
 				} catch (final Exception e) {
-					SignUpPage.log.error("Send post request fail");
+					this.error(e.getMessage());
 				}
 			}
 		};
-		
-		ClientResource clientResource = new ClientResource(
-				"http://localhost:8182/mycollab-web/api/signup");
-		UserHubResource testResource = clientResource.wrap(UserHubResource.class);
 
 		this.add(form);
 		form.add(new FeedbackPanel("feedback"));
