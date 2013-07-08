@@ -40,6 +40,8 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Alignment;
@@ -429,9 +431,17 @@ public class ContactImportWindow extends Window {
 						Component compent = setComponentOnGrid.next();
 						while (compent != null) {
 							if (compent instanceof ComboBox) {
-								String str = ((ComboBox) compent).getValue()
-										.toString();
-								if (listStringFromCombox.size() == 0)
+								String str = (((ComboBox) compent).getValue() != null) ? ((ComboBox) compent)
+										.getValue().toString() : "";
+								if (str.length() == 0) {
+									checkValidInput = false;
+									ContactImportWindow.this
+											.getParent()
+											.getWindow()
+											.showNotification(
+													"Please choose crm field to map.");
+									break;
+								} else if (listStringFromCombox.size() == 0)
 									listStringFromCombox.add(str);
 								else if (listStringFromCombox.indexOf(str) != -1) {
 									checkValidInput = false;
@@ -552,12 +562,6 @@ public class ContactImportWindow extends Window {
 					} catch (IOException e) {
 						throw new MyCollabException(e);
 					}
-				} else {
-					ContactImportWindow.this
-							.getParent()
-							.getWindow()
-							.showNotification(
-									"You should map one column to one crm field");
 				}
 			}
 		});
@@ -795,6 +799,7 @@ public class ContactImportWindow extends Window {
 		infoLayout.addComponent(labelInfo);
 
 		CheckBox checkbox = new CheckBox();
+		checkbox.setValue(true);
 		infoLayout.addComponent(checkbox);
 
 		bodyStep3Wapper.addComponent(layoutStep3);
@@ -842,6 +847,7 @@ public class ContactImportWindow extends Window {
 				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 		encodingCombobox.addItem("UTF-8");
 		encodingCombobox.setValue("UTF-8");
+		encodingCombobox.setEnabled(false);
 		gridLayout.addComponent(encodingCombobox, "Character Encoding", 0, 2);
 
 		ComboBox delimiterComboBox = new ComboBox();
@@ -851,6 +857,7 @@ public class ContactImportWindow extends Window {
 		delimiterComboBox.addItem("#,(sharp)");
 
 		delimiterComboBox.setValue(",(comma)");
+		delimiterComboBox.setEnabled(false);
 		gridLayout.addComponent(delimiterComboBox, "Delimiter", 0, 3);
 
 		checkboxHasHeader = new CheckBox();
@@ -888,6 +895,23 @@ public class ContactImportWindow extends Window {
 		informationStep1.addComponent(new Label("Select File"));
 
 		uploadField = new SingleFileUploadField();
+		uploadField.addListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				String filename = uploadField.getFileName();
+				String fileuploadType = filename.substring(
+						filename.indexOf(".") + 1, filename.length());
+				if (fileuploadType.equals("vcf")) {
+					fileformat.setValue("Vcard");
+					fileformat.setEnabled(false);
+				} else if (fileuploadType.equals("csv")) {
+					fileformat.setValue("CSV");
+					fileformat.setEnabled(false);
+				}
+			}
+		});
 		informationStep1.addComponent(uploadField);
 
 		informationStep1.addComponent(new Label(
