@@ -36,9 +36,8 @@ public class CallListDashlet extends Depot {
 	public CallListDashlet() {
 		super("My Calls", new VerticalLayout());
 
-		tableItem = new CallTableDisplay(Arrays.asList(
-				new TableViewField("", "isClosed",
-						UIConstants.TABLE_CONTROL_WIDTH),
+		tableItem = new CallTableDisplay(new TableViewField("", "isClosed",
+				UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
 				new TableViewField(LocalizationHelper
 						.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
 						"subject", UIConstants.TABLE_X_LABEL_WIDTH),

@@ -98,7 +98,20 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		}
 	}
 
-	public static void main(String[] args) {
+	@Override
+	public void rename(String oldPath, String newPath) {
+		AmazonS3 s3client = S3StorageConfig.getS3Client();
+		CopyObjectRequest copyRequest = new CopyObjectRequest(
+				S3StorageConfig.getBucket(), oldPath,
+				S3StorageConfig.getBucket(), newPath);
+		s3client.copyObject(copyRequest);
+
+		DeleteObjectRequest deleteRequest = new DeleteObjectRequest(
+				S3StorageConfig.getBucket(), oldPath);
+		s3client.deleteObject(deleteRequest);
+	}
+
+	public static void mainUpdateCache(String[] args) {
 		AmazonS3 s3client = S3StorageConfig.getS3Client();
 
 		try {
@@ -144,16 +157,9 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 	}
-
-	@Override
-	public void rename(String oldPath, String newPath) {
-		AmazonS3 s3client = S3StorageConfig.getS3Client();
-		CopyObjectRequest copyRequest = new CopyObjectRequest(S3StorageConfig.getBucket(), oldPath, S3StorageConfig.getBucket(), newPath);
-		s3client.copyObject(copyRequest);
+	
+	public static void main(String[] args) {
 		
-		DeleteObjectRequest deleteRequest = new DeleteObjectRequest(S3StorageConfig.getBucket(), oldPath);
-		s3client.deleteObject(deleteRequest);
 	}
 }

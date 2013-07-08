@@ -42,6 +42,7 @@ public class AssignTaskWindow extends Window {
 	private EditForm editForm;
 
 	public AssignTaskWindow(Task task) {
+		super("Assign task '" + task.getTaskname() + "'");
 		this.task = task;
 		this.setWidth("750px");
 		editForm = new EditForm();

@@ -62,15 +62,15 @@ public class Test {
 		form.set("email", "hainguyen@esofthead.com");
 		form.set("timezone", "UTC");
 		form.set("planId", "1");
-		try {
-			String result = testResource.doPost(form);
-			if (result != null) {
-				System.out.println(result);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getClass());
-			e.printStackTrace();
-		}
+//		try {
+//			String result = testResource.doPost(form);
+//			if (result != null) {
+//				System.out.println(result);
+//			}
+//		} catch (Exception e) {
+//			System.out.println(e.getClass());
+//			e.printStackTrace();
+//		}
 
 	}
 }
