@@ -239,4 +239,43 @@ public class GridFormLayoutHelper implements Serializable {
 	public GridLayout getLayout() {
 		return this.layout;
 	}
+
+	public Component addComponent(Component fieldValue, Component fieldCaption,
+			String defaultCaptionWidth, String fileValueWidth, int columns,
+			int rows, Alignment alignment) {
+		final HorizontalLayout captionWrapper = new HorizontalLayout();
+		captionWrapper.addComponent(fieldCaption);
+		captionWrapper.setComponentAlignment(fieldCaption, alignment);
+		captionWrapper.setWidth(defaultCaptionWidth);
+		captionWrapper.setHeight("100%");
+		captionWrapper.setStyleName("gridform-caption");
+		if (columns == 0) {
+			captionWrapper.addStyleName("first-col");
+		}
+		if (rows == 0) {
+			captionWrapper.addStyleName("first-row");
+		}
+		this.layout.addComponent(captionWrapper, 2 * columns, rows);
+		final HorizontalLayout fieldWrapper = new HorizontalLayout();
+		fieldWrapper.setStyleName("gridform-field");
+		fieldValue.setCaption(null);
+		fieldWrapper.addComponent(fieldValue);
+		fieldValue.setWidth(fileValueWidth);
+		fieldWrapper.setWidth("100%");
+		if (rows == 0) {
+			fieldWrapper.addStyleName("first-row");
+		}
+		this.layout.addComponent(fieldWrapper, 2 * columns + 1, rows);
+		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+		return fieldValue;
+	}
+
+	public Component addComponentSupportFieldCaption(
+			final Component fieldValue, final Component fieldCaption,
+			final String defaultCaptionWidth, final String fileValueWidth,
+			final int columns, final int rows, final Alignment alignment) {
+		return this.addComponent(fieldValue, fieldCaption, defaultCaptionWidth,
+				fileValueWidth, columns, rows, alignment);
+	}
+
 }
