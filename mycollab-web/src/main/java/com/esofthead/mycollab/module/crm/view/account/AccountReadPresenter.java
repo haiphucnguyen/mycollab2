@@ -12,7 +12,6 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.AccountLead;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
@@ -32,6 +31,7 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
@@ -172,7 +172,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleContact contact = new SimpleContact();
-						contact.setAccountId(view.getItem().getId());
+						contact.setAccountid(view.getItem().getId());
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(this, contact));
 					}
@@ -180,22 +180,14 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					@Override
 					public void selectAssociateItems(Set<SimpleContact> items) {
 						if (items.size() > 0) {
+							ContactService contactService = AppContext
+									.getSpringBean(ContactService.class);
 							SimpleAccount account = view.getItem();
-							List<AccountContact> associateContacts = new ArrayList<AccountContact>();
 							for (SimpleContact contact : items) {
-								AccountContact assoContact = new AccountContact();
-								assoContact.setAccountid(account.getId());
-								assoContact.setContactid(contact.getId());
-								assoContact
-										.setCreatedtime(new GregorianCalendar()
-												.getTime());
-								associateContacts.add(assoContact);
+								contact.setAccountid(account.getId());
+								contactService.updateWithSession(contact,
+										AppContext.getUsername());
 							}
-
-							AccountService accountService = AppContext
-									.getSpringBean(AccountService.class);
-							accountService
-									.saveAccountContactRelationship(associateContacts);
 
 							view.getRelatedContactHandlers().refresh();
 						}

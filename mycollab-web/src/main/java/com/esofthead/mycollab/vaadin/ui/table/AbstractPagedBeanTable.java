@@ -69,6 +69,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	private TableViewField requiredColumn;
 	private List<TableViewField> displayColumns;
+	private List<TableViewField> defaultSelectedColumns;
 
 	protected final Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
 
@@ -101,6 +102,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		} else {
 			this.displayColumns = displayColumns;
 		}
+		this.defaultSelectedColumns = displayColumns;
 		this.requiredColumn = requiredColumn;
 		this.type = type;
 
@@ -513,6 +515,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			this.addComponent(tableLazyLoadContainer, 0);
 		}
 
+	}
+
+	public List<TableViewField> getDefaultSelectedColumns() {
+		return defaultSelectedColumns;
 	}
 
 	public Object[] getVisibleColumns() {

@@ -7,10 +7,9 @@
         <result column="assignUserFullName" jdbcType="VARCHAR"
             property="assignUserFullName" />
         <result column="contactName" jdbcType="VARCHAR" property="contactName" />
-        <collection columnPrefix="account_"
-            ofType="com.esofthead.mycollab.module.crm.domain.Account"
-            property="accounts"
-            resultMap="com.esofthead.mycollab.module.crm.dao.AccountMapper.BaseResultMap" />
+        <result column="accountName" jdbcType="VARCHAR" property="accountName" />
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
+            property="assignUserAvatarId" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -84,7 +83,8 @@
             <![CDATA[${searchCriteria.anyPostalCode.operation} m_crm_contact.primPostalCode like '%${searchCriteria.anyPostalCode.value}%' OR m_crm_contact.otherPostalCode like '%${searchCriteria.anyPostalCode.value}%']]>
         </if>
         <if test="searchCriteria.leadSources != null">
-            ${searchCriteria.leadSources.operation} m_crm_contact.leadSource IN
+            ${searchCriteria.leadSources.operation}
+            m_crm_contact.leadSource IN
             <foreach close=")" collection="searchCriteria.leadSources.values"
                 item="leadSource" open="(" separator=",">
                 #{leadSource}
@@ -130,10 +130,9 @@
             <![CDATA[
             ${searchCriteria.accountName.operation}
             (SELECT COUNT(*)
-            FROM m_crm_account, m_crm_accounts_contacts
+            FROM m_crm_account
             WHERE
-                m_crm_accounts_contacts.accountId = m_crm_account.id
-                AND m_crm_accounts_contacts.contactId = m_crm_contact.id
+                m_crm_contact.accountId = m_crm_account.id
                 AND m_crm_account.accountName like '%${searchCriteria.accountName.value}%') > 0
                 ]]>
         </if>
@@ -147,10 +146,9 @@
             <![CDATA[
                 ${searchCriteria.accountId.operation}
                 (SELECT COUNT(*) 
-                FROM m_crm_account, m_crm_accounts_contacts 
+                FROM m_crm_account
                 WHERE m_crm_account.id ${searchCriteria.accountId.compareOperator} #{searchCriteria.accountId.value,javaType=INTEGER} 
-                    AND m_crm_contact.id = m_crm_accounts_contacts.contactId
-                    AND m_crm_account.id = m_crm_accounts_contacts.accountId) > 0
+                    AND m_crm_contact.accountId = m_crm_account.id) > 0
                 ]]>
         </if>
         <if test="searchCriteria.assignUserName != null">
@@ -162,7 +160,8 @@
             ]]>
         </if>
         <if test="searchCriteria.assignUsers != null">
-            ${searchCriteria.assignUsers.operation} m_crm_contact.assignUser IN
+            ${searchCriteria.assignUsers.operation}
+            m_crm_contact.assignUser IN
             <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="assignUser" open="(" separator=",">
                 #{assignUser}
@@ -187,7 +186,8 @@
             <![CDATA[${searchCriteria.anyState.operation} m_crm_contact.primState like '%${searchCriteria.anyState.value}%' OR m_crm_contact.otherState like '%${searchCriteria.anyState.value}%']]>
         </if>
         <if test="searchCriteria.countries != null">
-            ${searchCriteria.countries.operation} m_crm_contact.primCountry IN
+            ${searchCriteria.countries.operation}
+            m_crm_contact.primCountry IN
             <foreach close=")" collection="searchCriteria.countries.values"
                 item="priCountry" open="(" separator=",">
                 #{priCountry}
@@ -212,7 +212,8 @@
             <![CDATA[${searchCriteria.anyPostalCode.operation} m_crm_contact.primPostalCode like '%${searchCriteria.anyPostalCode.value}%' OR m_crm_contact.otherPostalCode like '%${searchCriteria.anyPostalCode.value}%']]>
         </if>
         <if test="searchCriteria.leadSources != null">
-            ${searchCriteria.leadSources.operation} m_crm_contact.leadSource IN
+            ${searchCriteria.leadSources.operation}
+            m_crm_contact.leadSource IN
             <foreach close=")" collection="searchCriteria.leadSources.values"
                 item="leadSource" open="(" separator=",">
                 #{leadSource}
@@ -258,12 +259,12 @@
                m_crm_contact.description, m_crm_contact.title, m_crm_contact.assistantPhone, m_crm_contact.email, m_crm_contact.department, 
                m_crm_contact.createdTime, m_crm_contact.createdUser, m_crm_contact.sAccountId, m_crm_contact.assignUser, 
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
+               s_user.avatarId as assignUserAvatarId,
                concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) AS contactName,
-               m_crm_contact.lastUpdatedTime, m_crm_account.id AS account_id, m_crm_account.accountName as account_accountName
+               m_crm_contact.lastUpdatedTime, m_crm_account.accountName accountName
 
         FROM m_crm_contact 
-               LEFT OUTER JOIN m_crm_accounts_contacts ON (m_crm_contact.id = m_crm_accounts_contacts.contactId)
-               LEFT OUTER JOIN m_crm_account ON (m_crm_accounts_contacts.accountId = m_crm_account.id) 
+               LEFT OUTER JOIN m_crm_account ON (m_crm_contact.accountId = m_crm_account.id) 
                LEFT OUTER JOIN s_user ON (m_crm_contact.assignUser = s_user.username)
         ]]>
     </sql>
@@ -290,7 +291,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_crm_contact.lastUpdatedTime DESC
         ]]>
@@ -339,7 +341,7 @@
                 refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
-    
+
     <!-- Here for Mass Update -->
     <update id="updateBySearchCriteria" parameterType="map">
         <include

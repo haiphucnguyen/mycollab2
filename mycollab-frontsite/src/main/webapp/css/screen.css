@@ -1411,14 +1411,20 @@ h1, h2, h3, h4, h5, h6 {
 	position: absolute;
 	width: 100px;
 	text-align: center;
-	left: 10px;
 	cursor: pointer;
+	margin-left: 65px;
 }
 
 .free-trial h2 {
 	background-color: #F59502;
 	font-size: 15px;
 	font-weight: bold;
+	padding: 0px;
+	color: #000;
+}
+
+.free-trial-cnt-2 {
+	margin-top: 10px;
 }
 
 .free-trial p {

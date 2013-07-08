@@ -89,7 +89,7 @@ public class ContactListViewImpl extends AbstractView implements
 							EventBus.getInstance().fireEvent(
 									new AccountEvent.GotoRead(
 											ContactListViewImpl.this, contact
-													.getAccountId()));
+													.getAccountid()));
 						}
 					}
 				});

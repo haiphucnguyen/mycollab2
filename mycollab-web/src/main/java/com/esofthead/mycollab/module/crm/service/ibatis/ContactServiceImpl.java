@@ -27,7 +27,6 @@ import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.crm.dao.AccountContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactCaseMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
@@ -45,74 +44,83 @@ import com.esofthead.mycollab.module.crm.service.ContactService;
 @Transactional
 @Traceable(module = "Crm", type = "Contact", nameField = "lastname")
 @Auditable(module = "Crm", type = "Contact")
-public class ContactServiceImpl extends DefaultService<Integer, Contact, ContactSearchCriteria> implements
-        ContactService {
-    
-    @Autowired
-    private ContactMapper contactMapper;
-    @Autowired
-    private ContactMapperExt contactMapperExt;
-    @Autowired
-    private AccountContactMapper accountContactMapper;
-    @Autowired
-    private ContactOpportunityMapper contactOpportunityMapper;
-    @Autowired
-    private ContactCaseMapper contactCaseMapper;
-    
-    @Override
-    public ICrudGenericDAO<Integer, Contact> getCrudMapper() {
-        return contactMapper;
-    }
-    
-    @Override
-    public ISearchableDAO<ContactSearchCriteria> getSearchMapper() {
-        return contactMapperExt;
-    }
-    
-    @Override
-    public SimpleContact findContactById(int contactId) {
-        SimpleContact contact = contactMapperExt.findContactById(contactId);
-        return contact;
-    }
-    
-    @Override
-    public SimpleContact findByPrimaryKey(Integer primaryKey) {
-        return findContactById(primaryKey);
-    }
-    
-    @Override
-    public void removeContactOpportunityRelationship(ContactOpportunity associateOpportunity) {
-        ContactOpportunityExample ex = new ContactOpportunityExample();
-        ex.createCriteria().andContactidEqualTo(associateOpportunity.getContactid()).andOpportunityidEqualTo(associateOpportunity.getOpportunityid());
-        contactOpportunityMapper.deleteByExample(ex);
-    }
-    
-    @Override
-    public void saveContactOpportunityRelationship(List<ContactOpportunity> associateOpportunities) {
-        for (ContactOpportunity assoOpportunity : associateOpportunities) {
-            ContactOpportunityExample ex = new ContactOpportunityExample();
-            ex.createCriteria().andContactidEqualTo(assoOpportunity.getContactid()).andOpportunityidEqualTo(assoOpportunity.getOpportunityid());
-            if (contactOpportunityMapper.countByExample(ex) == 0) {
-                contactOpportunityMapper.insert(assoOpportunity);
-            }
-        }
-    }
-    
-    @Override
-    public void saveContactCaseRelationship(List<ContactCase> associateCases) {
-        for (ContactCase associateCase : associateCases) {
-            ContactCaseExample ex = new ContactCaseExample();
-            ex.createCriteria().andContactidEqualTo(associateCase.getContactid()).andCaseidEqualTo(associateCase.getCaseid());
-            if (contactCaseMapper.countByExample(ex) == 0) {
-                contactCaseMapper.insert(associateCase);
-            }
-        }
-    }
-    
-    @Override
-    public void removeContactCaseRelationship(ContactCase associateCase) {
-        ContactCaseExample ex = new ContactCaseExample();
-        ex.createCriteria().andContactidEqualTo(associateCase.getContactid()).andCaseidEqualTo(associateCase.getCaseid());
-        contactCaseMapper.deleteByExample(ex);
-    }
+public class ContactServiceImpl extends
+		DefaultService<Integer, Contact, ContactSearchCriteria> implements
+		ContactService {
+
+	@Autowired
+	private ContactMapper contactMapper;
+	@Autowired
+	private ContactMapperExt contactMapperExt;
+	@Autowired
+	private ContactOpportunityMapper contactOpportunityMapper;
+	@Autowired
+	private ContactCaseMapper contactCaseMapper;
+
+	@Override
+	public ICrudGenericDAO<Integer, Contact> getCrudMapper() {
+		return contactMapper;
+	}
+
+	@Override
+	public ISearchableDAO<ContactSearchCriteria> getSearchMapper() {
+		return contactMapperExt;
+	}
+
+	@Override
+	public SimpleContact findContactById(int contactId) {
+		SimpleContact contact = contactMapperExt.findContactById(contactId);
+		return contact;
+	}
+
+	@Override
+	public SimpleContact findByPrimaryKey(Integer primaryKey) {
+		return findContactById(primaryKey);
+	}
+
+	@Override
+	public void removeContactOpportunityRelationship(
+			ContactOpportunity associateOpportunity) {
+		ContactOpportunityExample ex = new ContactOpportunityExample();
+		ex.createCriteria()
+				.andContactidEqualTo(associateOpportunity.getContactid())
+				.andOpportunityidEqualTo(
+						associateOpportunity.getOpportunityid());
+		contactOpportunityMapper.deleteByExample(ex);
+	}
+
+	@Override
+	public void saveContactOpportunityRelationship(
+			List<ContactOpportunity> associateOpportunities) {
+		for (ContactOpportunity assoOpportunity : associateOpportunities) {
+			ContactOpportunityExample ex = new ContactOpportunityExample();
+			ex.createCriteria()
+					.andContactidEqualTo(assoOpportunity.getContactid())
+					.andOpportunityidEqualTo(assoOpportunity.getOpportunityid());
+			if (contactOpportunityMapper.countByExample(ex) == 0) {
+				contactOpportunityMapper.insert(assoOpportunity);
+			}
+		}
+	}
+
+	@Override
+	public void saveContactCaseRelationship(List<ContactCase> associateCases) {
+		for (ContactCase associateCase : associateCases) {
+			ContactCaseExample ex = new ContactCaseExample();
+			ex.createCriteria()
+					.andContactidEqualTo(associateCase.getContactid())
+					.andCaseidEqualTo(associateCase.getCaseid());
+			if (contactCaseMapper.countByExample(ex) == 0) {
+				contactCaseMapper.insert(associateCase);
+			}
+		}
+	}
+
+	@Override
+	public void removeContactCaseRelationship(ContactCase associateCase) {
+		ContactCaseExample ex = new ContactCaseExample();
+		ex.createCriteria().andContactidEqualTo(associateCase.getContactid())
+				.andCaseidEqualTo(associateCase.getCaseid());
+		contactCaseMapper.deleteByExample(ex);
+	}
 }

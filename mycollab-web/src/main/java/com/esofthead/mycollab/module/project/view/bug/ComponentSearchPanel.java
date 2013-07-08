@@ -136,7 +136,7 @@ public class ComponentSearchPanel extends
 									.callSearchAction();
 						}
 					});
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(searchBtn);
 
 			final Button clearBtn = new Button("Clear",
@@ -149,7 +149,7 @@ public class ComponentSearchPanel extends
 									.setValue("");
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
 		}

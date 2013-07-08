@@ -1,0 +1,1 @@
+ALTER TABLE `s_user` CHANGE COLUMN `avatarId` `avatarId` VARCHAR(90) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL  ;
