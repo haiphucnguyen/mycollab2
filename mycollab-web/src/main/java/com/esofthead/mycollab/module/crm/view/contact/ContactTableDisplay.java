@@ -121,25 +121,20 @@ public class ContactTableDisplay extends
 					final Object itemId, final Object columnId) {
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
-				final List<Account> accounts = contact.getAccounts();
-				if (accounts != null && !accounts.isEmpty()) {
-					final VerticalLayout hLayout = new VerticalLayout();
-					for (final Account account : accounts) {
-						final ButtonLink accountLink = new ButtonLink(account
-								.getAccountname(), new Button.ClickListener() {
+				if (contact.getAccountName() != null) {
+					Button accountLink = new Button(contact.getAccountName(),
+							new Button.ClickListener() {
 
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new AccountEvent.GotoRead(
-												ContactTableDisplay.this,
-												account.getId()));
-							}
-						});
-						hLayout.addComponent(accountLink);
-					}
+								@Override
+								public void buttonClick(ClickEvent event) {
+									fireTableEvent(new TableClickEvent(
+											ContactTableDisplay.this, contact,
+											"accountName"));
 
-					return hLayout;
+								}
+							});
+					accountLink.setStyleName("link");
+					return accountLink;
 				} else {
 					return new Label();
 				}
