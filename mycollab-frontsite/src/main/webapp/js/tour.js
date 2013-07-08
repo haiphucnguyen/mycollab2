@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$('.free-trial-cnt-2').hide();
 	$('.tour-items').hide();
 	$('.content-1').show(0);
 	$('.items-1').addClass('item-active');
@@ -28,9 +29,11 @@ $(window).scroll(function(){
 	var $menu_left = $('.tour-mid-left');
 	// Fixed scroll free trial
 	if ($(window).scrollTop() > 80) {
-		$free_trial.css({'position': 'fixed', 'top': '0px'}); 
+		$('.free-trial-cnt-1').hide();
+		$('.free-trial-cnt-2').show();
 	} else {
-		$free_trial.css({'position': 'absolute', 'top': 'auto'});
+		$('.free-trial-cnt-2').hide();
+		$('.free-trial-cnt-1').show();
 	}
 	// Fixed scroll menu left
 	if ($(window).scrollTop() > 220) {
