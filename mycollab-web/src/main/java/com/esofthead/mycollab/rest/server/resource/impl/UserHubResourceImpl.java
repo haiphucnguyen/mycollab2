@@ -30,13 +30,13 @@ public class UserHubResourceImpl extends ServerResource implements
 	public String doPost(final Form form) {
 		UserHubResourceImpl.log.debug("Start handling form request");
 		final String subdomain = form.getFirstValue("subdomain");
-		// final String username = form.getFirstValue("username");
-		// final String password = form.getFirstValue("password");
-		// final String email = form.getFirstValue("email");
-		// final String timezoneId = form.getFirstValue("timezone");
-		// final int planId = Integer.parseInt(form.getFirstValue("planId"));
-		// this.billingService.registerAccount(subdomain, planId, username,
-		// password, email, timezoneId);
+		final String username = form.getFirstValue("username");
+		final String password = form.getFirstValue("password");
+		final String email = form.getFirstValue("email");
+		final String timezoneId = form.getFirstValue("timezone");
+		final int planId = Integer.parseInt(form.getFirstValue("planId"));
+		this.billingService.registerAccount(subdomain, planId, username,
+				password, email, timezoneId);
 		String siteUrl = "";
 		if (ApplicationProperties.productionMode) {
 			siteUrl = String.format(ApplicationProperties
