@@ -36,6 +36,7 @@ public class AssignTaskGroupWindow extends Window {
 	private EditForm editForm;
 
 	public AssignTaskGroupWindow(TaskList task) {
+		super("Assign task group '" + task.getName() + "'");
 		this.task = task;
 		this.setWidth("450px");
 		editForm = new EditForm();
@@ -96,11 +97,13 @@ public class AssignTaskGroupWindow extends Window {
 								// Save task status and assignee
 								ProjectTaskListService bugService = AppContext
 										.getSpringBean(ProjectTaskListService.class);
-								bugService.updateWithSession(task, AppContext.getUsername());
+								bugService.updateWithSession(task,
+										AppContext.getUsername());
 
 								AssignTaskGroupWindow.this.close();
-								 EventBus.getInstance().fireEvent(
-				                            new TaskListEvent.GotoRead(this, task.getId()));
+								EventBus.getInstance().fireEvent(
+										new TaskListEvent.GotoRead(this, task
+												.getId()));
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -117,7 +120,8 @@ public class AssignTaskGroupWindow extends Window {
 			@Override
 			public void attachField(Object propertyId, Field field) {
 				if (propertyId.equals("owner")) {
-					informationLayout.addComponent(field, "Responsible User", 0, 0);
+					informationLayout.addComponent(field, "Responsible User",
+							0, 0);
 				}
 			}
 		}
@@ -131,7 +135,7 @@ public class AssignTaskGroupWindow extends Window {
 					com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("owner")) {
 					return new ProjectMemberComboBox();
-				} 
+				}
 				return null;
 			}
 		}

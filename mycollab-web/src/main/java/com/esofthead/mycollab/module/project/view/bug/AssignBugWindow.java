@@ -42,6 +42,7 @@ public class AssignBugWindow extends Window {
 
 	public AssignBugWindow(final IBugCallbackStatusComp callbackForm,
 			final SimpleBug bug) {
+		super("Assign bug '" + bug.getSummary() + "'");
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");

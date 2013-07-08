@@ -43,6 +43,7 @@ public class ApproveInputWindow extends Window {
 
 	public ApproveInputWindow(final IBugCallbackStatusComp callbackForm,
 			final SimpleBug bug) {
+		super("Approve bug '" + bug.getSummary() + "'");
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");
