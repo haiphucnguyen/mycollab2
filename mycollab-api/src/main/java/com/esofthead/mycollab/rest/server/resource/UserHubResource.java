@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.restlet.resource.Post;
 
+import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
+
 public interface UserHubResource {
 	@Post
 	public String doPost(String subdomain, String username, String password,

@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
-import com.esofthead.mycollab.rest.server.resource.SubdomainExistedException;
+import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 import com.esofthead.mycollab.web.LocalizationHelper;
 
 @Service
@@ -60,32 +60,31 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	@Transactional
-	public void registerAccount(String subdomain, int billingPlanId,
-			String username, String password, String email, String timezoneId) {
+	public void registerAccount(final String subdomain,
+			final int billingPlanId, final String username,
+			final String password, final String email, final String timezoneId) {
 
 		// check whether username is already existed
-		UserExample userEx = new UserExample();
+		final UserExample userEx = new UserExample();
 		userEx.createCriteria().andUsernameEqualTo(username);
-		if (userMapper.countByExample(userEx) > 0) {
+		if (this.userMapper.countByExample(userEx) > 0) {
 			throw new ExistingUserRegisterException(
 					LocalizationHelper.getMessage(
 							GenericI18Enum.EXISTING_USER_REGISTER_ERROR,
 							username));
 		}
 
-		BillingAccountExample billingEx = new BillingAccountExample();
+		final BillingAccountExample billingEx = new BillingAccountExample();
 		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
-		if (billingAccountMapper.countByExample(billingEx) > 0) {
-			throw new SubdomainExistedException(
-					LocalizationHelper.getMessage(
-							GenericI18Enum.EXISTING_DOMAIN_REGISTER_ERROR,
-							subdomain));
+		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
+			throw new SubdomainExistedException(LocalizationHelper.getMessage(
+					GenericI18Enum.EXISTING_DOMAIN_REGISTER_ERROR, subdomain));
 		}
 
-		BillingPlan billingPlan = billingPlanMapper
+		final BillingPlan billingPlan = this.billingPlanMapper
 				.selectByPrimaryKey(billingPlanId);
 		// Save billing account
-		BillingAccount billingAccount = new BillingAccount();
+		final BillingAccount billingAccount = new BillingAccount();
 		billingAccount.setBillingplanid(billingPlan.getId());
 		billingAccount.setCreatedtime(new GregorianCalendar().getTime());
 		billingAccount
@@ -97,18 +96,18 @@ public class BillingServiceImpl implements BillingService {
 		billingAccount.setStatus(AccountStatusConstants.ACTIVE);
 		billingAccount.setSubdomain(subdomain);
 
-		Integer accountid = billingAccountMapper
+		final Integer accountid = this.billingAccountMapper
 				.insertAndReturnKey(billingAccount);
 
 		// Save to account setting
-		AccountSettings accountSettings = new AccountSettings();
+		final AccountSettings accountSettings = new AccountSettings();
 		accountSettings.setSaccountid(accountid);
 		accountSettings.setDefaulttimezone(timezoneId);
-		accountSettingMapper.insert(accountSettings);
+		this.accountSettingMapper.insert(accountSettings);
 
 		// Register the new user to this account
 		// Fix issue account
-		User user = new User();
+		final User user = new User();
 		user.setEmail(email);
 		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
 		user.setTimezone(timezoneId);
@@ -123,44 +122,40 @@ public class BillingServiceImpl implements BillingService {
 		} else if (user.getLastname() == null) {
 			user.setLastname("");
 		}
-		userMapper.insert(user);
+		this.userMapper.insert(user);
 
 		// TODO: adjust register service
 		// user.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
 		// user.setRegistrationsource(RegisterSourceConstants.WEB);
 
 		// Register default role for account
-		Role role = new Role();
+		final Role role = new Role();
 		role.setRolename(SimpleRole.STANDARD_USER);
 		role.setDescription("");
 		role.setSaccountid(accountid);
-		int roleId = roleService.saveWithSession(role, username);
+		final int roleId = this.roleService.saveWithSession(role, username);
 
 		// save default permission to role
-		PermissionMap permissionMap = new PermissionMap();
-		for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
-			permissionMap.addPath(
-					RolePermissionCollections.CRM_PERMISSIONS_ARR[i],
-					PermissionFlag.READ_ONLY);
+		final PermissionMap permissionMap = new PermissionMap();
+		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element, PermissionFlag.READ_ONLY);
 		}
 
-		for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
-			permissionMap.addPath(
-					RolePermissionCollections.USER_PERMISSION_ARR[i],
-					PermissionFlag.READ_ONLY);
+		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element, PermissionFlag.READ_ONLY);
 		}
-		roleService.savePermission(roleId, permissionMap);
+		this.roleService.savePermission(roleId, permissionMap);
 
 		// save default account currency
-		AccountCurrency currency = new AccountCurrency();
+		final AccountCurrency currency = new AccountCurrency();
 		currency.setAccountid(accountid);
 		currency.setCurrencyid(1);
-		accountCurrencyMapper.insert(currency);
+		this.accountCurrencyMapper.insert(currency);
 	}
 
 	@Override
-	public List<String> getSubdomainsOfUser(String username) {
-		return billingAccountMapperExt.getSubdomainsOfUser(username);
+	public List<String> getSubdomainsOfUser(final String username) {
+		return this.billingAccountMapperExt.getSubdomainsOfUser(username);
 	}
 
 }
