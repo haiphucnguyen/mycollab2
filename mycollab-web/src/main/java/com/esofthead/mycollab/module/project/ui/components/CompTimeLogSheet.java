@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -15,6 +16,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -154,10 +156,14 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 			CompTimeLogSheet.this.tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 					AppContext.getSpringBean(ItemTimeLoggingService.class),
-					SimpleItemTimeLogging.class,
-					new String[] { "logUserFullName", "createdtime",
-							"logvalue", "id" }, new String[] { "User",
-							"Created Time", "Time", "" });
+					SimpleItemTimeLogging.class, Arrays.asList(
+							new TableViewField("User", "logUserFullName",
+									UIConstants.TABLE_X_LABEL_WIDTH),
+							new TableViewField("Created Time", "createdtime"),
+							new TableViewField("Value", "logvalue",
+									UIConstants.TABLE_S_LABEL_WIDTH),
+							new TableViewField("", "id",
+									UIConstants.TABLE_CONTROL_WIDTH)));
 
 			CompTimeLogSheet.this.tableItem.addGeneratedColumn(
 					"logUserFullName", new Table.ColumnGenerator() {
@@ -276,13 +282,6 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 					});
 
 			CompTimeLogSheet.this.tableItem.setWidth("100%");
-
-			CompTimeLogSheet.this.tableItem.setColumnExpandRatio(
-					"logUserFullName", 1.0f);
-			CompTimeLogSheet.this.tableItem.setColumnWidth("monitorDate",
-					UIConstants.TABLE_DATE_TIME_WIDTH);
-			CompTimeLogSheet.this.tableItem.setColumnWidth("logvalue",
-					UIConstants.TABLE_S_LABEL_WIDTH);
 
 			this.addComponent(CompTimeLogSheet.this.tableItem);
 			this.loadTimeInvestItem();

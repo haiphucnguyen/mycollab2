@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.time;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -12,6 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
@@ -25,10 +27,9 @@ public class TimeTrackingTableDisplay
 		PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> {
 	private static final long serialVersionUID = 1L;
 
-	public TimeTrackingTableDisplay(String[] visibleColumns,
-			String[] columnHeaders) {
+	public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(ItemTimeLoggingService.class),
-				SimpleItemTimeLogging.class, visibleColumns, columnHeaders);
+				SimpleItemTimeLogging.class, displayColumns);
 
 		this.addGeneratedColumn("logUserFullName", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -165,12 +166,6 @@ public class TimeTrackingTableDisplay
 		});
 
 		this.setWidth("100%");
-
-		this.setColumnExpandRatio("summary", 1.0f);
-		this.setColumnWidth("logUserFullName", UIConstants.TABLE_EX_LABEL_WIDTH);
-		this.setColumnWidth("projectName", UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
-		this.setColumnWidth("logvalue", UIConstants.TABLE_S_LABEL_WIDTH);
 	}
 
 }

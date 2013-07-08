@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.BitSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -12,11 +14,12 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CallService;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.VerticalLayout;
@@ -33,27 +36,19 @@ public class CallListDashlet extends Depot {
 	public CallListDashlet() {
 		super("My Calls", new VerticalLayout());
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new CallTableDisplay(
-					new String[] { "isClosed", "subject", "status" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new CallTableDisplay(
-					new String[] { "isClosed", "subject", "startdate", "status" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
-							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER) });
-		}
+		tableItem = new CallTableDisplay(Arrays.asList(
+				new TableViewField("", "isClosed",
+						UIConstants.TABLE_CONTROL_WIDTH),
+				new TableViewField(LocalizationHelper
+						.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
+						"subject", UIConstants.TABLE_X_LABEL_WIDTH),
+				new TableViewField(LocalizationHelper
+						.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
+						"startdate", UIConstants.TABLE_DATE_WIDTH),
+				new TableViewField(LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
+						"status", UIConstants.TABLE_S_LABEL_WIDTH)));
+
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override

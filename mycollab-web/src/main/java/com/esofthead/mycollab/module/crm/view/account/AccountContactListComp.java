@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -10,14 +11,15 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.AccountContact;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -90,20 +92,10 @@ public class AccountContactListComp extends
 
 		addHeaderElement(controlsBtn);
 
-		tableItem = new ContactTableDisplay(
-				new String[] { "contactName", "title", "email", "officephone",
-						"id" },
-				new String[] {
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_TITLE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACTION_HEADER) });
+		tableItem = new ContactTableDisplay(Arrays.asList(
+				ContactTableFieldDef.name, ContactTableFieldDef.title,
+				ContactTableFieldDef.email, ContactTableFieldDef.phoneOffice,
+				ContactTableFieldDef.action));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -172,17 +164,18 @@ public class AccountContactListComp extends
 															final ConfirmDialog dialog) {
 														if (dialog
 																.isConfirmed()) {
-															final AccountService accountService = AppContext
-																	.getSpringBean(AccountService.class);
-															final AccountContact associateContact = new AccountContact();
-															associateContact
-																	.setAccountid(account
-																			.getId());
-															associateContact
-																	.setContactid(contact
-																			.getId());
-															accountService
-																	.removeAccountContactRelationship(associateContact);
+															final ContactService contactService = AppContext
+																	.getSpringBean(ContactService.class);
+															Contact contact = new Contact();
+															contact.setId(contact
+																	.getId());
+															contact.setAccountid(null);
+															contactService
+																	.updateWithSession(
+																			contact,
+																			AppContext
+																					.getUsername());
+
 															AccountContactListComp.this
 																	.refresh();
 														}

@@ -15,9 +15,7 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
 public class MyCollabApplication extends Application implements
@@ -184,37 +182,5 @@ public class MyCollabApplication extends Application implements
 
 	public void setInitialUrl(String initialUrl) {
 		this.initialUrl = initialUrl;
-	}
-
-	@Override
-	public Window getWindow(String name) {
-		Window w = super.getWindow(name);
-		if (w == null) {
-			if (name.startsWith("org.vaadin")) {
-				try {
-					Class<?> forName = Class.forName(name);
-					try {
-						Window newInstance = (Window) forName.newInstance();
-						w = newInstance;
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			if (w != null) {
-				addWindow(w);
-				w.open(new ExternalResource(w.getURL()));
-			}
-			return w;
-		}
-		return w;
 	}
 }

@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -1028,7 +1029,7 @@ public class ProjectController implements IController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 						presenter.go(projectView, new FileScreenData.Search(
-								(String[]) event.getData()));
+								(FileSearchCriteria) event.getData()));
 					}
 
 				});

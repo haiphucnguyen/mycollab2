@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui.table;
 
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 
 public class TableViewField {
 
@@ -15,7 +14,7 @@ public class TableViewField {
 	}
 
 	public TableViewField(String desc, String field) {
-		this(desc, field, UIConstants.TABLE_M_LABEL_WIDTH);
+		this(desc, field, -1);
 	}
 
 	public TableViewField(String desc, String field, int defaultWidth) {

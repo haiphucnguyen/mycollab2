@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -69,8 +71,12 @@ public class VersionListViewImpl extends AbstractView implements
 	private void generateDisplayTable() {
 		this.tableItem = new PagedBeanTable2<VersionService, VersionSearchCriteria, Version>(
 				AppContext.getSpringBean(VersionService.class), Version.class,
-				new String[] { "selected", "versionname", "description" },
-				new String[] { "", "Name", "Description" });
+				new TableViewField("", "selected",
+						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
+						new TableViewField("Name", "versionname",
+								UIConstants.TABLE_EX_LABEL_WIDTH),
+						new TableViewField("Description", "description",
+								UIConstants.TABLE_EX_LABEL_WIDTH)));
 
 		this.tableItem.addGeneratedColumn("selected",
 				new Table.ColumnGenerator() {
@@ -134,12 +140,6 @@ public class VersionListViewImpl extends AbstractView implements
 
 					}
 				});
-
-		this.tableItem.setColumnExpandRatio("versionname", 1);
-		this.tableItem.setColumnWidth("description",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.tableItem.setColumnWidth("selected",
-				UIConstants.TABLE_CONTROL_WIDTH);
 
 		this.tableItem.setWidth("100%");
 

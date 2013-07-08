@@ -7,7 +7,7 @@ public class StringUtil {
 
 	public static String preStringFormat(String value) {
 		if (value == null || "".equals(value)) {
-			return " ";
+			return "&nbsp;";
 		} else {
 			return value;
 		}

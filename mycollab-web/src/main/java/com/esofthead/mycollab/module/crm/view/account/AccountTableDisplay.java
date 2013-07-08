@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
+import com.esofthead.mycollab.vaadin.ui.UrlLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -18,6 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 /**
@@ -121,6 +123,23 @@ public class AccountTableDisplay extends
 								.getAssignUserFullName());
 				return b;
 
+			}
+		});
+
+		addGeneratedColumn("website", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
+				final SimpleAccount account = AccountTableDisplay.this
+						.getBeanByIndex(itemId);
+				if (account.getWebsite() != null) {
+					return new UrlLink(account.getWebsite());
+				} else {
+					return new Label("");
+				}
+				
 			}
 		});
 

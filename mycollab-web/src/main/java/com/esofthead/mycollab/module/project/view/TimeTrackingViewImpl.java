@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -24,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -119,10 +121,17 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 		dateSelectionLayout.addComponent(queryBtn);
 
-		this.tableItem = new TimeTrackingTableDisplay(new String[] {
-				"logUserFullName", "summary", "projectName", "createdtime",
-				"logvalue" }, new String[] { "User", "Summary", "Project",
-				"Created Time", "Hours" });
+		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
+				new TableViewField("User", "logUserFullName",
+						UIConstants.TABLE_X_LABEL_WIDTH),
+				new TableViewField("Summary", "summary",
+						UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
+						"Project", "projectName",
+						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+						"Created Time", "createdtime",
+						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
+						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH)));
+
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					private static final long serialVersionUID = 1L;

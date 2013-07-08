@@ -1,9 +1,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -26,6 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.MouseEvents;
@@ -43,9 +43,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class BugRelatedField extends CustomField {
-
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(BugRelatedField.class);
 	private TextField itemField;
 	private Embedded browseBtn;
 	private Embedded clearBtn;
@@ -230,9 +228,15 @@ public class BugRelatedField extends CustomField {
 
 		tableItem = new PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug>(
 				AppContext.getSpringBean(RelatedBugService.class),
-				SimpleRelatedBug.class, new String[] { "bugName", "relatetype",
-						"comment", "id" }, new String[] { "Bug Name",
-						"Related Type", "Comment", "" });
+				SimpleRelatedBug.class, Arrays.asList(
+						new TableViewField("Bug Name", "bugName",
+								UIConstants.TABLE_EX_LABEL_WIDTH),
+						new TableViewField("Related Type", "relatetype",
+								UIConstants.TABLE_S_LABEL_WIDTH),
+						new TableViewField("Comment", "comment",
+								UIConstants.TABLE_EX_LABEL_WIDTH),
+						new TableViewField("", "id",
+								UIConstants.TABLE_CONTROL_WIDTH)));
 
 		tableItem.addGeneratedColumn("bugName", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -381,10 +385,6 @@ public class BugRelatedField extends CustomField {
 				return deleteBtn;
 			}
 		});
-
-		tableItem.setColumnWidth("relatetype", UIConstants.TABLE_S_LABEL_WIDTH);
-		tableItem.setColumnWidth("comment", UIConstants.TABLE_EX_LABEL_WIDTH);
-		tableItem.setColumnWidth("id", UIConstants.TABLE_CONTROL_WIDTH);
 
 		mainLayout.addComponent(tableItem);
 

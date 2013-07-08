@@ -188,7 +188,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				if (subFolders != null) {
 					for (final Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
-						Object addItem = FileDashboardComponent.this.folderTree.addItem(
+						FileDashboardComponent.this.folderTree.addItem(
 								new Object[] {
 										subFolder.getName(),
 										AppContext.formatDateTime(subFolder
@@ -982,7 +982,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			@Override
 			protected SearchCriteria fillupSearchCriteria() {
 				FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
-
+				FileSearchPanel.this.searchCriteria.setRootFolder(rootPath);
 				FileSearchPanel.this.searchCriteria.setFileName(this.nameField
 						.getValue().toString().trim());
 				FileSearchPanel.this.searchCriteria.setBaseFolder(baseFolder

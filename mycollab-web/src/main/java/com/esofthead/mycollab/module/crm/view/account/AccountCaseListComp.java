@@ -4,11 +4,14 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.cases.CaseTableDisplay;
+import com.esofthead.mycollab.module.crm.view.cases.CaseTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -54,10 +57,10 @@ public class AccountCaseListComp extends
 
 		addHeaderElement(newBtn);
 
-		tableItem = new CaseTableDisplay(new String[] { "subject", "priority",
-				"status", "assignUserFullName", "createdtime" },
-				new String[] { "Subject", "Priority", "Status", "Assigned To",
-						"Date Created" });
+		tableItem = new CaseTableDisplay(Arrays.asList(
+				CaseTableFieldDef.subject, CaseTableFieldDef.priority,
+				CaseTableFieldDef.status, CaseTableFieldDef.assignUser,
+				CaseTableFieldDef.createdTime));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

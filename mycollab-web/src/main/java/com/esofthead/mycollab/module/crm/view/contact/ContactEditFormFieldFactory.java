@@ -24,7 +24,7 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
         if (propertyId.equals("leadsource")) {
             LeadSourceComboBox leadSource = new LeadSourceComboBox();
             return leadSource;
-        } else if (propertyId.equals("contactId")) {
+        } else if (propertyId.equals("accountid")) {
             AccountSelectionField contactField = new AccountSelectionField();
             return contactField;
         } else if (propertyId.equals("lastname")) {

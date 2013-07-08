@@ -10,6 +10,8 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface ProblemListView extends View {
+	
+	public static final String VIEW_DEF_ID = "project-problem-list";
 
     void enableActionControls(int numOfSelectedItem);
 

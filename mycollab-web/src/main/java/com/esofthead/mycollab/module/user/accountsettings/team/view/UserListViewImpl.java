@@ -4,12 +4,13 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -57,18 +59,15 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 	}
 
 	private void generateDisplayTable() {
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.tableItem = new UserTableDisplay(new String[] { "selected",
-					"displayName", "username", "email" }, new String[] { "",
-					"Name", "User Name", "Email" });
-
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.tableItem = new UserTableDisplay(new String[] { "selected",
-					"displayName", "username", "email", "lastAccessedTime" },
-					new String[] { "", "Name", "User Name", "Email",
-							"Last Accessed Time" });
-
-		}
+		this.tableItem = new UserTableDisplay(new TableViewField("",
+				"selected", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
+				new TableViewField("Name", "displayName",
+						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+						"User Name", "username",
+						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+						"Email", "email", UIConstants.TABLE_EMAIL_WIDTH),
+				new TableViewField("Last Accessed Time", "lastAccessedTime",
+						UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

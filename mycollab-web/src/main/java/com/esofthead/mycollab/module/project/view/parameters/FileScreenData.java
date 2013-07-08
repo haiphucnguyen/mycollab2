@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.parameters;
 
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 public class FileScreenData {
@@ -10,9 +11,9 @@ public class FileScreenData {
 		}
 	}
 
-	public static class Search extends ScreenData<String[]> {
+	public static class Search extends ScreenData<FileSearchCriteria> {
 
-		public Search(String[] criteria) {
+		public Search(FileSearchCriteria criteria) {
 			super(criteria);
 		}
 	}

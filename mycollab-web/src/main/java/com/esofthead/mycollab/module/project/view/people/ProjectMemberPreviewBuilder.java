@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.people;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
@@ -18,9 +20,9 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
+import com.esofthead.mycollab.module.project.view.bug.BugTableFieldDef;
 import com.esofthead.mycollab.module.project.view.standup.StandupReportListDisplay;
 import com.esofthead.mycollab.module.project.view.task.TaskTableDisplay;
 import com.esofthead.mycollab.module.project.view.user.ProjectActivityStreamPagedList;
@@ -419,19 +421,12 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		public UserBugDepot() {
 			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
-			this.bugDisplay = new BugTableDisplay(
-					new String[] { "id", "summary", "severity", "resolution",
-							"duedate" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
-							LocalizationHelper
-									.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
-							LocalizationHelper
-									.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
-							LocalizationHelper
-									.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
+			this.bugDisplay = new BugTableDisplay(BugTableFieldDef.action,
+					Arrays.asList(BugTableFieldDef.summary,
+							BugTableFieldDef.severity,
+							BugTableFieldDef.resolution,
+							BugTableFieldDef.duedate));
+
 			this.bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 						private static final long serialVersionUID = 1L;

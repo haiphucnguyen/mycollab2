@@ -72,19 +72,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	protected final Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
 
-	@Deprecated
-	public AbstractPagedBeanTable(final Class<T> type,
-			final String[] visibleColumns, final String[] columnHeaders) {
-		this.displayColumns = new ArrayList<TableViewField>();
-		for (int i = 0; i < visibleColumns.length; i++) {
-			displayColumns.add(new TableViewField(columnHeaders[i],
-					visibleColumns[i]));
-		}
-		this.type = type;
-
-		this.setStyleName("list-view");
-	}
-
 	public AbstractPagedBeanTable(Class<T> type,
 			List<TableViewField> displayColumns) {
 		this(type, null, displayColumns);
@@ -222,24 +209,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	public void addGeneratedColumn(final Object id,
 			final ColumnGenerator generatedColumn) {
 		this.columnGenerators.put(id, generatedColumn);
-	}
-
-	@Override
-	@Deprecated
-	public void setColumnExpandRatio(final Object propertyId,
-			final float expandRation) {
-
-	}
-
-	@Override
-	public void setColumnWidth(final Object propertyId, final int width) {
-		if (this.displayColumns != null) {
-			for (TableViewField field : displayColumns) {
-				if (propertyId.equals(field.getField())) {
-					field.setDefaultWidth(width);
-				}
-			}
-		}
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.time;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
@@ -20,6 +22,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -111,9 +114,14 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.tableItem = new TimeTrackingTableDisplay(new String[] {
-				"logUserFullName", "summary", "createdtime", "logvalue" },
-				new String[] { "User", "Summary", "Created Time", "Hours" });
+		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
+				new TableViewField("Summary", "summary",
+						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+						"User", "logUserFullName",
+						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+						"Created Time", "createdtime",
+						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
+						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH)));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

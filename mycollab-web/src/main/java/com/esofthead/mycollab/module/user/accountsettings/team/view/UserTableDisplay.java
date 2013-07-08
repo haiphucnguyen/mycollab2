@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -14,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -28,10 +31,10 @@ public class UserTableDisplay extends
 		PagedBeanTable2<UserService, UserSearchCriteria, SimpleUser> {
 	private static final long serialVersionUID = 1L;
 
-	public UserTableDisplay(final String[] visibleColumns,
-			String[] columnHeaders) {
+	public UserTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(UserService.class), SimpleUser.class,
-				visibleColumns, columnHeaders);
+				requiredColumn, displayColumns);
 
 		if (ScreenSize.hasSupport1024Pixels()) {
 			this.setWidth("750px");
@@ -136,11 +139,5 @@ public class UserTableDisplay extends
 						return dateLbl;
 					}
 				});
-
-		this.setColumnExpandRatio("displayName", 1.0f);
-		this.setColumnWidth("username", UIConstants.TABLE_EX_LABEL_WIDTH);
-		this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		this.setColumnWidth("lastAccessedTime",
-				UIConstants.TABLE_DATE_TIME_WIDTH);
 	}
 }

@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -10,7 +11,6 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -48,21 +48,11 @@ public class BugListWidget extends Depot {
 
 		this.addComponentAsFirst(backBtnWrapper);
 
-		this.tableItem = new BugTableDisplay(
-				new String[] { "id", "summary", "assignuserFullName",
-						"severity", "resolution", "duedate" },
-				new String[] {
-						"",
-						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_ASSIGN_USER_HEADER),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
+		this.tableItem = new BugTableDisplay(BugTableFieldDef.action,
+				Arrays.asList(BugTableFieldDef.summary,
+						BugTableFieldDef.assignUser, BugTableFieldDef.severity,
+						BugTableFieldDef.resolution, BugTableFieldDef.duedate));
+
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					private static final long serialVersionUID = 1L;

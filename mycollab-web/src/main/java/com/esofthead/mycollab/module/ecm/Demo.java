@@ -41,8 +41,8 @@ public class Demo {
 
 		jcrDao.saveContent(content, "nghitran");
 		//
-		// Resource content = jcrDao.getResource("a/b/d");
-		// System.out.println(content.getCreatedUser());
+		 Resource rs = jcrDao.getResource("a/b/d");
+		 System.out.println(rs);
 		//
 		// System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
 		//
@@ -50,7 +50,7 @@ public class Demo {
 		// System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
 		// System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
 
-		final List<Resource> resources = jcrDao.searchResourcesByName("a");
+		final List<Resource> resources = jcrDao.searchResourcesByName("a/b", "d");
 		System.out.println("Resources: " + resources.size());
 		// System.out.println("CONTENT " + content);
 		//

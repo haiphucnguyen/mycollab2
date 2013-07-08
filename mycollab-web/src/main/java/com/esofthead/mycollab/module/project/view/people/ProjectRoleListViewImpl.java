@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -24,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -65,9 +68,12 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	private void generateDisplayTable() {
 		this.tableItem = new PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, ProjectRole>(
 				AppContext.getSpringBean(ProjectRoleService.class),
-				ProjectRole.class, new String[] { "selected", "rolename",
-						"description" }, new String[] { "", "Name",
-						"Description" });
+				ProjectRole.class, new TableViewField("", "selected",
+						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
+						new TableViewField("Name", "rolename",
+								UIConstants.TABLE_EX_LABEL_WIDTH),
+						new TableViewField("Description", "description",
+								UIConstants.TABLE_EX_LABEL_WIDTH)));
 
 		this.tableItem.addGeneratedColumn("selected",
 				new Table.ColumnGenerator() {
@@ -126,12 +132,6 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 
 					}
 				});
-
-		this.tableItem.setColumnWidth("selected",
-				UIConstants.TABLE_CONTROL_WIDTH);
-		this.tableItem.setColumnExpandRatio("rolename", 1);
-		this.tableItem.setColumnWidth("description",
-				UIConstants.TABLE_X_LABEL_WIDTH);
 
 		this.listLayout.addComponent(this.constructTableActionControls());
 		this.listLayout.addComponent(this.tableItem);

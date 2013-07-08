@@ -9,14 +9,15 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.vaadin.ui.Button;
 
 public interface BugListView extends View {
-	
+	public static final String VIEW_DEF_ID = "project-bug-list";
+
 	void setTitle(String title);
 
-    HasSearchHandlers<BugSearchCriteria> getSearchHandlers();
+	HasSearchHandlers<BugSearchCriteria> getSearchHandlers();
 
-    HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers();
+	HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers();
 
-    IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable();
-    
-    Button getExportBtn();
+	IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable();
+
+	Button getExportBtn();
 }

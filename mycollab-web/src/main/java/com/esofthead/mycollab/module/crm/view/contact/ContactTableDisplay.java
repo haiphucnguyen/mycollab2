@@ -10,9 +10,9 @@ import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -26,10 +26,21 @@ import com.vaadin.ui.VerticalLayout;
 public class ContactTableDisplay extends
 		PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> {
 
-	public ContactTableDisplay(final String[] visibleColumns,
-			final String[] columnHeaders) {
+	public ContactTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
+	}
+
+	public ContactTableDisplay(TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
+		this(null, requiredColumn, displayColumns);
+
+	}
+
+	public ContactTableDisplay(String viewId, TableViewField requiredColumn,
+			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(ContactService.class),
-				SimpleContact.class, visibleColumns, columnHeaders);
+				SimpleContact.class, viewId, requiredColumn, displayColumns);
+
 		addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
@@ -110,39 +121,25 @@ public class ContactTableDisplay extends
 					final Object itemId, final Object columnId) {
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
-				final List<Account> accounts = contact.getAccounts();
-				if (accounts != null && !accounts.isEmpty()) {
-					final VerticalLayout hLayout = new VerticalLayout();
-					for (final Account account : accounts) {
-						final ButtonLink accountLink = new ButtonLink(account
-								.getAccountname(), new Button.ClickListener() {
+				if (contact.getAccountName() != null) {
+					Button accountLink = new Button(contact.getAccountName(),
+							new Button.ClickListener() {
 
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new AccountEvent.GotoRead(
-												ContactTableDisplay.this,
-												account.getId()));
-							}
-						});
-						hLayout.addComponent(accountLink);
-					}
+								@Override
+								public void buttonClick(ClickEvent event) {
+									fireTableEvent(new TableClickEvent(
+											ContactTableDisplay.this, contact,
+											"accountName"));
 
-					return hLayout;
+								}
+							});
+					accountLink.setStyleName("link");
+					return accountLink;
 				} else {
 					return new Label();
 				}
 			}
 		});
-
-		setColumnExpandRatio("contactName", 1.0f);
-
-		setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
-		setColumnWidth("accountName", UIConstants.TABLE_EX_LABEL_WIDTH);
-		setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
-		setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 		this.setWidth("100%");
 	}

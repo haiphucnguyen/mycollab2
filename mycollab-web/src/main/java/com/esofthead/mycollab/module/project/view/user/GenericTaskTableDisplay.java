@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.user;
 
+import java.util.List;
+
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
@@ -14,8 +16,8 @@ import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
@@ -31,10 +33,9 @@ public class GenericTaskTableDisplay
 		PagedBeanTable2<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> {
 	private static final long serialVersionUID = 1L;
 
-	public GenericTaskTableDisplay(final String[] visibleColumns,
-			final String[] columnHeaders) {
+	public GenericTaskTableDisplay(List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(ProjectGenericTaskService.class),
-				ProjectGenericTask.class, visibleColumns, columnHeaders);
+				ProjectGenericTask.class, displayColumns);
 
 		addGeneratedColumn("name", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -123,8 +124,5 @@ public class GenericTaskTableDisplay
 				return b;
 			}
 		});
-
-		setColumnExpandRatio("name", 1);
-		setColumnWidth("dueDate", UIConstants.TABLE_DATE_WIDTH);
 	}
 }

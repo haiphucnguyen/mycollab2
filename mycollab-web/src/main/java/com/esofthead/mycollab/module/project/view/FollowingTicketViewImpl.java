@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -101,9 +103,14 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		private ProjectService projectService;
 
 		public FollowingTicketTable() {
-			super(FollowingTicket.class, new String[] { "summary",
-					"projectName", "assignUser", "monitorDate" }, new String[] {
-					"Summary", "Project", "Assignee", "Monitor Date" });
+			super(FollowingTicket.class, Arrays.asList(new TableViewField(
+					"Summary", "summary", UIConstants.TABLE_EX_LABEL_WIDTH),
+					new TableViewField("Project", "projectName",
+							UIConstants.TABLE_X_LABEL_WIDTH),
+					new TableViewField("Assignee", "assignUser",
+							UIConstants.TABLE_X_LABEL_WIDTH),
+					new TableViewField("Created Date", "monitorDate",
+							UIConstants.TABLE_DATE_WIDTH)));
 
 			this.projectService = AppContext
 					.getSpringBean(ProjectService.class);
@@ -215,11 +222,6 @@ public class FollowingTicketViewImpl extends AbstractView implements
 					return lbl;
 				}
 			});
-
-			this.setColumnWidth("projectName", UIConstants.TABLE_X_LABEL_WIDTH);
-			this.setColumnWidth("assignUser", UIConstants.TABLE_X_LABEL_WIDTH);
-			this.setColumnWidth("monitorDate", UIConstants.TABLE_DATE_WIDTH);
-			this.setColumnExpandRatio("summary", 1.0f);
 		}
 
 		@Override
