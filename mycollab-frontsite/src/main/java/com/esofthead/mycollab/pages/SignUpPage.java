@@ -14,6 +14,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,19 +82,18 @@ public class SignUpPage extends BasePage {
 						.wrap(UserHubResource.class);
 
 				try {
-					final String subdomainValue = subdomain.getModelObject();
-					final String usernameValue = username.getModelObject();
-					final String passwordValue = password.getModelObject();
-					final String emailValue = email.getModelObject();
-					final String firstnameValue = firstname.getModelObject();
-					final String lastnameValue = lastname.getModelObject();
-					final String timezoneValue = timezone.getModelObject();
-					final int planIdValue = parameters.get("planId").toInt();
 
-					final String response = userResource.doPost(subdomainValue,
-							usernameValue, passwordValue, emailValue,
-							planIdValue, firstnameValue, lastnameValue,
-							timezoneValue);
+					Form form = new Form();
+					form.set("subdomain", subdomain.getModelObject());
+					form.set("planId", parameters.get("planId").toString());
+					form.set("username", username.getModelObject());
+					form.set("password", password.getModelObject());
+					form.set("email", email.getModelObject());
+					form.set("timezoneId", timezone.getModelObject());
+					form.set("firstname", firstname.getModelObject());
+					form.set("lastname", lastname.getModelObject());
+
+					final String response = userResource.doPost(form);
 					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
 							new RedirectRequestHandler(response));
 				} catch (final Exception e) {
