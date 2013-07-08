@@ -21,6 +21,7 @@ public class SimpleContact extends Contact {
 
 	private static final long serialVersionUID = 1L;
 	private String assignUserFullName;
+	private String assignUserAvatarId;
 	private String contactName;
 	private String accountName;
 
@@ -46,5 +47,13 @@ public class SimpleContact extends Contact {
 
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
 	}
 }

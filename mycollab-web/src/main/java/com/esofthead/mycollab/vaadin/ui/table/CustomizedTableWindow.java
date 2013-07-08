@@ -67,7 +67,27 @@ public abstract class CustomizedTableWindow extends Window {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						List<TableViewField> defaultSelectedColumns = tableItem
+								.getDefaultSelectedColumns();
+						if (defaultSelectedColumns != null) {
+							final List<TableViewField> selectedColumns = new ArrayList<TableViewField>();
+							final BeanItemContainer<TableViewField> container = (BeanItemContainer<TableViewField>) CustomizedTableWindow.this.listBuilder
+									.getContainerDataSource();
+							final Collection<TableViewField> itemIds = container
+									.getItemIds();
+
+							for (TableViewField column : defaultSelectedColumns) {
+								for (final TableViewField viewField : itemIds) {
+									if (column.getField().equals(
+											viewField.getField())) {
+										selectedColumns.add(viewField);
+									}
+								}
+							}
+
+							CustomizedTableWindow.this.listBuilder
+									.setValue(selectedColumns);
+						}
 
 					}
 				});

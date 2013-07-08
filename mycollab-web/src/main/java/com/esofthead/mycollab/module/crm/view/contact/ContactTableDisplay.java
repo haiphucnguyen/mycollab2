@@ -2,14 +2,12 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.util.List;
 
-import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -20,7 +18,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
-import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class ContactTableDisplay extends
@@ -122,22 +119,47 @@ public class ContactTableDisplay extends
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
 				if (contact.getAccountName() != null) {
-					Button accountLink = new Button(contact.getAccountName(),
-							new Button.ClickListener() {
+					ButtonLink accountLink = new ButtonLink(contact
+							.getAccountName(), new Button.ClickListener() {
 
-								@Override
-								public void buttonClick(ClickEvent event) {
-									fireTableEvent(new TableClickEvent(
-											ContactTableDisplay.this, contact,
-											"accountName"));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							fireTableEvent(new TableClickEvent(
+									ContactTableDisplay.this, contact,
+									"accountName"));
 
-								}
-							});
-					accountLink.setStyleName("link");
+						}
+					});
 					return accountLink;
 				} else {
 					return new Label();
 				}
+			}
+		});
+
+		addGeneratedColumn("birthday", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
+				final SimpleContact contact = ContactTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new Label(AppContext.formatDate(contact.getBirthday()));
+			}
+		});
+
+		addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(final Table source,
+					final Object itemId, final Object columnId) {
+				final SimpleContact contact = ContactTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new UserLink(contact.getAssignuser(), contact
+						.getAssignUserAvatarId(), contact
+						.getAssignUserFullName());
 			}
 		});
 
