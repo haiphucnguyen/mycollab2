@@ -45,6 +45,7 @@ public class ReOpenWindow extends Window {
 
 	public ReOpenWindow(final IBugCallbackStatusComp callbackForm,
 			final SimpleBug bug) {
+		super("Reopen bug '" + bug.getSummary() + "'");
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");

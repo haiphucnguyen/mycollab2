@@ -422,6 +422,20 @@ public class BugTableDisplay extends
 			}
 		});
 
+		this.addGeneratedColumn("createdtime", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleBug bug = BugTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new Label(
+						AppContext.formatDateTime(bug.getCreatedtime()));
+
+			}
+		});
+
 		this.setWidth("100%");
 	}
 

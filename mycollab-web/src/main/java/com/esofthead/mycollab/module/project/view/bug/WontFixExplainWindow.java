@@ -47,6 +47,7 @@ public class WontFixExplainWindow extends Window {
 
 	public WontFixExplainWindow(final IBugCallbackStatusComp callbackForm,
 			final SimpleBug bug) {
+		super("Won't fix bug '" + bug.getSummary() + "'");
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");

@@ -46,6 +46,7 @@ public class ResolvedInputWindow extends Window {
 
 	public ResolvedInputWindow(final IBugCallbackStatusComp callbackForm,
 			final SimpleBug bug) {
+		super("Resolve bug '" + bug.getSummary() + "'");
 		this.bug = bug;
 		this.setWidth("800px");
 		this.editForm = new EditForm();
