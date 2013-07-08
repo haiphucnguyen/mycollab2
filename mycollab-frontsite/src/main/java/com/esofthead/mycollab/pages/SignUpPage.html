@@ -32,42 +32,85 @@
 									value="with Facebook" /> <input class="btn-google"
 									type="button" name="sig-google" value="with Google" />
 							</div>
-							<div class="sig-left-1">
-								<p>First name</p>
-								<input type="text" wicket:id="firstnamefield" />
-								<p>Username</p>
-								<input type="text" wicket:id="usernamefield" />
-								<p>Password</p>
-								<input type="password" wicket:id="passwordfield" />
-								<p>Timezone</p>
-								<div class="timezone_dropdown">
-									<div class="timezone_input">
-										<span class="timezone_value"></span>
-									</div>
-								</div>
-								<input type="hidden" id="timezonefield"
-									wicket:id="timezonefield" />
-								<div id="timezone_dropdown_hidden">
-									<wicket:container wicket:id="arearepeat">
-										<div class="single_area">
-											<span wicket:id="one_area"></span>
+							<div wicket:id="feedback"></div>
+							<table class="signup-table">
+								<tr>
+									<td>
+										<div class="formfield">
+											<p>Username</p>
+											<input type="text" wicket:id="usernamefield" />
 										</div>
-										<div class="single_timezone" wicket:id="timezonerepeat">
-											<span wicket:id="one_timezone">US/Alaska: (UTC-0800)</span>
+									</td>
+									<td>
+										<div class="formfield">
+											<p>Subdomain</p>
+											<input id="subdomainfield" type="text"
+												wicket:id="subdomainfield" />
+											<span class="sig-subdomain">.mycollab.com</span>
 										</div>
-									</wicket:container>
-								</div>
-							</div>
-							<div class="sig-left-2">
-								<p>Last name</p>
-								<input type="text" wicket:id="lastnamefield" />
-								<p>Subdomain</p>
-								<input id="subdomainfield" type="text"
-									wicket:id="subdomainfield" />
-									<span class="sig-subdomain">.mycollab.com</span>
-								<p>Confirm Password</p>
-								<input type="password" wicket:id="cpasswordfield" />
-							</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="formfield-expand">
+											<p>Email</p>
+											<input type="text" wicket:id="emailfield" />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="formfield">
+											<p>First name</p>
+											<input type="text" wicket:id="firstnamefield" />
+										</div>
+									</td>
+									<td>
+										<div class="formfield">
+											<p>Last name</p>
+											<input type="text" wicket:id="lastnamefield" />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="formfield">
+											<p>Password</p>
+											<input type="password" wicket:id="passwordfield" />
+										</div>
+									</td>
+									<td>
+										<div class="formfield">
+											<p>Confirm Password</p>
+											<input type="password" wicket:id="cpasswordfield" />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="formfield-expand">
+											<p>Timezone</p>
+											<div class="timezone_dropdown">
+												<div class="timezone_input">
+													<span class="timezone_value"></span>
+												</div>
+											</div>
+											<input type="hidden" id="timezonefield"
+												wicket:id="timezonefield" />
+											<div id="timezone_dropdown_hidden">
+												<wicket:container wicket:id="arearepeat">
+													<div class="single_area">
+														<span wicket:id="one_area"></span>
+													</div>
+													<div class="single_timezone" wicket:id="timezonerepeat">
+														<span wicket:id="one_timezone">US/Alaska: (UTC-0800)</span>
+													</div>
+												</wicket:container>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
 							<div class="sig-left-chk">
 								<input type="checkbox" wicket:id="receiveupdatefield" name="receiveUpdate" id="receiveUpdate">
 								<label for="receiveUpdate">I want to receive Mycollab

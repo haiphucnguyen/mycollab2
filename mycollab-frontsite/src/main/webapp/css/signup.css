@@ -84,41 +84,21 @@
 	z-index: 2;
 }
 .signup-table {
-	background-color: #f5f5f5;
-	border: 1px solid #ababab;
-	padding-bottom: 10px;
-	margin-bottom: 15px;
-	position: relative;
-	z-index: 1;
-}
-.signup-table p {
-	font-size: 14px;
-	color: #575757;
-}
-.signup-table input {
-	width: 250px;
-	height: 32px;
-	border-radius: 5px;
-	font-size: 14px;
-	padding: 0px 7px;
-/* 	color: #b4b4b4; */
-	background: url("../images/grad-dark-top2.png") repeat-x 0 0 #ffffff;
-}
-.signup-table select {
-	width: 266px;
-	padding: 7px 0px 7px 7px;
-	font-size: 14px;
-	border-radius: 5px;
-	margin: 0px;
-	height: 34px;
-}
-.signup-table sup {
-	color: #4f8cca;
-}
-.signup-table input::-webkit-input-placeholder, .signup-table input:-moz-placeholder, .signup-table input::-moz-placeholder, .signup-table input:-ms-input-placeholder {
-	color: #b4b4b4;
+	width: 100%;
 }
 
+.signup-table .formfield {
+	width: 237px;
+	margin: 0 auto;
+}
+
+.signup-table .formfield-expand {
+	width: 100%;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0px 12px 0px 11px;
+}
 
 .single_area {
 	padding: 5px;
@@ -134,4 +114,15 @@
 #timezone_dropdown_hidden div.single_timezone:hover {
 	background-color: rgb(112, 112, 112);
 	color: white;
+}
+
+#signup-content ul.feedbackPanel {
+	padding-top: 10px;
+	list-style: disc inside none;
+	font-size: 12px;
+	line-height: 1.3em;
+}
+#signup-content ul.feedbackPanel li.feedbackPanelERROR {
+	color: red;
+	padding-left: 20px;
 }

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
@@ -24,29 +25,47 @@ public class UserHubResourceImpl extends ServerResource implements
 	@Autowired
 	private BillingService billingService;
 
+	@Override
 	@Post("form")
-	public String doPost(Form form) {
-		log.debug("Start handling form request");
-		String subdomain = form.getFirstValue("subdomain");
-		String username = form.getFirstValue("username");
-		String password = form.getFirstValue("password");
-		String email = form.getFirstValue("email");
-		String timezoneId = form.getFirstValue("timezone");
-		int planId = Integer.parseInt(form.getFirstValue("planId"));
-		billingService.registerAccount(subdomain, planId, username, password,
-				email, timezoneId);
-		return "ok";
+	public String doPost(final Form form) {
+		UserHubResourceImpl.log.debug("Start handling form request");
+		final String subdomain = form.getFirstValue("subdomain");
+		// final String username = form.getFirstValue("username");
+		// final String password = form.getFirstValue("password");
+		// final String email = form.getFirstValue("email");
+		// final String timezoneId = form.getFirstValue("timezone");
+		// final int planId = Integer.parseInt(form.getFirstValue("planId"));
+		// this.billingService.registerAccount(subdomain, planId, username,
+		// password, email, timezoneId);
+		String siteUrl = "";
+		if (ApplicationProperties.productionMode) {
+			siteUrl = String.format(ApplicationProperties
+					.getString(ApplicationProperties.APP_URL), subdomain);
+		} else {
+			final boolean isSupportSubDomain = ApplicationProperties
+					.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
+			if (!isSupportSubDomain) {
+				siteUrl = String.format(ApplicationProperties
+						.getString(ApplicationProperties.APP_URL),
+						ApplicationProperties
+								.getString(ApplicationProperties.SITE_NAME));
+			} else {
+				siteUrl = String.format(ApplicationProperties
+						.getString(ApplicationProperties.APP_URL), subdomain);
+			}
+		}
+		return siteUrl;
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(final String[] args) throws Exception {
 		// Create the HTTP server and listen on port 8182
-		Server server = new Server(Protocol.HTTP, 8182,
+		final Server server = new Server(Protocol.HTTP, 8182,
 				UserHubResourceImpl.class);
 		server.start();
 	}
 
 	@Override
-	public List<String> getSubdomainsOfUser(String username) {
-		return billingService.getSubdomainsOfUser(username);
+	public List<String> getSubdomainsOfUser(final String username) {
+		return this.billingService.getSubdomainsOfUser(username);
 	}
 }
