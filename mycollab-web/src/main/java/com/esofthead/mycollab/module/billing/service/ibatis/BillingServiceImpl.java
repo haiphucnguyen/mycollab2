@@ -13,7 +13,6 @@ import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
-import com.esofthead.mycollab.module.billing.ExistingDomainRegisterException;
 import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
@@ -33,6 +32,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.rest.server.resource.SubdomainExistedException;
 import com.esofthead.mycollab.web.LocalizationHelper;
 
 @Service
@@ -76,7 +76,7 @@ public class BillingServiceImpl implements BillingService {
 		BillingAccountExample billingEx = new BillingAccountExample();
 		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
 		if (billingAccountMapper.countByExample(billingEx) > 0) {
-			throw new ExistingDomainRegisterException(
+			throw new SubdomainExistedException(
 					LocalizationHelper.getMessage(
 							GenericI18Enum.EXISTING_DOMAIN_REGISTER_ERROR,
 							subdomain));

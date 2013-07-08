@@ -26,12 +26,14 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
+import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 public class SignUpPage extends BasePage {
 
@@ -128,6 +130,10 @@ public class SignUpPage extends BasePage {
 				}
 			}
 		};
+		
+		ClientResource clientResource = new ClientResource(
+				"http://localhost:8182/mycollab-web/api/signup");
+		UserHubResource testResource = clientResource.wrap(UserHubResource.class);
 
 		this.add(form);
 		form.add(new FeedbackPanel("feedback"));
