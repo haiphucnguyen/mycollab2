@@ -93,9 +93,9 @@ public class SignUpPage extends BasePage {
 					form.set("firstname", firstname.getModelObject());
 					form.set("lastname", lastname.getModelObject());
 
-					final String response = userResource.doPost(form);
-					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
-							new RedirectRequestHandler(response));
+//					final String response = userResource.doPost(form);
+//					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
+//							new RedirectRequestHandler(response));
 				} catch (final Exception e) {
 					this.error(e.getMessage());
 				}

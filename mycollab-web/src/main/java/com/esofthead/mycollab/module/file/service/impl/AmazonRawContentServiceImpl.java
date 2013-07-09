@@ -8,7 +8,6 @@ import java.io.InputStream;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
-import com.amazonaws.services.s3.model.CopyObjectResult;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
@@ -94,72 +93,93 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 			}
 
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new MyCollabException(e);
 		}
 	}
 
 	@Override
 	public void rename(String oldPath, String newPath) {
 		AmazonS3 s3client = S3StorageConfig.getS3Client();
-		CopyObjectRequest copyRequest = new CopyObjectRequest(
-				S3StorageConfig.getBucket(), oldPath,
-				S3StorageConfig.getBucket(), newPath);
-		s3client.copyObject(copyRequest);
-
-		DeleteObjectRequest deleteRequest = new DeleteObjectRequest(
-				S3StorageConfig.getBucket(), oldPath);
-		s3client.deleteObject(deleteRequest);
-	}
-
-	public static void mainUpdateCache(String[] args) {
-		AmazonS3 s3client = S3StorageConfig.getS3Client();
 
 		try {
-			ObjectListing listObjects = s3client.listObjects("mycollab_assets",
-					"icons");
+			ObjectListing listObjects = s3client.listObjects(
+					S3StorageConfig.getBucket(), oldPath);
 			for (S3ObjectSummary objectSummary : listObjects
 					.getObjectSummaries()) {
-				System.out.println("Key: " + objectSummary.getKey());
-
-				ObjectMetadata metaData = new ObjectMetadata();
-				metaData.setCacheControl("max-age=8640000");
 				String key = objectSummary.getKey();
-				String contentType = "";
-				int lastIndex = key.lastIndexOf(".");
-				if (lastIndex >= 0) {
-					String suffix = key.substring(lastIndex + 1);
+				String appendPath = key.substring(oldPath.length());
+				String newAppPath = newPath + appendPath;
 
-					if (suffix.equalsIgnoreCase("jpg")) {
-						contentType = "image/jpg";
-					} else if (suffix.equalsIgnoreCase("png")) {
-						contentType = "image/png";
-					} else if (suffix.equals("zip")) {
-						contentType = "application/zip";
-					}
+				CopyObjectRequest copyRequest = new CopyObjectRequest(
+						S3StorageConfig.getBucket(), key,
+						S3StorageConfig.getBucket(), newAppPath);
+				copyRequest
+						.withCannedAccessControlList(CannedAccessControlList.PublicRead);
+				s3client.copyObject(copyRequest);
 
-					System.out
-							.println("Suffix: " + suffix + "--" + contentType);
-					if (contentType != "") {
-						metaData.setContentType(contentType);
-					}
-				}
-
-				CopyObjectRequest request = new CopyObjectRequest(
-						"mycollab_assets", objectSummary.getKey(),
-						"mycollab_assets", objectSummary.getKey());
-				request.withNewObjectMetadata(metaData)
-						.withCannedAccessControlList(
-								CannedAccessControlList.PublicRead);
-				CopyObjectResult result = s3client.copyObject(request);
-				System.out.println("Result: " + result + "---");
+				DeleteObjectRequest deleteRequest = new DeleteObjectRequest(
+						S3StorageConfig.getBucket(), key);
+				s3client.deleteObject(deleteRequest);
 			}
 
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new MyCollabException(e);
 		}
+
 	}
-	
+
+	// public static void mainUpdateCache(String[] args) {
+	// AmazonS3 s3client = S3StorageConfig.getS3Client();
+	//
+	// try {
+	// ObjectListing listObjects = s3client.listObjects("mycollab_assets",
+	// "icons");
+	// for (S3ObjectSummary objectSummary : listObjects
+	// .getObjectSummaries()) {
+	// System.out.println("Key: " + objectSummary.getKey());
+	//
+	// ObjectMetadata metaData = new ObjectMetadata();
+	// metaData.setCacheControl("max-age=8640000");
+	// String key = objectSummary.getKey();
+	// String contentType = "";
+	// int lastIndex = key.lastIndexOf(".");
+	// if (lastIndex >= 0) {
+	// String suffix = key.substring(lastIndex + 1);
+	//
+	// if (suffix.equalsIgnoreCase("jpg")) {
+	// contentType = "image/jpg";
+	// } else if (suffix.equalsIgnoreCase("png")) {
+	// contentType = "image/png";
+	// } else if (suffix.equals("zip")) {
+	// contentType = "application/zip";
+	// }
+	//
+	// System.out
+	// .println("Suffix: " + suffix + "--" + contentType);
+	// if (contentType != "") {
+	// metaData.setContentType(contentType);
+	// }
+	// }
+	//
+	// CopyObjectRequest request = new CopyObjectRequest(
+	// "mycollab_assets", objectSummary.getKey(),
+	// "mycollab_assets", objectSummary.getKey());
+	// request.withNewObjectMetadata(metaData)
+	// .withCannedAccessControlList(
+	// CannedAccessControlList.PublicRead);
+	// CopyObjectResult result = s3client.copyObject(request);
+	// System.out.println("Result: " + result + "---");
+	// }
+	//
+	// } catch (Exception e) {
+	// throw new RuntimeException(e);
+	// }
+	// }
+
 	public static void main(String[] args) {
-		
+		AmazonRawContentServiceImpl service = new AmazonRawContentServiceImpl();
+		service.rename(
+
+		"1/common-comment1", "1/common-comment");
 	}
 }

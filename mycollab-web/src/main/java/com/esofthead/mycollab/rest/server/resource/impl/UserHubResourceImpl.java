@@ -5,6 +5,8 @@ import java.util.List;
 import org.restlet.Server;
 import org.restlet.data.Form;
 import org.restlet.data.Protocol;
+import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
@@ -13,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.rest.representation.ErrorRepresentation;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
 import com.esofthead.mycollab.rest.server.signup.ExistingUserRegisterException;
@@ -35,14 +39,14 @@ public class UserHubResourceImpl extends ServerResource implements
 		server.start();
 	}
 
-//	@Override
-//	public List<String> getSubdomainsOfUser(final String username) {
-//		return this.billingService.getSubdomainsOfUser(username);
-//	}
+	// @Override
+	// public List<String> getSubdomainsOfUser(final String username) {
+	// return this.billingService.getSubdomainsOfUser(username);
+	// }
 
 	@Override
 	@Post("form")
-	public String doPost(Form form) throws SubdomainExistedException,
+	public Representation doPost(Form form) throws SubdomainExistedException,
 			ExistingEmailRegisterException, ExistingUserRegisterException {
 		UserHubResourceImpl.log.debug("Start handling form request");
 		String subdomain = form.getFirstValue("subdomain");
@@ -51,8 +55,12 @@ public class UserHubResourceImpl extends ServerResource implements
 		String password = form.getFirstValue("password");
 		String email = form.getFirstValue("email");
 		String timezoneId = form.getFirstValue("timezoneId");
-		this.billingService.registerAccount(subdomain, planId, username,
-				password, email, timezoneId);
+		try {
+			this.billingService.registerAccount(subdomain, planId, username,
+					password, email, timezoneId);
+		} catch (MyCollabException e) {
+			return new ErrorRepresentation(e.getMessage().toCharArray());
+		}
 		String siteUrl = "";
 		if (ApplicationProperties.productionMode) {
 			siteUrl = String.format(ApplicationProperties
@@ -70,6 +78,6 @@ public class UserHubResourceImpl extends ServerResource implements
 						.getString(ApplicationProperties.APP_URL), subdomain);
 			}
 		}
-		return siteUrl;
+		return new StringRepresentation(siteUrl.toCharArray());
 	}
 }
