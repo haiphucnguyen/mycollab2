@@ -705,10 +705,10 @@ public class ContactImportWindow extends Window {
 									}
 									if ((i == listStringFromCombox.size() - 1)
 											&& errorStr.length() > 0) {
-										if (numRowError < 100)
+										if (numRowError <= 100)
 											lstRowFailDetail.add("row "
 													+ rowCount + ": "
-													+ errorStr);
+													+ errorStr.toString());
 										numRowError++;
 									}
 								}
