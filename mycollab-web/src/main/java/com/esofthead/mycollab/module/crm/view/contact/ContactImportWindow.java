@@ -925,15 +925,19 @@ public class ContactImportWindow extends Window {
 			} else if (label.equals("Fax")) {
 				contact.setFax(value);
 			} else if (label.equals("Birthday")) {
-				try {
-					DateFormat formatter = new SimpleDateFormat(
-							AppContext.getDateFormat());
-					formatter.setLenient(false);
-					Date date = formatter.parse(value);
-					contact.setBirthday(date);
-				} catch (Exception e) {
-					errorStr.append("Can't parse value = \'" + value
-							+ "\' to DateType, please input follow mm/dd/yyyy.");
+				if(value.length() == 0){
+					contact.setBirthday(null);
+				}else{
+					try {
+						DateFormat formatter = new SimpleDateFormat(
+								AppContext.getDateFormat());
+						formatter.setLenient(false);
+						Date date = formatter.parse(value);
+						contact.setBirthday(date);
+					} catch (Exception e) {
+						errorStr.append("Can't parse value = \'" + value
+								+ "\' to DateType, please input follow mm/dd/yyyy.");
+					}
 				}
 			} else if (label.equals("Callable")) {
 				boolean val = (value.equals("true")) ? true : false;
