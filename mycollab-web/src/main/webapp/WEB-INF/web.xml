@@ -74,8 +74,8 @@
 
     <!-- RESTLET PARAMS -->
     <context-param>
-        <param-name>org.restlet.application</param-name>
-        <param-value>restApp</param-value>
+        <param-name>org.restlet.component</param-name>
+        <param-value>restletComponent</param-value>
     </context-param>
 
     <servlet>
@@ -118,7 +118,7 @@
             <param-value>/WEB-INF/toolbox.xml</param-value>
         </init-param>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>velocity</servlet-name>
         <url-pattern>/templates/*</url-pattern>
