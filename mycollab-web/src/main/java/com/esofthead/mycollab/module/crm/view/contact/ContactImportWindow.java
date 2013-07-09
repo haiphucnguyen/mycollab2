@@ -2,13 +2,10 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,7 +64,7 @@ import ezvcard.types.TelephoneType;
 
 public class ContactImportWindow extends Window {
 	private static final long serialVersionUID = 1L;
-	public static final String[] fileType = { "CSV", "Vcard" };
+	public static final String[] fileType = { "CSV", "VCard" };
 	public static final String[] contactCrmFields = { "First Name",
 			"Last Name", "Account", "Title", "Department", "Email",
 			"Assistant", "Assistant Phone", "Leader Source", "Phone Office",
@@ -76,29 +73,27 @@ public class ContactImportWindow extends Window {
 			"Postal Code", "Country", "Other Address", "Other City",
 			"Other State", "Other Postal Code", "Other Country", "Description" };
 
-	private VerticalLayout layoutStep123;
-	private CssLayout layoutStep4;
-	private int xPosition, yPosition, numberOfColumn = 0;
+	private FileConfigurationLayout fileConfigurationLayout;
+	private MappingCrmConfigurationLayout mappingCrmFieldLayout;
 
 	public ContactImportWindow() {
 		super("Import Contact");
 		center();
-		this.setWidth("950px");
+		this.setWidth("1000px");
 
-		layoutStep123 = new FirstScreen();
-		this.addComponent(layoutStep123);
+		fileConfigurationLayout = new FileConfigurationLayout();
+		this.addComponent(fileConfigurationLayout);
 	}
 
-	public class FirstScreen extends VerticalLayout {
+	private class FileConfigurationLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 		private InputStream contentStream;
-		private CheckBox checkboxHasHeader;
+		private CheckBox hasHeaderCheckBox;
 		private SingleFileUploadField uploadField;
 
-		private File fileupload;
-		private ComboBox fileformat;
+		private ComboBox fileformatComboBox;
 
-		public FirstScreen() {
+		public FileConfigurationLayout() {
 			final VerticalLayout layout = new VerticalLayout();
 			layout.setWidth("100%");
 			layout.setSpacing(true);
@@ -107,14 +102,14 @@ public class ContactImportWindow extends Window {
 			informationLayout.setWidth("100%");
 			informationLayout.setSpacing(true);
 
-			CssLayout step1Layout = constructBodyStep1();
-			CssLayout step2Layout = constructBodyStep2();
-			CssLayout step3Layout = constructBodyStep3();
+			CssLayout fileUploadLayout = fileUploadLayout();
+			CssLayout fileInfomationLayout = fileConfigurationLayout();
+			CssLayout handleDuplicationLayout = handelDuplicateRecordLayout();
 
-			informationLayout.addComponent(step1Layout);
-			informationLayout.addComponent(step2Layout);
+			informationLayout.addComponent(fileUploadLayout);
+			informationLayout.addComponent(fileInfomationLayout);
 			layout.addComponent(informationLayout);
-			layout.addComponent(step3Layout);
+			layout.addComponent(handleDuplicationLayout);
 
 			HorizontalLayout controlGroupBtn = new HorizontalLayout();
 			controlGroupBtn.setSpacing(true);
@@ -196,41 +191,22 @@ public class ContactImportWindow extends Window {
 												}
 											});
 						} else if (fileuploadType.equals("csv")) {
-							try {
-								fileupload = new File("upload.csv");
-								OutputStream outputStream = new FileOutputStream(
-										fileupload);
-
-								int read = 0;
-								byte[] bytes = new byte[1024];
-
-								while ((read = contentStream.read(bytes)) != -1) {
-									outputStream.write(bytes, 0, read);
-								}
-								layoutStep4 = new SecondScreen(
-										(Boolean) checkboxHasHeader.getValue(),
-										fileupload);
-								xPosition = ContactImportWindow.this
-										.getPositionX();
-								yPosition = ContactImportWindow.this
-										.getPositionY();
+							File uploadFile = uploadField.getContentAsFile();
+							if (uploadFile != null) {
+								mappingCrmFieldLayout = new MappingCrmConfigurationLayout(
+										(Boolean) hasHeaderCheckBox.getValue(),
+										uploadFile);
 								ContactImportWindow.this
-										.removeComponent(layoutStep123);
-								if ((Boolean) checkboxHasHeader.getValue())
-									ContactImportWindow.this.setWidth("800px");
-								else
-									ContactImportWindow.this.setWidth("600px");
+										.removeComponent(fileConfigurationLayout);
 
-								ContactImportWindow.this.setPositionX(380);
-								ContactImportWindow.this.setPositionY(150);
+								ContactImportWindow.this.setWidth("800px");
+
+								ContactImportWindow.this.center();
 
 								ContactImportWindow.this
-										.addComponent(layoutStep4);
-							} catch (FileNotFoundException e) {
-								throw new MyCollabException(e);
-							} catch (IOException e) {
-								throw new MyCollabException(e);
+										.addComponent(mappingCrmFieldLayout);
 							}
+
 						} else {
 							getWindow().showNotification(
 									"Please choose supported files.");
@@ -260,27 +236,27 @@ public class ContactImportWindow extends Window {
 			this.addComponent(layout);
 		}
 
-		private CssLayout constructBodyStep3() {
-			final CssLayout bodyStep3Wapper = new CssLayout();
-			bodyStep3Wapper.addStyleName(UIConstants.BORDER_BOX_2);
-			bodyStep3Wapper.setWidth("100%");
+		private CssLayout handelDuplicateRecordLayout() {
+			final CssLayout bodyLayoutWapper = new CssLayout();
+			bodyLayoutWapper.addStyleName(UIConstants.BORDER_BOX_2);
+			bodyLayoutWapper.setWidth("100%");
 
-			final HorizontalLayout layoutStep3 = new HorizontalLayout();
+			final HorizontalLayout bodyLayout = new HorizontalLayout();
 
-			HorizontalLayout titleStep3 = new HorizontalLayout();
-			Label labelStep3 = new Label("Step 3:");
-			labelStep3.addStyleName("h3");
-			UiUtils.addComponent(titleStep3, labelStep3, Alignment.TOP_LEFT);
-			layoutStep3.addComponent(titleStep3);
+			HorizontalLayout titleHorizontal = new HorizontalLayout();
+			Label title = new Label("Step 3:");
+			title.addStyleName("h3");
+			UiUtils.addComponent(titleHorizontal, title, Alignment.TOP_LEFT);
+			bodyLayout.addComponent(titleHorizontal);
 
-			VerticalLayout infoLayoutStep3 = new VerticalLayout();
-			infoLayoutStep3.setMargin(true);
+			VerticalLayout informationLayout = new VerticalLayout();
+			informationLayout.setMargin(true);
 
 			HorizontalLayout infoLayout = new HorizontalLayout();
 			infoLayout.setSpacing(true);
 
-			infoLayoutStep3.addComponent(infoLayout);
-			layoutStep3.addComponent(infoLayoutStep3);
+			informationLayout.addComponent(infoLayout);
+			bodyLayout.addComponent(informationLayout);
 
 			Label labelInfo = new Label("Duplicate Record Handling");
 			infoLayout.addComponent(labelInfo);
@@ -289,26 +265,26 @@ public class ContactImportWindow extends Window {
 			checkbox.setValue(true);
 			infoLayout.addComponent(checkbox);
 
-			bodyStep3Wapper.addComponent(layoutStep3);
+			bodyLayoutWapper.addComponent(bodyLayout);
 
-			return bodyStep3Wapper;
+			return bodyLayoutWapper;
 		}
 
 		@SuppressWarnings("unchecked")
-		private CssLayout constructBodyStep2() {
-			final CssLayout bodyStep2Wapper = new CssLayout();
-			bodyStep2Wapper.addStyleName(UIConstants.BORDER_BOX_2);
-			bodyStep2Wapper.setWidth("100%");
+		private CssLayout fileConfigurationLayout() {
+			final CssLayout bodyLayoutWapper = new CssLayout();
+			bodyLayoutWapper.addStyleName(UIConstants.BORDER_BOX_2);
+			bodyLayoutWapper.setWidth("100%");
 
-			final HorizontalLayout layoutStep2 = new HorizontalLayout();
+			final HorizontalLayout bodyLayout = new HorizontalLayout();
 
-			HorizontalLayout titleStep2 = new HorizontalLayout();
-			Label labelStep2 = new Label("Step 2:");
-			labelStep2.addStyleName("h3");
-			UiUtils.addComponent(titleStep2, labelStep2, Alignment.TOP_LEFT);
-			layoutStep2.addComponent(titleStep2);
+			HorizontalLayout titleHorizontal = new HorizontalLayout();
+			Label title = new Label("Step 2:");
+			title.addStyleName("h3");
+			UiUtils.addComponent(titleHorizontal, title, Alignment.TOP_LEFT);
+			bodyLayout.addComponent(titleHorizontal);
 
-			VerticalLayout informationStep2 = new VerticalLayout();
+			VerticalLayout informationLayout = new VerticalLayout();
 
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(1, 5,
 					"100%", "200px", Alignment.MIDDLE_LEFT);
@@ -322,12 +298,12 @@ public class ContactImportWindow extends Window {
 			BeanItemContainer<String> fileformatType = new BeanItemContainer(
 					String.class, Arrays.asList(fileType));
 
-			fileformat = new ComboBox();
-			fileformat.setContainerDataSource(fileformatType);
-			fileformat
+			fileformatComboBox = new ComboBox();
+			fileformatComboBox.setContainerDataSource(fileformatType);
+			fileformatComboBox
 					.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
-			fileformat.setValue("Vcard");
-			gridLayout.addComponent(fileformat, "File Type", 0, 1);
+			fileformatComboBox.setValue("VCard");
+			gridLayout.addComponent(fileformatComboBox, "File Type", 0, 1);
 
 			ComboBox encodingCombobox = new ComboBox();
 			encodingCombobox
@@ -348,39 +324,48 @@ public class ContactImportWindow extends Window {
 			delimiterComboBox.setEnabled(false);
 			gridLayout.addComponent(delimiterComboBox, "Delimiter", 0, 3);
 
-			checkboxHasHeader = new CheckBox();
-			gridLayout.addComponent(checkboxHasHeader, "Has header", 0, 4);
-			informationStep2.addComponent(gridLayout.getLayout());
+			HorizontalLayout checkboxHorizontalLayout = new HorizontalLayout();
+			hasHeaderCheckBox = new CheckBox();
+			checkboxHorizontalLayout.addComponent(hasHeaderCheckBox);
 
-			layoutStep2.addComponent(titleStep2);
-			layoutStep2.addComponent(informationStep2);
+			Label checkboxMessageLabel = new Label(
+					"(Has header at first-line?)");
+			checkboxHorizontalLayout.addComponent(checkboxMessageLabel);
 
-			bodyStep2Wapper.addComponent(layoutStep2);
-			return bodyStep2Wapper;
+			gridLayout.addComponent(checkboxHorizontalLayout, "Has header", 0,
+					4);
+			informationLayout.addComponent(gridLayout.getLayout());
+
+			bodyLayout.addComponent(titleHorizontal);
+			bodyLayout.addComponent(informationLayout);
+
+			bodyLayoutWapper.addComponent(bodyLayout);
+			return bodyLayoutWapper;
 		}
 
-		private CssLayout constructBodyStep1() {
-			final CssLayout step1bodyWapper = new CssLayout();
-			step1bodyWapper.setWidth("100%");
-			step1bodyWapper.setHeight("100%");
-			step1bodyWapper.addStyleName(UIConstants.BORDER_BOX_2);
+		private CssLayout fileUploadLayout() {
+			final CssLayout bodyLayoutWapper = new CssLayout();
+			bodyLayoutWapper.setWidth("100%");
+			bodyLayoutWapper.setHeight("100%");
+			bodyLayoutWapper.addStyleName(UIConstants.BORDER_BOX_2);
 
-			final HorizontalLayout layoutStep1 = new HorizontalLayout();
-			layoutStep1.setSpacing(true);
-			layoutStep1.setHeight("100%");
+			final HorizontalLayout bodyLayout = new HorizontalLayout();
+			bodyLayout.setSpacing(true);
+			bodyLayout.setHeight("100%");
 
-			HorizontalLayout titleStep1 = new HorizontalLayout();
-			Label labelStep1 = new Label("Step 1:");
-			labelStep1.addStyleName("h3");
+			HorizontalLayout titleHorizontalLayout = new HorizontalLayout();
+			Label title = new Label("Step 1:");
+			title.addStyleName("h3");
 
-			UiUtils.addComponent(titleStep1, labelStep1, Alignment.TOP_LEFT);
-			layoutStep1.addComponent(titleStep1);
+			UiUtils.addComponent(titleHorizontalLayout, title,
+					Alignment.TOP_LEFT);
+			bodyLayout.addComponent(titleHorizontalLayout);
 
-			VerticalLayout informationStep1 = new VerticalLayout();
-			informationStep1.setSpacing(true);
-			informationStep1.setMargin(true);
+			VerticalLayout informationLayout = new VerticalLayout();
+			informationLayout.setSpacing(true);
+			informationLayout.setMargin(true);
 
-			informationStep1.addComponent(new Label("Select File"));
+			informationLayout.addComponent(new Label("Select File"));
 
 			uploadField = new SingleFileUploadField();
 			uploadField.addListener(new ValueChangeListener() {
@@ -392,24 +377,24 @@ public class ContactImportWindow extends Window {
 					String fileuploadType = filename.substring(
 							filename.indexOf(".") + 1, filename.length());
 					if (fileuploadType.equals("vcf")) {
-						fileformat.setValue("Vcard");
-						fileformat.setEnabled(false);
+						fileformatComboBox.setValue("VCard");
+						fileformatComboBox.setEnabled(false);
 					} else if (fileuploadType.equals("csv")) {
-						fileformat.setValue("CSV");
-						fileformat.setEnabled(false);
+						fileformatComboBox.setValue("CSV");
+						fileformatComboBox.setEnabled(false);
 					}
 				}
 			});
-			informationStep1.addComponent(uploadField);
+			informationLayout.addComponent(uploadField);
 
-			informationStep1.addComponent(new Label(
+			informationLayout.addComponent(new Label(
 					"Supported Files Type : VCF, CSV"));
 
-			layoutStep1.addComponent(titleStep1);
-			layoutStep1.addComponent(informationStep1);
-			step1bodyWapper.addComponent(layoutStep1);
+			bodyLayout.addComponent(titleHorizontalLayout);
+			bodyLayout.addComponent(informationLayout);
+			bodyLayoutWapper.addComponent(bodyLayout);
 
-			return step1bodyWapper;
+			return bodyLayoutWapper;
 		}
 
 		private SimpleContact convertVcardToContact(VCard vcard) {
@@ -561,39 +546,41 @@ public class ContactImportWindow extends Window {
 		}
 	}
 
-	public class SecondScreen extends CssLayout {
+	private class MappingCrmConfigurationLayout extends CssLayout {
 		private static final long serialVersionUID = 1L;
-		private VerticalLayout informationLayoutStep4;
+		private VerticalLayout columnMappingCrmLayout;
 		private GridFormLayoutHelper gridWithHeaderLayout;
 		private List<String> listStringFromCombox;
-		private HorizontalLayout errorImportLayout;
-		private File fileupload;
+		private HorizontalLayout messageHorizontal;
+		private File uploadFile;
+		private int numberOfColumn = 0;
 
-		public SecondScreen(final Boolean checkboxChecked, final File fileupload) {
-			this.fileupload = fileupload;
+		public MappingCrmConfigurationLayout(final boolean checkboxChecked,
+				final File uploadFile) {
+			this.uploadFile = uploadFile;
 			this.setWidth("100%");
 			this.addStyleName(UIConstants.BORDER_BOX_2);
 
-			final HorizontalLayout step4BodyLayout = new HorizontalLayout();
-			step4BodyLayout.setMargin(false, false, false, true);
-			step4BodyLayout.setSpacing(true);
+			final HorizontalLayout bodyLayout = new HorizontalLayout();
+			bodyLayout.setMargin(false, false, false, true);
+			bodyLayout.setSpacing(true);
 
-			final HorizontalLayout step4Title = new HorizontalLayout();
-			Label step4TitleLabel = new Label("Step 4:");
-			step4TitleLabel.addStyleName("h2");
-			step4Title.addComponent(step4TitleLabel);
-			step4BodyLayout.addComponent(step4Title);
+			final HorizontalLayout titleHorizontal = new HorizontalLayout();
+			Label title = new Label("Step 4:");
+			title.addStyleName("h2");
+			titleHorizontal.addComponent(title);
+			bodyLayout.addComponent(titleHorizontal);
 
-			informationLayoutStep4 = new VerticalLayout();
-			informationLayoutStep4.setWidth("100%");
-			informationLayoutStep4.setMargin(true);
+			columnMappingCrmLayout = new VerticalLayout();
+			columnMappingCrmLayout.setWidth("100%");
+			columnMappingCrmLayout.setMargin(true);
 			Label infoLabel = new Label("Map the columns to Module fields");
 			infoLabel.addStyleName("h3");
-			informationLayoutStep4.addComponent(infoLabel);
+			columnMappingCrmLayout.addComponent(infoLabel);
 			try {
 				gridWithHeaderLayout = new GridFormLayoutHelper(
 						2,
-						(new CSVReader(new FileReader(fileupload))).readNext().length + 2,
+						(new CSVReader(new FileReader(uploadFile))).readNext().length + 2,
 						"100%", "200px");
 			} catch (Exception e) {
 				throw new MyCollabException(e);
@@ -609,34 +596,25 @@ public class ContactImportWindow extends Window {
 			Label colIndex = new Label("Colum Index");
 			colIndex.addStyleName("h3");
 			// IF has header
-			if (checkboxChecked) {
+			if (checkboxChecked)
 				gridWithHeaderLayout.addComponentSupportFieldCaption(header,
 						new Label(), "0px", "200px", 0, 0,
 						Alignment.MIDDLE_CENTER);
-
-				gridWithHeaderLayout.addComponentSupportFieldCaption(crmLabel,
-						colIndex, "200px", "200px", 1, 0,
-						Alignment.MIDDLE_CENTER);
-			} else {
-				try {
-					gridWithHeaderLayout = new GridFormLayoutHelper(1,
-							(new CSVReader(new FileReader(fileupload)))
-									.readNext().length + 2, "100%", "200px");
-				} catch (Exception e) {
-					throw new MyCollabException(e);
-				}
-				gridWithHeaderLayout.getLayout().setMargin(true);
-				gridWithHeaderLayout.getLayout().setSpacing(true);
-				gridWithHeaderLayout.addComponentSupportFieldCaption(crmLabel,
-						colIndex, "200px", "200px", 0, 0,
+			else {
+				Label firstRowDataLabel = new Label("First Row Data");
+				firstRowDataLabel.addStyleName("h3");
+				gridWithHeaderLayout.addComponentSupportFieldCaption(
+						firstRowDataLabel, new Label(), "0px", "200px", 0, 0,
 						Alignment.MIDDLE_CENTER);
 			}
-			informationLayoutStep4.addComponent(gridWithHeaderLayout
+			gridWithHeaderLayout.addComponentSupportFieldCaption(crmLabel,
+					colIndex, "200px", "200px", 1, 0, Alignment.MIDDLE_CENTER);
+			columnMappingCrmLayout.addComponent(gridWithHeaderLayout
 					.getLayout());
 
 			HorizontalLayout controlGroupBtn = new HorizontalLayout();
 			controlGroupBtn.setMargin(false, false, false, false);
-			UiUtils.addComponent(informationLayoutStep4, controlGroupBtn,
+			UiUtils.addComponent(columnMappingCrmLayout, controlGroupBtn,
 					Alignment.MIDDLE_CENTER);
 
 			Button saveBtn = new Button("Save", new ClickListener() {
@@ -648,15 +626,10 @@ public class ContactImportWindow extends Window {
 					listStringFromCombox = new ArrayList<String>();
 					checkValidInput = true;
 					for (int i = 0; i < numberOfColumn; i++) {
-						Component compentOnGrid;
-						if (checkboxChecked)
-							compentOnGrid = gridWithHeaderLayout.getComponent(
-									1, i + 1);
-						else
-							compentOnGrid = gridWithHeaderLayout.getComponent(
-									0, i + 1);
-						if (compentOnGrid instanceof HorizontalLayout) {
-							Iterator<Component> setComponentOnGrid = ((HorizontalLayout) compentOnGrid)
+						Component componentOnGrid = gridWithHeaderLayout
+								.getComponent(1, i + 1);
+						if (componentOnGrid instanceof HorizontalLayout) {
+							Iterator<Component> setComponentOnGrid = ((HorizontalLayout) componentOnGrid)
 									.getComponentIterator();
 							Component compent = setComponentOnGrid.next();
 							while (compent != null) {
@@ -693,51 +666,64 @@ public class ContactImportWindow extends Window {
 							}
 						}
 					}
-					if (checkValidInput) { // success in input Data from User
+					// success in input Data from User
+					if (checkValidInput
+							&& (listStringFromCombox.indexOf("Last Name") != -1)) {
 						try {
 							// NOw we have lstStringCovert show field order we
 							CSVReader csvReader = new CSVReader(new FileReader(
-									fileupload));
+									uploadFile));
 							String[] rowIndex = csvReader.readNext();
 							int rowCount = 1;
 							if (checkboxChecked) {
 								rowIndex = csvReader.readNext();
 								rowCount++;
 							}
-							int rowCountSuccess = 0, rowError = 0;
+							int numRowSuccess = 0;
+							int numRowError = 0;
 
 							ContactService contactService = AppContext
 									.getSpringBean(ContactService.class);
-							final List<String> lstErrorString = new ArrayList<String>();
+							final List<String> lstRowFailDetail = new ArrayList<String>();
+							// we limit error row is 100
+
 							while (rowIndex != null && rowIndex.length > 0) {
 								// checking and log error
-								// row is rowCount , column is i
+								StringBuffer errorStr = new StringBuffer("");
 								SimpleContact contact = new SimpleContact();
 								contact.setSaccountid(AppContext.getAccountId());
-								String errorStr = "";
 								for (int i = 0; i < listStringFromCombox.size(); i++) {
-									errorStr += mapValueToContact(contact,
-											listStringFromCombox.get(i),
-											rowIndex[i]);
+									if (i < rowIndex.length) {
+										errorStr.append(mapValueToContact(
+												contact,
+												listStringFromCombox.get(i),
+												rowIndex[i]));
+									} else {
+										errorStr.append(mapValueToContact(
+												contact,
+												listStringFromCombox.get(i), ""));
+									}
 									if ((i == listStringFromCombox.size() - 1)
 											&& errorStr.length() > 0) {
-										lstErrorString.add("row " + rowCount
-												+ ": " + errorStr);
-										rowError++;
+										if (numRowError < 100)
+											lstRowFailDetail.add("row "
+													+ rowCount + ": "
+													+ errorStr);
+										numRowError++;
 									}
 								}
 								if (errorStr.length() == 0) {
 									contactService.saveWithSession(contact,
 											AppContext.getUsername());
-									rowCountSuccess++;
+									numRowSuccess++;
 								}
 								rowIndex = csvReader.readNext();
 								rowCount++;
 							}
+							csvReader.close();
 							// Show success , error message
-							String message = "Import success "
-									+ rowCountSuccess + " rows, fail "
-									+ rowError + " rows";
+							String message = "Import success " + numRowSuccess
+									+ " rows, fail " + numRowError + " rows";
 							Button btnLink = new Button(
 									"download CSV error file for more informations",
 									new ClickListener() {
@@ -754,11 +740,17 @@ public class ContactImportWindow extends Window {
 												String[] header = { "RowIndex : errorMessage" };
 												writer.writeNext(header);
 
-												for (int i = 0; i < lstErrorString
-														.size(); i++) {
-													String[] body = { lstErrorString
+												for (int i = 0; i < lstRowFailDetail
+														.size() && i <= 100; i++) {
+													String[] body = { lstRowFailDetail
 															.get(i) };
 													writer.writeNext(body);
+
+													if (i == 100) {
+														String[] endBody = { "And more" };
+														writer.writeNext(endBody);
+														break;
+													}
 												}
 												writer.close();
 												ContactImportWindow.this
@@ -780,21 +772,30 @@ public class ContactImportWindow extends Window {
 							btnLink.addStyleName("link");
 							Label messageImportLabel = new Label(message);
 
-							errorImportLayout = new HorizontalLayout();
-							errorImportLayout.setSpacing(true);
-							errorImportLayout.addComponent(messageImportLabel);
-							if (rowError > 0)
-								errorImportLayout.addComponent(btnLink);
-							if (errorImportLayout != null) {
-								informationLayoutStep4
-										.removeComponent(errorImportLayout);
+							if (messageHorizontal != null)
+								messageHorizontal.removeAllComponents();
+							else
+								messageHorizontal = new HorizontalLayout();
+							messageHorizontal.setSpacing(true);
+							messageHorizontal.addComponent(messageImportLabel);
+							if (numRowError > 0)
+								messageHorizontal.addComponent(btnLink);
+							if (messageHorizontal != null) {
+								columnMappingCrmLayout
+										.removeComponent(messageHorizontal);
 							}
-							informationLayoutStep4
-									.addComponent(errorImportLayout);
+							columnMappingCrmLayout
+									.addComponent(messageHorizontal);
 
 						} catch (IOException e) {
 							throw new MyCollabException(e);
 						}
+					} else {
+						ContactImportWindow.this
+								.getParent()
+								.getWindow()
+								.showNotification(
+										"'Last Name' is required field, please choose one column.");
 					}
 				}
 			});
@@ -808,9 +809,9 @@ public class ContactImportWindow extends Window {
 				public void buttonClick(ClickEvent event) {
 					ContactImportWindow.this.removeAllComponents();
 					ContactImportWindow.this.setWidth("950px");
-					ContactImportWindow.this.setPositionX(xPosition);
-					ContactImportWindow.this.setPositionY(yPosition);
-					ContactImportWindow.this.addComponent(layoutStep123);
+					ContactImportWindow.this
+							.addComponent(fileConfigurationLayout);
+					ContactImportWindow.this.center();
 				}
 			});
 			previousBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -834,18 +835,18 @@ public class ContactImportWindow extends Window {
 			});
 			btnClose.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlGroupBtn.addComponent(btnClose);
-			step4BodyLayout.addComponent(informationLayoutStep4);
-			this.addComponent(step4BodyLayout);
+			bodyLayout.addComponent(columnMappingCrmLayout);
+			this.addComponent(bodyLayout);
 
-			fillDataToGridLayout(checkboxChecked);
+			fillDataToGridLayout();
 		}
 
 		@SuppressWarnings({ "resource", "rawtypes", "unchecked" })
-		private void fillDataToGridLayout(boolean checkboxChecked) {
+		private void fillDataToGridLayout() {
 			// // IF Has Header ------ fill to CrM fields and disable
 			CSVReader csvReader;
 			try {
-				csvReader = new CSVReader(new FileReader(fileupload));
+				csvReader = new CSVReader(new FileReader(uploadFile));
 				String[] stringHeader = csvReader.readNext();
 				numberOfColumn = stringHeader.length;
 				for (int i = 0; i < stringHeader.length; i++) {
@@ -858,33 +859,23 @@ public class ContactImportWindow extends Window {
 					addcomboBox.setContainerDataSource(crmFileValue);
 
 					String headerStr = stringHeader[i];
-					if (checkboxChecked) {
-						gridWithHeaderLayout.addComponentSupportFieldCaption(
-								new Label(headerStr), new Label(), "0px",
-								"200px", 0, i + 1, Alignment.MIDDLE_CENTER);
-						Label fieldCaptionColumnIndex = new Label("Column "
-								+ (i + 1));
-						gridWithHeaderLayout.addComponentSupportFieldCaption(
-								addcomboBox, fieldCaptionColumnIndex, "200px",
-								"200px", 1, i + 1, Alignment.MIDDLE_CENTER);
-					} else {
-						Label fieldCaptionColumnIndex = new Label("Column "
-								+ (i + 1));
-						gridWithHeaderLayout.addComponentSupportFieldCaption(
-								addcomboBox, fieldCaptionColumnIndex, "200px",
-								"200px", 0, i + 1, Alignment.MIDDLE_CENTER);
-					}
+					gridWithHeaderLayout.addComponentSupportFieldCaption(
+							new Label(headerStr), new Label(), "0px", "200px",
+							0, i + 1, Alignment.MIDDLE_CENTER);
+					Label fieldCaptionColumnIndex = new Label("Column "
+							+ (i + 1));
+					gridWithHeaderLayout.addComponentSupportFieldCaption(
+							addcomboBox, fieldCaptionColumnIndex, "200px",
+							"200px", 1, i + 1, Alignment.MIDDLE_CENTER);
 				}
-			} catch (FileNotFoundException e) {
-				throw new MyCollabException(e);
 			} catch (IOException e) {
 				throw new MyCollabException(e);
 			}
 		}
 
-		private String mapValueToContact(SimpleContact contact, String label,
-				String value) {
-			String errorStr = "";
+		private StringBuffer mapValueToContact(SimpleContact contact,
+				String label, String value) {
+			StringBuffer errorStr = new StringBuffer("");
 			if (label.equals("First Name")) {
 				contact.setFirstname(value);
 			} else if (label.equals("Last Name")) {
@@ -906,12 +897,12 @@ public class ContactImportWindow extends Window {
 							.getSpringBean(ContactService.class);
 					int count = service.getTotalCount(criteria);
 					if (count > 0) {
-						errorStr += "This email has already exist on system.";
+						errorStr.append("This email has already exist on system.");
 					} else
 						contact.setEmail(value);
 				} catch (AddressException e1) {
-					errorStr += "Email-address: '" + value
-							+ "' is invalid on Internet.";
+					errorStr.append("Email-address: '" + value
+							+ "' is invalid on Internet.");
 				}
 			} else if (label.equals("Assistant")) {
 				contact.setAssistant(value);
@@ -937,8 +928,8 @@ public class ContactImportWindow extends Window {
 					Date date = formatter.parse(value);
 					contact.setBirthday(date);
 				} catch (Exception e) {
-					errorStr += "Can't parse value = \'" + value
-							+ "\' to DateType, please input follow mm/dd/yyyy.";
+					errorStr.append("Can't parse value = \'" + value
+							+ "\' to DateType, please input follow mm/dd/yyyy.");
 				}
 			} else if (label.equals("Callable")) {
 				boolean val = (value.equals("true")) ? true : false;

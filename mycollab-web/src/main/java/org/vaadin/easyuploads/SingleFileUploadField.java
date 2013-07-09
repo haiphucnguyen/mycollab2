@@ -1,5 +1,7 @@
 package org.vaadin.easyuploads;
 
+import java.io.File;
+
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -11,12 +13,18 @@ public class SingleFileUploadField extends UploadField {
 	public SingleFileUploadField() {
 		super(StorageMode.FILE);
 		this.setFileFactory(new TempFileFactory());
+	}
 
+	public File getContentAsFile() {
+		if (receiver instanceof FileBuffer) {
+			return ((FileBuffer) receiver).getFile();
+		}
+		return null;
 	}
 
 	@Override
 	protected void updateDisplay() {
-//		super.updateDisplay();
+		// super.updateDisplay();
 		String filename = getLastFileName();
 
 		HorizontalLayout layout = new HorizontalLayout();
