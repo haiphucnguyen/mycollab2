@@ -780,10 +780,7 @@ public class ContactImportWindow extends Window {
 							messageHorizontal.addComponent(messageImportLabel);
 							if (numRowError > 0)
 								messageHorizontal.addComponent(btnLink);
-							if (messageHorizontal != null) {
-								columnMappingCrmLayout
-										.removeComponent(messageHorizontal);
-							}
+
 							columnMappingCrmLayout
 									.addComponent(messageHorizontal);
 
@@ -885,7 +882,8 @@ public class ContactImportWindow extends Window {
 			} else if (label.equals("Department")) {
 				contact.setDepartment(value);
 			} else if (label.equals("Email")) {
-				if (value.length() == 0) {
+				if (value.length() == 0
+						|| value.trim().length() == 0) {
 					contact.setEmail(value);
 				} else {
 					InternetAddress emailAddr;
@@ -925,9 +923,10 @@ public class ContactImportWindow extends Window {
 			} else if (label.equals("Fax")) {
 				contact.setFax(value);
 			} else if (label.equals("Birthday")) {
-				if(value.length() == 0){
+				if (value.length() == 0
+						|| value.trim().length() == 0) {
 					contact.setBirthday(null);
-				}else{
+				} else {
 					try {
 						DateFormat formatter = new SimpleDateFormat(
 								AppContext.getDateFormat());
@@ -935,7 +934,8 @@ public class ContactImportWindow extends Window {
 						Date date = formatter.parse(value);
 						contact.setBirthday(date);
 					} catch (Exception e) {
-						errorStr.append("Can't parse value = \'" + value
+						errorStr.append("Can't parse value = \'"
+								+ value
 								+ "\' to DateType, please input follow mm/dd/yyyy.");
 					}
 				}
