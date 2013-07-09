@@ -885,24 +885,28 @@ public class ContactImportWindow extends Window {
 			} else if (label.equals("Department")) {
 				contact.setDepartment(value);
 			} else if (label.equals("Email")) {
-				InternetAddress emailAddr;
-				try {
-					emailAddr = new InternetAddress(value);
-					emailAddr.validate();
-					ContactSearchCriteria criteria = new ContactSearchCriteria();
-					criteria.setSaccountid(new NumberSearchField(AppContext
-							.getAccountId()));
-					criteria.setAnyEmail(new StringSearchField(value));
-					ContactService service = AppContext
-							.getSpringBean(ContactService.class);
-					int count = service.getTotalCount(criteria);
-					if (count > 0) {
-						errorStr.append("This email has already exist on system.");
-					} else
-						contact.setEmail(value);
-				} catch (AddressException e1) {
-					errorStr.append("Email-address: '" + value
-							+ "' is invalid on Internet.");
+				if (value.length() == 0) {
+					contact.setEmail(value);
+				} else {
+					InternetAddress emailAddr;
+					try {
+						emailAddr = new InternetAddress(value);
+						emailAddr.validate();
+						ContactSearchCriteria criteria = new ContactSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(AppContext
+								.getAccountId()));
+						criteria.setAnyEmail(new StringSearchField(value));
+						ContactService service = AppContext
+								.getSpringBean(ContactService.class);
+						int count = service.getTotalCount(criteria);
+						if (count > 0) {
+							errorStr.append("This email has already exist on system.");
+						} else
+							contact.setEmail(value);
+					} catch (AddressException e1) {
+						errorStr.append("Email-address: '" + value
+								+ "' is invalid on Internet.");
+					}
 				}
 			} else if (label.equals("Assistant")) {
 				contact.setAssistant(value);
