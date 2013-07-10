@@ -122,6 +122,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		if (requiredColumn != null) {
 			visibleColumnsCol.add(requiredColumn.getField());
 			columnHeadersCol.add(requiredColumn.getDesc());
+			this.tableItem.setColumnWidth(requiredColumn.getField(),
+					requiredColumn.getDefaultWidth());
 		}
 
 		for (int i = 0; i < viewFields.size(); i++) {

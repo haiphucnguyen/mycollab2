@@ -27,7 +27,6 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -36,10 +35,10 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
@@ -396,14 +395,11 @@ public class BugTableDisplay extends
 
 				Embedded iconEmbedded = new Embedded(null, iconPriority);
 				Label lbPriority = new Label(bug.getSeverity());
-				lbPriority.setWidth("70px");
-				FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
-				containerField.addComponentField(iconEmbedded);
-				containerField.getLayout().setComponentAlignment(iconEmbedded,
-						Alignment.MIDDLE_CENTER);
-				containerField.addComponentField(lbPriority);
-				containerField.getLayout().setComponentAlignment(lbPriority,
-						Alignment.MIDDLE_CENTER);
+				HorizontalLayout containerField = new HorizontalLayout();
+				containerField.setSpacing(true);
+				containerField.addComponent(iconEmbedded);
+				containerField.addComponent(lbPriority);
+				containerField.setExpandRatio(lbPriority, 1.0f);
 				return containerField;
 
 			}

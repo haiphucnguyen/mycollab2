@@ -36,7 +36,7 @@ public class MeetingListDashlet extends Depot {
 						"subject", UIConstants.TABLE_X_LABEL_WIDTH),
 				new TableViewField(LocalizationHelper
 						.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
-						"startdate", UIConstants.TABLE_DATE_WIDTH),
+						"startdate", UIConstants.TABLE_DATE_TIME_WIDTH),
 				new TableViewField(LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
 						"status", UIConstants.TABLE_S_LABEL_WIDTH)));
