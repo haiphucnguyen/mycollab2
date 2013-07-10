@@ -958,19 +958,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .home-banner-left-1 h1 {
-	font-size: 30px;
-	color: #df5d09;
-	line-height: 100%;
-	padding-top: 50px;
-	font-weight: normal;
-	padding-bottom: 5px;
+	color: #DF5D09;
+    font-size: 26px;
+    font-weight: normal;
+    line-height: 100%;
+    padding-bottom: 10px;
+    padding-top: 30px;
 }
 
 .home-banner-left-1 p {
-	font-size: 22px;
-	color: #000;
-	line-height: 130%;
-	padding-bottom: 20px;
+	color: #000000;
+    font-size: 14px;
+    line-height: 130%;
+    padding-bottom: 20px;
 }
 
 .home-banner-left-2 h1 {
