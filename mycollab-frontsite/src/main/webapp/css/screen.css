@@ -926,8 +926,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .home-banner {
-	height: 240px;
-	background: url("../images/home_banner_bg.jpg") no-repeat top center;
+	height: 340px;
+	background-color: #F5F4F4;
 	clear: inherit;
 	margin-bottom: 20px;
 	background-size: 80%; 
@@ -935,36 +935,64 @@ h1, h2, h3, h4, h5, h6 {
 
 .home-banner-left {
 	text-align: center;
-	width: 480px;
+	width: 500px;
 	float: left;
 	padding-left: 20px;
 }
 
 .home-banner-right {
-	width: 570px;
 	float: right;
-	text-align: left;
-	padding-left: 30px;
+    padding: 10px 15px 0 0;
+    text-align: center;
+    width: 565px;
 }
 
 .home-banner-right img {
-	width: 420px;
 	height: auto;
+    width: 550px;
 }
 
-.home-banner-left h1 {
-	font-size: 40px;
-	color: #0173bd;
+.home-banner-left-1 {
+	border-bottom: solid 6px #E8E8E8;
+	margin-bottom: 25px;
+}
+
+.home-banner-left-1 h1 {
+	font-size: 30px;
+	color: #df5d09;
+	line-height: 100%;
+	padding-top: 50px;
+	font-weight: normal;
+	padding-bottom: 5px;
+}
+
+.home-banner-left-1 p {
+	font-size: 22px;
+	color: #000;
+	line-height: 130%;
+	padding-bottom: 20px;
+}
+
+.home-banner-left-2 h1 {
+	font-size: 30px;
+	color: #000;
 	font-weight: bold;
 	line-height: 100%;
-	padding-bottom: 15px;
+	padding-bottom: 5px;
+	font-weight: normal;
 }
 
-.home-banner-left p {
-	font-size: 30px;
+.home-banner-left-2 p {
+	font-size: 22px;
 	line-height: 100%;
-	color: #0173bd;
-	margin-bottom: 30px;
+	color: #000;
+	margin-bottom: 25px;
+}
+
+.home-banner-left-2 span {
+	display: inline-block;
+    text-align: center;
+    width: 30px;
 }
 
 .home-button-1 {
@@ -1151,7 +1179,172 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFF;
 	opacity: 0.7;
 }
+
+.nivoSlider {
+	position: relative;
+	background: #fff url(../images/slides/loading.gif) no-repeat 50% 50%;
+    margin-bottom: 0px;
+}
+
+.nivoSlider img {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: none;
+}
+
+.nivoSlider a {
+	border: 0;
+	display: block;
+}
+
+.nivo-controlNav {
+	bottom: -24px;
+    left: 50%;
+    margin-left: -80px;
+    position: absolute;
+}
+
+.nivo-controlNav a {
+	display: block;
+	width: 22px;
+	height: 22px;
+	background: url(../images/slides/bullets.png) no-repeat;
+	text-indent: -9999px;
+	border: 0;
+	margin-right: 3px;
+	float: left;
+}
+
+.nivo-controlNav a.active {
+	background-position: 0 -22px;
+}
+
+.nivo-directionNav a {
+	display: block;
+	width: 30px;
+	height: 30px;
+	background: url(../images/slides/arrows.png) no-repeat;
+	text-indent: -9999px;
+	border: 0;
+}
+
+a.nivo-nextNav {
+	background-position: -30px 0;
+	right: 15px;
+}
+
+a.nivo-prevNav {
+	left:15px;
+}
+
+.controlnav-thumbs {
+	margin-bottom: 100px; /* Tweak this depending on thumbnail size */
+}
+
+.controlnav-thumbs .nivo-controlNav {
+	bottom: -70px; /* Tweak this depending on slider height */
+	left: 0;
+	margin-left: 0;
+	width: 100%;
+}
+
+.controlnav-thumbs .nivo-controlNav a {
+	width: auto;
+	height: auto;
+	background: none;
+	text-indent: 0;
+	margin: 0 6px 6px 0;
+}
+
+.controlnav-thumbs .nivo-controlNav img {
+	position: relative;
+	display: block;
+}
+
+/* The Nivo Slider styles */
+#slider {
+	height: 310px!important;
+}
+
+.nivoSlider {
+	position: relative;
+}
+.nivoSlider img {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+/* If an image is wrapped in a link */
+.nivoSlider a.nivo-imageLink {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	z-index: 6;
+	display: none;
+}
+/* The slices and boxes in the Slider */
+.nivo-slice {
+	display: block;
+	position: absolute;
+	z-index: 5;
+	height: 100%;
+}
+.nivo-box {
+	display: block;
+	position: absolute;
+	z-index: 5;
+}
+/* Caption styles */
+.nivo-caption {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	background: #000;
+	color: #fff;
+	opacity: 0.8; /* Overridden by captionOpacity setting */
+	width: 100%;
+	z-index: 8;
+}
+.nivo-caption p {
+	padding: 5px;
+	margin: 0;
+}
+.nivo-caption a {
+	display: inline !important;
+}
+.nivo-html-caption {
+    display: none;
+}
+/* Direction nav styles (e.g. Next & Prev) */
+.nivo-directionNav a {
+	position: absolute;
+	top: 45%;
+	z-index: 9;
+	cursor: pointer;
+}
+.nivo-prevNav {
+	left: 0px;
+}
+.nivo-nextNav {
+	right: 0px;
+}
+/* Control nav styles (e.g. 1,2,3...) */
+.nivo-controlNav a {
+	position: relative;
+	z-index: 9;
+	cursor: pointer;
+}
+.nivo-controlNav a.active {
+	font-weight: bold;
+}
 /* End home syte */
+
 /* Privacy style */
 #privacy-content {
 	width: 1100px;
