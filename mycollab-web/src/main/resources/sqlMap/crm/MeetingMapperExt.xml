@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt">
 
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
+
     <resultMap id="SimpleMeetingResult"
         extends="com.esofthead.mycollab.module.crm.dao.MeetingMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.crm.domain.SimpleMeeting">
@@ -49,7 +51,8 @@
             <![CDATA[${searchCriteria.saccountid.operation} m_crm_meeting.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
         </if>
         <if test="searchCriteria.assignUsers != null">
-            ${searchCriteria.assignUsers.operation} m_crm_meeting.createdUser IN
+            ${searchCriteria.assignUsers.operation}
+            m_crm_meeting.createdUser IN
             <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="user" open="(" separator=",">
                 #{user}
@@ -62,7 +65,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_crm_meeting.lastUpdatedTime DESC
         ]]>

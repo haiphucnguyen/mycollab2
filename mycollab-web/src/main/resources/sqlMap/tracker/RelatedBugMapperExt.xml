@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <resultMap
         extends="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper.BaseResultMap"
         id="RelatedBugResult"
@@ -44,7 +45,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_tracker_related_bug.bugid DESC
         ]]>

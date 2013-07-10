@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.ContractMapperExt">
-	<resultMap extends="com.esofthead.mycollab.module.crm.dao.ContractMapper.BaseResultMap"
-		id="SimpleContractResult" type="com.esofthead.mycollab.module.crm.domain.SimpleContract">
-		<result column="accountName" property="accountName" jdbcType="VARCHAR" />
-		<result column="opportunityName" property="opportunityName"
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
+    <resultMap
+        extends="com.esofthead.mycollab.module.crm.dao.ContractMapper.BaseResultMap"
+        id="SimpleContractResult" type="com.esofthead.mycollab.module.crm.domain.SimpleContract">
+        <result column="accountName" property="accountName"
+            jdbcType="VARCHAR" />
+        <result column="opportunityName" property="opportunityName"
             jdbcType="VARCHAR" />
         <result column="assignUserFullName" property="assignUserFullName"
             jdbcType="VARCHAR" />
-	</resultMap>
-	
-	<sql id="querySearchCriteria">
+    </resultMap>
+
+    <sql id="querySearchCriteria">
         <if test="contractName != null">
             <![CDATA[
                 ${contractName.operation} m_crm_contract.contractname LIKE '%${contractName.value}%'
                 ]]>
         </if>
         <if test="accountId != null">
-            ${accountId.operation} m_crm_account.id = #{accountId.value,javaType=INTEGER}
+            ${accountId.operation} m_crm_account.id =
+            #{accountId.value,javaType=INTEGER}
         </if>
         <if test="accountName != null">
-            ${accountName.operation} m_crm_account.accountName LIKE '%${accountName.value}%'
+            ${accountName.operation} m_crm_account.accountName
+            LIKE '%${accountName.value}%'
         </if>
         <if test="opportunityId != null">
-            ${opportunityId.operation} m_crm_opportunity.id = #{opportunityId.value,javaType=INTEGER}
+            ${opportunityId.operation} m_crm_opportunity.id =
+            #{opportunityId.value,javaType=INTEGER}
         </if>
         <if test="opportunityName != null">
-            ${opportunityName.operation} m_crm_opportunity.opportunityName like '%${opportunityName.value}%'
+            ${opportunityName.operation}
+            m_crm_opportunity.opportunityName like
+            '%${opportunityName.value}%'
         </if>
         <if test="assignUserName != null">
             <![CDATA[
@@ -35,7 +43,8 @@
             ]]>
         </if>
         <if test="assignUser != null">
-            ${assignUser.operation} m_crm_contract.assignUser = #{assignUser.value}
+            ${assignUser.operation} m_crm_contract.assignUser =
+            #{assignUser.value}
         </if>
         <if test="productId != null">
             <![CDATA[
@@ -65,7 +74,8 @@
 
     <sql id="queryTotalCountSearchCriteria">
         <if test="contractName != null">
-            ${contractName.operation} m_crm_contract.contractname like '%${contractName.value}%'
+            ${contractName.operation}
+            m_crm_contract.contractname like '%${contractName.value}%'
         </if>
         <if test="accountId != null">
             <![CDATA[
@@ -109,7 +119,8 @@
             ]]>
         </if>
         <if test="assignUser != null">
-            ${assignUser.operation} m_crm_contract.assignUser = #{assignUser.value}
+            ${assignUser.operation} m_crm_contract.assignUser =
+            #{assignUser.value}
         </if>
         <if test="productId != null">
             <![CDATA[
@@ -158,30 +169,37 @@
         parameterType="ContractSearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_contract
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.queryTotalCountSearchCriteria" />
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
-    
+
     <delete id="removeByCriteria" parameterType="ContractSearchCriteria">
         DELETE FROM m_crm_contract
         <if test="_parameter != null">
-            <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.queryTotalCountSearchCriteria" />
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.queryTotalCountSearchCriteria" />
         </if>
     </delete>
 
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
             m_crm_contract.lastUpdatedTime DESC
         ]]>
     </sql>
-    
+
     <select id="findPagableListByCriteria" resultMap="SimpleContractResult"
         parameterType="ContractSearchCriteria">
-        <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.selectSimpleContract" />
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.selectSimpleContract" />
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.querySearchCriteria" />
-        </trim>   
-        <include refid="orderStatement"/>     
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.querySearchCriteria" />
+        </trim>
+        <include refid="orderStatement" />
     </select>
 </mapper>

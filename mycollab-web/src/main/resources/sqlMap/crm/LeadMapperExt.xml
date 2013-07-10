@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.LeadMapperExt">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.LeadMapper.ResultMapWithBLOBs"
         id="SimpleLeadResult" type="com.esofthead.mycollab.module.crm.domain.SimpleLead">
-        
-         <result column="assignUserAvatarId" jdbcType="VARCHAR"
+
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
             property="assignUserAvatarId" />
-            
+
         <result column="assignUserFullName" jdbcType="VARCHAR"
             property="assignUserFullName" />
-            
+
         <result column="campaignName" jdbcType="VARCHAR"
             property="campaignName" />
     </resultMap>
@@ -18,7 +19,8 @@
     <sql id="querySearchCriteria">
         <if test="searchCriteria.campaignName != null">
             ${searchCriteria.campaignName.operation}
-            m_crm_campaign.campaignName like '%${searchCriteria.campaignName.value}%'
+            m_crm_campaign.campaignName like
+            '%${searchCriteria.campaignName.value}%'
         </if>
         <if test="searchCriteria.campaignId != null">
             <![CDATA[
@@ -39,7 +41,8 @@
 		  	]]>
         </if>
         <if test="searchCriteria.accountName != null">
-            ${searchCriteria.accountName.operation} m_crm_lead.accountName like
+            ${searchCriteria.accountName.operation}
+            m_crm_lead.accountName like
             '%${searchCriteria.accountName.value}%'
         </if>
         <if test="searchCriteria.assignUserName != null">
@@ -48,7 +51,8 @@
             ]]>
         </if>
         <if test="searchCriteria.assignUsers != null">
-            ${searchCriteria.assignUsers.operation} m_crm_lead.assignUser IN
+            ${searchCriteria.assignUsers.operation}
+            m_crm_lead.assignUser IN
             <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="assignUser" open="(" separator=",">
                 #{assignUser}
@@ -76,8 +80,8 @@
         </if>
         <if test="searchCriteria.sources != null">
             ${searchCriteria.sources.operation} m_crm_lead.source IN
-            <foreach close=")" collection="searchCriteria.sources.values" item="source"
-                open="(" separator=",">
+            <foreach close=")" collection="searchCriteria.sources.values"
+                item="source" open="(" separator=",">
                 #{source}
             </foreach>
         </if>
@@ -165,7 +169,8 @@
             <![CDATA[${searchCriteria.accountName.operation} m_crm_lead.accountName like '%${searchCriteria.accountName.value}%']]>
         </if>
         <if test="searchCriteria.assignUsers != null">
-            ${searchCriteria.assignUsers.operation} m_crm_lead.assignUser IN
+            ${searchCriteria.assignUsers.operation}
+            m_crm_lead.assignUser IN
             <foreach close=")" collection="searchCriteria.assignUsers.values"
                 item="assignUser" open="(" separator=",">
                 #{assignUser}
@@ -203,8 +208,8 @@
         </if>
         <if test="searchCriteria.sources != null">
             ${searchCriteria.sources.operation} m_crm_lead.source IN
-            <foreach close=")" collection="searchCriteria.sources.values" item="source"
-                open="(" separator=",">
+            <foreach close=")" collection="searchCriteria.sources.values"
+                item="source" open="(" separator=",">
                 #{source}
             </foreach>
         </if>
@@ -282,7 +287,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             m_crm_lead.lastUpdatedTime DESC
         ]]>
@@ -329,7 +335,7 @@
                 refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
-    
+
     <!-- Here for Mass Update -->
     <update id="updateBySearchCriteria" parameterType="map">
         <include

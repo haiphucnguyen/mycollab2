@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper
     namespace="com.esofthead.mycollab.module.project.dao.StandupReportMapperExt">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <resultMap
         extends="com.esofthead.mycollab.module.project.dao.StandupReportMapper.ResultMapWithBLOBs"
         id="StandupResult"
@@ -32,7 +33,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
              m_prj_standup.forday DESC, logByFullName DESC
         ]]>

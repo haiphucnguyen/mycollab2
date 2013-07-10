@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.OpportunityMapper.ResultMapWithBLOBs"
         id="SimpleOpportunityResult" type="com.esofthead.mycollab.module.crm.domain.SimpleOpportunity">
@@ -219,7 +220,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_crm_opportunity.lastUpdatedTime DESC
         ]]>
@@ -287,9 +289,12 @@
     <select id="getLeadSourcesSummary" parameterType="OpportunitySearchCriteria"
         resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap">
         SELECT m_crm_opportunity.source AS groupid,
-        SUM((SELECT m_crm_opportunity.amount FROM m_crm_opportunity n WHERE n.id = m_crm_opportunity.id AND n.salesStage = 'Closed Won'))AS value,
-       	(SELECT count(*) FROM m_crm_opportunity mm WHERE m_crm_opportunity.source = mm.source) AS countNum,
-       	'' AS groupname
+        SUM((SELECT
+        m_crm_opportunity.amount FROM m_crm_opportunity n WHERE n.id =
+        m_crm_opportunity.id AND n.salesStage = 'Closed Won'))AS value,
+        (SELECT count(*) FROM m_crm_opportunity mm WHERE
+        m_crm_opportunity.source = mm.source) AS countNum,
+        '' AS groupname
         FROM
         m_crm_opportunity
         <if test="searchCriteria != null">

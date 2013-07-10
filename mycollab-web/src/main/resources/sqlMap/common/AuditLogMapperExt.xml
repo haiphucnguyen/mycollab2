@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.common.dao.AuditLogMapperExt">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <resultMap id="SimpleAuditLogResult"
         extends="com.esofthead.mycollab.common.dao.AuditLogMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.common.domain.SimpleAuditLog">
@@ -62,7 +63,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_audit_log.posteddate DESC
         ]]>

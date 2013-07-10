@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.TaskListMapperExt">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <resultMap id="SimpleTaskListResult"
         extends="com.esofthead.mycollab.module.project.dao.TaskListMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.project.domain.SimpleTaskList">
@@ -100,7 +101,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_prj_task_list.groupIndex, m_prj_task_list.lastUpdatedTime DESC
         ]]>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.common.dao.SaveSearchResultMapperExt">
-
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <sql id="selectSaveSearchResult">
         <![CDATA[
         SELECT s_save_search_result.id, s_save_search_result.saveUser, s_save_search_result.sAccountId, s_save_search_result.type, 

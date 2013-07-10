@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.ProductMapperExt">
-	<resultMap extends="com.esofthead.mycollab.module.crm.dao.ProductMapper.BaseResultMap"
-		id="SimpleProductResult" type="com.esofthead.mycollab.module.crm.domain.SimpleProduct">
-		<result column="accountname" property="accountname" jdbcType="VARCHAR" />
-		<result column="contactname" property="contactname" jdbcType="VARCHAR" />
-	</resultMap>
-	
-	<sql id="querySearchCriteria">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
+    <resultMap
+        extends="com.esofthead.mycollab.module.crm.dao.ProductMapper.BaseResultMap"
+        id="SimpleProductResult" type="com.esofthead.mycollab.module.crm.domain.SimpleProduct">
+        <result column="accountname" property="accountname"
+            jdbcType="VARCHAR" />
+        <result column="contactname" property="contactname"
+            jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="querySearchCriteria">
         <if test="productName != null">
-            ${productName.operation} m_crm_product.productname like '%${productName.value}%'
+            ${productName.operation} m_crm_product.productname
+            like '%${productName.value}%'
         </if>
         <if test="contactId != null">
             <![CDATA[
@@ -90,23 +95,26 @@
        ]]>
     </sql>
 
-    <select id="getTotalCount" resultType="int"
-        parameterType="ProductSearchCriteria">
+    <select id="getTotalCount" resultType="int" parameterType="ProductSearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_product
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
         </trim>
     </select>
-    
+
     <delete id="removeByCriteria" parameterType="ProductSearchCriteria">
         DELETE FROM m_crm_product
         <if test="_parameter != null">
-            <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
         </if>
     </delete>
-    
+
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
             m_crm_product.lastUpdatedTime DESC
         ]]>
@@ -115,10 +123,13 @@
     <select id="findPagableListByCriteria" resultMap="SimpleProductResult"
         parameterType="ProductSearchCriteria">
 
-        <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.selectSimpleProduct" />
-       <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.selectSimpleProduct" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
         </trim>
-        <include refid="orderStatement"/>
+        <include refid="orderStatement" />
     </select>
 </mapper>

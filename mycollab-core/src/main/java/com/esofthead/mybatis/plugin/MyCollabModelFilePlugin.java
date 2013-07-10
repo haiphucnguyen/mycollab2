@@ -33,6 +33,9 @@ public class MyCollabModelFilePlugin extends
 			generateUpdateMultipleKeysSqlStatement(document, introspectedTable);
 		}
 
+		TextElement cacheElement = new TextElement(
+				"<cache type=\"com.esofthead.mycollab.cache.mybatis.InfinispanCache\" />");
+		document.getRootElement().addElement(cacheElement);
 		return true;
 	}
 
@@ -48,23 +51,6 @@ public class MyCollabModelFilePlugin extends
 					introspectedColumn.getLength(), "Field value is too long");
 			field.addAnnotation(annotation);
 		}
-//
-//		if (!introspectedColumn.isNullable()
-//				&& !isPrimaryKeyOfTable(introspectedColumn, introspectedTable)
-//				&& introspectedColumn.isStringColumn()) {
-//			String notNullAnnotation = "@javax.validation.constraints.NotNull(message=\"%s\")";
-//			notNullAnnotation = String.format(notNullAnnotation,
-//					"Field value must be not null");
-//			field.addAnnotation(notNullAnnotation);
-//
-//			System.out.println("INTRO COLUMN: "
-//					+ introspectedColumn.getActualColumnName()
-//					+ " "
-//					+ introspectedColumn.getIntrospectedTable()
-//							.getFullyQualifiedTableNameAtRuntime() + " "
-//					+ introspectedColumn.isNullable() + " "
-//					+ introspectedColumn.isStringColumn());
-//		}
 		return true;
 	}
 

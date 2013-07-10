@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.TaskMapperExt">
+    <cache type="com.esofthead.mycollab.cache.mybatis.InfinispanCache" />
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.TaskMapper.ResultMapWithBLOBs"
         id="SimpleTaskResult" type="com.esofthead.mycollab.module.crm.domain.SimpleTask">
@@ -140,11 +141,11 @@
         resultType="int">
         SELECT count(*) as totalCount FROM m_crm_task
         <if test="searchCriteria != null">
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
-        </trim>
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+            </trim>
         </if>
     </select>
 
@@ -158,7 +159,8 @@
 
     <sql id="orderStatement">
         ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField} ${searchCriteria.sortDirection}, </if>
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection}, </if>
         <![CDATA[
             lastUpdatedTime DESC
         ]]>
