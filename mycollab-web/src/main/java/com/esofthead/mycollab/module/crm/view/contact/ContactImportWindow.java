@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -42,6 +43,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -462,17 +464,22 @@ public class ContactImportWindow extends Window {
 						String[] stringHeader = csvReader.readNext();
 						List<ImportFieldDef> listImportFieldDef = new ArrayList<ImportFieldDef>();
 						for (int i = 0; i < stringHeader.length; i++) {
-							if (gridWithHeaderLayout.getLayout().getComponent(
-									1, i + 1) instanceof CSVBeanFieldComboBox) {
-
-								CSVBeanFieldComboBox csvBeanFieldComboBox = (CSVBeanFieldComboBox) gridWithHeaderLayout
-										.getLayout().getComponent(1, i + 1);
-
-								ImportFieldDef importFieldDef = new ImportFieldDef(
-										i + 1,
-										(FieldMapperDef) csvBeanFieldComboBox
-												.getData());
-								listImportFieldDef.add(importFieldDef);
+							Component componentOnGrid = gridWithHeaderLayout
+									.getComponent(1, i + 1);
+							if (componentOnGrid instanceof HorizontalLayout) {
+								Iterator<Component> lstComponentOnGrid = ((HorizontalLayout) componentOnGrid)
+										.getComponentIterator();
+								Component compent = lstComponentOnGrid.next();
+								while (compent != null) {
+									if (compent instanceof CSVBeanFieldComboBox) {
+										ImportFieldDef importFieldDef = new ImportFieldDef(
+												i + 1,
+												(FieldMapperDef) ((CSVBeanFieldComboBox) compent)
+														.getValue());
+										listImportFieldDef.add(importFieldDef);
+										break;
+									}
+								}
 							}
 						}
 						ContactCSVObjectEntityConverter converter = new ContactCSVObjectEntityConverter();
