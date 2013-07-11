@@ -473,7 +473,7 @@ public class ContactImportWindow extends Window {
 								while (compent != null) {
 									if (compent instanceof CSVBeanFieldComboBox) {
 										ImportFieldDef importFieldDef = new ImportFieldDef(
-												i + 1,
+												i,
 												(FieldMapperDef) ((CSVBeanFieldComboBox) compent)
 														.getValue());
 										listImportFieldDef.add(importFieldDef);
