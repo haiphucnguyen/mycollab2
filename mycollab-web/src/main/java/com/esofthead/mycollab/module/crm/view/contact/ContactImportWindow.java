@@ -22,8 +22,8 @@ import com.esofthead.mycollab.common.ui.components.CSVBeanFieldComboBox;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
-import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -391,10 +391,7 @@ public class ContactImportWindow extends Window {
 		private static final long serialVersionUID = 1L;
 		private VerticalLayout columnMappingCrmLayout;
 		private GridFormLayoutHelper gridWithHeaderLayout;
-		private List<String> listStringFromCombox;
-		private HorizontalLayout messageHorizontal;
 		private File uploadFile;
-		private int numberOfColumn = 0;
 		public final List<FieldMapperDef> contactCrmFields = constructListFieldMapper();
 
 		public MappingCrmConfigurationLayout(final boolean checkboxChecked,
@@ -461,177 +458,13 @@ public class ContactImportWindow extends Window {
 
 			Button saveBtn = new Button("Save", new ClickListener() {
 				private static final long serialVersionUID = 1L;
-				private boolean checkValidInput = true;
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					listStringFromCombox = new ArrayList<String>();
-					checkValidInput = true;
-					for (int i = 0; i < numberOfColumn; i++) {
-						Component componentOnGrid = gridWithHeaderLayout
-								.getComponent(1, i + 1);
-						if (componentOnGrid instanceof HorizontalLayout) {
-							Iterator<Component> setComponentOnGrid = ((HorizontalLayout) componentOnGrid)
-									.getComponentIterator();
-							Component compent = setComponentOnGrid.next();
-							while (compent != null) {
-								if (compent instanceof ComboBox) {
-									String str = (((ComboBox) compent)
-											.getValue() != null) ? ((ComboBox) compent)
-											.getValue().toString() : "";
-									if (str.length() == 0) {
-										checkValidInput = false;
-										ContactImportWindow.this
-												.getParent()
-												.getWindow()
-												.showNotification(
-														"Please choose crm field to map.");
-										break;
-									} else if (listStringFromCombox.size() == 0)
-										listStringFromCombox.add(str);
-									else if (listStringFromCombox.indexOf(str) != -1) {
-										checkValidInput = false;
-										ContactImportWindow.this
-												.getParent()
-												.getWindow()
-												.showNotification(
-														"You should map one column to one crm field");
-									} else {
-										listStringFromCombox.add(str);
-									}
-								}
-								try {
-									compent = setComponentOnGrid.next();
-								} catch (Exception e) {
-									break;
-								}
-							}
-						}
-					}
-					// success in input Data from User
-					if (checkValidInput
-							&& (listStringFromCombox.indexOf("Last Name") != -1)) {
-						try {
-							// NOw we have lstStringCovert show field order we
-							CSVReader csvReader = new CSVReader(new FileReader(
-									uploadFile));
-							String[] rowData = csvReader.readNext();
-							int rowCount = 1;
-							if (checkboxChecked) {
-								rowData = csvReader.readNext();
-								rowCount++;
-							}
-							int numRowSuccess = 0;
-							int numRowError = 0;
 
-							ContactService contactService = AppContext
-									.getSpringBean(ContactService.class);
-							final List<String> lstRowFailDetail = new ArrayList<String>();
-							// we limit error row is 100
-
-							while (rowData != null && rowData.length > 0) {
-								// checking and log error
-								StringBuffer errorStr = new StringBuffer("");
-								Contact contact = null;
-								String[] lstStringFromCombox = new String[listStringFromCombox
-										.size()];
-								ContactCSVObjectEntityConverter csvObjectConverter = new ContactCSVObjectEntityConverter();
-								try {
-									contact = csvObjectConverter.convert(new ImportFieldDef(
-											listStringFromCombox
-													.toArray(lstStringFromCombox),
-											rowData));
-								} catch (Exception e) {
-									errorStr.append(e.getMessage());
-									if (numRowError <= 100)
-										lstRowFailDetail.add("row " + rowCount
-												+ ": " + errorStr.toString());
-									numRowError++;
-								}
-								if (errorStr.length() == 0) {
-									contactService.saveWithSession(contact,
-											AppContext.getUsername());
-									numRowSuccess++;
-								}
-								rowData = csvReader.readNext();
-								rowCount++;
-							}
-							csvReader.close();
-							// Show success , error message
-							String message = "Import success " + numRowSuccess
-									+ " rows, fail " + numRowError + " rows";
-							Button btnLink = new Button(
-									"download CSV error file for more informations",
-									new ClickListener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void buttonClick(ClickEvent event) {
-											File reportErrorFile = new File(
-													"reportErrorFile.csv");
-											try {
-												CSVWriter writer = new CSVWriter(
-														new FileWriter(
-																reportErrorFile));
-												String[] header = { "RowIndex : errorMessage" };
-												writer.writeNext(header);
-
-												for (int i = 0; i < lstRowFailDetail
-														.size() && i <= 100; i++) {
-													String[] body = { lstRowFailDetail
-															.get(i) };
-													writer.writeNext(body);
-
-													if (i == 100) {
-														String[] endBody = { "And more" };
-														writer.writeNext(endBody);
-														break;
-													}
-												}
-												writer.close();
-												ContactImportWindow.this
-														.getWindow()
-														.open(new FileStreamResource(
-																new FileInputStream(
-																		reportErrorFile),
-																reportErrorFile
-																		.getName(),
-																ContactImportWindow.this
-																		.getApplication()),
-																"_blank");
-											} catch (IOException e) {
-												throw new MyCollabException(e);
-											}
-
-										}
-									});
-							btnLink.addStyleName("link");
-							Label messageImportLabel = new Label(message);
-
-							if (messageHorizontal != null)
-								messageHorizontal.removeAllComponents();
-							else
-								messageHorizontal = new HorizontalLayout();
-							messageHorizontal.setSpacing(true);
-							messageHorizontal.addComponent(messageImportLabel);
-							if (numRowError > 0)
-								messageHorizontal.addComponent(btnLink);
-
-							columnMappingCrmLayout
-									.addComponent(messageHorizontal);
-
-						} catch (IOException e) {
-							throw new MyCollabException(e);
-						}
-					} else {
-						ContactImportWindow.this
-								.getParent()
-								.getWindow()
-								.showNotification(
-										"'Last Name' is required field, please choose one column.");
-					}
 				}
 			});
+
 			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlGroupBtn.addComponent(saveBtn);
 
@@ -713,7 +546,6 @@ public class ContactImportWindow extends Window {
 			try {
 				csvReader = new CSVReader(new FileReader(uploadFile));
 				String[] stringHeader = csvReader.readNext();
-				numberOfColumn = stringHeader.length;
 				for (int i = 0; i < stringHeader.length; i++) {
 
 					final CSVBeanFieldComboBox crmFieldComboBox = new CSVBeanFieldComboBox(

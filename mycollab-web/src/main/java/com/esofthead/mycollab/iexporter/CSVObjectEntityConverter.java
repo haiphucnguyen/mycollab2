@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.iexporter;
 
-import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
+import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 
 public interface CSVObjectEntityConverter<E> extends
-		ObjectEntityConverter<ImportFieldDef, E> {
+		ObjectEntityConverter<CSVItemMapperDef, E> {
 
 	public static class FieldMapperDef {
 		private String fieldname;
@@ -33,29 +33,49 @@ public interface CSVObjectEntityConverter<E> extends
 	}
 
 	public static class ImportFieldDef {
-		private String[] label;
-		private String[] values;
+		private int columnIndex;
+		private FieldMapperDef fieldMapperDef;
 
-		public ImportFieldDef(String[] label, String[] values) {
-			this.label = label;
-			this.values = values;
+		public int getColumnIndex() {
+			return columnIndex;
 		}
 
-		public String[] getLabel() {
-			return label;
+		public void setColumnIndex(int columnIndex) {
+			this.columnIndex = columnIndex;
 		}
 
-		public void setLabel(String[] label) {
-			this.label = label;
+		public FieldMapperDef getFieldMapperDef() {
+			return fieldMapperDef;
 		}
 
-		public String[] getValues() {
-			return values;
+		public void setFieldMapperDef(FieldMapperDef fieldMapperDef) {
+			this.fieldMapperDef = fieldMapperDef;
+		}
+	}
+
+	public static class CSVItemMapperDef {
+		private String[] csvLine;
+		private ImportFieldDef[] fieldsDef;
+
+		public CSVItemMapperDef(String[] csvLine, ImportFieldDef[] fieldDefs) {
+			this.csvLine = csvLine;
+			this.fieldsDef = fieldDefs;
 		}
 
-		public void setValues(String[] values) {
-			this.values = values;
+		public String[] getCsvLine() {
+			return csvLine;
 		}
 
+		public void setCsvLine(String[] csvLine) {
+			this.csvLine = csvLine;
+		}
+
+		public ImportFieldDef[] getFieldsDef() {
+			return fieldsDef;
+		}
+
+		public void setFieldsDef(ImportFieldDef[] fieldsDef) {
+			this.fieldsDef = fieldsDef;
+		}
 	}
 }
