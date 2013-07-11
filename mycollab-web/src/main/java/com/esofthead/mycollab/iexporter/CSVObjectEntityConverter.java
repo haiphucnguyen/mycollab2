@@ -36,6 +36,11 @@ public interface CSVObjectEntityConverter<E> extends
 		private int columnIndex;
 		private FieldMapperDef fieldMapperDef;
 
+		public ImportFieldDef(int columnIndex, FieldMapperDef fieldMapperDef) {
+			this.columnIndex = columnIndex;
+			this.fieldMapperDef = fieldMapperDef;
+		}
+
 		public int getColumnIndex() {
 			return columnIndex;
 		}

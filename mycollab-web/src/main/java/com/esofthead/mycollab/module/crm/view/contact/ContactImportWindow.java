@@ -1,22 +1,18 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
 
 import com.esofthead.mycollab.common.ui.components.CSVBeanFieldComboBox;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -24,13 +20,13 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
+import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.contact.iexport.ContactCSVObjectEntityConverter;
 import com.esofthead.mycollab.module.crm.view.contact.iexport.ContactVCardObjectEntityConverter;
-import com.esofthead.mycollab.module.file.FileStreamResource;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -46,7 +42,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -461,7 +456,40 @@ public class ContactImportWindow extends Window {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
+					try {
+						CSVReader csvReader = new CSVReader(new FileReader(
+								uploadFile));
+						String[] stringHeader = csvReader.readNext();
+						List<ImportFieldDef> listImportFieldDef = new ArrayList<ImportFieldDef>();
+						for (int i = 0; i < stringHeader.length; i++) {
+							if (gridWithHeaderLayout.getLayout().getComponent(
+									1, i + 1) instanceof CSVBeanFieldComboBox) {
 
+								CSVBeanFieldComboBox csvBeanFieldComboBox = (CSVBeanFieldComboBox) gridWithHeaderLayout
+										.getLayout().getComponent(1, i + 1);
+
+								ImportFieldDef importFieldDef = new ImportFieldDef(
+										i + 1,
+										(FieldMapperDef) csvBeanFieldComboBox
+												.getData());
+								listImportFieldDef.add(importFieldDef);
+							}
+						}
+						ContactCSVObjectEntityConverter converter = new ContactCSVObjectEntityConverter();
+						String[] rowData = (checkboxChecked) ? csvReader
+								.readNext() : stringHeader;
+						while (rowData != null) {
+							Contact contact = converter.convert(new CSVItemMapperDef(
+									rowData,
+									listImportFieldDef
+											.toArray(new ImportFieldDef[listImportFieldDef
+													.size()])));
+							rowData = csvReader.readNext();
+						}
+						csvReader.close();
+					} catch (Exception e) {
+						throw new MyCollabException(e);
+					}
 				}
 			});
 
