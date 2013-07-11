@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVFormatter;
+import com.esofthead.mycollab.web.AppContext;
 
 public class CSVObjectEntityConverter<E> implements
 		ObjectEntityConverter<CSVItemMapperDef, E> {
@@ -13,6 +14,8 @@ public class CSVObjectEntityConverter<E> implements
 			E bean = cls.newInstance();
 			String[] csvLine = unit.getCsvLine();
 
+			PropertyUtils.setProperty(bean, "saccountid",
+					AppContext.getAccountId());
 			for (ImportFieldDef importFieldDef : unit.getFieldsDef()) {
 				try {
 					String csvFieldItem = csvLine[importFieldDef
