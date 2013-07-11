@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
 
@@ -19,7 +21,7 @@ import com.esofthead.mycollab.common.ui.components.CSVBeanFieldComboBox;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
+import com.esofthead.mycollab.iexporter.CSVImportEntityProcess;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
 import com.esofthead.mycollab.iexporter.csv.CSVBooleanFormatter;
@@ -28,7 +30,6 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.module.crm.view.contact.iexport.ContactCSVObjectEntityConverter;
 import com.esofthead.mycollab.module.crm.view.contact.iexport.ContactVCardObjectEntityConverter;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -57,6 +58,8 @@ import ezvcard.VCard;
 
 public class ContactImportWindow extends Window {
 	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory
+			.getLogger(ContactImportWindow.class);
 	public static final String[] fileType = { "CSV", "VCard" };
 
 	private FileConfigurationLayout fileConfigurationLayout;
@@ -142,7 +145,9 @@ public class ContactImportWindow extends Window {
 															for (VCard vcard : lstVcard) {
 																ContactVCardObjectEntityConverter converter = new ContactVCardObjectEntityConverter();
 																Contact add = converter
-																		.convert(vcard);
+																		.convert(
+																				Contact.class,
+																				vcard);
 																add.setCreatedtime(new Date());
 																add.setSaccountid(AppContext
 																		.getAccountId());
@@ -461,11 +466,10 @@ public class ContactImportWindow extends Window {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					try {
-						CSVReader csvReader = new CSVReader(new FileReader(
-								uploadFile));
-						String[] stringHeader = csvReader.readNext();
+
 						List<ImportFieldDef> listImportFieldDef = new ArrayList<ImportFieldDef>();
-						for (int i = 0; i < stringHeader.length; i++) {
+						for (int i = 0; i < gridWithHeaderLayout.getLayout()
+								.getRows(); i++) {
 							Component componentOnGrid = gridWithHeaderLayout
 									.getComponent(1, i + 1);
 							if (componentOnGrid instanceof HorizontalLayout) {
@@ -481,18 +485,11 @@ public class ContactImportWindow extends Window {
 								}
 							}
 						}
-						ContactCSVObjectEntityConverter converter = new ContactCSVObjectEntityConverter();
-						String[] rowData = (checkboxChecked) ? csvReader
-								.readNext() : stringHeader;
-						while (rowData != null) {
-							Contact contact = converter.convert(new CSVItemMapperDef(
-									rowData,
-									listImportFieldDef
-											.toArray(new ImportFieldDef[listImportFieldDef
-													.size()])));
-							rowData = csvReader.readNext();
-						}
-						csvReader.close();
+
+						CSVImportEntityProcess importProcess = new CSVImportEntityProcess();
+						importProcess.doImport(uploadFile,
+								AppContext.getSpringBean(ContactService.class),
+								Contact.class, listImportFieldDef);
 					} catch (Exception e) {
 						throw new MyCollabException(e);
 					}

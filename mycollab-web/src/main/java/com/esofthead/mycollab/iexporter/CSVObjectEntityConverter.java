@@ -1,10 +1,40 @@
 package com.esofthead.mycollab.iexporter;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVFormatter;
 
-public interface CSVObjectEntityConverter<E> extends
+public class CSVObjectEntityConverter<E> implements
 		ObjectEntityConverter<CSVItemMapperDef, E> {
+	@Override
+	public E convert(Class<E> cls, CSVItemMapperDef unit) {
+		try {
+			E bean = cls.newInstance();
+			String[] csvLine = unit.getCsvLine();
+
+			for (ImportFieldDef importFieldDef : unit.getFieldsDef()) {
+				try {
+					String csvFieldItem = csvLine[importFieldDef
+							.getColumnIndex()];
+					if (importFieldDef.getFieldFormatter() != null) {
+						PropertyUtils.setProperty(bean, importFieldDef
+								.getFieldname(), importFieldDef
+								.getFieldFormatter().format(csvFieldItem));
+					} else
+						PropertyUtils.setProperty(bean,
+								importFieldDef.getFieldname(), csvFieldItem);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return bean;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static class FieldMapperDef {
 		private String fieldname;

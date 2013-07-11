@@ -17,7 +17,7 @@ public class ContactVCardObjectEntityConverter implements
 		VCardObjectEntityConverter<Contact> {
 
 	@Override
-	public Contact convert(VCard vcard) {
+	public Contact convert(Class<Contact> cls, VCard vcard) {
 		Contact contact = new Contact();
 		if (vcard != null) {
 
