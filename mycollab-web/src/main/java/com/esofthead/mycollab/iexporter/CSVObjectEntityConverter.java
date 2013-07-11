@@ -49,12 +49,12 @@ public interface CSVObjectEntityConverter<E> extends
 			this.columnIndex = columnIndex;
 		}
 
-		public FieldMapperDef getFieldMapperDef() {
-			return fieldMapperDef;
+		public String getFieldname() {
+			return fieldMapperDef.getFieldname();
 		}
 
-		public void setFieldMapperDef(FieldMapperDef fieldMapperDef) {
-			this.fieldMapperDef = fieldMapperDef;
+		public String getDescription() {
+			return fieldMapperDef.getDescription();
 		}
 	}
 
