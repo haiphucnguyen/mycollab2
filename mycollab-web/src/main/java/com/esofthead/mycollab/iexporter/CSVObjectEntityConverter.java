@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.iexporter;
 
+import java.util.Map;
+
 public interface CSVObjectEntityConverter<E> extends
-		ObjectEntityConverter<String[], E> {
+		ObjectEntityConverter<Map<String,String[]>, E> {
 
 }
