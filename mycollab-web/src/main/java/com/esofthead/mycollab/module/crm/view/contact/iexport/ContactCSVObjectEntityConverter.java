@@ -18,9 +18,12 @@ public class ContactCSVObjectEntityConverter implements
 			try {
 				String csvFieldItem = csvLine[importFieldDef.getColumnIndex()];
 				if (importFieldDef.getFieldFormatter() != null) {
-				}
-				PropertyUtils.setProperty(contact,
-						importFieldDef.getFieldname(), csvFieldItem);
+					PropertyUtils.setProperty(contact, importFieldDef
+							.getFieldname(), importFieldDef.getFieldFormatter()
+							.format(csvFieldItem));
+				} else
+					PropertyUtils.setProperty(contact,
+							importFieldDef.getFieldname(), csvFieldItem);
 
 			} catch (Exception e) {
 				e.printStackTrace();
