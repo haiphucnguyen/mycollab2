@@ -20,12 +20,13 @@ import com.esofthead.mycollab.web.AppContext;
 public class ContactCSVObjectEntityConverter implements
 		CSVObjectEntityConverter<Contact> {
 	@Override
-	public Contact convert(Map<String, String[]> unit) {
+	public Contact convert(ImportFieldDef unit) {
 		StringBuffer errorStr = new StringBuffer("");
 		Contact contact = new Contact();
 		contact.setSaccountid(AppContext.getAccountId());
-		String[] labelArray = unit.get("Label");
-		String[] valueArray = unit.get("Value");
+		String[] labelArray = unit.getLabel();
+		String[] valueArray = unit.getValues();
+		
 		for (int i = 0; i < labelArray.length; i++) {
 			if (i < valueArray.length) {
 				errorStr.append(mapValueToContact(contact, labelArray[i],

@@ -9,10 +9,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
@@ -23,6 +21,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -520,10 +519,10 @@ public class ContactImportWindow extends Window {
 							// NOw we have lstStringCovert show field order we
 							CSVReader csvReader = new CSVReader(new FileReader(
 									uploadFile));
-							String[] rowIndex = csvReader.readNext();
+							String[] rowData = csvReader.readNext();
 							int rowCount = 1;
 							if (checkboxChecked) {
-								rowIndex = csvReader.readNext();
+								rowData = csvReader.readNext();
 								rowCount++;
 							}
 							int numRowSuccess = 0;
@@ -534,20 +533,18 @@ public class ContactImportWindow extends Window {
 							final List<String> lstRowFailDetail = new ArrayList<String>();
 							// we limit error row is 100
 
-							while (rowIndex != null && rowIndex.length > 0) {
+							while (rowData != null && rowData.length > 0) {
 								// checking and log error
 								StringBuffer errorStr = new StringBuffer("");
-								Contact contact = new Contact();
-								Map<String, String[]> map = new HashMap<String, String[]>();
+								Contact contact = null;
 								String[] lstStringFromCombox = new String[listStringFromCombox
 										.size()];
-
-								map.put("Label", listStringFromCombox
-										.toArray(lstStringFromCombox));
-								map.put("Value", rowIndex);
 								ContactCSVObjectEntityConverter csvObjectConverter = new ContactCSVObjectEntityConverter();
 								try {
-									contact = csvObjectConverter.convert(map);
+									contact = csvObjectConverter.convert(new ImportFieldDef(
+											listStringFromCombox
+													.toArray(lstStringFromCombox),
+											rowData));
 								} catch (Exception e) {
 									errorStr.append(e.getMessage());
 									if (numRowError <= 100)
@@ -560,7 +557,7 @@ public class ContactImportWindow extends Window {
 											AppContext.getUsername());
 									numRowSuccess++;
 								}
-								rowIndex = csvReader.readNext();
+								rowData = csvReader.readNext();
 								rowCount++;
 							}
 							csvReader.close();
