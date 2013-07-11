@@ -17,6 +17,8 @@ public class ContactCSVObjectEntityConverter implements
 		for (ImportFieldDef importFieldDef : unit.getFieldsDef()) {
 			try {
 				String csvFieldItem = csvLine[importFieldDef.getColumnIndex()];
+				if (importFieldDef.getFieldFormatter() != null) {
+				}
 				PropertyUtils.setProperty(contact,
 						importFieldDef.getFieldname(), csvFieldItem);
 
