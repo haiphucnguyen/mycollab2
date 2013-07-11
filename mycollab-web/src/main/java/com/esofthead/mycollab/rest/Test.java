@@ -17,6 +17,7 @@ import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
+import org.restlet.resource.ResourceException;
 
 import com.esofthead.mycollab.module.crm.domain.Customer;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
@@ -60,20 +61,24 @@ public class Test {
 
 		try {
 			Form form = new Form();
-			form.set("subdomain", "esofthead");
+			form.set("subdomain", "esofthead1234");
 			form.set("planId", "1");
-			form.set("username", "hainguyen1");
+			form.set("username", "hainguyen12345");
 			form.set("password", "123");
-			form.set("email", "hainguyen@esofthead1.com");
+			form.set("email", "hainguyen@esofthead12345.com");
 			form.set("timezoneId", "10");
 			form.set("firstname", "Nguyen");
 			form.set("lastname", "Hai");
 
-			Representation result = clientResource.post(form,
-					MediaType.MULTIPART_FORM_DATA);
-			if (result != null) {
-				System.out.println(result.getText());
+			try {
+				String result = testResource.doPost(form);
+				if (result != null) {
+					System.out.println(result);
+				}
+			} catch (ResourceException e) {
+				System.out.println(e.getCause() + "---" + e.getMessage());
 			}
+
 		} catch (Exception e) {
 			System.out.println(e.getClass());
 			e.printStackTrace();

@@ -1,11 +1,8 @@
 package com.esofthead.mycollab.rest.server.resource.impl;
 
-import java.util.List;
-
 import org.restlet.Server;
 import org.restlet.data.Form;
 import org.restlet.data.Protocol;
-import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -17,11 +14,7 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.rest.representation.ErrorRepresentation;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
-import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
-import com.esofthead.mycollab.rest.server.signup.ExistingUserRegisterException;
-import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 
 @Component("restUserResource")
 public class UserHubResourceImpl extends ServerResource implements
@@ -46,8 +39,7 @@ public class UserHubResourceImpl extends ServerResource implements
 
 	@Override
 	@Post("form")
-	public Representation doPost(Form form) throws SubdomainExistedException,
-			ExistingEmailRegisterException, ExistingUserRegisterException {
+	public String doPost(Form form) {
 		UserHubResourceImpl.log.debug("Start handling form request");
 		String subdomain = form.getFirstValue("subdomain");
 		int planId = Integer.parseInt(form.getFirstValue("planId"));
@@ -59,7 +51,7 @@ public class UserHubResourceImpl extends ServerResource implements
 			this.billingService.registerAccount(subdomain, planId, username,
 					password, email, timezoneId);
 		} catch (MyCollabException e) {
-			return new ErrorRepresentation(e.getMessage().toCharArray());
+			throw new MyCollabException(e);
 		}
 		String siteUrl = "";
 		if (ApplicationProperties.productionMode) {
@@ -78,6 +70,6 @@ public class UserHubResourceImpl extends ServerResource implements
 						.getString(ApplicationProperties.APP_URL), subdomain);
 			}
 		}
-		return new StringRepresentation(siteUrl.toCharArray());
+		return siteUrl;
 	}
 }
