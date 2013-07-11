@@ -470,15 +470,12 @@ public class ContactImportWindow extends Window {
 								Iterator<Component> lstComponentOnGrid = ((HorizontalLayout) componentOnGrid)
 										.getComponentIterator();
 								Component compent = lstComponentOnGrid.next();
-								while (compent != null) {
-									if (compent instanceof CSVBeanFieldComboBox) {
-										ImportFieldDef importFieldDef = new ImportFieldDef(
-												i,
-												(FieldMapperDef) ((CSVBeanFieldComboBox) compent)
-														.getValue());
-										listImportFieldDef.add(importFieldDef);
-										break;
-									}
+								if (compent instanceof CSVBeanFieldComboBox) {
+									ImportFieldDef importFieldDef = new ImportFieldDef(
+											i,
+											(FieldMapperDef) ((CSVBeanFieldComboBox) compent)
+													.getValue());
+									listImportFieldDef.add(importFieldDef);
 								}
 							}
 						}
