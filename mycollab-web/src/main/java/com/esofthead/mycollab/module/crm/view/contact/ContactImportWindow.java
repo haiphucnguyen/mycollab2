@@ -18,9 +18,11 @@ import org.vaadin.easyuploads.SingleFileUploadField;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
+import com.esofthead.mycollab.common.ui.components.CSVBeanFieldComboBox;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -57,13 +59,6 @@ import ezvcard.VCard;
 public class ContactImportWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	public static final String[] fileType = { "CSV", "VCard" };
-	public static final String[] contactCrmFields = { "First Name",
-			"Last Name", "Account", "Title", "Department", "Email",
-			"Assistant", "Assistant Phone", "Leader Source", "Phone Office",
-			"Mobile", "Home phone", "Other Phone", "Fax", "Birthday",
-			"Callable", "Assign User", "Address", "City", "State",
-			"Postal Code", "Country", "Other Address", "Other City",
-			"Other State", "Other Postal Code", "Other Country", "Description" };
 
 	private FileConfigurationLayout fileConfigurationLayout;
 	private MappingCrmConfigurationLayout mappingCrmFieldLayout;
@@ -400,6 +395,7 @@ public class ContactImportWindow extends Window {
 		private HorizontalLayout messageHorizontal;
 		private File uploadFile;
 		private int numberOfColumn = 0;
+		public final List<FieldMapperDef> contactCrmFields = constructListFieldMapper();
 
 		public MappingCrmConfigurationLayout(final boolean checkboxChecked,
 				final File uploadFile) {
@@ -678,9 +674,41 @@ public class ContactImportWindow extends Window {
 			fillDataToGridLayout();
 		}
 
-		@SuppressWarnings({ "resource", "rawtypes", "unchecked" })
+		private List<FieldMapperDef> constructListFieldMapper() {
+			FieldMapperDef[] fields = {
+					new FieldMapperDef("firstname", "First Name"),
+					new FieldMapperDef("lastname", "Last Name"),
+					new FieldMapperDef("account", "Account"),
+					new FieldMapperDef("title", "Title"),
+					new FieldMapperDef("department", "Department"),
+					new FieldMapperDef("email", "Email"),
+					new FieldMapperDef("assistant", "Assistant"),
+					new FieldMapperDef("assistantphone", "Assistant Phone"),
+					new FieldMapperDef("leadsource", "Leader Source"),
+					new FieldMapperDef("officephone", "Phone Office"),
+					new FieldMapperDef("mobile", "Mobile"),
+					new FieldMapperDef("homephone", "Home phone"),
+					new FieldMapperDef("otherphone", "Other Phone"),
+					new FieldMapperDef("fax", "Fax"),
+					new FieldMapperDef("birthday", "Birthday"),
+					new FieldMapperDef("iscallable", "Callable"),
+					new FieldMapperDef("assignuser", "Assign User"),
+					new FieldMapperDef("primaddress", "Address"),
+					new FieldMapperDef("primcity", "City"),
+					new FieldMapperDef("primstate", "State"),
+					new FieldMapperDef("primpostalcode", "Postal Code"),
+					new FieldMapperDef("primcountry", "Country"),
+					new FieldMapperDef("otheraddress", "Other Address"),
+					new FieldMapperDef("othercity", "Other City"),
+					new FieldMapperDef("otherstate", "Other State"),
+					new FieldMapperDef("otherpostalcode", "Other Postal Code"),
+					new FieldMapperDef("othercountry", "Other Country"),
+					new FieldMapperDef("description", "Description") };
+			return Arrays.asList(fields);
+		}
+
+		@SuppressWarnings({ "resource" })
 		private void fillDataToGridLayout() {
-			// // IF Has Header ------ fill to CrM fields and disable
 			CSVReader csvReader;
 			try {
 				csvReader = new CSVReader(new FileReader(uploadFile));
@@ -688,12 +716,8 @@ public class ContactImportWindow extends Window {
 				numberOfColumn = stringHeader.length;
 				for (int i = 0; i < stringHeader.length; i++) {
 
-					final ComboBox addcomboBox = new ComboBox();
-
-					BeanItemContainer<String> crmFileValue = new BeanItemContainer(
-							String.class, Arrays.asList(contactCrmFields));
-
-					addcomboBox.setContainerDataSource(crmFileValue);
+					final CSVBeanFieldComboBox crmFieldComboBox = new CSVBeanFieldComboBox(
+							contactCrmFields);
 
 					String headerStr = stringHeader[i];
 					gridWithHeaderLayout.addComponentSupportFieldCaption(
@@ -702,7 +726,7 @@ public class ContactImportWindow extends Window {
 					Label fieldCaptionColumnIndex = new Label("Column "
 							+ (i + 1));
 					gridWithHeaderLayout.addComponentSupportFieldCaption(
-							addcomboBox, fieldCaptionColumnIndex, "200px",
+							crmFieldComboBox, fieldCaptionColumnIndex, "200px",
 							"200px", 1, i + 1, Alignment.MIDDLE_CENTER);
 				}
 			} catch (IOException e) {

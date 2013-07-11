@@ -3,7 +3,6 @@ package com.esofthead.mycollab.module.crm.view.contact.iexport;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;

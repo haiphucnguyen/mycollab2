@@ -10,6 +10,11 @@ public interface CSVObjectEntityConverter<E> extends
 
 		private String description;
 
+		public FieldMapperDef(String fieldname, String description) {
+			this.fieldname = fieldname;
+			this.description = description;
+		}
+
 		public String getFieldname() {
 			return fieldname;
 		}
