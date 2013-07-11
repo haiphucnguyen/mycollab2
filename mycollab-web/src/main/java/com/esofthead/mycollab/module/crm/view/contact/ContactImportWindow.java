@@ -394,7 +394,7 @@ public class ContactImportWindow extends Window {
 	private class MappingCrmConfigurationLayout extends CssLayout {
 		private static final long serialVersionUID = 1L;
 		private VerticalLayout columnMappingCrmLayout;
-		private GridFormLayoutHelper gridWithHeaderLayout;
+		private GridFormLayoutHelper gridCrmMapping;
 		private File uploadFile;
 		public final List<FieldMapperDef> contactCrmFields = constructListFieldMapper();
 
@@ -421,15 +421,15 @@ public class ContactImportWindow extends Window {
 			infoLabel.addStyleName("h3");
 			columnMappingCrmLayout.addComponent(infoLabel);
 			try {
-				gridWithHeaderLayout = new GridFormLayoutHelper(
+				gridCrmMapping = new GridFormLayoutHelper(
 						2,
 						(new CSVReader(new FileReader(uploadFile))).readNext().length + 2,
 						"100%", "200px");
 			} catch (Exception e) {
 				throw new MyCollabException(e);
 			}
-			gridWithHeaderLayout.getLayout().setMargin(true);
-			gridWithHeaderLayout.getLayout().setSpacing(true);
+			gridCrmMapping.getLayout().setMargin(true);
+			gridCrmMapping.getLayout().setSpacing(true);
 
 			Label header = new Label("Header");
 			header.addStyleName("h3");
@@ -440,19 +440,19 @@ public class ContactImportWindow extends Window {
 			colIndex.addStyleName("h3");
 			// IF has header
 			if (checkboxChecked)
-				gridWithHeaderLayout.addComponentSupportFieldCaption(header,
+				gridCrmMapping.addComponentSupportFieldCaption(header,
 						new Label(), "0px", "200px", 0, 0,
 						Alignment.MIDDLE_CENTER);
 			else {
 				Label firstRowDataLabel = new Label("First Row Data");
 				firstRowDataLabel.addStyleName("h3");
-				gridWithHeaderLayout.addComponentSupportFieldCaption(
+				gridCrmMapping.addComponentSupportFieldCaption(
 						firstRowDataLabel, new Label(), "0px", "200px", 0, 0,
 						Alignment.MIDDLE_CENTER);
 			}
-			gridWithHeaderLayout.addComponentSupportFieldCaption(crmLabel,
+			gridCrmMapping.addComponentSupportFieldCaption(crmLabel,
 					colIndex, "200px", "200px", 1, 0, Alignment.MIDDLE_CENTER);
-			columnMappingCrmLayout.addComponent(gridWithHeaderLayout
+			columnMappingCrmLayout.addComponent(gridCrmMapping
 					.getLayout());
 
 			HorizontalLayout controlGroupBtn = new HorizontalLayout();
@@ -468,9 +468,9 @@ public class ContactImportWindow extends Window {
 					try {
 
 						List<ImportFieldDef> listImportFieldDef = new ArrayList<ImportFieldDef>();
-						for (int i = 0; i < gridWithHeaderLayout.getLayout()
+						for (int i = 0; i < gridCrmMapping.getLayout()
 								.getRows(); i++) {
-							Component componentOnGrid = gridWithHeaderLayout
+							Component componentOnGrid = gridCrmMapping
 									.getComponent(1, i + 1);
 							if (componentOnGrid instanceof HorizontalLayout) {
 								Iterator<Component> lstComponentOnGrid = ((HorizontalLayout) componentOnGrid)
@@ -585,12 +585,12 @@ public class ContactImportWindow extends Window {
 							contactCrmFields);
 
 					String headerStr = stringHeader[i];
-					gridWithHeaderLayout.addComponentSupportFieldCaption(
+					gridCrmMapping.addComponentSupportFieldCaption(
 							new Label(headerStr), new Label(), "0px", "200px",
 							0, i + 1, Alignment.MIDDLE_CENTER);
 					Label fieldCaptionColumnIndex = new Label("Column "
 							+ (i + 1));
-					gridWithHeaderLayout.addComponentSupportFieldCaption(
+					gridCrmMapping.addComponentSupportFieldCaption(
 							crmFieldComboBox, fieldCaptionColumnIndex, "200px",
 							"200px", 1, i + 1, Alignment.MIDDLE_CENTER);
 				}
