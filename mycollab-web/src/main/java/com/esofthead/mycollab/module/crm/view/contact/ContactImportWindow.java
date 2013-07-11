@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
+import com.esofthead.mycollab.iexporter.csv.CSVBooleanFormatter;
 import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -558,7 +559,8 @@ public class ContactImportWindow extends Window {
 					new FieldMapperDef("fax", "Fax"),
 					new FieldMapperDef("birthday", "Birthday",
 							new CSVDateFormatter()),
-					new FieldMapperDef("iscallable", "Callable"),
+					new FieldMapperDef("iscallable", "Callable",
+							new CSVBooleanFormatter()),
 					new FieldMapperDef("assignuser", "Assign User"),
 					new FieldMapperDef("primaddress", "Address"),
 					new FieldMapperDef("primcity", "City"),
