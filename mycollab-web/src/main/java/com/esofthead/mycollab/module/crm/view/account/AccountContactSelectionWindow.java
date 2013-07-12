@@ -8,14 +8,12 @@ import java.util.Arrays;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 

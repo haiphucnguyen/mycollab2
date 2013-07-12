@@ -33,7 +33,7 @@ public class AccountLeadSelectionWindow extends
 	@Override
 	protected void initUI() {
 		tableItem = new LeadTableDisplay(LeadTableFieldDef.selected,
-				Arrays.asList(LeadTableFieldDef.title, LeadTableFieldDef.name,
+				Arrays.asList(LeadTableFieldDef.name, LeadTableFieldDef.title,
 						LeadTableFieldDef.email, LeadTableFieldDef.phoneoffice));
 
 		Button selectBtn = new Button("Select", new Button.ClickListener() {
