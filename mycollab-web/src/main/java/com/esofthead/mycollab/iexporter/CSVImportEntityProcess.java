@@ -32,6 +32,8 @@ public class CSVImportEntityProcess<S extends ICrudService, E> {
 			CSVReader csvReader = new CSVReader(new FileReader(file));
 			CSVObjectEntityConverter<E> converter = new CSVObjectEntityConverter<E>();
 			String[] rowData = csvReader.readNext();
+			int rowIndex = 1;
+			StringBuffer errMsg = new StringBuffer("");
 			while (rowData != null) {
 				E bean = converter.convert(
 						beanCls,
@@ -41,12 +43,17 @@ public class CSVImportEntityProcess<S extends ICrudService, E> {
 					validate(bean);
 					service.saveWithSession(bean, AppContext.getUsername());
 				} catch (IllegalArgumentException e1) {
-					throw new IllegalAccessError(e1.getMessage());
+					errMsg.append(rowIndex).append(": ");
+					errMsg.append(e1.getMessage());
 				} finally {
 					rowData = csvReader.readNext();
+					rowIndex++;
 				}
 			}
 			csvReader.close();
+			if (errMsg.toString().length() > 0) {
+				throw new IllegalArgumentException(errMsg.toString());
+			}
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}

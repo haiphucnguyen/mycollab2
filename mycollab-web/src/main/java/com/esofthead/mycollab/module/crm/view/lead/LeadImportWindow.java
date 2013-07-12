@@ -1,50 +1,52 @@
-package com.esofthead.mycollab.module.crm.view.contact;
+package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVBooleanFormatter;
-import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
-import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.web.AppContext;
 
-public class ContactImportWindow extends EntityImportWindow<Contact> {
+public class LeadImportWindow extends EntityImportWindow<SimpleLead> {
 	private static final long serialVersionUID = 1L;
 
-	public ContactImportWindow() {
-		super(true, "Import Contact Window", AppContext
-				.getSpringBean(ContactService.class), Contact.class);
+	public LeadImportWindow() {
+		super(false, "Import Lead Import", AppContext
+				.getSpringBean(LeadService.class), SimpleLead.class);
 	}
 
 	@Override
 	protected List<FieldMapperDef> constructCSVFieldMapper() {
 		FieldMapperDef[] fields = {
+				new FieldMapperDef("leadsourcedesc", "Leader Source"),
+				new FieldMapperDef("statusdesc", "Status"),
+				new FieldMapperDef("referredby", "Referred By"),
+				new FieldMapperDef("prefixname", "Prefix Name"),
 				new FieldMapperDef("firstname", "First Name"),
 				new FieldMapperDef("lastname", "Last Name"),
-				new FieldMapperDef("account", "Account"),
+				new FieldMapperDef("accountname", "Account Name"),
 				new FieldMapperDef("title", "Title"),
 				new FieldMapperDef("department", "Department"),
-				new FieldMapperDef("email", "Email"),
-				new FieldMapperDef("assistant", "Assistant"),
-				new FieldMapperDef("assistantphone", "Assistant Phone"),
-				new FieldMapperDef("leadsource", "Leader Source"),
-				new FieldMapperDef("officephone", "Phone Office"),
-				new FieldMapperDef("mobile", "Mobile"),
-				new FieldMapperDef("homephone", "Home phone"),
-				new FieldMapperDef("otherphone", "Other Phone"),
-				new FieldMapperDef("fax", "Fax"),
-				new FieldMapperDef("birthday", "Birthday",
-						new CSVDateFormatter()),
 				new FieldMapperDef("iscallable", "Callable",
 						new CSVBooleanFormatter()),
+				new FieldMapperDef("officephone", "Office Phone"),
+				new FieldMapperDef("homephone", "Home phone"),
+				new FieldMapperDef("otherphone", "Other Phone"),
+				new FieldMapperDef("mobile", "Mobile"),
+				new FieldMapperDef("fax", "Fax"),
 				new FieldMapperDef("assignuser", "Assign User"),
+				new FieldMapperDef("status", "Status"),
+				new FieldMapperDef("source", "Source"),
+				new FieldMapperDef("website", "Website"),
+				new FieldMapperDef("industry", "Industry"),
+				new FieldMapperDef("noemployees", "NoEmployess"),
+				new FieldMapperDef("email", "Email"),
 				new FieldMapperDef("primaddress", "Address"),
 				new FieldMapperDef("primcity", "City"),
 				new FieldMapperDef("primstate", "State"),
@@ -61,10 +63,8 @@ public class ContactImportWindow extends EntityImportWindow<Contact> {
 
 	@Override
 	protected void reloadWhenBackToListView() {
-		ContactSearchCriteria contactSearchCriteria = new ContactSearchCriteria();
-		contactSearchCriteria.setContactName(new StringSearchField(""));
 		EventBus.getInstance().fireEvent(
-				new ContactEvent.GotoList(ContactListView.class,contactSearchCriteria));
+				new LeadEvent.GotoList(LeadListView.class,
+						new LeadSearchCriteria()));
 	}
-
 }

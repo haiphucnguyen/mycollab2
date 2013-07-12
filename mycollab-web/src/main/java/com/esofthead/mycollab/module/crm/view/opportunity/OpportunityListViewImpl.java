@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignImportWindow;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -151,6 +152,22 @@ public class OpportunityListViewImpl extends AbstractView implements
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+
+		Button importBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				CampaignImportWindow opportunityImportWindow = new CampaignImportWindow();
+				getWindow().addWindow(opportunityImportWindow);
+			}
+		});
+		importBtn.setDescription("Import");
+		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(importBtn);
+		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
+
 		return layoutWrapper;
 	}
 

@@ -143,6 +143,20 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
+		Button importBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				LeadImportWindow leadImportWindow = new LeadImportWindow();
+				getWindow().addWindow(leadImportWindow);
+			}
+		});
+		importBtn.setDescription("Import");
+		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(importBtn);
+		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
 		return layoutWrapper;
 	}
 
