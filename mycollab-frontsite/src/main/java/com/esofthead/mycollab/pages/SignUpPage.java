@@ -83,7 +83,7 @@ public class SignUpPage extends BasePage {
 
 				try {
 
-					Form form = new Form();
+					final Form form = new Form();
 					form.set("subdomain", subdomain.getModelObject());
 					form.set("planId", parameters.get("planId").toString());
 					form.set("username", username.getModelObject());
@@ -93,9 +93,10 @@ public class SignUpPage extends BasePage {
 					form.set("firstname", firstname.getModelObject());
 					form.set("lastname", lastname.getModelObject());
 
-//					final String response = userResource.doPost(form);
-//					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
-//							new RedirectRequestHandler(response));
+					final String response = userResource.doPost(form);
+
+					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
+							new RedirectRequestHandler(response));
 				} catch (final Exception e) {
 					this.error(e.getMessage());
 				}

@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
 import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 import com.esofthead.mycollab.web.LocalizationHelper;
 
@@ -71,6 +72,14 @@ public class BillingServiceImpl implements BillingService {
 			throw new ExistingUserRegisterException(
 					LocalizationHelper.getMessage(
 							GenericI18Enum.EXISTING_USER_REGISTER_ERROR,
+							username));
+		}
+
+		userEx.createCriteria().andUsernameEqualTo(email);
+		if (this.userMapper.countByExample(userEx) > 0) {
+			throw new ExistingEmailRegisterException(
+					LocalizationHelper.getMessage(
+							GenericI18Enum.EXISTING_EMAIL_REGISTER_ERROR,
 							username));
 		}
 
