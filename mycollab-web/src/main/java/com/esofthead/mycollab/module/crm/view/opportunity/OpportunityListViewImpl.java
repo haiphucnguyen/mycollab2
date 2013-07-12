@@ -47,6 +47,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 	private final VerticalLayout accountListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private CampaignImportWindow opportunityImportWindow;
 
 	public OpportunityListViewImpl() {
 
@@ -135,6 +136,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 
 		Button customizeViewBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -158,7 +160,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				CampaignImportWindow opportunityImportWindow = new CampaignImportWindow();
+				opportunityImportWindow = new CampaignImportWindow();
 				getWindow().addWindow(opportunityImportWindow);
 			}
 		});

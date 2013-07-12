@@ -12,7 +12,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
@@ -25,15 +24,22 @@ public class CSVImportEntityProcess<S extends ICrudService, E> {
 		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
-	public void doImport(File file, S service, Class<E> beanCls,
-			List<ImportFieldDef> fieldDef) {
+	/**
+	 * @throw this method throw IllegalArgumentException. You should catch it.
+	 */
+	public void doImport(File file, boolean isHasHeader, S service,
+			Class<E> beanCls, List<ImportFieldDef> fieldDef) {
 		try {
 			// TODO: miss header
 			CSVReader csvReader = new CSVReader(new FileReader(file));
 			CSVObjectEntityConverter<E> converter = new CSVObjectEntityConverter<E>();
 			String[] rowData = csvReader.readNext();
-			int rowIndex = 1;
+			if (isHasHeader)
+				rowData = csvReader.readNext();
+			int rowIndex = (isHasHeader) ? 2 : 1;
+			int numRowSuccess = 0, numRowError = 0;
 			StringBuffer errMsg = new StringBuffer("");
+
 			while (rowData != null) {
 				E bean = converter.convert(
 						beanCls,
@@ -42,20 +48,22 @@ public class CSVImportEntityProcess<S extends ICrudService, E> {
 				try {
 					validate(bean);
 					service.saveWithSession(bean, AppContext.getUsername());
+					numRowSuccess++;
 				} catch (IllegalArgumentException e1) {
-					errMsg.append(rowIndex).append(": ");
+					errMsg.append("Row " + rowIndex).append("_");
 					errMsg.append(e1.getMessage());
+					numRowError++;
 				} finally {
 					rowData = csvReader.readNext();
 					rowIndex++;
 				}
 			}
 			csvReader.close();
-			if (errMsg.toString().length() > 0) {
-				throw new IllegalArgumentException(errMsg.toString());
-			}
+			throw new IllegalArgumentException("numRowSuccess:" + numRowSuccess
+					+ "numRowError:" + numRowError + "Detail:"
+					+ errMsg.toString());
 		} catch (Exception e) {
-			throw new MyCollabException(e);
+			throw new IllegalArgumentException(e);
 		}
 	}
 
@@ -75,6 +83,7 @@ public class CSVImportEntityProcess<S extends ICrudService, E> {
 						": ");
 				errorMsg.append(violation.getMessage()).append(".");
 			}
+			errorMsg.append("//");
 			throw new IllegalArgumentException(errorMsg.toString());
 		}
 	}

@@ -88,6 +88,7 @@ public abstract class EntityImportWindow<E> extends Window {
 		private InputStream contentStream;
 		private CheckBox hasHeaderCheckBox;
 		private SingleFileUploadField uploadField;
+		private VerticalLayout uploadFieldVerticalLayout;
 
 		private ComboBox fileformatComboBox;
 
@@ -211,8 +212,36 @@ public abstract class EntityImportWindow<E> extends Window {
 							}
 
 						} else {
+							int uploadFieldIndex = uploadFieldVerticalLayout
+									.getComponentIndex(uploadField);
+							uploadFieldVerticalLayout
+									.removeComponent(uploadField);
+
+							uploadField = new SingleFileUploadField();
+							uploadField.addListener(new ValueChangeListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void valueChange(ValueChangeEvent event) {
+									String filename = uploadField.getFileName();
+									String fileuploadType = filename.substring(
+											filename.indexOf(".") + 1,
+											filename.length());
+									if (fileuploadType.equals("vcf")) {
+										fileformatComboBox.setValue("VCard");
+										fileformatComboBox.setEnabled(false);
+									} else if (fileuploadType.equals("csv")) {
+										fileformatComboBox.setValue("CSV");
+										fileformatComboBox.setEnabled(false);
+									}
+								}
+							});
+							uploadFieldVerticalLayout.addComponent(uploadField,
+									uploadFieldIndex);
+
 							getWindow().showNotification(
 									"Please choose supported files.");
+
 						}
 					}
 				}
@@ -306,6 +335,16 @@ public abstract class EntityImportWindow<E> extends Window {
 			fileformatComboBox
 					.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 			fileformatComboBox.setValue("VCard");
+			if (isSupportCSV && isSupportVCard)
+				fileformatComboBox.setEnabled(true);
+			else {
+				fileformatComboBox.setEnabled(false);
+				if (isSupportCSV)
+					fileformatComboBox.setValue("CSV");
+				else
+					fileformatComboBox.setValue("VCard");
+			}
+
 			gridLayout.addComponent(fileformatComboBox, "File Type", 0, 1);
 
 			ComboBox encodingCombobox = new ComboBox();
@@ -364,11 +403,11 @@ public abstract class EntityImportWindow<E> extends Window {
 					Alignment.TOP_LEFT);
 			bodyLayout.addComponent(titleHorizontalLayout);
 
-			VerticalLayout informationLayout = new VerticalLayout();
-			informationLayout.setSpacing(true);
-			informationLayout.setMargin(true);
+			uploadFieldVerticalLayout = new VerticalLayout();
+			uploadFieldVerticalLayout.setSpacing(true);
+			uploadFieldVerticalLayout.setMargin(true);
 
-			informationLayout.addComponent(new Label("Select File"));
+			uploadFieldVerticalLayout.addComponent(new Label("Select File"));
 
 			uploadField = new SingleFileUploadField();
 			uploadField.addListener(new ValueChangeListener() {
@@ -388,14 +427,15 @@ public abstract class EntityImportWindow<E> extends Window {
 					}
 				}
 			});
-			informationLayout.addComponent(uploadField);
+			uploadFieldVerticalLayout.addComponent(uploadField);
 
 			String fileTypeSupportString = (isSupportVCard) ? "Supported Fileds Type : VCF, CSV"
 					: "Supported Files Type : CSV";
-			informationLayout.addComponent(new Label(fileTypeSupportString));
+			uploadFieldVerticalLayout.addComponent(new Label(
+					fileTypeSupportString));
 
 			bodyLayout.addComponent(titleHorizontalLayout);
-			bodyLayout.addComponent(informationLayout);
+			bodyLayout.addComponent(uploadFieldVerticalLayout);
 			bodyLayoutWapper.addComponent(bodyLayout);
 
 			return bodyLayoutWapper;
@@ -408,6 +448,7 @@ public abstract class EntityImportWindow<E> extends Window {
 		private GridFormLayoutHelper gridCrmMapping;
 		private File uploadFile;
 		private final List<FieldMapperDef> contactCrmFields = constructCSVFieldMapper();
+		private VerticalLayout messageImportVerticalLayout;
 
 		public MappingCrmConfigurationLayout(final boolean checkboxChecked,
 				final File uploadFile) {
@@ -475,7 +516,10 @@ public abstract class EntityImportWindow<E> extends Window {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					try {
-
+						if (messageImportVerticalLayout != null) {
+							columnMappingCrmLayout
+									.removeComponent(messageImportVerticalLayout);
+						}
 						List<ImportFieldDef> listImportFieldDef = new ArrayList<ImportFieldDef>();
 						for (int i = 0; i < gridCrmMapping.getLayout()
 								.getRows(); i++) {
@@ -497,10 +541,46 @@ public abstract class EntityImportWindow<E> extends Window {
 
 						CSVImportEntityProcess importProcess = new CSVImportEntityProcess();
 						try {
-							importProcess.doImport(uploadFile, services, cls,
-									listImportFieldDef);
-						} catch (Exception e) {
-							// TODO : show successMsg , errMsg
+							importProcess.doImport(uploadFile, checkboxChecked,
+									services, cls, listImportFieldDef);
+						} catch (IllegalArgumentException e) {
+							StringBuffer msg = new StringBuffer(e.getMessage());
+							if (msg.indexOf("numRowSuccess") > 0) {
+								int numRowSuccess = Integer.parseInt(msg
+										.substring(
+												msg.indexOf("numRowSuccess:")
+														+ "numRowSuccess:"
+																.length(),
+												msg.indexOf("numRowError:")));
+								int numRowError = Integer.parseInt(msg
+										.substring(msg.indexOf("numRowError:")
+												+ "numRowError:".length(),
+												msg.indexOf("Detail:")));
+								messageImportVerticalLayout = new VerticalLayout();
+								messageImportVerticalLayout.setSpacing(true);
+
+								Label msgLabel = new Label(
+										"Import successfull " + numRowSuccess
+												+ " rows, " + "fail "
+												+ numRowError + " rows.");
+								messageImportVerticalLayout
+										.addComponent(msgLabel);
+
+								final String[] errorDetail = msg.substring(
+										msg.indexOf("Detail:")
+												+ "Detail:".length()).split(
+										"//");
+								int numErrMsgShowLimit = 3;
+								for (String errMsg : errorDetail) {
+									messageImportVerticalLayout
+											.addComponent(new Label(errMsg));
+									if (numErrMsgShowLimit == 0)
+										break;
+									numErrMsgShowLimit--;
+								}
+								columnMappingCrmLayout
+										.addComponent(messageImportVerticalLayout);
+							}
 						}
 					} catch (Exception e) {
 						throw new MyCollabException(e);

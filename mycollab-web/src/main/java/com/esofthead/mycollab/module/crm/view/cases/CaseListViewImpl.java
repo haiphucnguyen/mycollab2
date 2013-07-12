@@ -45,6 +45,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 	private final VerticalLayout listLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private CaseImportWindow caseImportWindow;
 
 	public CaseListViewImpl() {
 
@@ -130,6 +131,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 
 		Button customizeViewBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -152,7 +154,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				CaseImportWindow caseImportWindow = new CaseImportWindow();
+				caseImportWindow = new CaseImportWindow();
 				getWindow().addWindow(caseImportWindow);
 			}
 		});
