@@ -20,7 +20,7 @@ public class InfinispanCache implements org.apache.ibatis.cache.Cache {
 
 	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
-	Cache<Object, Object> cache;
+	private Cache<Object, Object> cache;
 	private String id;
 
 	private static EmbeddedCacheManager createCache() {
@@ -48,10 +48,17 @@ public class InfinispanCache implements org.apache.ibatis.cache.Cache {
 		}
 		String newId = id;
 		if (id.endsWith("Ext")) {
-			newId = id.substring(0, id.length()-3);
+			newId = id.substring(0, id.length() - 3);
 		}
 		this.id = id;
 		this.cache = CACHE_MANAGER.getCache(newId);
+	}
+
+	public static void clearCache(String id) {
+		Cache<Object, Object> dataCache = CACHE_MANAGER.getCache(id);
+		if (dataCache != null) {
+			dataCache.clear();
+		}
 	}
 
 	public void clear() {
@@ -63,8 +70,6 @@ public class InfinispanCache implements org.apache.ibatis.cache.Cache {
 	}
 
 	public Object getObject(Object key) {
-//		Object result = this.cache.get(arg0);
-//		log.debug("Asking for " + arg0 + ". Result is " + result);
 		return this.cache.get(key);
 	}
 
@@ -77,7 +82,6 @@ public class InfinispanCache implements org.apache.ibatis.cache.Cache {
 	}
 
 	public void putObject(Object key, Object value) {
-//		log.debug("Put (" + key + ", " + value + ") into cache");
 		this.cache.put(key, value);
 	}
 

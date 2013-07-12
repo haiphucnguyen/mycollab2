@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -41,10 +41,13 @@ public class AuditLogAspect {
 
 	private static Logger log = LoggerFactory.getLogger(AuditLogAspect.class);
 	private static Map<String, Object> caches = new HashMap<String, Object>();
+	
 	@Autowired
 	protected AuditLogService auditLogService;
+	
 	@Autowired
 	protected MonitorItemService monitorItemService;
+	
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
 
@@ -77,7 +80,7 @@ public class AuditLogAspect {
 		}
 	}
 
-	@After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
 	public void traceAfterUpdateActivity(JoinPoint joinPoint, Object bean,
 			String username) {
 

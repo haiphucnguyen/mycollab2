@@ -236,7 +236,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 							accountService
 									.saveAccountLeadRelationship(associateLeads);
 
-							view.getRelatedContactHandlers().refresh();
+							view.getRelatedLeadHandlers().refresh();
 						}
 					}
 				});

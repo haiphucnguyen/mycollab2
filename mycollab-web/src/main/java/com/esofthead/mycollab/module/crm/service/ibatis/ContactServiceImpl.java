@@ -23,14 +23,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
+import com.esofthead.mycollab.common.interceptor.service.FlushCache;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.CaseMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactCaseMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
 import com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapper;
+import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.ContactCaseExample;
@@ -79,6 +82,7 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
+	@FlushCache(ids = { ContactMapper.class, OpportunityMapper.class })
 	public void removeContactOpportunityRelationship(
 			ContactOpportunity associateOpportunity) {
 		ContactOpportunityExample ex = new ContactOpportunityExample();
@@ -90,6 +94,7 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
+	@FlushCache(ids = { ContactMapper.class, OpportunityMapper.class })
 	public void saveContactOpportunityRelationship(
 			List<ContactOpportunity> associateOpportunities) {
 		for (ContactOpportunity assoOpportunity : associateOpportunities) {
@@ -104,6 +109,7 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
+	@FlushCache(ids = { ContactMapper.class, CaseMapper.class })
 	public void saveContactCaseRelationship(List<ContactCase> associateCases) {
 		for (ContactCase associateCase : associateCases) {
 			ContactCaseExample ex = new ContactCaseExample();
@@ -117,6 +123,7 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
+	@FlushCache(ids = { ContactMapper.class, CaseMapper.class })
 	public void removeContactCaseRelationship(ContactCase associateCase) {
 		ContactCaseExample ex = new ContactCaseExample();
 		ex.createCriteria().andContactidEqualTo(associateCase.getContactid())
