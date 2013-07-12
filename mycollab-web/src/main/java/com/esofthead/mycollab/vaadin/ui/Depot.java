@@ -49,16 +49,15 @@ public class Depot extends VerticalLayout {
 		} else {
 			this.headerContent = new HorizontalLayout();
 			((HorizontalLayout) this.headerContent).setSpacing(true);
+			((HorizontalLayout) this.headerContent).setMargin(false, true,
+					false, true);
+			this.headerContent.setVisible(false);
 		}
 
 		this.headerContent.setStyleName("header-elements");
 		this.headerContent.setSizeUndefined();
 
-		final CssLayout headerWrapper = new CssLayout();
-		headerWrapper.addComponent(this.header);
-		headerWrapper.setStyleName("header-wrapper");
-		headerWrapper.setWidth(headerWidth);
-		this.addComponent(headerWrapper);
+		this.addComponent(this.header);
 
 		final VerticalLayout headerLeft = new VerticalLayout();
 		this.headerLbl = titleLbl;
@@ -81,12 +80,16 @@ public class Depot extends VerticalLayout {
 				}
 			}
 		});
-		this.header.addComponent(headerLeft);
-		this.header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
+		final CssLayout headerWrapper = new CssLayout();
+		headerWrapper.addComponent(headerLeft);
+		headerWrapper.setStyleName("header-wrapper");
+		headerWrapper.setWidth(headerWidth);
+		this.header.addComponent(headerWrapper);
+		this.header.setComponentAlignment(headerWrapper, Alignment.MIDDLE_LEFT);
 		this.header.addComponent(this.headerContent);
 		this.header.setComponentAlignment(this.headerContent,
 				Alignment.MIDDLE_LEFT);
-		this.header.setExpandRatio(headerLeft, 1.0f);
+		this.header.setExpandRatio(headerWrapper, 1.0f);
 
 		final CustomComponent customComp = new CustomComponent(this.bodyContent);
 		customComp.setWidth("100%");
@@ -104,11 +107,12 @@ public class Depot extends VerticalLayout {
 	public void addHeaderElement(final Component component) {
 		if (component != null) {
 			this.headerContent.addComponent(component);
+			this.headerContent.setVisible(true);
 		}
 	}
 
 	public Label getHeaderLbl() {
-		return headerLbl;
+		return this.headerLbl;
 	}
 
 	public void setContentBorder(final boolean hasBorder) {

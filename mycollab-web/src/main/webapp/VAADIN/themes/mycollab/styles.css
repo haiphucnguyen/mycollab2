@@ -247,7 +247,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 
 .v-upload .v-button {
-	color: rgb(69, 69, 69);
+	color: white;
 }
 
 .v-button.bluebtn:active .v-button-wrap {
@@ -1188,7 +1188,13 @@ input.v-textfield-errorField {
 	padding: 0px 0px 0px 18px;
 }
 
-.account-dashboard .addViewLayout .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
+/* .account-dashboard .addViewLayout .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin { */
+/* 	border-width: 0px 0px 1px 0px; */
+/* 	border-style: solid; */
+/* 	border-color: rgb(169, 169, 169); */
+/* } */
+
+.account-dashboard .addViewLayout .depotComp .depotHeader {
 	border-width: 0px 0px 1px 0px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
@@ -1562,18 +1568,41 @@ input.v-textfield-errorField {
 }
 .depotComp .v-csslayout-header-wrapper > .v-csslayout-margin {
 	padding: 5px 10px 5px 5px;
+/* 	border-width: 1px; */
+/* 	border-style: solid; */
+/* 	border-color: #a9a9a9; */
+/* 	border-radius: 3px 3px 0px 0px; */
+}
+.depotComp .depotHeader {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #a9a9a9;
 	border-radius: 3px 3px 0px 0px;
-}
-.depotComp .header-wrapper {
-	border-radius: 3px 3px 0px 0px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 rgb(230, 230, 230);
-	width: 100%;
+}
+
+.depotComp .depotHeader > div > div + div {
+	background-color: rgb(113, 113, 113);
+}
+
+/* .depotComp .header-wrapper { */
+/* 	border-radius: 3px 3px 0px 0px; */
+/* 	-moz-box-sizing: border-box; */
+/* 	-webkit-box-sizing: border-box; */
+/* 	box-sizing: border-box; */
+/* 	background: url('icons/grad-light-top2.png') repeat-x 0 0 rgb(230, 230, 230); */
+/* 	width: 100%; */
+/* } */
+
+.depotComp .depotHeader .header-elements .v-button .v-button-caption {
+	color: white;
+}
+
+.depotComp .depotHeader .header-elements .v-popupbutton .v-popup-indicator {
+	background: url("icons/sprites-white.png") no-repeat scroll -5px -10px transparent;
 }
 
 .depotComp.collapsed .header-wrapper > .v-csslayout-margin {
@@ -2456,6 +2485,7 @@ div.v-splitbutton, div.v-splitbutton .v-button {
 	background: url("icons/16/attachment.png") no-repeat center left
 		transparent;
 	padding-left: 20px;
+	color: rgb(69, 69, 69);
 }
 
 .v-multifileupload-uploads .v-upload .v-button > .v-button-wrap {
@@ -3945,4 +3975,24 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 .v-popupbutton.link .v-popup-indicator {
 	width: 0px !important;
+}
+
+/* NoSubDomainWindow */
+.nosubdomain-window {
+	height: 227px;
+}
+.nosubdomain-window .window-left, .nosubdomain-window .window-right {
+	width: 46px;
+	height: 227px;
+	float: left;
+}
+.nosubdomain-window .window-content {
+	float: left;
+	background: url('icons/no_subdomain_bg.png') repeat-x left top transparent;
+}
+.nosubdomain-window .window-left {
+	background: url('icons/no_subdomain_left.png') no-repeat left top transparent;
+}
+.nosubdomain-window .window-right {
+	background: url('icons/no_subdomain_right.png') no-repeat left top transparent;
 }

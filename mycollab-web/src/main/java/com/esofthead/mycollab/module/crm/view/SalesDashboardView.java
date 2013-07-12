@@ -16,8 +16,6 @@ import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -31,14 +29,13 @@ public class SalesDashboardView extends Depot {
 	private int currentReportIndex = 0;
 
 	public SalesDashboardView() {
-		super("Sales Dashboard", new HorizontalLayout(), new VerticalLayout(),
-				"100%", "200px");
+		super("Sales Dashboard", null, new VerticalLayout(), "100%", "200px");
 
-		initUI();
+		this.initUI();
 	}
 
 	public void displayReport() {
-		final String reportName = reportDashboard[currentReportIndex];
+		final String reportName = this.reportDashboard[this.currentReportIndex];
 
 		final VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
@@ -69,12 +66,13 @@ public class SalesDashboardView extends Depot {
 	}
 
 	private void initUI() {
-		final HorizontalLayout headerContainer = (HorizontalLayout) headerContent;
-		// headerContainer.setWidth("100%");
-		// ///headerContainer.setSpacing(true);
-		final Label emptySpace = new Label();
-		headerContainer.addComponent(emptySpace);
-		headerContainer.setExpandRatio(emptySpace, 1.0f);
+		// final HorizontalLayout headerContainer = (HorizontalLayout)
+		// headerContent;
+		// // headerContainer.setWidth("100%");
+		// // ///headerContainer.setSpacing(true);
+		// final Label emptySpace = new Label();
+		// headerContainer.addComponent(emptySpace);
+		// headerContainer.setExpandRatio(emptySpace, 1.0f);
 
 		final PopupButton saleChartPopup = new PopupButton(
 				"Opportunity Sales Stage");
@@ -93,8 +91,8 @@ public class SalesDashboardView extends Depot {
 					public void buttonClick(final ClickEvent event) {
 						saleChartPopup.setPopupVisible(false);
 						saleChartPopup.setCaption("Opportunity Sales Stage");
-						currentReportIndex = 0;
-						displayReport();
+						SalesDashboardView.this.currentReportIndex = 0;
+						SalesDashboardView.this.displayReport();
 					}
 				});
 		btnOpportunitySales.setStyleName("link");
@@ -108,16 +106,16 @@ public class SalesDashboardView extends Depot {
 					public void buttonClick(final ClickEvent event) {
 						saleChartPopup.setPopupVisible(false);
 						saleChartPopup.setCaption("Opportunity Lead Source");
-						currentReportIndex = 1;
-						displayReport();
+						SalesDashboardView.this.currentReportIndex = 1;
+						SalesDashboardView.this.displayReport();
 					}
 				});
 		btnOpportunityLead.setStyleName("link");
 		filterBtnLayout.addComponent(btnOpportunityLead);
 
-		displayReport();
+		this.displayReport();
 
 		saleChartPopup.addComponent(filterBtnLayout);
-		headerContainer.addComponent(saleChartPopup);
+		this.addHeaderElement(saleChartPopup);
 	}
 }

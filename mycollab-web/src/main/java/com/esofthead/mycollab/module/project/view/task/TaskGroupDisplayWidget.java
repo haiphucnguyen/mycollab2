@@ -19,6 +19,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -27,7 +28,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 public class TaskGroupDisplayWidget
@@ -45,7 +45,8 @@ public class TaskGroupDisplayWidget
 			BeanList.RowDisplayHandler<SimpleTaskList> {
 
 		@Override
-		public Component generateRow(SimpleTaskList taskList, int rowIndex) {
+		public Component generateRow(final SimpleTaskList taskList,
+				final int rowIndex) {
 			return new TaskListDepot(taskList);
 		}
 	}
@@ -57,179 +58,204 @@ public class TaskGroupDisplayWidget
 		private PopupButton taskListActionControl;
 		private final TaskDisplayComponent taskDisplayComponent;
 
-		public TaskListDepot(SimpleTaskList taskListParam) {
-			super(taskListParam.getName(), new HorizontalLayout(),
-					new TaskDisplayComponent(taskListParam, true));
+		public TaskListDepot(final SimpleTaskList taskListParam) {
+			super(taskListParam.getName(), null, new TaskDisplayComponent(
+					taskListParam, true));
 			if ("Closed".equals(taskListParam.getStatus())) {
-				headerLbl.addStyleName(UIConstants.LINK_COMPLETED);
+				this.headerLbl.addStyleName(UIConstants.LINK_COMPLETED);
 			}
 			this.taskList = taskListParam;
 			this.addStyleName("task-list");
-			initHeader();
-			taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
+			this.initHeader();
+			this.taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
 		}
 
 		private void initHeader() {
-			HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
-			headerLayout.setSpacing(true);
+			// HorizontalLayout headerLayout = (HorizontalLayout)
+			// this.headerContent;
+			// headerLayout.setSpacing(true);
 
-			taskListFilterControl = new PopupButton("Active Tasks");
-			taskListFilterControl.setWidth("120px");
-			taskListFilterControl.addStyleName("link");
+			this.taskListFilterControl = new PopupButton("Active Tasks");
+			// taskListFilterControl.setWidth("120px");
+			this.taskListFilterControl.addStyleName("link");
 
-			VerticalLayout filterBtnLayout = new VerticalLayout();
+			final VerticalLayout filterBtnLayout = new VerticalLayout();
 			filterBtnLayout.setMargin(true);
 			filterBtnLayout.setSpacing(true);
 			filterBtnLayout.setWidth("200px");
 
-			Button allTasksFilterBtn = new Button("All Tasks",
+			final Button allTasksFilterBtn = new Button("All Tasks",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							taskListFilterControl.setPopupVisible(false);
-							taskListFilterControl.setCaption("All Tasks");
-							displayAllTasks();
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListFilterControl
+									.setPopupVisible(false);
+							TaskListDepot.this.taskListFilterControl
+									.setCaption("All Tasks");
+							TaskListDepot.this.displayAllTasks();
 						}
 					});
 			allTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(allTasksFilterBtn);
 
-			Button activeTasksFilterBtn = new Button("Active Tasks Only",
+			final Button activeTasksFilterBtn = new Button("Active Tasks Only",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							taskListFilterControl.setPopupVisible(false);
-							taskListFilterControl.setCaption("Active Tasks");
-							displayActiveTasksOnly();
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListFilterControl
+									.setPopupVisible(false);
+							TaskListDepot.this.taskListFilterControl
+									.setCaption("Active Tasks");
+							TaskListDepot.this.displayActiveTasksOnly();
 						}
 					});
 			activeTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(activeTasksFilterBtn);
 
-			Button archievedTasksFilterBtn = new Button("Archieved Tasks Only",
-					new Button.ClickListener() {
+			final Button archievedTasksFilterBtn = new Button(
+					"Archieved Tasks Only", new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void buttonClick(ClickEvent event) {
-							taskListFilterControl.setCaption("Archieved Tasks");
-							taskListFilterControl.setPopupVisible(false);
-							displayInActiveTasks();
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListFilterControl
+									.setCaption("Archieved Tasks");
+							TaskListDepot.this.taskListFilterControl
+									.setPopupVisible(false);
+							TaskListDepot.this.displayInActiveTasks();
 						}
 					});
 			archievedTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(archievedTasksFilterBtn);
-			taskListFilterControl.addComponent(filterBtnLayout);
-			headerLayout.addComponent(taskListFilterControl);
+			this.taskListFilterControl.addComponent(filterBtnLayout);
+			this.addHeaderElement(this.taskListFilterControl);
 
-			taskListActionControl = new PopupButton("Action");
-			taskListActionControl.addStyleName("link");
-			headerLayout.addComponent(taskListActionControl);
+			final Separator divider = new Separator();
+			this.addHeaderElement(divider);
 
-			VerticalLayout actionBtnLayout = new VerticalLayout();
+			this.taskListActionControl = new PopupButton("Action");
+			this.taskListActionControl.addStyleName("link");
+			this.addHeaderElement(this.taskListActionControl);
+
+			final VerticalLayout actionBtnLayout = new VerticalLayout();
 			actionBtnLayout.setMargin(true);
 			actionBtnLayout.setSpacing(true);
 			actionBtnLayout.setWidth("200px");
-			taskListActionControl.addComponent(actionBtnLayout);
+			this.taskListActionControl.addComponent(actionBtnLayout);
 
-			Button readBtn = new Button("View", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button readBtn = new Button("View",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					taskListActionControl.setPopupVisible(false);
-					EventBus.getInstance()
-							.fireEvent(
-									new TaskListEvent.GotoRead(event, taskList
-											.getId()));
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListActionControl
+									.setPopupVisible(false);
+							EventBus.getInstance()
+									.fireEvent(
+											new TaskListEvent.GotoRead(event,
+													TaskListDepot.this.taskList
+															.getId()));
+						}
+					});
 			readBtn.setEnabled(CurrentProjectVariables
 					.canRead(ProjectRolePermissionCollections.TASKS));
 			readBtn.setStyleName("link");
 			actionBtnLayout.addComponent(readBtn);
 
-			Button editBtn = new Button("Edit", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button editBtn = new Button("Edit",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					taskListActionControl.setPopupVisible(false);
-					EventBus.getInstance().fireEvent(
-							new TaskListEvent.GotoEdit(event, taskList));
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListActionControl
+									.setPopupVisible(false);
+							EventBus.getInstance().fireEvent(
+									new TaskListEvent.GotoEdit(event,
+											TaskListDepot.this.taskList));
+						}
+					});
 			editBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.TASKS));
 			editBtn.setStyleName("link");
 			actionBtnLayout.addComponent(editBtn);
 
-			Button closeBtn = new Button("Close", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button closeBtn = new Button("Close",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					taskListActionControl.setPopupVisible(false);
-					taskList.setStatus("Closed");
-					ProjectTaskListService taskListService = AppContext
-							.getSpringBean(ProjectTaskListService.class);
-					taskListService.updateWithSession(taskList,
-							AppContext.getUsername());
-					LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
-							.getParent();
-					((ComponentContainer) parentComp.getParent())
-							.removeComponent(parentComp);
-				}
-			});
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListActionControl
+									.setPopupVisible(false);
+							TaskListDepot.this.taskList.setStatus("Closed");
+							final ProjectTaskListService taskListService = AppContext
+									.getSpringBean(ProjectTaskListService.class);
+							taskListService.updateWithSession(
+									TaskListDepot.this.taskList,
+									AppContext.getUsername());
+							final LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
+									.getParent();
+							((ComponentContainer) parentComp.getParent())
+									.removeComponent(parentComp);
+						}
+					});
 			closeBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.TASKS));
 			closeBtn.setStyleName("link");
 			actionBtnLayout.addComponent(closeBtn);
 
-			Button deleteBtn = new Button("Delete", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			final Button deleteBtn = new Button("Delete",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					taskListActionControl.setPopupVisible(false);
-					ConfirmDialogExt.show(
-							TaskListDepot.this.getWindow(),
-							LocalizationHelper
-									.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											ApplicationProperties
-													.getString(ApplicationProperties.SITE_NAME)),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-							new ConfirmDialog.Listener() {
-								private static final long serialVersionUID = 1L;
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListActionControl
+									.setPopupVisible(false);
+							ConfirmDialogExt.show(
+									TaskListDepot.this.getWindow(),
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.DELETE_DIALOG_TITLE,
+													ApplicationProperties
+															.getString(ApplicationProperties.SITE_NAME)),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+									new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
 
-								@Override
-								public void onClose(ConfirmDialog dialog) {
-									if (dialog.isConfirmed()) {
-										ProjectTaskListService taskListService = AppContext
-												.getSpringBean(ProjectTaskListService.class);
-										taskListService.removeWithSession(
-												taskList.getId(),
-												AppContext.getUsername());
-										LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
-												.getParent();
-										((ComponentContainer) parentComp
-												.getParent())
-												.removeComponent(parentComp);
-									}
-								}
-							});
-				}
-			});
+										@Override
+										public void onClose(
+												final ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												final ProjectTaskListService taskListService = AppContext
+														.getSpringBean(ProjectTaskListService.class);
+												taskListService
+														.removeWithSession(
+																TaskListDepot.this.taskList
+																		.getId(),
+																AppContext
+																		.getUsername());
+												final LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
+														.getParent();
+												((ComponentContainer) parentComp
+														.getParent())
+														.removeComponent(parentComp);
+											}
+										}
+									});
+						}
+					});
 			deleteBtn.setEnabled(CurrentProjectVariables
 					.canAccess(ProjectRolePermissionCollections.TASKS));
 			deleteBtn.setStyleName("link");
@@ -237,30 +263,30 @@ public class TaskGroupDisplayWidget
 		}
 
 		private TaskSearchCriteria createBaseSearchCriteria() {
-			TaskSearchCriteria criteria = new TaskSearchCriteria();
+			final TaskSearchCriteria criteria = new TaskSearchCriteria();
 			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
-			criteria.setTaskListId(new NumberSearchField(taskList.getId()));
+			criteria.setTaskListId(new NumberSearchField(this.taskList.getId()));
 			return criteria;
 		}
 
 		private void displayActiveTasksOnly() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
+			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
 					new String[] { "Open", "Pending" }));
-			taskDisplayComponent.setSearchCriteria(criteria);
+			this.taskDisplayComponent.setSearchCriteria(criteria);
 		}
 
 		private void displayAllTasks() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
-			taskDisplayComponent.setSearchCriteria(criteria);
+			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
+			this.taskDisplayComponent.setSearchCriteria(criteria);
 		}
 
 		private void displayInActiveTasks() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
+			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
 					new String[] { "Closed" }));
-			taskDisplayComponent.setSearchCriteria(criteria);
+			this.taskDisplayComponent.setSearchCriteria(criteria);
 		}
 	}
 
