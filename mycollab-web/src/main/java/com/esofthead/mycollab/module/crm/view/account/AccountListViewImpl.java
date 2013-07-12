@@ -45,6 +45,7 @@ public class AccountListViewImpl extends AbstractView implements
 	private final VerticalLayout accountListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private AccountImportWindow accountImportWindow;
 
 	public AccountListViewImpl() {
 		this.accountSearchPanel = new AccountSearchPanel();
@@ -106,6 +107,22 @@ public class AccountListViewImpl extends AbstractView implements
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+
+		Button importBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				accountImportWindow = new AccountImportWindow();
+				getWindow().addWindow(accountImportWindow);
+			}
+		});
+		importBtn.setDescription("Import");
+		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(importBtn);
+		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
+
 		return layoutWrapper;
 	}
 

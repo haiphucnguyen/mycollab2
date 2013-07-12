@@ -45,6 +45,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 	private final VerticalLayout listLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private CaseImportWindow caseImportWindow;
 
 	public CaseListViewImpl() {
 
@@ -130,24 +131,39 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 
-		Button customizeViewBtn = new Button("",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWindow().addWindow(
-								new CaseListCustomizeWindow(tableItem));
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindow().addWindow(new CaseListCustomizeWindow(tableItem));
 
-					}
-				});
+			}
+		});
 		customizeViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/customize.png"));
 		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+
+		Button importBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				caseImportWindow = new CaseImportWindow();
+				getWindow().addWindow(caseImportWindow);
+			}
+		});
+		importBtn.setDescription("Import");
+		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		layout.addComponent(importBtn);
+		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
+
 		return layoutWrapper;
 	}
 
