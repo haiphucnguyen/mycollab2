@@ -3971,6 +3971,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+}
 /* H3 Label */
 .v-label-h3 {
 	font-size: 13px;
@@ -3989,13 +3990,33 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	height: 227px;
 	float: left;
 }
-.nosubdomain-window > .window-content {
-/* 	float: left; */
+.nosubdomain-window .warning-icon {
+	background: url('icons/warning_symbol.png') no-repeat left top transparent;
+	width: 111px;
+	height: 97px;
+	float: left;
+}
+.nosubdomain-window .window-content {
+	float: left;
 	background: url('icons/no_subdomain_bg.png') repeat-x left top transparent;
+	height: 227px;
+	padding-top: 50px;
+}
+.nosubdomain-window .warning-message {
+	float: left;
+	border-left: 1px dotted rgb(169, 169, 169);
+	height: 97px;
+	width: 412px;
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+	color: rgb(99, 99, 99);
 }
 .nosubdomain-window .window-left {
+	float: left;
 	background: url('icons/no_subdomain_left.png') no-repeat left top transparent;
 }
 .nosubdomain-window .window-right {
+	float: left;
 	background: url('icons/no_subdomain_right.png') no-repeat left top transparent;
 }
