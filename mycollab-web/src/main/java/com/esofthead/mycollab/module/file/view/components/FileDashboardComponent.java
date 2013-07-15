@@ -8,7 +8,9 @@ import org.vaadin.easyuploads.SingleFileUploadField;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
@@ -29,6 +31,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
@@ -446,7 +449,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
 
-									final MoveResourceWindow moveResourceWindow = new MoveResourceWindow();
+									final MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+											resource);
 									ResourceTableDisplay.this.getWindow()
 											.addWindow(moveResourceWindow);
 								}
@@ -1015,11 +1019,13 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		private TreeTable folderTree;
 		private String rootPath;
 		private Folder baseFolder;
+		private Resource resourceEditting;
 
-		public MoveResourceWindow() {
+		public MoveResourceWindow(Resource resource) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
+			this.resourceEditting = resource;
 
 			constructBody();
 		}
@@ -1127,7 +1133,39 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					// TODO Move action here
+					try {
+						FileDashboardComponent.this.resourceService
+								.moveResource(
+										MoveResourceWindow.this.resourceEditting
+												.getPath(),
+										MoveResourceWindow.this.baseFolder
+												.getPath(), false);
+					} catch (MyCollabException e) {
+						ConfirmDialog.show(
+								MoveResourceWindow.this.getParent().getWindow(),
+								"Warning",
+								e.getMessage(),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											FileDashboardComponent.this.resourceService
+													.moveResource(
+															MoveResourceWindow.this.resourceEditting
+																	.getPath(),
+															MoveResourceWindow.this.baseFolder
+																	.getPath(),
+															true);
+										}
+									}
+								});
+					}
 				}
 			});
 			moveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);

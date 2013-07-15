@@ -25,4 +25,7 @@ public interface ResourceService {
 
 	List<Resource> searchResourcesByName(String baseFolderPath,
 			String resourceName);
+
+	void moveResource(String oldPath, String newPath,
+			boolean isConfirmOverride);
 }
