@@ -3989,8 +3989,8 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	height: 227px;
 	float: left;
 }
-.nosubdomain-window .window-content {
-	float: left;
+.nosubdomain-window > .window-content {
+/* 	float: left; */
 	background: url('icons/no_subdomain_bg.png') repeat-x left top transparent;
 }
 .nosubdomain-window .window-left {
