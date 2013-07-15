@@ -127,6 +127,7 @@ public class AccountLeadListComp extends
 					final Object columnId) {
 				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
 				final HorizontalLayout controlLayout = new HorizontalLayout();
+				controlLayout.setWidth("50px");
 				final Button editBtn = new Button(null,
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
