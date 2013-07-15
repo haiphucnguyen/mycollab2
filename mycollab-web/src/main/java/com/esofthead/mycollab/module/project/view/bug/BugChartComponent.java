@@ -41,7 +41,7 @@ public class BugChartComponent extends Depot {
 	public BugChartComponent(final BugSearchCriteria baseSearchCriteria,
 			final int headerWidth, final int titleWidth) {
 		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
-				new HorizontalLayout(), new VerticalLayout(), headerWidth
+				null, new VerticalLayout(), headerWidth
 						+ "px", titleWidth + "px");
 		this.baseSearchCriteria = baseSearchCriteria;
 		initUI();
@@ -133,12 +133,12 @@ public class BugChartComponent extends Depot {
 	}
 
 	private void initUI() {
-		final HorizontalLayout headerContainer = (HorizontalLayout) headerContent;
+//		final HorizontalLayout headerContainer = (HorizontalLayout) headerContent;
 		// headerContainer.setWidth("100%");
 		// headerContainer.setSpacing(true);
-		final Label emptySpace = new Label();
-		headerContainer.addComponent(emptySpace);
-		headerContainer.setExpandRatio(emptySpace, 1.0f);
+//		final Label emptySpace = new Label();
+//		headerContainer.addComponent(emptySpace);
+//		headerContainer.setExpandRatio(emptySpace, 1.0f);
 
 		final PopupButton bugChartPopup = new PopupButton("Bug Trend");
 		bugChartPopup.addStyleName("link");
@@ -211,6 +211,7 @@ public class BugChartComponent extends Depot {
 		displayReport();
 
 		bugChartPopup.addComponent(filterBtnLayout);
-		headerContainer.addComponent(bugChartPopup);
+		this.addHeaderElement(bugChartPopup);
+		this.setHeaderColor(true);
 	}
 }
