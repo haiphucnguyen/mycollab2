@@ -49,8 +49,6 @@ public class Depot extends VerticalLayout {
 		} else {
 			this.headerContent = new HorizontalLayout();
 			((HorizontalLayout) this.headerContent).setSpacing(true);
-			((HorizontalLayout) this.headerContent).setMargin(false, true,
-					false, true);
 			this.headerContent.setVisible(false);
 		}
 
@@ -88,7 +86,7 @@ public class Depot extends VerticalLayout {
 		this.header.setComponentAlignment(headerWrapper, Alignment.MIDDLE_LEFT);
 		this.header.addComponent(this.headerContent);
 		this.header.setComponentAlignment(this.headerContent,
-				Alignment.MIDDLE_LEFT);
+				Alignment.TOP_RIGHT);
 		this.header.setExpandRatio(headerWrapper, 1.0f);
 
 		final CustomComponent customComp = new CustomComponent(this.bodyContent);
@@ -125,5 +123,13 @@ public class Depot extends VerticalLayout {
 
 	public void setTitle(final String title) {
 		this.headerLbl.setValue(title);
+	}
+	
+	public void setHeaderColor(final boolean hasColor) {
+		if(hasColor){
+			this.headerContent.addStyleName("colored-header");
+		} else {
+			this.headerContent.removeStyleName("colored-header");
+		}
 	}
 }

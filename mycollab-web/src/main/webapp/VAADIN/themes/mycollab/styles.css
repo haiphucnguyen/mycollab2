@@ -242,7 +242,6 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	color: #FFFFFF;
 	text-shadow: 1px 1px 0px #1570cd;
 	border-radius: 3px;
-	margin-right: 4px;
 	padding: 3px 13px;
 }
 
@@ -1585,7 +1584,7 @@ input.v-textfield-errorField {
 }
 
 .depotComp .depotHeader > div > div + div {
-	background-color: rgb(113, 113, 113);
+	
 }
 
 /* .depotComp .header-wrapper { */
@@ -1597,11 +1596,11 @@ input.v-textfield-errorField {
 /* 	width: 100%; */
 /* } */
 
-.depotComp .depotHeader .header-elements .v-button .v-button-caption {
+.depotComp .depotHeader .header-elements.colored-header .v-button .v-button-caption {
 	color: white;
 }
 
-.depotComp .depotHeader .header-elements .v-popupbutton .v-popup-indicator {
+.depotComp .depotHeader .header-elements.colored-header .v-popupbutton .v-popup-indicator {
 	background: url("icons/sprites-white.png") no-repeat scroll -5px -10px transparent;
 }
 
@@ -1641,8 +1640,12 @@ input.v-textfield-errorField {
 	color: black;
 }
 
-.depotComp .header-elements {
-	
+.depotComp .header-elements.colored-header {
+	background-color: rgb(113, 113, 113);
+}
+
+.depotComp .header-elements .v-horizontallayout-margin {
+	padding: 4px 12px 4px;
 }
 
 .depotComp.collapsed .depotContent {

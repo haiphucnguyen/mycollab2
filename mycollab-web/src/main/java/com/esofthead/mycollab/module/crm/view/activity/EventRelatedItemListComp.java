@@ -49,8 +49,6 @@ public class EventRelatedItemListComp extends
 		contentContainer.setSpacing(true);
 
 		if (allowCreateNew) {
-			final HorizontalLayout buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
 			final Button newTaskBtn = new Button("New Task",
 					new Button.ClickListener() {
 						@Override
@@ -63,7 +61,7 @@ public class EventRelatedItemListComp extends
 			newTaskBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_TASK));
 			newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(newTaskBtn);
+			this.addHeaderElement(newTaskBtn);
 
 			final Button newCallBtn = new Button("New Call",
 					new Button.ClickListener() {
@@ -77,7 +75,7 @@ public class EventRelatedItemListComp extends
 			newCallBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_CALL));
 			newCallBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(newCallBtn);
+			this.addHeaderElement(newCallBtn);
 
 			final Button newMeetingBtn = new Button("New Meeting",
 					new Button.ClickListener() {
@@ -93,9 +91,7 @@ public class EventRelatedItemListComp extends
 			newMeetingBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_MEETING));
 			newMeetingBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-			buttonControls.addComponent(newMeetingBtn);
-
-			addHeaderElement(buttonControls);
+			this.addHeaderElement(newMeetingBtn);
 		}
 
 		tableItem = new EventTableDisplay(Arrays.asList(

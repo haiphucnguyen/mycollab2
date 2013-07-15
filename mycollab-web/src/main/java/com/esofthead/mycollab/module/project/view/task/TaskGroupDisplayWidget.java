@@ -67,16 +67,13 @@ public class TaskGroupDisplayWidget
 			this.taskList = taskListParam;
 			this.addStyleName("task-list");
 			this.initHeader();
+			this.setHeaderColor(true);
 			this.taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
 		}
 
 		private void initHeader() {
-			// HorizontalLayout headerLayout = (HorizontalLayout)
-			// this.headerContent;
-			// headerLayout.setSpacing(true);
 
 			this.taskListFilterControl = new PopupButton("Active Tasks");
-			// taskListFilterControl.setWidth("120px");
 			this.taskListFilterControl.addStyleName("link");
 
 			final VerticalLayout filterBtnLayout = new VerticalLayout();

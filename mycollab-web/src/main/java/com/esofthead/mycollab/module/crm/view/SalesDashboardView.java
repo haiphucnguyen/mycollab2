@@ -32,6 +32,7 @@ public class SalesDashboardView extends Depot {
 		super("Sales Dashboard", null, new VerticalLayout(), "100%", "200px");
 
 		this.initUI();
+		this.setHeaderColor(true);
 	}
 
 	public void displayReport() {
