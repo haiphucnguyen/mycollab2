@@ -58,6 +58,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	private final TreeTable folderTree;
 	private final ResourceTableDisplay resourceTable;
 	private String rootPath;
+	private String rootFolderName;
 	private final FileSearchPanel fileSearchPanel;
 
 	private Folder baseFolder;
@@ -151,7 +152,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		menuBar.addComponent(deleteBtn);
 
-		this.fileSearchPanel = new FileSearchPanel(menuBar, false);
+		this.fileSearchPanel = new FileSearchPanel(menuBar);
 
 		this.addComponent(this.fileSearchPanel);
 
@@ -306,6 +307,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	public void displayResources(String rootPath, String rootFolderName) {
 		this.folderTree.removeAllItems();
 		this.rootPath = rootPath;
+		this.rootFolderName = rootFolderName;
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(this.rootPath);
@@ -876,16 +878,13 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		protected FileSearchCriteria searchCriteria;
 		private ComponentContainer menuBar = null;
 		private HorizontalLayout basicSearchBody;
-		private boolean isPopupWindow;
 
 		public HorizontalLayout getBasicSearchBody() {
 			return basicSearchBody;
 		}
 
-		public FileSearchPanel(final ComponentContainer menuBar,
-				boolean isPopupWindow) {
+		public FileSearchPanel(final ComponentContainer menuBar) {
 			this.menuBar = menuBar;
-			this.isPopupWindow = isPopupWindow;
 		}
 
 		@Override
@@ -962,22 +961,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						if (!isPopupWindow)
-							FileDashboardComponent.this
-									.doSearch((FileSearchCriteria) fillupSearchCriteria());
-						else {
-							// TODO : search folder
-							List<Resource> lstResource = resourceService
-									.searchResourcesByName(
-											baseFolder.getPath(), nameField
-													.getValue().toString()
-													.trim());
-							for (Resource subFolder : lstResource) {
-								if (subFolder instanceof Folder) {
-
-								}
-							}
-						}
+						FileDashboardComponent.this
+								.doSearch((FileSearchCriteria) fillupSearchCriteria());
 					}
 				});
 				UiUtils.addComponent(basicSearchBody, searchBtn,
@@ -1026,7 +1011,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 	protected class MoveResourceWindow extends Window {
 		private static final long serialVersionUID = 1L;
-		private FileSearchPanel fileSearchPanel;
+		// private FileSearchPanel fileSearchPanel;
 		private TreeTable folderTree;
 		private String rootPath;
 		private Folder baseFolder;
@@ -1043,8 +1028,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 
-			fileSearchPanel = new FileSearchPanel(null, true);
-			layout.addComponent(fileSearchPanel);
+			// fileSearchPanel = new FileSearchPanel(null);
+			// layout.addComponent(fileSearchPanel);
 
 			final HorizontalLayout resourceContainer = new HorizontalLayout();
 			resourceContainer.setSizeFull();
@@ -1127,8 +1112,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				public void itemClick(final ItemClickEvent event) {
 					MoveResourceWindow.this.baseFolder = (Folder) event
 							.getItemId();
-					// FileDashboardComponent.this
-					// .displayResourcesInTable(FileDashboardComponent.this.baseFolder);
 				}
 			});
 
@@ -1167,16 +1150,17 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		}
 
 		private void displayFiles() {
-			String rootPath = String.format("%d/.crm",
-					AppContext.getAccountId());
+			String rootPath = FileDashboardComponent.this.rootPath;
 			this.folderTree.removeAllItems();
 			this.rootPath = rootPath;
 
 			this.baseFolder = new Folder();
 			baseFolder.setPath(this.rootPath);
-			this.folderTree.addItem(new Object[] { "Documents", "" },
+			this.folderTree.addItem(new Object[] {
+					FileDashboardComponent.this.rootFolderName, "" },
 					baseFolder);
-			this.folderTree.setItemCaption(baseFolder, "Documents");
+			this.folderTree.setItemCaption(baseFolder,
+					FileDashboardComponent.this.rootFolderName);
 
 			this.folderTree.setCollapsed(baseFolder, false);
 		}
