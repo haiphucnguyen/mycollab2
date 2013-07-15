@@ -54,7 +54,6 @@ public class DbLoggingAppender extends AppenderSkeleton {
 			record.setUseragent(context.getBrowser().getBrowserApplication());
 
 			String ipaddress = context.getBrowser().getAddress();
-
 			record.setIpaddress(ipaddress);
 
 			InetAddress address = InetAddress.getByName(ipaddress);

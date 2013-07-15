@@ -124,9 +124,9 @@ public class Depot extends VerticalLayout {
 	public void setTitle(final String title) {
 		this.headerLbl.setValue(title);
 	}
-	
+
 	public void setHeaderColor(final boolean hasColor) {
-		if(hasColor){
+		if (hasColor) {
 			this.headerContent.addStyleName("colored-header");
 		} else {
 			this.headerContent.removeStyleName("colored-header");
