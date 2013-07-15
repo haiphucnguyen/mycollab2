@@ -11,7 +11,6 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
-import com.esofthead.mycollab.usertracking.Ip2CountryCode;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 
@@ -54,11 +53,7 @@ public class DbLoggingAppender extends AppenderSkeleton {
 			/*
 			 * just accept ipv4
 			 */
-			if (ipaddress.length() <= 15) {
-				record.setIpaddress(context.getBrowser().getAddress());
-				record.setCountryCode(Ip2CountryCode.getCountryCode(record
-						.getIpaddress()));
-			}
+			
 		} catch (Exception e) {
 		
 		}

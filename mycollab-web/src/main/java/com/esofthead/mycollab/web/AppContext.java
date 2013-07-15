@@ -139,7 +139,11 @@ public class AppContext implements Serializable {
 	}
 
 	public static Integer getAccountId() {
-		return getInstance().accountId;
+		try {
+			return getInstance().accountId;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	public static String getSubDomain() {
@@ -172,7 +176,11 @@ public class AppContext implements Serializable {
 	}
 
 	public static String getUsername() {
-		return getInstance().session.getUsername();
+		try {
+			return getInstance().session.getUsername();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 	public static String getUserAvatarId() {
