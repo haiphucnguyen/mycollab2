@@ -23,7 +23,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -51,6 +50,8 @@ public class EventRelatedItemListComp extends
 		if (allowCreateNew) {
 			final Button newTaskBtn = new Button("New Task",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(final Button.ClickEvent event) {
 							fireNewRelatedItem("task");
@@ -65,6 +66,8 @@ public class EventRelatedItemListComp extends
 
 			final Button newCallBtn = new Button("New Call",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(final Button.ClickEvent event) {
 							fireNewRelatedItem("call");
@@ -106,10 +109,10 @@ public class EventRelatedItemListComp extends
 						"eventType", UIConstants.TABLE_S_LABEL_WIDTH),
 				new TableViewField(LocalizationHelper
 						.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
-						"startDate", UIConstants.TABLE_DATE_WIDTH),
+						"startDate", UIConstants.TABLE_DATE_TIME_WIDTH),
 				new TableViewField(LocalizationHelper
 						.getMessage(TaskI18nEnum.TABLE_END_DATE_HEADER),
-						"endDate", UIConstants.TABLE_DATE_WIDTH)));
+						"endDate", UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

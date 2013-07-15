@@ -116,7 +116,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 			private ComponentContainer createBottomLayout() {
 				final TabSheet tabBugDetail = new TabSheet();
 				tabBugDetail.setWidth("100%");
-				// tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				final CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_BUG,

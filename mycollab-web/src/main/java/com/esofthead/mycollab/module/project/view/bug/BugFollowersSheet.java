@@ -4,16 +4,13 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.MonitorItem;
-import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.web.AppContext;
 
 class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
@@ -53,23 +50,7 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 
 	@Override
 	protected void saveRelayNotification() {
-		RelayEmailNotification relayNotification = new RelayEmailNotification();
-		relayNotification.setChangeby(AppContext.getUsername());
-		relayNotification.setChangecomment("");
-		relayNotification.setSaccountid(AppContext
-				.getAccountId());
-		relayNotification.setType(MonitorTypeConstants.PRJ_BUG);
-		relayNotification.setTypeid(bean.getId());
-		relayNotification
-				.setEmailhandlerbean(BugNotificationService.class
-						.getName());
-		relayNotification
-				.setAction(MonitorTypeConstants.CREATE_ACTION);
-
-		RelayEmailNotificationService relayEmailNotificationService = AppContext
-				.getSpringBean(RelayEmailNotificationService.class);
-		relayEmailNotificationService.saveWithSession(
-				relayNotification, AppContext.getUsername());
+		
 	}
 
 	@Override

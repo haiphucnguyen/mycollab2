@@ -222,11 +222,6 @@
             <version>1.0.14</version>
         </dependency>
         <dependency>
-            <groupId>com.googlecode.ez-vcard</groupId>
-            <artifactId>ez-vcard</artifactId>
-            <version>0.8.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-svggen</artifactId>
             <version>1.7</version>
@@ -360,6 +355,12 @@
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.xml</artifactId>
             <version>2.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>0.4.0</version>
         </dependency>
 
         <dependency>
