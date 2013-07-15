@@ -4,6 +4,9 @@
  */
 package com.esofthead.mycollab.common.logging;
 
+import java.io.File;
+import java.net.InetAddress;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.ErrorCode;
@@ -13,6 +16,8 @@ import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
 import com.esofthead.mycollab.usertracking.Ip2CountryCode;
 import com.esofthead.mycollab.web.AppContext;
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.model.Country;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 
 /**
@@ -51,14 +56,18 @@ public class DbLoggingAppender extends AppenderSkeleton {
 			record.setUseragent(context.getBrowser().getBrowserApplication());
 
 			String ipaddress = context.getBrowser().getAddress();
-			/*
-			 * just accept ipv4
-			 */
-			if (ipaddress.length() <= 15) {
-				record.setIpaddress(context.getBrowser().getAddress());
-				record.setCountryCode(Ip2CountryCode.getCountryCode(record
-						.getIpaddress()));
+			
+			record.setIpaddress(ipaddress);
+			
+			InetAddress address = InetAddress.getByName(ipaddress);
+			com.maxmind.geoip2.DatabaseReader reader = new DatabaseReader(
+					new File("GeoLite2-City.mmdb"));
+			
+			if(address!=null) {
+				record.setCountryCode(reader.country(address).getCountry().getName());
 			}
+			reader.close();
+			
 		} catch (Exception e) {
 		
 		}
