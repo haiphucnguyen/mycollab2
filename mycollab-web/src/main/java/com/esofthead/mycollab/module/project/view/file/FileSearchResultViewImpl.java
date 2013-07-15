@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.module.project.view.file;
 
-import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileSearchResultComponent;
+import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -21,8 +21,8 @@ public class FileSearchResultViewImpl extends AbstractView implements
 			@Override
 			protected void backView() {
 				EventBus.getInstance().fireEvent(
-						new DocumentEvent.GotoDashboard(
-								FileSearchResultViewImpl.this, null));
+						new ProjectContentEvent.GotoDashboard(
+								FileSearchResultViewImpl.this));
 
 			}
 		};

@@ -58,6 +58,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	private final TreeTable folderTree;
 	private final ResourceTableDisplay resourceTable;
 	private String rootPath;
+	private String rootFolderName;
 	private final FileSearchPanel fileSearchPanel;
 
 	private Folder baseFolder;
@@ -141,7 +142,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 										public void onClose(
 												final ConfirmDialog dialog) {
 											// TODO Auto-generated method stub
-
 										}
 									});
 						}
@@ -307,6 +307,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	public void displayResources(String rootPath, String rootFolderName) {
 		this.folderTree.removeAllItems();
 		this.rootPath = rootPath;
+		this.rootFolderName = rootFolderName;
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(this.rootPath);
@@ -437,6 +438,21 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 							});
 					deleteBtn.setStyleName("link");
 					filterBtnLayout.addComponent(deleteBtn);
+
+					final Button moveFolderBtn = new Button("Move",
+							new Button.ClickListener() {
+								@Override
+								public void buttonClick(ClickEvent event) {
+									resourceSettingPopupBtn
+											.setPopupVisible(false);
+
+									final MoveResourceWindow moveResourceWindow = new MoveResourceWindow();
+									ResourceTableDisplay.this.getWindow()
+											.addWindow(moveResourceWindow);
+								}
+							});
+					moveFolderBtn.setStyleName("link");
+					filterBtnLayout.addComponent(moveFolderBtn);
 
 					filterBtnLayout.setMargin(true);
 					filterBtnLayout.setSpacing(true);
@@ -993,4 +1009,160 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		}
 	}
 
+	protected class MoveResourceWindow extends Window {
+		private static final long serialVersionUID = 1L;
+		// private FileSearchPanel fileSearchPanel;
+		private TreeTable folderTree;
+		private String rootPath;
+		private Folder baseFolder;
+
+		public MoveResourceWindow() {
+			super("Move File/Foler");
+			center();
+			this.setWidth("600px");
+
+			constructBody();
+		}
+
+		private void constructBody() {
+			VerticalLayout layout = new VerticalLayout();
+			layout.setSpacing(true);
+
+			// fileSearchPanel = new FileSearchPanel(null);
+			// layout.addComponent(fileSearchPanel);
+
+			final HorizontalLayout resourceContainer = new HorizontalLayout();
+			resourceContainer.setSizeFull();
+
+			this.folderTree = new TreeTable();
+			this.folderTree.setMultiSelect(false);
+			this.folderTree.setSelectable(true);
+			this.folderTree.setImmediate(true);
+			this.folderTree.addContainerProperty("Name", String.class, "");
+			this.folderTree.addContainerProperty("Date Modified", String.class,
+					"");
+			this.folderTree.setColumnWidth("Date Modified",
+					UIConstants.TABLE_DATE_TIME_WIDTH);
+			this.folderTree.setColumnExpandRatio("Name", 1.0f);
+			this.folderTree.setWidth("100%");
+
+			resourceContainer.addComponent(this.folderTree);
+
+			this.folderTree.addListener(new Tree.ExpandListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void nodeExpand(final ExpandEvent event) {
+					final Folder expandFolder = (Folder) event.getItemId();
+					final List<Folder> subFolders = FileDashboardComponent.this.resourceService
+							.getSubFolders(expandFolder.getPath());
+
+					MoveResourceWindow.this.folderTree.setItemIcon(
+							expandFolder,
+							MyCollabResource
+									.newResource("icons/16/ecm/folder_open.png"));
+
+					if (subFolders != null) {
+						for (final Folder subFolder : subFolders) {
+							expandFolder.addChild(subFolder);
+							MoveResourceWindow.this.folderTree.addItem(
+									new Object[] {
+											subFolder.getName(),
+											AppContext.formatDateTime(subFolder
+													.getCreated().getTime()) },
+									subFolder);
+
+							MoveResourceWindow.this.folderTree.setItemIcon(
+									subFolder,
+									MyCollabResource
+											.newResource("icons/16/ecm/folder_close.png"));
+							MoveResourceWindow.this.folderTree.setItemCaption(
+									subFolder, subFolder.getName());
+							MoveResourceWindow.this.folderTree.setParent(
+									subFolder, expandFolder);
+						}
+					}
+				}
+			});
+
+			this.folderTree.addListener(new Tree.CollapseListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void nodeCollapse(final CollapseEvent event) {
+					final Folder collapseFolder = (Folder) event.getItemId();
+					MoveResourceWindow.this.folderTree.setItemIcon(
+							collapseFolder,
+							MyCollabResource
+									.newResource("icons/16/ecm/folder_close.png"));
+					final List<Folder> childs = collapseFolder.getChilds();
+					for (final Folder subFolder : childs) {
+						MoveResourceWindow.this.folderTree
+								.removeItem(subFolder);
+					}
+
+					childs.clear();
+				}
+			});
+
+			this.folderTree.addListener(new ItemClickEvent.ItemClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void itemClick(final ItemClickEvent event) {
+					MoveResourceWindow.this.baseFolder = (Folder) event
+							.getItemId();
+				}
+			});
+
+			layout.addComponent(resourceContainer);
+			displayFiles();
+
+			HorizontalLayout controlGroupBtnLayout = new HorizontalLayout();
+			controlGroupBtnLayout.setSpacing(true);
+
+			Button moveBtn = new Button("Move", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					// TODO Move action here
+
+				}
+			});
+			moveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controlGroupBtnLayout.addComponent(moveBtn);
+			Button cancelBtn = new Button("Cancle", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					MoveResourceWindow.this.close();
+				}
+			});
+			cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controlGroupBtnLayout.addComponent(cancelBtn);
+
+			UiUtils.addComponent(layout, controlGroupBtnLayout,
+					Alignment.MIDDLE_CENTER);
+
+			this.addComponent(layout);
+		}
+
+		private void displayFiles() {
+			String rootPath = FileDashboardComponent.this.rootPath;
+			this.folderTree.removeAllItems();
+			this.rootPath = rootPath;
+
+			this.baseFolder = new Folder();
+			baseFolder.setPath(this.rootPath);
+			this.folderTree.addItem(new Object[] {
+					FileDashboardComponent.this.rootFolderName, "" },
+					baseFolder);
+			this.folderTree.setItemCaption(baseFolder,
+					FileDashboardComponent.this.rootFolderName);
+
+			this.folderTree.setCollapsed(baseFolder, false);
+		}
+	}
 }
