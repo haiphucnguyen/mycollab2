@@ -33,9 +33,14 @@ public class PageActionChain {
     
     public ScreenData pop() {
     	log.debug("Pop pageActionChain " + this + "---" + chains.size());
-    	ScreenData pageAction = chains.get(0);
-        chains.remove(0);
-        return pageAction;
+    	if (chains.size() > 0) {
+    		ScreenData pageAction = chains.get(0);
+            chains.remove(0);
+            return pageAction;
+    	} else {
+    		return null;
+    	}
+    	
     }
     
     public ScreenData peek() {
