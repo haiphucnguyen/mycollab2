@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,8 +110,7 @@ public class FileRawContentServiceImpl implements RawContentService {
 					+ destinationPath);
 			FileUtils.moveDirectory(srcDir, destDir);
 		} catch (IOException e) {
-			throw new MyCollabException(
-					"Please check duplicate file/folder before move.");
+			throw new MyCollabException(e);
 		}
 	}
 }

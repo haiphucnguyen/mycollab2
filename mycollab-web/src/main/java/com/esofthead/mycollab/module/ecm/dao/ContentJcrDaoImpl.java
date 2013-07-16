@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jcr.ItemExistsException;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
@@ -436,11 +437,15 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			@Override
 			public Object doInJcr(Session session) throws IOException,
 					RepositoryException {
-				try{
+				try {
 					session.move("/" + oldPath, "/" + destinationPath);
 					session.save();
-				}catch(Exception e){
-					throw new MyCollabException("Illegal move source to destination.");
+				} catch (ItemExistsException e) {
+					throw new MyCollabException(
+							"Please check duplicate file/folder befor move.", e);
+				} catch (Exception e) {
+					throw new MyCollabException(
+							"Illegal move source to destination.", e);
 				}
 				return null;
 			}
