@@ -259,8 +259,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	private void displayResourcesInTable(final Folder folder) {
 		final List<Resource> resources = this.resourceService
 				.getResources(folder.getPath());
-		if (!FileDashboardComponent.this.baseFolder.getPath().equals(
-				FileDashboardComponent.this.rootPath)) {
+		if (!folder.getPath().equals(FileDashboardComponent.this.rootPath)) {
 			Resource firstLineResource = new Resource();
 			firstLineResource.setUuid("fristLine");
 			resources.add(0, firstLineResource);
@@ -273,10 +272,13 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				"size", "created" });
 		this.resourceTable.setColumnHeaders(new String[] { "", "Name",
 				"Size (Kb)", "Created" });
+
+		FileDashboardComponent.this.baseFolder = folder;
 	}
 
 	private void displayResourcesInTable(final String foldername) {
-		List<Folder> childs = this.baseFolder.getChilds();
+		List<Folder> childs = FileDashboardComponent.this.resourceService
+				.getSubFolders(this.baseFolder.getPath());
 		if (childs == null) {
 			childs = this.resourceService.getSubFolders(this.baseFolder
 					.getPath());
@@ -550,6 +552,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								@Override
 								public void buttonClick(final ClickEvent event) {
 									if (resource instanceof Folder) {
+										// TODO : more
 										FileDashboardComponent.this
 												.displayResourcesInTable(resource
 														.getName());
