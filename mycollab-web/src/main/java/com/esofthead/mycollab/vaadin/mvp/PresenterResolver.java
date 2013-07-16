@@ -1,11 +1,11 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.WeakHashmapStack;
 import com.esofthead.mycollab.web.AppContext;
 
 public class PresenterResolver {
@@ -19,7 +19,7 @@ public class PresenterResolver {
 		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
 				.getVariable(PRESENTER_VAL);
 		if (presenterMap == null) {
-			presenterMap = new WeakHashmapStack<Class<?>, Object>();
+			presenterMap = new HashMap<Class<?>, Object>();
 			AppContext.putVariable(PRESENTER_VAL, presenterMap);
 		}
 		P value = (P) presenterMap.get(presenterClass);

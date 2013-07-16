@@ -1,46 +1,18 @@
 package com.esofthead.mycollab.cache.mybatis;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.infinispan.Cache;
-import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.manager.EmbeddedCacheManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.cache.CacheManager;
 
 public class InfinispanCache implements org.apache.ibatis.cache.Cache {
-
-	private final static Logger log = LoggerFactory
-			.getLogger(InfinispanCache.class);
-
-	private final static EmbeddedCacheManager CACHE_MANAGER = createCache();
 
 	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
 	private Cache<Object, Object> cache;
 	private String id;
-
-	private static EmbeddedCacheManager createCache() {
-		InputStream config = InfinispanCache.class
-				.getResourceAsStream("infinispan.xml");
-		EmbeddedCacheManager manager;
-		if (config != null) {
-			try {
-				log.debug("Read configuration from infinispan.xml");
-				manager = new DefaultCacheManager(config);
-			} catch (IOException e) {
-				log.error("Error while reading configuration file", e);
-				throw new RuntimeException(e);
-			}
-		} else {
-			log.debug("Using standard configuration");
-			manager = new DefaultCacheManager();
-		}
-		return manager;
-	}
 
 	public InfinispanCache(final String id) {
 		if (id == null) {
@@ -51,11 +23,11 @@ public class InfinispanCache implements org.apache.ibatis.cache.Cache {
 			newId = id.substring(0, id.length() - 3);
 		}
 		this.id = id;
-		this.cache = CACHE_MANAGER.getCache(newId);
+		this.cache = CacheManager.getCache(newId);
 	}
 
 	public static void clearCache(String id) {
-		Cache<Object, Object> dataCache = CACHE_MANAGER.getCache(id);
+		Cache<Object, Object> dataCache = CacheManager.getCache(id);
 		if (dataCache != null) {
 			dataCache.clear();
 		}

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,7 +10,6 @@ import net.sf.extcos.ComponentScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.WeakHashmapStack;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -41,7 +41,7 @@ class ViewManagerImpl extends ViewManager {
 			Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) AppContext
 					.getVariable(VIEW_MANAGER_VAL);
 			if (viewMap == null) {
-				viewMap = new WeakHashmapStack<Class<?>, Object>();
+				viewMap = new HashMap<Class<?>, Object>();
 				AppContext.putVariable(VIEW_MANAGER_VAL, viewMap);
 			}
 
