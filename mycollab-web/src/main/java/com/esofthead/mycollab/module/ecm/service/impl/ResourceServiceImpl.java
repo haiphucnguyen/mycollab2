@@ -14,7 +14,6 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
-import com.esofthead.mycollab.web.AppContext;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
@@ -82,62 +81,16 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public void moveResource(String oldPath, String destinationFolderPath,
-			boolean isConfirmOverride) {
+	public void moveResource(String oldPath, String destinationFolderPath) {
+		String oldResourceName = oldPath.substring(
+				oldPath.lastIndexOf("/") + 1, oldPath.length());
 		try {
-			Resource oldPathResource = contentJcrDao.getResource(oldPath);
-			List<Resource> lstDesPathResource = contentJcrDao
-					.getResources(destinationFolderPath);
-
-			for (Resource res : lstDesPathResource) {
-				int indexDuplicate = lstDesPathResource.indexOf(res);
-				if (res.getName().equals(oldPathResource.getName())) {
-					if (!isConfirmOverride)
-						throw new MyCollabException(
-								"Please check duplicated file/folder name .Do you want override?");
-					contentJcrDao.removeResource(lstDesPathResource.get(
-							indexDuplicate).getPath());
-				}
-			}
-
-			oldPathResource.setPath(destinationFolderPath + "/"
-					+ oldPathResource.getName());
-
-			if (oldPathResource instanceof Folder)
-				contentJcrDao.createFolder((Folder) oldPathResource,
-						AppContext.getUsername());
-			else if (oldPathResource instanceof Content)
-				contentJcrDao.saveContent((Content) oldPathResource,
-						AppContext.getUsername());
-
-			recursiveMoveResource(oldPath, destinationFolderPath,
-					oldPathResource.getName());
-
-			contentJcrDao.removeResource(oldPath);
-
-		} catch (Exception e) {
+			contentJcrDao.moveResource(oldPath, destinationFolderPath + "/"
+					+ oldResourceName);
+			rawContentService.moveContent(oldPath, destinationFolderPath + "/"
+					+ oldResourceName);
+		} catch (MyCollabException e) {
+			throw new MyCollabException(e.getMessage());
 		}
 	}
-
-	private void recursiveMoveResource(String path, String destination,
-			String parentFolderName) {
-		List<Resource> lstResource = contentJcrDao.getResources(path);
-		for (Resource res : lstResource) {
-			if (res instanceof Folder) {
-				recursiveMoveResource(res.getPath(), destination + "/"
-						+ parentFolderName, res.getName());
-			} else if (res instanceof Content) {
-				res.setPath(destination + "/" + parentFolderName + "/"
-						+ res.getName());
-				contentJcrDao.saveContent((Content) res,
-						AppContext.getUsername());
-			}
-		}
-		Resource curFolder = contentJcrDao.getResource(path);
-		curFolder.setPath(destination + "/" + curFolder.getName());
-
-		contentJcrDao
-				.createFolder((Folder) curFolder, AppContext.getUsername());
-	}
-
 }

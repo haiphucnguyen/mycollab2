@@ -8,7 +8,6 @@ import org.vaadin.easyuploads.SingleFileUploadField;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
-import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -31,7 +30,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
@@ -1132,45 +1130,26 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					// TODO Move action here
 					try {
 						FileDashboardComponent.this.resourceService
 								.moveResource(
 										MoveResourceWindow.this.resourceEditting
 												.getPath(),
 										MoveResourceWindow.this.baseFolder
-												.getPath(), false);
+												.getPath());
+						MoveResourceWindow.this.close();
+						FileDashboardComponent.this.getWindow()
+								.showNotification("Move successfully.");
 					} catch (MyCollabException e) {
-						ConfirmDialog.show(
-								MoveResourceWindow.this.getParent().getWindow(),
-								"Warning",
-								e.getMessage(),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											FileDashboardComponent.this.resourceService
-													.moveResource(
-															MoveResourceWindow.this.resourceEditting
-																	.getPath(),
-															MoveResourceWindow.this.baseFolder
-																	.getPath(),
-															true);
-										}
-									}
-								});
+						MoveResourceWindow.this.getParent().getWindow()
+								.showNotification(e.getMessage());
 					}
 				}
+
 			});
 			moveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlGroupBtnLayout.addComponent(moveBtn);
-			Button cancelBtn = new Button("Cancle", new ClickListener() {
+			Button cancelBtn = new Button("Cancel", new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

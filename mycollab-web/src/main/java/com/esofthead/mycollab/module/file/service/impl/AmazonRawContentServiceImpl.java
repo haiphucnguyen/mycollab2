@@ -182,4 +182,10 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 		"1/common-comment1", "1/common-comment");
 	}
+
+	@Override
+	public void moveContent(String olPath, String destinationPath) {
+		// TODO Auto-generated method stub
+		
+	}
 }

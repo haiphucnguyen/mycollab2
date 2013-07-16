@@ -4,8 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +99,20 @@ public class FileRawContentServiceImpl implements RawContentService {
 			log.error(
 					"Can not rename old path {} to new path {} because file is not existed",
 					oldPath, newPath);
+		}
+	}
+
+	@Override
+	public void moveContent(String oldPath, String destinationPath) {
+		try {
+			File srcDir = new File(FileStorageConfig.baseContentFolder + "/"
+					+ oldPath);
+			File destDir = new File(FileStorageConfig.baseContentFolder + "/"
+					+ destinationPath);
+			FileUtils.moveDirectory(srcDir, destDir);
+		} catch (IOException e) {
+			throw new MyCollabException(
+					"Please check duplicate file/folder before move.");
 		}
 	}
 }
