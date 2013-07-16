@@ -56,14 +56,15 @@ public class AppContext implements Serializable {
 	private int accountId;
 
 	public AppContext(Application application) {
+		WebApplicationContext context = (WebApplicationContext) application
+				.getContext();
+		String sessionId = context.getHttpSession().getId();
+		variables = CacheManager.getCache(sessionId);
+
 		if (springContext == null) {
-			WebApplicationContext context = (WebApplicationContext) application
-					.getContext();
 			springContext = WebApplicationContextUtils
 					.getRequiredWebApplicationContext(context.getHttpSession()
 							.getServletContext());
-			String sessionId = context.getHttpSession().getId();
-			variables = CacheManager.getCache(sessionId);
 		}
 	}
 
