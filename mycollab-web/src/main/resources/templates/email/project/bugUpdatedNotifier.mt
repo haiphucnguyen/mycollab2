@@ -86,22 +86,22 @@
                                 <tr>
                                 	<td colspan="4">
                                 		<p>Changes (by $historyLog.postedUserFullName):</p>
-                                		<table border="1" style="width:100%;">
+                                		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
-                                				<td>Fields</td>
-                                				<td>Old Value</td>
-                                				<td>New Value</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Fields</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Old Value</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">New Value</td>
                                 			</tr>
                                 			#foreach ($item in $historyLog.changeItems)
                                 				#if ($mapper.hasField($item.field))
                                 				<tr>
-                                					<td valign="top">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>
