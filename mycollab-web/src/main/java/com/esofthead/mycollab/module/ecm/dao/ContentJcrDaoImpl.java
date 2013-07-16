@@ -440,7 +440,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					session.move("/" + oldPath, "/" + destinationPath);
 					session.save();
 				}catch(Exception e){
-					throw new MyCollabException("Illegal move");
+					throw new MyCollabException("Illegal move source to destination.");
 				}
 				return null;
 			}

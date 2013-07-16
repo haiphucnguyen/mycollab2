@@ -1130,45 +1130,22 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					ConfirmDialog
-							.show(MoveResourceWindow.this.getParent()
-									.getWindow(),
-									"Warning",
-									"Please check duplicate files/folders before move. If this occur, duplicate files/folder will be overridden. Are you sure to move?",
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												try {
-													FileDashboardComponent.this.resourceService
-															.moveResource(
-																	MoveResourceWindow.this.resourceEditting
-																			.getPath(),
-																	MoveResourceWindow.this.baseFolder
-																			.getPath());
-													MoveResourceWindow.this
-															.close();
-													FileDashboardComponent.this
-															.getWindow()
-															.showNotification(
-																	"Move successfully.");
-												} catch (MyCollabException e) {
-													MoveResourceWindow.this
-															.getParent()
-															.getWindow()
-															.showNotification(
-																	"Illegal move to destination");
-												}
-											}
-										}
-									}); // end confirm Dialog
+					try {
+						FileDashboardComponent.this.resourceService
+								.moveResource(
+										MoveResourceWindow.this.resourceEditting
+												.getPath(),
+										MoveResourceWindow.this.baseFolder
+												.getPath());
+						MoveResourceWindow.this.close();
+						FileDashboardComponent.this.getWindow()
+								.showNotification("Move successfully.");
+					} catch (MyCollabException e) {
+						MoveResourceWindow.this.getParent().getWindow()
+								.showNotification(e.getMessage());
+					}
 				}
+
 			});
 			moveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlGroupBtnLayout.addComponent(moveBtn);

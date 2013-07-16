@@ -90,7 +90,7 @@ public class ResourceServiceImpl implements ResourceService {
 			rawContentService.moveContent(oldPath, destinationFolderPath + "/"
 					+ oldResourceName);
 		} catch (MyCollabException e) {
-			throw new MyCollabException("Illegal move source to destination.");
+			throw new MyCollabException(e.getMessage());
 		}
 	}
 }
