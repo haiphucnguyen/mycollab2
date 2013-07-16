@@ -11,5 +11,6 @@ package com.esofthead.mycollab.common;
 public class ModuleNameConstants {
 	public static final String CRM = "Crm";
 	public static final String PRJ = "Project";
+	public static final String FILE = "File";
 	public static final String ACCOUNT = "Account";
 }
