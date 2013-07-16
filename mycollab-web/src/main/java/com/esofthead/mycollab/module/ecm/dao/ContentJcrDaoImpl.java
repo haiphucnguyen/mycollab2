@@ -442,7 +442,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					session.save();
 				} catch (ItemExistsException e) {
 					throw new MyCollabException(
-							"Please check duplicate file/folder befor move.", e);
+							"Please check duplicate file/folder before move.", e);
 				} catch (Exception e) {
 					throw new MyCollabException(
 							"Illegal move source to destination.", e);

@@ -85,10 +85,13 @@ public class ResourceServiceImpl implements ResourceService {
 		String oldResourceName = oldPath.substring(
 				oldPath.lastIndexOf("/") + 1, oldPath.length());
 		try {
-			contentJcrDao.moveResource(oldPath, destinationFolderPath + "/"
-					+ oldResourceName);
-			rawContentService.moveContent(oldPath, destinationFolderPath + "/"
-					+ oldResourceName);
+			if (!oldPath.substring(0, oldPath.lastIndexOf("/")).equals(
+					destinationFolderPath)) {
+				contentJcrDao.moveResource(oldPath, destinationFolderPath + "/"
+						+ oldResourceName);
+				rawContentService.moveContent(oldPath, destinationFolderPath
+						+ "/" + oldResourceName);
+			}
 		} catch (MyCollabException e) {
 			throw new MyCollabException(e.getMessage());
 		}
