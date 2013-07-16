@@ -392,8 +392,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				while (nodes.hasNext()) {
 					Node node = nodes.nextNode();
 					if (isNodeFolder(node)) {
-//						Folder folder = convertNodeToFolder(node);
-//						resources.add(folder);
+						// Folder folder = convertNodeToFolder(node);
+						// resources.add(folder);
 					} else if (isNodeMyCollabContent(node)) {
 						Content content = convertNodeToContent(node);
 						resources.add(content);
@@ -422,6 +422,25 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					currentNode.getSession().move(currentNode.getPath(),
 							"/" + newPath);
 					currentNode.getSession().save();
+				}
+				return null;
+			}
+		});
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void moveResource(final String oldPath, final String destinationPath) {
+		jcrTemplate.execute(new JcrCallback() {
+
+			@Override
+			public Object doInJcr(Session session) throws IOException,
+					RepositoryException {
+				try{
+					session.move("/" + oldPath, "/" + destinationPath);
+					session.save();
+				}catch(Exception e){
+					throw new MyCollabException("Illegal move");
 				}
 				return null;
 			}

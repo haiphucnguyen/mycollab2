@@ -10,4 +10,6 @@ public interface RawContentService {
 	void removeContent(String objectPath);
 	
 	void rename(String oldPath, String newName);
+	
+	void moveContent(String oldPath, String destinationPath);
 }

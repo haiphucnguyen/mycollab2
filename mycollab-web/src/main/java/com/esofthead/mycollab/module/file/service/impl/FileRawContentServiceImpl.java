@@ -1,10 +1,16 @@
 package com.esofthead.mycollab.module.file.service.impl;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -97,6 +103,19 @@ public class FileRawContentServiceImpl implements RawContentService {
 			log.error(
 					"Can not rename old path {} to new path {} because file is not existed",
 					oldPath, newPath);
+		}
+	}
+
+	@Override
+	public void moveContent(String oldPath, String destinationPath) {
+		Path oldpath = FileSystems.getDefault().getPath(FileStorageConfig.baseContentFolder + "/" + oldPath,
+				new String[0]);
+		Path despath = FileSystems.getDefault().getPath(FileStorageConfig.baseContentFolder + "/" + destinationPath,
+				new String[0]);
+		try {
+			Files.move(oldpath, despath, REPLACE_EXISTING);
+		} catch (IOException e) {
+			throw new MyCollabException(e);
 		}
 	}
 }
