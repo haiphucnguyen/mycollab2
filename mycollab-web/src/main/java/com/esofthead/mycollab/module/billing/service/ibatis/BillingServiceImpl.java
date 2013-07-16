@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.user.domain.AccountSettings;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingAccountExample;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
+import com.esofthead.mycollab.module.user.domain.BillingPlanExample;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -165,6 +166,11 @@ public class BillingServiceImpl implements BillingService {
 	@Override
 	public List<String> getSubdomainsOfUser(final String username) {
 		return this.billingAccountMapperExt.getSubdomainsOfUser(username);
+	}
+
+	@Override
+	public List<BillingPlan> getAvailablePlans() {
+		return billingPlanMapper.selectByExample(new BillingPlanExample());
 	}
 
 }

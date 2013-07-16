@@ -93,7 +93,7 @@ public class SignUpPage extends BasePage {
 					form.set("firstname", firstname.getModelObject());
 					form.set("lastname", lastname.getModelObject());
 
-					final String response = userResource.doPost(form);
+					final String response = userResource.signup(form);
 
 					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
 							new RedirectRequestHandler(response));

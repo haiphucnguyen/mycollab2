@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.rest.server.resource.impl;
 
+import java.util.List;
+
 import org.restlet.Server;
 import org.restlet.data.Form;
 import org.restlet.data.Protocol;
-import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Post;
+import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +34,15 @@ public class UserHubResourceImpl extends ServerResource implements
 		server.start();
 	}
 
-	// @Override
-	// public List<String> getSubdomainsOfUser(final String username) {
-	// return this.billingService.getSubdomainsOfUser(username);
-	// }
+	@Override
+	@Post
+	public List<String> getSubdomainsOfUser(final String username) {
+		return this.billingService.getSubdomainsOfUser(username);
+	}
 
 	@Override
 	@Post("form")
-	public String doPost(Form form) {
+	public String signup(Form form) {
 		UserHubResourceImpl.log.debug("Start handling form request");
 		String subdomain = form.getFirstValue("subdomain");
 		int planId = Integer.parseInt(form.getFirstValue("planId"));
@@ -51,7 +54,7 @@ public class UserHubResourceImpl extends ServerResource implements
 			this.billingService.registerAccount(subdomain, planId, username,
 					password, email, timezoneId);
 		} catch (MyCollabException e) {
-			throw new MyCollabException(e);
+			throw new ResourceException(e);
 		}
 		String siteUrl = "";
 		if (ApplicationProperties.productionMode) {

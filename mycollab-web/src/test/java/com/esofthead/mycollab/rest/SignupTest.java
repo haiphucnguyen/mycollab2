@@ -47,7 +47,7 @@ public class SignupTest extends ServiceTest {
 				"http://localhost:3000/signup");
 		UserHubResource testResource = clientResource
 				.wrap(UserHubResource.class);
-		testResource.doPost(form);
+		testResource.signup(form);
 		// restUserResource.doPost(form);
 	}
 
