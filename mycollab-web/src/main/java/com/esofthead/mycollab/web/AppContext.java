@@ -5,15 +5,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TimeZone;
 
+import org.infinispan.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.esofthead.mycollab.cache.CacheManager;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
@@ -44,7 +44,7 @@ public class AppContext implements Serializable {
 
 	private static org.springframework.web.context.WebApplicationContext springContext;
 
-	private final Map<String, Object> variables = new HashMap<String, Object>();
+	private Cache<Object, Object> variables;
 
 	private SimpleUser session;
 	private UserPreference userPreference;
@@ -62,6 +62,8 @@ public class AppContext implements Serializable {
 			springContext = WebApplicationContextUtils
 					.getRequiredWebApplicationContext(context.getHttpSession()
 							.getServletContext());
+			String sessionId = context.getHttpSession().getId();
+			variables = CacheManager.getCache(sessionId);
 		}
 	}
 

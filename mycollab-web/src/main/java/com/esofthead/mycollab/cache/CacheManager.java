@@ -38,4 +38,8 @@ public class CacheManager {
 	public static Cache<Object, Object> getCache(String id) {
 		return CACHE_MANAGER.getCache(id);
 	}
+
+	public static void removeCache(String id) {
+		CACHE_MANAGER.removeCache(id);
+	}
 }
