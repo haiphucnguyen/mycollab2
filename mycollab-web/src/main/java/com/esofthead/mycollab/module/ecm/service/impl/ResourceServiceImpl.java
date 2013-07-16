@@ -96,4 +96,17 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new MyCollabException(e.getMessage());
 		}
 	}
+
+	@Override
+	public Folder getParentFolder(String path) {
+		try {
+			String parentPath = path.substring(0, path.lastIndexOf("/"));
+			Resource res = contentJcrDao.getResource(parentPath);
+			if (res instanceof Folder)
+				return (Folder) res;
+			return null;
+		} catch (Exception e) {
+			throw new MyCollabException(e);
+		}
+	}
 }

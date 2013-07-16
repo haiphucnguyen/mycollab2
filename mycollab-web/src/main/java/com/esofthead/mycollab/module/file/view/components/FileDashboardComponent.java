@@ -259,14 +259,20 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	private void displayResourcesInTable(final Folder folder) {
 		final List<Resource> resources = this.resourceService
 				.getResources(folder.getPath());
+		if (!FileDashboardComponent.this.baseFolder.getPath().equals(
+				FileDashboardComponent.this.rootPath)) {
+			Resource firstLineResource = new Resource();
+			firstLineResource.setUuid("fristLine");
+			resources.add(0, firstLineResource);
+		}
 		this.resourceTable
 				.setContainerDataSource(new BeanItemContainer<Resource>(
 						Resource.class, resources));
+
 		this.resourceTable.setVisibleColumns(new String[] { "uuid", "path",
 				"size", "created" });
 		this.resourceTable.setColumnHeaders(new String[] { "", "Name",
 				"Size (Kb)", "Created" });
-
 	}
 
 	private void displayResourcesInTable(final String foldername) {
@@ -333,7 +339,26 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
+					if (resource != null) {
+						if (resource.getUuid().equals("fristLine")) {
+							Button upBtn = new Button();
+							upBtn.addStyleName("link");
 
+							upBtn.setIcon(MyCollabResource
+									.newResource("icons/16/16.ico"));
+							upBtn.setDescription("Up to root Folder");
+
+							upBtn.addListener(new ClickListener() {
+								@Override
+								public void buttonClick(ClickEvent event) {
+									displayResources(
+											FileDashboardComponent.this.rootPath,
+											FileDashboardComponent.this.rootFolderName);
+								}
+							});
+							return upBtn;
+						}
+					}
 					final PopupButton resourceSettingPopupBtn = new PopupButton();
 					final VerticalLayout filterBtnLayout = new VerticalLayout();
 
@@ -475,6 +500,28 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						final Object itemId, final Object columnId) {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
+
+					if (resource != null) {
+						if (resource.getUuid().equals("fristLine")) {
+							Button gotoParentBtn = new Button("...");
+							gotoParentBtn.addStyleName("link");
+							gotoParentBtn.setDescription("Up to parent Folder");
+
+							gotoParentBtn.addListener(new ClickListener() {
+								@Override
+								public void buttonClick(ClickEvent event) {
+									Folder parentFolder = FileDashboardComponent.this.resourceService
+											.getParentFolder(FileDashboardComponent.this.baseFolder
+													.getPath());
+
+									FileDashboardComponent.this.baseFolder = parentFolder;
+									displayResourcesInTable(parentFolder);
+								}
+							});
+							return gotoParentBtn;
+						}
+					}
+
 					String path = resource.getPath();
 					final int pathIndex = path.lastIndexOf("/");
 					if (pathIndex > -1) {
@@ -530,6 +577,11 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						final Object itemId, final Object columnId) {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
+					if (resource != null) {
+						if (resource.getUuid().equals("fristLine")) {
+							return "";
+						}
+					}
 					return new Label(AppContext.formatDateTime(resource
 							.getCreated().getTime()));
 				}
@@ -542,6 +594,11 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						final Object itemId, final Object columnId) {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
+					if (resource != null) {
+						if (resource.getUuid().equals("fristLine")) {
+							return "";
+						}
+					}
 					return new Label(Math.round(resource.getSize() / 1024) + "");
 				}
 			});
