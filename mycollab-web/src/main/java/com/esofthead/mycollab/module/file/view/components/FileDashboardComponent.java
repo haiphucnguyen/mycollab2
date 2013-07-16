@@ -295,7 +295,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				if (foldername.equals(subFolder.getName())) {
 					this.folderTree.setCollapsed(subFolder, false);
 					this.displayResourcesInTable(subFolder);
-					this.baseFolder = subFolder;
 				} else {
 					this.folderTree.setItemIcon(subFolder, MyCollabResource
 							.newResource("icons/16/ecm/folder_close.png"));
@@ -307,7 +306,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					this.folderTree.setCollapsed(subFolder, false);
 					this.folderTree.setValue(subFolder);
 					this.displayResourcesInTable(subFolder);
-					this.baseFolder = subFolder;
 				}
 			}
 		}
@@ -516,7 +514,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 											.getParentFolder(FileDashboardComponent.this.baseFolder
 													.getPath());
 
-									FileDashboardComponent.this.baseFolder = parentFolder;
 									displayResourcesInTable(parentFolder);
 								}
 							});
