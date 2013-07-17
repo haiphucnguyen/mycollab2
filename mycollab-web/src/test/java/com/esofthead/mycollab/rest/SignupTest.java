@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.rest;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.restlet.data.Form;
@@ -38,7 +39,7 @@ public class SignupTest extends ServiceTest {
 	}
 
 	@DataSet
-	@org.junit.Test
+	@org.junit.Test(expected = ResourceException.class)
 	public void testSignupFailDuetoExistingUserRegister() throws Exception {
 
 		final Form form = new Form();
@@ -53,41 +54,31 @@ public class SignupTest extends ServiceTest {
 				"http://localhost:3000/signup");
 		UserHubResource testResource = clientResource
 				.wrap(UserHubResource.class);
-
-		try {
-			testResource.signup(form);
-		} catch (ResourceException e) {
-			System.out.println(clientResource.getResponse().getEntity()
-					.getText());
-		}
+		testResource.signup(form);
 	}
 
-	// @org.junit.Test(expected = SubdomainExistedException.class)
-	// @DataSet
-	// public void testSignupFailDuetoExistingDomainRegister()
-	// throws JSONException {
-	// final Form form = new Form();
-	// form.set("subdomain", "esofthead");
-	// form.set("username", "hainguyen");
-	// form.set("email", "baohan@esofthead.com");
-	// form.set("password", "admin123");
-	// form.set("timezone", "1");
-	// form.set("planId", "1");
-	//
-	// restUserResource.doPost(form);
-	// }
-	//
-	// @org.junit.Test
-	// @DataSet
-	// public void testSignupSuccessfully() throws JSONException {
-	// final Form form = new Form();
-	// form.set("subdomain", "esofthead1");
-	// form.set("username", "hainguyen1");
-	// form.set("email", "baohan@esofthead.com");
-	// form.set("password", "admin123");
-	// form.set("timezone", "1");
-	// form.set("planId", "1");
-	//
-	// restUserResource.doPost(form);
-	// }
+	@org.junit.Test
+	@DataSet
+	public void testGetSubdomains() {
+		ClientResource clientResource = new ClientResource(
+				"http://localhost:3000/signup");
+		UserHubResource testResource = clientResource
+				.wrap(UserHubResource.class);
+		String[] subDomains = testResource.getSubdomainsOfUser("admin");
+		Assert.assertEquals(2, subDomains.length);
+	}
+
+	@org.junit.Test
+	@DataSet
+	public void testSignupSuccessfully() {
+		final Form form = new Form();
+		form.set("subdomain", "esofthead1");
+		form.set("username", "hainguyen1");
+		form.set("email", "baohan@esofthead.com");
+		form.set("password", "admin123");
+		form.set("timezone", "1");
+		form.set("planId", "1");
+
+		restUserResource.signup(form);
+	}
 }

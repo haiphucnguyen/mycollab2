@@ -36,8 +36,14 @@ public class UserHubResourceImpl extends ServerResource implements
 
 	@Override
 	@Post
-	public List<String> getSubdomainsOfUser(final String username) {
-		return this.billingService.getSubdomainsOfUser(username);
+	public String[] getSubdomainsOfUser(final String username) {
+		List<String> subdomains = this.billingService
+				.getSubdomainsOfUser(username);
+		if (subdomains != null) {
+			return subdomains.toArray(new String[0]);
+		} else {
+			return new String[0];
+		}
 	}
 
 	@Override
