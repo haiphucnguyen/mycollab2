@@ -56,6 +56,10 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 					.getLastmodulevisit())) {
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.GotoUserAccountModule(this, null));
+			} else if (ModuleNameConstants.FILE.equals(pref
+					.getLastmodulevisit())) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoFileModule(this, null));
 			} else {
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.GotoConsolePage(this, null));

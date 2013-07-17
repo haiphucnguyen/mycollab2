@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.module.crm.view.CrmModule;
+import com.esofthead.mycollab.module.file.view.FileModule;
 import com.esofthead.mycollab.module.project.view.ProjectModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.web.AppContext;
@@ -24,6 +25,11 @@ public class ModuleHelper {
 	public static boolean isCurrentCrmModule() {
 		IModule module = getCurrentModule();
 		return (module != null) && (module instanceof CrmModule);
+	}
+
+	public static boolean isCurrentFileModule() {
+		IModule module = getCurrentModule();
+		return (module != null) && (module instanceof FileModule);
 	}
 
 	public static boolean isCurrentAccountModule() {

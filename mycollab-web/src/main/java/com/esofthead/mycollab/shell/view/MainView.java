@@ -103,6 +103,18 @@ public final class MainView extends AbstractView {
 		prjLink.setStyleName("link");
 		vLayout.addComponent(prjLink);
 
+		final Button docLink = new Button("Document Management",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						serviceMenu.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new ShellEvent.GotoFileModule(this, null));
+					}
+				});
+		docLink.setStyleName("link");
+		vLayout.addComponent(docLink);
+
 		serviceMenu.addComponent(vLayout);
 		layout.addComponent(serviceMenu, "serviceMenu");
 
