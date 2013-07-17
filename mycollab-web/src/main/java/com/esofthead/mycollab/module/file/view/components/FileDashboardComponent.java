@@ -345,7 +345,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 							upBtn.addStyleName("link");
 
 							upBtn.setIcon(MyCollabResource
-									.newResource("icons/16/ecm/up_to_root.ico"));
+									.newResource("icons/16/ecm/up_to_root.png"));
 							upBtn.setDescription("Up to root Folder");
 
 							upBtn.addListener(new ClickListener() {
