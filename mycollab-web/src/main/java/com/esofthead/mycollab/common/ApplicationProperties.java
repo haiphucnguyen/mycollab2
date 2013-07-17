@@ -13,9 +13,8 @@ public class ApplicationProperties {
 
 	public static final String DB_USERNAME = "db.username";
 	public static final String DB_PASSWORD = "db.password";
+	public static final String DB_DRIVER_CLASS = "db.driverClassName";
 	public static final String DB_URL = "db.url";
-	public static final String DB_DBMODEL = "db.model";
-	public static final String BK_FOLDER = "bk.folder";
 
 	public static final String CDN_URL = "cdn.url";
 

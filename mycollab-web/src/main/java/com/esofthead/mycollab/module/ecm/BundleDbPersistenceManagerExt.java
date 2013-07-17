@@ -12,16 +12,15 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
 	 */
 	public void init(PMContext context) throws Exception {
 		// init default values
-		if (getDriver() == null) {
-			setDriver("com.mysql.jdbc.Driver");
-		}
+		this.setDriver(ApplicationProperties
+				.getString(ApplicationProperties.DB_DRIVER_CLASS));
 
 		setUrl(ApplicationProperties.getString(ApplicationProperties.DB_URL));
 		setUser(ApplicationProperties
 				.getString(ApplicationProperties.DB_USERNAME));
 		setPassword(ApplicationProperties
 				.getString(ApplicationProperties.DB_PASSWORD));
-		
+
 		if (getSchemaObjectPrefix() == null) {
 			setSchemaObjectPrefix("ecm_p_workspace");
 		}

@@ -62,4 +62,10 @@
         /> <param name='extractorPoolSize' value='2' /> <param name='supportHighlighting' 
         value='true' /> </SearchIndex> -->
 
+    <!-- Cluster configuration with system variables. -->
+    <Cluster>
+        <Journal
+            class="com.esofthead.mycollab.module.ecm.MyCollabDatabaseJournal" />
+    </Cluster>
+
 </Repository>
