@@ -261,7 +261,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				.getResources(folder.getPath());
 		if (!folder.getPath().equals(FileDashboardComponent.this.rootPath)) {
 			Resource firstLineResource = new Resource();
-			firstLineResource.setUuid("fristLine");
+			firstLineResource.setUuid("firstLine");
 			resources.add(0, firstLineResource);
 		}
 		this.resourceTable
@@ -340,7 +340,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					if (resource != null) {
-						if (resource.getUuid().equals("fristLine")) {
+						if (resource.getUuid().equals("firstLine")) {
 							Button upBtn = new Button();
 							upBtn.addStyleName("link");
 
@@ -578,7 +578,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					if (resource != null) {
-						if (resource.getUuid().equals("fristLine")) {
+						if (resource.getUuid().equals("firstLine")) {
 							return "";
 						}
 					}
@@ -595,7 +595,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
 					if (resource != null) {
-						if (resource.getUuid().equals("fristLine")) {
+						if (resource.getUuid().equals("firstLine")) {
 							return "";
 						}
 					}
