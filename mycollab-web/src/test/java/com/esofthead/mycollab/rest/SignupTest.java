@@ -1,14 +1,15 @@
 package com.esofthead.mycollab.rest;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.restlet.data.Form;
 import org.restlet.ext.spring.SpringComponent;
 import org.restlet.resource.ClientResource;
+import org.restlet.resource.ResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -25,16 +26,21 @@ public class SignupTest extends ServiceTest {
 
 	@Autowired
 	private SpringComponent restServer;
-	
+
 	@Before
-	public void setUp() {
-		
+	public void setUp() throws Exception {
+		restServer.start();
 	}
 
-	@org.junit.Test(expected = ExistingUserRegisterException.class)
+	@After
+	public void tearDown() throws Exception {
+		restServer.stop();
+	}
+
 	@DataSet
+	@org.junit.Test
 	public void testSignupFailDuetoExistingUserRegister() throws Exception {
-		restServer.start();
+
 		final Form form = new Form();
 		form.set("subdomain", "esofthead1");
 		form.set("username", "admin");
@@ -47,8 +53,13 @@ public class SignupTest extends ServiceTest {
 				"http://localhost:3000/signup");
 		UserHubResource testResource = clientResource
 				.wrap(UserHubResource.class);
-		testResource.signup(form);
-		// restUserResource.doPost(form);
+
+		try {
+			testResource.signup(form);
+		} catch (ResourceException e) {
+			System.out.println(clientResource.getResponse().getEntity()
+					.getText());
+		}
 	}
 
 	// @org.junit.Test(expected = SubdomainExistedException.class)
