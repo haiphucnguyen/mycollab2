@@ -1760,6 +1760,7 @@ a.nivo-prevNav {
 	width: 225px;
 	font-size: 14px;
 	padding: 0px 5px;
+	border-radius: 3px;
 }
 
 .sig-mid-left input[type="password"] {
@@ -1767,6 +1768,7 @@ a.nivo-prevNav {
 	width: 225px;
 	font-size: 14px;
 	padding: 0px 5px;
+	border-radius: 3px;
 }
 
 .timezone_input{
@@ -1781,6 +1783,7 @@ a.nivo-prevNav {
 	-webkit-box-sizing: border-box;
 	background: url("../images/signup_selectbox.png") no-repeat center right #FFF;
 	background-size: 10%; 
+	border-radius: 3px;
 }
 
 .timezone_value {

@@ -4,6 +4,7 @@
 <wicket:head>
 	<link rel="stylesheet" type="text/css"
 		href="css/signup.css?version=new" />
+	<script type="text/javascript" src="js/jquery.html5-placeholder-shim.js"></script>
 	<script type="text/javascript" src="js/signup.js"></script>
 </wicket:head>
 </head>
@@ -33,12 +34,12 @@
 									type="button" name="sig-google" value="with Google" />
 							</div>
 							<div wicket:id="feedback"></div>
-							<table class="signup-table">
+							<table class="signup-table" cellpadding="5">
 								<tr>
 									<td>
 										<div class="formfield">
-											<p>Username</p>
-											<input type="text" wicket:id="usernamefield" />
+											<p>Email</p>
+											<input type="text" wicket:id="emailfield" />
 										</div>
 									</td>
 									<td>
@@ -47,28 +48,6 @@
 											<input id="subdomainfield" type="text"
 												wicket:id="subdomainfield" />
 											<span class="sig-subdomain">.mycollab.com</span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<div class="formfield-expand">
-											<p>Email</p>
-											<input type="text" wicket:id="emailfield" />
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="formfield">
-											<p>First name</p>
-											<input type="text" wicket:id="firstnamefield" />
-										</div>
-									</td>
-									<td>
-										<div class="formfield">
-											<p>Last name</p>
-											<input type="text" wicket:id="lastnamefield" />
 										</div>
 									</td>
 								</tr>

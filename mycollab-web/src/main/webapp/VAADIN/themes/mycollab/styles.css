@@ -4028,3 +4028,95 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	float: left;
 	background: url('icons/no_subdomain_right.png') no-repeat left top transparent;
 }
+
+/* Billing Plan Setting */
+.account-dashboard .billing-setting > .v-csslayout-margin {
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(169, 169, 169);
+	border-radius: 3px;
+	background-color: rgb(245, 245, 245);
+}
+.billing-setting .faq-layout .v-verticallayout-margin {
+	padding: 0px 25px;
+}
+.billing-setting .faq-layout {
+	color: black;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-left: 2px dotted rgb(169, 169, 169);
+}
+.billing-setting .faq-layout .faq-header {
+	font-weight: bold;
+}
+.current-plan-information {
+	text-align: center;
+}
+.current-plan-information .intro-text {
+	color: black;
+	font-weight: bold;
+}
+.current-plan-information .current-price-lbl {
+	color: rgb(162, 161, 161);
+	font-size: 18px;
+}
+.current-plan-information .current-price {
+	color: rgb(237, 4, 7);
+	font-size: 24px;
+	font-weight: bold;
+}
+.billing-plan {
+	text-align: center;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-color: rgb(200, 200, 200);
+	border-style: solid;
+	border-width: 1px 0px 0px 1px;
+	background-color: rgb(245, 245, 245);
+}
+.billing-plan-list > div > div:first-child > div > .billing-plan {
+	border-width: 1px 0px 0px;
+}
+.billing-plan.even {
+	background-color: rgb(212, 224, 240);
+}
+.billing-plan .billing-type {
+	font-size: 16px;
+	padding: 5px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	color: rgb(25, 115, 154);
+	text-transform: uppercase;
+	border-bottom: 1px solid rgb(200, 200, 200);
+	background-color: white;
+}
+.billing-price-lbl {
+	color: rgb(162, 161, 161);
+	line-height: 24px;
+	padding: 4px 0px 0px;
+}
+.billing-price {
+	color: rgb(20, 103, 139);
+	font-size: 22px;
+}
+.billing-plan .billing-user, .billing-plan .billing-storage, .billing-plan .billing-project, .billing-plan .billing-bug-feature, .billing-plan .billing-standup-feature, .billing-plan .billing-timetrack-feature {
+	font-weight: bold;
+}
+.billing-plan .billing-timetrack-feature {
+	padding-bottom: 15px;
+}
+.billing-plan .bluebtn {
+	margin-bottom: 15px;
+}
+.updateplan-window {
+	text-align: center;
+}
+.updateplan-window .billing-type {
+	color: rgb(25, 115, 154);
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: bold;
+}

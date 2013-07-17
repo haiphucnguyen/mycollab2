@@ -34,18 +34,6 @@ public class SignUpPage extends BasePage {
 
 	public SignUpPage(final PageParameters parameters) {
 		super(parameters);
-		final TextField<String> username = new TextField<String>(
-				"usernamefield", new Model<String>());
-		username.setRequired(true);
-		username.setLabel(Model.of("Username"));
-
-		final TextField<String> firstname = new TextField<String>(
-				"firstnamefield", new Model<String>());
-
-		final TextField<String> lastname = new TextField<String>(
-				"lastnamefield", new Model<String>());
-		lastname.setRequired(true);
-		lastname.setLabel(Model.of("Last Name"));
 
 		final TextField<String> email = new TextField<String>("emailfield",
 				new Model<String>());
@@ -86,12 +74,10 @@ public class SignUpPage extends BasePage {
 					final Form form = new Form();
 					form.set("subdomain", subdomain.getModelObject());
 					form.set("planId", parameters.get("planId").toString());
-					form.set("username", username.getModelObject());
+					form.set("username", email.getModelObject());
 					form.set("password", password.getModelObject());
 					form.set("email", email.getModelObject());
 					form.set("timezoneId", timezone.getModelObject());
-					form.set("firstname", firstname.getModelObject());
-					form.set("lastname", lastname.getModelObject());
 
 					final String response = userResource.signup(form);
 
@@ -105,15 +91,11 @@ public class SignUpPage extends BasePage {
 
 		this.add(form);
 		form.add(new FeedbackPanel("feedback"));
-		form.add(username);
 		form.add(subdomain);
 		form.add(email);
 		form.add(password);
 		form.add(cpassword);
-		/* form.add(email); */
 		form.add(timezone);
-		form.add(firstname);
-		form.add(lastname);
 		form.add(receiveupdate);
 
 		final RepeatingView timezoneAreaRepeat = new RepeatingView("arearepeat");

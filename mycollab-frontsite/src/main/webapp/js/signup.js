@@ -10,4 +10,13 @@ $(document).ready(function(){
 		$('#timezonefield').attr('value', $(this).attr('data-tag'));
 		$('#timezone_dropdown_hidden').slideToggle("fast");
 	});
+	
+	$('div[class^="formfield"]').each(function(){
+		var placeHolderContainer = $(this).find('p');
+		var inputObject = $(this).find('input');
+		inputObject.attr('placeholder', placeHolderContainer.text());
+		placeHolderContainer.hide();
+	});
+	
+	$.placeholder.shim();
 });
