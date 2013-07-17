@@ -549,7 +549,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								@Override
 								public void buttonClick(final ClickEvent event) {
 									if (resource instanceof Folder) {
-										// TODO : more
 										FileDashboardComponent.this
 												.displayResourcesInTable(resource
 														.getName());
