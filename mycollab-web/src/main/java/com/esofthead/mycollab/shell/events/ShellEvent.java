@@ -33,6 +33,13 @@ public class ShellEvent {
 		}
 	}
 
+	public static class GotoFileModule extends ApplicationEvent {
+
+		public GotoFileModule(Object source, Object data) {
+			super(source, data);
+		}
+	}
+
 	public static class GotoUserAccountModule extends ApplicationEvent {
 
 		public GotoUserAccountModule(Object source, Object data) {

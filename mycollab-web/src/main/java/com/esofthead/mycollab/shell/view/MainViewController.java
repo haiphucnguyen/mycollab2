@@ -6,6 +6,8 @@ package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.module.crm.view.CrmModulePresenter;
 import com.esofthead.mycollab.module.crm.view.CrmModuleScreenData;
+import com.esofthead.mycollab.module.file.view.FileModulePresenter;
+import com.esofthead.mycollab.module.file.view.FileModuleScreenData;
 import com.esofthead.mycollab.module.project.view.ProjectModulePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectModuleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModulePresenter;
@@ -90,5 +92,24 @@ public class MainViewController implements IController {
 												(String[]) event.getData()));
 							}
 						});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ShellEvent.GotoFileModule>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ShellEvent.GotoFileModule.class;
+					}
+
+					@Override
+					public void handle(ShellEvent.GotoFileModule event) {
+						FileModulePresenter fileModulePresenter = PresenterResolver
+								.getPresenter(FileModulePresenter.class);
+						FileModuleScreenData.GotoModule screenData = new FileModuleScreenData.GotoModule(
+								(String[]) event.getData());
+						fileModulePresenter.go(container, screenData);
+					}
+				});
 	}
 }

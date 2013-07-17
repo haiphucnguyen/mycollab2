@@ -11,36 +11,9 @@ import org.restlet.resource.ResourceException;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 public class Test {
-	// public static void main(String[] args) throws Exception {
-	// ClientResource mailRoot = new RestClientResource(
-	// "http://localhost:8080/mycollab-web/api/signup");
-	//
-	//
-	// try {
-	// Representation value = mailRoot.get(MediaType.APPLICATION_JSON);
-	// Status status = mailRoot.getStatus();
-	// System.out.println(status.getCode() + " ---"
-	// + status.getDescription());
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
 
 	public static void main(String[] args) throws ClientProtocolException,
 			IOException, JSONException {
-//		DefaultHttpClient httpClient = new DefaultHttpClient();
-//		HttpPost postRequest = new HttpPost(
-//				"http://localhost:8080/mycollab-web/api/signup");
-//
-//		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-//		nvps.add(new BasicNameValuePair("username", "username1"));
-//		nvps.add(new BasicNameValuePair("password", "password1"));
-//		nvps.add(new BasicNameValuePair("planId", "1"));
-//		nvps.add(new BasicNameValuePair("email", "hainguyen@esofthead.com"));
-//
-//		postRequest.setEntity(new UrlEncodedFormEntity(nvps));
-//		HttpResponse response = httpClient.execute(postRequest);
-//		System.out.println(response.getEntity().getContent());
 
 		ClientResource clientResource = new ClientResource(
 				"http://localhost:8080/mycollab-web/api/signup");
@@ -64,8 +37,11 @@ public class Test {
 					System.out.println(result);
 				}
 			} catch (ResourceException e) {
-				System.out.println("EXCEPTION: " + e.getCause() + "---"
+				System.out.println("EXCEPTION1: " + e.getCause() + "---"
 						+ e.getMessage());
+				System.out.println(clientResource.getResponse().getEntity()
+						.getText());
+
 			}
 
 		} catch (Exception e) {

@@ -7,8 +7,4 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 @ViewComponent
 public class FileModule extends AbstractView implements IModule {
 	private static final long serialVersionUID = 1L;
-
-	public void gotoFileDashboard() {
-		
-	}
 }
