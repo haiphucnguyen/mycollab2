@@ -10,8 +10,9 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class OpportunityListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public OpportunityListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public OpportunityListCustomizeWindow(String viewId,
+			AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	@Override
@@ -26,11 +27,6 @@ public class OpportunityListCustomizeWindow extends CustomizedTableWindow {
 				OpportunityTableFieldDef.opportunityName,
 				OpportunityTableFieldDef.probability,
 				OpportunityTableFieldDef.type);
-	}
-
-	@Override
-	protected String getViewId() {
-		return OpportunityListView.VIEW_DEF_ID;
 	}
 
 }

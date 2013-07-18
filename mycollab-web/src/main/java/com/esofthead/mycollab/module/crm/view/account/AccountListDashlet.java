@@ -11,16 +11,17 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -29,6 +30,8 @@ import com.vaadin.ui.VerticalLayout;
 public class AccountListDashlet extends Depot {
 	private static final long serialVersionUID = 1L;
 	private AccountTableDisplay tableItem;
+
+	public static final String VIEW_DEF_ID = "crm-account-dashlet";
 
 	public AccountListDashlet() {
 		super("My Accounts", new VerticalLayout());
@@ -58,6 +61,24 @@ public class AccountListDashlet extends Depot {
 					}
 				});
 		bodyContent.addComponent(tableItem);
+
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindow().addWindow(
+						new AccountListCustomizeWindow(
+								AccountListDashlet.VIEW_DEF_ID, tableItem));
+
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+
+		this.addHeaderElement(customizeViewBtn);
 	}
 
 	public void display() {

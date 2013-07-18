@@ -32,8 +32,12 @@ public abstract class CustomizedTableWindow extends Window {
 	private CustomViewStoreService customViewStoreService;
 	private AbstractPagedBeanTable tableItem;
 
-	public CustomizedTableWindow(final AbstractPagedBeanTable table) {
+	protected String viewId;
+
+	public CustomizedTableWindow(final String viewId,
+			final AbstractPagedBeanTable table) {
 		super("Customize View");
+		this.viewId = viewId;
 		this.setWidth("800px");
 		this.center();
 
@@ -112,7 +116,7 @@ public abstract class CustomizedTableWindow extends Window {
 						CustomViewStore viewDef = new CustomViewStore();
 						viewDef.setSaccountid(AppContext.getAccountId());
 						viewDef.setCreateduser(AppContext.getUsername());
-						viewDef.setViewid(getViewId());
+						viewDef.setViewid(viewId);
 						XStream xstream = new XStream(new StaxDriver());
 						viewDef.setViewinfo(xstream.toXML(selectedColumns));
 						customViewStoreService
@@ -167,7 +171,5 @@ public abstract class CustomizedTableWindow extends Window {
 				String[].class);
 		return Arrays.asList(copyArr);
 	}
-
-	abstract protected String getViewId();
 
 }

@@ -138,7 +138,9 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(new CaseListCustomizeWindow(tableItem));
+				getWindow().addWindow(
+						new CaseListCustomizeWindow(CaseListView.VIEW_DEF_ID,
+								tableItem));
 
 			}
 		});

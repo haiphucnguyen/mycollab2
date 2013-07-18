@@ -22,6 +22,9 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -69,6 +72,21 @@ public class CallListDashlet extends Depot {
 					}
 				});
 		bodyContent.addComponent(tableItem);
+
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+
+		this.addHeaderElement(customizeViewBtn);
 	}
 
 	public void display() {

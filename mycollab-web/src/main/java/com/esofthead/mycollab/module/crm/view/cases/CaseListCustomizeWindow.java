@@ -10,8 +10,8 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class CaseListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public CaseListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public CaseListCustomizeWindow(String viewId, AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	@Override
@@ -23,11 +23,6 @@ public class CaseListCustomizeWindow extends CustomizedTableWindow {
 				CaseTableFieldDef.priority, CaseTableFieldDef.reason,
 				CaseTableFieldDef.status, CaseTableFieldDef.subject,
 				CaseTableFieldDef.type);
-	}
-
-	@Override
-	protected String getViewId() {
-		return CaseListView.VIEW_DEF_ID;
 	}
 
 }

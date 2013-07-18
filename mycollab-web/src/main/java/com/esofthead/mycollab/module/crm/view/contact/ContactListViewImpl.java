@@ -147,8 +147,9 @@ public class ContactListViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow()
-						.addWindow(new ContactListCustomizeWindow(tableItem));
+				getWindow().addWindow(
+						new ContactListCustomizeWindow(
+								ContactListView.VIEW_DEF_ID, tableItem));
 
 			}
 		});

@@ -10,8 +10,9 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class ContactListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public ContactListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public ContactListCustomizeWindow(String viewId,
+			AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	@Override
@@ -25,11 +26,6 @@ public class ContactListCustomizeWindow extends CustomizedTableWindow {
 				ContactTableFieldDef.isCallable, ContactTableFieldDef.mobile,
 				ContactTableFieldDef.name, ContactTableFieldDef.phoneOffice,
 				ContactTableFieldDef.title);
-	}
-
-	@Override
-	protected String getViewId() {
-		return ContactListView.VIEW_DEF_ID;
 	}
 
 }

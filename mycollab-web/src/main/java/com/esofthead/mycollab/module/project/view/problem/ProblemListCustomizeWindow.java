@@ -10,8 +10,9 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class ProblemListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public ProblemListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public ProblemListCustomizeWindow(String viewId,
+			AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	@Override
@@ -21,11 +22,6 @@ public class ProblemListCustomizeWindow extends CustomizedTableWindow {
 				ProblemTableFieldDef.impact, ProblemTableFieldDef.name,
 				ProblemTableFieldDef.priority, ProblemTableFieldDef.raisedby,
 				ProblemTableFieldDef.rating, ProblemTableFieldDef.status);
-	}
-
-	@Override
-	protected String getViewId() {
-		return ProblemListView.VIEW_DEF_ID;
 	}
 
 }

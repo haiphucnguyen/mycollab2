@@ -10,8 +10,8 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class RiskListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public RiskListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public RiskListCustomizeWindow(String viewId, AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	@Override
@@ -22,11 +22,6 @@ public class RiskListCustomizeWindow extends CustomizedTableWindow {
 				RiskTableFieldDef.probability, RiskTableFieldDef.raisedBy,
 				RiskTableFieldDef.rating, RiskTableFieldDef.response,
 				RiskTableFieldDef.status);
-	}
-
-	@Override
-	protected String getViewId() {
-		return RiskListView.VIEW_DEF_ID;
 	}
 
 }

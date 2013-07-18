@@ -10,8 +10,9 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class CampaignListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public CampaignListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public CampaignListCustomizeWindow(String viewId,
+			AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	@Override
@@ -24,11 +25,6 @@ public class CampaignListCustomizeWindow extends CustomizedTableWindow {
 				CampaignTableFieldDef.expectedRevenue,
 				CampaignTableFieldDef.startDate, CampaignTableFieldDef.status,
 				CampaignTableFieldDef.type);
-	}
-
-	@Override
-	protected String getViewId() {
-		return CampaignListView.VIEW_DEF_ID;
 	}
 
 }

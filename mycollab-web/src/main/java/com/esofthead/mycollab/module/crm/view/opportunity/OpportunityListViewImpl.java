@@ -144,7 +144,8 @@ public class OpportunityListViewImpl extends AbstractView implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getWindow().addWindow(
-						new OpportunityListCustomizeWindow(tableItem));
+						new OpportunityListCustomizeWindow(
+								OpportunityListView.VIEW_DEF_ID, tableItem));
 
 			}
 		});

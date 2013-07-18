@@ -96,8 +96,9 @@ public class AccountListViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow()
-						.addWindow(new AccountListCustomizeWindow(tableItem));
+				getWindow().addWindow(
+						new AccountListCustomizeWindow(
+								AccountListView.VIEW_DEF_ID, tableItem));
 
 			}
 		});

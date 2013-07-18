@@ -138,7 +138,8 @@ public class CampaignListViewImpl extends AbstractView implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getWindow().addWindow(
-						new CampaignListCustomizeWindow(tableItem));
+						new CampaignListCustomizeWindow(
+								CampaignListView.VIEW_DEF_ID, tableItem));
 
 			}
 		});

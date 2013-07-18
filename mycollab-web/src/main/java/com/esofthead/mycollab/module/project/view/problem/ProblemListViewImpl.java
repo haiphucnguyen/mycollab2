@@ -244,8 +244,9 @@ public class ProblemListViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow()
-						.addWindow(new ProblemListCustomizeWindow(tableItem));
+				getWindow().addWindow(
+						new ProblemListCustomizeWindow(
+								ProblemListView.VIEW_DEF_ID, tableItem));
 
 			}
 		});

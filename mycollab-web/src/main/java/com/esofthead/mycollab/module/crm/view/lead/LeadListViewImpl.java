@@ -44,7 +44,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	private final VerticalLayout accountListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
-	private LeadImportWindow leadImportWindow ;
+	private LeadImportWindow leadImportWindow;
 
 	public LeadListViewImpl() {
 
@@ -128,13 +128,15 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
 		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
-		
+
 		Button customizeViewBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(new LeadListCustomizeWindow(tableItem));
+				getWindow().addWindow(
+						new LeadListCustomizeWindow(LeadListView.VIEW_DEF_ID,
+								tableItem));
 
 			}
 		});
@@ -159,7 +161,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		layout.addComponent(importBtn);
 		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
-		
+
 		return layoutWrapper;
 	}
 

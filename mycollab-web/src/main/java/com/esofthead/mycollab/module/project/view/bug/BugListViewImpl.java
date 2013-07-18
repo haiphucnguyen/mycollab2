@@ -108,7 +108,9 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(new BugListCustomizeWindow(tableItem));
+				getWindow().addWindow(
+						new BugListCustomizeWindow(BugListView.VIEW_DEF_ID,
+								tableItem));
 
 			}
 		});

@@ -239,7 +239,9 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(new RiskListCustomizeWindow(tableItem));
+				getWindow().addWindow(
+						new RiskListCustomizeWindow(RiskListView.VIEW_DEF_ID,
+								tableItem));
 
 			}
 		});

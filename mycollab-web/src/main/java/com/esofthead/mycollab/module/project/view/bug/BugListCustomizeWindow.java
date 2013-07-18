@@ -10,8 +10,8 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class BugListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public BugListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public BugListCustomizeWindow(String viewId, AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	@Override
@@ -22,11 +22,6 @@ public class BugListCustomizeWindow extends CustomizedTableWindow {
 				BugTableFieldDef.logBy, BugTableFieldDef.priority,
 				BugTableFieldDef.resolution, BugTableFieldDef.status,
 				BugTableFieldDef.summary);
-	}
-
-	@Override
-	protected String getViewId() {
-		return BugListView.VIEW_DEF_ID;
 	}
 
 }

@@ -10,8 +10,9 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 public class AccountListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public AccountListCustomizeWindow(AbstractPagedBeanTable table) {
-		super(table);
+	public AccountListCustomizeWindow(String viewId,
+			AbstractPagedBeanTable table) {
+		super(viewId, table);
 	}
 
 	protected Collection<TableViewField> getAvailableColumns() {
@@ -20,10 +21,5 @@ public class AccountListCustomizeWindow extends CustomizedTableWindow {
 				AccountTableFieldDef.email, AccountTableFieldDef.phoneoffice,
 				AccountTableFieldDef.website, AccountTableFieldDef.type,
 				AccountTableFieldDef.ownership, AccountTableFieldDef.fax);
-	}
-
-	@Override
-	protected String getViewId() {
-		return AccountListView.VIEW_DEF_ID;
 	}
 }
