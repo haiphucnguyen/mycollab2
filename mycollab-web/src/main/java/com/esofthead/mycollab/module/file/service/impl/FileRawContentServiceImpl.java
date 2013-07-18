@@ -104,11 +104,20 @@ public class FileRawContentServiceImpl implements RawContentService {
 	@Override
 	public void moveContent(String oldPath, String destinationPath) {
 		try {
-			File srcDir = new File(FileStorageConfig.baseContentFolder + "/"
+			File src = new File(FileStorageConfig.baseContentFolder + "/"
 					+ oldPath);
-			File destDir = new File(FileStorageConfig.baseContentFolder + "/"
+			File dest = new File(FileStorageConfig.baseContentFolder + "/"
 					+ destinationPath);
-			FileUtils.moveDirectory(srcDir, destDir);
+
+			if (dest.exists()) {
+				FileUtils.deleteQuietly(dest);
+			}
+
+			if (src.isFile()) {
+				FileUtils.moveFile(src, dest);
+			} else {
+				FileUtils.moveDirectory(src, dest);
+			}
 		} catch (IOException e) {
 			throw new MyCollabException(e);
 		}

@@ -19,7 +19,7 @@ public interface ResourceService {
 
 	void removeResource(String path);
 
-	InputStream getContantStream(String path);
+	InputStream getContentStream(String path);
 
 	void rename(String oldPath, String newPath);
 

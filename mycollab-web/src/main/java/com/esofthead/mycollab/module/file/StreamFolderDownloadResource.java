@@ -77,7 +77,7 @@ public class StreamFolderDownloadResource implements
 			for (Resource resource : resources) {
 				if (resource instanceof Content) {
 					InputStream contentStream = resourceService
-							.getContantStream(resource.getPath());
+							.getContentStream(resource.getPath());
 					log.debug("Add file entry " + resource.getName()
 							+ " to zip file");
 					String entryPath = resource.getPath().substring(
