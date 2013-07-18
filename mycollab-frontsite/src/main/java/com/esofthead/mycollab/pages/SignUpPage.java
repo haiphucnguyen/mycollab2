@@ -5,15 +5,16 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
@@ -35,28 +36,22 @@ public class SignUpPage extends BasePage {
 	public SignUpPage(final PageParameters parameters) {
 		super(parameters);
 
-		final TextField<String> email = new TextField<String>("emailfield",
-				new Model<String>());
-		email.setRequired(true);
-		email.setLabel(Model.of("Email"));
+		final RequiredTextField<String> email = new RequiredTextField<String>("emailfield");
+		email.add(EmailAddressValidator.getInstance());
+		email.setLabel(new ResourceModel("label.email"));
 
-		final CheckBox receiveupdate = new CheckBox("receiveupdatefield",
-				new Model<Boolean>());
-		final TextField<String> subdomain = new TextField<String>(
-				"subdomainfield", new Model<String>());
-		subdomain.setRequired(true);
-		subdomain.setLabel(Model.of("Subdomain"));
+		final CheckBox receiveupdate = new CheckBox("receiveupdatefield");
+		
+		final RequiredTextField<String> subdomain = new RequiredTextField<String>("subdomainfield");
+		subdomain.setLabel(new ResourceModel("label.subdomain"));
 
-		final PasswordTextField password = new PasswordTextField(
-				"passwordfield", new Model<String>());
-		password.setLabel(Model.of("Password"));
+		final PasswordTextField password = new PasswordTextField("passwordfield");
+		password.setLabel(new ResourceModel("label.password"));
 
-		final PasswordTextField cpassword = new PasswordTextField(
-				"cpasswordfield", new Model<String>());
-		cpassword.setLabel(Model.of("Confirm Password"));
+		final PasswordTextField cpassword = new PasswordTextField("cpasswordfield");
+		cpassword.setLabel(new ResourceModel("label.password"));
 
-		final HiddenField<String> timezone = new HiddenField<String>(
-				"timezonefield", new Model<String>());
+		final HiddenField<String> timezone = new HiddenField<String>("timezonefield");
 
 		final StatelessForm<Void> form = new StatelessForm<Void>("signupform") {
 

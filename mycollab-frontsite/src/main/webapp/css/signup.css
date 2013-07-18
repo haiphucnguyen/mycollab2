@@ -90,6 +90,7 @@
 .signup-table .formfield {
 	width: 237px;
 	margin: 0 auto;
+	position: relative;
 }
 
 .signup-table .formfield-expand {

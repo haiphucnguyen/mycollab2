@@ -73,4 +73,9 @@
         <error-code>404</error-code>
         <location>/error404</location>
     </error-page>
+    
+    <context-param>
+        <param-name>configuration</param-name>
+        <param-value>development</param-value>
+    </context-param> 
 </web-app>

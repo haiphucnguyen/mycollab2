@@ -12,26 +12,18 @@
 					<form method="post" wicket:id="signinform">
 						<label class="signin-lblemail">Email:</label>
 						<input id="email" type="text" wicket:id="emailfield" />
-						<input type="submit" value="Take me to my domain" />
+						<input type="submit" value="Take me to my domain" wicket:id="ajax-button"/>
+					
 						<div class="signin-radio">
-							<table>
-								<tr>
-									<td><input id="signin-radio-1" type="radio" name="domain" value="" checked></td>
-									<td><label for="signin-radio-1">esofthead.com</label></td>
-									<td><input class="signin-btngo" type="button" value="GO"></td>
-								</tr>
-								<tr>
-									<td><input id="signin-radio-2" type="radio" name="domain" value=""></td>
-									<td><label for="signin-radio-2">mycollab.com</label></td>
-									<td><input class="signin-btngo" type="button" value="GO"></td>
-								</tr>
-								<tr>
-									<td><input id="signin-radio-3" type="radio" name="domain" value=""></td>
-									<td><label for="signin-radio-3">mycollab.com</label></td>
-									<td><input class="signin-btngo" type="button" value="GO"></td>
-								</tr>
-							</table>
-						</div> 
+								<table wicket:id="listcontainer">
+									<wicket:container wicket:id="subdomainrepeat">
+										<tr>
+											<td><label class="signin-radio" wicket:id="subdomain"></label></td>
+											<td><a href="#" class="signin-btngo" wicket:id="gotosubdomain">GO</a></td>
+										</tr>
+									</wicket:container>
+								</table>
+						</div>
 					</form>
 				</div>
 			</div>

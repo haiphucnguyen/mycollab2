@@ -1905,7 +1905,10 @@ a.nivo-prevNav {
     margin-top: 1px;
     padding-left: 4px;
     position: absolute;
-    width: 95px;	
+    width: 95px;
+    right: 1px;
+    top: 0px;
+    border-radius: 0px 2px 2px 0px;
 }
 /* End Sign Up style */
 
@@ -1977,10 +1980,6 @@ a.nivo-prevNav {
 	padding-right: 5px;
 }
 
-.signin-radio {
-	padding: 20px 0px 0px;
-}
-
 .signin-btngo {
 	background-color: #BD7802;
 	border: #AB8358;
@@ -1989,7 +1988,7 @@ a.nivo-prevNav {
 	font-size: 11px;
 	padding: 2px 5px;
 	cursor: pointer;
-	margin-left: 10px;
+	vertical-align: middle;
 	font-weight: bold;
 }
 

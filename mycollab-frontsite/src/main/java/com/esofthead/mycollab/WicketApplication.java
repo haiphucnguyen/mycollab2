@@ -7,6 +7,8 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.pages.Error404Page;
 import com.esofthead.mycollab.pages.Error500Page;
@@ -25,6 +27,8 @@ import com.esofthead.mycollab.pages.TourPage;
  * @see com.esofthead.mycollab.Start#main(String[])
  */
 public class WicketApplication extends WebApplication {
+	private Logger log = LoggerFactory.getLogger(WicketApplication.class);
+
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
@@ -58,6 +62,7 @@ public class WicketApplication extends WebApplication {
 			@Override
 			public IRequestHandler onException(final RequestCycle cycle,
 					final Exception e) {
+				log.error("Error while process", e);
 				return new RenderPageRequestHandler(new PageProvider(
 						new Error500Page(e)));
 			}
