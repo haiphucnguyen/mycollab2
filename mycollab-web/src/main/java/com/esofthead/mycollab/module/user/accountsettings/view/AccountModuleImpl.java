@@ -92,7 +92,8 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 							AccountModuleImpl.this.profilePresenter.go(
 									AccountModuleImpl.this, null);
 						} else if ("Account Settings".equals(caption)) {
-
+							accountSettingPresenter.go(AccountModuleImpl.this,
+									null);
 						} else if ("Users & Permissions".equals(caption)) {
 							AccountModuleImpl.this.userPermissionPresenter.go(
 									AccountModuleImpl.this, null);
