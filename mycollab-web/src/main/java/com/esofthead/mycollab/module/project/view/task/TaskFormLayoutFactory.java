@@ -121,7 +121,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("notes")) {
 				field.setSizeUndefined();
 				this.informationLayout.addComponent(field, "Notes", 0, 6, 2,
-						UIConstants.DEFAULT_2XCONTROL_WIDTH);
+						"100%");
 			} else if (propertyId.equals("id")) {
 				this.informationLayout.addComponent(field, "Attachments", 0, 7,
 						2, "100%");
