@@ -20,13 +20,13 @@ import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class AccountSettingsViewImpl extends AbstractView implements
-		AccountSettingsView {
+public class BillingSummaryViewImpl extends AbstractView implements
+		BillingSummaryView {
 	BillingService billingService;
 
 	VerticalLayout currentPlan = null;
 
-	public AccountSettingsViewImpl() {
+	public BillingSummaryViewImpl() {
 		super();
 
 		this.setMargin(true);
@@ -154,7 +154,7 @@ public class AccountSettingsViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					AccountSettingsViewImpl.this.getWidget().getWindow()
+					BillingSummaryViewImpl.this.getWidget().getWindow()
 							.addWindow(new UpdateBillingPlanWindow(plan));
 				}
 			});
@@ -275,7 +275,7 @@ public class AccountSettingsViewImpl extends AbstractView implements
 
 		private void updateBillingPlan() {
 			AppContext.getBillingAccount().setBillingPlan(chosenPlan);
-			AccountSettingsViewImpl.this.loadCurrentPlan();
+			BillingSummaryViewImpl.this.loadCurrentPlan();
 		}
 	}
 }

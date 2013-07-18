@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleUrlResolver;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserUrlResolver;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -35,7 +36,8 @@ public class AccountUrlResolver extends UrlResolver {
 
 	private static class BillingUrlResolver extends UrlResolver {
 		protected void handlePage(String... params) {
-			
+			EventBus.getInstance().fireEvent(
+					new AccountBillingEvent.GotoSummary(this, null));
 		}
 	}
 }

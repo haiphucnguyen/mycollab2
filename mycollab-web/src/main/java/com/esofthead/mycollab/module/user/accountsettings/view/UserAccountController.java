@@ -3,8 +3,10 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingSummaryPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.ProfileScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.RoleScreenData;
@@ -35,8 +37,30 @@ public class UserAccountController implements IController {
 		this.container = container;
 
 		bindProfileEvents();
+		bindBillingEvents();
 		bindRoleEvents();
 		bindUserEvents();
+	}
+
+	private void bindBillingEvents() {
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<AccountBillingEvent.GotoSummary>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return AccountBillingEvent.GotoSummary.class;
+							}
+
+							@Override
+							public void handle(
+									AccountBillingEvent.GotoSummary event) {
+								BillingSummaryPresenter presenter = PresenterResolver
+										.getPresenter(BillingSummaryPresenter.class);
+								presenter.go(container, null);
+							}
+						});
 	}
 
 	private void bindProfileEvents() {

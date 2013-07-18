@@ -1,19 +1,23 @@
 package com.esofthead.mycollab.module.user.accountsettings.billing.view;
 
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class AccountSettingsPresenter extends
-		AbstractPresenter<AccountSettingsView> {
+public class BillingSummaryPresenter extends
+		AbstractPresenter<BillingSummaryView> {
 	private static final long serialVersionUID = 1L;
 
-	public AccountSettingsPresenter() {
-		super(AccountSettingsView.class);
+	public BillingSummaryPresenter() {
+		super(BillingSummaryView.class);
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		AccountModule accountContainer = (AccountModule) container;
+
+		accountContainer.gotoSubView("Account Settings");
 		view.loadCurrentPlan();
 	}
 }

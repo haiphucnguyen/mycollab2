@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.module.user.accountsettings.billing.view.AccountSettingsPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingSummaryPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
@@ -30,7 +30,7 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 
 	private ProfilePresenter profilePresenter;
 	private UserPermissionManagementPresenter userPermissionPresenter;
-	private AccountSettingsPresenter accountSettingPresenter;
+	private BillingSummaryPresenter accountSettingPresenter;
 
 	private final AccountSettingBreadcrumb breadcrumb;
 
@@ -104,7 +104,7 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 
 	private ComponentContainer constructAccountSettingsComponent() {
 		this.accountSettingPresenter = PresenterResolver
-				.getPresenter(AccountSettingsPresenter.class);
+				.getPresenter(BillingSummaryPresenter.class);
 		return this.accountSettingPresenter.getView();
 	}
 
