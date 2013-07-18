@@ -35,167 +35,174 @@ import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
 public class UserDashboardViewImpl extends AbstractView implements
-		UserDashboardView {
-	private static final long serialVersionUID = 1L;
+        UserDashboardView {
+    private static final long serialVersionUID = 1L;
 
-	private ButtonLink followingTicketsLink;
+    private final ButtonLink followingTicketsLink;
 
-	private ButtonLink timeTrackingLink;
+    private final ButtonLink timeTrackingLink;
 
-	private MyProjectListComponent myProjectListComponent;
+    private final MyProjectListComponent myProjectListComponent;
 
-	private ActivityStreamComponent activityStreamComponent;
+    private final ActivityStreamComponent activityStreamComponent;
 
-	private TaskStatusComponent taskStatusComponent;
+    private final TaskStatusComponent taskStatusComponent;
 
-	private List<Integer> prjKeys;
+    private List<Integer> prjKeys;
 
-	public UserDashboardViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(false, false, true, false);
-		this.setWidth("1130px");
+    public UserDashboardViewImpl() {
+        this.setSpacing(true);
+        this.setWidth("100%");
 
-		final CssLayout headerWrapper = new CssLayout();
-		headerWrapper.setWidth("100%");
-		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
+        final CssLayout contentWrapper = new CssLayout();
+        contentWrapper.setWidth("100%");
+        contentWrapper.addStyleName("main-content-wrapper");
+        this.addComponent(contentWrapper);
 
-		final HorizontalLayout header = new HorizontalLayout();
-		header.setWidth("100%");
-		header.setMargin(false);
-		header.setSpacing(true);
-		header.addStyleName("projectfeed-hdr");
+        final CssLayout headerWrapper = new CssLayout();
+        headerWrapper.setWidth("100%");
+        headerWrapper.setStyleName("projectfeed-hdr-wrapper");
 
-		header.addComponent(UserAvatarControlFactory
-				.createUserAvatarEmbeddedComponent(
-						AppContext.getUserAvatarId(), 64));
+        final HorizontalLayout header = new HorizontalLayout();
+        header.setWidth("100%");
+        header.setMargin(false);
+        header.setSpacing(true);
+        header.addStyleName("projectfeed-hdr");
 
-		final VerticalLayout headerContent = new VerticalLayout();
-		headerContent.addStyleName("projectfeed-hdr-content");
+        header.addComponent(UserAvatarControlFactory
+                .createUserAvatarEmbeddedComponent(
+                        AppContext.getUserAvatarId(), 64));
 
-		final Label headerLabel = new Label(AppContext.getSession()
-				.getDisplayName());
-		headerLabel.setStyleName(Reindeer.LABEL_H1);
+        final VerticalLayout headerContent = new VerticalLayout();
+        headerContent.addStyleName("projectfeed-hdr-content");
 
-		final HorizontalLayout headerContentTop = new HorizontalLayout();
-		headerContentTop.setSpacing(true);
-		headerContentTop.addComponent(headerLabel);
-		headerContentTop.setComponentAlignment(headerLabel,
-				Alignment.MIDDLE_LEFT);
+        final Label headerLabel = new Label(AppContext.getSession()
+                .getDisplayName());
+        headerLabel.setStyleName(Reindeer.LABEL_H1);
 
-		final Button createProjectBtn = new Button(
-				LocalizationHelper
-						.getMessage(ProjectCommonI18nEnum.NEW_PROJECT_ACTION),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        final HorizontalLayout headerContentTop = new HorizontalLayout();
+        headerContentTop.setSpacing(true);
+        headerContentTop.addComponent(headerLabel);
+        headerContentTop.setComponentAlignment(headerLabel,
+                Alignment.MIDDLE_LEFT);
 
-					@Override
-					public void buttonClick(final Button.ClickEvent event) {
-						final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
-						UserDashboardViewImpl.this.getWindow().addWindow(
-								projectNewWindow);
-					}
-				});
-		createProjectBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		headerContentTop.addComponent(createProjectBtn);
-		headerContentTop.setComponentAlignment(createProjectBtn,
-				Alignment.MIDDLE_LEFT);
+        final Button createProjectBtn = new Button(
+                LocalizationHelper
+                        .getMessage(ProjectCommonI18nEnum.NEW_PROJECT_ACTION),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		final HorizontalLayout headerContentBottom = new HorizontalLayout();
-		headerContentBottom.setSpacing(true);
-		followingTicketsLink = new ButtonLink("My Following Tickets (" + "0"
-				+ ")");
+                    @Override
+                    public void buttonClick(final Button.ClickEvent event) {
+                        final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
+                        UserDashboardViewImpl.this.getWindow().addWindow(
+                                projectNewWindow);
+                    }
+                });
+        createProjectBtn.setIcon(MyCollabResource
+                .newResource("icons/16/addRecord.png"));
+        createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        headerContentTop.addComponent(createProjectBtn);
+        headerContentTop.setComponentAlignment(createProjectBtn,
+                Alignment.MIDDLE_LEFT);
 
-		followingTicketsLink.setIcon(MyCollabResource
-				.newResource("icons/16/follow.png"));
-		followingTicketsLink.removeStyleName("wordWrap");
-		followingTicketsLink.addListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        final HorizontalLayout headerContentBottom = new HorizontalLayout();
+        headerContentBottom.setSpacing(true);
+        followingTicketsLink = new ButtonLink("My Following Tickets (" + "0"
+                + ")");
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (prjKeys != null) {
-					EventBus.getInstance().fireEvent(
-							new FollowingTicketEvent.GotoMyFollowingItems(
-									UserDashboardViewImpl.this, prjKeys));
-				}
-			}
-		});
+        followingTicketsLink.setIcon(MyCollabResource
+                .newResource("icons/16/follow.png"));
+        followingTicketsLink.removeStyleName("wordWrap");
+        followingTicketsLink.addListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-		timeTrackingLink = new ButtonLink("Time Tracking");
-		timeTrackingLink.addListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void buttonClick(ClickEvent event) {
+                if (prjKeys != null) {
+                    EventBus.getInstance().fireEvent(
+                            new FollowingTicketEvent.GotoMyFollowingItems(
+                                    UserDashboardViewImpl.this, prjKeys));
+                }
+            }
+        });
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new TimeTrackingEvent.GotoTimeTrackingView(
-								UserDashboardViewImpl.this, null));
-			}
-		});
-		timeTrackingLink.setIcon(MyCollabResource
-				.newResource("icons/16/project/time_tracking.png"));
-		timeTrackingLink.removeStyleName("wordWrap");
-		headerContentBottom.addComponent(followingTicketsLink);
-		headerContentBottom.addComponent(timeTrackingLink);
+        timeTrackingLink = new ButtonLink("Time Tracking");
+        timeTrackingLink.addListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-		headerContent.addComponent(headerContentTop);
-		headerContent.addComponent(headerContentBottom);
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(
+                        new TimeTrackingEvent.GotoTimeTrackingView(
+                                UserDashboardViewImpl.this, null));
+            }
+        });
+        timeTrackingLink.setIcon(MyCollabResource
+                .newResource("icons/16/project/time_tracking.png"));
+        timeTrackingLink.removeStyleName("wordWrap");
+        headerContentBottom.addComponent(followingTicketsLink);
+        headerContentBottom.addComponent(timeTrackingLink);
 
-		header.addComponent(headerContent);
-		header.setExpandRatio(headerContent, 1.0f);
-		headerWrapper.addComponent(header);
+        headerContent.addComponent(headerContentTop);
+        headerContent.addComponent(headerContentBottom);
 
-		this.addComponent(headerWrapper);
+        header.addComponent(headerContent);
+        header.setExpandRatio(headerContent, 1.0f);
+        headerWrapper.addComponent(header);
 
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setMargin(false, false, true, false);
+        contentWrapper.addComponent(headerWrapper);
 
-		final VerticalLayout leftPanel = new VerticalLayout();
-		leftPanel.setMargin(false, true, false, false);
-		this.activityStreamComponent = new ActivityStreamComponent();
-		leftPanel.addComponent(this.activityStreamComponent);
+        final HorizontalLayout layout = new HorizontalLayout();
+        layout.setWidth("100%");
+        layout.setMargin(false, false, true, false);
 
-		final VerticalLayout rightPanel = new VerticalLayout();
-		this.myProjectListComponent = new MyProjectListComponent();
-		this.taskStatusComponent = new TaskStatusComponent();
-		rightPanel.addComponent(this.myProjectListComponent);
-		rightPanel.addComponent(new LazyLoadWrapper(this.taskStatusComponent));
+        final VerticalLayout leftPanel = new VerticalLayout();
+        leftPanel.setMargin(false, true, false, false);
+        this.activityStreamComponent = new ActivityStreamComponent();
+        leftPanel.addComponent(this.activityStreamComponent);
+        leftPanel.setWidth("100%");
 
-		layout.addComponent(leftPanel);
-		layout.addComponent(rightPanel);
+        final VerticalLayout rightPanel = new VerticalLayout();
+        this.myProjectListComponent = new MyProjectListComponent();
+        this.taskStatusComponent = new TaskStatusComponent();
+        rightPanel.setWidth("565px");
+        rightPanel.addComponent(this.myProjectListComponent);
+        rightPanel.addComponent(new LazyLoadWrapper(this.taskStatusComponent));
 
-		this.addComponent(layout);
-	}
+        layout.addComponent(leftPanel);
+        layout.addComponent(rightPanel);
+        layout.setExpandRatio(leftPanel, 1.0f);
 
-	@Override
-	public void display() {
-		final ProjectService prjService = AppContext
-				.getSpringBean(ProjectService.class);
-		prjKeys = prjService.getUserProjectKeys(AppContext.getUsername());
-		if (prjKeys != null && !prjKeys.isEmpty()) {
-			this.activityStreamComponent.showFeeds(prjKeys);
-			this.myProjectListComponent.showProjects(prjKeys);
-			displayFollowingTicketsCount();
-		}
+        contentWrapper.addComponent(layout);
+    }
 
-		this.taskStatusComponent.showProjectTasksByStatus();
+    @Override
+    public void display() {
+        final ProjectService prjService = AppContext
+                .getSpringBean(ProjectService.class);
+        prjKeys = prjService.getUserProjectKeys(AppContext.getUsername());
+        if (prjKeys != null && !prjKeys.isEmpty()) {
+            this.activityStreamComponent.showFeeds(prjKeys);
+            this.myProjectListComponent.showProjects(prjKeys);
+            displayFollowingTicketsCount();
+        }
 
-	}
+        this.taskStatusComponent.showProjectTasksByStatus();
 
-	private void displayFollowingTicketsCount() {
-		// show following ticket numbers
-		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-		searchCriteria.setUser(new StringSearchField(SearchField.AND,
-				AppContext.getUsername()));
-		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
-				.toArray(new Integer[0])));
-		MonitorItemService monitorService = AppContext
-				.getSpringBean(MonitorItemService.class);
-		int followingItemsCount = monitorService.getTotalCount(searchCriteria);
-		followingTicketsLink.setCaption("My Following Tickets ("
-				+ followingItemsCount + ")");
-	}
+    }
+
+    private void displayFollowingTicketsCount() {
+        // show following ticket numbers
+        MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+        searchCriteria.setUser(new StringSearchField(SearchField.AND,
+                AppContext.getUsername()));
+        searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+                .toArray(new Integer[0])));
+        MonitorItemService monitorService = AppContext
+                .getSpringBean(MonitorItemService.class);
+        int followingItemsCount = monitorService.getTotalCount(searchCriteria);
+        followingTicketsLink.setCaption("My Following Tickets ("
+                + followingItemsCount + ")");
+    }
 }

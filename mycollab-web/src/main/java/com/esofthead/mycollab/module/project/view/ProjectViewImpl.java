@@ -67,380 +67,385 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class ProjectViewImpl extends AbstractView implements ProjectView {
 
-	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
-	private final HorizontalLayout root;
-	private final DetachedTabs myProjectTab;
-	private final CssLayout mySpaceArea = new CssLayout();
-	private final HorizontalLayout topPanel;
-	private ProjectDashboardPresenter dashboardPresenter;
-	private MessagePresenter messagePresenter;
-	private MilestonePresenter milestonesPresenter;
-	private TaskPresenter taskPresenter;
-	private BugPresenter bugPresenter;
-	private FilePresenter filePresenter;
-	private ProblemPresenter problemPresenter;
-	private RiskPresenter riskPresenter;
-	private TimeTrackingPresenter timePresenter;
-	private UserGroupPresenter userPresenter;
-	private StandupPresenter standupPresenter;
-	private final ProjectBreadcrumb breadCrumb;
-	private SplitButtonExt controlsBtn;
+    private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
+    private final HorizontalLayout root;
+    private final DetachedTabs myProjectTab;
+    private final CssLayout mySpaceArea = new CssLayout();
+    private final HorizontalLayout topPanel;
+    private ProjectDashboardPresenter dashboardPresenter;
+    private MessagePresenter messagePresenter;
+    private MilestonePresenter milestonesPresenter;
+    private TaskPresenter taskPresenter;
+    private BugPresenter bugPresenter;
+    private FilePresenter filePresenter;
+    private ProblemPresenter problemPresenter;
+    private RiskPresenter riskPresenter;
+    private TimeTrackingPresenter timePresenter;
+    private UserGroupPresenter userPresenter;
+    private StandupPresenter standupPresenter;
+    private final ProjectBreadcrumb breadCrumb;
+    private SplitButtonExt controlsBtn;
 
-	public ProjectViewImpl() {
-		this.setStyleName("projectDashboardView");
-		this.setMargin(false);
+    public ProjectViewImpl() {
+        this.setWidth("100%");
 
-		breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        final CssLayout contentWrapper = new CssLayout();
+        contentWrapper.setStyleName("projectDashboardView");
+        contentWrapper.addStyleName("main-content-wrapper");
+        contentWrapper.setWidth("100%");
+        this.addComponent(contentWrapper);
 
-		topPanel = new HorizontalLayout();
-		topPanel.setWidth("100%");
-		topPanel.setMargin(true);
-		this.addComponent(topPanel);
+        breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
 
-		root = new HorizontalLayout();
-		root.setStyleName("menuContent");
+        topPanel = new HorizontalLayout();
+        topPanel.setWidth("100%");
+        topPanel.setMargin(true);
+        contentWrapper.addComponent(topPanel);
 
-		myProjectTab = new DetachedTabs.Vertical(mySpaceArea);
-		myProjectTab.setSizeFull();
-		myProjectTab.setHeight(null);
+        root = new HorizontalLayout();
+        root.setStyleName("menuContent");
 
-		CssLayout menu = new CssLayout();
-		menu.setWidth("150px");
-		menu.setStyleName("sidebar-menu");
-		menu.addComponent(myProjectTab);
+        myProjectTab = new DetachedTabs.Vertical(mySpaceArea);
+        myProjectTab.setSizeFull();
+        myProjectTab.setHeight(null);
 
-		root.addComponent(menu);
-		mySpaceArea.setStyleName("projectTabContent");
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setHeight(null);
-		root.addComponent(mySpaceArea);
-		root.setExpandRatio(mySpaceArea, 1.0f);
-		root.setWidth("100%");
-		buildComponents();
-		this.addComponent(root);
-	}
+        CssLayout menu = new CssLayout();
+        menu.setWidth("150px");
+        menu.setStyleName("sidebar-menu");
+        menu.addComponent(myProjectTab);
 
-	private static class MenuButton extends Button {
-		public MenuButton(String caption, String iconResource) {
-			super(caption);
-			this.setIcon(MyCollabResource.newResource("icons/22/project/"
-					+ iconResource));
-			this.setStyleName("link");
-		}
-	}
+        root.addComponent(menu);
+        mySpaceArea.setStyleName("projectTabContent");
+        mySpaceArea.setWidth("100%");
+        mySpaceArea.setHeight(null);
+        root.addComponent(mySpaceArea);
+        root.setExpandRatio(mySpaceArea, 1.0f);
+        root.setWidth("100%");
+        buildComponents();
+        contentWrapper.addComponent(root);
+    }
 
-	private void buildComponents() {
-		myProjectTab.addTab(constructProjectDashboardComponent(),
-				new MenuButton("Dashboard", "menu_dashboard.png"));
-		myProjectTab.addTab(constructProjectMessageComponent(), new MenuButton(
-				"Messages", "menu_message.png"));
-		myProjectTab.addTab(constructProjectMilestoneComponent(),
-				new MenuButton("Phases", "menu_milestone.png"));
-		myProjectTab.addTab(constructTaskDashboardComponent(), new MenuButton(
-				"Tasks", "menu_task.png"));
-		myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
-				"Bugs", "menu_bug.png"));
-		myProjectTab.addTab(constructProjectFileComponent(), new MenuButton(
-				"Files", "menu_file.png"));
-		myProjectTab.addTab(constructProjectRiskComponent(), new MenuButton(
-				"Risks", "menu_risk.png"));
-		myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
-				"Problems", "menu_problem.png"));
-		myProjectTab.addTab(constructTimeTrackingComponent(), new MenuButton(
-				"Time", "menu_time.png"));
-		myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
-				"StandUp", "menu_standup.png"));
-		myProjectTab.addTab(constructProjectUsers(), new MenuButton(
-				"Users & Group", "menu_user.png"));
+    private static class MenuButton extends Button {
+        public MenuButton(String caption, String iconResource) {
+            super(caption);
+            this.setIcon(MyCollabResource.newResource("icons/22/project/"
+                    + iconResource));
+            this.setStyleName("link");
+        }
+    }
 
-		myProjectTab
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
-					@Override
-					public void tabChanged(TabChangedEvent event) {
-						Button btn = event.getSource();
-						String caption = btn.getCaption();
-						mySpaceArea.setStyleName("projectTabContent");
-						if ("Messages".equals(caption)) {
-							messagePresenter.go(ProjectViewImpl.this, null);
-						} else if ("Phases".equals(caption)) {
-							mySpaceArea.addStyleName("Phases");
-							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, CurrentProjectVariables
-											.getProjectId()));
-							gotoMilestoneView(new MilestoneScreenData.Search(
-									searchCriteria));
-						} else if ("Tasks".equals(caption)) {
-							taskPresenter.go(ProjectViewImpl.this, null);
-						} else if ("Bugs".equals(caption)) {
-							gotoBugView(null);
-						} else if ("Risks".equals(caption)) {
-							RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, CurrentProjectVariables
-											.getProjectId()));
-							gotoRiskView(new RiskScreenData.Search(
-									searchCriteria));
-						} else if ("Files".equals(caption)) {
-							filePresenter.go(ProjectViewImpl.this,
-									new FileScreenData.GotoDashboard());
-						} else if ("Problems".equals(caption)) {
-							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, CurrentProjectVariables
-											.getProjectId()));
-							problemPresenter
-									.go(ProjectViewImpl.this,
-											new ProblemScreenData.Search(
-													searchCriteria));
-						} else if ("Dashboard".equals(caption)) {
-							dashboardPresenter.go(ProjectViewImpl.this, null);
-						} else if ("Users & Group".equals(caption)) {
-							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-							criteria.setProjectId(new NumberSearchField(
-									CurrentProjectVariables.getProjectId()));
-							gotoUsersAndGroup(new ProjectMemberScreenData.Search(
-									criteria));
-						} else if ("Time".equals(caption)) {
-							ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									CurrentProjectVariables.getProjectId()));
-							searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria
-									.getCurrentRangeDateOfWeekSearchField());
-							gotoTimeTrackingView(new TimeTrackingScreenData.Search(
-									searchCriteria));
-						} else if ("StandUp".equals(caption)) {
-							StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-							criteria.setProjectId(new NumberSearchField(
-									CurrentProjectVariables.getProjectId()));
-							criteria.setOnDate(new DateSearchField(
-									SearchField.AND, new GregorianCalendar()
-											.getTime()));
-							standupPresenter.go(ProjectViewImpl.this,
-									new StandupScreenData.Search(criteria));
-						}
-					}
-				});
-	}
+    private void buildComponents() {
+        myProjectTab.addTab(constructProjectDashboardComponent(),
+                new MenuButton("Dashboard", "menu_dashboard.png"));
+        myProjectTab.addTab(constructProjectMessageComponent(), new MenuButton(
+                "Messages", "menu_message.png"));
+        myProjectTab.addTab(constructProjectMilestoneComponent(),
+                new MenuButton("Phases", "menu_milestone.png"));
+        myProjectTab.addTab(constructTaskDashboardComponent(), new MenuButton(
+                "Tasks", "menu_task.png"));
+        myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
+                "Bugs", "menu_bug.png"));
+        myProjectTab.addTab(constructProjectFileComponent(), new MenuButton(
+                "Files", "menu_file.png"));
+        myProjectTab.addTab(constructProjectRiskComponent(), new MenuButton(
+                "Risks", "menu_risk.png"));
+        myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
+                "Problems", "menu_problem.png"));
+        myProjectTab.addTab(constructTimeTrackingComponent(), new MenuButton(
+                "Time", "menu_time.png"));
+        myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
+                "StandUp", "menu_standup.png"));
+        myProjectTab.addTab(constructProjectUsers(), new MenuButton(
+                "Users & Group", "menu_user.png"));
 
-	@Override
-	public void gotoUsersAndGroup(ScreenData<?> data) {
-		userPresenter.go(ProjectViewImpl.this, data);
-	}
+        myProjectTab
+                .addTabChangedListener(new DetachedTabs.TabChangedListener() {
+                    @Override
+                    public void tabChanged(TabChangedEvent event) {
+                        Button btn = event.getSource();
+                        String caption = btn.getCaption();
+                        mySpaceArea.setStyleName("projectTabContent");
+                        if ("Messages".equals(caption)) {
+                            messagePresenter.go(ProjectViewImpl.this, null);
+                        } else if ("Phases".equals(caption)) {
+                            mySpaceArea.addStyleName("Phases");
+                            MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
+                            searchCriteria.setProjectId(new NumberSearchField(
+                                    SearchField.AND, CurrentProjectVariables
+                                            .getProjectId()));
+                            gotoMilestoneView(new MilestoneScreenData.Search(
+                                    searchCriteria));
+                        } else if ("Tasks".equals(caption)) {
+                            taskPresenter.go(ProjectViewImpl.this, null);
+                        } else if ("Bugs".equals(caption)) {
+                            gotoBugView(null);
+                        } else if ("Risks".equals(caption)) {
+                            RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
+                            searchCriteria.setProjectId(new NumberSearchField(
+                                    SearchField.AND, CurrentProjectVariables
+                                            .getProjectId()));
+                            gotoRiskView(new RiskScreenData.Search(
+                                    searchCriteria));
+                        } else if ("Files".equals(caption)) {
+                            filePresenter.go(ProjectViewImpl.this,
+                                    new FileScreenData.GotoDashboard());
+                        } else if ("Problems".equals(caption)) {
+                            ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
+                            searchCriteria.setProjectId(new NumberSearchField(
+                                    SearchField.AND, CurrentProjectVariables
+                                            .getProjectId()));
+                            problemPresenter
+                                    .go(ProjectViewImpl.this,
+                                            new ProblemScreenData.Search(
+                                                    searchCriteria));
+                        } else if ("Dashboard".equals(caption)) {
+                            dashboardPresenter.go(ProjectViewImpl.this, null);
+                        } else if ("Users & Group".equals(caption)) {
+                            ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+                            criteria.setProjectId(new NumberSearchField(
+                                    CurrentProjectVariables.getProjectId()));
+                            gotoUsersAndGroup(new ProjectMemberScreenData.Search(
+                                    criteria));
+                        } else if ("Time".equals(caption)) {
+                            ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+                            searchCriteria.setProjectId(new NumberSearchField(
+                                    CurrentProjectVariables.getProjectId()));
+                            searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria
+                                    .getCurrentRangeDateOfWeekSearchField());
+                            gotoTimeTrackingView(new TimeTrackingScreenData.Search(
+                                    searchCriteria));
+                        } else if ("StandUp".equals(caption)) {
+                            StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+                            criteria.setProjectId(new NumberSearchField(
+                                    CurrentProjectVariables.getProjectId()));
+                            criteria.setOnDate(new DateSearchField(
+                                    SearchField.AND, new GregorianCalendar()
+                                            .getTime()));
+                            standupPresenter.go(ProjectViewImpl.this,
+                                    new StandupScreenData.Search(criteria));
+                        }
+                    }
+                });
+    }
 
-	@Override
-	public void gotoTaskList(ScreenData data) {
-		taskPresenter.go(ProjectViewImpl.this, data);
-	}
+    @Override
+    public void gotoUsersAndGroup(ScreenData<?> data) {
+        userPresenter.go(ProjectViewImpl.this, data);
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void gotoRiskView(ScreenData data) {
-		riskPresenter.go(ProjectViewImpl.this, data);
-	}
+    @Override
+    public void gotoTaskList(ScreenData data) {
+        taskPresenter.go(ProjectViewImpl.this, data);
+    }
 
-	public void gotoTimeTrackingView(ScreenData data) {
-		timePresenter.go(ProjectViewImpl.this, data);
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void gotoRiskView(ScreenData data) {
+        riskPresenter.go(ProjectViewImpl.this, data);
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void gotoBugView(ScreenData data) {
-		bugPresenter.go(ProjectViewImpl.this, data);
-	}
+    public void gotoTimeTrackingView(ScreenData data) {
+        timePresenter.go(ProjectViewImpl.this, data);
+    }
 
-	@Override
-	public void gotoMilestoneView(ScreenData data) {
-		milestonesPresenter.go(ProjectViewImpl.this, data);
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void gotoBugView(ScreenData data) {
+        bugPresenter.go(ProjectViewImpl.this, data);
+    }
 
-	@Override
-	public void gotoStandupReportView(ScreenData<?> data) {
-		standupPresenter.go(ProjectViewImpl.this, data);
-	}
+    @Override
+    public void gotoMilestoneView(ScreenData data) {
+        milestonesPresenter.go(ProjectViewImpl.this, data);
+    }
 
-	private Component constructProjectDashboardComponent() {
-		dashboardPresenter = PresenterResolver
-				.getPresenter(ProjectDashboardPresenter.class);
-		return dashboardPresenter.getView();
-	}
+    @Override
+    public void gotoStandupReportView(ScreenData<?> data) {
+        standupPresenter.go(ProjectViewImpl.this, data);
+    }
 
-	private Component constructProjectUsers() {
-		userPresenter = PresenterResolver
-				.getPresenter(UserGroupPresenter.class);
-		return userPresenter.getView();
-	}
+    private Component constructProjectDashboardComponent() {
+        dashboardPresenter = PresenterResolver
+                .getPresenter(ProjectDashboardPresenter.class);
+        return dashboardPresenter.getView();
+    }
 
-	private Component constructProjectMessageComponent() {
-		messagePresenter = PresenterResolver
-				.getPresenter(MessagePresenter.class);
-		return messagePresenter.getView();
-	}
+    private Component constructProjectUsers() {
+        userPresenter = PresenterResolver
+                .getPresenter(UserGroupPresenter.class);
+        return userPresenter.getView();
+    }
 
-	private Component constructProjectMilestoneComponent() {
-		milestonesPresenter = PresenterResolver
-				.getPresenter(MilestonePresenter.class);
-		return milestonesPresenter.getView();
-	}
+    private Component constructProjectMessageComponent() {
+        messagePresenter = PresenterResolver
+                .getPresenter(MessagePresenter.class);
+        return messagePresenter.getView();
+    }
 
-	private Component constructProjectRiskComponent() {
-		riskPresenter = PresenterResolver.getPresenter(RiskPresenter.class);
-		return riskPresenter.getView();
-	}
+    private Component constructProjectMilestoneComponent() {
+        milestonesPresenter = PresenterResolver
+                .getPresenter(MilestonePresenter.class);
+        return milestonesPresenter.getView();
+    }
 
-	private Component constructProjectProblemComponent() {
-		problemPresenter = PresenterResolver
-				.getPresenter(ProblemPresenter.class);
-		return problemPresenter.getView();
-	}
+    private Component constructProjectRiskComponent() {
+        riskPresenter = PresenterResolver.getPresenter(RiskPresenter.class);
+        return riskPresenter.getView();
+    }
 
-	private Component constructTimeTrackingComponent() {
-		timePresenter = PresenterResolver
-				.getPresenter(TimeTrackingPresenter.class);
-		return timePresenter.getView();
-	}
+    private Component constructProjectProblemComponent() {
+        problemPresenter = PresenterResolver
+                .getPresenter(ProblemPresenter.class);
+        return problemPresenter.getView();
+    }
 
-	private Component constructProjectStandupMeeting() {
-		standupPresenter = PresenterResolver
-				.getPresenter(StandupPresenter.class);
-		return standupPresenter.getView();
-	}
+    private Component constructTimeTrackingComponent() {
+        timePresenter = PresenterResolver
+                .getPresenter(TimeTrackingPresenter.class);
+        return timePresenter.getView();
+    }
 
-	private Component constructTaskDashboardComponent() {
-		taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		return taskPresenter.getView();
-	}
+    private Component constructProjectStandupMeeting() {
+        standupPresenter = PresenterResolver
+                .getPresenter(StandupPresenter.class);
+        return standupPresenter.getView();
+    }
 
-	private Component constructProjectBugComponent() {
-		bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
-		return bugPresenter.getView();
-	}
+    private Component constructTaskDashboardComponent() {
+        taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
+        return taskPresenter.getView();
+    }
 
-	private Component constructProjectFileComponent() {
-		filePresenter = PresenterResolver.getPresenter(FilePresenter.class);
-		return filePresenter.getView();
-	}
+    private Component constructProjectBugComponent() {
+        bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
+        return bugPresenter.getView();
+    }
 
-	@Override
-	public void constructProjectHeaderPanel(final SimpleProject project,
-			PageActionChain pageActionChain) {
-		topPanel.removeAllComponents();
+    private Component constructProjectFileComponent() {
+        filePresenter = PresenterResolver.getPresenter(FilePresenter.class);
+        return filePresenter.getView();
+    }
 
-		topPanel.addComponent(breadCrumb);
-		topPanel.setComponentAlignment(breadCrumb, Alignment.BOTTOM_CENTER);
-		topPanel.setExpandRatio(breadCrumb, 1.0f);
+    @Override
+    public void constructProjectHeaderPanel(final SimpleProject project,
+            PageActionChain pageActionChain) {
+        topPanel.removeAllComponents();
 
-		breadCrumb.setProject(project);
-		breadCrumb.initBreadcrumb();
+        topPanel.addComponent(breadCrumb);
+        topPanel.setComponentAlignment(breadCrumb, Alignment.BOTTOM_CENTER);
+        topPanel.setExpandRatio(breadCrumb, 1.0f);
 
-		Button quickActionBtn = new Button("Quick Action",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						controlsBtn.setPopupVisible(true);
-					}
-				});
-		controlsBtn = new SplitButtonExt(quickActionBtn);
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/quick_action.png"));
+        breadCrumb.setProject(project);
+        breadCrumb.initBreadcrumb();
 
-		VerticalLayout popupButtonsControl = new VerticalLayout();
-		popupButtonsControl.setWidth("150px");
+        Button quickActionBtn = new Button("Quick Action",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(true);
+                    }
+                });
+        controlsBtn = new SplitButtonExt(quickActionBtn);
+        controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+        controlsBtn.setIcon(MyCollabResource
+                .newResource("icons/16/project/quick_action.png"));
 
-		Button createPhaseBtn = new Button("Create Phase",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						controlsBtn.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new MilestoneEvent.GotoAdd(
-										ProjectViewImpl.this, null));
-					}
-				});
-		createPhaseBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.MILESTONES));
-		createPhaseBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/milestone.png"));
-		createPhaseBtn.setStyleName("link");
-		popupButtonsControl.addComponent(createPhaseBtn);
+        VerticalLayout popupButtonsControl = new VerticalLayout();
+        popupButtonsControl.setWidth("150px");
 
-		Button createBugBtn = new Button("Create Bug",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						controlsBtn.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new BugEvent.GotoAdd(this, null));
-					}
-				});
-		createBugBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS));
-		createBugBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/bug.png"));
-		createBugBtn.setStyleName("link");
-		popupButtonsControl.addComponent(createBugBtn);
+        Button createPhaseBtn = new Button("Create Phase",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new MilestoneEvent.GotoAdd(
+                                        ProjectViewImpl.this, null));
+                    }
+                });
+        createPhaseBtn.setEnabled(CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.MILESTONES));
+        createPhaseBtn.setIcon(MyCollabResource
+                .newResource("icons/16/project/milestone.png"));
+        createPhaseBtn.setStyleName("link");
+        popupButtonsControl.addComponent(createPhaseBtn);
 
-		Button createRiskBtn = new Button("Create Risk",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						controlsBtn.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoAdd(this, null));
-					}
-				});
-		createRiskBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.RISKS));
-		createRiskBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/risk.png"));
-		createRiskBtn.setStyleName("link");
-		popupButtonsControl.addComponent(createRiskBtn);
+        Button createBugBtn = new Button("Create Bug",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new BugEvent.GotoAdd(this, null));
+                    }
+                });
+        createBugBtn.setEnabled(CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.BUGS));
+        createBugBtn.setIcon(MyCollabResource
+                .newResource("icons/16/project/bug.png"));
+        createBugBtn.setStyleName("link");
+        popupButtonsControl.addComponent(createBugBtn);
 
-		Button createProblemBtn = new Button("Create Problem",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						controlsBtn.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ProblemEvent.GotoAdd(this, null));
-					}
-				});
-		createProblemBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
-		createProblemBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/problem.png"));
-		createProblemBtn.setStyleName("link");
-		popupButtonsControl.addComponent(createProblemBtn);
+        Button createRiskBtn = new Button("Create Risk",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new RiskEvent.GotoAdd(this, null));
+                    }
+                });
+        createRiskBtn.setEnabled(CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.RISKS));
+        createRiskBtn.setIcon(MyCollabResource
+                .newResource("icons/16/project/risk.png"));
+        createRiskBtn.setStyleName("link");
+        popupButtonsControl.addComponent(createRiskBtn);
 
-		Button editProjectBtn = new Button(
-				LocalizationHelper
-						.getMessage(ProjectCommonI18nEnum.EDIT_PROJECT_ACTION),
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						controlsBtn.setPopupVisible(false);
-						dashboardPresenter.go(ProjectViewImpl.this,
-								new ProjectScreenData.Edit(project));
-					}
-				});
-		editProjectBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.PROJECT));
-		editProjectBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/edit_project_green.png"));
-		editProjectBtn.setStyleName("link");
-		popupButtonsControl.addComponent(editProjectBtn);
+        Button createProblemBtn = new Button("Create Problem",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new ProblemEvent.GotoAdd(this, null));
+                    }
+                });
+        createProblemBtn.setEnabled(CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.PROBLEMS));
+        createProblemBtn.setIcon(MyCollabResource
+                .newResource("icons/16/project/problem.png"));
+        createProblemBtn.setStyleName("link");
+        popupButtonsControl.addComponent(createProblemBtn);
 
-		controlsBtn.addComponent(popupButtonsControl);
+        Button editProjectBtn = new Button(
+                LocalizationHelper
+                        .getMessage(ProjectCommonI18nEnum.EDIT_PROJECT_ACTION),
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
+                        dashboardPresenter.go(ProjectViewImpl.this,
+                                new ProjectScreenData.Edit(project));
+                    }
+                });
+        editProjectBtn.setEnabled(CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.PROJECT));
+        editProjectBtn.setIcon(MyCollabResource
+                .newResource("icons/16/project/edit_project_green.png"));
+        editProjectBtn.setStyleName("link");
+        popupButtonsControl.addComponent(editProjectBtn);
 
-		topPanel.addComponent(controlsBtn);
-		topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-	}
+        controlsBtn.addComponent(popupButtonsControl);
 
-	@Override
-	public Component gotoSubView(String name) {
-		log.debug("Project: Go to tab view name " + name);
-		View component = (View) myProjectTab.selectTab(name);
-		return component;
-	}
+        topPanel.addComponent(controlsBtn);
+        topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
+    }
+
+    @Override
+    public Component gotoSubView(String name) {
+        log.debug("Project: Go to tab view name " + name);
+        View component = (View) myProjectTab.selectTab(name);
+        return component;
+    }
 }
