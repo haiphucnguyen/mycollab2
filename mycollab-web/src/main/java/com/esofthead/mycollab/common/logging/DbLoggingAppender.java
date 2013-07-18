@@ -11,6 +11,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
@@ -23,6 +25,9 @@ import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
  * @author haiphucnguyen
  */
 public class DbLoggingAppender extends AppenderSkeleton {
+
+	private static Logger log = LoggerFactory
+			.getLogger(DbLoggingAppender.class);
 
 	@Override
 	protected void append(LoggingEvent event) {
@@ -66,7 +71,7 @@ public class DbLoggingAppender extends AppenderSkeleton {
 			}
 			reader.close();
 		} catch (Exception e) {
-
+			log.debug("Error while converting to log object");
 		}
 
 		record.setErrortrace(message.toString());
@@ -91,6 +96,8 @@ public class DbLoggingAppender extends AppenderSkeleton {
 					.getMapper(ReportBugIssueMapper.class);
 			mapper.insertSelective(record);
 			session.commit();
+		} catch (Exception e) {
+			log.debug("Error while converting to log object", e);
 		} finally {
 			if (null != session) {
 				session.close();
