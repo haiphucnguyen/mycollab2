@@ -59,8 +59,8 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new RoleTableDisplay(Arrays.asList(new TableViewField(
-				"", "selected", UIConstants.TABLE_CONTROL_WIDTH),
+		this.tableItem = new RoleTableDisplay(new TableViewField("",
+				"selected", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
 				new TableViewField("Name", "rolename",
 						UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
 						"Description", "description",

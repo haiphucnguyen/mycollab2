@@ -10,10 +10,9 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -22,6 +21,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -35,10 +35,6 @@ public class UserTableDisplay extends
 			List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(UserService.class), SimpleUser.class,
 				requiredColumn, displayColumns);
-
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.setWidth("750px");
-		}
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -74,16 +70,17 @@ public class UserTableDisplay extends
 					final Object itemId, Object columnId) {
 				final SimpleUser user = UserTableDisplay.this
 						.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(user.getUsername(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+				UserLink b = new UserLink(user.getUsername(), user
+						.getAvatarid(), user.getDisplayName());
+				b.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								fireTableEvent(new TableClickEvent(
-										UserTableDisplay.this, user, "username"));
-							}
-						});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						fireTableEvent(new TableClickEvent(
+								UserTableDisplay.this, user, "username"));
+					}
+				});
 				return b;
 
 			}

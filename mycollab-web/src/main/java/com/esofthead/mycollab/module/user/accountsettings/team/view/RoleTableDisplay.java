@@ -26,14 +26,10 @@ import com.vaadin.ui.Table;
 public class RoleTableDisplay extends
 		PagedBeanTable2<RoleService, RoleSearchCriteria, Role> {
 	private static final long serialVersionUID = 1L;
-
-	public RoleTableDisplay(List<TableViewField> displayColumns) {
+	
+	public RoleTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
 		super(AppContext.getSpringBean(RoleService.class), Role.class,
-				displayColumns);
-
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.setWidth("750px");
-		}
+				requiredColumn, displayColumns);
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
@@ -81,6 +77,10 @@ public class RoleTableDisplay extends
 
 			}
 		});
+	}
+
+	public RoleTableDisplay(List<TableViewField> displayColumns) {
+		this(null, displayColumns);
 	}
 
 }
