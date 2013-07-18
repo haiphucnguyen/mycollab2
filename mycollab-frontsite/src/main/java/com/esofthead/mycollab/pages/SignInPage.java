@@ -1,15 +1,5 @@
 package com.esofthead.mycollab.pages;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.wicket.Application;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -21,8 +11,6 @@ import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
@@ -33,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.ApplicationProperties;
 import com.esofthead.mycollab.base.BasePage;
-import com.esofthead.mycollab.ext.SubdomainListPanel;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 public class SignInPage extends BasePage {

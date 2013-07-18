@@ -17,8 +17,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
@@ -28,8 +26,6 @@ import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 public class SignUpPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory.getLogger(SignUpPage.class);
 
 	public String selected = "10";
 
