@@ -24,6 +24,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -441,8 +442,9 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					session.move("/" + oldPath, "/" + destinationPath);
 					session.save();
 				} catch (ItemExistsException e) {
-					throw new MyCollabException(
-							"Please check duplicate file/folder before move.", e);
+					throw new UserInvalidInputException(
+							"Please check duplicate file/folder before move.",
+							e);
 				} catch (Exception e) {
 					throw new MyCollabException(
 							"Illegal move source to destination.", e);

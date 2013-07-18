@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -63,7 +64,7 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public InputStream getContantStream(String path) {
+	public InputStream getContentStream(String path) {
 		return rawContentService.getContent(path);
 	}
 
@@ -84,16 +85,17 @@ public class ResourceServiceImpl implements ResourceService {
 	public void moveResource(String oldPath, String destinationFolderPath) {
 		String oldResourceName = oldPath.substring(
 				oldPath.lastIndexOf("/") + 1, oldPath.length());
-		try {
-			if (!oldPath.substring(0, oldPath.lastIndexOf("/")).equals(
-					destinationFolderPath)) {
-				contentJcrDao.moveResource(oldPath, destinationFolderPath + "/"
-						+ oldResourceName);
-				rawContentService.moveContent(oldPath, destinationFolderPath
-						+ "/" + oldResourceName);
-			}
-		} catch (MyCollabException e) {
-			throw new MyCollabException(e.getMessage());
+		String enclosingPath = oldPath.substring(0, oldPath.lastIndexOf("/"));
+
+		
+		if (!destinationFolderPath.contains(enclosingPath)) {
+			String destinationPath = destinationFolderPath + "/"
+					+ oldResourceName;
+			contentJcrDao.moveResource(oldPath, destinationPath);
+			rawContentService.moveContent(oldPath, destinationPath);
+		} else {
+			throw new UserInvalidInputException(
+					"Can not move asset(s) to folder " + destinationFolderPath);
 		}
 	}
 
