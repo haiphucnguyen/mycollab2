@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import org.apache.jackrabbit.core.journal.DatabaseJournal;
 import org.infinispan.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -374,5 +375,7 @@ public class AppContext implements Serializable {
 		log.debug("Add fragement: " + fragement + " to " + mainWindow);
 		mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
 				+ " [MyCollab]");
+		
+		DatabaseJournal a;
 	}
 }
