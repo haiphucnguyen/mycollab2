@@ -736,8 +736,8 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 /* CRM Service */
 .crmContainer {
-	max-width: 1130px;
 	margin: 15px auto;
+	padding: 0px 25px;
 }
 
 .crmContainer .v-table-body-noselection {
@@ -1270,6 +1270,9 @@ input.v-textfield-errorField {
 
 /* Project Management */
 .projectDashboardView {
+	margin: 20px auto;
+}
+.projectDashboardView > .v-csslayout-margin > .v-csslayout-container {
 	background-color: #F3F3F3;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
 		to(#DDDDDD) );
@@ -1283,8 +1286,10 @@ input.v-textfield-errorField {
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 5px;
 	border: 1px solid #8F8F8F;
-	max-width: 1130px;
-	margin: 20px auto;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	overflow: hidden;
 }
 
 .projectDashboardView .v-label-h1,.projectDashboardView .v-label h1 {
@@ -1298,7 +1303,7 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .menuContent {
-	max-width: 1130px;
+/* 	max-width: 1130px; */
 }
 
 .projectDashboardView .v-table-body-noselection {
@@ -4119,4 +4124,8 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: bold;
+}
+/* reponsive wrapper */
+.main-content-wrapper > .v-csslayout-margin {
+	padding: 0px 25px 12px;
 }
