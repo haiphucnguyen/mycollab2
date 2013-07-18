@@ -14,10 +14,12 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.file.FileStreamResource;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
@@ -123,20 +125,17 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 		@Override
 		protected Field onCreateField(final Item item, final Object propertyId,
 				final Component uiContext) {
-			// if (propertyId.equals("accountId")) {
-			// return new FormLinkViewField(contact.getAccountName(),
-			// new Button.ClickListener() {
-			// @Override
-			// public void buttonClick(ClickEvent event) {
-			// EventBus.getInstance()
-			// .fireEvent(
-			// new AccountEvent.GotoRead(
-			// this,
-			// contact.getAccountId()));
-			//
-			// }
-			// });
-			if (propertyId.equals("email")) {
+			if (propertyId.equals("accountid")) {
+				return new FormLinkViewField(contact.getAccountName(),
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new AccountEvent.GotoRead(this, contact
+												.getAccountid()));
+							}
+						});
+			} else if (propertyId.equals("email")) {
 				return new FormEmailLinkViewField(
 						ContactPreviewBuilder.this.contact.getEmail());
 			} else if (propertyId.equals("assignuser")) {
