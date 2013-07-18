@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.file.view.components;
 
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -32,6 +33,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.HierarchicalContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
@@ -303,9 +305,20 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		} else {
 			for (final Folder subFolder : childs) {
 				if (foldername.equals(subFolder.getName())) {
-					this.folderTree.setCollapsed(subFolder, false);
-					this.folderTree.setValue(subFolder);
-					this.displayResourcesInTable(subFolder);
+					HierarchicalContainer containerDataSource = (HierarchicalContainer) this.folderTree
+							.getContainerDataSource();
+					Collection<?> itemIds = containerDataSource.getItemIds();
+					for (Object itemId : itemIds) {
+						if ((itemId instanceof Folder)
+								&& (((Folder) itemId).getName()
+										.equals(foldername))) {
+							this.folderTree.setCollapsed(itemId, false);
+							this.folderTree.setValue(itemId);
+							this.displayResourcesInTable((Folder) itemId);
+							return;
+						}
+
+					}
 				}
 			}
 		}
@@ -1194,8 +1207,11 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 										MoveResourceWindow.this.baseFolder
 												.getPath());
 						MoveResourceWindow.this.close();
-						FileDashboardComponent.this.getWindow()
-								.showNotification("Move successfully.");
+						FileDashboardComponent.this
+								.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
+						FileDashboardComponent.this
+								.getWindow()
+								.showNotification("Move asset(s) successfully.");
 					} catch (MyCollabException e) {
 						MoveResourceWindow.this.getParent().getWindow()
 								.showNotification(e.getMessage());

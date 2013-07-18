@@ -87,15 +87,16 @@ public class ResourceServiceImpl implements ResourceService {
 				oldPath.lastIndexOf("/") + 1, oldPath.length());
 		String enclosingPath = oldPath.substring(0, oldPath.lastIndexOf("/"));
 
-		
-		if (!destinationFolderPath.contains(enclosingPath)) {
+		Resource oldResource = contentJcrDao.getResource(oldPath);
+		if ((oldResource instanceof Folder)
+				&& destinationFolderPath.contains(enclosingPath)) {
+			throw new UserInvalidInputException(
+					"Can not move asset(s) to folder " + destinationFolderPath);
+		} else {
 			String destinationPath = destinationFolderPath + "/"
 					+ oldResourceName;
 			contentJcrDao.moveResource(oldPath, destinationPath);
 			rawContentService.moveContent(oldPath, destinationPath);
-		} else {
-			throw new UserInvalidInputException(
-					"Can not move asset(s) to folder " + destinationFolderPath);
 		}
 	}
 
