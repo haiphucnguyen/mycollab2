@@ -984,6 +984,8 @@ input.v-textfield-errorField {
 
 #loginFormContainer #newToUs #signupLink span {
 	float: right;
+	text-decoration: none;
+	padding-right: 10px;
 }
 
 #loginFormContainer #newToUs #signupLink .v-button-wrap {
@@ -2989,7 +2991,6 @@ div.v-lazyloadingwrapper-loading {
 }
 
 .footer-wrapper {
-	max-width: 1130px;
 	min-width: 910px;
 	margin: 0 auto;
 }
