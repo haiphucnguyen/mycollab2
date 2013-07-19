@@ -4129,3 +4129,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .main-content-wrapper > .v-csslayout-margin {
 	padding: 0px 25px 12px;
 }
+
+.v-horizontallayout .resourceItem:hover {
+	background-color: #ddd;
+}
