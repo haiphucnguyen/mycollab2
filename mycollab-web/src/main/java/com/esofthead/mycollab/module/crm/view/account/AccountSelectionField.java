@@ -19,99 +19,103 @@ import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
 public class AccountSelectionField extends FieldWrapper<Account> implements
-		FieldSelection {
+        FieldSelection {
 
-	private HorizontalLayout layout;
-	private TextField accountName;
-	private SimpleAccount account = new SimpleAccount();
-	private Embedded browseBtn;
-	private Embedded clearBtn;
+    private final HorizontalLayout layout;
+    private final TextField accountName;
+    private SimpleAccount account = new SimpleAccount();
+    private final Embedded browseBtn;
+    private final Embedded clearBtn;
 
-	public AccountSelectionField() {
-		super(new TextField(""), Account.class);
+    public AccountSelectionField() {
+        super(new TextField(""), Account.class);
 
-		layout = new HorizontalLayout();
-		layout.setSpacing(true);
+        layout = new HorizontalLayout();
+        layout.setSpacing(true);
+        layout.setWidth("100%");
 
-		accountName = new TextField();
-		accountName.setEnabled(true);
-		layout.addComponent(accountName);
-		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
+        accountName = new TextField();
+        accountName.setEnabled(true);
+        accountName.setWidth("100%");
+        layout.addComponent(accountName);
+        layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded(null,
-				MyCollabResource.newResource("icons/16/browseItem.png"));
-		layout.addComponent(browseBtn);
-		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
+        browseBtn = new Embedded(null,
+                MyCollabResource.newResource("icons/16/browseItem.png"));
+        layout.addComponent(browseBtn);
+        layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		browseBtn.addListener(new MouseEvents.ClickListener() {
-			@Override
-			public void click(ClickEvent event) {
-				AccountSelectionWindow accountWindow = new AccountSelectionWindow(
-						AccountSelectionField.this);
-				UIHelper.addWindowToRoot(AccountSelectionField.this,
-						accountWindow);
-				accountWindow.show();
-			}
-		});
+        browseBtn.addListener(new MouseEvents.ClickListener() {
+            @Override
+            public void click(ClickEvent event) {
+                AccountSelectionWindow accountWindow = new AccountSelectionWindow(
+                        AccountSelectionField.this);
+                UIHelper.addWindowToRoot(AccountSelectionField.this,
+                        accountWindow);
+                accountWindow.show();
+            }
+        });
 
-		clearBtn = new Embedded(null,
-				MyCollabResource.newResource("icons/16/clearItem.png"));
+        clearBtn = new Embedded(null,
+                MyCollabResource.newResource("icons/16/clearItem.png"));
 
-		clearBtn.addListener(new MouseEvents.ClickListener() {
-			@Override
-			public void click(ClickEvent event) {
-				clearValue();
-			}
-		});
-		layout.addComponent(clearBtn);
-		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
+        clearBtn.addListener(new MouseEvents.ClickListener() {
+            @Override
+            public void click(ClickEvent event) {
+                clearValue();
+            }
+        });
+        layout.addComponent(clearBtn);
+        layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
-		this.setCompositionRoot(layout);
-		this.addListener(new Property.ValueChangeListener() {
-			@Override
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				try {
-					AccountService accountService = AppContext
-							.getSpringBean(AccountService.class);
-					
-					Integer accountId = Integer.parseInt((String) event
-							.getProperty().getValue());
-					SimpleAccount account = accountService
-							.findAccountById(accountId);
-					if (account != null) {
-						accountName.setValue(account.getAccountname());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+        layout.setExpandRatio(accountName, 1.0f);
 
-			}
-		});
-	}
+        this.setCompositionRoot(layout);
+        this.addListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(
+                    com.vaadin.data.Property.ValueChangeEvent event) {
+                try {
+                    AccountService accountService = AppContext
+                            .getSpringBean(AccountService.class);
 
-	public void clearValue() {
-		accountName.setValue("");
-		AccountSelectionField.this.getWrappedField().setValue(null);
-		this.account = new SimpleAccount();
-	}
-	
-	public void setAccount(SimpleAccount account) {
-		this.account = account;
-		accountName.setValue(account.getAccountname());
-	}
-	
-	public SimpleAccount getAccount() {
-		return account;
-	}
+                    Integer accountId = Integer.parseInt((String) event
+                            .getProperty().getValue());
+                    SimpleAccount account = accountService
+                            .findAccountById(accountId);
+                    if (account != null) {
+                        accountName.setValue(account.getAccountname());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-	@Override
-	public void fireValueChange(Object data) {
-		account = (SimpleAccount) data;
-		if (account != null) {
-			accountName.setValue(account.getAccountname());
-			this.getWrappedField().setValue(account.getId());
-		}
+            }
+        });
+    }
 
-	}
+    public void clearValue() {
+        accountName.setValue("");
+        AccountSelectionField.this.getWrappedField().setValue(null);
+        this.account = new SimpleAccount();
+    }
+
+    public void setAccount(SimpleAccount account) {
+        this.account = account;
+        accountName.setValue(account.getAccountname());
+    }
+
+    public SimpleAccount getAccount() {
+        return account;
+    }
+
+    @Override
+    public void fireValueChange(Object data) {
+        account = (SimpleAccount) data;
+        if (account != null) {
+            accountName.setValue(account.getAccountname());
+            this.getWrappedField().setValue(account.getId());
+        }
+
+    }
 }
