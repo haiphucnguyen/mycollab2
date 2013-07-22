@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -72,7 +73,7 @@ public class UserTableDisplay extends
 				final SimpleUser user = UserTableDisplay.this
 						.getBeanByIndex(itemId);
 				UserLink b = new UserLink(user.getUsername(), user
-						.getAvatarid(), user.getDisplayName());
+						.getAvatarid(), user.getDisplayName(), false);
 				b.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -88,8 +89,41 @@ public class UserTableDisplay extends
 					return b;
 				} else {
 					HorizontalLayout layout = new HorizontalLayout();
+					layout.setWidth("100%");
 					layout.setSpacing(true);
-					layout.addComponent(b);
+
+					if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL
+							.equals(user.getRegisterstatus())
+							|| RegisterStatusConstants.VERIFICATING.equals(user
+									.getRegisterstatus())) {
+						HorizontalLayout userLayout = new HorizontalLayout();
+						userLayout.addComponent(b);
+
+						Label statusLbl = new Label("(Waiting for accept)");
+						userLayout.addComponent(statusLbl);
+
+						layout.addComponent(userLayout);
+						layout.setExpandRatio(userLayout, 1.0f);
+
+						ButtonLink resendBtn = new ButtonLink(
+								"Resend invitation",
+								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void buttonClick(ClickEvent event) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+						layout.addComponent(resendBtn);
+					} else if (RegisterStatusConstants.PENDING.equals(user
+							.getRegisterstatus())) {
+						layout.addComponent(b);
+						Label statusLbl = new Label("(Pending)");
+						layout.addComponent(statusLbl);
+						layout.addComponent(statusLbl);
+					}
 					return layout;
 				}
 			}
