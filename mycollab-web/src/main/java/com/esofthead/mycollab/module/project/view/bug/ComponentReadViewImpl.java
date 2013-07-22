@@ -29,6 +29,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -254,13 +255,18 @@ public class ComponentReadViewImpl extends AbstractView implements
 				this.mainBottomLayout.addComponent(this.bottomLayout);
 
 				this.bottomLayout.removeAllComponents();
+
 				final SimpleProject project = CurrentProjectVariables
 						.getProject();
+
 				final VerticalLayout leftColumn = new VerticalLayout();
+				leftColumn.setSpacing(true);
+				leftColumn.setWidth("100%");
+
 				this.bottomLayout.addComponent(leftColumn);
+				this.bottomLayout.setExpandRatio(leftColumn, 1.0f);
 				final UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
 						FormLayoutFactory.this);
-				unresolvedBugWidget.setWidth("450px");
 				leftColumn.addComponent(unresolvedBugWidget);
 				leftColumn.setComponentAlignment(unresolvedBugWidget,
 						Alignment.MIDDLE_CENTER);
@@ -280,14 +286,10 @@ public class ComponentReadViewImpl extends AbstractView implements
 				unresolvedBugWidget
 						.setSearchCriteria(unresolvedByPrioritySearchCriteria);
 
-				final VerticalLayout rightColumn = new VerticalLayout();
-				this.bottomLayout.addComponent(rightColumn);
-
 				final UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
 						FormLayoutFactory.this);
-				unresolvedByAssigneeWidget.setWidth("450px");
-				rightColumn.addComponent(unresolvedByAssigneeWidget);
-				rightColumn.setComponentAlignment(unresolvedByAssigneeWidget,
+				leftColumn.addComponent(unresolvedByAssigneeWidget);
+				leftColumn.setComponentAlignment(unresolvedByAssigneeWidget,
 						Alignment.MIDDLE_CENTER);
 
 				final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
@@ -304,6 +306,23 @@ public class ComponentReadViewImpl extends AbstractView implements
 										BugStatusConstants.REOPENNED }));
 				unresolvedByAssigneeWidget
 						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+
+				final VerticalLayout rightColumn = new VerticalLayout();
+				this.bottomLayout.addComponent(rightColumn);
+
+				final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+				chartSearchCriteria.setProjectId(new NumberSearchField(
+						CurrentProjectVariables.getProjectId()));
+				chartSearchCriteria
+						.setComponentids(new SetSearchField<Integer>(
+								ComponentReadViewImpl.this.component.getId()));
+
+				BugChartComponent bugChartComponent = null;
+				bugChartComponent = new BugChartComponent(chartSearchCriteria,
+						"400px", "200px");
+				rightColumn.addComponent(bugChartComponent);
+				rightColumn.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+
 			}
 
 			@Override

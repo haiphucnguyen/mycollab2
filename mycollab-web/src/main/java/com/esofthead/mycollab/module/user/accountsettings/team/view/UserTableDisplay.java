@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import java.util.List;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -19,6 +20,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
@@ -80,8 +82,16 @@ public class UserTableDisplay extends
 								UserTableDisplay.this, user, "username"));
 					}
 				});
-				return b;
 
+				if (RegisterStatusConstants.ACTIVE.equals(user
+						.getRegisterstatus())) {
+					return b;
+				} else {
+					HorizontalLayout layout = new HorizontalLayout();
+					layout.setSpacing(true);
+					layout.addComponent(b);
+					return layout;
+				}
 			}
 		});
 
