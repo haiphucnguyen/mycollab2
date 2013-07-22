@@ -92,7 +92,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
-		final CustomLayout bodyContent = CustomLayoutLoader.createLayout("milestoneView");
+		final CustomLayout bodyContent = CustomLayoutLoader
+				.createLayout("milestoneView");
 		bodyContent.setWidth("100%");
 		bodyContent.setStyleName("milestone-view");
 
@@ -194,11 +195,13 @@ public class MilestoneListViewImpl extends AbstractView implements
 		final GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1,
 				5, "100%", "60px");
 		layoutHelper.addComponent(
-				new Label(AppContext.formatDate(milestone.getStartdate())),
-				"Start Date", 0, 0, Alignment.MIDDLE_LEFT);
+				new Label(AppContext.formatDate(milestone.getStartdate(),
+						"<<Not Set>>")), "Start Date", 0, 0,
+				Alignment.MIDDLE_LEFT);
 		layoutHelper.addComponent(
-				new Label(AppContext.formatDate(milestone.getEnddate())),
-				"End Date", 0, 1, Alignment.MIDDLE_LEFT);
+				new Label(AppContext.formatDate(milestone.getEnddate(),
+						"<<Not Set>>")), "End Date", 0, 1,
+				Alignment.MIDDLE_LEFT);
 
 		layoutHelper.addComponent(new ProjectUserLink(milestone.getOwner(),
 				milestone.getOwnerAvatarId(), milestone.getOwnerFullName(),

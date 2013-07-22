@@ -61,9 +61,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 	private void generateDisplayTable() {
 		this.tableItem = new UserTableDisplay(new TableViewField("",
 				"selected", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
-				new TableViewField("Name", "displayName",
-						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"User Name", "username",
+				new TableViewField("User Name", "username",
 						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
 						"Email", "email", UIConstants.TABLE_EMAIL_WIDTH),
 				new TableViewField("Last Accessed Time", "lastAccessedTime",

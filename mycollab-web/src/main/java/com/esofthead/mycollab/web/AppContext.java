@@ -343,6 +343,14 @@ public class AppContext implements Serializable {
 		return simpleDateFormat.format(date);
 	}
 
+	public static String formatDate(Date date, String textIfDateIsNull) {
+		if (date == null) {
+			return textIfDateIsNull;
+		} else {
+			return formatDate(date);
+		}
+	}
+
 	public static Date convertDate(String dateVal) {
 		try {
 			return simpleDateFormat.parse(dateVal);

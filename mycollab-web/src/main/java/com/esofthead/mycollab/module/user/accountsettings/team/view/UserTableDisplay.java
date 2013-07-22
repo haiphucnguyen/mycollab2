@@ -10,7 +10,6 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -18,10 +17,10 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -81,30 +80,6 @@ public class UserTableDisplay extends
 								UserTableDisplay.this, user, "username"));
 					}
 				});
-				return b;
-
-			}
-		});
-
-		this.addGeneratedColumn("displayName", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final SimpleUser user = UserTableDisplay.this
-						.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(user.getDisplayName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								fireTableEvent(new TableClickEvent(
-										UserTableDisplay.this, user,
-										"displayName"));
-							}
-						});
 				return b;
 
 			}
