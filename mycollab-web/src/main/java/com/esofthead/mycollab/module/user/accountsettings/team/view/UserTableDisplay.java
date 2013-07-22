@@ -73,7 +73,7 @@ public class UserTableDisplay extends
 				final SimpleUser user = UserTableDisplay.this
 						.getBeanByIndex(itemId);
 				UserLink b = new UserLink(user.getUsername(), user
-						.getAvatarid(), user.getDisplayName(), false);
+						.getAvatarid(), user.getDisplayName(), true);
 				b.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

@@ -78,13 +78,10 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 					} else if (propertyId.equals("isAdmin")) {
 						if (user.getIsAdmin() != null
 								&& user.getIsAdmin() == Boolean.TRUE) {
-							return new FormViewField("True");
+							return new FormViewField("Admin");
 						} else {
-							FormContainerViewField formContainer = new FormContainerViewField();
-							Label roleLbl = new Label("False. Role: ");
-							roleLbl.setSizeUndefined();
-							formContainer.addComponentField(roleLbl);
-							Button roleLink = new Button(user.getRoleName(),
+							FormLinkViewField roleLink = new FormLinkViewField(
+									user.getRoleName(),
 									new Button.ClickListener() {
 										private static final long serialVersionUID = 1L;
 
@@ -97,9 +94,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 																	user.getRoleid()));
 										}
 									});
-							formContainer.addComponentField(roleLink);
-							roleLink.setStyleName("link");
-							return formContainer;
+							return roleLink;
 						}
 					} else if (propertyId.equals("website")) {
 						return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
@@ -205,11 +200,11 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 
 								if (user.getIsAdmin() != null
 										&& user.getIsAdmin() == Boolean.TRUE) {
-									return new FormViewField("True");
+									return new FormViewField("Admin");
 								} else {
 									FormContainerViewField formContainer = new FormContainerViewField();
 									formContainer.addComponentField(new Label(
-											"False. Role: "));
+											user.getRoleName()));
 									return formContainer;
 								}
 							} else if (propertyId.equals("website")) {

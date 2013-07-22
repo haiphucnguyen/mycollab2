@@ -122,7 +122,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 							UserBasicSearchLayout.this.nameField.setValue("");
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			clearBtn.addStyleName("cancel-button");
 			basicSearchBody.addComponent(clearBtn);
 			basicSearchBody.setComponentAlignment(clearBtn,

@@ -95,7 +95,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("email")) {
 				this.informationLayout.addComponent(field, "Email", 0, 2);
 			} else if (propertyId.equals("isadmin")) {
-				this.informationLayout.addComponent(field, "Is Admin", 1, 2);
+				this.informationLayout.addComponent(field, "Role", 1, 2);
 			} else if (propertyId.equals("company")) {
 				this.informationLayout.addComponent(field, "Company", 0, 3);
 			} else if (propertyId.equals("website")) {
