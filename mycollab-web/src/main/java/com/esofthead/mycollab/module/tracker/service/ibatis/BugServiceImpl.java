@@ -40,14 +40,14 @@ import com.esofthead.mycollab.module.tracker.domain.MetaField;
 import com.esofthead.mycollab.module.tracker.domain.MetaOptionField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.schedule.email.command.BugRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "summary", type = ProjectContants.BUG, extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG)
-@Watchable(type = MonitorTypeConstants.PRJ_BUG, userFieldName = "assignuser", emailHandlerBean = BugNotificationService.class)
+@Watchable(type = MonitorTypeConstants.PRJ_BUG, userFieldName = "assignuser", emailHandlerBean = BugRelayEmailNotificationAction.class)
 public class BugServiceImpl extends
 		DefaultService<Integer, BugWithBLOBs, BugSearchCriteria> implements BugService {
 	@Autowired

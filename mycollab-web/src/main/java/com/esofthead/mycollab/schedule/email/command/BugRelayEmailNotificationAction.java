@@ -1,8 +1,8 @@
-package com.esofthead.mycollab.module.tracker.service;
+package com.esofthead.mycollab.schedule.email.command;
 
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
-public interface BugNotificationService extends
+public interface BugRelayEmailNotificationAction extends
 		SendingRelayEmailNotificationAction {
 
 }

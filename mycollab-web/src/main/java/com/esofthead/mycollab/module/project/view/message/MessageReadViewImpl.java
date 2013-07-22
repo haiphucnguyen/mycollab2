@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
-import com.esofthead.mycollab.module.project.service.MessageNotificationService;
+import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -184,7 +184,7 @@ public class MessageReadViewImpl extends AbstractView implements
 				VerticalLayout bottomPanel = new VerticalLayout();
 				bottomPanel.addComponent(new CommentListDepot(
 						CommentTypeConstants.PRJ_MESSAGE, message.getId(),
-						true, true, MessageNotificationService.class));
+						true, true, MessageRelayEmailNotificationAction.class));
 				return bottomPanel;
 			}
 

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service.ibatis;
+package com.esofthead.mycollab.schedule.email.command;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,6 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
-import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
@@ -20,7 +19,7 @@ import com.esofthead.mycollab.utils.StringUtils;
 
 @Service
 public class MessageNotificationServiceImpl implements
-		MessageNotificationService {
+		MessageRelayEmailNotificationAction {
 
 	@Autowired
 	private MessageService messageService;

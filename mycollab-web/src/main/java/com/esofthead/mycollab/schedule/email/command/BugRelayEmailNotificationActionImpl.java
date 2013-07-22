@@ -1,10 +1,10 @@
-package com.esofthead.mycollab.module.tracker.service.ibatis;
+package com.esofthead.mycollab.schedule.email.command;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
@@ -12,15 +12,14 @@ import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.utils.StringUtils;
 
-@Service
-public class BugNotificationServiceImpl extends
+@Component
+public class BugRelayEmailNotificationActionImpl extends
 		DefaultSendingRelayEmailNotificationAction implements
-		BugNotificationService {
+		BugRelayEmailNotificationAction {
 	@Autowired
 	private BugService bugService;
 	@Autowired
@@ -28,7 +27,7 @@ public class BugNotificationServiceImpl extends
 
 	private final BugFieldNameMapper mapper;
 
-	public BugNotificationServiceImpl() {
+	public BugRelayEmailNotificationActionImpl() {
 		mapper = new BugFieldNameMapper();
 	}
 

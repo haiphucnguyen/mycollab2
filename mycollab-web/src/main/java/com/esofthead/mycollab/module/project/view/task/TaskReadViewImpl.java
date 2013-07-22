@@ -17,8 +17,8 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
-import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.schedule.email.command.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -89,7 +89,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				final CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_TASK,
 						TaskReadViewImpl.this.task.getId(), true, true,
-						ProjectTaskNotificationService.class);
+						ProjectTaskRelayEmailNotificationAction.class);
 				commentList.setMargin(true);
 				tabTaskDetail.addTab(commentList, "Comments");
 

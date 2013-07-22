@@ -12,17 +12,17 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.module.project.service.ProjectMemberInvitiationNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationActionImpl;
 import com.esofthead.mycollab.web.AppContext;
 
 @Service
 public class ProjectMemberInvitationNotificationServiceImp implements
-		ProjectMemberInvitiationNotificationService {
+		MessageRelayEmailNotificationActionImpl {
 
 	@Autowired
 	private ProjectMemberService projectMemberService;

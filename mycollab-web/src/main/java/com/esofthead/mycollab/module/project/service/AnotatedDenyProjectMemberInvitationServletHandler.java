@@ -16,6 +16,7 @@ import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationActionImpl;
 
 @Component("denyInvitationMemberServletHandler")
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
@@ -65,7 +66,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 								.setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
 						relayNotification.setTypeid(member.getProjectid());
 						relayNotification
-								.setEmailhandlerbean(ProjectMemberInvitiationNotificationService.class
+								.setEmailhandlerbean(MessageRelayEmailNotificationActionImpl.class
 										.getName());
 						if (relayEmailService != null) {
 							relayEmailService.saveWithSession(

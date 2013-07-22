@@ -15,9 +15,9 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
-import com.esofthead.mycollab.module.project.service.ProjectMemberInvitiationNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationActionImpl;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -120,7 +120,7 @@ public class ProjectMemberAddPresenter extends
 				relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
 				relayNotification.setTypeid(saveId);
 				relayNotification
-						.setEmailhandlerbean(ProjectMemberInvitiationNotificationService.class
+						.setEmailhandlerbean(MessageRelayEmailNotificationActionImpl.class
 								.getName());
 				RelayEmailNotificationService relayEmailNotificationService = AppContext
 						.getSpringBean(RelayEmailNotificationService.class);

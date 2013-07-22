@@ -19,14 +19,14 @@ import com.esofthead.mycollab.module.project.dao.TaskMapperExt;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.schedule.email.command.ProjectTaskRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK, nameField = "taskname", extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK)
-@Watchable(type = MonitorTypeConstants.PRJ_TASK, userFieldName = "assignuser", emailHandlerBean = ProjectTaskNotificationService.class)
+@Watchable(type = MonitorTypeConstants.PRJ_TASK, userFieldName = "assignuser", emailHandlerBean = ProjectTaskRelayEmailNotificationAction.class)
 public class ProjectTaskServiceImpl extends
 		DefaultService<Integer, Task, TaskSearchCriteria> implements
 		ProjectTaskService {

@@ -19,8 +19,8 @@ import com.esofthead.mycollab.module.project.dao.MessageMapperExt;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
-import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.MessageService;
+import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationAction;
 
 @Service
 @Transactional
@@ -63,7 +63,7 @@ public class MessageServiceImpl extends
 		relayNotification.setSaccountid(sAccountId);
 		relayNotification.setType(MonitorTypeConstants.PRJ_MESSAGE);
 		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
-		relayNotification.setEmailhandlerbean(MessageNotificationService.class.getName());
+		relayNotification.setEmailhandlerbean(MessageRelayEmailNotificationAction.class.getName());
 		relayNotification.setTypeid(recordId);
 		relayNotification.setExtratypeid(record.getProjectid());
 		return relayNotification;

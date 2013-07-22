@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
-import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.schedule.email.command.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
@@ -120,7 +120,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				final CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_BUG,
 						BugReadViewImpl.this.bug.getId(), true, true,
-						BugNotificationService.class);
+						BugRelayEmailNotificationAction.class);
 				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");
 

@@ -100,6 +100,7 @@ public abstract class CustomizedTableWindow extends Window {
 		body.setComponentAlignment(restoreLink, Alignment.MIDDLE_RIGHT);
 
 		final HorizontalLayout buttonControls = new HorizontalLayout();
+		buttonControls.setSpacing(true);
 		final Button saveBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {

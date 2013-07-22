@@ -1,11 +1,11 @@
-package com.esofthead.mycollab.schedule.email.impl;
+package com.esofthead.mycollab.schedule.email.command;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
@@ -18,8 +18,8 @@ import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapperExt;
 import com.esofthead.mycollab.module.user.domain.SimpleUserAccountInvitation;
 import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 
-@Service
-public class SendInvitationUserCommandService {
+@Component
+public class SendInvitationUserCommand {
 	@Autowired
 	private UserAccountInvitationMapper userAccountInvitationMapper;
 
