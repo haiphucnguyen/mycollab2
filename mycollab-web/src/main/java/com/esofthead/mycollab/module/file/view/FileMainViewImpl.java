@@ -1,17 +1,24 @@
 package com.esofthead.mycollab.module.file.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.MoveWindow;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.Separator;
@@ -27,6 +34,7 @@ import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -49,7 +57,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private Folder baseFolder;
 	private String rootPath;
 	private String rootFolderName;
-	private IteamResourceContainerLayout itemResourceContainerLayout;
+	private List<Resource> lstCheckedResource;
+	private ItemResourceContainerLayout itemResourceContainerLayout;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -156,34 +165,119 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		controllGroupBtn.setMargin(true, false, false, true);
 		controllGroupBtn.setSpacing(true);
 
-		Button selectAllBtn = new Button();
+		final Button selectAllBtn = new Button();
 		selectAllBtn.setIcon(MyCollabResource
 				.newResource("icons/16/checkbox_empty.png"));
+		selectAllBtn.setValue(false);
+		selectAllBtn.addListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (!(Boolean) selectAllBtn.getValue()) {
+					selectAllBtn.setIcon(MyCollabResource
+							.newResource("icons/16/checkbox.png"));
+					selectAllBtn.setValue(true);
+				} else {
+					selectAllBtn.setValue(false);
+					selectAllBtn.setIcon(MyCollabResource
+							.newResource("icons/16/checkbox_empty.png"));
+				}
+				if (itemResourceContainerLayout.getListAllCheckBox() != null) {
+					for (CheckBox cb : itemResourceContainerLayout
+							.getListAllCheckBox()) {
+						cb.click();
+					}
+				}
+			}
+		});
 		PopupButtonControl tableActionControls = new PopupButtonControl(
 				"selectAll", selectAllBtn);
 		tableActionControls.setWidth("70px");
 		UiUtils.addComponent(controllGroupBtn, tableActionControls,
 				Alignment.MIDDLE_LEFT);
 
-		Button downloadBtn = new Button("Download");
+		Button downloadBtn = new Button("Download", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (lstCheckedResource != null && lstCheckedResource.size() > 0) {
+					List<String> lstPath = new ArrayList<String>();
+					for (Resource res : lstCheckedResource) {
+						lstPath.add(res.getPath());
+					}
+
+					final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+							.getStreamFolderResource(lstPath
+									.toArray(new String[lstPath.size()]));
+
+					AppContext.getApplication().getMainWindow()
+							.open(downloadResource, "_blank");
+				}
+			}
+		});
 		downloadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 		UiUtils.addComponent(controllGroupBtn, downloadBtn,
 				Alignment.MIDDLE_LEFT);
 
-		Button downloadAsBtn = new Button("Download as");
-		downloadAsBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, downloadAsBtn,
-				Alignment.MIDDLE_LEFT);
+		Button moveToBtn = new Button("Move to", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-		Button moveToBtn = new Button("Move to");
+			@Override
+			public void buttonClick(ClickEvent event) {
+				MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+						lstCheckedResource,
+						FileMainViewImpl.this.resourceService);
+				FileMainViewImpl.this.getWindow().addWindow(moveResourceWindow);
+			}
+		});
 		moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 		UiUtils.addComponent(controllGroupBtn, moveToBtn, Alignment.MIDDLE_LEFT);
 
-		Button copyBtn = new Button("Copy");
-		copyBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, copyBtn, Alignment.MIDDLE_LEFT);
+		Button deleteBtn = new Button("Delete", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-		Button deleteBtn = new Button("Delete");
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ConfirmDialogExt.show(
+						FileMainViewImpl.this.getWindow(),
+						LocalizationHelper
+								.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										ApplicationProperties
+												.getString(ApplicationProperties.SITE_NAME)),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+						new ConfirmDialog.Listener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onClose(final ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									if (lstCheckedResource != null
+											&& lstCheckedResource.size() > 0) {
+										for (Resource res : lstCheckedResource) {
+											FileMainViewImpl.this.resourceService
+													.removeResource(res
+															.getPath());
+											// TODO: rebuilt
+											// IteamResourceContainer
+											FileMainViewImpl.this.treeMenu
+													.collapseItem(FileMainViewImpl.this.baseFolder);
+											FileMainViewImpl.this.treeMenu
+													.collapseItem(FileMainViewImpl.this.baseFolder);
+										}
+									}
+								}
+							}
+						});
+			}
+		});
 		deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 		UiUtils.addComponent(controllGroupBtn, deleteBtn, Alignment.MIDDLE_LEFT);
 
@@ -193,7 +287,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 
-		itemResourceContainerLayout = new IteamResourceContainerLayout(
+		itemResourceContainerLayout = new ItemResourceContainerLayout(
 				FileMainViewImpl.this.baseFolder, resourceService);
 		itemResourceContainerLayout.setWidth("100%");
 
@@ -318,12 +412,23 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 	}
 
-	private class IteamResourceContainerLayout extends VerticalLayout {
+	private class ItemResourceContainerLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
+		private Folder folder;
+		private List<CheckBox> listAllCheckBox;
 
-		public IteamResourceContainerLayout(Folder folder,
+		public List<CheckBox> getListAllCheckBox() {
+			return listAllCheckBox;
+		}
+
+		public ItemResourceContainerLayout(Folder folder,
 				ResourceService resourceService) {
+			this.folder = folder;
+			lstCheckedResource = new ArrayList<Resource>();
+			listAllCheckBox = new ArrayList<CheckBox>();
+
 			VerticalLayout layout = new VerticalLayout();
+			layout.setSpacing(false);
 			List<Resource> lstResource = resourceService.getResources(folder
 					.getPath());
 			this.addComponent(new Hr());
@@ -334,7 +439,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			this.addComponent(layout);
 		}
 
-		private HorizontalLayout constructOneIteamResourceLayout(Resource res) {
+		private HorizontalLayout constructOneIteamResourceLayout(
+				final Resource res) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.addStyleName("resourceItem");
 			layout.setWidth("100%");
@@ -343,6 +449,23 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			final CheckBox checkbox = new CheckBox();
 			checkbox.setWidth("30px");
 			checkbox.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			listAllCheckBox.add(checkbox);
+
+			checkbox.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					if (!(Boolean) checkbox.getValue()) {
+						lstCheckedResource.add(res);
+						checkbox.setValue(true);
+					} else {
+						lstCheckedResource.remove(res);
+						checkbox.setValue(false);
+					}
+				}
+			});
+
 			layout.addComponent(checkbox);
 			layout.setComponentAlignment(checkbox, Alignment.MIDDLE_LEFT);
 
@@ -398,6 +521,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					Alignment.MIDDLE_RIGHT);
 
 			final PopupButton resourceSettingPopupBtn = new PopupButton();
+			resourceSettingPopupBtn.setWidth("18px");
 			final VerticalLayout filterBtnLayout = new VerticalLayout();
 
 			final Button renameBtn = new Button("Rename",
@@ -488,5 +612,40 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	@Override
 	public void display() {
+	}
+
+	protected class MoveResourceWindow extends MoveWindow {
+		private static final long serialVersionUID = 1L;
+
+		public MoveResourceWindow(Resource resource,
+				ResourceService resourceService) {
+			super(resource, resourceService);
+		}
+
+		public MoveResourceWindow(List<Resource> lstResource,
+				ResourceService resourceService) {
+			super(lstResource, resourceService);
+		}
+
+		@Override
+		public void displayAfterMoveSuccess(Folder folder) {
+			// TODO Rebuilt IteamResourceContainer
+		}
+
+		@Override
+		protected void displayFiles() {
+			String rootPath = FileMainViewImpl.this.rootPath;
+			this.folderTree.removeAllItems();
+			this.rootPath = rootPath;
+
+			this.baseFolder = new Folder();
+			baseFolder.setPath(this.rootPath);
+			this.folderTree.addItem(new Object[] {
+					FileMainViewImpl.this.rootFolderName, "" }, baseFolder);
+			this.folderTree.setItemCaption(baseFolder,
+					FileMainViewImpl.this.rootFolderName);
+
+			this.folderTree.setCollapsed(baseFolder, false);
+		}
 	}
 }

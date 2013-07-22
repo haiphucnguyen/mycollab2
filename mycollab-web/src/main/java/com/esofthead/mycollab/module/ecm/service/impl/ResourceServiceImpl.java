@@ -89,7 +89,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 		Resource oldResource = contentJcrDao.getResource(oldPath);
 		if ((oldResource instanceof Folder)
-				&& destinationFolderPath.contains(enclosingPath)) {
+				&& enclosingPath.contains(destinationFolderPath)) {
 			throw new UserInvalidInputException(
 					"Can not move asset(s) to folder " + destinationFolderPath);
 		} else {

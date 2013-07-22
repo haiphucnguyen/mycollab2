@@ -27,6 +27,6 @@ public interface ResourceService {
 			String resourceName);
 
 	void moveResource(String oldPath, String newPath);
-	
+
 	Folder getParentFolder(String path);
 }

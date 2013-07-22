@@ -186,6 +186,6 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	@Override
 	public void moveContent(String olPath, String destinationPath) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

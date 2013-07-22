@@ -26,11 +26,11 @@ public class StreamFolderDownloadResource implements
 	private static Logger log = LoggerFactory
 			.getLogger(StreamFolderDownloadResource.class);
 
-	private String folderPath;
+	private String[] folderPath;
 
 	private ResourceService resourceService;
 
-	public StreamFolderDownloadResource(String folderPath) {
+	public StreamFolderDownloadResource(String[] folderPath) {
 		this.folderPath = folderPath;
 		resourceService = ApplicationContextUtil.getApplicationContext()
 				.getBean(ResourceService.class);
@@ -71,29 +71,32 @@ public class StreamFolderDownloadResource implements
 	}
 
 	private void saveContentToStream(ZipOutputStream zipOutputStream,
-			String path) {
+			String... path) {
 		try {
-			List<Resource> resources = resourceService.getResources(path);
-			for (Resource resource : resources) {
-				if (resource instanceof Content) {
-					InputStream contentStream = resourceService
-							.getContentStream(resource.getPath());
-					log.debug("Add file entry " + resource.getName()
-							+ " to zip file");
-					String entryPath = resource.getPath().substring(
-							resource.getPath().indexOf(folderPath)
-									+ folderPath.length() + 1);
-					ZipEntry entry = new ZipEntry(entryPath);
-					zipOutputStream.putNextEntry(entry);
-					byte[] bytes = new byte[1024];
-					int length = -1;
+			for (String resPath : path) {
+				List<Resource> resources = resourceService
+						.getResources(resPath);
+				for (Resource resource : resources) {
+					if (resource instanceof Content) {
+						InputStream contentStream = resourceService
+								.getContentStream(resource.getPath());
+						log.debug("Add file entry " + resource.getName()
+								+ " to zip file");
+						String entryPath = resource.getPath().substring(
+								resource.getPath().indexOf(resPath)
+										+ resPath.length() + 1);
+						ZipEntry entry = new ZipEntry(entryPath);
+						zipOutputStream.putNextEntry(entry);
+						byte[] bytes = new byte[1024];
+						int length = -1;
 
-					while ((length = contentStream.read(bytes)) != -1) {
-						zipOutputStream.write(bytes, 0, length);
+						while ((length = contentStream.read(bytes)) != -1) {
+							zipOutputStream.write(bytes, 0, length);
+						}
+						zipOutputStream.closeEntry();
+					} else if (resource instanceof Folder) {
+						saveContentToStream(zipOutputStream, resource.getPath());
 					}
-					zipOutputStream.closeEntry();
-				} else if (resource instanceof Folder) {
-					saveContentToStream(zipOutputStream, resource.getPath());
 				}
 			}
 		} catch (Exception e) {
