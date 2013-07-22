@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.schedule.email;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 public abstract class DefaultSendingRelayEmailNotificationAction implements

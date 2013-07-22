@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.schedule.impl;
+package com.esofthead.mycollab.schedule.email.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +25,8 @@ import com.esofthead.mycollab.common.logging.MyBatisFactory;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.mail.service.SystemMailService;
-import com.esofthead.mycollab.schedule.MyCollabScheduleService;
-import com.esofthead.mycollab.schedule.ScheduleConfig;
+import com.esofthead.mycollab.schedule.email.MyCollabScheduleService;
+import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -80,7 +80,7 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 	}
 
 	@Override
-	@Scheduled(fixedDelay = 60000)
+	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_RELAY_INTERVAL)
 	public void sendRelayEmails() {
 		List<RelayEmailWithBLOBs> relayEmails = mailRelayService
 				.getRelayEmails();
@@ -93,7 +93,8 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 			try {
 				List<MailRecipientField> toMailList = new ArrayList<MailRecipientField>();
 				for (int i = 0; i < recipientArr[0].length; i++) {
-					toMailList.add(new MailRecipientField(recipientArr[0][i], recipientArr[1][i]));
+					toMailList.add(new MailRecipientField(recipientArr[0][i],
+							recipientArr[1][i]));
 				}
 				mailService.sendHTMLMail(relayEmail.getFromemail(),
 						relayEmail.getFromemail(), toMailList, null, null,

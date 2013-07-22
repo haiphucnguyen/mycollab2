@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.service;
 
-import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
 public interface MessageNotificationService extends
 		SendingRelayEmailNotificationAction {

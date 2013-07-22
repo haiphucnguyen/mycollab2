@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.schedule.email;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 

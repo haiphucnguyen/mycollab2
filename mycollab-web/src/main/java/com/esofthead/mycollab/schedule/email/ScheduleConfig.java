@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule;
+package com.esofthead.mycollab.schedule.email;
 
 public class ScheduleConfig {
 	public static final int RUN_EMAIL_RELAY_INTERVAL = 60000;

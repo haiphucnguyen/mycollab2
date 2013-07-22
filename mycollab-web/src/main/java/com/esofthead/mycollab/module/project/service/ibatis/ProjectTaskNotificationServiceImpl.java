@@ -10,11 +10,11 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.mail.service.DefaultSendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
+import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.utils.StringUtils;
 
 @Service

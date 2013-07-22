@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.impl;
+package com.esofthead.mycollab.schedule.email.impl;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearc
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.ScheduleConfig;
+import com.esofthead.mycollab.schedule.email.ScheduleConfig;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Service

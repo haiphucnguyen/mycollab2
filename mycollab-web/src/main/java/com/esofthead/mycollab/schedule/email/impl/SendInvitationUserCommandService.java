@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.billing.service;
+package com.esofthead.mycollab.schedule.email.impl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapperExt;
 import com.esofthead.mycollab.module.user.domain.SimpleUserAccountInvitation;
-import com.esofthead.mycollab.schedule.ScheduleConfig;
+import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 
 @Service
 public class SendInvitationUserCommandService {
