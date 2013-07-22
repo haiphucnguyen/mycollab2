@@ -24,119 +24,126 @@ import com.vaadin.ui.HorizontalLayout;
 @ViewComponent
 public class AccountModuleImpl extends AbstractView implements AccountModule {
 
-	private final HorizontalLayout root;
-	private final DetachedTabs accountTab;
-	private final CssLayout accountSpace = new CssLayout();
+    private final HorizontalLayout root;
+    private final DetachedTabs accountTab;
+    private final CssLayout accountSpace = new CssLayout();
 
-	private ProfilePresenter profilePresenter;
-	private UserPermissionManagementPresenter userPermissionPresenter;
-	private BillingSummaryPresenter accountSettingPresenter;
+    private ProfilePresenter profilePresenter;
+    private UserPermissionManagementPresenter userPermissionPresenter;
+    private BillingSummaryPresenter accountSettingPresenter;
 
-	private final AccountSettingBreadcrumb breadcrumb;
+    private final AccountSettingBreadcrumb breadcrumb;
 
-	public AccountModuleImpl() {
-		ControllerRegistry.addController(new UserAccountController(this));
-		this.setStyleName("accountViewContainer");
-		this.setMargin(false);
+    public AccountModuleImpl() {
+        ControllerRegistry.addController(new UserAccountController(this));
+        this.setWidth("100%");
+        this.setMargin(false);
 
-		final HorizontalLayout headerWrapper = new HorizontalLayout();
-		headerWrapper.setWidth("100%");
-		headerWrapper.setMargin(true);
-		this.breadcrumb = ViewManager.getView(AccountSettingBreadcrumb.class);
-		headerWrapper.addComponent(this.breadcrumb);
-		this.addComponent(headerWrapper);
+        final CssLayout contentWrapper = new CssLayout();
+        contentWrapper.setWidth("100%");
+        contentWrapper.setStyleName("accountViewContainer");
+        contentWrapper.addStyleName("main-content-wrapper");
+        this.addComponent(contentWrapper);
 
-		this.root = new HorizontalLayout();
-		this.root.setStyleName("menuContent");
-		this.root.setWidth("100%");
+        final HorizontalLayout headerWrapper = new HorizontalLayout();
+        headerWrapper.setWidth("100%");
+        headerWrapper.setMargin(true);
+        this.breadcrumb = ViewManager.getView(AccountSettingBreadcrumb.class);
+        headerWrapper.addComponent(this.breadcrumb);
+        contentWrapper.addComponent(headerWrapper);
 
-		this.accountSpace.setWidth("100%");
-		this.accountSpace.setStyleName("account-dashboard");
-		this.accountTab = new DetachedTabs.Vertical(this.accountSpace);
-		this.accountTab.setSizeFull();
-		this.accountTab.setHeight(null);
+        this.root = new HorizontalLayout();
+        this.root.setStyleName("menuContent");
+        this.root.setWidth("100%");
 
-		final CssLayout menu = new CssLayout();
-		menu.setWidth("200px");
-		menu.setStyleName("sidebar-menu");
+        this.accountSpace.setWidth("100%");
+        this.accountSpace.setStyleName("account-dashboard");
+        this.accountTab = new DetachedTabs.Vertical(this.accountSpace);
+        this.accountTab.setSizeFull();
+        this.accountTab.setHeight(null);
 
-		menu.addComponent(this.accountTab);
-		this.root.addComponent(menu);
-		this.root.addComponent(this.accountSpace);
-		this.root.setExpandRatio(this.accountSpace, 1.0f);
+        final CssLayout menu = new CssLayout();
+        menu.setWidth("200px");
+        menu.setStyleName("sidebar-menu");
 
-		this.buildComponents();
+        menu.addComponent(this.accountTab);
+        this.root.addComponent(menu);
+        this.root.addComponent(this.accountSpace);
+        this.root.setExpandRatio(this.accountSpace, 1.0f);
 
-		this.addComponent(this.root);
-	}
+        this.buildComponents();
 
-	private void buildComponents() {
-		this.accountTab.addTab(this.constructUserInformationComponent(),
-				new MenuButton("User Information", "menu_profile.png"));
-		this.accountTab.addTab(this.constructAccountSettingsComponent(),
-				new MenuButton("Account Settings", "menu_account.png"));
+        contentWrapper.addComponent(this.root);
+        this.addComponent(contentWrapper);
+    }
 
-		if (AppContext.canRead(RolePermissionCollections.USER_USER)
-				|| AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
-			this.accountTab.addTab(this.constructUserPermissionComponent(),
-					new MenuButton("Users & Permissions", "menu_team.png"));
-		}
+    private void buildComponents() {
+        this.accountTab.addTab(this.constructUserInformationComponent(),
+                new MenuButton("User Information", "menu_profile.png"));
+        this.accountTab.addTab(this.constructAccountSettingsComponent(),
+                new MenuButton("Account Settings", "menu_account.png"));
 
-		this.accountTab
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
-					@Override
-					public void tabChanged(final TabChangedEvent event) {
-						final Button btn = event.getSource();
-						final String caption = btn.getCaption();
-						if ("User Information".equals(caption)) {
-							AccountModuleImpl.this.profilePresenter.go(
-									AccountModuleImpl.this, null);
-						} else if ("Account Settings".equals(caption)) {
-							accountSettingPresenter.go(AccountModuleImpl.this,
-									null);
-						} else if ("Users & Permissions".equals(caption)) {
-							AccountModuleImpl.this.userPermissionPresenter.go(
-									AccountModuleImpl.this, null);
-						}
-					}
-				});
-	}
+        if (AppContext.canRead(RolePermissionCollections.USER_USER)
+                || AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
+            this.accountTab.addTab(this.constructUserPermissionComponent(),
+                    new MenuButton("Users & Permissions", "menu_team.png"));
+        }
 
-	private ComponentContainer constructAccountSettingsComponent() {
-		this.accountSettingPresenter = PresenterResolver
-				.getPresenter(BillingSummaryPresenter.class);
-		return this.accountSettingPresenter.getView();
-	}
+        this.accountTab
+                .addTabChangedListener(new DetachedTabs.TabChangedListener() {
+                    @Override
+                    public void tabChanged(final TabChangedEvent event) {
+                        final Button btn = event.getSource();
+                        final String caption = btn.getCaption();
+                        if ("User Information".equals(caption)) {
+                            AccountModuleImpl.this.profilePresenter.go(
+                                    AccountModuleImpl.this, null);
+                        } else if ("Account Settings".equals(caption)) {
+                            accountSettingPresenter.go(AccountModuleImpl.this,
+                                    null);
+                        } else if ("Users & Permissions".equals(caption)) {
+                            AccountModuleImpl.this.userPermissionPresenter.go(
+                                    AccountModuleImpl.this, null);
+                        }
+                    }
+                });
+    }
 
-	private ComponentContainer constructUserInformationComponent() {
-		this.profilePresenter = PresenterResolver
-				.getPresenter(ProfilePresenter.class);
-		return this.profilePresenter.getView();
-	}
+    private ComponentContainer constructAccountSettingsComponent() {
+        this.accountSettingPresenter = PresenterResolver
+                .getPresenter(BillingSummaryPresenter.class);
+        return this.accountSettingPresenter.getView();
+    }
 
-	private ComponentContainer constructUserPermissionComponent() {
-		this.userPermissionPresenter = PresenterResolver
-				.getPresenter(UserPermissionManagementPresenter.class);
-		return this.userPermissionPresenter.getView();
-	}
+    private ComponentContainer constructUserInformationComponent() {
+        this.profilePresenter = PresenterResolver
+                .getPresenter(ProfilePresenter.class);
+        return this.profilePresenter.getView();
+    }
 
-	@Override
-	public void gotoSubView(final String viewName) {
-		this.accountTab.selectTab(viewName);
-	}
+    private ComponentContainer constructUserPermissionComponent() {
+        this.userPermissionPresenter = PresenterResolver
+                .getPresenter(UserPermissionManagementPresenter.class);
+        return this.userPermissionPresenter.getView();
+    }
 
-	private static class MenuButton extends Button {
-		public MenuButton(final String caption, final String iconResource) {
-			super(caption);
-			this.setIcon(MyCollabResource.newResource("icons/22/user/"
-					+ iconResource));
-			this.setStyleName("link");
-		}
-	}
+    @Override
+    public void gotoSubView(final String viewName) {
+        this.accountTab.selectTab(viewName);
+    }
 
-	@Override
-	public void gotoUserProfilePage() {
-		EventBus.getInstance().fireEvent(
-				new ProfileEvent.GotoProfileView(this, null));
-	}
+    private static class MenuButton extends Button {
+        public MenuButton(final String caption, final String iconResource) {
+            super(caption);
+            this.setIcon(MyCollabResource.newResource("icons/22/user/"
+                    + iconResource));
+            this.setStyleName("link");
+        }
+    }
+
+    @Override
+    public void gotoUserProfilePage() {
+        EventBus.getInstance().fireEvent(
+                new ProfileEvent.GotoProfileView(this, null));
+    }
 }
