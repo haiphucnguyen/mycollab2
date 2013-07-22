@@ -984,6 +984,8 @@ input.v-textfield-errorField {
 
 #loginFormContainer #newToUs #signupLink span {
 	float: right;
+	padding-right: 15px;
+	text-decoration: none;
 }
 
 #loginFormContainer #newToUs #signupLink .v-button-wrap {
@@ -1400,7 +1402,7 @@ input.v-textfield-errorField {
 }
 
 .v-csslayout-projectTabContent>.v-csslayout-margin {
-	padding: 0px;
+	padding: 6px;
 	border-style: solid;
 	border-color: #8f8f8f;
 	border-width: 1px 0px 0px 1px;
