@@ -43,13 +43,13 @@ public class SendInvitationUserCommand {
 
 			templateGenerator.putVariable(
 					"urlAccept",
-					getSiteUrl(invitation.getSubdomain())
+					ApplicationProperties.getSiteUrl(invitation.getSubdomain())
 							+ "user/confirm_invite/"
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
 									+ "/" + invitation.getUsername()));
 			templateGenerator.putVariable(
 					"urlDeny",
-					getSiteUrl(invitation.getSubdomain())
+					ApplicationProperties.getSiteUrl(invitation.getSubdomain())
 							+ "user/deny_invite/"
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
 									+ "/" + invitation.getUsername()));
@@ -65,16 +65,6 @@ public class SendInvitationUserCommand {
 			invitation
 					.setInvitationstatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL);
 			userAccountInvitationMapper.updateByPrimaryKeySelective(invitation);
-		}
-	}
-
-	private String getSiteUrl(String subdomain) {
-		if (ApplicationProperties.productionMode) {
-			return String.format(ApplicationProperties
-					.getString(ApplicationProperties.APP_URL), subdomain);
-		} else {
-			return ApplicationProperties
-					.getString(ApplicationProperties.APP_URL);
 		}
 	}
 }

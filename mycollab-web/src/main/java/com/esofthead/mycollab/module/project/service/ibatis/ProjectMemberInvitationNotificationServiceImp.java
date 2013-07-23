@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
@@ -56,7 +57,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 					notification.getChangeByUserFullName());
 			templateGenerator.putVariable(
 					"urlAccept",
-					TemplateGenerator.getSiteUrl(subdomain)
+					ApplicationProperties.getSiteUrl(subdomain)
 							+ "project/member/invitation/confirm_invite/"
 							+ UrlEncodeDecoder.encode(notification
 									.getSaccountid()
@@ -66,7 +67,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 									+ projectMemberId));
 			templateGenerator.putVariable(
 					"urlDeny",
-					TemplateGenerator.getSiteUrl(subdomain)
+					ApplicationProperties.getSiteUrl(subdomain)
 							+ "project/member/invitation/deny_invite/"
 							+ UrlEncodeDecoder.encode(notification
 									.getSaccountid()

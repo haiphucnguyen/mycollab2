@@ -62,23 +62,7 @@ public class UserHubResourceImpl extends ServerResource implements
 		} catch (MyCollabException e) {
 			throw new ResourceException(e);
 		}
-		String siteUrl = "";
-		if (ApplicationProperties.productionMode) {
-			siteUrl = String.format(ApplicationProperties
-					.getString(ApplicationProperties.APP_URL), subdomain);
-		} else {
-			final boolean isSupportSubDomain = ApplicationProperties
-					.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
-			if (!isSupportSubDomain) {
-				siteUrl = String.format(ApplicationProperties
-						.getString(ApplicationProperties.APP_URL),
-						ApplicationProperties
-								.getString(ApplicationProperties.SITE_NAME));
-			} else {
-				siteUrl = String.format(ApplicationProperties
-						.getString(ApplicationProperties.APP_URL), subdomain);
-			}
-		}
+		String siteUrl = ApplicationProperties.getSiteUrl(subdomain);
 		return siteUrl;
 	}
 }

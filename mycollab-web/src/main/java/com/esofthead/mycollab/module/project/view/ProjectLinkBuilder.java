@@ -121,7 +121,8 @@ public class ProjectLinkBuilder {
 					+ generateTaskPreviewLink(projectId, taskId);
 		}
 
-		public static String generateTaskPreviewLink(Integer projectId, Integer taskId) {
+		public static String generateTaskPreviewLink(Integer projectId,
+				Integer taskId) {
 			return "project/task/task/preview/"
 					+ UrlEncodeDecoder.encode(projectId + "/" + taskId);
 		}
@@ -194,23 +195,14 @@ public class ProjectLinkBuilder {
 		public MailLinkGenerator(int projectId) {
 			this.projectId = projectId;
 
-			if (!ApplicationProperties.productionMode) {
-				siteUrl = ApplicationProperties
-						.getString(ApplicationProperties.APP_URL);
+			ProjectService projectService = ApplicationContextUtil
+					.getApplicationContext().getBean(ProjectService.class);
+			String subdomain = projectService.getSubdomainOfProject(projectId);
+			if (subdomain != null) {
+				siteUrl = ApplicationProperties.getSiteUrl(subdomain);
 			} else {
-				ProjectService projectService = ApplicationContextUtil
-						.getApplicationContext().getBean(ProjectService.class);
-				String subdomain = projectService
-						.getSubdomainOfProject(projectId);
-				if (subdomain != null) {
-					siteUrl = String.format(ApplicationProperties
-							.getString(ApplicationProperties.APP_URL),
-							subdomain);
-				} else {
-					log.error("Can not find subdomain for projectid {}",
-							projectId);
-					siteUrl = "";
-				}
+				log.error("Can not find subdomain for projectid {}", projectId);
+				siteUrl = "";
 			}
 		}
 
