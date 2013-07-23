@@ -36,170 +36,170 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class AccountListViewImpl extends AbstractView implements
-		AccountListView {
+        AccountListView {
 
-	private static final long serialVersionUID = 1L;
-	private final AccountSearchPanel accountSearchPanel;
-	private SelectionOptionButton selectOptionButton;
-	private AccountTableDisplay tableItem;
-	private final VerticalLayout accountListLayout;
-	private PopupButtonControl tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
-	private AccountImportWindow accountImportWindow;
+    private static final long serialVersionUID = 1L;
+    private final AccountSearchPanel accountSearchPanel;
+    private SelectionOptionButton selectOptionButton;
+    private AccountTableDisplay tableItem;
+    private final VerticalLayout accountListLayout;
+    private PopupButtonControl tableActionControls;
+    private final Label selectedItemsNumberLabel = new Label();
+    private AccountImportWindow accountImportWindow;
 
-	public AccountListViewImpl() {
-		this.accountSearchPanel = new AccountSearchPanel();
-		this.addComponent(this.accountSearchPanel);
+    public AccountListViewImpl() {
+        this.accountSearchPanel = new AccountSearchPanel();
+        this.addComponent(this.accountSearchPanel);
 
-		this.accountListLayout = new VerticalLayout();
-		this.addComponent(this.accountListLayout);
+        this.accountListLayout = new VerticalLayout();
+        this.addComponent(this.accountListLayout);
 
-		this.generateDisplayTable();
-	}
+        this.generateDisplayTable();
+    }
 
-	private ComponentContainer constructTableActionControls() {
-		final CssLayout layoutWrapper = new CssLayout();
-		layoutWrapper.setWidth("100%");
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layout.setWidth("100%");
-		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-		layoutWrapper.addComponent(layout);
+    private ComponentContainer constructTableActionControls() {
+        final CssLayout layoutWrapper = new CssLayout();
+        layoutWrapper.setWidth("100%");
+        final HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
+        layout.setWidth("100%");
+        layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+        layoutWrapper.addComponent(layout);
 
-		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-		this.selectOptionButton.setSizeUndefined();
-		layout.addComponent(this.selectOptionButton);
+        this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+        this.selectOptionButton.setSizeUndefined();
+        layout.addComponent(this.selectOptionButton);
 
-		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
-		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
+        final Button deleteBtn = new Button(
+                LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+        deleteBtn.setEnabled(AppContext
+                .canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		this.tableActionControls.addOptionItem("export",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
-		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
-		this.tableActionControls.setVisible(false);
+        this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+        this.tableActionControls.addOptionItem("mail",
+                LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
+        this.tableActionControls.addOptionItem("export",
+                LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
+        this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
+                .getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
+        this.tableActionControls.setVisible(false);
 
-		layout.addComponent(this.tableActionControls);
-		layout.addComponent(this.selectedItemsNumberLabel);
-		layout.setComponentAlignment(this.selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
+        layout.addComponent(this.tableActionControls);
+        layout.addComponent(this.selectedItemsNumberLabel);
+        layout.setComponentAlignment(this.selectedItemsNumberLabel,
+                Alignment.MIDDLE_CENTER);
 
-		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
+        layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 
-		Button customizeViewBtn = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        Button customizeViewBtn = new Button("", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(
-						new AccountListCustomizeWindow(
-								AccountListView.VIEW_DEF_ID, tableItem));
+            @Override
+            public void buttonClick(ClickEvent event) {
+                getWindow().addWindow(
+                        new AccountListCustomizeWindow(
+                                AccountListView.VIEW_DEF_ID, tableItem));
 
-			}
-		});
-		customizeViewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/customize.png"));
-		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		layout.addComponent(customizeViewBtn);
-		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+            }
+        });
+        customizeViewBtn.setIcon(MyCollabResource
+                .newResource("icons/16/customize.png"));
+        customizeViewBtn.setDescription("Layout Options");
+        customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        layout.addComponent(customizeViewBtn);
+        layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
-		Button importBtn = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        Button importBtn = new Button("", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				accountImportWindow = new AccountImportWindow();
-				getWindow().addWindow(accountImportWindow);
-			}
-		});
-		importBtn.setDescription("Import");
-		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
-		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		layout.addComponent(importBtn);
-		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
+            @Override
+            public void buttonClick(ClickEvent event) {
+                accountImportWindow = new AccountImportWindow();
+                getWindow().addWindow(accountImportWindow);
+            }
+        });
+        importBtn.setDescription("Import");
+        importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+        importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+        layout.addComponent(importBtn);
+        layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
 
-		return layoutWrapper;
-	}
+        return layoutWrapper;
+    }
 
-	@Override
-	public void disableActionControls() {
-		this.tableActionControls.setVisible(false);
-		this.selectOptionButton.setSelectedChecbox(false);
-		this.selectedItemsNumberLabel.setValue("");
-	}
+    @Override
+    public void disableActionControls() {
+        this.tableActionControls.setVisible(false);
+        this.selectOptionButton.setSelectedChecbox(false);
+        this.selectedItemsNumberLabel.setValue("");
+    }
 
-	@Override
-	public void enableActionControls(final int numOfSelectedItems) {
-		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue(LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
-						numOfSelectedItems));
-	}
+    @Override
+    public void enableActionControls(final int numOfSelectedItems) {
+        this.tableActionControls.setVisible(true);
+        this.selectedItemsNumberLabel.setValue(LocalizationHelper
+                .getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
+                        numOfSelectedItems));
+    }
 
-	private void generateDisplayTable() {
-		this.tableItem = new AccountTableDisplay(AccountListView.VIEW_DEF_ID,
-				AccountTableFieldDef.selected, Arrays.asList(
-						AccountTableFieldDef.accountname,
-						AccountTableFieldDef.city,
-						AccountTableFieldDef.phoneoffice,
-						AccountTableFieldDef.email,
-						AccountTableFieldDef.assignUser));
+    private void generateDisplayTable() {
+        this.tableItem = new AccountTableDisplay(AccountListView.VIEW_DEF_ID,
+                AccountTableFieldDef.selected, Arrays.asList(
+                        AccountTableFieldDef.accountname,
+                        AccountTableFieldDef.city,
+                        AccountTableFieldDef.phoneoffice,
+                        AccountTableFieldDef.email,
+                        AccountTableFieldDef.assignUser));
 
-		this.tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 1L;
+        this.tableItem
+                .addTableListener(new ApplicationEventListener<TableClickEvent>() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TableClickEvent.class;
+                    }
 
-					@Override
-					public void handle(final TableClickEvent event) {
-						final SimpleAccount account = (SimpleAccount) event
-								.getData();
-						if ("accountname".equals(event.getFieldName())) {
-							EventBus.getInstance().fireEvent(
-									new AccountEvent.GotoRead(
-											AccountListViewImpl.this, account
-													.getId()));
-						}
-					}
-				});
+                    @Override
+                    public void handle(final TableClickEvent event) {
+                        final SimpleAccount account = (SimpleAccount) event
+                                .getData();
+                        if ("accountname".equals(event.getFieldName())) {
+                            EventBus.getInstance().fireEvent(
+                                    new AccountEvent.GotoRead(
+                                            AccountListViewImpl.this, account
+                                                    .getId()));
+                        }
+                    }
+                });
 
-		this.accountListLayout
-				.addComponent(this.constructTableActionControls());
-		this.accountListLayout.addComponent(this.tableItem);
-	}
+        this.accountListLayout
+                .addComponent(this.constructTableActionControls());
+        this.accountListLayout.addComponent(this.tableItem);
+    }
 
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return this.selectOptionButton;
-	}
+    @Override
+    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+        return this.selectOptionButton;
+    }
 
-	@Override
-	public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
-		return this.tableItem;
-	}
+    @Override
+    public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
+        return this.tableItem;
+    }
 
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return this.tableActionControls;
-	}
+    @Override
+    public HasPopupActionHandlers getPopupActionHandlers() {
+        return this.tableActionControls;
+    }
 
-	@Override
-	public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
-		return this.accountSearchPanel;
-	}
+    @Override
+    public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
+        return this.accountSearchPanel;
+    }
 
-	@Override
-	public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
-		return this.tableItem;
-	}
+    @Override
+    public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
+        return this.tableItem;
+    }
 }
