@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.user.accountsettings.billing.view;
 import java.util.List;
 
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -258,6 +259,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
+							BillingAccount billingAccount;
 							UpdateBillingPlanWindow.this.updateBillingPlan();
 							UpdateBillingPlanWindow.this.close();
 						}

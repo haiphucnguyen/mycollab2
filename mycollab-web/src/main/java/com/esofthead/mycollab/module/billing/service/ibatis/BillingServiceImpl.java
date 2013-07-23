@@ -232,4 +232,10 @@ public class BillingServiceImpl implements BillingService {
 		return billingPlanMapper.selectByExample(new BillingPlanExample());
 	}
 
+	@Override
+	public void updateBillingPlan(int accountid, int newBillingPlanId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -50,6 +50,12 @@ public class AccountSettingBreadcrumb extends Breadcrumb implements View {
 		AppContext.addFragment("account/preview", "User Profile");
 	}
 
+	public void gotoBillingPage() {
+		this.select(0);
+		this.addLink(new Button("Billing"));
+		AppContext.addFragment("account/billing", "Billing");
+	}
+
 	public void gotoUserList() {
 		this.select(0);
 		this.addLink(new Button("Users"));
