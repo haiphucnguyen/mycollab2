@@ -84,4 +84,23 @@ public class ApplicationProperties {
 		return properties
 				.getProperty("error.sendTo", "hainguyen@esofthead.com");
 	}
+
+	public static String getSiteUrl(String subdomain) {
+		String siteUrl = "";
+		if (ApplicationProperties.productionMode) {
+			siteUrl = String.format(ApplicationProperties
+					.getString(ApplicationProperties.APP_URL), subdomain);
+		} else {
+			boolean isSupportSubDomain = ApplicationProperties
+					.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
+			if (!isSupportSubDomain) {
+				siteUrl = String.format(ApplicationProperties
+						.getString(ApplicationProperties.APP_URL), subdomain);
+			} else {
+				siteUrl = ApplicationProperties
+						.getString(ApplicationProperties.APP_URL);
+			}
+		}
+		return siteUrl;
+	}
 }

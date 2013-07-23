@@ -253,7 +253,7 @@ public class ProblemListViewImpl extends AbstractView implements
 		customizeViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/customize.png"));
 		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 

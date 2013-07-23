@@ -105,7 +105,7 @@ public class AccountListViewImpl extends AbstractView implements
 		customizeViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/customize.png"));
 		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
@@ -120,7 +120,7 @@ public class AccountListViewImpl extends AbstractView implements
 		});
 		importBtn.setDescription("Import");
 		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
-		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		layout.addComponent(importBtn);
 		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
 
