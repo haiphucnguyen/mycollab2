@@ -117,14 +117,14 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 		customizeViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/customize.png"));
 		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		buttonControls.addComponent(customizeViewBtn);
 
 		this.exportBtn = new Button(
 				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
 		this.exportBtn.setIcon(MyCollabResource
 				.newResource("icons/16/export_excel.png"));
-		this.exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		this.exportBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		this.exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 		buttonControls.addComponent(this.exportBtn);
