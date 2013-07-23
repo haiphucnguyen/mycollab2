@@ -11,12 +11,15 @@ import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.ecm.ContentException;
+import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.MoveWindow;
+import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
+import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -28,9 +31,13 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.terminal.Sizeable;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -46,11 +53,12 @@ import com.vaadin.ui.Tree;
 import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 @ViewComponent
 public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private static final long serialVersionUID = 1L;
-	private Tree treeMenu;
+	private Tree menuTree;
 	private FilterPanel filterPanel;
 	private HorizontalLayout controllGroupBtn;
 	private final ResourceService resourceService;
@@ -76,14 +84,14 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		final VerticalLayout menuLayout = new VerticalLayout();
 		menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
-		this.treeMenu = new Tree();
-		this.treeMenu.setMultiSelect(false);
-		this.treeMenu.setSelectable(true);
-		this.treeMenu.setImmediate(true);
+		this.menuTree = new Tree();
+		this.menuTree.setMultiSelect(false);
+		this.menuTree.setSelectable(true);
+		this.menuTree.setImmediate(true);
 
-		menuLayout.addComponent(this.treeMenu);
+		menuLayout.addComponent(this.menuTree);
 
-		this.treeMenu.addListener(new Tree.ExpandListener() {
+		this.menuTree.addListener(new Tree.ExpandListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -92,46 +100,48 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				final List<Folder> subFolders = resourceService
 						.getSubFolders(expandFolder.getPath());
 
-				treeMenu.setItemIcon(expandFolder, MyCollabResource
+				menuTree.setItemIcon(expandFolder, MyCollabResource
 						.newResource("icons/16/ecm/folder_open.png"));
 
 				if (subFolders != null) {
 					for (final Folder subFolder : subFolders) {
 						expandFolder.addChild(subFolder);
-						treeMenu.addItem(subFolder);
+						menuTree.addItem(subFolder);
 
-						treeMenu.setItemIcon(subFolder, MyCollabResource
+						menuTree.setItemIcon(subFolder, MyCollabResource
 								.newResource("icons/16/ecm/folder_close.png"));
-						treeMenu.setItemCaption(subFolder, subFolder.getName());
-						treeMenu.setParent(subFolder, expandFolder);
+						menuTree.setItemCaption(subFolder, subFolder.getName());
+						menuTree.setParent(subFolder, expandFolder);
 					}
 				}
 			}
 		});
 
-		this.treeMenu.addListener(new Tree.CollapseListener() {
+		this.menuTree.addListener(new Tree.CollapseListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void nodeCollapse(final CollapseEvent event) {
 				final Folder collapseFolder = (Folder) event.getItemId();
-				treeMenu.setItemIcon(collapseFolder, MyCollabResource
+				menuTree.setItemIcon(collapseFolder, MyCollabResource
 						.newResource("icons/16/ecm/folder_close.png"));
 				final List<Folder> childs = collapseFolder.getChilds();
 				for (final Folder subFolder : childs) {
-					treeMenu.removeItem(subFolder);
+					menuTree.removeItem(subFolder);
 				}
 
 				childs.clear();
 			}
 		});
 
-		this.treeMenu.addListener(new ItemClickEvent.ItemClickListener() {
+		this.menuTree.addListener(new ItemClickEvent.ItemClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void itemClick(final ItemClickEvent event) {
-
+				final Folder item = (Folder) event.getItemId();
+				FileMainViewImpl.this.baseFolder = item;
+				itemResourceContainerLayout.constructBody(item);
 			}
 		});
 
@@ -169,6 +179,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		selectAllBtn.setIcon(MyCollabResource
 				.newResource("icons/16/checkbox_empty.png"));
 		selectAllBtn.setValue(false);
+
 		selectAllBtn.addListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -178,15 +189,23 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					selectAllBtn.setIcon(MyCollabResource
 							.newResource("icons/16/checkbox.png"));
 					selectAllBtn.setValue(true);
+					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
+						for (CheckBox cb : itemResourceContainerLayout
+								.getListAllCheckBox()) {
+							if (!(Boolean) cb.getValue())
+								cb.setValue(true);
+						}
+					}
 				} else {
 					selectAllBtn.setValue(false);
 					selectAllBtn.setIcon(MyCollabResource
 							.newResource("icons/16/checkbox_empty.png"));
-				}
-				if (itemResourceContainerLayout.getListAllCheckBox() != null) {
-					for (CheckBox cb : itemResourceContainerLayout
-							.getListAllCheckBox()) {
-						cb.click();
+					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
+						for (CheckBox cb : itemResourceContainerLayout
+								.getListAllCheckBox()) {
+							if ((Boolean) cb.getValue())
+								cb.setValue(false);
+						}
 					}
 				}
 			}
@@ -196,6 +215,51 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		tableActionControls.setWidth("70px");
 		UiUtils.addComponent(controllGroupBtn, tableActionControls,
 				Alignment.MIDDLE_LEFT);
+
+		Button goUpBtn = new Button();
+		goUpBtn.setIcon(new ThemeResource("icons/16/ecm/up_to_root.png"));
+		goUpBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (!FileMainViewImpl.this.baseFolder.getPath().equals(
+						FileMainViewImpl.this.rootPath)) {
+					Folder parentFolder = resourceService
+							.getParentFolder(FileMainViewImpl.this.baseFolder
+									.getPath());
+					FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+					itemResourceContainerLayout.constructBody(parentFolder);
+					FileMainViewImpl.this.baseFolder = parentFolder;
+				}
+			}
+		});
+		goUpBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+		UiUtils.addComponent(controllGroupBtn, goUpBtn, Alignment.MIDDLE_LEFT);
+
+		Button createBtn = new Button("Create", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				AddNewFolderWindow addnewFolderWindow = new AddNewFolderWindow();
+				FileMainViewImpl.this.getWindow().addWindow(addnewFolderWindow);
+			}
+		});
+		createBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+		UiUtils.addComponent(controllGroupBtn, createBtn, Alignment.MIDDLE_LEFT);
+
+		Button uploadBtn = new Button("Upload", new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		uploadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+		UiUtils.addComponent(controllGroupBtn, uploadBtn, Alignment.MIDDLE_LEFT);
 
 		Button downloadBtn = new Button("Download", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -265,12 +329,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 											FileMainViewImpl.this.resourceService
 													.removeResource(res
 															.getPath());
-											// TODO: rebuilt
-											// IteamResourceContainer
-											FileMainViewImpl.this.treeMenu
+											itemResourceContainerLayout
+													.constructBody(FileMainViewImpl.this.baseFolder);
+
+											FileMainViewImpl.this.menuTree
 													.collapseItem(FileMainViewImpl.this.baseFolder);
-											FileMainViewImpl.this.treeMenu
+											FileMainViewImpl.this.menuTree
 													.collapseItem(FileMainViewImpl.this.baseFolder);
+											FileMainViewImpl.this
+													.getWindow()
+													.showNotification(
+															"Delete successfully.");
+											FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 										}
 									}
 								}
@@ -414,8 +484,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private class ItemResourceContainerLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
-		private Folder folder;
 		private List<CheckBox> listAllCheckBox;
+		private VerticalLayout mainLayout;
 
 		public List<CheckBox> getListAllCheckBox() {
 			return listAllCheckBox;
@@ -423,20 +493,25 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		public ItemResourceContainerLayout(Folder folder,
 				ResourceService resourceService) {
-			this.folder = folder;
 			lstCheckedResource = new ArrayList<Resource>();
 			listAllCheckBox = new ArrayList<CheckBox>();
+			constructBody(folder);
+		}
 
-			VerticalLayout layout = new VerticalLayout();
-			layout.setSpacing(false);
-			List<Resource> lstResource = resourceService.getResources(folder
+		private void constructBody(Folder curFolder) {
+			if (mainLayout != null) {
+				this.removeAllComponents();
+			}
+			mainLayout = new VerticalLayout();
+			mainLayout.setSpacing(false);
+			List<Resource> lstResource = resourceService.getResources(curFolder
 					.getPath());
 			this.addComponent(new Hr());
 			for (Resource res : lstResource) {
-				layout.addComponent(constructOneIteamResourceLayout(res));
-				layout.addComponent(new Hr());
+				mainLayout.addComponent(constructOneIteamResourceLayout(res));
+				mainLayout.addComponent(new Hr());
 			}
-			this.addComponent(layout);
+			this.addComponent(mainLayout);
 		}
 
 		private HorizontalLayout constructOneIteamResourceLayout(
@@ -448,24 +523,22 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			final CheckBox checkbox = new CheckBox();
 			checkbox.setWidth("30px");
+			checkbox.setImmediate(true);
 			checkbox.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			listAllCheckBox.add(checkbox);
 
-			checkbox.addListener(new ClickListener() {
+			checkbox.addListener(new ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
-					if (!(Boolean) checkbox.getValue()) {
+				public void valueChange(ValueChangeEvent event) {
+					if ((Boolean) checkbox.getValue()) {
 						lstCheckedResource.add(res);
-						checkbox.setValue(true);
 					} else {
 						lstCheckedResource.remove(res);
-						checkbox.setValue(false);
 					}
 				}
 			});
-
 			layout.addComponent(checkbox);
 			layout.setComponentAlignment(checkbox, Alignment.MIDDLE_LEFT);
 
@@ -483,8 +556,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			CssLayout resIconWapper = new CssLayout();
 			final Embedded resourceIcon = new Embedded();
-			resourceIcon.setSource(MyCollabResource
-					.newResource("icons/48/Folder-icon.png"));
+			if (res instanceof Folder)
+				resourceIcon.setSource(MyCollabResource
+						.newResource("icons/48/Folder-icon.png"));
+			else
+				resourceIcon.setSource(MyCollabResource
+						.newResource("icons/48/file_blue_icon.png"));
 			resIconWapper.setWidth("70px");
 			resIconWapper.addComponent(resourceIcon);
 
@@ -492,15 +569,37 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			layout.setComponentAlignment(resIconWapper, Alignment.MIDDLE_LEFT);
 
 			VerticalLayout informationLayout = new VerticalLayout();
-			Label resourceNameLabel = new Label(res.getName());
-			resourceNameLabel.addStyleName("h3");
-			informationLayout.addComponent(resourceNameLabel);
+
+			Button resourceLinkBtn = new Button(res.getName(),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							if (res instanceof Folder) {
+								FileMainViewImpl.this.baseFolder = (Folder) res;
+								itemResourceContainerLayout
+										.constructBody((Folder) res);
+							} else {
+								FileDownloadWindow fileDownloadWindow = new FileDownloadWindow(
+										(Content) res);
+								FileMainViewImpl.this.getWindow().addWindow(
+										fileDownloadWindow);
+							}
+						}
+					});
+			resourceLinkBtn.addStyleName("link");
+			resourceLinkBtn.addStyleName("h3");
+			informationLayout.addComponent(resourceLinkBtn);
 
 			HorizontalLayout moreInfoAboutResLayout = new HorizontalLayout();
 			moreInfoAboutResLayout.addComponent(new Label(res.getCreatedBy()));
 			moreInfoAboutResLayout.addComponent(new Separator());
 			moreInfoAboutResLayout.addComponent(new Label(AppContext
 					.formatDate(res.getCreated().getTime())));
+			moreInfoAboutResLayout.addComponent(new Separator());
+			moreInfoAboutResLayout.addComponent(new Label(res.getSize()
+					.toString() + " bytes"));
 			informationLayout.addComponent(moreInfoAboutResLayout);
 
 			layout.addComponent(informationLayout);
@@ -530,10 +629,52 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							resourceSettingPopupBtn.setPopupVisible(false);
+							final RenameResourceWindow renameWindow = new RenameResourceWindow(
+									res, resourceService);
+							FileMainViewImpl.this.getWindow().addWindow(
+									renameWindow);
 						}
 					});
 			renameBtn.addStyleName("link");
 			filterBtnLayout.addComponent(renameBtn);
+
+			// ----------------Is need or
+			// not--------------------------------------
+			final Button downloadBtn = new Button("Download",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+						}
+					});
+			downloadBtn.addStyleName("link");
+			filterBtnLayout.addComponent(downloadBtn);
+
+			final Button moveBtn = new Button("Move to",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+						}
+					});
+			moveBtn.addStyleName("link");
+			filterBtnLayout.addComponent(moveBtn);
+
+			final Button deleteBtn = new Button("Delete",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+						}
+					});
+			deleteBtn.addStyleName("link");
+			filterBtnLayout.addComponent(deleteBtn);
+			// ------------------------------------------------------------------------
+
 			filterBtnLayout.setMargin(true);
 			filterBtnLayout.setSpacing(true);
 			filterBtnLayout.setWidth("100px");
@@ -569,25 +710,25 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			for (final Folder subFolder : childs) {
 				this.baseFolder.addChild(subFolder);
-				this.treeMenu.addItem(new Object[] {
+				this.menuTree.addItem(new Object[] {
 						subFolder.getName(),
 						AppContext.formatDateTime(subFolder.getCreated()
 								.getTime()) });
-				this.treeMenu.setItemCaption(subFolder, subFolder.getName());
-				this.treeMenu.setParent(subFolder, this.baseFolder);
+				this.menuTree.setItemCaption(subFolder, subFolder.getName());
+				this.menuTree.setParent(subFolder, this.baseFolder);
 				if (foldername.equals(subFolder.getName())) {
-					treeMenu.collapseItem(subFolder);
+					menuTree.collapseItem(subFolder);
 					this.displayResourcesInListLayout(subFolder);
 				} else {
-					this.treeMenu.setItemIcon(subFolder, MyCollabResource
+					this.menuTree.setItemIcon(subFolder, MyCollabResource
 							.newResource("icons/16/ecm/folder_close.png"));
 				}
 			}
 		} else {
 			for (final Folder subFolder : childs) {
 				if (foldername.equals(subFolder.getName())) {
-					this.treeMenu.collapseItem(subFolder);
-					this.treeMenu.setValue(subFolder);
+					this.menuTree.collapseItem(subFolder);
+					this.menuTree.setValue(subFolder);
 					this.displayResourcesInListLayout(subFolder);
 				}
 			}
@@ -595,26 +736,27 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
-		this.treeMenu.removeAllItems();
+		this.menuTree.removeAllItems();
 		this.rootPath = rootPath;
 		this.rootFolderName = rootFolderName;
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(this.rootPath);
-		this.treeMenu.addItem(this.baseFolder);
-		this.treeMenu.setItemCaption(this.baseFolder, rootFolderName);
-		this.treeMenu.setItemIcon(this.baseFolder,
+		this.menuTree.addItem(this.baseFolder);
+		this.menuTree.setItemCaption(this.baseFolder, rootFolderName);
+		this.menuTree.setItemIcon(this.baseFolder,
 				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
 
-		this.treeMenu.collapseItem(this.baseFolder);
+		this.menuTree.collapseItem(this.baseFolder);
 		this.displayResourcesInListLayout(this.baseFolder);
 	}
 
 	@Override
 	public void display() {
+		displayResources(rootPath, "My Documents");
 	}
 
-	protected class MoveResourceWindow extends MoveWindow {
+	protected class MoveResourceWindow extends AbstractMoveWindow {
 		private static final long serialVersionUID = 1L;
 
 		public MoveResourceWindow(Resource resource,
@@ -629,7 +771,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		@Override
 		public void displayAfterMoveSuccess(Folder folder) {
-			// TODO Rebuilt IteamResourceContainer
+			FileMainViewImpl.this.itemResourceContainerLayout
+					.constructBody(FileMainViewImpl.this.baseFolder);
+			FileMainViewImpl.this.getWindow().showNotification(
+					"Move asset(s) successfully.");
+			FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 		}
 
 		@Override
@@ -646,6 +792,198 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					FileMainViewImpl.this.rootFolderName);
 
 			this.folderTree.setCollapsed(baseFolder, false);
+		}
+	}
+
+	protected class RenameResourceWindow extends Window {
+		private static final long serialVersionUID = 1L;
+		private final Resource resource;
+		private final ResourceService service;
+
+		public RenameResourceWindow(final Resource resource,
+				final ResourceService service) {
+			super("Rename folder/file");
+			this.center();
+			this.setWidth("400px");
+
+			this.service = service;
+			this.resource = resource;
+			this.constructBody();
+		}
+
+		private void constructBody() {
+			final VerticalLayout layout = new VerticalLayout();
+			final HorizontalLayout topRename = new HorizontalLayout();
+			topRename.setSpacing(true);
+			topRename.setMargin(true);
+
+			final Label label = new Label("Enter new name: ");
+			UiUtils.addComponent(topRename, label, Alignment.MIDDLE_LEFT);
+
+			final TextField newName = new TextField();
+			newName.setWidth("150px");
+			UiUtils.addComponent(topRename, newName, Alignment.MIDDLE_LEFT);
+
+			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
+
+			final HorizontalLayout controlButton = new HorizontalLayout();
+			controlButton.setSpacing(true);
+			final Button save = new Button("Save", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					final String oldPath = RenameResourceWindow.this.resource
+							.getPath();
+					final String parentPath = oldPath.substring(0,
+							oldPath.lastIndexOf("/") + 1);
+					final String newNameValue = (String) newName.getValue();
+					final String newPath = parentPath + newNameValue;
+					try {
+						RenameResourceWindow.this.service.rename(oldPath,
+								newPath);
+						// reset layout
+						FileMainViewImpl.this.itemResourceContainerLayout
+								.constructBody(FileMainViewImpl.this.baseFolder);
+						// Set item caption for sub folder of base folder in
+						// folderTree
+
+						final List<Folder> childs = FileMainViewImpl.this.baseFolder
+								.getChilds();
+						for (final Folder folder : childs) {
+							if (folder.getName().equals(
+									RenameResourceWindow.this.resource
+											.getName())) {
+								folder.setPath(newPath);
+								menuTree.removeItem(folder);
+								menuTree.addItem(folder);
+								menuTree.setParent(folder, baseFolder);
+								menuTree.setItemCaption(folder, newNameValue);
+							}
+						}
+						RenameResourceWindow.this.close();
+
+					} catch (final ContentException e) {
+						RenameResourceWindow.this.getWindow().showNotification(
+								e.getMessage());
+					}
+				}
+			});
+			save.addStyleName(UIConstants.THEME_BLUE_LINK);
+
+			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
+
+			final Button cancel = new Button("Cancel", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					RenameResourceWindow.this.close();
+				}
+			});
+			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
+			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
+			this.addComponent(layout);
+		}
+	}
+
+	private class AddNewFolderWindow extends Window {
+		private static final long serialVersionUID = 1L;
+
+		private final TextField folderName;
+
+		public AddNewFolderWindow() {
+			((VerticalLayout) this.getContent()).setWidth(
+					Sizeable.SIZE_UNDEFINED, 0);
+			this.setModal(true);
+			this.setCaption("New Folder");
+			this.center();
+
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.setSizeUndefined();
+			final Label captionLbl = new Label("Enter folder name: ");
+			layout.addComponent(captionLbl);
+			layout.setComponentAlignment(captionLbl, Alignment.MIDDLE_LEFT);
+
+			this.folderName = new TextField();
+			layout.addComponent(this.folderName);
+			layout.setComponentAlignment(this.folderName, Alignment.MIDDLE_LEFT);
+			layout.setExpandRatio(this.folderName, 1.0f);
+
+			this.addComponent(layout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(layout,
+					Alignment.MIDDLE_CENTER);
+
+			final HorizontalLayout controlsLayout = new HorizontalLayout();
+			controlsLayout.setSpacing(true);
+			controlsLayout.setMargin(true, false, false, false);
+
+			final Button saveBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+
+							final String folderVal = (String) AddNewFolderWindow.this.folderName
+									.getValue();
+							if (folderVal != null
+									&& !folderVal.trim().equals("")) {
+								final String baseFolderPath = (FileMainViewImpl.this.baseFolder == null) ? FileMainViewImpl.this.rootPath
+										: FileMainViewImpl.this.baseFolder
+												.getPath();
+								final Folder newFolder = FileMainViewImpl.this.resourceService
+										.createNewFolder(baseFolderPath,
+												folderVal,
+												AppContext.getUsername());
+								FileMainViewImpl.this.baseFolder
+										.addChild(newFolder);
+								FileMainViewImpl.this.menuTree
+										.addItem(newFolder);
+								FileMainViewImpl.this.menuTree.setItemCaption(
+										newFolder, newFolder.getName());
+								FileMainViewImpl.this.menuTree.setParent(
+										newFolder,
+										FileMainViewImpl.this.baseFolder);
+								FileMainViewImpl.this.menuTree.setItemIcon(
+										newFolder,
+										MyCollabResource
+												.newResource("icons/16/ecm/folder_close.png"));
+								FileMainViewImpl.this.menuTree
+										.expandItem(FileMainViewImpl.this.baseFolder);
+
+								FileMainViewImpl.this.itemResourceContainerLayout
+										.constructBody(FileMainViewImpl.this.baseFolder);
+								AddNewFolderWindow.this.close();
+							}
+						}
+					});
+			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controlsLayout.addComponent(saveBtn);
+
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AddNewFolderWindow.this.close();
+						}
+					});
+			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			controlsLayout.addComponent(cancelBtn);
+			controlsLayout.setComponentAlignment(cancelBtn,
+					Alignment.MIDDLE_RIGHT);
+
+			this.addComponent(controlsLayout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(
+					controlsLayout, Alignment.MIDDLE_CENTER);
 		}
 	}
 }
