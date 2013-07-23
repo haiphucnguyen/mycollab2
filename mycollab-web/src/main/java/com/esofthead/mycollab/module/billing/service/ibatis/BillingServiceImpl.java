@@ -14,6 +14,8 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
+import com.esofthead.mycollab.module.billing.RegisterSourceConstants;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.PermissionFlag;
@@ -31,6 +33,7 @@ import com.esofthead.mycollab.module.user.domain.BillingPlanExample;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
@@ -116,7 +119,6 @@ public class BillingServiceImpl implements BillingService {
 		this.accountSettingMapper.insert(accountSettings);
 
 		// Register the new user to this account
-		// Fix issue account
 		final User user = new User();
 		user.setEmail(email);
 		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
@@ -134,15 +136,36 @@ public class BillingServiceImpl implements BillingService {
 		}
 		this.userMapper.insert(user);
 
-		// TODO: adjust register service
-		// user.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
-		// user.setRegistrationsource(RegisterSourceConstants.WEB);
+		// save user account
+		UserAccount userAccount = new UserAccount();
+		userAccount.setAccountid(accountid);
+		userAccount.setIsaccountowner(true);
+		userAccount.setIsadmin(true);
+		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
+		userAccount.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
+		userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
+		userAccount.setRoleid(null);
+		userAccount.setUsername(username);
 
+		// save default roles
+		saveEmployeeRole(accountid, username);
+		saveAdminRole(accountid, username);
+		saveGuestRole(accountid, username);
+
+		// save default account currency
+		final AccountCurrency currency = new AccountCurrency();
+		currency.setAccountid(accountid);
+		currency.setCurrencyid(1);
+		this.accountCurrencyMapper.insert(currency);
+	}
+
+	private void saveEmployeeRole(int accountid, String username) {
 		// Register default role for account
 		final Role role = new Role();
-		role.setRolename(SimpleRole.STANDARD_USER);
+		role.setRolename(SimpleRole.EMPLOYEE);
 		role.setDescription("");
 		role.setSaccountid(accountid);
+		role.setIssystemrole(true);
 		final int roleId = this.roleService.saveWithSession(role, username);
 
 		// save default permission to role
@@ -155,12 +178,48 @@ public class BillingServiceImpl implements BillingService {
 			permissionMap.addPath(element, PermissionFlag.READ_ONLY);
 		}
 		this.roleService.savePermission(roleId, permissionMap);
+	}
 
-		// save default account currency
-		final AccountCurrency currency = new AccountCurrency();
-		currency.setAccountid(accountid);
-		currency.setCurrencyid(1);
-		this.accountCurrencyMapper.insert(currency);
+	private void saveAdminRole(int accountid, String username) {
+		// Register default role for account
+		final Role role = new Role();
+		role.setRolename(SimpleRole.ADMIN);
+		role.setDescription("");
+		role.setSaccountid(accountid);
+		role.setIssystemrole(true);
+		final int roleId = this.roleService.saveWithSession(role, username);
+
+		// save default permission to role
+		final PermissionMap permissionMap = new PermissionMap();
+		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element, PermissionFlag.ACCESS);
+		}
+
+		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element, PermissionFlag.ACCESS);
+		}
+		this.roleService.savePermission(roleId, permissionMap);
+	}
+
+	private void saveGuestRole(int accountid, String username) {
+		// Register default role for account
+		final Role role = new Role();
+		role.setRolename(SimpleRole.GUEST);
+		role.setDescription("");
+		role.setSaccountid(accountid);
+		role.setIssystemrole(true);
+		final int roleId = this.roleService.saveWithSession(role, username);
+
+		// save default permission to role
+		final PermissionMap permissionMap = new PermissionMap();
+		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
+		}
+
+		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
+		}
+		this.roleService.savePermission(roleId, permissionMap);
 	}
 
 	@Override

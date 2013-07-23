@@ -7,9 +7,8 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import java.util.Collection;
 import java.util.Date;
 
-import org.vaadin.addon.customfield.CustomField;
+import org.vaadin.addon.customfield.FieldWrapper;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
@@ -21,24 +20,20 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -132,7 +127,16 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 					final com.vaadin.ui.Component uiContext) {
 
 				if (propertyId.equals("isAdmin")) {
-					return new UserAddViewImpl.EditForm.AdminRoleSelectionField();
+					if ((user.getIsAdmin() == null)
+							|| (user.getIsAdmin() == false)) {
+						AdminRoleSelectionField roleSelectionField = new AdminRoleSelectionField();
+						if (user.getRoleid() != null) {
+							roleSelectionField.setRoleId(user.getRoleid());
+						}
+						return roleSelectionField;
+					} else {
+						return new FormViewField("Account Owner");
+					}
 				} else if (propertyId.equals("firstname")
 						|| propertyId.equals("lastname")
 						|| propertyId.equals("email")) {
@@ -183,87 +187,48 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			}
 		}
 
-		private class AdminRoleSelectionField extends CustomField {
+		private class AdminRoleSelectionField extends FieldWrapper<Integer>
+				implements FieldSelection {
 			private static final long serialVersionUID = 1L;
-			private final CheckBox isAdminCheck;
-			private final HorizontalLayout layout;
-			private final HorizontalLayout roleLayout;
-			private final RoleComboBox roleComboBox;
+
+			private RoleComboBox roleBox;
 
 			public AdminRoleSelectionField() {
-				this.layout = new HorizontalLayout();
-				this.layout.setSpacing(true);
+				super(new TextField(""), Integer.class);
 
-				this.roleLayout = new HorizontalLayout();
-				this.roleLayout.setSpacing(true);
-				this.roleLayout.addComponent(new Label("Role"));
-				this.roleComboBox = new RoleComboBox();
-				this.roleComboBox
-						.addListener(new Property.ValueChangeListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void valueChange(
-									final Property.ValueChangeEvent event) {
-								UserAddViewImpl.this.user
-										.setRoleid((Integer) AdminRoleSelectionField.this.roleComboBox
-												.getValue());
-							}
-						});
-
-				this.roleLayout.addComponent(this.roleComboBox);
-
-				this.isAdminCheck = new CheckBox("");
-				this.isAdminCheck.setImmediate(true);
-				this.isAdminCheck.setWriteThrough(true);
-				this.isAdminCheck.addListener(new Button.ClickListener() {
+				roleBox = new RoleComboBox();
+				roleBox.addListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(final ClickEvent event) {
-						UserAddViewImpl.this.user
-								.setIsAdmin((Boolean) AdminRoleSelectionField.this.isAdminCheck
-										.getValue());
-
-						if (UserAddViewImpl.this.user.getIsAdmin()) {
-							UserAddViewImpl.this.user.setRoleid(null);
-							AdminRoleSelectionField.this.layout
-									.removeComponent(AdminRoleSelectionField.this.roleLayout);
-						} else {
-							if (AdminRoleSelectionField.this.roleComboBox
-									.getContainerPropertyIds().size() > 0) {
-								AdminRoleSelectionField.this.layout
-										.addComponent(AdminRoleSelectionField.this.roleLayout);
-							} else {
-								AppContext
-										.getApplication()
-										.getMainWindow()
-										.showNotification(
-												LocalizationHelper
-														.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-												"You must have at least one role to deselect admin checkbox",
-												Window.Notification.TYPE_HUMANIZED_MESSAGE);
-								AdminRoleSelectionField.this.isAdminCheck
-										.setValue(Boolean.TRUE);
-							}
+					public void valueChange(Property.ValueChangeEvent event) {
+						Object roleObj = roleBox.getValue();
+						if (roleObj != null && (roleObj instanceof Integer)) {
+							user.setRoleid((Integer) roleObj);
 						}
 					}
 				});
+				this.setCompositionRoot(roleBox);
+			}
 
-				this.isAdminCheck.setValue(UserAddViewImpl.this.user
-						.getIsAdmin());
-				this.layout.addComponent(this.isAdminCheck);
-				if (UserAddViewImpl.this.user.getIsAdmin() == null
-						|| !UserAddViewImpl.this.user.getIsAdmin()) {
-					this.layout.addComponent(this.roleLayout);
-				}
-
-				this.setCompositionRoot(this.layout);
+			public void setRoleId(int roleId) {
+				roleBox.setValue(roleId);
 			}
 
 			@Override
-			public Class<?> getType() {
-				return Object.class;
+			public Class<Integer> getType() {
+				return Integer.class;
+			}
+
+			@Override
+			public void fireValueChange(Object data) {
+				Integer roleIdVal = (Integer) data;
+				if (roleIdVal != null) {
+					this.getWrappedField().setValue(roleIdVal);
+				} else {
+					this.getWrappedField().setValue(null);
+				}
+
 			}
 		}
 	}

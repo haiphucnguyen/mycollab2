@@ -78,12 +78,12 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 
 					@Override
 					public void handle(final TableClickEvent event) {
-						final SimpleUser user = (SimpleUser) event.getData();
+						final String username = (String) event.getData();
 						if (("username".equals(event.getFieldName()) || ("displayName"
 								.equals(event.getFieldName())))) {
 							EventBus.getInstance().fireEvent(
 									new UserEvent.GotoRead(
-											UserListViewImpl.this, user));
+											UserListViewImpl.this, username));
 						}
 					}
 				});
