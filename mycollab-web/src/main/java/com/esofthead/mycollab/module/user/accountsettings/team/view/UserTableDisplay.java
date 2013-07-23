@@ -79,7 +79,8 @@ public class UserTableDisplay extends
                     @Override
                     public void buttonClick(ClickEvent event) {
                         fireTableEvent(new TableClickEvent(
-                                UserTableDisplay.this, user, "username"));
+                                UserTableDisplay.this, user.getUsername(),
+                                "username"));
                     }
                 });
 

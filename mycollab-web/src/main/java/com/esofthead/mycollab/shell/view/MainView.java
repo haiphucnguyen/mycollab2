@@ -157,6 +157,20 @@ public final class MainView extends AbstractView {
 		myAccountBtn.setStyleName("link");
 		accLayout.addComponent(myAccountBtn);
 
+		final Button userMgtBtn = new Button("User Management",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						accountMenu.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new ShellEvent.GotoUserAccountModule(this,
+										new String[] { "user", "list" }));
+					}
+				});
+		userMgtBtn.setStyleName("link");
+		accLayout.addComponent(userMgtBtn);
+
 		final Button signoutBtn = new Button("Sign out",
 				new Button.ClickListener() {
 					@Override

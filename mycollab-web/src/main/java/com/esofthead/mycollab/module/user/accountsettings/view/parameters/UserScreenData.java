@@ -6,9 +6,9 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 public class UserScreenData {
-	public static class Read extends ScreenData<Object> {
+	public static class Read extends ScreenData<String> {
 
-		public Read(Object params) {
+		public Read(String params) {
 			super(params);
 		}
 	}

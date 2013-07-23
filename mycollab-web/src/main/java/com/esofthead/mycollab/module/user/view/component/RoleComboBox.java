@@ -46,7 +46,6 @@ public class RoleComboBox extends ComboBox {
 			beanItem.addBean(role);
 		}
 
-		this.setNullSelectionAllowed(false);
 		this.setContainerDataSource(beanItem);
 		this.setItemCaptionPropertyId("rolename");
 		if (roleList.size() > 0) {

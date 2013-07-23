@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -14,8 +15,12 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+
+import de.steinwedel.vaadin.MessageBox;
+import de.steinwedel.vaadin.MessageBox.ButtonType;
 
 /**
  * 
@@ -67,15 +72,33 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		SimpleUser user = (SimpleUser) data.getParams();
+		if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+			String username = (String) data.getParams();
 
-		UserContainer userContainer = (UserContainer) container;
-		userContainer.removeAllComponents();
-		userContainer.addComponent(view.getWidget());
-		view.previewItem(user);
+			UserService userService = AppContext
+					.getSpringBean(UserService.class);
+			SimpleUser user = userService.findUserByUserNameInAccount(username,
+					AppContext.getAccountId());
+			if (user != null) {
+				UserContainer userContainer = (UserContainer) container;
+				userContainer.removeAllComponents();
+				userContainer.addComponent(view.getWidget());
+				view.previewItem(user);
 
-		AccountSettingBreadcrumb breadcrumb = ViewManager
-				.getView(AccountSettingBreadcrumb.class);
-		breadcrumb.gotoUserRead(user);
+				AccountSettingBreadcrumb breadcrumb = ViewManager
+						.getView(AccountSettingBreadcrumb.class);
+				breadcrumb.gotoUserRead(user);
+			} else {
+				MessageBox mb = new MessageBox(AppContext.getApplication()
+						.getMainWindow(), "Warning!", MessageBox.Icon.WARN,
+						"There is no user " + username + " in this account",
+						new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+				mb.show();
+			}
+
+		} else {
+			MessageConstants.showMessagePermissionAlert();
+		}
+
 	}
 }

@@ -1080,7 +1080,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		}
 	}
 
-	public static abstract class MoveWindow extends Window {
+	public static abstract class AbstractMoveWindow extends Window {
 		private static final long serialVersionUID = 1L;
 		protected TreeTable folderTree;
 		protected String rootPath;
@@ -1089,7 +1089,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		private ResourceService resourceService;
 		protected List<Resource> lstResEditting;
 
-		public MoveWindow(Resource resource, ResourceService resourceService) {
+		public AbstractMoveWindow(Resource resource, ResourceService resourceService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
@@ -1099,7 +1099,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			constructBody();
 		}
 
-		public MoveWindow(List<Resource> lstRes, ResourceService resourceService) {
+		public AbstractMoveWindow(List<Resource> lstRes, ResourceService resourceService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
@@ -1139,10 +1139,10 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				@Override
 				public void nodeExpand(final ExpandEvent event) {
 					final Folder expandFolder = (Folder) event.getItemId();
-					final List<Folder> subFolders = MoveWindow.this.resourceService
+					final List<Folder> subFolders = AbstractMoveWindow.this.resourceService
 							.getSubFolders(expandFolder.getPath());
 
-					MoveWindow.this.folderTree.setItemIcon(
+					AbstractMoveWindow.this.folderTree.setItemIcon(
 							expandFolder,
 							MyCollabResource
 									.newResource("icons/16/ecm/folder_open.png"));
@@ -1150,20 +1150,20 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					if (subFolders != null) {
 						for (final Folder subFolder : subFolders) {
 							expandFolder.addChild(subFolder);
-							MoveWindow.this.folderTree.addItem(
+							AbstractMoveWindow.this.folderTree.addItem(
 									new Object[] {
 											subFolder.getName(),
 											AppContext.formatDateTime(subFolder
 													.getCreated().getTime()) },
 									subFolder);
 
-							MoveWindow.this.folderTree.setItemIcon(
+							AbstractMoveWindow.this.folderTree.setItemIcon(
 									subFolder,
 									MyCollabResource
 											.newResource("icons/16/ecm/folder_close.png"));
-							MoveWindow.this.folderTree.setItemCaption(
+							AbstractMoveWindow.this.folderTree.setItemCaption(
 									subFolder, subFolder.getName());
-							MoveWindow.this.folderTree.setParent(subFolder,
+							AbstractMoveWindow.this.folderTree.setParent(subFolder,
 									expandFolder);
 						}
 					}
@@ -1176,13 +1176,13 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				@Override
 				public void nodeCollapse(final CollapseEvent event) {
 					final Folder collapseFolder = (Folder) event.getItemId();
-					MoveWindow.this.folderTree.setItemIcon(
+					AbstractMoveWindow.this.folderTree.setItemIcon(
 							collapseFolder,
 							MyCollabResource
 									.newResource("icons/16/ecm/folder_close.png"));
 					final List<Folder> childs = collapseFolder.getChilds();
 					for (final Folder subFolder : childs) {
-						MoveWindow.this.folderTree.removeItem(subFolder);
+						AbstractMoveWindow.this.folderTree.removeItem(subFolder);
 					}
 
 					childs.clear();
@@ -1194,7 +1194,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				@Override
 				public void itemClick(final ItemClickEvent event) {
-					MoveWindow.this.baseFolder = (Folder) event.getItemId();
+					AbstractMoveWindow.this.baseFolder = (Folder) event.getItemId();
 				}
 			});
 
@@ -1211,31 +1211,31 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					if (resourceEditting != null) {
 						try {
-							MoveWindow.this.resourceService.moveResource(
-									MoveWindow.this.resourceEditting.getPath(),
-									MoveWindow.this.baseFolder.getPath());
-							MoveWindow.this.close();
-							displayAfterMoveSuccess(MoveWindow.this.baseFolder);
-							MoveWindow.this.getWindow().showNotification(
+							AbstractMoveWindow.this.resourceService.moveResource(
+									AbstractMoveWindow.this.resourceEditting.getPath(),
+									AbstractMoveWindow.this.baseFolder.getPath());
+							AbstractMoveWindow.this.close();
+							displayAfterMoveSuccess(AbstractMoveWindow.this.baseFolder);
+							AbstractMoveWindow.this.getWindow().showNotification(
 									"Move asset(s) successfully.");
 						} catch (MyCollabException e) {
-							MoveWindow.this.getParent().getWindow()
+							AbstractMoveWindow.this.getParent().getWindow()
 									.showNotification(e.getMessage());
 						}
 					} else if (lstResEditting != null
 							&& lstResEditting.size() > 0) {
 						try {
 							for (Resource res : lstResEditting) {
-								MoveWindow.this.resourceService.moveResource(
+								AbstractMoveWindow.this.resourceService.moveResource(
 										res.getPath(),
-										MoveWindow.this.baseFolder.getPath());
+										AbstractMoveWindow.this.baseFolder.getPath());
 							}
-							MoveWindow.this.close();
-							displayAfterMoveSuccess(MoveWindow.this.baseFolder);
-							MoveWindow.this.getWindow().showNotification(
+							AbstractMoveWindow.this.close();
+							displayAfterMoveSuccess(AbstractMoveWindow.this.baseFolder);
+							AbstractMoveWindow.this.getWindow().showNotification(
 									"Move asset(s) successfully.");
 						} catch (MyCollabException e) {
-							MoveWindow.this.getParent().getWindow()
+							AbstractMoveWindow.this.getParent().getWindow()
 									.showNotification(e.getMessage());
 						}
 					}
@@ -1249,7 +1249,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					MoveWindow.this.close();
+					AbstractMoveWindow.this.close();
 				}
 			});
 			cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -1266,7 +1266,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		protected abstract void displayFiles();
 	}
 
-	protected class MoveResourceWindow extends MoveWindow {
+	protected class MoveResourceWindow extends AbstractMoveWindow {
 		private static final long serialVersionUID = 1L;
 
 		public MoveResourceWindow(Resource resource,

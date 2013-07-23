@@ -78,7 +78,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 					} else if (propertyId.equals("isAdmin")) {
 						if (user.getIsAdmin() != null
 								&& user.getIsAdmin() == Boolean.TRUE) {
-							return new FormViewField("Admin");
+							return new FormViewField("Account Owner");
 						} else {
 							FormLinkViewField roleLink = new FormLinkViewField(
 									user.getRoleName(),

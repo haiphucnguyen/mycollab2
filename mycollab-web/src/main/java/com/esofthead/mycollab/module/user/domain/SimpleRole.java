@@ -15,7 +15,9 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 public class SimpleRole extends Role {
 	private static final long serialVersionUID = 1L;
 
-	public static final String STANDARD_USER = "Standard User";
+	public static final String ADMIN = "Administrator";
+	public static final String EMPLOYEE = "Employee";
+	public static final String GUEST = "Guest";
 
 	private String permissionVal;
 	private PermissionMap permissionMap;
