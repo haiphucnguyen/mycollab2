@@ -296,6 +296,12 @@ public class UserServiceDBImpl extends
 		userAccountMapper.deleteByExample(userAccountEx);
 
 		// TODO: if user does not belong to any account then remove this user
+		userAccountEx = new UserAccountExample();
+		userAccountEx.createCriteria().andUsernameEqualTo(username);
+		int userPresentNum = userAccountMapper.countByExample(userAccountEx);
+		if (userPresentNum == 0) {
+
+		}
 	}
 
 	@Override

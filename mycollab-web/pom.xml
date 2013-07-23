@@ -375,6 +375,21 @@
             <version>2.0</version>
         </dependency>
 
+        <!-- Camel dependency -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+
+
+
         <!-- GWT dependency -->
         <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
             <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
