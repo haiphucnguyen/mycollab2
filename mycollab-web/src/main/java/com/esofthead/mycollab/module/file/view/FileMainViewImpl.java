@@ -1,14 +1,19 @@
 package com.esofthead.mycollab.module.file.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
@@ -21,8 +26,10 @@ import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -254,8 +261,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-
+				MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
+				FileMainViewImpl.this.getWindow().addWindow(multiUploadWindow);
 			}
 		});
 		uploadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -985,5 +992,107 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			((VerticalLayout) this.getContent()).setComponentAlignment(
 					controlsLayout, Alignment.MIDDLE_CENTER);
 		}
+	}
+
+	private class MultiUploadContentWindow extends Window {
+		private static final long serialVersionUID = 1L;
+
+		private final GridFormLayoutHelper layoutHelper;
+		private final MultiFileUploadExt multiUploadField;
+
+		public MultiUploadContentWindow() {
+			super("Multi Upload Content");
+			this.setWidth("500px");
+			((VerticalLayout) this.getContent()).setMargin(false, false, true,
+					false);
+			this.setModal(true);
+			final AttachmentPanel attachments = new AttachmentPanel();
+
+			this.layoutHelper = new GridFormLayoutHelper(1, 2, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+
+			this.multiUploadField = (MultiFileUploadExt) this.layoutHelper
+					.addComponent(new MultiFileUploadExt(attachments), "File",
+							0, 0);
+			this.layoutHelper.getLayout().setWidth("100%");
+			this.layoutHelper.getLayout().setMargin(false);
+			this.layoutHelper.getLayout().addStyleName("colored-gridlayout");
+			this.addComponent(this.layoutHelper.getLayout());
+
+			final HorizontalLayout controlsLayout = new HorizontalLayout();
+			controlsLayout.setSpacing(true);
+			controlsLayout.setMargin(true, false, false, false);
+
+			final Button uploadBtn = new Button("Upload",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							List<File> lstFileAttachments = attachments
+									.getListFile();
+							if (lstFileAttachments != null
+									&& lstFileAttachments.size() > 0) {
+								for (File file : lstFileAttachments) {
+									try {
+										final Content content = new Content();
+										content.setPath(FileMainViewImpl.this.baseFolder
+												.getPath()
+												+ "/"
+												+ file.getName());
+										content.setSize(Double.parseDouble(""
+												+ file.getTotalSpace()));
+										FileInputStream fileInputStream = new FileInputStream(
+												file);
+
+										FileMainViewImpl.this.resourceService
+												.saveContent(content,
+														AppContext
+																.getUsername(),
+														fileInputStream);
+									} catch (IOException e) {
+										throw new MyCollabException(e);
+									}
+									MultiUploadContentWindow.this.close();
+									FileMainViewImpl.this.itemResourceContainerLayout
+											.constructBody(FileMainViewImpl.this.baseFolder);
+									MultiUploadContentWindow.this.close();
+									FileMainViewImpl.this.getWindow()
+											.showNotification(
+													"Upload successfully.");
+								}
+							} else {
+								AppContext
+										.getApplication()
+										.getMainWindow()
+										.showNotification(
+												"It seems you did not attach file yet!");
+							}
+						}
+					});
+			uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controlsLayout.addComponent(uploadBtn);
+
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							MultiUploadContentWindow.this.close();
+						}
+					});
+			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			controlsLayout.addComponent(cancelBtn);
+			controlsLayout.setComponentAlignment(cancelBtn,
+					Alignment.MIDDLE_RIGHT);
+
+			this.addComponent(controlsLayout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(
+					controlsLayout, Alignment.MIDDLE_CENTER);
+		}
+
 	}
 }
