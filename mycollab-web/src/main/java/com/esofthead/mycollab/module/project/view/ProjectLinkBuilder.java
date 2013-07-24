@@ -196,7 +196,7 @@ public class ProjectLinkBuilder {
 			this.projectId = projectId;
 
 			ProjectService projectService = ApplicationContextUtil
-					.getApplicationContext().getBean(ProjectService.class);
+					.getBean(ProjectService.class);
 			String subdomain = projectService.getSubdomainOfProject(projectId);
 			if (subdomain != null) {
 				siteUrl = ApplicationProperties.getSiteUrl(subdomain);

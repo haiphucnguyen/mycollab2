@@ -24,6 +24,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.builder.ProxyBuilder;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.esb.handler.UserDeleteListener;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
@@ -58,6 +61,7 @@ import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
@@ -300,16 +304,29 @@ public class UserServiceDBImpl extends
 		userAccountEx.createCriteria().andUsernameEqualTo(username);
 		int userPresentNum = userAccountMapper.countByExample(userAccountEx);
 		if (userPresentNum == 0) {
-
+			UserExample userEx = new UserExample();
+			userEx.createCriteria().andUsernameEqualTo(username);
+			userMapper.deleteByExample(userEx);
+		} else {
+			// notify listener user is removed
+			CamelContext camelContext = ApplicationContextUtil
+					.getBean(CamelContext.class);
+			try {
+				UserDeleteListener userDeleteListener = new ProxyBuilder(
+						camelContext).endpoint("direct:userDelete").build(
+						UserDeleteListener.class);
+				userDeleteListener.userRemoved(username, accountId);
+			} catch (Exception e) {
+				log.error("Error while notify user delete", e);
+			}
 		}
 	}
 
 	@Override
 	public void removeUserAccounts(List<String> usernames, int accountId) {
-		UserAccountExample userAccountEx = new UserAccountExample();
-		userAccountEx.createCriteria().andUsernameIn(usernames)
-				.andAccountidEqualTo(accountId);
-		userAccountMapper.deleteByExample(userAccountEx);
+		for (String username : usernames) {
+			removeUserAccount(username, accountId);
+		}
 	}
 
 	@Override

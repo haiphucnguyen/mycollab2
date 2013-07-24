@@ -32,8 +32,7 @@ public class StreamFolderDownloadResource implements
 
 	public StreamFolderDownloadResource(String[] folderPath) {
 		this.folderPath = folderPath;
-		resourceService = ApplicationContextUtil.getApplicationContext()
-				.getBean(ResourceService.class);
+		resourceService = ApplicationContextUtil.getBean(ResourceService.class);
 	}
 
 	@Override
