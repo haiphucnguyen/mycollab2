@@ -388,7 +388,18 @@
             <version>2.11.1</version>
         </dependency>
 
+        <!-- Granite dependency -->
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-core</artifactId>
+            <version>3.0.0.M2</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.graniteds</groupId>
+            <artifactId>granite-spring</artifactId>
+            <version>3.0.0.M2</version>
+        </dependency>
 
         <!-- GWT dependency -->
         <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 

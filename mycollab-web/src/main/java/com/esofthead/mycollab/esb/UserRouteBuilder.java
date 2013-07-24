@@ -12,8 +12,8 @@ public class UserRouteBuilder extends SpringRouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
-		from("direct:userDelete").setExchangePattern(ExchangePattern.InOnly)
-				.to("seda:userDelete.queue");
+		from(EndpointConstants.USER_REMOVE_ENDPOINT).setExchangePattern(
+				ExchangePattern.InOnly).to("seda:userDelete.queue");
 		from("seda:userDelete.queue").threads().bean(
 				ApplicationContextUtil.getBean(UserDeleteListener.class),
 				"userRemoved(String, int)");

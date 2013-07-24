@@ -238,4 +238,10 @@ public class BillingServiceImpl implements BillingService {
 		
 	}
 
+	@Override
+	public void cancelAccount(int accountid) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

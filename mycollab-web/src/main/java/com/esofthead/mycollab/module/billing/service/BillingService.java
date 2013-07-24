@@ -8,6 +8,8 @@ public interface BillingService {
 	void registerAccount(String subdomain, int billingPlanId, String username,
 			String password, String email, String timezoneId);
 
+	void cancelAccount(int accountid);
+
 	void updateBillingPlan(int accountid, int newBillingPlanId);
 
 	List<String> getSubdomainsOfUser(String username);

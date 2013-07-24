@@ -19,7 +19,11 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.builder.ProxyBuilder;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +39,8 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.esb.EndpointConstants;
+import com.esofthead.mycollab.esb.handler.ProjectDeleteListener;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -51,6 +57,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Service
 @Transactional
@@ -58,6 +65,9 @@ import com.esofthead.mycollab.module.user.PermissionFlag;
 public class ProjectServiceImpl extends
 		DefaultService<Integer, Project, ProjectSearchCriteria> implements
 		ProjectService {
+
+	private static Logger log = LoggerFactory
+			.getLogger(ProjectServiceImpl.class);
 
 	@Autowired
 	private ProjectMapper projectMapper;
@@ -234,5 +244,24 @@ public class ProjectServiceImpl extends
 	@Override
 	public int getTotalFollowingTickets(MonitorSearchCriteria searchCriteria) {
 		return projectMapperExt.getTotalFollowingTickets(searchCriteria);
+	}
+
+	@Override
+	public int removeWithSession(Integer projectId, String username) {
+		int id = super.removeWithSession(projectId, username);
+		// notify listener project is removed, then silently remove project in
+		// associate records
+		CamelContext camelContext = ApplicationContextUtil
+				.getBean(CamelContext.class);
+		try {
+			ProjectDeleteListener projectDeleteListener = new ProxyBuilder(
+					camelContext).endpoint(
+					EndpointConstants.PROJECT_REMOVE_ENDPOINT).build(
+					ProjectDeleteListener.class);
+			projectDeleteListener.projectRemoved(projectId);
+		} catch (Exception e) {
+			log.error("Error while notify user delete", e);
+		}
+		return id;
 	}
 }

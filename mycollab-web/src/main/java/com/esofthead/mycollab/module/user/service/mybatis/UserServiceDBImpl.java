@@ -42,6 +42,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.esb.EndpointConstants;
 import com.esofthead.mycollab.esb.handler.UserDeleteListener;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
@@ -299,7 +300,7 @@ public class UserServiceDBImpl extends
 				.andAccountidEqualTo(accountId);
 		userAccountMapper.deleteByExample(userAccountEx);
 
-		// TODO: if user does not belong to any account then remove this user
+		// if user does not belong to any account then remove this user
 		userAccountEx = new UserAccountExample();
 		userAccountEx.createCriteria().andUsernameEqualTo(username);
 		int userPresentNum = userAccountMapper.countByExample(userAccountEx);
@@ -308,12 +309,14 @@ public class UserServiceDBImpl extends
 			userEx.createCriteria().andUsernameEqualTo(username);
 			userMapper.deleteByExample(userEx);
 		} else {
-			// notify listener user is removed
+			// notify listener user is removed, then silently remove user in
+			// associate records
 			CamelContext camelContext = ApplicationContextUtil
 					.getBean(CamelContext.class);
 			try {
 				UserDeleteListener userDeleteListener = new ProxyBuilder(
-						camelContext).endpoint("direct:userDelete").build(
+						camelContext).endpoint(
+						EndpointConstants.USER_REMOVE_ENDPOINT).build(
 						UserDeleteListener.class);
 				userDeleteListener.userRemoved(username, accountId);
 			} catch (Exception e) {
