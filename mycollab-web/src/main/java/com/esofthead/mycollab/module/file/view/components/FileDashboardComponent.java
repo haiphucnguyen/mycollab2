@@ -1089,7 +1089,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		private ResourceService resourceService;
 		protected List<Resource> lstResEditting;
 
-		public AbstractMoveWindow(Resource resource, ResourceService resourceService) {
+		public AbstractMoveWindow(Resource resource,
+				ResourceService resourceService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
@@ -1099,7 +1100,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			constructBody();
 		}
 
-		public AbstractMoveWindow(List<Resource> lstRes, ResourceService resourceService) {
+		public AbstractMoveWindow(List<Resource> lstRes,
+				ResourceService resourceService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
@@ -1163,8 +1165,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 											.newResource("icons/16/ecm/folder_close.png"));
 							AbstractMoveWindow.this.folderTree.setItemCaption(
 									subFolder, subFolder.getName());
-							AbstractMoveWindow.this.folderTree.setParent(subFolder,
-									expandFolder);
+							AbstractMoveWindow.this.folderTree.setParent(
+									subFolder, expandFolder);
 						}
 					}
 				}
@@ -1182,7 +1184,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 									.newResource("icons/16/ecm/folder_close.png"));
 					final List<Folder> childs = collapseFolder.getChilds();
 					for (final Folder subFolder : childs) {
-						AbstractMoveWindow.this.folderTree.removeItem(subFolder);
+						AbstractMoveWindow.this.folderTree
+								.removeItem(subFolder);
 					}
 
 					childs.clear();
@@ -1194,7 +1197,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				@Override
 				public void itemClick(final ItemClickEvent event) {
-					AbstractMoveWindow.this.baseFolder = (Folder) event.getItemId();
+					AbstractMoveWindow.this.baseFolder = (Folder) event
+							.getItemId();
 				}
 			});
 
@@ -1211,13 +1215,17 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					if (resourceEditting != null) {
 						try {
-							AbstractMoveWindow.this.resourceService.moveResource(
-									AbstractMoveWindow.this.resourceEditting.getPath(),
-									AbstractMoveWindow.this.baseFolder.getPath());
+							AbstractMoveWindow.this.resourceService
+									.moveResource(
+											AbstractMoveWindow.this.resourceEditting
+													.getPath(),
+											AbstractMoveWindow.this.baseFolder
+													.getPath());
 							AbstractMoveWindow.this.close();
 							displayAfterMoveSuccess(AbstractMoveWindow.this.baseFolder);
-							AbstractMoveWindow.this.getWindow().showNotification(
-									"Move asset(s) successfully.");
+							AbstractMoveWindow.this.getWindow()
+									.showNotification(
+											"Move asset(s) successfully.");
 						} catch (MyCollabException e) {
 							AbstractMoveWindow.this.getParent().getWindow()
 									.showNotification(e.getMessage());
@@ -1228,16 +1236,23 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 							for (Resource res : lstResEditting) {
 								AbstractMoveWindow.this.resourceService.moveResource(
 										res.getPath(),
-										AbstractMoveWindow.this.baseFolder.getPath());
+										AbstractMoveWindow.this.baseFolder
+												.getPath());
 							}
 							AbstractMoveWindow.this.close();
 							displayAfterMoveSuccess(AbstractMoveWindow.this.baseFolder);
-							AbstractMoveWindow.this.getWindow().showNotification(
-									"Move asset(s) successfully.");
+							AbstractMoveWindow.this.getWindow()
+									.showNotification(
+											"Move asset(s) successfully.");
 						} catch (MyCollabException e) {
 							AbstractMoveWindow.this.getParent().getWindow()
 									.showNotification(e.getMessage());
 						}
+					} else {
+						AbstractMoveWindow.this
+								.getParent()
+								.getWindow()
+								.showNotification("Please select items to move");
 					}
 				}
 
