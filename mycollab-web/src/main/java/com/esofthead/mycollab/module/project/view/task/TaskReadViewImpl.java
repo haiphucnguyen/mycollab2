@@ -12,6 +12,7 @@ import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -88,7 +89,8 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 				final CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_TASK,
-						TaskReadViewImpl.this.task.getId(), true, true,
+						TaskReadViewImpl.this.task.getId(),
+						CurrentProjectVariables.getProjectId(), true, true,
 						ProjectTaskRelayEmailNotificationAction.class);
 				commentList.setMargin(true);
 				tabTaskDetail.addTab(commentList, "Comments");
@@ -174,7 +176,8 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			@Override
 			protected ComponentContainer createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
-						PrintView.this.task.getId(), false, false);
+						PrintView.this.task.getId(),
+						CurrentProjectVariables.getProjectId(), false, false);
 			}
 
 			@Override

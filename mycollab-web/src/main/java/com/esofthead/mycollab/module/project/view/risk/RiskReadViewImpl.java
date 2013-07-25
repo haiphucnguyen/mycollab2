@@ -5,6 +5,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
@@ -161,7 +162,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			protected Layout createBottomPanel() {
 				final CommentListDepot commentList = new CommentListDepot(
 						CommentTypeConstants.PRJ_RISK,
-						RiskReadViewImpl.this.risk.getId(), true, false);
+						RiskReadViewImpl.this.risk.getId(),
+						CurrentProjectVariables.getProjectId(), true, false);
 				commentList.setWidth("100%");
 				return commentList;
 			}
@@ -244,7 +246,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_RISK,
-						PrintView.this.risk.getId(), false, false);
+						PrintView.this.risk.getId(),
+						CurrentProjectVariables.getProjectId(), false, false);
 			}
 		}
 	}

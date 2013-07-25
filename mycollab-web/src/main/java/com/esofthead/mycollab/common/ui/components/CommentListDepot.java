@@ -22,6 +22,37 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class CommentListDepot extends Depot {
 
+	private final CommentDisplay commentListBox;
+
+	public CommentListDepot(final String type, final Integer typeid,
+			final Integer extraTypeId, final boolean isDisplayCommentInput,
+			final boolean isSendingRelayEmail) {
+		super("Comments", new CommentDisplay(type, typeid, extraTypeId,
+				isDisplayCommentInput, isSendingRelayEmail, null));
+		this.setWidth("900px");
+		addStyleName("comment-list");
+		commentListBox = (CommentDisplay) bodyContent;
+		setTitle("Comments(" + commentListBox.getNumComments() + ")");
+		commentListBox.setMargin(true);
+	}
+
+	public CommentListDepot(final String type, final int typeid,
+			final int extraTypeId, final boolean isDisplayCommentInput,
+			final boolean isSendingRelayEmail, final Class emailHandler) {
+		super("Comments", new CommentDisplay(type, typeid, extraTypeId,
+				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
+		this.setWidth("900px");
+		addStyleName("comment-list");
+		commentListBox = (CommentDisplay) bodyContent;
+		setTitle("Comments(" + commentListBox.getNumComments() + ")");
+		commentListBox.setMargin(true);
+	}
+
+	public void loadComments(final String type, final int typeid) {
+		commentListBox.loadComments(type, typeid);
+		setTitle("Comments(" + commentListBox.getNumComments() + ")");
+	}
+
 	public static class CommentDisplay extends VerticalLayout implements
 			ReloadableComponent {
 		private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
@@ -31,44 +62,19 @@ public class CommentListDepot extends Depot {
 		private CommentInput commentBox;
 
 		public CommentDisplay(final boolean isDisplayCommentInput) {
-			this(isDisplayCommentInput, null);
+			this(null, null, null, isDisplayCommentInput, false, null);
 		}
 
-		public CommentDisplay(final boolean isDisplayCommentInput,
-				final Class emailHandler) {
-			setSpacing(true);
-			if (isDisplayCommentInput) {
-				commentBox = new CommentInput(this, type, typeid, emailHandler);
-				this.addComponent(commentBox);
-			}
-
-			commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(
-					AppContext.getSpringBean(CommentService.class),
-					CommentRowDisplayHandler.class);
-			commentList.setDisplayEmptyListText(false);
-			this.addComponent(commentList);
-		}
-
-		// public CommentDisplay(String type, int typeid) {
-		// this(type, typeid, true);
-		// }
-
-		public CommentDisplay(final String type, final int typeid,
-				final boolean isDisplayCommentInput,
-				final boolean isSendingRelayEmail) {
-			this(type, typeid, isDisplayCommentInput, isSendingRelayEmail, null);
-		}
-
-		public CommentDisplay(final String type, final int typeid,
-				final boolean isDisplayCommentInput,
+		public CommentDisplay(final String type, final Integer typeid,
+				final Integer extraTypeId, final boolean isDisplayCommentInput,
 				final boolean isSendingRelayEmail, final Class emailHandler) {
 			setSpacing(true);
 			this.type = type;
 			this.typeid = typeid;
 
 			if (isDisplayCommentInput) {
-				commentBox = new CommentInput(this, type, typeid, false,
-						isSendingRelayEmail, emailHandler);
+				commentBox = new CommentInput(this, type, typeid, extraTypeId,
+						false, isSendingRelayEmail, emailHandler);
 				this.addComponent(commentBox);
 			}
 
@@ -115,58 +121,5 @@ public class CommentListDepot extends Depot {
 		public void reload() {
 			displayCommentList();
 		}
-	}
-
-	private final CommentDisplay commentListBox;
-
-	public CommentListDepot(final boolean isDisplayCommentInput) {
-		super("Comments", new CommentDisplay(isDisplayCommentInput));
-		this.setWidth("900px");
-		addStyleName("comment-list");
-		commentListBox = (CommentDisplay) bodyContent;
-		commentListBox.setMargin(true);
-	}
-
-	// public CommentListDepot(String type, int typeid) {
-	// this(type, typeid, true);
-	// }
-
-	public CommentListDepot(final boolean isDisplayCommentInput,
-			final Class emailHandler) {
-		super("Comments", new CommentDisplay(isDisplayCommentInput,
-				emailHandler));
-		this.setWidth("900px");
-		addStyleName("comment-list");
-		commentListBox = (CommentDisplay) bodyContent;
-		commentListBox.setMargin(true);
-	}
-
-	public CommentListDepot(final String type, final int typeid,
-			final boolean isDisplayCommentInput,
-			final boolean isSendingRelayEmail) {
-		super("Comments", new CommentDisplay(type, typeid,
-				isDisplayCommentInput, isSendingRelayEmail, null));
-		this.setWidth("900px");
-		addStyleName("comment-list");
-		commentListBox = (CommentDisplay) bodyContent;
-		setTitle("Comments(" + commentListBox.getNumComments() + ")");
-		commentListBox.setMargin(true);
-	}
-
-	public CommentListDepot(final String type, final int typeid,
-			final boolean isDisplayCommentInput,
-			final boolean isSendingRelayEmail, final Class emailHandler) {
-		super("Comments", new CommentDisplay(type, typeid,
-				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
-		this.setWidth("900px");
-		addStyleName("comment-list");
-		commentListBox = (CommentDisplay) bodyContent;
-		setTitle("Comments(" + commentListBox.getNumComments() + ")");
-		commentListBox.setMargin(true);
-	}
-
-	public void loadComments(final String type, final int typeid) {
-		commentListBox.loadComments(type, typeid);
-		setTitle("Comments(" + commentListBox.getNumComments() + ")");
 	}
 }

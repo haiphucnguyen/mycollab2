@@ -5,6 +5,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -162,7 +163,8 @@ public class ProblemReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				final CommentListDepot commentList = new CommentListDepot(
 						CommentTypeConstants.PRJ_PROBLEM,
-						ProblemReadViewImpl.this.problem.getId(), true, false);
+						ProblemReadViewImpl.this.problem.getId(),
+						CurrentProjectVariables.getProjectId(), true, false);
 				commentList.setWidth("100%");
 				return commentList;
 			}
@@ -245,7 +247,8 @@ public class ProblemReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
-						PrintView.this.problem.getId(), false, false);
+						PrintView.this.problem.getId(),
+						CurrentProjectVariables.getProjectId(), false, false);
 			}
 		}
 	}

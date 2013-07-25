@@ -12,6 +12,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -94,7 +95,7 @@ public class MessageReadViewImpl extends AbstractView implements
 
 			@Override
 			public Layout getLayout() {
-				VerticalLayout riskAddLayout = new VerticalLayout();
+				VerticalLayout messageAddLayout = new VerticalLayout();
 
 				HorizontalLayout messageLayout = new HorizontalLayout();
 				messageLayout.setStyleName("message");
@@ -174,17 +175,18 @@ public class MessageReadViewImpl extends AbstractView implements
 				messageLayout.addComponent(rowLayout);
 				messageLayout.setExpandRatio(rowLayout, 1.0f);
 
-				riskAddLayout.addComponent(messageLayout);
-				riskAddLayout.addComponent(createBottomPanel());
+				messageAddLayout.addComponent(messageLayout);
+				messageAddLayout.addComponent(createBottomPanel());
 
-				return riskAddLayout;
+				return messageAddLayout;
 			}
 
 			protected Layout createBottomPanel() {
 				VerticalLayout bottomPanel = new VerticalLayout();
 				bottomPanel.addComponent(new CommentListDepot(
 						CommentTypeConstants.PRJ_MESSAGE, message.getId(),
-						true, true, MessageRelayEmailNotificationAction.class));
+						CurrentProjectVariables.getProjectId(), true, true,
+						MessageRelayEmailNotificationAction.class));
 				return bottomPanel;
 			}
 
