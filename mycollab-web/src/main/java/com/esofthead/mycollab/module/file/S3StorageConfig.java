@@ -62,7 +62,7 @@ public class S3StorageConfig {
 		if ("".equals(s3UrlPath)) {
 			return "";
 		} else {
-			return s3UrlPath + "/" + documentPath;
+			return s3UrlPath + documentPath;
 		}
 	}
 }
