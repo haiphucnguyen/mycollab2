@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -73,29 +72,23 @@ public class StreamFolderDownloadResource implements
 			String... path) {
 		try {
 			for (String resPath : path) {
-				List<Resource> resources = resourceService
-						.getResources(resPath);
-				for (Resource resource : resources) {
-					if (resource instanceof Content) {
-						InputStream contentStream = resourceService
-								.getContentStream(resource.getPath());
-						log.debug("Add file entry " + resource.getName()
-								+ " to zip file");
-						String entryPath = resource.getPath().substring(
-								resource.getPath().indexOf(resPath)
-										+ resPath.length() + 1);
-						ZipEntry entry = new ZipEntry(entryPath);
-						zipOutputStream.putNextEntry(entry);
-						byte[] bytes = new byte[1024];
-						int length = -1;
+				Resource resource = resourceService.getResource(resPath);
+				if (resource instanceof Content) {
+					InputStream contentStream = resourceService
+							.getContentStream(resource.getPath());
+					log.debug("Add file entry " + resource.getName()
+							+ " to zip file");
+					ZipEntry entry = new ZipEntry(resource.getName());
+					zipOutputStream.putNextEntry(entry);
+					byte[] bytes = new byte[1024];
+					int length = -1;
 
-						while ((length = contentStream.read(bytes)) != -1) {
-							zipOutputStream.write(bytes, 0, length);
-						}
-						zipOutputStream.closeEntry();
-					} else if (resource instanceof Folder) {
-						saveContentToStream(zipOutputStream, resource.getPath());
+					while ((length = contentStream.read(bytes)) != -1) {
+						zipOutputStream.write(bytes, 0, length);
 					}
+					zipOutputStream.closeEntry();
+				} else if (resource instanceof Folder) {
+					saveContentToStream(zipOutputStream, resource.getPath());
 				}
 			}
 		} catch (Exception e) {

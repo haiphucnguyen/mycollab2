@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -75,6 +74,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private Folder baseFolder;
 	private String rootPath;
 	private String rootFolderName;
+	private Button selectAllBtn;
 	private List<Resource> lstCheckedResource;
 	private ItemResourceContainerLayout itemResourceContainerLayout;
 
@@ -86,11 +86,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		HorizontalLayout mainView = new HorizontalLayout();
 		mainView.setSpacing(true);
 		mainView.setMargin(true);
-		if (ScreenSize.hasSupport1280Pixels()) {
-			mainView.setWidth("1400px");
-		} else {
-			mainView.setWidth("1130px");
-		}
+		mainView.setWidth("100%");
+
 		final HorizontalLayout menuBarContainerHorizontalLayout = new HorizontalLayout();
 		menuBarContainerHorizontalLayout.setMargin(true);
 
@@ -174,6 +171,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		menuLayout.addComponent(shareActionLayout);
 
 		mainView.addComponent(menuBarContainerHorizontalLayout);
+		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
+				Alignment.TOP_LEFT);
 
 		Separator separator = new Separator();
 		mainView.addComponent(separator);
@@ -190,7 +189,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		controllGroupBtn.setMargin(true, false, false, true);
 		controllGroupBtn.setSpacing(true);
 
-		final Button selectAllBtn = new Button();
+		selectAllBtn = new Button();
 		selectAllBtn.setIcon(MyCollabResource
 				.newResource("icons/16/checkbox_empty.png"));
 		selectAllBtn.setValue(false);
@@ -344,19 +343,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 											FileMainViewImpl.this.resourceService
 													.removeResource(res
 															.getPath());
-											itemResourceContainerLayout
-													.constructBody(FileMainViewImpl.this.baseFolder);
-
-											FileMainViewImpl.this.menuTree
-													.collapseItem(FileMainViewImpl.this.baseFolder);
-											FileMainViewImpl.this.menuTree
-													.collapseItem(FileMainViewImpl.this.baseFolder);
-											FileMainViewImpl.this
-													.getWindow()
-													.showNotification(
-															"Delete successfully.");
-											FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 										}
+										itemResourceContainerLayout
+												.constructBody(FileMainViewImpl.this.baseFolder);
+
+										FileMainViewImpl.this.menuTree
+												.collapseItem(FileMainViewImpl.this.baseFolder);
+										FileMainViewImpl.this.menuTree
+												.collapseItem(FileMainViewImpl.this.baseFolder);
+										FileMainViewImpl.this.getWindow()
+												.showNotification(
+														"Delete successfully.");
+										FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 									}
 								}
 							}
@@ -379,6 +377,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		mainBodyLayout.addComponent(itemResourceContainerLayout);
 
 		mainView.addComponent(mainBodyLayout);
+		mainView.setComponentAlignment(mainBodyLayout, Alignment.MIDDLE_LEFT);
 
 		mainView.setExpandRatio(mainBodyLayout, 1.0f);
 
@@ -539,6 +538,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
+			if (listAllCheckBox != null && listAllCheckBox.size() > 0)
+				listAllCheckBox.clear();
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 			List<Resource> lstResource = resourceService.getResources(curFolder
@@ -558,6 +559,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
+			if (listAllCheckBox != null && listAllCheckBox.size() > 0)
+				listAllCheckBox.clear();
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 
