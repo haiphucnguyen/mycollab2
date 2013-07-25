@@ -318,8 +318,9 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						return resources;
 					} else {
 						throw new ContentException(
-								"Do not support any node type except mycollab:folder. The current node has type "
-										+ node.getPrimaryNodeType().getName());
+								"Do not support any node type except mycollab:folder. The current node has type: "
+										+ node.getPrimaryNodeType().getName()
+										+ " and its path is " + path);
 					}
 				}
 
