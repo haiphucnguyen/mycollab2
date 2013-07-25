@@ -4,7 +4,7 @@ import java.util.GregorianCalendar;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class MonitorItemAspect {
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
 
-	@After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
 	public void traceSaveActivity(JoinPoint joinPoint, Object bean,
 			String username) {
 		Advised advised = (Advised) joinPoint.getThis();

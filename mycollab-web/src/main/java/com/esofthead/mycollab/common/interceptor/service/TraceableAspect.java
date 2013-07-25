@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
@@ -51,7 +50,7 @@ public class TraceableAspect {
 
 	}
 
-	@After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
 	public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
 			String username) {
 
