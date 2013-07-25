@@ -10,9 +10,10 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
-import com.esofthead.mycollab.module.file.domain.Attachment;
-import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -35,14 +36,14 @@ import com.vaadin.ui.VerticalLayout;
 public class AttachmentDisplayComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
-	public AttachmentDisplayComponent(List<Attachment> attachments) {
-		for (Attachment attachment : attachments) {
+	public AttachmentDisplayComponent(List<Content> attachments) {
+		for (Content attachment : attachments) {
 			this.addComponent(constructAttachmentRow(attachment));
 		}
 	}
 
-	public static Component constructAttachmentRow(final Attachment attachment) {
-		String docName = attachment.getDocumentpath();
+	public static Component constructAttachmentRow(final Content attachment) {
+		String docName = attachment.getPath();
 		int lastIndex = docName.lastIndexOf("/");
 		if (lastIndex != -1) {
 			docName = docName.substring(lastIndex + 1, docName.length());
@@ -78,8 +79,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					Resource previewResource = StreamDownloadResourceFactory
-							.getImagePreviewResource(attachment
-									.getDocumentpath());
+							.getImagePreviewResource(attachment.getPath());
 					AppContext
 							.getApplication()
 							.getMainWindow()
@@ -88,7 +88,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 				}
 			});
 			previewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/preview.png"));
+					.newResource("icons/16/preview.png"));
 			previewBtn.setStyleName("link");
 			attachmentLayout.addComponent(previewBtn);
 		}
@@ -118,11 +118,11 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											AttachmentService attachmentService = AppContext
-													.getSpringBean(AttachmentService.class);
-											attachmentService.removeAttachment(
-													AppContext.getAccountId(),
-													attachment);
+											ResourceService attachmentService = AppContext
+													.getSpringBean(ResourceService.class);
+											attachmentService
+													.removeResource(attachment
+															.getPath());
 											((ComponentContainer) attachmentLayout
 													.getParent())
 													.removeComponent(attachmentLayout);
@@ -132,8 +132,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 			}
 		});
-		trashBtn.setIcon(MyCollabResource
-				.newResource("icons/16/trash.png"));
+		trashBtn.setIcon(MyCollabResource.newResource("icons/16/trash.png"));
 		trashBtn.setStyleName("link");
 		attachmentLayout.addComponent(trashBtn);
 
@@ -143,7 +142,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Resource downloadResource = StreamDownloadResourceFactory
-						.getAccountStreamResource(attachment.getDocumentpath());
+						.getAccountStreamResource(attachment.getPath());
 				AppContext.getApplication().getMainWindow()
 						.open(downloadResource, "_blank");
 			}
@@ -157,10 +156,11 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 	public static Component getAttachmentDisplayComponent(String type,
 			int typeid) {
-		AttachmentService attachmentService = AppContext
-				.getSpringBean(AttachmentService.class);
-		List<Attachment> attachments = attachmentService.findByAttachmentId(
-				type, typeid);
+		ResourceService attachmentService = AppContext
+				.getSpringBean(ResourceService.class);
+		List<Content> attachments = attachmentService
+				.getContents(AttachmentUtils.getAttachmentPath(
+						AppContext.getAccountId(), type, typeid));
 		if (attachments != null && !attachments.isEmpty()) {
 			return new AttachmentDisplayComponent(attachments);
 		} else {

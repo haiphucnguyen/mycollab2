@@ -20,8 +20,8 @@ import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.SimpleNote;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
-import com.esofthead.mycollab.module.file.AttachmentConstants;
-import com.esofthead.mycollab.module.file.domain.Attachment;
+import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -108,7 +108,7 @@ public class NoteListItems extends Depot {
 							final int noteid = noteService.saveWithSession(
 									note, AppContext.getUsername());
 							attachments.saveContentsToRepo(
-									AttachmentConstants.CRM_NOTE_TYPE, noteid);
+									AttachmentUtils.CRM_NOTE_TYPE, noteid);
 							displayNotes();
 							addCreateBtn();
 						}
@@ -181,7 +181,7 @@ public class NoteListItems extends Depot {
 			messageContent.setStyleName("message-body");
 			rowLayout.addComponent(messageContent);
 
-			final List<Attachment> attachments = note.getAttachments();
+			final List<Content> attachments = note.getAttachments();
 			if (attachments != null && !attachments.isEmpty()) {
 				rowLayout.addComponent(new AttachmentDisplayComponent(
 						attachments));

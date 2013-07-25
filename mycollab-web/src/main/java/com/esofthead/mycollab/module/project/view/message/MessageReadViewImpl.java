@@ -9,9 +9,9 @@ import java.util.List;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.file.AttachmentConstants;
-import com.esofthead.mycollab.module.file.domain.Attachment;
-import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationAction;
@@ -158,16 +158,15 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				Component attachmentDisplayComp = AttachmentDisplayComponent
 						.getAttachmentDisplayComponent(
-								AttachmentConstants.PROJECT_MESSAGE,
+								AttachmentUtils.PROJECT_MESSAGE,
 								message.getId());
 				rowLayout.addComponent(attachmentDisplayComp);
 
-				AttachmentService attachmentService = AppContext
-						.getSpringBean(AttachmentService.class);
-				List<Attachment> attachments = attachmentService
-						.findByAttachmentId(
-								AttachmentConstants.PROJECT_MESSAGE,
-								message.getId());
+				ResourceService attachmentService = AppContext
+						.getSpringBean(ResourceService.class);
+				List<Content> attachments = attachmentService
+						.getContents(AttachmentUtils.getMessagePath(
+								AppContext.getAccountId(), message.getId()));
 				if (attachments == null || attachments.isEmpty()) {
 					attachmentField.setVisible(false);
 				}

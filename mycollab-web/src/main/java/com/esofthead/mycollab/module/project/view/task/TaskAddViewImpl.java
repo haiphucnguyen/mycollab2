@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.Collection;
 
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
@@ -135,7 +135,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 					if (TaskAddViewImpl.this.task.getId() != null) {
 						TaskAddViewImpl.this.attachmentUploadField
 								.getAttachments(
-										AttachmentConstants.PROJECT_TASK_TYPE,
+										AttachmentUtils.PROJECT_TASK_TYPE,
 										TaskAddViewImpl.this.task.getId());
 					}
 					return TaskAddViewImpl.this.attachmentUploadField;

@@ -27,7 +27,6 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
@@ -49,7 +48,8 @@ import com.esofthead.mycollab.schedule.email.command.BugRelayEmailNotificationAc
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG)
 @Watchable(type = MonitorTypeConstants.PRJ_BUG, userFieldName = "assignuser", emailHandlerBean = BugRelayEmailNotificationAction.class)
 public class BugServiceImpl extends
-		DefaultService<Integer, BugWithBLOBs, BugSearchCriteria> implements BugService {
+		DefaultService<Integer, BugWithBLOBs, BugSearchCriteria> implements
+		BugService {
 	@Autowired
 	protected BugMapper bugMapper;
 	@Autowired
@@ -60,8 +60,6 @@ public class BugServiceImpl extends
 	protected MetaDataMapper metaDataMapper;
 	@Autowired
 	protected AuditLogService auditLogService;
-	@Autowired
-	protected AttachmentService attachmentService;
 	@Autowired
 	protected MonitorItemService monitorItemService;
 
@@ -83,7 +81,7 @@ public class BugServiceImpl extends
 		} else {
 			record.setBugkey(maxKey + 1);
 		}
-		
+
 		return super.saveWithSession(record, username);
 	}
 

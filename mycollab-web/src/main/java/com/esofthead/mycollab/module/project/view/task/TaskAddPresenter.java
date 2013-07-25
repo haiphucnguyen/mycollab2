@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -103,11 +103,11 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
         if (item.getId() == null) {
             int taskId = taskService.saveWithSession(item, AppContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
-            uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_TASK_TYPE, taskId);
+            uploadField.saveContentsToRepo(AttachmentUtils.PROJECT_TASK_TYPE, taskId);
         } else {
             taskService.updateWithSession(item, AppContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
-            uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_TASK_TYPE, item.getId());
+            uploadField.saveContentsToRepo(AttachmentUtils.PROJECT_TASK_TYPE, item.getId());
         }
     }
 }

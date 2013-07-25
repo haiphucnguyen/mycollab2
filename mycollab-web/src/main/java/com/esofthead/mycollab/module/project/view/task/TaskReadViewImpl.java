@@ -11,7 +11,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.core.utils.StringUtil;
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -255,7 +255,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 										});
 							} else if (propertyId.equals("id")) {
 								return new FormAttachmentDisplayField(
-										AttachmentConstants.PROJECT_TASK_TYPE,
+										AttachmentUtils.PROJECT_TASK_TYPE,
 										PrintView.this.task.getId());
 							} else if (propertyId.equals("priority")) {
 								if (StringUtil

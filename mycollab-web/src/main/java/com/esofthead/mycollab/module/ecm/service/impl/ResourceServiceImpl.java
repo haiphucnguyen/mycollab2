@@ -28,7 +28,11 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public List<Resource> getResources(String path) {
 		return contentJcrDao.getResources(path);
+	}
 
+	@Override
+	public List<Content> getContents(String path) {
+		return contentJcrDao.getContents(path);
 	}
 
 	@Override
@@ -85,8 +89,6 @@ public class ResourceServiceImpl implements ResourceService {
 	public void moveResource(String oldPath, String destinationFolderPath) {
 		String oldResourceName = oldPath.substring(
 				oldPath.lastIndexOf("/") + 1, oldPath.length());
-		// String enclosingPath = oldPath.substring(0,
-		// oldPath.lastIndexOf("/"));
 
 		Resource oldResource = contentJcrDao.getResource(oldPath);
 		if ((oldResource instanceof Folder)

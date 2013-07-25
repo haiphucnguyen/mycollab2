@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.esofthead.mycollab.module.file.domain.Attachment;
-
 public class SimpleBug extends BugWithBLOBs {
 
 	private static final long serialVersionUID = 1L;
@@ -17,7 +15,6 @@ public class SimpleBug extends BugWithBLOBs {
 	private List<Version> affectedVersions;
 	private List<Version> fixedVersions;
 	private List<Component> components;
-	private List<Attachment> attachments;
 	private String comment;
 	private String milestoneName;
 
@@ -69,14 +66,6 @@ public class SimpleBug extends BugWithBLOBs {
 		this.components = components;
 	}
 
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-	}
-
 	public String getComment() {
 		return comment;
 	}
@@ -100,7 +89,6 @@ public class SimpleBug extends BugWithBLOBs {
 	public void setAssignUserAvatarId(String assignUserAvatarId) {
 		this.assignUserAvatarId = assignUserAvatarId;
 	}
-	
 
 	public String getLoguserAvatarId() {
 		return loguserAvatarId;

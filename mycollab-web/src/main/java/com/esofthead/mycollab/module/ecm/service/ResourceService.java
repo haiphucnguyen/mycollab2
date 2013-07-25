@@ -13,6 +13,8 @@ public interface ResourceService {
 
 	List<Resource> getResources(String path);
 
+	List<Content> getContents(String path);
+
 	List<Folder> getSubFolders(String path);
 
 	void saveContent(Content content, String createdUser, InputStream refStream);

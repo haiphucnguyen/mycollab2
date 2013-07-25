@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -98,7 +98,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 					AppContext.getUsername());
 			AttachmentUploadField uploadField = view.getAttachUploadField();
 			uploadField.saveContentsToRepo(
-					AttachmentConstants.PROJECT_BUG_TYPE, bugId);
+					AttachmentUtils.PROJECT_BUG_TYPE, bugId);
 
 			// save component
 			BugRelatedItemService bugRelatedItemService = AppContext
@@ -113,7 +113,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			bugService.updateWithSession(bug, AppContext.getUsername());
 			AttachmentUploadField uploadField = view.getAttachUploadField();
 			uploadField.saveContentsToRepo(
-					AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
+					AttachmentUtils.PROJECT_BUG_TYPE, bug.getId());
 
 			int bugId = bug.getId();
 			BugRelatedItemService bugRelatedItemService = AppContext

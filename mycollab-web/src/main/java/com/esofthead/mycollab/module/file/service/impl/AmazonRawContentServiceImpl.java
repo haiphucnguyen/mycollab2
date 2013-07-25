@@ -178,14 +178,12 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 	public static void main(String[] args) {
 		AmazonRawContentServiceImpl service = new AmazonRawContentServiceImpl();
-		service.rename(
-
-		"1/common-comment1", "1/common-comment");
+		service.rename("1/common-comment1", "1/common-comment");
 	}
 
 	@Override
-	public void moveContent(String olPath, String destinationPath) {
-		// TODO Auto-generated method stub
-
+	public void moveContent(String oldPath, String destinationPath) {
+		removeContent(destinationPath);
+		rename(oldPath, destinationPath);
 	}
 }
