@@ -50,7 +50,7 @@ public class FileDownloadWindow extends Window {
 		final Label author = new Label(this.content.getCreatedBy());
 		info.addComponent(author, "Created by", 0, 1);
 
-		final Label size = new Label(this.content.getSize() + "bytes");
+		final Label size = new Label(this.content.getSize() + "KB");
 		info.addComponent(size, "Size", 0, 2);
 
 		final Label dateCreate = new Label(AppContext.formatDate(this.content

@@ -4038,3 +4038,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .main-content-wrapper > .v-csslayout-margin {
 	padding: 0px 25px 12px;
 }
+
+.v-label > hr {
+	margin: 0px;
+}

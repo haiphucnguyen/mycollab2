@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.file.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -83,12 +85,16 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		HorizontalLayout mainView = new HorizontalLayout();
 		mainView.setSpacing(true);
 		mainView.setMargin(true);
-		mainView.setWidth("1130px");
-
+		if (ScreenSize.hasSupport1280Pixels()) {
+			mainView.setWidth("1400px");
+		} else {
+			mainView.setWidth("1130px");
+		}
 		final HorizontalLayout menuBarContainerHorizontalLayout = new HorizontalLayout();
 		menuBarContainerHorizontalLayout.setMargin(true);
 
 		final VerticalLayout menuLayout = new VerticalLayout();
+		menuLayout.setWidth("200px");
 		menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
 		this.menuTree = new Tree();
@@ -169,10 +175,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		mainView.addComponent(menuBarContainerHorizontalLayout);
 
 		Separator separator = new Separator();
-		separator.setHeight("500px");
 		mainView.addComponent(separator);
 
 		VerticalLayout mainBodyLayout = new VerticalLayout();
+		mainBodyLayout.setSpacing(true);
+		mainBodyLayout.addStyleName("box-no-border-left");
 
 		filterPanel = new FilterPanel();
 		mainBodyLayout.addComponent(filterPanel);
@@ -502,6 +509,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				ResourceService resourceService) {
 			lstCheckedResource = new ArrayList<Resource>();
 			listAllCheckBox = new ArrayList<CheckBox>();
+			this.setMargin(true);
 			constructBody(folder);
 		}
 
@@ -514,9 +522,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			List<Resource> lstResource = resourceService.getResources(curFolder
 					.getPath());
 			this.addComponent(new Hr());
-			for (Resource res : lstResource) {
-				mainLayout.addComponent(constructOneIteamResourceLayout(res));
-				mainLayout.addComponent(new Hr());
+			if (lstResource != null && lstResource.size() > 0) {
+				for (Resource res : lstResource) {
+					mainLayout
+							.addComponent(constructOneIteamResourceLayout(res));
+					mainLayout.addComponent(new Hr());
+				}
 			}
 			this.addComponent(mainLayout);
 		}
@@ -604,9 +615,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			moreInfoAboutResLayout.addComponent(new Separator());
 			moreInfoAboutResLayout.addComponent(new Label(AppContext
 					.formatDate(res.getCreated().getTime())));
-			moreInfoAboutResLayout.addComponent(new Separator());
-			moreInfoAboutResLayout.addComponent(new Label(res.getSize()
-					.toString() + " bytes"));
+			if (res instanceof Content) {
+				moreInfoAboutResLayout.addComponent(new Separator());
+				Double size = res.getSize();
+				DecimalFormat df = new DecimalFormat("#.##");
+				moreInfoAboutResLayout.addComponent(new Label(df.format(size)
+						+ " KB"));
+			}
 			informationLayout.addComponent(moreInfoAboutResLayout);
 
 			layout.addComponent(informationLayout);
@@ -614,17 +629,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					Alignment.MIDDLE_LEFT);
 			layout.setExpandRatio(informationLayout, 1.0f);
 
-			CssLayout shareIconWapper = new CssLayout();
-			final Embedded shareIcon = new Embedded();
-			shareIcon.setSource(MyCollabResource
-					.newResource("icons/24/shareICon.png"));
-			shareIconWapper.addComponent(shareIcon);
-			shareIconWapper.addComponent(new Label("Share"));
-			shareIconWapper.setWidth("100px");
-
-			layout.addComponent(shareIconWapper);
-			layout.setComponentAlignment(shareIconWapper,
-					Alignment.MIDDLE_RIGHT);
+			// CssLayout shareIconWapper = new CssLayout();
+			// final Embedded shareIcon = new Embedded();
+			// shareIcon.setSource(MyCollabResource
+			// .newResource("icons/24/shareICon.png"));
+			// shareIconWapper.addComponent(shareIcon);
+			// shareIconWapper.addComponent(new Label("Share"));
+			// shareIconWapper.setWidth("100px");
+			//
+			// layout.addComponent(shareIconWapper);
+			// layout.setComponentAlignment(shareIconWapper,
+			// Alignment.MIDDLE_RIGHT);
 
 			final PopupButton resourceSettingPopupBtn = new PopupButton();
 			resourceSettingPopupBtn.setWidth("18px");
@@ -1040,8 +1055,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 												.getPath()
 												+ "/"
 												+ file.getName());
-										content.setSize(Double.parseDouble(""
-												+ file.getTotalSpace()));
+										double sizeInByte = file.length();
+										content.setSize(sizeInByte / 1024);
 										FileInputStream fileInputStream = new FileInputStream(
 												file);
 
@@ -1053,14 +1068,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									} catch (IOException e) {
 										throw new MyCollabException(e);
 									}
-									MultiUploadContentWindow.this.close();
-									FileMainViewImpl.this.itemResourceContainerLayout
-											.constructBody(FileMainViewImpl.this.baseFolder);
-									MultiUploadContentWindow.this.close();
-									FileMainViewImpl.this.getWindow()
-											.showNotification(
-													"Upload successfully.");
 								}
+								FileMainViewImpl.this.itemResourceContainerLayout
+										.constructBody(FileMainViewImpl.this.baseFolder);
+								MultiUploadContentWindow.this.close();
+								FileMainViewImpl.this.getWindow()
+										.showNotification(
+												"Upload successfully.");
 							} else {
 								AppContext
 										.getApplication()
