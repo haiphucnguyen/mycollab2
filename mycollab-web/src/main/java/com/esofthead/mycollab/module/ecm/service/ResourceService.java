@@ -15,6 +15,8 @@ public interface ResourceService {
 	
 	Resource getResource(String path);
 
+	List<Content> getContents(String path);
+
 	List<Folder> getSubFolders(String path);
 
 	void saveContent(Content content, String createdUser, InputStream refStream);

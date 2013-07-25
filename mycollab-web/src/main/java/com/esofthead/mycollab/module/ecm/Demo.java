@@ -18,31 +18,37 @@ public class Demo {
 				"META-INF/spring/crm-context.xml",
 				"META-INF/spring/datasource-context.xml",
 				"META-INF/spring/ecm-context.xml",
-				"META-INF/spring/file-context.xml",
 				"META-INF/spring/project-context.xml",
 				"META-INF/spring/rest-context.xml",
 				"META-INF/spring/tracker-context.xml",
-				"META-INF/spring/user-context.xml");
+				"META-INF/spring/user-context.xml",
+				"META-INF/spring/migration-context.xml");
 
 		final ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
-
+		jcrDao.removeResource("1/.attachments/common-comment/103");
+		// List<Resource> resources = jcrDao
+		// .getResources("1/.attachments/common-comment");
+		// for (Resource resource : resources) {
+		// System.out.println(resource.getPath());
+		// jcrDao.removeResource(resource.getPath());
+		// }
 		// jcrDao.removeResource("/a/b/d");
 
-		final Folder pageContent = new Folder();
-		pageContent.setPath("a/b/d");
-
-		jcrDao.createFolder(pageContent, "baohan");
-
-		final Content content = new Content();
-		content.setDescription("AAA");
-		content.setPath("a/b/c/example.txt");
-		content.setSize(11d);
-		content.setTitle("aaa");
-
-		jcrDao.saveContent(content, "nghitran");
+		// final Folder pageContent = new Folder();
+		// pageContent.setPath("a/b/d");
 		//
-		 Resource rs = jcrDao.getResource("a/b/d");
-		 System.out.println(rs);
+		// jcrDao.createFolder(pageContent, "baohan");
+		//
+		// final Content content = new Content();
+		// content.setDescription("AAA");
+		// content.setPath("a/b/c/example.txt");
+		// content.setSize(11d);
+		// content.setTitle("aaa");
+		//
+		// jcrDao.saveContent(content, "nghitran");
+		//
+		// Resource rs = jcrDao.getResource("a/b/d");
+		// System.out.println(rs);
 		//
 		// System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
 		//
@@ -50,8 +56,9 @@ public class Demo {
 		// System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
 		// System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
 
-		final List<Resource> resources = jcrDao.searchResourcesByName("a/b", "d");
-		System.out.println("Resources: " + resources.size());
+		// final List<Resource> resources = jcrDao.searchResourcesByName("a/b",
+		// "d");
+		// System.out.println("Resources: " + resources.size());
 		// System.out.println("CONTENT " + content);
 		//
 		// jcrDao.removeContent("example/a/b");

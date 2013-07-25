@@ -10,7 +10,7 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -116,7 +116,7 @@ public class CommentInput extends VerticalLayout {
 						}
 
 						attachments.saveContentsToRepo(
-								AttachmentConstants.COMMON_COMMENT, commentId);
+								AttachmentUtils.COMMON_COMMENT, commentId);
 
 						// save success, clear comment area and load list
 						// comments again

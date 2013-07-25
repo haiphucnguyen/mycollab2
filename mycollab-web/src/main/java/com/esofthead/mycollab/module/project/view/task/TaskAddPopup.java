@@ -7,7 +7,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -228,7 +228,7 @@ public class TaskAddPopup extends CustomComponent {
 
 		void saveContentsToRepo(final Integer typeid) {
 			this.attachmentPanel.saveContentsToRepo(
-					AttachmentConstants.PROJECT_TASK_TYPE, typeid);
+					AttachmentUtils.PROJECT_TASK_TYPE, typeid);
 		}
 	}
 

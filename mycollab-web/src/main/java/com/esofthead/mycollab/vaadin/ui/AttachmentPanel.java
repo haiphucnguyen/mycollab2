@@ -18,9 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.module.file.domain.Attachment;
-import com.esofthead.mycollab.module.file.service.AttachmentService;
-import com.esofthead.mycollab.module.file.service.ContentService;
+import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ImageUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -38,13 +38,12 @@ public class AttachmentPanel extends VerticalLayout implements
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory.getLogger(AttachmentPanel.class);
 	private Map<String, File> fileStores;
-	private ContentService contentService;
-	private AttachmentService attachmentService;
 
 	private MultiFileUploadExt multiFileUpload;
+	private ResourceService resourceService;
 
 	public AttachmentPanel() {
-		contentService = AppContext.getSpringBean(ContentService.class);
+		resourceService = AppContext.getSpringBean(ResourceService.class);
 		this.setSpacing(true);
 	}
 
@@ -94,11 +93,11 @@ public class AttachmentPanel extends VerticalLayout implements
 	}
 
 	public void getAttachments(String type, int typeid) {
-		attachmentService = AppContext.getSpringBean(AttachmentService.class);
-		List<Attachment> attachments = attachmentService.findByAttachmentId(
-				type, typeid);
+
+		List<Content> attachments = resourceService.getContents(AttachmentUtils
+				.getAttachmentPath(AppContext.getAccountId(), type, typeid));
 		if (attachments != null && !attachments.isEmpty()) {
-			for (final Attachment attachment : attachments) {
+			for (final Content attachment : attachments) {
 				this.addComponent(AttachmentDisplayComponent
 						.constructAttachmentRow(attachment));
 			}
@@ -107,11 +106,10 @@ public class AttachmentPanel extends VerticalLayout implements
 
 	public void saveContentsToRepo(String type, Integer typeid) {
 		if (fileStores != null && !fileStores.isEmpty()) {
-			attachmentService = AppContext
-					.getSpringBean(AttachmentService.class);
 
 			for (String fileName : fileStores.keySet()) {
-				String filePath = type + "/" + typeid + "/" + fileName;
+				String attachmentPath = AttachmentUtils.getAttachmentPath(
+						AppContext.getAccountId(), type, typeid);
 				try {
 					String fileExt = "";
 					int index = fileName.lastIndexOf(".");
@@ -143,35 +141,40 @@ public class AttachmentPanel extends VerticalLayout implements
 
 							ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 							ImageIO.write(scaledImage, fileExt, outStream);
-							contentService.saveContent(
-									AppContext.getAccountId(),
-									filePath,
+
+							resourceService.saveContent(
+									constructContent(fileName, attachmentPath),
+									AppContext.getUsername(),
 									new ByteArrayInputStream(outStream
 											.toByteArray()));
 						} catch (IOException e) {
 							e.printStackTrace();
-							contentService.saveContent(
-									AppContext.getAccountId(),
-									filePath,
+							resourceService.saveContent(
+									constructContent(fileName, attachmentPath),
+									AppContext.getUsername(),
 									new FileInputStream(fileStores
 											.get(fileName)));
 						}
 					} else {
-						contentService.saveContent(AppContext.getAccountId(),
-								filePath,
-								new FileInputStream(fileStores.get(fileName)));
+						resourceService.saveContent(
+								constructContent(fileName, attachmentPath),
+								AppContext.getUsername(), new FileInputStream(
+										fileStores.get(fileName)));
 					}
-					Attachment record = new Attachment();
-					record.setType(type);
-					record.setTypeid(typeid);
-					record.setDocumentpath(filePath);
-					attachmentService.saveWithSession(record,
-							AppContext.getUsername());
+
 				} catch (FileNotFoundException e) {
 					log.error("Error when attach content in UI", e);
 				}
 			}
 		}
+	}
+
+	private Content constructContent(String fileName, String path) {
+		Content content = new Content();
+		content.setPath(path + "/" + fileName);
+		content.setTitle(fileName);
+		content.setDescription("");
+		return content;
 	}
 
 	public List<File> getListFile() {

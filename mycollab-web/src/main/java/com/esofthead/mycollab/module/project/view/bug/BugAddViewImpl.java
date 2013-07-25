@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.List;
 
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -146,7 +146,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					if (BugAddViewImpl.this.bug.getId() != null) {
 						BugAddViewImpl.this.attachmentUploadField
 								.getAttachments(
-										AttachmentConstants.PROJECT_BUG_TYPE,
+										AttachmentUtils.PROJECT_BUG_TYPE,
 										BugAddViewImpl.this.bug.getId());
 					}
 					return BugAddViewImpl.this.attachmentUploadField;

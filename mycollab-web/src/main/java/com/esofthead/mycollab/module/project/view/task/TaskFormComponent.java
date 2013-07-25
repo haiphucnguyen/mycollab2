@@ -5,7 +5,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.core.utils.StringUtil;
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -90,7 +90,7 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 							});
 				} else if (propertyId.equals("id")) {
 					return new FormAttachmentDisplayField(
-							AttachmentConstants.PROJECT_TASK_TYPE,
+							AttachmentUtils.PROJECT_TASK_TYPE,
 							TaskFormComponent.this.task.getId());
 				} else if (propertyId.equals("priority")) {
 					if (StringUtil.isNotNullOrEmpty(TaskFormComponent.this.task

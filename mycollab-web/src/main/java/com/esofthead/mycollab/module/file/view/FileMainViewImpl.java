@@ -175,7 +175,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				Alignment.TOP_LEFT);
 
 		Separator separator = new Separator();
+		separator.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+		separator.setHeight("100%");
 		mainView.addComponent(separator);
+		mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
 
 		VerticalLayout mainBodyLayout = new VerticalLayout();
 		mainBodyLayout.setSpacing(true);
@@ -519,7 +522,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private class ItemResourceContainerLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
-		private List<CheckBox> listAllCheckBox;
+		private final List<CheckBox> listAllCheckBox;
 		private VerticalLayout mainLayout;
 
 		public List<CheckBox> getListAllCheckBox() {

@@ -291,6 +291,46 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 	}
 
 	@Override
+	public List<Content> getContents(final String path) {
+		return jcrTemplate.execute(new JcrCallback<List<Content>>() {
+
+			@Override
+			public List<Content> doInJcr(Session session) throws IOException,
+					RepositoryException {
+				Node rootNode = session.getRootNode();
+				Node node = getNode(rootNode, path);
+				if (node != null) {
+					if (isNodeFolder(node)) {
+						List<Content> resources = new ArrayList<Content>();
+						NodeIterator childNodes = node.getNodes();
+						while (childNodes.hasNext()) {
+							Node childNode = childNodes.nextNode();
+							if (isNodeMyCollabContent(childNode)) {
+								Content content = convertNodeToContent(childNode);
+								resources.add(content);
+							} else {
+								String errorString = "Node %s has type not mycollab:content or mycollab:folder";
+								log.error(String.format(errorString,
+										childNode.getPath()));
+							}
+						}
+
+						return resources;
+					} else {
+						throw new ContentException(
+								"Do not support any node type except mycollab:folder. The current node has type: "
+										+ node.getPrimaryNodeType().getName()
+										+ " and its path is " + path);
+					}
+				}
+
+				log.debug("There is no resource in path {}", path);
+				return null;
+			}
+		});
+	}
+
+	@Override
 	public List<Folder> getSubFolders(final String path) {
 		return jcrTemplate.execute(new JcrCallback<List<Folder>>() {
 

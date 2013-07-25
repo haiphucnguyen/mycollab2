@@ -11,11 +11,6 @@
 
         <result column="ownerFullName" jdbcType="VARCHAR"
             property="ownerFullName" />
-
-        <collection property="attachments" javaType="ArrayList"
-            columnPrefix="attach_"
-            resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap"
-            ofType="com.esofthead.mycollab.module.file.domain.Attachment" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -32,13 +27,9 @@
             SELECT m_comment.id, m_comment.comment, m_comment.createdUser, m_comment.createdTime, 
                    m_comment.type, m_comment.typeId, m_comment.sAccountId,
                    s_user.avatarId AS ownerAvatarId,
-                   concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as ownerFullName,
-                   m_attachment.id AS attach_id, m_attachment.type AS attach_type, m_attachment.documentpath AS attach_documentpath, 
-                   m_attachment.createdTime AS attach_createdTime, m_attachment.lastUpdatedTime AS attach_lastUpdatedTime, 
-                   m_attachment.typeid AS attach_typeid
+                   concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as ownerFullName
                 FROM m_comment
                     LEFT OUTER JOIN s_user ON m_comment.createdUser = s_user.username
-                    LEFT OUTER JOIN m_attachment ON (m_attachment.type='common-comment' AND m_attachment.typeid=m_comment.id)
         ]]>
     </sql>
 

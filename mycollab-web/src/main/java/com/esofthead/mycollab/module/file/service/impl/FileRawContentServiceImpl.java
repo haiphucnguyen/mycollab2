@@ -64,7 +64,7 @@ public class FileRawContentServiceImpl implements RawContentService {
 					objectPath);
 			return new FileInputStream(file);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new MyCollabException(e);
 		}
 	}
 

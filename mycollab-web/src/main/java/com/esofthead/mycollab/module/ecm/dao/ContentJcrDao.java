@@ -20,6 +20,8 @@ public interface ContentJcrDao {
 
 	List<Resource> getResources(String path);
 
+	List<Content> getContents(String path);
+
 	List<Folder> getSubFolders(String path);
 
 	List<Resource> searchResourcesByName(String baseFolderPath,

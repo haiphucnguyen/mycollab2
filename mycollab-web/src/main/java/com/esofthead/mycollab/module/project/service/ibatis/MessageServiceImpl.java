@@ -12,7 +12,6 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.MessageMapper;
 import com.esofthead.mycollab.module.project.dao.MessageMapperExt;
@@ -28,9 +27,6 @@ import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificati
 public class MessageServiceImpl extends
 		DefaultService<Integer, Message, MessageSearchCriteria> implements
 		MessageService {
-
-	@Autowired
-	private AttachmentService attachmentService;
 
 	@Autowired
 	private MessageMapper messageMapper;
@@ -63,7 +59,9 @@ public class MessageServiceImpl extends
 		relayNotification.setSaccountid(sAccountId);
 		relayNotification.setType(MonitorTypeConstants.PRJ_MESSAGE);
 		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
-		relayNotification.setEmailhandlerbean(MessageRelayEmailNotificationAction.class.getName());
+		relayNotification
+				.setEmailhandlerbean(MessageRelayEmailNotificationAction.class
+						.getName());
 		relayNotification.setTypeid(recordId);
 		relayNotification.setExtratypeid(record.getProjectid());
 		return relayNotification;

@@ -1,27 +1,30 @@
 package com.esofthead.mycollab.common.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.esofthead.mycollab.module.file.domain.Attachment;
+import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
+import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 public class SimpleComment extends Comment {
 
-    private static final long serialVersionUID = 1L;
-    
-    private String ownerAvatarId;
-    private String ownerFullName;
-    private List<Attachment> attachments;
-    
+	private static final long serialVersionUID = 1L;
 
-    public String getOwnerFullName() {
-        return ownerFullName;
-    }
+	private String ownerAvatarId;
+	private String ownerFullName;
+	private List<Content> attachments;
 
-    public void setOwnerFullName(String ownerFullName) {
-        this.ownerFullName = ownerFullName;
-    }
+	public String getOwnerFullName() {
+		return ownerFullName;
+	}
 
-    public String getOwnerAvatarId() {
+	public void setOwnerFullName(String ownerFullName) {
+		this.ownerFullName = ownerFullName;
+	}
+
+	public String getOwnerAvatarId() {
 		return ownerAvatarId;
 	}
 
@@ -29,11 +32,18 @@ public class SimpleComment extends Comment {
 		this.ownerAvatarId = ownerAvatarId;
 	}
 
-	public List<Attachment> getAttachments() {
-        return attachments;
-    }
+	public List<Content> getAttachments() {
+		if (attachments == null) {
+			ContentJcrDao contentJcr = ApplicationContextUtil
+					.getBean(ContentJcrDao.class);
+			String commentPath = AttachmentUtils.getCommentPath(
+					this.getSaccountid(), this.getId());
+			attachments = contentJcr.getContents(commentPath);
+		}
 
-    public void setAttachments(List<Attachment> attachments) {
-        this.attachments = attachments;
-    }
+		if (attachments == null) {
+			attachments = new ArrayList<Content>();
+		}
+		return attachments;
+	}
 }

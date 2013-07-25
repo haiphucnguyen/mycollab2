@@ -11,7 +11,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Message;
@@ -443,7 +443,7 @@ public class MessageListViewImpl extends AbstractView implements
 										.getValue());
 								MessageListViewImpl.this.fireSaveItem(message);
 								attachments.saveContentsToRepo(
-										AttachmentConstants.PROJECT_MESSAGE,
+										AttachmentUtils.PROJECT_MESSAGE,
 										message.getId());
 							} else {
 								titleField.addStyleName("errorField");
