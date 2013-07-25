@@ -5,7 +5,6 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.esofthead.mycollab.common.ApplicationProperties;
-import com.esofthead.mycollab.web.AppContext;
 
 public class S3StorageConfig {
 	private static final String AWS_KEY = "s3.key";
@@ -50,8 +49,7 @@ public class S3StorageConfig {
 	}
 
 	public static String getAvatarLink(String username, int size) {
-		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL,
-				"");
+		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL, "");
 		if ("".equals(s3UrlPath)) {
 			return "";
 		} else {
@@ -60,13 +58,11 @@ public class S3StorageConfig {
 	}
 
 	public static String getResourceLink(String documentPath) {
-		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL,
-				"");
+		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL, "");
 		if ("".equals(s3UrlPath)) {
 			return "";
 		} else {
-			return s3UrlPath + "" + AppContext.getAccountId() + "/"
-					+ documentPath;
+			return s3UrlPath + "/" + documentPath;
 		}
 	}
 }
