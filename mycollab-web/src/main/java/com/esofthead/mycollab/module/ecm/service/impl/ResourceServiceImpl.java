@@ -115,4 +115,9 @@ public class ResourceServiceImpl implements ResourceService {
 			throw new MyCollabException(e);
 		}
 	}
+
+	@Override
+	public Resource getResource(String path) {
+		return contentJcrDao.getResource(path);
+	}
 }

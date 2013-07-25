@@ -63,6 +63,7 @@ import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
 public class FileMainViewImpl extends AbstractView implements FileMainView {
@@ -367,7 +368,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		mainBodyLayout.addComponent(controllGroupBtn);
 
-		String rootPath = String.format("%d/.crm", AppContext.getAccountId());
+		String rootPath = String.format("%d/.fm", AppContext.getAccountId());
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 
@@ -411,7 +412,22 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		private HorizontalLayout createSearchTopPanel() {
-			return new HorizontalLayout();
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			layout.setSpacing(true);
+
+			final Embedded titleIcon = new Embedded();
+			titleIcon.setSource(MyCollabResource
+					.newResource("icons/24/document_preview.png"));
+			layout.addComponent(titleIcon);
+			layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
+			final Label searchtitle = new Label("Files");
+			searchtitle.setStyleName(Reindeer.LABEL_H2);
+			layout.addComponent(searchtitle);
+			layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+			layout.setExpandRatio(searchtitle, 1.0f);
+			return layout;
 		}
 
 		@SuppressWarnings("rawtypes")
@@ -436,11 +452,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				basicSearchBody = new HorizontalLayout();
 				basicSearchBody.setSpacing(false);
 
-				Label filterLabel = new Label("Filter: ");
-				filterLabel.addStyleName("h3");
-				UiUtils.addComponent(basicSearchBody, filterLabel,
-						Alignment.MIDDLE_CENTER);
-
 				this.nameField = this.createSeachSupportTextField(
 						new TextField(), "NameFieldOfBasicSearch");
 
@@ -457,6 +468,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
+						List<Resource> lstResource = FileMainViewImpl.this.resourceService
+								.searchResourcesByName(
+										FileMainViewImpl.this.rootPath,
+										nameField.getValue().toString().trim());
+						if (lstResource != null && lstResource.size() > 0) {
+							itemResourceContainerLayout
+									.constructBodySearchActionResult(lstResource);
+						} else {
+							FileMainViewImpl.this.getWindow().showNotification(
+									"Searching has no any results.");
+						}
 					}
 				});
 				UiUtils.addComponent(basicSearchBody, searchBtn,
@@ -524,8 +546,40 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
 				for (Resource res : lstResource) {
-					mainLayout
-							.addComponent(constructOneIteamResourceLayout(res));
+					mainLayout.addComponent(constructOneIteamResourceLayout(
+							res, false));
+					mainLayout.addComponent(new Hr());
+				}
+			}
+			this.addComponent(mainLayout);
+		}
+
+		private void constructBodySearchActionResult(List<Resource> lstResource) {
+			if (mainLayout != null) {
+				this.removeAllComponents();
+			}
+			mainLayout = new VerticalLayout();
+			mainLayout.setSpacing(false);
+
+			HorizontalLayout messageSearchLayout = new HorizontalLayout();
+			messageSearchLayout.setWidth("100%");
+			Label titleLabel = new Label("Search result: ");
+			titleLabel.setWidth("115px");
+			messageSearchLayout.addComponent(titleLabel);
+
+			Label nameLabel = new Label("Name");
+			nameLabel.setWidth("350px");
+			messageSearchLayout.addComponent(nameLabel);
+			Label pathLabel = new Label("Path");
+			messageSearchLayout.addComponent(pathLabel);
+			messageSearchLayout.setExpandRatio(pathLabel, 1.0f);
+
+			this.addComponent(messageSearchLayout);
+			this.addComponent(new Hr());
+			if (lstResource != null && lstResource.size() > 0) {
+				for (Resource res : lstResource) {
+					mainLayout.addComponent(constructOneIteamResourceLayout(
+							res, true));
 					mainLayout.addComponent(new Hr());
 				}
 			}
@@ -533,7 +587,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		private HorizontalLayout constructOneIteamResourceLayout(
-				final Resource res) {
+				final Resource res, final boolean isSearchAction) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.addStyleName("resourceItem");
 			layout.setWidth("100%");
@@ -587,6 +641,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			layout.setComponentAlignment(resIconWapper, Alignment.MIDDLE_LEFT);
 
 			VerticalLayout informationLayout = new VerticalLayout();
+			informationLayout.setWidth("345px");
 
 			Button resourceLinkBtn = new Button(res.getName(),
 					new ClickListener() {
@@ -627,19 +682,14 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			layout.addComponent(informationLayout);
 			layout.setComponentAlignment(informationLayout,
 					Alignment.MIDDLE_LEFT);
-			layout.setExpandRatio(informationLayout, 1.0f);
 
-			// CssLayout shareIconWapper = new CssLayout();
-			// final Embedded shareIcon = new Embedded();
-			// shareIcon.setSource(MyCollabResource
-			// .newResource("icons/24/shareICon.png"));
-			// shareIconWapper.addComponent(shareIcon);
-			// shareIconWapper.addComponent(new Label("Share"));
-			// shareIconWapper.setWidth("100px");
-			//
-			// layout.addComponent(shareIconWapper);
-			// layout.setComponentAlignment(shareIconWapper,
-			// Alignment.MIDDLE_RIGHT);
+			if (isSearchAction) {
+				HorizontalLayout resourcePathLayout = constructBreadcrumbPathLayout(res);
+				layout.addComponent(resourcePathLayout);
+				layout.setExpandRatio(resourcePathLayout, 1.0f);
+			} else {
+				layout.setExpandRatio(informationLayout, 1.0f);
+			}
 
 			final PopupButton resourceSettingPopupBtn = new PopupButton();
 			resourceSettingPopupBtn.setWidth("18px");
@@ -710,51 +760,58 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					Alignment.MIDDLE_RIGHT);
 			return layout;
 		}
+
+		private HorizontalLayout constructBreadcrumbPathLayout(Resource res) {
+			HorizontalLayout layout = new HorizontalLayout();
+			final String[] path = res.getPath().split("/");
+			final StringBuffer curPath = new StringBuffer("");
+			for (int i = 0; i < path.length; i++) {
+				String pathName = path[i];
+				if (i == 0)
+					curPath.append(pathName);
+				else if (i != path.length - 1)
+					curPath.append("/").append(pathName);
+
+				if (!pathName.equals(AppContext.getAccountId().toString())
+						&& i != path.length - 1) {
+					final Button btn = new Button();
+					if (pathName.equals(".fm")) {
+						btn.setCaption("My Documents");
+					} else
+						btn.setCaption(pathName);
+					btn.addStyleName("link");
+					final String currentResourcePath = curPath.toString();
+					btn.addListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							Resource curResource = FileMainViewImpl.this.resourceService
+									.getResource(currentResourcePath);
+
+							FileMainViewImpl.this.menuTree
+									.expandItem(curResource);
+
+							FileMainViewImpl.this.itemResourceContainerLayout
+									.constructBody((Folder) curResource);
+							FileMainViewImpl.this.baseFolder = (Folder) curResource;
+						}
+					});
+					UiUtils.addComponent(layout, btn, Alignment.BOTTOM_CENTER);
+					if (i != path.length - 2) {
+						final Embedded nextIconEmbedd = new Embedded("",
+								new ThemeResource("icons/12/nex_icon.png"));
+						UiUtils.addComponent(layout, nextIconEmbedd,
+								Alignment.MIDDLE_LEFT);
+					}
+				}
+			}
+			return layout;
+		}
 	}
 
 	private void displayResourcesInListLayout(final Folder folder) {
-		// if
-		// (!itemResourceContainerLayout.getFolder().equals(folder.getPath())) {
-		// itemResourceContainerLayout.removeAllComponents();
-		// itemResourceContainerLayout = new IteamResourceContainerLayout(
-		// folder, resourceService);
-		// }
 		this.baseFolder = folder;
-	}
-
-	// when click on IteamResouce , we call this function
-	private void displayResourcesInTable(final String foldername) {
-		List<Folder> childs = resourceService.getSubFolders(this.baseFolder
-				.getPath());
-		if (childs == null) {
-			childs = this.resourceService.getSubFolders(this.baseFolder
-					.getPath());
-
-			for (final Folder subFolder : childs) {
-				this.baseFolder.addChild(subFolder);
-				this.menuTree.addItem(new Object[] {
-						subFolder.getName(),
-						AppContext.formatDateTime(subFolder.getCreated()
-								.getTime()) });
-				this.menuTree.setItemCaption(subFolder, subFolder.getName());
-				this.menuTree.setParent(subFolder, this.baseFolder);
-				if (foldername.equals(subFolder.getName())) {
-					menuTree.collapseItem(subFolder);
-					this.displayResourcesInListLayout(subFolder);
-				} else {
-					this.menuTree.setItemIcon(subFolder, MyCollabResource
-							.newResource("icons/16/ecm/folder_close.png"));
-				}
-			}
-		} else {
-			for (final Folder subFolder : childs) {
-				if (foldername.equals(subFolder.getName())) {
-					this.menuTree.collapseItem(subFolder);
-					this.menuTree.setValue(subFolder);
-					this.displayResourcesInListLayout(subFolder);
-				}
-			}
-		}
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {

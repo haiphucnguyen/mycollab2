@@ -12,6 +12,8 @@ public interface ResourceService {
 			String createdBy);
 
 	List<Resource> getResources(String path);
+	
+	Resource getResource(String path);
 
 	List<Content> getContents(String path);
 
