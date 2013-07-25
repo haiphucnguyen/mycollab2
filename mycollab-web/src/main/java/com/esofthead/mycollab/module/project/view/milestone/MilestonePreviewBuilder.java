@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
@@ -157,7 +158,9 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				relatedItemsPanel
 						.addComponent(PrintView.this.associateBugListComp);
 				PrintView.this.associateCommentListComp = new CommentDisplay(
-						true);
+						CommentTypeConstants.PRJ_MILESTONE, milestone.getId(),
+						CurrentProjectVariables.getProjectId(), false, false,
+						null);
 				PrintView.this.associateCommentListComp.setMargin(true);
 				relatedItemsPanel
 						.addComponent(PrintView.this.associateCommentListComp);
@@ -258,7 +261,10 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			this.tabContainer.setWidth("100%");
 			this.tabContainer.setHeight(Sizeable.SIZE_UNDEFINED, 0);
 
-			this.associateCommentListComp = new CommentDisplay(true);
+			this.associateCommentListComp = new CommentDisplay(
+					CommentTypeConstants.PRJ_MILESTONE, null,
+					CurrentProjectVariables.getProjectId(), true, false, null);
+
 			this.associateCommentListComp.setMargin(true);
 			this.tabContainer.addTab(this.associateCommentListComp, "Comments");
 			this.tabContainer.addTab(this.associateTaskGroupListComp,

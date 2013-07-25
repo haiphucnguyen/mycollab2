@@ -85,7 +85,6 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			protected ComponentContainer createBottomPanel() {
 				final TabSheet tabTaskDetail = new TabSheet();
 				tabTaskDetail.setWidth("100%");
-				// tabTaskDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				final CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_TASK,

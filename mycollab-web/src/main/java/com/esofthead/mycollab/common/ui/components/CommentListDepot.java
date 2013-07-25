@@ -7,7 +7,6 @@ package com.esofthead.mycollab.common.ui.components;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -57,13 +56,9 @@ public class CommentListDepot extends Depot {
 			ReloadableComponent {
 		private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
 		private String type;
-		private int typeid;
-		private int numComments;
+		private Integer typeid;
+		private Integer numComments;
 		private CommentInput commentBox;
-
-		public CommentDisplay(final boolean isDisplayCommentInput) {
-			this(null, null, null, isDisplayCommentInput, false, null);
-		}
 
 		public CommentDisplay(final String type, final Integer typeid,
 				final Integer extraTypeId, final boolean isDisplayCommentInput,
@@ -93,8 +88,8 @@ public class CommentListDepot extends Depot {
 		}
 
 		private void displayCommentList() {
-			if (type == null || typeid == 0) {
-				throw new MyCollabException("Parameters are invalid");
+			if (type == null || typeid == null || typeid == 0) {
+				return;
 			}
 
 			final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
