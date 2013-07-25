@@ -72,7 +72,7 @@ public class S3StreamDownloadResource extends StreamResource {
 			AmazonS3 s3Client = S3StorageConfig.getS3Client();
 			try {
 				S3Object obj = s3Client.getObject(new GetObjectRequest(
-						S3StorageConfig.getBucket(), "/" + documentPath));
+						S3StorageConfig.getBucket(), documentPath));
 
 				return obj.getObjectContent();
 			} catch (Exception e) {
