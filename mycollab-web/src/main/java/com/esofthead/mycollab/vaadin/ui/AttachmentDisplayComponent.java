@@ -99,36 +99,35 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				ConfirmDialog
-						.show(AppContext.getApplication().getMainWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
-												ApplicationProperties
-														.getString(ApplicationProperties.SITE_NAME)),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
+				ConfirmDialogExt.show(
+						AppContext.getApplication().getMainWindow(),
+						LocalizationHelper
+								.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										ApplicationProperties
+												.getString(ApplicationProperties.SITE_NAME)),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+						new ConfirmDialog.Listener() {
+							private static final long serialVersionUID = 1L;
 
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											ResourceService attachmentService = AppContext
-													.getSpringBean(ResourceService.class);
-											attachmentService
-													.removeResource(attachment
-															.getPath());
-											((ComponentContainer) attachmentLayout
-													.getParent())
-													.removeComponent(attachmentLayout);
-										}
-									}
-								});
+							@Override
+							public void onClose(ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									ResourceService attachmentService = AppContext
+											.getSpringBean(ResourceService.class);
+									attachmentService.removeResource(attachment
+											.getPath());
+									((ComponentContainer) attachmentLayout
+											.getParent())
+											.removeComponent(attachmentLayout);
+								}
+							}
+						});
 
 			}
 		});

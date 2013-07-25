@@ -9,8 +9,7 @@ import com.vaadin.terminal.StreamResource;
 public class StreamDownloadResourceFactory {
 	public static Resource getAccountStreamResource(String documentPath) {
 		if (StorageSetting.isFileStorage()) {
-			return new StreamDownloadResource(documentPath,
-					AppContext.getAccountId());
+			return new StreamDownloadResource(documentPath);
 		} else if (StorageSetting.isS3Storage()) {
 			return new S3StreamDownloadResource(documentPath);
 		} else {

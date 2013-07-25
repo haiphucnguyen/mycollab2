@@ -17,8 +17,8 @@ public class ImagePreviewResource extends FileResource {
 	private static final long serialVersionUID = 1L;
 
 	public ImagePreviewResource(String documentPath) {
-		super(new File(FileStorageConfig.baseContentFolder + "/"
-				+ AppContext.getAccountId(), documentPath), AppContext
-				.getApplication());
+		super(
+				new File(FileStorageConfig.baseContentFolder + "/"
+						+ documentPath), AppContext.getApplication());
 	}
 }

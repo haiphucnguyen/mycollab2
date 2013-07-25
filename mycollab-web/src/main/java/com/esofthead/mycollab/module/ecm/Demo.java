@@ -18,7 +18,6 @@ public class Demo {
 				"META-INF/spring/crm-context.xml",
 				"META-INF/spring/datasource-context.xml",
 				"META-INF/spring/ecm-context.xml",
-				"META-INF/spring/file-context.xml",
 				"META-INF/spring/project-context.xml",
 				"META-INF/spring/rest-context.xml",
 				"META-INF/spring/tracker-context.xml",
@@ -26,12 +25,13 @@ public class Demo {
 				"META-INF/spring/migration-context.xml");
 
 		final ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
-		List<Resource> resources = jcrDao
-				.getResources("1/.attachments/common-comment");
-		for (Resource resource : resources) {
-			System.out.println(resource.getPath());
-//			jcrDao.removeResource(resource.getPath());
-		}
+		jcrDao.removeResource("1/.attachments/common-comment/103");
+		// List<Resource> resources = jcrDao
+		// .getResources("1/.attachments/common-comment");
+		// for (Resource resource : resources) {
+		// System.out.println(resource.getPath());
+		// jcrDao.removeResource(resource.getPath());
+		// }
 		// jcrDao.removeResource("/a/b/d");
 
 		// final Folder pageContent = new Folder();

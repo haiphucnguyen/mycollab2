@@ -25,11 +25,6 @@ public class StreamDownloadResource extends FileResource {
 	private static Logger log = LoggerFactory
 			.getLogger(StreamDownloadResource.class);
 
-	public StreamDownloadResource(String documentPath, int accountId) {
-		super(new File(FileStorageConfig.baseContentFolder + "/" + accountId,
-				documentPath), AppContext.getApplication());
-	}
-
 	public StreamDownloadResource(String documentPath) {
 		super(new File(FileStorageConfig.baseContentFolder, documentPath),
 				AppContext.getApplication());
