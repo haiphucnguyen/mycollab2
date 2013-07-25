@@ -199,7 +199,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				final CommentListDepot commentList = new CommentListDepot(
 						CommentTypeConstants.PRJ_TASK_LIST,
-						TaskGroupReadViewImpl.this.taskList.getId(), true, true);
+						TaskGroupReadViewImpl.this.taskList.getId(),
+						CurrentProjectVariables.getProjectId(), true, true);
 				commentList.setWidth("100%");
 				relatedItemsPanel.addComponent(commentList);
 				relatedItemsPanel.addComponent(new TaskDepot());
@@ -301,7 +302,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.addComponent(new CommentListDepot(
 						CommentTypeConstants.PRJ_TASK_LIST,
-						PrintView.this.taskList.getId(), false, false));
+						PrintView.this.taskList.getId(),
+						CurrentProjectVariables.getProjectId(), false, false));
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}

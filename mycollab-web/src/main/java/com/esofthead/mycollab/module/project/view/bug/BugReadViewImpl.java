@@ -119,7 +119,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 				final CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_BUG,
-						BugReadViewImpl.this.bug.getId(), true, true,
+						BugReadViewImpl.this.bug.getId(),
+						CurrentProjectVariables.getProjectId(), true, true,
 						BugRelayEmailNotificationAction.class);
 				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");

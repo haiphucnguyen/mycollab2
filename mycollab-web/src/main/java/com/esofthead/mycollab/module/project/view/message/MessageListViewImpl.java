@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -405,7 +406,9 @@ public class MessageListViewImpl extends AbstractView implements
 			controls.addComponent(chkIsStick);
 			controls.setComponentAlignment(chkIsStick, Alignment.MIDDLE_CENTER);
 
-			final Button cancelBtn = new Button("Cancel",
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

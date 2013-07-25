@@ -31,21 +31,18 @@ public class CommentInput extends VerticalLayout {
 	private final RichTextArea commentArea;
 	private String type;
 	private Integer typeid;
-
-	public CommentInput(final ReloadableComponent component, final String type,
-			final Integer typeid) {
-		this(component, type, typeid, false, false, null);
-	}
+	private Integer extraTypeId;
 
 	public CommentInput(final ReloadableComponent component,
 			final String typeVal, final Integer typeidVal,
-			final boolean cancelButtonEnable, final boolean isSendingEmailRelay) {
-		this(component, typeVal, typeidVal, cancelButtonEnable,
+			final Integer extraTypeIdVal, final boolean cancelButtonEnable,
+			final boolean isSendingEmailRelay) {
+		this(component, typeVal, typeidVal, extraTypeIdVal, cancelButtonEnable,
 				isSendingEmailRelay, null);
 	}
 
-	public CommentInput(final ReloadableComponent component,
-			final String typeVal, final Integer typeidVal,
+	CommentInput(final ReloadableComponent component, final String typeVal,
+			final Integer typeidVal, final Integer extraTypeIdVal,
 			final boolean cancelButtonEnable,
 			final boolean isSendingEmailRelay, final Class emailHandler) {
 		this.setWidth("600px");
@@ -54,6 +51,7 @@ public class CommentInput extends VerticalLayout {
 
 		type = typeVal;
 		typeid = typeidVal;
+		extraTypeId = extraTypeIdVal;
 
 		commentArea = new RichTextArea();
 		commentArea.setWidth("100%");
@@ -102,6 +100,7 @@ public class CommentInput extends VerticalLayout {
 						comment.setSaccountid(AppContext.getAccountId());
 						comment.setType(type);
 						comment.setTypeid(typeid);
+						comment.setExtratypeid(extraTypeId);
 
 						final CommentService commentService = AppContext
 								.getSpringBean(CommentService.class);
@@ -134,12 +133,7 @@ public class CommentInput extends VerticalLayout {
 		this.addComponent(controlsLayout);
 	}
 
-	public CommentInput(final ReloadableComponent component, final String type,
-			final Integer typeid, final Class emailHandler) {
-		this(component, type, typeid, false, false, emailHandler);
-	}
-
-	public void setTypeAndId(final String type, final int typeid) {
+	void setTypeAndId(final String type, final int typeid) {
 		this.type = type;
 		this.typeid = typeid;
 	}
