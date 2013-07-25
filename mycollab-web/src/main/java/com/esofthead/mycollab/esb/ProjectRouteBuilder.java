@@ -16,7 +16,7 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 				ExchangePattern.InOnly).to("seda:projectDelete.queue");
 		from("seda:projectDelete.queue").threads().bean(
 				ApplicationContextUtil.getBean(ProjectDeleteListener.class),
-				"projectRemoved(int)");
+				"projectRemoved(int, int)");
 	}
 
 }

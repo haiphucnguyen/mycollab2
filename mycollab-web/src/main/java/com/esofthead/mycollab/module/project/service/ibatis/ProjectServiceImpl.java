@@ -248,20 +248,22 @@ public class ProjectServiceImpl extends
 
 	@Override
 	public int removeWithSession(Integer projectId, String username) {
-		int id = super.removeWithSession(projectId, username);
 		// notify listener project is removed, then silently remove project in
 		// associate records
 		CamelContext camelContext = ApplicationContextUtil
 				.getBean(CamelContext.class);
 		try {
+			Project project = findByPrimaryKey(projectId);
+
 			ProjectDeleteListener projectDeleteListener = new ProxyBuilder(
 					camelContext).endpoint(
 					EndpointConstants.PROJECT_REMOVE_ENDPOINT).build(
 					ProjectDeleteListener.class);
-			projectDeleteListener.projectRemoved(projectId);
+			projectDeleteListener.projectRemoved(project.getSaccountid(),
+					projectId);
 		} catch (Exception e) {
 			log.error("Error while notify user delete", e);
 		}
-		return id;
+		return super.removeWithSession(projectId, username);
 	}
 }

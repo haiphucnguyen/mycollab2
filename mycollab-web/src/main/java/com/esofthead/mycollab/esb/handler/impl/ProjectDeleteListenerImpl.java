@@ -11,8 +11,6 @@ import com.esofthead.mycollab.common.domain.ActivityStreamExample;
 import com.esofthead.mycollab.common.domain.CommentExample;
 import com.esofthead.mycollab.esb.handler.ProjectDeleteListener;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.project.domain.Project;
-import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component
@@ -22,12 +20,12 @@ public class ProjectDeleteListenerImpl implements ProjectDeleteListener {
 			.getLogger(ProjectDeleteListenerImpl.class);
 
 	@Override
-	public void projectRemoved(int projectId) {
+	public void projectRemoved(int accountId, int projectId) {
 		log.debug("Remove project {}", projectId);
 
 		deleteProjectActivityStream(projectId);
-		deleteProjectFiles(projectId);
 		deleteRelatedComments(projectId);
+		deleteProjectFiles(accountId, projectId);
 	}
 
 	private void deleteProjectActivityStream(int projectId) {
@@ -51,18 +49,13 @@ public class ProjectDeleteListenerImpl implements ProjectDeleteListener {
 		commentMapper.deleteByExample(ex);
 	}
 
-	private void deleteProjectFiles(int projectId) {
+	private void deleteProjectFiles(int accountid, int projectId) {
 		log.debug("Delete files of project {}", projectId);
-
-		ProjectService projectService = ApplicationContextUtil
-				.getBean(ProjectService.class);
-		Project project = projectService.findByPrimaryKey(projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
 				.getBean(ResourceService.class);
 
-		String rootPath = String.format("%d/project/%d",
-				project.getSaccountid(), projectId);
+		String rootPath = String.format("%d/project/%d", accountid, projectId);
 		resourceService.removeResource(rootPath);
 	}
 
