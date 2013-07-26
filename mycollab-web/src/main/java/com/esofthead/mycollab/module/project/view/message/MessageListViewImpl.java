@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.localization.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
+import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentPanel;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -29,7 +30,6 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
-import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -364,7 +364,7 @@ public class MessageListViewImpl extends AbstractView implements
 			addMessageWrapper.setWidth("500px");
 
 			final RichTextArea ckEditorTextField = new RichTextArea();
-			final AttachmentPanel attachments = new AttachmentPanel();
+			final ProjectAttachmentPanel attachments = new ProjectAttachmentPanel();
 			final TextField titleField = new TextField();
 
 			final HorizontalLayout titleLayout = new HorizontalLayout();
@@ -443,6 +443,7 @@ public class MessageListViewImpl extends AbstractView implements
 										.getValue());
 								MessageListViewImpl.this.fireSaveItem(message);
 								attachments.saveContentsToRepo(
+										message.getProjectid(),
 										AttachmentUtils.PROJECT_MESSAGE,
 										message.getId());
 							} else {

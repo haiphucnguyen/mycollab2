@@ -13,11 +13,11 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentPanel;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -204,7 +204,7 @@ public class TaskAddPopup extends CustomComponent {
 	private class TaskNoteLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 		private final RichTextArea noteArea;
-		private final AttachmentPanel attachmentPanel;
+		private final ProjectAttachmentPanel attachmentPanel;
 
 		public TaskNoteLayout() {
 			this.setSpacing(true);
@@ -214,7 +214,7 @@ public class TaskAddPopup extends CustomComponent {
 			this.noteArea.setHeight("200px");
 			this.addComponent(this.noteArea);
 
-			this.attachmentPanel = new AttachmentPanel();
+			this.attachmentPanel = new ProjectAttachmentPanel();
 			this.addComponent(this.attachmentPanel);
 			final MultiFileUploadExt uploadExt = new MultiFileUploadExt(
 					this.attachmentPanel);
@@ -228,6 +228,7 @@ public class TaskAddPopup extends CustomComponent {
 
 		void saveContentsToRepo(final Integer typeid) {
 			this.attachmentPanel.saveContentsToRepo(
+					CurrentProjectVariables.getProjectId(),
 					AttachmentUtils.PROJECT_TASK_TYPE, typeid);
 		}
 	}
