@@ -179,7 +179,6 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 
 	private static boolean isNodeFolder(Node node) {
 		try {
-			System.out.println(node.getPrimaryNodeType().getName());
 			return node.isNodeType("mycollab:folder");
 		} catch (RepositoryException e) {
 			return false;
@@ -422,18 +421,15 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						+ baseFolderPath
 						+ "]) AND LOCALNAME(folder) LIKE '%"
 						+ resourceName + "%' ";
-				// expression = String.format(expression, resourceName);
 				Query query = queryManager.createQuery(expression,
 						Query.JCR_SQL2);
-				System.out.println(query.getStatement());
 				QueryResult result = query.execute();
 				NodeIterator nodes = result.getNodes();
 				List<Resource> resources = new ArrayList<Resource>();
 				while (nodes.hasNext()) {
 					Node node = nodes.nextNode();
 					if (isNodeFolder(node)) {
-						// Folder folder = convertNodeToFolder(node);
-						// resources.add(folder);
+						// do nothing
 					} else if (isNodeMyCollabContent(node)) {
 						Content content = convertNodeToContent(node);
 						resources.add(content);

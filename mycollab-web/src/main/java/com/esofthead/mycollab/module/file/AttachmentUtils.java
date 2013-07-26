@@ -16,6 +16,14 @@ public class AttachmentUtils {
 
 	public static final String PROJECT_BUG_TYPE = "project-bug";
 
+	public static final String PROJECT_MILESTONE = "project-milestone";
+
+	public static final String PROJECT_RISK = "project-risk";
+
+	public static final String PROJECT_PROBLEM = "project-problem";
+
+	public static final String PROJECT_TASKLIST = "project-tasklist";
+
 	public static final String PROJECT_TASK_TYPE = "project-task";
 
 	public static final String COMMON_COMMENT = "common-comment";
@@ -25,6 +33,7 @@ public class AttachmentUtils {
 		return String.format("%d/.attachments/%s/%d", accountId, type, typeId);
 	}
 
+	@Deprecated
 	public static String getCommentPath(int accountId, int commentId) {
 		return getAttachmentPath(accountId, COMMON_COMMENT, commentId);
 	}
@@ -39,10 +48,67 @@ public class AttachmentUtils {
 				CRM_NOTE_TYPE, noteId);
 	}
 
+	public static String getCrmNoteCommentAttachmentPath(int accountId,
+			int noteId, int commentId) {
+		return String.format("%d/crm/.attachments/%s/%d/%s/%d", accountId,
+				CRM_NOTE_TYPE, noteId, COMMON_COMMENT, commentId);
+	}
+
+	public static String getProjectMessageAttachmentPath(int accountId,
+			int projectId, int messageId, int commentId) {
+		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
+				accountId, projectId, PROJECT_MESSAGE, messageId,
+				COMMON_COMMENT, commentId);
+	}
+
+	public static String getProjectBugAttachmentPath(int accountId,
+			int projectId, int bugId, int commentId) {
+		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
+				accountId, projectId, PROJECT_BUG_TYPE, bugId, COMMON_COMMENT,
+				commentId);
+	}
+
+	public static String getProjectMilestoneAttachmentPath(int accountId,
+			int projectId, int milestoneId, int commentId) {
+		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
+				accountId, projectId, PROJECT_MILESTONE, milestoneId,
+				COMMON_COMMENT, commentId);
+	}
+
+	public static String getProjectTaskListAttachmentPath(int accountId,
+			int projectId, int tasklistId, int commentId) {
+		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
+				accountId, projectId, PROJECT_TASKLIST, tasklistId,
+				COMMON_COMMENT, commentId);
+	}
+
+	public static String getProjectTaskAttachmentPath(int accountId,
+			int projectId, int taskId, int commentId) {
+		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
+				accountId, projectId, PROJECT_TASK_TYPE, taskId,
+				COMMON_COMMENT, commentId);
+	}
+
+	public static String getProjectRiskAttachmentPath(int accountId,
+			int projectId, int riskId, int commentId) {
+		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
+				accountId, projectId, PROJECT_RISK, riskId, COMMON_COMMENT,
+				commentId);
+	}
+
+	public static String getProjectProblemAttachmentPath(int accountId,
+			int projectId, int problemId, int commentId) {
+		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
+				accountId, projectId, PROJECT_PROBLEM, problemId,
+				COMMON_COMMENT, commentId);
+	}
+
+	@Deprecated
 	public static String getBugPath(int accountId, int bugId) {
 		return getAttachmentPath(accountId, PROJECT_BUG_TYPE, bugId);
 	}
 
+	@Deprecated
 	public static String getMessagePath(int accountId, int bugId) {
 		return getAttachmentPath(accountId, PROJECT_MESSAGE, bugId);
 	}
