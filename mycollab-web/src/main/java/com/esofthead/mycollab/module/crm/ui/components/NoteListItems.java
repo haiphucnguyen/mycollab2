@@ -194,15 +194,19 @@ public class NoteListItems extends Depot {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					final int compIndex = noteContentLayout
-							.getComponentIndex(commentList);
-					if (compIndex >= 0) {
-						commentInput = new CommentInput(
-								NoteRowDisplayHandler.this,
-								CommentTypeConstants.CRM_NOTE, note.getId(),
-								null, true, false);
-						noteContentLayout.addComponent(commentInput, compIndex);
-						replyBtn.setVisible(false);
+					if (noteContentLayout.getComponentCount() > 0) {
+						Component component = noteContentLayout
+								.getComponent(noteContentLayout
+										.getComponentCount() - 1);
+						if (!(component instanceof CommentInput)) {
+							commentInput = new CommentInput(
+									NoteRowDisplayHandler.this,
+									CommentTypeConstants.CRM_NOTE,
+									note.getId(), null, true, false);
+							noteContentLayout.addComponent(commentInput,
+									noteContentLayout.getComponentCount());
+							replyBtn.setVisible(false);
+						}
 					}
 				}
 			});

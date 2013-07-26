@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
@@ -75,9 +76,12 @@ public class SimpleComment extends Comment {
 						.getProjectTaskListCommentAttachmentPath(
 								AppContext.getAccountId(), getExtratypeid(),
 								getTypeid(), getId());
+			} else if (CommentTypeConstants.CRM_NOTE.equals(getType())) {
+				commentPath = AttachmentUtils.getCrmNoteCommentAttachmentPath(
+						AppContext.getAccountId(), getTypeid(), getId());
 			} else {
-				commentPath = AttachmentUtils.getCommentPath(
-						this.getSaccountid(), this.getId());
+				throw new MyCollabException("Do not support comment type "
+						+ getType());
 			}
 
 			attachments = contentJcr.getContents(commentPath);
