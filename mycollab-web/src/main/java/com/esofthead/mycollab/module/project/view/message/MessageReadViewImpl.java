@@ -14,11 +14,11 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
+import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentDisplayComponentFactory;
 import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -156,8 +156,8 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				rowLayout.addComponent(attachmentField);
 
-				Component attachmentDisplayComp = AttachmentDisplayComponent
-						.getAttachmentDisplayComponent(
+				Component attachmentDisplayComp = ProjectAttachmentDisplayComponentFactory
+						.getAttachmentDisplayComponent(message.getProjectid(),
 								AttachmentUtils.PROJECT_MESSAGE,
 								message.getId());
 				rowLayout.addComponent(attachmentDisplayComp);
@@ -165,8 +165,12 @@ public class MessageReadViewImpl extends AbstractView implements
 				ResourceService attachmentService = AppContext
 						.getSpringBean(ResourceService.class);
 				List<Content> attachments = attachmentService
-						.getContents(AttachmentUtils.getMessagePath(
-								AppContext.getAccountId(), message.getId()));
+						.getContents(AttachmentUtils
+								.getProjectEntityAttachmentPath(
+										AppContext.getAccountId(),
+										message.getProjectid(),
+										AttachmentUtils.PROJECT_MESSAGE,
+										message.getId()));
 				if (attachments == null || attachments.isEmpty()) {
 					attachmentField.setVisible(false);
 				}
