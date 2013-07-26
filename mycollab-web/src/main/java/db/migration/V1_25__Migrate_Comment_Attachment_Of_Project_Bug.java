@@ -59,7 +59,7 @@ public class V1_25__Migrate_Comment_Attachment_Of_Project_Bug implements
 							comment.getInt("id"));
 
 					String messageNewPath = AttachmentUtils
-							.getProjectBugAttachmentPath(
+							.getProjectBugCommentAttachmentPath(
 									comment.getInt("sAccountId"),
 									comment.getInt("projectId"),
 									comment.getInt("typeId"),

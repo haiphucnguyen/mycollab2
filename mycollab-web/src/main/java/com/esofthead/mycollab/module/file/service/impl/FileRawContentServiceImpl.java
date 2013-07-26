@@ -109,6 +109,11 @@ public class FileRawContentServiceImpl implements RawContentService {
 			File dest = new File(FileStorageConfig.baseContentFolder + "/"
 					+ destinationPath);
 
+			if (!src.exists()) {
+				log.debug("Source: {} is not existed", src.getPath());
+				return;
+			}
+
 			if (dest.exists()) {
 				FileUtils.deleteQuietly(dest);
 			}

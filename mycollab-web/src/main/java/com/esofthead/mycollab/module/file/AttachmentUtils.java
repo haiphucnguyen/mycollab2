@@ -55,6 +55,12 @@ public class AttachmentUtils {
 	}
 
 	public static String getProjectMessageAttachmentPath(int accountId,
+			int projectId, int messageId) {
+		return String.format("%d/project/%d/.attachments/%s/%d", accountId,
+				projectId, PROJECT_MESSAGE, messageId);
+	}
+
+	public static String getProjectMessageCommentAttachmentPath(int accountId,
 			int projectId, int messageId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_MESSAGE, messageId,
@@ -62,6 +68,12 @@ public class AttachmentUtils {
 	}
 
 	public static String getProjectBugAttachmentPath(int accountId,
+			int projectId, int bugId) {
+		return String.format("%d/project/%d/.attachments/%s/%d", accountId,
+				projectId, PROJECT_BUG_TYPE, bugId);
+	}
+
+	public static String getProjectBugCommentAttachmentPath(int accountId,
 			int projectId, int bugId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_BUG_TYPE, bugId, COMMON_COMMENT,
@@ -83,6 +95,12 @@ public class AttachmentUtils {
 	}
 
 	public static String getProjectTaskAttachmentPath(int accountId,
+			int projectId, int taskId) {
+		return String.format("%d/project/%d/.attachments/%s/%d", accountId,
+				projectId, PROJECT_TASK_TYPE, taskId);
+	}
+
+	public static String getProjectTaskCommentAttachmentPath(int accountId,
 			int projectId, int taskId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_TASK_TYPE, taskId,
@@ -106,6 +124,11 @@ public class AttachmentUtils {
 	@Deprecated
 	public static String getBugPath(int accountId, int bugId) {
 		return getAttachmentPath(accountId, PROJECT_BUG_TYPE, bugId);
+	}
+
+	@Deprecated
+	public static String getTaskPath(int accountId, int bugId) {
+		return getAttachmentPath(accountId, PROJECT_TASK_TYPE, bugId);
 	}
 
 	@Deprecated
