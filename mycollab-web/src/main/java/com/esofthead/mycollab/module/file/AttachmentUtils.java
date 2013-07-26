@@ -28,6 +28,7 @@ public class AttachmentUtils {
 
 	public static final String COMMON_COMMENT = "common-comment";
 
+	@Deprecated
 	public static String getAttachmentPath(int accountId, String type,
 			int typeId) {
 		return String.format("%d/.attachments/%s/%d", accountId, type, typeId);
@@ -41,6 +42,21 @@ public class AttachmentUtils {
 	@Deprecated
 	public static String getCrmNotePath(int accountId, int noteId) {
 		return getAttachmentPath(accountId, CRM_NOTE_TYPE, noteId);
+	}
+
+	@Deprecated
+	public static String getBugPath(int accountId, int bugId) {
+		return getAttachmentPath(accountId, PROJECT_BUG_TYPE, bugId);
+	}
+
+	@Deprecated
+	public static String getTaskPath(int accountId, int bugId) {
+		return getAttachmentPath(accountId, PROJECT_TASK_TYPE, bugId);
+	}
+
+	@Deprecated
+	public static String getMessagePath(int accountId, int bugId) {
+		return getAttachmentPath(accountId, PROJECT_MESSAGE, bugId);
 	}
 
 	public static String getCrmNoteAttachmentPath(int accountId, int noteId) {
@@ -125,20 +141,5 @@ public class AttachmentUtils {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_PROBLEM, problemId,
 				COMMON_COMMENT, commentId);
-	}
-
-	@Deprecated
-	public static String getBugPath(int accountId, int bugId) {
-		return getAttachmentPath(accountId, PROJECT_BUG_TYPE, bugId);
-	}
-
-	@Deprecated
-	public static String getTaskPath(int accountId, int bugId) {
-		return getAttachmentPath(accountId, PROJECT_TASK_TYPE, bugId);
-	}
-
-	@Deprecated
-	public static String getMessagePath(int accountId, int bugId) {
-		return getAttachmentPath(accountId, PROJECT_MESSAGE, bugId);
 	}
 }

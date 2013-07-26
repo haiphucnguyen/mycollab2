@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.vaadin.ui;
+package com.esofthead.mycollab.module.project.ui.components;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -22,6 +22,9 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ImageUtil;
+import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
+import com.esofthead.mycollab.vaadin.ui.AttachmentUploadComponent;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -32,17 +35,18 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class AttachmentPanel extends VerticalLayout implements
+public class ProjectAttachmentPanel extends VerticalLayout implements
 		AttachmentUploadComponent {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(AttachmentPanel.class);
+	private static Logger log = LoggerFactory
+			.getLogger(ProjectAttachmentPanel.class);
 	private Map<String, File> fileStores;
 
 	private MultiFileUploadExt multiFileUpload;
 	private ResourceService resourceService;
 
-	public AttachmentPanel() {
+	public ProjectAttachmentPanel() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
 		this.setSpacing(true);
 	}
@@ -64,7 +68,8 @@ public class AttachmentPanel extends VerticalLayout implements
 					file.delete();
 				}
 				fileStores.remove(fileName);
-				AttachmentPanel.this.removeComponent(fileAttachmentLayout);
+				ProjectAttachmentPanel.this
+						.removeComponent(fileAttachmentLayout);
 				if (multiFileUpload != null) {
 					multiFileUpload.removeAndReInitMultiUpload();
 				}
@@ -92,9 +97,10 @@ public class AttachmentPanel extends VerticalLayout implements
 		}
 	}
 
-	public void getAttachments(String type, int typeid) {
+	public void getAttachments(int projectId, String type, int typeid) {
 		List<Content> attachments = resourceService.getContents(AttachmentUtils
-				.getAttachmentPath(AppContext.getAccountId(), type, typeid));
+				.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+						projectId, type, typeid));
 		if (attachments != null && !attachments.isEmpty()) {
 			for (final Content attachment : attachments) {
 				this.addComponent(AttachmentDisplayComponent
@@ -103,12 +109,14 @@ public class AttachmentPanel extends VerticalLayout implements
 		}
 	}
 
-	public void saveContentsToRepo(String type, Integer typeid) {
+	public void saveContentsToRepo(int projectId, String type, Integer typeid) {
 		if (fileStores != null && !fileStores.isEmpty()) {
 
 			for (String fileName : fileStores.keySet()) {
-				String attachmentPath = AttachmentUtils.getAttachmentPath(
-						AppContext.getAccountId(), type, typeid);
+				String attachmentPath = AttachmentUtils
+						.getProjectEntityAttachmentPath(
+								AppContext.getAccountId(), projectId, type,
+								typeid);
 				try {
 					String fileExt = "";
 					int index = fileName.lastIndexOf(".");

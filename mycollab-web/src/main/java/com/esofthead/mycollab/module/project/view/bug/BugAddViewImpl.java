@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -13,8 +14,6 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormAttachmentUploadField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -33,7 +32,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 
 	private final EditForm editForm;
 	private SimpleBug bug;
-	private FormAttachmentUploadField attachmentUploadField;
+	private ProjectFormAttachmentUploadField attachmentUploadField;
 
 	private ComponentMultiSelectField componentSelect;
 	private VersionMultiSelectField affectedVersionSelect;
@@ -54,7 +53,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 	}
 
 	@Override
-	public AttachmentUploadField getAttachUploadField() {
+	public ProjectFormAttachmentUploadField getAttachUploadField() {
 		return this.attachmentUploadField;
 	}
 
@@ -142,10 +141,10 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("id")) {
-					BugAddViewImpl.this.attachmentUploadField = new FormAttachmentUploadField();
+					BugAddViewImpl.this.attachmentUploadField = new ProjectFormAttachmentUploadField();
 					if (BugAddViewImpl.this.bug.getId() != null) {
 						BugAddViewImpl.this.attachmentUploadField
-								.getAttachments(
+								.getAttachments(bug.getProjectid(),
 										AttachmentUtils.PROJECT_BUG_TYPE,
 										BugAddViewImpl.this.bug.getId());
 					}

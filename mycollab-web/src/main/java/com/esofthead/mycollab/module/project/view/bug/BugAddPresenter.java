@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -18,7 +19,6 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -51,8 +51,8 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 				breadcrumb.gotoBugEdit(bug);
 			}
 		} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
+			MessageConstants.showMessagePermissionAlert();
+		}
 	}
 
 	private void bind() {
@@ -96,8 +96,9 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			bug.setLogby(AppContext.getUsername());
 			int bugId = bugService.saveWithSession(bug,
 					AppContext.getUsername());
-			AttachmentUploadField uploadField = view.getAttachUploadField();
-			uploadField.saveContentsToRepo(
+			ProjectFormAttachmentUploadField uploadField = view
+					.getAttachUploadField();
+			uploadField.saveContentsToRepo(bug.getProjectid(),
 					AttachmentUtils.PROJECT_BUG_TYPE, bugId);
 
 			// save component
@@ -111,8 +112,9 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 					view.getComponents());
 		} else {
 			bugService.updateWithSession(bug, AppContext.getUsername());
-			AttachmentUploadField uploadField = view.getAttachUploadField();
-			uploadField.saveContentsToRepo(
+			ProjectFormAttachmentUploadField uploadField = view
+					.getAttachUploadField();
+			uploadField.saveContentsToRepo(bug.getProjectid(),
 					AttachmentUtils.PROJECT_BUG_TYPE, bug.getId());
 
 			int bugId = bug.getId();

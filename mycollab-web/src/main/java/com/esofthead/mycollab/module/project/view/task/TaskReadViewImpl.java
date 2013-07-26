@@ -18,7 +18,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
-import com.esofthead.mycollab.module.project.ui.components.ProjectFormAttachmentDisplayField;
+import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.command.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
