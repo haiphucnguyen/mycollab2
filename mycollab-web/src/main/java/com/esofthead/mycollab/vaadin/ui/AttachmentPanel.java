@@ -20,7 +20,6 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ImageUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -92,9 +91,8 @@ public class AttachmentPanel extends VerticalLayout implements
 		}
 	}
 
-	public void getAttachments(String type, int typeid) {
-		List<Content> attachments = resourceService.getContents(AttachmentUtils
-				.getAttachmentPath(AppContext.getAccountId(), type, typeid));
+	public void getAttachments(String attachmentPath) {
+		List<Content> attachments = resourceService.getContents(attachmentPath);
 		if (attachments != null && !attachments.isEmpty()) {
 			for (final Content attachment : attachments) {
 				this.addComponent(AttachmentDisplayComponent
@@ -103,12 +101,9 @@ public class AttachmentPanel extends VerticalLayout implements
 		}
 	}
 
-	public void saveContentsToRepo(String type, Integer typeid) {
+	public void saveContentsToRepo(String attachmentPath) {
 		if (fileStores != null && !fileStores.isEmpty()) {
-
 			for (String fileName : fileStores.keySet()) {
-				String attachmentPath = AttachmentUtils.getAttachmentPath(
-						AppContext.getAccountId(), type, typeid);
 				try {
 					String fileExt = "";
 					int index = fileName.lastIndexOf(".");

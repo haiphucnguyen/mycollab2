@@ -2,14 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.common.ui.components;
+package com.esofthead.mycollab.module.crm.ui.components;
 
 import java.util.GregorianCalendar;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -115,8 +117,19 @@ public class CommentInput extends VerticalLayout {
 									emailHandler);
 						}
 
-						attachments.saveContentsToRepo(
-								AttachmentUtils.COMMON_COMMENT, commentId);
+						String attachmentPath = "";
+						if (CommentTypeConstants.CRM_NOTE.equals(type)) {
+							attachmentPath = AttachmentUtils
+									.getCrmNoteCommentAttachmentPath(
+											AppContext.getAccountId(), typeid,
+											commentId);
+						} else {
+							// do nothing
+						}
+
+						if (!"".equals(attachmentPath)) {
+							attachments.saveContentsToRepo(attachmentPath);
+						}
 
 						// save success, clear comment area and load list
 						// comments again

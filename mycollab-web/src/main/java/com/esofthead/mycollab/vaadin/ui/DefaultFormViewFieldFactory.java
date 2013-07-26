@@ -24,7 +24,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 	public static interface AttachmentUploadField extends Field {
 
-		void saveContentsToRepo(String type, int typeId);
+		void saveContentsToRepo(String attachmentPath);
 	}
 
 	public static class FormAttachmentDisplayField extends CustomField {
@@ -62,8 +62,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			setCompositionRoot(layout);
 		}
 
-		public void getAttachments(final String type, final int typeid) {
-			attachmentPanel.getAttachments(type, typeid);
+		public void getAttachments(String attachmentPath) {
+			attachmentPanel.getAttachments(attachmentPath);
 		}
 
 		@Override
@@ -72,8 +72,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		}
 
 		@Override
-		public void saveContentsToRepo(final String type, final int typeId) {
-			attachmentPanel.saveContentsToRepo(type, typeId);
+		public void saveContentsToRepo(String attachmentPath) {
+			attachmentPanel.saveContentsToRepo(attachmentPath);
 		}
 	}
 

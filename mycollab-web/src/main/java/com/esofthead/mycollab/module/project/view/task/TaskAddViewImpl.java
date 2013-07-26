@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.Collection;
 
 import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
@@ -15,11 +16,11 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormAttachmentUploadField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -133,10 +134,14 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 				} else if (propertyId.equals("id")) {
 					TaskAddViewImpl.this.attachmentUploadField = new FormAttachmentUploadField();
 					if (TaskAddViewImpl.this.task.getId() != null) {
-						TaskAddViewImpl.this.attachmentUploadField
-								.getAttachments(
+						String attachmentPath = AttachmentUtils
+								.getProjectEntityAttachmentPath(
+										AppContext.getAccountId(),
+										CurrentProjectVariables.getProjectId(),
 										AttachmentUtils.PROJECT_TASK_TYPE,
 										TaskAddViewImpl.this.task.getId());
+						TaskAddViewImpl.this.attachmentUploadField
+								.getAttachments(attachmentPath);
 					}
 					return TaskAddViewImpl.this.attachmentUploadField;
 				}

@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.common.ui.components;
+package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.common.ui.components.CommentRowDisplayHandler;
+import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -58,7 +60,7 @@ public class CommentListDepot extends Depot {
 		private String type;
 		private Integer typeid;
 		private Integer numComments;
-		private CommentInput commentBox;
+		private ProjectCommentInput commentBox;
 
 		public CommentDisplay(final String type, final Integer typeid,
 				final Integer extraTypeId, final boolean isDisplayCommentInput,
@@ -68,7 +70,7 @@ public class CommentListDepot extends Depot {
 			this.typeid = typeid;
 
 			if (isDisplayCommentInput) {
-				commentBox = new CommentInput(this, type, typeid, extraTypeId,
+				commentBox = new ProjectCommentInput(this, type, typeid, extraTypeId,
 						false, isSendingRelayEmail, emailHandler);
 				this.addComponent(commentBox);
 			}

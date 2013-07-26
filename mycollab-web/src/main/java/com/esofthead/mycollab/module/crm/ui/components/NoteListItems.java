@@ -9,7 +9,6 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.common.ui.components.CommentInput;
 import com.esofthead.mycollab.common.ui.components.CommentRowDisplayHandler;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -107,8 +106,10 @@ public class NoteListItems extends Depot {
 									.getTime());
 							final int noteid = noteService.saveWithSession(
 									note, AppContext.getUsername());
-							attachments.saveContentsToRepo(
-									AttachmentUtils.CRM_NOTE_TYPE, noteid);
+							String attachmentPath = AttachmentUtils
+									.getCrmNoteAttachmentPath(
+											AppContext.getAccountId(), noteid);
+							attachments.saveContentsToRepo(attachmentPath);
 							displayNotes();
 							addCreateBtn();
 						}

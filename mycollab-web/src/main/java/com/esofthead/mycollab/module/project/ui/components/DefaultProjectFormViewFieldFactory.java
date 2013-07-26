@@ -3,7 +3,10 @@ package com.esofthead.mycollab.module.project.ui.components;
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -33,11 +36,11 @@ public class DefaultProjectFormViewFieldFactory {
 	public static class ProjectFormAttachmentUploadField extends CustomField {
 		private static final long serialVersionUID = 1L;
 		private final MultiFileUploadExt uploadExt;
-		private final ProjectAttachmentPanel attachmentPanel;
+		private final AttachmentPanel attachmentPanel;
 
 		public ProjectFormAttachmentUploadField() {
 			final VerticalLayout layout = new VerticalLayout();
-			attachmentPanel = new ProjectAttachmentPanel();
+			attachmentPanel = new AttachmentPanel();
 			uploadExt = new MultiFileUploadExt(attachmentPanel);
 			layout.addComponent(attachmentPanel);
 			layout.addComponent(uploadExt);
@@ -46,7 +49,10 @@ public class DefaultProjectFormViewFieldFactory {
 
 		public void getAttachments(int projectId, final String type,
 				final int typeid) {
-			attachmentPanel.getAttachments(projectId, type, typeid);
+			String attachmentPath = AttachmentUtils
+					.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+							projectId, type, typeid);
+			attachmentPanel.getAttachments(attachmentPath);
 		}
 
 		@Override
@@ -56,7 +62,10 @@ public class DefaultProjectFormViewFieldFactory {
 
 		public void saveContentsToRepo(int projectid, final String type,
 				final int typeId) {
-			attachmentPanel.saveContentsToRepo(projectid, type, typeId);
+			String attachmentPath = AttachmentUtils
+					.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+							projectid, type, typeId);
+			attachmentPanel.saveContentsToRepo(attachmentPath);
 		}
 	}
 }
