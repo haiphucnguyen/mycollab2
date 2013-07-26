@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.module.project.ui.components.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -365,7 +366,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 							BugReadViewImpl.this.bug.getLoguserAvatarId(),
 							BugReadViewImpl.this.bug.getLoguserFullName());
 				} else if (propertyId.equals("id")) {
-					return new FormAttachmentDisplayField(
+					return new ProjectFormAttachmentDisplayField(
+							bug.getProjectid(),
 							AttachmentUtils.PROJECT_BUG_TYPE,
 							BugReadViewImpl.this.bug.getId());
 				} else if (propertyId.equals("components")) {

@@ -59,7 +59,7 @@ public class V1_26__Migrate_Comment_Attachment_Of_Project_Milestone implements
 							comment.getInt("id"));
 
 					String messageNewPath = AttachmentUtils
-							.getProjectMilestoneAttachmentPath(
+							.getProjectMilestoneCommentAttachmentPath(
 									comment.getInt("sAccountId"),
 									comment.getInt("projectId"),
 									comment.getInt("typeId"),

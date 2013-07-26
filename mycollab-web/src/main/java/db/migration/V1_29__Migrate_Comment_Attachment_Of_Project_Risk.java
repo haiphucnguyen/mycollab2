@@ -59,7 +59,7 @@ public class V1_29__Migrate_Comment_Attachment_Of_Project_Risk implements
 							comment.getInt("id"));
 
 					String messageNewPath = AttachmentUtils
-							.getProjectRiskAttachmentPath(
+							.getProjectRiskCommentAttachmentPath(
 									comment.getInt("sAccountId"),
 									comment.getInt("projectId"),
 									comment.getInt("typeId"),

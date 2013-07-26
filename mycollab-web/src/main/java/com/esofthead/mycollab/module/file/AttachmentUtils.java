@@ -67,6 +67,12 @@ public class AttachmentUtils {
 				COMMON_COMMENT, commentId);
 	}
 
+	public static String getProjectEntityAttachmentPath(int accountId,
+			int projectId, String type, int typeid) {
+		return String.format("%d/project/%d/.attachments/%s/%d", accountId,
+				projectId, type, typeid);
+	}
+
 	public static String getProjectBugAttachmentPath(int accountId,
 			int projectId, int bugId) {
 		return String.format("%d/project/%d/.attachments/%s/%d", accountId,
@@ -80,14 +86,14 @@ public class AttachmentUtils {
 				commentId);
 	}
 
-	public static String getProjectMilestoneAttachmentPath(int accountId,
-			int projectId, int milestoneId, int commentId) {
+	public static String getProjectMilestoneCommentAttachmentPath(
+			int accountId, int projectId, int milestoneId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_MILESTONE, milestoneId,
 				COMMON_COMMENT, commentId);
 	}
 
-	public static String getProjectTaskListAttachmentPath(int accountId,
+	public static String getProjectTaskListCommentAttachmentPath(int accountId,
 			int projectId, int tasklistId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_TASKLIST, tasklistId,
@@ -107,14 +113,14 @@ public class AttachmentUtils {
 				COMMON_COMMENT, commentId);
 	}
 
-	public static String getProjectRiskAttachmentPath(int accountId,
+	public static String getProjectRiskCommentAttachmentPath(int accountId,
 			int projectId, int riskId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_RISK, riskId, COMMON_COMMENT,
 				commentId);
 	}
 
-	public static String getProjectProblemAttachmentPath(int accountId,
+	public static String getProjectProblemCommentAttachmentPath(int accountId,
 			int projectId, int problemId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, PROJECT_PROBLEM, problemId,
