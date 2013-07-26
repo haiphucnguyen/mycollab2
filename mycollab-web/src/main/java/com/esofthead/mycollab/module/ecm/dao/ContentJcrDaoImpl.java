@@ -323,8 +323,6 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 										+ " and its path is " + path);
 					}
 				}
-
-				log.debug("There is no resource in path {}", path);
 				return null;
 			}
 		});
@@ -479,6 +477,14 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			public Object doInJcr(Session session) throws IOException,
 					RepositoryException {
 				try {
+					int index = destinationPath.lastIndexOf("/");
+					if (index >= 0) {
+						String parentDestPath = destinationPath.substring(0,
+								index);
+						Folder folder = new Folder();
+						folder.setPath(parentDestPath);
+						createFolder(folder, "");
+					}
 					session.move("/" + oldPath, "/" + destinationPath);
 					session.save();
 				} catch (ItemExistsException e) {

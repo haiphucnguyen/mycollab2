@@ -29,8 +29,14 @@ public class AttachmentUtils {
 		return getAttachmentPath(accountId, COMMON_COMMENT, commentId);
 	}
 
+	@Deprecated
 	public static String getCrmNotePath(int accountId, int noteId) {
 		return getAttachmentPath(accountId, CRM_NOTE_TYPE, noteId);
+	}
+
+	public static String getCrmNoteAttachmentPath(int accountId, int noteId) {
+		return String.format("%d/crm/.attachments/%s/%d", accountId,
+				CRM_NOTE_TYPE, noteId);
 	}
 
 	public static String getBugPath(int accountId, int bugId) {

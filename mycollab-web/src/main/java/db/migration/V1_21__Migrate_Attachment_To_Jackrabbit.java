@@ -83,7 +83,7 @@ public class V1_21__Migrate_Attachment_To_Jackrabbit implements
 				content.setTitle("");
 				contentJrcDao.saveContent(content, "");
 			}
-			// jdbcTemplate.execute("drop table `m_attachment`");
+			jdbcTemplate.execute("drop table `m_attachment`");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MyCollabException(e);

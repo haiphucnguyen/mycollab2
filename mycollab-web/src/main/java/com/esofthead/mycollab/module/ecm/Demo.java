@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.ecm;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -9,6 +10,7 @@ import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.file.service.RawContentService;
 
 public class Demo {
 	public static void main(final String[] args) throws Exception {
@@ -24,46 +26,23 @@ public class Demo {
 				"META-INF/spring/user-context.xml",
 				"META-INF/spring/migration-context.xml");
 
-		final ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
-		jcrDao.removeResource("1/.attachments/common-comment/103");
-		// List<Resource> resources = jcrDao
-		// .getResources("1/.attachments/common-comment");
-		// for (Resource resource : resources) {
-		// System.out.println(resource.getPath());
-		// jcrDao.removeResource(resource.getPath());
-		// }
-		// jcrDao.removeResource("/a/b/d");
-
-		// final Folder pageContent = new Folder();
-		// pageContent.setPath("a/b/d");
-		//
-		// jcrDao.createFolder(pageContent, "baohan");
-		//
-		// final Content content = new Content();
-		// content.setDescription("AAA");
-		// content.setPath("a/b/c/example.txt");
-		// content.setSize(11d);
-		// content.setTitle("aaa");
-		//
-		// jcrDao.saveContent(content, "nghitran");
-		//
-		// Resource rs = jcrDao.getResource("a/b/d");
-		// System.out.println(rs);
-		//
-		// System.out.println("NULL: " + jcrDao.getResource("a/b/c"));
-		//
-		// jcrDao.rename("a/b/d", "a/b/c");
-		// System.out.println("NOT NULL: " + jcrDao.getResource("a/b/c"));
-		// System.out.println("D NULL: " + jcrDao.getResource("a/b/d"));
-
-		// final List<Resource> resources = jcrDao.searchResourcesByName("a/b",
-		// "d");
-		// System.out.println("Resources: " + resources.size());
-		// System.out.println("CONTENT " + content);
-		//
-		// jcrDao.removeContent("example/a/b");
-		// Content content2 = jcrDao.getContent("example/a/b");
-		// System.out.println("CONTENT 2" + content2);
+//		final ContentJcrDao jcrDao = context.getBean(ContentJcrDao.class);
+//		RawContentService rawContentService = context
+//				.getBean(RawContentService.class);
+//
+//		String[] paths = new String[] {
+//				"1/.attachments/crm-note/2/da1589d79676690909670cfe5be92b02.PDF",
+//				"1/.attachments/crm-note/2/default_user_avatar_48_48.png",
+//				"1/.attachments/crm-note/17/1-3.jpg"};
+//		for (String path : paths) {
+//			InputStream contentStream = rawContentService.getContent(path);
+//			Content content = new Content();
+//			content.setPath(path);
+//			content.setSize(Double.parseDouble(contentStream.available() + ""));
+//			content.setTitle("");
+//			content.setDescription("");
+//			jcrDao.saveContent(content, "");
+//		}
 
 	}
 }
