@@ -39,8 +39,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.esb.EndpointConstants;
-import com.esofthead.mycollab.esb.handler.ProjectDeleteListener;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -56,6 +54,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.service.esb.ProjectDeleteListener;
+import com.esofthead.mycollab.module.project.service.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.user.PermissionFlag;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
@@ -257,7 +257,7 @@ public class ProjectServiceImpl extends
 
 			ProjectDeleteListener projectDeleteListener = new ProxyBuilder(
 					camelContext).endpoint(
-					EndpointConstants.PROJECT_REMOVE_ENDPOINT).build(
+					ProjectEndPoints.PROJECT_REMOVE_ENDPOINT).build(
 					ProjectDeleteListener.class);
 			projectDeleteListener.projectRemoved(project.getSaccountid(),
 					projectId);

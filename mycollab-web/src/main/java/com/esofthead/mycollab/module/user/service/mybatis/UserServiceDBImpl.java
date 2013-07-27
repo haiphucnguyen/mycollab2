@@ -42,8 +42,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.esb.EndpointConstants;
-import com.esofthead.mycollab.esb.handler.UserDeleteListener;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
@@ -62,6 +60,8 @@ import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.module.user.service.esb.UserDeleteListener;
+import com.esofthead.mycollab.module.user.service.esb.UserEndpoints;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -316,7 +316,7 @@ public class UserServiceDBImpl extends
 			try {
 				UserDeleteListener userDeleteListener = new ProxyBuilder(
 						camelContext).endpoint(
-						EndpointConstants.USER_REMOVE_ENDPOINT).build(
+						UserEndpoints.USER_REMOVE_ENDPOINT).build(
 						UserDeleteListener.class);
 				userDeleteListener.userRemoved(username, accountId);
 			} catch (Exception e) {

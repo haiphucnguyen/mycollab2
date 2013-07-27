@@ -1,11 +1,10 @@
-package com.esofthead.mycollab.esb.handler.impl;
+package com.esofthead.mycollab.module.user.service.esb;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.esb.handler.UserDeleteListener;
 import com.esofthead.mycollab.module.project.dao.MessageMapper;
 import com.esofthead.mycollab.module.project.dao.MilestoneMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
