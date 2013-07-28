@@ -86,7 +86,7 @@ public class ProjectActivityStreamPagedList
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
 									UserAvatarControlFactory.getAvatarLink(
 											activityStream
-													.getCreatedUserAvatarId(),
+													.getOwnerAvatarId(),
 											16),
 									ProjectLinkBuilder.WebLinkGenerator
 											.generateProjectMemberFullLink(
@@ -94,7 +94,7 @@ public class ProjectActivityStreamPagedList
 															.getExtratypeid(),
 													activityStream
 															.getCreateduser()),
-									activityStream.getCreatedUserFullName(),
+									activityStream.getOwnerFullName(),
 									LocalizationHelper
 											.getMessage(ProjectLocalizationTypeMap
 													.getType(activityStream
@@ -116,9 +116,9 @@ public class ProjectActivityStreamPagedList
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
 									UserAvatarControlFactory.getAvatarLink(
 											activityStream
-													.getCreatedUserAvatarId(),
+													.getOwnerAvatarId(),
 											16),
-									activityStream.getCreatedUserFullName(),
+									activityStream.getOwnerFullName(),
 									LocalizationHelper
 											.getMessage(ProjectLocalizationTypeMap
 													.getType(activityStream

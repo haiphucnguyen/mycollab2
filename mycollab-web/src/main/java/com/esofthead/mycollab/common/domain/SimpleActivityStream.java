@@ -6,8 +6,8 @@ public class SimpleActivityStream extends ActivityStream {
 
     private static final long serialVersionUID = 1L;
     
-    private String createdUserAvatarId;
-    private String createdUserFullName;
+    private String ownerAvatarId;
+    private String ownerFullName;
     private List<SimpleComment> comments;
 
     public List<SimpleComment> getComments() {
@@ -18,19 +18,19 @@ public class SimpleActivityStream extends ActivityStream {
         this.comments = comments;
     }
 
-    public String getCreatedUserAvatarId() {
-		return createdUserAvatarId;
+    public String getOwnerAvatarId() {
+		return ownerAvatarId;
 	}
 
-	public void setCreatedUserAvatarId(String createdUserAvatarId) {
-		this.createdUserAvatarId = createdUserAvatarId;
+	public void setOwnerAvatarId(String createdUserAvatarId) {
+		this.ownerAvatarId = createdUserAvatarId;
 	}
 
-	public String getCreatedUserFullName() {
-        return createdUserFullName;
+	public String getOwnerFullName() {
+        return ownerFullName;
     }
 
-    public void setCreatedUserFullName(String createdUserFullName) {
-        this.createdUserFullName = createdUserFullName;
+    public void setOwnerFullName(String createdUserFullName) {
+        this.ownerFullName = createdUserFullName;
     }
 }
