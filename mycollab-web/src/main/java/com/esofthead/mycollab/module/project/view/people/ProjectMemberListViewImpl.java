@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -113,39 +114,39 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ConfirmDialog
-						.show(AppContext.getApplication().getMainWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
-												ApplicationProperties
-														.getString(ApplicationProperties.SITE_NAME)),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
+				ConfirmDialogExt.show(
+						AppContext.getApplication().getMainWindow(),
+						LocalizationHelper
+								.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										ApplicationProperties
+												.getString(ApplicationProperties.SITE_NAME)),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+						new ConfirmDialog.Listener() {
+							private static final long serialVersionUID = 1L;
 
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											ProjectMemberService prjMemberService = AppContext
-													.getSpringBean(ProjectMemberService.class);
-											prjMemberService.removeWithSession(
-													member.getId(),
-													AppContext.getUsername());
+							@Override
+							public void onClose(ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									ProjectMemberService prjMemberService = AppContext
+											.getSpringBean(ProjectMemberService.class);
+									prjMemberService.removeWithSession(
+											member.getId(),
+											AppContext.getUsername());
 
-											EventBus.getInstance()
-													.fireEvent(
-															new ProjectMemberEvent.GotoList(
-																	ProjectMemberListViewImpl.this,
-																	null));
-										}
-									}
-								});
+									EventBus.getInstance()
+											.fireEvent(
+													new ProjectMemberEvent.GotoList(
+															ProjectMemberListViewImpl.this,
+															null));
+								}
+							}
+						});
 			}
 		});
 		btnDelete.setIcon(MyCollabResource
