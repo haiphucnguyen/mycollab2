@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.user.service.esb;
+package com.esofthead.mycollab.module.project.service.esb;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,27 +12,33 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component
-public class UserDeleteListenerImpl implements UserDeleteListener {
+public class ProjectMemberDeleteListenerImpl implements
+		ProjectMemberDeleteListener {
 
 	private static Logger log = LoggerFactory
-			.getLogger(UserDeleteListenerImpl.class);
-
-	@Autowired
-	private UserService userService;
+			.getLogger(ProjectMemberDeleteListenerImpl.class);
 
 	@Autowired
 	private ActivityStreamMapper activityStreamMapper;
 
+	@Autowired
+	private UserService userService;
+
 	@Override
-	public void userRemoved(String username, int accountid) {
-		log.debug("Remove user {} with account id {}", username, accountid);
-		removeUserActivities(username, accountid);
+	public void projectMemberRemoved(String username, Integer projectMemberId,
+			Integer projectId, Integer accountId) {
+		log.debug(
+				"Remove project member has username {}, project member id {} and project id {}",
+				new Object[] { username, projectMemberId, projectId });
+
+		removeProjectMemberActivityStreams(username, projectId, accountId);
 
 	}
 
-	private void removeUserActivities(String username, int accountid) {
+	private void removeProjectMemberActivityStreams(String username,
+			Integer projectId, int accountId) {
 		SimpleUser user = userService.findUserByUserNameInAccount(username,
-				accountid);
+				accountId);
 		ActivityStreamExample ex = new ActivityStreamExample();
 		ActivityStream record = new ActivityStream();
 		record.setCreateduserfullname(user.getDisplayName());
