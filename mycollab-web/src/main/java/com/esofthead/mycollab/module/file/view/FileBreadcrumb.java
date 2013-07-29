@@ -47,9 +47,9 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 			public void buttonClick(ClickEvent event) {
 				FileSearchCriteria criteria = new FileSearchCriteria();
 				criteria.setBaseFolder(AppContext.getAccountId().toString()
-						+ "/.fm");
+						+ "/Documents");
 				criteria.setRootFolder(AppContext.getAccountId().toString()
-						+ "/.fm");
+						+ "/Documents");
 				notifySelectHandler(criteria);
 			}
 		}));
@@ -64,9 +64,9 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 					public void buttonClick(ClickEvent event) {
 						FileSearchCriteria criteria = new FileSearchCriteria();
 						criteria.setBaseFolder(AppContext.getAccountId()
-								.toString() + "/.fm");
+								.toString() + "/Documents");
 						criteria.setRootFolder(AppContext.getAccountId()
-								.toString() + "/.fm");
+								.toString() + "/Documents");
 						notifySelectHandler(criteria);
 					}
 				});
@@ -88,7 +88,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 
 			if (!pathName.equals(AppContext.getAccountId().toString())) {
 				final Button btn = new Button();
-				if (pathName.equals(".fm")) {
+				if (pathName.equals("Documents")) {
 					btn.setCaption("My Documents");
 				} else
 					btn.setCaption(pathName);
@@ -101,7 +101,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 						FileSearchCriteria criteria = new FileSearchCriteria();
 						criteria.setBaseFolder(currentResourcePath);
 						criteria.setRootFolder(AppContext.getAccountId()
-								.toString() + "/.fm");
+								.toString() + "/Documents");
 						notifySelectHandler(criteria);
 					}
 				});

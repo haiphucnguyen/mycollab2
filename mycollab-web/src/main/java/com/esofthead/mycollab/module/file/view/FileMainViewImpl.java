@@ -831,7 +831,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				if (!pathName.equals(AppContext.getAccountId().toString())
 						&& i != path.length - 1) {
 					final Button btn = new Button();
-					if (pathName.equals(".fm")) {
+					if (pathName.equals("Documents")) {
 						btn.setCaption("My Documents");
 					} else
 						btn.setCaption(pathName);
@@ -892,18 +892,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		@Override
 		protected void displayFiles() {
-			String rootPath = FileMainViewImpl.this.rootPath;
 			this.folderTree.removeAllItems();
-			this.rootPath = rootPath;
 
 			this.baseFolder = new Folder();
-			baseFolder.setPath(this.rootPath);
-			this.folderTree.addItem(new Object[] {
-					FileMainViewImpl.this.rootFolderName, "" }, baseFolder);
-			this.folderTree.setItemCaption(baseFolder,
+			baseFolder.setPath(FileMainViewImpl.this.rootPath);
+			this.folderTree
+					.addItem(new Object[] {
+							FileMainViewImpl.this.rootFolderName, "" },
+							this.baseFolder);
+			this.folderTree.setItemCaption(this.baseFolder,
 					FileMainViewImpl.this.rootFolderName);
 
-			this.folderTree.setCollapsed(baseFolder, false);
+			this.folderTree.setCollapsed(this.baseFolder, false);
 		}
 	}
 
