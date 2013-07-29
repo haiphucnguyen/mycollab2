@@ -1103,7 +1103,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		private static final long serialVersionUID = 1L;
 
 		private final GridFormLayoutHelper layoutHelper;
-		private final MultiFileUploadExt multiUploadField;
+		private final MultiFileUploadExt multiFileUploadExt;
 
 		public MultiUploadContentWindow() {
 			super("Multi Upload Content");
@@ -1116,9 +1116,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			this.layoutHelper = new GridFormLayoutHelper(1, 2, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
 
-			this.multiUploadField = (MultiFileUploadExt) this.layoutHelper
-					.addComponent(new MultiFileUploadExt(attachments), "File",
-							0, 0);
+			multiFileUploadExt = new MultiFileUploadExt(attachments);
+			multiFileUploadExt.addComponent(attachments);
+			multiFileUploadExt.setWidth("100%");
+
+			this.layoutHelper.addComponent(multiFileUploadExt, "File", 0, 0);
+
 			this.layoutHelper.getLayout().setWidth("100%");
 			this.layoutHelper.getLayout().setMargin(false);
 			this.layoutHelper.getLayout().addStyleName("colored-gridlayout");
