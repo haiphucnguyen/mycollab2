@@ -7,5 +7,6 @@ public class Hr extends Label {
 
 	public Hr() {
 		super("<hr/>", Label.CONTENT_XHTML);
+		this.addStyleName("hr");
 	}
 }

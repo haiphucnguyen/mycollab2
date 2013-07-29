@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ItemClickEvent;
@@ -138,12 +139,21 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				final Folder collapseFolder = (Folder) event.getItemId();
 				menuTree.setItemIcon(collapseFolder, MyCollabResource
 						.newResource("icons/16/ecm/folder_close.png"));
-				final List<Folder> childs = collapseFolder.getChilds();
-				for (final Folder subFolder : childs) {
-					menuTree.removeItem(subFolder);
-				}
 
-				childs.clear();
+				Container dataSource = menuTree.getContainerDataSource();
+				final Object[] dataCollectionArray = dataSource.getItemIds()
+						.toArray();
+				for (Object id : dataCollectionArray) {
+					Folder folder = (Folder) id;
+					if (folder.getPath().contains(collapseFolder.getPath())
+							&& !folder.getPath().equals(
+									collapseFolder.getPath())) {
+						dataSource.removeItem(folder);
+					}
+				}
+				FileMainViewImpl.this.menuTree
+						.setContainerDataSource(dataSource);
+				FileMainViewImpl.this.menuTree.collapseItem(collapseFolder);
 			}
 		});
 
@@ -360,14 +370,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 													FileMainViewImpl.this.resourceService
 															.removeResource(res
 																	.getPath());
+													if (res instanceof Folder) {
+														FileMainViewImpl.this.menuTree
+																.removeItem((Folder) res);
+													}
 												}
 												itemResourceContainerLayout
 														.constructBody(FileMainViewImpl.this.baseFolder);
-
 												FileMainViewImpl.this.menuTree
-														.collapseItem(FileMainViewImpl.this.baseFolder);
-												FileMainViewImpl.this.menuTree
-														.collapseItem(FileMainViewImpl.this.baseFolder);
+														.expandItem(FileMainViewImpl.this.baseFolder);
 												FileMainViewImpl.this
 														.getWindow()
 														.showNotification(
@@ -1052,8 +1063,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										.createNewFolder(baseFolderPath,
 												folderVal,
 												AppContext.getUsername());
-								FileMainViewImpl.this.baseFolder
-										.addChild(newFolder);
 								FileMainViewImpl.this.menuTree
 										.addItem(newFolder);
 								FileMainViewImpl.this.menuTree.setItemCaption(
@@ -1067,7 +1076,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 												.newResource("icons/16/ecm/folder_close.png"));
 								FileMainViewImpl.this.menuTree
 										.expandItem(FileMainViewImpl.this.baseFolder);
-
 								FileMainViewImpl.this.itemResourceContainerLayout
 										.constructBody(FileMainViewImpl.this.baseFolder);
 								AddNewFolderWindow.this.close();
