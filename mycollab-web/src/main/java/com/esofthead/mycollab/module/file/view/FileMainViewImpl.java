@@ -426,6 +426,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						FileMainViewImpl.this.itemResourceContainerLayout
 								.constructBody(selectedFolder);
 						fileBreadCrumb.gotoFolder(selectedFolder);
+						FileMainViewImpl.this.baseFolder = selectedFolder;
 					}
 				});
 	}
