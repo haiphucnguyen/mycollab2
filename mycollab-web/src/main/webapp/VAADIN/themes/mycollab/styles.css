@@ -168,6 +168,9 @@ body div>input.v-filterselect-input[type="text"] {
 .v-table-body, .v-table-body-noselection {
 	height: 100% !important;
 }
+.v-table-body > div {
+	height: 100% !important;
+}
 
 .v-table tr.v-selected {
 	background-image: url("icons/grad-light-top2.png");
