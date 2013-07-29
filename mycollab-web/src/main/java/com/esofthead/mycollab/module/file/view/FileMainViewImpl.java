@@ -77,6 +77,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private Button selectAllBtn;
 	private List<Resource> lstCheckedResource;
 	private ItemResourceContainerLayout itemResourceContainerLayout;
+	private FileBreadcrumb fileBreadCrumb;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -153,13 +154,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				final Folder item = (Folder) event.getItemId();
 				FileMainViewImpl.this.baseFolder = item;
 				itemResourceContainerLayout.constructBody(item);
+				if (!item.getPath().equals(rootPath))
+					fileBreadCrumb.addLinkFolder(item);
 			}
 		});
 
 		HorizontalLayout shareActionLayout = new HorizontalLayout();
 		final Embedded shareIcon = new Embedded();
 		shareIcon.setSource(MyCollabResource
-				.newResource("icons/24/shareICon.png"));
+				.newResource("icons/24/share_icon.png"));
 		shareActionLayout.addComponent(shareIcon);
 		shareActionLayout.setComponentAlignment(shareIcon,
 				Alignment.MIDDLE_CENTER);
@@ -186,6 +189,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		filterPanel = new FilterPanel();
 		mainBodyLayout.addComponent(filterPanel);
+
+		// file bread Crum ---------------------
+		fileBreadCrumb = new FileBreadcrumb();
+		mainBodyLayout.addComponent(fileBreadCrumb);
 
 		// Construct controllGroupBtn
 		controllGroupBtn = new HorizontalLayout();
@@ -380,7 +387,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		mainBodyLayout.addComponent(itemResourceContainerLayout);
 
 		mainView.addComponent(mainBodyLayout);
-		mainView.setComponentAlignment(mainBodyLayout, Alignment.MIDDLE_LEFT);
+		mainView.setComponentAlignment(mainBodyLayout, Alignment.TOP_LEFT);
 
 		mainView.setExpandRatio(mainBodyLayout, 1.0f);
 
@@ -636,7 +643,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			final Embedded resourceIcon = new Embedded();
 			if (res instanceof Folder)
 				resourceIcon.setSource(MyCollabResource
-						.newResource("icons/48/Folder-icon.png"));
+						.newResource("icons/48/folder_blue_icon.png"));
 			else
 				resourceIcon.setSource(MyCollabResource
 						.newResource("icons/48/file_blue_icon.png"));
@@ -659,6 +666,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								FileMainViewImpl.this.baseFolder = (Folder) res;
 								itemResourceContainerLayout
 										.constructBody((Folder) res);
+								FileMainViewImpl.this.fileBreadCrumb
+										.addLinkFolder((Folder) res);
 							} else {
 								FileDownloadWindow fileDownloadWindow = new FileDownloadWindow(
 										(Content) res);
@@ -806,7 +815,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					UiUtils.addComponent(layout, btn, Alignment.BOTTOM_CENTER);
 					if (i != path.length - 2) {
 						final Embedded nextIconEmbedd = new Embedded("",
-								new ThemeResource("icons/12/nex_icon.png"));
+								new ThemeResource("icons/12/next_icon.png"));
 						UiUtils.addComponent(layout, nextIconEmbedd,
 								Alignment.MIDDLE_LEFT);
 					}
