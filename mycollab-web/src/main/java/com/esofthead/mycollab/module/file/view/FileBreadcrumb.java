@@ -60,8 +60,8 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 	}
 
 	public void addLinkFolder(Folder folder) {
-		index++;
 		this.select(index);
+		index++;
 		this.addLink(new Button(folder.getName(), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -70,8 +70,55 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 				// TODO : go to folder
 			}
 		}));
-		this.setLinkEnabled(true, index + 1);
+		this.setLinkEnabled(true, index);
 		FileLinkBuilder.addLink(folder.getName());
+		// --------------------------
+		final String[] path = folder.getPath().split("/");
+		final StringBuffer curPath = new StringBuffer("");
+
+		// final String[] path = res.getPath().split("/");
+		// final StringBuffer curPath = new StringBuffer("");
+		// for (int i = 0; i < path.length; i++) {
+		// String pathName = path[i];
+		// if (i == 0)
+		// curPath.append(pathName);
+		// else if (i != path.length - 1)
+		// curPath.append("/").append(pathName);
+		//
+		// if (!pathName.equals(AppContext.getAccountId().toString())
+		// && i != path.length - 1) {
+		// final Button btn = new Button();
+		// if (pathName.equals(".fm")) {
+		// btn.setCaption("My Documents");
+		// } else
+		// btn.setCaption(pathName);
+		// btn.addStyleName("link");
+		// final String currentResourcePath = curPath.toString();
+		// btn.addListener(new Button.ClickListener() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public void buttonClick(ClickEvent event) {
+		// Resource curResource = FileMainViewImpl.this.resourceService
+		// .getResource(currentResourcePath);
+		//
+		// FileMainViewImpl.this.menuTree
+		// .expandItem(curResource);
+		//
+		// FileMainViewImpl.this.itemResourceContainerLayout
+		// .constructBody((Folder) curResource);
+		// FileMainViewImpl.this.baseFolder = (Folder) curResource;
+		// }
+		// });
+		// UiUtils.addComponent(layout, btn, Alignment.BOTTOM_CENTER);
+		// if (i != path.length - 2) {
+		// final Embedded nextIconEmbedd = new Embedded("",
+		// new ThemeResource("icons/12/next_icon.png"));
+		// UiUtils.addComponent(layout, nextIconEmbedd,
+		// Alignment.MIDDLE_LEFT);
+		// }
+		// }
+		// }
 	}
 
 	public void removeLinkFolder(Folder folder) {
