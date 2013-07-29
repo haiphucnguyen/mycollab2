@@ -26,9 +26,8 @@ public class ProjectDataTypeFactory {
 			"Major", "Minor", "Trivial" };
 
 	private static String[] BUG_STATUS_LIST = new String[] {
-			BugStatusConstants.CLOSE, BugStatusConstants.INPROGRESS,
-			BugStatusConstants.OPEN, BugStatusConstants.TESTPENDING,
-			BugStatusConstants.WONFIX };
+			BugStatusConstants.VERIFIED, BugStatusConstants.INPROGRESS,
+			BugStatusConstants.OPEN, BugStatusConstants.RESOLVED };
 
 	private static String[] BUG_RESOLUTION_LIST = new String[] {
 			BugResolutionConstants.CAN_NOT_REPRODUCE,

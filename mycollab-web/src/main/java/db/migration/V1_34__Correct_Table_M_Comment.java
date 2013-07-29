@@ -4,21 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
 import db.migration.domain.Record;
 
 public class V1_34__Correct_Table_M_Comment implements SpringJdbcMigration {
-
-	private static Logger log = LoggerFactory
-			.getLogger(V1_34__Correct_Table_M_Comment.class);
 
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
 		try {

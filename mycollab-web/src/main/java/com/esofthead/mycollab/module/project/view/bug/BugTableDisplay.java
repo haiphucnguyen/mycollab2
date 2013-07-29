@@ -91,7 +91,7 @@ public class BugTableDisplay extends
 						String category = event.getClickedItem().getCategory();
 						String value = event.getClickedItem().getValue();
 						if ("status".equals(category)) {
-							if (BugStatusConstants.CLOSE.equals(value)) {
+							if (BugStatusConstants.VERIFIED.equals(value)) {
 								AppContext
 										.getApplication()
 										.getMainWindow()
@@ -114,7 +114,7 @@ public class BugTableDisplay extends
 												new ReOpenWindow(
 														BugTableDisplay.this,
 														bug));
-							} else if (BugStatusConstants.TESTPENDING
+							} else if (BugStatusConstants.RESOLVED
 									.equals(value)) {
 								AppContext
 										.getApplication()
@@ -202,26 +202,26 @@ public class BugTableDisplay extends
 							statusMenuItem.addItem("Start Progress", "status",
 									BugStatusConstants.INPROGRESS);
 							statusMenuItem.addItem("Resolved", "status",
-									BugStatusConstants.TESTPENDING);
+									BugStatusConstants.RESOLVED);
 							statusMenuItem.addItem("Won't Fix", "status",
-									BugStatusConstants.WONFIX);
+									BugStatusConstants.RESOLVED);
 						} else if (BugStatusConstants.INPROGRESS.equals(bug
 								.getStatus())) {
 							statusMenuItem.addItem("Stop Progress", "status",
 									BugStatusConstants.OPEN);
 							statusMenuItem.addItem("Resolved", "status",
-									BugStatusConstants.TESTPENDING);
-						} else if (BugStatusConstants.CLOSE.equals(bug
+									BugStatusConstants.RESOLVED);
+						} else if (BugStatusConstants.VERIFIED.equals(bug
 								.getStatus())) {
 							statusMenuItem.addItem("ReOpen", "status",
 									BugStatusConstants.REOPENNED);
-						} else if (BugStatusConstants.TESTPENDING.equals(bug
+						} else if (BugStatusConstants.RESOLVED.equals(bug
 								.getStatus())) {
 							statusMenuItem.addItem("ReOpen", "status",
 									BugStatusConstants.REOPENNED);
 							statusMenuItem.addItem("Approve & Close", "status",
-									BugStatusConstants.CLOSE);
-						} else if (BugStatusConstants.WONFIX.equals(bug
+									BugStatusConstants.VERIFIED);
+						} else if (BugStatusConstants.RESOLVED.equals(bug
 								.getStatus())) {
 							statusMenuItem.addItem("ReOpen", "status",
 									BugStatusConstants.REOPENNED);
@@ -348,7 +348,7 @@ public class BugTableDisplay extends
 					b.setIcon(iconPriority);
 				}
 
-				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+				if (BugStatusConstants.VERIFIED.equals(bug.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
 						&& (bug.getDuedate().before(new GregorianCalendar()

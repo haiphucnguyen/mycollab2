@@ -29,6 +29,10 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 		this.setUseDefaultClickBehaviour(false);
 
 		index = 1;
+		initBreadcrumb();
+	}
+
+	public void initBreadcrumb() {
 		// home Btn ----------------
 		this.addLink(new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -41,10 +45,8 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 			}
 		}));
 		this.setHeight(25, Sizeable.UNITS_PIXELS);
-		initBreadcrumb();
-	}
 
-	public void initBreadcrumb() {
+		this.select(0);
 		Button documentBtnLink = generateBreadcrumbLink("My Documents",
 				new ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -59,22 +61,41 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 1);
 	}
 
-	public void addLinkFolder(Folder folder) {
-		index++;
-		this.select(index);
-		this.addLink(new Button(folder.getName(), new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+	public void gotoFolder(Folder folder) {
+		initBreadcrumb();
+		final String[] path = folder.getPath().split("/");
+		final StringBuffer curPath = new StringBuffer("");
+		for (int i = 0; i < path.length; i++) {
+			String pathName = path[i];
+			if (i == 0)
+				curPath.append(pathName);
+			else
+				curPath.append("/").append(pathName);
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO : go to folder
+			if (!pathName.equals(AppContext.getAccountId().toString())) {
+				final Button btn = new Button();
+				if (pathName.equals(".fm")) {
+					btn.setCaption("My Documents");
+				} else
+					btn.setCaption(pathName);
+
+				final String currentResourcePath = curPath.toString();
+				btn.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// TODO : go to folder
+					}
+				});
+				if (i > 1) {
+					this.select(i - 1);
+					this.addLink(btn);
+					this.setLinkEnabled(true, i);
+					// FileLinkBuilder.addLink(pathName);
+				}
 			}
-		}));
-		this.setLinkEnabled(true, index + 1);
-		FileLinkBuilder.addLink(folder.getName());
-	}
-
-	public void removeLinkFolder(Folder folder) {
+		}
 	}
 
 	public static class FileLinkBuilder {

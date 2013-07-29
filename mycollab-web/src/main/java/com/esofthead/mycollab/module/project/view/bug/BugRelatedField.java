@@ -187,7 +187,7 @@ public class BugRelatedField extends CustomField {
 								.setRelatetype(BugRelationConstants.DUPLICATED);
 						BugService bugService = AppContext
 								.getSpringBean(BugService.class);
-						bean.setStatus(BugStatusConstants.WONFIX);
+						bean.setStatus(BugStatusConstants.RESOLVED);
 						bean.setResolution(BugResolutionConstants.DUPLICATE);
 						bugService.updateWithSession(bean,
 								AppContext.getUsername());
@@ -298,7 +298,7 @@ public class BugRelatedField extends CustomField {
 					b.setIcon(iconPriority);
 				}
 
-				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+				if (BugStatusConstants.VERIFIED.equals(bug.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
 						&& (bug.getDuedate().before(new GregorianCalendar()

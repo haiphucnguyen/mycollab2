@@ -154,8 +154,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				final Folder item = (Folder) event.getItemId();
 				FileMainViewImpl.this.baseFolder = item;
 				itemResourceContainerLayout.constructBody(item);
-				if (!item.getPath().equals(rootPath))
-					fileBreadCrumb.addLinkFolder(item);
+				fileBreadCrumb.gotoFolder(item);
 			}
 		});
 
@@ -255,6 +254,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 					itemResourceContainerLayout.constructBody(parentFolder);
 					FileMainViewImpl.this.baseFolder = parentFolder;
+					FileMainViewImpl.this.fileBreadCrumb
+							.gotoFolder(FileMainViewImpl.this.baseFolder);
 				}
 			}
 		});
@@ -323,60 +324,66 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 		UiUtils.addComponent(controllGroupBtn, moveToBtn, Alignment.MIDDLE_LEFT);
 
-		Button deleteBtn = new Button("Delete", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button deleteBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				ConfirmDialogExt.show(
-						FileMainViewImpl.this.getWindow(),
-						LocalizationHelper
-								.getMessage(
-										GenericI18Enum.DELETE_DIALOG_TITLE,
-										ApplicationProperties
-												.getString(ApplicationProperties.SITE_NAME)),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-						new ConfirmDialog.Listener() {
-							private static final long serialVersionUID = 1L;
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ConfirmDialogExt.show(
+								FileMainViewImpl.this.getWindow(),
+								LocalizationHelper
+										.getMessage(
+												GenericI18Enum.DELETE_DIALOG_TITLE,
+												ApplicationProperties
+														.getString(ApplicationProperties.SITE_NAME)),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-							@Override
-							public void onClose(final ConfirmDialog dialog) {
-								if (dialog.isConfirmed()) {
-									if (lstCheckedResource != null
-											&& lstCheckedResource.size() > 0) {
-										for (Resource res : lstCheckedResource) {
-											FileMainViewImpl.this.resourceService
-													.removeResource(res
-															.getPath());
+									@Override
+									public void onClose(
+											final ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											if (lstCheckedResource != null
+													&& lstCheckedResource
+															.size() > 0) {
+												for (Resource res : lstCheckedResource) {
+													FileMainViewImpl.this.resourceService
+															.removeResource(res
+																	.getPath());
+												}
+												itemResourceContainerLayout
+														.constructBody(FileMainViewImpl.this.baseFolder);
+
+												FileMainViewImpl.this.menuTree
+														.collapseItem(FileMainViewImpl.this.baseFolder);
+												FileMainViewImpl.this.menuTree
+														.collapseItem(FileMainViewImpl.this.baseFolder);
+												FileMainViewImpl.this
+														.getWindow()
+														.showNotification(
+																"Delete successfully.");
+												FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+											}
 										}
-										itemResourceContainerLayout
-												.constructBody(FileMainViewImpl.this.baseFolder);
-
-										FileMainViewImpl.this.menuTree
-												.collapseItem(FileMainViewImpl.this.baseFolder);
-										FileMainViewImpl.this.menuTree
-												.collapseItem(FileMainViewImpl.this.baseFolder);
-										FileMainViewImpl.this.getWindow()
-												.showNotification(
-														"Delete successfully.");
-										FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 									}
-								}
-							}
-						});
-			}
-		});
+								});
+					}
+				});
 		deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 		UiUtils.addComponent(controllGroupBtn, deleteBtn, Alignment.MIDDLE_LEFT);
 
 		mainBodyLayout.addComponent(controllGroupBtn);
 
-		this.rootPath = String.format("%d/.fm", AppContext.getAccountId());
+		this.rootPath = String.format("%d/Documents", AppContext.getAccountId());
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 
@@ -503,6 +510,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						if (lstResource != null && lstResource.size() > 0) {
 							itemResourceContainerLayout
 									.constructBodySearchActionResult(lstResource);
+							FileMainViewImpl.this.fileBreadCrumb
+									.initBreadcrumb();
 						} else {
 							FileMainViewImpl.this.getWindow().showNotification(
 									"Searching has no any results.");
@@ -686,7 +695,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								itemResourceContainerLayout
 										.constructBody((Folder) res);
 								FileMainViewImpl.this.fileBreadCrumb
-										.addLinkFolder((Folder) res);
+										.gotoFolder((Folder) res);
 							} else {
 								FileDownloadWindow fileDownloadWindow = new FileDownloadWindow(
 										(Content) res);
@@ -829,6 +838,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							FileMainViewImpl.this.itemResourceContainerLayout
 									.constructBody((Folder) curResource);
 							FileMainViewImpl.this.baseFolder = (Folder) curResource;
+							FileMainViewImpl.this.fileBreadCrumb
+									.gotoFolder(FileMainViewImpl.this.baseFolder);
 						}
 					});
 					UiUtils.addComponent(layout, btn, Alignment.BOTTOM_CENTER);
