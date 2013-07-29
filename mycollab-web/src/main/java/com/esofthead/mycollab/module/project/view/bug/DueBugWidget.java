@@ -4,8 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.GregorianCalendar;
-
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
@@ -34,6 +32,18 @@ import com.vaadin.ui.Label;
  * @author haiphucnguyen
  */
 public class DueBugWidget extends BugDisplayWidget {
+	private static final long serialVersionUID = 1L;
+
+	public DueBugWidget() {
+		super(LocalizationHelper.getMessage(BugI18nEnum.DUE_BUGS_WIDGET_TITLE),
+				DueBugRowDisplayHandler.class);
+	}
+
+	@Override
+	protected BugSearchParameter constructMoreDisplayFilter() {
+		return new BugSearchParameter("Due Bugs", searchCriteria);
+	}
+
 	public static class DueBugRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
 
@@ -61,9 +71,7 @@ public class DueBugWidget extends BugDisplayWidget {
 					});
 			defectLink.setWidth("100%");
 
-			if (bug.getDuedate() != null
-					&& (bug.getDuedate().before(new GregorianCalendar()
-							.getTime()))) {
+			if (bug.isOverdue()) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 
@@ -107,17 +115,5 @@ public class DueBugWidget extends BugDisplayWidget {
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}
-	}
-
-	private static final long serialVersionUID = 1L;
-
-	public DueBugWidget() {
-		super(LocalizationHelper.getMessage(BugI18nEnum.DUE_BUGS_WIDGET_TITLE),
-				DueBugRowDisplayHandler.class);
-	}
-
-	@Override
-	protected BugSearchParameter constructMoreDisplayFilter() {
-		return new BugSearchParameter("Due Bugs", searchCriteria);
 	}
 }

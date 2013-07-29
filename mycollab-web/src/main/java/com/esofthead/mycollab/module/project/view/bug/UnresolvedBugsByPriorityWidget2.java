@@ -23,25 +23,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 public class UnresolvedBugsByPriorityWidget2 extends Depot {
-	private class BugPriorityClickListener implements Button.ClickListener {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void buttonClick(final ClickEvent event) {
-			final String caption = event.getButton().getCaption();
-			UnresolvedBugsByPriorityWidget2.this.bugSearchCriteria
-					.setPriorities(new SetSearchField<String>(
-							new String[] { caption }));
-			final BugSearchParameter param = new BugSearchParameter(
-					"Unresolved " + caption + " Bug List",
-					UnresolvedBugsByPriorityWidget2.this.bugSearchCriteria);
-			EventBus.getInstance()
-					.fireEvent(
-							new BugEvent.GotoList(this,
-									new BugScreenData.Search(param)));
-		}
-	}
-
 	private static final long serialVersionUID = 1L;
 
 	private BugSearchCriteria bugSearchCriteria;
@@ -114,6 +95,25 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 				}
 			}
 
+		}
+	}
+
+	private class BugPriorityClickListener implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(final ClickEvent event) {
+			final String caption = event.getButton().getCaption();
+			UnresolvedBugsByPriorityWidget2.this.bugSearchCriteria
+					.setPriorities(new SetSearchField<String>(
+							new String[] { caption }));
+			final BugSearchParameter param = new BugSearchParameter(
+					"Unresolved " + caption + " Bug List",
+					UnresolvedBugsByPriorityWidget2.this.bugSearchCriteria);
+			EventBus.getInstance()
+					.fireEvent(
+							new BugEvent.GotoList(this,
+									new BugScreenData.Search(param)));
 		}
 	}
 }

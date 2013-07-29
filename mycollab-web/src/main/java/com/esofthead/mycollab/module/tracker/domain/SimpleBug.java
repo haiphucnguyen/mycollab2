@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+
 public class SimpleBug extends BugWithBLOBs {
 
 	private static final long serialVersionUID = 1L;
@@ -98,7 +100,16 @@ public class SimpleBug extends BugWithBLOBs {
 		this.loguserAvatarId = loguserAvatarId;
 	}
 
+	public boolean isCompleted() {
+		return BugStatusConstants.VERIFIED.equals(getStatus());
+	}
+
 	public boolean isOverdue() {
+		if (BugStatusConstants.RESOLVED.equals(getStatus())
+				|| BugStatusConstants.VERIFIED.equals(getStatus())) {
+			return false;
+		}
+
 		if (this.getDuedate() != null) {
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
