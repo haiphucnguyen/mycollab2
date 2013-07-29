@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.GregorianCalendar;
-
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
@@ -60,9 +58,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 					});
 			defectLink.setWidth("100%");
 
-			if (bug.getDuedate() != null
-					&& (bug.getDuedate().before(new GregorianCalendar()
-							.getTime()))) {
+			if (bug.isOverdue()) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 			layout.addComponent(defectLink);

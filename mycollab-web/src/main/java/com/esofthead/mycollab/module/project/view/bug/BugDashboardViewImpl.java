@@ -123,9 +123,6 @@ public class BugDashboardViewImpl extends AbstractView implements
 		headerTop.addComponent(header);
 		headerWrapper.addComponent(headerTop);
 
-		// final VerticalLayout headerContent = new VerticalLayout();
-		// headerContent.setWidth("100%");
-		// headerContent.setMargin(true);
 		final ButtonGroup navButton = new ButtonGroup();
 		final Button bugListBtn = new Button("Bugs",
 				new Button.ClickListener() {
@@ -168,8 +165,6 @@ public class BugDashboardViewImpl extends AbstractView implements
 		header.setExpandRatio(controlsBtn, 1.0f);
 		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
-		// headerWrapper.addComponent(headerContent);
-
 		this.addComponent(headerWrapper);
 
 		final HorizontalLayout body = new HorizontalLayout();
@@ -211,11 +206,10 @@ public class BugDashboardViewImpl extends AbstractView implements
 		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
-		myBugsSearchCriteria
-				.setStatuses(new SetSearchField<String>(SearchField.AND,
-						new String[] { BugStatusConstants.INPROGRESS,
-								BugStatusConstants.OPEN,
-								BugStatusConstants.REOPENNED }));
+		myBugsSearchCriteria.setStatuses(new SetSearchField<String>(
+				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
+						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
+						BugStatusConstants.RESOLVED }));
 		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
 				.getUsername()));
 
@@ -230,11 +224,10 @@ public class BugDashboardViewImpl extends AbstractView implements
 		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
 				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
 						.getTime()));
-		dueDefectsCriteria
-				.setStatuses(new SetSearchField<String>(SearchField.AND,
-						new String[] { BugStatusConstants.INPROGRESS,
-								BugStatusConstants.OPEN,
-								BugStatusConstants.REOPENNED }));
+		dueDefectsCriteria.setStatuses(new SetSearchField<String>(
+				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
+						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
+						BugStatusConstants.RESOLVED }));
 		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
 		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();

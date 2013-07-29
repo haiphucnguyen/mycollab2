@@ -40,8 +40,7 @@ public class BugSimpleDisplayWidget extends
 						}
 					});
 			bugLink.setStyleName("link");
-			String bugStatus = bug.getStatus();
-			if ("Close".equalsIgnoreCase(bugStatus)) {
+			if (bug.isCompleted()) {
 				bugLink.addStyleName(UIConstants.LINK_COMPLETED);
 			} else if (bug.isOverdue()) {
 				bugLink.addStyleName(UIConstants.LINK_OVERDUE);

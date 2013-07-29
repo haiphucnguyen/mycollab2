@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -89,7 +91,9 @@ public class ApproveInputWindow extends Window {
 				controlsBtn.setMargin(true, false, true, false);
 				layout.addComponent(controlsBtn);
 
-				final Button cancelBtn = new Button("Cancel",
+				final Button cancelBtn = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 

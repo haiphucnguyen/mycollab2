@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -348,11 +347,9 @@ public class BugTableDisplay extends
 					b.setIcon(iconPriority);
 				}
 
-				if (BugStatusConstants.VERIFIED.equals(bug.getStatus())) {
+				if (bug.isCompleted()) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
-				} else if (bug.getDuedate() != null
-						&& (bug.getDuedate().before(new GregorianCalendar()
-								.getTime()))) {
+				} else if (bug.isOverdue()) {
 					b.addStyleName(UIConstants.LINK_OVERDUE);
 				}
 				return b;
