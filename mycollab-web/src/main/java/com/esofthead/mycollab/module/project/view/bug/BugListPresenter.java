@@ -1,8 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -47,15 +45,11 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 			new FieldExportColumn("resolution", "Resolution"),
 			new FieldExportColumn("duedate", "Due Date") };
 
-	private BugService bugService;
-	private BugSearchCriteria searchCriteria;
 	private boolean isSelectAll = false;
 
 	@SuppressWarnings("serial")
 	public BugListPresenter() {
 		super(BugListView.class);
-
-		bugService = AppContext.getSpringBean(BugService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
@@ -113,7 +107,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 						new ExportExcelStreamResource<BugSearchCriteria>(title,
 								EXPORT_COLUMNS, AppContext
 										.getSpringBean(BugService.class),
-										searchBugSearchCriteria), "bug_list.xls", view
+								searchBugSearchCriteria), "bug_list.xls", view
 								.getApplication());
 				view.getWidget().getWindow().open(res, "_blank");
 			}
@@ -164,31 +158,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 
 	@Override
 	public void doSearch(BugSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
 		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 		checkWhetherEnableTableActionControl();
-	}
-
-	private void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleBug> currentDataList = view.getPagedBeanTable()
-					.getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleBug item : currentDataList) {
-				if (item.isSelected()) {
-					keyList.add(item.getId());
-				}
-			}
-
-			if (keyList.size() > 0) {
-				bugService.removeWithSession(keyList, AppContext.getUsername());
-				doSearch(searchCriteria);
-				checkWhetherEnableTableActionControl();
-			}
-		} else {
-			bugService.removeByCriteria(searchCriteria);
-			doSearch(searchCriteria);
-		}
-
 	}
 }

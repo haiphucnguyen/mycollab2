@@ -7,5 +7,5 @@ import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 public interface ActivityStreamService extends
 		IDefaultService<Integer, ActivityStream, ActivityStreamSearchCriteria> {
 
-	void save(ActivityStream activityStream);
+	Integer save(ActivityStream activityStream);
 }

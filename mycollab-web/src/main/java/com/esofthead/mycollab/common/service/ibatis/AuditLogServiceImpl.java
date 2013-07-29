@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,22 +55,6 @@ public class AuditLogServiceImpl extends
 	@Override
 	public ISearchableDAO<AuditLogSearchCriteria> getSearchMapper() {
 		return auditLogMapperExt;
-	}
-
-	@Override
-	public int saveAuditLog(String username, String module, String type,
-			int typeid, int sAccountId, Object oldObj, Object newObj) {
-		AuditLog auditLog = new AuditLog();
-		auditLog.setPosteduser(username);
-		auditLog.setModule(module);
-		auditLog.setType(type);
-		auditLog.setTypeid(typeid);
-		auditLog.setSaccountid(sAccountId);
-		auditLog.setPosteddate(new GregorianCalendar().getTime());
-		auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));
-		auditLog.setObjectClass(oldObj.getClass().getName());
-		auditLogMapper.insertAndReturnKey(auditLog);
-		return auditLog.getId();
 	}
 
 	public static class AuditLogUtil {
