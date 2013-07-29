@@ -7,6 +7,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -15,33 +17,36 @@ import org.xml.sax.InputSource;
 public class SimpleAuditLog extends AuditLog {
 	private static final long serialVersionUID = 1L;
 
+	private static Logger log = LoggerFactory.getLogger(SimpleAuditLog.class);
+
 	private List<AuditChangeItem> changeItems;
-    
-    private String postedUserFullName;
-    
-    private String postedUserAvatarId;
 
-    public SimpleAuditLog() {
-    }
+	private String postedUserFullName;
 
-    public List<AuditChangeItem> getChangeItems() {
-        setChangeItems();
-        return changeItems;
-    }
+	private String postedUserAvatarId;
 
-    public void setChangeItems(List<AuditChangeItem> changeItems) {
-        this.changeItems = changeItems;
-    }
+	public SimpleAuditLog() {
+	}
 
-    public String getPostedUserFullName() {
-        return postedUserFullName;
-    }
+	public List<AuditChangeItem> getChangeItems() {
+		if (changeItems == null) {
+			changeItems = parseChangeItems();
+		}
+		if (changeItems == null) {
+			changeItems = new ArrayList<AuditChangeItem>();
+		}
+		return changeItems;
+	}
 
-    public void setPostedUserFullName(String postedUserFullName) {
-        this.postedUserFullName = postedUserFullName;
-    }
+	public String getPostedUserFullName() {
+		return postedUserFullName;
+	}
 
-    public String getPostedUserAvatarId() {
+	public void setPostedUserFullName(String postedUserFullName) {
+		this.postedUserFullName = postedUserFullName;
+	}
+
+	public String getPostedUserAvatarId() {
 		return postedUserAvatarId;
 	}
 
@@ -49,30 +54,31 @@ public class SimpleAuditLog extends AuditLog {
 		this.postedUserAvatarId = postedUserAvatarId;
 	}
 
-	private void setChangeItems() {
-        DocumentBuilderFactory builderFactory = DocumentBuilderFactory
-                .newInstance();
-        builderFactory.setIgnoringComments(true);
-        builderFactory.setIgnoringElementContentWhitespace(true);
-        try {
-            DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
-            Document document = docBuilder.parse(new InputSource(
-                    new StringReader(this.getChangeset())));
-            NodeList changeElements = document
-                    .getElementsByTagName("changelog");
+	private List<AuditChangeItem> parseChangeItems() {
+		List<AuditChangeItem> items = new ArrayList<AuditChangeItem>();
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+				.newInstance();
+		builderFactory.setIgnoringComments(true);
+		builderFactory.setIgnoringElementContentWhitespace(true);
+		try {
+			DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
+			Document document = docBuilder.parse(new InputSource(
+					new StringReader(this.getChangeset())));
+			NodeList changeElements = document
+					.getElementsByTagName("changelog");
 
-            changeItems = new ArrayList<AuditChangeItem>();
+			for (int i = 0; i < changeElements.getLength(); i++) {
+				Element element = (Element) changeElements.item(i);
+				AuditChangeItem changeItem = new AuditChangeItem();
+				changeItem.setField(element.getAttribute("field"));
+				changeItem.setNewvalue(element.getAttribute("newvalue"));
+				changeItem.setOldvalue(element.getAttribute("oldvalue"));
+				items.add(changeItem);
+			}
+		} catch (Exception e) {
+			log.error("Error while parse change log item", e);
+		}
 
-            for (int i = 0; i < changeElements.getLength(); i++) {
-                Element element = (Element) changeElements.item(i);
-                AuditChangeItem changeItem = new AuditChangeItem();
-                changeItem.setField(element.getAttribute("field"));
-                changeItem.setNewvalue(element.getAttribute("newvalue"));
-                changeItem.setOldvalue(element.getAttribute("oldvalue"));
-                changeItems.add(changeItem);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		return items;
+	}
 }

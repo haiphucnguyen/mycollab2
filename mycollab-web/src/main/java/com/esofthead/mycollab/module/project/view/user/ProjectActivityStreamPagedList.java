@@ -85,8 +85,7 @@ public class ProjectActivityStreamPagedList
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
 									UserAvatarControlFactory.getAvatarLink(
-											activityStream
-													.getOwnerAvatarId(),
+											activityStream.getOwnerAvatarId(),
 											16),
 									ProjectLinkBuilder.WebLinkGenerator
 											.generateProjectMemberFullLink(
@@ -115,8 +114,7 @@ public class ProjectActivityStreamPagedList
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
 									UserAvatarControlFactory.getAvatarLink(
-											activityStream
-													.getOwnerAvatarId(),
+											activityStream.getOwnerAvatarId(),
 											16),
 									activityStream.getOwnerFullName(),
 									LocalizationHelper
@@ -133,6 +131,8 @@ public class ProjectActivityStreamPagedList
 													activityStream.getType(),
 													activityStream.getTypeid()),
 									activityStream.getNamefield());
+
+					
 				}
 
 				final Label actionLbl = new Label(content, Label.CONTENT_XHTML);

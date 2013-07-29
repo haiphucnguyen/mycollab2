@@ -19,9 +19,9 @@ public class ActivityStreamServiceImpl extends
 
 	@Autowired
 	protected ActivityStreamMapper activityStreamMapper;
-        
-        @Autowired
-        protected ActivityStreamMapperExt activityStreamMapperExt;
+
+	@Autowired
+	protected ActivityStreamMapperExt activityStreamMapperExt;
 
 	@Override
 	public ICrudGenericDAO<Integer, ActivityStream> getCrudMapper() {
@@ -34,7 +34,8 @@ public class ActivityStreamServiceImpl extends
 	}
 
 	@Override
-	public void save(ActivityStream activityStream) {
-		activityStreamMapper.insert(activityStream);
+	public Integer save(ActivityStream activityStream) {
+		activityStreamMapper.insertAndReturnKey(activityStream);
+		return activityStream.getId();
 	}
 }

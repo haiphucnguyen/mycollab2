@@ -16,6 +16,8 @@ public class CacheManager {
 
 	private final static EmbeddedCacheManager CACHE_MANAGER = createCache();
 
+	private static String GLOBAL_CACHE = "global";
+
 	private static EmbeddedCacheManager createCache() {
 		InputStream config = InfinispanCache.class
 				.getResourceAsStream("infinispan.xml");
@@ -37,6 +39,10 @@ public class CacheManager {
 
 	public static Cache<Object, Object> getCache(String id) {
 		return CACHE_MANAGER.getCache(id);
+	}
+
+	public static Cache<Object, Object> getCache() {
+		return CACHE_MANAGER.getCache(GLOBAL_CACHE);
 	}
 
 	public static void removeCache(String id) {
