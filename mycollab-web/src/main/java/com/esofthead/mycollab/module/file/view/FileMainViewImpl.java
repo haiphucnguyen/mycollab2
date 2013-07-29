@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -383,7 +384,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		mainBodyLayout.addComponent(controllGroupBtn);
 
-		this.rootPath = String.format("%d/Documents", AppContext.getAccountId());
+		this.rootPath = String
+				.format("%d/Documents", AppContext.getAccountId());
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 
@@ -401,7 +403,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		this.addComponent(mainView);
 		this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
 
-		displayResources(rootPath, "My Documents");
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
@@ -416,6 +417,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
 
 		this.menuTree.collapseItem(this.baseFolder);
+		fileBreadCrumb
+				.addSearchHandler(new SearchHandler<FileSearchCriteria>() {
+					@Override
+					public void onSearch(FileSearchCriteria criteria) {
+						Folder selectedFolder = (Folder) FileMainViewImpl.this.resourceService
+								.getResource(criteria.getBaseFolder());
+						FileMainViewImpl.this.itemResourceContainerLayout
+								.constructBody(selectedFolder);
+						fileBreadCrumb.gotoFolder(selectedFolder);
+						FileMainViewImpl.this.baseFolder = selectedFolder;
+					}
+				});
 	}
 
 	@Override
@@ -818,7 +831,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				if (!pathName.equals(AppContext.getAccountId().toString())
 						&& i != path.length - 1) {
 					final Button btn = new Button();
-					if (pathName.equals(".fm")) {
+					if (pathName.equals("Documents")) {
 						btn.setCaption("My Documents");
 					} else
 						btn.setCaption(pathName);
@@ -879,18 +892,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		@Override
 		protected void displayFiles() {
-			String rootPath = FileMainViewImpl.this.rootPath;
 			this.folderTree.removeAllItems();
-			this.rootPath = rootPath;
 
 			this.baseFolder = new Folder();
-			baseFolder.setPath(this.rootPath);
-			this.folderTree.addItem(new Object[] {
-					FileMainViewImpl.this.rootFolderName, "" }, baseFolder);
-			this.folderTree.setItemCaption(baseFolder,
+			baseFolder.setPath(FileMainViewImpl.this.rootPath);
+			this.folderTree
+					.addItem(new Object[] {
+							FileMainViewImpl.this.rootFolderName, "" },
+							this.baseFolder);
+			this.folderTree.setItemCaption(this.baseFolder,
 					FileMainViewImpl.this.rootFolderName);
 
-			this.folderTree.setCollapsed(baseFolder, false);
+			this.folderTree.setCollapsed(this.baseFolder, false);
 		}
 	}
 
@@ -1090,7 +1103,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		private static final long serialVersionUID = 1L;
 
 		private final GridFormLayoutHelper layoutHelper;
-		private final MultiFileUploadExt multiUploadField;
+		private final MultiFileUploadExt multiFileUploadExt;
 
 		public MultiUploadContentWindow() {
 			super("Multi Upload Content");
@@ -1103,9 +1116,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			this.layoutHelper = new GridFormLayoutHelper(1, 2, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
 
-			this.multiUploadField = (MultiFileUploadExt) this.layoutHelper
-					.addComponent(new MultiFileUploadExt(attachments), "File",
-							0, 0);
+			multiFileUploadExt = new MultiFileUploadExt(attachments);
+			multiFileUploadExt.addComponent(attachments);
+			multiFileUploadExt.setWidth("100%");
+
+			this.layoutHelper.addComponent(multiFileUploadExt, "File", 0, 0);
+
 			this.layoutHelper.getLayout().setWidth("100%");
 			this.layoutHelper.getLayout().setMargin(false);
 			this.layoutHelper.getLayout().addStyleName("colored-gridlayout");

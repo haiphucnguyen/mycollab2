@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
@@ -49,7 +50,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -59,6 +59,20 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 	protected SimpleProjectMember projectMember;
 	protected AdvancedPreviewBeanForm<ProjectMember> previewForm;
 
+	public void previewItem(final SimpleProjectMember item) {
+		this.projectMember = item;
+		this.previewForm.setItemDataSource(new BeanItem<ProjectMember>(
+				this.projectMember));
+	}
+
+	public SimpleProjectMember getProjectMember() {
+		return this.projectMember;
+	}
+
+	public AdvancedPreviewBeanForm<ProjectMember> getPreviewForm() {
+		return this.previewForm;
+	}
+
 	protected class ProjectMemberFormFieldFactory extends
 			DefaultFormViewFieldFactory {
 		private static final long serialVersionUID = 1L;
@@ -66,18 +80,30 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		@Override
 		protected Field onCreateField(final Item item, final Object propertyId,
 				final Component uiContext) {
-			if (propertyId.equals("isAdmin")) {
+			if (propertyId.equals("isadmin")) {
 				if (ProjectMemberPreviewBuilder.this.projectMember.getIsadmin() != null
 						&& ProjectMemberPreviewBuilder.this.projectMember
 								.getIsadmin() == Boolean.FALSE) {
-					final HorizontalLayout layout = new HorizontalLayout();
-					layout.setSpacing(true);
-					layout.addComponent(new Label("False"));
-					layout.addComponent(new Label("Role: "
-							+ ProjectMemberPreviewBuilder.this.projectMember
-									.getRoleName()));
-					return new DefaultFormViewFieldFactory.FormContainerField(
-							layout);
+					FormLinkViewField roleLink = new FormLinkViewField(
+							ProjectMemberPreviewBuilder.this.projectMember
+									.getRoleName(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									EventBus.getInstance()
+											.fireEvent(
+													new ProjectRoleEvent.GotoRead(
+															ProjectMemberFormFieldFactory.this,
+															projectMember
+																	.getProjectroleid()));
+								}
+							});
+					return roleLink;
+				} else {
+					return new DefaultFormViewFieldFactory.FormViewField(
+							"Project Admin");
 				}
 			} else if (propertyId.equals("username")) {
 				return new FormViewField(
@@ -226,7 +252,6 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 
 			};
 
-			// this.basicInformationLayout.addComponent(this.previewForm);
 			this.basicInformationLayout.addStyleName("main-info");
 
 			this.projectMemberReadViewLayout.addTab(
@@ -239,20 +264,6 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 					"Assignments");
 
 		}
-	}
-
-	public void previewItem(final SimpleProjectMember item) {
-		this.projectMember = item;
-		this.previewForm.setItemDataSource(new BeanItem<ProjectMember>(
-				this.projectMember));
-	}
-
-	public SimpleProjectMember getProjectMember() {
-		return this.projectMember;
-	}
-
-	public AdvancedPreviewBeanForm<ProjectMember> getPreviewForm() {
-		return this.previewForm;
 	}
 
 	protected class UserTaskDepot extends Depot {
@@ -511,7 +522,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			openBugBtn.setStyleName("link");
 			actionBtnLayout.addComponent(openBugBtn);
 
-			final Button pendingBugBtn = new Button("Pending Bugs",
+			final Button pendingBugBtn = new Button("Resolved Bugs",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -520,7 +531,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 							UserBugDepot.this.bugActionControl
 									.setPopupVisible(false);
 							UserBugDepot.this.bugActionControl
-									.setCaption("Pending Bugs");
+									.setCaption("Resolved Bugs");
 							UserBugDepot.this.displayResolvedBugs();
 						}
 					});
@@ -529,7 +540,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			pendingBugBtn.setStyleName("link");
 			actionBtnLayout.addComponent(pendingBugBtn);
 
-			final Button closeBugBtn = new Button("Closed Bug",
+			final Button closeBugBtn = new Button("Verified Bugs",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -538,7 +549,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 							UserBugDepot.this.bugActionControl
 									.setPopupVisible(false);
 							UserBugDepot.this.bugActionControl
-									.setCaption("Closed Bug");
+									.setCaption("Verified Bugs");
 							UserBugDepot.this.displayClosedBugs();
 						}
 					});
@@ -577,8 +588,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		private void displayClosedBugs() {
 			final BugSearchCriteria criteria = this.createBugSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { BugStatusConstants.VERIFIED,
-							BugStatusConstants.RESOLVED }));
+					new String[] { BugStatusConstants.VERIFIED }));
 			this.bugDisplay.setSearchCriteria(criteria);
 		}
 	}

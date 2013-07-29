@@ -90,7 +90,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 			if (propertyId.equals("username")) {
 				this.informationLayout.addComponent(field, "User", 0, 0);
 			} else if (propertyId.equals("isadmin")) {
-				this.informationLayout.addComponent(field, "Is Admin", 0, 1);
+				this.informationLayout.addComponent(field, "Role", 0, 1);
 			}
 		}
 	}

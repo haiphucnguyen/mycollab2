@@ -308,7 +308,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 								Content content = convertNodeToContent(childNode);
 								resources.add(content);
 							} else {
-								String errorString = "Node %s has type not mycollab:content or mycollab:folder";
+								String errorString = "Node %s has type not mycollab:content";
 								log.error(String.format(errorString,
 										childNode.getPath()));
 							}

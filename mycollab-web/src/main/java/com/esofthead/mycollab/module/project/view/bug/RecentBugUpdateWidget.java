@@ -4,14 +4,11 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.GregorianCalendar;
-
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
-import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -35,6 +32,19 @@ import com.vaadin.ui.Label;
  * @author haiphucnguyen
  */
 public class RecentBugUpdateWidget extends BugDisplayWidget {
+	private static final long serialVersionUID = 1L;
+
+	public RecentBugUpdateWidget() {
+		super(LocalizationHelper
+				.getMessage(BugI18nEnum.UPDATED_RECENTLY_WIDGET_TITLE),
+				RecentBugRowDisplayHandler.class);
+	}
+
+	@Override
+	protected BugSearchParameter constructMoreDisplayFilter() {
+		return new BugSearchParameter("Recent Bugs", searchCriteria);
+	}
+
 	public static class RecentBugRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
 
@@ -62,11 +72,9 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 					});
 			defectLink.setWidth("100%");
 
-			if (BugStatusConstants.VERIFIED.equals(bug.getStatus())) {
+			if (bug.isCompleted()) {
 				defectLink.addStyleName(UIConstants.LINK_COMPLETED);
-			} else if (bug.getDuedate() != null
-					&& (bug.getDuedate().before(new GregorianCalendar()
-							.getTime()))) {
+			} else if (bug.isOverdue()) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 			layout.addComponent(defectLink);
@@ -107,18 +115,5 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}
-	}
-
-	private static final long serialVersionUID = 1L;
-
-	public RecentBugUpdateWidget() {
-		super(LocalizationHelper
-				.getMessage(BugI18nEnum.UPDATED_RECENTLY_WIDGET_TITLE),
-				RecentBugRowDisplayHandler.class);
-	}
-
-	@Override
-	protected BugSearchParameter constructMoreDisplayFilter() {
-		return new BugSearchParameter("Recent Bugs", searchCriteria);
 	}
 }
