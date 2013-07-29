@@ -376,7 +376,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		mainBodyLayout.addComponent(controllGroupBtn);
 
-		String rootPath = String.format("%d/.fm", AppContext.getAccountId());
+		this.rootPath = String.format("%d/.fm", AppContext.getAccountId());
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 
@@ -394,6 +394,25 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		this.addComponent(mainView);
 		this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
 
+		displayResources(rootPath, "My Documents");
+	}
+
+	public void displayResources(String rootPath, String rootFolderName) {
+		this.menuTree.removeAllItems();
+		this.rootFolderName = rootFolderName;
+
+		this.baseFolder = new Folder();
+		this.baseFolder.setPath(rootPath);
+		this.menuTree.addItem(this.baseFolder);
+		this.menuTree.setItemCaption(this.baseFolder, rootFolderName);
+		this.menuTree.setItemIcon(this.baseFolder,
+				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
+
+		this.menuTree.collapseItem(this.baseFolder);
+	}
+
+	@Override
+	public void display() {
 		displayResources(rootPath, "My Documents");
 	}
 
@@ -557,8 +576,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
 				for (Resource res : lstResource) {
-					mainLayout.addComponent(constructOneIteamResourceLayout(
-							res, false));
+					mainLayout.addComponent(constructOneItemResourceLayout(res,
+							false));
 					mainLayout.addComponent(new Hr());
 				}
 			}
@@ -591,15 +610,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
 				for (Resource res : lstResource) {
-					mainLayout.addComponent(constructOneIteamResourceLayout(
-							res, true));
+					mainLayout.addComponent(constructOneItemResourceLayout(res,
+							true));
 					mainLayout.addComponent(new Hr());
 				}
 			}
 			this.addComponent(mainLayout);
 		}
 
-		private HorizontalLayout constructOneIteamResourceLayout(
+		private HorizontalLayout constructOneItemResourceLayout(
 				final Resource res, final boolean isSearchAction) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.addStyleName("resourceItem");
@@ -823,31 +842,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			}
 			return layout;
 		}
-	}
-
-	private void displayResourcesInListLayout(final Folder folder) {
-		this.baseFolder = folder;
-	}
-
-	public void displayResources(String rootPath, String rootFolderName) {
-		this.menuTree.removeAllItems();
-		this.rootPath = rootPath;
-		this.rootFolderName = rootFolderName;
-
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(this.rootPath);
-		this.menuTree.addItem(this.baseFolder);
-		this.menuTree.setItemCaption(this.baseFolder, rootFolderName);
-		this.menuTree.setItemIcon(this.baseFolder,
-				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
-
-		this.menuTree.collapseItem(this.baseFolder);
-		this.displayResourcesInListLayout(this.baseFolder);
-	}
-
-	@Override
-	public void display() {
-		displayResources(rootPath, "My Documents");
 	}
 
 	protected class MoveResourceWindow extends AbstractMoveWindow {
