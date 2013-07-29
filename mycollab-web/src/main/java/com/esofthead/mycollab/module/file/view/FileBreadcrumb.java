@@ -1,9 +1,15 @@
 package com.esofthead.mycollab.module.file.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -17,18 +23,18 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer;
 
 @ViewComponent
-public class FileBreadcrumb extends Breadcrumb implements View {
+public class FileBreadcrumb extends Breadcrumb implements View,
+		HasSearchHandlers<FileSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
-	private int index;
+	private List<SearchHandler<FileSearchCriteria>> handers;
 
 	public FileBreadcrumb() {
 		this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
 		this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
 		this.setUseDefaultClickBehaviour(false);
 
-		index = 1;
 		initBreadcrumb();
 	}
 
@@ -39,9 +45,12 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO : go to MyDocuments folder
-				// EventBus.getInstance().fireEvent(
-				// new ShellEvent.GotoProjectModule(this, null));
+				FileSearchCriteria criteria = new FileSearchCriteria();
+				criteria.setBaseFolder(AppContext.getAccountId().toString()
+						+ "/.fm");
+				criteria.setRootFolder(AppContext.getAccountId().toString()
+						+ "/.fm");
+				notifySelectHandler(criteria);
 			}
 		}));
 		this.setHeight(25, Sizeable.UNITS_PIXELS);
@@ -53,7 +62,12 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// go to MyDocument folder
+						FileSearchCriteria criteria = new FileSearchCriteria();
+						criteria.setBaseFolder(AppContext.getAccountId()
+								.toString() + "/.fm");
+						criteria.setRootFolder(AppContext.getAccountId()
+								.toString() + "/.fm");
+						notifySelectHandler(criteria);
 					}
 				});
 		documentBtnLink.addStyleName("link");
@@ -61,7 +75,7 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 1);
 	}
 
-	public void gotoFolder(Folder folder) {
+	public void gotoFolder(final Folder folder) {
 		initBreadcrumb();
 		final String[] path = folder.getPath().split("/");
 		final StringBuffer curPath = new StringBuffer("");
@@ -79,13 +93,16 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 				} else
 					btn.setCaption(pathName);
 
-				final String currentResourcePath = curPath.toString();
 				btn.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO : go to folder
+						FileSearchCriteria criteria = new FileSearchCriteria();
+						criteria.setBaseFolder(folder.getPath());
+						criteria.setRootFolder(AppContext.getAccountId()
+								.toString() + "/.fm");
+						notifySelectHandler(criteria);
 					}
 				});
 				if (i > 1) {
@@ -142,5 +159,21 @@ public class FileBreadcrumb extends Breadcrumb implements View {
 			Button.ClickListener listener) {
 		return CommonUIFactory.createButtonTooltip(
 				menuLinkGenerator.handleText(linkname), linkname, listener);
+	}
+
+	@Override
+	public void addSearchHandler(final SearchHandler<FileSearchCriteria> handler) {
+		if (this.handers == null) {
+			this.handers = new ArrayList<SearchHandler<FileSearchCriteria>>();
+		}
+		this.handers.add(handler);
+	}
+
+	public void notifySelectHandler(final FileSearchCriteria criteria) {
+		if (this.handers != null) {
+			for (final SearchHandler<FileSearchCriteria> handler : this.handers) {
+				handler.onSearch(criteria);
+			}
+		}
 	}
 }

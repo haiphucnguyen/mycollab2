@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -383,7 +384,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		mainBodyLayout.addComponent(controllGroupBtn);
 
-		this.rootPath = String.format("%d/Documents", AppContext.getAccountId());
+		this.rootPath = String
+				.format("%d/Documents", AppContext.getAccountId());
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 
@@ -401,7 +403,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		this.addComponent(mainView);
 		this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
 
-		displayResources(rootPath, "My Documents");
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
@@ -416,6 +417,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
 
 		this.menuTree.collapseItem(this.baseFolder);
+		fileBreadCrumb
+				.addSearchHandler(new SearchHandler<FileSearchCriteria>() {
+					@Override
+					public void onSearch(FileSearchCriteria criteria) {
+						Folder selectedFolder = (Folder) FileMainViewImpl.this.resourceService
+								.getResource(criteria.getBaseFolder());
+						FileMainViewImpl.this.itemResourceContainerLayout
+								.constructBody(selectedFolder);
+						fileBreadCrumb.gotoFolder(selectedFolder);
+					}
+				});
 	}
 
 	@Override
