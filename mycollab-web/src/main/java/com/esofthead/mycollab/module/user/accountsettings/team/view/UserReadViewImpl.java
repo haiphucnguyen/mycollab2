@@ -200,7 +200,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 
 								if (user.getIsAdmin() != null
 										&& user.getIsAdmin() == Boolean.TRUE) {
-									return new FormViewField("Admin");
+									return new FormViewField("Account Owner");
 								} else {
 									FormContainerViewField formContainer = new FormContainerViewField();
 									formContainer.addComponentField(new Label(
