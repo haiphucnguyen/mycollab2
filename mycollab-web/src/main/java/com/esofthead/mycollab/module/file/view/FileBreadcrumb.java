@@ -115,46 +115,6 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 		}
 	}
 
-	public static class FileLinkBuilder {
-		public static String URL_PREFIX_PARAM = "?url=";
-
-		public static String DEFAULT_PREFIX_PARAM = "#";
-
-		public static String rootLink = DEFAULT_PREFIX_PARAM + "file/";
-
-		public static String currentLink = rootLink;
-
-		public static void addLink(String linkName) {
-			currentLink += UrlEncodeDecoder.encode(linkName);
-			AppContext.addFragment(
-					rootLink + UrlEncodeDecoder.encode(linkName), "");
-		}
-	}
-
-	@Override
-	public ComponentContainer getWidget() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	private static class BreadcrumbLabelStringGenerator implements
-			LabelStringGenerator {
-
-		@Override
-		public String handleText(String value) {
-			if (value.length() > 35) {
-				return value.substring(0, 35) + "...";
-			}
-			return value;
-		}
-
-	}
-
 	private static Button generateBreadcrumbLink(String linkname,
 			Button.ClickListener listener) {
 		return CommonUIFactory.createButtonTooltip(
@@ -176,4 +136,45 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 			}
 		}
 	}
+
+	@Override
+	public ComponentContainer getWidget() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void addViewListener(
+			ApplicationEventListener<? extends ApplicationEvent> listener) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public static class FileLinkBuilder {
+		public static String URL_PREFIX_PARAM = "?url=";
+
+		public static String DEFAULT_PREFIX_PARAM = "#";
+
+		public static String rootLink = DEFAULT_PREFIX_PARAM + "file/";
+
+		public static String currentLink = rootLink;
+
+		public static void addLink(String linkName) {
+			currentLink += UrlEncodeDecoder.encode(linkName);
+			AppContext.addFragment(
+					rootLink + UrlEncodeDecoder.encode(linkName), "");
+		}
+	}
+
+	private static class BreadcrumbLabelStringGenerator implements
+			LabelStringGenerator {
+
+		@Override
+		public String handleText(String value) {
+			if (value.length() > 35) {
+				return value.substring(0, 35) + "...";
+			}
+			return value;
+		}
+
+	}
+
 }
