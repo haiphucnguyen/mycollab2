@@ -154,8 +154,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				final Folder item = (Folder) event.getItemId();
 				FileMainViewImpl.this.baseFolder = item;
 				itemResourceContainerLayout.constructBody(item);
-				if (!item.getPath().equals(rootPath))
-					fileBreadCrumb.addLinkFolder(item);
+				fileBreadCrumb.gotoFolder(item);
 			}
 		});
 
@@ -255,6 +254,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 					itemResourceContainerLayout.constructBody(parentFolder);
 					FileMainViewImpl.this.baseFolder = parentFolder;
+					FileMainViewImpl.this.fileBreadCrumb
+							.gotoFolder(FileMainViewImpl.this.baseFolder);
 				}
 			}
 		});
@@ -503,6 +504,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						if (lstResource != null && lstResource.size() > 0) {
 							itemResourceContainerLayout
 									.constructBodySearchActionResult(lstResource);
+							FileMainViewImpl.this.fileBreadCrumb
+									.initBreadcrumb();
 						} else {
 							FileMainViewImpl.this.getWindow().showNotification(
 									"Searching has no any results.");
@@ -686,7 +689,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								itemResourceContainerLayout
 										.constructBody((Folder) res);
 								FileMainViewImpl.this.fileBreadCrumb
-										.addLinkFolder((Folder) res);
+										.gotoFolder((Folder) res);
 							} else {
 								FileDownloadWindow fileDownloadWindow = new FileDownloadWindow(
 										(Content) res);
@@ -829,6 +832,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							FileMainViewImpl.this.itemResourceContainerLayout
 									.constructBody((Folder) curResource);
 							FileMainViewImpl.this.baseFolder = (Folder) curResource;
+							FileMainViewImpl.this.fileBreadCrumb
+									.gotoFolder(FileMainViewImpl.this.baseFolder);
 						}
 					});
 					UiUtils.addComponent(layout, btn, Alignment.BOTTOM_CENTER);
