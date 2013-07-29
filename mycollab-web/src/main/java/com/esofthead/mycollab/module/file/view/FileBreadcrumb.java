@@ -92,14 +92,14 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 					btn.setCaption("My Documents");
 				} else
 					btn.setCaption(pathName);
-
+				final String currentResourcePath = curPath.toString();
 				btn.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
 						FileSearchCriteria criteria = new FileSearchCriteria();
-						criteria.setBaseFolder(folder.getPath());
+						criteria.setBaseFolder(currentResourcePath);
 						criteria.setRootFolder(AppContext.getAccountId()
 								.toString() + "/.fm");
 						notifySelectHandler(criteria);
