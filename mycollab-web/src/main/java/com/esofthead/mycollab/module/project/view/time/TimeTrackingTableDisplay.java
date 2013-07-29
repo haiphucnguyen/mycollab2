@@ -75,7 +75,7 @@ public class TimeTrackingTableDisplay
 					b.setIcon(MyCollabResource
 							.newResource("icons/16/project/bug.png"));
 
-					if (BugStatusConstants.CLOSE.equals(itemLogging.getStatus())) {
+					if (BugStatusConstants.VERIFIED.equals(itemLogging.getStatus())) {
 						b.addStyleName(UIConstants.LINK_COMPLETED);
 					} else if (itemLogging.getDueDate() != null
 							&& (itemLogging.getDueDate()

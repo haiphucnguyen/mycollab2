@@ -211,10 +211,11 @@ public class BugDashboardViewImpl extends AbstractView implements
 		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
-		myBugsSearchCriteria.setStatuses(new SetSearchField<String>(
-				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
-						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
-						BugStatusConstants.TESTPENDING }));
+		myBugsSearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
 		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
 				.getUsername()));
 
@@ -229,10 +230,11 @@ public class BugDashboardViewImpl extends AbstractView implements
 		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
 				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
 						.getTime()));
-		dueDefectsCriteria.setStatuses(new SetSearchField<String>(
-				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
-						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
-						BugStatusConstants.TESTPENDING }));
+		dueDefectsCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
 		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
 		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();

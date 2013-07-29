@@ -192,7 +192,7 @@ public class ReOpenWindow extends Window {
 					final Object propertyId,
 					final com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("resolution")) {
-					return new BugResolutionComboBox();
+					return BugResolutionComboBox.getInstanceForValidBugWindow();
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("fixedVersions")) {

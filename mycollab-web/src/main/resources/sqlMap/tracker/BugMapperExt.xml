@@ -560,12 +560,12 @@
         UNION
         (<![CDATA[
                 SELECT m_tracker_bug.status AS groupid, 
-                    (SELECT COUNT(*) FROM m_tracker_bug AS tracker_bug_count WHERE tracker_bug_count.lastUpdatedTime < m_tracker_bug.lastUpdatedTime AND tracker_bug_count.status='Close') AS value, 
+                    (SELECT COUNT(*) FROM m_tracker_bug AS tracker_bug_count WHERE tracker_bug_count.lastUpdatedTime < m_tracker_bug.lastUpdatedTime AND tracker_bug_count.status='Resolved') AS value, 
                     DATE_FORMAT(m_tracker_bug.lastUpdatedTime,"%Y-%m-%d") as groupname
 		FROM m_tracker_bug]]>
         <if test="searchCriteria != null">
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                m_tracker_bug.status='Close'
+                m_tracker_bug.status='Resolved'
                 <include
                     refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
             </trim>
@@ -575,12 +575,12 @@
         UNION
         (<![CDATA[
                 SELECT m_tracker_bug.status AS groupid, 
-                    (SELECT COUNT(*) FROM m_tracker_bug AS tracker_bug_count WHERE tracker_bug_count.lastUpdatedTime < m_tracker_bug.lastUpdatedTime AND tracker_bug_count.status='Test Pending') AS value,
+                    (SELECT COUNT(*) FROM m_tracker_bug AS tracker_bug_count WHERE tracker_bug_count.lastUpdatedTime < m_tracker_bug.lastUpdatedTime AND tracker_bug_count.status='Verified') AS value,
                      DATE_FORMAT(m_tracker_bug.lastUpdatedTime,"%Y-%m-%d") as groupname
 		FROM m_tracker_bug]]>
         <if test="searchCriteria != null">
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                m_tracker_bug.status='Test Pending'
+                m_tracker_bug.status='Verified'
                 <include
                     refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
             </trim>
@@ -590,12 +590,12 @@
         UNION
         (<![CDATA[
                 SELECT m_tracker_bug.status AS groupid, 
-                    (SELECT COUNT(*) FROM m_tracker_bug AS tracker_bug_count WHERE tracker_bug_count.lastUpdatedTime < m_tracker_bug.lastUpdatedTime AND tracker_bug_count.status='Won\'t Fix') AS value,
+                    (SELECT COUNT(*) FROM m_tracker_bug AS tracker_bug_count WHERE tracker_bug_count.lastUpdatedTime < m_tracker_bug.lastUpdatedTime AND tracker_bug_count.status='Reopenned') AS value,
                      DATE_FORMAT(m_tracker_bug.lastUpdatedTime,"%Y-%m-%d") as groupname
 		FROM m_tracker_bug]]>
         <if test="searchCriteria != null">
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                m_tracker_bug.status='Won\'t Fix'
+                m_tracker_bug.status='Reopenned'
                 <include
                     refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
             </trim>

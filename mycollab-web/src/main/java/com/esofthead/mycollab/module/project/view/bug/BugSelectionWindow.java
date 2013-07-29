@@ -96,7 +96,7 @@ public class BugSelectionWindow extends Window {
 							}
 						});
 
-				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+				if (BugStatusConstants.VERIFIED.equals(bug.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
 						&& (bug.getDuedate().before(new GregorianCalendar()

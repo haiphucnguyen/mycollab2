@@ -155,7 +155,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						MyCollabResource
 								.newResource("icons/24/project/bug.png"));
 
-				if (BugStatusConstants.CLOSE.equals(BugReadViewImpl.this.bug
+				if (BugStatusConstants.VERIFIED.equals(BugReadViewImpl.this.bug
 						.getStatus())) {
 					bugAddLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
 				} else if (BugReadViewImpl.this.bug.getDuedate() != null
@@ -652,7 +652,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						}
 					}));
 			this.bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.CLOSE.equals(this.bug.getStatus())) {
+		} else if (BugStatusConstants.VERIFIED.equals(this.bug.getStatus())) {
 			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			final Button reopenBtn = new Button("Reopen",
@@ -670,11 +670,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 													BugReadViewImpl.this.bug));
 						}
 					});
-			// reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			navButton.addButton(reopenBtn);
 
 			this.bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.TESTPENDING.equals(this.bug.getStatus())) {
+		} else if (BugStatusConstants.RESOLVED.equals(this.bug.getStatus())) {
 			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Reopen",
@@ -708,7 +707,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						}
 					}));
 			this.bugWorkflowControl.addComponent(navButton);
-		} else if (BugStatusConstants.WONFIX.equals(this.bug.getStatus())) {
+		} else if (BugStatusConstants.RESOLVED.equals(this.bug.getStatus())) {
 			this.bugWorkflowControl.removeAllComponents();
 			final ButtonGroup navButton = new ButtonGroup();
 			final Button reopenBtn = new Button("Reopen",

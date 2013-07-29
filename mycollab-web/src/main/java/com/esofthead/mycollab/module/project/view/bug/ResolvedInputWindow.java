@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -91,7 +93,9 @@ public class ResolvedInputWindow extends Window {
 				controlsBtn.setSpacing(true);
 				layout.addComponent(controlsBtn);
 
-				final Button cancelBtn = new Button("Cancel",
+				final Button cancelBtn = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(
@@ -111,7 +115,7 @@ public class ResolvedInputWindow extends Window {
 							public void buttonClick(
 									final Button.ClickEvent event) {
 								ResolvedInputWindow.this.bug
-										.setStatus(BugStatusConstants.TESTPENDING);
+										.setStatus(BugStatusConstants.RESOLVED);
 
 								final BugRelatedItemService bugRelatedItemService = AppContext
 										.getSpringBean(BugRelatedItemService.class);
@@ -196,7 +200,8 @@ public class ResolvedInputWindow extends Window {
 				if (propertyId.equals("resolution")) {
 					ResolvedInputWindow.this.bug
 							.setResolution(BugResolutionConstants.FIXED);
-					return new BugResolutionComboBox();
+					return BugResolutionComboBox
+							.getInstanceForResolvedBugWindow();
 				} else if (propertyId.equals("assignuser")) {
 					ResolvedInputWindow.this.bug
 							.setAssignuser(ResolvedInputWindow.this.bug
