@@ -361,6 +361,22 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			activeTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(activeTasksFilterBtn);
 
+			final Button pendingTasksFilterBtn = new Button(
+					"Pending Tasks Only", new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							UserTaskDepot.this.taskListFilterControl
+									.setPopupVisible(false);
+							UserTaskDepot.this.taskListFilterControl
+									.setCaption("Pending Tasks");
+							UserTaskDepot.this.displayPendingTasksOnly();
+						}
+					});
+			pendingTasksFilterBtn.setStyleName("link");
+			filterBtnLayout.addComponent(pendingTasksFilterBtn);
+
 			final Button archievedTasksFilterBtn = new Button(
 					"Archieved Tasks Only", new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -393,7 +409,14 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 		private void displayActiveTasksOnly() {
 			this.taskSearchCriteria = this.createBaseSearchCriteria();
 			this.taskSearchCriteria.setStatuses(new SetSearchField<String>(
-					SearchField.AND, new String[] { "Open", "Pending" }));
+					SearchField.AND, new String[] { "Open" }));
+			this.taskDisplay.setSearchCriteria(this.taskSearchCriteria);
+		}
+
+		private void displayPendingTasksOnly() {
+			this.taskSearchCriteria = this.createBaseSearchCriteria();
+			this.taskSearchCriteria.setStatuses(new SetSearchField<String>(
+					SearchField.AND, new String[] { "Pending" }));
 			this.taskDisplay.setSearchCriteria(this.taskSearchCriteria);
 		}
 

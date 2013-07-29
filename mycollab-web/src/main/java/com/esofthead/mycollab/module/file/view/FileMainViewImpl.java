@@ -323,60 +323,66 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 		UiUtils.addComponent(controllGroupBtn, moveToBtn, Alignment.MIDDLE_LEFT);
 
-		Button deleteBtn = new Button("Delete", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button deleteBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				ConfirmDialogExt.show(
-						FileMainViewImpl.this.getWindow(),
-						LocalizationHelper
-								.getMessage(
-										GenericI18Enum.DELETE_DIALOG_TITLE,
-										ApplicationProperties
-												.getString(ApplicationProperties.SITE_NAME)),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-						new ConfirmDialog.Listener() {
-							private static final long serialVersionUID = 1L;
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ConfirmDialogExt.show(
+								FileMainViewImpl.this.getWindow(),
+								LocalizationHelper
+										.getMessage(
+												GenericI18Enum.DELETE_DIALOG_TITLE,
+												ApplicationProperties
+														.getString(ApplicationProperties.SITE_NAME)),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-							@Override
-							public void onClose(final ConfirmDialog dialog) {
-								if (dialog.isConfirmed()) {
-									if (lstCheckedResource != null
-											&& lstCheckedResource.size() > 0) {
-										for (Resource res : lstCheckedResource) {
-											FileMainViewImpl.this.resourceService
-													.removeResource(res
-															.getPath());
+									@Override
+									public void onClose(
+											final ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											if (lstCheckedResource != null
+													&& lstCheckedResource
+															.size() > 0) {
+												for (Resource res : lstCheckedResource) {
+													FileMainViewImpl.this.resourceService
+															.removeResource(res
+																	.getPath());
+												}
+												itemResourceContainerLayout
+														.constructBody(FileMainViewImpl.this.baseFolder);
+
+												FileMainViewImpl.this.menuTree
+														.collapseItem(FileMainViewImpl.this.baseFolder);
+												FileMainViewImpl.this.menuTree
+														.collapseItem(FileMainViewImpl.this.baseFolder);
+												FileMainViewImpl.this
+														.getWindow()
+														.showNotification(
+																"Delete successfully.");
+												FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+											}
 										}
-										itemResourceContainerLayout
-												.constructBody(FileMainViewImpl.this.baseFolder);
-
-										FileMainViewImpl.this.menuTree
-												.collapseItem(FileMainViewImpl.this.baseFolder);
-										FileMainViewImpl.this.menuTree
-												.collapseItem(FileMainViewImpl.this.baseFolder);
-										FileMainViewImpl.this.getWindow()
-												.showNotification(
-														"Delete successfully.");
-										FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 									}
-								}
-							}
-						});
-			}
-		});
+								});
+					}
+				});
 		deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 		UiUtils.addComponent(controllGroupBtn, deleteBtn, Alignment.MIDDLE_LEFT);
 
 		mainBodyLayout.addComponent(controllGroupBtn);
 
-		this.rootPath = String.format("%d/.fm", AppContext.getAccountId());
+		this.rootPath = String.format("%d/Documents", AppContext.getAccountId());
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 
