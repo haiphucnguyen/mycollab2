@@ -103,7 +103,7 @@ public class ProjectMemberServiceImpl extends
 						.selectByPrimaryKey(projectMember.getProjectid());
 				ProjectMemberDeleteListener projectMemberDeleteListener = new ProxyBuilder(
 						camelContext).endpoint(
-						ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINTS)
+						ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT)
 						.build(ProjectMemberDeleteListener.class);
 				projectMemberDeleteListener.projectMemberRemoved(username,
 						primaryKey, projectMember.getProjectid(),

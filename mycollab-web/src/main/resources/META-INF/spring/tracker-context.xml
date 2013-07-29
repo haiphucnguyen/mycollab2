@@ -27,24 +27,6 @@
 			value="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="metadataMapper">
-		<property name="sqlSessionTemplate" ref="sqlMapClient" />
-		<property name="mapperInterface"
-			value="com.esofthead.mycollab.module.tracker.dao.MetaDataMapper" />
-	</bean>
-
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="queryMapper">
-		<property name="sqlSessionTemplate" ref="sqlMapClient" />
-		<property name="mapperInterface"
-			value="com.esofthead.mycollab.module.tracker.dao.QueryMapper" />
-	</bean>
-
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="queryMapperExt">
-		<property name="sqlSessionTemplate" ref="sqlMapClient" />
-		<property name="mapperInterface"
-			value="com.esofthead.mycollab.module.tracker.dao.QueryMapperExt" />
-	</bean>
-
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="bugRelatedItemMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"

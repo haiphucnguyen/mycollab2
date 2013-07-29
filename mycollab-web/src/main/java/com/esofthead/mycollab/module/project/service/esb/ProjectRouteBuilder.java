@@ -19,7 +19,7 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 				"projectRemoved(int, int)");
 
 		//Configure project member removed
-		from(ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINTS)
+		from(ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT)
 				.setExchangePattern(ExchangePattern.InOnly).to(
 						"seda:projectMemberDelete.queue");
 		from("seda:projectMemberDelete.queue")
