@@ -260,8 +260,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 		header.addComponent(exportBtn);
 		header.setComponentAlignment(exportBtn, Alignment.MIDDLE_RIGHT);
-
-		// mainLayout.addComponent(layoutExport);
+		
 		mainLayout.setWidth("100%");
 		this.addComponent(headerWrapper);
 		this.taskLists = new TaskGroupDisplayWidget();

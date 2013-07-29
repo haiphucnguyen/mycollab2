@@ -113,6 +113,22 @@ public class TaskGroupDisplayWidget
 			activeTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(activeTasksFilterBtn);
 
+			final Button pendingTasksFilterBtn = new Button(
+					"Pending Tasks Only", new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							TaskListDepot.this.taskListFilterControl
+									.setPopupVisible(false);
+							TaskListDepot.this.taskListFilterControl
+									.setCaption("Pending Tasks");
+							TaskListDepot.this.displayPendingTasksOnly();
+						}
+					});
+			pendingTasksFilterBtn.setStyleName("link");
+			filterBtnLayout.addComponent(pendingTasksFilterBtn);
+
 			final Button archievedTasksFilterBtn = new Button(
 					"Archieved Tasks Only", new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -270,7 +286,14 @@ public class TaskGroupDisplayWidget
 		private void displayActiveTasksOnly() {
 			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { "Open", "Pending" }));
+					new String[] { "Open" }));
+			this.taskDisplayComponent.setSearchCriteria(criteria);
+		}
+
+		private void displayPendingTasksOnly() {
+			final TaskSearchCriteria criteria = this.createBaseSearchCriteria();
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { "Pending" }));
 			this.taskDisplayComponent.setSearchCriteria(criteria);
 		}
 
