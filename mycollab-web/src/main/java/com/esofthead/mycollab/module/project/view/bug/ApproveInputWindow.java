@@ -113,7 +113,7 @@ public class ApproveInputWindow extends Window {
 									final Button.ClickEvent event) {
 								// Save bug status and assignee
 								ApproveInputWindow.this.bug
-										.setStatus(BugStatusConstants.CLOSE);
+										.setStatus(BugStatusConstants.VERIFIED);
 								final BugService bugService = AppContext
 										.getSpringBean(BugService.class);
 								bugService.updateWithSession(

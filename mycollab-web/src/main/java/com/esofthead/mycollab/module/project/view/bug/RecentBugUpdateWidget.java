@@ -62,7 +62,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 					});
 			defectLink.setWidth("100%");
 
-			if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+			if (BugStatusConstants.VERIFIED.equals(bug.getStatus())) {
 				defectLink.addStyleName(UIConstants.LINK_COMPLETED);
 			} else if (bug.getDuedate() != null
 					&& (bug.getDuedate().before(new GregorianCalendar()

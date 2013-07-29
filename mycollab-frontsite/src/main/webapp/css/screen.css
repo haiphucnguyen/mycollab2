@@ -612,7 +612,7 @@ h1, h2, h3, h4, h5, h6 {
 #header {
 	height: 50px;
 	width: 100%;
-	background-color: #2B98D8;
+	background-color: #575757;
 	margin-bottom: 25px;
 }
 
@@ -1642,45 +1642,48 @@ a.nivo-prevNav {
 #signup-content {
 	width: 1100px;
 	margin: 0 auto;
-	border: solid 1px #ababab;
 	margin-bottom: 20px;
-	background: url("../images/home_banner_bg.jpg") no-repeat scroll center top transparent;
 }
 
 .sig-top {
-	border-top: solid 16px #228bc9;
 	text-align: center;
-	background: url("../images/home_border.png") no-repeat scroll center bottom transparent;
-	margin-bottom: 30px;
+	width: 810px;
+	border-bottom: solid 6px #228BC9;
+	margin: 0 auto; 
+	z-index: 1;
+	position: relative;
 }
 	
 .sig-top h1 {
 	font-size: 35px;
     font-weight: normal;
     line-height: 100%;
-    color: #228BC9;
-    padding: 20px 0px 10px;
+    color: #3c3c3c;
+    padding: 10px 0px 0px;
 }
 
 .sig-top p {
-	color: #228BC9;
-    font-size: 22px;
+	color: #797979;
+    font-size: 18px;
     padding-bottom: 30px;
 }
 
 .sig-mid {
 	padding: 0px 30px;
+	border-radius: 5px;
+	border: solid 1px #cacaca; 
+	margin-top: -3px;
+	z-index: 0;
 }
 
 .sig-mid-left {
 	width: 530px;
-	margin-bottom: 30px;
 	float: left;
 }
 
 .mid-left-title {
 	text-align: center;
-	color: #0173bd;
+	color: #f57830;
 }
 
 .mid-left-title h1 {
@@ -1691,12 +1694,13 @@ a.nivo-prevNav {
 
 .mid-left-title p {
 	font-size: 20px;
-	padding: 0px 0px 10px;
-	line-height: 200%;
+    font-weight: bold;
+    line-height: 150%;
+    padding: 0 0 10px;
+    margin-top: 30px;
 }
 
 .sig-left-ctn {
-	background-color: #F7E3BF;
 	padding-bottom: 20px;
 }
 
@@ -1807,9 +1811,35 @@ a.nivo-prevNav {
 }
 
 .sig-left-chk {
-	clear: both;
-	padding: 15px 20px;
-	line-height: 110%;
+	background-color: #F9EAE2;
+    clear: both;
+    line-height: 110%;
+    margin: 15px;
+    padding: 5px 10px;
+}
+
+.sig-left-using {
+	display: block;
+	height: 32px;
+	margin: 20px 0;
+}
+
+.sig-left-using ul {
+	margin: 0 0 0 10px;
+	padding: 0px;
+	list-style: none;
+}
+
+.sig-left-using ul li {
+	display: inline-block;
+	padding: 0px 5px;
+	float: left;
+}
+
+.sig-left-using .using-title {
+	display: block;
+	line-height: 32px;
+	color: #5a5a5a;
 }
 
 .sig-left-chk a {
@@ -1842,6 +1872,7 @@ a.nivo-prevNav {
 	height: 40px;
 	background-color: #228bc9;
 	margin-bottom: 26px;
+	clear: both;
 }
 
 .sig-mid-left input[type="submit"]:hover {
@@ -1853,16 +1884,17 @@ a.nivo-prevNav {
 	width: 480px;
 	text-align: center;
 	background-color: #E8E8E8;
+	margin-top: 40px;
 }
 
 .sig-mid-right h1 {
-	font-size: 16px;
-	padding: 5px 20px;
-	color: #FFF;
+	font-size: 24px;
+	padding: 10px 0px;
+	color: #646464;
 	font-weight: normal;
-	background-color: #5D9119;
-	margin-bottom: 25px;
+	margin: 0 20px 25px 20px;
 	text-align: left;
+	border-bottom: solid 8px #D9D9D9;
 }
 
 .sig-mid-right img {
@@ -1897,7 +1929,7 @@ a.nivo-prevNav {
 }
 
 .sig-subdomain {
-	background-color: #F54B49;
+	background-color: #228bc9;
     color: #FFFFFF;
     font-size: 14px;
     height: 25px;

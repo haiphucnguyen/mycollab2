@@ -521,7 +521,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 									.setPopupVisible(false);
 							UserBugDepot.this.bugActionControl
 									.setCaption("Pending Bugs");
-							UserBugDepot.this.displayPendingBugs();
+							UserBugDepot.this.displayResolvedBugs();
 						}
 					});
 			pendingBugBtn.setEnabled(CurrentProjectVariables
@@ -567,18 +567,18 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			this.bugDisplay.setSearchCriteria(criteria);
 		}
 
-		private void displayPendingBugs() {
+		private void displayResolvedBugs() {
 			final BugSearchCriteria criteria = this.createBugSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { BugStatusConstants.TESTPENDING }));
+					new String[] { BugStatusConstants.RESOLVED }));
 			this.bugDisplay.setSearchCriteria(criteria);
 		}
 
 		private void displayClosedBugs() {
 			final BugSearchCriteria criteria = this.createBugSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { BugStatusConstants.CLOSE,
-							BugStatusConstants.WONFIX }));
+					new String[] { BugStatusConstants.VERIFIED,
+							BugStatusConstants.RESOLVED }));
 			this.bugDisplay.setSearchCriteria(criteria);
 		}
 	}
