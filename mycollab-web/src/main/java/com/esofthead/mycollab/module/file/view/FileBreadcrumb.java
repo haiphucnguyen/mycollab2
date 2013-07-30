@@ -124,13 +124,13 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 						this.setLinkEnabled(true, holder);
 						holder++;
 					} else {
-						if (i > 3 && i < path.length - 2 && isNeedAdd3dot) {
+						if (i > 2 && i < path.length - 2 && isNeedAdd3dot) {
 							this.select(i - 1);
 							this.addLink(new Button("..."));
 							this.setLinkEnabled(true, i);
 							isNeedAdd3dot = false;
 							holder = i + 1;
-						} else if (i <= 3) {
+						} else if (i <= 2) {
 							this.select(i - 1);
 							this.addLink(btn);
 							this.setLinkEnabled(true, i);
