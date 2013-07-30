@@ -40,16 +40,17 @@ public class AuditLogShowHandler {
 	}
 
 	public String generateChangeSet(SimpleAuditLog auditLog) {
-		StringBuffer str = new StringBuffer("<p>");
+		StringBuffer str = new StringBuffer("");
+		boolean isAppended = false;
 		List<AuditChangeItem> changeItems = auditLog.getChangeItems();
 		if (changeItems != null && changeItems.size() > 0) {
-			str.append("<ul>");
 			for (int i = 0; i < changeItems.size(); i++) {
 				AuditChangeItem item = changeItems.get(i);
 				String fieldName = item.getField();
 				FieldDisplayHandler fieldDisplayHandler = fieldsFormat
 						.get(fieldName);
 				if (fieldDisplayHandler != null) {
+					isAppended = true;
 					str.append("<li>");
 					str.append(fieldDisplayHandler.getDisplayName())
 							.append(": ")
@@ -64,11 +65,13 @@ public class AuditLogShowHandler {
 							.append("</i>");
 					str.append("</li>");
 				}
-
 			}
-			str.append("</ul>");
+
 		}
-		str.append("</p>");
+		if (isAppended) {
+			str.insert(0, "<p>").insert(0, "<ul>");
+			str.append("</ul>").append("</p>");
+		}
 		return str.toString();
 	}
 
