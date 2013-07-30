@@ -770,62 +770,74 @@ h1, h2, h3, h4, h5, h6 {
 .col-style2, .col-style3 {
 	width: 174px;
 	float: left;
-	border-top: solid 1px #BCB8B8;
-	border-right: solid 1px #BCB8B8;
+}
+
+.col-style2 {
+	background: url("../images/pricing_bg1.png") no-repeat top left transparent;
+	height: 199px;
+	margin-right: 1px;
+}
+
+.col-style3 {
+	background: url("../images/pricing_bg2.png") no-repeat top left transparent;
+    position: relative;
+    width: 180px;
+    z-index: 1;
+    margin: -15px -2px -2px;
+    height: 216px;
 }
 
 .col-style2 h2 {
-	background: url("../images/pricing_bg.png") no-repeat center center transparent;
-	padding: 10px 0px;
+	padding: 2px 0px 5px;
+	color: #FFF;
 }
 
-.prig-free {
-	color: #1692EF;
+.col-style3 h2 {
+	padding: 4px 0px 5px;
+	color: #FFF;
 }
 
-.prig-micro {
-	color: #46A389;
-}
-
-.prig-compact {
-	color: #F5B830;
-}
-
-.prig-corporate {
-	color: #FF771B;
-}
-
-.prig-enterprise {
-	color: #FF3C00;
+.col-style3 .prig-price {
+	padding-top: 25px;
 }
 
 .prig-description {
-	background-color: #2B98D8;
 	height: 35px;
 	padding: 10px 3px 0px;
-	font-size: 13px;
+	font-size: 11px;
 	line-height: 130%;
-	color: #FFF;
+	color: #585858;
+	margin-bottom: 20px;
 }
 
 .pricing-button {
 	height: 50px;
-	background-color: #2B98D8;
 	display: inline-block;
 	width: 100%;
 }
 
 .pricing-button a {
 	width: 124px;
-	height: 31px;
-	background: url("../images/pricing_button.png") no-repeat center center;
+	height: 28px;
 	display: block;
-	color: #FFF;
-	padding: 5px 0px 0px 0px;
+	color: #fefefe;
+	padding: 3px 0px 0px 0px;
 	margin: 6px auto 0px;
-	font-size: 11px;
+	font-size: 13px;
 	font-family: 'Arial';
 	font-weight: bold;
+}
+
+.col-style2 .pricing-button a {
+	background-color: #979797;
+	border-radius: 5px;
+	border: solid 1px #838383; 
+}
+
+.col-style3 .pricing-button a {
+	background-color: #228bc9;
+	border-radius: 5px;
+	border: solid 1px #2b6b91;
 }
 
 .pricing-button a:hover {
@@ -833,18 +845,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prig-price {
-	background-color: #5D6570;
-	color: #FFF;
+	color: #ff0000;
 	height: 40px;
-	font-size: 26px;
+	font-size: 30px;
 	font-weight: bold;
 	letter-spacing: 0.7px;
-	padding: 10px 0px 0px;
+	padding: 13px 0px 0px;
 }
 
 .prig-month {
 	font-size: 12px;
 	letter-spacing: 0.2px;
+	color: #616161;
 }
 
 .pricing-mid {
@@ -906,10 +918,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .prig-block-2 {
 	height: 124px;
-}
-
-.prig-border-left {
-	border-left: solid 1px #ABABAB; 
 }
 
 .pricing-top-title {
