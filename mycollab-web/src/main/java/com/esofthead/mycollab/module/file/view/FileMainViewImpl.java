@@ -375,8 +375,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 																.removeItem((Folder) res);
 													}
 												}
-												itemResourceContainerLayout
-														.constructBody(FileMainViewImpl.this.baseFolder);
+												if (!fileBreadCrumb
+														.getCurrentBreamCrumbFolder()
+														.getPath()
+														.equals(baseFolder
+																.getPath())) {
+													itemResourceContainerLayout
+															.constructBody((Folder) resourceService
+																	.getResource(rootPath));
+												} else {
+													itemResourceContainerLayout
+															.constructBody(baseFolder);
+												}
+												FileMainViewImpl.this.menuTree
+														.collapseItem(FileMainViewImpl.this.baseFolder);
 												FileMainViewImpl.this.menuTree
 														.expandItem(FileMainViewImpl.this.baseFolder);
 												FileMainViewImpl.this
@@ -438,6 +450,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								.constructBody(selectedFolder);
 						fileBreadCrumb.gotoFolder(selectedFolder);
 						FileMainViewImpl.this.baseFolder = selectedFolder;
+						fileBreadCrumb
+								.setCurrentBreamCrumbFolder(selectedFolder);
 					}
 				});
 	}
@@ -536,6 +550,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									.constructBodySearchActionResult(lstResource);
 							FileMainViewImpl.this.fileBreadCrumb
 									.initBreadcrumb();
+							FileMainViewImpl.this.fileBreadCrumb
+									.setCurrentBreamCrumbFolder((Folder) FileMainViewImpl.this.resourceService
+											.getResource(rootPath));
 						} else {
 							FileMainViewImpl.this.getWindow().showNotification(
 									"Searching has no any results.");
@@ -899,6 +916,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			FileMainViewImpl.this.getWindow().showNotification(
 					"Move asset(s) successfully.");
 			FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+			FileMainViewImpl.this.menuTree
+					.collapseItem(FileMainViewImpl.this.baseFolder);
 		}
 
 		@Override
@@ -1063,19 +1082,25 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										.createNewFolder(baseFolderPath,
 												folderVal,
 												AppContext.getUsername());
-								FileMainViewImpl.this.menuTree
-										.addItem(newFolder);
-								FileMainViewImpl.this.menuTree.setItemCaption(
-										newFolder, newFolder.getName());
-								FileMainViewImpl.this.menuTree.setParent(
-										newFolder,
-										FileMainViewImpl.this.baseFolder);
-								FileMainViewImpl.this.menuTree.setItemIcon(
-										newFolder,
-										MyCollabResource
-												.newResource("icons/16/ecm/folder_close.png"));
-								FileMainViewImpl.this.menuTree
-										.expandItem(FileMainViewImpl.this.baseFolder);
+
+								if (!FileMainViewImpl.this.menuTree
+										.isExpanded(FileMainViewImpl.this.baseFolder)) {
+									FileMainViewImpl.this.menuTree
+											.expandItem(FileMainViewImpl.this.baseFolder);
+								} else {
+									FileMainViewImpl.this.menuTree
+											.addItem(newFolder);
+									FileMainViewImpl.this.menuTree
+											.setItemCaption(newFolder,
+													newFolder.getName());
+									FileMainViewImpl.this.menuTree.setParent(
+											newFolder,
+											FileMainViewImpl.this.baseFolder);
+									FileMainViewImpl.this.menuTree.setItemIcon(
+											newFolder,
+											MyCollabResource
+													.newResource("icons/16/ecm/folder_close.png"));
+								}
 								FileMainViewImpl.this.itemResourceContainerLayout
 										.constructBody(FileMainViewImpl.this.baseFolder);
 								AddNewFolderWindow.this.close();

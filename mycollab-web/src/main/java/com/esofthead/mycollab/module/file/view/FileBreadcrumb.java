@@ -29,6 +29,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 	private List<SearchHandler<FileSearchCriteria>> handers;
+	private Folder currentBreamCrumbFolder;
 
 	public FileBreadcrumb() {
 		this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
@@ -77,6 +78,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 
 	public void gotoFolder(final Folder folder) {
 		initBreadcrumb();
+		currentBreamCrumbFolder = folder;
 		final String[] path = folder.getPath().split("/");
 		final StringBuffer curPath = new StringBuffer("");
 		for (int i = 0; i < path.length; i++) {
@@ -146,6 +148,14 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 	public void addViewListener(
 			ApplicationEventListener<? extends ApplicationEvent> listener) {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public Folder getCurrentBreamCrumbFolder() {
+		return currentBreamCrumbFolder;
+	}
+
+	public void setCurrentBreamCrumbFolder(Folder currentBreamCrumbFolder) {
+		this.currentBreamCrumbFolder = currentBreamCrumbFolder;
 	}
 
 	public static class FileLinkBuilder {
