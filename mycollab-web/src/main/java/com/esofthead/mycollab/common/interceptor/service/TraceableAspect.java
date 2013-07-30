@@ -50,29 +50,7 @@ public class TraceableAspect {
 
 	}
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
-	public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
-			String username) {
-
-		Advised advised = (Advised) joinPoint.getThis();
-		Class<?> cls = advised.getTargetSource().getTargetClass();
-
-		Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
-		if (traceableAnnotation != null) {
-			try {
-				ActivityStream activity = constructActivity(
-						traceableAnnotation, bean, username,
-						ActivityStreamConstants.ACTION_UPDATE);
-				activityStreamService.save(activity);
-			} catch (Exception e) {
-				log.error(
-						"Error when save activity for save action of service "
-								+ cls.getName(), e);
-			}
-		}
-	}
-
-	private ActivityStream constructActivity(Traceable traceableAnnotation,
+	static ActivityStream constructActivity(Traceable traceableAnnotation,
 			Object bean, String username, String action)
 			throws IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException {

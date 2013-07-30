@@ -37,169 +37,180 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class TimeTrackingViewImpl extends AbstractView implements
-		TimeTrackingView {
-	private static final long serialVersionUID = 1L;
+        TimeTrackingView {
+    private static final long serialVersionUID = 1L;
 
-	private PopupDateField fromDateField;
-	private PopupDateField toDateField;
+    private PopupDateField fromDateField;
+    private PopupDateField toDateField;
 
-	private TimeTrackingTableDisplay tableItem;
+    private TimeTrackingTableDisplay tableItem;
 
-	public TimeTrackingViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(false, false, true, false);
-		this.setWidth("1130px");
-		this.setHeight("100%");
-		final CssLayout headerWrapper = new CssLayout();
-		headerWrapper.setWidth("100%");
-		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
+    public TimeTrackingViewImpl() {
+        this.setSpacing(true);
+        this.setWidth("100%");
 
-		final HorizontalLayout header = new HorizontalLayout();
-		header.setWidth("100%");
-		header.setSpacing(true);
+        final CssLayout contentWrapper = new CssLayout();
+        contentWrapper.setWidth("100%");
+        contentWrapper.addStyleName("main-content-wrapper");
+        this.addComponent(contentWrapper);
 
-		final Embedded timeIcon = new Embedded();
-		timeIcon.setSource(MyCollabResource
-				.newResource("icons/24/time_tracking.png"));
-		header.addComponent(timeIcon);
+        final CssLayout headerWrapper = new CssLayout();
+        headerWrapper.setWidth("100%");
+        headerWrapper.setStyleName("projectfeed-hdr-wrapper");
 
-		final Label layoutHeader = new Label("Your Time Reporting");
-		layoutHeader.addStyleName("h2");
-		header.addComponent(layoutHeader);
-		header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
-		header.setExpandRatio(layoutHeader, 1.0f);
+        final HorizontalLayout header = new HorizontalLayout();
+        header.setWidth("100%");
+        header.setSpacing(true);
 
-		headerWrapper.addComponent(header);
-		this.addComponent(headerWrapper);
+        final Embedded timeIcon = new Embedded();
+        timeIcon.setSource(MyCollabResource
+                .newResource("icons/24/time_tracking.png"));
+        header.addComponent(timeIcon);
 
-		final Button backBtn = new Button("Back to Work Board");
-		backBtn.addListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        final Label layoutHeader = new Label("Your Time Reporting");
+        layoutHeader.addStyleName("h2");
+        header.addComponent(layoutHeader);
+        header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
+        header.setExpandRatio(layoutHeader, 1.0f);
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ShellEvent.GotoProjectModule(
-								TimeTrackingViewImpl.this, null));
+        headerWrapper.addComponent(header);
+        contentWrapper.addComponent(headerWrapper);
 
-			}
-		});
+        final Button backBtn = new Button("Back to Work Board");
+        backBtn.addListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		this.addComponent(backBtn);
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBus.getInstance().fireEvent(
+                        new ShellEvent.GotoProjectModule(
+                                TimeTrackingViewImpl.this, null));
 
-		final HorizontalLayout dateSelectionLayout = new HorizontalLayout();
-		dateSelectionLayout.setSpacing(true);
-		this.addComponent(dateSelectionLayout);
+            }
+        });
 
-		dateSelectionLayout.addComponent(new Label("From:  "));
+        backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
-		fromDateField = new PopupDateField();
-		fromDateField.setResolution(DateField.RESOLUTION_DAY);
-		dateSelectionLayout.addComponent(fromDateField);
+        VerticalLayout controlBtns = new VerticalLayout();
+        controlBtns.setMargin(true, false, true, false);
+        controlBtns.addComponent(backBtn);
 
-		dateSelectionLayout.addComponent(new Label("  To:  "));
-		toDateField = new PopupDateField();
-		toDateField.setResolution(DateField.RESOLUTION_DAY);
-		dateSelectionLayout.addComponent(toDateField);
+        contentWrapper.addComponent(controlBtns);
 
-		final Button queryBtn = new Button("Submit",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        final HorizontalLayout dateSelectionLayout = new HorizontalLayout();
+        dateSelectionLayout.setSpacing(true);
+        dateSelectionLayout.setMargin(false, false, true, false);
+        contentWrapper.addComponent(dateSelectionLayout);
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						Date from = (Date) fromDateField.getValue();
-						Date to = (Date) toDateField.getValue();
-						searchTimeReporting(from, to);
-					}
-				});
-		queryBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        dateSelectionLayout.addComponent(new Label("From:  "));
 
-		dateSelectionLayout.addComponent(queryBtn);
+        fromDateField = new PopupDateField();
+        fromDateField.setResolution(DateField.RESOLUTION_DAY);
+        dateSelectionLayout.addComponent(fromDateField);
 
-		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
-				new TableViewField("User", "logUserFullName",
-						UIConstants.TABLE_X_LABEL_WIDTH),
-				new TableViewField("Summary", "summary",
-						UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
-						"Project", "projectName",
-						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"Created Time", "createdtime",
-						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
-						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH)));
+        dateSelectionLayout.addComponent(new Label("  To:  "));
+        toDateField = new PopupDateField();
+        toDateField.setResolution(DateField.RESOLUTION_DAY);
+        dateSelectionLayout.addComponent(toDateField);
 
-		this.tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 1L;
+        final Button queryBtn = new Button("Submit",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        Date from = (Date) fromDateField.getValue();
+                        Date to = (Date) toDateField.getValue();
+                        searchTimeReporting(from, to);
+                    }
+                });
+        queryBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-					@Override
-					public void handle(final TableClickEvent event) {
-						final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
-								.getData();
-						if ("summary".equals(event.getFieldName())) {
-							final int typeId = itemLogging.getTypeid();
-							final int projectId = itemLogging.getProjectid();
+        dateSelectionLayout.addComponent(queryBtn);
 
-							if (MonitorTypeConstants.PRJ_BUG.equals(itemLogging
-									.getType())) {
-								final PageActionChain chain = new PageActionChain(
-										new ProjectScreenData.Goto(projectId),
-										new BugScreenData.Read(typeId));
-								EventBus.getInstance().fireEvent(
-										new ProjectEvent.GotoMyProject(this,
-												chain));
-							} else if (MonitorTypeConstants.PRJ_TASK
-									.equals(itemLogging.getType())) {
-								final PageActionChain chain = new PageActionChain(
-										new ProjectScreenData.Goto(projectId),
-										new TaskScreenData.Read(typeId));
-								EventBus.getInstance().fireEvent(
-										new ProjectEvent.GotoMyProject(this,
-												chain));
-							}
-						} else if ("projectName".equals(event.getFieldName())) {
-							final PageActionChain chain = new PageActionChain(
-									new ProjectScreenData.Goto(itemLogging
-											.getProjectid()));
-							EventBus.getInstance()
-									.fireEvent(
-											new ProjectEvent.GotoMyProject(
-													this, chain));
-						}
-					}
-				});
-		this.addComponent(this.tableItem);
-	}
+        this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
+                new TableViewField("User", "logUserFullName",
+                        UIConstants.TABLE_X_LABEL_WIDTH),
+                new TableViewField("Summary", "summary",
+                        UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
+                        "Project", "projectName",
+                        UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+                        "Created Time", "createdtime",
+                        UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
+                        "Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH)));
 
-	@Override
-	public void display() {
-		Calendar date = new GregorianCalendar();
-		date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        this.tableItem
+                .addTableListener(new ApplicationEventListener<TableClickEvent>() {
+                    private static final long serialVersionUID = 1L;
 
-		Date from = date.getTime();
-		date.add(Calendar.DATE, 6);
-		Date to = date.getTime();
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TableClickEvent.class;
+                    }
 
-		fromDateField.setValue(from);
-		toDateField.setValue(to);
-		this.searchTimeReporting(from, to);
-	}
+                    @Override
+                    public void handle(final TableClickEvent event) {
+                        final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
+                                .getData();
+                        if ("summary".equals(event.getFieldName())) {
+                            final int typeId = itemLogging.getTypeid();
+                            final int projectId = itemLogging.getProjectid();
 
-	private void searchTimeReporting(Date from, Date to) {
-		final ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-		searchCriteria.setLogUsers(new SetSearchField<String>(SearchField.AND,
-				new String[] { AppContext.getUsername() }));
-		searchCriteria.setRangeDate(new RangeDateSearchField(from, to));
-		this.tableItem.setSearchCriteria(searchCriteria);
-	}
+                            if (MonitorTypeConstants.PRJ_BUG.equals(itemLogging
+                                    .getType())) {
+                                final PageActionChain chain = new PageActionChain(
+                                        new ProjectScreenData.Goto(projectId),
+                                        new BugScreenData.Read(typeId));
+                                EventBus.getInstance().fireEvent(
+                                        new ProjectEvent.GotoMyProject(this,
+                                                chain));
+                            } else if (MonitorTypeConstants.PRJ_TASK
+                                    .equals(itemLogging.getType())) {
+                                final PageActionChain chain = new PageActionChain(
+                                        new ProjectScreenData.Goto(projectId),
+                                        new TaskScreenData.Read(typeId));
+                                EventBus.getInstance().fireEvent(
+                                        new ProjectEvent.GotoMyProject(this,
+                                                chain));
+                            }
+                        } else if ("projectName".equals(event.getFieldName())) {
+                            final PageActionChain chain = new PageActionChain(
+                                    new ProjectScreenData.Goto(itemLogging
+                                            .getProjectid()));
+                            EventBus.getInstance()
+                                    .fireEvent(
+                                            new ProjectEvent.GotoMyProject(
+                                                    this, chain));
+                        }
+                    }
+                });
+        contentWrapper.addComponent(this.tableItem);
+    }
+
+    @Override
+    public void display() {
+        Calendar date = new GregorianCalendar();
+        date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        Date from = date.getTime();
+        date.add(Calendar.DATE, 6);
+        Date to = date.getTime();
+
+        fromDateField.setValue(from);
+        toDateField.setValue(to);
+        this.searchTimeReporting(from, to);
+    }
+
+    private void searchTimeReporting(Date from, Date to) {
+        final ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+        searchCriteria.setLogUsers(new SetSearchField<String>(SearchField.AND,
+                new String[] { AppContext.getUsername() }));
+        searchCriteria.setRangeDate(new RangeDateSearchField(from, to));
+        this.tableItem.setSearchCriteria(searchCriteria);
+    }
 
 }

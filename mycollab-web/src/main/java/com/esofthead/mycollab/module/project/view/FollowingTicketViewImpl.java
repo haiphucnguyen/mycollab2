@@ -33,209 +33,220 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class FollowingTicketViewImpl extends AbstractView implements
-		FollowingTicketView {
-	private static final long serialVersionUID = 1L;
+        FollowingTicketView {
+    private static final long serialVersionUID = 1L;
 
-	private final FollowingTicketTable ticketTable;
+    private final FollowingTicketTable ticketTable;
 
-	public FollowingTicketViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(false, false, true, false);
-		this.setWidth("1130px");
-		final CssLayout headerWrapper = new CssLayout();
-		headerWrapper.setWidth("100%");
-		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
+    public FollowingTicketViewImpl() {
+        this.setSpacing(true);
+        this.setWidth("100%");
 
-		final HorizontalLayout header = new HorizontalLayout();
-		header.setWidth("100%");
-		header.setSpacing(true);
+        final CssLayout contentWrapper = new CssLayout();
+        contentWrapper.setWidth("100%");
+        contentWrapper.addStyleName("main-content-wrapper");
+        this.addComponent(contentWrapper);
 
-		final Embedded timeIcon = new Embedded();
-		timeIcon.setSource(MyCollabResource.newResource("icons/24/follow.png"));
-		header.addComponent(timeIcon);
+        final CssLayout headerWrapper = new CssLayout();
+        headerWrapper.setWidth("100%");
+        headerWrapper.setStyleName("projectfeed-hdr-wrapper");
 
-		final Label layoutHeader = new Label("Your Following Tickets");
-		layoutHeader.addStyleName("h2");
-		header.addComponent(layoutHeader);
-		header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
-		header.setExpandRatio(layoutHeader, 1.0f);
+        final HorizontalLayout header = new HorizontalLayout();
+        header.setWidth("100%");
+        header.setSpacing(true);
 
-		headerWrapper.addComponent(header);
-		this.addComponent(headerWrapper);
+        final Embedded timeIcon = new Embedded();
+        timeIcon.setSource(MyCollabResource.newResource("icons/24/follow.png"));
+        header.addComponent(timeIcon);
 
-		final Button backBtn = new Button("Back to Work Board");
-		backBtn.addListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        final Label layoutHeader = new Label("Your Following Tickets");
+        layoutHeader.addStyleName("h2");
+        header.addComponent(layoutHeader);
+        header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
+        header.setExpandRatio(layoutHeader, 1.0f);
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ShellEvent.GotoProjectModule(
-								FollowingTicketViewImpl.this, null));
+        headerWrapper.addComponent(header);
+        contentWrapper.addComponent(headerWrapper);
 
-			}
-		});
+        final Button backBtn = new Button("Back to Work Board");
+        backBtn.addListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		this.addComponent(backBtn);
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBus.getInstance().fireEvent(
+                        new ShellEvent.GotoProjectModule(
+                                FollowingTicketViewImpl.this, null));
 
-		this.ticketTable = new FollowingTicketTable();
-		this.addComponent(this.ticketTable);
-	}
+            }
+        });
 
-	@Override
-	public void displayFollowingTicket(final List<Integer> prjKeys) {
-		final MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
-				.toArray(new Integer[0])));
-		searchCriteria.setUser(new StringSearchField(AppContext.getUsername()));
-		this.ticketTable.setSearchCriteria(searchCriteria);
+        backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
-	}
+        VerticalLayout controlBtns = new VerticalLayout();
+        controlBtns.setMargin(true, false, true, false);
+        controlBtns.addComponent(backBtn);
 
-	private class FollowingTicketTable extends
-			AbstractPagedBeanTable<MonitorSearchCriteria, FollowingTicket> {
+        contentWrapper.addComponent(controlBtns);
 
-		private static final long serialVersionUID = 1L;
-		private ProjectService projectService;
+        this.ticketTable = new FollowingTicketTable();
+        contentWrapper.addComponent(this.ticketTable);
+    }
 
-		public FollowingTicketTable() {
-			super(FollowingTicket.class, Arrays.asList(new TableViewField(
-					"Summary", "summary", UIConstants.TABLE_EX_LABEL_WIDTH),
-					new TableViewField("Project", "projectName",
-							UIConstants.TABLE_X_LABEL_WIDTH),
-					new TableViewField("Assignee", "assignUser",
-							UIConstants.TABLE_X_LABEL_WIDTH),
-					new TableViewField("Created Date", "monitorDate",
-							UIConstants.TABLE_DATE_WIDTH)));
+    @Override
+    public void displayFollowingTicket(final List<Integer> prjKeys) {
+        final MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+        searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+                .toArray(new Integer[0])));
+        searchCriteria.setUser(new StringSearchField(AppContext.getUsername()));
+        this.ticketTable.setSearchCriteria(searchCriteria);
 
-			this.projectService = AppContext
-					.getSpringBean(ProjectService.class);
+    }
 
-			this.addGeneratedColumn("summary", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
+    private class FollowingTicketTable extends
+            AbstractPagedBeanTable<MonitorSearchCriteria, FollowingTicket> {
 
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					final ButtonLink ticketLink = new ButtonLink(ticket
-							.getSummary());
-					ticketLink.addListener(new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
+        private ProjectService projectService;
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							if ("Bug".equals(ticket.getType())) {
-								final int projectId = ticket.getProjectId();
-								final int bugId = ticket.getTypeId();
-								final PageActionChain chain = new PageActionChain(
-										new ProjectScreenData.Goto(projectId),
-										new BugScreenData.Read(bugId));
-								EventBus.getInstance().fireEvent(
-										new ProjectEvent.GotoMyProject(this,
-												chain));
-							} else if ("Task".equals(ticket.getType())) {
-								final int projectId = ticket.getProjectId();
-								final int taskId = ticket.getTypeId();
-								final PageActionChain chain = new PageActionChain(
-										new ProjectScreenData.Goto(projectId),
-										new TaskScreenData.Read(taskId));
-								EventBus.getInstance().fireEvent(
-										new ProjectEvent.GotoMyProject(this,
-												chain));
-							}
+        public FollowingTicketTable() {
+            super(FollowingTicket.class, Arrays.asList(new TableViewField(
+                    "Summary", "summary", UIConstants.TABLE_EX_LABEL_WIDTH),
+                    new TableViewField("Project", "projectName",
+                            UIConstants.TABLE_X_LABEL_WIDTH),
+                    new TableViewField("Assignee", "assignUser",
+                            UIConstants.TABLE_X_LABEL_WIDTH),
+                    new TableViewField("Created Date", "monitorDate",
+                            UIConstants.TABLE_DATE_WIDTH)));
 
-						}
-					});
+            this.projectService = AppContext
+                    .getSpringBean(ProjectService.class);
 
-					if ("Bug".equals(ticket.getType())) {
-						ticketLink.setIcon(MyCollabResource
-								.newResource("icons/16/project/bug.png"));
-					} else if ("Task".equals(ticket.getType())) {
-						ticketLink.setIcon(MyCollabResource
-								.newResource("icons/16/project/task.png"));
-					}
-					return ticketLink;
-				}
-			});
+            this.addGeneratedColumn("summary", new ColumnGenerator() {
+                private static final long serialVersionUID = 1L;
 
-			this.addGeneratedColumn("projectName", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
+                @Override
+                public Object generateCell(final Table source,
+                        final Object itemId, final Object columnId) {
+                    final FollowingTicket ticket = FollowingTicketTable.this
+                            .getBeanByIndex(itemId);
+                    final ButtonLink ticketLink = new ButtonLink(ticket
+                            .getSummary());
+                    ticketLink.addListener(new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
 
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					final ButtonLink projectLink = new ButtonLink(ticket
-							.getProjectName());
-					projectLink.addListener(new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+                        @Override
+                        public void buttonClick(final ClickEvent event) {
+                            if ("Bug".equals(ticket.getType())) {
+                                final int projectId = ticket.getProjectId();
+                                final int bugId = ticket.getTypeId();
+                                final PageActionChain chain = new PageActionChain(
+                                        new ProjectScreenData.Goto(projectId),
+                                        new BugScreenData.Read(bugId));
+                                EventBus.getInstance().fireEvent(
+                                        new ProjectEvent.GotoMyProject(this,
+                                                chain));
+                            } else if ("Task".equals(ticket.getType())) {
+                                final int projectId = ticket.getProjectId();
+                                final int taskId = ticket.getTypeId();
+                                final PageActionChain chain = new PageActionChain(
+                                        new ProjectScreenData.Goto(projectId),
+                                        new TaskScreenData.Read(taskId));
+                                EventBus.getInstance().fireEvent(
+                                        new ProjectEvent.GotoMyProject(this,
+                                                chain));
+                            }
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							final int projectId = ticket.getProjectId();
-							final PageActionChain chain = new PageActionChain(
-									new ProjectScreenData.Goto(projectId));
-							EventBus.getInstance()
-									.fireEvent(
-											new ProjectEvent.GotoMyProject(
-													this, chain));
-						}
-					});
-					projectLink.setIcon(MyCollabResource
-							.newResource("icons/16/project/project.png"));
-					return projectLink;
-				}
-			});
+                        }
+                    });
 
-			this.addGeneratedColumn("assignUser", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
+                    if ("Bug".equals(ticket.getType())) {
+                        ticketLink.setIcon(MyCollabResource
+                                .newResource("icons/16/project/bug.png"));
+                    } else if ("Task".equals(ticket.getType())) {
+                        ticketLink.setIcon(MyCollabResource
+                                .newResource("icons/16/project/task.png"));
+                    }
+                    return ticketLink;
+                }
+            });
 
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					final UserLink userLink = new UserLink(ticket
-							.getAssignUser(), ticket.getAssignUserAvatarId(),
-							ticket.getAssignUserFullName());
-					return userLink;
-				}
-			});
+            this.addGeneratedColumn("projectName", new ColumnGenerator() {
+                private static final long serialVersionUID = 1L;
 
-			this.addGeneratedColumn("monitorDate", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
+                @Override
+                public Object generateCell(final Table source,
+                        final Object itemId, final Object columnId) {
+                    final FollowingTicket ticket = FollowingTicketTable.this
+                            .getBeanByIndex(itemId);
+                    final ButtonLink projectLink = new ButtonLink(ticket
+                            .getProjectName());
+                    projectLink.addListener(new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
 
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					Label lbl = new Label();
-					lbl.setValue(AppContext.formatDate(ticket.getMonitorDate()));
-					return lbl;
-				}
-			});
-		}
+                        @Override
+                        public void buttonClick(final ClickEvent event) {
+                            final int projectId = ticket.getProjectId();
+                            final PageActionChain chain = new PageActionChain(
+                                    new ProjectScreenData.Goto(projectId));
+                            EventBus.getInstance()
+                                    .fireEvent(
+                                            new ProjectEvent.GotoMyProject(
+                                                    this, chain));
+                        }
+                    });
+                    projectLink.setIcon(MyCollabResource
+                            .newResource("icons/16/project/project.png"));
+                    return projectLink;
+                }
+            });
 
-		@Override
-		protected int queryTotalCount() {
-			return this.projectService
-					.getTotalFollowingTickets(this.searchRequest
-							.getSearchCriteria());
-		}
+            this.addGeneratedColumn("assignUser", new ColumnGenerator() {
+                private static final long serialVersionUID = 1L;
 
-		@Override
-		protected List<FollowingTicket> queryCurrentData() {
-			return this.projectService
-					.getProjectFollowingTickets(this.searchRequest);
-		}
+                @Override
+                public Object generateCell(final Table source,
+                        final Object itemId, final Object columnId) {
+                    final FollowingTicket ticket = FollowingTicketTable.this
+                            .getBeanByIndex(itemId);
+                    final UserLink userLink = new UserLink(ticket
+                            .getAssignUser(), ticket.getAssignUserAvatarId(),
+                            ticket.getAssignUserFullName());
+                    return userLink;
+                }
+            });
 
-	}
+            this.addGeneratedColumn("monitorDate", new ColumnGenerator() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public Object generateCell(final Table source,
+                        final Object itemId, final Object columnId) {
+                    final FollowingTicket ticket = FollowingTicketTable.this
+                            .getBeanByIndex(itemId);
+                    Label lbl = new Label();
+                    lbl.setValue(AppContext.formatDate(ticket.getMonitorDate()));
+                    return lbl;
+                }
+            });
+        }
+
+        @Override
+        protected int queryTotalCount() {
+            return this.projectService
+                    .getTotalFollowingTickets(this.searchRequest
+                            .getSearchCriteria());
+        }
+
+        @Override
+        protected List<FollowingTicket> queryCurrentData() {
+            return this.projectService
+                    .getProjectFollowingTickets(this.searchRequest);
+        }
+
+    }
 }

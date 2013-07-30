@@ -16,6 +16,9 @@
             property="numOpenTasks" />
 
         <result column="numAllTasks" jdbcType="INTEGER" property="numAllTasks" />
+        
+        <result column="numComments" property="numComments"
+            jdbcType="INTEGER" />
 
         <result column="ownerAvatarId" jdbcType="VARCHAR"
             property="ownerAvatarId" />

@@ -4,21 +4,22 @@ import java.util.List;
 
 public class SimpleActivityStream extends ActivityStream {
 
-    private static final long serialVersionUID = 1L;
-    
-    private String ownerAvatarId;
-    private String ownerFullName;
-    private List<SimpleComment> comments;
+	private static final long serialVersionUID = 1L;
 
-    public List<SimpleComment> getComments() {
-        return comments;
-    }
+	private String ownerAvatarId;
+	private String ownerFullName;
+	private List<SimpleComment> comments;
+	private SimpleAuditLog assoAuditLog;
 
-    public void setComments(List<SimpleComment> comments) {
-        this.comments = comments;
-    }
+	public List<SimpleComment> getComments() {
+		return comments;
+	}
 
-    public String getOwnerAvatarId() {
+	public void setComments(List<SimpleComment> comments) {
+		this.comments = comments;
+	}
+
+	public String getOwnerAvatarId() {
 		return ownerAvatarId;
 	}
 
@@ -27,10 +28,18 @@ public class SimpleActivityStream extends ActivityStream {
 	}
 
 	public String getOwnerFullName() {
-        return ownerFullName;
-    }
+		return ownerFullName;
+	}
 
-    public void setOwnerFullName(String createdUserFullName) {
-        this.ownerFullName = createdUserFullName;
-    }
+	public void setOwnerFullName(String createdUserFullName) {
+		this.ownerFullName = createdUserFullName;
+	}
+
+	public SimpleAuditLog getAssoAuditLog() {
+		return assoAuditLog;
+	}
+
+	public void setAssoAuditLog(SimpleAuditLog assoAuditLog) {
+		this.assoAuditLog = assoAuditLog;
+	}
 }
