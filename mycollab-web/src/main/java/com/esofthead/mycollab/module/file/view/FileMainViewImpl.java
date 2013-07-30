@@ -95,7 +95,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		menuBarContainerHorizontalLayout.setMargin(true);
 
 		final VerticalLayout menuLayout = new VerticalLayout();
-		menuLayout.setWidth("200px");
+		menuLayout.setWidth("250px");
 		menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
 		this.menuTree = new Tree();
@@ -996,8 +996,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							if (folder.getName().equals(
 									RenameResourceWindow.this.resource
 											.getName())) {
-								folder.setPath(newPath);
 								menuTree.removeItem(folder);
+								folder.setPath(newPath);
 								menuTree.addItem(folder);
 								menuTree.setParent(folder, baseFolder);
 								menuTree.setItemCaption(folder, newNameValue);
