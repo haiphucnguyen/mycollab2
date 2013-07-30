@@ -8,12 +8,21 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCrit
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.vaadin.ui.ComponentContainer;
 
-public class ComponentPresenter extends AbstractPresenter<ComponentContainer> {
+public class ComponentPresenter
+		extends
+		AbstractPresenter<com.esofthead.mycollab.module.project.view.bug.ComponentContainer> {
 	private static final long serialVersionUID = 1L;
 
 	public ComponentPresenter() {
-		super(ComponentContainer.class);
+		super(
+				com.esofthead.mycollab.module.project.view.bug.ComponentContainer.class);
+	}
+
+	@Override
+	public void go(ComponentContainer container, ScreenData<?> data) {
+		super.go(container, data, false);
 	}
 
 	@Override
