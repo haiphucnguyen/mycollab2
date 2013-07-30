@@ -4,12 +4,16 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.infinispan.Cache;
+import org.infinispan.manager.EmbeddedCacheManager;
 
 import com.esofthead.mycollab.cache.CacheManager;
 
 public class InfinispanCache implements org.apache.ibatis.cache.Cache {
 
 	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
+	private static EmbeddedCacheManager cacheManager = CacheManager
+			.createCache("infinispanDb.xml");
 
 	private Cache<Object, Object> cache;
 	private String id;
@@ -23,11 +27,11 @@ public class InfinispanCache implements org.apache.ibatis.cache.Cache {
 			newId = id.substring(0, id.length() - 3);
 		}
 		this.id = id;
-		this.cache = CacheManager.getCache(newId);
+		this.cache = cacheManager.getCache(newId);
 	}
 
 	public static void clearCache(String id) {
-		Cache<Object, Object> dataCache = CacheManager.getCache(id);
+		Cache<Object, Object> dataCache = cacheManager.getCache(id);
 		if (dataCache != null) {
 			dataCache.clear();
 		}

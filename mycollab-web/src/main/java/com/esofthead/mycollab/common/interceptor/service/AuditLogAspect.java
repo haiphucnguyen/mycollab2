@@ -75,9 +75,16 @@ public class AuditLogAspect {
 
 				// get old value
 				Object service = advised.getTargetSource().getTarget();
-				Method findMethod = cls.getMethod("findByPrimaryKey",
-						new Class[] { Serializable.class });
-				Object oldValue = findMethod.invoke(service, typeid);
+				Method findMethod = null;
+				Object oldValue = null;
+				try {
+					findMethod = cls.getMethod("findById",
+							new Class[] { Integer.class });
+				} catch (Exception e) {
+					findMethod = cls.getMethod("findByPrimaryKey",
+							new Class[] { Serializable.class });
+				}
+				oldValue = findMethod.invoke(service, typeid);
 				String key = bean.toString() + auditAnnotation.type() + typeid;
 
 				caches.put(key, oldValue);
