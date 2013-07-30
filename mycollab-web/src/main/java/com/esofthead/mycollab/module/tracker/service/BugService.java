@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 public interface BugService extends
 		IDefaultService<Integer, BugWithBLOBs, BugSearchCriteria> {
 
-	SimpleBug findBugById(int bugid);
+	SimpleBug findById(Integer bugid);
 
 	List<GroupItem> getStatusSummary(BugSearchCriteria criteria);
 

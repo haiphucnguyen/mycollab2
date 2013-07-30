@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -88,6 +89,7 @@ public final class MainView extends AbstractView {
 								new ShellEvent.GotoCrmModule(this, null));
 					}
 				});
+		crmLink.setIcon(MyCollabResource.newResource("icons/16/customer.png"));
 		crmLink.setStyleName("link");
 		vLayout.addComponent(crmLink);
 
@@ -101,6 +103,7 @@ public final class MainView extends AbstractView {
 					}
 				});
 		prjLink.setStyleName("link");
+		prjLink.setIcon(MyCollabResource.newResource("icons/16/project.png"));
 		vLayout.addComponent(prjLink);
 
 		final Button docLink = new Button("Document Management",
@@ -113,6 +116,7 @@ public final class MainView extends AbstractView {
 					}
 				});
 		docLink.setStyleName("link");
+		docLink.setIcon(MyCollabResource.newResource("icons/16/document.png"));
 		vLayout.addComponent(docLink);
 
 		serviceMenu.addComponent(vLayout);
