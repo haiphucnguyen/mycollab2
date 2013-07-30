@@ -3,9 +3,9 @@
     xsi:schemaLocation="urn:infinispan:config:5.3 http://www.infinispan.org/schemas/infinispan-config-5.3.xsd"
     xmlns="urn:infinispan:config:5.3">
     <global>
-        <globalJmxStatistics enabled="false" allowDuplicateDomains="true"/>
+        <globalJmxStatistics enabled="false"
+            allowDuplicateDomains="true" />
     </global>
-
     <default>
         <eviction strategy="LIRS" maxEntries="20000" />
         <expiration wakeUpInterval="500" lifespan="60000"
@@ -17,6 +17,6 @@
                 </properties>
             </loader>
         </loaders>
+        <storeAsBinary enabled="true" defensive="true" />
     </default>
-
 </infinispan>
