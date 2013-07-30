@@ -153,7 +153,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				}
 				FileMainViewImpl.this.menuTree
 						.setContainerDataSource(dataSource);
-				FileMainViewImpl.this.menuTree.collapseItem(collapseFolder);
 			}
 		});
 
@@ -647,12 +646,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			messageSearchLayout.setWidth("100%");
 			Label titleLabel = new Label("Search result: ");
 			titleLabel.setWidth("115px");
+			titleLabel.addStyleName("h3");
 			messageSearchLayout.addComponent(titleLabel);
 
 			Label nameLabel = new Label("Name");
+			nameLabel.addStyleName("h3");
 			nameLabel.setWidth("350px");
 			messageSearchLayout.addComponent(nameLabel);
 			Label pathLabel = new Label("Path");
+			pathLabel.addStyleName("h3");
 			messageSearchLayout.addComponent(pathLabel);
 			messageSearchLayout.setExpandRatio(pathLabel, 1.0f);
 
@@ -845,53 +847,58 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			return layout;
 		}
 
-		private HorizontalLayout constructBreadcrumbPathLayout(Resource res) {
+		private HorizontalLayout constructBreadcrumbPathLayout(
+				final Resource res) {
 			HorizontalLayout layout = new HorizontalLayout();
-			final String[] path = res.getPath().split("/");
-			final StringBuffer curPath = new StringBuffer("");
-			for (int i = 0; i < path.length; i++) {
-				String pathName = path[i];
-				if (i == 0)
-					curPath.append(pathName);
-				else if (i != path.length - 1)
-					curPath.append("/").append(pathName);
+			layout.setSpacing(true);
 
-				if (!pathName.equals(AppContext.getAccountId().toString())
-						&& i != path.length - 1) {
-					final Button btn = new Button();
-					if (pathName.equals("Documents")) {
-						btn.setCaption("My Documents");
-					} else
-						btn.setCaption(pathName);
-					btn.addStyleName("link");
-					final String currentResourcePath = curPath.toString();
-					btn.addListener(new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							Resource curResource = FileMainViewImpl.this.resourceService
-									.getResource(currentResourcePath);
-
-							FileMainViewImpl.this.menuTree
-									.expandItem(curResource);
-
-							FileMainViewImpl.this.itemResourceContainerLayout
-									.constructBody((Folder) curResource);
-							FileMainViewImpl.this.baseFolder = (Folder) curResource;
-							FileMainViewImpl.this.fileBreadCrumb
-									.gotoFolder(FileMainViewImpl.this.baseFolder);
-						}
-					});
-					UiUtils.addComponent(layout, btn, Alignment.BOTTOM_CENTER);
-					if (i != path.length - 2) {
-						final Embedded nextIconEmbedd = new Embedded("",
-								new ThemeResource("icons/12/next_icon.png"));
-						UiUtils.addComponent(layout, nextIconEmbedd,
-								Alignment.MIDDLE_LEFT);
-					}
-				}
+			String parentFolderPath = resourceService.getParentFolder(
+					res.getPath()).getPath();
+			StringBuffer parentFolderPathStrBuffer = new StringBuffer(
+					rootFolderName
+							+ parentFolderPath.substring(parentFolderPath
+									.indexOf("/", 2)));
+			if (parentFolderPathStrBuffer.toString().split("/").length > 6) {
+				String[] parentFolderPathArray = parentFolderPath.split("/");
+				parentFolderPathStrBuffer
+						.append(rootFolderName)
+						.append("\\")
+						.append(parentFolderPathArray[2])
+						.append("\\")
+						.append("...")
+						.append("\\")
+						.append(parentFolderPathArray[parentFolderPathArray.length - 2])
+						.append("\\")
+						.append(parentFolderPathArray[parentFolderPathArray.length - 1]);
 			}
+			Label pathLabel = new Label(parentFolderPathStrBuffer.toString());
+			pathLabel.addStyleName("h3");
+			UiUtils.addComponent(layout, pathLabel, Alignment.MIDDLE_CENTER);
+
+			Button toContainFolder = new Button();
+			toContainFolder.setIcon(new ThemeResource(
+					"icons/48/folder_arrow_right_icon.png"));
+			toContainFolder.setDescription("Go to folder");
+			toContainFolder.addListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					Resource containFolder = FileMainViewImpl.this.resourceService
+							.getParentFolder(res.getPath());
+					FileMainViewImpl.this.menuTree
+							.expandItem((Folder) containFolder);
+					FileMainViewImpl.this.itemResourceContainerLayout
+							.constructBody((Folder) containFolder);
+					FileMainViewImpl.this.baseFolder = (Folder) containFolder;
+					FileMainViewImpl.this.fileBreadCrumb
+							.gotoFolder(FileMainViewImpl.this.baseFolder);
+				}
+			});
+			toContainFolder.addStyleName("link");
+			UiUtils.addComponent(layout, toContainFolder,
+					Alignment.MIDDLE_CENTER);
+
 			return layout;
 		}
 	}
@@ -916,8 +923,26 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			FileMainViewImpl.this.getWindow().showNotification(
 					"Move asset(s) successfully.");
 			FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
-			FileMainViewImpl.this.menuTree
-					.collapseItem(FileMainViewImpl.this.baseFolder);
+
+			Container dataSource = FileMainViewImpl.this.menuTree
+					.getContainerDataSource();
+			Object[] dataSourceArray = dataSource.getItemIds().toArray();
+
+			for (Object item : dataSourceArray) {
+				if (((Folder) item).getPath().equals(folder.getPath())) {
+					FileMainViewImpl.this.menuTree.collapseItem((Folder) item);
+					FileMainViewImpl.this.menuTree.expandItem((Folder) item);
+					break;
+				}
+			}
+			for (Object item : dataSourceArray) {
+				if (((Folder) item).getPath().equals(
+						FileMainViewImpl.this.baseFolder.getPath())) {
+					FileMainViewImpl.this.menuTree.collapseItem((Folder) item);
+					FileMainViewImpl.this.menuTree.expandItem((Folder) item);
+					break;
+				}
+			}
 		}
 
 		@Override
@@ -1075,9 +1100,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									.getValue();
 							if (folderVal != null
 									&& !folderVal.trim().equals("")) {
-								final String baseFolderPath = (FileMainViewImpl.this.baseFolder == null) ? FileMainViewImpl.this.rootPath
+								String baseFolderPath = (FileMainViewImpl.this.baseFolder == null) ? FileMainViewImpl.this.rootPath
 										: FileMainViewImpl.this.baseFolder
 												.getPath();
+								if (!fileBreadCrumb
+										.getCurrentBreadCrumbFolder().getPath()
+										.equals(baseFolder.getPath())) {
+									baseFolderPath = rootPath;
+									baseFolder = (Folder) resourceService
+											.getResource(rootPath);
+								}
+
 								final Folder newFolder = FileMainViewImpl.this.resourceService
 										.createNewFolder(baseFolderPath,
 												folderVal,

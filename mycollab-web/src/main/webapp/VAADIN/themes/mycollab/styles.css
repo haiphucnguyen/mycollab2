@@ -481,7 +481,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .v-textfield.v-readonly {
-	border: 1px solid gray;
+	border: 1px solid rgb(161, 161, 161);
 }
 
 .v-textfield.noBorderRight {
