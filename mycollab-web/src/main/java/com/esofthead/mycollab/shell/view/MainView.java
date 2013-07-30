@@ -32,6 +32,8 @@ public final class MainView extends AbstractView {
 
 	private final CssLayout bodyLayout;
 
+	private PopupButton serviceMenu;
+
 	public MainView() {
 		this.setSizeFull();
 		this.addComponent(this.createTopMenu());
@@ -51,6 +53,23 @@ public final class MainView extends AbstractView {
 		this.bodyLayout.removeAllComponents();
 		final LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
 		this.bodyLayout.addComponent(comp);
+
+		if (ModuleHelper.isCurrentCrmModule()) {
+			serviceMenu.setCaption("Customer Management");
+			serviceMenu.setIcon(MyCollabResource
+					.newResource("icons/16/customer_gray.png"));
+		} else if (ModuleHelper.isCurrentProjectModule()) {
+			serviceMenu.setCaption("Projects");
+			serviceMenu.setIcon(MyCollabResource
+					.newResource("icons/16/project_gray.png"));
+		} else if (ModuleHelper.isCurrentFileModule()) {
+			serviceMenu.setCaption("Documents");
+			serviceMenu.setIcon(MyCollabResource
+					.newResource("icons/16/document_gray.png"));
+		} else {
+			serviceMenu.setCaption("Services");
+			serviceMenu.setIcon(null);
+		}
 	}
 
 	private CustomLayout createFooter() {
@@ -74,7 +93,7 @@ public final class MainView extends AbstractView {
 		layout.setStyleName("topNavigation");
 		layout.setHeight("40px");
 		layout.setWidth("100%");
-		final PopupButton serviceMenu = new PopupButton("Services");
+		serviceMenu = new PopupButton("Services");
 		serviceMenu.setStyleName("serviceMenu");
 		serviceMenu.addStyleName("topNavPopup");
 		final VerticalLayout vLayout = new VerticalLayout();
@@ -93,7 +112,7 @@ public final class MainView extends AbstractView {
 		crmLink.setStyleName("link");
 		vLayout.addComponent(crmLink);
 
-		final Button prjLink = new Button("Project Management",
+		final Button prjLink = new Button("Projects",
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -106,7 +125,7 @@ public final class MainView extends AbstractView {
 		prjLink.setIcon(MyCollabResource.newResource("icons/16/project.png"));
 		vLayout.addComponent(prjLink);
 
-		final Button docLink = new Button("Document Management",
+		final Button docLink = new Button("Documents",
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
