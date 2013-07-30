@@ -29,7 +29,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 	private List<SearchHandler<FileSearchCriteria>> handers;
-	private Folder currentBreamCrumbFolder;
+	private Folder currentBreadCrumbFolder;
 
 	public FileBreadcrumb() {
 		this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
@@ -78,7 +78,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 
 	public void gotoFolder(final Folder folder) {
 		initBreadcrumb();
-		currentBreamCrumbFolder = folder;
+		currentBreadCrumbFolder = folder;
 		final String[] path = folder.getPath().split("/");
 		final StringBuffer curPath = new StringBuffer("");
 		for (int i = 0; i < path.length; i++) {
@@ -90,10 +90,10 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 
 			if (!pathName.equals(AppContext.getAccountId().toString())) {
 				final Button btn = new Button();
-				if (pathName.equals("Documents")) {
-					btn.setCaption("My Documents");
-				} else
+				if (!pathName.equals("Documents")) {
 					btn.setCaption(pathName);
+					btn.setDescription(pathName);
+				}
 				final String currentResourcePath = curPath.toString();
 				btn.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -150,12 +150,12 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-	public Folder getCurrentBreamCrumbFolder() {
-		return currentBreamCrumbFolder;
+	public Folder getCurrentBreadCrumbFolder() {
+		return currentBreadCrumbFolder;
 	}
 
-	public void setCurrentBreamCrumbFolder(Folder currentBreamCrumbFolder) {
-		this.currentBreamCrumbFolder = currentBreamCrumbFolder;
+	public void setCurrentBreadCrumbFolder(Folder currentBreamCrumbFolder) {
+		this.currentBreadCrumbFolder = currentBreamCrumbFolder;
 	}
 
 	public static class FileLinkBuilder {
