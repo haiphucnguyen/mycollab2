@@ -145,9 +145,9 @@ public class ComponentReadPresenter extends
 				SimpleComponent component = componentService
 						.findComponentById((Integer) data.getParams());
 				if (component != null) {
-					ComponentContainer riskContainer = (ComponentContainer) container;
-					riskContainer.removeAllComponents();
-					riskContainer.addComponent(view.getWidget());
+					ComponentContainer componentContainer = (ComponentContainer) container;
+					componentContainer.removeAllComponents();
+					componentContainer.addComponent(view.getWidget());
 					view.previewItem(component);
 
 					ProjectBreadcrumb breadcrumb = ViewManager

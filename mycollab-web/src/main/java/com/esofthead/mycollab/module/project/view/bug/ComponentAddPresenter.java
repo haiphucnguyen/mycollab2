@@ -83,8 +83,9 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
-			TrackerContainer trackerContainer = (TrackerContainer) container;
-			trackerContainer.addComponent(view.getWidget());
+			com.esofthead.mycollab.module.project.view.bug.ComponentContainer componentContainer = (com.esofthead.mycollab.module.project.view.bug.ComponentContainer) container;
+			componentContainer.removeAllComponents();
+			componentContainer.addComponent(view.getWidget());
 
 			Component component = (Component) data.getParams();
 			view.editItem(component);
@@ -98,7 +99,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 				breadcrumb.gotoComponentEdit(component);
 			}
 		} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
+			MessageConstants.showMessagePermissionAlert();
+		}
 	}
 }

@@ -223,9 +223,9 @@ public class VersionListPresenter extends AbstractPresenter<VersionListView>
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.VERSIONS)) {
-			TrackerContainer trackerContainer = (TrackerContainer) container;
-			trackerContainer.removeAllComponents();
-			trackerContainer.addComponent(view.getWidget());
+			VersionContainer versionContainer = (VersionContainer) container;
+			versionContainer.removeAllComponents();
+			versionContainer.addComponent(view.getWidget());
 
 			doSearch((VersionSearchCriteria) data.getParams());
 

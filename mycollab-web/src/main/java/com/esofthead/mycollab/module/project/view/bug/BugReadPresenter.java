@@ -31,12 +31,11 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 			if (data.getParams() instanceof Integer) {
 				BugService bugService = AppContext
 						.getSpringBean(BugService.class);
-				SimpleBug bug = bugService.findById((Integer) data
-						.getParams());
+				SimpleBug bug = bugService.findById((Integer) data.getParams());
 				if (bug != null) {
-					TrackerContainer trackerContainer = (TrackerContainer) container;
-					trackerContainer.removeAllComponents();
-					trackerContainer.addComponent(view.getWidget());
+					BugContainer bugContainer = (BugContainer) container;
+					bugContainer.removeAllComponents();
+					bugContainer.addComponent(view.getWidget());
 					view.previewItem(bug);
 
 					ProjectBreadcrumb breadcrumb = ViewManager

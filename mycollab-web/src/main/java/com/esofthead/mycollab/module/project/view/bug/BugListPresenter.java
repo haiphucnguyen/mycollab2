@@ -139,7 +139,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.BUGS)) {
-			TrackerContainer trackerContainer = (TrackerContainer) container;
+			BugContainer trackerContainer = (BugContainer) container;
 			trackerContainer.removeAllComponents();
 			trackerContainer.addComponent(view.getWidget());
 

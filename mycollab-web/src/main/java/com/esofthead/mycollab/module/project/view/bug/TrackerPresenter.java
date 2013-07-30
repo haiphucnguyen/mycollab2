@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.billing.BillingPlanChecker;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
@@ -30,49 +32,33 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Bugs");
 
-		view.removeAllComponents();
-
 		Presenter presenter = null;
 
 		if (BillingPlanChecker.isBugComponentEnable()) {
-			if (data instanceof BugScreenData.Search) {
+			if (ClassUtils.instanceOf(data, BugScreenData.Search.class,
+					BugScreenData.Add.class, BugScreenData.Edit.class,
+					BugScreenData.Read.class)) {
+				presenter = PresenterResolver.getPresenter(BugPresenter.class);
+			} else if (ClassUtils.instanceOf(data,
+					ComponentScreenData.Add.class,
+					ComponentScreenData.Edit.class,
+					ComponentScreenData.Search.class,
+					ComponentScreenData.Read.class)) {
 				presenter = PresenterResolver
-						.getPresenter(BugListPresenter.class);
-			} else if (data instanceof BugScreenData.Add
-					|| data instanceof BugScreenData.Edit) {
+						.getPresenter(ComponentPresenter.class);
+			} else if (ClassUtils.instanceOf(data, VersionScreenData.Add.class,
+					VersionScreenData.Edit.class,
+					VersionScreenData.Search.class,
+					VersionScreenData.Read.class)) {
 				presenter = PresenterResolver
-						.getPresenter(BugAddPresenter.class);
-			} else if (data instanceof BugScreenData.Read) {
-				presenter = PresenterResolver
-						.getPresenter(BugReadPresenter.class);
-			} else if (data instanceof ComponentScreenData.Add) {
-				presenter = PresenterResolver
-						.getPresenter(ComponentAddPresenter.class);
-			} else if (data instanceof ComponentScreenData.Edit) {
-				presenter = PresenterResolver
-						.getPresenter(ComponentAddPresenter.class);
-			} else if (data instanceof ComponentScreenData.Search) {
-				presenter = PresenterResolver
-						.getPresenter(ComponentListPresenter.class);
-			} else if (data instanceof ComponentScreenData.Read) {
-				presenter = PresenterResolver
-						.getPresenter(ComponentReadPresenter.class);
-			} else if (data instanceof VersionScreenData.Add) {
-				presenter = PresenterResolver
-						.getPresenter(VersionAddPresenter.class);
-			} else if (data instanceof VersionScreenData.Edit) {
-				presenter = PresenterResolver
-						.getPresenter(VersionAddPresenter.class);
-			} else if (data instanceof VersionScreenData.Search) {
-				presenter = PresenterResolver
-						.getPresenter(VersionListPresenter.class);
-			} else if (data instanceof VersionScreenData.Read) {
-				presenter = PresenterResolver
-						.getPresenter(VersionReadPresenter.class);
+						.getPresenter(VersionPresenter.class);
 			} else if (data == null
 					|| data instanceof BugScreenData.GotoDashboard) {
 				presenter = PresenterResolver
 						.getPresenter(BugDashboardPresenter.class);
+			} else {
+				throw new MyCollabException("Do not support screen data "
+						+ data);
 			}
 		} else {
 			presenter = PresenterResolver
