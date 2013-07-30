@@ -6,8 +6,8 @@ public class SimpleActivityStream extends ActivityStream {
 
 	private static final long serialVersionUID = 1L;
 
-	private String ownerAvatarId;
-	private String ownerFullName;
+	private String createdUserAvatarId;
+    private String createdUserFullName;
 	private List<SimpleComment> comments;
 	private SimpleAuditLog assoAuditLog;
 
@@ -19,20 +19,20 @@ public class SimpleActivityStream extends ActivityStream {
 		this.comments = comments;
 	}
 
-	public String getOwnerAvatarId() {
-		return ownerAvatarId;
+	public String getCreatedUserAvatarId() {
+		return createdUserAvatarId;
 	}
 
-	public void setOwnerAvatarId(String createdUserAvatarId) {
-		this.ownerAvatarId = createdUserAvatarId;
+	public void setCreatedUserAvatarId(String createdUserAvatarId) {
+		this.createdUserAvatarId = createdUserAvatarId;
 	}
 
-	public String getOwnerFullName() {
-		return ownerFullName;
+	public String getCreatedUserFullName() {
+		return createdUserFullName;
 	}
 
-	public void setOwnerFullName(String createdUserFullName) {
-		this.ownerFullName = createdUserFullName;
+	public void setCreatedUserFullName(String createdUserFullName) {
+		this.createdUserFullName = createdUserFullName;
 	}
 
 	public SimpleAuditLog getAssoAuditLog() {

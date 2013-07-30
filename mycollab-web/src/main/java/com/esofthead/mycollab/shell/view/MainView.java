@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -29,167 +30,189 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public final class MainView extends AbstractView {
 
-	private final CssLayout bodyLayout;
+    private final CssLayout bodyLayout;
 
-	public MainView() {
-		this.setSizeFull();
-		this.addComponent(this.createTopMenu());
-		this.bodyLayout = new CssLayout();
-		this.bodyLayout.addStyleName("main-body");
-		this.bodyLayout.setWidth("100%");
-		this.bodyLayout.setHeight("100%");
-		this.addComponent(this.bodyLayout);
-		this.setExpandRatio(this.bodyLayout, 1.0f);
-		this.addComponent(this.createFooter());
-		this.setSizeFull();
-		ControllerRegistry.addController(new MainViewController(this));
-	}
+    private PopupButton serviceMenu;
 
-	public void addModule(final IModule module) {
-		ModuleHelper.setCurrentModule(module);
-		this.bodyLayout.removeAllComponents();
-		final LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
-		this.bodyLayout.addComponent(comp);
-	}
+    public MainView() {
+        this.setSizeFull();
+        this.addComponent(this.createTopMenu());
+        this.bodyLayout = new CssLayout();
+        this.bodyLayout.addStyleName("main-body");
+        this.bodyLayout.setWidth("100%");
+        this.bodyLayout.setHeight("100%");
+        this.addComponent(this.bodyLayout);
+        this.setExpandRatio(this.bodyLayout, 1.0f);
+        this.addComponent(this.createFooter());
+        this.setSizeFull();
+        ControllerRegistry.addController(new MainViewController(this));
+    }
 
-	private CustomLayout createFooter() {
-		final CustomLayout footer = CustomLayoutLoader.createLayout("footer");
-		final Button sendFeedback = new Button("Feedback");
-		sendFeedback.setStyleName(UIConstants.THEME_BLUE_LINK);
-		sendFeedback.addListener(new ClickListener() {
+    public void addModule(final IModule module) {
+        ModuleHelper.setCurrentModule(module);
+        this.bodyLayout.removeAllComponents();
+        final LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
+        this.bodyLayout.addComponent(comp);
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				MainView.this.getWindow().addWindow(new FeedbackWindow());
-			}
-		});
-		footer.addComponent(sendFeedback, "footer-right");
-		return footer;
-	}
+        if (ModuleHelper.isCurrentCrmModule()) {
+            serviceMenu.setCaption("Customer Management");
+            serviceMenu.setIcon(MyCollabResource
+                    .newResource("icons/16/customer_gray.png"));
+        } else if (ModuleHelper.isCurrentProjectModule()) {
+            serviceMenu.setCaption("Projects");
+            serviceMenu.setIcon(MyCollabResource
+                    .newResource("icons/16/project_gray.png"));
+        } else if (ModuleHelper.isCurrentFileModule()) {
+            serviceMenu.setCaption("Documents");
+            serviceMenu.setIcon(MyCollabResource
+                    .newResource("icons/16/document_gray.png"));
+        } else {
+            serviceMenu.setCaption("Services");
+            serviceMenu.setIcon(null);
+        }
+    }
 
-	private CustomLayout createTopMenu() {
-		final CustomLayout layout = CustomLayoutLoader
-				.createLayout("topNavigation");
-		layout.setStyleName("topNavigation");
-		layout.setHeight("40px");
-		layout.setWidth("100%");
-		final PopupButton serviceMenu = new PopupButton("Services");
-		serviceMenu.setStyleName("serviceMenu");
-		serviceMenu.addStyleName("topNavPopup");
-		final VerticalLayout vLayout = new VerticalLayout();
-		vLayout.setWidth("200px");
+    private CustomLayout createFooter() {
+        final CustomLayout footer = CustomLayoutLoader.createLayout("footer");
+        final Button sendFeedback = new Button("Feedback");
+        sendFeedback.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+        sendFeedback.addListener(new ClickListener() {
 
-		final Button crmLink = new Button("Customer Management",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						serviceMenu.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoCrmModule(this, null));
-					}
-				});
-		crmLink.setStyleName("link");
-		vLayout.addComponent(crmLink);
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                MainView.this.getWindow().addWindow(new FeedbackWindow());
+            }
+        });
+        footer.addComponent(sendFeedback, "footer-right");
+        return footer;
+    }
 
-		final Button prjLink = new Button("Project Management",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						serviceMenu.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoProjectModule(this, null));
-					}
-				});
-		prjLink.setStyleName("link");
-		vLayout.addComponent(prjLink);
+    private CustomLayout createTopMenu() {
+        final CustomLayout layout = CustomLayoutLoader
+                .createLayout("topNavigation");
+        layout.setStyleName("topNavigation");
+        layout.setHeight("40px");
+        layout.setWidth("100%");
+        serviceMenu = new PopupButton("Services");
+        serviceMenu.setStyleName("serviceMenu");
+        serviceMenu.addStyleName("topNavPopup");
+        final VerticalLayout vLayout = new VerticalLayout();
+        vLayout.setWidth("200px");
 
-		final Button docLink = new Button("Document Management",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						serviceMenu.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoFileModule(this, null));
-					}
-				});
-		docLink.setStyleName("link");
-		vLayout.addComponent(docLink);
+        final Button crmLink = new Button("Customer Management",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        serviceMenu.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.GotoCrmModule(this, null));
+                    }
+                });
+        crmLink.setIcon(MyCollabResource.newResource("icons/16/customer.png"));
+        crmLink.setStyleName("link");
+        vLayout.addComponent(crmLink);
 
-		serviceMenu.addComponent(vLayout);
-		layout.addComponent(serviceMenu, "serviceMenu");
+        final Button prjLink = new Button("Projects",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        serviceMenu.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.GotoProjectModule(this, null));
+                    }
+                });
+        prjLink.setStyleName("link");
+        prjLink.setIcon(MyCollabResource.newResource("icons/16/project.png"));
+        vLayout.addComponent(prjLink);
 
-		final HorizontalLayout accountLayout = new HorizontalLayout();
-		final Embedded userAvatar = UserAvatarControlFactory
-				.createUserAvatarEmbeddedComponent(
-						AppContext.getUserAvatarId(), 24);
-		accountLayout.addComponent(userAvatar);
-		accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
+        final Button docLink = new Button("Documents",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        serviceMenu.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.GotoFileModule(this, null));
+                    }
+                });
+        docLink.setStyleName("link");
+        docLink.setIcon(MyCollabResource.newResource("icons/16/document.png"));
+        vLayout.addComponent(docLink);
 
-		final PopupButton accountMenu = new PopupButton(AppContext.getSession()
-				.getDisplayName());
-		final VerticalLayout accLayout = new VerticalLayout();
-		accLayout.setWidth("120px");
+        serviceMenu.addComponent(vLayout);
+        layout.addComponent(serviceMenu, "serviceMenu");
 
-		final Button myProfileBtn = new Button("Profile",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						accountMenu.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoUserAccountModule(this,
-										new String[] { "preview" }));
-					}
-				});
-		myProfileBtn.setStyleName("link");
-		accLayout.addComponent(myProfileBtn);
+        final HorizontalLayout accountLayout = new HorizontalLayout();
+        final Embedded userAvatar = UserAvatarControlFactory
+                .createUserAvatarEmbeddedComponent(
+                        AppContext.getUserAvatarId(), 24);
+        accountLayout.addComponent(userAvatar);
+        accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
 
-		final Button myAccountBtn = new Button("Account",
-				new Button.ClickListener() {
+        final PopupButton accountMenu = new PopupButton(AppContext.getSession()
+                .getDisplayName());
+        final VerticalLayout accLayout = new VerticalLayout();
+        accLayout.setWidth("120px");
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						accountMenu.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoUserAccountModule(this,
-										new String[] { "billing" }));
-					}
-				});
-		myAccountBtn.setStyleName("link");
-		accLayout.addComponent(myAccountBtn);
+        final Button myProfileBtn = new Button("Profile",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        accountMenu.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.GotoUserAccountModule(this,
+                                        new String[] { "preview" }));
+                    }
+                });
+        myProfileBtn.setStyleName("link");
+        accLayout.addComponent(myProfileBtn);
 
-		final Button userMgtBtn = new Button("User Management",
-				new Button.ClickListener() {
+        final Button myAccountBtn = new Button("Account",
+                new Button.ClickListener() {
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						accountMenu.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoUserAccountModule(this,
-										new String[] { "user", "list" }));
-					}
-				});
-		userMgtBtn.setStyleName("link");
-		accLayout.addComponent(userMgtBtn);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        accountMenu.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.GotoUserAccountModule(this,
+                                        new String[] { "billing" }));
+                    }
+                });
+        myAccountBtn.setStyleName("link");
+        accLayout.addComponent(myAccountBtn);
 
-		final Button signoutBtn = new Button("Sign out",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						AppContext.setSession(null, null, null);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.LogOut(this, null));
-					}
-				});
-		signoutBtn.setStyleName("link");
-		accLayout.addComponent(signoutBtn);
+        final Button userMgtBtn = new Button("User Management",
+                new Button.ClickListener() {
 
-		accountMenu.addComponent(accLayout);
-		accountMenu.setStyleName("accountMenu");
-		accountMenu.addStyleName("topNavPopup");
-		accountLayout.addComponent(accountMenu);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        accountMenu.setPopupVisible(false);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.GotoUserAccountModule(this,
+                                        new String[] { "user", "list" }));
+                    }
+                });
+        userMgtBtn.setStyleName("link");
+        accLayout.addComponent(userMgtBtn);
 
-		layout.addComponent(accountLayout, "accountMenu");
+        final Button signoutBtn = new Button("Sign out",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        AppContext.setSession(null, null, null);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.LogOut(this, null));
+                    }
+                });
+        signoutBtn.setStyleName("link");
+        accLayout.addComponent(signoutBtn);
 
-		return layout;
-	}
+        accountMenu.addComponent(accLayout);
+        accountMenu.setStyleName("accountMenu");
+        accountMenu.addStyleName("topNavPopup");
+        accountLayout.addComponent(accountMenu);
+
+        layout.addComponent(accountLayout, "accountMenu");
+
+        return layout;
+    }
 }

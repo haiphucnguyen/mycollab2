@@ -21,7 +21,7 @@ public class PopupButtonControl extends SplitButton implements
 	public PopupButtonControl(final String id, final Button button) {
 		super(button, new SplitButton.PopupButton());
 
-		addStyleName(UIConstants.THEME_BLUE_LINK);
+		addStyleName(UIConstants.THEME_GRAY_LINK);
 
 		initPopupButton(id, button.getCaption());
 	}

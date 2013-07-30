@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.ui.components.ProjectActivityStreamGenerator;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -186,6 +187,10 @@ public class ActivityStreamComponent extends Depot {
 												activityStream.getProjectId(),
 												ProjectLinkBuilder.DEFAULT_PREFIX_PARAM),
 										activityStream.getProjectName());
+						if (activityStream.getAssoAuditLog() != null) {
+							content += ProjectActivityStreamGenerator
+									.generatorDetailChangeOfActivity(activityStream);
+						}
 					}
 
 					final Label activityLink = new Label(content,
