@@ -34,9 +34,9 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 				SimpleBug bug = bugService.findById((Integer) data
 						.getParams());
 				if (bug != null) {
-					BugContainer bugContainer = (BugContainer) container;
-					bugContainer.removeAllComponents();
-					bugContainer.addComponent(view.getWidget());
+					TrackerContainer trackerContainer = (TrackerContainer) container;
+					trackerContainer.removeAllComponents();
+					trackerContainer.addComponent(view.getWidget());
 					view.previewItem(bug);
 
 					ProjectBreadcrumb breadcrumb = ViewManager

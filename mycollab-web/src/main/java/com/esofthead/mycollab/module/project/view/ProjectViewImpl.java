@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
+import com.esofthead.mycollab.module.project.view.bug.TrackerPresenter;
 import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
@@ -83,7 +83,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private MessagePresenter messagePresenter;
 	private MilestonePresenter milestonesPresenter;
 	private TaskPresenter taskPresenter;
-	private BugPresenter bugPresenter;
+	private TrackerPresenter trackerPresenter;
 	private FilePresenter filePresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
@@ -258,7 +258,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void gotoBugView(ScreenData data) {
-		bugPresenter.go(ProjectViewImpl.this, data);
+		trackerPresenter.go(ProjectViewImpl.this, data);
 	}
 
 	@Override
@@ -324,8 +324,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectBugComponent() {
-		bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
-		return bugPresenter.getView();
+		trackerPresenter = PresenterResolver.getPresenter(TrackerPresenter.class);
+		return trackerPresenter.getView();
 	}
 
 	private Component constructProjectFileComponent() {

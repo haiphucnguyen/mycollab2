@@ -4,19 +4,16 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class BugAdvertisementPresenter extends
-		AbstractPresenter<BugAdvertisementView> {
+public class VersionPresenter extends AbstractPresenter<VersionContainer> {
 	private static final long serialVersionUID = 1L;
 
-	public BugAdvertisementPresenter() {
-		super(BugAdvertisementView.class);
+	public VersionPresenter() {
+		super(VersionContainer.class);
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		TrackerContainer trackerContainer = (TrackerContainer) container;
-		trackerContainer.removeAllComponents();
-		trackerContainer.addComponent(view.getWidget());
+
 	}
 
 }

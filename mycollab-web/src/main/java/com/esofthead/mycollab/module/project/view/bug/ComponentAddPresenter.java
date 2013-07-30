@@ -83,8 +83,8 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
-			BugContainer bugContainer = (BugContainer) container;
-			bugContainer.addComponent(view.getWidget());
+			TrackerContainer trackerContainer = (TrackerContainer) container;
+			trackerContainer.addComponent(view.getWidget());
 
 			Component component = (Component) data.getParams();
 			view.editItem(component);

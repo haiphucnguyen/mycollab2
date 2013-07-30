@@ -5,7 +5,7 @@ import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
+import com.esofthead.mycollab.module.project.view.bug.TrackerPresenter;
 import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
@@ -130,7 +130,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ComponentScreenData.Search.class, VersionScreenData.Read.class,
 				VersionScreenData.Search.class, VersionScreenData.Add.class,
 				VersionScreenData.Edit.class)) {
-			presenter = PresenterResolver.getPresenter(BugPresenter.class);
+			presenter = PresenterResolver.getPresenter(TrackerPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
 				StandupScreenData.Search.class, StandupScreenData.Add.class)) {
 			presenter = PresenterResolver.getPresenter(StandupPresenter.class);

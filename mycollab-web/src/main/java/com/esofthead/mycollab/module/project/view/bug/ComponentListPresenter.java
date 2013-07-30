@@ -224,9 +224,9 @@ public class ComponentListPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
-			BugContainer bugContainer = (BugContainer) container;
-			bugContainer.removeAllComponents();
-			bugContainer.addComponent(view.getWidget());
+			TrackerContainer trackerContainer = (TrackerContainer) container;
+			trackerContainer.removeAllComponents();
+			trackerContainer.addComponent(view.getWidget());
 
 			doSearch((ComponentSearchCriteria) data.getParams());
 

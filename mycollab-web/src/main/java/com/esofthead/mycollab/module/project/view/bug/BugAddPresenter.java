@@ -36,9 +36,9 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS)) {
-			BugContainer bugContainer = (BugContainer) container;
-			bugContainer.removeAllComponents();
-			bugContainer.addComponent(view.getWidget());
+			TrackerContainer trackerContainer = (TrackerContainer) container;
+			trackerContainer.removeAllComponents();
+			trackerContainer.addComponent(view.getWidget());
 
 			SimpleBug bug = (SimpleBug) data.getParams();
 			view.editItem(bug);
