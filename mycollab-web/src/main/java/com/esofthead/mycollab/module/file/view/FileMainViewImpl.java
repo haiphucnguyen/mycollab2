@@ -376,7 +376,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 													}
 												}
 												if (!fileBreadCrumb
-														.getCurrentBreamCrumbFolder()
+														.getCurrentBreadCrumbFolder()
 														.getPath()
 														.equals(baseFolder
 																.getPath())) {
@@ -451,7 +451,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						fileBreadCrumb.gotoFolder(selectedFolder);
 						FileMainViewImpl.this.baseFolder = selectedFolder;
 						fileBreadCrumb
-								.setCurrentBreamCrumbFolder(selectedFolder);
+								.setCurrentBreadCrumbFolder(selectedFolder);
 					}
 				});
 	}
@@ -551,7 +551,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							FileMainViewImpl.this.fileBreadCrumb
 									.initBreadcrumb();
 							FileMainViewImpl.this.fileBreadCrumb
-									.setCurrentBreamCrumbFolder((Folder) FileMainViewImpl.this.resourceService
+									.setCurrentBreadCrumbFolder((Folder) FileMainViewImpl.this.resourceService
 											.getResource(rootPath));
 						} else {
 							FileMainViewImpl.this.getWindow().showNotification(
