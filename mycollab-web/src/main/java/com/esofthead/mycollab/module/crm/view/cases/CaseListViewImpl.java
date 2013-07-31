@@ -123,7 +123,8 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
 		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
+				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
+				.canWrite(RolePermissionCollections.CRM_CASE));
 
 		this.tableActionControls.setVisible(false);
 
@@ -163,6 +164,9 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 		importBtn.setDescription("Import");
 		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
 		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		importBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CASE));
+
 		layout.addComponent(importBtn);
 		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
 

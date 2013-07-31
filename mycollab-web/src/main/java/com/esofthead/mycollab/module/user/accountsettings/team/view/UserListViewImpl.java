@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -25,7 +27,10 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -108,7 +113,12 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
-		this.tableActionControls = new PopupButtonControl("delete", "Delete");
+		final Button deleteBtn = new Button(
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+		deleteBtn.setEnabled(AppContext
+				.canAccess(RolePermissionCollections.USER_USER));
+		
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		this.tableActionControls.addOptionItem("mail", "Mail");
 		this.tableActionControls.addOptionItem("export", "Export");
 
