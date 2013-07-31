@@ -17,7 +17,7 @@ public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
 		super.onGo(container, data);
 
 		view.displayDashboard();
-		AppContext.addFragment("crm/dashboard", "Crm Dashboard");
+		AppContext.addFragment("crm/dashboard", "Customer Dashboard");
 	}
 
 }

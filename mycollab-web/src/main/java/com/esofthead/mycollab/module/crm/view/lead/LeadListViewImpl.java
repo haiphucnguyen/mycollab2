@@ -158,7 +158,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		});
 		importBtn.setDescription("Import");
 		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
-		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		layout.addComponent(importBtn);
 		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
 

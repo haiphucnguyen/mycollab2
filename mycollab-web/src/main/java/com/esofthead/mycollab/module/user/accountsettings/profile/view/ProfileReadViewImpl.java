@@ -72,7 +72,6 @@ public class ProfileReadViewImpl extends AbstractView implements
 				byte[] imageData = (byte[]) this.getValue();
 				String mimeType = this.getLastMimeType();
 				if (mimeType.equals("image/jpeg")) {
-					// convert jpg to png file format
 					imageData = ImageUtil.convertJpgToPngFormat(imageData);
 					if (imageData == null) {
 						throw new MyCollabException(
@@ -94,7 +93,6 @@ public class ProfileReadViewImpl extends AbstractView implements
 		};
 		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
 		avatarUploadField.setWidth("100px");
-		// TODO: set upload maximum file size
 		this.userAvatar.addComponent(avatarUploadField);
 	}
 
@@ -331,6 +329,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 				} else if (propertyId.equals("dateofbirth")) {
 					value = AppContext.formatDate(PreviewForm.this.user
 							.getDateofbirth());
+					return new DefaultFormViewFieldFactory.FormViewField(value);
 				} else if (propertyId.equals("timezone")) {
 					value = TimezoneMapper.getTimezone(
 							PreviewForm.this.user.getTimezone())
