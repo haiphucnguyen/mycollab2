@@ -168,20 +168,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			}
 		});
 
-		HorizontalLayout shareActionLayout = new HorizontalLayout();
-		final Embedded shareIcon = new Embedded();
-		shareIcon.setSource(MyCollabResource
-				.newResource("icons/24/share_icon.png"));
-		shareActionLayout.addComponent(shareIcon);
-		shareActionLayout.setComponentAlignment(shareIcon,
-				Alignment.MIDDLE_CENTER);
-		Button shareBtnLink = new Button("Shared with me");
-		shareBtnLink.addStyleName("link");
-		shareActionLayout.addComponent(shareBtnLink);
-		shareActionLayout.setComponentAlignment(shareBtnLink,
-				Alignment.MIDDLE_CENTER);
-		menuLayout.addComponent(shareActionLayout);
-
 		mainView.addComponent(menuBarContainerHorizontalLayout);
 		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
 				Alignment.TOP_LEFT);
