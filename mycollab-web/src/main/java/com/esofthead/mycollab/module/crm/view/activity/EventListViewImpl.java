@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.TaskI18nEnum;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -23,8 +24,10 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -121,8 +124,15 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
-		this.tableActionControls = new PopupButtonControl("delete",
+		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+		boolean isDeleteEnable = AppContext
+				.canAccess(RolePermissionCollections.CRM_CALL)
+				|| AppContext.canAccess(RolePermissionCollections.CRM_MEETING)
+				|| AppContext.canAccess(RolePermissionCollections.CRM_TASK);
+		deleteBtn.setEnabled(isDeleteEnable);
+
+		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
 		this.tableActionControls.addOptionItem("export",

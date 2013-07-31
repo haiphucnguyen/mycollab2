@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.ui.components.CommentListDepot.CommentDisplay;
@@ -248,7 +249,8 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			this.milestoneInformation = new VerticalLayout();
 			this.milestoneInformation.setMargin(false);
 			final HorizontalLayout actionControls = new ProjectPreviewFormControlsGenerator<Milestone>(
-					this.previewForm).createButtonControls();
+					this.previewForm)
+					.createButtonControls(ProjectRolePermissionCollections.MILESTONES);
 
 			final VerticalLayout marginLayout = new VerticalLayout();
 			marginLayout.setMargin(false);

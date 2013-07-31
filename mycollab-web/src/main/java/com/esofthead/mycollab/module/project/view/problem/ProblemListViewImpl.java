@@ -230,7 +230,9 @@ public class ProblemListViewImpl extends AbstractView implements
 		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		this.tableActionControls.addOptionItem("mail", "Mail");
 		this.tableActionControls.addOptionItem("export", "Export");
-		this.tableActionControls.addOptionItem("massUpdate", "Mass update");
+		this.tableActionControls.addOptionItem("massUpdate", "Mass update",
+				CurrentProjectVariables
+						.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 		this.tableActionControls.setVisible(false);
 
 		layout.addComponent(this.tableActionControls);

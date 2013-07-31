@@ -120,7 +120,9 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
 		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
+				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
+				.canWrite(RolePermissionCollections.CRM_LEAD));
+
 		this.tableActionControls.setVisible(false);
 
 		layout.addComponent(this.tableActionControls);
@@ -159,6 +161,9 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		importBtn.setDescription("Import");
 		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
 		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		importBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_LEAD));
+
 		layout.addComponent(importBtn);
 		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
 

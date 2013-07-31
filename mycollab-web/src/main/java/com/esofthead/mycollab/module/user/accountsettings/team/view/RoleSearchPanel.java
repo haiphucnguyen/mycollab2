@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -64,6 +65,8 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
+		createBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.USER_ROLE));
 
 		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
 
@@ -111,7 +114,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 					RoleBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			// searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			searchComp.addComponent(searchBtn);
 			basicSearchBody.addComponent(searchComp);
 
@@ -126,7 +129,6 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 					});
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			clearBtn.addStyleName("cancel-button");
-			// clearBtn.setWidth("55px");
 			basicSearchBody.addComponent(clearBtn);
 			basicSearchBody.setComponentAlignment(clearBtn,
 					Alignment.MIDDLE_LEFT);
