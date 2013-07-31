@@ -71,15 +71,14 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private static final long serialVersionUID = 1L;
 	private Tree menuTree;
 	private FilterPanel filterPanel;
-	private HorizontalLayout controllGroupBtn;
 	private final ResourceService resourceService;
 	private Folder baseFolder;
 	private String rootPath;
 	private String rootFolderName;
-	private Button selectAllBtn;
 	private List<Resource> lstCheckedResource;
 	private ItemResourceContainerLayout itemResourceContainerLayout;
 	private FileBreadcrumb fileBreadCrumb;
+	private MainBodyResourceLayout bodyResourceLayout;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -192,235 +191,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		mainView.addComponent(separator);
 		mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
 
-		VerticalLayout mainBodyLayout = new VerticalLayout();
-		mainBodyLayout.setSpacing(true);
-		mainBodyLayout.addStyleName("box-no-border-left");
+		// here for MainBodyResourceLayout class
+		bodyResourceLayout = new MainBodyResourceLayout();
 
-		filterPanel = new FilterPanel();
-		mainBodyLayout.addComponent(filterPanel);
-
-		// file bread Crum ---------------------
-		fileBreadCrumb = new FileBreadcrumb();
-		mainBodyLayout.addComponent(fileBreadCrumb);
-
-		// Construct controllGroupBtn
-		controllGroupBtn = new HorizontalLayout();
-		controllGroupBtn.setMargin(true, false, false, true);
-		controllGroupBtn.setSpacing(true);
-
-		selectAllBtn = new Button();
-		selectAllBtn.setIcon(MyCollabResource
-				.newResource("icons/16/checkbox_empty.png"));
-		selectAllBtn.setValue(false);
-
-		selectAllBtn.addListener(new ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (!(Boolean) selectAllBtn.getValue()) {
-					selectAllBtn.setIcon(MyCollabResource
-							.newResource("icons/16/checkbox.png"));
-					selectAllBtn.setValue(true);
-					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
-						for (CheckBox cb : itemResourceContainerLayout
-								.getListAllCheckBox()) {
-							if (!(Boolean) cb.getValue())
-								cb.setValue(true);
-						}
-					}
-				} else {
-					selectAllBtn.setValue(false);
-					selectAllBtn.setIcon(MyCollabResource
-							.newResource("icons/16/checkbox_empty.png"));
-					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
-						for (CheckBox cb : itemResourceContainerLayout
-								.getListAllCheckBox()) {
-							if ((Boolean) cb.getValue())
-								cb.setValue(false);
-						}
-					}
-				}
-			}
-		});
-		PopupButtonControl tableActionControls = new PopupButtonControl(
-				"selectAll", selectAllBtn);
-		tableActionControls.setWidth("70px");
-		UiUtils.addComponent(controllGroupBtn, tableActionControls,
-				Alignment.MIDDLE_LEFT);
-
-		Button goUpBtn = new Button();
-		goUpBtn.setIcon(new ThemeResource("icons/16/ecm/up_to_root.png"));
-		goUpBtn.addListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (!FileMainViewImpl.this.baseFolder.getPath().equals(
-						FileMainViewImpl.this.rootPath)) {
-					Folder parentFolder = resourceService
-							.getParentFolder(FileMainViewImpl.this.baseFolder
-									.getPath());
-					FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
-					itemResourceContainerLayout.constructBody(parentFolder);
-					FileMainViewImpl.this.baseFolder = parentFolder;
-					FileMainViewImpl.this.fileBreadCrumb
-							.gotoFolder(FileMainViewImpl.this.baseFolder);
-				}
-			}
-		});
-		goUpBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, goUpBtn, Alignment.MIDDLE_LEFT);
-
-		Button createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				AddNewFolderWindow addnewFolderWindow = new AddNewFolderWindow();
-				FileMainViewImpl.this.getWindow().addWindow(addnewFolderWindow);
-			}
-		});
-		createBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, createBtn, Alignment.MIDDLE_LEFT);
-
-		Button uploadBtn = new Button("Upload", new ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
-				FileMainViewImpl.this.getWindow().addWindow(multiUploadWindow);
-			}
-		});
-		uploadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, uploadBtn, Alignment.MIDDLE_LEFT);
-
-		Button downloadBtn = new Button("Download", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (lstCheckedResource != null && lstCheckedResource.size() > 0) {
-					List<String> lstPath = new ArrayList<String>();
-					for (Resource res : lstCheckedResource) {
-						lstPath.add(res.getPath());
-					}
-
-					final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-							.getStreamFolderResource(lstPath
-									.toArray(new String[lstPath.size()]));
-
-					AppContext.getApplication().getMainWindow()
-							.open(downloadResource, "_blank");
-				}
-			}
-		});
-		downloadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, downloadBtn,
-				Alignment.MIDDLE_LEFT);
-
-		Button moveToBtn = new Button("Move to", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-						lstCheckedResource,
-						FileMainViewImpl.this.resourceService);
-				FileMainViewImpl.this.getWindow().addWindow(moveResourceWindow);
-			}
-		});
-		moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, moveToBtn, Alignment.MIDDLE_LEFT);
-
-		Button deleteBtn = new Button(
-				LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						ConfirmDialogExt.show(
-								FileMainViewImpl.this.getWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
-												ApplicationProperties
-														.getString(ApplicationProperties.SITE_NAME)),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void onClose(
-											final ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											if (lstCheckedResource != null
-													&& lstCheckedResource
-															.size() > 0) {
-												for (Resource res : lstCheckedResource) {
-													FileMainViewImpl.this.resourceService
-															.removeResource(res
-																	.getPath());
-													if (res instanceof Folder) {
-														FileMainViewImpl.this.menuTree
-																.removeItem((Folder) res);
-													}
-												}
-												if (!fileBreadCrumb
-														.getCurrentBreadCrumbFolder()
-														.getPath()
-														.equals(baseFolder
-																.getPath())) {
-													itemResourceContainerLayout
-															.constructBody((Folder) resourceService
-																	.getResource(rootPath));
-												} else {
-													itemResourceContainerLayout
-															.constructBody(baseFolder);
-												}
-												FileMainViewImpl.this.menuTree
-														.collapseItem(FileMainViewImpl.this.baseFolder);
-												FileMainViewImpl.this.menuTree
-														.expandItem(FileMainViewImpl.this.baseFolder);
-												FileMainViewImpl.this
-														.getWindow()
-														.showNotification(
-																"Delete successfully.");
-												FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
-											}
-										}
-									}
-								});
-					}
-				});
-		deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-		UiUtils.addComponent(controllGroupBtn, deleteBtn, Alignment.MIDDLE_LEFT);
-
-		mainBodyLayout.addComponent(controllGroupBtn);
-
-		this.rootPath = String
-				.format("%d/Documents", AppContext.getAccountId());
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(rootPath);
-
-		itemResourceContainerLayout = new ItemResourceContainerLayout(
-				FileMainViewImpl.this.baseFolder, resourceService);
-		itemResourceContainerLayout.setWidth("100%");
-
-		mainBodyLayout.addComponent(itemResourceContainerLayout);
-
-		mainView.addComponent(mainBodyLayout);
-		mainView.setComponentAlignment(mainBodyLayout, Alignment.TOP_LEFT);
-
-		mainView.setExpandRatio(mainBodyLayout, 1.0f);
+		mainView.addComponent(bodyResourceLayout);
+		mainView.setComponentAlignment(bodyResourceLayout, Alignment.TOP_LEFT);
+		mainView.setExpandRatio(bodyResourceLayout, 1.0f);
 
 		this.addComponent(mainView);
 		this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
@@ -797,14 +573,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			renameBtn.addStyleName("link");
 			filterBtnLayout.addComponent(renameBtn);
 
-			// ----------------Is need or
-			// not--------------------------------------
 			final Button downloadBtn = new Button("Download",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+									.getStreamFolderResource(new String[] { res
+											.getPath() });
+
+							AppContext.getApplication().getMainWindow()
+									.open(downloadResource, "_blank");
 						}
 					});
 			downloadBtn.addStyleName("link");
@@ -816,6 +596,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+									res, FileMainViewImpl.this.resourceService);
+							FileMainViewImpl.this.getWindow().addWindow(
+									moveResourceWindow);
 						}
 					});
 			moveBtn.addStyleName("link");
@@ -827,6 +611,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							lstCheckedResource.clear();
+							lstCheckedResource.add(res);
+
+							bodyResourceLayout.deleteResourceAction();
+							lstCheckedResource.clear();
 						}
 					});
 			deleteBtn.addStyleName("link");
@@ -943,6 +732,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					break;
 				}
 			}
+			if ((Boolean) bodyResourceLayout.selectAllBtn.getValue())
+				bodyResourceLayout.selectAllBtn.click();
 		}
 
 		@Override
@@ -1267,5 +1058,251 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					controlsLayout, Alignment.MIDDLE_CENTER);
 		}
 
+	}
+
+	private class MainBodyResourceLayout extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
+		private HorizontalLayout controllGroupBtn;
+		private Button deleteBtn;
+		private Button selectAllBtn;
+
+		public MainBodyResourceLayout() {
+			VerticalLayout mainBodyLayout = new VerticalLayout();
+			mainBodyLayout.setSpacing(true);
+			mainBodyLayout.addStyleName("box-no-border-left");
+
+			filterPanel = new FilterPanel();
+			mainBodyLayout.addComponent(filterPanel);
+
+			// file bread Crum ---------------------
+			fileBreadCrumb = new FileBreadcrumb();
+			mainBodyLayout.addComponent(fileBreadCrumb);
+
+			// Construct controllGroupBtn
+			controllGroupBtn = new HorizontalLayout();
+			controllGroupBtn.setMargin(true, false, false, true);
+			controllGroupBtn.setSpacing(true);
+
+			selectAllBtn = new Button();
+			selectAllBtn.setIcon(MyCollabResource
+					.newResource("icons/16/checkbox_empty.png"));
+			selectAllBtn.setValue(false);
+			selectAllBtn.setImmediate(true);
+
+			selectAllBtn.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					if (!(Boolean) selectAllBtn.getValue()) {
+						selectAllBtn.setIcon(MyCollabResource
+								.newResource("icons/16/checkbox.png"));
+						selectAllBtn.setValue(true);
+						if (itemResourceContainerLayout.getListAllCheckBox() != null) {
+							for (CheckBox cb : itemResourceContainerLayout
+									.getListAllCheckBox()) {
+								if (!(Boolean) cb.getValue())
+									cb.setValue(true);
+							}
+						}
+					} else {
+						selectAllBtn.setValue(false);
+						selectAllBtn.setIcon(MyCollabResource
+								.newResource("icons/16/checkbox_empty.png"));
+						if (itemResourceContainerLayout.getListAllCheckBox() != null) {
+							for (CheckBox cb : itemResourceContainerLayout
+									.getListAllCheckBox()) {
+								if ((Boolean) cb.getValue())
+									cb.setValue(false);
+							}
+						}
+					}
+				}
+			});
+			PopupButtonControl tableActionControls = new PopupButtonControl(
+					"selectAll", selectAllBtn);
+			tableActionControls.setWidth("70px");
+			UiUtils.addComponent(controllGroupBtn, tableActionControls,
+					Alignment.MIDDLE_LEFT);
+
+			Button goUpBtn = new Button();
+			goUpBtn.setIcon(new ThemeResource("icons/16/ecm/up_to_root.png"));
+			goUpBtn.addListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					if (!FileMainViewImpl.this.baseFolder.getPath().equals(
+							FileMainViewImpl.this.rootPath)) {
+						Folder parentFolder = resourceService
+								.getParentFolder(FileMainViewImpl.this.baseFolder
+										.getPath());
+						FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+						itemResourceContainerLayout.constructBody(parentFolder);
+						FileMainViewImpl.this.baseFolder = parentFolder;
+						FileMainViewImpl.this.fileBreadCrumb
+								.gotoFolder(FileMainViewImpl.this.baseFolder);
+					}
+				}
+			});
+			goUpBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			UiUtils.addComponent(controllGroupBtn, goUpBtn,
+					Alignment.MIDDLE_LEFT);
+
+			Button createBtn = new Button("Create", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					AddNewFolderWindow addnewFolderWindow = new AddNewFolderWindow();
+					FileMainViewImpl.this.getWindow().addWindow(
+							addnewFolderWindow);
+				}
+			});
+			createBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			UiUtils.addComponent(controllGroupBtn, createBtn,
+					Alignment.MIDDLE_LEFT);
+
+			Button uploadBtn = new Button("Upload", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
+					FileMainViewImpl.this.getWindow().addWindow(
+							multiUploadWindow);
+				}
+			});
+			uploadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			UiUtils.addComponent(controllGroupBtn, uploadBtn,
+					Alignment.MIDDLE_LEFT);
+
+			Button downloadBtn = new Button("Download",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							if (lstCheckedResource != null
+									&& lstCheckedResource.size() > 0) {
+								List<String> lstPath = new ArrayList<String>();
+								for (Resource res : lstCheckedResource) {
+									lstPath.add(res.getPath());
+								}
+
+								final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+										.getStreamFolderResource(lstPath
+												.toArray(new String[lstPath
+														.size()]));
+
+								AppContext.getApplication().getMainWindow()
+										.open(downloadResource, "_blank");
+							}
+						}
+					});
+			downloadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			UiUtils.addComponent(controllGroupBtn, downloadBtn,
+					Alignment.MIDDLE_LEFT);
+
+			Button moveToBtn = new Button("Move to",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+									lstCheckedResource,
+									FileMainViewImpl.this.resourceService);
+							FileMainViewImpl.this.getWindow().addWindow(
+									moveResourceWindow);
+						}
+					});
+			moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			UiUtils.addComponent(controllGroupBtn, moveToBtn,
+					Alignment.MIDDLE_LEFT);
+
+			deleteBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							ConfirmDialogExt.show(
+									FileMainViewImpl.this.getWindow(),
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.DELETE_DIALOG_TITLE,
+													ApplicationProperties
+															.getString(ApplicationProperties.SITE_NAME)),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+									new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
+
+										@Override
+										public void onClose(
+												final ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												deleteResourceAction();
+											}
+										}
+									});
+						}
+					});
+			deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			deleteBtn.setImmediate(true);
+			UiUtils.addComponent(controllGroupBtn, deleteBtn,
+					Alignment.MIDDLE_LEFT);
+
+			mainBodyLayout.addComponent(controllGroupBtn);
+
+			FileMainViewImpl.this.rootPath = String.format("%d/Documents",
+					AppContext.getAccountId());
+			FileMainViewImpl.this.baseFolder = new Folder();
+			FileMainViewImpl.this.baseFolder.setPath(rootPath);
+
+			itemResourceContainerLayout = new ItemResourceContainerLayout(
+					FileMainViewImpl.this.baseFolder, resourceService);
+			itemResourceContainerLayout.setWidth("100%");
+
+			mainBodyLayout.addComponent(itemResourceContainerLayout);
+			this.addComponent(mainBodyLayout);
+		}
+
+		protected void deleteResourceAction() {
+			if (lstCheckedResource != null && lstCheckedResource.size() > 0) {
+				for (Resource res : lstCheckedResource) {
+					FileMainViewImpl.this.resourceService.removeResource(res
+							.getPath());
+					if (res instanceof Folder) {
+						FileMainViewImpl.this.menuTree.removeItem((Folder) res);
+					}
+				}
+				if (!fileBreadCrumb.getCurrentBreadCrumbFolder().getPath()
+						.equals(baseFolder.getPath())) {
+					itemResourceContainerLayout
+							.constructBody((Folder) resourceService
+									.getResource(rootPath));
+				} else {
+					itemResourceContainerLayout.constructBody(baseFolder);
+				}
+				if ((Boolean) selectAllBtn.getValue())
+					selectAllBtn.click();
+
+				FileMainViewImpl.this.menuTree
+						.collapseItem(FileMainViewImpl.this.baseFolder);
+				FileMainViewImpl.this.menuTree
+						.expandItem(FileMainViewImpl.this.baseFolder);
+				FileMainViewImpl.this.getWindow().showNotification(
+						"Delete successfully.");
+				FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+			}
+		}
 	}
 }
