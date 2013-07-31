@@ -81,7 +81,7 @@ public class ProblemUrlResolver extends UrlResolver {
 
 			ProblemService problemService = AppContext
 					.getSpringBean(ProblemService.class);
-			SimpleProblem problem = problemService.findProblemById(problemId);
+			SimpleProblem problem = problemService.findById(problemId);
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new ProblemScreenData.Edit(problem));

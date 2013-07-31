@@ -11,5 +11,5 @@ public interface ProjectRoleService extends
 
 	void savePermission(int projectId, int roleId, PermissionMap permissionMap);
 
-	SimpleProjectRole findRoleById(int roleId);
+	SimpleProjectRole findById(int roleId);
 }

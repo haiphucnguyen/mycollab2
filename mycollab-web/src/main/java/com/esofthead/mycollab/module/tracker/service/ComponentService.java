@@ -8,5 +8,5 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCrit
 public interface ComponentService extends
         IDefaultService<Integer, Component, ComponentSearchCriteria> {
 
-    SimpleComponent findComponentById(int componentId);
+    SimpleComponent findById(int componentId);
 }

@@ -83,7 +83,7 @@ public class OpportunitySelectionField extends FieldWrapper<Opportunity>
 					OpportunityService opportunityService = AppContext
 							.getSpringBean(OpportunityService.class);
 					SimpleOpportunity opportunity = opportunityService
-							.findOpportunityById(opportunityId);
+							.findById(opportunityId);
 					if (opportunity != null) {
 						opportunityName.setValue(opportunity
 								.getOpportunityname());

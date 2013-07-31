@@ -296,7 +296,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
 				SimpleAccount account = accountService
-						.findAccountById((Integer) data.getParams());
+						.findById((Integer) data.getParams());
 				if (account != null) {
 					super.onGo(container, data);
 					view.previewItem((SimpleAccount) account);

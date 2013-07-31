@@ -142,7 +142,7 @@ public class ProjectRoleReadPresenter extends
 			ProjectRoleService projectRoleService = AppContext
 					.getSpringBean(ProjectRoleService.class);
 			SimpleProjectRole role = projectRoleService
-					.findRoleById((Integer) data.getParams());
+					.findById((Integer) data.getParams());
 			if (role == null) {
 				AppContext
 						.getApplication()

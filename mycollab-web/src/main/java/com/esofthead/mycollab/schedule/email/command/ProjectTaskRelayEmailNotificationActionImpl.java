@@ -36,7 +36,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int taskId = emailNotification.getTypeid();
-		SimpleTask task = projectTaskService.findTaskById(taskId);
+		SimpleTask task = projectTaskService.findById(taskId);
 
 		String subject = StringUtils.subString(task.getTaskname(), 150);
 
@@ -69,7 +69,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int taskId = emailNotification.getTypeid();
-		SimpleTask task = projectTaskService.findTaskById(taskId);
+		SimpleTask task = projectTaskService.findById(taskId);
 		if (task == null) {
 			return null;
 		}
@@ -97,7 +97,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int taskId = emailNotification.getTypeid();
-		SimpleTask task = projectTaskService.findTaskById(taskId);
+		SimpleTask task = projectTaskService.findById(taskId);
 		if (task == null) {
 			return null;
 		}

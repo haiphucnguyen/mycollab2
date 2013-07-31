@@ -41,7 +41,7 @@ public class ProblemServiceImpl extends DefaultService<Integer, Problem, Problem
     }
 
     @Override
-    public SimpleProblem findProblemById(Integer problemId) {
+    public SimpleProblem findById(Integer problemId) {
         return problemMapperExt.findProblemById(problemId);
     }
 }

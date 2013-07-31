@@ -158,7 +158,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 			if (data.getParams() instanceof Integer) {
 				RiskService riskService = AppContext
 						.getSpringBean(RiskService.class);
-				SimpleRisk risk = riskService.findRiskById((Integer) data
+				SimpleRisk risk = riskService.findById((Integer) data
 						.getParams());
 				if (risk != null) {
 					RiskContainer riskContainer = (RiskContainer) container;

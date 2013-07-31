@@ -66,7 +66,7 @@ public class AccountServiceImpl extends
 	}
 
 	@Override
-	public SimpleAccount findAccountById(int accountId) {
+	public SimpleAccount findById(int accountId) {
 		return accountMapperExt.findAccountById(accountId);
 	}
 

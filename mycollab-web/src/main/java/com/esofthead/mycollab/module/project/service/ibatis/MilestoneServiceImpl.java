@@ -49,7 +49,7 @@ public class MilestoneServiceImpl extends DefaultService<Integer, Milestone, Mil
     }
 
     @Override
-    public SimpleMilestone findMilestoneById(int milestoneId) {
+    public SimpleMilestone findById(int milestoneId) {
         return milestoneMapperExt.findMilestoneById(milestoneId);
     }
 }

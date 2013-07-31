@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 public interface OpportunityService extends
         IDefaultService<Integer, Opportunity, OpportunitySearchCriteria> {
 
-    SimpleOpportunity findOpportunityById(int opportunityId);
+    SimpleOpportunity findById(int opportunityId);
     
     List<GroupItem> getSalesStageSummary(OpportunitySearchCriteria criteria);
     

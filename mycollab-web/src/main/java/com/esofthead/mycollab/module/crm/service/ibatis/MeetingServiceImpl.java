@@ -35,7 +35,7 @@ public class MeetingServiceImpl extends DefaultService<Integer, Meeting, Meeting
     }
 
     @Override
-    public SimpleMeeting findMeetingById(int meetingId) {
+    public SimpleMeeting findById(int meetingId) {
         return meetingMapperExt.findMeetingById(meetingId);
     }
 

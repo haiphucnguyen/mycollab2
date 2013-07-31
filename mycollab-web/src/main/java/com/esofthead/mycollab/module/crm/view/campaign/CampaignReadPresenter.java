@@ -323,7 +323,7 @@ public class CampaignReadPresenter extends
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
 				SimpleCampaign campaign = campaignService
-						.findCampaignById((Integer) data.getParams());
+						.findById((Integer) data.getParams());
 				if (campaign != null) {
 					super.onGo(container, data);
 					view.previewItem(campaign);

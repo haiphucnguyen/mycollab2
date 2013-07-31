@@ -43,7 +43,7 @@ public class ComponentServiceImpl extends DefaultService<Integer, Component, Com
     }
 
     @Override
-    public SimpleComponent findComponentById(int componentId) {
+    public SimpleComponent findById(int componentId) {
         return componentMapperExt.findComponentById(componentId);
     }
 
