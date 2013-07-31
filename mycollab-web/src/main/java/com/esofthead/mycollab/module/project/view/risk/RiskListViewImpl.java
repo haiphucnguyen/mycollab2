@@ -226,7 +226,9 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		this.tableActionControls.addOptionItem("mail", "Mail");
 		this.tableActionControls.addOptionItem("export", "Export");
-		this.tableActionControls.addOptionItem("massUpdate", "Mass Update");
+		this.tableActionControls.addOptionItem("massUpdate", "Mass Update",
+				CurrentProjectVariables
+						.canWrite(ProjectRolePermissionCollections.RISKS));
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);

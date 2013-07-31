@@ -201,6 +201,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			final boolean canAccess = CurrentProjectVariables
 					.canAccess(permissionItem);
 
+			assignBtn.setEnabled(canWrite);
 			backBtn.setEnabled(canRead);
 			editBtn.setEnabled(canWrite);
 			cloneBtn.setEnabled(canWrite);
