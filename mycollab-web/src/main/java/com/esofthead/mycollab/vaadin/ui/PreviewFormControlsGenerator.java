@@ -16,17 +16,8 @@ public class PreviewFormControlsGenerator<T> {
 	private Button deleteBtn;
 	private Button cloneBtn;
 
-	// private Button previousItem;
-	// private Button nextItemBtn;
-	// private Button historyBtn;
-	// private Button printBtn;
-
 	public PreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
 		this.previewForm = editForm;
-	}
-
-	public HorizontalLayout createButtonControls() {
-		return createButtonControls(null);
 	}
 
 	public HorizontalLayout createButtonControls(String permissionItem) {
@@ -118,8 +109,6 @@ public class PreviewFormControlsGenerator<T> {
 			editBtn.setEnabled(canWrite);
 			cloneBtn.setEnabled(canWrite);
 			deleteBtn.setEnabled(canAccess);
-			// printBtn.setEnabled(canRead);
-			// historyBtn.setEnabled(canRead);
 		}
 		return layout;
 	}
