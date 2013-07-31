@@ -80,8 +80,6 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 				addressLayout.addComponent(field, "Other Postal Code", 1, 3);
 			} else if (propertyId.equals("othercountry")) {
 				addressLayout.addComponent(field, "Other Country", 1, 4);
-			} else if (propertyId.equals("id") && !isReadMode) {
-				addressLayout.addComponent(field, "Copy Other Address", 0, 5);
 			} else if (propertyId.equals("description")) {
 				descriptionLayout.addComponent(field, "Description", 0, 0, 2,
 						"100%", Alignment.TOP_LEFT);

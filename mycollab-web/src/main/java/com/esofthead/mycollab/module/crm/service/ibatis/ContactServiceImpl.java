@@ -71,14 +71,14 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
-	public SimpleContact findContactById(int contactId) {
+	public SimpleContact findById(int contactId) {
 		SimpleContact contact = contactMapperExt.findContactById(contactId);
 		return contact;
 	}
 
 	@Override
 	public SimpleContact findByPrimaryKey(Integer primaryKey) {
-		return findContactById(primaryKey);
+		return findById(primaryKey);
 	}
 
 	@Override

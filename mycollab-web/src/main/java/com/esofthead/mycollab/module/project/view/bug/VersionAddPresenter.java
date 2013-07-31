@@ -79,8 +79,8 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.VERSIONS)) {
-			BugContainer bugContainer = (BugContainer) container;
-			bugContainer.addComponent(view.getWidget());
+			VersionContainer versionContainer = (VersionContainer) container;
+			versionContainer.addComponent(view.getWidget());
 
 			Version version = (Version) data.getParams();
 			view.editItem(version);
@@ -93,8 +93,8 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 				breadcrumb.gotoVersionEdit(version);
 			}
 		} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
+			MessageConstants.showMessagePermissionAlert();
+		}
 	}
 
 }

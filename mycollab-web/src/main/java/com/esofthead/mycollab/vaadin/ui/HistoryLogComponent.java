@@ -182,9 +182,6 @@ public class HistoryLogComponent extends VerticalLayout {
 		}
 	}
 
-	/**
-     *
-     */
 	private static class FieldDisplayHandler {
 
 		private String displayName;
@@ -203,32 +200,16 @@ public class HistoryLogComponent extends VerticalLayout {
 			return displayName;
 		}
 
-		@SuppressWarnings("unused")
-		public void setDisplayName(String displayName) {
-			this.displayName = displayName;
-		}
-
 		public HistoryFieldFormat getFormat() {
 			return format;
 		}
-
-		@SuppressWarnings("unused")
-		public void setFormat(HistoryFieldFormat format) {
-			this.format = format;
-		}
 	}
 
-	/**
-     *
-     */
 	public static interface HistoryFieldFormat {
 
 		Component formatField(String value);
 	}
 
-	/**
-     *
-     */
 	public static class DefaultHistoryFieldFormat implements HistoryFieldFormat {
 
 		@Override

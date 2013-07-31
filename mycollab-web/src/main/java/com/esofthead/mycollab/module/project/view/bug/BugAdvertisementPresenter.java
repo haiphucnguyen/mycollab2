@@ -14,9 +14,9 @@ public class BugAdvertisementPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		BugContainer bugContainer = (BugContainer) container;
-		bugContainer.removeAllComponents();
-		bugContainer.addComponent(view.getWidget());
+		TrackerContainer trackerContainer = (TrackerContainer) container;
+		trackerContainer.removeAllComponents();
+		trackerContainer.addComponent(view.getWidget());
 	}
 
 }

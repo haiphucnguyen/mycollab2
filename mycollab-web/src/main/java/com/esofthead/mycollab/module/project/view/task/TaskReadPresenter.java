@@ -186,7 +186,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 			if (data.getParams() instanceof Integer) {
 				final ProjectTaskService taskService = AppContext
 						.getSpringBean(ProjectTaskService.class);
-				final SimpleTask task = taskService.findTaskById((Integer) data
+				final SimpleTask task = taskService.findById((Integer) data
 						.getParams());
 				this.view.previewItem(task);
 

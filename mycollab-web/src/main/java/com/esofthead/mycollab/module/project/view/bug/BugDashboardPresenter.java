@@ -16,9 +16,8 @@ public class BugDashboardPresenter extends AbstractPresenter<BugDashboardView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		BugContainer bugContainer = (BugContainer) container;
-		bugContainer.removeAllComponents();
-		bugContainer.addComponent(view.getWidget());
+		TrackerContainer trackerContainer = (TrackerContainer) container;
+		trackerContainer.gotoSubView("Dashboard");
 
 		view.displayDashboard();
 

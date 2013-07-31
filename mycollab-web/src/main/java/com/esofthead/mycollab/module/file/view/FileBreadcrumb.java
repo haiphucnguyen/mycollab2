@@ -29,6 +29,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 	private List<SearchHandler<FileSearchCriteria>> handers;
+	private Folder currentBreadCrumbFolder;
 
 	public FileBreadcrumb() {
 		this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
@@ -77,8 +78,11 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 
 	public void gotoFolder(final Folder folder) {
 		initBreadcrumb();
+		currentBreadCrumbFolder = folder;
 		final String[] path = folder.getPath().split("/");
 		final StringBuffer curPath = new StringBuffer("");
+		boolean isNeedAdd3dot = (path.length > 6) ? true : false;
+		int holder = 0;
 		for (int i = 0; i < path.length; i++) {
 			String pathName = path[i];
 			if (i == 0)
@@ -88,10 +92,14 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 
 			if (!pathName.equals(AppContext.getAccountId().toString())) {
 				final Button btn = new Button();
-				if (pathName.equals("Documents")) {
-					btn.setCaption("My Documents");
-				} else
-					btn.setCaption(pathName);
+				if (!pathName.equals("Documents")) {
+					if (pathName.length() > 25) {
+						btn.setCaption(pathName.substring(0, 20) + "...");
+					} else {
+						btn.setCaption(pathName);
+					}
+					btn.setDescription(pathName);
+				}
 				final String currentResourcePath = curPath.toString();
 				btn.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -106,10 +114,28 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 					}
 				});
 				if (i > 1) {
-					this.select(i - 1);
-					this.addLink(btn);
-					this.setLinkEnabled(true, i);
-					// FileLinkBuilder.addLink(pathName);
+					if (path.length <= 6) {
+						this.select(i - 1);
+						this.addLink(btn);
+						this.setLinkEnabled(true, i);
+					} else if (i == path.length - 1 || i == path.length - 2) {
+						this.select(holder - 1);
+						this.addLink(btn);
+						this.setLinkEnabled(true, holder);
+						holder++;
+					} else {
+						if (i > 2 && i < path.length - 2 && isNeedAdd3dot) {
+							this.select(i - 1);
+							this.addLink(new Button("..."));
+							this.setLinkEnabled(true, i);
+							isNeedAdd3dot = false;
+							holder = i + 1;
+						} else if (i <= 2) {
+							this.select(i - 1);
+							this.addLink(btn);
+							this.setLinkEnabled(true, i);
+						}
+					}
 				}
 			}
 		}
@@ -146,6 +172,14 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 	public void addViewListener(
 			ApplicationEventListener<? extends ApplicationEvent> listener) {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public Folder getCurrentBreadCrumbFolder() {
+		return currentBreadCrumbFolder;
+	}
+
+	public void setCurrentBreadCrumbFolder(Folder currentBreamCrumbFolder) {
+		this.currentBreadCrumbFolder = currentBreamCrumbFolder;
 	}
 
 	public static class FileLinkBuilder {

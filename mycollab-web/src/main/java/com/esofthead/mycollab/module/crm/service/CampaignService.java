@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 public interface CampaignService extends
         IDefaultService<Integer, CampaignWithBLOBs, CampaignSearchCriteria> {
 
-    SimpleCampaign findCampaignById(int campaignId);
+    SimpleCampaign findById(int campaignId);
 
     void saveCampaignAccountRelationship(List<CampaignAccount> associateAccounts);
 

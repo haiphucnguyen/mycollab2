@@ -47,7 +47,7 @@ public class CaseEditFormFieldFactory extends DefaultEditFormFieldFactory{
                 AccountService accountService = AppContext
                         .getSpringBean(AccountService.class);
                 SimpleAccount account = accountService
-                        .findAccountById(cases.getAccountid());
+                        .findById(cases.getAccountid());
                 if (account != null) {
                     accountField.setAccount(account);
                 }

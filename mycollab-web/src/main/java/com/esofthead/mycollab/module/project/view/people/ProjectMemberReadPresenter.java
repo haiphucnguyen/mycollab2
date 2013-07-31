@@ -172,7 +172,7 @@ public class ProjectMemberReadPresenter extends
 					.getSpringBean(ProjectMemberService.class);
 			SimpleProjectMember prjMember = null;
 			if (data.getParams() instanceof Integer) {
-				prjMember = prjMemberService.findMemberById((Integer) data
+				prjMember = prjMemberService.findById((Integer) data
 						.getParams());
 
 			} else if (data.getParams() instanceof String) {

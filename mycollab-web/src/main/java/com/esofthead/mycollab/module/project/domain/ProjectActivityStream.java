@@ -4,48 +4,30 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
-import com.esofthead.mycollab.common.domain.ActivityStream;
+import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class ProjectActivityStream extends ActivityStream {
+public class ProjectActivityStream extends SimpleActivityStream {
 	private static final long serialVersionUID = 1L;
 	private int projectId;
-    private String projectName;
-    private String createdUserAvatarId;
-    private String createdUserFullName;
+	private String projectName;
 
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public String getCreatedUserAvatarId() {
-		return createdUserAvatarId;
+	public int getProjectId() {
+		return projectId;
 	}
 
-	public void setCreatedUserAvatarId(String createdUserAvatarId) {
-		this.createdUserAvatarId = createdUserAvatarId;
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
-	public String getCreatedUserFullName() {
-        return createdUserFullName;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public void setCreatedUserFullName(String createdUserFullName) {
-        this.createdUserFullName = createdUserFullName;
-    }
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 }

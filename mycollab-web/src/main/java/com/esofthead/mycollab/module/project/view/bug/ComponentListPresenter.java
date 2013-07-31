@@ -36,7 +36,6 @@ import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
@@ -221,12 +220,13 @@ public class ComponentListPresenter extends
 	}
 
 	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+	protected void onGo(com.vaadin.ui.ComponentContainer container,
+			ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
-			BugContainer bugContainer = (BugContainer) container;
-			bugContainer.removeAllComponents();
-			bugContainer.addComponent(view.getWidget());
+			ComponentContainer trackerContainer = (ComponentContainer) container;
+			trackerContainer.removeAllComponents();
+			trackerContainer.addComponent(view.getWidget());
 
 			doSearch((ComponentSearchCriteria) data.getParams());
 

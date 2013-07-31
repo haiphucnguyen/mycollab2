@@ -86,7 +86,7 @@ public class ContactSelectionField extends FieldWrapper<Contact> implements
 					Integer accountId = Integer.parseInt((String) event
 							.getProperty().getValue());
 					SimpleContact contact = accountService
-							.findContactById(accountId);
+							.findById(accountId);
 					if (contact != null) {
 						contactName.setValue(contact.getContactName());
 					}

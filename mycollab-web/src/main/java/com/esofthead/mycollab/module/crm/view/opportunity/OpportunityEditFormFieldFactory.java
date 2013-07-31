@@ -32,7 +32,7 @@ public class OpportunityEditFormFieldFactory extends DefaultEditFormFieldFactory
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
 				SimpleCampaign campaign = campaignService
-						.findCampaignById(opportunity.getCampaignid());
+						.findById(opportunity.getCampaignid());
 				if (campaign != null) {
 					campaignField.setCampaign(campaign);
 				}
@@ -45,7 +45,7 @@ public class OpportunityEditFormFieldFactory extends DefaultEditFormFieldFactory
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
 				SimpleAccount account = accountService
-						.findAccountById(opportunity.getAccountid());
+						.findById(opportunity.getAccountid());
 				if (account != null) {
 					accountField.setAccount(account);
 				}

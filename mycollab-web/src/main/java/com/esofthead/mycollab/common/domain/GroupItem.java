@@ -1,20 +1,23 @@
 package com.esofthead.mycollab.common.domain;
 
-public class GroupItem {
+import java.io.Serializable;
 
-    private String groupid;
-    private String groupname;
-    private int value;
-    private String extraValue;
-    private int countNum;
-    
-    public String getGroupid() {
-        return groupid;
-    }
+public class GroupItem implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private String groupid;
+	private String groupname;
+	private int value;
+	private String extraValue;
+	private int countNum;
 
-    public void setGroupid(String groupid) {
-        this.groupid = groupid;
-    }
+	public String getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
 
 	public int getValue() {
 		return value;
@@ -33,12 +36,12 @@ public class GroupItem {
 	}
 
 	public String getGroupname() {
-        return groupname;
-    }
+		return groupname;
+	}
 
-    public void setGroupname(String groupname) {
-        this.groupname = groupname;
-    }
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
+	}
 
 	public String getExtraValue() {
 		return extraValue;

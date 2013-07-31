@@ -9,18 +9,16 @@ import org.infinispan.manager.EmbeddedCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.cache.mybatis.InfinispanCache;
-
 public class CacheManager {
 	private static Logger log = LoggerFactory.getLogger(CacheManager.class);
 
-	private final static EmbeddedCacheManager CACHE_MANAGER = createCache();
+	private final static EmbeddedCacheManager CACHE_MANAGER = createCache("infinispan1.xml");
 
 	private static String GLOBAL_CACHE = "global";
 
-	private static EmbeddedCacheManager createCache() {
-		InputStream config = InfinispanCache.class
-				.getResourceAsStream("infinispan.xml");
+	public static EmbeddedCacheManager createCache(String configFile) {
+		InputStream config = CacheManager.class.getClassLoader()
+				.getResourceAsStream(configFile);
 		EmbeddedCacheManager manager;
 		if (config != null) {
 			try {
@@ -34,6 +32,7 @@ public class CacheManager {
 			log.debug("Using standard configuration");
 			manager = new DefaultCacheManager();
 		}
+		manager.addListener(new CacheListener());
 		return manager;
 	}
 

@@ -35,7 +35,7 @@ public class UserDeleteListenerImpl implements UserDeleteListener {
 				accountid);
 		ActivityStreamExample ex = new ActivityStreamExample();
 		ActivityStream record = new ActivityStream();
-		record.setCreateduserfullname(user.getDisplayName());
+		record.setCreateduserdisplayname(user.getDisplayName());
 		activityStreamMapper.updateByExampleSelective(record, ex);
 	}
 

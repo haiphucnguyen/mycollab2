@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -194,7 +195,21 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					tf.setRequiredError("Please enter a Summary");
 					return tf;
 				} else if (propertyId.equals("milestoneid")) {
-					return new MilestoneComboBox();
+					final MilestoneComboBox milestoneBox = new MilestoneComboBox();
+					milestoneBox
+							.addListener(new Property.ValueChangeListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void valueChange(
+										Property.ValueChangeEvent event) {
+									String milestoneName = milestoneBox
+											.getItemCaption(milestoneBox
+													.getValue());
+									bug.setMilestoneName(milestoneName);
+								}
+							});
+					return milestoneBox;
 				} else if (propertyId.equals("estimatetime")
 						|| (propertyId.equals("estimateremaintime"))) {
 					return new NumbericTextField();

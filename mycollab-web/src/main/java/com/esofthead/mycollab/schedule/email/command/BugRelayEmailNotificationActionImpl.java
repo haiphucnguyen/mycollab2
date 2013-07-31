@@ -35,16 +35,21 @@ public class BugRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findBugById(bugId);
+		SimpleBug bug = bugService.findById(bugId);
+		if (bug != null) {
+			String subject = StringUtils.subString(bug.getSummary(), 150);
 
-		String subject = StringUtils.subString(bug.getSummary(), 150);
+			TemplateGenerator templateGenerator = new TemplateGenerator(
+					"[$bug.projectname]: Bug \"" + subject + "...\" created",
+					"templates/email/project/bugCreatedNotifier.mt");
+			templateGenerator.putVariable("bug", bug);
+			templateGenerator.putVariable("hyperLinks",
+					constructHyperLinks(bug));
+			return templateGenerator;
+		} else {
+			return null;
+		}
 
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: Bug \"" + subject + "...\" created",
-				"templates/email/project/bugCreatedNotifier.mt");
-		templateGenerator.putVariable("bug", bug);
-		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
-		return templateGenerator;
 	}
 
 	private Map<String, String> constructHyperLinks(SimpleBug bug) {
@@ -70,7 +75,7 @@ public class BugRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findBugById(bugId);
+		SimpleBug bug = bugService.findById(bugId);
 
 		String subject = StringUtils.subString(bug.getSummary(), 150);
 
@@ -94,7 +99,7 @@ public class BugRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findBugById(bugId);
+		SimpleBug bug = bugService.findById(bugId);
 		ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
 				bug.getProjectid());
 		String comment = StringUtils.subString(

@@ -44,7 +44,7 @@ public class TaskUrlResolver extends UrlResolver {
 
 			ProjectTaskService taskService = AppContext
 					.getSpringBean(ProjectTaskService.class);
-			SimpleTask task = taskService.findTaskById(taskId);
+			SimpleTask task = taskService.findById(taskId);
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new TaskScreenData.Edit(task));

@@ -16,5 +16,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCrit
 public interface MilestoneService extends
         IDefaultService<Integer, Milestone, MilestoneSearchCriteria> {
 
-    SimpleMilestone findMilestoneById(int milestoneId);
+    SimpleMilestone findById(int milestoneId);
 }

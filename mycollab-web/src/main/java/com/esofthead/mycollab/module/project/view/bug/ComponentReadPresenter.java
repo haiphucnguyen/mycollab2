@@ -143,11 +143,11 @@ public class ComponentReadPresenter extends
 				ComponentService componentService = AppContext
 						.getSpringBean(ComponentService.class);
 				SimpleComponent component = componentService
-						.findComponentById((Integer) data.getParams());
+						.findById((Integer) data.getParams());
 				if (component != null) {
-					ComponentContainer riskContainer = (ComponentContainer) container;
-					riskContainer.removeAllComponents();
-					riskContainer.addComponent(view.getWidget());
+					ComponentContainer componentContainer = (ComponentContainer) container;
+					componentContainer.removeAllComponents();
+					componentContainer.addComponent(view.getWidget());
 					view.previewItem(component);
 
 					ProjectBreadcrumb breadcrumb = ViewManager

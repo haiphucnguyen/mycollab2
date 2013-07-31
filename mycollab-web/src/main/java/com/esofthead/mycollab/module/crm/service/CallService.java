@@ -7,5 +7,5 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 
 public interface CallService extends IDefaultService<Integer, CallWithBLOBs, CallSearchCriteria> {
 
-    SimpleCall findCallById(int callId);
+    SimpleCall findById(int callId);
 }

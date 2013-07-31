@@ -80,7 +80,7 @@ public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs>
 					CampaignService campaignService = AppContext
 							.getSpringBean(CampaignService.class);
 					SimpleCampaign campaign = campaignService
-							.findCampaignById(campaignId);
+							.findById(campaignId);
 					if (campaign != null) {
 						campaignName.setValue(campaign.getCampaignname());
 					}

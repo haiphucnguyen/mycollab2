@@ -59,8 +59,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.3.0.Final</version>
         </dependency>
-        <!-- <dependency> <groupId>org.vaadin.addons</groupId> <artifactId>buttongroup</artifactId> 
-            <version>1.2</version> </dependency> -->
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>buttongroup</artifactId>

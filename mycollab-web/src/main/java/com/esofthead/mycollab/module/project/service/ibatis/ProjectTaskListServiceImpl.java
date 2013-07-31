@@ -49,7 +49,7 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
     }
 
     @Override
-    public SimpleTaskList findTaskListById(int taskListId) {
+    public SimpleTaskList findById(int taskListId) {
         return projectTaskListMapperExt.findTaskListById(taskListId);
     }
 

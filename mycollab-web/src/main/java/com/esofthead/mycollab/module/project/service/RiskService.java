@@ -7,5 +7,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 
 public interface RiskService extends
 		IDefaultService<Integer, Risk, RiskSearchCriteria> {
-	SimpleRisk findRiskById(int riskId);
+	SimpleRisk findById(int riskId);
 }

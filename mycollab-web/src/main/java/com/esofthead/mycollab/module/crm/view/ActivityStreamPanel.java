@@ -128,11 +128,11 @@ public class ActivityStreamPanel extends Depot {
 						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
 					}
 
-					final String content = LocalizationHelper
+					String content = LocalizationHelper
 							.getMessage(action, UserAvatarControlFactory
 									.getAvatarLink(activityStream
-											.getOwnerAvatarId(), 16),
-									activityStream.getOwnerFullName(),
+											.getCreatedUserAvatarId(), 16),
+									activityStream.getCreatedUserFullName(),
 									LocalizationHelper
 											.getMessage(CrmLocalizationTypeMap
 													.getType(activityStream
@@ -143,6 +143,11 @@ public class ActivityStreamPanel extends Depot {
 											activityStream.getType(),
 											activityStream.getTypeid()),
 									activityStream.getNamefield());
+					if (activityStream.getAssoAuditLog() != null) {
+						content += CrmActivityStreamGenerator
+								.generatorDetailChangeOfActivity(activityStream);
+					}
+
 					final Label activityLink = new Label(content,
 							Label.CONTENT_XHTML);
 					final CssLayout streamWrapper = new CssLayout();

@@ -7,5 +7,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 
 public interface ProjectTaskService extends
 		IDefaultService<Integer, Task, TaskSearchCriteria> {
-	SimpleTask findTaskById(int taskId);
+	SimpleTask findById(int taskId);
 }

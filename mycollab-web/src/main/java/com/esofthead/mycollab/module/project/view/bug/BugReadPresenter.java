@@ -31,8 +31,7 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 			if (data.getParams() instanceof Integer) {
 				BugService bugService = AppContext
 						.getSpringBean(BugService.class);
-				SimpleBug bug = bugService.findBugById((Integer) data
-						.getParams());
+				SimpleBug bug = bugService.findById((Integer) data.getParams());
 				if (bug != null) {
 					BugContainer bugContainer = (BugContainer) container;
 					bugContainer.removeAllComponents();

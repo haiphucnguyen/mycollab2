@@ -150,7 +150,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 			if (data.getParams() instanceof Integer) {
 				CallService callService = AppContext
 						.getSpringBean(CallService.class);
-				call = callService.findCallById((Integer) data.getParams());
+				call = callService.findById((Integer) data.getParams());
 				if (call == null) {
 					AppContext
 							.getApplication()

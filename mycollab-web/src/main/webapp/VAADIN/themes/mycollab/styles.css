@@ -243,9 +243,9 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 
 .v-button-graybtn,.v-button.v-button-gray.v-disabled:active {
-	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
+	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#b2b2b2;
-	border: 1px solid #093768;
+	border: 1px solid rgb(87, 87, 87);
 	color: #FFFFFF;
 	text-shadow: 1px 1px 0px #1570cd;
 	border-radius: 3px;
@@ -291,9 +291,9 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button-graybtn:hover {
-	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
+	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#b2b2b2;
-	border: 1px solid #093768;
+	border: 1px solid rgb(56, 56, 56);
 }
 
 .v-button-link.medium-text .v-button-caption {
@@ -413,12 +413,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	padding: 0px;
 }
 
-.h-sidebar-menu .v-csslayout-container .v-button-link:active .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-button-link:focus .v-button-wrap
-	{
-	padding: 0px 20px;
-	border-right: 1px solid #8F8F8F;
-}
-
 .h-sidebar-menu .v-csslayout-container .v-button,.h-sidebar-menu .v-csslayout-container .v-button .v-button-wrap
 	{
 	border-radius: 0px;
@@ -443,9 +437,12 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	*display: inline;
 	zoom: 1;
 	position: relative;
-	padding: 0px 20px;
-	border-right: 1px solid #8F8F8F;
+	padding: 0px 18px;
+	border-left: 1px solid #8F8F8F;
 	height: 16px;
+}
+.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap,.v-ie .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.v-ie7 .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:active:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:focus:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap:active {
+	border: none;	
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption
@@ -481,7 +478,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .v-textfield.v-readonly {
-	border: 1px solid gray;
+	border: 1px solid rgb(161, 161, 161);
 }
 
 .v-textfield.noBorderRight {
@@ -500,16 +497,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 #topNavigation {
 	height: 40px;
-	background: #2d95ca;
-	background: -moz-linear-gradient(top, #2d95ca 0, #3daad6 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2d95ca),
-		color-stop(100%, #3daad6));
-	background: -webkit-linear-gradient(top, #2d95ca 0, #3daad6 100%);
-	background: -o-linear-gradient(top, #2d95ca 0, #3daad6 100%);
-	background: -ms-linear-gradient(top, #2d95ca 0, #3daad6 100%);
-	background: linear-gradient(to bottom, #2d95ca 0, #3daad6 100%);
-	filter: progid:  DXImageTransform.Microsoft.gradient(startColorstr=  '#2D95CA',
-		endColorstr=  '#3DAAD6', GradientType=  0);
+	background: none no-repeat 0 0 rgb(87, 87, 87);
 }
 
 #topNavigation .v-button,#topNavigation .v-button .v-button-wrap {
@@ -2662,14 +2650,14 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .v-button.select-bg {
 	height: 24px;
 	width: 22px;
-	background: url('icons/16/select.png') no-repeat center center
-		rgb(201, 201, 201);
+	background: url('icons/16/select.png') no-repeat center center transparent;
 	border-radius: 0px 2px 2px 0px;
 }
 
-.v-button.select-bg .v-button-wrap {
+.v-button.select-bg .v-button-wrap, .v-button.select-bg:active .v-button-wrap {
 	padding: 0px;
 	margin: 0px;
+	border-width: 0px;
 }
 /* End Background has SELECT icon */
 
@@ -3039,7 +3027,7 @@ div.v-lazyloadingwrapper-loading {
 	width: 100%;
 	border-top: 1px solid rgb(143, 143, 143);
 	padding: 6px 0px;
-	background-color: rgb(243, 243, 243);
+	background-color: rgb(56, 56, 56);
 }
 
 .footer-wrapper {
@@ -3049,9 +3037,10 @@ div.v-lazyloadingwrapper-loading {
 
 .footer-left {
 	float: left;
-	text-shadow: 0px 1px 0px rgb(255, 255, 255);
+	text-shadow: 0px 1px 0px #444;
 	padding-top: 4px;
 	padding-left: 5px;
+	color: white;
 }
 
 .footer-right {
@@ -4347,4 +4336,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .v-label>hr {
 	margin: 0px;
+}
+
+/* Multiple Select Comp */
+.v-csslayout.select-bg {
+	background: url("icons/grad-light-top.png") repeat-x 0 1px rgb(218, 218, 218);
 }

@@ -2,8 +2,11 @@
 <infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="urn:infinispan:config:5.3 http://www.infinispan.org/schemas/infinispan-config-5.3.xsd"
     xmlns="urn:infinispan:config:5.3">
+    <global>
+        <globalJmxStatistics enabled="false" allowDuplicateDomains="true"/>
+    </global>
 
-    <namedCache name="xml-configured-cache">
+    <default>
         <eviction strategy="LIRS" maxEntries="20000" />
         <expiration wakeUpInterval="500" lifespan="60000"
             maxIdle="10000" />
@@ -14,6 +17,6 @@
                 </properties>
             </loader>
         </loaders>
-    </namedCache>
+    </default>
 
 </infinispan>

@@ -3,7 +3,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import org.vaadin.hene.splitbutton.SplitButtonExt;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -122,44 +121,6 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		headerTop.addComponent(header);
 		headerWrapper.addComponent(headerTop);
-
-		final ButtonGroup navButton = new ButtonGroup();
-		final Button bugListBtn = new Button("Bugs",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new BugEvent.GotoList(this, null));
-					}
-				});
-
-		navButton.addButton(bugListBtn);
-
-		final Button componentListBtn = new Button("Components",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new BugComponentEvent.GotoList(this, null));
-					}
-				});
-
-		navButton.addButton(componentListBtn);
-
-		final Button versionListBtn = new Button("Versions",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new BugVersionEvent.GotoList(this, null));
-					}
-				});
-
-		navButton.addButton(versionListBtn);
-
-		header.addComponent(navButton);
-		header.setExpandRatio(navButton, 1.0f);
-		header.setComponentAlignment(navButton, Alignment.MIDDLE_CENTER);
 
 		header.addComponent(controlsBtn);
 		header.setExpandRatio(controlsBtn, 1.0f);

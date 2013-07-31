@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
+import com.esofthead.mycollab.common.domain.AuditLogShowHandler;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
@@ -15,6 +16,7 @@ import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
+import com.esofthead.mycollab.module.project.ui.components.ProjectActivityStreamGenerator;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -85,7 +87,8 @@ public class ProjectActivityStreamPagedList
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
 									UserAvatarControlFactory.getAvatarLink(
-											activityStream.getOwnerAvatarId(),
+											activityStream
+													.getCreatedUserAvatarId(),
 											16),
 									ProjectLinkBuilder.WebLinkGenerator
 											.generateProjectMemberFullLink(
@@ -93,7 +96,7 @@ public class ProjectActivityStreamPagedList
 															.getExtratypeid(),
 													activityStream
 															.getCreateduser()),
-									activityStream.getOwnerFullName(),
+									activityStream.getCreatedUserFullName(),
 									LocalizationHelper
 											.getMessage(ProjectLocalizationTypeMap
 													.getType(activityStream
@@ -114,9 +117,10 @@ public class ProjectActivityStreamPagedList
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
 									UserAvatarControlFactory.getAvatarLink(
-											activityStream.getOwnerAvatarId(),
+											activityStream
+													.getCreatedUserAvatarId(),
 											16),
-									activityStream.getOwnerFullName(),
+									activityStream.getCreatedUserFullName(),
 									LocalizationHelper
 											.getMessage(ProjectLocalizationTypeMap
 													.getType(activityStream
@@ -131,8 +135,10 @@ public class ProjectActivityStreamPagedList
 													activityStream.getType(),
 													activityStream.getTypeid()),
 									activityStream.getNamefield());
-
-					
+					if (activityStream.getAssoAuditLog() != null) {
+						content += ProjectActivityStreamGenerator
+								.generatorDetailChangeOfActivity(activityStream);
+					}
 				}
 
 				final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
