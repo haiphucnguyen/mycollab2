@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.StreamResource;
 
 public class StreamFolderDownloadResource implements
@@ -90,13 +91,21 @@ public class StreamFolderDownloadResource implements
 					if (res instanceof Content) {
 						String contentName = res.getName();
 						if (lstFileDownloadName.size() > 0) {
-							if (lstFileDownloadName.indexOf(contentName) == -1) {
-								lstFileDownloadName.add(contentName);
-							} else {
+							if (lstFileDownloadName.indexOf(contentName) != -1) {
 								contentName = resourceService.getParentFolder(
 										res.getPath()).getName()
 										+ "_" + contentName;
+								if (lstFileDownloadName.indexOf(contentName) != -1) {
+									contentName = res
+											.getPath()
+											.replace("/", "_")
+											.substring(
+													AppContext.getAccountId()
+															.toString()
+															.length() + 1);
+								}
 							}
+							lstFileDownloadName.add(contentName);
 						} else {
 							lstFileDownloadName.add(contentName);
 						}
@@ -104,7 +113,9 @@ public class StreamFolderDownloadResource implements
 								.getContentStream(res.getPath());
 						log.debug("Add file entry " + contentName
 								+ " to zip file");
+
 						ZipEntry entry = new ZipEntry(contentName);
+
 						zipOutputStream.putNextEntry(entry);
 						byte[] bytes = new byte[1024];
 						int length = -1;

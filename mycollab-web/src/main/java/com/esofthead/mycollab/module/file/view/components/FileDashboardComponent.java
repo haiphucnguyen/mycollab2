@@ -1222,7 +1222,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 											AbstractMoveWindow.this.baseFolder
 													.getPath());
 							AbstractMoveWindow.this.close();
-							displayAfterMoveSuccess(AbstractMoveWindow.this.baseFolder);
+							displayAfterMoveSuccess(
+									AbstractMoveWindow.this.baseFolder, false);
 							AbstractMoveWindow.this.getWindow()
 									.showNotification(
 											"Move asset(s) successfully.");
@@ -1232,22 +1233,21 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						}
 					} else if (lstResEditting != null
 							&& lstResEditting.size() > 0) {
-						try {
-							for (Resource res : lstResEditting) {
+						boolean checkingFail = false;
+						for (Resource res : lstResEditting) {
+							try {
 								AbstractMoveWindow.this.resourceService.moveResource(
 										res.getPath(),
 										AbstractMoveWindow.this.baseFolder
 												.getPath());
+							} catch (Exception e) {
+								checkingFail = true;
 							}
-							AbstractMoveWindow.this.close();
-							displayAfterMoveSuccess(AbstractMoveWindow.this.baseFolder);
-							AbstractMoveWindow.this.getWindow()
-									.showNotification(
-											"Move asset(s) successfully.");
-						} catch (MyCollabException e) {
-							AbstractMoveWindow.this.getParent().getWindow()
-									.showNotification(e.getMessage());
 						}
+						AbstractMoveWindow.this.close();
+						displayAfterMoveSuccess(
+								AbstractMoveWindow.this.baseFolder,
+								checkingFail);
 					} else {
 						AbstractMoveWindow.this
 								.getParent()
@@ -1276,7 +1276,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			this.addComponent(layout);
 		}
 
-		public abstract void displayAfterMoveSuccess(Folder folder);
+		public abstract void displayAfterMoveSuccess(Folder folder,
+				boolean checking);
 
 		protected abstract void displayFiles();
 	}
@@ -1290,7 +1291,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		}
 
 		@Override
-		public void displayAfterMoveSuccess(Folder folder) {
+		public void displayAfterMoveSuccess(Folder folder, boolean checking) {
 			FileDashboardComponent.this
 					.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
 		}

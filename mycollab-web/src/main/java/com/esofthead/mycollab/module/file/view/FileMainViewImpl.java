@@ -643,10 +643,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			String parentFolderPath = resourceService.getParentFolder(
 					res.getPath()).getPath();
-			StringBuffer parentFolderPathStrBuffer = new StringBuffer(
-					rootFolderName
-							+ parentFolderPath.substring(parentFolderPath
-									.indexOf("/", 2)));
+			StringBuffer parentFolderPathStrBuffer;
+			if (parentFolderPath.equals(rootPath)) {
+				parentFolderPathStrBuffer = new StringBuffer(rootFolderName);
+			} else
+				parentFolderPathStrBuffer = new StringBuffer(rootFolderName
+						+ parentFolderPath.substring(parentFolderPath.indexOf(
+								"/", 2)));
 			if (parentFolderPathStrBuffer.toString().split("/").length > 6) {
 				String[] parentFolderPathArray = parentFolderPath.split("/");
 				parentFolderPathStrBuffer
@@ -706,11 +709,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		@Override
-		public void displayAfterMoveSuccess(Folder folder) {
+		public void displayAfterMoveSuccess(Folder folder, boolean checking) {
 			FileMainViewImpl.this.itemResourceContainerLayout
 					.constructBody(FileMainViewImpl.this.baseFolder);
-			FileMainViewImpl.this.getWindow().showNotification(
-					"Move asset(s) successfully.");
+			if (!checking)
+				FileMainViewImpl.this.getWindow().showNotification(
+						"Move asset(s) successfully.");
+			else
+				FileMainViewImpl.this
+						.getWindow()
+						.showNotification(
+								"Move finish, some items can't move to destination. Please check duplicated file-name and try again.");
 			FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 
 			Container dataSource = FileMainViewImpl.this.menuTree
