@@ -243,9 +243,9 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 
 .v-button-graybtn,.v-button.v-button-gray.v-disabled:active {
-	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
+	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#b2b2b2;
-	border: 1px solid #093768;
+	border: 1px solid rgb(87, 87, 87);
 	color: #FFFFFF;
 	text-shadow: 1px 1px 0px #1570cd;
 	border-radius: 3px;
@@ -291,9 +291,9 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button-graybtn:hover {
-	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
+	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#b2b2b2;
-	border: 1px solid #093768;
+	border: 1px solid rgb(56, 56, 56);
 }
 
 .v-button-link.medium-text .v-button-caption {
@@ -413,12 +413,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	padding: 0px;
 }
 
-.h-sidebar-menu .v-csslayout-container .v-button-link:active .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-button-link:focus .v-button-wrap
-	{
-	padding: 0px 20px;
-	border-right: 1px solid #8F8F8F;
-}
-
 .h-sidebar-menu .v-csslayout-container .v-button,.h-sidebar-menu .v-csslayout-container .v-button .v-button-wrap
 	{
 	border-radius: 0px;
@@ -443,9 +437,12 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	*display: inline;
 	zoom: 1;
 	position: relative;
-	padding: 0px 20px;
-	border-right: 1px solid #8F8F8F;
+	padding: 0px 18px;
+	border-left: 1px solid #8F8F8F;
 	height: 16px;
+}
+.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap,.v-ie .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.v-ie7 .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:active:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:focus:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap:active {
+	border: none;	
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption
