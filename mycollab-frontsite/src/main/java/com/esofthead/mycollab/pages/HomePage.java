@@ -4,9 +4,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import com.esofthead.mycollab.base.BasePage;
+import com.esofthead.mycollab.base.BasePageHome;
 
-public class HomePage extends BasePage {
+public class HomePage extends BasePageHome {
 	private static final long serialVersionUID = 1L;
 
 	public HomePage(final PageParameters parameters) {
