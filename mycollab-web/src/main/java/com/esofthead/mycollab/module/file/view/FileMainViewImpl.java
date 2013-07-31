@@ -1205,14 +1205,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 													.get(0).getPath());
 								} else if (lstCheckedResource.size() > 0) {
 									downloadResource = StreamDownloadResourceFactory
-											.getStreamResource(lstCheckedResource
-													.get(0).getPath());
-
-									// downloadResource =
-									// StreamDownloadResourceFactory
-									// .getStreamFolderResource(lstPath
-									// .toArray(new String[lstPath
-									// .size()]));
+											.getStreamFolderResource(lstPath
+													.toArray(new String[lstPath
+															.size()]));
 								}
 								AppContext.getApplication().getMainWindow()
 										.open(downloadResource, "_blank");
@@ -1270,30 +1265,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										.showNotification(
 												"Please select items to delete");
 							} else {
-								ConfirmDialogExt.show(
-										FileMainViewImpl.this.getWindow(),
-										LocalizationHelper
-												.getMessage(
-														GenericI18Enum.DELETE_DIALOG_TITLE,
-														ApplicationProperties
-																.getString(ApplicationProperties.SITE_NAME)),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
-
-											@Override
-											public void onClose(
-													final ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													deleteResourceAction();
-												}
-											}
-										});
+								deleteResourceAction();
 							}
 						}
 					});
@@ -1318,33 +1290,65 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		protected void deleteResourceAction() {
-			if (lstCheckedResource != null && lstCheckedResource.size() > 0) {
-				for (Resource res : lstCheckedResource) {
-					FileMainViewImpl.this.resourceService.removeResource(res
-							.getPath());
-					if (res instanceof Folder) {
-						FileMainViewImpl.this.menuTree.removeItem((Folder) res);
-					}
-				}
-				if (!fileBreadCrumb.getCurrentBreadCrumbFolder().getPath()
-						.equals(baseFolder.getPath())) {
-					itemResourceContainerLayout
-							.constructBody((Folder) resourceService
-									.getResource(rootPath));
-				} else {
-					itemResourceContainerLayout.constructBody(baseFolder);
-				}
-				if ((Boolean) selectAllBtn.getValue())
-					selectAllBtn.click();
+			ConfirmDialogExt
+					.show(FileMainViewImpl.this.getWindow(),
+							LocalizationHelper
+									.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											ApplicationProperties
+													.getString(ApplicationProperties.SITE_NAME)),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+							new ConfirmDialog.Listener() {
+								private static final long serialVersionUID = 1L;
 
-				FileMainViewImpl.this.menuTree
-						.collapseItem(FileMainViewImpl.this.baseFolder);
-				FileMainViewImpl.this.menuTree
-						.expandItem(FileMainViewImpl.this.baseFolder);
-				FileMainViewImpl.this.getWindow().showNotification(
-						"Delete successfully.");
-				FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
-			}
+								@Override
+								public void onClose(final ConfirmDialog dialog) {
+									if (dialog.isConfirmed()) {
+										if (lstCheckedResource != null
+												&& lstCheckedResource.size() > 0) {
+											for (Resource res : lstCheckedResource) {
+												FileMainViewImpl.this.resourceService
+														.removeResource(res
+																.getPath());
+												if (res instanceof Folder) {
+													FileMainViewImpl.this.menuTree
+															.removeItem((Folder) res);
+												}
+											}
+											if (!fileBreadCrumb
+													.getCurrentBreadCrumbFolder()
+													.getPath()
+													.equals(baseFolder
+															.getPath())) {
+												itemResourceContainerLayout
+														.constructBody((Folder) resourceService
+																.getResource(rootPath));
+											} else {
+												itemResourceContainerLayout
+														.constructBody(baseFolder);
+											}
+											if ((Boolean) selectAllBtn
+													.getValue())
+												selectAllBtn.click();
+
+											FileMainViewImpl.this.menuTree
+													.collapseItem(FileMainViewImpl.this.baseFolder);
+											FileMainViewImpl.this.menuTree
+													.expandItem(FileMainViewImpl.this.baseFolder);
+											FileMainViewImpl.this
+													.getWindow()
+													.showNotification(
+															"Delete successfully.");
+											FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+										}
+									}
+								}
+							});
 		}
 	}
 }
