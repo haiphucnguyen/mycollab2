@@ -27,10 +27,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		this.previewForm = editForm;
 	}
 
-	public HorizontalLayout createButtonControls() {
-		return createButtonControls(null);
-	}
-
 	public HorizontalLayout createButtonControls(final String permissionItem) {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
