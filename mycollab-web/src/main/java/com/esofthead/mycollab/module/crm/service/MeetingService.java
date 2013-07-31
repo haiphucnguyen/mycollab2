@@ -7,5 +7,5 @@ import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 
 public interface MeetingService extends IDefaultService<Integer, Meeting, MeetingSearchCriteria> {
 
-    SimpleMeeting findMeetingById(int meetingId);
+    SimpleMeeting findById(int meetingId);
 }

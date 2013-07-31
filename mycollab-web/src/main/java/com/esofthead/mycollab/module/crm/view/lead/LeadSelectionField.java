@@ -84,7 +84,7 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 							.getProperty().getValue());
 					LeadService leadService = AppContext
 							.getSpringBean(LeadService.class);
-					SimpleLead lead = leadService.findLeadById(leadId);
+					SimpleLead lead = leadService.findById(leadId);
 					if (lead != null) {
 						leadName.setValue(lead.getLeadName());
 					}

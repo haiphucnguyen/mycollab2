@@ -152,7 +152,7 @@ public class AssignmentReadPresenter extends
 			if (data.getParams() instanceof Integer) {
 				TaskService taskService = AppContext
 						.getSpringBean(TaskService.class);
-				task = taskService.findTaskById((Integer) data.getParams());
+				task = taskService.findById((Integer) data.getParams());
 				if (task == null) {
 					AppContext
 							.getApplication()

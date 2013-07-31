@@ -43,7 +43,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 		int projectMemberId = notification.getTypeid();
 
 		SimpleProjectMember member = projectMemberService
-				.findMemberById(projectMemberId);
+				.findById(projectMemberId);
 
 		if (member != null) {
 			String subdomain = projectService.getSubdomainOfProject(member
@@ -89,7 +89,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 			SimpleRelayEmailNotification notification) {
 		int projectId = notification.getTypeid();
 
-		SimpleProject project = projectService.findProjectById(projectId);
+		SimpleProject project = projectService.findById(projectId);
 
 		SimpleUser user = userService.findUserByUserNameInAccount(
 				notification.getChangeby(), AppContext.getAccountId());
@@ -119,7 +119,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 			SimpleRelayEmailNotification notification) {
 		int projectId = notification.getTypeid();
 
-		SimpleProject project = projectService.findProjectById(projectId);
+		SimpleProject project = projectService.findById(projectId);
 
 		SimpleUser user = userService.findUserByUserNameInAccount(
 				notification.getChangeby(), AppContext.getAccountId());

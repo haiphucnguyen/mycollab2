@@ -51,7 +51,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						&& sAccount > 0 && projectAdmin != null
 						&& !projectAdmin.equals("")) {
 					SimpleProjectMember member = projectMemberService
-							.findMemberById(memberId);
+							.findById(memberId);
 					if (member != null
 							&& member.getStatus().equals(
 									ProjectMemberStatusContants.VERIFICATING)) {

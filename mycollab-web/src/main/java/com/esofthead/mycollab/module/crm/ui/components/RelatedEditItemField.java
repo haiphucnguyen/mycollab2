@@ -158,7 +158,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 					AccountService accountService = AppContext
 							.getSpringBean(AccountService.class);
 					SimpleAccount account = accountService
-							.findAccountById(typeid);
+							.findById(typeid);
 					if (account != null) {
 						itemField.setValue(account.getAccountname());
 					}
@@ -166,7 +166,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 					CampaignService campaignService = AppContext
 							.getSpringBean(CampaignService.class);
 					SimpleCampaign campaign = campaignService
-							.findCampaignById(typeid);
+							.findById(typeid);
 					if (campaign != null) {
 						itemField.setValue(campaign.getCampaignname());
 					}
@@ -174,14 +174,14 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 					ContactService contactService = AppContext
 							.getSpringBean(ContactService.class);
 					SimpleContact contact = contactService
-							.findContactById(typeid);
+							.findById(typeid);
 					if (contact != null) {
 						itemField.setValue(contact.getContactName());
 					}
 				} else if ("Lead".equals(type)) {
 					LeadService leadService = AppContext
 							.getSpringBean(LeadService.class);
-					SimpleLead lead = leadService.findLeadById(typeid);
+					SimpleLead lead = leadService.findById(typeid);
 					if (lead != null) {
 						itemField.setValue(lead.getLeadName());
 					}
@@ -189,14 +189,14 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 					OpportunityService opportunityService = AppContext
 							.getSpringBean(OpportunityService.class);
 					SimpleOpportunity opportunity = opportunityService
-							.findOpportunityById(typeid);
+							.findById(typeid);
 					if (opportunity != null) {
 						itemField.setValue(opportunity.getOpportunityname());
 					}
 				} else if ("Case".equals(type)) {
 					CaseService caseService = AppContext
 							.getSpringBean(CaseService.class);
-					SimpleCase cases = caseService.findCaseById(typeid);
+					SimpleCase cases = caseService.findById(typeid);
 					if (cases != null) {
 						itemField.setValue(cases.getSubject());
 					}

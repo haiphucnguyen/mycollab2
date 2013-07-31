@@ -153,7 +153,7 @@ public class TaskGroupReadPresenter extends
 				ProjectTaskListService taskService = AppContext
 						.getSpringBean(ProjectTaskListService.class);
 				SimpleTaskList taskgroup = taskService
-						.findTaskListById((Integer) data.getParams());
+						.findById((Integer) data.getParams());
 				view.previewItem(taskgroup);
 
 				ProjectBreadcrumb breadCrumb = ViewManager

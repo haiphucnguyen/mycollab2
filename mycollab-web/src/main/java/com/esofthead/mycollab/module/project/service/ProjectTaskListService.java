@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
  */
 public interface ProjectTaskListService extends
         IDefaultService<Integer, TaskList, TaskListSearchCriteria> {
-    SimpleTaskList findTaskListById(int taskListId);
+    SimpleTaskList findById(int taskListId);
     
     void updateTaskListIndex(TaskList[] taskLists);
 }

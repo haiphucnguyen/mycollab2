@@ -8,5 +8,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 public interface ProblemService extends
 		IDefaultService<Integer, Problem, ProblemSearchCriteria> {
 
-	SimpleProblem findProblemById(Integer problemId);
+	SimpleProblem findById(Integer problemId);
 }

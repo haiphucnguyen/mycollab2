@@ -43,7 +43,7 @@ public class VersionServiceImpl extends
 	}
 
 	@Override
-	public SimpleVersion findVersionById(int versionId) {
+	public SimpleVersion findById(int versionId) {
 		return versionMapperExt.findVersionById(versionId);
 	}
 }

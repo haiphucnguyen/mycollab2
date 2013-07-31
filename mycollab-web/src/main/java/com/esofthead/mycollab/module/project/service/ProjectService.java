@@ -38,7 +38,7 @@ public interface ProjectService extends
 	List<ProjectActivityStream> getProjectActivityStreams(
 			SearchRequest<ActivityStreamSearchCriteria> searchRequest);
 
-	SimpleProject findProjectById(int projectId);
+	SimpleProject findById(int projectId);
 
 	String getSubdomainOfProject(int projectId);
 

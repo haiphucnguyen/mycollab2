@@ -331,7 +331,7 @@ public class OpportunitySearchPanel extends
                 final AccountService accountService = AppContext
                         .getSpringBean(AccountService.class);
                 final SimpleAccount account = accountService
-                        .findAccountById((Integer) value.getAccountId()
+                        .findById((Integer) value.getAccountId()
                                 .getValue());
                 this.accountField.setAccount(account);
             }

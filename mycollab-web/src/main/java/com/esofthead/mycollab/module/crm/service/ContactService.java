@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 public interface ContactService extends
         IDefaultService<Integer, Contact, ContactSearchCriteria> {
     
-    SimpleContact findContactById(int contactId);
+    SimpleContact findById(int contactId);
     
     void removeContactOpportunityRelationship(ContactOpportunity associateOpportunity);
     

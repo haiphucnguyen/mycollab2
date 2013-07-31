@@ -119,7 +119,7 @@ public class AssignmentAddViewImpl extends AbstractView implements AssignmentAdd
                         ContactService accountService = AppContext
                                 .getSpringBean(ContactService.class);
                         SimpleContact contact = accountService
-                                .findContactById(task.getContactid());
+                                .findById(task.getContactid());
                         if (contact != null) {
                             field.setContact(contact);
                         }

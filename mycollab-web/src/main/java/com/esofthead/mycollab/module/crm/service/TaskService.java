@@ -24,5 +24,5 @@ import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
 
 public interface TaskService extends
 		IDefaultService<Integer, Task, TodoSearchCriteria> {
-	SimpleTask findTaskById(int taskId);
+	SimpleTask findById(int taskId);
 }

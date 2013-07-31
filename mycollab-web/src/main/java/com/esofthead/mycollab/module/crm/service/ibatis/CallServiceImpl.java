@@ -35,7 +35,7 @@ public class CallServiceImpl extends DefaultService<Integer, CallWithBLOBs, Call
     }
 
     @Override
-    public SimpleCall findCallById(int callId) {
+    public SimpleCall findById(int callId) {
         return callMapperExt.findCallById(callId);
     }
 

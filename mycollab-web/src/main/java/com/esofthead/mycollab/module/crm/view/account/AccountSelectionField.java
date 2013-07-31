@@ -82,7 +82,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
                     Integer accountId = Integer.parseInt((String) event
                             .getProperty().getValue());
                     SimpleAccount account = accountService
-                            .findAccountById(accountId);
+                            .findById(accountId);
                     if (account != null) {
                         accountName.setValue(account.getAccountname());
                     }

@@ -7,5 +7,5 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriter
 
 public interface VersionService extends
 		IDefaultService<Integer, Version, VersionSearchCriteria> {
-	SimpleVersion findVersionById(int versionId);
+	SimpleVersion findById(int versionId);
 }

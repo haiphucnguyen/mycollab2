@@ -41,7 +41,7 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
     }
 
     @Override
-    public SimpleRisk findRiskById(int riskId) {
+    public SimpleRisk findById(int riskId) {
         return riskMapperExt.findRiskById(riskId);
     }
 }

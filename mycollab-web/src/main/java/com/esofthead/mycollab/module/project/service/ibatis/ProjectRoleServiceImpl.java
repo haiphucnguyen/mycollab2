@@ -70,7 +70,7 @@ public class ProjectRoleServiceImpl extends
 	}
 
 	@Override
-	public SimpleProjectRole findRoleById(int roleId) {
+	public SimpleProjectRole findById(int roleId) {
 		return roleMapperExt.findRoleById(roleId);
 	}
 }
