@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.file.view.components;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -50,7 +53,9 @@ public class FileDownloadWindow extends Window {
 		final Label author = new Label(this.content.getCreatedBy());
 		info.addComponent(author, "Created by", 0, 1);
 
-		final Label size = new Label(this.content.getSize() + "KB");
+		DecimalFormat df = new DecimalFormat("#");
+		df.setRoundingMode(RoundingMode.HALF_UP);
+		final Label size = new Label(df.format(this.content.getSize()) + "KB");
 		info.addComponent(size, "Size", 0, 2);
 
 		final Label dateCreate = new Label(AppContext.formatDate(this.content
