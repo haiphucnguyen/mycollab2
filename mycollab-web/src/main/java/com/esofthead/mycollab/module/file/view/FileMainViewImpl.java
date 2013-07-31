@@ -381,6 +381,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			}
 			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
 				lstCheckedResource.clear();
+			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
+				listAllCheckBox.clear();
+			}
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 			List<Resource> lstResource = resourceService.getResources(curFolder
@@ -402,6 +405,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			}
 			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
 				lstCheckedResource.clear();
+			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
+				listAllCheckBox.clear();
+			}
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 
@@ -1199,9 +1205,14 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 													.get(0).getPath());
 								} else if (lstCheckedResource.size() > 0) {
 									downloadResource = StreamDownloadResourceFactory
-											.getStreamFolderResource(lstPath
-													.toArray(new String[lstPath
-															.size()]));
+											.getStreamResource(lstCheckedResource
+													.get(0).getPath());
+
+									// downloadResource =
+									// StreamDownloadResourceFactory
+									// .getStreamFolderResource(lstPath
+									// .toArray(new String[lstPath
+									// .size()]));
 								}
 								AppContext.getApplication().getMainWindow()
 										.open(downloadResource, "_blank");
