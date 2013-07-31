@@ -22,12 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.FlushCache;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.AccountLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapperExt;
@@ -41,8 +43,8 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Account", nameField = "accountname")
-@Auditable(module = "Crm", type = "Account")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.ACCOUNT, nameField = "accountname")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.ACCOUNT)
 public class AccountServiceImpl extends
 		DefaultService<Integer, Account, AccountSearchCriteria> implements
 		AccountService {

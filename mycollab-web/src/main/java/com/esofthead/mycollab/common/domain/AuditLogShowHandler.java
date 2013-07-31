@@ -108,7 +108,7 @@ public class AuditLogShowHandler {
 		@Override
 		public String formatField(String value) {
 			if (value != null && !value.trim().equals("")) {
-				return (value.length() > 200) ? (value.substring(0, 200) + "...")
+				return (value.length() > 200) ? (value.substring(0, 150) + "...")
 						: value;
 			} else {
 				return "<Null>";
@@ -126,7 +126,7 @@ public class AuditLogShowHandler {
 						value, formatW3C);
 				return AppContext.formatDate(formatDate);
 			} else {
-				return "<Null>";
+				return "";
 			}
 
 		}
