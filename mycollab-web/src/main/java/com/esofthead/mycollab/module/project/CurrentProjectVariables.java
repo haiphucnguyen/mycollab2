@@ -2,6 +2,9 @@ package com.esofthead.mycollab.module.project;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.dao.ProjectRolePermissionMapper;
@@ -16,6 +19,9 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 public class CurrentProjectVariables {
+	private static Logger log = LoggerFactory
+			.getLogger(CurrentProjectVariables.class);
+
 	public static SimpleProject getProject() {
 		return (SimpleProject) AppContext
 				.getVariable(ProjectContants.CURRENT_PROJECT);
@@ -79,11 +85,17 @@ public class CurrentProjectVariables {
 			return true;
 		}
 
-		PermissionMap permissionMap = getProjectMember().getPermissionMaps();
-		if (permissionMap == null) {
+		try {
+			PermissionMap permissionMap = getProjectMember()
+					.getPermissionMaps();
+			if (permissionMap == null) {
+				return false;
+			} else {
+				return permissionMap.canRead(permissionItem);
+			}
+		} catch (Exception e) {
+			log.error("Error while checking permission", e);
 			return false;
-		} else {
-			return permissionMap.canRead(permissionItem);
 		}
 	}
 
@@ -91,11 +103,18 @@ public class CurrentProjectVariables {
 		if (isAdmin()) {
 			return true;
 		}
-		PermissionMap permissionMap = getProjectMember().getPermissionMaps();
-		if (permissionMap == null) {
+
+		try {
+			PermissionMap permissionMap = getProjectMember()
+					.getPermissionMaps();
+			if (permissionMap == null) {
+				return false;
+			} else {
+				return permissionMap.canWrite(permissionItem);
+			}
+		} catch (Exception e) {
+			log.error("Error while checking permission", e);
 			return false;
-		} else {
-			return permissionMap.canWrite(permissionItem);
 		}
 	}
 
@@ -103,11 +122,18 @@ public class CurrentProjectVariables {
 		if (isAdmin()) {
 			return true;
 		}
-		PermissionMap permissionMap = getProjectMember().getPermissionMaps();
-		if (permissionMap == null) {
+
+		try {
+			PermissionMap permissionMap = getProjectMember()
+					.getPermissionMaps();
+			if (permissionMap == null) {
+				return false;
+			} else {
+				return permissionMap.canAccess(permissionItem);
+			}
+		} catch (Exception e) {
+			log.error("Error while checking permission", e);
 			return false;
-		} else {
-			return permissionMap.canAccess(permissionItem);
 		}
 	}
 
@@ -118,6 +144,6 @@ public class CurrentProjectVariables {
 		} else {
 			return -1;
 		}
-		
+
 	}
 }
