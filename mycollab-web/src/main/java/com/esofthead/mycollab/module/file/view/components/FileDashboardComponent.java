@@ -1248,12 +1248,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						displayAfterMoveSuccess(
 								AbstractMoveWindow.this.baseFolder,
 								checkingFail);
-					} else {
-						AbstractMoveWindow.this
-								.getParent()
-								.getWindow()
-								.showNotification("Please select items to move");
-					}
+					} 
 				}
 
 			});

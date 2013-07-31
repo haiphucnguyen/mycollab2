@@ -379,8 +379,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
-			if (listAllCheckBox != null && listAllCheckBox.size() > 0)
-				listAllCheckBox.clear();
+			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
+				lstCheckedResource.clear();
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 			List<Resource> lstResource = resourceService.getResources(curFolder
@@ -400,8 +400,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
-			if (listAllCheckBox != null && listAllCheckBox.size() > 0)
-				listAllCheckBox.clear();
+			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
+				lstCheckedResource.clear();
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 
@@ -567,10 +567,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-									.getStreamFolderResource(new String[] { res
-											.getPath() });
-
+							final com.vaadin.terminal.Resource downloadResource;
+							if (res instanceof Folder) {
+								downloadResource = StreamDownloadResourceFactory
+										.getStreamFolderResource(new String[] { res
+												.getPath() });
+							} else {
+								downloadResource = StreamDownloadResourceFactory
+										.getStreamResource(res.getPath());
+							}
 							AppContext.getApplication().getMainWindow()
 									.open(downloadResource, "_blank");
 						}
@@ -1186,14 +1191,26 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								for (Resource res : lstCheckedResource) {
 									lstPath.add(res.getPath());
 								}
-
-								final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-										.getStreamFolderResource(lstPath
-												.toArray(new String[lstPath
-														.size()]));
-
+								com.vaadin.terminal.Resource downloadResource = null;
+								if (lstCheckedResource.size() == 1
+										&& lstCheckedResource.get(0) instanceof Content) {
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamResource(lstCheckedResource
+													.get(0).getPath());
+								} else if (lstCheckedResource.size() > 0) {
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamFolderResource(lstPath
+													.toArray(new String[lstPath
+															.size()]));
+								}
 								AppContext.getApplication().getMainWindow()
 										.open(downloadResource, "_blank");
+
+							} else {
+								FileMainViewImpl.this
+										.getWindow()
+										.showNotification(
+												"Please choose items to download.");
 							}
 						}
 					});
@@ -1207,11 +1224,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-									lstCheckedResource,
-									FileMainViewImpl.this.resourceService);
-							FileMainViewImpl.this.getWindow().addWindow(
-									moveResourceWindow);
+							if (lstCheckedResource.size() > 0) {
+								MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+										lstCheckedResource,
+										FileMainViewImpl.this.resourceService);
+								FileMainViewImpl.this.getWindow().addWindow(
+										moveResourceWindow);
+							} else {
+								FileMainViewImpl.this
+										.getParent()
+										.getWindow()
+										.showNotification(
+												"Please select items to move");
+							}
+
 						}
 					});
 			moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -1226,30 +1252,38 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							ConfirmDialogExt.show(
-									FileMainViewImpl.this.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
-													ApplicationProperties
-															.getString(ApplicationProperties.SITE_NAME)),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
+							if (lstCheckedResource.size() == 0) {
+								FileMainViewImpl.this
+										.getParent()
+										.getWindow()
+										.showNotification(
+												"Please select items to delete");
+							} else {
+								ConfirmDialogExt.show(
+										FileMainViewImpl.this.getWindow(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														ApplicationProperties
+																.getString(ApplicationProperties.SITE_NAME)),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-										@Override
-										public void onClose(
-												final ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteResourceAction();
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													deleteResourceAction();
+												}
 											}
-										}
-									});
+										});
+							}
 						}
 					});
 			deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
