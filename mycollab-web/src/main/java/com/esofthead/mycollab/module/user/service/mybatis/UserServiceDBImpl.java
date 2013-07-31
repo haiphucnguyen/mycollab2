@@ -295,7 +295,32 @@ public class UserServiceDBImpl extends
 
 	@Override
 	public void removeUserAccount(String username, int accountId) {
+		// check if current user is the unique account owner, then reject
+		// deletion
 		UserAccountExample userAccountEx = new UserAccountExample();
+		userAccountEx.createCriteria().andUsernameEqualTo(username)
+				.andAccountidEqualTo(accountId);
+		List<UserAccount> accounts = userAccountMapper
+				.selectByExample(userAccountEx);
+		if (accounts.size() > 0) {
+			UserAccount account = accounts.get(0);
+			if (account.getIsaccountowner() != null
+					&& account.getIsaccountowner() == Boolean.TRUE) {
+				userAccountEx = new UserAccountExample();
+				userAccountEx.createCriteria().andAccountidEqualTo(accountId)
+						.andIsaccountownerEqualTo(Boolean.TRUE);
+				if (userAccountMapper.countByExample(userAccountEx) == 1) {
+					throw new UserInvalidInputException(
+							"Can not delete user "
+									+ username
+									+ ". The reason is "
+									+ username
+									+ " is the unique account owner of current account.");
+				}
+			}
+		}
+
+		userAccountEx = new UserAccountExample();
 		userAccountEx.createCriteria().andUsernameEqualTo(username)
 				.andAccountidEqualTo(accountId);
 		userAccountMapper.deleteByExample(userAccountEx);

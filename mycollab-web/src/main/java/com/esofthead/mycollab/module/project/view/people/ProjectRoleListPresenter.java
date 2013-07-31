@@ -34,6 +34,9 @@ import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
+import de.steinwedel.vaadin.MessageBox;
+import de.steinwedel.vaadin.MessageBox.ButtonType;
+
 /**
  * 
  * @author haiphucnguyen
@@ -227,8 +230,17 @@ public class ProjectRoleListPresenter extends
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (ProjectRole item : currentDataList) {
-				if (item.isSelected()) {
+				if (item.isSelected()
+						&& (item.getIssystemrole() == null || item
+								.getIssystemrole() == Boolean.FALSE)) {
 					keyList.add(item.getId());
+				} else {
+					MessageBox mb = new MessageBox(AppContext.getApplication()
+							.getMainWindow(), "Warning!", MessageBox.Icon.WARN,
+							"Can not delete role " + item.getRolename()
+									+ " because it is the system role.",
+							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+					mb.show();
 				}
 			}
 
