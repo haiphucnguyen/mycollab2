@@ -137,7 +137,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 		HorizontalLayout hoursLoggingPanel = new HorizontalLayout();
 		hoursLoggingPanel.setSpacing(true);
-		hoursLoggingPanel.addComponent(new Label("Total Hours Logging"));
+		hoursLoggingPanel.addComponent(new Label("Total Hours Logging:"));
 		totalHoursLoggingLabel = new Label("0 Hrs");
 		hoursLoggingPanel.addComponent(totalHoursLoggingLabel);
 		contentWrapper.addComponent(hoursLoggingPanel);

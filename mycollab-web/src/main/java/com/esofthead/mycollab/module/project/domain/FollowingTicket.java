@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.module.project.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FollowingTicket {
+public class FollowingTicket implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private int projectId;
 
@@ -13,9 +15,9 @@ public class FollowingTicket {
 	private int typeId;
 
 	private String summary;
-	
+
 	private String status;
-	
+
 	private Date dueDate;
 
 	private String assignUser;
