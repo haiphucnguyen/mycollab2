@@ -18,10 +18,8 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 		private GridFormLayoutHelper informationLayout;
 		private GridFormLayoutHelper addressLayout;
 		private GridFormLayoutHelper descriptionLayout;
-		private final boolean isReadMode;
 
-		public ContactInformationLayout(final boolean isReadMode) {
-			this.isReadMode = isReadMode;
+		public ContactInformationLayout() {
 		}
 
 		@Override
@@ -145,7 +143,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		informationLayout = new ContactInformationLayout(false);
+		informationLayout = new ContactInformationLayout();
 		final AddViewLayout2 contactAddLayout = new AddViewLayout2(title,
 				MyCollabResource.newResource("icons/22/crm/contact.png"));
 
