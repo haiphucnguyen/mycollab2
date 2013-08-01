@@ -1,14 +1,14 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountUrlResolver;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 import com.esofthead.mycollab.web.AppContext;
 
-public class RoleUrlResolver extends UrlResolver {
+public class RoleUrlResolver extends AccountUrlResolver {
 	public RoleUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());
 		this.addSubResolver("add", new AddUrlResolver());
@@ -16,21 +16,21 @@ public class RoleUrlResolver extends UrlResolver {
 		this.addSubResolver("preview", new PreviewUrlResolver());
 	}
 
-	private class ListUrlResolver extends UrlResolver {
+	private class ListUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
 					new RoleEvent.GotoList(ListUrlResolver.this, null));
 		}
 	}
 
-	private class AddUrlResolver extends UrlResolver {
+	private class AddUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
 					new RoleEvent.GotoAdd(AddUrlResolver.this, null));
 		}
 	}
 
-	private class EditUrlResolver extends UrlResolver {
+	private class EditUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			int roleId = Integer.parseInt(UrlEncodeDecoder.decode(params[0]));
 			RoleService roleService = AppContext
@@ -41,7 +41,7 @@ public class RoleUrlResolver extends UrlResolver {
 		}
 	}
 
-	private class PreviewUrlResolver extends UrlResolver {
+	private class PreviewUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			int roleId = Integer.parseInt(UrlEncodeDecoder.decode(params[0]));
 			RoleService roleService = AppContext

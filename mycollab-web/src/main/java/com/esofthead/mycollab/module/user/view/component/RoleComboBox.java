@@ -46,10 +46,18 @@ public class RoleComboBox extends ComboBox {
 			beanItem.addBean(role);
 		}
 
+		SimpleRole ownerRole = new SimpleRole();
+		ownerRole.setId(-1);
+		ownerRole.setRolename("Account Owner");
+		beanItem.addBean(ownerRole);
+
 		this.setContainerDataSource(beanItem);
 		this.setItemCaptionPropertyId("rolename");
 		if (roleList.size() > 0) {
-			this.setValue(this.getContainerPropertyIds().iterator().next());
+			SimpleRole role = roleList.get(0);
+			this.setValue(role.getId());
+		} else {
+			this.setValue(-1);
 		}
 	}
 

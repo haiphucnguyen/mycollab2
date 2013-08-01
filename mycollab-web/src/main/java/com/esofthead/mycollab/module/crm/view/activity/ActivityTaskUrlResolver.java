@@ -3,17 +3,17 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
+import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
-public class ActivityTaskUrlResolver extends UrlResolver {
+public class ActivityTaskUrlResolver extends CrmUrlResolver {
 	public ActivityTaskUrlResolver() {
 		this.addSubResolver("add", new TaskAddUrlResolver());
 		this.addSubResolver("edit", new TaskEditUrlResolver());
 		this.addSubResolver("preview", new TaskPreviewUrlResolver());
 	}
 
-	public static class TaskAddUrlResolver extends UrlResolver {
+	public static class TaskAddUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
@@ -21,7 +21,7 @@ public class ActivityTaskUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class TaskEditUrlResolver extends UrlResolver {
+	public static class TaskEditUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -31,7 +31,7 @@ public class ActivityTaskUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class TaskPreviewUrlResolver extends UrlResolver {
+	public static class TaskPreviewUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

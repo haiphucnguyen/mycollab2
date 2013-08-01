@@ -8,8 +8,12 @@ import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 public class ShellUrlResolver extends UrlResolver {
 	public ShellUrlResolver() {
 		super();
-		this.addSubResolver("crm", new CrmUrlResolver());
-		this.addSubResolver("project", new ProjectUrlResolver());
-		this.addSubResolver("account", new AccountUrlResolver());
+		this.addSubResolver("crm", new CrmUrlResolver().build());
+		this.addSubResolver("project", new ProjectUrlResolver().build());
+		this.addSubResolver("account", new AccountUrlResolver().build());
+	}
+
+	@Override
+	protected void defaultPageErrorHandler() {
 	}
 }

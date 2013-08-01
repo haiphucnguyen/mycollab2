@@ -11,20 +11,20 @@ import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 import com.esofthead.mycollab.web.AppContext;
 
-public class StandupUrlResolver extends UrlResolver {
+public class StandupUrlResolver extends ProjectUrlResolver {
 	public StandupUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());
 		this.addSubResolver("add", new PreviewUrlResolver());
 	}
 
-	private static class ListUrlResolver extends UrlResolver {
+	private static class ListUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -44,7 +44,7 @@ public class StandupUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class PreviewUrlResolver extends UrlResolver {
+	private static class PreviewUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

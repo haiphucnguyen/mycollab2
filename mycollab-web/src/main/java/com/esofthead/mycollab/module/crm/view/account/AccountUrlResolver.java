@@ -3,10 +3,10 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
-public class AccountUrlResolver extends UrlResolver {
+public class AccountUrlResolver extends CrmUrlResolver {
 	public AccountUrlResolver() {
 		this.addSubResolver("list", new AccountListUrlResolver());
 		this.addSubResolver("preview", new AccountPreviewUrlResolver());
@@ -14,7 +14,7 @@ public class AccountUrlResolver extends UrlResolver {
 		this.addSubResolver("edit", new AccountEditUrlResolver());
 	}
 
-	public static class AccountListUrlResolver extends UrlResolver {
+	public static class AccountListUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
@@ -22,7 +22,7 @@ public class AccountUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class AccountAddUrlResolver extends UrlResolver {
+	public static class AccountAddUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
@@ -30,7 +30,7 @@ public class AccountUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class AccountEditUrlResolver extends UrlResolver {
+	public static class AccountEditUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -40,7 +40,7 @@ public class AccountUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class AccountPreviewUrlResolver extends UrlResolver {
+	public static class AccountPreviewUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

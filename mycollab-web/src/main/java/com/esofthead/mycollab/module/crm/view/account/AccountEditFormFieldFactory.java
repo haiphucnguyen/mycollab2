@@ -45,7 +45,7 @@ public class AccountEditFormFieldFactory extends DefaultEditFormFieldFactory {
 		} else if (propertyId.equals("accountname")) {
 			TextField tf = new TextField();
 			tf.setNullRepresentation("");
-			tf.setRequired(false);
+			tf.setRequired(true);
 			tf.setRequiredError("Please enter an Account Name");
 			return tf;
 		}

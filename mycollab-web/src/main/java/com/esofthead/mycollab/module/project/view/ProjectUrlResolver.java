@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver;
 import com.esofthead.mycollab.module.project.view.file.ProjectFileUrlResolver;
@@ -22,7 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 public class ProjectUrlResolver extends UrlResolver {
-	public ProjectUrlResolver() {
+	public UrlResolver build() {
 		this.addSubResolver("dashboard", new ProjectPageUrlResolver());
 		this.addSubResolver("message", new MessageUrlResolver());
 		this.addSubResolver("milestone", new MilestoneUrlResolver());
@@ -35,6 +34,7 @@ public class ProjectUrlResolver extends UrlResolver {
 		this.addSubResolver("role", new RoleUrlResolver());
 		this.addSubResolver("time", new TimeUrlResolver());
 		this.addSubResolver("file", new ProjectFileUrlResolver());
+		return this;
 	}
 
 	@Override
@@ -43,21 +43,17 @@ public class ProjectUrlResolver extends UrlResolver {
 			EventBus.getInstance().fireEvent(
 					new ShellEvent.GotoProjectModule(this, params));
 		} else {
-			try {
-				super.handle(params);
-			} catch (Exception e) {
-				EventBus.getInstance().fireEvent(
-						new ShellEvent.GotoProjectModule(this, params));
-				if (e instanceof MyCollabException) {
-					throw (MyCollabException) e;
-				} else {
-					throw new MyCollabException(e);
-				}
-			}
+			super.handle(params);
 		}
 	}
 
-	public static class ProjectPageUrlResolver extends UrlResolver {
+	@Override
+	protected void defaultPageErrorHandler() {
+		EventBus.getInstance().fireEvent(
+				new ShellEvent.GotoProjectModule(this, null));
+	}
+
+	public static class ProjectPageUrlResolver extends ProjectUrlResolver {
 
 		@Override
 		protected void handlePage(String... params) {
