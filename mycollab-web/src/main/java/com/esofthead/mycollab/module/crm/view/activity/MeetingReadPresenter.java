@@ -155,8 +155,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 			if (data.getParams() instanceof Integer) {
 				MeetingService meetingService = AppContext
 						.getSpringBean(MeetingService.class);
-				meeting = meetingService.findById((Integer) data
-						.getParams());
+				meeting = meetingService.findById((Integer) data.getParams());
 				if (meeting == null) {
 					AppContext
 							.getApplication()
@@ -180,7 +179,9 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
 			AppContext.addFragment(CrmLinkGenerator
 					.generateMeetingPreviewLink(meeting.getId()),
-					"Preview Meeting: " + meeting.getSubject());
+					LocalizationHelper.getMessage(
+							GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+							"Meeting", meeting.getSubject()));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

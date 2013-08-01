@@ -171,9 +171,10 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 			container.addComponent(view.getWidget());
 
 			view.previewItem(call);
-			AppContext.addFragment(
-					CrmLinkGenerator.generateCallPreviewLink(call.getId()),
-					"Preiview Call: " + call.getSubject());
+			AppContext.addFragment(CrmLinkGenerator
+					.generateCallPreviewLink(call.getId()), LocalizationHelper
+					.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+							"Call", call.getSubject()));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

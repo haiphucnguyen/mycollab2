@@ -80,19 +80,23 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 					return;
 				}
 			}
-			
+
 			container.removeAllComponents();
 			container.addComponent(view.getWidget());
-			
+
 			view.editItem(meeting);
 
 			if (meeting.getId() == null) {
 				AppContext.addFragment("crm/activity/meeting/add/",
-						"Add Meeting");
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+								"Meeting"));
 			} else {
 				AppContext.addFragment("crm/activity/meeting/edit/"
 						+ UrlEncodeDecoder.encode(meeting.getId()),
-						"Edit Meeting: " + meeting.getSubject());
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+								"Meeting", meeting.getSubject()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

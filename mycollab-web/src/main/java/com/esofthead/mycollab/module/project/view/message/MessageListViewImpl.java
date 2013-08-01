@@ -451,9 +451,12 @@ public class MessageListViewImpl extends AbstractView implements
 								attachments.saveContentsToRepo(attachmentPath);
 							} else {
 								titleField.addStyleName("errorField");
-								final MessageBox mb = new MessageBox(AppContext
-										.getApplication().getMainWindow(),
-										"Error!", MessageBox.Icon.ERROR,
+								final MessageBox mb = new MessageBox(
+										AppContext.getApplication()
+												.getMainWindow(),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
+										MessageBox.Icon.ERROR,
 										"Title must be not null!",
 										new MessageBox.ButtonConfig(
 												ButtonType.OK, "Ok"));

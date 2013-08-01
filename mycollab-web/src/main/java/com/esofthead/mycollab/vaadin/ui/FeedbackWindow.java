@@ -9,11 +9,13 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.EmailValidator;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -143,7 +145,9 @@ public class FeedbackWindow extends Window {
 				EmailValidator emailValidator = new EmailValidator();
 				if (!emailValidator.validate(email)) {
 					MessageBox mb = new MessageBox(AppContext.getApplication()
-							.getMainWindow(), "Warming!", MessageBox.Icon.WARN,
+							.getMainWindow(), LocalizationHelper
+							.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+							MessageBox.Icon.WARN,
 							"The email is not valid, please check it again!",
 							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
 					mb.show();

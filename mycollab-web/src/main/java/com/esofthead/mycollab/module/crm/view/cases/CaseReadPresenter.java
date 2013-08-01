@@ -230,7 +230,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
-			
+
 			if (data.getParams() instanceof Integer) {
 				CaseService caseService = AppContext
 						.getSpringBean(CaseService.class);
@@ -242,7 +242,9 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
 					AppContext.addFragment(CrmLinkGenerator
 							.generateCasePreviewLink(cases.getId()),
-							"Preview: " + cases.getSubject());
+							LocalizationHelper.getMessage(
+									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+									"Case", cases.getSubject()));
 				} else {
 					AppContext
 							.getApplication()

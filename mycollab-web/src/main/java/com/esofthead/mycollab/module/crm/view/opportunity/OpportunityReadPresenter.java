@@ -280,7 +280,7 @@ public class OpportunityReadPresenter extends
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER));
-			
+
 			if (data.getParams() instanceof Integer) {
 				OpportunityService opportunityService = AppContext
 						.getSpringBean(OpportunityService.class);
@@ -293,8 +293,11 @@ public class OpportunityReadPresenter extends
 					AppContext.addFragment(
 							CrmLinkGenerator
 									.generateOpportunityPreviewLink(opportunity
-											.getId()), "Preview Opportunity: "
-									+ opportunity.getOpportunityname());
+											.getId()),
+							LocalizationHelper.getMessage(
+									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+									"Opportunity",
+									opportunity.getOpportunityname()));
 				} else {
 					AppContext
 							.getApplication()

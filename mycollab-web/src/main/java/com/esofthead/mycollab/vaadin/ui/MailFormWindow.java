@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -204,10 +206,12 @@ public class MailFormWindow extends Window {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				if (tokenFieldMailTo.getListRecipient().size() <= 0 || subject.toString().equals("")) {
+				if (tokenFieldMailTo.getListRecipient().size() <= 0
+						|| subject.toString().equals("")) {
 					MessageBox mb = new MessageBox(
 							AppContext.getApplication().getMainWindow(),
-							"Warming!",
+							LocalizationHelper
+									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
 							MessageBox.Icon.WARN,
 							"The To Email field and Subject field must be not empty! Please fulfil them before pressing enter button.",
 							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
@@ -231,11 +235,10 @@ public class MailFormWindow extends Window {
 
 					systemMailService.sendHTMLMail(AppContext.getSession()
 							.getEmail(), AppContext.getSession()
-							.getDisplayName(),
-							tokenFieldMailTo.getListRecipient(), tokenFieldMailCc
-									.getListRecipient(), tokenFieldMailBcc
-									.getListRecipient(), subject.getValue()
-									.toString(),
+							.getDisplayName(), tokenFieldMailTo
+							.getListRecipient(), tokenFieldMailCc
+							.getListRecipient(), tokenFieldMailBcc
+							.getListRecipient(), subject.getValue().toString(),
 							noteArea.getValue().toString(),
 							emailAttachmentSource);
 					MailFormWindow.this.close();

@@ -7,6 +7,7 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -154,7 +155,8 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												"This version has not supported the sending email for all users yet!");
+												LocalizationHelper
+														.getMessage(ExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 								List<SimpleAccount> tableData = view
@@ -195,7 +197,10 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow(
-									"Mass Update Accounts",
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
+													"Account"),
 									AccountListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
@@ -280,7 +285,9 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 
 			super.onGo(container, data);
 			doSearch((AccountSearchCriteria) data.getParams());
-			AppContext.addFragment("crm/account/list", "Account List");
+			AppContext.addFragment("crm/account/list", LocalizationHelper
+					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
+							"Account"));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

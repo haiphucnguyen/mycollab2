@@ -231,7 +231,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
-			
+
 			if (data.getParams() instanceof Integer) {
 				LeadService leadService = AppContext
 						.getSpringBean(LeadService.class);
@@ -243,7 +243,9 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 					AppContext.addFragment(CrmLinkGenerator
 							.generateLeadPreviewLink(lead.getId()),
-							"Preview Lead: " + lead.getLeadName());
+							LocalizationHelper.getMessage(
+									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+									"Lead", lead.getLeadName()));
 				} else {
 					AppContext
 							.getApplication()

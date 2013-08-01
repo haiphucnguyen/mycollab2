@@ -101,12 +101,16 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 			view.editItem(campaign);
 
 			if (campaign.getId() == null) {
-				AppContext.addFragment("crm/campaign/add", "Add Campaign");
+				AppContext.addFragment("crm/campaign/add", LocalizationHelper
+						.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+								"Campaign"));
 			} else {
 				AppContext.addFragment(
 						"crm/campaign/edit/"
 								+ UrlEncodeDecoder.encode(campaign.getId()),
-						"Edit Campaign: " + campaign.getCampaignname());
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+								"Campaign", campaign.getCampaignname()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

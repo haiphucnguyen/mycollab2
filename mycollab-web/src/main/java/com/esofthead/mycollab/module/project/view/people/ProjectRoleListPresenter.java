@@ -235,9 +235,12 @@ public class ProjectRoleListPresenter extends
 								.getIssystemrole() == Boolean.FALSE)) {
 					keyList.add(item.getId());
 				} else {
-					MessageBox mb = new MessageBox(AppContext.getApplication()
-							.getMainWindow(), "Warning!", MessageBox.Icon.WARN,
-							"Can not delete role " + item.getRolename()
+					MessageBox mb = new MessageBox(
+							AppContext.getApplication().getMainWindow(),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+							MessageBox.Icon.WARN, "Can not delete role "
+									+ item.getRolename()
 									+ " because it is the system role.",
 							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
 					mb.show();

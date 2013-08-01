@@ -75,7 +75,7 @@ public class OpportunityAddPresenter extends
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER));
-			
+
 			Opportunity opportunity = null;
 			if (data.getParams() instanceof Opportunity) {
 				opportunity = (Opportunity) data.getParams();
@@ -101,15 +101,20 @@ public class OpportunityAddPresenter extends
 			view.editItem(opportunity);
 
 			if (opportunity.getId() == null) {
-				AppContext
-						.addFragment("crm/opportunity/add", "Add Opportunity");
+				AppContext.addFragment("crm/opportunity/add",
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+								"Opportunity"));
 			} else {
 				AppContext
 						.addFragment(
 								"crm/opportunity/edit/"
 										+ UrlEncodeDecoder.encode(opportunity
-												.getId()), "Edit Opportunity: "
-										+ opportunity.getOpportunityname());
+												.getId()),
+								LocalizationHelper.getMessage(
+										GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+										"Opportunity",
+										opportunity.getOpportunityname()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

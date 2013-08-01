@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 
 import de.steinwedel.vaadin.MessageBox;
 import de.steinwedel.vaadin.MessageBox.ButtonType;
@@ -11,9 +13,11 @@ public class MessageConstants {
 
 	public static void showMessagePermissionAlert() {
 		MessageBox mb = new MessageBox(AppContext.getApplication()
-				.getMainWindow(), "Warning!", MessageBox.Icon.WARN,
-				MessageConstants.PERMISSION_ALERT, new MessageBox.ButtonConfig(
-						ButtonType.OK, "Ok"));
+				.getMainWindow(),
+				LocalizationHelper
+						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+				MessageBox.Icon.WARN, MessageConstants.PERMISSION_ALERT,
+				new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
 		mb.show();
 	}
 
