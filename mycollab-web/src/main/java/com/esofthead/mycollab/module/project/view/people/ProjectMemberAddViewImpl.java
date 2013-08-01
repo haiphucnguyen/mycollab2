@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
-import org.vaadin.addon.customfield.FieldWrapper;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -122,7 +121,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						final List<SimpleUser> users = prjMemberService
 								.getUsersNotInProject(CurrentProjectVariables
 										.getProjectId());
-						return new UserComboBox(users);
+						UserComboBox userBox = new UserComboBox(users);
+						userBox.setRequired(true);
+						return userBox;
 					} else {
 						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
 							return new DefaultFormViewFieldFactory.FormViewField(
@@ -162,29 +163,32 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 							@Override
 							public void valueChange(
 									final Property.ValueChangeEvent event) {
-								System.out
-										.println("VALUE: "
-												+ AdminRoleSelectionField.this.roleComboBox
-														.getValue());
-								Integer roleId = (Integer) AdminRoleSelectionField.this.roleComboBox
-										.getValue();
-								if (roleId == -1) {
-									ProjectMemberAddViewImpl.this.user
-											.setIsadmin(Boolean.TRUE);
-									ProjectMemberAddViewImpl.this.user
-											.setProjectroleid(null);
-								} else {
-									ProjectMemberAddViewImpl.this.user
-											.setProjectroleid((Integer) AdminRoleSelectionField.this.roleComboBox
-													.getValue());
-									ProjectMemberAddViewImpl.this.user
-											.setIsadmin(Boolean.FALSE);
-								}
+								getValue();
 
 							}
 						});
 
 				this.setCompositionRoot(this.roleComboBox);
+			}
+
+			@Override
+			public Object getValue() {
+				Integer roleId = (Integer) AdminRoleSelectionField.this.roleComboBox
+						.getValue();
+				Boolean resultVal = null;
+				if (roleId == -1) {
+					ProjectMemberAddViewImpl.this.user.setIsadmin(Boolean.TRUE);
+					ProjectMemberAddViewImpl.this.user.setProjectroleid(null);
+					resultVal = Boolean.TRUE;
+				} else {
+					ProjectMemberAddViewImpl.this.user
+							.setProjectroleid((Integer) AdminRoleSelectionField.this.roleComboBox
+									.getValue());
+					ProjectMemberAddViewImpl.this.user
+							.setIsadmin(Boolean.FALSE);
+					resultVal = Boolean.FALSE;
+				}
+				return resultVal;
 			}
 
 			public void setRoleId(int roleId) {

@@ -22,6 +22,7 @@ public class ProjectRoleComboBox extends ComboBox {
 	@SuppressWarnings("unchecked")
 	public ProjectRoleComboBox() {
 		super();
+		this.setImmediate(true);
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
 		ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
@@ -55,11 +56,9 @@ public class ProjectRoleComboBox extends ComboBox {
 		if (roleList.size() > 0) {
 			SimpleProjectRole role = roleList.get(0);
 			this.setValue(role.getId());
+		} else {
+			this.setValue(-1);
 		}
-	}
-
-	public boolean isComboRoleNotEmpty() {
-		return (roleList.size() > 0);
 	}
 
 }
