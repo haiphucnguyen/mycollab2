@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.file.view.components.FileSearchResultCompon
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 
 @ViewComponent
 public class FileSearchResultViewImpl extends AbstractView implements
@@ -32,6 +33,7 @@ public class FileSearchResultViewImpl extends AbstractView implements
 	public void displaySearchResult(FileSearchCriteria searchCriteria) {
 		searchResultComp.displaySearchResult(searchCriteria.getRootFolder(),
 				searchCriteria.getBaseFolder(), searchCriteria.getFileName());
+		AppContext.addFragment("crm/file/search", "Customer: Search Files");
 	}
 
 }

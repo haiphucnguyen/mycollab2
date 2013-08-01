@@ -7,5 +7,5 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm/activity")
 @LocaleData({ @Locale("en_US") })
 public enum ActivityI18nEnum {
-	PREVIEW_TASK_TITLE, CALENDAR_TAB_TITLE, ACTIVITY_LIST_TAB_TITLE
+	CALENDAR_TAB_TITLE, ACTIVITY_LIST_TAB_TITLE
 }

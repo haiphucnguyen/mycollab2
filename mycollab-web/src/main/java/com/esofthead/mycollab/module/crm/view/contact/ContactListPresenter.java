@@ -7,6 +7,7 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -38,7 +39,7 @@ import com.vaadin.ui.ComponentContainer;
 
 public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 		implements ListPresenter<ContactSearchCriteria>,
-		MassUpdatePresenter<Contact>{
+		MassUpdatePresenter<Contact> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -152,7 +153,8 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												"This version has not supported the sending email for all users yet!");
+												LocalizationHelper
+														.getMessage(ExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 								List<SimpleContact> tableData = view
@@ -191,9 +193,12 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
-						}   else if ("massUpdate".equals(id)) {
+						} else if ("massUpdate".equals(id)) {
 							MassUpdateContactWindow massUpdateWindow = new MassUpdateContactWindow(
-									"Mass Update Contacts",
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
+													"Contact"),
 									ContactListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
@@ -247,7 +252,9 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 
 			super.onGo(container, data);
 			doSearch((ContactSearchCriteria) data.getParams());
-			AppContext.addFragment("crm/contact/list", "Contact List");
+			AppContext.addFragment("crm/contact/list", LocalizationHelper
+					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
+							"Contact"));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}
@@ -299,7 +306,7 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 				doSearch(searchCriteria);
 			}
 		} else {
-			contactService.updateBySearchCriteria(value,searchCriteria);
+			contactService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

@@ -38,8 +38,8 @@ import com.vaadin.ui.ComponentContainer;
 
 public class CampaignListPresenter extends
 		CrmGenericPresenter<CampaignListView> implements
-		ListPresenter<CampaignSearchCriteria> ,
-		MassUpdatePresenter<CampaignWithBLOBs>{
+		ListPresenter<CampaignSearchCriteria>,
+		MassUpdatePresenter<CampaignWithBLOBs> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -177,7 +177,10 @@ public class CampaignListPresenter extends
 							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateCampaignWindow massUpdateWindow = new MassUpdateCampaignWindow(
-									"Mass Update Campaigns",
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
+													"Campaign"),
 									CampaignListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
@@ -227,11 +230,13 @@ public class CampaignListPresenter extends
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER));
-			
+
 			super.onGo(container, data);
 			doSearch((CampaignSearchCriteria) data.getParams());
 
-			AppContext.addFragment("crm/campaign/list", "Campaign List");
+			AppContext.addFragment("crm/campaign/list", LocalizationHelper
+					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
+							"Campaign"));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}
@@ -283,7 +288,7 @@ public class CampaignListPresenter extends
 				doSearch(searchCriteria);
 			}
 		} else {
-			campaignService.updateBySearchCriteria(value,searchCriteria);
+			campaignService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

@@ -28,7 +28,7 @@ public class FileDashboardPresenter extends
 
 			super.onGo(container, data);
 			view.displayFiles();
-			AppContext.addFragment("crm/file/dashboard", "File Dashboard");
+			AppContext.addFragment("crm/file/dashboard", "Customer: File Dashboard");
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

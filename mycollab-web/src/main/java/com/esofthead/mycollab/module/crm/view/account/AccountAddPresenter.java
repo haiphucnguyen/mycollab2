@@ -100,13 +100,17 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 			super.onGo(container, data);
 			view.editItem(account);
 			if (account.getId() == null) {
-				AppContext.addFragment("crm/account/add", "Add Account");
+				AppContext.addFragment("crm/account/add", LocalizationHelper
+						.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+								"Account"));
 
 			} else {
 				AppContext.addFragment(
 						"crm/account/edit/"
 								+ UrlEncodeDecoder.encode(account.getId()),
-						"Edit Account: " + account.getAccountname());
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+								"Account", account.getAccountname()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

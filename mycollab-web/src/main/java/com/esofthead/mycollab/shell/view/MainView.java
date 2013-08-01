@@ -55,7 +55,7 @@ public final class MainView extends AbstractView {
         this.bodyLayout.addComponent(comp);
 
         if (ModuleHelper.isCurrentCrmModule()) {
-            serviceMenu.setCaption("Customer Management");
+            serviceMenu.setCaption("CRM");
             serviceMenu.setIcon(MyCollabResource
                     .newResource("icons/16/customer_gray.png"));
         } else if (ModuleHelper.isCurrentProjectModule()) {
@@ -99,7 +99,7 @@ public final class MainView extends AbstractView {
         final VerticalLayout vLayout = new VerticalLayout();
         vLayout.setWidth("200px");
 
-        final Button crmLink = new Button("Customer Management",
+        final Button crmLink = new Button("CRM",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {

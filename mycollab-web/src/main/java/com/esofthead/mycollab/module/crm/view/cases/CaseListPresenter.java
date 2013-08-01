@@ -7,6 +7,7 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
@@ -37,7 +38,8 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
-		implements ListPresenter<CaseSearchCriteria> , MassUpdatePresenter<CaseWithBLOBs> {
+		implements ListPresenter<CaseSearchCriteria>,
+		MassUpdatePresenter<CaseWithBLOBs> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -152,7 +154,8 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												"This version has not supported the sending email for all users yet!");
+												LocalizationHelper
+														.getMessage(ExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 								List<SimpleCase> tableData = view
@@ -192,7 +195,10 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateCaseWindow massUpdateWindow = new MassUpdateCaseWindow(
-									"Mass Update Cases",
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
+													"Case"),
 									CaseListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
@@ -243,11 +249,13 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
-			
+
 			super.onGo(container, data);
 			doSearch((CaseSearchCriteria) data.getParams());
 
-			AppContext.addFragment("crm/cases/list", "Cases List");
+			AppContext.addFragment("crm/cases/list",
+					LocalizationHelper.getMessage(
+							GenericI18Enum.BROWSER_LIST_ITEMS_TITLE, "Case"));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}
@@ -287,8 +295,8 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 	@Override
 	public void massUpdate(CaseWithBLOBs value) {
 		if (!isSelectAll) {
-			Collection<SimpleCase> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
+			Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
+					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCase item : currentDataList) {
 				if (item.isSelected()) {
@@ -300,7 +308,7 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 				doSearch(searchCriteria);
 			}
 		} else {
-			caseService.updateBySearchCriteria(value,searchCriteria);
+			caseService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

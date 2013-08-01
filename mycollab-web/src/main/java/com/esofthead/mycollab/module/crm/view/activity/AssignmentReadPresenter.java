@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
-import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
@@ -174,8 +173,8 @@ public class AssignmentReadPresenter extends
 			view.previewItem(task);
 			AppContext.addFragment(CrmLinkGenerator
 					.generateTaskPreviewLink(task.getId()), LocalizationHelper
-					.getMessage(ActivityI18nEnum.PREVIEW_TASK_TITLE,
-							task.getSubject()));
+					.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+							"Task", task.getSubject()));
 
 		} else {
 			MessageConstants.showMessagePermissionAlert();

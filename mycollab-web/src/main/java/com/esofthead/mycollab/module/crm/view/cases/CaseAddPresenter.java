@@ -68,7 +68,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
-			
+
 			CaseWithBLOBs cases = null;
 			if (data.getParams() instanceof CaseWithBLOBs) {
 				cases = (CaseWithBLOBs) data.getParams();
@@ -94,12 +94,16 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 			view.editItem(cases);
 
 			if (cases.getId() == null) {
-				AppContext.addFragment("crm/cases/add", "Add Case");
+				AppContext.addFragment("crm/cases/add", LocalizationHelper
+						.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+								"Case"));
 			} else {
 				AppContext.addFragment(
 						"crm/cases/edit/"
 								+ UrlEncodeDecoder.encode(cases.getId()),
-						"Edit Case: " + cases.getSubject());
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, "Case",
+								cases.getSubject()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

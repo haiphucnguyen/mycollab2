@@ -295,14 +295,16 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 			if (data.getParams() instanceof Integer) {
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
-				SimpleAccount account = accountService
-						.findById((Integer) data.getParams());
+				SimpleAccount account = accountService.findById((Integer) data
+						.getParams());
 				if (account != null) {
 					super.onGo(container, data);
 					view.previewItem((SimpleAccount) account);
 					AppContext.addFragment(CrmLinkGenerator
 							.generateAccountPreviewLink(account.getId()),
-							"Preview account: " + account.getAccountname());
+							LocalizationHelper.getMessage(
+									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+									"Account", account.getAccountname()));
 				} else {
 					AppContext
 							.getApplication()

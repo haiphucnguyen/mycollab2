@@ -90,11 +90,15 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 			view.editItem(call);
 
 			if (call.getId() == null) {
-				AppContext.addFragment("crm/activity/call/add/", "Add Call");
+				AppContext.addFragment("crm/activity/call/add/",
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_ADD_ITEM_TITLE, "Call"));
 			} else {
 				AppContext.addFragment("crm/activity/call/edit/"
-						+ UrlEncodeDecoder.encode(call.getId()), "Edit Call: "
-						+ call.getSubject());
+						+ UrlEncodeDecoder.encode(call.getId()),
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, "Call",
+								call.getSubject()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

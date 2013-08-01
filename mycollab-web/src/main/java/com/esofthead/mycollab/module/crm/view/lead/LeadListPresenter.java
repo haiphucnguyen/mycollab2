@@ -7,6 +7,7 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -150,7 +151,8 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												"This version has not supported the sending email for all users yet!");
+												LocalizationHelper
+														.getMessage(ExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 
@@ -191,9 +193,12 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
-						}else if ("massUpdate".equals(id)) {
+						} else if ("massUpdate".equals(id)) {
 							MassUpdateLeadWindow massUpdateWindow = new MassUpdateLeadWindow(
-									"Mass Update Leads",
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
+													"Lead"),
 									LeadListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
@@ -245,11 +250,13 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
-			
+
 			super.onGo(container, data);
 			doSearch((LeadSearchCriteria) data.getParams());
 
-			AppContext.addFragment("crm/lead/list", "Lead List");
+			AppContext.addFragment("crm/lead/list",
+					LocalizationHelper.getMessage(
+							GenericI18Enum.BROWSER_LIST_ITEMS_TITLE, "Lead"));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}
@@ -288,8 +295,8 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 	@Override
 	public void massUpdate(Lead value) {
 		if (!isSelectAll) {
-			Collection<SimpleLead> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
+			Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleLead item : currentDataList) {
 				if (item.isSelected()) {
@@ -302,7 +309,7 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 				doSearch(searchCriteria);
 			}
 		} else {
-			leadService.updateBySearchCriteria(value,searchCriteria);
+			leadService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}
