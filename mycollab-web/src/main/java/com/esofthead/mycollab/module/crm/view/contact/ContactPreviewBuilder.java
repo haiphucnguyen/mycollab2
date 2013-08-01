@@ -156,6 +156,9 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				} else {
 					return new FormViewField("Yes");
 				}
+			} else if (propertyId.equals("birthday")) {
+				return new FormViewField(AppContext.formatDate(contact
+						.getBirthday()));
 			} else if (propertyId.equals("firstname")) {
 				final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 				final Label nameLbl = new Label(
@@ -447,8 +450,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 			this.previewForm = new AdvancedPreviewBeanForm<Contact>() {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout(
-							true));
+					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout());
 					this.setFormFieldFactory(new ContactFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					ReadView.this.contactAddLayout
