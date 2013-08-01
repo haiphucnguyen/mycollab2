@@ -4361,7 +4361,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-Notification {
 	padding: 0px;
 }
-.v-Notification-error {
+.v-Notification-system, .v-Notification-error, .v-Notification-warning, .v-Notification-tray {
 	padding: 1em;
 }
 .v-Notification h1 {
@@ -4377,7 +4377,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.v-Notification-error h1 {
+.v-Notification-error h1, .v-Notification-warning h1, .v-Notification-tray h1 {
 	display: inline;
 	background: none;
 	border: none;
