@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
+import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
-public class ActivityUrlResolver extends UrlResolver {
+public class ActivityUrlResolver extends CrmUrlResolver {
 	public ActivityUrlResolver() {
 		this.addSubResolver("calendar", new ActivityCalendartUrlResolver());
 		this.addSubResolver("todo", new ActivityTodoAddUrlResolver());
@@ -13,7 +13,7 @@ public class ActivityUrlResolver extends UrlResolver {
 		this.addSubResolver("call", new CallUrlResolver());
 	}
 
-	public static class ActivityCalendartUrlResolver extends UrlResolver {
+	public static class ActivityCalendartUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
@@ -21,7 +21,7 @@ public class ActivityUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class ActivityTodoAddUrlResolver extends UrlResolver {
+	public static class ActivityTodoAddUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(

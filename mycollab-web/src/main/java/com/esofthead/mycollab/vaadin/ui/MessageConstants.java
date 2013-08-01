@@ -9,14 +9,13 @@ import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 public class MessageConstants {
 
-	public final static String PERMISSION_ALERT = "Sorry! You do not have permission to do this task.";
-
 	public static void showMessagePermissionAlert() {
 		MessageBox mb = new MessageBox(AppContext.getApplication()
 				.getMainWindow(),
 				LocalizationHelper
 						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-				MessageBox.Icon.WARN, MessageConstants.PERMISSION_ALERT,
+				MessageBox.Icon.WARN,
+				"Sorry! You do not have permission to do this task.",
 				new MessageBox.ButtonConfig(ButtonType.OK, "OK"));
 		mb.show();
 	}

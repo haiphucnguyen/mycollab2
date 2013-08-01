@@ -4,19 +4,19 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
-public class MessageUrlResolver extends UrlResolver {
+public class MessageUrlResolver extends ProjectUrlResolver {
 	public MessageUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());
 		this.addSubResolver("preview", new PreviewUrlResolver());
 	}
 
-	private static class ListUrlResolver extends UrlResolver {
+	private static class ListUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -34,7 +34,7 @@ public class MessageUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class PreviewUrlResolver extends UrlResolver {
+	private static class PreviewUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
