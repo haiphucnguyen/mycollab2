@@ -28,8 +28,8 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 public class FeedbackWindow extends Window {
 	private static final long serialVersionUID = 1L;

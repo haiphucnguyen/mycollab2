@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleUrlResolver;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserUrlResolver;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
@@ -23,7 +24,17 @@ public class AccountUrlResolver extends UrlResolver {
 			EventBus.getInstance().fireEvent(
 					new ShellEvent.GotoUserAccountModule(this, params));
 		} else {
-			super.handle(params);
+			try {
+				super.handle(params);
+			} catch (Exception e) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoUserAccountModule(this, params));
+				if (e instanceof MyCollabException) {
+					throw (MyCollabException) e;
+				} else {
+					throw new MyCollabException(e);
+				}
+			}
 		}
 	}
 

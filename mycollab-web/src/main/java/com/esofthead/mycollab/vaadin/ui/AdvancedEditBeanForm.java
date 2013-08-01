@@ -17,8 +17,8 @@ import com.esofthead.mycollab.validator.constraints.DateComparision;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
 public class AdvancedEditBeanForm<T> extends GenericForm implements

@@ -34,8 +34,8 @@ import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 /**
  * 

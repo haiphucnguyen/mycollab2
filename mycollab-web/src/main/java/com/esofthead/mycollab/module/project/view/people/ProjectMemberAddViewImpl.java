@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
+import org.vaadin.addon.customfield.FieldWrapper;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -26,19 +26,13 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -142,7 +136,14 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					}
 
 				} else if (propertyId.equals("isadmin")) {
-					return new AdminRoleSelectionField();
+					AdminRoleSelectionField roleBox = new AdminRoleSelectionField();
+					if (user.getProjectroleid() != null) {
+						roleBox.setRoleId(user.getProjectroleid());
+					} else if (user.getIsadmin() != null
+							&& user.getIsadmin() == Boolean.TRUE) {
+						roleBox.setRoleId(-1);
+					}
+					return roleBox;
 				}
 				return null;
 			}
@@ -150,18 +151,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 		private class AdminRoleSelectionField extends CustomField {
 			private static final long serialVersionUID = 1L;
-			private final CheckBox isAdminCheck;
-			private final HorizontalLayout layout;
-			private final HorizontalLayout roleLayout;
 			private final ProjectRoleComboBox roleComboBox;
 
 			public AdminRoleSelectionField() {
-				this.layout = new HorizontalLayout();
-				this.layout.setSpacing(true);
-
-				this.roleLayout = new HorizontalLayout();
-				this.roleLayout.setSpacing(true);
-				this.roleLayout.addComponent(new Label("Role"));
 				this.roleComboBox = new ProjectRoleComboBox();
 				this.roleComboBox
 						.addListener(new Property.ValueChangeListener() {
@@ -170,79 +162,38 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 							@Override
 							public void valueChange(
 									final Property.ValueChangeEvent event) {
-								ProjectMemberAddViewImpl.this.user
-										.setProjectroleid((Integer) AdminRoleSelectionField.this.roleComboBox
-												.getValue());
-								ProjectMemberAddViewImpl.this.user
-										.setIsadmin(Boolean.FALSE);
+								System.out
+										.println("VALUE: "
+												+ AdminRoleSelectionField.this.roleComboBox
+														.getValue());
+								Integer roleId = (Integer) AdminRoleSelectionField.this.roleComboBox
+										.getValue();
+								if (roleId == -1) {
+									ProjectMemberAddViewImpl.this.user
+											.setIsadmin(Boolean.TRUE);
+									ProjectMemberAddViewImpl.this.user
+											.setProjectroleid(null);
+								} else {
+									ProjectMemberAddViewImpl.this.user
+											.setProjectroleid((Integer) AdminRoleSelectionField.this.roleComboBox
+													.getValue());
+									ProjectMemberAddViewImpl.this.user
+											.setIsadmin(Boolean.FALSE);
+								}
+
 							}
 						});
 
-				this.roleLayout.addComponent(this.roleComboBox);
+				this.setCompositionRoot(this.roleComboBox);
+			}
 
-				this.isAdminCheck = new CheckBox("");
-				this.isAdminCheck.setImmediate(true);
-				this.isAdminCheck.setWriteThrough(true);
-				this.isAdminCheck.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						ProjectMemberAddViewImpl.this.user
-								.setIsadmin((Boolean) AdminRoleSelectionField.this.isAdminCheck
-										.getValue());
-
-						if (ProjectMemberAddViewImpl.this.user.getIsadmin()) {
-							ProjectMemberAddViewImpl.this.user
-									.setProjectroleid(null);
-							AdminRoleSelectionField.this.layout
-									.removeComponent(AdminRoleSelectionField.this.roleLayout);
-						} else {
-							if (AdminRoleSelectionField.this.roleComboBox
-									.getContainerPropertyIds().size() > 0) {
-								AdminRoleSelectionField.this.layout
-										.addComponent(AdminRoleSelectionField.this.roleLayout);
-
-								if (ProjectMemberAddViewImpl.this.user
-										.getProjectroleid() != null) {
-									AdminRoleSelectionField.this.roleComboBox
-											.setValue(ProjectMemberAddViewImpl.this.user
-													.getProjectroleid());
-								}
-							} else {
-								AppContext
-										.getApplication()
-										.getMainWindow()
-										.showNotification(
-												LocalizationHelper
-														.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-												"You must have at least one role to deselect admin checkbox",
-												Window.Notification.TYPE_HUMANIZED_MESSAGE);
-								AdminRoleSelectionField.this.isAdminCheck
-										.setValue(Boolean.TRUE);
-							}
-						}
-					}
-				});
-
-				this.isAdminCheck.setValue(ProjectMemberAddViewImpl.this.user
-						.getIsadmin());
-				this.layout.addComponent(this.isAdminCheck);
-				if (ProjectMemberAddViewImpl.this.user.getIsadmin() == null
-						|| !ProjectMemberAddViewImpl.this.user.getIsadmin()) {
-					if (this.roleComboBox.isComboRoleNotEmpty()) {
-						this.layout.addComponent(this.roleLayout);
-					} else {
-						this.isAdminCheck.setValue(true);
-					}
-				}
-
-				this.setCompositionRoot(this.layout);
+			public void setRoleId(int roleId) {
+				roleComboBox.setValue(roleId);
 			}
 
 			@Override
-			public Class<?> getType() {
-				return Object.class;
+			public Class<Integer> getType() {
+				return Integer.class;
 			}
 		}
 	}

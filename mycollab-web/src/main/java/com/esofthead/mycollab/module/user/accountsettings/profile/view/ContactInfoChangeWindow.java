@@ -25,8 +25,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
 public class ContactInfoChangeWindow extends Window {

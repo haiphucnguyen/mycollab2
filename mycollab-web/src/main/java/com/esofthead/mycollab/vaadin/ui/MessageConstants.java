@@ -4,8 +4,8 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 public class MessageConstants {
 
@@ -17,7 +17,7 @@ public class MessageConstants {
 				LocalizationHelper
 						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
 				MessageBox.Icon.WARN, MessageConstants.PERMISSION_ALERT,
-				new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+				new MessageBox.ButtonConfig(ButtonType.OK, "OK"));
 		mb.show();
 	}
 

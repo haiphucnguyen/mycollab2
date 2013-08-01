@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver;
 import com.esofthead.mycollab.module.project.view.file.ProjectFileUrlResolver;
@@ -42,7 +43,17 @@ public class ProjectUrlResolver extends UrlResolver {
 			EventBus.getInstance().fireEvent(
 					new ShellEvent.GotoProjectModule(this, params));
 		} else {
-			super.handle(params);
+			try {
+				super.handle(params);
+			} catch (Exception e) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoProjectModule(this, params));
+				if (e instanceof MyCollabException) {
+					throw (MyCollabException) e;
+				} else {
+					throw new MyCollabException(e);
+				}
+			}
 		}
 	}
 

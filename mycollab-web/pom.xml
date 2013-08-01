@@ -70,13 +70,7 @@
             <artifactId>popupbutton</artifactId>
             <version>1.2.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>messagebox</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-
+        <!-- VAADIN ADDONS -->
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>cropfield</artifactId>

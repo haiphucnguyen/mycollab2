@@ -16,7 +16,7 @@ import com.vaadin.ui.ComboBox;
 public class ProjectRoleComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<SimpleProjectRole> roleList;
 
 	@SuppressWarnings("unchecked")
@@ -44,6 +44,11 @@ public class ProjectRoleComboBox extends ComboBox {
 			beanItem.addBean(role);
 		}
 
+		SimpleProjectRole ownerRole = new SimpleProjectRole();
+		ownerRole.setId(-1);
+		ownerRole.setRolename("Project Owner");
+		beanItem.addBean(ownerRole);
+
 		this.setNullSelectionAllowed(false);
 		this.setContainerDataSource(beanItem);
 		this.setItemCaptionPropertyId("rolename");
@@ -52,7 +57,7 @@ public class ProjectRoleComboBox extends ComboBox {
 			this.setValue(role.getId());
 		}
 	}
-	
+
 	public boolean isComboRoleNotEmpty() {
 		return (roleList.size() > 0);
 	}

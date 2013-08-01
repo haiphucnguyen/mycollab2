@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountUrlResolver;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityUrlResolver;
@@ -33,7 +34,17 @@ public class CrmUrlResolver extends UrlResolver {
 			EventBus.getInstance().fireEvent(
 					new ShellEvent.GotoCrmModule(this, params));
 		} else {
-			super.handle(params);
+			try {
+				super.handle(params);
+			} catch (Exception e) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoCrmModule(this, params));
+				if (e instanceof MyCollabException) {
+					throw (MyCollabException) e;
+				} else {
+					throw new MyCollabException(e);
+				}
+			}
 		}
 	}
 
