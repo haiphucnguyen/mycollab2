@@ -168,12 +168,12 @@ body div>input.v-filterselect-input[type="text"] {
 	overflow: auto;
 }
 
-.v-table-body,.v-table-body-noselection {
+.v-table-body-noselection {
 	height: 100% !important;
 }
-.v-table-body > div {
-	height: 100% !important;
-}
+/* .v-table-body > div { */
+/* 	height: 100% !important; */
+/* } */
 
 .v-table tr.v-selected {
 	background-image: url("icons/grad-light-top2.png");
@@ -312,9 +312,18 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	padding-top: 2px;
 }
 
+.folder-tree .v-table-body-wrapper.v-table-body {
+	height: 480px !important;
+}
+.folder-tree .v-table-body-wrapper.v-table-body > div {
+	height: auto !important;
+}
+
 .v-table-body-wrapper.v-table-body {
 	height: 100% !important;
 }
+
+
 
 .v-table-cell-wrapper {
 	white-space: normal;
@@ -3945,7 +3954,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
 
-.addViewLayout .addViewBottomControls .relatedbug-comp .depotComp .v-csslayout-header-wrapper>.v-csslayout-margin
+.addViewLayout .addViewBottomControls .relatedbug-comp .depotComp .depotHeader
 	{
 	border-width: 1px;
 	border-radius: 0px;
@@ -4341,4 +4350,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* Multiple Select Comp */
 .v-csslayout.select-bg {
 	background: url("icons/grad-light-top.png") repeat-x 0 1px rgb(218, 218, 218);
+}
+
+/* Task Group Reorder */
+.taskgroup-reorder .v-verticallayout-margin {
+	padding-top: 20px;
 }
