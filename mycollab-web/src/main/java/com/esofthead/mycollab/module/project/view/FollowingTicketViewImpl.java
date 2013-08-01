@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view;
 
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
@@ -12,6 +13,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -150,6 +152,13 @@ public class FollowingTicketViewImpl extends AbstractView implements
                                 EventBus.getInstance().fireEvent(
                                         new ProjectEvent.GotoMyProject(this,
                                                 chain));
+                                if (BugStatusConstants.VERIFIED.equals(ticket.getStatus())) {
+                                	ticketLink.addStyleName(UIConstants.LINK_COMPLETED);
+            					} else if (ticket.getDueDate() != null
+            							&& (ticket.getDueDate()
+            									.before(new GregorianCalendar().getTime()))) {
+            						ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
+            					}
                             } else if ("Task".equals(ticket.getType())) {
                                 final int projectId = ticket.getProjectId();
                                 final int taskId = ticket.getTypeId();
@@ -159,6 +168,18 @@ public class FollowingTicketViewImpl extends AbstractView implements
                                 EventBus.getInstance().fireEvent(
                                         new ProjectEvent.GotoMyProject(this,
                                                 chain));
+                                if ("Closed".equals(ticket.getStatus())) {
+                                	ticketLink.addStyleName(UIConstants.LINK_COMPLETED);
+            					} else {
+            						if ("Pending".equals(ticket.getStatus())) {
+            							ticketLink.addStyleName(UIConstants.LINK_PENDING);
+            						} else if (ticket.getDueDate() != null
+            								&& (ticket.getDueDate()
+            										.before(new GregorianCalendar()
+            												.getTime()))) {
+            							ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
+            						}
+            					}
                             }
 
                         }

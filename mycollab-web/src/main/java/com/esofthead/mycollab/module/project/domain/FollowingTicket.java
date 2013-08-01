@@ -13,6 +13,10 @@ public class FollowingTicket {
 	private int typeId;
 
 	private String summary;
+	
+	private String status;
+	
+	private Date dueDate;
 
 	private String assignUser;
 
@@ -92,5 +96,21 @@ public class FollowingTicket {
 
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 }

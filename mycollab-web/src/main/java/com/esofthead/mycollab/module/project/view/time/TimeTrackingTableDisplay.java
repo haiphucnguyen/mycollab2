@@ -56,11 +56,11 @@ public class TimeTrackingTableDisplay
 				final SimpleItemTimeLogging itemLogging = TimeTrackingTableDisplay.this
 						.getBeanByIndex(itemId);
 
-				ButtonLink b = null;
+				ButtonLink timeTrackingLink = null;
 
 				if (itemLogging.getType().equals(MonitorTypeConstants.PRJ_BUG)) {
 
-					b = new ButtonLink(itemLogging.getSummary(),
+					timeTrackingLink = new ButtonLink(itemLogging.getSummary(),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -72,20 +72,20 @@ public class TimeTrackingTableDisplay
 											itemLogging, "summary"));
 								}
 							});
-					b.setIcon(MyCollabResource
+					timeTrackingLink.setIcon(MyCollabResource
 							.newResource("icons/16/project/bug.png"));
 
 					if (BugStatusConstants.VERIFIED.equals(itemLogging.getStatus())) {
-						b.addStyleName(UIConstants.LINK_COMPLETED);
+						timeTrackingLink.addStyleName(UIConstants.LINK_COMPLETED);
 					} else if (itemLogging.getDueDate() != null
 							&& (itemLogging.getDueDate()
 									.before(new GregorianCalendar().getTime()))) {
-						b.addStyleName(UIConstants.LINK_OVERDUE);
+						timeTrackingLink.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				} else if (itemLogging.getType().equals(
 						MonitorTypeConstants.PRJ_TASK)) {
 
-					b = new ButtonLink(itemLogging.getSummary(),
+					timeTrackingLink = new ButtonLink(itemLogging.getSummary(),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -97,29 +97,29 @@ public class TimeTrackingTableDisplay
 											itemLogging, "summary"));
 								}
 							});
-					b.setIcon(MyCollabResource
+					timeTrackingLink.setIcon(MyCollabResource
 							.newResource("icons/16/project/task.png"));
 
 					if (itemLogging.getPercentageComplete() != null
 							&& 100d == itemLogging.getPercentageComplete()) {
-						b.addStyleName(UIConstants.LINK_COMPLETED);
+						timeTrackingLink.addStyleName(UIConstants.LINK_COMPLETED);
 					} else {
 						if ("Pending".equals(itemLogging.getStatus())) {
-							b.addStyleName(UIConstants.LINK_PENDING);
+							timeTrackingLink.addStyleName(UIConstants.LINK_PENDING);
 						} else if (itemLogging.getDueDate() != null
 								&& (itemLogging.getDueDate()
 										.before(new GregorianCalendar()
 												.getTime()))) {
-							b.addStyleName(UIConstants.LINK_OVERDUE);
+							timeTrackingLink.addStyleName(UIConstants.LINK_OVERDUE);
 						}
 					}
 				}
 
-				b.addStyleName("link");
-				b.addStyleName(UIConstants.WORD_WRAP);
-				b.setWidth("100%");
+				timeTrackingLink.addStyleName("link");
+				timeTrackingLink.addStyleName(UIConstants.WORD_WRAP);
+				timeTrackingLink.setWidth("100%");
 
-				return b;
+				return timeTrackingLink;
 
 			}
 		});

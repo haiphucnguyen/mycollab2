@@ -45,6 +45,8 @@
         <result column="typeId" jdbcType="INTEGER" property="typeId" />
         <result column="monitorDate" jdbcType="TIMESTAMP"
             property="monitorDate" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="dueDate" jdbcType="TIMESTAMP" property="dueDate" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -271,7 +273,7 @@
             m_prj_task.taskname AS summary, m_prj_task.assignUser AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
             s_user.avatarId AS assignUserAvatarId, m_monitor_item.monitor_date AS monitorDate,
-            m_prj_task.id AS typeId
+            m_prj_task.id AS typeId, m_prj_task.deadline AS dueDate
                
         FROM m_monitor_item
             INNER JOIN m_prj_task ON (m_monitor_item.type='Project-Task' AND m_monitor_item.typeid=m_prj_task.id)
@@ -286,7 +288,7 @@
             m_tracker_bug.summary AS summary, s_user.username AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
             s_user.avatarId AS assignUserAvatarId, m_monitor_item.monitor_date AS monitorDate,
-            m_tracker_bug.id AS typeId
+            m_tracker_bug.id AS typeId, m_tracker_bug.duedate AS dueDate
                
         FROM m_monitor_item
             INNER JOIN m_tracker_bug ON (m_monitor_item.type='Project-Bug' AND m_monitor_item.typeid=m_tracker_bug.id)
