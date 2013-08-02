@@ -24,6 +24,10 @@
         <if test="searchCriteria.id != null">
             <![CDATA[${searchCriteria.id.operation} m_prj_member.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
         </if>
+        
+        <if test="searchCriteria.status != null">
+            <![CDATA[${searchCriteria.status.operation} m_prj_member.status ${searchCriteria.status.compareOperator} #{searchCriteria.status.value,javaType=INTEGER}]]>
+        </if>
 
         <if test="searchCriteria.projectId != null">
             <![CDATA[${searchCriteria.projectId.operation} m_prj_member.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,javaType=INTEGER}]]>
