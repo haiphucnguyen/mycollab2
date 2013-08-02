@@ -4,32 +4,33 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
-import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 
 @Service
 public class ProjectMemberInvitationNotificationServiceImp {
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
+
+	@Autowired
+	private ProjectMemberMapper projectMemberMapper;
 
 	@Autowired
 	private ProjectService projectService;
@@ -40,6 +41,7 @@ public class ProjectMemberInvitationNotificationServiceImp {
 	@Autowired
 	private UserService userService;
 
+	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
 	public void sendNotificationForCreateAction() {
 		ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField(
@@ -77,6 +79,11 @@ public class ProjectMemberInvitationNotificationServiceImp {
 							member.getMemberFullName())), null, null,
 					templateGenerator.generateSubjectContent(),
 					templateGenerator.generateBodyContent(), null);
+
+			// Send email and change register status of user to
+			// RegisterStatusConstants.SENT_VERIFICATION_EMAIL
+			member.setStatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL);
+			projectMemberMapper.updateByPrimaryKeySelective(member);
 		}
 	}
 

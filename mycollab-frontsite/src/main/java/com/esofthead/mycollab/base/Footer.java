@@ -4,8 +4,11 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import com.esofthead.mycollab.pages.PricingPage;
 import com.esofthead.mycollab.pages.PrivacyPage;
+import com.esofthead.mycollab.pages.SignInPage;
 import com.esofthead.mycollab.pages.TermOfServicePage;
+import com.esofthead.mycollab.pages.TourPage;
 
 public class Footer extends Panel {
 
@@ -13,19 +16,22 @@ public class Footer extends Panel {
 
 	public Footer(String id) {
 		super(id);
-
-		/*for (int i = 1; i <= 2; i++) {
-			add(new BookmarkablePageLink<Void>("privacyLink" + i,
-					PrivacyPage.class));
-		}*/
 		
-		add(new BookmarkablePageLink<Void>("privacyLink2", PrivacyPage.class));
+		BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>("tourlink", TourPage.class);
+		add(tour);
+		BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>("pricinglink", PricingPage.class);
+		add(pricing);
+		ExternalLink support = new ExternalLink("supportlink", "mailto:sales@esofthead.com");
+		add(support);
+		ExternalLink contact = new ExternalLink("contactlink", "mailto:sales@esofthead.com");
+		add(contact);
+		BookmarkablePageLink<Void> privacy = new BookmarkablePageLink<Void>("privacylink", PrivacyPage.class);
+		add(privacy);
+		BookmarkablePageLink<Void> signIn = new BookmarkablePageLink<Void>("signInlink", SignInPage.class);
+		add(signIn);
+		BookmarkablePageLink<Void> terms = new BookmarkablePageLink<Void>("termslink", TermOfServicePage.class);
+		add(terms);
 		
-		BookmarkablePageLink<Void> signin = new BookmarkablePageLink<Void>("privacyLink1", TermOfServicePage.class);
-		add(signin);
-
-		add(new ExternalLink("mailLink", "mailto:support@esofthead.com"));
-		add(new ExternalLink("twitterLink", "https://twitter.com/mycollab_vn"));
 		this.setRenderBodyOnly(true);
 	}
 }
