@@ -107,12 +107,16 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 			view.editItem(contact);
 
 			if (contact.getId() == null) {
-				AppContext.addFragment("crm/contact/add", "Add Contact");
+				AppContext.addFragment("crm/contact/add", LocalizationHelper
+						.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+								"Contact"));
 			} else {
 				AppContext.addFragment(
 						"crm/contact/edit/"
 								+ UrlEncodeDecoder.encode(contact.getId()),
-						"Edit Contact: " + contact.getLastname());
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+								"Contact", contact.getLastname()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

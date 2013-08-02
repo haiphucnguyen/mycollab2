@@ -129,7 +129,9 @@ public class OpportunityListViewImpl extends AbstractView implements
 		this.tableActionControls.addOptionItem("export",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
 		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
+				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
+				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
+
 		this.tableActionControls.setVisible(false);
 
 		layout.addComponent(this.tableActionControls);
@@ -168,6 +170,9 @@ public class OpportunityListViewImpl extends AbstractView implements
 		importBtn.setDescription("Import");
 		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
 		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		importBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
+
 		layout.addComponent(importBtn);
 		layout.setComponentAlignment(importBtn, Alignment.MIDDLE_RIGHT);
 

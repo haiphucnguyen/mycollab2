@@ -16,12 +16,13 @@ import com.vaadin.ui.ComboBox;
 public class ProjectRoleComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<SimpleProjectRole> roleList;
 
 	@SuppressWarnings("unchecked")
 	public ProjectRoleComboBox() {
 		super();
+		this.setImmediate(true);
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
 		ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
@@ -44,17 +45,20 @@ public class ProjectRoleComboBox extends ComboBox {
 			beanItem.addBean(role);
 		}
 
+		SimpleProjectRole ownerRole = new SimpleProjectRole();
+		ownerRole.setId(-1);
+		ownerRole.setRolename("Project Owner");
+		beanItem.addBean(ownerRole);
+
 		this.setNullSelectionAllowed(false);
 		this.setContainerDataSource(beanItem);
 		this.setItemCaptionPropertyId("rolename");
 		if (roleList.size() > 0) {
 			SimpleProjectRole role = roleList.get(0);
 			this.setValue(role.getId());
+		} else {
+			this.setValue(-1);
 		}
-	}
-	
-	public boolean isComboRoleNotEmpty() {
-		return (roleList.size() > 0);
 	}
 
 }

@@ -241,15 +241,18 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 			if (data.getParams() instanceof Integer) {
 				ContactService contactService = AppContext
 						.getSpringBean(ContactService.class);
-				SimpleContact contact = contactService
-						.findById((Integer) data.getParams());
+				SimpleContact contact = contactService.findById((Integer) data
+						.getParams());
 				if (contact != null) {
 					super.onGo(container, data);
 					view.previewItem(contact);
 
 					AppContext.addFragment(CrmLinkGenerator
 							.generateContactPreviewLink(contact.getId()),
-							"Preview contact: " + contact.getContactName());
+							LocalizationHelper.getMessage(
+									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+									"Contact", contact.getContactName()));
+
 				} else {
 					AppContext
 							.getApplication()

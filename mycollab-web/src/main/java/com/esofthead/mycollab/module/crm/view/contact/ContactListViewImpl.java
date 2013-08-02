@@ -128,7 +128,8 @@ public class ContactListViewImpl extends AbstractView implements
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
 
 		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE));
+				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
+				.canWrite(RolePermissionCollections.CRM_CONTACT));
 
 		this.tableActionControls.setVisible(false);
 
@@ -171,6 +172,9 @@ public class ContactListViewImpl extends AbstractView implements
 		importBtn.setDescription("Import");
 		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
 		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		importBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CONTACT));
+
 		buttonControls.addComponent(importBtn);
 
 		return layoutWrapper;

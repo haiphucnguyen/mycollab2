@@ -13,7 +13,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
@@ -34,6 +34,9 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 /**
  * 
@@ -200,8 +203,20 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (Role item : currentDataList) {
-				if (item.isSelected()) {
+				if (item.isSelected()
+						&& (item.getIssystemrole() == null || item
+								.getIssystemrole() == Boolean.FALSE)) {
 					keyList.add(item.getId());
+				} else {
+					MessageBox mb = new MessageBox(
+							AppContext.getApplication().getMainWindow(),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+							MessageBox.Icon.WARN, "Can not delete role "
+									+ item.getRolename()
+									+ " because it is the system role.",
+							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+					mb.show();
 				}
 			}
 
@@ -220,7 +235,7 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.ROLES)) {
+				.canRead(RolePermissionCollections.USER_ROLE)) {
 			RoleContainer roleContainer = (RoleContainer) container;
 			roleContainer.removeAllComponents();
 			roleContainer.addComponent(view.getWidget());

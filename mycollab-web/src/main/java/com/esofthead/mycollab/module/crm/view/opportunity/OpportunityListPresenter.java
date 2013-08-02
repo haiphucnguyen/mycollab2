@@ -39,7 +39,7 @@ import com.vaadin.ui.ComponentContainer;
 public class OpportunityListPresenter extends
 		CrmGenericPresenter<OpportunityListView> implements
 		ListPresenter<OpportunitySearchCriteria>,
-		MassUpdatePresenter<Opportunity>{
+		MassUpdatePresenter<Opportunity> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -172,9 +172,12 @@ public class OpportunityListPresenter extends
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
-						} else if("massUpdate".equals(id)){
+						} else if ("massUpdate".equals(id)) {
 							MassUpdateOpportunityWindow massUpdateWindow = new MassUpdateOpportunityWindow(
-									"Mass Update Opportunitys",
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
+													"Opportunitie"),
 									OpportunityListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
@@ -229,7 +232,9 @@ public class OpportunityListPresenter extends
 			super.onGo(container, data);
 			doSearch((OpportunitySearchCriteria) data.getParams());
 
-			AppContext.addFragment("crm/opportunity/list", "Lead List");
+			AppContext.addFragment("crm/opportunity/list", LocalizationHelper
+					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
+							"Opportunity"));
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}
@@ -282,7 +287,7 @@ public class OpportunityListPresenter extends
 				doSearch(searchCriteria);
 			}
 		} else {
-			opportunityService.updateBySearchCriteria(value,searchCriteria);
+			opportunityService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

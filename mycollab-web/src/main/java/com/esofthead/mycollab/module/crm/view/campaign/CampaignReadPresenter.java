@@ -318,7 +318,7 @@ public class CampaignReadPresenter extends
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER));
-			
+
 			if (data.getParams() instanceof Integer) {
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
@@ -329,7 +329,9 @@ public class CampaignReadPresenter extends
 					view.previewItem(campaign);
 					AppContext.addFragment(CrmLinkGenerator
 							.generateCampaignPreviewLink(campaign.getId()),
-							"Preview Campaign: " + campaign.getCampaignname());
+							LocalizationHelper.getMessage(
+									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+									"Campaign", campaign.getCampaignname()));
 				} else {
 					AppContext
 							.getApplication()

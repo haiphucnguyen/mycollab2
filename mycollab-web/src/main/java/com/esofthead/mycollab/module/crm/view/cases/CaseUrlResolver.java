@@ -3,10 +3,10 @@ package com.esofthead.mycollab.module.crm.view.cases;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
-public class CaseUrlResolver extends UrlResolver {
+public class CaseUrlResolver extends CrmUrlResolver {
 	public CaseUrlResolver() {
 		this.addSubResolver("list", new CaseListUrlResolver());
 		this.addSubResolver("add", new CaseAddUrlResolver());
@@ -14,15 +14,15 @@ public class CaseUrlResolver extends UrlResolver {
 		this.addSubResolver("preview", new CasePreviewUrlResolver());
 	}
 
-	public static class CaseListUrlResolver extends UrlResolver {
+	public static class CaseListUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
-			EventBus.getInstance().fireEvent(
-					new CaseEvent.GotoList(this, null));
+			EventBus.getInstance()
+					.fireEvent(new CaseEvent.GotoList(this, null));
 		}
 	}
 
-	public static class CaseAddUrlResolver extends UrlResolver {
+	public static class CaseAddUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
@@ -30,7 +30,7 @@ public class CaseUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class CaseEditUrlResolver extends UrlResolver {
+	public static class CaseEditUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -40,7 +40,7 @@ public class CaseUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class CasePreviewUrlResolver extends UrlResolver {
+	public static class CasePreviewUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

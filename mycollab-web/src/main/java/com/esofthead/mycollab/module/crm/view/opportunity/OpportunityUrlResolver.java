@@ -3,10 +3,10 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
-public class OpportunityUrlResolver extends UrlResolver {
+public class OpportunityUrlResolver extends CrmUrlResolver {
 	public OpportunityUrlResolver() {
 		this.addSubResolver("list", new OpportunityListUrlResolver());
 		this.addSubResolver("add", new OpportunityAddUrlResolver());
@@ -14,7 +14,7 @@ public class OpportunityUrlResolver extends UrlResolver {
 		this.addSubResolver("preview", new OpportunityPreviewUrlResolver());
 	}
 
-	public static class OpportunityListUrlResolver extends UrlResolver {
+	public static class OpportunityListUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
@@ -22,7 +22,7 @@ public class OpportunityUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class OpportunityAddUrlResolver extends UrlResolver {
+	public static class OpportunityAddUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
@@ -30,7 +30,7 @@ public class OpportunityUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class OpportunityEditUrlResolver extends UrlResolver {
+	public static class OpportunityEditUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -40,7 +40,7 @@ public class OpportunityUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class OpportunityPreviewUrlResolver extends UrlResolver {
+	public static class OpportunityPreviewUrlResolver extends CrmUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

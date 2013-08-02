@@ -29,7 +29,7 @@ public class PopupButtonControl extends SplitButton implements
 	public PopupButtonControl(final String id, final String defaultName) {
 		super();
 		setCaption(defaultName);
-
+		addStyleName(UIConstants.THEME_GRAY_LINK);
 		initPopupButton(id, defaultName);
 	}
 

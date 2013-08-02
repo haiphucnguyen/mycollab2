@@ -21,7 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 public class ProjectUrlResolver extends UrlResolver {
-	public ProjectUrlResolver() {
+	public UrlResolver build() {
 		this.addSubResolver("dashboard", new ProjectPageUrlResolver());
 		this.addSubResolver("message", new MessageUrlResolver());
 		this.addSubResolver("milestone", new MilestoneUrlResolver());
@@ -34,6 +34,7 @@ public class ProjectUrlResolver extends UrlResolver {
 		this.addSubResolver("role", new RoleUrlResolver());
 		this.addSubResolver("time", new TimeUrlResolver());
 		this.addSubResolver("file", new ProjectFileUrlResolver());
+		return this;
 	}
 
 	@Override
@@ -46,7 +47,13 @@ public class ProjectUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class ProjectPageUrlResolver extends UrlResolver {
+	@Override
+	protected void defaultPageErrorHandler() {
+		EventBus.getInstance().fireEvent(
+				new ShellEvent.GotoProjectModule(this, null));
+	}
+
+	public static class ProjectPageUrlResolver extends ProjectUrlResolver {
 
 		@Override
 		protected void handlePage(String... params) {

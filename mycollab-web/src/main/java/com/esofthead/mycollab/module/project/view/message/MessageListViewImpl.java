@@ -56,8 +56,8 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 @ViewComponent
 public class MessageListViewImpl extends AbstractView implements
@@ -451,9 +451,12 @@ public class MessageListViewImpl extends AbstractView implements
 								attachments.saveContentsToRepo(attachmentPath);
 							} else {
 								titleField.addStyleName("errorField");
-								final MessageBox mb = new MessageBox(AppContext
-										.getApplication().getMainWindow(),
-										"Error!", MessageBox.Icon.ERROR,
+								final MessageBox mb = new MessageBox(
+										AppContext.getApplication()
+												.getMainWindow(),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
+										MessageBox.Icon.ERROR,
 										"Title must be not null!",
 										new MessageBox.ButtonConfig(
 												ButtonType.OK, "Ok"));

@@ -15,7 +15,7 @@ import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 public class CrmUrlResolver extends UrlResolver {
-	public CrmUrlResolver() {
+	public UrlResolver build() {
 		this.addSubResolver("dashboard", new CrmDashboardUrlResolver());
 		this.addSubResolver("account", new AccountUrlResolver());
 		this.addSubResolver("contact", new ContactUrlResolver());
@@ -25,6 +25,7 @@ public class CrmUrlResolver extends UrlResolver {
 		this.addSubResolver("cases", new CaseUrlResolver());
 		this.addSubResolver("activity", new ActivityUrlResolver());
 		this.addSubResolver("file", new FileUrlResolver());
+		return this;
 	}
 
 	@Override
@@ -37,7 +38,14 @@ public class CrmUrlResolver extends UrlResolver {
 		}
 	}
 
-	public static class CrmDashboardUrlResolver extends UrlResolver {
+	@Override
+	protected void defaultPageErrorHandler() {
+		EventBus.getInstance().fireEvent(
+				new ShellEvent.GotoCrmModule(this, null));
+
+	}
+
+	public static class CrmDashboardUrlResolver extends CrmUrlResolver {
 
 		@Override
 		protected void handlePage(String... params) {

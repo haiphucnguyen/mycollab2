@@ -2,16 +2,16 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 import com.esofthead.mycollab.web.AppContext;
 
-public class BugUrlResolver extends UrlResolver {
+public class BugUrlResolver extends ProjectUrlResolver {
 	public BugUrlResolver() {
 		this.addSubResolver("dashboard", new DashboardUrlResolver());
 		this.addSubResolver("list", new DashboardUrlResolver());
@@ -20,10 +20,10 @@ public class BugUrlResolver extends UrlResolver {
 		this.addSubResolver("preview", new PreviewUrlResolver());
 		this.addSubResolver("component", new ComponentUrlResolver());
 		this.addSubResolver("version", new VersionUrlResolver());
-		
+
 	}
 
-	private static class DashboardUrlResolver extends UrlResolver {
+	private static class DashboardUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -36,7 +36,7 @@ public class BugUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class PreviewUrlResolver extends UrlResolver {
+	private static class PreviewUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -52,7 +52,7 @@ public class BugUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class AddUrlResolver extends UrlResolver {
+	private static class AddUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -65,8 +65,8 @@ public class BugUrlResolver extends UrlResolver {
 					new ProjectEvent.GotoMyProject(this, chain));
 		}
 	}
-	
-	private static class EditUrlResolver extends UrlResolver {
+
+	private static class EditUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -75,10 +75,8 @@ public class BugUrlResolver extends UrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int bugId = Integer.parseInt(tokens[1]);
 
-			BugService bugService = AppContext
-					.getSpringBean(BugService.class);
-			SimpleBug bug = bugService
-					.findById(bugId);
+			BugService bugService = AppContext.getSpringBean(BugService.class);
+			SimpleBug bug = bugService.findById(bugId);
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new BugScreenData.Edit(bug));

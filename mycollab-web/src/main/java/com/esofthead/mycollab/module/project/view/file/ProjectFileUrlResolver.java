@@ -2,18 +2,18 @@ package com.esofthead.mycollab.module.project.view.file;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
-public class ProjectFileUrlResolver extends UrlResolver {
+public class ProjectFileUrlResolver extends ProjectUrlResolver {
 	public ProjectFileUrlResolver() {
 		this.addSubResolver("dashboard", new ListUrlResolver());
 	}
 
-	private static class ListUrlResolver extends UrlResolver {
+	private static class ListUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

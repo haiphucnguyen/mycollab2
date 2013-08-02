@@ -41,7 +41,7 @@ import com.vaadin.ui.VerticalLayout;
 public class BugDashboardViewImpl extends AbstractView implements
 		BugDashboardView {
 
-	private VerticalLayout leftColumn, rightColumn;
+	private VerticalLayout leftColumn, rightColumn, headerWrapper;
 
 	public BugDashboardViewImpl() {
 		super();
@@ -50,9 +50,33 @@ public class BugDashboardViewImpl extends AbstractView implements
 	}
 
 	private void initUI() {
-		final VerticalLayout headerWrapper = new VerticalLayout();
+		headerWrapper = new VerticalLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.addStyleName("bugdashboard-header");
+
+		this.addComponent(headerWrapper);
+
+		final HorizontalLayout body = new HorizontalLayout();
+		body.setWidth("100%");
+		body.setSpacing(true);
+
+		this.leftColumn = new VerticalLayout();
+		this.leftColumn.setSpacing(true);
+		this.leftColumn.setMargin(false, true, false, false);
+		body.addComponent(this.leftColumn);
+		body.setExpandRatio(this.leftColumn, 1.0f);
+
+		this.rightColumn = new VerticalLayout();
+		this.rightColumn.setSpacing(true);
+
+		body.addComponent(this.rightColumn);
+		body.setComponentAlignment(this.rightColumn, Alignment.TOP_RIGHT);
+
+		this.addComponent(body);
+	}
+
+	private void initHeader() {
+		headerWrapper.removeAllComponents();
 		final CssLayout headerTop = new CssLayout();
 		headerTop.setWidth("100%");
 		headerTop.addStyleName("bugdashboard-header-top");
@@ -125,30 +149,11 @@ public class BugDashboardViewImpl extends AbstractView implements
 		header.addComponent(controlsBtn);
 		header.setExpandRatio(controlsBtn, 1.0f);
 		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-
-		this.addComponent(headerWrapper);
-
-		final HorizontalLayout body = new HorizontalLayout();
-		body.setWidth("100%");
-		body.setSpacing(true);
-
-		this.leftColumn = new VerticalLayout();
-		this.leftColumn.setSpacing(true);
-		this.leftColumn.setMargin(false, true, false, false);
-		body.addComponent(this.leftColumn);
-		body.setExpandRatio(this.leftColumn, 1.0f);
-
-		this.rightColumn = new VerticalLayout();
-		this.rightColumn.setSpacing(true);
-
-		body.addComponent(this.rightColumn);
-		body.setComponentAlignment(this.rightColumn, Alignment.TOP_RIGHT);
-
-		this.addComponent(body);
 	}
 
 	@Override
 	public void displayDashboard() {
+		initHeader();
 		this.leftColumn.removeAllComponents();
 		this.rightColumn.removeAllComponents();
 

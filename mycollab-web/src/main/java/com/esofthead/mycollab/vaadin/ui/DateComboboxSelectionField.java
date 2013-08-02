@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.vaadin.addon.customfield.CustomField;
 
+import com.vaadin.data.Property;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -21,8 +22,14 @@ public class DateComboboxSelectionField extends CustomField {
 	private ComboBox cboDate;
 
 	private Map<String, Integer> mapNumberMonth = new HashMap<String, Integer>();
+	private FieldSelection fieldSelection;
 
 	public DateComboboxSelectionField() {
+		this(null);
+	}
+
+	public DateComboboxSelectionField(FieldSelection fieldSelection) {
+		this.fieldSelection = fieldSelection;
 		initUI();
 	}
 
@@ -31,7 +38,9 @@ public class DateComboboxSelectionField extends CustomField {
 		layout.setSpacing(true);
 
 		cboMonth = new ComboBox();
-		cboMonth.setNullSelectionAllowed(false);
+		cboMonth.setNullSelectionAllowed(true);
+		cboMonth.setImmediate(true);
+
 		addMonthItems();
 		cboMonth.select(cboMonth.getItemIds().iterator().next());
 		cboMonth.setWidth("117px");
@@ -39,7 +48,9 @@ public class DateComboboxSelectionField extends CustomField {
 		layout.setComponentAlignment(cboMonth, Alignment.TOP_CENTER);
 
 		cboDate = new ComboBox();
-		cboDate.setNullSelectionAllowed(false);
+		cboDate.setNullSelectionAllowed(true);
+		cboDate.setImmediate(true);
+
 		addDayItems();
 		cboDate.select(cboDate.getItemIds().iterator().next());
 		cboDate.setWidth("50px");
@@ -47,14 +58,48 @@ public class DateComboboxSelectionField extends CustomField {
 		layout.setComponentAlignment(cboDate, Alignment.TOP_CENTER);
 
 		cboYear = new ComboBox();
-		cboYear.setNullSelectionAllowed(false);
+		cboYear.setNullSelectionAllowed(true);
+		cboYear.setImmediate(true);
+
 		addYearItems();
 		cboYear.select(cboYear.getItemIds().iterator().next());
 		cboYear.setWidth("70px");
 		layout.addComponent(cboYear);
 		layout.setComponentAlignment(cboYear, Alignment.TOP_CENTER);
 
+		cboMonth.addListener(new Property.ValueChangeListener() {
+
+			@Override
+			public void valueChange(Property.ValueChangeEvent event) {
+				fireDateChange();
+
+			}
+		});
+
+		cboDate.addListener(new Property.ValueChangeListener() {
+
+			@Override
+			public void valueChange(Property.ValueChangeEvent event) {
+				fireDateChange();
+
+			}
+		});
+
+		cboYear.addListener(new Property.ValueChangeListener() {
+
+			@Override
+			public void valueChange(Property.ValueChangeEvent event) {
+				fireDateChange();
+
+			}
+		});
 		setCompositionRoot(layout);
+	}
+
+	private void fireDateChange() {
+		if (fieldSelection != null) {
+			fieldSelection.fireValueChange(getDate());
+		}
 	}
 
 	private String formatMonth(String month) {
@@ -101,19 +146,30 @@ public class DateComboboxSelectionField extends CustomField {
 			cboDate.select(calendar.get(Calendar.DATE) + "");
 			cboMonth.select(formatMonth(calendar.get(Calendar.MONTH) + 1 + ""));
 			cboYear.select(calendar.get(Calendar.YEAR));
+		} else {
+			cboDate.select("");
+			cboMonth.select("");
+			cboYear.select("");
 		}
 	}
 
 	public Date getDate() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Integer.parseInt(cboYear.getValue().toString()), mapNumberMonth.get(cboMonth.getValue().toString()) - 1,
-				Integer.parseInt(cboDate.getValue().toString()));
-		return calendar.getTime();
+		if ((cboDate.getValue() != null) && (cboMonth.getValue() != null)
+				&& (cboYear.getValue() != null)) {
+			Calendar calendar = Calendar.getInstance();
+
+			calendar.set(Integer.parseInt(cboYear.getValue().toString()),
+					mapNumberMonth.get(cboMonth.getValue().toString()) - 1,
+					Integer.parseInt(cboDate.getValue().toString()));
+			return calendar.getTime();
+		} else {
+			return null;
+		}
+
 	}
 
 	@Override
 	public Class<?> getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return Date.class;
 	}
 }

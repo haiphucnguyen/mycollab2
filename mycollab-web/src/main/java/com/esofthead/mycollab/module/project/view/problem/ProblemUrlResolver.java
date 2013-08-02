@@ -7,14 +7,14 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 import com.esofthead.mycollab.web.AppContext;
 
-public class ProblemUrlResolver extends UrlResolver {
+public class ProblemUrlResolver extends ProjectUrlResolver {
 	public ProblemUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());
 		this.addSubResolver("preview", new PreviewUrlResolver());
@@ -22,7 +22,7 @@ public class ProblemUrlResolver extends UrlResolver {
 		this.addSubResolver("edit", new EditUrlResolver());
 	}
 
-	private static class ListUrlResolver extends UrlResolver {
+	private static class ListUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -40,7 +40,7 @@ public class ProblemUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class PreviewUrlResolver extends UrlResolver {
+	private static class PreviewUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -56,7 +56,7 @@ public class ProblemUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class AddUrlResolver extends UrlResolver {
+	private static class AddUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -70,7 +70,7 @@ public class ProblemUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class EditUrlResolver extends UrlResolver {
+	private static class EditUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

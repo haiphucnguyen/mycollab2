@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
@@ -11,10 +12,9 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriter
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 import com.esofthead.mycollab.web.AppContext;
 
-public class VersionUrlResolver extends UrlResolver {
+public class VersionUrlResolver extends ProjectUrlResolver {
 	public VersionUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());
 		this.addSubResolver("add", new AddUrlResolver());
@@ -22,7 +22,7 @@ public class VersionUrlResolver extends UrlResolver {
 		this.addSubResolver("preview", new PreviewUrlResolver());
 	}
 
-	private static class ListUrlResolver extends UrlResolver {
+	private static class ListUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -40,7 +40,7 @@ public class VersionUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class PreviewUrlResolver extends UrlResolver {
+	private static class PreviewUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -56,7 +56,7 @@ public class VersionUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class EditUrlResolver extends UrlResolver {
+	private static class EditUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -76,7 +76,7 @@ public class VersionUrlResolver extends UrlResolver {
 		}
 	}
 
-	private static class AddUrlResolver extends UrlResolver {
+	private static class AddUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);

@@ -15,7 +15,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Window;
 
-public class UrlResolver {
+public abstract class UrlResolver {
 	private static Logger log = LoggerFactory.getLogger(UrlResolver.class);
 
 	private Map<String, UrlResolver> subResolvers;
@@ -58,6 +58,7 @@ public class UrlResolver {
 			}
 		} catch (Exception e) {
 			log.error("Error while navigation", e);
+			defaultPageErrorHandler();
 			AppContext
 					.getApplication()
 					.getMainWindow()
@@ -69,6 +70,8 @@ public class UrlResolver {
 							Window.Notification.TYPE_HUMANIZED_MESSAGE);
 		}
 	}
+	
+	abstract protected void defaultPageErrorHandler();
 
 	protected void handlePage(String... params) {
 		log.debug("Handle page: " + this + " with params: "

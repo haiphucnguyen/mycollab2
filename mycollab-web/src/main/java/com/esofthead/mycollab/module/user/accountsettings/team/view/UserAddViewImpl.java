@@ -7,7 +7,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import java.util.Collection;
 import java.util.Date;
 
-import org.vaadin.addon.customfield.FieldWrapper;
+import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
@@ -20,9 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -127,16 +125,13 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 					final com.vaadin.ui.Component uiContext) {
 
 				if (propertyId.equals("isAdmin")) {
-					if ((user.getIsAdmin() == null)
-							|| (user.getIsAdmin() == false)) {
-						AdminRoleSelectionField roleSelectionField = new AdminRoleSelectionField();
-						if (user.getRoleid() != null) {
-							roleSelectionField.setRoleId(user.getRoleid());
-						}
-						return roleSelectionField;
+					AdminRoleSelectionField roleSelectionField = new AdminRoleSelectionField();
+					if (user.getRoleid() != null) {
+						roleSelectionField.setRoleId(user.getRoleid());
 					} else {
-						return new FormViewField("Account Owner");
+						roleSelectionField.setRoleId(-1);
 					}
+					return roleSelectionField;
 				} else if (propertyId.equals("firstname")
 						|| propertyId.equals("lastname")
 						|| propertyId.equals("email")) {
@@ -187,25 +182,21 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			}
 		}
 
-		private class AdminRoleSelectionField extends FieldWrapper<Integer>
-				implements FieldSelection {
+		private class AdminRoleSelectionField extends CustomField {
 			private static final long serialVersionUID = 1L;
 
 			private RoleComboBox roleBox;
 
 			public AdminRoleSelectionField() {
-				super(new TextField(""), Integer.class);
-
 				roleBox = new RoleComboBox();
-				roleBox.addListener(new Property.ValueChangeListener() {
+				this.roleBox.addListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void valueChange(Property.ValueChangeEvent event) {
-						Object roleObj = roleBox.getValue();
-						if (roleObj != null && (roleObj instanceof Integer)) {
-							user.setRoleid((Integer) roleObj);
-						}
+					public void valueChange(
+							final Property.ValueChangeEvent event) {
+						getValue();
+
 					}
 				});
 				this.setCompositionRoot(roleBox);
@@ -215,20 +206,27 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 				roleBox.setValue(roleId);
 			}
 
-			@Override
-			public Class<Integer> getType() {
-				return Integer.class;
+			public Object getValue() {
+				Integer roleId = (Integer) AdminRoleSelectionField.this.roleBox
+						.getValue();
+				Boolean resultVal = null;
+				if (roleId == -1) {
+					UserAddViewImpl.this.user.setIsAdmin(Boolean.TRUE);
+					UserAddViewImpl.this.user.setRoleid(null);
+					resultVal = Boolean.TRUE;
+				} else {
+					UserAddViewImpl.this.user
+							.setRoleid((Integer) AdminRoleSelectionField.this.roleBox
+									.getValue());
+					UserAddViewImpl.this.user.setIsAdmin(Boolean.FALSE);
+					resultVal = Boolean.FALSE;
+				}
+				return resultVal;
 			}
 
 			@Override
-			public void fireValueChange(Object data) {
-				Integer roleIdVal = (Integer) data;
-				if (roleIdVal != null) {
-					this.getWrappedField().setValue(roleIdVal);
-				} else {
-					this.getWrappedField().setValue(null);
-				}
-
+			public Class<Integer> getType() {
+				return Integer.class;
 			}
 		}
 	}

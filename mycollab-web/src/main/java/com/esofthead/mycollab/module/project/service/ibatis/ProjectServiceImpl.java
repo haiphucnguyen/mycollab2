@@ -226,6 +226,8 @@ public class ProjectServiceImpl extends
 	public String getSubdomainOfProject(int projectId) {
 		if (ApplicationProperties.productionMode) {
 			return projectMapperExt.getSubdomainOfProject(projectId);
+		} else {
+			
 		}
 
 		return null;

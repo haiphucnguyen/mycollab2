@@ -43,153 +43,161 @@ import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
  */
 @ViewComponent
 public class TaskGroupReorderViewImpl extends AbstractView implements
-		TaskGroupReorderView {
-	private static final long serialVersionUID = 1L;
-	private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
-	private Button saveOrderBtn;
-	private final Set<SimpleTaskList> changeSet = new HashSet<SimpleTaskList>();
+        TaskGroupReorderView {
+    private static final long serialVersionUID = 1L;
+    private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
+    private Button saveOrderBtn;
+    private final Set<SimpleTaskList> changeSet = new HashSet<SimpleTaskList>();
 
-	public TaskGroupReorderViewImpl() {
-		super();
-		constructHeader();
-	}
+    public TaskGroupReorderViewImpl() {
+        super();
+        this.setMargin(true);
+        constructHeader();
+    }
 
-	private void constructHeader() {
-		HorizontalLayout header = new HorizontalLayout();
-		header.setMargin(true);
-		header.setSpacing(true);
-		header.setWidth("100%");
-		Label headerLbl = new Label("All Tasks");
-		headerLbl.setStyleName("h2");
-		header.addComponent(headerLbl);
-		header.setExpandRatio(headerLbl, 1.0f);
-		
-		Button backToListBtn = new Button("Back to task list",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+    private void constructHeader() {
+        CssLayout headerWrapper = new CssLayout();
+        headerWrapper.setWidth("100%");
+        headerWrapper.addStyleName("taskgroup-header");
 
-					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						EventBus.getInstance()
-								.fireEvent(
-										new TaskListEvent.GotoTaskListScreen(
-												this, null));
-					}
-				});
-		backToListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		header.addComponent(backToListBtn);
-		header.setComponentAlignment(backToListBtn, Alignment.MIDDLE_RIGHT);
+        HorizontalLayout header = new HorizontalLayout();
+        header.setSpacing(true);
+        header.setWidth("100%");
+        Label headerLbl = new Label("All Tasks");
+        headerLbl.setStyleName("h2");
+        header.addComponent(headerLbl);
+        header.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
+        header.setExpandRatio(headerLbl, 1.0f);
 
-		saveOrderBtn = new Button("Save", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        Button backToListBtn = new Button("Back to task list",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new TaskListEvent.SaveReoderTaskList(event, changeSet));
-			}
-		});
-		saveOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		header.addComponent(saveOrderBtn);
-		header.setComponentAlignment(saveOrderBtn, Alignment.MIDDLE_RIGHT);
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        EventBus.getInstance()
+                                .fireEvent(
+                                        new TaskListEvent.GotoTaskListScreen(
+                                                this, null));
+                    }
+                });
+        backToListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        header.addComponent(backToListBtn);
+        header.setComponentAlignment(backToListBtn, Alignment.MIDDLE_RIGHT);
 
-		this.addComponent(header);
+        saveOrderBtn = new Button("Save", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-		final DDVerticalLayout ddLayout = new DDVerticalLayout();
-		ddLayout.setComponentVerticalDropRatio(0.3f);
-		ddLayout.setDragMode(LayoutDragMode.CLONE);
-		ddLayout.setDropHandler(new DropHandler() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                EventBus.getInstance().fireEvent(
+                        new TaskListEvent.SaveReoderTaskList(event, changeSet));
+            }
+        });
+        saveOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        header.addComponent(saveOrderBtn);
+        header.setComponentAlignment(saveOrderBtn, Alignment.MIDDLE_RIGHT);
 
-			@Override
-			public AcceptCriterion getAcceptCriterion() {
-				return new Not(VerticalLocationIs.MIDDLE);
-			}
+        headerWrapper.addComponent(header);
 
-			@Override
-			public void drop(DragAndDropEvent event) {
-				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
-						.getTransferable();
+        this.addComponent(headerWrapper);
 
-				DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
-						.getTargetDetails();
+        final DDVerticalLayout ddLayout = new DDVerticalLayout();
+        ddLayout.addStyleName("taskgroup-reorder");
+        ddLayout.setComponentVerticalDropRatio(0.3f);
+        ddLayout.setDragMode(LayoutDragMode.CLONE);
+        ddLayout.setDropHandler(new DropHandler() {
+            private static final long serialVersionUID = 1L;
 
-				TaskListComponent comp = (TaskListComponent) transferable
-						.getComponent();
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                return new Not(VerticalLocationIs.MIDDLE);
+            }
 
-				int currentIndex = ddLayout.getComponentIndex(comp);
-				int newIndex = details.getOverIndex();
+            @Override
+            public void drop(DragAndDropEvent event) {
+                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
+                        .getTransferable();
 
-				ddLayout.removeComponent(comp);
+                DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
+                        .getTargetDetails();
 
-				if (currentIndex > newIndex
-						&& details.getDropLocation() == VerticalDropLocation.BOTTOM) {
-					newIndex++;
-				}
+                TaskListComponent comp = (TaskListComponent) transferable
+                        .getComponent();
 
-				SimpleTaskList dropTaskList = comp.getTaskList();
-				dropTaskList.setGroupindex(newIndex);
-				changeSet.add(dropTaskList);
-				ddLayout.addComponent(comp, newIndex);
+                int currentIndex = ddLayout.getComponentIndex(comp);
+                int newIndex = details.getOverIndex();
 
-				// change affected task list items
-				for (int i = 0; i < ddLayout.getComponentCount(); i++) {
-					TaskListComponent affectedComp = (TaskListComponent) ddLayout
-							.getComponent(i);
-					SimpleTaskList affectedTaskList = affectedComp
-							.getTaskList();
-					affectedTaskList.setGroupindex(i);
-					changeSet.add(affectedTaskList);
-				}
-			}
-		});
+                ddLayout.removeComponent(comp);
 
-		taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(
-				null, AppContext.getSpringBean(ProjectTaskListService.class),
-				TaskListRowDisplayHandler.class, ddLayout, false);
-		this.addComponent(taskLists);
-	}
+                if (currentIndex > newIndex
+                        && details.getDropLocation() == VerticalDropLocation.BOTTOM) {
+                    newIndex++;
+                }
 
-	@Override
-	public void displayTaskLists() {
-		TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
-				.getProjectId()));
-		taskLists.setSearchCriteria(criteria);
-	}
+                SimpleTaskList dropTaskList = comp.getTaskList();
+                dropTaskList.setGroupindex(newIndex);
+                changeSet.add(dropTaskList);
+                ddLayout.addComponent(comp, newIndex);
 
-	public static class TaskListRowDisplayHandler implements
-			BeanList.RowDisplayHandler<SimpleTaskList> {
+                // change affected task list items
+                for (int i = 0; i < ddLayout.getComponentCount(); i++) {
+                    TaskListComponent affectedComp = (TaskListComponent) ddLayout
+                            .getComponent(i);
+                    SimpleTaskList affectedTaskList = affectedComp
+                            .getTaskList();
+                    affectedTaskList.setGroupindex(i);
+                    changeSet.add(affectedTaskList);
+                }
+            }
+        });
 
-		@Override
-		public Component generateRow(SimpleTaskList taskList, int rowIndex) {
-			return new TaskListComponent(taskList);
-		}
-	}
+        taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(
+                null, AppContext.getSpringBean(ProjectTaskListService.class),
+                TaskListRowDisplayHandler.class, ddLayout, false);
+        this.addComponent(taskLists);
+    }
 
-	private static class TaskListComponent extends CssLayout {
-		private static final long serialVersionUID = 1L;
-		private final SimpleTaskList taskList;
+    @Override
+    public void displayTaskLists() {
+        TaskListSearchCriteria criteria = new TaskListSearchCriteria();
+        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+                .getProjectId()));
+        taskLists.setSearchCriteria(criteria);
+    }
 
-		public TaskListComponent(SimpleTaskList taskList) {
-			this.taskList = taskList;
-			this.setStyleName("task-component");
-			this.setWidth("100%");
-			Label taskName = new Label(taskList.getName());
-			taskName.addStyleName("task-name");
-			if ("Closed".equals(taskList.getStatus())) {
-				taskName.addStyleName(UIConstants.LINK_COMPLETED);
-			}
-			this.addComponent(taskName);
-			Label taskCreatedTime = new Label("Last updated on "
-					+ DateTimeUtils.getStringDateFromNow(taskList
-							.getLastupdatedtime()));
-			taskCreatedTime.setStyleName("created-time");
-			this.addComponent(taskCreatedTime);
-		}
+    public static class TaskListRowDisplayHandler implements
+            BeanList.RowDisplayHandler<SimpleTaskList> {
 
-		public SimpleTaskList getTaskList() {
-			return taskList;
-		}
-	}
+        @Override
+        public Component generateRow(SimpleTaskList taskList, int rowIndex) {
+            return new TaskListComponent(taskList);
+        }
+    }
+
+    private static class TaskListComponent extends CssLayout {
+        private static final long serialVersionUID = 1L;
+        private final SimpleTaskList taskList;
+
+        public TaskListComponent(SimpleTaskList taskList) {
+            this.taskList = taskList;
+            this.setStyleName("task-component");
+            this.setWidth("100%");
+            Label taskName = new Label(taskList.getName());
+            taskName.addStyleName("task-name");
+            if ("Closed".equals(taskList.getStatus())) {
+                taskName.addStyleName(UIConstants.LINK_COMPLETED);
+            }
+            this.addComponent(taskName);
+            Label taskCreatedTime = new Label("Last updated on "
+                    + DateTimeUtils.getStringDateFromNow(taskList
+                            .getLastupdatedtime()));
+            taskCreatedTime.setStyleName("created-time");
+            this.addComponent(taskCreatedTime);
+        }
+
+        public SimpleTaskList getTaskList() {
+            return taskList;
+        }
+    }
 }

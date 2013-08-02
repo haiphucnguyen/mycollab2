@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.file.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -166,20 +167,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				fileBreadCrumb.gotoFolder(item);
 			}
 		});
-
-		HorizontalLayout shareActionLayout = new HorizontalLayout();
-		final Embedded shareIcon = new Embedded();
-		shareIcon.setSource(MyCollabResource
-				.newResource("icons/24/share_icon.png"));
-		shareActionLayout.addComponent(shareIcon);
-		shareActionLayout.setComponentAlignment(shareIcon,
-				Alignment.MIDDLE_CENTER);
-		Button shareBtnLink = new Button("Shared with me");
-		shareBtnLink.addStyleName("link");
-		shareActionLayout.addComponent(shareBtnLink);
-		shareActionLayout.setComponentAlignment(shareBtnLink,
-				Alignment.MIDDLE_CENTER);
-		menuLayout.addComponent(shareActionLayout);
 
 		mainView.addComponent(menuBarContainerHorizontalLayout);
 		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
@@ -392,8 +379,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
-			if (listAllCheckBox != null && listAllCheckBox.size() > 0)
+			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
+				lstCheckedResource.clear();
+			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
 				listAllCheckBox.clear();
+			}
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 			List<Resource> lstResource = resourceService.getResources(curFolder
@@ -413,8 +403,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
-			if (listAllCheckBox != null && listAllCheckBox.size() > 0)
+			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
+				lstCheckedResource.clear();
+			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
 				listAllCheckBox.clear();
+			}
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 
@@ -535,7 +528,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (res instanceof Content) {
 				moreInfoAboutResLayout.addComponent(new Separator());
 				Double size = res.getSize();
-				DecimalFormat df = new DecimalFormat("#.##");
+				DecimalFormat df = new DecimalFormat("#");
+				df.setRoundingMode(RoundingMode.HALF_UP);
 				moreInfoAboutResLayout.addComponent(new Label(df.format(size)
 						+ " KB"));
 			}
@@ -579,10 +573,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-									.getStreamFolderResource(new String[] { res
-											.getPath() });
-
+							final com.vaadin.terminal.Resource downloadResource;
+							if (res instanceof Folder) {
+								downloadResource = StreamDownloadResourceFactory
+										.getStreamFolderResource(new String[] { res
+												.getPath() });
+							} else {
+								downloadResource = StreamDownloadResourceFactory
+										.getStreamResource(res.getPath());
+							}
 							AppContext.getApplication().getMainWindow()
 									.open(downloadResource, "_blank");
 						}
@@ -643,10 +642,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			String parentFolderPath = resourceService.getParentFolder(
 					res.getPath()).getPath();
-			StringBuffer parentFolderPathStrBuffer = new StringBuffer(
-					rootFolderName
-							+ parentFolderPath.substring(parentFolderPath
-									.indexOf("/", 2)));
+			StringBuffer parentFolderPathStrBuffer;
+			if (parentFolderPath.equals(rootPath)) {
+				parentFolderPathStrBuffer = new StringBuffer(rootFolderName);
+			} else
+				parentFolderPathStrBuffer = new StringBuffer(rootFolderName
+						+ parentFolderPath.substring(parentFolderPath.indexOf(
+								"/", 2)));
 			if (parentFolderPathStrBuffer.toString().split("/").length > 6) {
 				String[] parentFolderPathArray = parentFolderPath.split("/");
 				parentFolderPathStrBuffer
@@ -706,11 +708,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		@Override
-		public void displayAfterMoveSuccess(Folder folder) {
+		public void displayAfterMoveSuccess(Folder folder, boolean checking) {
 			FileMainViewImpl.this.itemResourceContainerLayout
 					.constructBody(FileMainViewImpl.this.baseFolder);
-			FileMainViewImpl.this.getWindow().showNotification(
-					"Move asset(s) successfully.");
+			if (!checking)
+				FileMainViewImpl.this.getWindow().showNotification(
+						"Move asset(s) successfully.");
+			else
+				FileMainViewImpl.this
+						.getWindow()
+						.showNotification(
+								"Move finish, some items can't move to destination. Please check duplicated file-name and try again.");
 			FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
 
 			Container dataSource = FileMainViewImpl.this.menuTree
@@ -1189,14 +1197,26 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								for (Resource res : lstCheckedResource) {
 									lstPath.add(res.getPath());
 								}
-
-								final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-										.getStreamFolderResource(lstPath
-												.toArray(new String[lstPath
-														.size()]));
-
+								com.vaadin.terminal.Resource downloadResource = null;
+								if (lstCheckedResource.size() == 1
+										&& lstCheckedResource.get(0) instanceof Content) {
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamResource(lstCheckedResource
+													.get(0).getPath());
+								} else if (lstCheckedResource.size() > 0) {
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamFolderResource(lstPath
+													.toArray(new String[lstPath
+															.size()]));
+								}
 								AppContext.getApplication().getMainWindow()
 										.open(downloadResource, "_blank");
+
+							} else {
+								FileMainViewImpl.this
+										.getWindow()
+										.showNotification(
+												"Please choose items to download.");
 							}
 						}
 					});
@@ -1210,11 +1230,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-									lstCheckedResource,
-									FileMainViewImpl.this.resourceService);
-							FileMainViewImpl.this.getWindow().addWindow(
-									moveResourceWindow);
+							if (lstCheckedResource.size() > 0) {
+								MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+										lstCheckedResource,
+										FileMainViewImpl.this.resourceService);
+								FileMainViewImpl.this.getWindow().addWindow(
+										moveResourceWindow);
+							} else {
+								FileMainViewImpl.this
+										.getParent()
+										.getWindow()
+										.showNotification(
+												"Please select items to move");
+							}
+
 						}
 					});
 			moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -1229,30 +1258,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							ConfirmDialogExt.show(
-									FileMainViewImpl.this.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
-													ApplicationProperties
-															.getString(ApplicationProperties.SITE_NAME)),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void onClose(
-												final ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteResourceAction();
-											}
-										}
-									});
+							if (lstCheckedResource.size() == 0) {
+								FileMainViewImpl.this
+										.getParent()
+										.getWindow()
+										.showNotification(
+												"Please select items to delete");
+							} else {
+								deleteResourceAction();
+							}
 						}
 					});
 			deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
@@ -1276,33 +1290,65 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		protected void deleteResourceAction() {
-			if (lstCheckedResource != null && lstCheckedResource.size() > 0) {
-				for (Resource res : lstCheckedResource) {
-					FileMainViewImpl.this.resourceService.removeResource(res
-							.getPath());
-					if (res instanceof Folder) {
-						FileMainViewImpl.this.menuTree.removeItem((Folder) res);
-					}
-				}
-				if (!fileBreadCrumb.getCurrentBreadCrumbFolder().getPath()
-						.equals(baseFolder.getPath())) {
-					itemResourceContainerLayout
-							.constructBody((Folder) resourceService
-									.getResource(rootPath));
-				} else {
-					itemResourceContainerLayout.constructBody(baseFolder);
-				}
-				if ((Boolean) selectAllBtn.getValue())
-					selectAllBtn.click();
+			ConfirmDialogExt
+					.show(FileMainViewImpl.this.getWindow(),
+							LocalizationHelper
+									.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											ApplicationProperties
+													.getString(ApplicationProperties.SITE_NAME)),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+							new ConfirmDialog.Listener() {
+								private static final long serialVersionUID = 1L;
 
-				FileMainViewImpl.this.menuTree
-						.collapseItem(FileMainViewImpl.this.baseFolder);
-				FileMainViewImpl.this.menuTree
-						.expandItem(FileMainViewImpl.this.baseFolder);
-				FileMainViewImpl.this.getWindow().showNotification(
-						"Delete successfully.");
-				FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
-			}
+								@Override
+								public void onClose(final ConfirmDialog dialog) {
+									if (dialog.isConfirmed()) {
+										if (lstCheckedResource != null
+												&& lstCheckedResource.size() > 0) {
+											for (Resource res : lstCheckedResource) {
+												FileMainViewImpl.this.resourceService
+														.removeResource(res
+																.getPath());
+												if (res instanceof Folder) {
+													FileMainViewImpl.this.menuTree
+															.removeItem((Folder) res);
+												}
+											}
+											if (!fileBreadCrumb
+													.getCurrentBreadCrumbFolder()
+													.getPath()
+													.equals(baseFolder
+															.getPath())) {
+												itemResourceContainerLayout
+														.constructBody((Folder) resourceService
+																.getResource(rootPath));
+											} else {
+												itemResourceContainerLayout
+														.constructBody(baseFolder);
+											}
+											if ((Boolean) selectAllBtn
+													.getValue())
+												selectAllBtn.click();
+
+											FileMainViewImpl.this.menuTree
+													.collapseItem(FileMainViewImpl.this.baseFolder);
+											FileMainViewImpl.this.menuTree
+													.expandItem(FileMainViewImpl.this.baseFolder);
+											FileMainViewImpl.this
+													.getWindow()
+													.showNotification(
+															"Delete successfully.");
+											FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+										}
+									}
+								}
+							});
 		}
 	}
 }

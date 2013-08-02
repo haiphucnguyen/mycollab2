@@ -247,6 +247,7 @@ public class VersionReadViewImpl extends AbstractView implements
                 final SimpleProject project = CurrentProjectVariables
                         .getProject();
                 final VerticalLayout leftColumn = new VerticalLayout();
+                leftColumn.setSpacing(true);
                 this.bottomLayout.addComponent(leftColumn);
                 this.bottomLayout.setExpandRatio(leftColumn, 1.0f);
 

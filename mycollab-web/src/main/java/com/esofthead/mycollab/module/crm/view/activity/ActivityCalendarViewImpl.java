@@ -6,10 +6,12 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityEventProvider.CrmEvent;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.DateClickEvent;
@@ -42,10 +44,20 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		actionBtnLayout.setSpacing(true);
 		actionBtnLayout.setWidth("200px");
 
-		actionBtnLayout.addComponent(new ButtonLink("Create Todo", listener));
-		actionBtnLayout.addComponent(new ButtonLink("Create Call", listener));
-		actionBtnLayout
-				.addComponent(new ButtonLink("Create Meeting", listener));
+		ButtonLink todoBtn = new ButtonLink("Create Todo", listener);
+		actionBtnLayout.addComponent(todoBtn);
+		todoBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_TASK));
+
+		Button callBtn = new ButtonLink("Create Call", listener);
+		actionBtnLayout.addComponent(callBtn);
+		callBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CALL));
+
+		ButtonLink meetingBtn = new ButtonLink("Create Meeting", listener);
+		actionBtnLayout.addComponent(meetingBtn);
+		meetingBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_MEETING));
 
 		calendarActionBtn.addComponent(actionBtnLayout);
 
@@ -83,14 +95,15 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				}
 			}
 		});
-		
+
 		calendar.setHandler(new DateClickHandler() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void dateClick(DateClickEvent event) {
-				//do nothing, it is a trick to remove default date click handler
-				
+				// do nothing, it is a trick to remove default date click
+				// handler
+
 			}
 		});
 

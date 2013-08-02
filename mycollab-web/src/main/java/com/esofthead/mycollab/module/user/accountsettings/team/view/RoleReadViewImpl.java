@@ -116,7 +116,7 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Role>(PreviewForm.this))
-						.createButtonControls();
+						.createButtonControls(RolePermissionCollections.USER_ROLE);
 			}
 
 			@Override

@@ -76,7 +76,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
-			
+
 			Lead lead = null;
 
 			if (data.getParams() instanceof Lead) {
@@ -104,12 +104,16 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			view.editItem(lead);
 
 			if (lead.getId() == null) {
-				AppContext.addFragment("crm/lead/add", "Add Lead");
+				AppContext.addFragment("crm/lead/add", LocalizationHelper
+						.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+								"Lead"));
 			} else {
 				AppContext.addFragment(
 						"crm/lead/edit/"
 								+ UrlEncodeDecoder.encode(lead.getId()),
-						"Edit Lead: " + lead.getLastname());
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, "Lead",
+								lead.getLastname()));
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();
