@@ -19,7 +19,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUserAccountInvitation;
 import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 
 @Component
-public class SendInvitationUserCommand {
+public class SendUserInvitationCommand {
 	@Autowired
 	private UserAccountInvitationMapper userAccountInvitationMapper;
 

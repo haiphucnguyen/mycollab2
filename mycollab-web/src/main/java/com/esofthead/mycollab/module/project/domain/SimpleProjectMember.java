@@ -28,6 +28,8 @@ public class SimpleProjectMember extends ProjectMember {
 	private String projectName;
 	
 	private String email;
+	
+	private int sAccountId;
 
 	public String getMemberFullName() {
 		return memberFullName;
@@ -91,5 +93,13 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public void setMemberAvatarId(String memberAvatarId) {
 		this.memberAvatarId = memberAvatarId;
+	}
+
+	public int getsAccountId() {
+		return sAccountId;
+	}
+
+	public void setsAccountId(int sAccountId) {
+		this.sAccountId = sAccountId;
 	}
 }
