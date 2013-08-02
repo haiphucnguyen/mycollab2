@@ -26,7 +26,7 @@
         </if>
         
         <if test="searchCriteria.status != null">
-            <![CDATA[${searchCriteria.status.operation} m_prj_member.status ${searchCriteria.status.compareOperator} #{searchCriteria.status.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.status.operation} m_prj_member.status = #{searchCriteria.status.value}]]>
         </if>
 
         <if test="searchCriteria.projectId != null">
