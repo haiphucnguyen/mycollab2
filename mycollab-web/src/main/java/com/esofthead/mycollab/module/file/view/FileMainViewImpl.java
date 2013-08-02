@@ -95,8 +95,58 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		menuBarContainerHorizontalLayout.setMargin(true);
 
 		final VerticalLayout menuLayout = new VerticalLayout();
+		menuLayout.setSpacing(true);
 		menuLayout.setWidth("250px");
 		menuBarContainerHorizontalLayout.addComponent(menuLayout);
+
+		HorizontalLayout topControlMenuLayoutWapper = new HorizontalLayout();
+		topControlMenuLayoutWapper.setWidth("250px");
+		topControlMenuLayoutWapper.addStyleName("border-box2-no-margin");
+
+		HorizontalLayout topControlMenuLayout = new HorizontalLayout();
+		topControlMenuLayout.setSpacing(false);
+		UiUtils.addComponent(topControlMenuLayoutWapper, topControlMenuLayout,
+				Alignment.MIDDLE_RIGHT);
+
+		Button eventBtn = new Button();
+		eventBtn.setIcon(new ThemeResource("icons/16/ecm/event.png"));
+		eventBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+			}
+		});
+		eventBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		topControlMenuLayout.addComponent(eventBtn);
+
+		Button settingBtn = new Button();
+		settingBtn.setIcon(new ThemeResource("icons/16/ecm/settings.png"));
+		settingBtn.addListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+			}
+		});
+		settingBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		topControlMenuLayout.addComponent(settingBtn);
+
+		final PopupButton linkBtn = new PopupButton();
+		linkBtn.setIcon(new ThemeResource("icons/16/ecm/link.png"));
+		linkBtn.setWidth("65px");
+		final VerticalLayout filterBtnLayout = new VerticalLayout();
+		filterBtnLayout.setMargin(true);
+		filterBtnLayout.setSpacing(true);
+		filterBtnLayout.setWidth("300px");
+		Button uploadDropboxBtn = new Button("Upload from Dropbox");
+		uploadDropboxBtn.addStyleName("link");
+		filterBtnLayout.addComponent(uploadDropboxBtn);
+
+		linkBtn.addComponent(filterBtnLayout);
+		linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		topControlMenuLayout.addComponent(linkBtn);
+		menuLayout.addComponent(topControlMenuLayoutWapper);
 
 		this.menuTree = new Tree();
 		this.menuTree.setMultiSelect(false);
@@ -1153,10 +1203,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					}
 				}
 			});
-			goUpBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			goUpBtn.setDescription("Back to parent folder");
+			goUpBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 			UiUtils.addComponent(controllGroupBtn, goUpBtn,
 					Alignment.MIDDLE_LEFT);
 
+			HorizontalLayout groupActionControllLayout = new HorizontalLayout();
+			groupActionControllLayout.setSpacing(false);
 			Button createBtn = new Button("Create", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -1167,9 +1220,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							addnewFolderWindow);
 				}
 			});
-			createBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-			UiUtils.addComponent(controllGroupBtn, createBtn,
-					Alignment.MIDDLE_LEFT);
+			createBtn.setIcon(new ThemeResource("icons/16/ecm/add.png"));
+			createBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+			groupActionControllLayout.addComponent(createBtn);
 
 			Button uploadBtn = new Button("Upload", new ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -1181,9 +1234,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							multiUploadWindow);
 				}
 			});
-			uploadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-			UiUtils.addComponent(controllGroupBtn, uploadBtn,
-					Alignment.MIDDLE_LEFT);
+			uploadBtn.setIcon(new ThemeResource("icons/16/ecm/upload.png"));
+			uploadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+			groupActionControllLayout.addComponent(uploadBtn);
 
 			Button downloadBtn = new Button("Download",
 					new Button.ClickListener() {
@@ -1220,9 +1273,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							}
 						}
 					});
-			downloadBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-			UiUtils.addComponent(controllGroupBtn, downloadBtn,
-					Alignment.MIDDLE_LEFT);
+			downloadBtn.setIcon(new ThemeResource("icons/16/ecm/download.png"));
+			downloadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+			groupActionControllLayout.addComponent(downloadBtn);
 
 			Button moveToBtn = new Button("Move to",
 					new Button.ClickListener() {
@@ -1246,9 +1299,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						}
 					});
-			moveToBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-			UiUtils.addComponent(controllGroupBtn, moveToBtn,
-					Alignment.MIDDLE_LEFT);
+			moveToBtn.setIcon(new ThemeResource("icons/16/ecm/move_up.png"));
+			moveToBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+			groupActionControllLayout.addComponent(moveToBtn);
 
 			deleteBtn = new Button(
 					LocalizationHelper
@@ -1269,10 +1322,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							}
 						}
 					});
-			deleteBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			deleteBtn.setIcon(new ThemeResource("icons/16/ecm/delete.png"));
+			deleteBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			deleteBtn.setImmediate(true);
-			UiUtils.addComponent(controllGroupBtn, deleteBtn,
-					Alignment.MIDDLE_LEFT);
+			groupActionControllLayout.addComponent(deleteBtn);
+			controllGroupBtn.addComponent(groupActionControllLayout);
 
 			mainBodyLayout.addComponent(controllGroupBtn);
 
