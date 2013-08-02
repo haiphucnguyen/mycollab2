@@ -3015,7 +3015,6 @@ div.v-lazyloadingwrapper-loading {
 
 .v-button-link .v-icon,.v-button-borderless .v-icon {
 	margin-left: 0;
-	margin-top: 2px;
 }
 /* End Filter Select */
 
@@ -4377,7 +4376,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.v-Notification-error h1, .v-Notification-warning h1, .v-Notification-tray h1 {
+.v-Notification.v-Notification-error h1, .v-Notification.v-Notification-warning h1, .v-Notification.v-Notification-tray h1 {
 	display: inline;
 	background: none;
 	border: none;
