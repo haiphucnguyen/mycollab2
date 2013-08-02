@@ -174,8 +174,10 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 														"_blank");
 									} else {
 										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-												.getStreamFolderResource(new String[] { ((Folder) resource)
-														.getPath() });
+												.getStreamFolderResource(
+														new String[] { ((Folder) resource)
+																.getPath() },
+														false);
 										AppContext
 												.getApplication()
 												.getMainWindow()

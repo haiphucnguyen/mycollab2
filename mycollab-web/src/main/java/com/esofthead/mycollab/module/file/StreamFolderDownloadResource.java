@@ -12,13 +12,13 @@ import java.util.zip.ZipOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.StreamResource;
 
 public class StreamFolderDownloadResource implements
@@ -32,12 +32,13 @@ public class StreamFolderDownloadResource implements
 
 	private ResourceService resourceService;
 
-	private List<String> lstFileDownloadName;
+	private boolean isSearchAction;
 
-	public StreamFolderDownloadResource(String[] folderPath) {
+	public StreamFolderDownloadResource(String[] folderPath,
+			boolean isSearchAction) {
 		this.folderPath = folderPath;
 		resourceService = ApplicationContextUtil.getBean(ResourceService.class);
-		lstFileDownloadName = new ArrayList<String>();
+		this.isSearchAction = isSearchAction;
 	}
 
 	@Override
@@ -59,8 +60,10 @@ public class StreamFolderDownloadResource implements
 				try {
 					ZipOutputStream zipOutStream = new ZipOutputStream(
 							outStream);
-					saveContentToStream(zipOutStream, folderPath);
-					lstFileDownloadName.clear();
+					if (isSearchAction)
+						zipResourceWithSearchAction(zipOutStream, folderPath);
+					else
+						zipResource(zipOutStream, folderPath);
 					zipOutStream.close();
 					outStream.close();
 				} catch (Exception e) {
@@ -75,70 +78,100 @@ public class StreamFolderDownloadResource implements
 		return inStream;
 	}
 
-	private void saveContentToStream(ZipOutputStream zipOutputStream,
+	private void zipResourceWithSearchAction(ZipOutputStream zip,
 			String... path) {
 		try {
 			for (String resPath : path) {
-				List<Resource> lstResource;
+				Folder resParentFolder = resourceService
+						.getParentFolder(resPath);
+				Resource curRes = resourceService.getResource(resPath);
+				String currentResourcePath = "";
+				try {
+					currentResourcePath = resParentFolder.getPath().substring(
+							resParentFolder.getPath().indexOf("/", 2) + 1);
+				} catch (Exception e) {
+					currentResourcePath = "";
+				}
+				currentResourcePath = currentResourcePath.replace("/", "");
+				byte[] buf = new byte[1024];
+				int len = -1;
+				InputStream contentStream = resourceService
+						.getContentStream(curRes.getPath());
+				zip.putNextEntry(new ZipEntry(currentResourcePath
+						+ curRes.getName()));
+				while ((len = contentStream.read(buf)) > 0) {
+					zip.write(buf, 0, len);
+				}
+			}
+		} catch (Exception e) {
+			throw new MyCollabException(e);
+		}
+	}
+
+	private void zipResource(ZipOutputStream zipOutputStream, String... path) {
+		try {
+			List<Resource> lstResource = new ArrayList<Resource>();
+			for (String resPath : path) {
 				Resource currentResource = resourceService.getResource(resPath);
 				if (currentResource instanceof Folder) {
 					lstResource = resourceService.getResources(resPath);
-				} else {
-					lstResource = new ArrayList<Resource>();
-					lstResource.add(currentResource);
-				}
-				for (Resource res : lstResource) {
-					if (res instanceof Content) {
-						String contentName = res.getName();
-						if (lstFileDownloadName.size() > 0) {
-							if (lstFileDownloadName.indexOf(contentName) != -1) {
-								contentName = resourceService.getParentFolder(
-										res.getPath()).getName()
-										+ "_" + contentName;
-								if (lstFileDownloadName.indexOf(contentName) != -1) {
-									contentName = res
-											.getPath()
-											.replace("/", "_")
-											.substring(
-													AppContext.getAccountId()
-															.toString()
-															.length() + 1);
-								}
+					if (lstResource.size() == 0) {
+						zipOutputStream.putNextEntry(new ZipEntry(
+								currentResource.getName() + "/"));
+					} else {
+						for (Resource res : lstResource) {
+							if (res instanceof Content) {
+								addFileToZip(currentResource.getName(),
+										(Content) res, zipOutputStream);
+							} else if (res instanceof Folder) {
+								addFolderToZip(currentResource.getName(), res,
+										zipOutputStream);
 							}
-							lstFileDownloadName.add(contentName);
-						} else {
-							lstFileDownloadName.add(contentName);
 						}
-						InputStream contentStream = resourceService
-								.getContentStream(res.getPath());
-						log.debug("Add file entry " + contentName
-								+ " to zip file");
-
-						ZipEntry entry = new ZipEntry(contentName);
-
-						zipOutputStream.putNextEntry(entry);
-						byte[] bytes = new byte[1024];
-						int length = -1;
-
-						while ((length = contentStream.read(bytes)) != -1) {
-							zipOutputStream.write(bytes, 0, length);
-						}
-						zipOutputStream.closeEntry();
-					} else if (res instanceof Folder) {
-						String folderPath = res
-								.getPath()
-								.replace("/", "_")
-								.substring(
-										AppContext.getAccountId().toString()
-												.length() + 1);
-						ZipEntry entry = new ZipEntry(folderPath + "/");
-						zipOutputStream.putNextEntry(entry);
-						saveContentToStream(zipOutputStream, res.getPath());
 					}
+				} else {
+					addFileToZip("", (Content) currentResource, zipOutputStream);
 				}
 			}
 		} catch (Exception e) {
 			log.error("Error while save content", e);
+		}
+	}
+
+	private void addFileToZip(String path, Content res, ZipOutputStream zip)
+			throws Exception {
+		byte[] buf = new byte[1024];
+		int len = -1;
+		InputStream contentStream = resourceService.getContentStream(res
+				.getPath());
+		if (path.length() == 0)
+			path = res.getName();
+		else
+			path += "/" + res.getName();
+		zip.putNextEntry(new ZipEntry(path));
+		while ((len = contentStream.read(buf)) > 0) {
+			zip.write(buf, 0, len);
+		}
+	}
+
+	private void addFolderToZip(String path, Resource res, ZipOutputStream zip)
+			throws Exception {
+		List<Resource> lstResource = resourceService
+				.getResources(res.getPath());
+		if (res instanceof Folder && lstResource.size() == 0) { // emptyFolder
+			zip.putNextEntry(new ZipEntry(path + "/" + res.getName() + "/"));
+		} else {
+			if (res instanceof Folder) {
+				zip.putNextEntry(new ZipEntry(path + "/" + res.getName() + "/"));
+			}
+			for (Resource curRes : lstResource) {
+				if (curRes instanceof Folder) {
+					addFolderToZip(path + "/" + res.getName(), curRes, zip);
+				} else {
+					addFileToZip(path + "/" + res.getName(), (Content) curRes,
+							zip);
+				}
+			}
 		}
 	}
 

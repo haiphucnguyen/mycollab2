@@ -412,6 +412,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		private static final long serialVersionUID = 1L;
 		private final List<CheckBox> listAllCheckBox;
 		private VerticalLayout mainLayout;
+		private boolean isSearchAction = false;
 
 		public List<CheckBox> getListAllCheckBox() {
 			return listAllCheckBox;
@@ -426,6 +427,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		private void constructBody(Folder curFolder) {
+			isSearchAction = false;
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
@@ -450,6 +452,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 
 		private void constructBodySearchActionResult(List<Resource> lstResource) {
+			isSearchAction = true;
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
@@ -626,8 +629,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							final com.vaadin.terminal.Resource downloadResource;
 							if (res instanceof Folder) {
 								downloadResource = StreamDownloadResourceFactory
-										.getStreamFolderResource(new String[] { res
-												.getPath() });
+										.getStreamFolderResource(
+												new String[] { res.getPath() },
+												false);
 							} else {
 								downloadResource = StreamDownloadResourceFactory
 										.getStreamResource(res.getPath());
@@ -701,16 +705,29 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								"/", 2)));
 			if (parentFolderPathStrBuffer.toString().split("/").length > 6) {
 				String[] parentFolderPathArray = parentFolderPath.split("/");
+				parentFolderPathStrBuffer = new StringBuffer("");
 				parentFolderPathStrBuffer
 						.append(rootFolderName)
-						.append("\\")
-						.append(parentFolderPathArray[2])
-						.append("\\")
+						.append("/")
+						.append((parentFolderPathArray[2].length() > 25) ? parentFolderPathArray[2]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[2])
+						.append("/")
+						.append((parentFolderPathArray[3].length() > 25) ? parentFolderPathArray[3]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[3])
+						.append("/")
 						.append("...")
-						.append("\\")
-						.append(parentFolderPathArray[parentFolderPathArray.length - 2])
-						.append("\\")
-						.append(parentFolderPathArray[parentFolderPathArray.length - 1]);
+						.append("/")
+						.append((parentFolderPathArray[parentFolderPathArray.length - 2]
+								.length() > 25) ? parentFolderPathArray[parentFolderPathArray.length - 2]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[parentFolderPathArray.length - 2])
+						.append("/")
+						.append((parentFolderPathArray[parentFolderPathArray.length - 1]
+								.length() > 25) ? parentFolderPathArray[parentFolderPathArray.length - 1]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[parentFolderPathArray.length - 1]);
 			}
 			Label pathLabel = new Label(parentFolderPathStrBuffer.toString());
 			pathLabel.addStyleName("h3");
@@ -952,9 +969,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								String baseFolderPath = (FileMainViewImpl.this.baseFolder == null) ? FileMainViewImpl.this.rootPath
 										: FileMainViewImpl.this.baseFolder
 												.getPath();
-								if (!fileBreadCrumb
-										.getCurrentBreadCrumbFolder().getPath()
-										.equals(baseFolder.getPath())) {
+								if (itemResourceContainerLayout.isSearchAction) {
 									baseFolderPath = rootPath;
 									baseFolder = (Folder) resourceService
 											.getResource(rootPath);
@@ -1134,6 +1149,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			// file bread Crum ---------------------
 			fileBreadCrumb = new FileBreadcrumb();
+			fileBreadCrumb.setCurrentBreadCrumbFolder(baseFolder);
 			mainBodyLayout.addComponent(fileBreadCrumb);
 
 			// Construct controllGroupBtn
@@ -1255,10 +1271,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 											.getStreamResource(lstCheckedResource
 													.get(0).getPath());
 								} else if (lstCheckedResource.size() > 0) {
-									downloadResource = StreamDownloadResourceFactory
-											.getStreamFolderResource(lstPath
-													.toArray(new String[lstPath
-															.size()]));
+									downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
+											lstPath.toArray(new String[lstPath
+													.size()]),
+											itemResourceContainerLayout.isSearchAction);
 								}
 								AppContext.getApplication().getMainWindow()
 										.open(downloadResource, "_blank");
@@ -1372,11 +1388,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 															.removeItem((Folder) res);
 												}
 											}
-											if (!fileBreadCrumb
-													.getCurrentBreadCrumbFolder()
-													.getPath()
-													.equals(baseFolder
-															.getPath())) {
+											if (itemResourceContainerLayout.isSearchAction) {
 												itemResourceContainerLayout
 														.constructBody((Folder) resourceService
 																.getResource(rootPath));
