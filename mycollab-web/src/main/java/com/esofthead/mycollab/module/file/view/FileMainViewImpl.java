@@ -11,7 +11,6 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
@@ -1143,6 +1142,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			controllGroupBtn.setSpacing(true);
 
 			selectAllBtn = new Button();
+			selectAllBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			selectAllBtn.setIcon(MyCollabResource
 					.newResource("icons/16/checkbox_empty.png"));
 			selectAllBtn.setValue(false);
@@ -1178,10 +1178,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					}
 				}
 			});
-			PopupButtonControl tableActionControls = new PopupButtonControl(
-					"selectAll", selectAllBtn);
-			tableActionControls.setWidth("70px");
-			UiUtils.addComponent(controllGroupBtn, tableActionControls,
+			UiUtils.addComponent(controllGroupBtn, selectAllBtn,
 					Alignment.MIDDLE_LEFT);
 
 			Button goUpBtn = new Button();
