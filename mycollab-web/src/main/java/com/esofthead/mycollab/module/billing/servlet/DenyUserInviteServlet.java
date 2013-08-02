@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.billing.service;
+package com.esofthead.mycollab.module.billing.servlet;
 
 import javax.servlet.annotation.WebServlet;
 
