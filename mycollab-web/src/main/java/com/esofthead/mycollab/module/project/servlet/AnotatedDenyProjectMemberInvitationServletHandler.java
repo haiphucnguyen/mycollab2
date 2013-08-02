@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service;
+package com.esofthead.mycollab.module.project.servlet;
 
 import java.io.IOException;
 
@@ -16,10 +16,11 @@ import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.schedule.email.command.MessageRelayEmailNotificationActionImpl;
 
-@Component("confirmInvitationMemberServletHandler")
-public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
+@Component("denyInvitationMemberServletHandler")
+public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		HttpRequestHandler {
 
 	@Autowired
@@ -31,6 +32,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 	@Override
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
 		String pathInfo = request.getPathInfo();
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
@@ -46,17 +48,13 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 				pathVariables = pathVariables.replace(projectAdmin + "/", "");
 
 				int memberId = Integer.parseInt(pathVariables);
-
 				if (memberId > 0 && projectMemberService != null
 						&& sAccount > 0 && projectAdmin != null
 						&& !projectAdmin.equals("")) {
 					SimpleProjectMember member = projectMemberService
 							.findById(memberId);
-					if (member != null
-							&& member.getStatus().equals(
-									ProjectMemberStatusContants.VERIFICATING)) {
-						member.setStatus(ProjectMemberStatusContants.ACTIVE);
-						projectMemberService.updateWithSession(member,
+					if (member != null && !member.getStatus().equals(ProjectMemberStatusContants.ACTIVE)) {
+						projectMemberService.removeWithSession(memberId,
 								projectAdmin);
 
 						RelayEmailNotification relayNotification = new RelayEmailNotification();
@@ -66,7 +64,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						relayNotification.setSaccountid(sAccount);
 						relayNotification.setType("invitationMember");
 						relayNotification
-								.setAction(MonitorTypeConstants.UPDATE_ACTION);
+								.setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
 						relayNotification.setTypeid(member.getProjectid());
 						relayNotification
 								.setEmailhandlerbean(MessageRelayEmailNotificationActionImpl.class
@@ -75,9 +73,6 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 							relayEmailService.saveWithSession(
 									relayNotification, projectAdmin);
 						}
-
-						response.sendRedirect(request.getServletContext()
-								.getRealPath("/"));
 					}
 				}
 			}
@@ -85,4 +80,5 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 			// TODO: response to user invalid page
 		}
 	}
+
 }

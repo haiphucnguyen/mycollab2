@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.file.service;
+package com.esofthead.mycollab.module.file.servlet;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -19,6 +19,7 @@ import org.springframework.web.HttpRequestHandler;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.FileStorageConfig;
 import com.esofthead.mycollab.module.file.StorageSetting;
+import com.esofthead.mycollab.module.file.service.ContentService;
 
 @Component("userAvatarFSServlet")
 public class AnnotatedUserAvatarServlet implements HttpRequestHandler {

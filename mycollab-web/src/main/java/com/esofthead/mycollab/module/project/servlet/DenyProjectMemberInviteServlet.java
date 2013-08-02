@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service;
+package com.esofthead.mycollab.module.project.servlet;
 
 import javax.servlet.annotation.WebServlet;
 
