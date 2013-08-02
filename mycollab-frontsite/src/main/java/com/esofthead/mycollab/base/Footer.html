@@ -1,18 +1,46 @@
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
-	<div id="footer">
+	<div id="footer-home">
 		<div class="wrapper">
 			<div class="footer-copyright">
-				&copy;2010-2013 MyCollab, LLC. All rights reserved. <a
+				<h1>MYCOLLAB</h1>
+				&copy;2010-2013 MyCollab, LLC. All rights reserved. 
+				<!-- <a
 					wicket:id="privacyLink1"><span>Terms of Service</span></a> <span>|</span>
-				<a wicket:id="privacyLink2"><span>Privacy Policy</span></a>
+				<a wicket:id="privacyLink2"><span>Privacy Policy</span></a> -->
 			</div>
-			<nav class="footer-nav">
-				<ul>
-					<li class="foo-cal">Call: (+84) 918-734-068 &Iota;</li>
-					<li class="foo-email">Email: <a wicket:id="mailLink">support@esofthead.com</a> &Iota;</li>
-					<li class="foo-twitter">Twitter: <a wicket:id="twitterLink" target="_blank">@mycollab_vn</a></li>
-				</ul>
-			</nav>
+			<div class="footer-sitemap">
+				<div class="sitemap-col">
+					<h1>MyCollab</h1>
+					<ul>
+						<li><a wicket:id="tourlink">Tour</a></li>
+						<li><a wicket:id="pricinglink">Plans &amp; Pricing</a></li>
+						<li><a wicket:id="supportlink">Support</a></li>
+					</ul>
+				</div>
+				<div class="sitemap-col">
+					<h1>Community</h1>
+					<ul>
+						<li><a>Twitter</a></li>
+						<li><a>Facebook</a></li>
+						<li><a>Google+</a></li>
+					</ul>
+				</div>
+				<div class="sitemap-col">
+					<h1>Support</h1>
+					<ul>
+						<li><a wicket:id="contactlink">Contact Us</a></li>
+						<li><a wicket:id="privacylink">Privacy Policy</a></li>
+						<li><a wicket:id="termslink">Terms of Service</a></li>
+					</ul>
+				</div>
+				<div class="sitemap-col sitemap-col-last">
+					<h1>Extras</h1>
+					<ul>
+						<li><a wicket:id="signInlink">Sign In</a></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
 		</div>
 	</div>
 </wicket:panel>

@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
+import java.util.Date;
+
 import com.esofthead.mycollab.common.domain.PermissionMap;
 
 /**
@@ -30,6 +32,8 @@ public class SimpleProjectMember extends ProjectMember {
 	private String email;
 	
 	private int sAccountId;
+	
+	private Date lastAccessTime;
 
 	public String getMemberFullName() {
 		return memberFullName;
@@ -101,5 +105,13 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public void setsAccountId(int sAccountId) {
 		this.sAccountId = sAccountId;
+	}
+
+	public Date getLastAccessTime() {
+		return lastAccessTime;
+	}
+
+	public void setLastAccessTime(Date lastAccessTime) {
+		this.lastAccessTime = lastAccessTime;
 	}
 }

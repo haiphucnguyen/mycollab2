@@ -93,7 +93,7 @@ public class ApplicationProperties {
 		} else {
 			boolean isSupportSubDomain = ApplicationProperties
 					.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
-			if (!isSupportSubDomain) {
+			if (isSupportSubDomain) {
 				siteUrl = String.format(ApplicationProperties
 						.getString(ApplicationProperties.APP_URL), subdomain);
 			} else {
