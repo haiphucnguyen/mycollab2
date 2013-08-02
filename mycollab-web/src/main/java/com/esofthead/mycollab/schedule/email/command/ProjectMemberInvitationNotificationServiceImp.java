@@ -15,6 +15,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -27,6 +28,9 @@ public class ProjectMemberInvitationNotificationServiceImp {
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
+
+	@Autowired
+	private ProjectMemberMapper projectMemberMapper;
 
 	@Autowired
 	private ProjectService projectService;
@@ -75,6 +79,11 @@ public class ProjectMemberInvitationNotificationServiceImp {
 							member.getMemberFullName())), null, null,
 					templateGenerator.generateSubjectContent(),
 					templateGenerator.generateBodyContent(), null);
+
+			// Send email and change register status of user to
+			// RegisterStatusConstants.SENT_VERIFICATION_EMAIL
+			member.setStatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL);
+			projectMemberMapper.updateByPrimaryKeySelective(member);
 		}
 	}
 

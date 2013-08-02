@@ -11,8 +11,11 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
@@ -181,6 +184,42 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		memberEmailLabel.addStyleName("member-email");
 		memberEmailLabel.setWidth("100%");
 		memberInfo.addComponent(memberEmailLabel);
+
+		if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(member
+				.getStatus())) {
+			final VerticalLayout waitingNotLayout = new VerticalLayout();
+			Label infoStatus = new Label("Waiting for accept invitation");
+			waitingNotLayout.addComponent(infoStatus);
+
+			ButtonLink resendInvitationLink = new ButtonLink(
+					"Resend Invitation", new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							ProjectMemberMapper projectMemberMapper = AppContext
+									.getSpringBean(ProjectMemberMapper.class);
+							member.setStatus(RegisterStatusConstants.VERIFICATING);
+							projectMemberMapper
+									.updateByPrimaryKeySelective(member);
+							waitingNotLayout.removeAllComponents();
+							waitingNotLayout.addComponent(new Label(
+									"Sending invitation email"));
+						}
+					});
+			resendInvitationLink.setStyleName("link");
+			waitingNotLayout.addComponent(resendInvitationLink);
+			memberInfo.addComponent(waitingNotLayout);
+		} else if (RegisterStatusConstants.ACTIVE.equals(member.getStatus())) {
+			Label lastAccessTimeLbl = new Label("Logged in "
+					+ DateTimeUtils.getStringDateFromNow(member
+							.getLastAccessTime()));
+			memberInfo.addComponent(lastAccessTimeLbl);
+		} else if (RegisterStatusConstants.VERIFICATING.equals(member
+				.getStatus())) {
+			Label infoStatus = new Label("Sending invitation email");
+			memberInfo.addComponent(infoStatus);
+		}
 
 		String bugStatus = member.getNumOpenBugs() + " open bug";
 		if (member.getNumOpenBugs() > 2)
