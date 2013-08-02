@@ -45,7 +45,7 @@ public class WicketApplication extends WebApplication {
 		super.init();
 
 		// add your configuration here
-
+		getDebugSettings().setAjaxDebugModeEnabled(false);
 		this.getMarkupSettings().setStripWicketTags(true);
 
 		this.mountPage("/tour", TourPage.class);
