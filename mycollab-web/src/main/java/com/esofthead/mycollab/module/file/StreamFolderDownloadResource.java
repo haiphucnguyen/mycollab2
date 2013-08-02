@@ -125,6 +125,14 @@ public class StreamFolderDownloadResource implements
 						}
 						zipOutputStream.closeEntry();
 					} else if (res instanceof Folder) {
+						String folderPath = res
+								.getPath()
+								.replace("/", "_")
+								.substring(
+										AppContext.getAccountId().toString()
+												.length() + 1);
+						ZipEntry entry = new ZipEntry(folderPath + "/");
+						zipOutputStream.putNextEntry(entry);
 						saveContentToStream(zipOutputStream, res.getPath());
 					}
 				}
