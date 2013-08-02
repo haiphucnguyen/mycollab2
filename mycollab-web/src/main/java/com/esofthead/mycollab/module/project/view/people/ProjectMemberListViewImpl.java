@@ -189,6 +189,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 				.getStatus())) {
 			final VerticalLayout waitingNotLayout = new VerticalLayout();
 			Label infoStatus = new Label("Waiting for accept invitation");
+			infoStatus.addStyleName("member-email");
 			waitingNotLayout.addComponent(infoStatus);
 
 			ButtonLink resendInvitationLink = new ButtonLink(
@@ -203,21 +204,26 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 							projectMemberMapper
 									.updateByPrimaryKeySelective(member);
 							waitingNotLayout.removeAllComponents();
-							waitingNotLayout.addComponent(new Label(
-									"Sending invitation email"));
+							Label statusEmail = new Label(
+									"Sending invitation email");
+							statusEmail.addStyleName("member-email");
+							waitingNotLayout.addComponent(statusEmail);
 						}
 					});
 			resendInvitationLink.setStyleName("link");
+			resendInvitationLink.addStyleName("member-email");
 			waitingNotLayout.addComponent(resendInvitationLink);
 			memberInfo.addComponent(waitingNotLayout);
 		} else if (RegisterStatusConstants.ACTIVE.equals(member.getStatus())) {
 			Label lastAccessTimeLbl = new Label("Logged in "
 					+ DateTimeUtils.getStringDateFromNow(member
 							.getLastAccessTime()));
+			lastAccessTimeLbl.addStyleName("member-email");
 			memberInfo.addComponent(lastAccessTimeLbl);
 		} else if (RegisterStatusConstants.VERIFICATING.equals(member
 				.getStatus())) {
 			Label infoStatus = new Label("Sending invitation email");
+			infoStatus.addStyleName("member-email");
 			memberInfo.addComponent(infoStatus);
 		}
 
