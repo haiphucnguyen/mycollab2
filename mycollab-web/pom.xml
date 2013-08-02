@@ -1,571 +1,567 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <name>mycollab-web</name>
-    <artifactId>mycollab-web</artifactId>
-    <parent>
-        <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <packaging>war</packaging>
-    <properties>
-        <vaadinVersion>6.8.11</vaadinVersion>
-        <gwtversion>2.3.0</gwtversion>
-        <jettyVersion>8.1.11.v20130520</jettyVersion>
-    </properties>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>mycollab-web</name>
+	<artifactId>mycollab-web</artifactId>
+	<parent>
+		<groupId>com.esofthead.mycollab</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<packaging>war</packaging>
+	<properties>
+		<vaadinVersion>6.8.11</vaadinVersion>
+		<gwtversion>2.3.0</gwtversion>
+		<jettyVersion>8.1.11.v20130520</jettyVersion>
+	</properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-core</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-jackrabbit</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin</artifactId>
-            <version>${vaadinVersion}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-jackrabbit</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
 
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-            <classifier>sources</classifier>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>4.3.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>buttongroup</artifactId>
-            <version>1.3-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>popupbutton</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <!-- VAADIN ADDONS -->
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>cropfield</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>ratingstars</artifactId>
-            <version>1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>dragdroplayouts</artifactId>
-            <version>0.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>tokenfield</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>stylecalendar</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>easyuploads</artifactId>
-            <version>0.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>notifique</artifactId>
-            <version>1.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>customfield</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>contextmenu</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>timefield</artifactId>
-            <version>0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.hene.splitbutton</groupId>
-            <artifactId>splitbutton</artifactId>
-            <version>0.9.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>browsercookies</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>vaadin-calendar-agpl-3.0</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>lazyloadwrapper</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.lexaden.components</groupId>
-            <artifactId>breadcrumb</artifactId>
-            <version>1.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>listbuilder</artifactId>
-            <version>0.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>gwt-graphics</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>ru.bazon.vaadin</groupId>
-            <artifactId>vaadin-gantt</artifactId>
-            <version>0.3.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>ru.bazon</groupId>
-            <artifactId>pstring</artifactId>
-            <version>0.0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addon</groupId>
-            <artifactId>confirmdialog</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>2.4.8</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1-b01</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.googlecode.flyway</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>2.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-email</artifactId>
-            <version>1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.extcos</groupId>
-            <artifactId>extcos</artifactId>
-            <version>0.4b</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jfree</groupId>
-            <artifactId>jfreechart</artifactId>
-            <version>1.0.14</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>batik-svggen</artifactId>
-            <version>1.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.3.171</version>
-        </dependency>
-        <dependency>
-            <groupId>info.bliki.wiki</groupId>
-            <artifactId>bliki-core</artifactId>
-            <version>3.0.19</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-httpclient</groupId>
-                    <artifactId>commons-httpclient</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>uk.com.robust-it</groupId>
-            <artifactId>cloning</artifactId>
-            <version>1.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mortennobel</groupId>
-            <artifactId>java-image-scaling</artifactId>
-            <version>0.8.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client</artifactId>
-            <version>1.13.2-beta</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.9</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.infinispan</groupId>
-            <artifactId>infinispan-core</artifactId>
-            <version>5.3.0.Final</version>
-        </dependency>
-
-        <!-- JETTY dependency -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-websocket</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin</artifactId>
+			<version>${vaadinVersion}</version>
+		</dependency>
 
 
-        <dependency>
-            <groupId>fr.xebia.web</groupId>
-            <artifactId>xebia-servlet-extras</artifactId>
-            <version>1.0.7</version>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>buttongroup</artifactId>
+			<version>1.3-SNAPSHOT</version>
+		</dependency>
 
-        <!-- RESTLET dependency -->
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet</artifactId>
-            <version>2.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.json</artifactId>
-            <version>2.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.servlet</artifactId>
-            <version>2.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.spring</artifactId>
-            <version>2.1.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-asm</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-expression</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.xml</artifactId>
-            <version>2.1.2</version>
-        </dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>popupbutton</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<!-- VAADIN ADDONS -->
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>cropfield</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>ratingstars</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>dragdroplayouts</artifactId>
+			<version>0.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>tokenfield</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>stylecalendar</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>easyuploads</artifactId>
+			<version>0.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>notifique</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>customfield</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>contextmenu</artifactId>
+			<version>3.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>timefield</artifactId>
+			<version>0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.hene.splitbutton</groupId>
+			<artifactId>splitbutton</artifactId>
+			<version>0.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>browsercookies</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>vaadin-calendar-agpl-3.0</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>lazyloadwrapper</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lexaden.components</groupId>
+			<artifactId>breadcrumb</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>listbuilder</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>gwt-graphics</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ru.bazon.vaadin</groupId>
+			<artifactId>vaadin-gantt</artifactId>
+			<version>0.3.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ru.bazon</groupId>
+			<artifactId>pstring</artifactId>
+			<version>0.0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addon</groupId>
+			<artifactId>confirmdialog</artifactId>
+			<version>1.2.1</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.maxmind.geoip2</groupId>
-            <artifactId>geoip2</artifactId>
-            <version>0.4.0</version>
-        </dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.8</version>
+			<scope>test</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>com.googlecode.ez-vcard</groupId>
-            <artifactId>ez-vcard</artifactId>
-            <version>0.8.2</version>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${springVersion}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>net.sf.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>2.0</version>
-        </dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1-b01</version>
+			<scope>provided</scope>
+		</dependency>
 
-        <!-- Camel dependency -->
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-core</artifactId>
-            <version>2.11.1</version>
-        </dependency>
+		<dependency>
+			<groupId>com.googlecode.flyway</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>2.2</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring</artifactId>
-            <version>2.11.1</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.extcos</groupId>
+			<artifactId>extcos</artifactId>
+			<version>0.4b</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-svggen</artifactId>
+			<version>1.7</version>
+		</dependency>
 
-        <!-- Granite dependency -->
-        <dependency>
-            <groupId>org.graniteds</groupId>
-            <artifactId>granite-core</artifactId>
-            <version>3.0.0.M2</version>
-        </dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.171</version>
+		</dependency>
+		<dependency>
+			<groupId>info.bliki.wiki</groupId>
+			<artifactId>bliki-core</artifactId>
+			<version>3.0.19</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-httpclient</groupId>
+					<artifactId>commons-httpclient</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <dependency>
-            <groupId>org.graniteds</groupId>
-            <artifactId>granite-spring</artifactId>
-            <version>3.0.0.M2</version>
-        </dependency>
+		<dependency>
+			<groupId>uk.com.robust-it</groupId>
+			<artifactId>cloning</artifactId>
+			<version>1.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mortennobel</groupId>
+			<artifactId>java-image-scaling</artifactId>
+			<version>0.8.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.13.2-beta</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-codec</groupId>
+					<artifactId>commons-codec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <!-- GWT dependency -->
-        <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
-            <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
-            <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
-            <scope>compile</scope> </dependency> -->
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.2</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.21</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.esofthead.mycollab</groupId>
-                        <artifactId>mycollab-core</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Common Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Project Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Tracker Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Ecm Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/EcmGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>${javaVersion}</source>
-                    <target>${javaVersion}</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <warName>app</warName>
-                </configuration>
-            </plugin>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-core</artifactId>
+			<version>5.3.0.Final</version>
+		</dependency>
+
+		<!-- JETTY dependency -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-websocket</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>fr.xebia.web</groupId>
+			<artifactId>xebia-servlet-extras</artifactId>
+			<version>1.0.7</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- RESTLET dependency -->
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.json</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.servlet</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.spring</artifactId>
+			<version>2.1.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-asm</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-expression</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.xml</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.maxmind.geoip2</groupId>
+			<artifactId>geoip2</artifactId>
+			<version>0.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.ez-vcard</groupId>
+			<artifactId>ez-vcard</artifactId>
+			<version>0.8.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.0</version>
+		</dependency>
+
+		<!-- Camel dependency -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+
+		<!-- Granite dependency -->
+		<dependency>
+			<groupId>org.graniteds</groupId>
+			<artifactId>granite-core</artifactId>
+			<version>3.0.0.M2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.graniteds</groupId>
+			<artifactId>granite-spring</artifactId>
+			<version>3.0.0.M2</version>
+		</dependency>
+
+		<!-- GWT dependency -->
+		<!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+			<version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
+			<groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
+			<scope>compile</scope> </dependency> -->
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.21</version>
+					</dependency>
+					<dependency>
+						<groupId>com.esofthead.mycollab</groupId>
+						<artifactId>mycollab-core</artifactId>
+						<version>1.0-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>Common Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>Project Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>Tracker Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>Ecm Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/EcmGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${javaVersion}</source>
+					<target>${javaVersion}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<warName>app</warName>
+				</configuration>
+			</plugin>
 
 
 
-            <!--CHECK LOCALIZATION -->
-            <!-- <plugin> <groupId>ch.qos.cal10n.plugins</groupId> <artifactId>maven-cal10n-plugin</artifactId> 
-                <executions> <execution> <id>checkLocale</id> <phase>compile</phase> <goals> 
-                <goal>verify</goal> </goals> <configuration> <enumTypes> <enumType>com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum</enumType> 
-                <enumType>com.esofthead.mycollab.common.localization.GenericI18Enum</enumType> 
-                </enumTypes> </configuration> </execution> </executions> </plugin> -->
-            <!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
-                <version>1.0.2</version> <executions> <execution> <phase>prepare-package</phase> 
-                <configuration> </configuration> <goals> <goal>update-widgetset</goal> </goals> 
-                </execution> </executions> <dependencies> <dependency> <groupId>com.google.gwt</groupId> 
-                <artifactId>gwt-user</artifactId> <version>${gwtversion}</version> <scope>compile</scope> 
-                </dependency> <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> 
-                <version>${gwtversion}</version> <scope>compile</scope> </dependency> </dependencies> 
-                </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
-                <version>${gwtversion}</version> <executions> <execution> <phase>prepare-package</phase> 
-                <configuration> <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> </configuration> 
-                <goals> <goal>compile</goal> </goals> </execution> </executions> <dependencies> 
-                <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
-                <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
-                <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
-                <scope>compile</scope> </dependency> </dependencies> </plugin> -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <wtpversion>2.0</wtpversion>
-                </configuration>
-            </plugin>
+			<!--CHECK LOCALIZATION -->
+			<!-- <plugin> <groupId>ch.qos.cal10n.plugins</groupId> <artifactId>maven-cal10n-plugin</artifactId> 
+				<executions> <execution> <id>checkLocale</id> <phase>compile</phase> <goals> 
+				<goal>verify</goal> </goals> <configuration> <enumTypes> <enumType>com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum</enumType> 
+				<enumType>com.esofthead.mycollab.common.localization.GenericI18Enum</enumType> 
+				</enumTypes> </configuration> </execution> </executions> </plugin> -->
+			<!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
+				<version>1.0.2</version> <executions> <execution> <phase>prepare-package</phase> 
+				<configuration> </configuration> <goals> <goal>update-widgetset</goal> </goals> 
+				</execution> </executions> <dependencies> <dependency> <groupId>com.google.gwt</groupId> 
+				<artifactId>gwt-user</artifactId> <version>${gwtversion}</version> <scope>compile</scope> 
+				</dependency> <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> 
+				<version>${gwtversion}</version> <scope>compile</scope> </dependency> </dependencies> 
+				</plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
+				<version>${gwtversion}</version> <executions> <execution> <phase>prepare-package</phase> 
+				<configuration> <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> </configuration> 
+				<goals> <goal>compile</goal> </goals> </execution> </executions> <dependencies> 
+				<dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+				<version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
+				<groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
+				<scope>compile</scope> </dependency> </dependencies> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jettyVersion}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-servlets</artifactId>
-                        <version>8.1.5.v20120716</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <tmpDir>target/temp</tmpDir>
-                    <!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
-                    <webAppConfig>
-                        <contextPath>/${project.name}</contextPath>
-                    </webAppConfig>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jettyVersion}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-servlets</artifactId>
+						<version>8.1.5.v20120716</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<tmpDir>target/temp</tmpDir>
+					<!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
+					<webAppConfig>
+						<contextPath>/${project.name}</contextPath>
+					</webAppConfig>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <configuration>
-                            <target>
-                                <copy verbose="true"
-                                    file="${basedir}/src/main/resources/resources.properties-live"
-                                    tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" />
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- <plugin> <groupId>com.github.wvengen</groupId> <artifactId>proguard-maven-plugin</artifactId> 
-                <executions> <execution> <phase>package</phase> <goals> <goal>proguard</goal> 
-                </goals> </execution> </executions> <configuration> <proguardVersion>4.9</proguardVersion> 
-                <proguardInclude>proguard.conf</proguardInclude> <inFilter>com/esofthead/**</inFilter> 
-                <libs> <lib>${java.home}/lib/rt.jar</lib> <lib>${java.home}/lib/jsse.jar</lib> 
-                </libs> <injar>classes</injar> <outjar>temp</outjar> <injarNotExistsSkip>true</injarNotExistsSkip> 
-                <maxMemory>1024m</maxMemory> </configuration> <dependencies> <dependency> 
-                <groupId>net.sf.proguard</groupId> <artifactId>proguard-base</artifactId> 
-                <version>4.9</version> <scope>runtime</scope> </dependency> </dependencies> 
-                </plugin> -->
-        </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>codehaus-snapshots</id>
-            <url>http://nexus.codehaus.org/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<configuration>
+							<target>
+								<copy verbose="true"
+									file="${basedir}/src/main/resources/resources.properties-live"
+									tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- <plugin> <groupId>com.github.wvengen</groupId> <artifactId>proguard-maven-plugin</artifactId> 
+				<executions> <execution> <phase>package</phase> <goals> <goal>proguard</goal> 
+				</goals> </execution> </executions> <configuration> <proguardVersion>4.9</proguardVersion> 
+				<proguardInclude>proguard.conf</proguardInclude> <inFilter>com/esofthead/**</inFilter> 
+				<libs> <lib>${java.home}/lib/rt.jar</lib> <lib>${java.home}/lib/jsse.jar</lib> 
+				</libs> <injar>classes</injar> <outjar>temp</outjar> <injarNotExistsSkip>true</injarNotExistsSkip> 
+				<maxMemory>1024m</maxMemory> </configuration> <dependencies> <dependency> 
+				<groupId>net.sf.proguard</groupId> <artifactId>proguard-base</artifactId> 
+				<version>4.9</version> <scope>runtime</scope> </dependency> </dependencies> 
+				</plugin> -->
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>codehaus-snapshots</id>
+			<url>http://nexus.codehaus.org/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
