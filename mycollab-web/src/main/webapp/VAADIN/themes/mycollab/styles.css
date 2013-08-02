@@ -1764,8 +1764,14 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:                           DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=                           '#DDD', GradientType=        
+	filter: progid:                                       DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=                                       '#DDD',
+		GradientType= 
+		
+		
+		 
+		    
+		         
 		                  0);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -1813,7 +1819,19 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:                           DXImageTransform.Microsoft.gradient(startColorstr=
+	filter: progid:                                       DXImageTransform.Microsoft.gradient(startColorstr=
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -1836,8 +1854,8 @@ input.v-textfield-errorField {
 		
 		
 		 
-		   '#F8F8F8', endColorstr=                           '#EEEEEE',
-		GradientType=      
+		   '#F8F8F8', endColorstr=                                       '#EEEEEE',
+		GradientType=                  
 		
 		
 		  
@@ -2514,12 +2532,14 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 /* Button Group */
 .v-buttongroup .v-button {
-	height: 26px !important;
+	height: 24px !important;
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		rgb(208, 115, 20);
 	padding: 4px 13px 0px;
 	color: white;
 	border-color: rgb(169, 169, 169);
+	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
+		rgb(208, 115, 20);
 }
 
 .v-buttongroup .v-button-left {
@@ -2539,13 +2559,17 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .v-buttongroup .v-button.v-button-middle {
-	border-width: 1px 0px;
+	border-width: 1px 0px 1px 1px;
 	border-radius: 0px;
 }
 
 .v-buttongroup .v-button.v-button-right {
 	border-radius: 0px 3px 3px 0px;
 	border-left: 1px solid rgb(129, 129, 129);
+}
+
+.v-buttongroup .v-button.v-button-left {
+	border-width: 1px 0px 1px 1px;
 }
 
 .v-buttongroup .v-button:active .v-button-wrap {
@@ -2562,6 +2586,30 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 		rgb(208, 115, 20);
 	padding: 4px 13px 0px;
 	border-color: rgb(169, 169, 169);
+}
+
+.v-buttongroup .v-button.graybtn.v-button-left,.v-buttongroup .v-button.graybtn.v-button-middle,.v-buttongroup .v-button.graybtn.v-button-right
+	{
+	background-color: rgb(169, 169, 169);
+	border-color: rgb(56, 56, 56);
+	color: #FFFFFF;
+	text-shadow: 1px 1px 0px #1570cd;
+	padding: 3px 13px;
+}
+
+.v-buttongroup .v-button.graybtn2.v-button-left,.v-buttongroup .v-button.graybtn2.v-button-middle,.v-buttongroup .v-button.graybtn2.v-button-right
+	{
+	background-color: rgb(169, 169, 169);
+	border-color: rgb(56, 56, 56);
+	color: #FFFFFF;
+	border-top: none;
+	border-bottom: none;
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+	text-shadow: 1px 1px 0px #1570cd;
+	padding: 3px 13px;
+	text-shadow: 1px 1px 0px #1570cd;
+	text-shadow: 1px 1px 0px #1570cd;
 }
 
 .v-buttongroup .v-button.v-button-left:active,.v-buttongroup .v-button.v-button-middle:active,.v-buttongroup .v-button.v-button-right:active,.v-buttongroup .v-button.v-button-left:focus,.v-buttongroup .v-button.v-button-middle:focus,.v-buttongroup .v-button.v-button-right:focus
