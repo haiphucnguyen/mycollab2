@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
@@ -40,8 +41,10 @@ public class UserHubResourceImpl extends ServerResource implements
 		List<String> subdomains = this.billingService
 				.getSubdomainsOfUser(username);
 		if (subdomains != null) {
+			log.debug("There are subdomains for user {} {}", username, BeanUtility.printBeanObj(subdomains));
 			return subdomains.toArray(new String[0]);
 		} else {
+			log.debug("There is no subdomain for user {}", username);
 			return new String[0];
 		}
 	}
