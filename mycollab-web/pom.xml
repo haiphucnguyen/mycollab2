@@ -60,6 +60,13 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.3.0.Final</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.dropbox.core</groupId>
+            <artifactId>dropbox-core-sdk</artifactId>
+            <version>[1.7,1.8)</version>
+        </dependency>
+
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>buttongroup</artifactId>
@@ -421,10 +428,12 @@
         </dependency>
 
         <!-- GWT dependency -->
-        <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+        <!-- 
+         <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
             <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
             <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
-            <scope>compile</scope> </dependency> -->
+            <scope>compile</scope> </dependency>
+            -->
     </dependencies>
     <build>
         <plugins>
