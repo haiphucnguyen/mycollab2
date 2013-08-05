@@ -21,6 +21,7 @@ public class ContentActivityLogServiceImpl
 	@Autowired
 	private ContentActivityLogMapper contentActivityLogMapper;
 
+	@Autowired
 	private ContentActivityLogMapperExt contentActivityLogMapperExt;
 
 	@Override

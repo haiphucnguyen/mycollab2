@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.web.AppContext;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
 import db.migration.domain.Record;
@@ -68,7 +69,7 @@ public class V1_30__Migrate_Comment_Attachment_Of_Project_Problem implements
 						log.debug("Move resource {} to {}", content.getPath(),
 								messageNewPath);
 						resourceService.moveResource(content.getPath(),
-								messageNewPath);
+								messageNewPath, AppContext.getUsername());
 					}
 				}
 			}

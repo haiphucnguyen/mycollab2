@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.web.AppContext;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
 import db.migration.domain.Record;
@@ -60,8 +61,10 @@ public class V1_22__Migrate_Attachment_Of_Crm_Note implements
 						log.debug("Move content from " + content.getPath()
 								+ " to " + crmNoteAttachmentPath + "/"
 								+ content.getName());
-						resourceService.moveResource(content.getPath(),
-								crmNoteAttachmentPath);
+						resourceService
+								.moveResource(content.getPath(),
+										crmNoteAttachmentPath,
+										AppContext.getUsername());
 					}
 				}
 			}

@@ -12,7 +12,7 @@ public interface ResourceService {
 			String createdBy);
 
 	List<Resource> getResources(String path);
-	
+
 	Resource getResource(String path);
 
 	List<Content> getContents(String path);
@@ -21,16 +21,16 @@ public interface ResourceService {
 
 	void saveContent(Content content, String createdUser, InputStream refStream);
 
-	void removeResource(String path);
+	void removeResource(String path, String userDelete);
 
 	InputStream getContentStream(String path);
 
-	void rename(String oldPath, String newPath);
+	void rename(String oldPath, String newPath, String userUpdate);
 
 	List<Resource> searchResourcesByName(String baseFolderPath,
 			String resourceName);
 
-	void moveResource(String oldPath, String newPath);
+	void moveResource(String oldPath, String newPath, String userMove);
 
 	Folder getParentFolder(String path);
 }

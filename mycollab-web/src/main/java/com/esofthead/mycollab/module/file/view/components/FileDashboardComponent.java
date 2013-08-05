@@ -459,8 +459,10 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 														final ConfirmDialog dialog) {
 													if (dialog.isConfirmed()) {
 														FileDashboardComponent.this.resourceService
-																.removeResource(resource
-																		.getPath());
+																.removeResource(
+																		resource.getPath(),
+																		AppContext
+																				.getUsername());
 
 														FileDashboardComponent.this
 																.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
@@ -798,7 +800,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					final String newPath = parentPath + newNameValue;
 					try {
 						RenameResourceWindow.this.service.rename(oldPath,
-								newPath);
+								newPath, AppContext.getUsername());
 						// reset layout
 						FileDashboardComponent.this
 								.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
@@ -1224,7 +1226,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 											AbstractMoveWindow.this.resourceEditting
 													.getPath(),
 											AbstractMoveWindow.this.baseFolder
-													.getPath());
+													.getPath(), AppContext
+													.getUsername());
 							AbstractMoveWindow.this.close();
 							displayAfterMoveSuccess(
 									AbstractMoveWindow.this.baseFolder, false);
@@ -1243,7 +1246,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								AbstractMoveWindow.this.resourceService.moveResource(
 										res.getPath(),
 										AbstractMoveWindow.this.baseFolder
-												.getPath());
+												.getPath(), AppContext
+												.getUsername());
 							} catch (Exception e) {
 								checkingFail = true;
 							}

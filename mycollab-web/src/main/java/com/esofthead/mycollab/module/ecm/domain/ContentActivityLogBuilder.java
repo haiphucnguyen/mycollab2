@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.ecm.domain;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Create;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Delete;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Move;
+import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Rename;
 
 public class ContentActivityLogBuilder {
 	public static ContentActivityLogAction makeCreateFolder(String path) {
@@ -29,6 +30,35 @@ public class ContentActivityLogBuilder {
 	public static ContentActivityLogAction makeMoveContent(String oldPath,
 			String newPath) {
 		return makeMove(oldPath, newPath, ContentActivityLogAction.CONTENT_TYPE);
+	}
+
+	public static ContentActivityLogAction makeRenameFolder(String oldPath,
+			String newPath) {
+		String oldName = oldPath.substring(oldPath.lastIndexOf("/") + 1,
+				oldPath.length());
+		String newName = newPath.substring(newPath.lastIndexOf("/") + 1,
+				newPath.length());
+		return makeRenameFolder(oldName, newName,
+				ContentActivityLogAction.FOLDER_TYPE);
+	}
+
+	public static ContentActivityLogAction makeRenameContent(String oldPath,
+			String newPath) {
+		String oldName = oldPath.substring(oldPath.lastIndexOf("/") + 1,
+				oldPath.length());
+		String newName = newPath.substring(newPath.lastIndexOf("/") + 1,
+				newPath.length());
+		return makeRenameFolder(oldName, newName,
+				ContentActivityLogAction.CONTENT_TYPE);
+	}
+
+	private static ContentActivityLogAction makeRenameFolder(String oldName,
+			String newName, String type) {
+		Rename renameAction = new Rename();
+		renameAction.setNewName(newName);
+		renameAction.setOldName(oldName);
+		renameAction.setResourceType(type);
+		return renameAction;
 	}
 
 	private static ContentActivityLogAction makeMove(String oldPath,

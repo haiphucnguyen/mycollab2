@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.domain.ActivityStreamExample;
 import com.esofthead.mycollab.common.domain.CommentExample;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.web.AppContext;
 
 @Component
 public class ProjectDeleteListenerImpl implements ProjectDeleteListener {
@@ -55,7 +56,7 @@ public class ProjectDeleteListenerImpl implements ProjectDeleteListener {
 				.getBean(ResourceService.class);
 
 		String rootPath = String.format("%d/project/%d", accountid, projectId);
-		resourceService.removeResource(rootPath);
+		resourceService.removeResource(rootPath, AppContext.getUsername());
 	}
 
 }

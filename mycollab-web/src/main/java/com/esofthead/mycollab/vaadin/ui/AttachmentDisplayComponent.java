@@ -120,8 +120,9 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 								if (dialog.isConfirmed()) {
 									ResourceService attachmentService = AppContext
 											.getSpringBean(ResourceService.class);
-									attachmentService.removeResource(attachment
-											.getPath());
+									attachmentService.removeResource(
+											attachment.getPath(),
+											AppContext.getUsername());
 									((ComponentContainer) attachmentLayout
 											.getParent())
 											.removeComponent(attachmentLayout);

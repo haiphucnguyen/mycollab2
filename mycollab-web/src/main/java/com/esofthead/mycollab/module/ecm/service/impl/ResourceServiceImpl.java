@@ -56,6 +56,12 @@ public class ResourceServiceImpl implements ResourceService {
 		folder.setCreatedBy(createdBy);
 		folder.setCreated(new GregorianCalendar());
 		contentJcrDao.createFolder(folder, createdBy);
+		ContentActivityLog activityLog = new ContentActivityLog();
+		ContentActivityLogAction createFolderAction = ContentActivityLogBuilder
+				.makeCreateFolder(folderPath);
+		activityLog.setCreateduser(createdBy);
+		activityLog.setActiondesc(createFolderAction.toString());
+		contentActivityLogService.saveWithSession(activityLog, "");
 		return folder;
 	}
 
@@ -76,9 +82,23 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public void removeResource(String path) {
+	public void removeResource(String path, String deleteUser) {
+		Resource res = contentJcrDao.getResource(path);
+		ContentActivityLogAction deleteResourceAction;
+		if (res instanceof Folder)
+			deleteResourceAction = ContentActivityLogBuilder
+					.makeDeleteFolder(path);
+		else
+			deleteResourceAction = ContentActivityLogBuilder
+					.makeDeleteContent(path);
+
 		contentJcrDao.removeResource(path);
 		rawContentService.removeContent(path);
+
+		ContentActivityLog activityLog = new ContentActivityLog();
+		activityLog.setCreateduser(deleteUser);
+		activityLog.setActiondesc(deleteResourceAction.toString());
+		contentActivityLogService.saveWithSession(activityLog, "");
 	}
 
 	@Override
@@ -87,9 +107,23 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public void rename(String oldPath, String newPath) {
+	public void rename(String oldPath, String newPath, String userUpdate) {
+		Resource res = contentJcrDao.getResource(oldPath);
+		ContentActivityLogAction renameAction;
+		if (res instanceof Folder)
+			renameAction = ContentActivityLogBuilder.makeRenameFolder(oldPath,
+					newPath);
+		else
+			renameAction = ContentActivityLogBuilder.makeRenameContent(oldPath,
+					newPath);
+
 		contentJcrDao.rename(oldPath, newPath);
 		rawContentService.rename(oldPath, newPath);
+
+		ContentActivityLog activityLog = new ContentActivityLog();
+		activityLog.setCreateduser(userUpdate);
+		activityLog.setActiondesc(renameAction.toString());
+		contentActivityLogService.saveWithSession(activityLog, "");
 	}
 
 	@Override
@@ -100,11 +134,20 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public void moveResource(String oldPath, String destinationFolderPath) {
+	public void moveResource(String oldPath, String destinationFolderPath,
+			String userMove) {
 		String oldResourceName = oldPath.substring(
 				oldPath.lastIndexOf("/") + 1, oldPath.length());
 
 		Resource oldResource = contentJcrDao.getResource(oldPath);
+		ContentActivityLogAction moveResoureAction;
+		if (oldResource instanceof Folder) {
+			moveResoureAction = ContentActivityLogBuilder.makeMoveFolder(
+					oldPath, destinationFolderPath);
+		} else {
+			moveResoureAction = ContentActivityLogBuilder.makeMoveContent(
+					oldPath, destinationFolderPath);
+		}
 		if ((oldResource instanceof Folder)
 				&& destinationFolderPath.contains(oldPath)) {
 			throw new UserInvalidInputException(
@@ -114,6 +157,11 @@ public class ResourceServiceImpl implements ResourceService {
 					+ oldResourceName;
 			contentJcrDao.moveResource(oldPath, destinationPath);
 			rawContentService.moveContent(oldPath, destinationPath);
+
+			ContentActivityLog activityLog = new ContentActivityLog();
+			activityLog.setCreateduser(userMove);
+			activityLog.setActiondesc(moveResoureAction.toString());
+			contentActivityLogService.saveWithSession(activityLog, "");
 		}
 	}
 

@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.web.AppContext;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
 import db.migration.domain.Record;
@@ -28,20 +29,22 @@ public class V1_23__Migrate_Attachment_Of_Comment implements
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
 		try {
 
-			List<Record> comments = jdbcTemplate.query(
-					"select * from m_comment where m_comment.type=\"Crm-Note\"", new RowMapper<Record>() {
+			List<Record> comments = jdbcTemplate
+					.query("select * from m_comment where m_comment.type=\"Crm-Note\"",
+							new RowMapper<Record>() {
 
-						@Override
-						public Record mapRow(ResultSet rs, int rowNum)
-								throws SQLException {
-							Record comment = new Record();
-							comment.put("sAccountId", rs.getInt("sAccountId"));
-							comment.put("id", rs.getInt("id"));
-							comment.put("typeId", rs.getInt("typeId"));
-							comment.put("type", rs.getString("type"));
-							return comment;
-						}
-					});
+								@Override
+								public Record mapRow(ResultSet rs, int rowNum)
+										throws SQLException {
+									Record comment = new Record();
+									comment.put("sAccountId",
+											rs.getInt("sAccountId"));
+									comment.put("id", rs.getInt("id"));
+									comment.put("typeId", rs.getInt("typeId"));
+									comment.put("type", rs.getString("type"));
+									return comment;
+								}
+							});
 
 			ResourceService resourceService = ApplicationContextUtil
 					.getBean(ResourceService.class);
@@ -66,7 +69,7 @@ public class V1_23__Migrate_Attachment_Of_Comment implements
 							log.debug("Move resource {} to {}",
 									content.getPath(), commentNewPath);
 							resourceService.moveResource(content.getPath(),
-									commentNewPath);
+									commentNewPath, AppContext.getUsername());
 						}
 					}
 				}

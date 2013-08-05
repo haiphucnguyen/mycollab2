@@ -219,8 +219,10 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 														final ConfirmDialog dialog) {
 													if (dialog.isConfirmed()) {
 														FileSearchResultComponent.this.resourceService
-																.removeResource(resource
-																		.getPath());
+																.removeResource(
+																		resource.getPath(),
+																		AppContext
+																				.getUsername());
 
 														FileSearchResultComponent.this
 																.displaySearchResult(
@@ -415,7 +417,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					final String newPath = parentPath + newNameValue;
 					try {
 						RenameResourceWindow.this.service.rename(oldPath,
-								newPath);
+								newPath, AppContext.getUsername());
 						// reset layout
 						FileSearchResultComponent.this.displaySearchResult(
 								FileSearchResultComponent.this.rootFolder,

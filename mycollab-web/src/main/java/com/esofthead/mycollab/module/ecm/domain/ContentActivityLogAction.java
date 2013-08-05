@@ -74,7 +74,7 @@ public class ContentActivityLogAction {
 			this.createType = createType;
 		}
 	}
-	
+
 	public static class Delete extends ContentActivityLogAction {
 		private String path;
 		private String deleteType;
@@ -94,5 +94,36 @@ public class ContentActivityLogAction {
 		public void setDeleteType(String deleteType) {
 			this.deleteType = deleteType;
 		}
+	}
+
+	public static class Rename extends ContentActivityLogAction {
+		private String oldName;
+		private String newName;
+		private String resourceType;
+
+		public String getOldName() {
+			return oldName;
+		}
+
+		public void setOldName(String oldName) {
+			this.oldName = oldName;
+		}
+
+		public String getNewName() {
+			return newName;
+		}
+
+		public void setNewName(String newName) {
+			this.newName = newName;
+		}
+
+		public String getResourceType() {
+			return resourceType;
+		}
+
+		public void setResourceType(String resourceType) {
+			this.resourceType = resourceType;
+		}
+
 	}
 }

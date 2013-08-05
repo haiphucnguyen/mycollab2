@@ -83,6 +83,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private FileBreadcrumb fileBreadCrumb;
 	private MainBodyResourceLayout bodyResourceLayout;
 	public static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
+	private FileActivityStreamComponent fileActivityStreamComponent;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -221,6 +222,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			}
 		});
 
+		fileActivityStreamComponent = new FileActivityStreamComponent();
+		menuLayout.addComponent(fileActivityStreamComponent);
+
 		mainView.addComponent(menuBarContainerHorizontalLayout);
 		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
 				Alignment.TOP_LEFT);
@@ -274,6 +278,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	@Override
 	public void display() {
 		displayResources(rootPath, "My Documents");
+		fileActivityStreamComponent.showContentFeeds();
 	}
 
 	class FilterPanel extends GenericSearchPanel<FileSearchCriteria> {
@@ -877,7 +882,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					final String newPath = parentPath + newNameValue;
 					try {
 						RenameResourceWindow.this.service.rename(oldPath,
-								newPath);
+								newPath, AppContext.getUsername());
 						// reset layout
 						FileMainViewImpl.this.itemResourceContainerLayout
 								.constructBody(FileMainViewImpl.this.baseFolder);
@@ -1409,9 +1414,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										if (lstCheckedResource != null
 												&& lstCheckedResource.size() > 0) {
 											for (Resource res : lstCheckedResource) {
-												FileMainViewImpl.this.resourceService
-														.removeResource(res
-																.getPath());
+												FileMainViewImpl.this.resourceService.removeResource(
+														res.getPath(),
+														AppContext
+																.getUsername());
 												if (res instanceof Folder) {
 													FileMainViewImpl.this.menuTree
 															.removeItem((Folder) res);
