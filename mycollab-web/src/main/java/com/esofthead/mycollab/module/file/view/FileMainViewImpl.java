@@ -7,6 +7,8 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.MultiFileUploadExt;
@@ -80,6 +82,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private ItemResourceContainerLayout itemResourceContainerLayout;
 	private FileBreadcrumb fileBreadCrumb;
 	private MainBodyResourceLayout bodyResourceLayout;
+	public static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -964,8 +967,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 							final String folderVal = (String) AddNewFolderWindow.this.folderName
 									.getValue();
+
 							if (folderVal != null
 									&& !folderVal.trim().equals("")) {
+								Pattern pattern = Pattern
+										.compile(illegalFileNamePattern);
+								Matcher matcher = pattern.matcher(folderVal);
+								if (matcher.find()) {
+									FileMainViewImpl.this
+											.getWindow()
+											.showNotification(
+													"Please enter valid folder name except any follow characters : <>:&/\\|?*&");
+									return;
+								}
+
 								String baseFolderPath = (FileMainViewImpl.this.baseFolder == null) ? FileMainViewImpl.this.rootPath
 										: FileMainViewImpl.this.baseFolder
 												.getPath();
@@ -1073,6 +1088,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									&& lstFileAttachments.size() > 0) {
 								for (File file : lstFileAttachments) {
 									try {
+										if (file.getName() != null
+												&& file.getName().length() > 0) {
+											Pattern pattern = Pattern
+													.compile(illegalFileNamePattern);
+											Matcher matcher = pattern
+													.matcher(file.getName());
+											if (matcher.find()) {
+												FileMainViewImpl.this
+														.getWindow()
+														.showNotification(
+																"Please upload valid file-name except any follow characters : <>:&/\\|?*&");
+												return;
+											}
+										}
 										final Content content = new Content();
 										content.setPath(FileMainViewImpl.this.baseFolder
 												.getPath()

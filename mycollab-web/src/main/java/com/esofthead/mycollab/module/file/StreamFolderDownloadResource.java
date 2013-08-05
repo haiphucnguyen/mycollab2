@@ -92,6 +92,10 @@ public class StreamFolderDownloadResource implements
 				} catch (Exception e) {
 					currentResourcePath = "";
 				}
+				if (currentResourcePath.indexOf("/") != -1) {
+					currentResourcePath = currentResourcePath
+							.substring(currentResourcePath.indexOf("/") + 1);
+				}
 				currentResourcePath = currentResourcePath.replace("/", "");
 				byte[] buf = new byte[1024];
 				int len = -1;
