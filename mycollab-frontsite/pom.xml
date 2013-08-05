@@ -32,8 +32,8 @@
         </license>
     </licenses>
     <properties>
-        <wicket.version>6.6.0</wicket.version>
-        <jetty.version>8.1.5.v20120716</jetty.version>
+        <wicket.version>6.9.1</wicket.version>
+        <jetty.version>8.1.11.v20130520</jetty.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
