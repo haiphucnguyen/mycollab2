@@ -58,7 +58,6 @@ public class WicketApplication extends WebApplication {
 		this.mountPage("/signup", SignUpPage.class);
 		this.mountPage("/terms", TermOfServicePage.class);
 		this.mountPage("/signin", SignInPage.class);
-		this.mountPage("/frontsite/signin", SignInPage.class);
 		this.mountPage("/error404", Error404Page.class);
 		this.mountPage("/error500", Error500Page.class);
 
@@ -72,10 +71,6 @@ public class WicketApplication extends WebApplication {
 						new Error500Page(e)));
 			}
 		});
-		
-		// notice that in most cases this should be done as the
-		// last mounting-related operation because it replaces the root mapper
-//		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(), new HttpsConfig()));
 
 		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(),
 				new HttpsConfig()) {

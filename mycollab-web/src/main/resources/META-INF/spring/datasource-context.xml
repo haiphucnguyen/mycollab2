@@ -25,13 +25,10 @@
         <property name="jdbcUrl" value="${db.url}" />
         <property name="username" value="${db.username}" />
         <property name="password" value="${db.password}" />
-        <property name="idleConnectionTestPeriod" value="60" />
-        <property name="idleMaxAge" value="240" />
         <property name="maxConnectionsPerPartition" value="50" />
         <property name="minConnectionsPerPartition" value="10" />
         <property name="partitionCount" value="3" />
         <property name="acquireIncrement" value="5" />
-        <property name="releaseHelperThreads" value="3" />
     </bean>
 
     <bean id="txManager"

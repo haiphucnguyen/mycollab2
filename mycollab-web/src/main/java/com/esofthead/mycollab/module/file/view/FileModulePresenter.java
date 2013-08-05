@@ -22,15 +22,19 @@ public class FileModulePresenter extends AbstractPresenter<FileModule> {
 		MainView mainView = (MainView) container;
 		mainView.addModule((IModule) view);
 
-		String[] params = (String[]) data.getParams();
-		if (params == null || params.length == 0) {
-			FileMainPresenter mainPresenter = PresenterResolver
-					.getPresenter(FileMainPresenter.class);
-			mainPresenter.go(view, null);
-		} else {
-			FragmentNavigator.shellUrlResolver.getSubResolver("file").handle(
-					params);
-		}
+		// String[] params = (String[]) data.getParams();
+		// if (params == null || params.length == 0) {
+		// FileMainPresenter mainPresenter = PresenterResolver
+		// .getPresenter(FileMainPresenter.class);
+		// mainPresenter.go(view, null);
+		// } else {
+		// FragmentNavigator.shellUrlResolver.getSubResolver("document").handle(
+		// params);
+		// }
+
+		FileMainPresenter mainPresenter = PresenterResolver
+				.getPresenter(FileMainPresenter.class);
+		mainPresenter.go(view, null);
 
 		AppContext.updateLastModuleVisit(ModuleNameConstants.FILE);
 	}
