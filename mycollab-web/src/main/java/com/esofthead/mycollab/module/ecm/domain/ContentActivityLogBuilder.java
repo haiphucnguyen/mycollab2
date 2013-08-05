@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.ecm.domain;
 
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Create;
+import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Delete;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Move;
 
 public class ContentActivityLogBuilder {
@@ -37,5 +38,21 @@ public class ContentActivityLogBuilder {
 		moveAction.setNewPath(newPath);
 		moveAction.setMoveType(moveType);
 		return moveAction;
+	}
+
+	public static ContentActivityLogAction makeDeleteFolder(String path) {
+		return makeDelete(path, ContentActivityLogAction.FOLDER_TYPE);
+	}
+
+	public static ContentActivityLogAction makeDeleteContent(String path) {
+		return makeDelete(path, ContentActivityLogAction.CONTENT_TYPE);
+	}
+
+	private static ContentActivityLogAction makeDelete(String path,
+			String deleteType) {
+		Delete deleteAction = new Delete();
+		deleteAction.setDeleteType(deleteType);
+		deleteAction.setPath(path);
+		return deleteAction;
 	}
 }

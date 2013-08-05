@@ -11,8 +11,12 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.ContentActivityLog;
+import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction;
+import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogBuilder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
@@ -24,6 +28,9 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Autowired
 	private RawContentService rawContentService;
+
+	@Autowired
+	private ContentActivityLogService contentActivityLogService;
 
 	@Override
 	public List<Resource> getResources(String path) {
@@ -59,6 +66,13 @@ public class ResourceServiceImpl implements ResourceService {
 
 		String contentPath = content.getPath();
 		rawContentService.saveContent(contentPath, refStream);
+
+		ContentActivityLog activityLog = new ContentActivityLog();
+		ContentActivityLogAction createContentAction = ContentActivityLogBuilder
+				.makeCreateContent(contentPath);
+		activityLog.setCreateduser(createdUser);
+		activityLog.setActiondesc(createContentAction.toString());
+		contentActivityLogService.saveWithSession(activityLog, "");
 	}
 
 	@Override

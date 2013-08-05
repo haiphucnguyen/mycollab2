@@ -74,4 +74,25 @@ public class ContentActivityLogAction {
 			this.createType = createType;
 		}
 	}
+	
+	public static class Delete extends ContentActivityLogAction {
+		private String path;
+		private String deleteType;
+
+		public String getPath() {
+			return path;
+		}
+
+		public void setPath(String path) {
+			this.path = path;
+		}
+
+		public String getDeleteType() {
+			return deleteType;
+		}
+
+		public void setDeleteType(String deleteType) {
+			this.deleteType = deleteType;
+		}
+	}
 }
