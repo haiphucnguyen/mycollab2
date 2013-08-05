@@ -74,21 +74,21 @@ public class WicketApplication extends WebApplication {
 		
 		// notice that in most cases this should be done as the
 		// last mounting-related operation because it replaces the root mapper
-		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(), new HttpsConfig()));
+//		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(), new HttpsConfig()));
 
-//		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(),
-//				new HttpsConfig(80, 443)) {
-//			@Override
-//			protected Scheme getDesiredSchemeFor(Class pageClass) {
-//				if (getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT) {
-//					log.debug("in development mode, returning HTTP");
-//					return Scheme.HTTP;
-//				} else {
-//					log.debug("not in development mode, letting the mapper decide");
-//					return super.getDesiredSchemeFor(pageClass);
-//				}
-//			}
-//		});
+		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(),
+				new HttpsConfig()) {
+			@Override
+			protected Scheme getDesiredSchemeFor(Class pageClass) {
+				if (getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT) {
+					log.debug("in development mode, returning HTTP");
+					return Scheme.HTTP;
+				} else {
+					log.debug("not in development mode, letting the mapper decide");
+					return super.getDesiredSchemeFor(pageClass);
+				}
+			}
+		});
 	}
 
 }
