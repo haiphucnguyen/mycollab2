@@ -18,7 +18,7 @@ public class ApplicationProperties {
 
 	public static final String CDN_URL = "cdn.url";
 
-	public static final String APP_URL = "app.url";
+	private static final String APP_URL = "app.url";
 
 	public static final String FACEBOOK_URL = "facebook.url";
 	public static final String GOOGLE_URL = "google.url";
@@ -42,8 +42,11 @@ public class ApplicationProperties {
 	public static final String STORAGE_SYSTEM = "storageSystem";
 
 	public static final String SITE_NAME = "site.name";
-	public static final String RUNNING_MODE = "running.mode";
+	private static final String RUNNING_MODE = "running.mode";
 	public static final String SUPPORT_ACCOUNT_SUBDOMAIN = "isSupportAccountSubDomain";
+
+	public static final String DROPBOX_AUTH_LINK = "";
+	public static final String GOOGLE_DRIVE_LINK = "";
 
 	public static boolean productionMode = false;
 
