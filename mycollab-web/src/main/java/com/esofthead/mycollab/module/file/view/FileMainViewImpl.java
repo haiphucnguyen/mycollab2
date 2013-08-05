@@ -50,7 +50,6 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -113,7 +112,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		final Button eventBtn = new Button();
 		eventBtn.setDescription("Event");
-		eventBtn.setIcon(new ThemeResource("icons/16/ecm/event.png"));
+		eventBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/event.png"));
 		eventBtn.addListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -121,12 +120,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			public void buttonClick(ClickEvent event) {
 				if (eventBtn.getDescription().equals("Event")) {
 					eventBtn.setDescription("FileManagement");
-					eventBtn.setIcon(new ThemeResource(
-							"icons/16/ecm/document_yellow_icon.png"));
+					eventBtn.setIcon(MyCollabResource
+							.newResource("icons/16/ecm/document_yellow_icon.png"));
 					gotoActionLogPage();
 				} else if (eventBtn.getDescription().equals("FileManagement")) {
 					eventBtn.setDescription("Event");
-					eventBtn.setIcon(new ThemeResource("icons/16/ecm/event.png"));
+					eventBtn.setIcon(MyCollabResource
+							.newResource("icons/16/ecm/event.png"));
 					gotoFileMainViewPage(baseFolder);
 				}
 			}
@@ -135,7 +135,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		navButton.addButton(eventBtn);
 
 		Button settingBtn = new Button();
-		settingBtn.setIcon(new ThemeResource("icons/16/ecm/settings.png"));
+		settingBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/settings.png"));
 		settingBtn.addListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -147,7 +147,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		navButton.addButton(settingBtn);
 
 		final PopupButton linkBtn = new PopupButton();
-		linkBtn.setIcon(new ThemeResource("icons/16/ecm/link.png"));
+		linkBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/link.png"));
 		linkBtn.setWidth("65px");
 		final VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
@@ -762,7 +762,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			UiUtils.addComponent(layout, pathLabel, Alignment.MIDDLE_CENTER);
 
 			Button toContainFolder = new Button();
-			toContainFolder.setIcon(new ThemeResource(
+			toContainFolder.setIcon(MyCollabResource.newResource(
 					"icons/48/folder_arrow_right_icon.png"));
 			toContainFolder.setDescription("Go to folder");
 			toContainFolder.addListener(new Button.ClickListener() {
@@ -1254,7 +1254,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					Alignment.MIDDLE_LEFT);
 
 			Button goUpBtn = new Button();
-			goUpBtn.setIcon(new ThemeResource("icons/16/ecm/up_to_root.png"));
+			goUpBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/up_to_root.png"));
 			goUpBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -1290,7 +1290,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							addnewFolderWindow);
 				}
 			});
-			createBtn.setIcon(new ThemeResource("icons/16/ecm/add.png"));
+			createBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/add.png"));
 			createBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(createBtn);
 
@@ -1304,7 +1304,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							multiUploadWindow);
 				}
 			});
-			uploadBtn.setIcon(new ThemeResource("icons/16/ecm/upload.png"));
+			uploadBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/upload.png"));
 			uploadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(uploadBtn);
 
@@ -1343,7 +1343,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							}
 						}
 					});
-			downloadBtn.setIcon(new ThemeResource("icons/16/ecm/download.png"));
+			downloadBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/download.png"));
 			downloadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(downloadBtn);
 
@@ -1369,7 +1369,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						}
 					});
-			moveToBtn.setIcon(new ThemeResource("icons/16/ecm/move_up.png"));
+			moveToBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/move_up.png"));
 			moveToBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(moveToBtn);
 
@@ -1392,7 +1392,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							}
 						}
 					});
-			deleteBtn.setIcon(new ThemeResource("icons/16/ecm/delete.png"));
+			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/delete.png"));
 			deleteBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			deleteBtn.setImmediate(true);
 			navButton.addButton(deleteBtn);
