@@ -33,4 +33,10 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.ecm.dao.ContentActivityLogMapperExt" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="externalDriveMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.ecm.dao.ExternalDriveMapper" />
+    </bean>
 </beans>
