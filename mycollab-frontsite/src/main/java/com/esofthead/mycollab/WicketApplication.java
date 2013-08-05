@@ -58,6 +58,7 @@ public class WicketApplication extends WebApplication {
 		this.mountPage("/signup", SignUpPage.class);
 		this.mountPage("/terms", TermOfServicePage.class);
 		this.mountPage("/signin", SignInPage.class);
+		this.mountPage("/frontsite/signin", SignInPage.class);
 		this.mountPage("/error404", Error404Page.class);
 		this.mountPage("/error500", Error500Page.class);
 
