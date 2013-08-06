@@ -420,18 +420,23 @@
             <version>0.8.0-rc1</version>
         </dependency>
 
-        <!-- Granite dependency -->
+        <!-- Spring blazeds dependency -->
         <dependency>
-            <groupId>org.graniteds</groupId>
-            <artifactId>granite-core</artifactId>
-            <version>3.0.0.M2</version>
+            <groupId>org.springframework.flex</groupId>
+            <artifactId>spring-flex-core</artifactId>
+            <version>1.5.2.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context-support</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.graniteds</groupId>
-            <artifactId>granite-spring</artifactId>
-            <version>3.0.0.M2</version>
-        </dependency>
 
         <!-- GWT dependency -->
         <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
@@ -594,6 +599,18 @@
             </plugins>
         </pluginManagement>
     </build>
+    <repositories>
+        <repository>
+            <id>blazeds</id>
+            <url>http://repository.jspresso.org/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>codehaus-snapshots</id>
