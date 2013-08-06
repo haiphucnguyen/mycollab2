@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.CaseI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.LocalizationHelper;
 
 public interface CaseTableFieldDef {
 	public static TableViewField selected = new TableViewField("", "selected",

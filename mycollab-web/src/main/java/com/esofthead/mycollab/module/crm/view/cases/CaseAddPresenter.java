@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.cases;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -18,7 +19,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 

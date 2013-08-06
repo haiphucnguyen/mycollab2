@@ -8,6 +8,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.view.account.MassUpdateRiskWindow;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -31,7 +32,6 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;

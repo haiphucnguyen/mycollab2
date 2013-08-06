@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -17,7 +18,6 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;

@@ -10,13 +10,13 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
-import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;

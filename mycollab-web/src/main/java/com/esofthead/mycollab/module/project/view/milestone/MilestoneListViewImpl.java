@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
@@ -20,7 +21,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;

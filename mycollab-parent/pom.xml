@@ -19,6 +19,7 @@
         <module>../mycollab-core</module>
         <module>../mycollab-api</module>
         <module>../mycollab-jackrabbit</module>
+        <module>../mycollab-services</module>
         <module>../mycollab-web</module>
         <module>../mycollab-frontsite</module>
         <module>../mycollab-deployer</module>

@@ -8,10 +8,10 @@ import org.vaadin.tokenfield.TokenField;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.EmailValidator;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.utils.ParsingUtils;
 import com.esofthead.mycollab.utils.ParsingUtils.InvalidEmailException;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")

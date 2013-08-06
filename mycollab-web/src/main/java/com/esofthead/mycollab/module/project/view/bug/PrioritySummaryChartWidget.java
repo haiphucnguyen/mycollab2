@@ -8,6 +8,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -20,7 +21,6 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 
 public class PrioritySummaryChartWidget extends

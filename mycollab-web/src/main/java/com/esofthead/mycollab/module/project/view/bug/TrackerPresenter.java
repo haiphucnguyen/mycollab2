@@ -2,11 +2,11 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.module.billing.BillingPlanChecker;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
+import com.esofthead.mycollab.shell.BillingPlanChecker;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;

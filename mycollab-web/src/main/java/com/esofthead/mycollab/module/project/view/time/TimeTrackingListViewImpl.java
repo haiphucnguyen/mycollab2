@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
@@ -24,7 +25,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;

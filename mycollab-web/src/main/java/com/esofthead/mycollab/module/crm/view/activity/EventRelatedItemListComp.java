@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.Arrays;
 
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -20,7 +21,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;

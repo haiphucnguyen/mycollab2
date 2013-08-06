@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -18,7 +19,6 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 
 import com.esofthead.mycollab.vaadin.ui.MessageBox;

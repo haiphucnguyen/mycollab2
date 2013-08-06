@@ -7,8 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class DateTimeUtils {
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"MM/dd/yyyy");
 
 	public static Date convertDate(Date value) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -22,7 +25,8 @@ public class DateTimeUtils {
 	}
 
 	public static Date getDateByStringWithFormat(String strDate, String format) {
-		if (strDate != null && !strDate.equals("") && format!= null && !format.equals("")) {
+		if (strDate != null && !strDate.equals("") && format != null
+				&& !format.equals("")) {
 			SimpleDateFormat formatter = new SimpleDateFormat(format);
 			try {
 				return formatter.parse(strDate);
@@ -108,4 +112,22 @@ public class DateTimeUtils {
 		Date dateExpect = cal.getTime();
 		return dateExpect;
 	}
+
+	public static String formatDate(Date date) {
+		return formatDate(date, null);
+	}
+
+	public static String formatDate(Date date, TimeZone timezone) {
+		if (date == null) {
+			return "";
+		}
+
+		if (timezone != null) {
+			simpleDateFormat.setTimeZone(timezone);
+		}
+
+		return simpleDateFormat.format(date);
+	}
+	
+	
 }

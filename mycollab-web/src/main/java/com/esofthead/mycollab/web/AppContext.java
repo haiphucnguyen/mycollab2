@@ -16,8 +16,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.esofthead.mycollab.cache.CacheManager;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.PermissionMap;
-import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
+import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -26,7 +29,6 @@ import com.esofthead.mycollab.module.user.domain.UserPreference;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
-import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -137,7 +139,7 @@ public class AppContext implements Serializable {
 			accountId = account.getId();
 		} else {
 			throw new UserInvalidInputException(LocalizationHelper.getMessage(
-					ExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
+					WebExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
 		}
 	}
 
@@ -317,16 +319,8 @@ public class AppContext implements Serializable {
 	}
 
 	public static String formatDate(Date date) {
-		if (date == null) {
-			return "";
-		}
-
-		TimeZone timezone = (TimeZone) getVariable(USER_TIMEZONE);
-		if (timezone != null) {
-			simpleDateTimeFormat.setTimeZone(timezone);
-		}
-
-		return simpleDateFormat.format(date);
+		return DateTimeUtils.formatDate(date,
+				(TimeZone) getVariable(USER_TIMEZONE));
 	}
 
 	public static String formatDate(Date date, String textIfDateIsNull) {
