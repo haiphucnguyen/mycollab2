@@ -11,9 +11,9 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.ContentActivityLog;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogBuilder;
+import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogWithBLOBs;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
@@ -56,10 +56,11 @@ public class ResourceServiceImpl implements ResourceService {
 		folder.setCreatedBy(createdBy);
 		folder.setCreated(new GregorianCalendar());
 		contentJcrDao.createFolder(folder, createdBy);
-		ContentActivityLog activityLog = new ContentActivityLog();
+		ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 		ContentActivityLogAction createFolderAction = ContentActivityLogBuilder
 				.makeCreateFolder(folderPath);
 		activityLog.setCreateduser(createdBy);
+		activityLog.setBasefolderpath(baseFolderPath);
 		activityLog.setActiondesc(createFolderAction.toString());
 		contentActivityLogService.saveWithSession(activityLog, "");
 		return folder;
@@ -73,11 +74,12 @@ public class ResourceServiceImpl implements ResourceService {
 		String contentPath = content.getPath();
 		rawContentService.saveContent(contentPath, refStream);
 
-		ContentActivityLog activityLog = new ContentActivityLog();
+		ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 		ContentActivityLogAction createContentAction = ContentActivityLogBuilder
 				.makeCreateContent(contentPath);
 		activityLog.setCreateduser(createdUser);
 		activityLog.setActiondesc(createContentAction.toString());
+		activityLog.setBasefolderpath(contentPath);
 		contentActivityLogService.saveWithSession(activityLog, "");
 	}
 
@@ -95,9 +97,10 @@ public class ResourceServiceImpl implements ResourceService {
 		contentJcrDao.removeResource(path);
 		rawContentService.removeContent(path);
 
-		ContentActivityLog activityLog = new ContentActivityLog();
+		ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 		activityLog.setCreateduser(deleteUser);
 		activityLog.setActiondesc(deleteResourceAction.toString());
+		activityLog.setBasefolderpath(path);
 		contentActivityLogService.saveWithSession(activityLog, "");
 	}
 
@@ -120,9 +123,10 @@ public class ResourceServiceImpl implements ResourceService {
 		contentJcrDao.rename(oldPath, newPath);
 		rawContentService.rename(oldPath, newPath);
 
-		ContentActivityLog activityLog = new ContentActivityLog();
+		ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 		activityLog.setCreateduser(userUpdate);
 		activityLog.setActiondesc(renameAction.toString());
+		activityLog.setBasefolderpath(newPath);
 		contentActivityLogService.saveWithSession(activityLog, "");
 	}
 
@@ -148,6 +152,7 @@ public class ResourceServiceImpl implements ResourceService {
 			moveResoureAction = ContentActivityLogBuilder.makeMoveContent(
 					oldPath, destinationFolderPath);
 		}
+		
 		if ((oldResource instanceof Folder)
 				&& destinationFolderPath.contains(oldPath)) {
 			throw new UserInvalidInputException(
@@ -158,9 +163,10 @@ public class ResourceServiceImpl implements ResourceService {
 			contentJcrDao.moveResource(oldPath, destinationPath);
 			rawContentService.moveContent(oldPath, destinationPath);
 
-			ContentActivityLog activityLog = new ContentActivityLog();
+			ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 			activityLog.setCreateduser(userMove);
 			activityLog.setActiondesc(moveResoureAction.toString());
+			activityLog.setBasefolderpath(destinationPath);
 			contentActivityLogService.saveWithSession(activityLog, "");
 		}
 	}

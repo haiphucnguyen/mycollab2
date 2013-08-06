@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.ecm.domain;
 
-public class SimpleContentActivityLog extends ContentActivityLog {
+public class SimpleContentActivityLog extends ContentActivityLogWithBLOBs {
 	private static final long serialVersionUID = 1L;
 
 	private String userFullName;

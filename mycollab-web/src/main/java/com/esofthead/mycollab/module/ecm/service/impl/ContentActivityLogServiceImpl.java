@@ -8,14 +8,14 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.ecm.dao.ContentActivityLogMapper;
 import com.esofthead.mycollab.module.ecm.dao.ContentActivityLogMapperExt;
-import com.esofthead.mycollab.module.ecm.domain.ContentActivityLog;
+import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogWithBLOBs;
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 
 @Service
 public class ContentActivityLogServiceImpl
 		extends
-		DefaultService<Integer, ContentActivityLog, ContentActivityLogSearchCriteria>
+		DefaultService<Integer, ContentActivityLogWithBLOBs, ContentActivityLogSearchCriteria>
 		implements ContentActivityLogService {
 
 	@Autowired

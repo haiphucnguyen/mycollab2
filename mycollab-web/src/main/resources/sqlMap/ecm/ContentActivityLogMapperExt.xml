@@ -25,7 +25,8 @@
 
     <sql id="selectSimpleActivityLog">
         <![CDATA[
-        SELECT m_ecm_activity_log.id, m_ecm_activity_log.createdUser, m_ecm_activity_log.actionDesc, m_ecm_activity_log.createdTime, m_ecm_activity_log.createdUserFullName,
+        SELECT m_ecm_activity_log.id, m_ecm_activity_log.createdUser, m_ecm_activity_log.actionDesc, m_ecm_activity_log.createdTime, 
+            m_ecm_activity_log.createdUserFullName, m_ecm_activity_log.baseFolderPath,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as userFullName,
             s_user.avatarId AS userAvatarId
         FROM m_ecm_activity_log
