@@ -22,11 +22,9 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
@@ -91,16 +89,18 @@ public class FileActivityStreamPagedList
 
 				final ContentActivityLogAction contentActivityAction = ContentActivityLogAction
 						.fromString(activityStream.getActiondesc());
-				String userName = activityStream.getCreateduser();
-				if (userName.indexOf("@") != -1)
-					userName = userName.substring(0, userName.indexOf("@"));
+				// String userName = activityStream.getCreateduser();
+				// if (userName.indexOf("@") != -1)
+				// userName = userName.substring(0, userName.indexOf("@"));
 
-				Embedded embedded = new Embedded();
-				embedded.setIcon(new ThemeResource(UserAvatarControlFactory
-						.getAvatarLink(activityStream.getUserAvatarId(), 16)));
-				streamInfoLayout.addComponent(embedded);
+				Label IconEmbedded = new Label("<img src=\""
+						+ UserAvatarControlFactory.getAvatarLink(
+								activityStream.getUserAvatarId(), 16)
+						+ "\" alt=\"\">", Label.CONTENT_XHTML);
+				streamInfoLayout.addComponent(IconEmbedded);
 
-				Button userNameBtn = new Button(userName,
+				Button userNameBtn = new Button(
+						activityStream.getUserFullName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
