@@ -161,6 +161,8 @@ public class FileActivityStreamPagedList
 								}
 							});
 					newPathBtn.addStyleName("link");
+					newPathBtn
+							.setDescription("Download if it's available or go to enclosing folder. Please review activity logs.");
 					streamInfoLayout.addComponent(newPathBtn);
 				} else if (contentActivityAction instanceof Delete) {
 					String oldName = ((Delete) contentActivityAction).getPath();
