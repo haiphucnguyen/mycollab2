@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
@@ -95,8 +96,8 @@ public class FileActivityStreamPagedList
 					userName = userName.substring(0, userName.indexOf("@"));
 
 				Embedded embedded = new Embedded();
-				embedded.setIcon(new ThemeResource(activityStream
-						.getUserAvatarId()));
+				embedded.setIcon(new ThemeResource(UserAvatarControlFactory
+						.getAvatarLink(activityStream.getUserAvatarId(), 16)));
 				streamInfoLayout.addComponent(embedded);
 
 				Button userNameBtn = new Button(userName,
@@ -238,6 +239,7 @@ public class FileActivityStreamPagedList
 								}
 							});
 					infoBtn.addStyleName("link");
+					infoBtn.setDescription("Download if it's available or go to enclosing folder. Please review activity logs.");
 					streamInfoLayout.addComponent(infoBtn);
 				} else if (contentActivityAction instanceof Rename) {
 					String newName = ((Rename) contentActivityAction)
@@ -300,14 +302,12 @@ public class FileActivityStreamPagedList
 
 	@Override
 	protected int queryTotalCount() {
-		return this.totalCount;
+		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected List<SimpleContentActivityLog> queryCurrentData() {
-		return this.contentActivityLogService
-				.findPagableListByCriteria(this.searchRequest);
+		return null;
 	}
 
 	@Override
