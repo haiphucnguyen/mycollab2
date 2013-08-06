@@ -81,9 +81,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private MainBodyResourceLayout bodyResourceLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
 	public static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
+	private Button eventBtn;
 
 	public FileMainViewImpl() {
-		fileActivityStreamComponent = new FileActivityStreamComponent();
 		resourceService = AppContext.getSpringBean(ResourceService.class);
 		this.setSpacing(true);
 		this.setMargin(false);
@@ -110,7 +110,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		UiUtils.addComponent(topControlMenuLayoutWapper, navButton,
 				Alignment.MIDDLE_RIGHT);
 
-		final Button eventBtn = new Button();
+		eventBtn = new Button();
 		eventBtn.setDescription("Event");
 		eventBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/event.png"));
 		eventBtn.addListener(new Button.ClickListener() {
@@ -135,7 +135,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		navButton.addButton(eventBtn);
 
 		Button settingBtn = new Button();
-		settingBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/settings.png"));
+		settingBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/settings.png"));
 		settingBtn.addListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -226,9 +227,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			@Override
 			public void itemClick(final ItemClickEvent event) {
 				final Folder item = (Folder) event.getItemId();
-				FileMainViewImpl.this.baseFolder = item;
-				itemResourceContainerLayout.constructBody(item);
-				bodyResourceLayout.fileBreadCrumb.gotoFolder(item);
+				gotoFileMainViewPage(item);
 			}
 		});
 
@@ -256,16 +255,74 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private void gotoActionLogPage() {
 		bodyResourceLayout.removeAllComponents();
+		if (fileActivityStreamComponent == null) {
+			fileActivityStreamComponent = new FileActivityStreamComponent();
+			// and Folder - handeler
+			fileActivityStreamComponent
+					.addSelectedHandlerToPageList(new SearchHandler<FileSearchCriteria>() {
+						@Override
+						public void onSearch(FileSearchCriteria criteria) {
+							Resource res = resourceService.getResource(criteria
+									.getBaseFolder());
+							if (res == null) {
+								gotoEnclosingFoder(res, criteria);
+								return;
+							}
+							gotoFileMainViewPage((Folder) res);
+						}
+					});
+			// add File - handeler
+			fileActivityStreamComponent
+					.addSelectedHandlerToPageList(new SearchHandler<FileSearchCriteria>() {
+						@Override
+						public void onSearch(FileSearchCriteria criteria) {
+							Resource res = resourceService.getResource(criteria
+									.getBaseFolder());
+							if (res == null) {
+								gotoEnclosingFoder(res, criteria);
+								return;
+							}
+							FileMainViewImpl.this.getWindow().addWindow(
+									new FileDownloadWindow((Content) res));
+						}
+					});
+			// add handele
+			fileActivityStreamComponent
+					.addSelectedHandlerToPageList(new SearchHandler<FileSearchCriteria>() {
+						@Override
+						public void onSearch(FileSearchCriteria criteria) {
+						}
+					});
+		}
 		bodyResourceLayout.addComponent(fileActivityStreamComponent);
 		fileActivityStreamComponent.showContentFeeds();
 	}
 
+	private void gotoEnclosingFoder(Resource res, FileSearchCriteria criteria) {
+		String path = criteria.getBaseFolder().substring(0,
+				criteria.getBaseFolder().lastIndexOf("/"));
+		Resource parentFolder = resourceService.getResource(path);
+		if (parentFolder != null) {
+			gotoFileMainViewPage((Folder) parentFolder);
+		} else {
+			String message = (res instanceof Folder) ? "Folder's location has moved, Please review activity-logs for more informations."
+					: "File's location has moved, Please review activity-logs for more informations.";
+			FileMainViewImpl.this.getWindow().showNotification(message);
+		}
+	}
+
 	private void gotoFileMainViewPage(Folder baseFolder) {
 		bodyResourceLayout.removeAllComponents();
+		bodyResourceLayout.setSpacing(true);
 		bodyResourceLayout.addComponent(bodyResourceLayout.filterPanel);
 		bodyResourceLayout.addComponent(bodyResourceLayout.fileBreadCrumb);
 		bodyResourceLayout.addComponent(bodyResourceLayout.controllGroupBtn);
 		bodyResourceLayout.addComponent(itemResourceContainerLayout);
+		this.baseFolder = baseFolder;
+		bodyResourceLayout.fileBreadCrumb.gotoFolder(baseFolder);
+		itemResourceContainerLayout.constructBody(baseFolder);
+		eventBtn.setDescription("Event");
+		eventBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/event.png"));
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
@@ -696,7 +753,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							lstCheckedResource.add(res);
 
 							bodyResourceLayout.deleteResourceAction();
-							lstCheckedResource.clear();
 						}
 					});
 			deleteBtn.addStyleName("link");
@@ -762,8 +818,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			UiUtils.addComponent(layout, pathLabel, Alignment.MIDDLE_CENTER);
 
 			Button toContainFolder = new Button();
-			toContainFolder.setIcon(MyCollabResource.newResource(
-					"icons/48/folder_arrow_right_icon.png"));
+			toContainFolder.setIcon(MyCollabResource
+					.newResource("icons/48/folder_arrow_right_icon.png"));
 			toContainFolder.setDescription("Go to folder");
 			toContainFolder.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -1254,7 +1310,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					Alignment.MIDDLE_LEFT);
 
 			Button goUpBtn = new Button();
-			goUpBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/up_to_root.png"));
+			goUpBtn.setIcon(MyCollabResource
+					.newResource("icons/16/ecm/up_to_root.png"));
 			goUpBtn.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -1290,7 +1347,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							addnewFolderWindow);
 				}
 			});
-			createBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/add.png"));
+			createBtn.setIcon(MyCollabResource
+					.newResource("icons/16/ecm/add.png"));
 			createBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(createBtn);
 
@@ -1304,7 +1362,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							multiUploadWindow);
 				}
 			});
-			uploadBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/upload.png"));
+			uploadBtn.setIcon(MyCollabResource
+					.newResource("icons/16/ecm/upload.png"));
 			uploadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(uploadBtn);
 
@@ -1343,7 +1402,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							}
 						}
 					});
-			downloadBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/download.png"));
+			downloadBtn.setIcon(MyCollabResource
+					.newResource("icons/16/ecm/download.png"));
 			downloadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(downloadBtn);
 
@@ -1369,7 +1429,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						}
 					});
-			moveToBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/move_up.png"));
+			moveToBtn.setIcon(MyCollabResource
+					.newResource("icons/16/ecm/move_up.png"));
 			moveToBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			navButton.addButton(moveToBtn);
 
@@ -1392,7 +1453,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							}
 						}
 					});
-			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/delete.png"));
+			deleteBtn.setIcon(MyCollabResource
+					.newResource("icons/16/ecm/delete.png"));
 			deleteBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			deleteBtn.setImmediate(true);
 			navButton.addButton(deleteBtn);

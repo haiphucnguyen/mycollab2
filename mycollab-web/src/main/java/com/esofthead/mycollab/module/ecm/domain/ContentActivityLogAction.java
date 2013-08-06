@@ -97,24 +97,24 @@ public class ContentActivityLogAction {
 	}
 
 	public static class Rename extends ContentActivityLogAction {
-		private String oldName;
-		private String newName;
+		private String oldPath;
+		private String newPath;
 		private String resourceType;
 
-		public String getOldName() {
-			return oldName;
+		public String getOldPath() {
+			return oldPath;
 		}
 
-		public void setOldName(String oldName) {
-			this.oldName = oldName;
+		public void setOldPath(String oldPath) {
+			this.oldPath = oldPath;
 		}
 
-		public String getNewName() {
-			return newName;
+		public String getNewPath() {
+			return newPath;
 		}
 
-		public void setNewName(String newName) {
-			this.newName = newName;
+		public void setNewPath(String newPath) {
+			this.newPath = newPath;
 		}
 
 		public String getResourceType() {

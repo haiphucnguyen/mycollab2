@@ -5,6 +5,8 @@
 package com.esofthead.mycollab.module.file.view;
 
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.VerticalLayout;
@@ -32,4 +34,10 @@ public class FileActivityStreamComponent extends Depot {
 
 		this.activityStreamList.setSearchCriteria(searchCriteria);
 	}
+
+	public void addSelectedHandlerToPageList(
+			SearchHandler<FileSearchCriteria> handler) {
+		activityStreamList.addSearchHandler(handler);
+	}
+
 }

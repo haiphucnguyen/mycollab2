@@ -34,29 +34,21 @@ public class ContentActivityLogBuilder {
 
 	public static ContentActivityLogAction makeRenameFolder(String oldPath,
 			String newPath) {
-		String oldName = oldPath.substring(oldPath.lastIndexOf("/") + 1,
-				oldPath.length());
-		String newName = newPath.substring(newPath.lastIndexOf("/") + 1,
-				newPath.length());
-		return makeRenameFolder(oldName, newName,
+		return makeRenameFolder(oldPath, newPath,
 				ContentActivityLogAction.FOLDER_TYPE);
 	}
 
 	public static ContentActivityLogAction makeRenameContent(String oldPath,
 			String newPath) {
-		String oldName = oldPath.substring(oldPath.lastIndexOf("/") + 1,
-				oldPath.length());
-		String newName = newPath.substring(newPath.lastIndexOf("/") + 1,
-				newPath.length());
-		return makeRenameFolder(oldName, newName,
+		return makeRenameFolder(oldPath, newPath,
 				ContentActivityLogAction.CONTENT_TYPE);
 	}
 
-	private static ContentActivityLogAction makeRenameFolder(String oldName,
-			String newName, String type) {
+	private static ContentActivityLogAction makeRenameFolder(String oldPath,
+			String newPath, String type) {
 		Rename renameAction = new Rename();
-		renameAction.setNewName(newName);
-		renameAction.setOldName(oldName);
+		renameAction.setOldPath(oldPath);
+		renameAction.setNewPath(newPath);
 		renameAction.setResourceType(type);
 		return renameAction;
 	}
