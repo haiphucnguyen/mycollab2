@@ -302,6 +302,13 @@
             <version>5.3.0.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-client-hotrod</artifactId>
+            <version>5.3.0.Final</version>
+        </dependency>
+
+
         <!-- JETTY dependency -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -599,28 +606,4 @@
             </plugins>
         </pluginManagement>
     </build>
-    <repositories>
-        <repository>
-            <id>blazeds</id>
-            <url>http://repository.jspresso.org/maven2/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>codehaus-snapshots</id>
-            <url>http://nexus.codehaus.org/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
