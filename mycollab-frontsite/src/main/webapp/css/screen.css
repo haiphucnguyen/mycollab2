@@ -1,7 +1,18 @@
 /**************************/
 /*        CSS reset       */
 /**************************/
+@import url(http://fonts.googleapis.com/css?family=Monda:400,700);
 
+@font-face {
+    font-family: 'verdana';
+    src: url('../fonts/verdana.eot');
+    src: url('../fonts/verdana.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/verdana.svg#verdana') format('svg'),
+         url('../fonts/verdana.woff') format('woff'),
+         url('../fonts/verdana.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, quote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
 	margin: 0;
@@ -647,9 +658,10 @@ h1, h2, h3, h4, h5, h6 {
 .header-mid ul li a{	
 	color: #FFFFFF;
     display: block;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
     height: 50px;
+    font-family: 'Monda';
 }
 
 .header-mid ul li:hover {
@@ -755,10 +767,12 @@ h1, h2, h3, h4, h5, h6 {
 
 #footer-home .footer-copyright {
 	padding-top: 30px;
+	color: #555555;
 }
 
 #footer-home .footer-copyright h1 {
 	color: #FFF;
+	font-family: 'Monda';
 }
 
 .footer-sitemap {
@@ -788,6 +802,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 14px;
 	margin-left: 40px;
 	padding-bottom: 5px;
+	font-family: 'Monda';
 }
 
 .footer-sitemap .sitemap-col ul {
@@ -798,7 +813,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-sitemap .sitemap-col ul li a {
 	color: #4992df;
-	font-size: 13px;
+	font-size: 12px;
+	font-family: 'verdana';
 }
 
 .footer-sitemap .sitemap-col ul li a:hover {
@@ -1034,34 +1050,38 @@ h1, h2, h3, h4, h5, h6 {
 
 .home-banner-left-1 h1 {
 	color: #db8603;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: normal;
     line-height: 100%;
     padding-bottom: 10px;
     padding-top: 30px;
+    font-family: 'Monda';
 }
 
 .home-banner-left-1 p {
-	color: #000000;
+	color: #323232;
     font-size: 16px;
     line-height: 130%;
     padding-bottom: 20px;
+    font-family: 'verdana';
 }
 
 .home-banner-left-2 h1 {
-	font-size: 30px;
-	color: #000;
+	font-size: 36px;
+	color: #606060;
 	font-weight: bold;
 	line-height: 100%;
 	padding-bottom: 5px;
 	font-weight: normal;
+	font-family: 'Monda';
 }
 
 .home-banner-left-2 p {
-	font-size: 22px;
+	font-size: 18px;
 	line-height: 100%;
-	color: #000;
+	color: #606060;
 	margin-bottom: 25px;
+	font-family: 'verdana';
 }
 
 .home-banner-left-2 span {
@@ -1078,7 +1098,7 @@ h1, h2, h3, h4, h5, h6 {
     border-width: 1px;
     color: #FFFFFF;
     display: inline-block;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
     height: 30px;
     letter-spacing: 1px;
@@ -1088,6 +1108,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     text-decoration: none;
     width: 120px;
+    font-family: 'verdana';
 }
 
 .home-button-1:hover {	
@@ -1113,6 +1134,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     text-decoration: none;
     width: 230px;
+    font-family: 'verdana';
 }
 
 .home-button-2:hover {	
@@ -1196,11 +1218,11 @@ h1, h2, h3, h4, h5, h6 {
  }
  
 .home-box2-coll {
- 	width: 316px;
- 	float: left;
- 	padding: 20px 25px;
- 	text-align: center;
  	clear: inherit;
+    float: left;
+    padding: 20px;
+    text-align: center;
+    width: 326px;
  }
  
 .coll-style1 {
@@ -1217,6 +1239,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 	padding-bottom: 25px;
 	text-align: left;
+	font-family: 'Monda';
 }
 
 .home-box2-coll p {
@@ -1227,6 +1250,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 10px;
 	line-height: 130%;
 	text-align: justify;
+	font-family: 'verdana';
 }
 
 .home-button-3 {
@@ -2149,8 +2173,9 @@ a.nivo-prevNav {
 .develop {
 	color: #FFF;
     display: inline-block;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     padding: 14px 0 0 32px;
+    font-family: 'Monda';
 }
 /* End Note */
