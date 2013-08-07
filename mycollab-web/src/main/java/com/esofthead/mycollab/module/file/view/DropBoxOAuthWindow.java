@@ -28,6 +28,7 @@ public class DropBoxOAuthWindow extends Window {
 	public DropBoxOAuthWindow() {
 		super("Connecting account");
 		this.setWidth("500px");
+		this.setName("Dropbox");
 		this.center();
 		constructBody();
 	}
@@ -54,33 +55,32 @@ public class DropBoxOAuthWindow extends Window {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WebApplicationContext webContext = (WebApplicationContext) AppContext
-						.getApplication().getContext();
-				java.util.Locale locale = new Locale("Vietnamese", "VietName");
+				String redirectUri = "http://localhost:8080/mycollab-web/drive/dropboxAuth";
+
+				java.util.Locale locale = new Locale(Locale.US.getLanguage(),
+						Locale.US.getCountry());
 				String userLocale = locale.toString();
 				DbxRequestConfig requestConfig = new DbxRequestConfig(
 						"text-edit/0.1", userLocale);
 				DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 						"rheskqqb6f8fo6a");
-				String redirectUri = "http://localhost:8080/drive/dropboxAuth";
+				System.out.println("redirect URL : " + redirectUri);
+				WebApplicationContext webContext = (WebApplicationContext) AppContext
+						.getApplication().getContext();
+
 				HttpSession session = webContext.getHttpSession();
 				String sessionKey = "dropbox-auth-csrf-token";
 				DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(
 						session, sessionKey);
 				DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 						redirectUri, csrfTokenStore);
-				// Start authorization.
 				String authorizeUrl = webAuth.start();
-				// Send user to Dropbox authorization page, which will redirect
-				// back to
-				// your
-				// "callback URL" after the user authorizes your app (part 2,
-				// below).
-				// response.sendRedirect(authorizeUrl);
 
-				open(new ExternalResource(authorizeUrl), "connect to Dropbox",
-						true);
+				Window window = new Window("Dropbox connecting...");
+				window.setWidth("1000px");
+				getApplication().addWindow(window);
 
+				open(new ExternalResource(authorizeUrl), window.getName(), true);
 			}
 		});
 		dropboxBtn.addStyleName(UIConstants.THEME_BLUE_LINK);

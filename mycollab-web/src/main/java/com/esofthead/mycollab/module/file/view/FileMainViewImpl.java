@@ -160,6 +160,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
+						linkBtn.setPopupVisible(false);
 						FileMainViewImpl.this.getWindow().addWindow(
 								new DropBoxOAuthWindow());
 					}
