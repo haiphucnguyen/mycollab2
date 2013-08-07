@@ -2,7 +2,9 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
@@ -12,7 +14,6 @@ import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Component;
@@ -42,17 +43,14 @@ public class ProjectMessageListComponent extends Depot {
 					ProjectCommonI18nEnum.FEED_PROJECT_MESSAGE_TITLE,
 					UserAvatarControlFactory.getAvatarLink(
 							message.getPostedUserAvatarId(), 16),
-					ProjectLinkBuilder.WebLinkGenerator
-							.generateProjectMemberFullLink(
-									message.getProjectid(),
-									message.getPosteduser()), message
-							.getFullPostedUserName(), MyCollabResource
+					ProjectLinkBuilder.generateProjectMemberFullLink(
+							message.getProjectid(), message.getPosteduser()),
+					message.getFullPostedUserName(), MyCollabResource
 							.newResourceLink("icons/16/project/message.png"),
-					ProjectLinkBuilder.WebLinkGenerator
-							.generateMessagePreviewFullLink(
-									message.getProjectid(), message.getId(),
-									ProjectLinkBuilder.DEFAULT_PREFIX_PARAM),
-					message.getTitle());
+					ProjectLinkBuilder.generateMessagePreviewFullLink(
+							message.getProjectid(), message.getId(),
+							ProjectLinkUtils.DEFAULT_PREFIX_PARAM), message
+							.getTitle());
 			final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
 
 			header.addComponent(actionLbl);

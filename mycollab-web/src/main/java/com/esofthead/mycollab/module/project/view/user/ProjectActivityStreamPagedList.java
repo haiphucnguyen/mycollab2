@@ -7,11 +7,11 @@ import java.util.List;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
-import com.esofthead.mycollab.common.domain.AuditLogShowHandler;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
@@ -21,7 +21,6 @@ import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 
@@ -90,7 +89,7 @@ public class ProjectActivityStreamPagedList
 											activityStream
 													.getCreatedUserAvatarId(),
 											16),
-									ProjectLinkBuilder.WebLinkGenerator
+									ProjectLinkBuilder
 											.generateProjectMemberFullLink(
 													activityStream
 															.getExtratypeid(),
@@ -104,7 +103,7 @@ public class ProjectActivityStreamPagedList
 									ProjectResources
 											.getResourceLink(activityStream
 													.getType()),
-									ProjectLinkBuilder.WebLinkGenerator
+									ProjectLinkBuilder
 											.generateProjectItemLink(
 													activityStream
 															.getExtratypeid(),
@@ -128,7 +127,7 @@ public class ProjectActivityStreamPagedList
 									ProjectResources
 											.getResourceLink(activityStream
 													.getType()),
-									ProjectLinkBuilder.WebLinkGenerator
+									ProjectLinkBuilder
 											.generateProjectItemLink(
 													activityStream
 															.getExtratypeid(),

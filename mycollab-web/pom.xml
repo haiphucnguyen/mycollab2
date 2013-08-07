@@ -31,7 +31,7 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-jackrabbit</artifactId>
+            <artifactId>mycollab-services</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -40,7 +40,6 @@
             <artifactId>vaadin</artifactId>
             <version>${vaadinVersion}</version>
         </dependency>
-
 
         <dependency>
             <groupId>javax.validation</groupId>
@@ -54,11 +53,21 @@
             <classifier>sources</classifier>
             <scope>provided</scope>
         </dependency>
+
+
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>4.3.0.Final</version>
+            <groupId>com.dropbox.core</groupId>
+            <artifactId>dropbox-core-sdk</artifactId>
+            <version>[1.7,1.8)</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
+        </dependency>
+
+        <!-- VAADIN ADDONS -->
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>buttongroup</artifactId>
@@ -70,7 +79,7 @@
             <artifactId>popupbutton</artifactId>
             <version>1.2.1</version>
         </dependency>
-        <!-- VAADIN ADDONS -->
+
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>cropfield</artifactId>
@@ -193,17 +202,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.googlecode.flyway</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>2.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-email</artifactId>
-            <version>1.3</version>
-        </dependency>
-        <dependency>
             <groupId>net.sf.extcos</groupId>
             <artifactId>extcos</artifactId>
             <version>0.4b</version>
@@ -218,6 +216,19 @@
             <artifactId>batik-svggen</artifactId>
             <version>1.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.scribe</groupId>
+            <artifactId>scribe</artifactId>
+            <version>1.3.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -241,11 +252,7 @@
             <artifactId>cloning</artifactId>
             <version>1.9.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.mortennobel</groupId>
-            <artifactId>java-image-scaling</artifactId>
-            <version>0.8.5</version>
-        </dependency>
+
         <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
@@ -261,18 +268,6 @@
                     <artifactId>commons-codec</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.infinispan</groupId>
-            <artifactId>infinispan-core</artifactId>
-            <version>5.3.0.Final</version>
         </dependency>
 
         <!-- JETTY dependency -->
@@ -367,32 +362,6 @@
             <version>2.0</version>
         </dependency>
 
-        <!-- Camel dependency -->
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-core</artifactId>
-            <version>2.11.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring</artifactId>
-            <version>2.11.1</version>
-        </dependency>
-
-        <!-- Granite dependency -->
-        <dependency>
-            <groupId>org.graniteds</groupId>
-            <artifactId>granite-core</artifactId>
-            <version>3.0.0.M2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.graniteds</groupId>
-            <artifactId>granite-spring</artifactId>
-            <version>3.0.0.M2</version>
-        </dependency>
-
         <!-- GWT dependency -->
         <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
             <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
@@ -401,46 +370,6 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.2</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.21</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.esofthead.mycollab</groupId>
-                        <artifactId>mycollab-core</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Common Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Project Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Tracker Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Ecm Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/EcmGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -500,7 +429,7 @@
                     <dependency>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-servlets</artifactId>
-                        <version>8.1.5.v20120716</version>
+                        <version>${jettyVersion}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -554,16 +483,4 @@
             </plugins>
         </pluginManagement>
     </build>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>codehaus-snapshots</id>
-            <url>[http://nexus.codehaus.org/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

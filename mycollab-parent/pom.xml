@@ -7,10 +7,6 @@
     <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <ciManagement>
-        <system>hudson</system>
-        <url>http://build2.netconference.com:8080/job/dev/</url>
-    </ciManagement>
     <properties>
         <springVersion>3.2.0.RELEASE</springVersion>
         <aspectjVersion>1.7.1</aspectjVersion>
@@ -23,6 +19,7 @@
         <module>../mycollab-core</module>
         <module>../mycollab-api</module>
         <module>../mycollab-jackrabbit</module>
+        <module>../mycollab-services</module>
         <module>../mycollab-web</module>
         <module>../mycollab-frontsite</module>
         <module>../mycollab-deployer</module>
@@ -410,18 +407,16 @@
         </plugins>
     </reporting>
     <distributionManagement>
-        <!-- Publish versioned releases here -->
         <repository>
             <id>releaseNexus</id>
-            <name>My releases</name>
-            <url>http://build2.netconference.com:8080/nexus/content/repositories/releases</url>
+            <name>My 
+        releases</name>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
         </repository>
-
-        <!-- Publish snapshots here -->
         <snapshotRepository>
             <id>snapshotNexus</id>
             <name>My snapshots</name>
-            <url>http://build2.netconference.com:8080/nexus/content/repositories/snapshots</url>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

@@ -29,9 +29,10 @@ public class StreamDownloadResourceFactory {
 		}
 	}
 
-	public static Resource getStreamFolderResource(String[] documentPath) {
-		return new StreamResource(
-				new StreamFolderDownloadResource(documentPath), "out.zip",
+	public static Resource getStreamFolderResource(String[] documentPath,
+			boolean isSearchAction) {
+		return new StreamResource(new StreamFolderDownloadResource(
+				documentPath, isSearchAction), "out.zip",
 				AppContext.getApplication());
 
 	}

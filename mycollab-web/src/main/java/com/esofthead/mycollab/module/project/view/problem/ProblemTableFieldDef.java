@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.LocalizationHelper;
 
 public interface ProblemTableFieldDef {
 

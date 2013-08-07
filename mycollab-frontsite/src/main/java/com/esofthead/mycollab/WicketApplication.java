@@ -1,9 +1,13 @@
 package com.esofthead.mycollab;
 
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.https.HttpsConfig;
+import org.apache.wicket.protocol.https.HttpsMapper;
+import org.apache.wicket.protocol.https.Scheme;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -45,7 +49,7 @@ public class WicketApplication extends WebApplication {
 		super.init();
 
 		// add your configuration here
-
+		getDebugSettings().setAjaxDebugModeEnabled(false);
 		this.getMarkupSettings().setStripWicketTags(true);
 
 		this.mountPage("/tour", TourPage.class);
@@ -67,5 +71,20 @@ public class WicketApplication extends WebApplication {
 						new Error500Page(e)));
 			}
 		});
+
+		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(),
+				new HttpsConfig()) {
+			@Override
+			protected Scheme getDesiredSchemeFor(Class pageClass) {
+				if (getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT) {
+					log.debug("in development mode, returning HTTP");
+					return Scheme.HTTP;
+				} else {
+					log.debug("not in development mode, letting the mapper decide");
+					return super.getDesiredSchemeFor(pageClass);
+				}
+			}
+		});
 	}
+
 }

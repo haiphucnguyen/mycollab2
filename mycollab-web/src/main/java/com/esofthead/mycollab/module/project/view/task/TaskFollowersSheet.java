@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
-import com.esofthead.mycollab.schedule.email.command.ProjectTaskRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")

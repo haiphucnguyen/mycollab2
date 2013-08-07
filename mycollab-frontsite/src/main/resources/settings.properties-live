@@ -1,1 +1,3 @@
-signup.url=http://app.mycollab.com/api/signup
+webapp.url=http://localhost:8080/mycollab-web/
+signup.url=http://v1.mycollab.com/mycollab-web/api/signup
+signin.url=http://v1.mycollab.com/mycollab-web/api/signin

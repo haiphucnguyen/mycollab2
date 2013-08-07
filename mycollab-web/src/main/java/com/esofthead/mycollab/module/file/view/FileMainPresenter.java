@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.file.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class FileMainPresenter extends AbstractPresenter<FileMainView> {
@@ -18,6 +19,8 @@ public class FileMainPresenter extends AbstractPresenter<FileMainView> {
 
 		fileModule.addComponent(view);
 		view.display();
+
+		AppContext.addFragment("document/list", "Documents");
 	}
 
 }

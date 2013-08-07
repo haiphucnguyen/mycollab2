@@ -7,6 +7,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -18,7 +19,6 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
@@ -174,8 +174,10 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 														"_blank");
 									} else {
 										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-												.getStreamFolderResource(new String[] { ((Folder) resource)
-														.getPath() });
+												.getStreamFolderResource(
+														new String[] { ((Folder) resource)
+																.getPath() },
+														false);
 										AppContext
 												.getApplication()
 												.getMainWindow()
@@ -217,8 +219,10 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 														final ConfirmDialog dialog) {
 													if (dialog.isConfirmed()) {
 														FileSearchResultComponent.this.resourceService
-																.removeResource(resource
-																		.getPath());
+																.removeResource(
+																		resource.getPath(),
+																		AppContext
+																				.getUsername());
 
 														FileSearchResultComponent.this
 																.displaySearchResult(
@@ -413,7 +417,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					final String newPath = parentPath + newNameValue;
 					try {
 						RenameResourceWindow.this.service.rename(oldPath,
-								newPath);
+								newPath, AppContext.getUsername());
 						// reset layout
 						FileSearchResultComponent.this.displaySearchResult(
 								FileSearchResultComponent.this.rootFolder,

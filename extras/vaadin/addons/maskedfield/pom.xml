@@ -134,14 +134,14 @@
         <repository>
             <id>releaseNexus</id>
             <name>My releases</name>
-            <url>http://build2.netconference.com:8080/nexus/content/repositories/releases</url>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
         </repository>
 
         <!-- Publish snapshots here -->
         <snapshotRepository>
             <id>snapshotNexus</id>
             <name>My snapshots</name>
-            <url>http://build2.netconference.com:8080/nexus/content/repositories/snapshots</url>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

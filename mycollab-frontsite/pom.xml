@@ -32,8 +32,8 @@
         </license>
     </licenses>
     <properties>
-        <wicket.version>6.6.0</wicket.version>
-        <jetty.version>8.1.5.v20120716</jetty.version>
+        <wicket.version>6.9.1</wicket.version>
+        <jetty.version>8.1.11.v20130520</jetty.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -103,9 +103,10 @@
         <dependency>
             <groupId>fr.xebia.web</groupId>
             <artifactId>xebia-servlet-extras</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
             <scope>runtime</scope>
         </dependency>
+
 
         <!-- JUNIT DEPENDENCY FOR TESTING -->
         <dependency>

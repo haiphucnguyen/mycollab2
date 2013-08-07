@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.module.crm.view;
 
-import com.esofthead.mycollab.common.domain.AuditLogShowHandler;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
 public class CrmActivityStreamGenerator {
 	private static AuditLogShowHandler accountHandler = new AccountAuditLogShowHandler();

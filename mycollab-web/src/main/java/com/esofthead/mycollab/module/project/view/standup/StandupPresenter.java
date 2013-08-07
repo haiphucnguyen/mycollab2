@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.project.view.standup;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.billing.BillingPlanChecker;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
+import com.esofthead.mycollab.shell.BillingPlanChecker;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
