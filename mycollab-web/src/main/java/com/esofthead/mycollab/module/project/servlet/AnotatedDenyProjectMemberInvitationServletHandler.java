@@ -17,7 +17,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.schedule.email.command.MessageNotificationServiceImpl;
+import com.esofthead.mycollab.schedule.email.project.MessageNotificationServiceImpl;
 
 @Component("denyInvitationMemberServletHandler")
 public class AnotatedDenyProjectMemberInvitationServletHandler implements

@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.crm.view.lead;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -16,7 +17,6 @@ import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableDisplay;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 
 /**

@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
-import com.esofthead.mycollab.common.domain.AuditLogShowHandler;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
 public class ProjectActivityStreamGenerator {
 	private static AuditLogShowHandler bugHandler = new BugAuditLogShowHandler();

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.davengo.web.vaadin.crop.CropField;
 import com.davengo.web.vaadin.crop.widgetset.client.ui.VCropSelection;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;

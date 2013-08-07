@@ -13,6 +13,7 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -158,9 +159,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		}));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(message.getTitle()));
-		AppContext.addFragment(ProjectLinkBuilder.WebLinkGenerator
-				.generateMessagePreviewLink(project.getId(), message.getId()),
-				"Preview Message: " + message.getTitle());
+		AppContext.addFragment(ProjectLinkUtils.generateMessagePreviewLink(
+				project.getId(), message.getId()), "Preview Message: "
+				+ message.getTitle());
 	}
 
 	public void gotoRiskList() {
@@ -179,9 +180,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(risk.getRiskname()));
 		AppContext.addFragment(
-				ProjectLinkBuilder.WebLinkGenerator.generateRiskPreview(
-						project.getId(), risk.getId()),
-				"Preview Risk: " + risk.getRiskname());
+				ProjectLinkUtils.generateRiskPreview(project.getId(),
+						risk.getId()), "Preview Risk: " + risk.getRiskname());
 	}
 
 	public void gotoRiskEdit(final Risk risk) {
@@ -240,10 +240,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Phases", new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(milestone.getName()));
-		AppContext.addFragment(ProjectLinkBuilder.WebLinkGenerator
-				.generateMilestonePreviewLink(project.getId(),
-						milestone.getId()),
-				"Preview Phase: " + milestone.getName());
+		AppContext.addFragment(ProjectLinkUtils.generateMilestonePreviewLink(
+				project.getId(), milestone.getId()), "Preview Phase: "
+				+ milestone.getName());
 	}
 
 	public void gotoMilestoneEdit(final Milestone milestone) {
@@ -306,9 +305,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Problems", new GotoProblemListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(problem.getIssuename()));
-		AppContext.addFragment(ProjectLinkBuilder.WebLinkGenerator
-				.generateProblemPreviewLink(project.getId(), problem.getId()),
-				"Preview Problem: " + problem.getIssuename());
+		AppContext.addFragment(ProjectLinkUtils.generateProblemPreviewLink(
+				project.getId(), problem.getId()), "Preview Problem: "
+				+ problem.getIssuename());
 	}
 
 	public void gotoProblemEdit(final Problem problem) {
@@ -396,10 +395,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink("Task Group: " + taskList.getName()));
-		AppContext.addFragment(
-				ProjectLinkBuilder.WebLinkGenerator
-						.generateTaskGroupPreviewLink(project.getId(),
-								taskList.getId()),
+		AppContext.addFragment(ProjectLinkUtils.generateTaskGroupPreviewLink(
+				project.getId(), taskList.getId()),
 				"TaskGroup: " + taskList.getName());
 	}
 
@@ -446,9 +443,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink("Task: " + task.getTaskname()));
-		AppContext.addFragment(ProjectLinkBuilder.WebLinkGenerator
-				.generateTaskPreviewLink(project.getId(), task.getId()),
-				"Task: " + task.getTaskname());
+		AppContext.addFragment(
+				ProjectLinkUtils.generateTaskPreviewLink(project.getId(),
+						task.getId()), "Task: " + task.getTaskname());
 	}
 
 	public void gotoTaskEdit(final Task task) {
@@ -543,9 +540,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(bug.getSummary()));
 		AppContext.addFragment(
-				ProjectLinkBuilder.WebLinkGenerator.generateBugPreviewLink(
-						bug.getProjectid(), bug.getId()),
-				"Preview Bug: " + bug.getSummary());
+				ProjectLinkUtils.generateBugPreviewLink(bug.getProjectid(),
+						bug.getId()), "Preview Bug: " + bug.getSummary());
 	}
 
 	public void gotoVersionList() {
@@ -604,11 +600,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Versions", new GotoVersionListener()));
 		this.setLinkEnabled(true, 3);
 		this.addLink(generateBreadcrumbLink(version.getVersionname()));
-		AppContext.addFragment(
-				ProjectLinkBuilder.WebLinkGenerator
-						.generateBugVersionPreviewLink(project.getId(),
-								version.getId()),
-				"Preview Version: " + version.getVersionname());
+		AppContext.addFragment(ProjectLinkUtils.generateBugVersionPreviewLink(
+				project.getId(), version.getId()), "Preview Version: "
+				+ version.getVersionname());
 	}
 
 	private class GotoVersionListener implements Button.ClickListener {
@@ -677,9 +671,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Components", new GotoComponentListener()));
 		this.addLink(generateBreadcrumbLink(component.getComponentname()));
-		AppContext.addFragment(ProjectLinkBuilder.WebLinkGenerator
-				.generateBugComponentPreviewLink(project.getId(),
-						component.getId()),
+		AppContext.addFragment(
+				ProjectLinkUtils.generateBugComponentPreviewLink(
+						project.getId(), component.getId()),
 				"Preview Component: " + component.getComponentname());
 	}
 
@@ -866,8 +860,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void gotoProjectDashboard() {
 		this.select(1);
-		AppContext.addFragment(ProjectLinkBuilder.WebLinkGenerator
-				.generateProjectLink(project.getId()), "Dashboard");
+		AppContext.addFragment(
+				ProjectLinkUtils.generateProjectLink(project.getId()),
+				"Dashboard");
 	}
 
 	public void gotoProjectEdit() {

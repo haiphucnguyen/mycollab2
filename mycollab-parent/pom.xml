@@ -19,6 +19,7 @@
         <module>../mycollab-core</module>
         <module>../mycollab-api</module>
         <module>../mycollab-jackrabbit</module>
+        <module>../mycollab-services</module>
         <module>../mycollab-web</module>
         <module>../mycollab-frontsite</module>
         <module>../mycollab-deployer</module>
@@ -405,9 +406,17 @@
             </plugin>
         </plugins>
     </reporting>
-    <!-- <distributionManagement> <repository> <id>releaseNexus</id> <name>My 
-        releases</name> <url>http://build2.netconference.com:8080/nexus/content/repositories/releases</url> 
-        </repository> <snapshotRepository> <id>snapshotNexus</id> <name>My snapshots</name> 
-        <url>http://build2.netconference.com:8080/nexus/content/repositories/snapshots</url> 
-        </snapshotRepository> </distributionManagement> -->
+    <distributionManagement>
+        <repository>
+            <id>releaseNexus</id>
+            <name>My 
+        releases</name>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshotNexus</id>
+            <name>My snapshots</name>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
