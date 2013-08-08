@@ -6,9 +6,9 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
@@ -268,8 +268,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 												LocalizationHelper
 														.getMessage(
 																GenericI18Enum.DELETE_DIALOG_TITLE,
-																ApplicationProperties
-																		.getString(ApplicationProperties.SITE_NAME)),
+																SiteConfiguration
+																		.getSiteName()),
 												LocalizationHelper
 														.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 												LocalizationHelper

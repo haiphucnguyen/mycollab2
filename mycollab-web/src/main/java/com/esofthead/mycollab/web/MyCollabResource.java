@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.web;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
-import com.esofthead.mycollab.module.file.StorageSetting;
+import com.esofthead.mycollab.configuration.DeploymentMode;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
@@ -11,9 +11,8 @@ public abstract class MyCollabResource {
 	private static MyCollabResource impl;
 
 	static {
-		String storageSystem = ApplicationProperties.getString(
-				ApplicationProperties.STORAGE_SYSTEM, "file");
-		if (StorageSetting.S3_STORAGE_SYSTEM.equals(storageSystem.trim())) {
+		DeploymentMode deploymentMode = SiteConfiguration.getDeploymentMode();
+		if (deploymentMode == DeploymentMode.SITE) {
 			impl = new S3Resource();
 		} else {
 			impl = new VaadinThemeResource();

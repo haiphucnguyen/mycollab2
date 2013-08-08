@@ -1,8 +1,6 @@
-package com.esofthead.mycollab.module.file;
+package com.esofthead.mycollab.configuration;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
-
-public class StorageSetting {
+class StorageSetting {
 	public static final String FILE_STORAGE_SYSTEM = "file";
 
 	public static final String S3_STORAGE_SYSTEM = "s3";

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.flex.plugin;
 
+import java.lang.reflect.Field;
 import java.util.Set;
 
 import net.sf.extcos.ComponentQuery;
@@ -37,6 +38,10 @@ public class As3GeneratorMojo extends AbstractMojo {
 
 		for (Class<?> domainClass : viewClasses) {
 			getLog().info("Domain class" + domainClass.getName());
+			Field[] fields = domainClass.getDeclaredFields();
+			for (Field field : fields) {
+				getLog().info("Field name: " + field.getName());
+			}
 		}
 	}
 }

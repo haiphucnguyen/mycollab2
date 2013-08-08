@@ -5,8 +5,8 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -203,8 +203,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 											LocalizationHelper
 													.getMessage(
 															GenericI18Enum.DELETE_DIALOG_TITLE,
-															ApplicationProperties
-																	.getString(ApplicationProperties.SITE_NAME)),
+															SiteConfiguration
+																	.getSiteName()),
 											LocalizationHelper
 													.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
 											LocalizationHelper

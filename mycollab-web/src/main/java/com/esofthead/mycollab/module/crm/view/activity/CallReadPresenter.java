@@ -2,8 +2,8 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -46,11 +46,9 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 					public void onDelete(final SimpleCall data) {
 						ConfirmDialogExt.show(
 								view.getWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
-												ApplicationProperties
-														.getString(ApplicationProperties.SITE_NAME)),
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										SiteConfiguration.getSiteName()),
 								LocalizationHelper
 										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 								LocalizationHelper

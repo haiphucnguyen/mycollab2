@@ -3,27 +3,21 @@ package com.esofthead.mycollab.module.file.service;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.file.StorageSetting;
 import com.esofthead.mycollab.module.file.service.impl.AmazonRawContentServiceImpl;
+import com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl;
 
 @Service(value = "rawContentService")
 public class RawContentServiceFactoryBean extends
 		AbstractFactoryBean<RawContentService> {
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected RawContentService createInstance() throws Exception {
-		if (StorageSetting.isFileStorage()) {
-			String rawContentImplClassName = ApplicationProperties
-					.getString("content.rawContentServiceImpl",
-							"com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl");
-			Class<RawContentService> cls = (Class<RawContentService>) Class
-					.forName(rawContentImplClassName);
-			RawContentService rawContentService = cls.newInstance();
+		if (SiteConfiguration.isSupportFileStorage()) {
+			RawContentService rawContentService = new FileRawContentServiceImpl();
 			return rawContentService;
-		} else if (StorageSetting.isS3Storage()) {
+		} else if (SiteConfiguration.isSupportS3Storage()) {
 			return new AmazonRawContentServiceImpl();
 		} else {
 			throw new MyCollabException(

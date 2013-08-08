@@ -16,9 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
+import com.esofthead.mycollab.configuration.FileStorageConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.file.FileStorageConfig;
-import com.esofthead.mycollab.module.file.StorageSetting;
 import com.esofthead.mycollab.module.file.service.ContentService;
 
 @Component("userAvatarFSServlet")
@@ -33,7 +33,7 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 	@Override
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if (!StorageSetting.isFileStorage()) {
+		if (!SiteConfiguration.isSupportFileStorage()) {
 			throw new MyCollabException(
 					"This servlet support file system setting only");
 		}
@@ -51,7 +51,9 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 			}
 		}
 
-		avatarFile = FileStorageConfig.getAvatarFile(username, size);
+		FileStorageConfiguration fileConfiguration = (FileStorageConfiguration) SiteConfiguration
+				.getStorageConfiguration();
+		avatarFile = fileConfiguration.getAvatarFile(username, size);
 
 		if (avatarFile == null) {
 			if (size == 0) {

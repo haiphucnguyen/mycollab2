@@ -6,8 +6,8 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -59,10 +59,9 @@ public class MilestoneReadPresenter extends
 					public void onDelete(final Milestone data) {
 						ConfirmDialogExt.show(
 								view.getWindow(),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE,
-												ApplicationProperties
-												.getString(ApplicationProperties.SITE_NAME)),
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										SiteConfiguration.getSiteName()),
 								LocalizationHelper
 										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 								LocalizationHelper
@@ -167,8 +166,8 @@ public class MilestoneReadPresenter extends
 			if (data.getParams() instanceof Integer) {
 				MilestoneService riskService = AppContext
 						.getSpringBean(MilestoneService.class);
-				SimpleMilestone milestone = riskService
-						.findById((Integer) data.getParams());
+				SimpleMilestone milestone = riskService.findById((Integer) data
+						.getParams());
 				if (milestone != null) {
 					MilestoneContainer milestoneContainer = (MilestoneContainer) container;
 					milestoneContainer.removeAllComponents();

@@ -12,7 +12,6 @@ import com.esofthead.mycollab.common.interceptor.service.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.TaskMapper;
 import com.esofthead.mycollab.module.project.dao.TaskMapperExt;
@@ -35,9 +34,6 @@ public class ProjectTaskServiceImpl extends
 	private TaskMapper taskMapper;
 	@Autowired
 	private TaskMapperExt taskMapperExt;
-
-	@Autowired
-	private SystemMailService mailService;
 
 	@Override
 	public ICrudGenericDAO<Integer, Task> getCrudMapper() {

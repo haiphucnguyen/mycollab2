@@ -3,8 +3,8 @@ package com.esofthead.mycollab.schedule.email.project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -23,7 +23,7 @@ public class MailLinkGenerator {
 				.getBean(ProjectService.class);
 		String subdomain = projectService.getSubdomainOfProject(projectId);
 		if (subdomain != null) {
-			siteUrl = ApplicationProperties.getSiteUrl(subdomain);
+			siteUrl = SiteConfiguration.getSiteUrl(subdomain);
 		} else {
 			log.error("Can not find subdomain for projectid {}", projectId);
 			siteUrl = "";

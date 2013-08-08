@@ -14,9 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.esofthead.mycollab.cache.CacheManager;
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -68,6 +68,8 @@ public class AppContext implements Serializable {
 					.getRequiredWebApplicationContext(context.getHttpSession()
 							.getServletContext());
 		}
+		
+		log.error("Error example");
 	}
 
 	public static AppContext getInstance() {
@@ -159,7 +161,7 @@ public class AppContext implements Serializable {
 
 	public static String getSiteUrl() {
 		if (getInstance().siteUrl == null) {
-			getInstance().siteUrl = ApplicationProperties
+			getInstance().siteUrl = SiteConfiguration
 					.getSiteUrl(getInstance().subdomain);
 		}
 

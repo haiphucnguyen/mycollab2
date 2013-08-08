@@ -34,8 +34,9 @@ import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.configuration.DeploymentMode;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -69,7 +70,7 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 @Service
 @Transactional
-@RemotingDestination(channels={"mycollab-amf","mycollab-secure-amf"})
+@RemotingDestination(channels = { "mycollab-amf", "mycollab-secure-amf" })
 public class UserServiceDBImpl extends
 		DefaultService<String, User, UserSearchCriteria> implements UserService {
 
@@ -206,9 +207,7 @@ public class UserServiceDBImpl extends
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
 
-		boolean isSupportSubDomain = ApplicationProperties
-				.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
-		if (isSupportSubDomain) {
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
 			criteria.setSubdomain(new StringSearchField(subdomain));
 		}
 

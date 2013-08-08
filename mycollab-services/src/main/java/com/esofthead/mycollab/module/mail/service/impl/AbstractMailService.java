@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.module.mail.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.mail.EmailException;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
@@ -20,12 +17,10 @@ public abstract class AbstractMailService implements IGenericMailService {
 			List<MailRecipientField> toEmail, List<MailRecipientField> ccEmail,
 			List<MailRecipientField> bccEmail, String subject, String html,
 			List<EmailAttachementSource> attachments) {
-		try {
-			getMailer().sendHTMLMail(fromEmail, fromName, toEmail, ccEmail,
-					bccEmail, subject, html, attachments);
-		} catch (EmailException ex) {
-			ex.printStackTrace();
-		}
+
+		getMailer().sendHTMLMail(fromEmail, fromName, toEmail, ccEmail,
+				bccEmail, subject, html, attachments);
+
 	}
 
 	@Override
@@ -33,16 +28,7 @@ public abstract class AbstractMailService implements IGenericMailService {
 			List<SimpleUser> users, String subject, String html,
 			List<EmailAttachementSource> attachment) {
 
-		List<MailRecipientField> lstRecipient = new ArrayList<MailRecipientField>();
-		for (int i = 0; i < users.size(); i++) {
-			String mail = users.get(i).getEmail();
-			String mailName = (users.get(i).getDisplayName() == null || users
-					.get(i).getDisplayName().equals("")) ? mail : users.get(i)
-					.getDisplayName();
-			lstRecipient.add(new MailRecipientField(mail, mailName));
-		}
-
-		this.sendHTMLMail(fromEmail, fromName, lstRecipient, null, null,
-				subject, html, attachment);
+		getMailer().sendHTMLMail(fromEmail, fromName, users, subject, html,
+				attachment);
 	}
 }

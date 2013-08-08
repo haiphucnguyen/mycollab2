@@ -2,9 +2,8 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.File;
 
-import com.esofthead.mycollab.module.file.FileStorageConfig;
-import com.esofthead.mycollab.module.file.S3StorageConfig;
-import com.esofthead.mycollab.module.file.StorageSetting;
+import com.esofthead.mycollab.configuration.FileStorageConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.ExternalResource;
@@ -27,14 +26,8 @@ public class UserAvatarControlFactory {
 			return "";
 		}
 
-		String link = "";
-
-		if (StorageSetting.isFileStorage()) {
-			link = AppContext.getSiteUrl() + "avatar/" + userAvatarId + "/"
-					+ size;
-		} else if (StorageSetting.isS3Storage()) {
-			link = S3StorageConfig.getAvatarLink(userAvatarId, size);
-		}
+		String link = SiteConfiguration.getStorageConfiguration()
+				.generateAvatarPath(userAvatarId, size);
 
 		return link;
 	}
@@ -47,8 +40,11 @@ public class UserAvatarControlFactory {
 					+ size + ".png");
 		}
 
-		if (StorageSetting.isFileStorage()) {
-			File avatarFile = FileStorageConfig.getAvatarFile(avatarId, size);
+		if (SiteConfiguration.isSupportFileStorage()) {
+			FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) SiteConfiguration
+					.getStorageConfiguration();
+			File avatarFile = fileStorageConfiguration.getAvatarFile(avatarId,
+					size);
 			if (avatarFile != null) {
 				avatarRes = new FileResource(avatarFile,
 						AppContext.getApplication());
@@ -58,9 +54,10 @@ public class UserAvatarControlFactory {
 								+ ".png");
 			}
 
-		} else if (StorageSetting.isS3Storage()) {
-			avatarRes = new ExternalResource(S3StorageConfig.getAvatarLink(
-					avatarId, size));
+		} else if (SiteConfiguration.isSupportS3Storage()) {
+			avatarRes = new ExternalResource(SiteConfiguration
+					.getStorageConfiguration().generateAvatarPath(avatarId,
+							size));
 		}
 
 		return avatarRes;

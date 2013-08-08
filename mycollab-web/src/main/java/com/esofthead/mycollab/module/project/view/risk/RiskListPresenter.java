@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.view.account.MassUpdateRiskWindow;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
@@ -38,8 +38,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class RiskListPresenter extends AbstractPresenter<RiskListView>
-		implements ListPresenter<RiskSearchCriteria>,
-		MassUpdatePresenter<Risk>{
+		implements ListPresenter<RiskSearchCriteria>, MassUpdatePresenter<Risk> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -126,11 +125,9 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 						if ("delete".equals(id)) {
 							ConfirmDialogExt.show(
 									view.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
-													ApplicationProperties
-															.getString(ApplicationProperties.SITE_NAME)),
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											SiteConfiguration.getSiteName()),
 									LocalizationHelper
 											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
 									LocalizationHelper
@@ -176,8 +173,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(
-									"Mass Update Risk",
-									RiskListPresenter.this);
+									"Mass Update Risk", RiskListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
@@ -272,8 +268,8 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 	@Override
 	public void massUpdate(Risk value) {
 		if (!isSelectAll) {
-			Collection<SimpleRisk> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
+			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
+					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleRisk item : currentDataList) {
 				if (item.isSelected()) {
@@ -286,7 +282,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 				doSearch(searchCriteria);
 			}
 		} else {
-			riskService.updateBySearchCriteria(value,searchCriteria);
+			riskService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

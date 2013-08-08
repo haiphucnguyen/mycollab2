@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.common.logging;
 
-import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
@@ -13,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
@@ -46,24 +46,25 @@ public class DbLoggingAppender extends AppenderSkeleton {
 		ReportBugIssueWithBLOBs record = new ReportBugIssueWithBLOBs();
 		try {
 			/* continue on error */
-//			record.setUsername(AppContext.getUsername());
-//			record.setSaccountid(AppContext.getAccountId());
-//			AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
-//					.getApplication().getContext();
-//			record.setUseragent(context.getBrowser().getBrowserApplication());
-//
-//			String ipaddress = context.getBrowser().getAddress();
-//			record.setIpaddress(ipaddress);
-//
-//			InetAddress address = InetAddress.getByName(ipaddress);
-//			com.maxmind.geoip2.DatabaseReader reader = new DatabaseReader(
-//					new File("GeoLite2-City.mmdb"));
-//
-//			if (address != null) {
-//				record.setCountryCode(reader.country(address).getCountry()
-//						.getName());
-//			}
-//			reader.close();
+			// record.setUsername(AppContext.getUsername());
+			// record.setSaccountid(AppContext.getAccountId());
+			// AbstractWebApplicationContext context =
+			// (AbstractWebApplicationContext) AppContext
+			// .getApplication().getContext();
+			// record.setUseragent(context.getBrowser().getBrowserApplication());
+			//
+			// String ipaddress = context.getBrowser().getAddress();
+			// record.setIpaddress(ipaddress);
+			//
+			// InetAddress address = InetAddress.getByName(ipaddress);
+			// com.maxmind.geoip2.DatabaseReader reader = new DatabaseReader(
+			// new File("GeoLite2-City.mmdb"));
+			//
+			// if (address != null) {
+			// record.setCountryCode(reader.country(address).getCountry()
+			// .getName());
+			// }
+			// reader.close();
 		} catch (Exception e) {
 			log.debug("Error while converting to log object");
 		}
@@ -83,19 +84,13 @@ public class DbLoggingAppender extends AppenderSkeleton {
 	}
 
 	private static final void commitLog(ReportBugIssueWithBLOBs record) {
-		SqlSession session = null;
 		try {
-			session = MyBatisFactory.build().openSession();
-			ReportBugIssueMapper mapper = session
-					.getMapper(ReportBugIssueMapper.class);
+			ReportBugIssueMapper mapper = ApplicationContextUtil
+					.getBean(ReportBugIssueMapper.class);
 			mapper.insertSelective(record);
-			session.commit();
 		} catch (Exception e) {
-			log.debug("Error while converting to log object", e);
-		} finally {
-			if (null != session) {
-				session.close();
-			}
+			// Send error via email directly
+			
 		}
 	}
 }

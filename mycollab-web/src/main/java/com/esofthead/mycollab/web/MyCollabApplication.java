@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.DeploymentMode;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
@@ -89,9 +90,7 @@ public class MyCollabApplication extends Application implements
 		MyCollabApplication.setInstance(this);
 
 		if (!isInitializeApp) {
-			boolean isSupportSubDomain = ApplicationProperties
-					.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
-			if (isSupportSubDomain) {
+			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
 				initialSubDomain = request.getServerName().split("\\.")[0];
 			} else {
 				initialSubDomain = request.getServerName();

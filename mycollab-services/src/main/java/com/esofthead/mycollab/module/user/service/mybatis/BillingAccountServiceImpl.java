@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.configuration.DeploymentMode;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
@@ -39,12 +40,11 @@ public class BillingAccountServiceImpl extends
 	@Override
 	public BillingAccount getAccountByDomain(String domain) {
 		BillingAccountExample ex = new BillingAccountExample();
-		boolean isSupportSubDomain = ApplicationProperties
-				.getBoolean(ApplicationProperties.SUPPORT_ACCOUNT_SUBDOMAIN);
-		if (isSupportSubDomain) {
+
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
 			ex.createCriteria().andSubdomainEqualTo(domain);
 		}
-		
+
 		List<BillingAccount> accounts = billingAccountMapper
 				.selectByExample(ex);
 		if ((accounts == null) || accounts.size() == 0) {
