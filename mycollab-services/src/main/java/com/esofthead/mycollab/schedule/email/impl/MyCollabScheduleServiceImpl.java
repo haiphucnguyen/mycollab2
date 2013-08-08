@@ -50,11 +50,6 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 				.selectByExampleWithBLOBs(new ReportBugIssueExample());
 
 		if (!listIssues.isEmpty()) {
-			// Remove all issues in table
-			ReportBugIssueExample ex = new ReportBugIssueExample();
-			ex.createCriteria().andIdGreaterThan(0);
-			mapper.deleteByExample(ex);
-
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"My Collab Error Report", "templates/email/errorReport.mt");
 			templateGenerator.putVariable("issueCol", listIssues);
@@ -66,6 +61,11 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 							.getSendErrorEmail())), null, null,
 					templateGenerator.generateSubjectContent(),
 					templateGenerator.generateBodyContent(), null);
+
+			// Remove all issues in table
+			ReportBugIssueExample ex = new ReportBugIssueExample();
+			ex.createCriteria().andIdGreaterThan(0);
+			mapper.deleteByExample(ex);
 		}
 	}
 

@@ -68,8 +68,6 @@ public class AppContext implements Serializable {
 					.getRequiredWebApplicationContext(context.getHttpSession()
 							.getServletContext());
 		}
-		
-		log.error("Error example");
 	}
 
 	public static AppContext getInstance() {
