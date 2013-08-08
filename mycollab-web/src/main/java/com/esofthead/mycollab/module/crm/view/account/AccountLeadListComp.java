@@ -6,8 +6,8 @@ import java.util.Set;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.splitbutton.SplitButton;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -157,8 +157,8 @@ public class AccountLeadListComp extends
 												LocalizationHelper
 														.getMessage(
 																GenericI18Enum.DELETE_DIALOG_TITLE,
-																ApplicationProperties
-																		.getString(ApplicationProperties.SITE_NAME)),
+																SiteConfiguration
+																		.getSiteName()),
 												LocalizationHelper
 														.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
 												LocalizationHelper

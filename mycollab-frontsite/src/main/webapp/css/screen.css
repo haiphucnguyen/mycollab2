@@ -1,7 +1,18 @@
 /**************************/
 /*        CSS reset       */
 /**************************/
+@import url(http://fonts.googleapis.com/css?family=Monda:400,700);
 
+@font-face {
+    font-family: 'verdana';
+    src: url('../fonts/verdana.eot');
+    src: url('../fonts/verdana.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/verdana.svg#verdana') format('svg'),
+         url('../fonts/verdana.woff') format('woff'),
+         url('../fonts/verdana.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, quote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
 	margin: 0;
@@ -647,9 +658,10 @@ h1, h2, h3, h4, h5, h6 {
 .header-mid ul li a{	
 	color: #FFFFFF;
     display: block;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
     height: 50px;
+    font-family: 'Monda';
 }
 
 .header-mid ul li:hover {
@@ -755,10 +767,12 @@ h1, h2, h3, h4, h5, h6 {
 
 #footer-home .footer-copyright {
 	padding-top: 30px;
+	color: #606060;
 }
 
 #footer-home .footer-copyright h1 {
 	color: #FFF;
+	font-family: 'Monda';
 }
 
 .footer-sitemap {
@@ -788,6 +802,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 14px;
 	margin-left: 40px;
 	padding-bottom: 5px;
+	font-family: 'Monda';
 }
 
 .footer-sitemap .sitemap-col ul {
@@ -797,8 +812,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer-sitemap .sitemap-col ul li a {
-	color: #4992df;
-	font-size: 13px;
+	color: #8a8a8a;
+	font-size: 12px;
+	font-family: 'verdana';
 }
 
 .footer-sitemap .sitemap-col ul li a:hover {
@@ -829,9 +845,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .col-style1 h1 {
-	font-size: 22px;
+	font-size: 20px;
 	padding: 35px 0px 5px 0px;
 	color:#118DEA;
+	font-family: 'Monda';
+}
+
+.col-style1 p {
+	font-family: 'verdana';
 }
 
 .col-style2, .col-style3 {
@@ -857,11 +878,13 @@ h1, h2, h3, h4, h5, h6 {
 .col-style2 h2 {
 	padding: 2px 0px 5px;
 	color: #FFF;
+	font-family: 'Monda';
 }
 
 .col-style3 h2 {
 	padding: 4px 0px 5px;
 	color: #FFF;
+	font-family: 'Monda';
 }
 
 .col-style3 .prig-price {
@@ -875,6 +898,7 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 130%;
 	color: #585858;
 	margin-bottom: 20px;
+	font-family: 'verdana';
 }
 
 .pricing-button {
@@ -891,14 +915,15 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 3px 0px 0px 0px;
 	margin: 6px auto 0px;
 	font-size: 13px;
-	font-family: 'Arial';
+	font-family: 'verdana';
 	font-weight: bold;
 }
 
 .col-style2 .pricing-button a {
 	background-color: #979797;
 	border-radius: 5px;
-	border: solid 1px #838383; 
+	border: solid 1px #838383;
+	font-family: 'verdana';
 }
 
 .col-style3 .pricing-button a {
@@ -924,6 +949,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 12px;
 	letter-spacing: 0.2px;
 	color: #616161;
+	font-family: 'verdana';
 }
 
 .pricing-mid {
@@ -946,6 +972,7 @@ h1, h2, h3, h4, h5, h6 {
 	width: 172px;
 	background-color: #FAFAFA;
 	border-right: solid 1px #BCB8B8;
+	font-family: 'verdana';
 }
 
 .prig-table tr td img {
@@ -1034,40 +1061,45 @@ h1, h2, h3, h4, h5, h6 {
 
 .home-banner-left-1 h1 {
 	color: #db8603;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: normal;
     line-height: 100%;
     padding-bottom: 10px;
     padding-top: 30px;
+    font-family: 'Monda';
 }
 
 .home-banner-left-1 p {
-	color: #000000;
+	color: #323232;
     font-size: 16px;
     line-height: 130%;
     padding-bottom: 20px;
+    font-family: 'verdana';
 }
 
 .home-banner-left-2 h1 {
-	font-size: 30px;
-	color: #000;
+	font-size: 36px;
+	color: #606060;
 	font-weight: bold;
 	line-height: 100%;
 	padding-bottom: 5px;
 	font-weight: normal;
+	font-family: 'Monda';
 }
 
 .home-banner-left-2 p {
-	font-size: 22px;
+	font-size: 18px;
 	line-height: 100%;
-	color: #000;
+	color: #606060;
 	margin-bottom: 25px;
+	font-family: 'verdana';
 }
 
 .home-banner-left-2 span {
 	display: inline-block;
     text-align: center;
     width: 30px;
+    font-family: 'verdana';
 }
 
 .home-button-1 {
@@ -1078,7 +1110,7 @@ h1, h2, h3, h4, h5, h6 {
     border-width: 1px;
     color: #FFFFFF;
     display: inline-block;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
     height: 30px;
     letter-spacing: 1px;
@@ -1088,6 +1120,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     text-decoration: none;
     width: 120px;
+    font-family: 'verdana';
 }
 
 .home-button-1:hover {	
@@ -1113,6 +1146,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     text-decoration: none;
     width: 230px;
+    font-family: 'verdana';
 }
 
 .home-button-2:hover {	
@@ -1196,11 +1230,11 @@ h1, h2, h3, h4, h5, h6 {
  }
  
 .home-box2-coll {
- 	width: 316px;
- 	float: left;
- 	padding: 20px 25px;
- 	text-align: center;
  	clear: inherit;
+    float: left;
+    padding: 20px;
+    text-align: center;
+    width: 326px;
  }
  
 .coll-style1 {
@@ -1217,6 +1251,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 	padding-bottom: 25px;
 	text-align: left;
+	font-family: 'Monda';
 }
 
 .home-box2-coll p {
@@ -1227,12 +1262,13 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 10px;
 	line-height: 130%;
 	text-align: justify;
+	font-family: 'verdana';
 }
 
 .home-button-3 {
 	color: #ffffff;
 	font-size: 12px;
-	line-height: 34px;
+	line-height: 30px;
 	display: inline-block;
 	padding: 0px;
 	text-decoration: none;
@@ -1244,6 +1280,7 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100px;
 	height: 30px;
 	text-align: center;
+	font-family: 'verdana';
 }
 
 .home-button-3 img {
@@ -1445,6 +1482,7 @@ a.nivo-prevNav {
 	display: inline-block;
 	padding: 35px 0px 15px 70px;
 	margin-top: 5px;
+	font-family: 'Monda';
 }
 
 .pri-top p {
@@ -1480,6 +1518,7 @@ a.nivo-prevNav {
 	padding: 5px 0px 5px 20px;
 	font-weight: normal;
 	margin-bottom: 10px;
+	font-family: 'Monda';
 }
 
 .pri-mid-left p {
@@ -1487,6 +1526,7 @@ a.nivo-prevNav {
 	font-size: 12px;
 	color: #000;
 	text-align: justify;
+	font-family: 'verdana';
 }
 
 .pri-mid-right {
@@ -1519,11 +1559,12 @@ a.nivo-prevNav {
 
 .pri-bott-block h2 {
 	color: #242424;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     height: 32px;
     padding-left: 25px;
     padding-top: 10px;
+    font-family: 'Monda';
 }
 
 .pri-bott-block p {
@@ -1531,6 +1572,7 @@ a.nivo-prevNav {
 	color: #5f5c5c;
 	padding-bottom: 10px;
 	text-align:justify;
+	font-family: 'verdana';
 }
 
 .pri-bott-text {
@@ -1585,6 +1627,7 @@ a.nivo-prevNav {
 	padding-top: 40px;
 	padding-bottom: 10px;
 	text-align: left;
+	font-family: 'Monda';
 }
 
 .tour-top .tour-top-small {
@@ -1606,6 +1649,7 @@ a.nivo-prevNav {
 	background-color: #228bc9;
 	color: #FFF;
 	padding: 5px 0px 5px 20px;
+	font-family: 'Monda';
 }
 
 .tour-mid-left ul li {
@@ -1615,7 +1659,8 @@ a.nivo-prevNav {
 	border-left: solid 1px #ababab;
 	border-right: solid 1px #ababab;
 	border-bottom: solid 1px #ababab;
-	
+	font-family: 'verdana';
+	background-color: #FFF;
 }
 
 .tour-mid-left ul li:hover {
@@ -1640,6 +1685,7 @@ a.nivo-prevNav {
 	font-weight: normal;
 	color: #228bc9;
 	padding-bottom: 5px;
+	font-family: 'Monda';
 }
 
 .content-1 img {
@@ -1651,6 +1697,7 @@ a.nivo-prevNav {
 	font-size: 14px;
 	padding-bottom: 12px;
 	text-align: justify;
+	font-family: 'verdana';
 }
 
 .intro-block {
@@ -1689,6 +1736,7 @@ a.nivo-prevNav {
 	font-weight: bold;
 	padding: 0px;
 	color: #000;
+	font-family: 'Monda';
 }
 
 .free-trial-cnt-2 {
@@ -1698,7 +1746,7 @@ a.nivo-prevNav {
 .free-trial p {
 	color: #FFF;
 	background-color: #2B97D7;
-	
+	font-family: 'verdana';
 }
 
 .tour-arrow {
@@ -1735,12 +1783,14 @@ a.nivo-prevNav {
     line-height: 100%;
     color: #3c3c3c;
     padding: 10px 0px 0px;
+    font-family: 'Monda';
 }
 
 .sig-top p {
 	color: #797979;
     font-size: 18px;
     padding-bottom: 30px;
+    font-family: 'verdana';
 }
 
 .sig-mid {
@@ -1773,6 +1823,7 @@ a.nivo-prevNav {
     line-height: 150%;
     padding: 0 0 10px;
     margin-top: 30px;
+    font-family: 'Monda';
 }
 
 .sig-left-ctn {
@@ -1840,6 +1891,7 @@ a.nivo-prevNav {
 	font-size: 14px;
 	padding: 0px 5px;
 	border-radius: 3px;
+	font-family: 'verdana';
 }
 
 .sig-mid-left input[type="password"] {
@@ -1848,6 +1900,7 @@ a.nivo-prevNav {
 	font-size: 14px;
 	padding: 0px 5px;
 	border-radius: 3px;
+	font-family: 'verdana';
 }
 
 .timezone_input{
@@ -1871,6 +1924,7 @@ a.nivo-prevNav {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	font-family: 'verdana';
 }
 
 #timezone_dropdown_hidden {
@@ -1883,6 +1937,7 @@ a.nivo-prevNav {
 	background-color: white;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	font-family: 'verdana';
 }
 
 .sig-left-chk {
@@ -1915,6 +1970,7 @@ a.nivo-prevNav {
 	display: block;
 	line-height: 32px;
 	color: #5a5a5a;
+	font-family: 'verdana';
 }
 
 .sig-left-chk a {
@@ -1948,6 +2004,7 @@ a.nivo-prevNav {
 	background-color: #228bc9;
 	margin-bottom: 26px;
 	clear: both;
+	font-family: 'verdana';
 }
 
 .sig-mid-left input[type="submit"]:hover {
@@ -1960,6 +2017,7 @@ a.nivo-prevNav {
 	text-align: center;
 	background-color: #E8E8E8;
 	margin-top: 40px;
+	margin-bottom: 20px;
 }
 
 .sig-mid-right h1 {
@@ -1970,6 +2028,7 @@ a.nivo-prevNav {
 	margin: 0 20px 25px 20px;
 	text-align: left;
 	border-bottom: solid 8px #D9D9D9;
+	font-family: 'Monda';
 }
 
 .sig-mid-right img {
@@ -1988,11 +2047,13 @@ a.nivo-prevNav {
 	font-weight: bold;
 	padding-left: 25px;
 	background: url("../images/pricing_question.png") no-repeat scroll left center transparent;
+	font-family: 'Monda';
 }
 
 .sig-right-block p {
 	font-size: 12px;
 	padding-bottom: 15px;
+	font-family: 'verdana';
 }
 
 .sig-right-block p a {
@@ -2012,10 +2073,11 @@ a.nivo-prevNav {
     margin-top: 1px;
     padding-left: 4px;
     position: absolute;
-    width: 95px;
+    width: 105px;
     right: 1px;
     top: 0px;
     border-radius: 0px 2px 2px 0px;
+    font-family: 'verdana';
 }
 /* End Sign Up style */
 
@@ -2120,6 +2182,7 @@ a.nivo-prevNav {
 	color: #228BC9;
 	text-align: center;
 	padding-bottom: 20px;
+	font-family: 'Monda';
 }
 
 .term-block h2 {
@@ -2127,11 +2190,13 @@ a.nivo-prevNav {
 	font-size: 16px;
 	font-weight: bold;
 	padding-bottom: 5px;
+	font-family: 'Monda';
 }
 
 .term-block p {
 	padding-bottom: 10px;
 	font-size: 14px;
+	font-family: 'verdana';
 }
 
 .term-block ol {
@@ -2149,8 +2214,9 @@ a.nivo-prevNav {
 .develop {
 	color: #FFF;
     display: inline-block;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     padding: 14px 0 0 32px;
+    font-family: 'Monda';
 }
 /* End Note */

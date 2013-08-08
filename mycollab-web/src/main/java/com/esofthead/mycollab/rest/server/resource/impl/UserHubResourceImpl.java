@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.service.BillingService;
@@ -41,7 +41,8 @@ public class UserHubResourceImpl extends ServerResource implements
 		List<String> subdomains = this.billingService
 				.getSubdomainsOfUser(username);
 		if (subdomains != null) {
-			log.debug("There are subdomains for user {} {}", username, BeanUtility.printBeanObj(subdomains));
+			log.debug("There are subdomains for user {} {}", username,
+					BeanUtility.printBeanObj(subdomains));
 			return subdomains.toArray(new String[0]);
 		} else {
 			log.debug("There is no subdomain for user {}", username);
@@ -65,7 +66,7 @@ public class UserHubResourceImpl extends ServerResource implements
 		} catch (MyCollabException e) {
 			throw new ResourceException(e);
 		}
-		String siteUrl = ApplicationProperties.getSiteUrl(subdomain);
+		String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
 		return siteUrl;
 	}
 }

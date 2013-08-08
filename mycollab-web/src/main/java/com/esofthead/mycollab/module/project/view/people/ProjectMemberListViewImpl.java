@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -119,11 +119,9 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				ConfirmDialogExt.show(
 						AppContext.getApplication().getMainWindow(),
-						LocalizationHelper
-								.getMessage(
-										GenericI18Enum.DELETE_DIALOG_TITLE,
-										ApplicationProperties
-												.getString(ApplicationProperties.SITE_NAME)),
+						LocalizationHelper.getMessage(
+								GenericI18Enum.DELETE_DIALOG_TITLE,
+								SiteConfiguration.getSiteName()),
 						LocalizationHelper
 								.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 						LocalizationHelper

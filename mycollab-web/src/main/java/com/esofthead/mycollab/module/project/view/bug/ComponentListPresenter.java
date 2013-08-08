@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -130,11 +130,9 @@ public class ComponentListPresenter extends
 						if ("delete".equals(id)) {
 							ConfirmDialogExt.show(
 									view.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
-													ApplicationProperties
-															.getString(ApplicationProperties.SITE_NAME)),
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											SiteConfiguration.getSiteName()),
 									LocalizationHelper
 											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
 									LocalizationHelper

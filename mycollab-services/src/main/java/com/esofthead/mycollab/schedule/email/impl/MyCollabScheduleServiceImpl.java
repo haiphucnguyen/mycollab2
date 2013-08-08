@@ -8,25 +8,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.common.domain.ReportBugIssueExample;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
-import com.esofthead.mycollab.common.logging.MyBatisFactory;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
-import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.schedule.email.MyCollabScheduleService;
 import com.esofthead.mycollab.schedule.email.ScheduleConfig;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -40,42 +39,33 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 			.getLogger(MyCollabScheduleServiceImpl.class);
 
 	@Autowired
-	private SystemMailService mailService;
-
-	@Autowired
 	private MailRelayService mailRelayService;
 
 	@Override
 	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_RELAY_INTERVAL)
 	public void sendErrorReports() {
-		SqlSession session = MyBatisFactory.build().openSession();
-		try {
+		ReportBugIssueMapper mapper = ApplicationContextUtil
+				.getBean(ReportBugIssueMapper.class);
+		List<ReportBugIssueWithBLOBs> listIssues = mapper
+				.selectByExampleWithBLOBs(new ReportBugIssueExample());
 
-			ReportBugIssueMapper mapper = session
-					.getMapper(ReportBugIssueMapper.class);
-			List<ReportBugIssueWithBLOBs> listIssues = mapper
-					.selectByExampleWithBLOBs(new ReportBugIssueExample());
+		if (!listIssues.isEmpty()) {
+			// Remove all issues in table
+			ReportBugIssueExample ex = new ReportBugIssueExample();
+			ex.createCriteria().andIdGreaterThan(0);
+			mapper.deleteByExample(ex);
 
-			if (!listIssues.isEmpty()) {
-				// Remove all issues in table
-				ReportBugIssueExample ex = new ReportBugIssueExample();
-				ex.createCriteria().andIdGreaterThan(0);
-				mapper.deleteByExample(ex);
-				session.commit(true);
-
-				TemplateGenerator templateGenerator = new TemplateGenerator(
-						"My Collab Error Report",
-						"templates/email/errorReport.mt");
-				templateGenerator.putVariable("issueCol", listIssues);
-				mailService.sendHTMLMail("mail@esofthead.com", "Error Agent",
-						Arrays.asList(new MailRecipientField(
-								ApplicationProperties.getSendErrorEmail(),
-								ApplicationProperties.getSendErrorEmail())),
-						null, null, templateGenerator.generateSubjectContent(),
-						templateGenerator.generateBodyContent(), null);
-			}
-		} finally {
-			session.close();
+			TemplateGenerator templateGenerator = new TemplateGenerator(
+					"My Collab Error Report", "templates/email/errorReport.mt");
+			templateGenerator.putVariable("issueCol", listIssues);
+			Mailer mailer = new Mailer(
+					SiteConfiguration.getEmailConfiguration());
+			mailer.sendHTMLMail("mail@esofthead.com", "Error Agent", Arrays
+					.asList(new MailRecipientField(SiteConfiguration
+							.getSendErrorEmail(), SiteConfiguration
+							.getSendErrorEmail())), null, null,
+					templateGenerator.generateSubjectContent(),
+					templateGenerator.generateBodyContent(), null);
 		}
 	}
 
@@ -96,7 +86,10 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 					toMailList.add(new MailRecipientField(recipientArr[0][i],
 							recipientArr[1][i]));
 				}
-				mailService.sendHTMLMail(relayEmail.getFromemail(),
+
+				Mailer mailer = new Mailer(
+						SiteConfiguration.getEmailConfiguration());
+				mailer.sendHTMLMail(relayEmail.getFromemail(),
 						relayEmail.getFromemail(), toMailList, null, null,
 						relayEmail.getSubject(), relayEmail.getBodycontent(),
 						null);

@@ -15,17 +15,25 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.esofthead.mycollab.configuration.S3StorageConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.file.S3StorageConfig;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
 public class AmazonRawContentServiceImpl implements RawContentService {
 
 	private static final int BUFFER_SIZE = 1024;
 
+	private S3StorageConfiguration storageConfiguration;
+
+	public AmazonRawContentServiceImpl() {
+		storageConfiguration = (S3StorageConfiguration) SiteConfiguration
+				.getStorageConfiguration();
+	}
+
 	public void saveContent(String objectPath, InputStream stream) {
 
-		AmazonS3 s3client = S3StorageConfig.getS3Client();
+		AmazonS3 s3client = storageConfiguration.newS3Client();
 		try {
 			/*
 			 * need to save to temporary buffer
@@ -51,7 +59,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 			stream.close();
 
 			PutObjectRequest request = new PutObjectRequest(
-					S3StorageConfig.getBucket(), objectPath, tmpFile);
+					storageConfiguration.getBucket(), objectPath, tmpFile);
 
 			ObjectMetadata metaData = new ObjectMetadata();
 			metaData.setCacheControl("max-age=8640000");
@@ -68,11 +76,11 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	}
 
 	public InputStream getContent(String objectPath) {
-		AmazonS3 s3client = S3StorageConfig.getS3Client();
+		AmazonS3 s3client = storageConfiguration.newS3Client();
 
 		try {
 			S3Object obj = s3client.getObject(new GetObjectRequest(
-					S3StorageConfig.getBucket(), objectPath));
+					storageConfiguration.getBucket(), objectPath));
 
 			return obj.getObjectContent();
 		} catch (Exception e) {
@@ -81,14 +89,14 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	}
 
 	public void removeContent(String object) {
-		AmazonS3 s3client = S3StorageConfig.getS3Client();
+		AmazonS3 s3client = storageConfiguration.newS3Client();
 
 		try {
 			ObjectListing listObjects = s3client.listObjects(
-					S3StorageConfig.getBucket(), object);
+					storageConfiguration.getBucket(), object);
 			for (S3ObjectSummary objectSummary : listObjects
 					.getObjectSummaries()) {
-				s3client.deleteObject(S3StorageConfig.getBucket(),
+				s3client.deleteObject(storageConfiguration.getBucket(),
 						objectSummary.getKey());
 			}
 
@@ -99,11 +107,11 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 	@Override
 	public void rename(String oldPath, String newPath) {
-		AmazonS3 s3client = S3StorageConfig.getS3Client();
+		AmazonS3 s3client = storageConfiguration.newS3Client();
 
 		try {
 			ObjectListing listObjects = s3client.listObjects(
-					S3StorageConfig.getBucket(), oldPath);
+					storageConfiguration.getBucket(), oldPath);
 			for (S3ObjectSummary objectSummary : listObjects
 					.getObjectSummaries()) {
 				String key = objectSummary.getKey();
@@ -111,14 +119,14 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 				String newAppPath = newPath + appendPath;
 
 				CopyObjectRequest copyRequest = new CopyObjectRequest(
-						S3StorageConfig.getBucket(), key,
-						S3StorageConfig.getBucket(), newAppPath);
+						storageConfiguration.getBucket(), key,
+						storageConfiguration.getBucket(), newAppPath);
 				copyRequest
 						.withCannedAccessControlList(CannedAccessControlList.PublicRead);
 				s3client.copyObject(copyRequest);
 
 				DeleteObjectRequest deleteRequest = new DeleteObjectRequest(
-						S3StorageConfig.getBucket(), key);
+						storageConfiguration.getBucket(), key);
 				s3client.deleteObject(deleteRequest);
 			}
 

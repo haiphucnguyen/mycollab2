@@ -8,8 +8,8 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -126,11 +126,9 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 												.getPath())) {
 							ConfirmDialogExt.show(
 									FileDashboardComponent.this.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
-													ApplicationProperties
-															.getString(ApplicationProperties.SITE_NAME)),
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											SiteConfiguration.getSiteName()),
 									"Are you sure to delete folder "
 											+ FileDashboardComponent.this.baseFolder
 													.getName() + " ?",
@@ -443,8 +441,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 											LocalizationHelper
 													.getMessage(
 															GenericI18Enum.DELETE_DIALOG_TITLE,
-															ApplicationProperties
-																	.getString(ApplicationProperties.SITE_NAME)),
+															SiteConfiguration
+																	.getSiteName()),
 											LocalizationHelper
 													.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
 											LocalizationHelper

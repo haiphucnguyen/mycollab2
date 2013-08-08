@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
@@ -63,13 +63,13 @@ public class ProjectMemberInvitationNotificationServiceImp {
 					member.getMemberFullName());
 			templateGenerator.putVariable(
 					"urlAccept",
-					ApplicationProperties.getSiteUrl(subdomain)
+					SiteConfiguration.getSiteUrl(subdomain)
 							+ "project/member/invitation/confirm_invite/"
 							+ UrlEncodeDecoder.encode(member.getsAccountId()
 									+ "/" + member.getId()));
 			templateGenerator.putVariable(
 					"urlDeny",
-					ApplicationProperties.getSiteUrl(subdomain)
+					SiteConfiguration.getSiteUrl(subdomain)
 							+ "project/member/invitation/deny_invite/"
 							+ UrlEncodeDecoder.encode(member.getsAccountId()
 									+ "/" + member.getId()));

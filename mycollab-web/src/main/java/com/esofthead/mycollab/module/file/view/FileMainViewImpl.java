@@ -15,8 +15,8 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -1488,11 +1488,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		protected void deleteResourceAction() {
 			ConfirmDialogExt
 					.show(FileMainViewImpl.this.getWindow(),
-							LocalizationHelper
-									.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											ApplicationProperties
-													.getString(ApplicationProperties.SITE_NAME)),
+							LocalizationHelper.getMessage(
+									GenericI18Enum.DELETE_DIALOG_TITLE,
+									SiteConfiguration.getSiteName()),
 							LocalizationHelper
 									.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
 							LocalizationHelper

@@ -2,19 +2,18 @@ package com.esofthead.mycollab.module.ecm;
 
 import org.apache.jackrabbit.core.journal.DatabaseJournal;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.configuration.DatabaseConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 
 public class MyCollabDatabaseJournal extends DatabaseJournal {
 
 	public MyCollabDatabaseJournal() {
-		this.setDriver(ApplicationProperties
-				.getString(ApplicationProperties.DB_DRIVER_CLASS));
-		this.setUrl(ApplicationProperties
-				.getString(ApplicationProperties.DB_URL));
-		this.setUser(ApplicationProperties
-				.getString(ApplicationProperties.DB_USERNAME));
-		this.setPassword(ApplicationProperties
-				.getString(ApplicationProperties.DB_PASSWORD));
+		DatabaseConfiguration dbConfiguration = SiteConfiguration
+				.getDatabaseConfiguration();
+		this.setDriver(dbConfiguration.getDriverClass());
+		this.setUrl(dbConfiguration.getDbUrl());
+		this.setUser(dbConfiguration.getUser());
+		this.setPassword(dbConfiguration.getPassword());
 		this.setSchemaObjectPrefix("ecm_journal");
 		this.setDatabaseType("mysql");
 	}

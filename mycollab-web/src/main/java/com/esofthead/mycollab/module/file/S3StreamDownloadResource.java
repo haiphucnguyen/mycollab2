@@ -9,6 +9,8 @@ import java.io.InputStream;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.esofthead.mycollab.configuration.S3StorageConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.service.FileTypeResolver;
@@ -68,11 +70,13 @@ public class S3StreamDownloadResource extends StreamResource {
 		@Override
 		public InputStream getStream() {
 			String fileName = getFilename(documentPath);
+			S3StorageConfiguration storageConfiguration = (S3StorageConfiguration) SiteConfiguration
+					.getStorageConfiguration();
 			fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
-			AmazonS3 s3Client = S3StorageConfig.getS3Client();
+			AmazonS3 s3Client = storageConfiguration.newS3Client();
 			try {
 				S3Object obj = s3Client.getObject(new GetObjectRequest(
-						S3StorageConfig.getBucket(), documentPath));
+						storageConfiguration.getBucket(), documentPath));
 
 				return obj.getObjectContent();
 			} catch (Exception e) {

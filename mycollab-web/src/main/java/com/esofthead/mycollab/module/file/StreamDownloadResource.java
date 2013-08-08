@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.DownloadStream;
 import com.vaadin.terminal.FileResource;
@@ -26,8 +27,9 @@ public class StreamDownloadResource extends FileResource {
 			.getLogger(StreamDownloadResource.class);
 
 	public StreamDownloadResource(String documentPath) {
-		super(new File(FileStorageConfig.baseContentFolder, documentPath),
-				AppContext.getApplication());
+		super(
+				new File(FileStorageConfiguration.baseContentFolder,
+						documentPath), AppContext.getApplication());
 	}
 
 	@Override

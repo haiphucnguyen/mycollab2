@@ -7,14 +7,15 @@ import java.util.List;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.EmailValidator;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
@@ -27,9 +28,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
-
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 public class FeedbackWindow extends Window {
 	private static final long serialVersionUID = 1L;
@@ -170,8 +168,7 @@ public class FeedbackWindow extends Window {
 							.toString().trim();
 					nameEmailFrom = nameEmailFrom.equals("") ? email
 							: nameEmailFrom;
-					String toEmail = ApplicationProperties
-							.getString(ApplicationProperties.MAIL_SENDTO);
+					String toEmail = SiteConfiguration.getSendErrorEmail();
 
 					FeedbackWindow.this.close();
 

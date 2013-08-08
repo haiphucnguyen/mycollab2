@@ -3,7 +3,8 @@ package com.esofthead.mycollab.module.ecm;
 import org.apache.jackrabbit.core.persistence.PMContext;
 import org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.configuration.DatabaseConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 
 public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
 
@@ -11,15 +12,13 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
 	 * {@inheritDoc}
 	 */
 	public void init(PMContext context) throws Exception {
-		// init default values
-		this.setDriver(ApplicationProperties
-				.getString(ApplicationProperties.DB_DRIVER_CLASS));
+		DatabaseConfiguration dbConfiguration = SiteConfiguration
+				.getDatabaseConfiguration();
+		this.setDriver(dbConfiguration.getDriverClass());
 
-		setUrl(ApplicationProperties.getString(ApplicationProperties.DB_URL));
-		setUser(ApplicationProperties
-				.getString(ApplicationProperties.DB_USERNAME));
-		setPassword(ApplicationProperties
-				.getString(ApplicationProperties.DB_PASSWORD));
+		setUrl(dbConfiguration.getDbUrl());
+		setUser(dbConfiguration.getUser());
+		setPassword(dbConfiguration.getPassword());
 
 		if (getSchemaObjectPrefix() == null) {
 			setSchemaObjectPrefix("ecm_p_workspace");

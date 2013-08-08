@@ -10,8 +10,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.configuration.EmailConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.Mailer;
@@ -24,17 +25,10 @@ public class MyCollabMonitoringReporter {
 		/*
 		 * do send mail here
 		 */
-		String host = ApplicationProperties
-				.getString(ApplicationProperties.MAIL_SMTPHOST);
-		String userName = ApplicationProperties
-				.getString(ApplicationProperties.MAIL_USERNAME);
-		String password = ApplicationProperties
-				.getString(ApplicationProperties.MAIL_PASSWORD);
-		String port = ApplicationProperties
-				.getString(ApplicationProperties.MAIL_PORT);
+		EmailConfiguration emailConfiguration = SiteConfiguration
+				.getEmailConfiguration();
 
-		Mailer mailer = new Mailer(host, userName, password,
-				Integer.parseInt(port), true);
+		Mailer mailer = new Mailer(SiteConfiguration.getEmailConfiguration());
 
 		File file = new File(attachment);
 		List<EmailAttachementSource> emailAttachmentSource = null;
@@ -44,10 +38,10 @@ public class MyCollabMonitoringReporter {
 		}
 
 		try {
-			mailer.sendHTMLMail(userName, "eSofthead reporter", Arrays
-					.asList(new MailRecipientField(ApplicationProperties
-							.getString(ApplicationProperties.ERROR_SENDTO),
-							"eSofthead")), null, null,
+			mailer.sendHTMLMail(emailConfiguration.getUser(),
+					"eSofthead reporter",
+					Arrays.asList(new MailRecipientField(SiteConfiguration
+							.getSendErrorEmail(), "eSofthead")), null, null,
 					"Daily Report Monitoring - " + toDayString(),
 					"<h1>This is the sample of daily monitoring report</h1>",
 					emailAttachmentSource);
@@ -61,7 +55,7 @@ public class MyCollabMonitoringReporter {
 		}
 	}
 
-	static String toDayString() {
+	private static String toDayString() {
 		final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);

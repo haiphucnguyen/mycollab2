@@ -16,7 +16,8 @@ import org.apache.velocity.tools.ToolManager;
 import org.apache.velocity.tools.config.EasyFactoryConfiguration;
 import org.apache.velocity.tools.generic.DateTool;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.configuration.SharingOptions;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 
 public class TemplateGenerator {
 	private final String subjectTemplate;
@@ -47,16 +48,13 @@ public class TemplateGenerator {
 
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 
-		defaultUrls.put("cdn_url",
-				ApplicationProperties.getString(ApplicationProperties.CDN_URL));
-		defaultUrls.put("facebook_url", ApplicationProperties
-				.getString(ApplicationProperties.FACEBOOK_URL));
-		defaultUrls.put("google_url", ApplicationProperties
-				.getString(ApplicationProperties.GOOGLE_URL));
-		defaultUrls.put("linkedin_url", ApplicationProperties
-				.getString(ApplicationProperties.LINKEDIN_URL));
-		defaultUrls.put("twitter_url", ApplicationProperties
-				.getString(ApplicationProperties.TWITTER_URL));
+		SharingOptions sharingOptions = SiteConfiguration.getSharingOptions();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		defaultUrls.put("facebook_url", sharingOptions.getFacebookUrl());
+		defaultUrls.put("google_url", sharingOptions.getGoogleplusUrl());
+		defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
+		defaultUrls.put("twitter_url", sharingOptions.getTwitterUrl());
 
 		velocityContext.put("defaultUrls", defaultUrls);
 	}

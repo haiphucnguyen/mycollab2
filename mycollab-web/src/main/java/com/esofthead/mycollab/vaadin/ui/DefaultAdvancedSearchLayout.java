@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -247,11 +247,9 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				if ("delete".equals(id)) {
 					ConfirmDialogExt.show(
 							getWindow(),
-							LocalizationHelper
-									.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											ApplicationProperties
-													.getString(ApplicationProperties.SITE_NAME)),
+							LocalizationHelper.getMessage(
+									GenericI18Enum.DELETE_DIALOG_TITLE,
+									SiteConfiguration.getSiteName()),
 							"Do you want to delete record ?",
 							LocalizationHelper
 									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),

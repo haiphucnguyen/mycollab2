@@ -28,12 +28,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
+import com.esofthead.mycollab.configuration.DeploymentMode;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -224,10 +225,10 @@ public class ProjectServiceImpl extends
 
 	@Override
 	public String getSubdomainOfProject(int projectId) {
-		if (ApplicationProperties.productionMode) {
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
 			return projectMapperExt.getSubdomainOfProject(projectId);
 		} else {
-			
+
 		}
 
 		return null;

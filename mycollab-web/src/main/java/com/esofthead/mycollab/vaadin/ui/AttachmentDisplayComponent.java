@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -99,15 +99,11 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				ConfirmDialogExt.show(
-						AppContext.getApplication().getMainWindow(),
-						LocalizationHelper
-								.getMessage(
-										GenericI18Enum.DELETE_DIALOG_TITLE,
-										ApplicationProperties
-												.getString(ApplicationProperties.SITE_NAME)),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
+				ConfirmDialogExt.show(AppContext.getApplication()
+						.getMainWindow(), LocalizationHelper.getMessage(
+						GenericI18Enum.DELETE_DIALOG_TITLE,
+						SiteConfiguration.getSiteName()), LocalizationHelper
+						.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 						LocalizationHelper
@@ -142,7 +138,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Resource downloadResource = StreamDownloadResourceFactory
-						.getAccountStreamResource(attachment.getPath());
+						.getStreamResource(attachment.getPath());
 				AppContext.getApplication().getMainWindow()
 						.open(downloadResource, "_blank");
 			}
