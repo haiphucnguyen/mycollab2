@@ -7,9 +7,10 @@
         paymentMethod="Credit Card" status="Active" subdomain="mycollab" />
 
     <s_user username="admin" firstname="Nguyen" lastname="Hai"
-        email="hainguyen@esofthead.com" avatarId="nguyen" />
+        email="hainguyen@esofthead.com" avatarId="nguyen"
+        registerStatus="Active" />
     <s_user username="user1" firstname="first1" lastname="last1"
-        email="linhduong@esofthead.com" avatarId="hai" />
+        email="linhduong@esofthead.com" avatarId="hai" registerStatus="Active" />
 
     <s_user_account id="1" isAccountOwner="1"
         registerStatus="Active" username="admin" accountId="1"
