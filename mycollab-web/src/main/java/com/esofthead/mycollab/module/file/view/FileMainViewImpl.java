@@ -18,7 +18,6 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.dropbox.core.DbxClient;
 import com.dropbox.core.DbxEntry;
-import com.dropbox.core.DbxEntry.WithChildren;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -162,7 +161,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		filterBtnLayout.setMargin(true);
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("180px");
-		Button uploadDropboxBtn = new Button("Upload from Dropbox",
+		Button uploadDropboxBtn = new Button("Connect Dropbox",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -179,8 +178,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								String userLocale = locale.toString();
 								DbxRequestConfig requestConfig = new DbxRequestConfig(
 										"text-edit/0.1", userLocale);
-//								dropboxClient = new DbxClient(requestConfig,
-//										AppContext.getCurrentAccessToken());
+								dropboxClient = new DbxClient(requestConfig, "");
 
 								FileMainViewImpl.this.menuTree
 										.expandItem(rootECMFolder);
