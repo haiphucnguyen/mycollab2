@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
-import com.esofthead.mycollab.test.ServiceTest;
+import com.esofthead.mycollab.test.service.ServiceTest;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {

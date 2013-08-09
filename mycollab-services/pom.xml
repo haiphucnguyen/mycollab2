@@ -32,6 +32,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-test</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.7</version>

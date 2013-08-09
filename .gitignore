@@ -160,3 +160,6 @@ mycollab-frontsite/.classpath.classpath
 mycollab-services/.settings/org.eclipse.jdt.core.prefs
 mycollab-services/.classpath
 mycollab-services/.project
+mycollab-test/.classpath
+mycollab-test/.project
+mycollab-test/.settings/org.eclipse.jdt.core.prefs
