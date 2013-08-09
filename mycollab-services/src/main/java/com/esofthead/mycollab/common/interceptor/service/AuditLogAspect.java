@@ -13,7 +13,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.infinispan.Cache;
+import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
@@ -45,7 +45,7 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 public class AuditLogAspect {
 
 	private static Logger log = LoggerFactory.getLogger(AuditLogAspect.class);
-	private static Cache<Object, Object> caches = CacheManager.getCache();
+	private static BasicCache<Object, Object> caches = CacheManager.getCache();
 
 	@Autowired
 	protected AuditLogMapper auditLogMapper;

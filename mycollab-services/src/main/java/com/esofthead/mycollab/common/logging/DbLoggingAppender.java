@@ -89,8 +89,7 @@ public class DbLoggingAppender extends AppenderSkeleton {
 					.getBean(ReportBugIssueMapper.class);
 			mapper.insertSelective(record);
 		} catch (Exception e) {
-			// Send error via email directly
-			
+			e.printStackTrace();
 		}
 	}
 }

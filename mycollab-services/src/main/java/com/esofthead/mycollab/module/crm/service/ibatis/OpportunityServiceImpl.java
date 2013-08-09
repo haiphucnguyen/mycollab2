@@ -24,13 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
-import com.esofthead.mycollab.common.interceptor.service.FlushCache;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.crm.dao.ContactMapper;
-import com.esofthead.mycollab.module.crm.dao.LeadMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityContactMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
@@ -86,7 +83,6 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     }
     
     @Override
-    @FlushCache(ids = { OpportunityMapper.class, ContactMapper.class })
     public void saveOpportunityContactRelationship(List<OpportunityContact> associateContacts) {
         for (OpportunityContact associateContact : associateContacts) {
             OpportunityContactExample ex = new OpportunityContactExample();
@@ -98,7 +94,6 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     }
     
     @Override
-    @FlushCache(ids = { OpportunityMapper.class, ContactMapper.class })
     public void removeOpportunityContactRelationship(OpportunityContact associateContact) {
         OpportunityContactExample ex = new OpportunityContactExample();
         ex.createCriteria().andContactidEqualTo(associateContact.getContactid()).andOpportunityidEqualTo(associateContact.getOpportunityid());
@@ -106,7 +101,6 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     }
     
     @Override
-    @FlushCache(ids = { OpportunityMapper.class, LeadMapper.class })
     public void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads) {
         for (OpportunityLead associateLead : associateLeads) {
             OpportunityLeadExample ex = new OpportunityLeadExample();
@@ -118,7 +112,6 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     }
     
     @Override
-    @FlushCache(ids = { OpportunityMapper.class, LeadMapper.class })
     public void removeOpportunityLeadRelationship(OpportunityLead associateLead) {
         OpportunityLeadExample ex = new OpportunityLeadExample();
         ex.createCriteria().andOpportunityidEqualTo(associateLead.getOpportunityid()).andLeadidEqualTo(associateLead.getLeadid());

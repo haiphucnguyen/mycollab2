@@ -23,19 +23,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
-import com.esofthead.mycollab.common.interceptor.service.FlushCache;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignAccountMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignContactMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapperExt;
-import com.esofthead.mycollab.module.crm.dao.ContactMapper;
-import com.esofthead.mycollab.module.crm.dao.LeadMapper;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccountExample;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
@@ -82,7 +78,6 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { CampaignMapper.class, AccountMapper.class })
 	public void saveCampaignAccountRelationship(
 			List<CampaignAccount> associateAccounts) {
 		for (CampaignAccount associateAccount : associateAccounts) {
@@ -97,7 +92,6 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { CampaignMapper.class, AccountMapper.class })
 	public void removeCampaignAccountRelationship(
 			CampaignAccount associateAccount) {
 		CampaignAccountExample ex = new CampaignAccountExample();
@@ -108,7 +102,6 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { CampaignMapper.class, ContactMapper.class })
 	public void saveCampaignContactRelationship(
 			List<CampaignContact> associateContacts) {
 		for (CampaignContact associateContact : associateContacts) {
@@ -123,7 +116,6 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { CampaignMapper.class, ContactMapper.class })
 	public void removeCampaignContactRelationship(
 			CampaignContact associateContact) {
 		CampaignContactExample ex = new CampaignContactExample();
@@ -134,7 +126,6 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { CampaignMapper.class, LeadMapper.class })
 	public void saveCampaignLeadRelationship(List<CampaignLead> associateLeads) {
 		for (CampaignLead associateLead : associateLeads) {
 			CampaignLeadExample ex = new CampaignLeadExample();
@@ -148,7 +139,6 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { CampaignMapper.class, LeadMapper.class })
 	public void removeCampaignLeadRelationship(CampaignLead associateLead) {
 		CampaignLeadExample ex = new CampaignLeadExample();
 		ex.createCriteria().andCampaignidEqualTo(associateLead.getCampaignid())

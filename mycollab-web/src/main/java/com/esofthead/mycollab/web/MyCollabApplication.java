@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.web;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +18,10 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
+import com.maxmind.geoip2.DatabaseReader;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
+import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
 import com.vaadin.ui.Window.Notification;
 
@@ -31,6 +36,18 @@ public class MyCollabApplication extends Application implements
 
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
+
+	private static DatabaseReader reader = null;
+
+	static {
+		try {
+			URL url = MyCollabApplication.class.getClassLoader().getResource(
+					"GeoLite2-City.mmdb");
+			reader = new DatabaseReader(new File(url.toURI()));
+		} catch (Exception e) {
+			log.error("Can not read geo database file", e);
+		}
+	}
 
 	private static ThreadLocal<MyCollabApplication> threadLocal = new ThreadLocal<MyCollabApplication>();
 
@@ -160,8 +177,34 @@ public class MyCollabApplication extends Application implements
 							LocalizationHelper
 									.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
 							Notification.TYPE_ERROR_MESSAGE);
+			String errorMsg = "An uncaught exception occurred with username %s, in account %d, useragent %s, ip %s and country code %s ";
+			try {
+				String username = AppContext.getUsername();
+				int accountId = AppContext.getAccountId();
+				AbstractWebApplicationContext webContext = (AbstractWebApplicationContext) this
+						.getContext();
+				String useragent = webContext.getBrowser()
+						.getBrowserApplication();
+				String ipaddress = webContext.getBrowser().getAddress();
+				String countryCode = "<no defined>";
+				InetAddress address = InetAddress.getByName(ipaddress);
+				if (address != null && reader != null) {
+					try {
+						countryCode = reader.country(address).getCountry()
+								.getName();
+					} catch (Exception e2) {
+						log.error("Can not read country code", e2);
+					}
+				}
 
-			log.error("An uncaught exception occurred: ", event.getThrowable());
+				errorMsg = String.format(errorMsg, username, accountId,
+						useragent, ipaddress, countryCode);
+
+			} catch (Exception e1) {
+				errorMsg = "An uncaught exception occurred ";
+			}
+
+			log.error(errorMsg, event.getThrowable());
 		}
 
 	}

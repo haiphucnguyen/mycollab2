@@ -99,6 +99,12 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt" />
     </bean>
+    
+    <bean id="reportBugIssueMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.common.dao.ReportBugIssueMapper" />
+    </bean>
 
     <bean id="messageDispatcher" class="com.esofthead.mycollab.core.MessageDispatcherImpl" />
 </beans>
