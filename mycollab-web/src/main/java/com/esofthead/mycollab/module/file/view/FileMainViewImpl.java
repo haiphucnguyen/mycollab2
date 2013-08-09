@@ -7,6 +7,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,11 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
+import com.dropbox.core.DbxClient;
+import com.dropbox.core.DbxEntry;
+import com.dropbox.core.DbxEntry.WithChildren;
+import com.dropbox.core.DbxException;
+import com.dropbox.core.DbxRequestConfig;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -74,6 +80,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private Tree menuTree;
 	private final ResourceService resourceService;
 	private Folder baseFolder;
+	private Folder rootECMFolder;
 	private String rootPath;
 	private String rootFolderName;
 	private List<Resource> lstCheckedResource;
@@ -82,6 +89,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private FileActivityStreamComponent fileActivityStreamComponent;
 	public static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 	private Button eventBtn;
+	private DbxClient dropboxClient;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -161,8 +169,45 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						linkBtn.setPopupVisible(false);
+						DropBoxOAuthWindow dropboxConnectWindow = new DropBoxOAuthWindow() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							protected void handleReloadAfterConnectDropbox() {
+								java.util.Locale locale = new Locale(Locale.US
+										.getLanguage(), Locale.US.getCountry());
+								String userLocale = locale.toString();
+								DbxRequestConfig requestConfig = new DbxRequestConfig(
+										"text-edit/0.1", userLocale);
+								dropboxClient = new DbxClient(requestConfig,
+										AppContext.getCurrentAccessToken());
+
+								FileMainViewImpl.this.menuTree
+										.expandItem(rootECMFolder);
+
+								DbxEntry entry;
+								try {
+									entry = dropboxClient.getMetadata("/");
+									com.dropbox.core.DbxEntry.Folder dropboxRootFolder = entry
+											.asFolder();
+									FileMainViewImpl.this.menuTree
+											.addItem(dropboxRootFolder);
+									FileMainViewImpl.this.menuTree.setParent(
+											dropboxRootFolder, rootECMFolder);
+									FileMainViewImpl.this.menuTree
+											.setItemCaption(dropboxRootFolder,
+													"DropboxRootFolder");
+									FileMainViewImpl.this.menuTree.setItemIcon(
+											dropboxRootFolder,
+											MyCollabResource
+													.newResource("icons/16/ecm/folder_close.png"));
+								} catch (DbxException e) {
+									throw new MyCollabException(e);
+								}
+							}
+						};
 						FileMainViewImpl.this.getWindow().addWindow(
-								new DropBoxOAuthWindow());
+								dropboxConnectWindow);
 					}
 				});
 		uploadDropboxBtn.addStyleName("link");
@@ -185,24 +230,79 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			@Override
 			public void nodeExpand(final ExpandEvent event) {
-				final Folder expandFolder = (Folder) event.getItemId();
-				final List<Folder> subFolders = resourceService
-						.getSubFolders(expandFolder.getPath());
+				Object object = event.getItemId();
 
-				menuTree.setItemIcon(expandFolder, MyCollabResource
-						.newResource("icons/16/ecm/folder_open.png"));
+				java.util.Locale locale = new Locale(Locale.US.getLanguage(),
+						Locale.US.getCountry());
+				String userLocale = locale.toString();
+				DbxRequestConfig requestConfig = new DbxRequestConfig(
+						"text-edit/0.1", userLocale);
+				dropboxClient = new DbxClient(requestConfig,
+						"88kFQau3vgAAAAAAAAAAAVBpXYnn7uu3Y4B5N5j0cUkHQjVeyX-YK5Ladr2OX7ir");
+				DbxEntry entry;
+				try {
+					entry = dropboxClient.getMetadata("/");
+					com.dropbox.core.DbxEntry.Folder dropboxRootFolder = entry
+							.asFolder();
 
-				if (subFolders != null) {
-					for (final Folder subFolder : subFolders) {
-						expandFolder.addChild(subFolder);
-						menuTree.addItem(subFolder);
-
-						menuTree.setItemIcon(subFolder, MyCollabResource
-								.newResource("icons/16/ecm/folder_close.png"));
-						menuTree.setItemCaption(subFolder, subFolder.getName());
-						menuTree.setParent(subFolder, expandFolder);
-					}
+					FileMainViewImpl.this.menuTree.addItem(dropboxRootFolder);
+					FileMainViewImpl.this.menuTree.setParent(dropboxRootFolder,
+							rootECMFolder);
+					// FileMainViewImpl.this.menuTree.setItemCaption(
+					// dropboxRootFolder, "DropboxRootFolder");
+					// FileMainViewImpl.this.menuTree.setItemIcon(
+					// dropboxRootFolder,
+					// MyCollabResource
+					// .newResource("icons/16/ecm/folder_close.png"));
+				} catch (DbxException e) {
+					e.printStackTrace();
 				}
+
+				// if (object instanceof com.dropbox.core.DbxEntry.Folder) {
+				// com.dropbox.core.DbxEntry.Folder dropboxFolder =
+				// (com.dropbox.core.DbxEntry.Folder) object;
+				// try {
+				// WithChildren lstResource = dropboxClient
+				// .getMetadataWithChildren(dropboxFolder.path);
+				// if (lstResource != null) {
+				// for (DbxEntry entry : lstResource.children) {
+				// if (entry.isFolder()) {
+				// menuTree.addItem(entry);
+				// menuTree.setItemIcon(
+				// entry,
+				// MyCollabResource
+				// .newResource("icons/16/ecm/folder_close.png"));
+				// menuTree.setItemCaption(entry, entry.name);
+				// menuTree.setParent(entry, object);
+				// }
+				// }
+				// }
+				// } catch (DbxException e) {
+				// throw new MyCollabException(e);
+				// }
+				// } else if (object instanceof Folder) {
+				// final Folder expandFolder = (Folder) event.getItemId();
+				// final List<Folder> subFolders = resourceService
+				// .getSubFolders(expandFolder.getPath());
+				//
+				// menuTree.setItemIcon(expandFolder, MyCollabResource
+				// .newResource("icons/16/ecm/folder_open.png"));
+				//
+				// if (subFolders != null) {
+				// for (final Folder subFolder : subFolders) {
+				// expandFolder.addChild(subFolder);
+				// menuTree.addItem(subFolder);
+				//
+				// menuTree.setItemIcon(
+				// subFolder,
+				// MyCollabResource
+				// .newResource("icons/16/ecm/folder_close.png"));
+				// menuTree.setItemCaption(subFolder,
+				// subFolder.getName());
+				// menuTree.setParent(subFolder, expandFolder);
+				// }
+				// }
+				// }
 			}
 		});
 
@@ -341,6 +441,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
+		this.rootECMFolder = this.baseFolder;
 		this.menuTree.addItem(this.baseFolder);
 		this.menuTree.setItemCaption(this.baseFolder, rootFolderName);
 		this.menuTree.setItemIcon(this.baseFolder,

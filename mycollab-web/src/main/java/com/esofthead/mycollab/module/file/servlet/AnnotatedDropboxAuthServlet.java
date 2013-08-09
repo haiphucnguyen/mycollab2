@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.file.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
-import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.web.AppContext;
 
 @Component("dropboxAuthServlet")
 public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
@@ -31,7 +32,6 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 				"rheskqqb6f8fo6a");
 		String redirectUri = request.getRequestURL().toString();
-		System.out.println("redirect URL : " + redirectUri);
 		HttpSession session = request.getSession(true);
 		String sessionKey = "dropbox-auth-csrf-token";
 		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
@@ -48,10 +48,29 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		try {
 			authFinish = getWebAuth(request).finish(request.getParameterMap());
 		} catch (Exception e) {
-			throw new MyCollabException(e);
+			PrintWriter out = response.getWriter();
+			out.println("<html>"
+					+ "<body></body>"
+					+ "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>"
+					+ "<script>");
+			out.println("$(document).ready(function(){" + "window.close();"
+					+ "});");
+			out.println("</script>");
+			out.println("</html>");
+			return;
 		}
 		String accessToken = authFinish.accessToken;
-		System.out.print("Access TOken key : " + accessToken);
+		// Store accessToken ...
+		AppContext.setCurrentAccessToken(accessToken);
+		// response script close current window
+		PrintWriter out = response.getWriter();
+		out.println("<html>"
+				+ "<body></body>"
+				+ "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>"
+				+ "<script>");
+		out.println("$(document).ready(function(){" + "window.close();" + "});");
+		out.println("</script>");
+		out.println("</html>");
 	}
 
 }

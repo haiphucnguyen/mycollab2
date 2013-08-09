@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.infinispan.Cache;
+import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -46,7 +46,7 @@ public class AppContext implements Serializable {
 
 	private static org.springframework.web.context.WebApplicationContext springContext;
 
-	private Cache<Object, Object> variables;
+	private BasicCache<Object, Object> variables;
 
 	private SimpleUser session;
 	private UserPreference userPreference;
@@ -56,6 +56,7 @@ public class AppContext implements Serializable {
 
 	private String subdomain;
 	private int accountId;
+	private static String currentAccessToken;
 
 	public AppContext(Application application) {
 		WebApplicationContext context = (WebApplicationContext) application
@@ -68,8 +69,6 @@ public class AppContext implements Serializable {
 					.getRequiredWebApplicationContext(context.getHttpSession()
 							.getServletContext());
 		}
-		
-		log.error("Error example");
 	}
 
 	public static AppContext getInstance() {
@@ -116,6 +115,14 @@ public class AppContext implements Serializable {
 					"There is error when try to update user preference for last module visit",
 					e);
 		}
+	}
+
+	public static String getCurrentAccessToken() {
+		return currentAccessToken;
+	}
+
+	public static void setCurrentAccessToken(String key) {
+		currentAccessToken = key;
 	}
 
 	public static void setSession(SimpleUser userSession,
