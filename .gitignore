@@ -158,3 +158,5 @@ extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/cust
 extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/customfield/demo/itest/WrappingFieldTest.nas
 mycollab-frontsite/.classpath.classpath
 mycollab-services/.settings/org.eclipse.jdt.core.prefs
+mycollab-services/.classpath
+mycollab-services/.project
