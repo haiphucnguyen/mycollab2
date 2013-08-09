@@ -112,10 +112,10 @@ public abstract class DropBoxOAuthWindow extends Window {
 						return;
 					}
 					ExternalDrive dropboxDrive = new ExternalDrive();
-					dropboxDrive.setAccesstoken(AppContext
-							.getCurrentAccessToken());
-					dropboxDrive.setCreatedtime(new GregorianCalendar(2100, 1,
-							1).getTime());
+//					dropboxDrive.setAccesstoken(AppContext
+//							.getCurrentAccessToken());
+//					dropboxDrive.setCreatedtime(new GregorianCalendar(2100, 1,
+//							1).getTime());
 					dropboxDrive.setFoldername(name);
 					dropboxDrive.setOwner(AppContext.getUsername());
 					dropboxDrive.setStoragename(StorageNames.DROPBOX);

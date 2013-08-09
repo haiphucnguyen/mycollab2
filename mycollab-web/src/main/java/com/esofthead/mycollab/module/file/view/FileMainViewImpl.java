@@ -179,8 +179,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								String userLocale = locale.toString();
 								DbxRequestConfig requestConfig = new DbxRequestConfig(
 										"text-edit/0.1", userLocale);
-								dropboxClient = new DbxClient(requestConfig,
-										AppContext.getCurrentAccessToken());
+//								dropboxClient = new DbxClient(requestConfig,
+//										AppContext.getCurrentAccessToken());
 
 								FileMainViewImpl.this.menuTree
 										.expandItem(rootECMFolder);
