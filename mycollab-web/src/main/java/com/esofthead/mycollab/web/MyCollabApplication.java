@@ -3,6 +3,7 @@ package com.esofthead.mycollab.web;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +41,9 @@ public class MyCollabApplication extends Application implements
 
 	static {
 		try {
-			reader = new DatabaseReader(new File("GeoLite2-City.mmdb"));
+			URL url = MyCollabApplication.class.getClassLoader().getResource(
+					"GeoLite2-City.mmdb");
+			reader = new DatabaseReader(new File(url.toURI()));
 		} catch (Exception e) {
 			log.error("Can not read geo database file", e);
 		}

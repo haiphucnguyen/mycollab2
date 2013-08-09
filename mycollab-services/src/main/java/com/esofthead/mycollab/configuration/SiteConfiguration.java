@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.configuration;
 
+import java.util.Properties;
+
 public class SiteConfiguration {
 	private static SiteConfiguration instance;
 
@@ -86,6 +88,12 @@ public class SiteConfiguration {
 				.getString(ApplicationProperties.DB_PASSWORD);
 		instance.databaseConfiguration = new DatabaseConfiguration(driverClass,
 				dbUrl, dbUser, dbPassword);
+
+		// load cache properties
+		Properties props = new Properties();
+		props.put("infinispan.client.hotrod.server_list", ApplicationProperties
+				.getString("infinispan.client.hotrod.server_list", ""));
+		instance.cacheProperties = props;
 	}
 
 	private DeploymentMode deploymentMode;
@@ -97,6 +105,11 @@ public class SiteConfiguration {
 	private EmailConfiguration relayEmailConfiguration;
 	private DatabaseConfiguration databaseConfiguration;
 	private String cdnUrl;
+	private Properties cacheProperties;
+
+	public static Properties getCacheProperties() {
+		return instance.cacheProperties;
+	}
 
 	public static String getCdnUrl() {
 		return instance.cdnUrl;

@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
-import com.esofthead.mycollab.common.interceptor.service.FlushCache;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -33,7 +32,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.AccountLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapperExt;
-import com.esofthead.mycollab.module.crm.dao.LeadMapper;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountLead;
 import com.esofthead.mycollab.module.crm.domain.AccountLeadExample;
@@ -73,7 +71,6 @@ public class AccountServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { AccountMapper.class, LeadMapper.class })
 	public void saveAccountLeadRelationship(List<AccountLead> associateLeads) {
 		for (AccountLead associateLead : associateLeads) {
 			AccountLeadExample ex = new AccountLeadExample();
@@ -87,7 +84,6 @@ public class AccountServiceImpl extends
 	}
 
 	@Override
-	@FlushCache(ids = { AccountMapper.class, LeadMapper.class })
 	public void removeAccountLeadRelationship(AccountLead associateLead) {
 		AccountLeadExample ex = new AccountLeadExample();
 		ex.createCriteria().andAccountidEqualTo(associateLead.getAccountid())

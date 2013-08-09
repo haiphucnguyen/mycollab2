@@ -6,7 +6,13 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.infinispan.client.hotrod.RemoteCache;
+import org.infinispan.client.hotrod.RemoteCacheManager;
+import org.infinispan.client.hotrod.configuration.Configuration;
+import org.infinispan.client.hotrod.configuration.ConfigurationBuilder;
+
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 
 public class ParsingUtils {
 
@@ -83,6 +89,23 @@ public class ParsingUtils {
 			} else {
 				throw new InvalidEmailException("The email is not valid!");
 			}
+		}
+	}
+
+	public static void main(String[] args) {
+		try {
+			Configuration configuration = new ConfigurationBuilder()
+					.withProperties(SiteConfiguration.getCacheProperties())
+					.build();
+			RemoteCacheManager instance = new RemoteCacheManager(configuration,
+					true);
+			RemoteCache<Object, Object> cache = instance.getCache();
+			cache.put("a", 1);
+			cache.put("a-1", 1);
+			System.out.println(cache.keySet().size());
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

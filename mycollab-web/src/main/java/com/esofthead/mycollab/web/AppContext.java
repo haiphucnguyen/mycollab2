@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.infinispan.Cache;
+import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -46,7 +46,7 @@ public class AppContext implements Serializable {
 
 	private static org.springframework.web.context.WebApplicationContext springContext;
 
-	private Cache<Object, Object> variables;
+	private BasicCache<Object, Object> variables;
 
 	private SimpleUser session;
 	private UserPreference userPreference;

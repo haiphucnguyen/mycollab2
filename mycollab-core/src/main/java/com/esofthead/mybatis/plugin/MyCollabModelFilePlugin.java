@@ -33,9 +33,6 @@ public class MyCollabModelFilePlugin extends
 			generateUpdateMultipleKeysSqlStatement(document, introspectedTable);
 		}
 
-		TextElement cacheElement = new TextElement(
-				"<cache type=\"com.esofthead.mycollab.cache.mybatis.InfinispanCache\" />");
-		document.getRootElement().addElement(cacheElement);
 		return true;
 	}
 
