@@ -61,7 +61,7 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		}
 		String accessToken = authFinish.accessToken;
 		// Store accessToken ...
-		AppContext.setCurrentAccessToken(accessToken);
+
 		// response script close current window
 		PrintWriter out = response.getWriter();
 		out.println("<html>"

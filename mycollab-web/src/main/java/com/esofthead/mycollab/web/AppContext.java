@@ -56,7 +56,6 @@ public class AppContext implements Serializable {
 
 	private String subdomain;
 	private int accountId;
-	private static String currentAccessToken;
 
 	public AppContext(Application application) {
 		WebApplicationContext context = (WebApplicationContext) application
@@ -115,14 +114,6 @@ public class AppContext implements Serializable {
 					"There is error when try to update user preference for last module visit",
 					e);
 		}
-	}
-
-	public static String getCurrentAccessToken() {
-		return currentAccessToken;
-	}
-
-	public static void setCurrentAccessToken(String key) {
-		currentAccessToken = key;
 	}
 
 	public static void setSession(SimpleUser userSession,
