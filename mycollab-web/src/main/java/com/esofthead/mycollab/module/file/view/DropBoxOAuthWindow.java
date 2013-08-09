@@ -93,15 +93,16 @@ public abstract class DropBoxOAuthWindow extends Window {
 		HorizontalLayout folderNameLayout = new HorizontalLayout();
 		folderNameLayout.setSpacing(false);
 
-		Button searchBtn = new Button();
-		searchBtn.setStyleName("dropbox-icon-button");
-		searchBtn.setIcon(MyCollabResource
+		Button dropboxIconBtn = new Button();
+		dropboxIconBtn.setStyleName("dropbox-icon-button");
+		dropboxIconBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/dropbox_icon_16px.png"));
-		folderNameLayout.addComponent(searchBtn);
+		folderNameLayout.addComponent(dropboxIconBtn);
 
 		folderName = new TextField();
 		folderName.setValue("Dropbox directory");
 		folderName.setWidth("340px");
+		folderName.addStyleName("no-border-radius-left");
 		folderNameLayout.addComponent(folderName);
 		mainLayout.addComponent(folderNameLayout);
 

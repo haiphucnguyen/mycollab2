@@ -128,7 +128,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				if (eventBtn.getDescription().equals("Event")) {
 					eventBtn.setDescription("FileManagement");
 					eventBtn.setIcon(MyCollabResource
-							.newResource("icons/16/ecm/document_yellow_icon.png"));
+							.newResource("icons/16/ecm/file_managerment.png"));
 					gotoActionLogPage();
 				} else if (eventBtn.getDescription().equals("FileManagement")) {
 					eventBtn.setDescription("Event");

@@ -749,14 +749,19 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .v-button.dropbox-icon-button {
-	background: url("icons/grad-light-bottom.png") repeat-x scroll left
-		bottom rgb(255, 255, 255);
+	background: url("icons/input-bg.png") repeat-x left top #fff;
 	border-radius: 3px 0px 0px 3px;
 	border-right: medium none;
 }
 
 .v-button.dropbox-icon-button .v-button-wrap {
 	padding: 3px 0px 5px 6px;
+	background: none;
+}
+
+.v-textfield.no-border-radius-left {
+	border-left: medium none;
+	border-radius: 0px 3px 3px 0px;
 }
 
 .basicSearch .basicSearchBody .v-button-link.cancel-button {
@@ -1775,8 +1780,8 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:     DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=     '#DDD', GradientType=     0);
+	filter: progid:        DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=        '#DDD', GradientType=        0);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -1823,8 +1828,11 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:     DXImageTransform.Microsoft.gradient(startColorstr= 
-		   '#F8F8F8', endColorstr=     '#EEEEEE', GradientType=     0);
+	filter: progid:        DXImageTransform.Microsoft.gradient(startColorstr=
+		
+		
+		 
+		   '#F8F8F8', endColorstr=        '#EEEEEE', GradientType=        0);
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
