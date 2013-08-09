@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.file.view;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -23,7 +23,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -34,9 +33,9 @@ public abstract class DropBoxOAuthWindow extends Window {
 	private TextField folderName;
 
 	public DropBoxOAuthWindow() {
-		super("Add Dropbox");
-		this.setWidth("420px");
-		this.setHeight("280px");
+		super("Connecting account");
+		this.setWidth("500px");
+		this.setName("Dropbox");
 		this.center();
 		constructBody();
 	}
@@ -45,13 +44,20 @@ public abstract class DropBoxOAuthWindow extends Window {
 		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setSpacing(true);
-		mainLayout.setMargin(true);
 
 		Label messageInfoLal = new Label(
-				"You can connect the Dropbox account to Mycollab-Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
+				"You can connect the following account to Mycollab-Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
 		mainLayout.addComponent(messageInfoLal);
 
-		Button btnLogin = new Button("Login(Dropbox)",
+		final VerticalLayout dropboxVerticalLayout = new VerticalLayout();
+		Embedded iconEmbedded = new Embedded();
+		iconEmbedded.setSource(MyCollabResource
+				.newResource("icons/dropbox_icon_256px.png"));
+		dropboxVerticalLayout.addComponent(iconEmbedded);
+		dropboxVerticalLayout.setComponentAlignment(iconEmbedded,
+				Alignment.MIDDLE_CENTER);
+
+		final Button dropboxBtn = new Button("Dropbox",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -82,43 +88,18 @@ public abstract class DropBoxOAuthWindow extends Window {
 								true);
 					}
 				});
-		btnLogin.addStyleName(UIConstants.THEME_BLUE_LINK);
-		mainLayout.addComponent(btnLogin);
-		mainLayout.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
-
-		Label title = new Label("Folder title");
-
-		mainLayout.addComponent(title);
-
-		HorizontalLayout folderNameLayout = new HorizontalLayout();
-		folderNameLayout.setSpacing(false);
-
-		Button searchBtn = new Button();
-		searchBtn.setStyleName("dropbox-icon-button");
-		searchBtn.setIcon(MyCollabResource
-				.newResource("icons/16/ecm/dropbox_icon_16px.png"));
-		folderNameLayout.addComponent(searchBtn);
-
-		folderName = new TextField();
-		folderName.setValue("Dropbox directory");
-		folderName.setWidth("340px");
-		folderNameLayout.addComponent(folderName);
-		mainLayout.addComponent(folderNameLayout);
-
-		final VerticalLayout dropboxVerticalLayout = new VerticalLayout();
-		Embedded iconEmbedded = new Embedded();
-		iconEmbedded.setSource(MyCollabResource
-				.newResource("icons/dropbox_icon_256px.png"));
-		dropboxVerticalLayout.addComponent(iconEmbedded);
-		dropboxVerticalLayout.setComponentAlignment(iconEmbedded,
+		dropboxBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		dropboxVerticalLayout.addComponent(dropboxBtn);
+		dropboxVerticalLayout.setComponentAlignment(dropboxBtn,
 				Alignment.MIDDLE_CENTER);
 
-		HorizontalLayout controllGroupBtn = new HorizontalLayout();
-		controllGroupBtn.setSpacing(true);
-		controllGroupBtn.setHeight("50px");
-		controllGroupBtn.setMargin(true, false, false, false);
+		folderName = new TextField("Folder Name ");
+		folderName.setWidth("150px");
+		dropboxVerticalLayout.addComponent(folderName);
+		dropboxVerticalLayout.setComponentAlignment(folderName,
+				Alignment.MIDDLE_CENTER);
 
-		Button doneBtn = new Button("OK", new Button.ClickListener() {
+		Button doneBtn = new Button("Done", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -131,8 +112,10 @@ public abstract class DropBoxOAuthWindow extends Window {
 						return;
 					}
 					ExternalDrive dropboxDrive = new ExternalDrive();
-					// dropboxDrive.setAccesstoken("");
-					dropboxDrive.setCreatedtime(new Date());
+//					dropboxDrive.setAccesstoken(AppContext
+//							.getCurrentAccessToken());
+//					dropboxDrive.setCreatedtime(new GregorianCalendar(2100, 1,
+//							1).getTime());
 					dropboxDrive.setFoldername(name);
 					dropboxDrive.setOwner(AppContext.getUsername());
 					dropboxDrive.setStoragename(StorageNames.DROPBOX);
@@ -149,22 +132,11 @@ public abstract class DropBoxOAuthWindow extends Window {
 			}
 		});
 		doneBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		controllGroupBtn.addComponent(doneBtn);
-
-		Button cancleBtn = new Button("Cancle", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				DropBoxOAuthWindow.this.close();
-			}
-		});
-		cancleBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		controllGroupBtn.addComponent(cancleBtn);
-
-		mainLayout.addComponent(controllGroupBtn);
-		mainLayout.setComponentAlignment(controllGroupBtn,
+		dropboxVerticalLayout.addComponent(doneBtn);
+		dropboxVerticalLayout.setComponentAlignment(doneBtn,
 				Alignment.MIDDLE_CENTER);
+
+		mainLayout.addComponent(dropboxVerticalLayout);
 		this.addComponent(mainLayout);
 	}
 

@@ -174,7 +174,6 @@ body div>input.v-filterselect-input[type="text"] {
 /* .v-table-body > div { */
 /* 	height: 100% !important; */
 /* } */
-
 .v-table tr.v-selected {
 	background-image: url("icons/grad-light-top2.png");
 	background-position: left top;
@@ -315,15 +314,14 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 .folder-tree .v-table-body-wrapper.v-table-body {
 	height: 480px !important;
 }
-.folder-tree .v-table-body-wrapper.v-table-body > div {
+
+.folder-tree .v-table-body-wrapper.v-table-body>div {
 	height: auto !important;
 }
 
 .v-table-body-wrapper.v-table-body {
 	height: 100% !important;
 }
-
-
 
 .v-table-cell-wrapper {
 	white-space: normal;
@@ -450,8 +448,10 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	border-left: 1px solid #8F8F8F;
 	height: 16px;
 }
-.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap,.v-ie .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.v-ie7 .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:active:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:focus:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap:active {
-	border: none;	
+
+.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap,.v-ie .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.v-ie7 .h-sidebar-menu .v-csslayout-container .v-pressed.v-button-link:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:active:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container div.v-button-link:focus:first-child .v-button-wrap,.h-sidebar-menu .v-csslayout-container .v-button-link:first-child .v-button-wrap:active
+	{
+	border: none;
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption
@@ -746,6 +746,17 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 .v-button.search-icon-button .v-button-wrap {
 	padding: 3px 0px 3px 6px;
+}
+
+.v-button.dropbox-icon-button {
+	background: url("icons/grad-light-bottom.png") repeat-x scroll left
+		bottom rgb(255, 255, 255);
+	border-radius: 3px 0px 0px 3px;
+	border-right: medium none;
+}
+
+.v-button.dropbox-icon-button .v-button-wrap {
+	padding: 3px 0px 5px 6px;
 }
 
 .basicSearch .basicSearchBody .v-button-link.cancel-button {
@@ -1764,8 +1775,8 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:  DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=  '#DDD', GradientType=  0);
+	filter: progid:     DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=     '#DDD', GradientType=     0);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -1812,8 +1823,8 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:  DXImageTransform.Microsoft.gradient(startColorstr=  '#F8F8F8',
-		endColorstr=  '#EEEEEE', GradientType=  0);
+	filter: progid:     DXImageTransform.Microsoft.gradient(startColorstr= 
+		   '#F8F8F8', endColorstr=     '#EEEEEE', GradientType=     0);
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
@@ -2689,11 +2700,13 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .v-button.select-bg {
 	height: 24px;
 	width: 22px;
-	background: url('icons/16/select.png') no-repeat center center transparent;
+	background: url('icons/16/select.png') no-repeat center center
+		transparent;
 	border-radius: 0px 2px 2px 0px;
 }
 
-.v-button.select-bg .v-button-wrap, .v-button.select-bg:active .v-button-wrap {
+.v-button.select-bg .v-button-wrap,.v-button.select-bg:active .v-button-wrap
+	{
 	padding: 0px;
 	margin: 0px;
 	border-width: 0px;
@@ -3050,7 +3063,8 @@ div.v-lazyloadingwrapper-loading {
 
 .v-horizontallayout.border-box2-no-margin .v-horizontallayout-margin {
 	padding: 0px 1px 1px 0px;
-<<<<<<< HEAD
+	<<<<<<<
+	HEAD
 }
 
 /* Filter Select */
@@ -4139,7 +4153,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	margin-right: 3px;
 }
 
-.v-label-hr > hr {
+.v-label-hr>hr {
 	border-color: rgb(169, 169, 169);
 	border-style: solid;
 	border-width: 0px 0px 1px;
@@ -4394,7 +4408,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 /* Multiple Select Comp */
 .v-csslayout.select-bg {
-	background: url("icons/grad-light-top.png") repeat-x 0 1px rgb(218, 218, 218);
+	background: url("icons/grad-light-top.png") repeat-x 0 1px
+		rgb(218, 218, 218);
 }
 
 /* Task Group Reorder */
@@ -4406,9 +4421,12 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-Notification {
 	padding: 0px;
 }
-.v-Notification-system, .v-Notification-error, .v-Notification-warning, .v-Notification-tray {
+
+.v-Notification-system,.v-Notification-error,.v-Notification-warning,.v-Notification-tray
+	{
 	padding: 1em;
 }
+
 .v-Notification h1 {
 	display: block;
 	width: 100%;
@@ -4422,7 +4440,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.v-Notification.v-Notification-error h1, .v-Notification.v-Notification-warning h1, .v-Notification.v-Notification-tray h1 {
+
+.v-Notification.v-Notification-error h1,.v-Notification.v-Notification-warning h1,.v-Notification.v-Notification-tray h1
+	{
 	display: inline;
 	background: none;
 	border: none;
@@ -4430,6 +4450,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 7px 10px;
 	color: white;
 }
+
 .v-Notification p {
 	padding: 5px 3px;
 	display: block;
@@ -4438,14 +4459,17 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	box-sizing: border-box;
 	width: 100%;
 }
+
 .v-Notification table {
 	margin: 0px 10px 0px 3px;
 }
+
 .v-Notification #notificationmsg-icon {
 	height: 48px;
 	width: 48px;
 	background: url('icons/48/info.png') no-repeat left top transparent;
 }
+
 .v-Notification #warningmsg-icon {
 	height: 48px;
 	width: 48px;
