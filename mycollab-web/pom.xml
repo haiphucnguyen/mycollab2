@@ -265,6 +265,7 @@
         </dependency>
 
         <!-- JETTY dependency -->
+        <!-- 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
@@ -288,7 +289,7 @@
             <artifactId>jetty-websocket</artifactId>
             <version>${jettyVersion}</version>
         </dependency>
-
+-->
 
         <dependency>
             <groupId>fr.xebia.web</groupId>

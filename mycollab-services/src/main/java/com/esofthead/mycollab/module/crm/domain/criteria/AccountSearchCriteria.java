@@ -16,137 +16,139 @@
  */
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
+import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class AccountSearchCriteria extends SearchCriteria {
+public class AccountSearchCriteria extends SearchCriteria implements
+		GroupableSearchCriteria {
 
-    private StringSearchField accountname;
-    private StringSearchField assignUser;
-    private StringSearchField assignUserName;
-    private StringSearchField anyCity;
-    private StringSearchField website;
-    private SetSearchField<String> types;
-    private SetSearchField<String> industries;
-    private SetSearchField<String> assignUsers;
-    private StringSearchField anyPhone;
-    private StringSearchField anyAddress;
-    private StringSearchField anyMail;
-    private NumberSearchField saccountid;
-    private NumberSearchField id;
-    private NumberSearchField campaignId;
+	private StringSearchField accountname;
+	private StringSearchField assignUser;
+	private StringSearchField assignUserName;
+	private StringSearchField anyCity;
+	private StringSearchField website;
+	private SetSearchField<String> types;
+	private SetSearchField<String> industries;
+	private SetSearchField<String> assignUsers;
+	private StringSearchField anyPhone;
+	private StringSearchField anyAddress;
+	private StringSearchField anyMail;
+	private NumberSearchField saccountid;
+	private NumberSearchField id;
+	private NumberSearchField campaignId;
 
-    public StringSearchField getAnyMail() {
-        return anyMail;
-    }
+	public StringSearchField getAnyMail() {
+		return anyMail;
+	}
 
-    public void setAnyMail(StringSearchField anyMail) {
-        this.anyMail = anyMail;
-    }
+	public void setAnyMail(StringSearchField anyMail) {
+		this.anyMail = anyMail;
+	}
 
-    public StringSearchField getAnyAddress() {
-        return anyAddress;
-    }
+	public StringSearchField getAnyAddress() {
+		return anyAddress;
+	}
 
-    public void setAnyAddress(StringSearchField anyAddress) {
-        this.anyAddress = anyAddress;
-    }
+	public void setAnyAddress(StringSearchField anyAddress) {
+		this.anyAddress = anyAddress;
+	}
 
-    public StringSearchField getAccountname() {
-        return accountname;
-    }
+	public StringSearchField getAccountname() {
+		return accountname;
+	}
 
-    public void setAccountname(StringSearchField accountname) {
-        this.accountname = accountname;
-    }
+	public void setAccountname(StringSearchField accountname) {
+		this.accountname = accountname;
+	}
 
-    public StringSearchField getAssignUser() {
-        return assignUser;
-    }
+	public StringSearchField getAssignUser() {
+		return assignUser;
+	}
 
-    public void setAssignUser(StringSearchField assignUser) {
-        this.assignUser = assignUser;
-    }
+	public void setAssignUser(StringSearchField assignUser) {
+		this.assignUser = assignUser;
+	}
 
-    public void setAnyCity(StringSearchField anyCity) {
-        this.anyCity = anyCity;
-    }
+	public void setAnyCity(StringSearchField anyCity) {
+		this.anyCity = anyCity;
+	}
 
-    public StringSearchField getAnyCity() {
-        return anyCity;
-    }
+	public StringSearchField getAnyCity() {
+		return anyCity;
+	}
 
-    public StringSearchField getWebsite() {
-        return website;
-    }
+	public StringSearchField getWebsite() {
+		return website;
+	}
 
-    public void setWebsite(StringSearchField website) {
-        this.website = website;
-    }
+	public void setWebsite(StringSearchField website) {
+		this.website = website;
+	}
 
-    public SetSearchField<String> getTypes() {
-        return types;
-    }
+	public SetSearchField<String> getTypes() {
+		return types;
+	}
 
-    public void setTypes(SetSearchField<String> types) {
-        this.types = types;
-    }
+	public void setTypes(SetSearchField<String> types) {
+		this.types = types;
+	}
 
-    public SetSearchField<String> getIndustries() {
-        return industries;
-    }
+	public SetSearchField<String> getIndustries() {
+		return industries;
+	}
 
-    public void setIndustries(SetSearchField<String> industries) {
-        this.industries = industries;
-    }
+	public void setIndustries(SetSearchField<String> industries) {
+		this.industries = industries;
+	}
 
-    public SetSearchField<String> getAssignUsers() {
-        return assignUsers;
-    }
+	public SetSearchField<String> getAssignUsers() {
+		return assignUsers;
+	}
 
-    public void setAssignUsers(SetSearchField<String> assignUsers) {
-        this.assignUsers = assignUsers;
-    }
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
+		this.assignUsers = assignUsers;
+	}
 
-    public NumberSearchField getSaccountid() {
-        return saccountid;
-    }
+	public NumberSearchField getSaccountid() {
+		return saccountid;
+	}
 
-    public void setSaccountid(NumberSearchField saccountid) {
-        this.saccountid = saccountid;
-    }
+	public void setSaccountid(NumberSearchField saccountid) {
+		this.saccountid = saccountid;
+	}
 
-    public StringSearchField getAssignUserName() {
-        return assignUserName;
-    }
+	public StringSearchField getAssignUserName() {
+		return assignUserName;
+	}
 
-    public void setAssignUserName(StringSearchField assignUserName) {
-        this.assignUserName = assignUserName;
-    }
+	public void setAssignUserName(StringSearchField assignUserName) {
+		this.assignUserName = assignUserName;
+	}
 
-    public StringSearchField getAnyPhone() {
-        return anyPhone;
-    }
+	public StringSearchField getAnyPhone() {
+		return anyPhone;
+	}
 
-    public void setAnyPhone(StringSearchField anyPhone) {
-        this.anyPhone = anyPhone;
-    }
+	public void setAnyPhone(StringSearchField anyPhone) {
+		this.anyPhone = anyPhone;
+	}
 
-    public NumberSearchField getId() {
-        return id;
-    }
+	public NumberSearchField getId() {
+		return id;
+	}
 
-    public void setId(NumberSearchField id) {
-        this.id = id;
-    }
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
 
-    public NumberSearchField getCampaignId() {
-        return campaignId;
-    }
+	public NumberSearchField getCampaignId() {
+		return campaignId;
+	}
 
-    public void setCampaignId(NumberSearchField campaignId) {
-        this.campaignId = campaignId;
-    }
+	public void setCampaignId(NumberSearchField campaignId) {
+		this.campaignId = campaignId;
+	}
 }

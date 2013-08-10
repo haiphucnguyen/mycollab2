@@ -17,13 +17,15 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
+import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class CampaignSearchCriteria extends SearchCriteria {
+public class CampaignSearchCriteria extends SearchCriteria implements
+		GroupableSearchCriteria {
 
     private StringSearchField campaignName;
     private StringSearchField assignUserName;

@@ -115,7 +115,7 @@
 
     <servlet-mapping>
         <servlet-name>velocity</servlet-name>
-        <url-pattern>/templates/*.mt</url-pattern>
+        <url-pattern>/templates/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

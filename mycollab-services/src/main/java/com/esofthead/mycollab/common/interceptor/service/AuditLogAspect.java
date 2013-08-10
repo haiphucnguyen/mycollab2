@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.cache.CacheManager;
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.dao.AuditLogMapper;
@@ -45,7 +45,7 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 public class AuditLogAspect {
 
 	private static Logger log = LoggerFactory.getLogger(AuditLogAspect.class);
-	private static BasicCache<Object, Object> caches = CacheManager.getCache();
+	private static BasicCache<Object, Object> caches = LocalCacheManager.getCache();
 
 	@Autowired
 	protected AuditLogMapper auditLogMapper;

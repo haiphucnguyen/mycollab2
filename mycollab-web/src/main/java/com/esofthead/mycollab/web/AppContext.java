@@ -10,10 +10,8 @@ import java.util.TimeZone;
 import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.esofthead.mycollab.cache.CacheManager;
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -29,6 +27,7 @@ import com.esofthead.mycollab.module.user.domain.UserPreference;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -43,8 +42,6 @@ public class AppContext implements Serializable {
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 
 	public static String USER_TIMEZONE = "USER_TIMEZONE";
-
-	private static org.springframework.web.context.WebApplicationContext springContext;
 
 	private BasicCache<Object, Object> variables;
 
@@ -61,13 +58,7 @@ public class AppContext implements Serializable {
 		WebApplicationContext context = (WebApplicationContext) application
 				.getContext();
 		String sessionId = context.getHttpSession().getId();
-		variables = CacheManager.getCache(sessionId);
-
-		if (springContext == null) {
-			springContext = WebApplicationContextUtils
-					.getRequiredWebApplicationContext(context.getHttpSession()
-							.getServletContext());
-		}
+		variables = LocalCacheManager.getCache(sessionId);
 	}
 
 	public static AppContext getInstance() {
@@ -192,11 +183,7 @@ public class AppContext implements Serializable {
 
 	public static <T> T getSpringBean(Class<T> requiredType) {
 
-		return springContext.getBean(requiredType);
-	}
-
-	public static ApplicationContext getSpringContext() {
-		return springContext;
+		return ApplicationContextUtil.getBean(requiredType);
 	}
 
 	public static boolean isAdmin() {

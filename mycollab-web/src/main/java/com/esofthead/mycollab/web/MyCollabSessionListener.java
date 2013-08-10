@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSessionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.cache.CacheManager;
+import com.esofthead.mycollab.cache.LocalCacheManager;
 
 public class MyCollabSessionListener implements HttpSessionListener {
 	private static Logger log = LoggerFactory
@@ -20,7 +20,7 @@ public class MyCollabSessionListener implements HttpSessionListener {
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
 		String sessionId = se.getSession().getId();
-		CacheManager.removeCache(sessionId);
+		LocalCacheManager.removeCache(sessionId);
 		log.debug("Remove cache {}", sessionId);
 	}
 

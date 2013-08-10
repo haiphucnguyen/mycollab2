@@ -1,11 +1,13 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
+import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class CaseSearchCriteria extends SearchCriteria {
+public class CaseSearchCriteria extends SearchCriteria implements
+		GroupableSearchCriteria {
 	private StringSearchField subject;
 
 	private StringSearchField assignUser;
@@ -25,8 +27,8 @@ public class CaseSearchCriteria extends SearchCriteria {
 	private SetSearchField<String> assignUsers;
 
 	private NumberSearchField saccountid;
-	
-	 private NumberSearchField id;
+
+	private NumberSearchField id;
 
 	public StringSearchField getSubject() {
 		return subject;

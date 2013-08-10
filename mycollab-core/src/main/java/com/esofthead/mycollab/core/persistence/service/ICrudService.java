@@ -20,44 +20,26 @@ package com.esofthead.mycollab.core.persistence.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.Cacheable;
+
 public interface ICrudService<K extends Serializable, T> extends IService {
 
-	int saveWithSession(T record, String userSessionId);
+	@CacheEvict
+	int saveWithSession(T record, String username);
 
-	/**
-	 * 
-	 * @param record
-	 * @param userSessionId
-	 * @return
-	 */
-	int updateWithSession(T record, String userSessionId);
+	@CacheEvict
+	int updateWithSession(T record, String username);
 
-	/**
-	 * 
-	 * @param record
-	 * @param primaryKeys
-	 */
+	@CacheEvict
 	void massUpdateWithSession(T record, List<K> primaryKeys);
 
-	/**
-	 * @param id
-	 * @return
-	 */
+	@Cacheable
 	T findByPrimaryKey(K primaryKey);
 
-	/**
-	 * 
-	 * @param primaryKey
-	 * @param userSessionId
-	 * @return
-	 */
-	int removeWithSession(K primaryKey, String userSessionId);
+	@CacheEvict
+	int removeWithSession(K primaryKey, String username);
 
-	/**
-	 * 
-	 * @param primaryKeys
-	 * @param username
-	 * @return
-	 */
+	@CacheEvict
 	void removeWithSession(List<K> primaryKeys, String username);
 }

@@ -5,44 +5,46 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.BitSearchField;
+import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class MeetingSearchCriteria extends SearchCriteria {
+public class MeetingSearchCriteria extends SearchCriteria implements
+		GroupableSearchCriteria {
 
-    private NumberSearchField saccountid;
-    private SetSearchField<String> assignUsers;
-    private NumberSearchField id;
-    private BitSearchField isClosed;
+	private NumberSearchField saccountid;
+	private SetSearchField<String> assignUsers;
+	private NumberSearchField id;
+	private BitSearchField isClosed;
 
-    public NumberSearchField getSaccountid() {
-        return saccountid;
-    }
+	public NumberSearchField getSaccountid() {
+		return saccountid;
+	}
 
-    public void setSaccountid(NumberSearchField saccountid) {
-        this.saccountid = saccountid;
-    }
+	public void setSaccountid(NumberSearchField saccountid) {
+		this.saccountid = saccountid;
+	}
 
-    public SetSearchField<String> getAssignUsers() {
-        return assignUsers;
-    }
+	public SetSearchField<String> getAssignUsers() {
+		return assignUsers;
+	}
 
-    public void setAssignUsers(SetSearchField<String> assignUsers) {
-        this.assignUsers = assignUsers;
-    }
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
+		this.assignUsers = assignUsers;
+	}
 
-    public void setId(NumberSearchField id) {
-        this.id = id;
-    }
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
 
-    public NumberSearchField getId() {
-        return id;
-    }
+	public NumberSearchField getId() {
+		return id;
+	}
 
 	public void setIsClosed(BitSearchField isClosed) {
 		this.isClosed = isClosed;

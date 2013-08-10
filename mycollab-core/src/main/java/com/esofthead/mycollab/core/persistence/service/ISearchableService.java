@@ -16,41 +16,49 @@
  */
 package com.esofthead.mycollab.core.persistence.service;
 
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import java.util.List;
 
 import net.bull.javamelody.MonitoredWithSpring;
 
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.Cacheable;
+
 /**
  * Engroup serivice supports pagable/search data.
- *
+ * 
  * @param <S>
  */
 public interface ISearchableService<S extends SearchCriteria> extends IService {
 
-    /**
-     * Get the total available items base on search criteria.
-     *
-     * @param criteria
-     * @return
-     */
+	/**
+	 * Get the total available items base on search criteria.
+	 * 
+	 * @param criteria
+	 * @return
+	 */
 	@MonitoredWithSpring
-    int getTotalCount(S criteria);
+	@Cacheable
+	int getTotalCount(S criteria);
 
-    /**
-     *
-     * @param criteria
-     * @param skipNum
-     * @param maxResult
-     * @return
-     */
-    @MonitoredWithSpring
-    List findPagableListByCriteria(SearchRequest<S> searchRequest);
+	/**
+	 * 
+	 * @param criteria
+	 * @param skipNum
+	 * @param maxResult
+	 * @return
+	 */
+	@MonitoredWithSpring
+	@Cacheable
+	List findPagableListByCriteria(SearchRequest<S> searchRequest);
 
-    void removeByCriteria(S criteria);
-    
-    Integer getNextItemKey(S criteria);
-    
-    Integer getPreviousItemKey(S criteria);
+	@CacheEvict
+	void removeByCriteria(S criteria);
+
+	@Cacheable
+	Integer getNextItemKey(S criteria);
+
+	@Cacheable
+	Integer getPreviousItemKey(S criteria);
 }
