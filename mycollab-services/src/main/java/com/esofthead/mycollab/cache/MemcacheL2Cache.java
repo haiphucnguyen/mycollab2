@@ -13,11 +13,21 @@ public class MemcacheL2Cache implements L2Cache {
 
 	public MemcacheL2Cache() {
 		try {
-			MemcachedClient c = new MemcachedClient(
-					new BinaryConnectionFactory(),
+			client = new MemcachedClient(new BinaryConnectionFactory(),
 					AddrUtil.getAddresses("localhost:11212"));
 		} catch (IOException e) {
 			throw new MyCollabException(e);
 		}
+	}
+
+	@Override
+	public Object get(String key) {
+		return client.get(key);
+	}
+
+	@Override
+	public void put(String key, Object value) {
+		client.set(key, 3600, value);
+
 	}
 }

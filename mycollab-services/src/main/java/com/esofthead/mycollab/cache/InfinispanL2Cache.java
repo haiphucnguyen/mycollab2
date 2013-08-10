@@ -8,4 +8,15 @@ public class InfinispanL2Cache implements L2Cache {
 	public InfinispanL2Cache() {
 		cache = LocalCacheManager.getCache();
 	}
+
+	@Override
+	public Object get(String key) {
+		return cache.get(key);
+	}
+
+	@Override
+	public void put(String key, Object value) {
+		cache.put(key, value);
+
+	}
 }
