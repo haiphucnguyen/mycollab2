@@ -84,8 +84,8 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			} else if (data.getParams() instanceof Integer) {
 				LeadService leadService = AppContext
 						.getSpringBean(LeadService.class);
-				lead = (Lead) leadService.findByPrimaryKey((Integer) data
-						.getParams());
+				lead = (Lead) leadService.findByPrimaryKey(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (lead == null) {
 					AppContext
 							.getApplication()

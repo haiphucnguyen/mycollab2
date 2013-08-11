@@ -65,8 +65,8 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 			} else if (data.getParams() instanceof Integer) {
 				MeetingService meetingService = AppContext
 						.getSpringBean(MeetingService.class);
-				meeting = meetingService.findByPrimaryKey((Integer) data
-						.getParams());
+				meeting = meetingService.findByPrimaryKey(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (meeting == null) {
 					AppContext
 							.getApplication()

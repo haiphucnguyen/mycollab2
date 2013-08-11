@@ -30,7 +30,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public T findByPrimaryKey(K primaryKey) {
+	public T findByPrimaryKey(K primaryKey, int accountId) {
 		return (T) getCrudMapper().selectByPrimaryKey(primaryKey);
 	}
 

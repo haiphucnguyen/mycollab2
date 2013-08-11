@@ -82,8 +82,8 @@ public class OpportunityAddPresenter extends
 			} else if (data.getParams() instanceof Integer) {
 				OpportunityService accountService = AppContext
 						.getSpringBean(OpportunityService.class);
-				opportunity = accountService.findByPrimaryKey((Integer) data
-						.getParams());
+				opportunity = accountService.findByPrimaryKey(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (opportunity == null) {
 					AppContext
 							.getApplication()

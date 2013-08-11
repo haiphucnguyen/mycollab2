@@ -66,8 +66,8 @@ public class AssignmentAddPresenter extends
 			} else if (data.getParams() instanceof Integer) {
 				TaskService taskService = AppContext
 						.getSpringBean(TaskService.class);
-				task = taskService.findByPrimaryKey((Integer) data
-						.getParams());
+				task = taskService.findByPrimaryKey((Integer) data.getParams(),
+						AppContext.getAccountId());
 				if (task == null) {
 					AppContext
 							.getApplication()
@@ -80,11 +80,11 @@ public class AssignmentAddPresenter extends
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
-			}else {
+			} else {
 				throw new MyCollabException("Do not support param data: "
 						+ data);
 			}
-			
+
 			container.removeAllComponents();
 			container.addComponent(view.getWidget());
 			view.editItem(task);

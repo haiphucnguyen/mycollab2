@@ -81,8 +81,8 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 			} else if (data.getParams() instanceof Integer) {
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
-				account = accountService.findByPrimaryKey((Integer) data
-						.getParams());
+				account = accountService.findByPrimaryKey(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (account == null) {
 					AppContext
 							.getApplication()

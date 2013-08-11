@@ -65,7 +65,8 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 			if (data.getParams() instanceof Integer) {
 				CallService callService = AppContext
 						.getSpringBean(CallService.class);
-				call = callService.findByPrimaryKey((Integer) data.getParams());
+				call = callService.findByPrimaryKey((Integer) data.getParams(),
+						AppContext.getAccountId());
 				if (call == null) {
 					AppContext
 							.getApplication()

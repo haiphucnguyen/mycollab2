@@ -88,8 +88,8 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 			} else if (data.getParams() instanceof Integer) {
 				ContactService contactService = AppContext
 						.getSpringBean(ContactService.class);
-				contact = (Contact) contactService
-						.findByPrimaryKey((Integer) data.getParams());
+				contact = (Contact) contactService.findByPrimaryKey(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (contact == null) {
 					AppContext
 							.getApplication()

@@ -75,8 +75,8 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 			} else if (data.getParams() instanceof Integer) {
 				CaseService caseService = AppContext
 						.getSpringBean(CaseService.class);
-				cases = caseService
-						.findByPrimaryKey((Integer) data.getParams());
+				cases = caseService.findByPrimaryKey(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (cases == null) {
 					AppContext
 							.getApplication()

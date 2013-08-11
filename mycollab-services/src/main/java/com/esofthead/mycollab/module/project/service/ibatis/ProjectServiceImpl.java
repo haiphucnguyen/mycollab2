@@ -257,7 +257,7 @@ public class ProjectServiceImpl extends
 		CamelContext camelContext = ApplicationContextUtil
 				.getBean(CamelContext.class);
 		try {
-			Project project = findByPrimaryKey(projectId);
+			Project project = findByPrimaryKey(projectId, accountId);
 
 			ProjectDeleteListener projectDeleteListener = new ProxyBuilder(
 					camelContext).endpoint(

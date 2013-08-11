@@ -82,7 +82,8 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
 				campaign = (CampaignWithBLOBs) campaignService
-						.findByPrimaryKey((Integer) data.getParams());
+						.findByPrimaryKey((Integer) data.getParams(),
+								AppContext.getAccountId());
 				if (campaign == null) {
 					AppContext
 							.getApplication()

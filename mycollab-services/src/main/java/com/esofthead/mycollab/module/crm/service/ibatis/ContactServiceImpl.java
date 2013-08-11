@@ -74,7 +74,7 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
-	public SimpleContact findByPrimaryKey(Integer primaryKey) {
+	public SimpleContact findByPrimaryKey(Integer primaryKey, int accountId) {
 		return findById(primaryKey);
 	}
 

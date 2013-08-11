@@ -38,7 +38,7 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 		return getCrudMapper().deleteByPrimaryKey(primaryKey);
 	}
 
-	public T findByPrimaryKey(K primaryKey) {
+	public T findByPrimaryKey(K primaryKey, int accountId) {
 		return (T) getCrudMapper().selectByPrimaryKey(primaryKey);
 	}
 
