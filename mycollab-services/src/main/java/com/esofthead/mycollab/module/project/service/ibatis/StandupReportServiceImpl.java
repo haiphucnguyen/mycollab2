@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.common.interceptor.service.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;

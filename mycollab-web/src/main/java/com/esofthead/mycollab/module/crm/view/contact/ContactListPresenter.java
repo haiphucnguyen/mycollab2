@@ -300,7 +300,8 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 				}
 			}
 			if (keyList.size() > 0) {
-				contactService.massUpdateWithSession(value, keyList);
+				contactService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

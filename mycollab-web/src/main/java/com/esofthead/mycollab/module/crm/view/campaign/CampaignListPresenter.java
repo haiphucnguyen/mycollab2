@@ -282,7 +282,8 @@ public class CampaignListPresenter extends
 				}
 			}
 			if (keyList.size() > 0) {
-				campaignService.massUpdateWithSession(value, keyList);
+				campaignService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

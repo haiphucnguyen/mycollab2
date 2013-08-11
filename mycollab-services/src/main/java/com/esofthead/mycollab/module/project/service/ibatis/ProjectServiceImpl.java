@@ -32,7 +32,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
-import com.esofthead.mycollab.common.interceptor.service.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.configuration.DeploymentMode;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchRequest;

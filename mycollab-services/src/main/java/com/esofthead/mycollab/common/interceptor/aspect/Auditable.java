@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.common.interceptor.service;
+package com.esofthead.mycollab.common.interceptor.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

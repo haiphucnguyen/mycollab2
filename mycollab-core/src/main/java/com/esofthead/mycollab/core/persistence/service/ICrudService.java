@@ -31,7 +31,8 @@ public interface ICrudService<K extends Serializable, T> extends IService {
 	@CacheEvict
 	int updateWithSession(T record, String username);
 
-	void massUpdateWithSession(T record, List<K> primaryKeys);
+	@CacheEvict
+	void massUpdateWithSession(T record, List<K> primaryKeys, int accountId);
 
 	@Cacheable
 	T findByPrimaryKey(K primaryKey);

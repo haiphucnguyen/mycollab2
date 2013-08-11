@@ -304,7 +304,8 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 			}
 
 			if (keyList.size() > 0) {
-				accountService.massUpdateWithSession(value, keyList);
+				accountService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

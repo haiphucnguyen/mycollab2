@@ -278,7 +278,8 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 			}
 
 			if (keyList.size() > 0) {
-				riskService.massUpdateWithSession(value, keyList);
+				riskService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

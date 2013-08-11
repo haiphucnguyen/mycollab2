@@ -281,7 +281,8 @@ public class OpportunityListPresenter extends
 			}
 
 			if (keyList.size() > 0) {
-				opportunityService.massUpdateWithSession(value, keyList);
+				opportunityService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

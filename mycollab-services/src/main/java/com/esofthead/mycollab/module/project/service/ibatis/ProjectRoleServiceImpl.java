@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.PermissionMap;
-import com.esofthead.mycollab.common.interceptor.service.Auditable;
+import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;

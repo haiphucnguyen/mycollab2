@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.common.interceptor.service;
+package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -22,11 +22,11 @@ import com.esofthead.mycollab.core.cache.CacheEvict;
 @Aspect
 @Component
 @Configurable
-public class UpdateItemCacheEvictAspect {
-	private Logger log = LoggerFactory.getLogger(UpdateItemCacheEvictAspect.class);
+public class SaveItemCacheEvictAspect {
+	private Logger log = LoggerFactory.getLogger(SaveItemCacheEvictAspect.class);
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
-	public void cacheEvictUpdate(JoinPoint pjp, Object bean, String username) {
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
+	public void cacheEvictSave(JoinPoint pjp, Object bean, String username) {
 		Advised advised = (Advised) pjp.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
 

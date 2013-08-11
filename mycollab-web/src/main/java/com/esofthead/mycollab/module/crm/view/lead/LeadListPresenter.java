@@ -303,7 +303,8 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 			}
 
 			if (keyList.size() > 0) {
-				leadService.massUpdateWithSession(value, keyList);
+				leadService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

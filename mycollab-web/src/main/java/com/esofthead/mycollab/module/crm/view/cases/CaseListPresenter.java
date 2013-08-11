@@ -302,7 +302,8 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 				}
 			}
 			if (keyList.size() > 0) {
-				caseService.massUpdateWithSession(value, keyList);
+				caseService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

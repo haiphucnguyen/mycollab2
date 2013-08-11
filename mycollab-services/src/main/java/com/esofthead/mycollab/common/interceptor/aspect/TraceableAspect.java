@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.common.interceptor.service;
+package com.esofthead.mycollab.common.interceptor.aspect;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;

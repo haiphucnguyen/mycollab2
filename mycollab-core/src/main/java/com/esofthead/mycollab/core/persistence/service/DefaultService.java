@@ -79,7 +79,6 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 		return getSearchMapper().getTotalCount(criteria);
 	}
 
-	
 	@Override
 	public List findPagableListByCriteria(SearchRequest<S> searchRequest) {
 		return getSearchMapper().findPagableListByCriteria(
@@ -130,7 +129,8 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public void massUpdateWithSession(T record, List<K> primaryKeys) {
+	public void massUpdateWithSession(T record, List<K> primaryKeys,
+			int accountId) {
 		getCrudMapper().massUpdateWithSession(record, primaryKeys);
 	}
 

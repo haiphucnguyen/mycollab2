@@ -37,8 +37,8 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
-		implements ListPresenter<ProblemSearchCriteria> ,
-		MassUpdatePresenter<Problem>{
+		implements ListPresenter<ProblemSearchCriteria>,
+		MassUpdatePresenter<Problem> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
@@ -125,10 +125,9 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 						if ("delete".equals(id)) {
 							ConfirmDialogExt.show(
 									view.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
-													SiteConfiguration.getSiteName()),
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											SiteConfiguration.getSiteName()),
 									LocalizationHelper
 											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
 									LocalizationHelper
@@ -171,7 +170,7 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 							}
 
 							view.getWidget().getWindow().open(res, "_blank");
-						}else if ("massUpdate".equals(id)) {
+						} else if ("massUpdate".equals(id)) {
 							MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
 									"Mass Update Problems",
 									ProblemListPresenter.this);
@@ -280,11 +279,12 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 			}
 
 			if (keyList.size() > 0) {
-				problemService.massUpdateWithSession(value, keyList);
+				problemService.massUpdateWithSession(value, keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {
-			problemService.updateBySearchCriteria(value,searchCriteria);
+			problemService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}
