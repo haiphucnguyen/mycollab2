@@ -205,7 +205,8 @@ public class UserListPresenter extends AbstractPresenter<UserListView>
 				doSearch(searchCriteria);
 			}
 		} else {
-			userService.removeByCriteria(searchCriteria);
+			userService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

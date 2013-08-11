@@ -37,7 +37,9 @@ public interface ICrudService<K extends Serializable, T> extends IService {
 	@Cacheable
 	T findByPrimaryKey(K primaryKey);
 
-	int removeWithSession(K primaryKey, String username);
+	@CacheEvict
+	int removeWithSession(K primaryKey, String username, int accountId);
 
-	void removeWithSession(List<K> primaryKeys, String username);
+	@CacheEvict
+	void removeWithSession(List<K> primaryKeys, String username, int accountId);
 }

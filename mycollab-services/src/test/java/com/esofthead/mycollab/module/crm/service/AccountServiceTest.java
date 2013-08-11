@@ -110,7 +110,7 @@ public class AccountServiceTest extends ServiceTest {
 	@Test
 	@DataSet
 	public void testRemoveAccounts() {
-		accountService.removeWithSession(Arrays.asList(1, 2), "hai79");
+		accountService.removeWithSession(Arrays.asList(1, 2), "hai79", 1);
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 	}
@@ -128,7 +128,7 @@ public class AccountServiceTest extends ServiceTest {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setIndustries(new SetSearchField<String>(SearchField.AND,
 				new String[] { "a" }));
-		accountService.removeByCriteria(criteria);
+		accountService.removeByCriteria(criteria, 1);
 
 		criteria = new AccountSearchCriteria();
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));

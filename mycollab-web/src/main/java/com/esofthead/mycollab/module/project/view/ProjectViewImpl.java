@@ -324,7 +324,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectBugComponent() {
-		trackerPresenter = PresenterResolver.getPresenter(TrackerPresenter.class);
+		trackerPresenter = PresenterResolver
+				.getPresenter(TrackerPresenter.class);
 		return trackerPresenter.getView();
 	}
 
@@ -454,10 +455,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							controlsBtn.setPopupVisible(false);
 							ConfirmDialogExt.show(
 									ProjectViewImpl.this.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
-													SiteConfiguration.getSiteName()),
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											SiteConfiguration.getSiteName()),
 									LocalizationHelper
 											.getMessage(ProjectCommonI18nEnum.CONFIRM_PROJECT_DELETE_MESSAGE),
 									LocalizationHelper
@@ -476,7 +476,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 														CurrentProjectVariables
 																.getProjectId(),
 														AppContext
-																.getUsername());
+																.getUsername(),
+														AppContext
+																.getAccountId());
 												EventBus.getInstance()
 														.fireEvent(
 																new ShellEvent.GotoProjectModule(

@@ -86,7 +86,7 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	}
 
 	@Override
-	public int removeWithSession(K primaryKey, String username) {
+	public int removeWithSession(K primaryKey, String username, int accountId) {
 		if (username == null) {
 			return getCrudMapper().deleteByPrimaryKey(primaryKey);
 		} else {
@@ -99,7 +99,8 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	}
 
 	@Override
-	public void removeWithSession(List<K> primaryKeys, String username) {
+	public void removeWithSession(List<K> primaryKeys, String username,
+			int accountId) {
 		throw new RuntimeException("Sub classes must override before call");
 	}
 

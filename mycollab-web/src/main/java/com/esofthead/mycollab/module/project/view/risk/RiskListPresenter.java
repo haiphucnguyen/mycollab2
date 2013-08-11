@@ -253,13 +253,14 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 			}
 
 			if (keyList.size() > 0) {
-				riskService
-						.removeWithSession(keyList, AppContext.getUsername());
+				riskService.removeWithSession(keyList,
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			riskService.removeByCriteria(searchCriteria);
+			riskService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

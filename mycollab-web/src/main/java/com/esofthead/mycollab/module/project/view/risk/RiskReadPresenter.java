@@ -70,7 +70,8 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 													.getSpringBean(RiskService.class);
 											riskService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
 													new RiskEvent.GotoList(
 															this, null));

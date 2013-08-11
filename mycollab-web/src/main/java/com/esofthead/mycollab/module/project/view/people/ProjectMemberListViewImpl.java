@@ -138,7 +138,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 											.getSpringBean(ProjectMemberService.class);
 									prjMemberService.removeWithSession(
 											member.getId(),
-											AppContext.getUsername());
+											AppContext.getUsername(),
+											AppContext.getAccountId());
 
 									EventBus.getInstance()
 											.fireEvent(

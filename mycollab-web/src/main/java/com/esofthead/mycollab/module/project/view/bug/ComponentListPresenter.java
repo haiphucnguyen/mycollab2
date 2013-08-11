@@ -256,12 +256,13 @@ public class ComponentListPresenter extends
 
 			if (keyList.size() > 0) {
 				componentService.removeWithSession(keyList,
-						AppContext.getUsername());
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			componentService.removeByCriteria(searchCriteria);
+			componentService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

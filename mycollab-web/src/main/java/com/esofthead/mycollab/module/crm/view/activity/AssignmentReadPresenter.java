@@ -47,10 +47,9 @@ public class AssignmentReadPresenter extends
 					public void onDelete(final SimpleTask data) {
 						ConfirmDialogExt.show(
 								view.getWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
-												SiteConfiguration.getSiteName()),
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										SiteConfiguration.getSiteName()),
 								LocalizationHelper
 										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 								LocalizationHelper
@@ -67,7 +66,8 @@ public class AssignmentReadPresenter extends
 													.getSpringBean(TaskService.class);
 											taskService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance()
 													.fireEvent(
 															new ActivityEvent.GotoTodoList(

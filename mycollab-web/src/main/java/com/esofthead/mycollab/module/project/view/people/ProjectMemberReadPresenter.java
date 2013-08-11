@@ -77,7 +77,8 @@ public class ProjectMemberReadPresenter extends
 													.getSpringBean(ProjectMemberService.class);
 											projectMemberService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance()
 													.fireEvent(
 															new ProjectMemberEvent.GotoList(

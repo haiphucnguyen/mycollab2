@@ -90,9 +90,4 @@ public class MonitorItemServiceImpl extends
 	public Integer getPreviousItemKey(MonitorSearchCriteria arg0) {
 		return null;
 	}
-
-	@Override
-	public void removeByCriteria(MonitorSearchCriteria arg0) {
-
-	}
 }

@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.schedule.email.project.MessageNotificationServiceImpl;
+import com.esofthead.mycollab.web.AppContext;
 
 @Component("denyInvitationMemberServletHandler")
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
@@ -53,9 +54,11 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 						&& !projectAdmin.equals("")) {
 					SimpleProjectMember member = projectMemberService
 							.findById(memberId);
-					if (member != null && !member.getStatus().equals(ProjectMemberStatusContants.ACTIVE)) {
+					if (member != null
+							&& !member.getStatus().equals(
+									ProjectMemberStatusContants.ACTIVE)) {
 						projectMemberService.removeWithSession(memberId,
-								projectAdmin);
+								projectAdmin, AppContext.getAccountId());
 
 						RelayEmailNotification relayNotification = new RelayEmailNotification();
 						relayNotification.setChangeby(projectAdmin);

@@ -87,7 +87,8 @@ public class OpportunityReadPresenter extends
 													.getSpringBean(OpportunityService.class);
 											OpportunityService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance()
 													.fireEvent(
 															new OpportunityEvent.GotoList(

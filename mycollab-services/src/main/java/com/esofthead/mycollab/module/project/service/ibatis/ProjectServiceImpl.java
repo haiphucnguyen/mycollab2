@@ -250,7 +250,8 @@ public class ProjectServiceImpl extends
 	}
 
 	@Override
-	public int removeWithSession(Integer projectId, String username) {
+	public int removeWithSession(Integer projectId, String username,
+			int accountId) {
 		// notify listener project is removed, then silently remove project in
 		// associate records
 		CamelContext camelContext = ApplicationContextUtil
@@ -267,6 +268,6 @@ public class ProjectServiceImpl extends
 		} catch (Exception e) {
 			log.error("Error while notify user delete", e);
 		}
-		return super.removeWithSession(projectId, username);
+		return super.removeWithSession(projectId, username, accountId);
 	}
 }

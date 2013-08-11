@@ -279,13 +279,14 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 			}
 
 			if (keyList.size() > 0) {
-				leadService
-						.removeWithSession(keyList, AppContext.getUsername());
+				leadService.removeWithSession(keyList,
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			leadService.removeByCriteria(searchCriteria);
+			leadService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 	}

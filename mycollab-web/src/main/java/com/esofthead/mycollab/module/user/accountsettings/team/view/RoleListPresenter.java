@@ -218,12 +218,13 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 			}
 
 			if (keyList.size() > 0) {
-				userService
-						.removeWithSession(keyList, AppContext.getUsername());
+				userService.removeWithSession(keyList,
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {
-			userService.removeByCriteria(searchCriteria);
+			userService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

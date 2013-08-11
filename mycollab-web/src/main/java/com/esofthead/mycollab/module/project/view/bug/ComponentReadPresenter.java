@@ -55,7 +55,8 @@ public class ComponentReadPresenter extends
 						ComponentService riskService = AppContext
 								.getSpringBean(ComponentService.class);
 						riskService.removeWithSession(data.getId(),
-								AppContext.getUsername());
+								AppContext.getUsername(),
+								AppContext.getAccountId());
 						EventBus.getInstance().fireEvent(
 								new BugComponentEvent.GotoList(this, null));
 					}

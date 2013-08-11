@@ -256,7 +256,9 @@ public class TaskGroupDisplayWidget
 																TaskListDepot.this.taskList
 																		.getId(),
 																AppContext
-																		.getUsername());
+																		.getUsername(),
+																AppContext
+																		.getAccountId());
 												final LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
 														.getParent();
 												((ComponentContainer) parentComp

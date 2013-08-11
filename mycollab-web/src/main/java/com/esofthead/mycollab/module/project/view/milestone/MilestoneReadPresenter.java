@@ -78,7 +78,8 @@ public class MilestoneReadPresenter extends
 													.getSpringBean(MilestoneService.class);
 											milestoneService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance()
 													.fireEvent(
 															new MilestoneEvent.GotoList(

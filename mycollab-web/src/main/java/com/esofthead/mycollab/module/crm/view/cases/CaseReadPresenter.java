@@ -83,7 +83,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 													.getSpringBean(CaseService.class);
 											caseService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
 													new CaseEvent.GotoList(
 															this, null));

@@ -187,7 +187,9 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 													monitorItemService.removeWithSession(
 															monitorItem.getId(),
 															AppContext
-																	.getUsername());
+																	.getUsername(),
+															AppContext
+																	.getAccountId());
 													CompFollowersSheet.this
 															.loadMonitorItems();
 												}

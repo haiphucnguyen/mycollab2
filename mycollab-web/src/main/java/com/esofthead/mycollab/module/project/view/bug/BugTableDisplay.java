@@ -168,7 +168,9 @@ public class BugTableDisplay extends
 													bugService.removeWithSession(
 															bug.getId(),
 															AppContext
-																	.getUsername());
+																	.getUsername(),
+															AppContext
+																	.getAccountId());
 													refresh();
 												}
 											}

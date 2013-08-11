@@ -91,7 +91,8 @@ public class CampaignReadPresenter extends
 													.getSpringBean(CampaignService.class);
 											campaignService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
 													new CampaignEvent.GotoList(
 															this, null));

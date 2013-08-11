@@ -246,12 +246,13 @@ public class ProjectRoleListPresenter extends
 
 			if (keyList.size() > 0) {
 				projectRoleService.removeWithSession(keyList,
-						AppContext.getUsername());
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			projectRoleService.removeByCriteria(searchCriteria);
+			projectRoleService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

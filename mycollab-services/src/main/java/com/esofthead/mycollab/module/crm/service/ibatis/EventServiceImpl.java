@@ -13,25 +13,20 @@ import com.esofthead.mycollab.module.crm.service.EventService;
 @Service
 @Transactional
 public class EventServiceImpl extends DefaultSearchService<EventSearchCriteria>
-        implements EventService {
+		implements EventService {
 
-    @Autowired
-    protected EventMapperExt eventMapperExt;
+	@Autowired
+	protected EventMapperExt eventMapperExt;
 
-    @Override
-    public ISearchableDAO<EventSearchCriteria> getSearchMapper() {
-        return eventMapperExt;
-    }
+	@Override
+	public ISearchableDAO<EventSearchCriteria> getSearchMapper() {
+		return eventMapperExt;
+	}
 
-    @Override
-    public int getTotalCount(EventSearchCriteria criteria) {
-        return eventMapperExt.getTotalCountFromCall(criteria)
-                + eventMapperExt.getTotalCountFromTask(criteria)
-                + eventMapperExt.getTotalCountFromMeeting(criteria);
-    }
-
-    @Override
-    public void removeByCriteria(EventSearchCriteria criteria) {
-        super.removeByCriteria(criteria);
-    }
+	@Override
+	public int getTotalCount(EventSearchCriteria criteria) {
+		return eventMapperExt.getTotalCountFromCall(criteria)
+				+ eventMapperExt.getTotalCountFromTask(criteria)
+				+ eventMapperExt.getTotalCountFromMeeting(criteria);
+	}
 }

@@ -278,13 +278,14 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 			}
 
 			if (keyList.size() > 0) {
-				caseService
-						.removeWithSession(keyList, AppContext.getUsername());
+				caseService.removeWithSession(keyList,
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			caseService.removeByCriteria(searchCriteria);
+			caseService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

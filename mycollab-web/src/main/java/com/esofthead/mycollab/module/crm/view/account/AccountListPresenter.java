@@ -263,12 +263,13 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 
 			if (keyList.size() > 0) {
 				accountService.removeWithSession(keyList,
-						AppContext.getUsername());
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			accountService.removeByCriteria(searchCriteria);
+			accountService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

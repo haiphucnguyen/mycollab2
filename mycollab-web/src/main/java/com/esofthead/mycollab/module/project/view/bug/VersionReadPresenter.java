@@ -53,7 +53,8 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 						VersionService versionService = AppContext
 								.getSpringBean(VersionService.class);
 						versionService.removeWithSession(data.getId(),
-								AppContext.getUsername());
+								AppContext.getUsername(),
+								AppContext.getAccountId());
 						EventBus.getInstance().fireEvent(
 								new BugVersionEvent.GotoList(this, null));
 					}
@@ -134,8 +135,8 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 			if (data.getParams() instanceof Integer) {
 				VersionService componentService = AppContext
 						.getSpringBean(VersionService.class);
-				Version version = componentService
-						.findById((Integer) data.getParams());
+				Version version = componentService.findById((Integer) data
+						.getParams());
 				if (version != null) {
 					VersionContainer versionContainer = (VersionContainer) container;
 					versionContainer.removeAllComponents();

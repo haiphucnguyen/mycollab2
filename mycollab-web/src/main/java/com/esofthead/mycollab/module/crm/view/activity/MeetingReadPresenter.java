@@ -65,7 +65,8 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 													.getSpringBean(MeetingService.class);
 											campaignService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance()
 													.fireEvent(
 															new ActivityEvent.GotoTodoList(

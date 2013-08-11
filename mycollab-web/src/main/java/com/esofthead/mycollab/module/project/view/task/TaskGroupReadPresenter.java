@@ -43,12 +43,13 @@ public class TaskGroupReadPresenter extends
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleTaskList>() {
-					
+
 					@Override
 					public void onAssign(SimpleTaskList data) {
-						AppContext.getApplication().getMainWindow().addWindow(new AssignTaskGroupWindow(data));
+						AppContext.getApplication().getMainWindow()
+								.addWindow(new AssignTaskGroupWindow(data));
 					}
-					
+
 					@Override
 					public void onEdit(SimpleTaskList data) {
 						EventBus.getInstance().fireEvent(
@@ -60,7 +61,8 @@ public class TaskGroupReadPresenter extends
 						ProjectTaskListService taskListService = AppContext
 								.getSpringBean(ProjectTaskListService.class);
 						taskListService.removeWithSession(data.getId(),
-								AppContext.getUsername());
+								AppContext.getUsername(),
+								AppContext.getAccountId());
 						EventBus.getInstance()
 								.fireEvent(
 										new TaskListEvent.GotoTaskListScreen(
@@ -152,8 +154,8 @@ public class TaskGroupReadPresenter extends
 			if (data.getParams() instanceof Integer) {
 				ProjectTaskListService taskService = AppContext
 						.getSpringBean(ProjectTaskListService.class);
-				SimpleTaskList taskgroup = taskService
-						.findById((Integer) data.getParams());
+				SimpleTaskList taskgroup = taskService.findById((Integer) data
+						.getParams());
 				view.previewItem(taskgroup);
 
 				ProjectBreadcrumb breadCrumb = ViewManager

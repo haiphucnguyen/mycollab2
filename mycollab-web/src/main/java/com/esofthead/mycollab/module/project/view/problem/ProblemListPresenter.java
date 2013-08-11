@@ -255,12 +255,13 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 
 			if (keyList.size() > 0) {
 				problemService.removeWithSession(keyList,
-						AppContext.getUsername());
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			problemService.removeByCriteria(searchCriteria);
+			problemService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 

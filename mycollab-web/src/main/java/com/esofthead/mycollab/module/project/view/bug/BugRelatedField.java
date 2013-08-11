@@ -343,8 +343,9 @@ public class BugRelatedField extends CustomField {
 															relatedItem
 																	.getRelatedid()));
 
-											relatedBugService
-													.removeByCriteria(relateBugIdCriteria);
+											relatedBugService.removeByCriteria(
+													relateBugIdCriteria,
+													AppContext.getAccountId());
 
 											BugRelatedSearchCriteria relateIdCriteria = new BugRelatedSearchCriteria();
 											relateIdCriteria
@@ -356,8 +357,9 @@ public class BugRelatedField extends CustomField {
 															relatedItem
 																	.getBugid()));
 
-											relatedBugService
-													.removeByCriteria(relateIdCriteria);
+											relatedBugService.removeByCriteria(
+													relateIdCriteria,
+													AppContext.getAccountId());
 
 											BugRelatedField.this.setCriteria();
 										}

@@ -65,7 +65,8 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 													.getSpringBean(CallService.class);
 											callService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance()
 													.fireEvent(
 															new ActivityEvent.GotoTodoList(

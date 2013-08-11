@@ -260,12 +260,13 @@ public class CampaignListPresenter extends
 
 			if (keyList.size() > 0) {
 				campaignService.removeWithSession(keyList,
-						AppContext.getUsername());
+						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();
 			}
 		} else {
-			campaignService.removeByCriteria(searchCriteria);
+			campaignService.removeByCriteria(searchCriteria,
+					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
 	}

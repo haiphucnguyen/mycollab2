@@ -89,7 +89,8 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 													.getSpringBean(AccountService.class);
 											accountService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
 													new AccountEvent.GotoList(
 															this, null));

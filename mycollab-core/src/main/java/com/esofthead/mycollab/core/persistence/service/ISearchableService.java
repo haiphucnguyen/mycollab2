@@ -22,6 +22,7 @@ import net.bull.javamelody.MonitoredWithSpring;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.Cacheable;
 
 /**
@@ -52,7 +53,8 @@ public interface ISearchableService<S extends SearchCriteria> extends IService {
 	@Cacheable
 	List findPagableListByCriteria(SearchRequest<S> searchRequest);
 
-	void removeByCriteria(S criteria);
+	@CacheEvict
+	void removeByCriteria(S criteria, int accountId);
 
 	Integer getNextItemKey(S criteria);
 

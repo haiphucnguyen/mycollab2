@@ -291,7 +291,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 																			BugReadViewImpl.this.bug
 																					.getId(),
 																			AppContext
-																					.getUsername());
+																					.getUsername(),
+																			AppContext
+																					.getAccountId());
 															EventBus.getInstance()
 																	.fireEvent(
 																			new BugEvent.GotoList(

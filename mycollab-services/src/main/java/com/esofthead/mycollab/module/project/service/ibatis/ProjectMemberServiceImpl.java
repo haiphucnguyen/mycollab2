@@ -89,7 +89,8 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public int removeWithSession(Integer primaryKey, String username) {
+	public int removeWithSession(Integer primaryKey, String username,
+			int accountId) {
 		SimpleProjectMember projectMember = projectMemberMapperExt
 				.findMemberById(primaryKey);
 		ProjectMapper projectMapper = ApplicationContextUtil
@@ -103,8 +104,8 @@ public class ProjectMemberServiceImpl extends
 						.selectByPrimaryKey(projectMember.getProjectid());
 				ProjectMemberDeleteListener projectMemberDeleteListener = new ProxyBuilder(
 						camelContext).endpoint(
-						ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT)
-						.build(ProjectMemberDeleteListener.class);
+						ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT).build(
+						ProjectMemberDeleteListener.class);
 				projectMemberDeleteListener.projectMemberRemoved(username,
 						primaryKey, projectMember.getProjectid(),
 						project.getSaccountid());
@@ -112,6 +113,6 @@ public class ProjectMemberServiceImpl extends
 				log.error("Error while notify user delete", e);
 			}
 		}
-		return super.removeWithSession(primaryKey, username);
+		return super.removeWithSession(primaryKey, username, accountId);
 	}
 }

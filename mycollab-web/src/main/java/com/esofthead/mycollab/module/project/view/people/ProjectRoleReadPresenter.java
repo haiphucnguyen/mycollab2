@@ -54,7 +54,8 @@ public class ProjectRoleReadPresenter extends
 						ProjectRoleService projectRoleService = AppContext
 								.getSpringBean(ProjectRoleService.class);
 						projectRoleService.removeWithSession(data.getId(),
-								AppContext.getUsername());
+								AppContext.getUsername(),
+								AppContext.getAccountId());
 						EventBus.getInstance().fireEvent(
 								new ProjectRoleEvent.GotoList(this, null));
 					}
@@ -141,8 +142,8 @@ public class ProjectRoleReadPresenter extends
 		if (data.getParams() instanceof Integer) {
 			ProjectRoleService projectRoleService = AppContext
 					.getSpringBean(ProjectRoleService.class);
-			SimpleProjectRole role = projectRoleService
-					.findById((Integer) data.getParams());
+			SimpleProjectRole role = projectRoleService.findById((Integer) data
+					.getParams());
 			if (role == null) {
 				AppContext
 						.getApplication()

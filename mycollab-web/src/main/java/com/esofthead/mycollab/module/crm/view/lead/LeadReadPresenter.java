@@ -64,9 +64,8 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					public void onDelete(final Lead data) {
 						ConfirmDialogExt.show(
 								view.getWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
 								LocalizationHelper
 										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
@@ -84,7 +83,8 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 													.getSpringBean(LeadService.class);
 											LeadService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
 													new LeadEvent.GotoList(
 															this, null));

@@ -83,7 +83,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 													.getSpringBean(ContactService.class);
 											ContactService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
 													new ContactEvent.GotoList(
 															this, null));

@@ -85,7 +85,8 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 													.getSpringBean(ProjectTaskService.class);
 											taskService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance()
 													.fireEvent(
 															new TaskListEvent.GotoTaskListScreen(

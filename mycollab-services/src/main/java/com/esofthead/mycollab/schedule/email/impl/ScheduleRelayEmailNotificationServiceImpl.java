@@ -58,7 +58,7 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 							}
 
 							relayEmailNotificationService.removeWithSession(
-									notification.getId(), "");
+									notification.getId(), "", -1);
 
 						} catch (Exception e) {
 							log.error("Error when sending notification email",

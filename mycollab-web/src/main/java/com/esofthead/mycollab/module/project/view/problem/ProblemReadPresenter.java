@@ -68,7 +68,8 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 													.getSpringBean(ProblemService.class);
 											riskService.removeWithSession(
 													data.getId(),
-													AppContext.getUsername());
+													AppContext.getUsername(),
+													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
 													new ProblemEvent.GotoList(
 															this, null));

@@ -266,7 +266,9 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 										saveSearchResultService
 												.removeWithSession(itemDelete,
 														AppContext
-																.getUsername());
+																.getUsername(),
+														AppContext
+																.getAccountId());
 										getWindow().showNotification(
 												"Delete successfully.");
 

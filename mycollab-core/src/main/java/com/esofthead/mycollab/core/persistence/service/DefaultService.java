@@ -62,7 +62,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public int removeWithSession(K primaryKey, String username) {
+	public int removeWithSession(K primaryKey, String username, int accountId) {
 		if (username == null) {
 			return getCrudMapper().deleteByPrimaryKey(primaryKey);
 		} else {
@@ -89,7 +89,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public void removeByCriteria(S criteria) {
+	public void removeByCriteria(S criteria, int accountId) {
 		boolean isValid = false;
 		try {
 			PropertyDescriptor[] propertyDescriptors = PropertyUtils
@@ -124,7 +124,8 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public void removeWithSession(List<K> primaryKeys, String username) {
+	public void removeWithSession(List<K> primaryKeys, String username,
+			int accountId) {
 		getCrudMapper().removeKeysWithSession(primaryKeys);
 	}
 

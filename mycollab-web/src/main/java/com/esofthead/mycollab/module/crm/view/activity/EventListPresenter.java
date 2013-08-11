@@ -125,9 +125,8 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 						if ("delete".equals(id)) {
 							ConfirmDialogExt.show(
 									view.getWindow(),
-									LocalizationHelper
-											.getMessage(
-													GenericI18Enum.DELETE_DIALOG_TITLE,
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
 											SiteConfiguration.getSiteName()),
 									LocalizationHelper
 											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
@@ -274,22 +273,22 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 		if (keyListCall.size() > 0) {
 			CallService callService = AppContext
 					.getSpringBean(CallService.class);
-			callService
-					.removeWithSession(keyListCall, AppContext.getUsername());
+			callService.removeWithSession(keyListCall,
+					AppContext.getUsername(), AppContext.getAccountId());
 		}
 
 		if (keyListMeeting.size() > 0) {
 			MeetingService meetingService = AppContext
 					.getSpringBean(MeetingService.class);
 			meetingService.removeWithSession(keyListMeeting,
-					AppContext.getUsername());
+					AppContext.getUsername(), AppContext.getAccountId());
 		}
 
 		if (keyListTask.size() > 0) {
 			TaskService taskService = AppContext
 					.getSpringBean(TaskService.class);
-			taskService
-					.removeWithSession(keyListTask, AppContext.getUsername());
+			taskService.removeWithSession(keyListTask,
+					AppContext.getUsername(), AppContext.getAccountId());
 		}
 		doSearch(searchCriteria);
 		checkWhetherEnableTableActionControl();

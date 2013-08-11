@@ -319,7 +319,9 @@ public class TaskTableDisplay extends
 													projectTaskService.removeWithSession(
 															task.getId(),
 															AppContext
-																	.getUsername());
+																	.getUsername(),
+															AppContext
+																	.getAccountId());
 													fireTableEvent(new TableClickEvent(
 															TaskTableDisplay.this,
 															task, "deleteTask"));

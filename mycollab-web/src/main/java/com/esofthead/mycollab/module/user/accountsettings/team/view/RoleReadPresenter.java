@@ -47,7 +47,8 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 						RoleService roleService = AppContext
 								.getSpringBean(RoleService.class);
 						roleService.removeWithSession(data.getId(),
-								AppContext.getUsername());
+								AppContext.getUsername(),
+								AppContext.getAccountId());
 						EventBus.getInstance().fireEvent(
 								new RoleEvent.GotoList(this, null));
 					}

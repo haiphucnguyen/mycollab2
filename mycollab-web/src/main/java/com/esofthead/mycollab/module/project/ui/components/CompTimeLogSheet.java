@@ -253,7 +253,9 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 																						itemTimeLogging
 																								.getId(),
 																						AppContext
-																								.getUsername());
+																								.getUsername(),
+																						AppContext
+																								.getAccountId());
 																		AddTimeInvest.this
 																				.loadTimeInvestItem();
 																	}
