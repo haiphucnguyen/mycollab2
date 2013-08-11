@@ -43,7 +43,7 @@ public class AppContext implements Serializable {
 
 	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
-	private BasicCache<Object, Object> variables;
+	private BasicCache<String, Object> variables;
 
 	private SimpleUser session;
 	private UserPreference userPreference;

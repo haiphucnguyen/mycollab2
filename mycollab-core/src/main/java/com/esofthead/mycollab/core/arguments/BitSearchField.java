@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
+
 /**
  *
  * @author haiphucnguyen
@@ -27,4 +29,8 @@ public class BitSearchField extends NumberSearchField {
     public BitSearchField(String oper, Number value, String compareOperator) {
         super(oper, value, compareOperator);
     }
+    
+    public String toString() {
+		return BeanUtility.printBeanObj(this);
+	}
 }

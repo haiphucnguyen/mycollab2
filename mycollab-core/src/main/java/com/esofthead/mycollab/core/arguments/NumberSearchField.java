@@ -1,46 +1,48 @@
 package com.esofthead.mycollab.core.arguments;
 
+
 public class NumberSearchField extends SearchField {
 
-    public static final String EQUAL = "=";
-    public static final String NOTEQUAL = "<>";
-    public static final String LESSTHAN = "<";
-    public static final String GREATER = ">";
-    
-    private Number value;
-    private String compareOperator;
+	public static final String EQUAL = "=";
+	public static final String NOTEQUAL = "<>";
+	public static final String LESSTHAN = "<";
+	public static final String GREATER = ">";
 
-    public NumberSearchField(Number value) {
-        this(SearchField.AND, value, EQUAL);
-    }
+	private Number value;
+	private String compareOperator;
 
-    public NumberSearchField(String oper, Number value) {
-        this(oper, value, EQUAL);
-    }
-    
-    public NumberSearchField(Number value, String compareOperator) {
-        this(SearchField.AND, value, compareOperator);
-    }
+	public NumberSearchField(Number value) {
+		this(SearchField.AND, value, EQUAL);
+	}
 
-    public NumberSearchField(String oper, Number value, String compareOperator) {
-        this.operation = oper;
-        this.value = value;
-        this.compareOperator = compareOperator;
-    }
+	public NumberSearchField(String oper, Number value) {
+		this(oper, value, EQUAL);
+	}
 
-    public Number getValue() {
-        return value;
-    }
+	public NumberSearchField(Number value, String compareOperator) {
+		this(SearchField.AND, value, compareOperator);
+	}
 
-    public void setValue(Number value) {
-        this.value = value;
-    }
+	public NumberSearchField(String oper, Number value, String compareOperator) {
+		this.operation = oper;
+		this.value = value;
+		this.compareOperator = compareOperator;
+	}
 
-    public String getCompareOperator() {
-        return compareOperator;
-    }
+	public Number getValue() {
+		return value;
+	}
 
-    public void setCompareOperator(String compareOperator) {
-        this.compareOperator = compareOperator;
-    }
+	public void setValue(Number value) {
+		this.value = value;
+	}
+
+	public String getCompareOperator() {
+		return compareOperator;
+	}
+
+	public void setCompareOperator(String compareOperator) {
+		this.compareOperator = compareOperator;
+	}
+
 }

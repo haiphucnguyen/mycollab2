@@ -4,10 +4,11 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     id="WebApp_ID" version="3.0">
     <display-name>mycollab-web</display-name>
-
+<!-- 
     <listener>
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
+    -->
 
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
@@ -20,7 +21,7 @@
     <listener>
         <listener-class>com.esofthead.mycollab.web.MyCollabSessionListener</listener-class>
     </listener>
-
+<!-- 
     <filter>
         <filter-name>monitoring</filter-name>
         <filter-class>net.bull.javamelody.CustomMonitoringFilter</filter-class>
@@ -30,6 +31,8 @@
         <filter-name>monitoring</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    -->
+    
     <!-- <filter> <filter-name>GzipFilter</filter-name> <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class> 
         <init-param> <param-name>mimeTypes</param-name> <param-value>text/javascript,application/javascript,application/json,application/x-javascript,text/html,text/css,text/plain</param-value> 
         </init-param> </filter> <filter-mapping> <filter-name>GzipFilter</filter-name> 
@@ -51,10 +54,18 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+            classpath:/META-INF/spring/*-context.xml
+        </param-value>
+    </context-param>
+    <!-- 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
             classpath:/META-INF/spring/*-context.xml 
             classpath:net/bull/javamelody/monitoring-spring.xml
         </param-value>
     </context-param>
+    -->
 
     <!-- VAADIN PARAMS -->
     <context-param>

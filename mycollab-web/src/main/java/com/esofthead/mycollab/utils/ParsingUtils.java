@@ -6,11 +6,6 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.rubyeye.xmemcached.MemcachedClient;
-import net.rubyeye.xmemcached.XMemcachedClientBuilder;
-import net.rubyeye.xmemcached.command.BinaryCommandFactory;
-import net.rubyeye.xmemcached.utils.AddrUtil;
-
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 
 public class ParsingUtils {
@@ -88,34 +83,6 @@ public class ParsingUtils {
 			} else {
 				throw new InvalidEmailException("The email is not valid!");
 			}
-		}
-	}
-
-	public static void main(String[] args) {
-		try {
-			// Configuration configuration = new ConfigurationBuilder()
-			// .withProperties(SiteConfiguration.getCacheProperties())
-			// .build();
-			// RemoteCacheManager instance = new
-			// RemoteCacheManager(configuration,
-			// true);
-			// RemoteCache<Object, Object> cache = instance.getCache();
-			// cache.put("a", 1);
-			// cache.put("a-1", 1);
-			// System.out.println(cache.keySet().size());
-
-			XMemcachedClientBuilder builder = new XMemcachedClientBuilder(
-					AddrUtil.getAddresses("cache.mycollab.com:11211"));
-			builder.setCommandFactory(new BinaryCommandFactory());
-			builder.setConnectionPoolSize(5);
-			MemcachedClient client = builder.build();
-
-			long current = System.currentTimeMillis();
-			client.add("a", 0, "avjvgrjgrjgrjhrejhpj jgjrgopjrhojrehpoj jpgjrphjreophj");
-			System.out.println(client.get("a"));
-			System.out.println(System.currentTimeMillis() - current);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

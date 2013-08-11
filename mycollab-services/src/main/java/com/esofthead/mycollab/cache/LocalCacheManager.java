@@ -7,13 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LocalCacheManager {
-	private static Logger log = LoggerFactory.getLogger(LocalCacheManager.class);
+	private static Logger log = LoggerFactory
+			.getLogger(LocalCacheManager.class);
 
 	private static BasicCacheContainer instance = new DefaultCacheManager();
 
 	private static String GLOBAL_CACHE = "global";
 
-	public static BasicCache<Object, Object> getCache(String id) {
+	public static BasicCache<String, Object> getCache(String id) {
 		return instance.getCache(id);
 	}
 
@@ -22,7 +23,7 @@ public class LocalCacheManager {
 	}
 
 	public static void removeCache(String id) {
-		BasicCache<Object, Object> cache = instance.getCache(id);
+		BasicCache<String, Object> cache = instance.getCache(id);
 		cache.clear();
 	}
 }
