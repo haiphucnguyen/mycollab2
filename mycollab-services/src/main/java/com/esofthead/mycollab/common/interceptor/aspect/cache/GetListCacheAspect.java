@@ -56,12 +56,13 @@ public class GetListCacheAspect {
 						if (accountIdField != null) {
 							Integer accountId = (Integer) accountIdField
 									.getValue();
-							String key = "%s-%d-%s-[%d-%d]";
+							String key = "%s-%d-%s-%s[%d-%d]";
 							key = String.format(key, cls.getName(), accountId,
 									BeanUtility.printBeanObj(searchRequest
 											.getSearchCriteria()),
-									searchRequest.getCurrentPage(),
-									searchRequest.getNumberOfItems());
+									"findPagableListByCriteria", searchRequest
+											.getCurrentPage(), searchRequest
+											.getNumberOfItems());
 							BasicCache<String, Object> cache = LocalCacheManager
 									.getCache(accountId.toString());
 							Object val = cache.get(key);

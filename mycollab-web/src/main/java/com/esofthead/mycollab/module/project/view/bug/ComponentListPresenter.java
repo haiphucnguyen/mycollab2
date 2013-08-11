@@ -255,7 +255,7 @@ public class ComponentListPresenter extends
 			}
 
 			if (keyList.size() > 0) {
-				componentService.removeWithSession(keyList,
+				componentService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();

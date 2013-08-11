@@ -277,7 +277,7 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 			}
 
 			if (keyList.size() > 0) {
-				contactService.removeWithSession(keyList,
+				contactService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();

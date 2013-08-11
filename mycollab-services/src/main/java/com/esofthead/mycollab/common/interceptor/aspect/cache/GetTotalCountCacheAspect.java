@@ -53,9 +53,10 @@ public class GetTotalCountCacheAspect {
 					if (accountIdField != null) {
 
 						Integer accountId = (Integer) accountIdField.getValue();
-						String key = "%s-%d-%s";
+						String key = "%s-%d-%s-%s";
 						key = String.format(key, cls.getName(), accountId,
-								BeanUtility.printBeanObj(searchCriteria));
+								BeanUtility.printBeanObj(searchCriteria),
+								"getTotalCount");
 						BasicCache<String, Object> cache = LocalCacheManager
 								.getCache(accountId.toString());
 						Object val = cache.get(key);

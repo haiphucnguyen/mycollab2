@@ -23,7 +23,8 @@ import com.esofthead.mycollab.core.cache.CacheEvict;
 @Component
 @Configurable
 public class UpdateItemCacheEvictAspect {
-	private Logger log = LoggerFactory.getLogger(UpdateItemCacheEvictAspect.class);
+	private Logger log = LoggerFactory
+			.getLogger(UpdateItemCacheEvictAspect.class);
 
 	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
 	public void cacheEvictUpdate(JoinPoint pjp, Object bean, String username) {
@@ -59,7 +60,9 @@ public class UpdateItemCacheEvictAspect {
 
 					}
 				} catch (Exception e) {
-					log.error("Error when clean cache", e);
+					log.error(
+							"Error when clean cache of class " + cls.getName(),
+							e);
 				}
 			}
 		}

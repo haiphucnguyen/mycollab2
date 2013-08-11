@@ -99,7 +99,7 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	}
 
 	@Override
-	public void removeWithSession(List<K> primaryKeys, String username,
+	public void massRemoveWithSession(List<K> primaryKeys, String username,
 			int accountId) {
 		throw new RuntimeException("Sub classes must override before call");
 	}

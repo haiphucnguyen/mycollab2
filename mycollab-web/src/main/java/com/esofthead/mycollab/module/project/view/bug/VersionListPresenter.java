@@ -254,7 +254,7 @@ public class VersionListPresenter extends AbstractPresenter<VersionListView>
 			}
 
 			if (keyList.size() > 0) {
-				versionService.removeWithSession(keyList,
+				versionService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();

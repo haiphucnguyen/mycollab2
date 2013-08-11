@@ -124,7 +124,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public void removeWithSession(List<K> primaryKeys, String username,
+	public void massRemoveWithSession(List<K> primaryKeys, String username,
 			int accountId) {
 		getCrudMapper().removeKeysWithSession(primaryKeys);
 	}

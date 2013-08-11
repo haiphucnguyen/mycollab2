@@ -218,7 +218,7 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 			}
 
 			if (keyList.size() > 0) {
-				userService.removeWithSession(keyList,
+				userService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}

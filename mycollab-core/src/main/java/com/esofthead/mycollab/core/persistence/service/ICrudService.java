@@ -41,5 +41,5 @@ public interface ICrudService<K extends Serializable, T> extends IService {
 	int removeWithSession(K primaryKey, String username, int accountId);
 
 	@CacheEvict
-	void removeWithSession(List<K> primaryKeys, String username, int accountId);
+	void massRemoveWithSession(List<K> primaryKeys, String username, int accountId);
 }

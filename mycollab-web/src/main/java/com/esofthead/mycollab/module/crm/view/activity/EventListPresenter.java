@@ -273,21 +273,21 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 		if (keyListCall.size() > 0) {
 			CallService callService = AppContext
 					.getSpringBean(CallService.class);
-			callService.removeWithSession(keyListCall,
+			callService.massRemoveWithSession(keyListCall,
 					AppContext.getUsername(), AppContext.getAccountId());
 		}
 
 		if (keyListMeeting.size() > 0) {
 			MeetingService meetingService = AppContext
 					.getSpringBean(MeetingService.class);
-			meetingService.removeWithSession(keyListMeeting,
+			meetingService.massRemoveWithSession(keyListMeeting,
 					AppContext.getUsername(), AppContext.getAccountId());
 		}
 
 		if (keyListTask.size() > 0) {
 			TaskService taskService = AppContext
 					.getSpringBean(TaskService.class);
-			taskService.removeWithSession(keyListTask,
+			taskService.massRemoveWithSession(keyListTask,
 					AppContext.getUsername(), AppContext.getAccountId());
 		}
 		doSearch(searchCriteria);

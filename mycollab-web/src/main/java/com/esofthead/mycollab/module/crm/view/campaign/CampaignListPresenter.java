@@ -259,7 +259,7 @@ public class CampaignListPresenter extends
 			}
 
 			if (keyList.size() > 0) {
-				campaignService.removeWithSession(keyList,
+				campaignService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();

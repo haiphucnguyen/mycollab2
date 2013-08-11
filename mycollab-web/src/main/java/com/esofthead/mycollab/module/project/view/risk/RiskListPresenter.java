@@ -253,7 +253,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 			}
 
 			if (keyList.size() > 0) {
-				riskService.removeWithSession(keyList,
+				riskService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();

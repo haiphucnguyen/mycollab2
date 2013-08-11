@@ -257,7 +257,7 @@ public class OpportunityListPresenter extends
 			}
 
 			if (keyList.size() > 0) {
-				opportunityService.removeWithSession(keyList,
+				opportunityService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 				checkWhetherEnableTableActionControl();

@@ -110,7 +110,7 @@ public class AccountServiceTest extends ServiceTest {
 	@Test
 	@DataSet
 	public void testRemoveAccounts() {
-		accountService.removeWithSession(Arrays.asList(1, 2), "hai79", 1);
+		accountService.massRemoveWithSession(Arrays.asList(1, 2), "hai79", 1);
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 	}

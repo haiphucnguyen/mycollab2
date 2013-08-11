@@ -197,7 +197,7 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void removeWithSession(List<String> primaryKeys, String username,
+	public void massRemoveWithSession(List<String> primaryKeys, String username,
 			int accountId) {
 		userMapperExt.removeKeysWithSession(primaryKeys);
 	}
