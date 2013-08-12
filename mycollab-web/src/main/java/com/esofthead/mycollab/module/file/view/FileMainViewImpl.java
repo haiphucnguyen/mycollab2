@@ -229,78 +229,29 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			@Override
 			public void nodeExpand(final ExpandEvent event) {
 				Object object = event.getItemId();
+				if (object instanceof Folder) {
+					final Folder expandFolder = (Folder) event.getItemId();
+					final List<Folder> subFolders = resourceService
+							.getSubFolders(expandFolder.getPath());
 
-				java.util.Locale locale = new Locale(Locale.US.getLanguage(),
-						Locale.US.getCountry());
-				String userLocale = locale.toString();
-				DbxRequestConfig requestConfig = new DbxRequestConfig(
-						"text-edit/0.1", userLocale);
-				dropboxClient = new DbxClient(requestConfig,
-						"88kFQau3vgAAAAAAAAAAAVBpXYnn7uu3Y4B5N5j0cUkHQjVeyX-YK5Ladr2OX7ir");
-				DbxEntry entry;
-				try {
-					entry = dropboxClient.getMetadata("/");
-					com.dropbox.core.DbxEntry.Folder dropboxRootFolder = entry
-							.asFolder();
+					menuTree.setItemIcon(expandFolder, MyCollabResource
+							.newResource("icons/16/ecm/folder_open.png"));
 
-					FileMainViewImpl.this.menuTree.addItem(dropboxRootFolder);
-					FileMainViewImpl.this.menuTree.setParent(dropboxRootFolder,
-							rootECMFolder);
-					// FileMainViewImpl.this.menuTree.setItemCaption(
-					// dropboxRootFolder, "DropboxRootFolder");
-					// FileMainViewImpl.this.menuTree.setItemIcon(
-					// dropboxRootFolder,
-					// MyCollabResource
-					// .newResource("icons/16/ecm/folder_close.png"));
-				} catch (DbxException e) {
-					e.printStackTrace();
+					if (subFolders != null) {
+						for (final Folder subFolder : subFolders) {
+							expandFolder.addChild(subFolder);
+							menuTree.addItem(subFolder);
+
+							menuTree.setItemIcon(
+									subFolder,
+									MyCollabResource
+											.newResource("icons/16/ecm/folder_close.png"));
+							menuTree.setItemCaption(subFolder,
+									subFolder.getName());
+							menuTree.setParent(subFolder, expandFolder);
+						}
+					}
 				}
-
-				// if (object instanceof com.dropbox.core.DbxEntry.Folder) {
-				// com.dropbox.core.DbxEntry.Folder dropboxFolder =
-				// (com.dropbox.core.DbxEntry.Folder) object;
-				// try {
-				// WithChildren lstResource = dropboxClient
-				// .getMetadataWithChildren(dropboxFolder.path);
-				// if (lstResource != null) {
-				// for (DbxEntry entry : lstResource.children) {
-				// if (entry.isFolder()) {
-				// menuTree.addItem(entry);
-				// menuTree.setItemIcon(
-				// entry,
-				// MyCollabResource
-				// .newResource("icons/16/ecm/folder_close.png"));
-				// menuTree.setItemCaption(entry, entry.name);
-				// menuTree.setParent(entry, object);
-				// }
-				// }
-				// }
-				// } catch (DbxException e) {
-				// throw new MyCollabException(e);
-				// }
-				// } else if (object instanceof Folder) {
-				// final Folder expandFolder = (Folder) event.getItemId();
-				// final List<Folder> subFolders = resourceService
-				// .getSubFolders(expandFolder.getPath());
-				//
-				// menuTree.setItemIcon(expandFolder, MyCollabResource
-				// .newResource("icons/16/ecm/folder_open.png"));
-				//
-				// if (subFolders != null) {
-				// for (final Folder subFolder : subFolders) {
-				// expandFolder.addChild(subFolder);
-				// menuTree.addItem(subFolder);
-				//
-				// menuTree.setItemIcon(
-				// subFolder,
-				// MyCollabResource
-				// .newResource("icons/16/ecm/folder_close.png"));
-				// menuTree.setItemCaption(subFolder,
-				// subFolder.getName());
-				// menuTree.setParent(subFolder, expandFolder);
-				// }
-				// }
-				// }
 			}
 		});
 

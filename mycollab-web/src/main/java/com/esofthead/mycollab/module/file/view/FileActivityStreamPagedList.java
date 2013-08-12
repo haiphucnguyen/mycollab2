@@ -89,9 +89,6 @@ public class FileActivityStreamPagedList
 
 				final ContentActivityLogAction contentActivityAction = ContentActivityLogAction
 						.fromString(activityStream.getActiondesc());
-				// String userName = activityStream.getCreateduser();
-				// if (userName.indexOf("@") != -1)
-				// userName = userName.substring(0, userName.indexOf("@"));
 
 				Label IconEmbedded = new Label("<img src=\""
 						+ UserAvatarControlFactory.getAvatarLink(
