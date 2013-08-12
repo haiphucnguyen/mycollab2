@@ -1,7 +1,11 @@
 package com.esofthead.mycollab.cache;
 
+import java.util.Set;
+
+import org.infinispan.AdvancedCache;
 import org.infinispan.api.BasicCache;
 import org.infinispan.api.BasicCacheContainer;
+import org.infinispan.context.Flag;
 import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +19,12 @@ public class LocalCacheManager {
 	private static String GLOBAL_CACHE = "global";
 
 	public static BasicCache<String, Object> getCache(String id) {
-		return instance.getCache(id);
+		BasicCache<String, Object> cache = instance.getCache(id);
+		if (cache instanceof AdvancedCache) {
+			cache = ((AdvancedCache<String, Object>) cache)
+					.withFlags(Flag.IGNORE_RETURN_VALUES);
+		}
+		return cache;
 	}
 
 	public static BasicCache<Object, Object> getCache() {
@@ -25,5 +34,46 @@ public class LocalCacheManager {
 	public static void removeCache(String id) {
 		BasicCache<String, Object> cache = instance.getCache(id);
 		cache.clear();
+	}
+
+	public static void removeCacheItems(String id, String prefixKey) {
+		BasicCache<String, Object> cache = instance.getCache(id);
+		log.debug("Remove cache has prefix {} in group {}", prefixKey, id);
+		Set<String> keys = cache.keySet();
+		if (keys != null && keys.size() > 0) {
+
+			String[] keyArr = keys.toArray(new String[0]);
+			for (int i = 0; i < keyArr.length; i++) {
+				if (keyArr[i].startsWith(prefixKey)) {
+					log.debug("Remove cache key {}", keyArr[i]);
+					cache.remove(keyArr[i]);
+				}
+			}
+
+			log.debug("Keys left : {}", cache.keySet().size());
+
+		}
+	}
+
+	public static void main(String[] args) {
+		BasicCache<String, Object> cache = LocalCacheManager.getCache("1");
+		cache.put("1-a", "2-a");
+		cache.put("1-a-a", "2");
+
+//		Set<String> keys = cache.keySet();
+//		if (keys != null && keys.size() > 0) {
+//
+//			String[] keyArr = keys.toArray(new String[0]);
+//			for (int i = 0; i < keyArr.length; i++) {
+//				if (keyArr[i].startsWith("1")) {
+//					log.debug("Remove cache key {}", keyArr[i]);
+//					System.out.println(cache.remove(keyArr[i]));
+//				}
+//			}
+//
+//			log.debug("Keys left : {}", cache.keySet().size());
+//
+//		}
+		 LocalCacheManager.removeCacheItems("1", "1");
 	}
 }

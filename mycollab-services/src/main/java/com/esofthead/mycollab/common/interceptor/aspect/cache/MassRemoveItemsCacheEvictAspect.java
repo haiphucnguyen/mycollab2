@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.infinispan.api.BasicCache;
+import org.infinispan.context.Flag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
@@ -47,14 +48,8 @@ public class MassRemoveItemsCacheEvictAspect {
 					if (keys != null && keys.size() > 0) {
 						String keyPrefix = String.format("%s-%d-",
 								cls.getName(), accountId);
-
-						String[] keyArr = keys.toArray(new String[0]);
-						for (int i = 0; i < keyArr.length; i++) {
-							if (keyArr[i].startsWith(keyPrefix)) {
-								log.debug("Remove cache key {}", keyArr[i]);
-								cache.removeAsync(keyArr[i]);
-							}
-						}
+						LocalCacheManager.removeCacheItems(
+								accountId.toString(), keyPrefix);
 
 					}
 				} catch (Exception e) {

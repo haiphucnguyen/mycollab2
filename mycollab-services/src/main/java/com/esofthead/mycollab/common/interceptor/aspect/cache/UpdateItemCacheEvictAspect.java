@@ -49,13 +49,8 @@ public class UpdateItemCacheEvictAspect {
 							String keyPrefix = String.format("%s-%d-",
 									cls.getName(), accountId);
 
-							String[] keyArr = keys.toArray(new String[0]);
-							for (int i = 0; i < keyArr.length; i++) {
-								if (keyArr[i].startsWith(keyPrefix)) {
-									log.debug("Remove cache key {}", keyArr[i]);
-									cache.removeAsync(keyArr[i]);
-								}
-							}
+							LocalCacheManager.removeCacheItems(
+									accountId.toString(), keyPrefix);
 						}
 
 					}
