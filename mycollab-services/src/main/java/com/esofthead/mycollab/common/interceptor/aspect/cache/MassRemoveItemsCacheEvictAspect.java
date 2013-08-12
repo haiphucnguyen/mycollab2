@@ -22,13 +22,14 @@ import com.esofthead.mycollab.core.cache.CacheEvict;
 @Aspect
 @Component
 @Configurable
-public class MassUpdateCacheAspect {
-	private static Logger log = LoggerFactory
-			.getLogger(MassUpdateCacheAspect.class);
+public class MassRemoveItemsCacheEvictAspect {
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.massUpdateWithSession(..)) && args(bean, primaryKeys, accountId)")
-	public void cacheEvictSave(JoinPoint pjp, Object bean, List primaryKeys,
-			Integer accountId) {
+	private static Logger log = LoggerFactory
+			.getLogger(MassRemoveItemsCacheEvictAspect.class);
+
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.massRemoveWithSession(..)) && args(primaryKeys, username, accountId)")
+	public void cacheEvictSave(JoinPoint pjp, List primaryKeys,
+			String username, Integer accountId) {
 		Advised advised = (Advised) pjp.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
 

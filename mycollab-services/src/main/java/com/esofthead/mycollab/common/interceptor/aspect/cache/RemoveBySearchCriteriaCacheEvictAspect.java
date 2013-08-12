@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Set;
 
 import org.aspectj.lang.JoinPoint;
@@ -17,17 +16,19 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.cache.CacheEvict;
 
 @Aspect
 @Component
 @Configurable
-public class MassUpdateCacheAspect {
-	private static Logger log = LoggerFactory
-			.getLogger(MassUpdateCacheAspect.class);
+public class RemoveBySearchCriteriaCacheEvictAspect {
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.massUpdateWithSession(..)) && args(bean, primaryKeys, accountId)")
-	public void cacheEvictSave(JoinPoint pjp, Object bean, List primaryKeys,
+	private static Logger log = LoggerFactory
+			.getLogger(RemoveBySearchCriteriaCacheEvictAspect.class);
+
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.removeByCriteria(..)) && args(criteria, accountId)")
+	public void cacheEvictSave(JoinPoint pjp, SearchCriteria searchCriteria,
 			Integer accountId) {
 		Advised advised = (Advised) pjp.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
