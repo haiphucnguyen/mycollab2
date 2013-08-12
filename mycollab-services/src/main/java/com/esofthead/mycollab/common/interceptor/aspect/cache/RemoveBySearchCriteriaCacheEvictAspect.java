@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import java.lang.reflect.Method;
-import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -13,19 +12,20 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.cache.CacheUtils;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.cache.CacheEvict;
-import com.esofthead.mycollab.core.persistence.service.ICrudService;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 
 @Aspect
 @Component
 @Configurable
-public class MassUpdateCacheAspect {
+public class RemoveBySearchCriteriaCacheEvictAspect {
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.massUpdateWithSession(..)) && args(bean, primaryKeys, accountId)")
-	public void cacheEvictSave(JoinPoint pjp, Object bean, List primaryKeys,
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.removeByCriteria(..)) && args(searchCriteria, accountId)")
+	public void cacheEvictSave(JoinPoint pjp, SearchCriteria searchCriteria,
 			Integer accountId) {
 		Advised advised = (Advised) pjp.getThis();
-		Class<ICrudService> cls = (Class<ICrudService>) advised
+		Class<ISearchableService> cls = (Class<ISearchableService>) advised
 				.getTargetSource().getTargetClass();
 
 		final Signature signature = pjp.getStaticPart().getSignature();

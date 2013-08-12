@@ -29,9 +29,11 @@ public interface AccountService extends
 
 	SimpleAccount findById(int accountId);
 
-	void saveAccountLeadRelationship(List<AccountLead> associateLeads);
+	void saveAccountLeadRelationship(List<AccountLead> associateLeads,
+			Integer accountId);
 
-	void removeAccountLeadRelationship(AccountLead associateLead);
+	void removeAccountLeadRelationship(AccountLead associateLead,
+			Integer accountId);
 
 	void updateBySearchCriteria(Account account,
 			AccountSearchCriteria searchCriteria);

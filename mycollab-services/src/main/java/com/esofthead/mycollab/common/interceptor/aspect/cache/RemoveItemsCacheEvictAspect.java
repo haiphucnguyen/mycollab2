@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import java.lang.reflect.Method;
-import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -19,11 +18,11 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
 @Aspect
 @Component
 @Configurable
-public class MassUpdateCacheAspect {
+public class RemoveItemsCacheEvictAspect {
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.massUpdateWithSession(..)) && args(bean, primaryKeys, accountId)")
-	public void cacheEvictSave(JoinPoint pjp, Object bean, List primaryKeys,
-			Integer accountId) {
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.removeWithSession(..)) && args(primaryKey, username, accountId)")
+	public void cacheEvictSave(JoinPoint pjp, Object primaryKey,
+			String username, Integer accountId) {
 		Advised advised = (Advised) pjp.getThis();
 		Class<ICrudService> cls = (Class<ICrudService>) advised
 				.getTargetSource().getTargetClass();

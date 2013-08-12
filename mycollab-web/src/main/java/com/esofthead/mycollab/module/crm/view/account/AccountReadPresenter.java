@@ -232,8 +232,8 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
 							AccountService accountService = AppContext
 									.getSpringBean(AccountService.class);
-							accountService
-									.saveAccountLeadRelationship(associateLeads);
+							accountService.saveAccountLeadRelationship(
+									associateLeads, AppContext.getAccountId());
 
 							view.getRelatedLeadHandlers().refresh();
 						}

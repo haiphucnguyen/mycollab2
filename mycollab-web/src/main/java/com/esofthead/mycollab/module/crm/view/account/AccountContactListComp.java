@@ -148,7 +148,8 @@ public class AccountContactListComp extends
 												LocalizationHelper
 														.getMessage(
 																GenericI18Enum.DELETE_DIALOG_TITLE,
-																SiteConfiguration.getSiteName()),
+																SiteConfiguration
+																		.getSiteName()),
 												LocalizationHelper
 														.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
 												LocalizationHelper
@@ -165,9 +166,6 @@ public class AccountContactListComp extends
 																.isConfirmed()) {
 															final ContactService contactService = AppContext
 																	.getSpringBean(ContactService.class);
-															Contact contact = new Contact();
-															contact.setId(contact
-																	.getId());
 															contact.setAccountid(null);
 															contactService
 																	.updateWithSession(

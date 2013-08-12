@@ -19,11 +19,11 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
 @Aspect
 @Component
 @Configurable
-public class MassUpdateCacheAspect {
+public class MassRemoveItemsCacheEvictAspect {
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.massUpdateWithSession(..)) && args(bean, primaryKeys, accountId)")
-	public void cacheEvictSave(JoinPoint pjp, Object bean, List primaryKeys,
-			Integer accountId) {
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.massRemoveWithSession(..)) && args(primaryKeys, username, accountId)")
+	public void cacheEvictSave(JoinPoint pjp, List primaryKeys,
+			String username, Integer accountId) {
 		Advised advised = (Advised) pjp.getThis();
 		Class<ICrudService> cls = (Class<ICrudService>) advised
 				.getTargetSource().getTargetClass();

@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
@@ -38,6 +39,7 @@ import com.esofthead.mycollab.module.crm.domain.AccountLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 
 @Service
 @Transactional
@@ -71,7 +73,8 @@ public class AccountServiceImpl extends
 	}
 
 	@Override
-	public void saveAccountLeadRelationship(List<AccountLead> associateLeads) {
+	public void saveAccountLeadRelationship(List<AccountLead> associateLeads,
+			Integer accountId) {
 		for (AccountLead associateLead : associateLeads) {
 			AccountLeadExample ex = new AccountLeadExample();
 			ex.createCriteria()
@@ -81,13 +84,30 @@ public class AccountServiceImpl extends
 				accountLeadMapper.insert(associateLead);
 			}
 		}
+
+		cleanAccountLeadCaches(accountId);
 	}
 
 	@Override
-	public void removeAccountLeadRelationship(AccountLead associateLead) {
+	public void removeAccountLeadRelationship(AccountLead associateLead,
+			Integer accountId) {
 		AccountLeadExample ex = new AccountLeadExample();
 		ex.createCriteria().andAccountidEqualTo(associateLead.getAccountid())
 				.andLeadidEqualTo(associateLead.getLeadid());
 		accountLeadMapper.deleteByExample(ex);
+
+		cleanAccountLeadCaches(accountId);
+	}
+
+	private void cleanAccountLeadCaches(Integer accountId) {
+		// Clean cache relate to account and lead
+		String leadPrefixKey = String.format("%s-%d",
+				LeadService.class.getName(), accountId);
+		LocalCacheManager.removeCacheItems(accountId.toString(), leadPrefixKey);
+
+		String accountPrefixKey = String.format("%s-%d",
+				AccountService.class.getName(), accountId);
+		LocalCacheManager.removeCacheItems(accountId.toString(),
+				accountPrefixKey);
 	}
 }

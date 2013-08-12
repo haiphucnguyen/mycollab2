@@ -16,11 +16,13 @@
  */
 package com.esofthead.mycollab.core.persistence.service;
 
-import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.List;
+
 import org.apache.commons.beanutils.PropertyUtils;
+
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 
 /**
  * The generic class that serves the basic operations in data access layer:
