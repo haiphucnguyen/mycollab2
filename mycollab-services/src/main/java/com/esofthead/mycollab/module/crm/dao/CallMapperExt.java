@@ -6,5 +6,5 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 
 public interface CallMapperExt extends ISearchableDAO<CallSearchCriteria> {
 
-    SimpleCall findCallById(int callId);
+    SimpleCall findById(int callId);
 }

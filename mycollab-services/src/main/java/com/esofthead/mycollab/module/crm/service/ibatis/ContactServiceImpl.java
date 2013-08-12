@@ -69,7 +69,7 @@ public class ContactServiceImpl extends
 
 	@Override
 	public SimpleContact findById(int contactId) {
-		SimpleContact contact = contactMapperExt.findContactById(contactId);
+		SimpleContact contact = contactMapperExt.findById(contactId);
 		return contact;
 	}
 

@@ -69,7 +69,7 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     
     @Override
     public SimpleOpportunity findById(int opportunityId) {
-        return opportunityMapperExt.findOpportunityById(opportunityId);
+        return opportunityMapperExt.findById(opportunityId);
     }
     
     @Override

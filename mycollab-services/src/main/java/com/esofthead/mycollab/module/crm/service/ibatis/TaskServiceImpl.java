@@ -59,7 +59,7 @@ public class TaskServiceImpl extends
 
 	@Override
 	public SimpleTask findById(int taskId) {
-		return taskMapperExt.findTaskById(taskId);
+		return taskMapperExt.findById(taskId);
 	}
 
 }

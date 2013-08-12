@@ -8,5 +8,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 
 public interface LeadMapperExt extends ISearchableDAO<LeadSearchCriteria>,
 	IMassUpdateDAO<Lead, LeadSearchCriteria>{
-	SimpleLead findLeadById(int leadId);
+	
+	SimpleLead findById(int leadId);
 }

@@ -40,6 +40,6 @@ public class CaseServiceImpl extends DefaultService<Integer, CaseWithBLOBs, Case
 
     @Override
     public SimpleCase findById(int caseId) {
-        return caseMapperExt.findCaseById(caseId);
+        return caseMapperExt.findById(caseId);
     }
 }

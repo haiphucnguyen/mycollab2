@@ -10,5 +10,5 @@ public interface CampaignMapperExt extends
 		ISearchableDAO<CampaignSearchCriteria>,
 		IMassUpdateDAO<CampaignWithBLOBs, CampaignSearchCriteria> {
 
-	SimpleCampaign findCampaignById(int campaignId);
+	SimpleCampaign findById(int campaignId);
 }
