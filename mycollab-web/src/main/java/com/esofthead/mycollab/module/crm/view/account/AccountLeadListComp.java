@@ -183,7 +183,10 @@ public class AccountLeadListComp extends
 																	.setLeadid(lead
 																			.getId());
 															accountService
-																	.removeAccountLeadRelationship(associateLead);
+																	.removeAccountLeadRelationship(
+																			associateLead,
+																			AppContext
+																					.getAccountId());
 															AccountLeadListComp.this
 																	.refresh();
 														}

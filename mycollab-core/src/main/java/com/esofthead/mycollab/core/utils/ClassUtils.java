@@ -9,4 +9,16 @@ public class ClassUtils {
 		}
 		return false;
 	}
+
+	public static Class<?> getInterfaceInstanceOf(Class cls, Class superCls) {
+		Class[] interfaces = cls.getInterfaces();
+		for (Class inter : interfaces) {
+			System.out.println(inter.getName());
+			if (superCls.isAssignableFrom(inter)) {
+				return inter;
+			}
+		}
+
+		return null;
+	}
 }

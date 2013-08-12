@@ -10,6 +10,10 @@ import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.persistence.service.ICrudService;
+import com.esofthead.mycollab.core.utils.ClassUtils;
+import com.esofthead.mycollab.module.crm.service.ibatis.AccountServiceImpl;
+
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
 			.getLogger(LocalCacheManager.class);
@@ -49,31 +53,11 @@ public class LocalCacheManager {
 					cache.remove(keyArr[i]);
 				}
 			}
-
-			log.debug("Keys left : {}", cache.keySet().size());
-
 		}
 	}
 
 	public static void main(String[] args) {
-		BasicCache<String, Object> cache = LocalCacheManager.getCache("1");
-		cache.put("1-a", "2-a");
-		cache.put("1-a-a", "2");
-
-//		Set<String> keys = cache.keySet();
-//		if (keys != null && keys.size() > 0) {
-//
-//			String[] keyArr = keys.toArray(new String[0]);
-//			for (int i = 0; i < keyArr.length; i++) {
-//				if (keyArr[i].startsWith("1")) {
-//					log.debug("Remove cache key {}", keyArr[i]);
-//					System.out.println(cache.remove(keyArr[i]));
-//				}
-//			}
-//
-//			log.debug("Keys left : {}", cache.keySet().size());
-//
-//		}
-		 LocalCacheManager.removeCacheItems("1", "1");
+		System.out.println(ClassUtils.getInterfaceInstanceOf(
+				AccountServiceImpl.class, ICrudService.class));
 	}
 }

@@ -31,24 +31,10 @@ import com.esofthead.mycollab.core.cache.Cacheable;
  * @param <S>
  */
 public interface ISearchableService<S extends SearchCriteria> extends IService {
-
-	/**
-	 * Get the total available items base on search criteria.
-	 * 
-	 * @param criteria
-	 * @return
-	 */
 	@MonitoredWithSpring
 	@Cacheable
 	int getTotalCount(S criteria);
 
-	/**
-	 * 
-	 * @param criteria
-	 * @param skipNum
-	 * @param maxResult
-	 * @return
-	 */
 	@MonitoredWithSpring
 	@Cacheable
 	List findPagableListByCriteria(SearchRequest<S> searchRequest);
@@ -56,7 +42,9 @@ public interface ISearchableService<S extends SearchCriteria> extends IService {
 	@CacheEvict
 	void removeByCriteria(S criteria, int accountId);
 
+	@Cacheable
 	Integer getNextItemKey(S criteria);
 
+	@Cacheable
 	Integer getPreviousItemKey(S criteria);
 }

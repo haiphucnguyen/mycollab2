@@ -14,6 +14,7 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
@@ -33,7 +34,7 @@ public class GetListCacheAspect {
 	public Object cacheFindList(ProceedingJoinPoint pjp,
 			SearchRequest searchRequest) {
 		Advised advised = (Advised) pjp.getThis();
-		Class<?> cls = advised.getTargetSource().getTargetClass();
+		Class cls = advised.getTargetSource().getTargetClass();
 
 		final Signature signature = pjp.getStaticPart().getSignature();
 		Cacheable cacheable = null;
@@ -57,9 +58,11 @@ public class GetListCacheAspect {
 							Integer accountId = (Integer) accountIdField
 									.getValue();
 							String key = "%s-%d-%s-%s[%d-%d]";
-							key = String.format(key, cls.getName(), accountId,
-									BeanUtility.printBeanObj(searchRequest
-											.getSearchCriteria()),
+							key = String.format(key, CacheUtils
+									.getEnclosingServiceInterface(cls),
+									accountId, BeanUtility
+											.printBeanObj(searchRequest
+													.getSearchCriteria()),
 									"findPagableListByCriteria", searchRequest
 											.getCurrentPage(), searchRequest
 											.getNumberOfItems());
