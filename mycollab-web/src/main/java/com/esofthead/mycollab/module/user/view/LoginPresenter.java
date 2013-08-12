@@ -73,7 +73,8 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 		UserPreferenceService preferenceService = AppContext
 				.getSpringBean(UserPreferenceService.class);
-		UserPreference pref = preferenceService.getPreferenceOfUser(username);
+		UserPreference pref = preferenceService.getPreferenceOfUser(username,
+				AppContext.getAccountId());
 
 		log.debug("Login to system successfully. Save user and preference "
 				+ pref + " to session");
