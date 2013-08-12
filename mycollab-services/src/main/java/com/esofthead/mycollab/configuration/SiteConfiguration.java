@@ -56,8 +56,8 @@ public class SiteConfiguration {
 				.getString(ApplicationProperties.MAIL_USERNAME);
 		String password = ApplicationProperties
 				.getString(ApplicationProperties.MAIL_PASSWORD);
-		Integer port = Integer.parseInt(ApplicationProperties
-				.getString(ApplicationProperties.MAIL_PORT));
+		Integer port = Integer.parseInt(ApplicationProperties.getString(
+				ApplicationProperties.MAIL_PORT, "-1"));
 		Boolean isTls = Boolean.parseBoolean(ApplicationProperties.getString(
 				ApplicationProperties.MAIL_IS_TLS, "false"));
 		instance.emailConfiguration = new EmailConfiguration(host, user,

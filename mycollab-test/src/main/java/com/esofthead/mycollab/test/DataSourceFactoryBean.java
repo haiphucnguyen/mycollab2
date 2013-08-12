@@ -45,10 +45,10 @@ public class DataSourceFactoryBean extends AbstractFactoryBean {
 	@Override
 	protected Object createInstance() throws Exception {
 		InputStream stream = DataSourceFactoryBean.class.getClassLoader()
-				.getResourceAsStream("database.properties");
+				.getResourceAsStream("resources.properties");
 		if (stream == null) {
 			stream = DataSourceFactoryBean.class.getClassLoader()
-					.getResourceAsStream("default-database.properties");
+					.getResourceAsStream("default-resources.properties");
 		}
 
 		Properties props = new Properties();
@@ -77,6 +77,8 @@ public class DataSourceFactoryBean extends AbstractFactoryBean {
 			dataSource.close();
 			log.debug("Close connection");
 		}
+		
+		
 	}
 
 	@Override

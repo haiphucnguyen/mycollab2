@@ -18,7 +18,7 @@ public class DbUnitUtil {
     public static void main(String[] args) throws Exception {
         DataSource dataSource = (DataSource) new DataSourceFactoryBean()
                 .getDataSource();
-        File file = new File("src/test/resources/engroup.dtd");
+        File file = new File("src/main/resources/engroup.dtd");
         IDatabaseConnection connection = null;
         try {
             connection = new DatabaseDataSourceConnection(dataSource);
