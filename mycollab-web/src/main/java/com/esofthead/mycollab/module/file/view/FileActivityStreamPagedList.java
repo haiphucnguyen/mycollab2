@@ -22,9 +22,11 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
@@ -71,6 +73,13 @@ public class FileActivityStreamPagedList
 
 		Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
 
+		Embedded fileIconEmbedded = new Embedded();
+		fileIconEmbedded.setSource(MyCollabResource
+				.newResource("icons/16/ecm/file_icon_16px.png"));
+
+		Embedded folderIconEmbedded = new Embedded();
+		folderIconEmbedded.setSource(MyCollabResource
+				.newResource("icons/16/ecm/folder_blue_16px.png"));
 		try {
 			for (final SimpleContentActivityLog activityStream : currentListData) {
 				final Date itemCreatedDate = activityStream.getCreatedtime();
@@ -121,6 +130,13 @@ public class FileActivityStreamPagedList
 					streamInfoLayout.addComponent(new Label(" moved "
 							+ ((Move) contentActivityAction).getMoveType()
 							+ " "));
+					if (((Move) contentActivityAction).getMoveType().equals(
+							ContentActivityLogAction.FOLDER_TYPE)) {
+						streamInfoLayout.addComponent(folderIconEmbedded);
+					} else {
+						streamInfoLayout.addComponent(fileIconEmbedded);
+					}
+
 					Button oldNameLbl = new Button(oldName);
 					oldNameLbl.addStyleName("link");
 					oldNameLbl.setDescription(oldName);
@@ -169,6 +185,12 @@ public class FileActivityStreamPagedList
 							.addComponent(new Label(" deleted "
 									+ ((Delete) contentActivityAction)
 											.getDeleteType()));
+					if (((Delete) contentActivityAction).getDeleteType()
+							.equals(ContentActivityLogAction.FOLDER_TYPE)) {
+						streamInfoLayout.addComponent(folderIconEmbedded);
+					} else {
+						streamInfoLayout.addComponent(fileIconEmbedded);
+					}
 					Button pathBtn = new Button(oldName,
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
@@ -210,6 +232,13 @@ public class FileActivityStreamPagedList
 							.addComponent(new Label(" created "
 									+ ((Create) contentActivityAction)
 											.getCreateType()));
+
+					if (((Create) contentActivityAction).getCreateType()
+							.equals(ContentActivityLogAction.FOLDER_TYPE)) {
+						streamInfoLayout.addComponent(folderIconEmbedded);
+					} else {
+						streamInfoLayout.addComponent(fileIconEmbedded);
+					}
 					Button infoBtn = new Button(createName,
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
@@ -252,6 +281,12 @@ public class FileActivityStreamPagedList
 					streamInfoLayout.addComponent(new Label(" renamed "
 							+ ((Rename) contentActivityAction)
 									.getResourceType()));
+					if (((Rename) contentActivityAction).getResourceType()
+							.equals(ContentActivityLogAction.FOLDER_TYPE)) {
+						streamInfoLayout.addComponent(folderIconEmbedded);
+					} else {
+						streamInfoLayout.addComponent(fileIconEmbedded);
+					}
 					Button oldNameLbl = new Button(oldName);
 					oldNameLbl.addStyleName("link");
 					oldNameLbl.setDescription(oldName);

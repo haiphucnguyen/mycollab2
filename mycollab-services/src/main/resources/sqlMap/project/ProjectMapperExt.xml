@@ -1,65 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectMapperExt">
-    
-    <resultMap
-        extends="com.esofthead.mycollab.module.project.dao.ProjectMapper.ResultMapWithBLOBs"
-        id="SimpleProjectResult" type="com.esofthead.mycollab.module.project.domain.SimpleProject">
-        <result column="ownerName" jdbcType="VARCHAR" property="ownerName" />
-        <result column="accountName" jdbcType="VARCHAR" property="accountName" />
-        <result column="numOpenBugs" jdbcType="INTEGER" property="numOpenBugs" />
-        <result column="numBugs" jdbcType="INTEGER" property="numBugs" />
-        <result column="numOpenTasks" jdbcType="INTEGER"
-            property="numOpenTasks" />
-        <result column="numTasks" jdbcType="INTEGER" property="numTasks" />
-        <result column="numOpenProblems" jdbcType="INTEGER"
-            property="numOpenProblems" />
-        <result column="numProblems" jdbcType="INTEGER" property="numProblems" />
-        <result column="numOpenRisks" jdbcType="INTEGER"
-            property="numOpenRisks" />
-        <result column="numRisks" jdbcType="INTEGER" property="numRisks" />
-        <association property="currency"
-            resultMap="com.esofthead.mycollab.common.dao.CurrencyMapper.BaseResultMap"
-            columnPrefix="curr_"></association>
-    </resultMap>
 
-    <resultMap
-        extends="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.SimpleActivityStreamResult"
-        id="ActivityStreamResult"
-        type="com.esofthead.mycollab.module.project.domain.ProjectActivityStream">
-        <result column="projectId" jdbcType="INTEGER" property="projectId" />
-        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
-    </resultMap>
+	<resultMap
+		extends="com.esofthead.mycollab.module.project.dao.ProjectMapper.ResultMapWithBLOBs"
+		id="SimpleProjectResult" type="com.esofthead.mycollab.module.project.domain.SimpleProject">
+		<result column="ownerName" jdbcType="VARCHAR" property="ownerName" />
+		<result column="accountName" jdbcType="VARCHAR" property="accountName" />
+		<result column="numOpenBugs" jdbcType="INTEGER" property="numOpenBugs" />
+		<result column="numBugs" jdbcType="INTEGER" property="numBugs" />
+		<result column="numOpenTasks" jdbcType="INTEGER" property="numOpenTasks" />
+		<result column="numTasks" jdbcType="INTEGER" property="numTasks" />
+		<result column="numOpenProblems" jdbcType="INTEGER" property="numOpenProblems" />
+		<result column="numProblems" jdbcType="INTEGER" property="numProblems" />
+		<result column="numOpenRisks" jdbcType="INTEGER" property="numOpenRisks" />
+		<result column="numRisks" jdbcType="INTEGER" property="numRisks" />
+		<association property="currency"
+			resultMap="com.esofthead.mycollab.common.dao.CurrencyMapper.BaseResultMap"
+			columnPrefix="curr_"></association>
+	</resultMap>
 
-    <resultMap id="FollowingTicketResult"
-        type="com.esofthead.mycollab.module.project.domain.FollowingTicket">
-        <result column="projectId" jdbcType="INTEGER" property="projectId" />
-        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
-        <result column="assignUser" jdbcType="VARCHAR" property="assignUser" />
-        <result column="assignUserAvatarId" jdbcType="VARCHAR"
-            property="assignUserAvatarId" />
-        <result column="assignUserFullName" jdbcType="VARCHAR"
-            property="assignUserFullName" />
-        <result column="summary" jdbcType="VARCHAR" property="summary" />
-        <result column="type" jdbcType="VARCHAR" property="type" />
-        <result column="typeId" jdbcType="INTEGER" property="typeId" />
-        <result column="monitorDate" jdbcType="TIMESTAMP"
-            property="monitorDate" />
-        <result column="status" jdbcType="VARCHAR" property="status" />
-        <result column="dueDate" jdbcType="TIMESTAMP" property="dueDate" />
-    </resultMap>
+	<resultMap
+		extends="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.SimpleActivityStreamResult"
+		id="ActivityStreamResult"
+		type="com.esofthead.mycollab.module.project.domain.ProjectActivityStream">
+		<result column="projectId" jdbcType="INTEGER" property="projectId" />
+		<result column="projectName" jdbcType="VARCHAR" property="projectName" />
+	</resultMap>
 
-    <sql id="querySearchCriteria">
-        <if test="searchCriteria.username != null">
+	<resultMap id="FollowingTicketResult"
+		type="com.esofthead.mycollab.module.project.domain.FollowingTicket">
+		<result column="projectId" jdbcType="INTEGER" property="projectId" />
+		<result column="projectName" jdbcType="VARCHAR" property="projectName" />
+		<result column="assignUser" jdbcType="VARCHAR" property="assignUser" />
+		<result column="assignUserAvatarId" jdbcType="VARCHAR"
+			property="assignUserAvatarId" />
+		<result column="assignUserFullName" jdbcType="VARCHAR"
+			property="assignUserFullName" />
+		<result column="summary" jdbcType="VARCHAR" property="summary" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="typeId" jdbcType="INTEGER" property="typeId" />
+		<result column="monitorDate" jdbcType="TIMESTAMP" property="monitorDate" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="dueDate" jdbcType="TIMESTAMP" property="dueDate" />
+	</resultMap>
+
+	<sql id="querySearchCriteria">
+		<if test="searchCriteria.username != null">
             <![CDATA[
-            ${username.operation}
+            ${searchCriteria.username.operation}
             (SELECT COUNT(*)
             FROM s_user as user 
             WHERE m_prj_project.owner = user.username 
                 AND user.username = #{searchCriteria.username.value} ) > 0
             ]]>
-        </if>
-        <if test="searchCriteria.ownerName != null">
+		</if>
+		<if test="searchCriteria.ownerName != null">
             <![CDATA[
             ${searchCriteria.ownerName.operation}
             (SELECT COUNT(*) 
@@ -67,8 +63,8 @@
              WHERE m_prj_project.owner = user.username 
                  AND (concat(user.firstname, ' ', LTRIM(concat(IFNULL(user.middlename, ''), ' ')), user.lastname) like '%${searchCriteria.ownerName.value}%') ) > 0
             ]]>
-        </if>
-        <if test="searchCriteria.accountName != null">
+		</if>
+		<if test="searchCriteria.accountName != null">
             <![CDATA[
             ${searchCriteria.accountName.operation}
             (SELECT COUNT(*) 
@@ -76,36 +72,36 @@
              WHERE m_prj_project.account = m_crm_account.id 
                  AND m_crm_account.accountName LIKE '%${searchCriteria.accountName.value}%') > 0
             ]]>
-        </if>
-        <if test="searchCriteria.projectStatus != null">
-            ${searchCriteria.projectStatus.operation}
-            m_prj_project.projectStatus
-            like
-            '%${searchCriteria.projectStatus.value}%'
-        </if>
-        <if test="searchCriteria.projectType != null">
-            ${searchCriteria.projectType.operation}
-            m_prj_project.projectType
-            like
-            '%${searchCriteria.projectType.value}%'
-        </if>
-        <if test="searchCriteria.saccountid != null">
+		</if>
+		<if test="searchCriteria.projectStatus != null">
+			${searchCriteria.projectStatus.operation}
+			m_prj_project.projectStatus
+			like
+			'%${searchCriteria.projectStatus.value}%'
+		</if>
+		<if test="searchCriteria.projectType != null">
+			${searchCriteria.projectType.operation}
+			m_prj_project.projectType
+			like
+			'%${searchCriteria.projectType.value}%'
+		</if>
+		<if test="searchCriteria.saccountid != null">
             <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
-        </if>
-        <if test="searchCriteria.projectName != null">
+		</if>
+		<if test="searchCriteria.projectName != null">
           <![CDATA[
             ${searchCriteria.projectName.operation} m_prj_project.name like '%${searchCriteria.projectName.value}%'
             ]]>
-        </if>
-        <if test="searchCriteria.involvedMember != null">
+		</if>
+		<if test="searchCriteria.involvedMember != null">
           <![CDATA[
             ${searchCriteria.involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
             ]]>
-        </if>
-    </sql>
+		</if>
+	</sql>
 
-    <sql id="queryTotalCountSearchCriteria">
-        <if test="searchCriteria.username != null">
+	<sql id="queryTotalCountSearchCriteria">
+		<if test="searchCriteria.username != null">
             <![CDATA[
             ${searchCriteria.username.operation}
             (SELECT COUNT(*) 
@@ -113,8 +109,8 @@
              WHERE m_prj_project.owner = user.username 
                  AND user.username = #{searchCriteria.username.value} ) > 0
             ]]>
-        </if>
-        <if test="searchCriteria.ownerName != null">
+		</if>
+		<if test="searchCriteria.ownerName != null">
             <![CDATA[
             ${searchCriteria.ownerName.operation}
             (SELECT COUNT(*) 
@@ -122,8 +118,8 @@
              WHERE m_prj_project.owner = user.username 
                  AND (concat(user.firstname, ' ', LTRIM(concat(IFNULL(user.middlename, ''), ' ')), user.lastname) like '%${searchCriteria.ownerName.value}%') ) > 0
             ]]>
-        </if>
-        <if test="searchCriteria.accountName != null">
+		</if>
+		<if test="searchCriteria.accountName != null">
             <![CDATA[
             ${searchCriteria.accountName.operation}
             (SELECT COUNT(*)
@@ -131,33 +127,33 @@
                 WHERE m_prj_project.account = m_crm_account.id 
                     AND m_crm_account.accountName LIKE '%${searchCriteria.accountName.value}%') > 0
             ]]>
-        </if>
-        <if test="searchCriteria.projectStatus != null">
-            m_prj_project.projectStatus like
-            '%${searchCriteria.projectStatus.value}%'
-        </if>
-        <if test="searchCriteria.projectType != null">
-            ${searchCriteria.projectType.operation}
-            m_prj_project.projectType
-            like
-            '%${searchCriteria.projectType.value}%'
-        </if>
-        <if test="searchCriteria.saccountid != null">
+		</if>
+		<if test="searchCriteria.projectStatus != null">
+			m_prj_project.projectStatus like
+			'%${searchCriteria.projectStatus.value}%'
+		</if>
+		<if test="searchCriteria.projectType != null">
+			${searchCriteria.projectType.operation}
+			m_prj_project.projectType
+			like
+			'%${searchCriteria.projectType.value}%'
+		</if>
+		<if test="searchCriteria.saccountid != null">
             <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
-        </if>
-        <if test="searchCriteria.projectName != null">
+		</if>
+		<if test="searchCriteria.projectName != null">
           <![CDATA[
             ${searchCriteria.projectName.operation} m_prj_project.name like '%${searchCriteria.projectName.value}%'
             ]]>
-        </if>
-        <if test="searchCriteria.involvedMember != null">
+		</if>
+		<if test="searchCriteria.involvedMember != null">
           <![CDATA[
             ${searchCriteria.involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
             ]]>
-        </if>
-    </sql>
+		</if>
+	</sql>
 
-    <sql id="selectSimpleProject">
+	<sql id="selectSimpleProject">
         <![CDATA[
         SELECT m_prj_project.id, m_prj_project.name, m_prj_project.owner, m_prj_project.account, 
         m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
@@ -177,53 +173,53 @@
             LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username) 
             LEFT OUTER JOIN s_currency ON (m_prj_project.currencyid=s_currency.id)
         ]]>
-    </sql>
+	</sql>
 
-    <select id="findProjectById" parameterType="java.lang.Integer"
-        resultMap="SimpleProjectResult">
-        <include refid="selectSimpleProject" />
+	<select id="findProjectById" parameterType="java.lang.Integer"
+		resultMap="SimpleProjectResult">
+		<include refid="selectSimpleProject" />
 
-        WHERE m_prj_project.id=#{projectId, javaType=INTEGER}
-    </select>
+		WHERE m_prj_project.id=#{projectId, javaType=INTEGER}
+	</select>
 
-    <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria">
-        SELECT count(*) as totalCount FROM m_prj_project
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.queryTotalCountSearchCriteria" />
-            </trim>
-        </if>
-    </select>
+	<select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria">
+		SELECT count(*) as totalCount FROM m_prj_project
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.queryTotalCountSearchCriteria" />
+			</trim>
+		</if>
+	</select>
 
-    <select id="getUserProjectKeys" resultType="java.lang.Integer">
-        SELECT m_prj_project.id
-        FROM m_prj_project
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
-    </select>
+	<select id="getUserProjectKeys" resultType="java.lang.Integer">
+		SELECT m_prj_project.id
+		FROM m_prj_project
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
+			</trim>
+		</if>
+	</select>
 
 
-    <select id="findPagableListByCriteria" resultMap="SimpleProjectResult"
-        parameterType="ProjectSearchCriteria">
-        <include
-            refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleProject" />
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
-    </select>
+	<select id="findPagableListByCriteria" resultMap="SimpleProjectResult"
+		parameterType="ProjectSearchCriteria">
+		<include
+			refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleProject" />
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
+			</trim>
+		</if>
+	</select>
 
-    <sql id="selectSimpleActivityStream">
+	<sql id="selectSimpleActivityStream">
         <![CDATA[
         SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, 
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField, s_activitystream.extraTypeId,
@@ -238,36 +234,36 @@
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
         ]]>
-    </sql>
+	</sql>
 
-    <select id="getProjectActivityStreams" parameterType="ActivityStreamSearchCriteria"
-        resultMap="ActivityStreamResult">
-        <include
-            refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleActivityStream" />
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-            </trim>
-            <include
-                refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.orderStatement" />
-        </if>
-    </select>
+	<select id="getProjectActivityStreams" parameterType="ActivityStreamSearchCriteria"
+		resultMap="ActivityStreamResult">
+		<include
+			refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleActivityStream" />
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+			</trim>
+			<include
+				refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.orderStatement" />
+		</if>
+	</select>
 
-    <select id="getTotalActivityStream" resultType="int"
-        parameterType="ActivityStreamSearchCriteria">
-        SELECT count(*) as totalCount FROM s_activitystream
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
-    </select>
+	<select id="getTotalActivityStream" resultType="int"
+		parameterType="ActivityStreamSearchCriteria">
+		SELECT count(*) as totalCount FROM s_activitystream
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+			</trim>
+		</if>
+	</select>
 
-    <sql id="selectFollowingTicketOfTask">
+	<sql id="selectFollowingTicketOfTask">
         <![CDATA[
         SELECT 'Task' as type, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
             m_prj_task.taskname AS summary, m_prj_task.assignUser AS assignUser,
@@ -280,9 +276,9 @@
             INNER JOIN m_prj_project ON (m_prj_project.id=m_monitor_item.extraTypeId)
             INNER JOIN s_user ON (s_user.username=m_prj_task.assignUser)
         ]]>
-    </sql>
+	</sql>
 
-    <sql id="selectFollowingTicketOfBug">
+	<sql id="selectFollowingTicketOfBug">
         <![CDATA[
         SELECT 'Bug' as type, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
             m_tracker_bug.summary AS summary, s_user.username AS assignUser,
@@ -295,56 +291,56 @@
             INNER JOIN m_prj_project ON (m_prj_project.id=m_monitor_item.extraTypeId)
             INNER JOIN s_user ON (s_user.username=m_tracker_bug.assignuser)
         ]]>
-    </sql>
+	</sql>
 
-    <select id="getProjectFollowingTickets" parameterType="MonitorSearchCriteria"
-        resultMap="FollowingTicketResult">
-        (
-        <include
-            refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectFollowingTicketOfTask" />
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
-        )
-        UNION
+	<select id="getProjectFollowingTickets" parameterType="MonitorSearchCriteria"
+		resultMap="FollowingTicketResult">
+		(
+		<include
+			refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectFollowingTicketOfTask" />
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
+			</trim>
+		</if>
+		)
+		UNION
 
-        (
-        <include
-            refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectFollowingTicketOfBug" />
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
-        )
-        ORDER BY monitorDate DESC
-    </select>
+		(
+		<include
+			refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectFollowingTicketOfBug" />
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
+			</trim>
+		</if>
+		)
+		ORDER BY monitorDate DESC
+	</select>
 
-    <select id="getTotalFollowingTickets" resultType="int"
-        parameterType="MonitorSearchCriteria">
-        SELECT count(*) as totalCount FROM m_monitor_item
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
-    </select>
+	<select id="getTotalFollowingTickets" resultType="int"
+		parameterType="MonitorSearchCriteria">
+		SELECT count(*) as totalCount FROM m_monitor_item
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.common.dao.MonitorItemMapperExt.querySearchCriteria" />
+			</trim>
+		</if>
+	</select>
 
-    <select id="getSubdomainOfProject" resultType="java.lang.String"
-        parameterType="java.lang.Integer">
+	<select id="getSubdomainOfProject" resultType="java.lang.String"
+		parameterType="java.lang.Integer">
         <![CDATA[
         SELECT s_account.subdomain
             FROM s_account, m_prj_project
             WHERE m_prj_project.sAccountId=s_account.id AND
                   m_prj_project.id=#{projectId,javaType=INTEGER}
                   ]]>
-    </select>
+	</select>
 </mapper>

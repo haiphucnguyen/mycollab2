@@ -33,191 +33,197 @@ import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
 @RunWith(MyCollabClassRunner.class)
-@ContextConfiguration(locations = {"classpath:META-INF/spring/service-context-test.xml"})
+@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class ContactServiceTest extends ServiceTest {
 
-    @Autowired
-    protected ContactService contactService;
+	@Autowired
+	protected ContactService contactService;
 
-    @DataSet
-    @Test
-    public void testGetFindByCriteria() {
-        Assert.assertEquals(
-                1,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(getCriteria(),
-                0, 2)).size());
-    }
+	@DataSet
+	@Test
+	public void testGetFindByCriteria() {
+		Assert.assertEquals(
+				1,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(getCriteria(),
+								0, 2)).size());
+	}
 
-    @DataSet
-    @Test
-    public void testGetTotalCount() {
-        Assert.assertEquals(1, contactService.getTotalCount(getCriteria()));
-    }
+	@DataSet
+	@Test
+	public void testGetTotalCount() {
+		Assert.assertEquals(1, contactService.getTotalCount(getCriteria()));
+	}
 
-    private ContactSearchCriteria getCriteria() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAssignUserName(new StringSearchField(SearchField.AND,
-                "Duong"));
-        criteria.setAccountName(new StringSearchField(SearchField.AND, "x"));
-        criteria.setContactName(new StringSearchField(SearchField.AND, "Hai"));
-        criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
-        return criteria;
-    }
+	private ContactSearchCriteria getCriteria() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
+				"Duong"));
+		criteria.setAccountName(new StringSearchField(SearchField.AND, "x"));
+		criteria.setContactName(new StringSearchField(SearchField.AND, "Hai"));
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
+		return criteria;
+	}
 
-    @Test
-    @DataSet
-    public void testSearchContactName() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setContactName(new StringSearchField(SearchField.AND, "Nguyen Hai"));
-        Assert.assertEquals(1, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                1,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchContactName() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setContactName(new StringSearchField(SearchField.AND,
+				"Nguyen Hai"));
+		Assert.assertEquals(1, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAssignUsers() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[]{"linh", "hai"}));
-        Assert.assertEquals(3, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                3,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAssignUsers() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND,
+				new String[] { "linh", "hai" }));
+		Assert.assertEquals(3, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				3,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchLeadSources() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setLeadSources(new SetSearchField<String>(SearchField.AND, new String[]{"Email", "Campaign"}));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchLeadSources() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setLeadSources(new SetSearchField<String>(SearchField.AND,
+				new String[] { "Email", "Campaign" }));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAnyPostalCode() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAnyPostalCode(new StringSearchField(SearchField.AND, "70000"));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAnyPostalCode() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAnyPostalCode(new StringSearchField(SearchField.AND,
+				"70000"));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAnyCity() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAnyCity(new StringSearchField(SearchField.AND, "HCM"));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAnyCity() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAnyCity(new StringSearchField(SearchField.AND, "HCM"));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAnyPhone() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAnyPhone(new StringSearchField(SearchField.AND, "(111)-(222)"));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAnyPhone() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAnyPhone(new StringSearchField(SearchField.AND,
+				"(111)-(222)"));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAnyCountries() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setCountries(new SetSearchField<String>(SearchField.AND, new String[]{"Viet nam", "America"}));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAnyCountries() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setCountries(new SetSearchField<String>(SearchField.AND,
+				new String[] { "Viet nam", "America" }));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAnyState() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAnyState(new StringSearchField(SearchField.AND, "abc"));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAnyState() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAnyState(new StringSearchField(SearchField.AND, "abc"));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAnyAddress() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAnyAddress(new StringSearchField(SearchField.AND, "ade"));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAnyAddress() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAnyAddress(new StringSearchField(SearchField.AND, "ade"));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchAnyEmail() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setAnyEmail(new StringSearchField(SearchField.AND, "abc@y.co"));
-        Assert.assertEquals(2, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                2,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchAnyEmail() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setAnyEmail(new StringSearchField(SearchField.AND, "abc@y.co"));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchLastname() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setLastname(new StringSearchField(SearchField.AND, "Linh"));
-        Assert.assertEquals(1, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                1,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchLastname() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setLastname(new StringSearchField(SearchField.AND, "Linh"));
+		Assert.assertEquals(1, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 
-    @Test
-    @DataSet
-    public void testSearchFirstname() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setFirstname(new StringSearchField(SearchField.AND, "Nguyen"));
-        Assert.assertEquals(3, contactService.getTotalCount(criteria));
-        Assert.assertEquals(
-                3,
-                contactService.findPagableListByCriteria(
-                new SearchRequest<ContactSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
+	@Test
+	@DataSet
+	public void testSearchFirstname() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setFirstname(new StringSearchField(SearchField.AND, "Nguyen"));
+		Assert.assertEquals(3, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				3,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
 }
