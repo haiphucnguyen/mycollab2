@@ -27,7 +27,7 @@ public class RemoveBySearchCriteriaCacheEvictAspect {
 	private static Logger log = LoggerFactory
 			.getLogger(RemoveBySearchCriteriaCacheEvictAspect.class);
 
-	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.removeByCriteria(..)) && args(criteria, accountId)")
+	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.removeByCriteria(..)) && args(searchCriteria, accountId)")
 	public void cacheEvictSave(JoinPoint pjp, SearchCriteria searchCriteria,
 			Integer accountId) {
 		Advised advised = (Advised) pjp.getThis();
