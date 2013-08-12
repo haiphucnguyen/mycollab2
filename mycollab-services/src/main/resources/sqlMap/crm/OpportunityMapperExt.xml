@@ -241,7 +241,7 @@
         </if>
     </select>
 
-    <select id="findOpportunityById" parameterType="int"
+    <select id="findById" parameterType="int"
         resultMap="SimpleOpportunityResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.selectSimpleOpportunity" />

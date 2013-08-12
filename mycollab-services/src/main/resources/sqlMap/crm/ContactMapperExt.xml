@@ -313,7 +313,7 @@
         </if>
     </select>
 
-    <select id="findContactById" parameterType="int"
+    <select id="findById" parameterType="int"
         resultMap="SimpleContactResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />

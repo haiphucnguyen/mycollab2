@@ -35,7 +35,7 @@
         ]]>
     </sql>
 
-    <select id="findMeetingById" parameterType="int"
+    <select id="findById" parameterType="int"
         resultMap="SimpleMeetingResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.selectSimpleMeeting" />

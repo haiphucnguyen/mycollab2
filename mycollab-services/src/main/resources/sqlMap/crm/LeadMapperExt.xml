@@ -308,7 +308,7 @@
         </if>
     </select>
 
-    <select id="findLeadById" parameterType="int" resultMap="SimpleLeadResult">
+    <select id="findById" parameterType="int" resultMap="SimpleLeadResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 

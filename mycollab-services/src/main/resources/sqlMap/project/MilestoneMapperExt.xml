@@ -84,7 +84,7 @@
         </if>
     </select>
 
-    <select id="findMilestoneById" parameterType="java.lang.Integer"
+    <select id="findById" parameterType="java.lang.Integer"
         resultMap="MilestoneResult">
         <include
             refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.selectMilestone" />

@@ -235,7 +235,7 @@
         </if>
     </select>
 
-    <select id="findCampaignById" parameterType="int"
+    <select id="findById" parameterType="int"
         resultMap="SimpleCampaignResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />

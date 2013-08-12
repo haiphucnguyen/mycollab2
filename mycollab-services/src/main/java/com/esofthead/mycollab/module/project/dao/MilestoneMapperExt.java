@@ -14,5 +14,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCrit
  */
 public interface MilestoneMapperExt extends ISearchableDAO<MilestoneSearchCriteria> {
 
-    SimpleMilestone findMilestoneById(int milestoneId);
+    SimpleMilestone findById(int milestoneId);
 }
