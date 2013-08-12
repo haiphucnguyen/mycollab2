@@ -3,10 +3,10 @@ package com.esofthead.mycollab.module.ecm.dao;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(EngroupClassRunner.class)
+@RunWith(MyCollabClassRunner.class)
 @ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class ContentJcrDaoTest extends ServiceTest {
 

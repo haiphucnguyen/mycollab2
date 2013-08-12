@@ -23,11 +23,11 @@
 
     <m_crm_campaign id="1" campaignName="AAA" status="a"
         type="b" assignUser="hai79" budget="12.1" expectedCost="2"
-        sAccountId="1" startDate="2011-11-1 00:00:00" endDate="2011-11-5 00:00:00" />
+        sAccountId="1" startDate="2011-11-01 00:00:00" endDate="2011-11-05 00:00:00" />
 
     <m_crm_campaign id="2" campaignName="AAA" status="a"
         type="b" assignUser="hai79" budget="12.1" expectedCost="2"
-        sAccountId="1" startDate="2012-11-1 00:00:00" endDate="2012-11-5 00:00:00" />
+        sAccountId="1" startDate="2012-11-01 00:00:00" endDate="2012-11-05 00:00:00" />
 
     <m_crm_campaign id="3" campaignName="AAA" status="a"
         type="b" assignUser="hai79" budget="12.1" expectedCost="2"
@@ -51,8 +51,8 @@
 
     <m_crm_campaign id="9" campaignName="AAA" status="a"
         type="b" assignUser="hai79" budget="12.1" expectedCost="2"
-        sAccountId="1" startDate="2013-1-1 00:00:00" endDate="2013-1-5 00:00:00" />
+        sAccountId="1" startDate="2013-01-01 00:00:00" endDate="2013-01-05 00:00:00" />
     <m_crm_campaign id="10" campaignName="AAA" status="a"
         type="b" assignUser="hai79" budget="12.1" expectedCost="2"
-        sAccountId="1" startDate="2013-1-25 00:00:00" endDate="2013-1-30 00:00:00" />
+        sAccountId="1" startDate="2013-01-25 00:00:00" endDate="2013-01-30 00:00:00" />
 </dataset>

@@ -29,10 +29,10 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(EngroupClassRunner.class)
+@RunWith(MyCollabClassRunner.class)
 @ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class OpportunityServiceTest extends ServiceTest {
 

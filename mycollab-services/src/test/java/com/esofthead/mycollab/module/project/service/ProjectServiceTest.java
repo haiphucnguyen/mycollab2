@@ -14,10 +14,10 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(EngroupClassRunner.class)
+@RunWith(MyCollabClassRunner.class)
 @ContextConfiguration(locations = {"classpath:META-INF/spring/service-context-test.xml"})
 public class ProjectServiceTest extends ServiceTest{
 

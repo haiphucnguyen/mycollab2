@@ -21,10 +21,10 @@ import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(EngroupClassRunner.class)
+@RunWith(MyCollabClassRunner.class)
 @ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class BugServiceTest extends ServiceTest {
 

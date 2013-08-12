@@ -39,7 +39,7 @@ package com.esofthead.mycollab.test;
  * 
  * @author Hai Nguyen (hainguyen@esofthead.com)
  */
-public interface EngroupTestModule {
+public interface MyCollabTestModule {
     /**
      * Assign the test host to this module. Depend on the functionality of this
      * module, it get some variables from this host like data source, test

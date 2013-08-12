@@ -26,11 +26,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.esofthead.mycollab.test.module.DbUnitModule;
 
-public class EngroupClassRunner extends SpringJUnit4ClassRunner {
+public class MyCollabClassRunner extends SpringJUnit4ClassRunner {
 
-    private List<EngroupTestModule> testModules;
+    private List<MyCollabTestModule> testModules;
 
-    public EngroupClassRunner(Class<?> clazz) throws InitializationError {
+    public MyCollabClassRunner(Class<?> clazz) throws InitializationError {
         super(clazz);
     }
 
@@ -43,7 +43,7 @@ public class EngroupClassRunner extends SpringJUnit4ClassRunner {
     }
 
     private void preInvokeMethod(FrameworkMethod method) {
-        testModules = new ArrayList<EngroupTestModule>();
+        testModules = new ArrayList<MyCollabTestModule>();
         DataSet dataSetAnno = method.getAnnotation(DataSet.class);
         if (dataSetAnno != null) {
             DbUnitModule dbModule = new DbUnitModule();
@@ -51,13 +51,13 @@ public class EngroupClassRunner extends SpringJUnit4ClassRunner {
             testModules.add(dbModule);
         }
 
-        for (EngroupTestModule module : testModules) {
+        for (MyCollabTestModule module : testModules) {
             module.setUp();
         }
     }
 
     private void postInvokeMethod(FrameworkMethod method) {
-        for (EngroupTestModule module : testModules) {
+        for (MyCollabTestModule module : testModules) {
             module.tearDown();
         }
     }

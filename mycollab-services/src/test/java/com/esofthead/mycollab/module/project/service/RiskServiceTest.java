@@ -14,10 +14,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(EngroupClassRunner.class)
+@RunWith(MyCollabClassRunner.class)
 @ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class RiskServiceTest extends ServiceTest {
 
