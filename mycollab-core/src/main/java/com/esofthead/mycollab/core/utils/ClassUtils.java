@@ -13,7 +13,6 @@ public class ClassUtils {
 	public static Class<?> getInterfaceInstanceOf(Class cls, Class superCls) {
 		Class[] interfaces = cls.getInterfaces();
 		for (Class inter : interfaces) {
-			System.out.println(inter.getName());
 			if (superCls.isAssignableFrom(inter)) {
 				return inter;
 			}
