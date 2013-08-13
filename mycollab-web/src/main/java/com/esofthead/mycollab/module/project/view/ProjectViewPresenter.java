@@ -65,7 +65,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ProjectService projectService = (ProjectService) AppContext
 						.getSpringBean(ProjectService.class);
 				SimpleProject project = (SimpleProject) projectService
-						.findById((Integer) data.getParams());
+						.findById((Integer) data.getParams(),
+								AppContext.getAccountId());
 
 				if (project == null) {
 					AppContext

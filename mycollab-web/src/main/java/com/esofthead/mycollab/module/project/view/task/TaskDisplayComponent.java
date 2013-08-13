@@ -180,8 +180,10 @@ public class TaskDisplayComponent extends CssLayout {
 							final ProjectTaskListService taskListService = AppContext
 									.getSpringBean(ProjectTaskListService.class);
 							TaskDisplayComponent.this.taskList = taskListService
-									.findById(TaskDisplayComponent.this.taskList
-											.getId());
+									.findById(
+											TaskDisplayComponent.this.taskList
+													.getId(), AppContext
+													.getAccountId());
 							TaskDisplayComponent.this.showTaskGroupInfo();
 						}
 					}

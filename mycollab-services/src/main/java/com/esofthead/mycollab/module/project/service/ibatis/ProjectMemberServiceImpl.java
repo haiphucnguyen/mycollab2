@@ -60,7 +60,7 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public SimpleProjectMember findById(int memberId) {
+	public SimpleProjectMember findById(int memberId, Integer sAccountId) {
 		return projectMemberMapperExt.findMemberById(memberId);
 	}
 

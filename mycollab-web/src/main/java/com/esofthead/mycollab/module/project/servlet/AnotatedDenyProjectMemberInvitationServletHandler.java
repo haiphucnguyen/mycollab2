@@ -52,8 +52,8 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 				if (memberId > 0 && projectMemberService != null
 						&& sAccount > 0 && projectAdmin != null
 						&& !projectAdmin.equals("")) {
-					SimpleProjectMember member = projectMemberService
-							.findById(memberId);
+					SimpleProjectMember member = projectMemberService.findById(
+							memberId, AppContext.getAccountId());
 					if (member != null
 							&& !member.getStatus().equals(
 									ProjectMemberStatusContants.ACTIVE)) {

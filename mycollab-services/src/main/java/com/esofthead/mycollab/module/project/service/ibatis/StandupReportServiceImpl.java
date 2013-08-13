@@ -29,7 +29,8 @@ import com.esofthead.mycollab.module.project.service.StandupReportService;
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "forday", type = ProjectContants.STANDUP, extraFieldName = "projectid")
-public class StandupReportServiceImpl extends
+public class StandupReportServiceImpl
+		extends
 		DefaultService<Integer, StandupReportWithBLOBs, StandupReportSearchCriteria>
 		implements StandupReportService {
 	@Autowired
@@ -38,7 +39,8 @@ public class StandupReportServiceImpl extends
 	private StandupReportMapperExt standupReportMapperExt;
 
 	@Override
-	public SimpleStandupReport findStandupReportById(int standupId) {
+	public SimpleStandupReport findStandupReportById(int standupId,
+			Integer sAccountId) {
 		return standupReportMapperExt.findReportById(standupId);
 	}
 
@@ -54,7 +56,7 @@ public class StandupReportServiceImpl extends
 
 	@Override
 	public SimpleStandupReport findStandupReportByDateUser(int projectId,
-			String username, Date onDate) {
+			String username, Date onDate, Integer sAccountId) {
 		StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(projectId));
 		criteria.setLogBy(new StringSearchField(SearchField.AND, username));

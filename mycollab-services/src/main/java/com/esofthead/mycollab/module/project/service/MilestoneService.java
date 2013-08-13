@@ -4,17 +4,20 @@
  */
 package com.esofthead.mycollab.module.project.service;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public interface MilestoneService extends
-        IDefaultService<Integer, Milestone, MilestoneSearchCriteria> {
+		IDefaultService<Integer, Milestone, MilestoneSearchCriteria> {
 
-    SimpleMilestone findById(int milestoneId);
+	@Cacheable
+	SimpleMilestone findById(int milestoneId, @CacheKey Integer sAccountId);
 }

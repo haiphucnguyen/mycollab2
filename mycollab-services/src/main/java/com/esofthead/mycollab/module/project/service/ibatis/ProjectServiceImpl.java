@@ -212,12 +212,12 @@ public class ProjectServiceImpl extends
 	}
 
 	@Override
-	public SimpleProject findById(int projectId) {
+	public SimpleProject findById(int projectId, Integer sAccountId) {
 		return projectMapperExt.findProjectById(projectId);
 	}
 
 	@Override
-	public List<Integer> getUserProjectKeys(String username) {
+	public List<Integer> getUserProjectKeys(String username, Integer sAccountId) {
 		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(username));
 		return projectMapperExt.getUserProjectKeys(searchCriteria);

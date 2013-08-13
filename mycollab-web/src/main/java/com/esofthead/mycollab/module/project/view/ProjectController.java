@@ -933,7 +933,8 @@ public class ProjectController implements IController {
 								.findStandupReportByDateUser(
 										CurrentProjectVariables.getProjectId(),
 										AppContext.getUsername(),
-										new GregorianCalendar().getTime());
+										new GregorianCalendar().getTime(),
+										AppContext.getAccountId());
 						if (report == null) {
 							report = new SimpleStandupReport();
 						}

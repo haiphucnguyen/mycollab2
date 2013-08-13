@@ -171,8 +171,8 @@ public class ProjectMemberReadPresenter extends
 					.getSpringBean(ProjectMemberService.class);
 			SimpleProjectMember prjMember = null;
 			if (data.getParams() instanceof Integer) {
-				prjMember = prjMemberService.findById((Integer) data
-						.getParams());
+				prjMember = prjMemberService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 
 			} else if (data.getParams() instanceof String) {
 				String username = (String) data.getParams();

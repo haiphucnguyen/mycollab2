@@ -81,7 +81,8 @@ public class ComponentUrlResolver extends ProjectUrlResolver {
 
 			ComponentService componentService = AppContext
 					.getSpringBean(ComponentService.class);
-			SimpleComponent component = componentService.findById(componentId);
+			SimpleComponent component = componentService.findById(componentId,
+					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new ComponentScreenData.Edit(component));

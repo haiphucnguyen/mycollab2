@@ -23,45 +23,47 @@ import com.esofthead.mycollab.module.tracker.service.ComponentService;
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "componentname", type = ProjectContants.BUG_COMPONENT, extraFieldName = "projectid")
-@Auditable(module = ModuleNameConstants.PRJ, type =  ProjectContants.BUG_COMPONENT)
-public class ComponentServiceImpl extends DefaultService<Integer, Component, ComponentSearchCriteria> implements
-        ComponentService {
+@Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG_COMPONENT)
+public class ComponentServiceImpl extends
+		DefaultService<Integer, Component, ComponentSearchCriteria> implements
+		ComponentService {
 
-    @Autowired
-    private ComponentMapper componentMapper;
-    @Autowired
-    private ComponentMapperExt componentMapperExt;
+	@Autowired
+	private ComponentMapper componentMapper;
+	@Autowired
+	private ComponentMapperExt componentMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, Component> getCrudMapper() {
-        return componentMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, Component> getCrudMapper() {
+		return componentMapper;
+	}
 
-    @Override
-    public ISearchableDAO<ComponentSearchCriteria> getSearchMapper() {
-        return componentMapperExt;
-    }
+	@Override
+	public ISearchableDAO<ComponentSearchCriteria> getSearchMapper() {
+		return componentMapperExt;
+	}
 
-    @Override
-    public SimpleComponent findById(int componentId) {
-        return componentMapperExt.findComponentById(componentId);
-    }
+	@Override
+	public SimpleComponent findById(int componentId, Integer sAccountId) {
+		return componentMapperExt.findComponentById(componentId);
+	}
 
-    @Override
-    public int saveWithSession(Component record, String username) {
-        //check whether there is exiting record
-        ComponentExample ex = new ComponentExample();
-        
-        ex.createCriteria().andComponentnameEqualTo(record.getComponentname()).andProjectidEqualTo(record.getProjectid());
-        
-        int count = componentMapper.countByExample(ex);
-        if (count > 0) {
-            throw new MyCollabException("There is an existing record has name " + record.getComponentname());
-        } else {
-            return super.saveWithSession(record, username);
-        }
-        
-    }
-    
-    
+	@Override
+	public int saveWithSession(Component record, String username) {
+		// check whether there is exiting record
+		ComponentExample ex = new ComponentExample();
+
+		ex.createCriteria().andComponentnameEqualTo(record.getComponentname())
+				.andProjectidEqualTo(record.getProjectid());
+
+		int count = componentMapper.countByExample(ex);
+		if (count > 0) {
+			throw new MyCollabException("There is an existing record has name "
+					+ record.getComponentname());
+		} else {
+			return super.saveWithSession(record, username);
+		}
+
+	}
+
 }

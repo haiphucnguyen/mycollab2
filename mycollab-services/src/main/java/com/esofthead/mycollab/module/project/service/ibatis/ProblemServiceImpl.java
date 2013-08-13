@@ -22,26 +22,27 @@ import com.esofthead.mycollab.module.project.service.ProblemService;
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "issuename", type = ProjectContants.PROBLEM, extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.PROBLEM)
-public class ProblemServiceImpl extends DefaultService<Integer, Problem, ProblemSearchCriteria> implements
-        ProblemService {
+public class ProblemServiceImpl extends
+		DefaultService<Integer, Problem, ProblemSearchCriteria> implements
+		ProblemService {
 
-    @Autowired
-    private ProblemMapper problemMapper;
-    @Autowired
-    private ProblemMapperExt problemMapperExt;
+	@Autowired
+	private ProblemMapper problemMapper;
+	@Autowired
+	private ProblemMapperExt problemMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, Problem> getCrudMapper() {
-        return problemMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, Problem> getCrudMapper() {
+		return problemMapper;
+	}
 
-    @Override
-    public ISearchableDAO<ProblemSearchCriteria> getSearchMapper() {
-        return problemMapperExt;
-    }
+	@Override
+	public ISearchableDAO<ProblemSearchCriteria> getSearchMapper() {
+		return problemMapperExt;
+	}
 
-    @Override
-    public SimpleProblem findById(Integer problemId) {
-        return problemMapperExt.findProblemById(problemId);
-    }
+	@Override
+	public SimpleProblem findById(Integer problemId, Integer sAccountId) {
+		return problemMapperExt.findProblemById(problemId);
+	}
 }

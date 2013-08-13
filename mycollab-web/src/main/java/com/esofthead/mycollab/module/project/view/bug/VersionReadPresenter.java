@@ -135,8 +135,8 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 			if (data.getParams() instanceof Integer) {
 				VersionService componentService = AppContext
 						.getSpringBean(VersionService.class);
-				Version version = componentService.findById((Integer) data
-						.getParams());
+				Version version = componentService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (version != null) {
 					VersionContainer versionContainer = (VersionContainer) container;
 					versionContainer.removeAllComponents();

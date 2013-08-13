@@ -18,7 +18,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 
@@ -26,31 +26,32 @@ public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
 	private static final long serialVersionUID = 1L;
 
 	public MessageReadPresenter() {
-        super(MessageReadView.class);
-    }
+		super(MessageReadView.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-    	if (CurrentProjectVariables
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.MESSAGES)) {
-    		MessageContainer messageContainer = (MessageContainer) container;
-            messageContainer.removeAllComponents();
-            messageContainer.addComponent(view.getWidget());
+			MessageContainer messageContainer = (MessageContainer) container;
+			messageContainer.removeAllComponents();
+			messageContainer.addComponent(view.getWidget());
 
-            if (data.getParams() instanceof Integer) {
-                MessageService messageService = AppContext
-                        .getSpringBean(MessageService.class);
-                SimpleMessage message = messageService.findMessageById((Integer) data
-                        .getParams());
-                view.previewItem(message);
+			if (data.getParams() instanceof Integer) {
+				MessageService messageService = AppContext
+						.getSpringBean(MessageService.class);
+				SimpleMessage message = messageService.findMessageById(
+						(Integer) data.getParams(), AppContext.getAccountId());
+				view.previewItem(message);
 
-                ProjectBreadcrumb breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
-                breadCrumb.gotoMessage(message);
-            } else {
-                throw new MyCollabException("Unhanddle this case yet");
-            }
-    	} else {
+				ProjectBreadcrumb breadCrumb = ViewManager
+						.getView(ProjectBreadcrumb.class);
+				breadCrumb.gotoMessage(message);
+			} else {
+				throw new MyCollabException("Unhanddle this case yet");
+			}
+		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}
-    }
+	}
 }

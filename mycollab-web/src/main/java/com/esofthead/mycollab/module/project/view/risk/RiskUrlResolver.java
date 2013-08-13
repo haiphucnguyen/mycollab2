@@ -80,7 +80,8 @@ public class RiskUrlResolver extends ProjectUrlResolver {
 
 			RiskService riskService = AppContext
 					.getSpringBean(RiskService.class);
-			SimpleRisk risk = riskService.findById(riskId);
+			SimpleRisk risk = riskService.findById(riskId,
+					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new RiskScreenData.Edit(risk));

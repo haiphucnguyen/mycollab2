@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.service;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -18,7 +20,9 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
  */
 public interface ProjectMemberService extends
 		IDefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria> {
-	SimpleProjectMember findById(int memberId);
+
+	@Cacheable
+	SimpleProjectMember findById(int memberId, @CacheKey Integer sAccountId);
 
 	SimpleProjectMember findMemberByUsername(String username, int projectId);
 

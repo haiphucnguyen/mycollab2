@@ -23,40 +23,41 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK_LIST, nameField = "name", extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK_LIST)
-public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList, TaskListSearchCriteria> implements
-        ProjectTaskListService {
+public class ProjectTaskListServiceImpl extends
+		DefaultService<Integer, TaskList, TaskListSearchCriteria> implements
+		ProjectTaskListService {
 
-    @Autowired
-    protected TaskListMapper projectTaskListMapper;
-    @Autowired
-    protected TaskListMapperExt projectTaskListMapperExt;
+	@Autowired
+	protected TaskListMapper projectTaskListMapper;
+	@Autowired
+	protected TaskListMapperExt projectTaskListMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, TaskList> getCrudMapper() {
-        return projectTaskListMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, TaskList> getCrudMapper() {
+		return projectTaskListMapper;
+	}
 
-    @Override
-    public ISearchableDAO<TaskListSearchCriteria> getSearchMapper() {
-        return projectTaskListMapperExt;
-    }
+	@Override
+	public ISearchableDAO<TaskListSearchCriteria> getSearchMapper() {
+		return projectTaskListMapperExt;
+	}
 
-    @Override
-    public SimpleTaskList findById(int taskListId) {
-        return projectTaskListMapperExt.findTaskListById(taskListId);
-    }
+	@Override
+	public SimpleTaskList findById(int taskListId, Integer sAccountId) {
+		return projectTaskListMapperExt.findTaskListById(taskListId);
+	}
 
-    @Override
-    public void updateTaskListIndex(TaskList[] taskLists) {
-        for (TaskList taskList : taskLists) {
-            projectTaskListMapper.updateByPrimaryKeySelective(taskList);
-        }
-    }
+	@Override
+	public void updateTaskListIndex(TaskList[] taskLists, Integer sAccountId) {
+		for (TaskList taskList : taskLists) {
+			projectTaskListMapper.updateByPrimaryKeySelective(taskList);
+		}
+	}
 }

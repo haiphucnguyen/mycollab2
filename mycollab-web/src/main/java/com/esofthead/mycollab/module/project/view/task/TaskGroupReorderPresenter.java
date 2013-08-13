@@ -51,8 +51,9 @@ public class TaskGroupReorderPresenter extends
 										.getData();
 								ProjectTaskListService taskListService = (ProjectTaskListService) AppContext
 										.getSpringBean(ProjectTaskListService.class);
-								taskListService.updateTaskListIndex(changeSet
-										.toArray(new TaskList[] {}));
+								taskListService.updateTaskListIndex(
+										changeSet.toArray(new TaskList[] {}),
+										AppContext.getAccountId());
 								EventBus.getInstance().fireEvent(
 										new TaskListEvent.GotoTaskListScreen(
 												this, null));

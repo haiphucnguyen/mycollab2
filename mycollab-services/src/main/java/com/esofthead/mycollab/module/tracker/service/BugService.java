@@ -16,19 +16,27 @@ public interface BugService extends
 	@Cacheable
 	SimpleBug findById(Integer bugid, @CacheKey Integer sAccountId);
 
+	@Cacheable
 	List<GroupItem> getStatusSummary(BugSearchCriteria criteria);
 
+	@Cacheable
 	List<GroupItem> getPrioritySummary(BugSearchCriteria criteria);
 
+	@Cacheable
 	List<GroupItem> getAssignedDefectsSummary(BugSearchCriteria criteria);
 
+	@Cacheable
 	List<GroupItem> getResolutionDefectsSummary(BugSearchCriteria criteria);
 
+	@Cacheable
 	List<GroupItem> getReporterDefectsSummary(BugSearchCriteria criteria);
 
+	@Cacheable
 	List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria);
 
+	@Cacheable
 	List<GroupItem> getComponentDefectsSummary(BugSearchCriteria searchCriteria);
 
+	@Cacheable
 	List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria);
 }

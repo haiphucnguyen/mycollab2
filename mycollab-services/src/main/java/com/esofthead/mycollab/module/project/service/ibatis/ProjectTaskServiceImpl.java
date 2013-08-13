@@ -46,7 +46,7 @@ public class ProjectTaskServiceImpl extends
 	}
 
 	@Override
-	public SimpleTask findById(int taskId) {
+	public SimpleTask findById(int taskId, Integer sAccountId) {
 		return taskMapperExt.findTaskById(taskId);
 	}
 

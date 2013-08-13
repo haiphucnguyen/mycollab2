@@ -57,7 +57,8 @@ public class StandupUrlResolver extends ProjectUrlResolver {
 					.getSpringBean(StandupReportService.class);
 			SimpleStandupReport report = reportService
 					.findStandupReportByDateUser(projectId,
-							AppContext.getUsername(), onDate);
+							AppContext.getUsername(), onDate,
+							AppContext.getAccountId());
 			if (report == null) {
 				report = new SimpleStandupReport();
 			}

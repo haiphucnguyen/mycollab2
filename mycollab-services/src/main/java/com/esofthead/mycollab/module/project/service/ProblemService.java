@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.service;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
@@ -7,6 +9,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 
 public interface ProblemService extends
 		IDefaultService<Integer, Problem, ProblemSearchCriteria> {
-
-	SimpleProblem findById(Integer problemId);
+	@Cacheable
+	SimpleProblem findById(Integer problemId, @CacheKey Integer sAccountId);
 }

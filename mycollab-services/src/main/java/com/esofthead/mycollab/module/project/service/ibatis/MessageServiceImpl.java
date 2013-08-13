@@ -80,7 +80,7 @@ public class MessageServiceImpl extends
 	}
 
 	@Override
-	public SimpleMessage findMessageById(int messageId) {
+	public SimpleMessage findMessageById(int messageId, Integer sAccountId) {
 		return messageMapperExt.findMessageById(messageId);
 	}
 }

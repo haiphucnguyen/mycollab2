@@ -21,6 +21,8 @@ import java.util.List;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.domain.Project;
@@ -31,19 +33,26 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 public interface ProjectService extends
 		IDefaultService<Integer, Project, ProjectSearchCriteria> {
 
+	@Cacheable
 	int getTotalActivityStream(ActivityStreamSearchCriteria criteria);
 
-	List<Integer> getUserProjectKeys(String username);
+	@Cacheable
+	List<Integer> getUserProjectKeys(String username,
+			@CacheKey Integer sAccountId);
 
+	@Cacheable
 	List<ProjectActivityStream> getProjectActivityStreams(
 			SearchRequest<ActivityStreamSearchCriteria> searchRequest);
 
-	SimpleProject findById(int projectId);
+	@Cacheable
+	SimpleProject findById(int projectId, @CacheKey Integer sAccountId);
 
 	String getSubdomainOfProject(int projectId);
 
+	@Cacheable
 	int getTotalFollowingTickets(MonitorSearchCriteria searchRequest);
 
+	@Cacheable
 	List<FollowingTicket> getProjectFollowingTickets(
 			SearchRequest<MonitorSearchCriteria> searchRequest);
 }

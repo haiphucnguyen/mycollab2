@@ -67,7 +67,8 @@ public class VersionUrlResolver extends ProjectUrlResolver {
 
 			VersionService versionService = AppContext
 					.getSpringBean(VersionService.class);
-			SimpleVersion version = versionService.findById(versionId);
+			SimpleVersion version = versionService.findById(versionId,
+					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new VersionScreenData.Edit(version));

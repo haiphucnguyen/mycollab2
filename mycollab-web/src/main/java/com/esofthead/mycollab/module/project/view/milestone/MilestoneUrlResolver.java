@@ -65,7 +65,8 @@ public class MilestoneUrlResolver extends ProjectUrlResolver {
 
 			MilestoneService milestoneService = AppContext
 					.getSpringBean(MilestoneService.class);
-			SimpleMilestone milestone = milestoneService.findById(milestoneid);
+			SimpleMilestone milestone = milestoneService.findById(milestoneid,
+					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new MilestoneScreenData.Edit(milestone));

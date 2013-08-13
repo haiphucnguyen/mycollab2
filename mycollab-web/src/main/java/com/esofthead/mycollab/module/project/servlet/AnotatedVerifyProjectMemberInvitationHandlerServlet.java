@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
+import com.esofthead.mycollab.web.AppContext;
 
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
@@ -51,8 +52,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 				if (memberId > 0 && projectMemberService != null
 						&& sAccount > 0 && projectAdmin != null
 						&& !projectAdmin.equals("")) {
-					SimpleProjectMember member = projectMemberService
-							.findById(memberId);
+					SimpleProjectMember member = projectMemberService.findById(
+							memberId, AppContext.getAccountId());
 					if (member != null
 							&& member.getStatus().equals(
 									ProjectMemberStatusContants.VERIFICATING)) {

@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
  */
 public interface ProjectGenericTaskService extends
 		ISearchableService<ProjectGenericTaskSearchCriteria> {
+	
 	List<ProjectGenericTaskCount> findPagableTaskCountListByCriteria(
 			SearchRequest<ProjectGenericTaskSearchCriteria> searchRequest);
 }

@@ -143,8 +143,8 @@ public class ComponentReadPresenter extends
 			if (data.getParams() instanceof Integer) {
 				ComponentService componentService = AppContext
 						.getSpringBean(ComponentService.class);
-				SimpleComponent component = componentService
-						.findById((Integer) data.getParams());
+				SimpleComponent component = componentService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (component != null) {
 					ComponentContainer componentContainer = (ComponentContainer) container;
 					componentContainer.removeAllComponents();

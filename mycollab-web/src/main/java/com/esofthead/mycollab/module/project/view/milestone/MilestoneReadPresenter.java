@@ -167,8 +167,8 @@ public class MilestoneReadPresenter extends
 			if (data.getParams() instanceof Integer) {
 				MilestoneService riskService = AppContext
 						.getSpringBean(MilestoneService.class);
-				SimpleMilestone milestone = riskService.findById((Integer) data
-						.getParams());
+				SimpleMilestone milestone = riskService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (milestone != null) {
 					MilestoneContainer milestoneContainer = (MilestoneContainer) container;
 					milestoneContainer.removeAllComponents();

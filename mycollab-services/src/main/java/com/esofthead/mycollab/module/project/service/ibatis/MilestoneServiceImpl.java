@@ -23,33 +23,34 @@ import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCrit
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, type = ProjectContants.MILESTONE, nameField = "name", extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.MILESTONE)
-public class MilestoneServiceImpl extends DefaultService<Integer, Milestone, MilestoneSearchCriteria> implements
-        MilestoneService {
+public class MilestoneServiceImpl extends
+		DefaultService<Integer, Milestone, MilestoneSearchCriteria> implements
+		MilestoneService {
 
-    @Autowired
-    protected MilestoneMapper milestoneMapper;
-    @Autowired
-    protected MilestoneMapperExt milestoneMapperExt;
+	@Autowired
+	protected MilestoneMapper milestoneMapper;
+	@Autowired
+	protected MilestoneMapperExt milestoneMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, Milestone> getCrudMapper() {
-        return milestoneMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, Milestone> getCrudMapper() {
+		return milestoneMapper;
+	}
 
-    @Override
-    public ISearchableDAO<MilestoneSearchCriteria> getSearchMapper() {
-        return milestoneMapperExt;
-    }
+	@Override
+	public ISearchableDAO<MilestoneSearchCriteria> getSearchMapper() {
+		return milestoneMapperExt;
+	}
 
-    @Override
-    public SimpleMilestone findById(int milestoneId) {
-        return milestoneMapperExt.findById(milestoneId);
-    }
+	@Override
+	public SimpleMilestone findById(int milestoneId, Integer sAccountId) {
+		return milestoneMapperExt.findById(milestoneId);
+	}
 }

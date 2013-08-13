@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -110,6 +111,8 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 					view.getFixedVersion());
 			bugRelatedItemService.saveComponentsOfBug(bugId,
 					view.getComponents());
+			CacheUtils.cleanCache(AppContext.getAccountId(),
+					BugService.class.getName());
 		} else {
 			bugService.updateWithSession(bug, AppContext.getUsername());
 			ProjectFormAttachmentUploadField uploadField = view
@@ -126,6 +129,8 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 					view.getFixedVersion());
 			bugRelatedItemService.updateComponentsOfBug(bugId,
 					view.getComponents());
+			CacheUtils.cleanCache(AppContext.getAccountId(),
+					BugService.class.getName());
 		}
 
 	}

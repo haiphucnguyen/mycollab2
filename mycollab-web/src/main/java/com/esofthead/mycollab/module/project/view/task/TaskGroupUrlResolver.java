@@ -44,7 +44,8 @@ public class TaskGroupUrlResolver extends ProjectUrlResolver {
 
 			ProjectTaskListService taskGroupService = AppContext
 					.getSpringBean(ProjectTaskListService.class);
-			SimpleTaskList taskgroup = taskGroupService.findById(taskgroupId);
+			SimpleTaskList taskgroup = taskGroupService.findById(taskgroupId,
+					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new TaskGroupScreenData.Edit(taskgroup));

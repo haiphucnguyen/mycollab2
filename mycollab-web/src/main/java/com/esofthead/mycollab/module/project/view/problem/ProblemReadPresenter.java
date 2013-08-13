@@ -156,8 +156,8 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 			if (data.getParams() instanceof Integer) {
 				ProblemService problemService = AppContext
 						.getSpringBean(ProblemService.class);
-				SimpleProblem problem = problemService.findById((Integer) data
-						.getParams());
+				SimpleProblem problem = problemService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (problem != null) {
 					ProblemContainer problemContainer = (ProblemContainer) container;
 					problemContainer.removeAllComponents();
