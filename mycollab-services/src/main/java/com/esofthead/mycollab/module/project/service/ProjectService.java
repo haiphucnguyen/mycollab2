@@ -34,7 +34,7 @@ public interface ProjectService extends
 		IDefaultService<Integer, Project, ProjectSearchCriteria> {
 
 	@Cacheable
-	int getTotalActivityStream(ActivityStreamSearchCriteria criteria);
+	int getTotalActivityStream(@CacheKey ActivityStreamSearchCriteria criteria);
 
 	@Cacheable
 	List<Integer> getUserProjectKeys(String username,
@@ -42,7 +42,7 @@ public interface ProjectService extends
 
 	@Cacheable
 	List<ProjectActivityStream> getProjectActivityStreams(
-			SearchRequest<ActivityStreamSearchCriteria> searchRequest);
+			@CacheKey SearchRequest<ActivityStreamSearchCriteria> searchRequest);
 
 	@Cacheable
 	SimpleProject findById(int projectId, @CacheKey Integer sAccountId);
@@ -50,9 +50,9 @@ public interface ProjectService extends
 	String getSubdomainOfProject(int projectId);
 
 	@Cacheable
-	int getTotalFollowingTickets(MonitorSearchCriteria searchRequest);
+	int getTotalFollowingTickets(@CacheKey MonitorSearchCriteria searchRequest);
 
 	@Cacheable
 	List<FollowingTicket> getProjectFollowingTickets(
-			SearchRequest<MonitorSearchCriteria> searchRequest);
+			@CacheKey SearchRequest<MonitorSearchCriteria> searchRequest);
 }

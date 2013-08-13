@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.service;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
@@ -8,7 +9,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 public interface ItemTimeLoggingService
 		extends
 		IDefaultService<Integer, ItemTimeLogging, ItemTimeLoggingSearchCriteria> {
-	
+
 	@Cacheable
-	Double getTotalHoursByCriteria(ItemTimeLoggingSearchCriteria criteria);
+	Double getTotalHoursByCriteria(
+			@CacheKey ItemTimeLoggingSearchCriteria criteria);
 }

@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.module.project.service;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
@@ -9,7 +12,10 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCr
 public interface ProjectRoleService extends
 		IDefaultService<Integer, ProjectRole, ProjectRoleSearchCriteria> {
 
-	void savePermission(int projectId, int roleId, PermissionMap permissionMap);
+	@CacheEvict
+	void savePermission(int projectId, int roleId, PermissionMap permissionMap,
+			@CacheKey Integer sAccountId);
 
-	SimpleProjectRole findById(int roleId);
+	@Cacheable
+	SimpleProjectRole findById(int roleId, @CacheKey Integer sAccountId);
 }

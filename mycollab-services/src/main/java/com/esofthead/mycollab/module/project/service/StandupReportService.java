@@ -23,6 +23,7 @@ public interface StandupReportService
 			String username, Date onDate, @CacheKey Integer sAccountId);
 
 	@Cacheable
-	List<GroupItem> getReportsCount(StandupReportSearchCriteria criteria);
+	List<GroupItem> getReportsCount(
+			@CacheKey StandupReportSearchCriteria criteria);
 
 }

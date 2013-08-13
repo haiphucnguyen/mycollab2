@@ -30,7 +30,7 @@ public class ProjectRoleServiceImpl extends
 
 	@Autowired
 	private ProjectRoleMapper roleMapper;
-	
+
 	@Autowired
 	private ProjectRoleMapperExt roleMapperExt;
 
@@ -48,7 +48,8 @@ public class ProjectRoleServiceImpl extends
 	}
 
 	@Override
-	public void savePermission(int projectId, int roleId, PermissionMap permissionMap) {
+	public void savePermission(int projectId, int roleId,
+			PermissionMap permissionMap, Integer sAccountId) {
 		XStream xstream = new XStream(new StaxDriver());
 		String perVal = xstream.toXML(permissionMap);
 
@@ -70,7 +71,7 @@ public class ProjectRoleServiceImpl extends
 	}
 
 	@Override
-	public SimpleProjectRole findById(int roleId) {
+	public SimpleProjectRole findById(int roleId, Integer sAccountId) {
 		return roleMapperExt.findRoleById(roleId);
 	}
 }
