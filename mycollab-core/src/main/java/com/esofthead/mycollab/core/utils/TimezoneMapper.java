@@ -1049,19 +1049,6 @@ public class TimezoneMapper {
 			String timezoneId = availableIDs[i];
 			TimeZone timeZone = TimeZone.getTimeZone(timezoneId);
 
-			// System.out
-			// .println("Timezone: "
-			// + timeZone.getID()
-			// + "---"
-			// + timeZone.getDisplayName()
-			// + "   "
-			// + timeZone.getRawOffset()
-			// / (1000 * 60 * 60)
-			// + "   Offset: "
-			// + getOffsetString(timeZone.getRawOffset()
-			// / (1000 * 60 * 60),
-			// getNameOffset(timeZone.getID())));
-
 			if (!getArea(timeZone.getID()).equals("")) {
 				System.out
 						.println("timeMap.put(\""
@@ -1077,11 +1064,6 @@ public class TimezoneMapper {
 								+ timeZone.getRawOffset());
 			}
 		}
-
-		// TimezoneExt timeZ = timeMap.get("1");
-		//
-		// TimeZone t = timeZ.getTimezone();
-		// System.out.println("aa: " + t);
 
 	}
 }

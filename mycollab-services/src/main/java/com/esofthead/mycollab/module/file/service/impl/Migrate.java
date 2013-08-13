@@ -21,9 +21,8 @@ public class Migrate {
 			} else {
 				String contentPath = childFile.getAbsolutePath().substring(
 						BASE_PATH.length() + 1);
-				System.out.println("Put file " + contentPath + " to s3");
-				amazonRawContentServiceImpl.saveContent(contentPath, new FileInputStream(
-						childFile));
+				amazonRawContentServiceImpl.saveContent(contentPath,
+						new FileInputStream(childFile));
 			}
 		}
 	}

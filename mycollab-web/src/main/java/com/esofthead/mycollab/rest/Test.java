@@ -34,18 +34,18 @@ public class Test {
 			try {
 				String result = testResource.signup(form);
 				if (result != null) {
-					System.out.println(result);
+//					System.out.println(result);
 				}
 			} catch (ResourceException e) {
-				System.out.println("EXCEPTION1: " + e.getCause() + "---"
-						+ e.getMessage());
-				System.out.println(clientResource.getResponse().getEntity()
-						.getText());
+//				System.out.println("EXCEPTION1: " + e.getCause() + "---"
+//						+ e.getMessage());
+//				System.out.println(clientResource.getResponse().getEntity()
+//						.getText());
 
 			}
 
 		} catch (Exception e) {
-			System.out.println("EX: " + e.getClass());
+//			System.out.println("EX: " + e.getClass());
 			e.printStackTrace();
 		}
 

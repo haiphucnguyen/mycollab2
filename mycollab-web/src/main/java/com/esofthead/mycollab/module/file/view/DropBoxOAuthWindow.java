@@ -5,12 +5,17 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
@@ -32,6 +37,9 @@ import com.vaadin.ui.Window;
 public abstract class DropBoxOAuthWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private TextField folderName;
+
+	private static Logger log = LoggerFactory
+			.getLogger(DropBoxOAuthWindow.class);
 
 	public DropBoxOAuthWindow() {
 		super("Add Dropbox");
@@ -66,7 +74,7 @@ public abstract class DropBoxOAuthWindow extends Window {
 								"text-edit/0.1", userLocale);
 						DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 								"rheskqqb6f8fo6a");
-						System.out.println("redirect URL : " + redirectUri);
+						log.debug("redirect URL : " + redirectUri);
 						WebApplicationContext webContext = (WebApplicationContext) AppContext
 								.getApplication().getContext();
 
@@ -119,47 +127,53 @@ public abstract class DropBoxOAuthWindow extends Window {
 		controllGroupBtn.setHeight("50px");
 		controllGroupBtn.setMargin(true, false, false, false);
 
-		Button doneBtn = new Button("OK", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button doneBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_OK_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					String name = folderName.getValue().toString().trim();
-					if (name.equals("")) {
-						getWindow()
-								.showNotification("Please Enter folder name");
-						return;
+					@Override
+					public void buttonClick(ClickEvent event) {
+						try {
+							String name = folderName.getValue().toString()
+									.trim();
+							if (name.equals("")) {
+								getWindow().showNotification(
+										"Please Enter folder name");
+								return;
+							}
+							ExternalDrive dropboxDrive = new ExternalDrive();
+							// dropboxDrive.setAccesstoken("");
+							dropboxDrive.setCreatedtime(new Date());
+							dropboxDrive.setFoldername(name);
+							dropboxDrive.setOwner(AppContext.getUsername());
+							dropboxDrive.setStoragename(StorageNames.DROPBOX);
+
+							ExternalDriveService service = AppContext
+									.getSpringBean(ExternalDriveService.class);
+							service.saveWithSession(dropboxDrive,
+									AppContext.getUsername());
+							handleReloadAfterConnectDropbox();
+						} catch (Exception e) {
+							throw new MyCollabException(e);
+						}
+						DropBoxOAuthWindow.this.close();
 					}
-					ExternalDrive dropboxDrive = new ExternalDrive();
-					// dropboxDrive.setAccesstoken("");
-					dropboxDrive.setCreatedtime(new Date());
-					dropboxDrive.setFoldername(name);
-					dropboxDrive.setOwner(AppContext.getUsername());
-					dropboxDrive.setStoragename(StorageNames.DROPBOX);
-
-					ExternalDriveService service = AppContext
-							.getSpringBean(ExternalDriveService.class);
-					service.saveWithSession(dropboxDrive,
-							AppContext.getUsername());
-					handleReloadAfterConnectDropbox();
-				} catch (Exception e) {
-					throw new MyCollabException(e);
-				}
-				DropBoxOAuthWindow.this.close();
-			}
-		});
+				});
 		doneBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controllGroupBtn.addComponent(doneBtn);
 
-		Button cancleBtn = new Button("Cancle", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button cancleBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				DropBoxOAuthWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						DropBoxOAuthWindow.this.close();
+					}
+				});
 		cancleBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controllGroupBtn.addComponent(cancleBtn);
 

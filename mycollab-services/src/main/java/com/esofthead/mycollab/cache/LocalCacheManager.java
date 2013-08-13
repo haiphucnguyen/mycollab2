@@ -10,10 +10,6 @@ import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.persistence.service.ICrudService;
-import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.module.crm.service.ibatis.AccountServiceImpl;
-
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
 			.getLogger(LocalCacheManager.class);
@@ -54,10 +50,5 @@ public class LocalCacheManager {
 				}
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		System.out.println(ClassUtils.getInterfaceInstanceOf(
-				AccountServiceImpl.class, ICrudService.class));
 	}
 }
