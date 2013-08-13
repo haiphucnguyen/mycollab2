@@ -3,9 +3,7 @@ package com.esofthead.mycollab.cache;
 import java.io.Writer;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.persistence.service.ICrudService;
-import com.esofthead.mycollab.core.persistence.service.IDefaultService;
-import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -36,17 +34,7 @@ public class CacheUtils {
 
 	public static Class getEnclosingServiceInterface(Class serviceClass) {
 		Class<?> cls = ClassUtils.getInterfaceInstanceOf(serviceClass,
-				ICrudService.class);
-		if (cls == null) {
-			cls = ClassUtils.getInterfaceInstanceOf(serviceClass,
-					ISearchableService.class);
-		}
-
-		if (cls == null) {
-			cls = ClassUtils.getInterfaceInstanceOf(serviceClass,
-					IDefaultService.class);
-		}
-
+				IService.class);
 		if (cls == null) {
 			throw new MyCollabException(
 					"Can not get enclosing interface service of class "

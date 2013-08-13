@@ -6,23 +6,24 @@ package com.esofthead.mycollab.module.tracker.service;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public interface BugRelatedItemService {
-    void saveAffectedVersionsOfBug(int bugid, List<Version> versions);
-    
-    void saveFixedVersionsOfBug(int bugid, List<Version> versions);
-    
-    void saveComponentsOfBug(int bugid, List<Component> components);
-    
-    void updateAfftedVersionsOfBug(int bugid, List<Version> versions);
-    
-    void updateFixedVersionsOfBug(int bugid, List<Version> versions);
-    
-    void updateComponentsOfBug(int bugid, List<Component> components);
+public interface BugRelatedItemService extends IService {
+	void saveAffectedVersionsOfBug(int bugid, List<Version> versions);
+
+	void saveFixedVersionsOfBug(int bugid, List<Version> versions);
+
+	void saveComponentsOfBug(int bugid, List<Component> components);
+
+	void updateAfftedVersionsOfBug(int bugid, List<Version> versions);
+
+	void updateFixedVersionsOfBug(int bugid, List<Version> versions);
+
+	void updateComponentsOfBug(int bugid, List<Component> components);
 }
