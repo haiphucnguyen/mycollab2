@@ -19,12 +19,18 @@ package com.esofthead.mycollab.core.arguments;
 
 public abstract class SearchCriteria {
 	public static String ASC = "ASC";
-	
+
 	public static String DESC = "DESC";
-	
+
 	private String orderByField;
-	
+
 	private String sortDirection;
+
+	private NumberSearchField saccountid;
+
+	public SearchCriteria() {
+		saccountid = new NumberSearchField(GroupIdProvider.getAccountId());
+	}
 
 	public String getOrderByField() {
 		return orderByField;
@@ -40,5 +46,13 @@ public abstract class SearchCriteria {
 
 	public void setSortDirection(String sortDirection) {
 		this.sortDirection = sortDirection;
+	}
+
+	public NumberSearchField getSaccountid() {
+		return saccountid;
+	}
+
+	public void setSaccountid(NumberSearchField saccountid) {
+		this.saccountid = saccountid;
 	}
 }

@@ -76,7 +76,8 @@ public class BugUrlResolver extends ProjectUrlResolver {
 			int bugId = Integer.parseInt(tokens[1]);
 
 			BugService bugService = AppContext.getSpringBean(BugService.class);
-			SimpleBug bug = bugService.findById(bugId);
+			SimpleBug bug = bugService.findById(bugId,
+					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new BugScreenData.Edit(bug));

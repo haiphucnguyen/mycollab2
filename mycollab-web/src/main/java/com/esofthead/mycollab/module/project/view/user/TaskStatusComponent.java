@@ -87,8 +87,6 @@ public class TaskStatusComponent extends Depot {
 					searchCriteria.setAssignUser(new StringSearchField(
 							AppContext.getUsername()));
 					searchCriteria.setIsOpenned(new SearchField());
-					searchCriteria.setsAccountId(new NumberSearchField(
-							AppContext.getAccountId()));
 					searchCriteria.setProjectId(new NumberSearchField(taskCount
 							.getProjectId()));
 					ProjectGenericTaskService prjGenericTaskService = AppContext
@@ -108,8 +106,6 @@ public class TaskStatusComponent extends Depot {
 		});
 
 		ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
-		searchCriteria.setsAccountId(new NumberSearchField(AppContext
-				.getAccountId()));
 		searchCriteria.setIsOpenned(new SearchField());
 		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));

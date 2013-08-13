@@ -17,131 +17,120 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
-import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class CampaignSearchCriteria extends SearchCriteria implements
-		GroupableSearchCriteria {
+public class CampaignSearchCriteria extends SearchCriteria {
 
-    private StringSearchField campaignName;
-    private StringSearchField assignUserName;
-    private StringSearchField assignUser;
-    private NumberSearchField leadId;
-    private NumberSearchField saccountid;
-    private SetSearchField<String> statuses;
-    private SetSearchField<String> types;
-    private SetSearchField<String> assignUsers;
-    private DateTimeSearchField startDate;
-    private DateTimeSearchField endDate;
-    private RangeDateTimeSearchField startDateRange;
-    private RangeDateTimeSearchField endDateRange;
-    private NumberSearchField id;
+	private StringSearchField campaignName;
+	private StringSearchField assignUserName;
+	private StringSearchField assignUser;
+	private NumberSearchField leadId;
+	private SetSearchField<String> statuses;
+	private SetSearchField<String> types;
+	private SetSearchField<String> assignUsers;
+	private DateTimeSearchField startDate;
+	private DateTimeSearchField endDate;
+	private RangeDateTimeSearchField startDateRange;
+	private RangeDateTimeSearchField endDateRange;
+	private NumberSearchField id;
 
-    public StringSearchField getCampaignName() {
-        return campaignName;
-    }
+	public StringSearchField getCampaignName() {
+		return campaignName;
+	}
 
-    public void setCampaignName(StringSearchField campaignName) {
-        this.campaignName = campaignName;
-    }
+	public void setCampaignName(StringSearchField campaignName) {
+		this.campaignName = campaignName;
+	}
 
-    public StringSearchField getAssignUser() {
-        return assignUser;
-    }
+	public StringSearchField getAssignUser() {
+		return assignUser;
+	}
 
-    public void setAssignUser(StringSearchField assignUser) {
-        this.assignUser = assignUser;
-    }
+	public void setAssignUser(StringSearchField assignUser) {
+		this.assignUser = assignUser;
+	}
 
-    public NumberSearchField getLeadId() {
-        return leadId;
-    }
+	public NumberSearchField getLeadId() {
+		return leadId;
+	}
 
-    public void setLeadId(NumberSearchField leadId) {
-        this.leadId = leadId;
-    }
+	public void setLeadId(NumberSearchField leadId) {
+		this.leadId = leadId;
+	}
 
-    public NumberSearchField getSaccountid() {
-        return saccountid;
-    }
+	public SetSearchField<String> getStatuses() {
+		return statuses;
+	}
 
-    public void setSaccountid(NumberSearchField saccountid) {
-        this.saccountid = saccountid;
-    }
+	public void setStatuses(SetSearchField<String> statuses) {
+		this.statuses = statuses;
+	}
 
-    public SetSearchField<String> getStatuses() {
-        return statuses;
-    }
+	public SetSearchField<String> getTypes() {
+		return types;
+	}
 
-    public void setStatuses(SetSearchField<String> statuses) {
-        this.statuses = statuses;
-    }
+	public void setTypes(SetSearchField<String> types) {
+		this.types = types;
+	}
 
-    public SetSearchField<String> getTypes() {
-        return types;
-    }
+	public SetSearchField<String> getAssignUsers() {
+		return assignUsers;
+	}
 
-    public void setTypes(SetSearchField<String> types) {
-        this.types = types;
-    }
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
+		this.assignUsers = assignUsers;
+	}
 
-    public SetSearchField<String> getAssignUsers() {
-        return assignUsers;
-    }
+	public StringSearchField getAssignUserName() {
+		return assignUserName;
+	}
 
-    public void setAssignUsers(SetSearchField<String> assignUsers) {
-        this.assignUsers = assignUsers;
-    }
+	public void setAssignUserName(StringSearchField assignUserName) {
+		this.assignUserName = assignUserName;
+	}
 
-    public StringSearchField getAssignUserName() {
-        return assignUserName;
-    }
+	public DateTimeSearchField getStartDate() {
+		return startDate;
+	}
 
-    public void setAssignUserName(StringSearchField assignUserName) {
-        this.assignUserName = assignUserName;
-    }
+	public void setStartDate(DateTimeSearchField startDate) {
+		this.startDate = startDate;
+	}
 
-    public DateTimeSearchField getStartDate() {
-        return startDate;
-    }
+	public DateTimeSearchField getEndDate() {
+		return endDate;
+	}
 
-    public void setStartDate(DateTimeSearchField startDate) {
-        this.startDate = startDate;
-    }
+	public void setEndDate(DateTimeSearchField endDate) {
+		this.endDate = endDate;
+	}
 
-    public DateTimeSearchField getEndDate() {
-        return endDate;
-    }
+	public RangeDateTimeSearchField getStartDateRange() {
+		return startDateRange;
+	}
 
-    public void setEndDate(DateTimeSearchField endDate) {
-        this.endDate = endDate;
-    }
+	public void setStartDateRange(RangeDateTimeSearchField startDateRange) {
+		this.startDateRange = startDateRange;
+	}
 
-    public RangeDateTimeSearchField getStartDateRange() {
-        return startDateRange;
-    }
+	public RangeDateTimeSearchField getEndDateRange() {
+		return endDateRange;
+	}
 
-    public void setStartDateRange(RangeDateTimeSearchField startDateRange) {
-        this.startDateRange = startDateRange;
-    }
+	public void setEndDateRange(RangeDateTimeSearchField endDateRange) {
+		this.endDateRange = endDateRange;
+	}
 
-    public RangeDateTimeSearchField getEndDateRange() {
-        return endDateRange;
-    }
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
 
-    public void setEndDateRange(RangeDateTimeSearchField endDateRange) {
-        this.endDateRange = endDateRange;
-    }
-
-    public void setId(NumberSearchField id) {
-        this.id = id;
-    }
-
-    public NumberSearchField getId() {
-        return id;
-    }
+	public NumberSearchField getId() {
+		return id;
+	}
 }

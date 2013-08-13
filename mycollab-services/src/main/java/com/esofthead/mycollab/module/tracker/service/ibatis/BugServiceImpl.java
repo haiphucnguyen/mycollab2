@@ -102,7 +102,7 @@ public class BugServiceImpl extends
 	}
 
 	@Override
-	public SimpleBug findById(Integer bugId) {
+	public SimpleBug findById(Integer bugId, Integer sAccountId) {
 		SimpleBug bug = bugMapperExt.getBugById(bugId);
 		return bug;
 	}

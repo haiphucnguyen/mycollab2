@@ -26,8 +26,6 @@ public class QuoteSearchCriteria extends SearchCriteria {
     private NumberSearchField contractId;
     
     private NumberSearchField contactId;
-    
-    private NumberSearchField saccountid;
 
 	public StringSearchField getSubject() {
 		return subject;
@@ -107,14 +105,6 @@ public class QuoteSearchCriteria extends SearchCriteria {
 
 	public void setContactId(NumberSearchField contactId) {
 		this.contactId = contactId;
-	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
 	}
 
 	public StringSearchField getAssignUser() {

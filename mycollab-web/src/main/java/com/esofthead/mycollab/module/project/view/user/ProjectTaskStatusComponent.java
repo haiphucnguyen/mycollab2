@@ -103,8 +103,6 @@ public class ProjectTaskStatusComponent extends Depot {
 		bodyContent.removeAllComponents();
 		bodyContent.addComponent(new LazyLoadWrapper(taskList));
 		final ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
-		searchCriteria.setsAccountId(new NumberSearchField(AppContext
-				.getAccountId()));
 		searchCriteria.setIsOpenned(new SearchField());
 		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));

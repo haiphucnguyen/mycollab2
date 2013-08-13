@@ -5,21 +5,19 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class ProductSearchCriteria extends SearchCriteria {
-    private StringSearchField productName;
+	private StringSearchField productName;
 
-    private StringSearchField accountName;
-    
-    private NumberSearchField contactId;
-    
-    private NumberSearchField accountId;
+	private StringSearchField accountName;
 
-    private StringSearchField contactName;
-    
-    private NumberSearchField contractId;
-    
-    private NumberSearchField productId;
-    
-    private NumberSearchField saccountid;
+	private NumberSearchField contactId;
+
+	private NumberSearchField accountId;
+
+	private StringSearchField contactName;
+
+	private NumberSearchField contractId;
+
+	private NumberSearchField productId;
 
 	public StringSearchField getProductName() {
 		return productName;
@@ -75,13 +73,5 @@ public class ProductSearchCriteria extends SearchCriteria {
 
 	public void setProductId(NumberSearchField productId) {
 		this.productId = productId;
-	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
 	}
 }

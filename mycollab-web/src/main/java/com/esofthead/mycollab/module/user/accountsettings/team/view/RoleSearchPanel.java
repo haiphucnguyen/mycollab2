@@ -138,9 +138,6 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			RoleSearchPanel.this.searchCriteria = new RoleSearchCriteria();
-			RoleSearchPanel.this.searchCriteria
-					.setsAccountId(new NumberSearchField(AppContext
-							.getAccountId()));
 			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				RoleSearchPanel.this.searchCriteria
 						.setRoleName(new StringSearchField(SearchField.AND,

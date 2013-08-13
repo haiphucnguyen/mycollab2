@@ -60,7 +60,7 @@ public class BugServiceTest extends ServiceTest {
 	@DataSet
 	@Test
 	public void testGetExtBug() {
-		SimpleBug bug = bugService.findById(1);
+		SimpleBug bug = bugService.findById(1,1);
 		Assert.assertEquals("Nguyen Hai", bug.getLoguserFullName());
 		Assert.assertEquals("Nguyen Hai", bug.getAssignuserFullName());
 		Assert.assertEquals(1, bug.getAffectedVersions().size());
@@ -172,7 +172,7 @@ public class BugServiceTest extends ServiceTest {
 
 		System.out.println("bugid: " + bugId);
 
-		bug = bugService.findById(bugId);
+		bug = bugService.findById(bugId, 1);
 		Assert.assertEquals("summary4", bug.getSummary());
 	}
 }

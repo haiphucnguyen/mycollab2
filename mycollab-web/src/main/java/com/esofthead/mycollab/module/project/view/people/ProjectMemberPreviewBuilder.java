@@ -41,6 +41,7 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -634,6 +635,8 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 					SearchField.AND, projectMember.getUsername()));
 			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
 					CurrentProjectVariables.getProjectId()));
+			searchCriteria.setSaccountid(new NumberSearchField(AppContext
+					.getAccountId()));
 			this.activityStreamList.setSearchCriteria(searchCriteria);
 		}
 	}

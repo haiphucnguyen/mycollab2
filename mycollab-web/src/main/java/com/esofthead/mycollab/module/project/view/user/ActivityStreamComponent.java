@@ -14,6 +14,7 @@ import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -65,6 +66,8 @@ public class ActivityStreamComponent extends Depot {
 				new String[] { ModuleNameConstants.PRJ }));
 		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
 				.toArray(new Integer[0])));
+		searchCriteria.setSaccountid(new NumberSearchField(AppContext
+				.getAccountId()));
 		this.activityStreamList.setSearchCriteria(searchCriteria);
 
 	}

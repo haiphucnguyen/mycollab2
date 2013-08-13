@@ -6,15 +6,16 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class MessageSearchCriteria extends SearchCriteria {
+
 	private NumberSearchField id;
-	
-    private SetSearchField<Integer> projectids;
-    
-    private StringSearchField category;
-    
-    private StringSearchField title;
-    
-    private StringSearchField message;
+
+	private SetSearchField<Integer> projectids;
+
+	private StringSearchField category;
+
+	private StringSearchField title;
+
+	private StringSearchField message;
 
 	public NumberSearchField getId() {
 		return id;

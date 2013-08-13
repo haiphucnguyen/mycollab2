@@ -17,13 +17,11 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.BitSearchField;
-import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class TodoSearchCriteria extends SearchCriteria implements
-		GroupableSearchCriteria {
+public class TodoSearchCriteria extends SearchCriteria {
 
 	private StringSearchField subject;
 	private StringSearchField contact;
@@ -38,7 +36,6 @@ public class TodoSearchCriteria extends SearchCriteria implements
 	private NumberSearchField caseId;
 	private StringSearchField assignUser;
 	private StringSearchField type;
-	private NumberSearchField saccountid;
 	private StringSearchField status;
 	private NumberSearchField id;
 
@@ -146,14 +143,6 @@ public class TodoSearchCriteria extends SearchCriteria implements
 
 	public void setType(StringSearchField type) {
 		this.type = type;
-	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
 	}
 
 	public StringSearchField getStatus() {

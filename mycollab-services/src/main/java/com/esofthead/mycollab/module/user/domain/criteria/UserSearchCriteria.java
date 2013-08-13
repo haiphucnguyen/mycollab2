@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.user.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
@@ -24,7 +23,6 @@ public class UserSearchCriteria extends SearchCriteria {
 
 	private StringSearchField displayName;
 	private StringSearchField username;
-	private NumberSearchField saccountid;
 	private StringSearchField registerStatus;
 	private StringSearchField subdomain;
 
@@ -34,14 +32,6 @@ public class UserSearchCriteria extends SearchCriteria {
 
 	public void setDisplayName(StringSearchField displayName) {
 		this.displayName = displayName;
-	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
 	}
 
 	public StringSearchField getUsername() {

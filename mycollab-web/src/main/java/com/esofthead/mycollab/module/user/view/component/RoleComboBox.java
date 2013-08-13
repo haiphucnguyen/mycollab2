@@ -30,8 +30,6 @@ public class RoleComboBox extends ComboBox {
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
 		RoleSearchCriteria criteria = new RoleSearchCriteria();
-		criteria.setsAccountId(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
 
 		RoleService roleService = AppContext.getSpringBean(RoleService.class);
 		List<SimpleRole> roleList = roleService

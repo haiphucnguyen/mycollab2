@@ -11,8 +11,8 @@
     </sql>
 
     <sql id="querySearchCriteria">
-        <if test="searchCriteria.sAccountId != null ">
-            <![CDATA[${searchCriteria.sAccountId.operation} s_save_search_result.sAccountId = #{searchCriteria.sAccountId.value, javaType=INTEGER} ]]>
+        <if test="searchCriteria.saccountid != null ">
+            <![CDATA[${searchCriteria.saccountid.operation} s_save_search_result.sAccountId = #{searchCriteria.saccountid.value, javaType=INTEGER} ]]>
         </if>
 
         <if test="searchCriteria.type != null ">

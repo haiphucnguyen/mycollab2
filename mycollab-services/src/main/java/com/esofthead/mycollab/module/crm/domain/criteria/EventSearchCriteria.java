@@ -2,15 +2,11 @@ package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
-import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class EventSearchCriteria extends SearchCriteria implements
-		GroupableSearchCriteria {
-
-	private NumberSearchField saccountid;
+public class EventSearchCriteria extends SearchCriteria {
 	private StringSearchField subject;
 	private StringSearchField assignUser;
 	private DateTimeSearchField startDate;
@@ -18,14 +14,6 @@ public class EventSearchCriteria extends SearchCriteria implements
 	private StringSearchField type;
 	private NumberSearchField typeid;
 	private BooleanSearchField isClosed;
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
-	}
 
 	public StringSearchField getSubject() {
 		return subject;

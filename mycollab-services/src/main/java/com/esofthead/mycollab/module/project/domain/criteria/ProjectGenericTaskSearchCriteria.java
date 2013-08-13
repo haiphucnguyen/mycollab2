@@ -10,45 +10,35 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
-    public static final String OPEN_STATUS = "Open";
-    
-    public static final String CLOSE_STATUS = "Closed";
-    
-    private NumberSearchField sAccountId;
-    
-    private NumberSearchField projectId;
-    
-    private StringSearchField assignUser;
-    
-    private SearchField isOpenned;
+	public static final String OPEN_STATUS = "Open";
 
-    public NumberSearchField getsAccountId() {
-        return sAccountId;
-    }
+	public static final String CLOSE_STATUS = "Closed";
 
-    public void setsAccountId(NumberSearchField sAccountId) {
-        this.sAccountId = sAccountId;
-    }
+	private NumberSearchField projectId;
 
-    public NumberSearchField getProjectId() {
-        return projectId;
-    }
+	private StringSearchField assignUser;
 
-    public void setProjectId(NumberSearchField projectId) {
-        this.projectId = projectId;
-    }
+	private SearchField isOpenned;
 
-    public StringSearchField getAssignUser() {
-        return assignUser;
-    }
+	public NumberSearchField getProjectId() {
+		return projectId;
+	}
 
-    public void setAssignUser(StringSearchField assignUser) {
-        this.assignUser = assignUser;
-    }
+	public void setProjectId(NumberSearchField projectId) {
+		this.projectId = projectId;
+	}
+
+	public StringSearchField getAssignUser() {
+		return assignUser;
+	}
+
+	public void setAssignUser(StringSearchField assignUser) {
+		this.assignUser = assignUser;
+	}
 
 	public SearchField getIsOpenned() {
 		return isOpenned;

@@ -23,8 +23,6 @@ public class ContractSearchCriteria extends SearchCriteria {
 
 	private NumberSearchField productId;
 
-	private NumberSearchField saccountid;
-
 	public StringSearchField getContractName() {
 		return contractName;
 	}
@@ -89,14 +87,6 @@ public class ContractSearchCriteria extends SearchCriteria {
 
 	public void setProductId(NumberSearchField productId) {
 		this.productId = productId;
-	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
 	}
 
 	public StringSearchField getAssignUser() {

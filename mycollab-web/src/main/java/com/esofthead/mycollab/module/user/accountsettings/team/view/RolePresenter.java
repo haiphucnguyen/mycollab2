@@ -33,13 +33,11 @@ public class RolePresenter extends AbstractPresenter<RoleContainer> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		UserPermissionManagementView groupContainer = (UserPermissionManagementView) container;
 		groupContainer.gotoSubView("Roles");
-		
+
 		if (data == null) {
 			RoleListPresenter listPresenter = PresenterResolver
 					.getPresenter(RoleListPresenter.class);
 			RoleSearchCriteria criteria = new RoleSearchCriteria();
-			criteria.setsAccountId(new NumberSearchField(AppContext
-					.getAccountId()));
 			listPresenter.go(view.getWidget(),
 					new ScreenData.Search<RoleSearchCriteria>(criteria));
 		} else if (data instanceof RoleScreenData.Add

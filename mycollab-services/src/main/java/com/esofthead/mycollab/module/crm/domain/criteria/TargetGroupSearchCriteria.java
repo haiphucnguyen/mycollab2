@@ -18,8 +18,6 @@ public class TargetGroupSearchCriteria extends SearchCriteria {
     private NumberSearchField leadId;
     
     private NumberSearchField campaignId;
-    
-    private NumberSearchField saccountid;
 
 	public StringSearchField getAssignUserName() {
 		return assignUserName;
@@ -76,14 +74,5 @@ public class TargetGroupSearchCriteria extends SearchCriteria {
 	public void setCampaignId(NumberSearchField campaignId) {
 		this.campaignId = campaignId;
 	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
-	}
-    
     
 }

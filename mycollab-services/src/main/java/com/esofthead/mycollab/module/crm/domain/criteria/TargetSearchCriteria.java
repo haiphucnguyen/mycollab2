@@ -33,8 +33,6 @@ public class TargetSearchCriteria extends SearchCriteria {
     private StringSearchField username;
 
     private NumberSearchField targetListId;
-    
-    private NumberSearchField saccountid;
 
 	public StringSearchField getTargetName() {
 		return targetName;
@@ -82,13 +80,5 @@ public class TargetSearchCriteria extends SearchCriteria {
 
 	public void setTargetListId(NumberSearchField targetListId) {
 		this.targetListId = targetListId;
-	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
 	}
 }

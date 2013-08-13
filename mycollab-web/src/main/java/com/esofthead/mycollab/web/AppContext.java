@@ -16,6 +16,7 @@ import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.arguments.GroupIdProvider;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -59,6 +60,14 @@ public class AppContext implements Serializable {
 				.getContext();
 		String sessionId = context.getHttpSession().getId();
 		variables = LocalCacheManager.getCache(sessionId);
+
+		GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
+
+			@Override
+			public Integer getGroupId() {
+				return AppContext.getAccountId();
+			}
+		});
 	}
 
 	public static AppContext getInstance() {

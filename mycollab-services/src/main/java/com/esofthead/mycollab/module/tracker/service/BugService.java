@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.tracker.service;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -11,7 +13,8 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 public interface BugService extends
 		IDefaultService<Integer, BugWithBLOBs, BugSearchCriteria> {
 
-	SimpleBug findById(Integer bugid);
+	@Cacheable
+	SimpleBug findById(Integer bugid, @CacheKey Integer sAccountId);
 
 	List<GroupItem> getStatusSummary(BugSearchCriteria criteria);
 

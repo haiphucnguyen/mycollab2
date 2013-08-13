@@ -6,26 +6,17 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class ProjectRoleSearchCriteria extends SearchCriteria {
 
-    private StringSearchField rolename;
-    private NumberSearchField projectId;
-    private NumberSearchField saccountid;
-    private NumberSearchField id;
+	private StringSearchField rolename;
+	private NumberSearchField projectId;
+	private NumberSearchField id;
 
-    public StringSearchField getRolename() {
-        return rolename;
-    }
+	public StringSearchField getRolename() {
+		return rolename;
+	}
 
-    public void setRolename(StringSearchField rolename) {
-        this.rolename = rolename;
-    }
-
-    public NumberSearchField getSaccountid() {
-        return saccountid;
-    }
-
-    public void setSaccountid(NumberSearchField saccountid) {
-        this.saccountid = saccountid;
-    }
+	public void setRolename(StringSearchField rolename) {
+		this.rolename = rolename;
+	}
 
 	public NumberSearchField getProjectId() {
 		return projectId;

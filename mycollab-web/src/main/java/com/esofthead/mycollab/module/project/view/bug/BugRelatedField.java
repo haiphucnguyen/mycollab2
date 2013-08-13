@@ -253,8 +253,8 @@ public class BugRelatedField extends CustomField {
 
 				BugService bugService = AppContext
 						.getSpringBean(BugService.class);
-				final SimpleBug bug = bugService.findById(relatedItem
-						.getRelatedid());
+				final SimpleBug bug = bugService.findById(
+						relatedItem.getRelatedid(), AppContext.getAccountId());
 
 				ButtonLink b = new ButtonLink(bugname,
 						new Button.ClickListener() {

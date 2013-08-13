@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.cache.CacheKey;
@@ -56,14 +55,14 @@ public class L2CacheAspect {
 								try {
 									if (arg instanceof Integer) {
 										groupId = (Integer) arg;
-									} else if (arg instanceof GroupableSearchCriteria) {
-										groupId = (Integer) ((GroupableSearchCriteria) arg)
+									} else if (arg instanceof SearchCriteria) {
+										groupId = (Integer) ((SearchCriteria) arg)
 												.getSaccountid().getValue();
 									} else if (arg instanceof SearchRequest) {
 										SearchCriteria criteria = ((SearchRequest) arg)
 												.getSearchCriteria();
-										if (criteria instanceof GroupableSearchCriteria) {
-											groupId = (Integer) ((GroupableSearchCriteria) criteria)
+										if (criteria instanceof SearchCriteria) {
+											groupId = (Integer) ((SearchCriteria) criteria)
 													.getSaccountid().getValue();
 										} else {
 											return pjp.proceed();

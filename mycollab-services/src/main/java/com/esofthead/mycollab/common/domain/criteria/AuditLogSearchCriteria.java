@@ -9,47 +9,37 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class AuditLogSearchCriteria extends SearchCriteria {
-    private StringSearchField module;
-    
-    private StringSearchField type;
-    
-    private NumberSearchField typeid;
-    
-    private NumberSearchField saccountid;
+	private StringSearchField module;
 
-    public StringSearchField getType() {
-        return type;
-    }
+	private StringSearchField type;
 
-    public void setType(StringSearchField type) {
-        this.type = type;
-    }
+	private NumberSearchField typeid;
 
-    public NumberSearchField getTypeid() {
-        return typeid;
-    }
+	public StringSearchField getType() {
+		return type;
+	}
 
-    public void setTypeid(NumberSearchField typeid) {
-        this.typeid = typeid;
-    }
+	public void setType(StringSearchField type) {
+		this.type = type;
+	}
 
-    public NumberSearchField getSaccountid() {
-        return saccountid;
-    }
+	public NumberSearchField getTypeid() {
+		return typeid;
+	}
 
-    public void setSaccountid(NumberSearchField saccountid) {
-        this.saccountid = saccountid;
-    }
-    
-    public StringSearchField getModule() {
-        return module;
-    }
+	public void setTypeid(NumberSearchField typeid) {
+		this.typeid = typeid;
+	}
 
-    public void setModule(StringSearchField module) {
-        this.module = module;
-    }
+	public StringSearchField getModule() {
+		return module;
+	}
+
+	public void setModule(StringSearchField module) {
+		this.module = module;
+	}
 }

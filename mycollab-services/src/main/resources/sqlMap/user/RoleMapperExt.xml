@@ -10,9 +10,9 @@
     </resultMap>
 
     <sql id="querySearchCriteria">
-        <if test="searchCriteria.sAccountId != null">
+        <if test="searchCriteria.saccountid != null">
           <![CDATA[
-            ${searchCriteria.sAccountId.operation} s_roles.sAccountId = ${searchCriteria.sAccountId.value}
+            ${searchCriteria.saccountid.operation} s_roles.sAccountId = ${searchCriteria.saccountid.value}
             ]]>
         </if>
         <if test="searchCriteria.roleName != null">

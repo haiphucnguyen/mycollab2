@@ -376,7 +376,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			searchCriteria.setType(new StringSearchField(type));
 			searchCriteria.setCreateUser(new StringSearchField(AppContext
 					.getUsername()));
-			searchCriteria.setsAccountId(new NumberSearchField(AppContext
+			searchCriteria.setSaccountid(new NumberSearchField(AppContext
 					.getAccountId()));
 
 			List<SaveSearchResultWithBLOBs> result = saveSearchResultService

@@ -117,7 +117,7 @@ public class AuditLogServiceImpl extends
 		}
 
 		static private String formatDateW3C(Date date) {
-			
+
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 			String text = df.format(date);
 			String result = text.substring(0, 22) + ":" + text.substring(22);
@@ -142,7 +142,7 @@ public class AuditLogServiceImpl extends
 	}
 
 	@Override
-	public SimpleAuditLog findById(int auditLogId) {
+	public SimpleAuditLog findById(int auditLogId, int sAccountId) {
 		return auditLogMapperExt.findById(auditLogId);
 	}
 }

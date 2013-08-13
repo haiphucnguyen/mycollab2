@@ -16,14 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class OpportunitySearchCriteria extends SearchCriteria implements
-		GroupableSearchCriteria {
+public class OpportunitySearchCriteria extends SearchCriteria {
 
 	private StringSearchField opportunityName;
 	private StringSearchField accountName;
@@ -32,7 +30,6 @@ public class OpportunitySearchCriteria extends SearchCriteria implements
 	private StringSearchField assignUserName;
 	private NumberSearchField accountId;
 	private NumberSearchField contactId;
-	private NumberSearchField saccountid;
 	private StringSearchField nextStep;
 	private SetSearchField<String> salesStages;
 	private SetSearchField<String> leadSources;
@@ -92,14 +89,6 @@ public class OpportunitySearchCriteria extends SearchCriteria implements
 
 	public void setContactId(NumberSearchField contactId) {
 		this.contactId = contactId;
-	}
-
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
-
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
 	}
 
 	public StringSearchField getNextStep() {

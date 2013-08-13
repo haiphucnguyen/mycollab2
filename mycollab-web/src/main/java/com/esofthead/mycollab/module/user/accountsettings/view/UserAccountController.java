@@ -272,7 +272,7 @@ public class UserAccountController implements IController {
 								.getPresenter(UserPermissionManagementPresenter.class);
 
 						RoleSearchCriteria criteria = new RoleSearchCriteria();
-						criteria.setsAccountId(new NumberSearchField(
+						criteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
 						presenter.go(container, new RoleScreenData.Search(
 								criteria));
