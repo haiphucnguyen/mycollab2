@@ -19,12 +19,14 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 
 @Aspect
 @Component
@@ -32,15 +34,15 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 public class L2CacheAspect {
 	private Logger log = LoggerFactory.getLogger(L2CacheAspect.class);
 
-	static List<Class> blacklistCls = Arrays
-			.asList(new Class[] { RelayEmailNotificationService.class });
+	static List<Class> blacklistCls = Arrays.asList(new Class[] {
+			RelayEmailNotificationService.class, MonitorItemService.class, ExtMailService.class });
 
 	@Around("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {
 
 		Advised advised = (Advised) pjp.getThis();
 		Class cls = advised.getTargetSource().getTargetClass();
-		if (blacklistCls.contains(cls)) {
+		if (blacklistCls.contains(CacheUtils.getEnclosingServiceInterface(cls))) {
 			return pjp.proceed();
 		}
 
@@ -92,7 +94,7 @@ public class L2CacheAspect {
 								String key = String
 										.format("%s-%s-%s",
 												CacheUtils
-														.getEnclosingServiceInterface(cls),
+														.getEnclosingServiceInterfaceName(cls),
 												method.getName(),
 												CacheUtils
 														.constructParamsKey(args));

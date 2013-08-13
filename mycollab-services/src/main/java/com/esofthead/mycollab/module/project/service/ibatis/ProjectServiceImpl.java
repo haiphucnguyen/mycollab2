@@ -228,10 +228,8 @@ public class ProjectServiceImpl extends
 		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
 			return projectMapperExt.getSubdomainOfProject(projectId);
 		} else {
-
+			return SiteConfiguration.getSiteUrl("");
 		}
-
-		return null;
 	}
 
 	@Override

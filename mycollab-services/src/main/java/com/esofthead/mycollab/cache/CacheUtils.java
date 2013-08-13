@@ -31,10 +31,10 @@ public class CacheUtils {
 
 	public static String getCachePrefix(Class serviceClass, Integer accountId) {
 		return String.format("%s-%d",
-				getEnclosingServiceInterface(serviceClass), accountId);
+				getEnclosingServiceInterfaceName(serviceClass), accountId);
 	}
 
-	public static String getEnclosingServiceInterface(Class serviceClass) {
+	public static Class getEnclosingServiceInterface(Class serviceClass) {
 		Class<?> cls = ClassUtils.getInterfaceInstanceOf(serviceClass,
 				ICrudService.class);
 		if (cls == null) {
@@ -49,10 +49,15 @@ public class CacheUtils {
 
 		if (cls == null) {
 			throw new MyCollabException(
-					"Can not get enclosing interface service");
+					"Can not get enclosing interface service of class "
+							+ serviceClass.getName());
 		}
 
-		return cls.getName();
+		return cls;
+	}
+
+	public static String getEnclosingServiceInterfaceName(Class serviceClass) {
+		return getEnclosingServiceInterface(serviceClass).getName();
 	}
 
 	public static void cleanCache(Integer accountId, String prefixKey) {
