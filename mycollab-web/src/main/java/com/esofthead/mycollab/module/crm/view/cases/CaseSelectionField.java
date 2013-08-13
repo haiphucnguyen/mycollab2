@@ -80,7 +80,8 @@ public class CaseSelectionField extends FieldWrapper<CaseWithBLOBs> implements
 							.getProperty().getValue());
 					CaseService casesService = AppContext
 							.getSpringBean(CaseService.class);
-					SimpleCase cases = casesService.findById(casesId);
+					SimpleCase cases = casesService.findById(casesId,
+							AppContext.getAccountId());
 					if (cases != null) {
 						casesName.setValue(cases.getSubject());
 					}

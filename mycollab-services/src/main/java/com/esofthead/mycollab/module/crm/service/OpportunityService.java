@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.crm.service;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
@@ -27,21 +29,29 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 
 public interface OpportunityService extends
-        IDefaultService<Integer, Opportunity, OpportunitySearchCriteria> {
+		IDefaultService<Integer, Opportunity, OpportunitySearchCriteria> {
 
-    SimpleOpportunity findById(int opportunityId);
-    
-    List<GroupItem> getSalesStageSummary(OpportunitySearchCriteria criteria);
-    
-    List<GroupItem> getLeadSourcesSummary(OpportunitySearchCriteria criteria);
-    
-    void saveOpportunityContactRelationship(List<OpportunityContact> associateContacts);
-    
-    void removeOpportunityContactRelationship(OpportunityContact associateContact);
-    
-    void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads);
-    
-    void removeOpportunityLeadRelationship(OpportunityLead associateLead);
+	@Cacheable
+	SimpleOpportunity findById(int opportunityId, @CacheKey int sAccountId);
 
-	void updateBySearchCriteria(Opportunity value,OpportunitySearchCriteria searchCriteria);
+	@Cacheable
+	List<GroupItem> getSalesStageSummary(
+			@CacheKey OpportunitySearchCriteria criteria);
+
+	@Cacheable
+	List<GroupItem> getLeadSourcesSummary(
+			@CacheKey OpportunitySearchCriteria criteria);
+
+	void saveOpportunityContactRelationship(
+			List<OpportunityContact> associateContacts);
+
+	void removeOpportunityContactRelationship(
+			OpportunityContact associateContact);
+
+	void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads);
+
+	void removeOpportunityLeadRelationship(OpportunityLead associateLead);
+
+	void updateBySearchCriteria(Opportunity value,
+			OpportunitySearchCriteria searchCriteria);
 }

@@ -240,8 +240,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 			if (data.getParams() instanceof Integer) {
 				ContactService contactService = AppContext
 						.getSpringBean(ContactService.class);
-				SimpleContact contact = contactService.findById((Integer) data
-						.getParams());
+				SimpleContact contact = contactService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (contact != null) {
 					super.onGo(container, data);
 					view.previewItem(contact);

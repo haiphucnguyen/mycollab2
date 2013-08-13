@@ -20,27 +20,28 @@ import com.esofthead.mycollab.module.crm.service.MeetingService;
 @Transactional
 @Traceable(module = "Crm", type = "Meeting", nameField = "subject")
 @Auditable(module = "Crm", type = "Meeting")
-public class MeetingServiceImpl extends DefaultService<Integer, Meeting, MeetingSearchCriteria>
-        implements MeetingService {
+public class MeetingServiceImpl extends
+		DefaultService<Integer, Meeting, MeetingSearchCriteria> implements
+		MeetingService {
 
-    @Autowired
-    protected MeetingMapper meetingMapper;
-    @Autowired
-    protected MeetingMapperExt meetingMapperExt;
+	@Autowired
+	protected MeetingMapper meetingMapper;
+	@Autowired
+	protected MeetingMapperExt meetingMapperExt;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public ICrudGenericDAO<Integer, Meeting> getCrudMapper() {
-        return meetingMapper;
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public ICrudGenericDAO<Integer, Meeting> getCrudMapper() {
+		return meetingMapper;
+	}
 
-    @Override
-    public SimpleMeeting findById(int meetingId) {
-        return meetingMapperExt.findById(meetingId);
-    }
+	@Override
+	public SimpleMeeting findById(int meetingId, int sAccountId) {
+		return meetingMapperExt.findById(meetingId);
+	}
 
-    @Override
-    public ISearchableDAO<MeetingSearchCriteria> getSearchMapper() {
-        return meetingMapperExt;
-    }
+	@Override
+	public ISearchableDAO<MeetingSearchCriteria> getSearchMapper() {
+		return meetingMapperExt;
+	}
 }

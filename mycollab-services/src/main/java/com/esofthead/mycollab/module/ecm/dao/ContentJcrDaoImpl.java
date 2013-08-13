@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class ContentJcrDaoImpl implements ContentJcrDao {
 
 	private static Logger log = LoggerFactory

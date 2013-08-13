@@ -17,6 +17,8 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -24,5 +26,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
 
 public interface TaskService extends
 		IDefaultService<Integer, Task, TodoSearchCriteria> {
-	SimpleTask findById(int taskId);
+	@Cacheable
+	SimpleTask findById(int taskId, @CacheKey int sAccountId);
 }

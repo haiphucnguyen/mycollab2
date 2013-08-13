@@ -17,12 +17,15 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class OpportunityEditFormFieldFactory extends DefaultEditFormFieldFactory{
+public class OpportunityEditFormFieldFactory extends
+		DefaultEditFormFieldFactory {
 	private static final long serialVersionUID = 1L;
 	private Opportunity opportunity;
-	public OpportunityEditFormFieldFactory(Opportunity opportunity){
+
+	public OpportunityEditFormFieldFactory(Opportunity opportunity) {
 		this.opportunity = opportunity;
 	}
+
 	@Override
 	protected Field onCreateField(Item item, Object propertyId,
 			com.vaadin.ui.Component uiContext) {
@@ -31,8 +34,8 @@ public class OpportunityEditFormFieldFactory extends DefaultEditFormFieldFactory
 			if (opportunity.getCampaignid() != null) {
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
-				SimpleCampaign campaign = campaignService
-						.findById(opportunity.getCampaignid());
+				SimpleCampaign campaign = campaignService.findById(
+						opportunity.getCampaignid(), AppContext.getAccountId());
 				if (campaign != null) {
 					campaignField.setCampaign(campaign);
 				}
@@ -44,8 +47,8 @@ public class OpportunityEditFormFieldFactory extends DefaultEditFormFieldFactory
 			if (opportunity.getAccountid() != null) {
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
-				SimpleAccount account = accountService
-						.findById(opportunity.getAccountid());
+				SimpleAccount account = accountService.findById(
+						opportunity.getAccountid(), AppContext.getAccountId());
 				if (account != null) {
 					accountField.setAccount(account);
 				}
@@ -59,7 +62,7 @@ public class OpportunityEditFormFieldFactory extends DefaultEditFormFieldFactory
 			return tf;
 		} else if (propertyId.equals("currencyid")) {
 			CurrencyComboBox currencyBox = new CurrencyComboBox();
-			
+
 			return currencyBox;
 		} else if (propertyId.equals("salesstage")) {
 			return new OpportunitySalesStageComboBox();

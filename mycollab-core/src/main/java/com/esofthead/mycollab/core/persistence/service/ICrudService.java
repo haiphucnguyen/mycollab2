@@ -21,26 +21,29 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 
 public interface ICrudService<K extends Serializable, T> extends IService {
 
 	@CacheEvict
-	int saveWithSession(T record, String username);
+	int saveWithSession(@CacheKey T record, String username);
 
 	@CacheEvict
-	int updateWithSession(T record, String username);
+	int updateWithSession(@CacheKey T record, String username);
 
 	@CacheEvict
-	void massUpdateWithSession(T record, List<K> primaryKeys, int accountId);
+	void massUpdateWithSession(@CacheKey T record, List<K> primaryKeys,
+			int accountId);
 
 	@Cacheable
-	T findByPrimaryKey(K primaryKey, int accountId);
+	T findByPrimaryKey(K primaryKey, @CacheKey int sAccountId);
 
 	@CacheEvict
-	int removeWithSession(K primaryKey, String username, int accountId);
+	int removeWithSession(K primaryKey, String username,
+			@CacheKey int sAccountId);
 
 	@CacheEvict
 	void massRemoveWithSession(List<K> primaryKeys, String username,
-			int accountId);
+			@CacheKey int sAccountId);
 }

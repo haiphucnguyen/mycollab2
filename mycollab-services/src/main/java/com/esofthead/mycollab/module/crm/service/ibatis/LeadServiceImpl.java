@@ -36,26 +36,27 @@ import com.esofthead.mycollab.module.crm.service.LeadService;
 @Transactional
 @Traceable(module = "Crm", type = "Lead", nameField = "lastname")
 @Auditable(module = "Crm", type = "Lead")
-public class LeadServiceImpl extends DefaultService<Integer, Lead, LeadSearchCriteria>
-        implements LeadService {
+public class LeadServiceImpl extends
+		DefaultService<Integer, Lead, LeadSearchCriteria> implements
+		LeadService {
 
-    @Autowired
-    private LeadMapper leadMapper;
-    @Autowired
-    private LeadMapperExt leadMapperExt;
+	@Autowired
+	private LeadMapper leadMapper;
+	@Autowired
+	private LeadMapperExt leadMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, Lead> getCrudMapper() {
-        return leadMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, Lead> getCrudMapper() {
+		return leadMapper;
+	}
 
-    @Override
-    public ISearchableDAO<LeadSearchCriteria> getSearchMapper() {
-        return leadMapperExt;
-    }
+	@Override
+	public ISearchableDAO<LeadSearchCriteria> getSearchMapper() {
+		return leadMapperExt;
+	}
 
-    @Override
-    public SimpleLead findById(int leadId) {
-        return leadMapperExt.findById(leadId);
-    }
+	@Override
+	public SimpleLead findById(int leadId, int sAccountId) {
+		return leadMapperExt.findById(leadId);
+	}
 }

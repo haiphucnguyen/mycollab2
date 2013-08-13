@@ -68,14 +68,9 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
-	public SimpleContact findById(int contactId) {
+	public SimpleContact findById(int contactId, int sAccountId) {
 		SimpleContact contact = contactMapperExt.findById(contactId);
 		return contact;
-	}
-
-	@Override
-	public SimpleContact findByPrimaryKey(Integer primaryKey, int accountId) {
-		return findById(primaryKey);
 	}
 
 	@Override

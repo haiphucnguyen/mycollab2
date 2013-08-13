@@ -283,8 +283,8 @@ public class OpportunityReadPresenter extends
 			if (data.getParams() instanceof Integer) {
 				OpportunityService opportunityService = AppContext
 						.getSpringBean(OpportunityService.class);
-				SimpleOpportunity opportunity = opportunityService
-						.findById((Integer) data.getParams());
+				SimpleOpportunity opportunity = opportunityService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (opportunity != null) {
 					super.onGo(container, data);
 					view.previewItem(opportunity);

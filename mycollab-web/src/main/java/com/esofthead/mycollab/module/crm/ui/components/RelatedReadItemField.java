@@ -56,8 +56,8 @@ public class RelatedReadItemField extends CustomField {
 			if ("Account".equals(type)) {
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
-				final SimpleAccount account = accountService
-						.findById(typeid);
+				final SimpleAccount account = accountService.findById(typeid,
+						AppContext.getAccountId());
 				if (account != null) {
 					relatedLink = new ButtonLink(account.getAccountname(),
 							new Button.ClickListener() {
@@ -74,8 +74,8 @@ public class RelatedReadItemField extends CustomField {
 			} else if ("Campaign".equals(type)) {
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
-				final SimpleCampaign campaign = campaignService
-						.findById(typeid);
+				final SimpleCampaign campaign = campaignService.findById(
+						typeid, AppContext.getAccountId());
 				if (campaign != null) {
 					relatedLink = new ButtonLink(campaign.getCampaignname(),
 							new Button.ClickListener() {
@@ -93,8 +93,8 @@ public class RelatedReadItemField extends CustomField {
 			} else if ("Contact".equals(type)) {
 				ContactService contactService = AppContext
 						.getSpringBean(ContactService.class);
-				final SimpleContact contact = contactService
-						.findById(typeid);
+				final SimpleContact contact = contactService.findById(typeid,
+						AppContext.getAccountId());
 				if (contact != null) {
 					relatedLink = new ButtonLink(contact.getContactName(),
 							new Button.ClickListener() {
@@ -111,7 +111,8 @@ public class RelatedReadItemField extends CustomField {
 			} else if ("Lead".equals(type)) {
 				LeadService leadService = AppContext
 						.getSpringBean(LeadService.class);
-				final SimpleLead lead = leadService.findById(typeid);
+				final SimpleLead lead = leadService.findById(typeid,
+						AppContext.getAccountId());
 				if (lead != null) {
 					relatedLink = new ButtonLink(lead.getLeadName(),
 							new Button.ClickListener() {
@@ -129,7 +130,7 @@ public class RelatedReadItemField extends CustomField {
 				OpportunityService opportunityService = AppContext
 						.getSpringBean(OpportunityService.class);
 				final SimpleOpportunity opportunity = opportunityService
-						.findById(typeid);
+						.findById(typeid, AppContext.getAccountId());
 				if (opportunity != null) {
 					relatedLink = new ButtonLink(
 							opportunity.getOpportunityname(),
@@ -147,7 +148,8 @@ public class RelatedReadItemField extends CustomField {
 			} else if ("Case".equals(type)) {
 				CaseService caseService = AppContext
 						.getSpringBean(CaseService.class);
-				final SimpleCase cases = caseService.findById(typeid);
+				final SimpleCase cases = caseService.findById(typeid,
+						AppContext.getAccountId());
 				if (cases != null) {
 					relatedLink = new ButtonLink(cases.getSubject(),
 							new Button.ClickListener() {

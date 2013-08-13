@@ -29,46 +29,48 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
-public class AssignmentAddViewImpl extends AbstractView implements AssignmentAddView {
+public class AssignmentAddViewImpl extends AbstractView implements
+		AssignmentAddView {
 
-    private static final long serialVersionUID = 1L;
-    private EditForm editForm;
-    private Task task;
+	private static final long serialVersionUID = 1L;
+	private EditForm editForm;
+	private Task task;
 
-    public AssignmentAddViewImpl() {
-        super();
-        editForm = new EditForm();
-        this.addComponent(editForm);
-    }
+	public AssignmentAddViewImpl() {
+		super();
+		editForm = new EditForm();
+		this.addComponent(editForm);
+	}
 
-    @Override
-    public void editItem(Task item) {
-        this.task = item;
-        editForm.setItemDataSource(new BeanItem<Task>(task));
-    }
+	@Override
+	public void editItem(Task item) {
+		this.task = item;
+		editForm.setItemDataSource(new BeanItem<Task>(task));
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<Task> {
+	private class EditForm extends AdvancedEditBeanForm<Task> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource,
-                Collection<?> propertyIds) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
-            super.setItemDataSource(newDataSource, propertyIds);
-        }
+		@Override
+		public void setItemDataSource(Item newDataSource,
+				Collection<?> propertyIds) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource, propertyIds);
+		}
 
-        private class FormLayoutFactory extends AssignmentFormLayoutFactory {
+		private class FormLayoutFactory extends AssignmentFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
-            
-            public FormLayoutFactory() {
-                super((task.getId() == null) ? "Create Task" : task.getSubject());
-            }
+			private static final long serialVersionUID = 1L;
 
-            private Layout createButtonControls() {
-            	final HorizontalLayout controlPanel = new HorizontalLayout();
+			public FormLayoutFactory() {
+				super((task.getId() == null) ? "Create Task" : task
+						.getSubject());
+			}
+
+			private Layout createButtonControls() {
+				final HorizontalLayout controlPanel = new HorizontalLayout();
 				final Layout controlButtons = (new EditFormControlsGenerator<Task>(
 						EditForm.this)).createButtonControls();
 				controlButtons.setSizeUndefined();
@@ -77,101 +79,105 @@ public class AssignmentAddViewImpl extends AbstractView implements AssignmentAdd
 				controlPanel.setComponentAlignment(controlButtons,
 						Alignment.MIDDLE_CENTER);
 				return controlPanel;
-            }
+			}
 
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return null;
-            }
-        }
+			@Override
+			protected Layout createBottomPanel() {
+				return null;
+			}
+		}
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("startdate")) {
-                    PopupDateField dateField = new PopupDateField();
-                    dateField.setDateFormat(AppContext.getDateTimeFormat());
-                    return dateField;
-                } else if (propertyId.equals("duedate")) {
-                    PopupDateField dateField = new PopupDateField();
-                    dateField.setDateFormat(AppContext.getDateTimeFormat());
-                    return dateField;
-                } else if (propertyId.equals("status")) {
-                    return new TaskStatusComboBox();
-                } else if (propertyId.equals("priority")) {
-                    return new TaskPriorityComboBox();
-                } else if (propertyId.equals("description")) {
-                    TextArea descArea = new TextArea();
-                    descArea.setNullRepresentation("");
-                    return descArea;
-                } else if (propertyId.equals("contactid")) {
-                    ContactSelectionField field = new ContactSelectionField();
-                    if (task.getContactid() != null) {
-                        ContactService accountService = AppContext
-                                .getSpringBean(ContactService.class);
-                        SimpleContact contact = accountService
-                                .findById(task.getContactid());
-                        if (contact != null) {
-                            field.setContact(contact);
-                        }
-                    }
-                    return field;
-                } else if (propertyId.equals("subject")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Subject must not be null");
-                    return tf;
-                } else if (propertyId.equals("type")) {
-                    RelatedEditItemField field = new RelatedEditItemField(new String[]{
-                                CrmTypeConstants.ACCOUNT, CrmTypeConstants.CAMPAIGN, CrmTypeConstants.CONTACT, CrmTypeConstants.LEAD,
-                                CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE}, task);
-                    field.setType(task.getType());
-                    
-                    return field;
-                } else if (propertyId.equals("assignuser")) {
-                    UserComboBox userBox = new UserComboBox();
-                    userBox.select(task.getAssignuser());
-                    return userBox;
-                }
-                return null;
-            }
-        }
-    }
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("startdate")) {
+					PopupDateField dateField = new PopupDateField();
+					dateField.setDateFormat(AppContext.getDateTimeFormat());
+					return dateField;
+				} else if (propertyId.equals("duedate")) {
+					PopupDateField dateField = new PopupDateField();
+					dateField.setDateFormat(AppContext.getDateTimeFormat());
+					return dateField;
+				} else if (propertyId.equals("status")) {
+					return new TaskStatusComboBox();
+				} else if (propertyId.equals("priority")) {
+					return new TaskPriorityComboBox();
+				} else if (propertyId.equals("description")) {
+					TextArea descArea = new TextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
+				} else if (propertyId.equals("contactid")) {
+					ContactSelectionField field = new ContactSelectionField();
+					if (task.getContactid() != null) {
+						ContactService accountService = AppContext
+								.getSpringBean(ContactService.class);
+						SimpleContact contact = accountService.findById(
+								task.getContactid(), AppContext.getAccountId());
+						if (contact != null) {
+							field.setContact(contact);
+						}
+					}
+					return field;
+				} else if (propertyId.equals("subject")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Subject must not be null");
+					return tf;
+				} else if (propertyId.equals("type")) {
+					RelatedEditItemField field = new RelatedEditItemField(
+							new String[] { CrmTypeConstants.ACCOUNT,
+									CrmTypeConstants.CAMPAIGN,
+									CrmTypeConstants.CONTACT,
+									CrmTypeConstants.LEAD,
+									CrmTypeConstants.OPPORTUNITY,
+									CrmTypeConstants.CASE }, task);
+					field.setType(task.getType());
 
-    @Override
-    public HasEditFormHandlers<Task> getEditFormHandlers() {
-        return editForm;
-    }
+					return field;
+				} else if (propertyId.equals("assignuser")) {
+					UserComboBox userBox = new UserComboBox();
+					userBox.select(task.getAssignuser());
+					return userBox;
+				}
+				return null;
+			}
+		}
+	}
 
-    class TaskPriorityComboBox extends ValueComboBox {
+	@Override
+	public HasEditFormHandlers<Task> getEditFormHandlers() {
+		return editForm;
+	}
 
-        private static final long serialVersionUID = 1L;
+	class TaskPriorityComboBox extends ValueComboBox {
 
-        public TaskPriorityComboBox() {
-            super();
-            setCaption(null);
-            this.loadData(CrmDataTypeFactory.getTaskPriorities());
-        }
-    }
+		private static final long serialVersionUID = 1L;
 
-    class TaskStatusComboBox extends ValueComboBox {
+		public TaskPriorityComboBox() {
+			super();
+			setCaption(null);
+			this.loadData(CrmDataTypeFactory.getTaskPriorities());
+		}
+	}
 
-        private static final long serialVersionUID = 1L;
+	class TaskStatusComboBox extends ValueComboBox {
 
-        public TaskStatusComboBox() {
-            super();
-            setCaption(null);
-            this.loadData(CrmDataTypeFactory.getTaskStatuses());
-        }
-    }
+		private static final long serialVersionUID = 1L;
+
+		public TaskStatusComboBox() {
+			super();
+			setCaption(null);
+			this.loadData(CrmDataTypeFactory.getTaskStatuses());
+		}
+	}
 }

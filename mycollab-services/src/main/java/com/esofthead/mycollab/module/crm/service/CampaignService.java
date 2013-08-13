@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.crm.service;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
@@ -27,21 +29,20 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 
 public interface CampaignService extends
-        IDefaultService<Integer, CampaignWithBLOBs, CampaignSearchCriteria> {
+		IDefaultService<Integer, CampaignWithBLOBs, CampaignSearchCriteria> {
 
-    SimpleCampaign findById(int campaignId);
+	@Cacheable
+	SimpleCampaign findById(int campaignId, @CacheKey int sAccountId);
 
-    void saveCampaignAccountRelationship(List<CampaignAccount> associateAccounts);
+	void saveCampaignAccountRelationship(List<CampaignAccount> associateAccounts);
 
-    void removeCampaignAccountRelationship(CampaignAccount associateAccount);
+	void removeCampaignAccountRelationship(CampaignAccount associateAccount);
 
-    void saveCampaignContactRelationship(List<CampaignContact> associateContacts);
+	void saveCampaignContactRelationship(List<CampaignContact> associateContacts);
 
-    void removeCampaignContactRelationship(CampaignContact associateContact);
+	void removeCampaignContactRelationship(CampaignContact associateContact);
 
-    void saveCampaignLeadRelationship(List<CampaignLead> associateLeads);
+	void saveCampaignLeadRelationship(List<CampaignLead> associateLeads);
 
-    void removeCampaignLeadRelationship(CampaignLead associateLead);
-
-	void updateBySearchCriteria(CampaignWithBLOBs value,CampaignSearchCriteria searchCriteria);
+	void removeCampaignLeadRelationship(CampaignLead associateLead);
 }

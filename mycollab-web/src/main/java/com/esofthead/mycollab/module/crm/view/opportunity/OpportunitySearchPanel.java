@@ -42,325 +42,325 @@ import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 public class OpportunitySearchPanel extends
-        DefaultGenericSearchPanel<OpportunitySearchCriteria> {
+		DefaultGenericSearchPanel<OpportunitySearchCriteria> {
 
-    protected OpportunitySearchCriteria searchCriteria;
+	protected OpportunitySearchCriteria searchCriteria;
 
-    public OpportunitySearchPanel() {
-        this.searchCriteria = new OpportunitySearchCriteria();
-    }
+	public OpportunitySearchPanel() {
+		this.searchCriteria = new OpportunitySearchCriteria();
+	}
 
-    private HorizontalLayout createSearchTopPanel() {
-        final HorizontalLayout layout = new HorizontalLayout();
-        layout.setWidth("100%");
-        layout.setSpacing(true);
+	private HorizontalLayout createSearchTopPanel() {
+		final HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
 
-        final Embedded titleIcon = new Embedded();
-        titleIcon.setSource(MyCollabResource
-                .newResource("icons/22/crm/opportunity.png"));
-        layout.addComponent(titleIcon);
-        layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/22/crm/opportunity.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
-        final Label searchtitle = new Label("Opportunities");
-        searchtitle.setStyleName(Reindeer.LABEL_H2);
-        layout.addComponent(searchtitle);
-        layout.setExpandRatio(searchtitle, 1.0f);
-        layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+		final Label searchtitle = new Label("Opportunities");
+		searchtitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(searchtitle);
+		layout.setExpandRatio(searchtitle, 1.0f);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-        final Button createAccountBtn = new Button("Create",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+		final Button createAccountBtn = new Button("Create",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBus.getInstance().fireEvent(
-                                new OpportunityEvent.GotoAdd(
-                                        OpportunitySearchPanel.this, null));
-                    }
-                });
-        createAccountBtn.setIcon(MyCollabResource
-                .newResource("icons/16/addRecord.png"));
-        createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        createAccountBtn.setEnabled(AppContext
-                .canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
-        UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new OpportunityEvent.GotoAdd(
+										OpportunitySearchPanel.this, null));
+					}
+				});
+		createAccountBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
+		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createAccountBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
+		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
-        return layout;
-    }
+		return layout;
+	}
 
-    @SuppressWarnings("rawtypes")
-    private class OpportunityBasicSearchLayout extends BasicSearchLayout {
+	@SuppressWarnings("rawtypes")
+	private class OpportunityBasicSearchLayout extends BasicSearchLayout {
 
-        private static final long serialVersionUID = 1L;
-        private TextField nameField;
-        private CheckBox myItemCheckbox;
+		private static final long serialVersionUID = 1L;
+		private TextField nameField;
+		private CheckBox myItemCheckbox;
 
-        @SuppressWarnings("unchecked")
-        public OpportunityBasicSearchLayout() {
-            super(OpportunitySearchPanel.this);
-        }
+		@SuppressWarnings("unchecked")
+		public OpportunityBasicSearchLayout() {
+			super(OpportunitySearchPanel.this);
+		}
 
-        @Override
-        public ComponentContainer constructHeader() {
-            return OpportunitySearchPanel.this.createSearchTopPanel();
-        }
+		@Override
+		public ComponentContainer constructHeader() {
+			return OpportunitySearchPanel.this.createSearchTopPanel();
+		}
 
-        @Override
-        public ComponentContainer constructBody() {
-            final HorizontalLayout layout = new HorizontalLayout();
-            layout.setSpacing(false);
+		@Override
+		public ComponentContainer constructBody() {
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(false);
 
-            this.nameField = this.createSeachSupportTextField(new TextField(),
-                    "NameFieldOfSearch");
-            this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            UiUtils.addComponent(layout, this.nameField,
-                    Alignment.MIDDLE_CENTER);
+			this.nameField = this.createSeachSupportTextField(new TextField(),
+					"NameFieldOfSearch");
+			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(layout, this.nameField,
+					Alignment.MIDDLE_CENTER);
 
-            final Button searchBtn = new Button();
-            searchBtn.setStyleName("search-icon-button");
-            searchBtn.setIcon(MyCollabResource
-                    .newResource("icons/16/search_white.png"));
+			final Button searchBtn = new Button();
+			searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search_white.png"));
 
-            searchBtn.addListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    OpportunityBasicSearchLayout.this.callSearchAction();
-                }
-            });
-            UiUtils.addComponent(layout, searchBtn, Alignment.MIDDLE_LEFT);
+			searchBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					OpportunityBasicSearchLayout.this.callSearchAction();
+				}
+			});
+			UiUtils.addComponent(layout, searchBtn, Alignment.MIDDLE_LEFT);
 
-            this.myItemCheckbox = new CheckBox(
-                    LocalizationHelper
-                            .getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
-            this.myItemCheckbox.setWidth("75px");
-            UiUtils.addComponent(layout, this.myItemCheckbox,
-                    Alignment.MIDDLE_CENTER);
+			this.myItemCheckbox = new CheckBox(
+					LocalizationHelper
+							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
+			this.myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(layout, this.myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
 
-            final Separator separator1 = new Separator();
-            UiUtils.addComponent(layout, separator1, Alignment.MIDDLE_LEFT);
+			final Separator separator1 = new Separator();
+			UiUtils.addComponent(layout, separator1, Alignment.MIDDLE_LEFT);
 
-            final Button cancelBtn = new Button(
-                    LocalizationHelper
-                            .getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
-            cancelBtn.setStyleName(UIConstants.THEME_LINK);
-            cancelBtn.addStyleName("cancel-button");
-            cancelBtn.addListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    OpportunityBasicSearchLayout.this.nameField.setValue("");
-                }
-            });
-            UiUtils.addComponent(layout, cancelBtn, Alignment.MIDDLE_CENTER);
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+			cancelBtn.setStyleName(UIConstants.THEME_LINK);
+			cancelBtn.addStyleName("cancel-button");
+			cancelBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					OpportunityBasicSearchLayout.this.nameField.setValue("");
+				}
+			});
+			UiUtils.addComponent(layout, cancelBtn, Alignment.MIDDLE_CENTER);
 
-            final Separator separator2 = new Separator();
-            UiUtils.addComponent(layout, separator2, Alignment.MIDDLE_LEFT);
+			final Separator separator2 = new Separator();
+			UiUtils.addComponent(layout, separator2, Alignment.MIDDLE_LEFT);
 
-            final Button advancedSearchBtn = new Button("Advanced Search",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+			final Button advancedSearchBtn = new Button("Advanced Search",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            OpportunitySearchPanel.this
-                                    .moveToAdvancedSearchLayout();
-                        }
-                    });
-            advancedSearchBtn.setStyleName("link");
-            UiUtils.addComponent(layout, advancedSearchBtn,
-                    Alignment.MIDDLE_CENTER);
-            return layout;
-        }
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							OpportunitySearchPanel.this
+									.moveToAdvancedSearchLayout();
+						}
+					});
+			advancedSearchBtn.setStyleName("link");
+			UiUtils.addComponent(layout, advancedSearchBtn,
+					Alignment.MIDDLE_CENTER);
+			return layout;
+		}
 
-        @Override
-        protected SearchCriteria fillupSearchCriteria() {
-            OpportunitySearchPanel.this.searchCriteria = new OpportunitySearchCriteria();
-            OpportunitySearchPanel.this.searchCriteria
-                    .setSaccountid(new NumberSearchField(SearchField.AND,
-                            AppContext.getAccountId()));
+		@Override
+		protected SearchCriteria fillupSearchCriteria() {
+			OpportunitySearchPanel.this.searchCriteria = new OpportunitySearchCriteria();
+			OpportunitySearchPanel.this.searchCriteria
+					.setSaccountid(new NumberSearchField(SearchField.AND,
+							AppContext.getAccountId()));
 
-            if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
-                    .toString().trim())) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setOpportunityName(new StringSearchField(
-                                SearchField.AND, ((String) this.nameField
-                                        .getValue()).trim()));
-            }
+			if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
+					.toString().trim())) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setOpportunityName(new StringSearchField(
+								SearchField.AND, ((String) this.nameField
+										.getValue()).trim()));
+			}
 
-            if (this.myItemCheckbox.booleanValue()) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setAssignUsers(new SetSearchField<String>(
-                                SearchField.AND, new String[] { AppContext
-                                        .getUsername() }));
-            } else {
-                OpportunitySearchPanel.this.searchCriteria.setAssignUsers(null);
-            }
+			if (this.myItemCheckbox.booleanValue()) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setAssignUsers(new SetSearchField<String>(
+								SearchField.AND, new String[] { AppContext
+										.getUsername() }));
+			} else {
+				OpportunitySearchPanel.this.searchCriteria.setAssignUsers(null);
+			}
 
-            return OpportunitySearchPanel.this.searchCriteria;
-        }
-    }
+			return OpportunitySearchPanel.this.searchCriteria;
+		}
+	}
 
-    private class OpportunityAdvancedSearchLayout extends
-            DefaultAdvancedSearchLayout<OpportunitySearchCriteria> {
+	private class OpportunityAdvancedSearchLayout extends
+			DefaultAdvancedSearchLayout<OpportunitySearchCriteria> {
 
-        private static final long serialVersionUID = 1L;
-        private TextField opportunityNameField;
-        private AccountSelectionField accountField;
-        private TextField nextStepField;
-        private UserListSelect userField;
-        private OpportunitySalesStageListSelect stageField;
-        private LeadSourceListSelect sourceField;
+		private static final long serialVersionUID = 1L;
+		private TextField opportunityNameField;
+		private AccountSelectionField accountField;
+		private TextField nextStepField;
+		private UserListSelect userField;
+		private OpportunitySalesStageListSelect stageField;
+		private LeadSourceListSelect sourceField;
 
-        @SuppressWarnings("unchecked")
-        public OpportunityAdvancedSearchLayout() {
-            super(OpportunitySearchPanel.this, CrmTypeConstants.OPPORTUNITY);
-        }
+		@SuppressWarnings("unchecked")
+		public OpportunityAdvancedSearchLayout() {
+			super(OpportunitySearchPanel.this, CrmTypeConstants.OPPORTUNITY);
+		}
 
-        @Override
-        public ComponentContainer constructHeader() {
-            return OpportunitySearchPanel.this.createSearchTopPanel();
-        }
+		@Override
+		public ComponentContainer constructHeader() {
+			return OpportunitySearchPanel.this.createSearchTopPanel();
+		}
 
-        @Override
-        public ComponentContainer constructBody() {
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
-                    "100%", "90px");
-            gridLayout.getLayout().setWidth("100%");
-            gridLayout.getLayout().setMargin(true, true, true, false);
+		@Override
+		public ComponentContainer constructBody() {
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
+					"100%", "90px");
+			gridLayout.getLayout().setWidth("100%");
+			gridLayout.getLayout().setMargin(true, true, true, false);
 
-            // if (ScreenSize.hasSupport1024Pixels()) {
-            // gridLayout = new GridFormLayoutHelper(3, 3,
-            // UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-            // "90px");
-            // } else if (ScreenSize.hasSupport1280Pixels()) {
-            // gridLayout = new GridFormLayoutHelper(3, 3, "90px");
-            // }
+			// if (ScreenSize.hasSupport1024Pixels()) {
+			// gridLayout = new GridFormLayoutHelper(3, 3,
+			// UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+			// "90px");
+			// } else if (ScreenSize.hasSupport1280Pixels()) {
+			// gridLayout = new GridFormLayoutHelper(3, 3, "90px");
+			// }
 
-            this.opportunityNameField = (TextField) gridLayout.addComponent(
-                    new TextField(), "Name", 0, 0);
-            this.accountField = (AccountSelectionField) gridLayout
-                    .addComponent(new AccountSelectionField(), "Account", 1, 0);
-            this.nextStepField = (TextField) gridLayout.addComponent(
-                    new TextField(), "Next Step", 2, 0);
+			this.opportunityNameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Name", 0, 0);
+			this.accountField = (AccountSelectionField) gridLayout
+					.addComponent(new AccountSelectionField(), "Account", 1, 0);
+			this.nextStepField = (TextField) gridLayout.addComponent(
+					new TextField(), "Next Step", 2, 0);
 
-            this.userField = (UserListSelect) gridLayout.addComponent(
-                    new UserListSelect(), "Assigned to", 0, 1);
-            this.stageField = (OpportunitySalesStageListSelect) gridLayout
-                    .addComponent(new OpportunitySalesStageListSelect(),
-                            "Sales Stage", 1, 1);
-            this.sourceField = (LeadSourceListSelect) gridLayout.addComponent(
-                    new LeadSourceListSelect(), "Lead Source", 2, 1);
+			this.userField = (UserListSelect) gridLayout.addComponent(
+					new UserListSelect(), "Assigned to", 0, 1);
+			this.stageField = (OpportunitySalesStageListSelect) gridLayout
+					.addComponent(new OpportunitySalesStageListSelect(),
+							"Sales Stage", 1, 1);
+			this.sourceField = (LeadSourceListSelect) gridLayout.addComponent(
+					new LeadSourceListSelect(), "Lead Source", 2, 1);
 
-            gridLayout.getLayout().setSpacing(true);
-            return gridLayout.getLayout();
-        }
+			gridLayout.getLayout().setSpacing(true);
+			return gridLayout.getLayout();
+		}
 
-        @Override
-        protected OpportunitySearchCriteria fillupSearchCriteria() {
-            OpportunitySearchPanel.this.searchCriteria = new OpportunitySearchCriteria();
-            OpportunitySearchPanel.this.searchCriteria
-                    .setSaccountid(new NumberSearchField(SearchField.AND,
-                            AppContext.getAccountId()));
+		@Override
+		protected OpportunitySearchCriteria fillupSearchCriteria() {
+			OpportunitySearchPanel.this.searchCriteria = new OpportunitySearchCriteria();
+			OpportunitySearchPanel.this.searchCriteria
+					.setSaccountid(new NumberSearchField(SearchField.AND,
+							AppContext.getAccountId()));
 
-            if (StringUtil.isNotNullOrEmpty((String) this.opportunityNameField
-                    .getValue())) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setOpportunityName(new StringSearchField(
-                                SearchField.AND,
-                                ((String) this.opportunityNameField.getValue())
-                                        .trim()));
-            }
+			if (StringUtil.isNotNullOrEmpty((String) this.opportunityNameField
+					.getValue())) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setOpportunityName(new StringSearchField(
+								SearchField.AND,
+								((String) this.opportunityNameField.getValue())
+										.trim()));
+			}
 
-            final SimpleAccount account = this.accountField.getAccount();
-            if (account.getId() != null) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setAccountId(new NumberSearchField(SearchField.AND,
-                                account.getId()));
-            }
+			final SimpleAccount account = this.accountField.getAccount();
+			if (account.getId() != null) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setAccountId(new NumberSearchField(SearchField.AND,
+								account.getId()));
+			}
 
-            if (StringUtil.isNotNullOrEmpty((String) this.nextStepField
-                    .getValue())) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setNextStep(new StringSearchField(SearchField.AND,
-                                ((String) this.nextStepField.getValue()).trim()));
-            }
+			if (StringUtil.isNotNullOrEmpty((String) this.nextStepField
+					.getValue())) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setNextStep(new StringSearchField(SearchField.AND,
+								((String) this.nextStepField.getValue()).trim()));
+			}
 
-            final Collection<String> assignUsers = (Collection<String>) this.userField
-                    .getValue();
-            if (assignUsers != null && assignUsers.size() > 0) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setAssignUsers(new SetSearchField<String>(
-                                SearchField.AND, assignUsers));
-            }
+			final Collection<String> assignUsers = (Collection<String>) this.userField
+					.getValue();
+			if (assignUsers != null && assignUsers.size() > 0) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setAssignUsers(new SetSearchField<String>(
+								SearchField.AND, assignUsers));
+			}
 
-            final Collection<String> saleStages = (Collection<String>) this.stageField
-                    .getValue();
-            if (saleStages != null && saleStages.size() > 0) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setSalesStages(new SetSearchField<String>(
-                                SearchField.AND, saleStages));
-            }
+			final Collection<String> saleStages = (Collection<String>) this.stageField
+					.getValue();
+			if (saleStages != null && saleStages.size() > 0) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setSalesStages(new SetSearchField<String>(
+								SearchField.AND, saleStages));
+			}
 
-            final Collection<String> leadSources = (Collection<String>) this.sourceField
-                    .getValue();
-            if (leadSources != null && leadSources.size() > 0) {
-                OpportunitySearchPanel.this.searchCriteria
-                        .setLeadSources(new SetSearchField<String>(
-                                SearchField.AND, leadSources));
-            }
-            return OpportunitySearchPanel.this.searchCriteria;
-        }
+			final Collection<String> leadSources = (Collection<String>) this.sourceField
+					.getValue();
+			if (leadSources != null && leadSources.size() > 0) {
+				OpportunitySearchPanel.this.searchCriteria
+						.setLeadSources(new SetSearchField<String>(
+								SearchField.AND, leadSources));
+			}
+			return OpportunitySearchPanel.this.searchCriteria;
+		}
 
-        @Override
-        protected void clearFields() {
-            this.opportunityNameField.setValue("");
-            this.accountField.clearValue();
-            this.nextStepField.setValue("");
-            this.userField.setValue(null);
-            this.stageField.setValue(null);
-            this.sourceField.setValue(null);
-        }
+		@Override
+		protected void clearFields() {
+			this.opportunityNameField.setValue("");
+			this.accountField.clearValue();
+			this.nextStepField.setValue("");
+			this.userField.setValue(null);
+			this.stageField.setValue(null);
+			this.sourceField.setValue(null);
+		}
 
-        @Override
-        protected void loadSaveSearchToField(
-                final OpportunitySearchCriteria value) {
-            if (value.getOpportunityName() != null) {
-                this.opportunityNameField.setValue(value.getOpportunityName()
-                        .getValue());
-            }
-            if (value.getAccountId() != null) {
-                final AccountService accountService = AppContext
-                        .getSpringBean(AccountService.class);
-                final SimpleAccount account = accountService
-                        .findById((Integer) value.getAccountId()
-                                .getValue());
-                this.accountField.setAccount(account);
-            }
-            if (value.getNextStep() != null) {
-                this.nextStepField.setValue(value.getNextStep().getValue());
-            }
-            if (value.getAssignUsers() != null) {
-                this.userField.setValue(Arrays.asList((Object[]) value
-                        .getAssignUsers().values));
-            }
-            if (value.getSalesStages() != null) {
-                this.stageField.setValue(Arrays.asList((Object[]) value
-                        .getSalesStages().values));
-            }
-            if (value.getLeadSources() != null) {
-                this.sourceField.setValue(Arrays.asList((Object[]) value
-                        .getLeadSources().values));
-            }
-        }
-    }
+		@Override
+		protected void loadSaveSearchToField(
+				final OpportunitySearchCriteria value) {
+			if (value.getOpportunityName() != null) {
+				this.opportunityNameField.setValue(value.getOpportunityName()
+						.getValue());
+			}
+			if (value.getAccountId() != null) {
+				final AccountService accountService = AppContext
+						.getSpringBean(AccountService.class);
+				final SimpleAccount account = accountService.findById(
+						(Integer) value.getAccountId().getValue(),
+						AppContext.getAccountId());
+				this.accountField.setAccount(account);
+			}
+			if (value.getNextStep() != null) {
+				this.nextStepField.setValue(value.getNextStep().getValue());
+			}
+			if (value.getAssignUsers() != null) {
+				this.userField.setValue(Arrays.asList((Object[]) value
+						.getAssignUsers().values));
+			}
+			if (value.getSalesStages() != null) {
+				this.stageField.setValue(Arrays.asList((Object[]) value
+						.getSalesStages().values));
+			}
+			if (value.getLeadSources() != null) {
+				this.sourceField.setValue(Arrays.asList((Object[]) value
+						.getLeadSources().values));
+			}
+		}
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    protected BasicSearchLayout<OpportunitySearchCriteria> createBasicSearchLayout() {
-        return new OpportunityBasicSearchLayout();
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	protected BasicSearchLayout<OpportunitySearchCriteria> createBasicSearchLayout() {
+		return new OpportunityBasicSearchLayout();
+	}
 
-    @Override
-    protected SearchLayout<OpportunitySearchCriteria> createAdvancedSearchLayout() {
-        return new OpportunityAdvancedSearchLayout();
-    }
+	@Override
+	protected SearchLayout<OpportunitySearchCriteria> createAdvancedSearchLayout() {
+		return new OpportunityAdvancedSearchLayout();
+	}
 }
