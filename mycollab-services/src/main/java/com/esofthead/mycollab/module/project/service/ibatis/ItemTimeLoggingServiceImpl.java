@@ -35,7 +35,9 @@ public class ItemTimeLoggingServiceImpl extends
 
 	@Override
 	public Double getTotalHoursByCriteria(ItemTimeLoggingSearchCriteria criteria) {
-		return itemTimeLoggingMapperExt.getTotalHoursByCriteria(criteria);
+		Double value = itemTimeLoggingMapperExt
+				.getTotalHoursByCriteria(criteria);
+		return (value != null) ? value : 0;
 	}
 
 }

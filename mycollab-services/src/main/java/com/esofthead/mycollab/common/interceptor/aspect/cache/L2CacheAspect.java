@@ -101,10 +101,14 @@ public class L2CacheAspect {
 								Object returnVal = cache.get(key);
 								if (returnVal == null) {
 									returnVal = pjp.proceed();
-									cache.put(key, returnVal);
-									log.debug(
-											"There is no exist value of key {}, query from database then put it to cache",
-											key);
+									try {
+										cache.put(key, returnVal);
+										log.debug(
+												"There is no exist value of key {}, query from database then put it to cache",
+												key);
+									} catch (Exception e) {
+										log.error("Error while put to cache", e);
+									}
 									return returnVal;
 								} else {
 									log.debug(
