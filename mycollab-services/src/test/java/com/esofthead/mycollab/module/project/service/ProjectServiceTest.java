@@ -65,13 +65,4 @@ public class ProjectServiceTest extends ServiceTest {
 						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(2, projects.size());
 	}
-
-	@DataSet
-	@Test
-	public void testGetListProject() {
-		List projects = projectService.getListProject(1);
-
-		Assert.assertEquals(4, projects.size());
-
-	}
 }

@@ -46,6 +46,4 @@ public interface ProjectService extends
 
 	List<FollowingTicket> getProjectFollowingTickets(
 			SearchRequest<MonitorSearchCriteria> searchRequest);
-
-	List<Project> getListProject(int accountId);
 }

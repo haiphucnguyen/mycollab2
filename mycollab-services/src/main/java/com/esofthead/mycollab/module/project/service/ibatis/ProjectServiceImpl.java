@@ -35,7 +35,6 @@ import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.configuration.DeploymentMode;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -270,15 +269,5 @@ public class ProjectServiceImpl extends
 			log.error("Error while notify user delete", e);
 		}
 		return super.removeWithSession(projectId, username, accountId);
-	}
-
-	@Override
-	public List<Project> getListProject(int accountId) {
-		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(accountId));
-		criteria.setProjectStatus(new StringSearchField("Open"));
-
-		return projectMapperExt.findPagableListByCriteria(criteria,
-				new RowBounds(0, Integer.MAX_VALUE));
 	}
 }
