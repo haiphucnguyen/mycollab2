@@ -8,6 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.MyCollabClassRunner;
@@ -22,7 +25,11 @@ public class UserServiceTest extends ServiceTest {
 	@DataSet
 	@Test
 	public void testGetListUser() {
-		List lstUser = userService.getListUser(1);
+		UserSearchCriteria criteria = new UserSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(1));
+		List lstUser = userService
+				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(2, lstUser.size());
 	}
 }

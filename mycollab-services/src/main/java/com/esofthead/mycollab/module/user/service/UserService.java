@@ -46,6 +46,4 @@ public interface UserService extends
 	User findUserByUserName(String username);
 
 	void verifyUser(String username);
-
-	List<SimpleUser> getListUser(int accountId);
 }
