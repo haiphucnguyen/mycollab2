@@ -17,6 +17,8 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -24,7 +26,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 
 public interface LeadService extends
 		IDefaultService<Integer, Lead, LeadSearchCriteria> {
-	SimpleLead findById(int leadId);
-
-	void updateBySearchCriteria(Lead value, LeadSearchCriteria searchCriteria);
+	@Cacheable
+	SimpleLead findById(int leadId, @CacheKey int sAccountId);
 }

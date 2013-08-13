@@ -17,166 +17,167 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.BitSearchField;
+import com.esofthead.mycollab.core.arguments.GroupableSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class TodoSearchCriteria extends SearchCriteria {
+public class TodoSearchCriteria extends SearchCriteria implements
+		GroupableSearchCriteria {
 
-    private StringSearchField subject;
-    private StringSearchField contact;
-    private NumberSearchField contactId;
-    private NumberSearchField accountId;
-    private NumberSearchField campaignId;
-    private NumberSearchField targetId;
-    private NumberSearchField leadId;
-    private NumberSearchField opportunityId;
-    private NumberSearchField quoteId;
-    private NumberSearchField productId;
-    private NumberSearchField caseId;
-    private StringSearchField assignUser;
-    private StringSearchField type;
-    private NumberSearchField saccountid;
-    private StringSearchField status;
-    private NumberSearchField id;
-    
-    private BitSearchField isClosed;
+	private StringSearchField subject;
+	private StringSearchField contact;
+	private NumberSearchField contactId;
+	private NumberSearchField accountId;
+	private NumberSearchField campaignId;
+	private NumberSearchField targetId;
+	private NumberSearchField leadId;
+	private NumberSearchField opportunityId;
+	private NumberSearchField quoteId;
+	private NumberSearchField productId;
+	private NumberSearchField caseId;
+	private StringSearchField assignUser;
+	private StringSearchField type;
+	private NumberSearchField saccountid;
+	private StringSearchField status;
+	private NumberSearchField id;
 
-    public StringSearchField getSubject() {
-        return subject;
-    }
+	private BitSearchField isClosed;
 
-    public void setSubject(StringSearchField subject) {
-        this.subject = subject;
-    }
+	public StringSearchField getSubject() {
+		return subject;
+	}
 
-    public StringSearchField getContact() {
-        return contact;
-    }
+	public void setSubject(StringSearchField subject) {
+		this.subject = subject;
+	}
 
-    public void setContact(StringSearchField contact) {
-        this.contact = contact;
-    }
+	public StringSearchField getContact() {
+		return contact;
+	}
 
-    public NumberSearchField getContactId() {
-        return contactId;
-    }
+	public void setContact(StringSearchField contact) {
+		this.contact = contact;
+	}
 
-    public void setContactId(NumberSearchField contactId) {
-        this.contactId = contactId;
-    }
+	public NumberSearchField getContactId() {
+		return contactId;
+	}
 
-    public NumberSearchField getAccountId() {
-        return accountId;
-    }
+	public void setContactId(NumberSearchField contactId) {
+		this.contactId = contactId;
+	}
 
-    public void setAccountId(NumberSearchField accountId) {
-        this.accountId = accountId;
-    }
+	public NumberSearchField getAccountId() {
+		return accountId;
+	}
 
-    public NumberSearchField getCampaignId() {
-        return campaignId;
-    }
+	public void setAccountId(NumberSearchField accountId) {
+		this.accountId = accountId;
+	}
 
-    public void setCampaignId(NumberSearchField campaignId) {
-        this.campaignId = campaignId;
-    }
+	public NumberSearchField getCampaignId() {
+		return campaignId;
+	}
 
-    public NumberSearchField getTargetId() {
-        return targetId;
-    }
+	public void setCampaignId(NumberSearchField campaignId) {
+		this.campaignId = campaignId;
+	}
 
-    public void setTargetId(NumberSearchField targetId) {
-        this.targetId = targetId;
-    }
+	public NumberSearchField getTargetId() {
+		return targetId;
+	}
 
-    public NumberSearchField getLeadId() {
-        return leadId;
-    }
+	public void setTargetId(NumberSearchField targetId) {
+		this.targetId = targetId;
+	}
 
-    public void setLeadId(NumberSearchField leadId) {
-        this.leadId = leadId;
-    }
+	public NumberSearchField getLeadId() {
+		return leadId;
+	}
 
-    public NumberSearchField getOpportunityId() {
-        return opportunityId;
-    }
+	public void setLeadId(NumberSearchField leadId) {
+		this.leadId = leadId;
+	}
 
-    public void setOpportunityId(NumberSearchField opportunityId) {
-        this.opportunityId = opportunityId;
-    }
+	public NumberSearchField getOpportunityId() {
+		return opportunityId;
+	}
 
-    public NumberSearchField getQuoteId() {
-        return quoteId;
-    }
+	public void setOpportunityId(NumberSearchField opportunityId) {
+		this.opportunityId = opportunityId;
+	}
 
-    public void setQuoteId(NumberSearchField quoteId) {
-        this.quoteId = quoteId;
-    }
+	public NumberSearchField getQuoteId() {
+		return quoteId;
+	}
 
-    public NumberSearchField getProductId() {
-        return productId;
-    }
+	public void setQuoteId(NumberSearchField quoteId) {
+		this.quoteId = quoteId;
+	}
 
-    public void setProductId(NumberSearchField productId) {
-        this.productId = productId;
-    }
+	public NumberSearchField getProductId() {
+		return productId;
+	}
 
-    public NumberSearchField getCaseId() {
-        return caseId;
-    }
+	public void setProductId(NumberSearchField productId) {
+		this.productId = productId;
+	}
 
-    public void setCaseId(NumberSearchField caseId) {
-        this.caseId = caseId;
-    }
+	public NumberSearchField getCaseId() {
+		return caseId;
+	}
 
-    public StringSearchField getAssignUser() {
-        return assignUser;
-    }
+	public void setCaseId(NumberSearchField caseId) {
+		this.caseId = caseId;
+	}
 
-    public void setAssignUser(StringSearchField assignUser) {
-        this.assignUser = assignUser;
-    }
+	public StringSearchField getAssignUser() {
+		return assignUser;
+	}
 
-    public StringSearchField getType() {
-        return type;
-    }
+	public void setAssignUser(StringSearchField assignUser) {
+		this.assignUser = assignUser;
+	}
 
-    public void setType(StringSearchField type) {
-        this.type = type;
-    }
+	public StringSearchField getType() {
+		return type;
+	}
 
-    public NumberSearchField getSaccountid() {
-        return saccountid;
-    }
+	public void setType(StringSearchField type) {
+		this.type = type;
+	}
 
-    public void setSaccountid(NumberSearchField saccountid) {
-        this.saccountid = saccountid;
-    }
+	public NumberSearchField getSaccountid() {
+		return saccountid;
+	}
 
-    public StringSearchField getStatus() {
-        return status;
-    }
+	public void setSaccountid(NumberSearchField saccountid) {
+		this.saccountid = saccountid;
+	}
 
-    public void setStatus(StringSearchField status) {
-        this.status = status;
-    }
+	public StringSearchField getStatus() {
+		return status;
+	}
 
-    public void setId(NumberSearchField id) {
-        this.id = id;
-    }
+	public void setStatus(StringSearchField status) {
+		this.status = status;
+	}
 
-    public NumberSearchField getId() {
-        return id;
-    }
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
 
-    public BitSearchField getIsClosed() {
-        return isClosed;
-    }
+	public NumberSearchField getId() {
+		return id;
+	}
 
-    public void setIsClosed(BitSearchField isClosed) {
-        this.isClosed = isClosed;
-    }
-    
-    
+	public BitSearchField getIsClosed() {
+		return isClosed;
+	}
+
+	public void setIsClosed(BitSearchField isClosed) {
+		this.isClosed = isClosed;
+	}
+
 }

@@ -211,7 +211,7 @@
         </if>
     </select>
 
-    <select id="findCaseById" parameterType="int" resultMap="SimpleCaseResult">
+    <select id="findById" parameterType="int" resultMap="SimpleCaseResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.CaseMapperExt.selectSimpleCase" />
 

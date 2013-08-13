@@ -183,7 +183,7 @@
         ]]>
     </sql>
 
-    <select id="findTaskById" parameterType="int" resultMap="SimpleTaskResult">
+    <select id="findById" parameterType="int" resultMap="SimpleTaskResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.selectSimpleTask" />
 

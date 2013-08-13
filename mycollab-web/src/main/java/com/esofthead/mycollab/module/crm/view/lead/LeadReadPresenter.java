@@ -234,8 +234,8 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 			if (data.getParams() instanceof Integer) {
 				LeadService leadService = AppContext
 						.getSpringBean(LeadService.class);
-				SimpleLead lead = leadService.findById((Integer) data
-						.getParams());
+				SimpleLead lead = leadService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (lead != null) {
 					super.onGo(container, data);
 					view.previewItem(lead);

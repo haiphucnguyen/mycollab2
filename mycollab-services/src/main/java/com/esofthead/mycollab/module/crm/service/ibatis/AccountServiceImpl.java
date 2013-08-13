@@ -68,8 +68,8 @@ public class AccountServiceImpl extends
 	}
 
 	@Override
-	public SimpleAccount findById(int accountId) {
-		return accountMapperExt.findAccountById(accountId);
+	public SimpleAccount findById(int id, int accountId) {
+		return accountMapperExt.findById(id);
 	}
 
 	@Override
@@ -110,4 +110,5 @@ public class AccountServiceImpl extends
 		LocalCacheManager.removeCacheItems(accountId.toString(),
 				accountPrefixKey);
 	}
+	
 }

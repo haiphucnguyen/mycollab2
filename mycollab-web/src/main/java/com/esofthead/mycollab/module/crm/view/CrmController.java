@@ -258,8 +258,9 @@ public class CrmController implements IController {
 						if (event.getData() instanceof Integer) {
 							TaskService taskService = AppContext
 									.getSpringBean(TaskService.class);
-							task = taskService.findById((Integer) event
-									.getData());
+							task = taskService.findById(
+									(Integer) event.getData(),
+									AppContext.getAccountId());
 						} else if (event.getData() instanceof Task) {
 							task = (Task) event.getData();
 						} else {
@@ -327,8 +328,9 @@ public class CrmController implements IController {
 						if (event.getData() instanceof Integer) {
 							MeetingService meetingService = AppContext
 									.getSpringBean(MeetingService.class);
-							meeting = meetingService
-									.findById((Integer) event.getData());
+							meeting = meetingService.findById(
+									(Integer) event.getData(),
+									AppContext.getAccountId());
 						} else if (event.getData() instanceof Meeting) {
 							meeting = (Meeting) event.getData();
 						} else {
@@ -397,8 +399,9 @@ public class CrmController implements IController {
 						if (event.getData() instanceof Integer) {
 							CallService callService = AppContext
 									.getSpringBean(CallService.class);
-							call = callService.findById((Integer) event
-									.getData());
+							call = callService.findById(
+									(Integer) event.getData(),
+									AppContext.getAccountId());
 						} else if (event.getData() instanceof CallWithBLOBs) {
 							call = (CallWithBLOBs) event.getData();
 						} else {

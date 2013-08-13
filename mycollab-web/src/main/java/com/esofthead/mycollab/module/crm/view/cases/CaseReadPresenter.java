@@ -233,8 +233,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 			if (data.getParams() instanceof Integer) {
 				CaseService caseService = AppContext
 						.getSpringBean(CaseService.class);
-				SimpleCase cases = caseService.findById((Integer) data
-						.getParams());
+				SimpleCase cases = caseService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (cases != null) {
 					super.onGo(container, data);
 					view.previewItem(cases);

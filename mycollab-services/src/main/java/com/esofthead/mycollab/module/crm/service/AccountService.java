@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.crm.service;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountLead;
@@ -27,14 +29,12 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 public interface AccountService extends
 		IDefaultService<Integer, Account, AccountSearchCriteria> {
 
-	SimpleAccount findById(int accountId);
+	@Cacheable
+	SimpleAccount findById(int id, @CacheKey int accountId);
 
 	void saveAccountLeadRelationship(List<AccountLead> associateLeads,
 			Integer accountId);
 
 	void removeAccountLeadRelationship(AccountLead associateLead,
 			Integer accountId);
-
-	void updateBySearchCriteria(Account account,
-			AccountSearchCriteria searchCriteria);
 }

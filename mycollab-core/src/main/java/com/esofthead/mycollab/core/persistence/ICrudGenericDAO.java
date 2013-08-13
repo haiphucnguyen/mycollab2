@@ -48,6 +48,11 @@ public interface ICrudGenericDAO<K extends Serializable, T> {
      */
     int updateByPrimaryKeySelective(T record);
     
+    /**
+     * 
+     * @param record
+     * @param primaryKeys
+     */
     void massUpdateWithSession(@Param("record") T record, @Param("primaryKeys") List<K> primaryKeys);
 
     /**

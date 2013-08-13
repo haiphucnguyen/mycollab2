@@ -6,5 +6,5 @@ import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 
 public interface MeetingMapperExt extends ISearchableDAO<MeetingSearchCriteria> {
 
-    SimpleMeeting findMeetingById(int meetingId);
+    SimpleMeeting findById(int meetingId);
 }

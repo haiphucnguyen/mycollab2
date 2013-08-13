@@ -10,5 +10,5 @@ public interface AccountMapperExt extends
 		ISearchableDAO<AccountSearchCriteria>,
 		IMassUpdateDAO<Account, AccountSearchCriteria> {
 
-	public abstract SimpleAccount findAccountById(int accountId);
+	public abstract SimpleAccount findById(int accountId);
 }

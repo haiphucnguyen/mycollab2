@@ -118,7 +118,7 @@ public class AccountServiceTest extends ServiceTest {
 	@Test
 	@DataSet
 	public void testFindAccountById() {
-		SimpleAccount account = accountService.findById(1);
+		SimpleAccount account = accountService.findById(1, 1);
 		Assert.assertEquals("xyz", account.getAccountname());
 	}
 
@@ -143,7 +143,7 @@ public class AccountServiceTest extends ServiceTest {
 		account.setSaccountid(1);
 		accountService.updateWithSession(account, "hai79");
 
-		accountService.findById(1);
+		accountService.findById(1, 1);
 		Assert.assertEquals("abc", account.getAccountname());
 	}
 

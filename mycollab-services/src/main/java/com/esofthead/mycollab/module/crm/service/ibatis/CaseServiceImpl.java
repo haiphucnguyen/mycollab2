@@ -20,26 +20,27 @@ import com.esofthead.mycollab.module.crm.service.CaseService;
 @Transactional
 @Traceable(module = "Crm", type = "Case", nameField = "subject")
 @Auditable(module = "Crm", type = "Case")
-public class CaseServiceImpl extends DefaultService<Integer, CaseWithBLOBs, CaseSearchCriteria> implements
-        CaseService {
+public class CaseServiceImpl extends
+		DefaultService<Integer, CaseWithBLOBs, CaseSearchCriteria> implements
+		CaseService {
 
-    @Autowired
-    protected CaseMapper caseMapper;
-    @Autowired
-    protected CaseMapperExt caseMapperExt;
+	@Autowired
+	protected CaseMapper caseMapper;
+	@Autowired
+	protected CaseMapperExt caseMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, CaseWithBLOBs> getCrudMapper() {
-        return caseMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, CaseWithBLOBs> getCrudMapper() {
+		return caseMapper;
+	}
 
-    @Override
-    public ISearchableDAO<CaseSearchCriteria> getSearchMapper() {
-        return caseMapperExt;
-    }
+	@Override
+	public ISearchableDAO<CaseSearchCriteria> getSearchMapper() {
+		return caseMapperExt;
+	}
 
-    @Override
-    public SimpleCase findById(int caseId) {
-        return caseMapperExt.findCaseById(caseId);
-    }
+	@Override
+	public SimpleCase findById(int caseId, int sAccountId) {
+		return caseMapperExt.findById(caseId);
+	}
 }

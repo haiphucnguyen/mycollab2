@@ -222,7 +222,7 @@
         </if>
     </delete>
 
-    <select id="findAccountById" parameterType="java.lang.Integer"
+    <select id="findById" parameterType="java.lang.Integer"
         resultMap="SimpleAccountResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />

@@ -154,7 +154,8 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 			if (data.getParams() instanceof Integer) {
 				MeetingService meetingService = AppContext
 						.getSpringBean(MeetingService.class);
-				meeting = meetingService.findById((Integer) data.getParams());
+				meeting = meetingService.findById((Integer) data.getParams(),
+						AppContext.getAccountId());
 				if (meeting == null) {
 					AppContext
 							.getApplication()

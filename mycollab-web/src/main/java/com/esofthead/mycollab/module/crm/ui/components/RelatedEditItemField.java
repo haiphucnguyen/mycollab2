@@ -105,9 +105,8 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		clearBtn = new Embedded(null, MyCollabResource
-				.newResource(
-				"icons/16/clearItem.png"));
+		clearBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -157,31 +156,32 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 				if ("Account".equals(type)) {
 					AccountService accountService = AppContext
 							.getSpringBean(AccountService.class);
-					SimpleAccount account = accountService
-							.findById(typeid);
+					SimpleAccount account = accountService.findById(typeid,
+							AppContext.getAccountId());
 					if (account != null) {
 						itemField.setValue(account.getAccountname());
 					}
 				} else if ("Campaign".equals(type)) {
 					CampaignService campaignService = AppContext
 							.getSpringBean(CampaignService.class);
-					SimpleCampaign campaign = campaignService
-							.findById(typeid);
+					SimpleCampaign campaign = campaignService.findById(typeid,
+							AppContext.getAccountId());
 					if (campaign != null) {
 						itemField.setValue(campaign.getCampaignname());
 					}
 				} else if ("Contact".equals(type)) {
 					ContactService contactService = AppContext
 							.getSpringBean(ContactService.class);
-					SimpleContact contact = contactService
-							.findById(typeid);
+					SimpleContact contact = contactService.findById(typeid,
+							AppContext.getAccountId());
 					if (contact != null) {
 						itemField.setValue(contact.getContactName());
 					}
 				} else if ("Lead".equals(type)) {
 					LeadService leadService = AppContext
 							.getSpringBean(LeadService.class);
-					SimpleLead lead = leadService.findById(typeid);
+					SimpleLead lead = leadService.findById(typeid,
+							AppContext.getAccountId());
 					if (lead != null) {
 						itemField.setValue(lead.getLeadName());
 					}
@@ -189,14 +189,15 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 					OpportunityService opportunityService = AppContext
 							.getSpringBean(OpportunityService.class);
 					SimpleOpportunity opportunity = opportunityService
-							.findById(typeid);
+							.findById(typeid, AppContext.getAccountId());
 					if (opportunity != null) {
 						itemField.setValue(opportunity.getOpportunityname());
 					}
 				} else if ("Case".equals(type)) {
 					CaseService caseService = AppContext
 							.getSpringBean(CaseService.class);
-					SimpleCase cases = caseService.findById(typeid);
+					SimpleCase cases = caseService.findById(typeid,
+							AppContext.getAccountId());
 					if (cases != null) {
 						itemField.setValue(cases.getSubject());
 					}

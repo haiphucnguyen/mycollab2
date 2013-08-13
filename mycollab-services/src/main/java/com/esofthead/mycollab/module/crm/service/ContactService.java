@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.crm.service;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
@@ -26,17 +28,18 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 
 public interface ContactService extends
-        IDefaultService<Integer, Contact, ContactSearchCriteria> {
-    
-    SimpleContact findById(int contactId);
-    
-    void removeContactOpportunityRelationship(ContactOpportunity associateOpportunity);
-    
-    void saveContactOpportunityRelationship(List<ContactOpportunity> associateOpportunities);
-    
-    void saveContactCaseRelationship(List<ContactCase> associateCases);
-    
-    void removeContactCaseRelationship(ContactCase associateCase);
+		IDefaultService<Integer, Contact, ContactSearchCriteria> {
 
-	void updateBySearchCriteria(Contact value,ContactSearchCriteria searchCriteria);
+	@Cacheable
+	SimpleContact findById(int contactId, @CacheKey int sAccountId);
+
+	void removeContactOpportunityRelationship(
+			ContactOpportunity associateOpportunity);
+
+	void saveContactOpportunityRelationship(
+			List<ContactOpportunity> associateOpportunities);
+
+	void saveContactCaseRelationship(List<ContactCase> associateCases);
+
+	void removeContactCaseRelationship(ContactCase associateCase);
 }

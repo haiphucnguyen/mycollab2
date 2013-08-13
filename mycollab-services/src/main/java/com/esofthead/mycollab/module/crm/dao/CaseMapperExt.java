@@ -8,5 +8,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 
 public interface CaseMapperExt extends ISearchableDAO<CaseSearchCriteria> ,
 	IMassUpdateDAO<CaseWithBLOBs, CaseSearchCriteria>{
-	SimpleCase findCaseById(int caseId);
+	
+	SimpleCase findById(int caseId);
 }

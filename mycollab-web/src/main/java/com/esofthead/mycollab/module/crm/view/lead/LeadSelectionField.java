@@ -38,9 +38,8 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 		leadName = new TextField();
 		layout.addComponent(leadName);
 
-		browseBtn = new Embedded(null, MyCollabResource
-				.newResource(
-				"icons/16/browseItem.png"));
+		browseBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 		browseBtn.addListener(new MouseEvents.ClickListener() {
@@ -57,9 +56,7 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 		});
 
 		clearBtn = new Embedded(null,
-				MyCollabResource
-				.newResource(
-				"icons/16/clearItem.png"));
+				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -84,7 +81,8 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 							.getProperty().getValue());
 					LeadService leadService = AppContext
 							.getSpringBean(LeadService.class);
-					SimpleLead lead = leadService.findById(leadId);
+					SimpleLead lead = leadService.findById(leadId,
+							AppContext.getAccountId());
 					if (lead != null) {
 						leadName.setValue(lead.getLeadName());
 					}

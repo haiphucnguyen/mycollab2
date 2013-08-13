@@ -85,8 +85,8 @@ public class ContactSelectionField extends FieldWrapper<Contact> implements
 							.getSpringBean(ContactService.class);
 					Integer accountId = Integer.parseInt((String) event
 							.getProperty().getValue());
-					SimpleContact contact = accountService
-							.findById(accountId);
+					SimpleContact contact = accountService.findById(accountId,
+							AppContext.getAccountId());
 					if (contact != null) {
 						contactName.setValue(contact.getContactName());
 					}
