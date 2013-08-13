@@ -2,6 +2,8 @@ package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.cache.CacheKey;
@@ -29,11 +32,18 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 public class L2CacheAspect {
 	private Logger log = LoggerFactory.getLogger(L2CacheAspect.class);
 
+	static List<Class> blacklistCls = Arrays
+			.asList(new Class[] { RelayEmailNotificationService.class });
+
 	@Around("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {
 
 		Advised advised = (Advised) pjp.getThis();
 		Class cls = advised.getTargetSource().getTargetClass();
+		if (blacklistCls.contains(cls)) {
+			return pjp.proceed();
+		}
+
 		final Signature signature = pjp.getStaticPart().getSignature();
 		Cacheable cacheable = null;
 		if (signature instanceof MethodSignature) {
