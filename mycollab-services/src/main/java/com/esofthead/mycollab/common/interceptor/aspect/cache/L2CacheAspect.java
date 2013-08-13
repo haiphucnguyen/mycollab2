@@ -26,6 +26,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 
 @Aspect
@@ -36,7 +37,7 @@ public class L2CacheAspect {
 
 	static List<Class> blacklistCls = Arrays.asList(new Class[] {
 			RelayEmailNotificationService.class, MonitorItemService.class,
-			BugRelatedItemService.class });
+			BugRelatedItemService.class, RawContentServiceFactoryBean.class });
 
 	@Around("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {

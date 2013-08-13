@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.file.service.impl.AmazonRawContentServiceImpl;
 import com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl;
 
 @Service(value = "rawContentService")
 public class RawContentServiceFactoryBean extends
-		AbstractFactoryBean<RawContentService> {
+		AbstractFactoryBean<RawContentService> implements IService {
 
 	@Override
 	protected RawContentService createInstance() throws Exception {
