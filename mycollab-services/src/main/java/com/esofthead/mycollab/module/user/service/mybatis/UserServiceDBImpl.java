@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.crypto.Cipher;
 import javax.imageio.ImageIO;
 
 import org.apache.camel.CamelContext;
@@ -197,8 +198,8 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void massRemoveWithSession(List<String> primaryKeys, String username,
-			int accountId) {
+	public void massRemoveWithSession(List<String> primaryKeys,
+			String username, int accountId) {
 		userMapperExt.removeKeysWithSession(primaryKeys);
 	}
 
@@ -369,6 +370,14 @@ public class UserServiceDBImpl extends
 		} else {
 			return users.get(0);
 		}
+	}
+
+	@Override
+	public List<SimpleUser> getListUser(int accountId) {
+		UserSearchCriteria criteria = new UserSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(accountId));
+		return userMapperExt.findPagableListByCriteria(criteria, new RowBounds(
+				0, Integer.MAX_VALUE));
 	}
 
 }

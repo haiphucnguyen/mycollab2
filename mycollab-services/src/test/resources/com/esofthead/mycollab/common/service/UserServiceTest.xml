@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Engroup - Enterprise Groupware Platform Copyright (C) 2007-2009 eSoftHead 
+	Company <engroup@esofthead.com> http://www.esofthead.com Licensed under the 
+	GPL, Version 3.0 (the "License"); you may not use this file except in compliance 
+	with the License. You may obtain a copy of the License at http://www.gnu.org/licenses/gpl.html 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+<!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
+<dataset>
+	<s_user username="hainguyen" firstname="Nguyen" lastname="Hai"
+		email="hainguyen@esofthead.com" registerStatus="Active" />
+
+	<s_user username="linhduong" firstname="Duong" lastname="Linh"
+		email="linhduong@esofthead.com" registerStatus="Active" />
+
+	<s_user_account id="1" username="hainguyen" accountId="1"
+		isAccountOwner="1" isAdmin="1" roleId="7" registeredTime="2013-08-08 00:00:00"
+		registerStatus="finish" />
+	<s_user_account id="2" username="linhduong" accountId="1"
+		isAccountOwner="1" isAdmin="0" roleId="7" registeredTime="2013-08-08 20:00:00"
+		registerStatus="finish" />
+
+
+</dataset>
