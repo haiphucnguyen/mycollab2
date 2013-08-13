@@ -177,7 +177,8 @@ public class ProjectMemberReadPresenter extends
 			} else if (data.getParams() instanceof String) {
 				String username = (String) data.getParams();
 				prjMember = prjMemberService.findMemberByUsername(username,
-						CurrentProjectVariables.getProjectId());
+						CurrentProjectVariables.getProjectId(),
+						AppContext.getAccountId());
 			}
 
 			if (prjMember != null) {

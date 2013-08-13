@@ -35,7 +35,7 @@ public class MessageNotificationServiceImpl implements
 		int messageId = notification.getTypeid();
 		int projectId = notification.getExtratypeid();
 		List<SimpleUser> usersInProject = projectMemberService
-				.getUsersInProject(projectId);
+				.getUsersInProject(projectId, 0);
 
 		SimpleMessage message = messageService.findMessageById(messageId, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -57,7 +57,7 @@ public class MessageNotificationServiceImpl implements
 		int messageId = notification.getTypeid();
 		int projectId = notification.getExtratypeid();
 		List<SimpleUser> usersInProject = projectMemberService
-				.getUsersInProject(projectId);
+				.getUsersInProject(projectId, 0);
 
 		SimpleMessage message = messageService.findMessageById(messageId, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -98,7 +98,7 @@ public class MessageNotificationServiceImpl implements
 
 		Integer projectid = message.getProjectid();
 		List<SimpleUser> usersInProject = projectMemberService
-				.getUsersInProject(projectid);
+				.getUsersInProject(projectid, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$message.projectName]: $message.fullPostedUserName add a new comment \""
 						+ StringUtils.subString(

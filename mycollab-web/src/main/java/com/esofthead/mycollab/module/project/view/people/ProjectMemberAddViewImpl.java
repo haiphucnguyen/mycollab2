@@ -119,8 +119,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						final ProjectMemberService prjMemberService = AppContext
 								.getSpringBean(ProjectMemberService.class);
 						final List<SimpleUser> users = prjMemberService
-								.getUsersNotInProject(CurrentProjectVariables
-										.getProjectId());
+								.getUsersNotInProject(
+										CurrentProjectVariables.getProjectId(),
+										AppContext.getAccountId());
 						UserComboBox userBox = new UserComboBox(users);
 						userBox.setRequired(true);
 						return userBox;

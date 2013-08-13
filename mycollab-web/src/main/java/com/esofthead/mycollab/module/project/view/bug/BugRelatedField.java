@@ -128,7 +128,8 @@ public class BugRelatedField extends CustomField {
 				.getSpringBean(ProjectMemberService.class);
 		SimpleProjectMember member = memberService.findMemberByUsername(
 				AppContext.getUsername(),
-				CurrentProjectVariables.getProjectId());
+				CurrentProjectVariables.getProjectId(),
+				AppContext.getAccountId());
 
 		if (member != null) {
 			btnRelate
@@ -376,7 +377,8 @@ public class BugRelatedField extends CustomField {
 						.getSpringBean(ProjectMemberService.class);
 				SimpleProjectMember member = memberService
 						.findMemberByUsername(AppContext.getUsername(),
-								CurrentProjectVariables.getProjectId());
+								CurrentProjectVariables.getProjectId(),
+								AppContext.getAccountId());
 
 				if (member != null) {
 					deleteBtn.setEnabled(member.getIsadmin()

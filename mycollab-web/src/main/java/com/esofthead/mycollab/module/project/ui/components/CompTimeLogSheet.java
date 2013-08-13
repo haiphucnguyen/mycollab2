@@ -274,7 +274,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 									.findMemberByUsername(AppContext
 											.getUsername(),
 											CurrentProjectVariables
-													.getProjectId());
+													.getProjectId(), AppContext
+													.getAccountId());
 
 							if (member != null) {
 								deleteBtn.setEnabled(member.getIsadmin());

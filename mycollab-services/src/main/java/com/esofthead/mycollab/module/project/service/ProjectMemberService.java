@@ -24,9 +24,15 @@ public interface ProjectMemberService extends
 	@Cacheable
 	SimpleProjectMember findById(int memberId, @CacheKey Integer sAccountId);
 
-	SimpleProjectMember findMemberByUsername(String username, int projectId);
+	@Cacheable
+	SimpleProjectMember findMemberByUsername(String username, int projectId,
+			@CacheKey Integer sAccountId);
 
-	List<SimpleUser> getUsersNotInProject(int projectId);
+	@Cacheable
+	List<SimpleUser> getUsersNotInProject(int projectId,
+			@CacheKey Integer sAccountId);
 
-	List<SimpleUser> getUsersInProject(int projectId);
+	@Cacheable
+	List<SimpleUser> getUsersInProject(int projectId,
+			@CacheKey Integer sAccountId);
 }

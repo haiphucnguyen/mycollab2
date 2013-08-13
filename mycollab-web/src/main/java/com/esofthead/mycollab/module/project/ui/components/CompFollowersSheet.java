@@ -87,7 +87,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 					SimpleProjectMember projectMember = memberService
 							.findMemberByUsername(AppContext.getUsername(),
-									CurrentProjectVariables.getProjectId());
+									CurrentProjectVariables.getProjectId(),
+									AppContext.getAccountId());
 
 					boolean haveRightToSave = projectMember.getIsadmin()
 							|| (AppContext.getUsername().equals(member
@@ -206,7 +207,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 						.getSpringBean(ProjectMemberService.class);
 				SimpleProjectMember member = memberService
 						.findMemberByUsername(AppContext.getUsername(),
-								CurrentProjectVariables.getProjectId());
+								CurrentProjectVariables.getProjectId(),
+								AppContext.getAccountId());
 
 				if (member != null) {
 					deleteBtn.setEnabled(member.getIsadmin()

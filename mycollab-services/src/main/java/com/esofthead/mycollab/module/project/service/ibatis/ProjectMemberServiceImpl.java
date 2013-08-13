@@ -65,13 +65,14 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public List<SimpleUser> getUsersNotInProject(int projectId) {
+	public List<SimpleUser> getUsersNotInProject(int projectId,
+			Integer sAccountId) {
 		return projectMemberMapperExt.getUsersNotInProject(projectId);
 	}
 
 	@Override
 	public SimpleProjectMember findMemberByUsername(String username,
-			int projectId) {
+			int projectId, Integer sAccountId) {
 		return projectMemberMapperExt.findMemberByUsername(username, projectId);
 	}
 
@@ -84,7 +85,7 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public List<SimpleUser> getUsersInProject(int projectId) {
+	public List<SimpleUser> getUsersInProject(int projectId, Integer sAccountId) {
 		return projectMemberMapperExt.getUsersInProject(projectId);
 	}
 
