@@ -157,10 +157,9 @@ public class CaseContactListComp extends
 					public void buttonClick(Button.ClickEvent event) {
 						ConfirmDialogExt.show(
 								AppContext.getApplication().getMainWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
-												SiteConfiguration.getSiteName()),
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										SiteConfiguration.getSiteName()),
 								LocalizationHelper
 										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
 								LocalizationHelper
@@ -182,7 +181,10 @@ public class CaseContactListComp extends
 													.setContactid(contact
 															.getId());
 											contactService
-													.removeContactCaseRelationship(associateContact);
+													.removeContactCaseRelationship(
+															associateContact,
+															AppContext
+																	.getAccountId());
 											CaseContactListComp.this.refresh();
 										}
 									}

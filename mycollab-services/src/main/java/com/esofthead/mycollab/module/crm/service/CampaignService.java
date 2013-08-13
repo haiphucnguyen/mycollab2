@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.crm.service;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
@@ -34,15 +35,29 @@ public interface CampaignService extends
 	@Cacheable
 	SimpleCampaign findById(int campaignId, @CacheKey int sAccountId);
 
-	void saveCampaignAccountRelationship(List<CampaignAccount> associateAccounts);
+	@CacheEvict(serviceMap = { AccountService.class })
+	void saveCampaignAccountRelationship(
+			List<CampaignAccount> associateAccounts,
+			@CacheKey Integer sAccountId);
 
-	void removeCampaignAccountRelationship(CampaignAccount associateAccount);
+	@CacheEvict(serviceMap = { AccountService.class })
+	void removeCampaignAccountRelationship(CampaignAccount associateAccount,
+			@CacheKey Integer sAccountId);
 
-	void saveCampaignContactRelationship(List<CampaignContact> associateContacts);
+	@CacheEvict(serviceMap = { ContactService.class })
+	void saveCampaignContactRelationship(
+			List<CampaignContact> associateContacts,
+			@CacheKey Integer sAccountId);
 
-	void removeCampaignContactRelationship(CampaignContact associateContact);
+	@CacheEvict(serviceMap = { ContactService.class })
+	void removeCampaignContactRelationship(CampaignContact associateContact,
+			@CacheKey Integer sAccountId);
 
-	void saveCampaignLeadRelationship(List<CampaignLead> associateLeads);
+	@CacheEvict(serviceMap = { LeadService.class })
+	void saveCampaignLeadRelationship(List<CampaignLead> associateLeads,
+			@CacheKey Integer sAccountId);
 
-	void removeCampaignLeadRelationship(CampaignLead associateLead);
+	@CacheEvict(serviceMap = { LeadService.class })
+	void removeCampaignLeadRelationship(CampaignLead associateLead,
+			@CacheKey Integer sAccountId);
 }

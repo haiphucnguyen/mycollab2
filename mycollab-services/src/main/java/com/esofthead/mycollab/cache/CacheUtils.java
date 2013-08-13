@@ -29,6 +29,11 @@ public class CacheUtils {
 		return jsonXStream.toXML(args);
 	}
 
+	public static String getCachePrefix(Class serviceClass, Integer accountId) {
+		return String.format("%s-%d",
+				getEnclosingServiceInterface(serviceClass), accountId);
+	}
+
 	public static String getEnclosingServiceInterface(Class serviceClass) {
 		Class<?> cls = ClassUtils.getInterfaceInstanceOf(serviceClass,
 				ICrudService.class);

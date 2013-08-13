@@ -140,8 +140,9 @@ public class OpportunityAddPresenter extends
 						.getTime());
 				ContactService contactService = AppContext
 						.getSpringBean(ContactService.class);
-				contactService.saveContactOpportunityRelationship(Arrays
-						.asList(associateOpportunity));
+				contactService.saveContactOpportunityRelationship(
+						Arrays.asList(associateOpportunity),
+						AppContext.getAccountId());
 			}
 		} else {
 			opportunityService.updateWithSession(opportunity,

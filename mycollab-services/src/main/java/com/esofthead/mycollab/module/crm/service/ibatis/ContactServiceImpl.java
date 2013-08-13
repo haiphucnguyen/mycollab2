@@ -75,7 +75,7 @@ public class ContactServiceImpl extends
 
 	@Override
 	public void removeContactOpportunityRelationship(
-			ContactOpportunity associateOpportunity) {
+			ContactOpportunity associateOpportunity, Integer sAccountId) {
 		ContactOpportunityExample ex = new ContactOpportunityExample();
 		ex.createCriteria()
 				.andContactidEqualTo(associateOpportunity.getContactid())
@@ -86,7 +86,7 @@ public class ContactServiceImpl extends
 
 	@Override
 	public void saveContactOpportunityRelationship(
-			List<ContactOpportunity> associateOpportunities) {
+			List<ContactOpportunity> associateOpportunities, Integer accountId) {
 		for (ContactOpportunity assoOpportunity : associateOpportunities) {
 			ContactOpportunityExample ex = new ContactOpportunityExample();
 			ex.createCriteria()
@@ -99,7 +99,8 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
-	public void saveContactCaseRelationship(List<ContactCase> associateCases) {
+	public void saveContactCaseRelationship(List<ContactCase> associateCases,
+			Integer accountId) {
 		for (ContactCase associateCase : associateCases) {
 			ContactCaseExample ex = new ContactCaseExample();
 			ex.createCriteria()
@@ -112,7 +113,8 @@ public class ContactServiceImpl extends
 	}
 
 	@Override
-	public void removeContactCaseRelationship(ContactCase associateCase) {
+	public void removeContactCaseRelationship(ContactCase associateCase,
+			Integer sAccountId) {
 		ContactCaseExample ex = new ContactCaseExample();
 		ex.createCriteria().andContactidEqualTo(associateCase.getContactid())
 				.andCaseidEqualTo(associateCase.getCaseid());

@@ -135,8 +135,8 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
-				campaignService.saveCampaignAccountRelationship(Arrays
-						.asList(assoAccount));
+				campaignService.saveCampaignAccountRelationship(
+						Arrays.asList(assoAccount), AppContext.getAccountId());
 			}
 		} else {
 			accountService.updateWithSession(account, AppContext.getUsername());

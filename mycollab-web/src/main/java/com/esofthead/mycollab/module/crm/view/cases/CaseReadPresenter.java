@@ -215,8 +215,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
 						ContactService contactService = AppContext
 								.getSpringBean(ContactService.class);
-						contactService
-								.saveContactCaseRelationship(associateContacts);
+						contactService.saveContactCaseRelationship(
+								associateContacts, AppContext.getAccountId());
 
 						view.getRelatedContactHandlers().refresh();
 					}

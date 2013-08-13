@@ -197,7 +197,10 @@ public class ContactOpportunityListComp extends
 													.setOpportunityid(opportunity
 															.getId());
 											contactService
-													.removeContactOpportunityRelationship(associateOpportunity);
+													.removeContactOpportunityRelationship(
+															associateOpportunity,
+															AppContext
+																	.getAccountId());
 											ContactOpportunityListComp.this
 													.refresh();
 										}

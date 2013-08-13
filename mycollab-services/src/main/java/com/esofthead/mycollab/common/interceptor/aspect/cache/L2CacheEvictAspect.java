@@ -73,6 +73,14 @@ public class L2CacheEvictAspect {
 								String prefixKey = CacheUtils
 										.getEnclosingServiceInterface(cls);
 								CacheUtils.cleanCache(groupId, prefixKey);
+
+								if (cacheable.serviceMap() != null
+										&& cacheable.serviceMap().length > 0) {
+									for (Class prefKey : cacheable.serviceMap()) {
+										CacheUtils.cleanCache(groupId,
+												prefKey.getName());
+									}
+								}
 							}
 						}
 					}

@@ -183,7 +183,10 @@ public class CampaignContactListComp extends
 													.setCampaignid(campaign
 															.getId());
 											campaignService
-													.removeCampaignContactRelationship(associateContact);
+													.removeCampaignContactRelationship(
+															associateContact,
+															AppContext
+																	.getAccountId());
 											CampaignContactListComp.this
 													.refresh();
 										}

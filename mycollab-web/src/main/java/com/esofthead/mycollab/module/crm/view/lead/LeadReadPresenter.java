@@ -217,8 +217,9 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 							CampaignService campaignService = AppContext
 									.getSpringBean(CampaignService.class);
-							campaignService
-									.saveCampaignLeadRelationship(associateCampaigns);
+							campaignService.saveCampaignLeadRelationship(
+									associateCampaigns,
+									AppContext.getAccountId());
 						}
 					}
 				});

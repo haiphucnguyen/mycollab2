@@ -142,8 +142,9 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
-				campaignService.saveCampaignContactRelationship(Arrays
-						.asList(associateContact));
+				campaignService.saveCampaignContactRelationship(
+						Arrays.asList(associateContact),
+						AppContext.getAccountId());
 			} else if (contact.getExtraData() != null
 					&& contact.getExtraData() instanceof SimpleOpportunity) {
 				OpportunityContact associateContact = new OpportunityContact();
@@ -154,8 +155,9 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 						.getTime());
 				OpportunityService opportunityService = AppContext
 						.getSpringBean(OpportunityService.class);
-				opportunityService.saveOpportunityContactRelationship(Arrays
-						.asList(associateContact));
+				opportunityService.saveOpportunityContactRelationship(
+						Arrays.asList(associateContact),
+						AppContext.getAccountId());
 			} else if (contact.getExtraData() != null
 					&& contact.getExtraData() instanceof SimpleCase) {
 				ContactCase associateCase = new ContactCase();
@@ -164,8 +166,10 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 						.getId());
 				associateCase.setCreatedtime(new GregorianCalendar().getTime());
 
-				contactService.saveContactCaseRelationship(Arrays
-						.asList(associateCase));
+				contactService
+						.saveContactCaseRelationship(
+								Arrays.asList(associateCase),
+								AppContext.getAccountId());
 			}
 
 		} else {

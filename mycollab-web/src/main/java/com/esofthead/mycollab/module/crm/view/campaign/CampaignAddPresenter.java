@@ -134,8 +134,10 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 						.getId());
 				associateLead.setCreatedtime(new GregorianCalendar().getTime());
 
-				campaignService.saveCampaignLeadRelationship(Arrays
-						.asList(associateLead));
+				campaignService
+						.saveCampaignLeadRelationship(
+								Arrays.asList(associateLead),
+								AppContext.getAccountId());
 			}
 		} else {
 			campaignService.updateWithSession(campaign,

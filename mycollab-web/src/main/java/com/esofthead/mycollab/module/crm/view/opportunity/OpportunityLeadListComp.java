@@ -181,7 +181,10 @@ public class OpportunityLeadListComp extends
 													.setOpportunityid(opportunity
 															.getId());
 											opportunityService
-													.removeOpportunityLeadRelationship(associateLead);
+													.removeOpportunityLeadRelationship(
+															associateLead,
+															AppContext
+																	.getAccountId());
 											OpportunityLeadListComp.this
 													.refresh();
 										}

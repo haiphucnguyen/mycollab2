@@ -138,8 +138,10 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
-				campaignService.saveCampaignLeadRelationship(Arrays
-						.asList(associateLead));
+				campaignService
+						.saveCampaignLeadRelationship(
+								Arrays.asList(associateLead),
+								AppContext.getAccountId());
 			} else if (lead.getExtraData() != null
 					&& lead.getExtraData() instanceof SimpleOpportunity) {
 				OpportunityLead associateLead = new OpportunityLead();
@@ -150,8 +152,10 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
 				OpportunityService opportunityService = AppContext
 						.getSpringBean(OpportunityService.class);
-				opportunityService.saveOpportunityLeadRelationship(Arrays
-						.asList(associateLead));
+				opportunityService
+						.saveOpportunityLeadRelationship(
+								Arrays.asList(associateLead),
+								AppContext.getAccountId());
 			}
 		} else {
 			leadService.updateWithSession(lead, AppContext.getUsername());

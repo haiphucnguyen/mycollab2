@@ -233,8 +233,8 @@ public class OpportunityReadPresenter extends
 
 						OpportunityService opportunityService = AppContext
 								.getSpringBean(OpportunityService.class);
-						opportunityService
-								.saveOpportunityContactRelationship(associateContacts);
+						opportunityService.saveOpportunityContactRelationship(
+								associateContacts, AppContext.getAccountId());
 						view.getRelatedContactHandlers().refresh();
 					}
 				});
@@ -266,8 +266,8 @@ public class OpportunityReadPresenter extends
 
 						OpportunityService opportunityService = AppContext
 								.getSpringBean(OpportunityService.class);
-						opportunityService
-								.saveOpportunityLeadRelationship(associateLeads);
+						opportunityService.saveOpportunityLeadRelationship(
+								associateLeads, AppContext.getAccountId());
 						view.getRelatedLeadHandlers().refresh();
 					}
 				});

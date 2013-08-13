@@ -79,7 +79,7 @@ public class CampaignServiceImpl extends
 
 	@Override
 	public void saveCampaignAccountRelationship(
-			List<CampaignAccount> associateAccounts) {
+			List<CampaignAccount> associateAccounts, Integer sAccountId) {
 		for (CampaignAccount associateAccount : associateAccounts) {
 			CampaignAccountExample ex = new CampaignAccountExample();
 			ex.createCriteria()
@@ -93,7 +93,7 @@ public class CampaignServiceImpl extends
 
 	@Override
 	public void removeCampaignAccountRelationship(
-			CampaignAccount associateAccount) {
+			CampaignAccount associateAccount, Integer sAccountId) {
 		CampaignAccountExample ex = new CampaignAccountExample();
 		ex.createCriteria()
 				.andAccountidEqualTo(associateAccount.getAccountid())
@@ -103,7 +103,7 @@ public class CampaignServiceImpl extends
 
 	@Override
 	public void saveCampaignContactRelationship(
-			List<CampaignContact> associateContacts) {
+			List<CampaignContact> associateContacts, Integer sAccountId) {
 		for (CampaignContact associateContact : associateContacts) {
 			CampaignContactExample ex = new CampaignContactExample();
 			ex.createCriteria()
@@ -117,7 +117,7 @@ public class CampaignServiceImpl extends
 
 	@Override
 	public void removeCampaignContactRelationship(
-			CampaignContact associateContact) {
+			CampaignContact associateContact, Integer sAccountId) {
 		CampaignContactExample ex = new CampaignContactExample();
 		ex.createCriteria()
 				.andCampaignidEqualTo(associateContact.getCampaignid())
@@ -126,7 +126,8 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	public void saveCampaignLeadRelationship(List<CampaignLead> associateLeads) {
+	public void saveCampaignLeadRelationship(List<CampaignLead> associateLeads,
+			Integer sAccountId) {
 		for (CampaignLead associateLead : associateLeads) {
 			CampaignLeadExample ex = new CampaignLeadExample();
 			ex.createCriteria()
@@ -139,7 +140,8 @@ public class CampaignServiceImpl extends
 	}
 
 	@Override
-	public void removeCampaignLeadRelationship(CampaignLead associateLead) {
+	public void removeCampaignLeadRelationship(CampaignLead associateLead,
+			Integer sAccountId) {
 		CampaignLeadExample ex = new CampaignLeadExample();
 		ex.createCriteria().andCampaignidEqualTo(associateLead.getCampaignid())
 				.andLeadidEqualTo(associateLead.getLeadid());

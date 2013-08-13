@@ -228,8 +228,9 @@ public class CampaignReadPresenter extends
 
 							CampaignService accountService = AppContext
 									.getSpringBean(CampaignService.class);
-							accountService
-									.saveCampaignAccountRelationship(associateAccounts);
+							accountService.saveCampaignAccountRelationship(
+									associateAccounts,
+									AppContext.getAccountId());
 
 							view.getRelatedAccountHandlers().refresh();
 						}
@@ -265,8 +266,9 @@ public class CampaignReadPresenter extends
 
 							CampaignService campaignService = AppContext
 									.getSpringBean(CampaignService.class);
-							campaignService
-									.saveCampaignContactRelationship(associateContacts);
+							campaignService.saveCampaignContactRelationship(
+									associateContacts,
+									AppContext.getAccountId());
 
 							view.getRelatedContactHandlers().refresh();
 						}
@@ -301,8 +303,8 @@ public class CampaignReadPresenter extends
 
 							CampaignService campaignService = AppContext
 									.getSpringBean(CampaignService.class);
-							campaignService
-									.saveCampaignLeadRelationship(associateLeads);
+							campaignService.saveCampaignLeadRelationship(
+									associateLeads, AppContext.getAccountId());
 
 							view.getRelatedLeadHandlers().refresh();
 						}

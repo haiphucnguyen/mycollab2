@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.service;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
@@ -42,16 +43,20 @@ public interface OpportunityService extends
 	List<GroupItem> getLeadSourcesSummary(
 			@CacheKey OpportunitySearchCriteria criteria);
 
+	@CacheEvict(serviceMap = { ContactService.class })
 	void saveOpportunityContactRelationship(
-			List<OpportunityContact> associateContacts);
+			List<OpportunityContact> associateContacts,
+			@CacheKey Integer sAccountId);
 
+	@CacheEvict(serviceMap = { ContactService.class })
 	void removeOpportunityContactRelationship(
-			OpportunityContact associateContact);
+			OpportunityContact associateContact, @CacheKey Integer sAccountId);
 
-	void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads);
+	@CacheEvict(serviceMap = { LeadService.class })
+	void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads,
+			@CacheKey Integer sAccountId);
 
-	void removeOpportunityLeadRelationship(OpportunityLead associateLead);
-
-	void updateBySearchCriteria(Opportunity value,
-			OpportunitySearchCriteria searchCriteria);
+	@CacheEvict(serviceMap = { LeadService.class })
+	void removeOpportunityLeadRelationship(OpportunityLead associateLead,
+			@CacheKey Integer sAccountId);
 }

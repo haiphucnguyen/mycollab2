@@ -181,7 +181,10 @@ public class CampaignLeadListComp extends
 													.setCampaignid(campaign
 															.getId());
 											campaignService
-													.removeCampaignLeadRelationship(associateLead);
+													.removeCampaignLeadRelationship(
+															associateLead,
+															AppContext
+																	.getAccountId());
 											CampaignLeadListComp.this.refresh();
 										}
 									}

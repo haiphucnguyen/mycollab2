@@ -87,7 +87,7 @@ public class OpportunityServiceImpl extends
 
 	@Override
 	public void saveOpportunityContactRelationship(
-			List<OpportunityContact> associateContacts) {
+			List<OpportunityContact> associateContacts, Integer sAccountId) {
 		for (OpportunityContact associateContact : associateContacts) {
 			OpportunityContactExample ex = new OpportunityContactExample();
 			ex.createCriteria()
@@ -102,7 +102,7 @@ public class OpportunityServiceImpl extends
 
 	@Override
 	public void removeOpportunityContactRelationship(
-			OpportunityContact associateContact) {
+			OpportunityContact associateContact, Integer sAccountId) {
 		OpportunityContactExample ex = new OpportunityContactExample();
 		ex.createCriteria()
 				.andContactidEqualTo(associateContact.getContactid())
@@ -112,7 +112,7 @@ public class OpportunityServiceImpl extends
 
 	@Override
 	public void saveOpportunityLeadRelationship(
-			List<OpportunityLead> associateLeads) {
+			List<OpportunityLead> associateLeads, Integer sAccountId) {
 		for (OpportunityLead associateLead : associateLeads) {
 			OpportunityLeadExample ex = new OpportunityLeadExample();
 			ex.createCriteria()
@@ -125,7 +125,8 @@ public class OpportunityServiceImpl extends
 	}
 
 	@Override
-	public void removeOpportunityLeadRelationship(OpportunityLead associateLead) {
+	public void removeOpportunityLeadRelationship(
+			OpportunityLead associateLead, Integer sAccountId) {
 		OpportunityLeadExample ex = new OpportunityLeadExample();
 		ex.createCriteria()
 				.andOpportunityidEqualTo(associateLead.getOpportunityid())

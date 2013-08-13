@@ -221,8 +221,9 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 							ContactService contactService = AppContext
 									.getSpringBean(ContactService.class);
-							contactService
-									.saveContactOpportunityRelationship(associateOpportunities);
+							contactService.saveContactOpportunityRelationship(
+									associateOpportunities,
+									AppContext.getAccountId());
 
 							view.getRelatedOpportunityHandlers().refresh();
 						}

@@ -158,9 +158,8 @@ public class LeadCampaignListComp extends
 					public void buttonClick(Button.ClickEvent event) {
 						ConfirmDialogExt.show(
 								AppContext.getApplication().getMainWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
 								LocalizationHelper
 										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
@@ -183,7 +182,10 @@ public class LeadCampaignListComp extends
 													.setCampaignid(campaign
 															.getId());
 											campaignService
-													.removeCampaignLeadRelationship(associateLead);
+													.removeCampaignLeadRelationship(
+															associateLead,
+															AppContext
+																	.getAccountId());
 											LeadCampaignListComp.this.refresh();
 										}
 									}
