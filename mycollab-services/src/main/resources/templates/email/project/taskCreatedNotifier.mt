@@ -23,23 +23,23 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Task Name:&nbsp;</td>
-									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word;" colspan="3"><a href="$hyperLinks.taskUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskname</a></td>
+									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word;" colspan="3"><a href="$!hyperLinks.taskUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskname</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
-									<td>$!date.format('short_date', $task.Startdate)</td>
+									<td>$!date.format('short_date', $!task.Startdate)</td>
 									<td style="text-align: right; min-width: 90px;">Actual Start Date:&nbsp;</td>
-									<td>$!date.format('short_date', $task.Actualstartdate)</td>		
+									<td>$!date.format('short_date', $!task.Actualstartdate)</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">End Date:&nbsp;</td>
-									<td>$!date.format('short_date', $task.Enddate)</td>
+									<td>$!date.format('short_date', $!task.Enddate)</td>
 									<td style="text-align: right;">Actual End Date:&nbsp;</td>
-									<td>$!date.format('short_date', $task.Actualenddate)</td>		
+									<td>$!date.format('short_date', $!task.Actualenddate)</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Deadline:&nbsp;</td>
-									<td>$!date.format('short_date', $task.Deadline)</td>
+									<td>$!date.format('short_date', $!task.Deadline)</td>
 									<td style="text-align: right;">Priority:&nbsp;</td>
 									<td>$!task.priority</td>		
 								</tr>

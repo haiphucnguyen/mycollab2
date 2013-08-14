@@ -25,14 +25,14 @@
                                     <td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">Please, accept the invitation at:</td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$urlAccept" style="color: #4283c4; text-decoration: underline;">$urlAccept</a></td>
+                                    <td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!urlAccept" style="color: #4283c4; text-decoration: underline;">$!urlAccept</a></td>
                                 </tr>
                                 <tr></tr>
                                 <tr>
                                     <td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">or decline it and cancel further reminders at:</td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$urlDeny" style="color: #4283c4; text-decoration: underline;">$urlDeny</a></td>
+                                    <td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!urlDeny" style="color: #4283c4; text-decoration: underline;">$!urlDeny</a></td>
                                 </tr>
                             </table>
                         </td>

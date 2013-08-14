@@ -16,7 +16,7 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi there,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">MyCollab has invited you to join the team for project "$member.projectName" at our online collaboration tool.</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">MyCollab has invited you to join the team for project "$!member.projectName" at our online collaboration tool.</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
@@ -25,14 +25,14 @@
 									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">Please, accept the invitation at:</td>
 								</tr>
 								<tr>
-									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$urlAccept" style="color: rgb(216, 121, 55); text-decoration: underline;">$urlAccept</a></td>
+									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!urlAccept" style="color: rgb(216, 121, 55); text-decoration: underline;">$!urlAccept</a></td>
 								</tr>
 								<tr></tr>
 								<tr>
 									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">or decline it and cancel further reminders at:</td>
 								</tr>
 								<tr>
-									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$urlDeny" style="color: rgb(216, 121, 55); text-decoration: underline;">$urlDeny</a></td>
+									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!urlDeny" style="color: rgb(216, 121, 55); text-decoration: underline;">$!urlDeny</a></td>
 								</tr>
 							</table>
 						</td>
