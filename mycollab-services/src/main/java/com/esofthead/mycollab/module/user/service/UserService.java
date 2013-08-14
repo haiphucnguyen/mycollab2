@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.user.service;
 
 import java.util.List;
 
+import org.springframework.flex.remoting.RemotingDestination;
+
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -26,6 +28,7 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 /**
  * @author hai
  */
+@RemotingDestination(channels = { "mycollab-amf", "mycollab-secure-amf" })
 public interface UserService extends
 		IDefaultService<String, User, UserSearchCriteria> {
 	public static int FREE_BILLING = 0;

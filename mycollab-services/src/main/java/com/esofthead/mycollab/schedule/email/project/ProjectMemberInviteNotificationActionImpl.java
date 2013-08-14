@@ -42,9 +42,9 @@ public class ProjectMemberInviteNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int project_member_id = emailNotification.getTypeid();
+		int memberId = emailNotification.getTypeid();
 		SimpleProjectMember member = projectMemberService.findById(
-				project_member_id, emailNotification.getSaccountid());
+				memberId, emailNotification.getSaccountid());
 		String subdomain = projectService.getSubdomainOfProject(member
 				.getProjectid());
 
