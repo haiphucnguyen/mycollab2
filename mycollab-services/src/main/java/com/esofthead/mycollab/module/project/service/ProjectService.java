@@ -45,7 +45,7 @@ public interface ProjectService extends
 			@CacheKey SearchRequest<ActivityStreamSearchCriteria> searchRequest);
 
 	@Cacheable
-	SimpleProject findById(int projectId, @CacheKey Integer sAccountId);
+	SimpleProject findById(int projectId, @CacheKey int sAccountId);
 
 	String getSubdomainOfProject(int projectId);
 

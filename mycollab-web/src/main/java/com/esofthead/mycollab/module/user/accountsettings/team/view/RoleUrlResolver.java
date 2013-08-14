@@ -35,7 +35,8 @@ public class RoleUrlResolver extends AccountUrlResolver {
 			int roleId = Integer.parseInt(UrlEncodeDecoder.decode(params[0]));
 			RoleService roleService = AppContext
 					.getSpringBean(RoleService.class);
-			SimpleRole role = roleService.findRoleById(roleId);
+			SimpleRole role = roleService.findRoleById(roleId,
+					AppContext.getAccountId());
 			EventBus.getInstance().fireEvent(
 					new RoleEvent.GotoEdit(EditUrlResolver.this, role));
 		}
@@ -46,7 +47,8 @@ public class RoleUrlResolver extends AccountUrlResolver {
 			int roleId = Integer.parseInt(UrlEncodeDecoder.decode(params[0]));
 			RoleService roleService = AppContext
 					.getSpringBean(RoleService.class);
-			SimpleRole role = roleService.findRoleById(roleId);
+			SimpleRole role = roleService.findRoleById(roleId,
+					AppContext.getAccountId());
 			EventBus.getInstance().fireEvent(
 					new RoleEvent.GotoRead(PreviewUrlResolver.this, role));
 		}

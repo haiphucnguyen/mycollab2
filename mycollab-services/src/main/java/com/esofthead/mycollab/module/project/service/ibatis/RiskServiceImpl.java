@@ -42,7 +42,7 @@ public class RiskServiceImpl extends
 	}
 
 	@Override
-	public SimpleRisk findById(int riskId, Integer sAccountId) {
+	public SimpleRisk findById(int riskId, int sAccountId) {
 		return riskMapperExt.findRiskById(riskId);
 	}
 }

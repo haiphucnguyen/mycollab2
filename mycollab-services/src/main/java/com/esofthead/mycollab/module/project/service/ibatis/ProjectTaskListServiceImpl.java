@@ -50,12 +50,12 @@ public class ProjectTaskListServiceImpl extends
 	}
 
 	@Override
-	public SimpleTaskList findById(int taskListId, Integer sAccountId) {
+	public SimpleTaskList findById(int taskListId, int sAccountId) {
 		return projectTaskListMapperExt.findTaskListById(taskListId);
 	}
 
 	@Override
-	public void updateTaskListIndex(TaskList[] taskLists, Integer sAccountId) {
+	public void updateTaskListIndex(TaskList[] taskLists, int sAccountId) {
 		for (TaskList taskList : taskLists) {
 			projectTaskListMapper.updateByPrimaryKeySelective(taskList);
 		}

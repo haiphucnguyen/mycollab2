@@ -59,7 +59,8 @@ public class RoleServiceDBImpl extends
 	}
 
 	@Override
-	public void savePermission(int roleId, PermissionMap permissionMap) {
+	public void savePermission(int roleId, PermissionMap permissionMap,
+			int accountid) {
 		XStream xstream = new XStream(new StaxDriver());
 		String perVal = xstream.toXML(permissionMap);
 
@@ -79,7 +80,7 @@ public class RoleServiceDBImpl extends
 	}
 
 	@Override
-	public SimpleRole findRoleById(int roleId) {
+	public SimpleRole findRoleById(int roleId, int sAccountId) {
 		return roleMapperExt.findById(roleId);
 	}
 }

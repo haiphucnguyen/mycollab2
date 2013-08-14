@@ -14,7 +14,7 @@ public interface BugService extends
 		IDefaultService<Integer, BugWithBLOBs, BugSearchCriteria> {
 
 	@Cacheable
-	SimpleBug findById(Integer bugid, @CacheKey Integer sAccountId);
+	SimpleBug findById(int bugid, @CacheKey int sAccountId);
 
 	@Cacheable
 	List<GroupItem> getStatusSummary(@CacheKey BugSearchCriteria criteria);

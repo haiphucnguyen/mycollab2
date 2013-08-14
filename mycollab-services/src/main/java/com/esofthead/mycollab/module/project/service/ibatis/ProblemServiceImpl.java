@@ -42,7 +42,7 @@ public class ProblemServiceImpl extends
 	}
 
 	@Override
-	public SimpleProblem findById(Integer problemId, Integer sAccountId) {
+	public SimpleProblem findById(Integer problemId, int sAccountId) {
 		return problemMapperExt.findProblemById(problemId);
 	}
 }

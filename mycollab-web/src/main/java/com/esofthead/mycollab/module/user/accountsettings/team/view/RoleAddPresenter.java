@@ -71,7 +71,8 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 			roleService.updateWithSession(item, AppContext.getUsername());
 		}
 
-		roleService.savePermission(item.getId(), view.getPermissionMap());
+		roleService.savePermission(item.getId(), view.getPermissionMap(),
+				item.getSaccountid());
 
 	}
 
@@ -88,7 +89,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 
 			AccountSettingBreadcrumb breadcrumb = ViewManager
 					.getView(AccountSettingBreadcrumb.class);
-			
+
 			if (role.getId() == null) {
 				breadcrumb.gotoRoleAdd();
 			} else {

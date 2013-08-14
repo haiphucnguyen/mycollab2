@@ -82,10 +82,10 @@ public class AuditLogAspect {
 				Object oldValue = null;
 				try {
 					findMethod = cls.getMethod("findById", new Class[] {
-							Integer.class, Integer.class });
+							int.class, int.class });
 				} catch (Exception e) {
 					findMethod = cls.getMethod("findByPrimaryKey", new Class[] {
-							Serializable.class, Integer.class, Integer.class });
+							Serializable.class, int.class, int.class });
 				}
 				oldValue = findMethod.invoke(service, typeid, sAccountId);
 				String key = bean.toString() + auditAnnotation.type() + typeid;

@@ -10,5 +10,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 public interface ProjectTaskService extends
 		IDefaultService<Integer, Task, TaskSearchCriteria> {
 	@Cacheable
-	SimpleTask findById(Integer taskId, @CacheKey Integer sAccountId);
+	SimpleTask findById(int taskId, @CacheKey int sAccountId);
 }

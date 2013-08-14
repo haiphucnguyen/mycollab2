@@ -22,7 +22,7 @@ public interface ProjectMemberService extends
 		IDefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria> {
 
 	@Cacheable
-	SimpleProjectMember findById(int memberId, @CacheKey Integer sAccountId);
+	SimpleProjectMember findById(int memberId, @CacheKey int sAccountId);
 
 	@Cacheable
 	SimpleProjectMember findMemberByUsername(String username, int projectId,

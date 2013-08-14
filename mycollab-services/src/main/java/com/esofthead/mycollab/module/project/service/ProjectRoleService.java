@@ -17,5 +17,5 @@ public interface ProjectRoleService extends
 			@CacheKey Integer sAccountId);
 
 	@Cacheable
-	SimpleProjectRole findById(int roleId, @CacheKey Integer sAccountId);
+	SimpleProjectRole findById(int roleId, @CacheKey int sAccountId);
 }

@@ -17,6 +17,9 @@
 package com.esofthead.mycollab.module.user.service;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -26,7 +29,9 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
  * @author hpnguyen
  */
 public interface RoleService extends IDefaultService<Integer, Role, RoleSearchCriteria> {
-    void savePermission(int roleId, PermissionMap permissionMap);
+	@CacheEvict
+    void savePermission(int roleId, PermissionMap permissionMap, @CacheKey int sAccountId);
     
-    SimpleRole findRoleById(int roleId);
+    @Cacheable
+    SimpleRole findRoleById(int roleId, @CacheKey int sAccountId);
 }

@@ -212,7 +212,7 @@ public class ProjectServiceImpl extends
 	}
 
 	@Override
-	public SimpleProject findById(int projectId, Integer sAccountId) {
+	public SimpleProject findById(int projectId, int sAccountId) {
 		return projectMapperExt.findProjectById(projectId);
 	}
 

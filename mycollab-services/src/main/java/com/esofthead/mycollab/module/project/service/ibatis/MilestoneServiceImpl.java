@@ -50,7 +50,7 @@ public class MilestoneServiceImpl extends
 	}
 
 	@Override
-	public SimpleMilestone findById(int milestoneId, Integer sAccountId) {
+	public SimpleMilestone findById(int milestoneId, int sAccountId) {
 		return milestoneMapperExt.findById(milestoneId);
 	}
 }
