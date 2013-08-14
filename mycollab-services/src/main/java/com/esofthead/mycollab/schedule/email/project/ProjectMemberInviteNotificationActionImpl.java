@@ -17,11 +17,9 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
 
 @Service
-public class ProjectMemberInviteNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationAction implements
+public class ProjectMemberInviteNotificationActionImpl implements
 		ProjectMemberInviteNotificationAction {
 
 	@Autowired
@@ -40,11 +38,11 @@ public class ProjectMemberInviteNotificationActionImpl extends
 	private UserService userService;
 
 	@Override
-	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
-		int memberId = emailNotification.getTypeid();
-		SimpleProjectMember member = projectMemberService.findById(
-				memberId, emailNotification.getSaccountid());
+	public void sendNotificationForCreateAction(
+			SimpleRelayEmailNotification notification) {
+		int memberId = notification.getTypeid();
+		SimpleProjectMember member = projectMemberService.findById(memberId,
+				notification.getSaccountid());
 		String subdomain = projectService.getSubdomainOfProject(member
 				.getProjectid());
 
@@ -76,22 +74,19 @@ public class ProjectMemberInviteNotificationActionImpl extends
 		// RegisterStatusConstants.SENT_VERIFICATION_EMAIL
 		member.setStatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL);
 		projectMemberService.updateWithSession(member,
-				emailNotification.getChangeByUserFullName());
-		return templateGenerator;
+				notification.getChangeByUserFullName());
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+	public void sendNotificationForUpdateAction(
+			SimpleRelayEmailNotification notification) {
 		// do nothing
-		return null;
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+	public void sendNotificationForCommentAction(
+			SimpleRelayEmailNotification notification) {
 		// do nothing
-		return null;
 	}
 
 }
