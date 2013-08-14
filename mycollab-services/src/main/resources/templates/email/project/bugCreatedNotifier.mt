@@ -16,14 +16,14 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi there,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that a new bug has been created in project <a href="$hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$bug.projectname</a>. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that a new bug has been created in project <a href="$!hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!bug.projectname</a>. Here're details about it:</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Bug Summary:&nbsp;</td>
-									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$hyperLinks.bugUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$bug.summary</a></td>
+									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.bugUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.summary</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
@@ -31,27 +31,29 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Status:&nbsp;</td>
-									<td>$bug.status</td>
+									<td>$!bug.status</td>
 									<td style="text-align: right; min-width: 90px;">Priority:&nbsp;</td>
-									<td>$bug.priority</td>		
+									<td>$!bug.priority</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Severity:&nbsp;</td>
-									<td>$bug.severity</td>
+									<td>$!bug.severity</td>
 									<td style="text-align: right;">Resolution:&nbsp;</td>
-									<td>$bug.resolution</td>		
+									<td>$!bug.resolution</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
-									<td style="vertical-align: top;">$!date.format('short_date', $bug.Duedate)</td>
+									<td style="vertical-align: top;">$!date.format('short_date', $!bug.Duedate)</td>
 									<td style="text-align: right; vertical-align: top;">Milestone:&nbsp;</td>
-									<td><a href="$hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.milestoneName</td>		
+									<td><a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.milestoneName</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
-									<td><a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$bug.loguserFullName</a></td>
+									<td><a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.loguserFullName</a></td>
 									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td><a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$bug.assignuserFullName</a></td>		
+									<td>
+										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.assignuserFullName</a>
+									</td>				
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>
@@ -59,11 +61,11 @@
 										#if( $bug.components.size() > 1 )
 											<ul>
 											#foreach( $component in $bug.components )
-												<li>$component.Componentname</li>
+												<li>$!component.Componentname</li>
 											#end
 											</ul>
 										#elseif( $bug.components.size() > 0 )
-											$bug.components.get(0).Componentname
+											$!bug.components.get(0).Componentname
 										#else
 											N/A
 										#end
@@ -73,11 +75,11 @@
 										#if( $bug.affectedVersions.size() > 1 )
 											<ul>
 											#foreach( $affectedVersion in $bug.affectedVersions )
-												<li>$component.Componentname</li>
+												<li>$!component.Componentname</li>
 											#end
 											</ul>
 										#elseif( $bug.affectedVersions.size() > 0 )
-											$bug.affectedVersions.get(0).Versionname
+											$!bug.affectedVersions.get(0).Versionname
 										#else
 											N/A
 										#end
