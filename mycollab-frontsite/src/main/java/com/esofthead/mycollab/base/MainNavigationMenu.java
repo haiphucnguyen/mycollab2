@@ -24,6 +24,8 @@ public class MainNavigationMenu extends Panel {
 		add(signIn);
 		BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>("tour", TourPage.class);
 		add(tour);
+		ExternalLink blog = new ExternalLink("blog", "http://esofthead.com/blog/");
+		add(blog);
 		ExternalLink support = new ExternalLink("support", "mailto:sales@esofthead.com");
 		add(support);
 		BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>("pricing_signup", PricingPage.class);
