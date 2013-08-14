@@ -154,14 +154,18 @@
                         </configuration>
                     </execution>
                     -->
-                    <!-- <execution> <id>Common Artifacts Generator</id> 
+                    <!-- 
+                     <execution> <id>Common Artifacts Generator</id> 
                         <phase>validate</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> -->
-                    <!-- <execution> <id>Project Artifacts Generator</id> 
+                        <overwrite>true</overwrite> </configuration> </execution>
+                   <execution> <id>Project Artifacts Generator</id> 
                         <phase>validate</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Tracker 
+                        <overwrite>true</overwrite> </configuration> </execution>
+                        -->
+                        <!--  
+                        <execution> <id>Tracker 
                         Artifacts Generator</id> <phase>validate</phase> <goals> <goal>generate</goal> 
                         </goals> <configuration> <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Ecm 
