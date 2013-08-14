@@ -264,33 +264,6 @@
             </exclusions>
         </dependency>
 
-        <!-- JETTY dependency -->
-        <!-- 
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-websocket</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
--->
-
         <dependency>
             <groupId>fr.xebia.web</groupId>
             <artifactId>xebia-servlet-extras</artifactId>
@@ -375,6 +348,15 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -429,7 +411,6 @@
                 </dependencies>
                 <configuration>
                     <tmpDir>target/temp</tmpDir>
-                    <!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
                     <webAppConfig>
                         <contextPath>/${project.name}</contextPath>
                     </webAppConfig>
@@ -465,7 +446,17 @@
                 <groupId>net.sf.proguard</groupId> <artifactId>proguard-base</artifactId> 
                 <version>4.9</version> <scope>runtime</scope> </dependency> </dependencies> 
                 </plugin> -->
+            <!-- Enabling and configuring regular resources filtering. See 
+                also section "resources" below -->
+
         </plugins>
+        <!-- Instructing the resources plugin to filter certain directories -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -478,4 +469,18 @@
             </plugins>
         </pluginManagement>
     </build>
+    <profiles>
+        <!-- Environment of server 1 -->
+        <profile>
+            <id>server1</id>
+            <properties>
+            </properties>
+        </profile>
+        <!-- Environment of server 1 -->
+        <profile>
+            <id>server2</id>
+            <properties>
+            </properties>
+        </profile>
+    </profiles>
 </project>

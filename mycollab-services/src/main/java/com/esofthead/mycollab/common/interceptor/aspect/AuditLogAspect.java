@@ -45,7 +45,8 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 public class AuditLogAspect {
 
 	private static Logger log = LoggerFactory.getLogger(AuditLogAspect.class);
-	private static BasicCache<Object, Object> caches = LocalCacheManager.getCache();
+	private static BasicCache<Object, Object> caches = LocalCacheManager
+			.getCache();
 
 	@Autowired
 	protected AuditLogMapper auditLogMapper;
@@ -70,6 +71,8 @@ public class AuditLogAspect {
 		if (auditAnnotation != null) {
 			try {
 				int typeid = (Integer) PropertyUtils.getProperty(bean, "id");
+				int sAccountId = (Integer) PropertyUtils.getProperty(bean,
+						"saccountid");
 				// store old value to map, wait until the update process
 				// successfully then add to log item
 
@@ -78,13 +81,13 @@ public class AuditLogAspect {
 				Method findMethod = null;
 				Object oldValue = null;
 				try {
-					findMethod = cls.getMethod("findById",
-							new Class[] { Integer.class });
+					findMethod = cls.getMethod("findById", new Class[] {
+							Integer.class, Integer.class });
 				} catch (Exception e) {
-					findMethod = cls.getMethod("findByPrimaryKey",
-							new Class[] { Serializable.class });
+					findMethod = cls.getMethod("findByPrimaryKey", new Class[] {
+							Serializable.class, Integer.class });
 				}
-				oldValue = findMethod.invoke(service, typeid);
+				oldValue = findMethod.invoke(service, typeid, sAccountId);
 				String key = bean.toString() + auditAnnotation.type() + typeid;
 
 				caches.put(key, oldValue);
