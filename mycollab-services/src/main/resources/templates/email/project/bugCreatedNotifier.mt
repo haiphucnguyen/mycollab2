@@ -51,7 +51,9 @@
 									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
 									<td><a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$bug.loguserFullName</a></td>
 									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td><a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$bug.assignuserFullName</a></td>		
+									<td>
+										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.assignuserFullName</a>
+									</td>				
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>

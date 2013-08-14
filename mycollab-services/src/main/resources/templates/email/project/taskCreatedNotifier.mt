@@ -16,14 +16,14 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi there,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that a new task <a href="$hyperLinks.taskUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$task.taskname</a> has been created in project <a href="$hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$task.projectName</a>. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that a new task <a href="$hyperLinks.taskUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskname</a> has been created in project <a href="$!hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!task.projectName</a>. Here're details about it:</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Task Name:&nbsp;</td>
-									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word;" colspan="3"><a href="$hyperLinks.taskUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$task.taskname</a></td>
+									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word;" colspan="3"><a href="$hyperLinks.taskUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskname</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
@@ -45,10 +45,10 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Assign:&nbsp;</td>
-									<td style="vertical-align: top;"><a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.assignUserFullName</a>
+									<td style="vertical-align: top;"><a href="${!hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.assignUserFullName</a>
 									</td>
 									<td style="text-align: right; vertical-align: top;"> Task list:&nbsp;</td>
-									<td style="vertical-align: top;"><a href="${hyperLinks.taskListUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskListName</a></td>		
+									<td style="vertical-align: top;"><a href="${!hyperLinks.taskListUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskListName</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Notes:&nbsp;</td>
