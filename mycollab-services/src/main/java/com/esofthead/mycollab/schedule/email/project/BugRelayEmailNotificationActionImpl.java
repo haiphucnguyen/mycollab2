@@ -36,11 +36,13 @@ public class BugRelayEmailNotificationActionImpl extends
 		int bugId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findById(bugId, 0);
 		if (bug != null) {
-			String subject = StringUtils.subString(bug.getSummary(), 150);
+			String subject = bug.getSummary();
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					"[$bug.projectname]: Bug \"" + subject + "...\" created",
+					"[$bug.projectname]: Bug \"" + subject
+							+ "\" has been created",
 					"templates/email/project/bugCreatedNotifier.mt");
+
 			templateGenerator.putVariable("bug", bug);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(bug));
@@ -79,7 +81,8 @@ public class BugRelayEmailNotificationActionImpl extends
 		String subject = StringUtils.subString(bug.getSummary(), 150);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: Bug \"" + subject + "...\" updated",
+				"[$bug.projectname]: Bug \"" + subject
+						+ "...\" has been updated",
 				"templates/email/project/bugUpdatedNotifier.mt");
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
@@ -101,13 +104,11 @@ public class BugRelayEmailNotificationActionImpl extends
 		SimpleBug bug = bugService.findById(bugId, 0);
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				bug.getProjectid());
-		String comment = StringUtils.subString(
-				emailNotification.getChangecomment(), 150);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$bug.projectname]: "
 						+ emailNotification.getChangeByUserFullName()
-						+ " add a new comment \"" + comment + "...\" to bug \""
+						+ " has commented on "
 						+ StringUtils.subString(bug.getSummary(), 100) + "\"",
 				"templates/email/project/bugCommentNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
