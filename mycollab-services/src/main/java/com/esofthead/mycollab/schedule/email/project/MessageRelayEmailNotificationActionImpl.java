@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.schedule.email.project;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
@@ -40,15 +42,27 @@ public class MessageRelayEmailNotificationActionImpl implements
 		SimpleMessage message = messageService.findMessageById(messageId, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$message.projectName]: $message.fullPostedUserName sent a message \""
-						+ message.getTitle() + "...\"",
+						+ message.getTitle() + "\"",
 				"templates/email/project/messageCreatedNotifier.mt");
 		templateGenerator.putVariable("message", message);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
-		extMailService.sendHTMLMail("mail@esofthead.com",
-				notification.getChangeByUserFullName(), usersInProject,
-				templateGenerator.generateSubjectContent(),
-				templateGenerator.generateBodyContent(), null);
+		for (SimpleUser user : usersInProject) {
+			String userName = (user.getUsername() != null) ? user.getUsername()
+					: user.getFirstname() + " " + user.getLastname();
+			templateGenerator.putVariable("userName", userName);
+
+			MailRecipientField userMail = new MailRecipientField(
+					user.getEmail(), user.getUsername());
+			List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+			lst.add(userMail);
+
+			extMailService.sendHTMLMail("mail@esofthead.com",
+					notification.getChangeByUserFullName(), lst, null, null,
+					templateGenerator.generateSubjectContent(),
+					templateGenerator.generateBodyContent(), null);
+		}
+
 	}
 
 	@Override
@@ -62,15 +76,26 @@ public class MessageRelayEmailNotificationActionImpl implements
 		SimpleMessage message = messageService.findMessageById(messageId, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$message.projectName]: $message.fullPostedUserName posted a new message \""
-						+ message.getTitle() + "...\"",
+						+ message.getTitle() + "\"",
 				"templates/email/project/messageUpdatedNotifier.mt");
 		templateGenerator.putVariable("message", message);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
-		extMailService.sendHTMLMail("mail@esofthead.com",
-				notification.getChangeByUserFullName(), usersInProject,
-				templateGenerator.generateSubjectContent(),
-				templateGenerator.generateBodyContent(), null);
+		for (SimpleUser user : usersInProject) {
+			String userName = (user.getUsername() != null) ? user.getUsername()
+					: user.getFirstname() + " " + user.getLastname();
+			templateGenerator.putVariable("userName", userName);
+
+			MailRecipientField userMail = new MailRecipientField(
+					user.getEmail(), user.getUsername());
+			List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+			lst.add(userMail);
+
+			extMailService.sendHTMLMail("mail@esofthead.com",
+					notification.getChangeByUserFullName(), lst, null, null,
+					templateGenerator.generateSubjectContent(),
+					templateGenerator.generateBodyContent(), null);
+		}
 	}
 
 	private Map<String, String> constructHyperLinks(SimpleMessage message) {
@@ -100,10 +125,8 @@ public class MessageRelayEmailNotificationActionImpl implements
 		List<SimpleUser> usersInProject = projectMemberService
 				.getUsersInProject(projectid, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$message.projectName]: $message.fullPostedUserName add a new comment \""
-						+ StringUtils.subString(
-								notification.getChangecomment(), 150) + "...\""
-						+ "to message \"" + message.getTitle() + "\"",
+				"[$message.projectName]: $!message.fullPostedUserName has commented on \""
+						+ message.getTitle() + "\"",
 				"templates/email/project/messageCommentNotifier.mt");
 		templateGenerator.putVariable("message", message);
 		templateGenerator.putVariable("comment", notification);
@@ -111,10 +134,21 @@ public class MessageRelayEmailNotificationActionImpl implements
 				.generateUserPreviewFullLink(notification.getChangeby()));
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
-		extMailService.sendHTMLMail("mail@esofthead.com",
-				notification.getChangeByUserFullName(), usersInProject,
-				templateGenerator.generateSubjectContent(),
-				templateGenerator.generateBodyContent(), null);
+		for (SimpleUser user : usersInProject) {
+			String userName = (user.getUsername() != null) ? user.getUsername()
+					: user.getFirstname() + " " + user.getLastname();
+			templateGenerator.putVariable("userName", userName);
+
+			MailRecipientField userMail = new MailRecipientField(
+					user.getEmail(), user.getUsername());
+			List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+			lst.add(userMail);
+
+			extMailService.sendHTMLMail("mail@esofthead.com",
+					notification.getChangeByUserFullName(), lst, null, null,
+					templateGenerator.generateSubjectContent(),
+					templateGenerator.generateBodyContent(), null);
+		}
 
 	}
 

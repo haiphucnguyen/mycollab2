@@ -64,6 +64,9 @@ public class ProjectMemberInviteNotificationActionImpl implements
 						+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
 								+ member.getId()));
 
+		String userName = (member.getMemberFullName() != null) ? member
+				.getMemberFullName() : "there";
+		templateGenerator.putVariable("userName", userName);
 		extMailService.sendHTMLMail("mail@esofthead.com", "No-reply", Arrays
 				.asList(new MailRecipientField(member.getEmail(), member
 						.getMemberFullName())), null, null, templateGenerator

@@ -53,7 +53,9 @@ public class SendUserInvitationCommand {
 							+ "user/deny_invite/"
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
 									+ "/" + invitation.getUsername()));
-
+			String userName = (invitation.getUsername() != null) ? invitation
+					.getUsername() : "there";
+			templateGenerator.putVariable("userName", userName);
 			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
 					Arrays.asList(new MailRecipientField(invitation
 							.getUsername(), invitation.getUsername())), null,

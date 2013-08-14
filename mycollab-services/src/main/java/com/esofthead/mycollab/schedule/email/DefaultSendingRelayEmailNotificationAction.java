@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.schedule.email;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -26,10 +28,26 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
 			if (templateGenerator != null) {
-				extMailService.sendHTMLMail("mail@esofthead.com",
-						notification.getChangeByUserFullName(), notifiers,
-						templateGenerator.generateSubjectContent(),
-						templateGenerator.generateBodyContent(), null);
+				for (SimpleUser user : notifiers) {
+					String userName = "";
+					try {
+						userName = user.getFirstname() + " "
+								+ user.getLastname();
+					} catch (Exception e) {
+						userName = user.getUsername();
+					}
+					templateGenerator.putVariable("userName", userName);
+
+					MailRecipientField userMail = new MailRecipientField(
+							user.getEmail(), user.getUsername());
+					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+					lst.add(userMail);
+
+					extMailService.sendHTMLMail("mail@esofthead.com",
+							notification.getChangeByUserFullName(), lst, null,
+							null, templateGenerator.generateSubjectContent(),
+							templateGenerator.generateBodyContent(), null);
+				}
 			}
 		}
 	}
@@ -41,10 +59,26 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
 			if (templateGenerator != null) {
-				extMailService.sendHTMLMail("mail@esofthead.com",
-						notification.getChangeByUserFullName(), notifiers,
-						templateGenerator.generateSubjectContent(),
-						templateGenerator.generateBodyContent(), null);
+				for (SimpleUser user : notifiers) {
+					String userName = "";
+					try {
+						userName = user.getFirstname() + " "
+								+ user.getLastname();
+					} catch (Exception e) {
+						userName = user.getUsername();
+					}
+					templateGenerator.putVariable("userName", userName);
+					
+					MailRecipientField userMail = new MailRecipientField(
+							user.getEmail(), user.getUsername());
+					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+					lst.add(userMail);
+
+					extMailService.sendHTMLMail("mail@esofthead.com",
+							notification.getChangeByUserFullName(), lst, null,
+							null, templateGenerator.generateSubjectContent(),
+							templateGenerator.generateBodyContent(), null);
+				}
 			}
 		}
 
@@ -57,10 +91,26 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForCommentAction(notification);
 			if (templateGenerator != null) {
-				extMailService.sendHTMLMail("mail@esofthead.com",
-						notification.getChangeByUserFullName(), notifiers,
-						templateGenerator.generateSubjectContent(),
-						templateGenerator.generateBodyContent(), null);
+				for (SimpleUser user : notifiers) {
+					String userName = "";
+					try {
+						userName = user.getFirstname() + " "
+								+ user.getLastname();
+					} catch (Exception e) {
+						userName = user.getUsername();
+					}
+					templateGenerator.putVariable("userName", userName);
+					
+					MailRecipientField userMail = new MailRecipientField(
+							user.getEmail(), user.getUsername());
+					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+					lst.add(userMail);
+
+					extMailService.sendHTMLMail("mail@esofthead.com",
+							notification.getChangeByUserFullName(), lst, null,
+							null, templateGenerator.generateSubjectContent(),
+							templateGenerator.generateBodyContent(), null);
+				}
 			}
 		}
 	}
