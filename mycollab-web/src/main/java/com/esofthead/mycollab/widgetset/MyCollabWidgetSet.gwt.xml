@@ -58,4 +58,6 @@
     
 
     <inherits name="org.tepi.listbuilder.gwt.ListBuilderWidgetset" />
+
+    <inherits name="org.vaadin.artur.icepush.IcepushaddonWidgetset" />
 </module>

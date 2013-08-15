@@ -37,7 +37,7 @@
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
-        <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+        <servlet-class>org.vaadin.artur.icepush.ICEPushServlet</servlet-class>
         <init-param>
             <param-name>application</param-name>
             <param-value>com.esofthead.mycollab.web.MyCollabApplication</param-value>

@@ -1,15 +1,15 @@
 package com.esofthead.mycollab.module.file.view;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.artur.icepush.ICEPush;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
@@ -35,11 +35,16 @@ import com.vaadin.ui.Window;
 public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private Label messageInfoLbl;
 	private TextField folderName;
+	private CloudDriveInfo cloudDriveInfo;
 
 	private static Logger log = LoggerFactory
 			.getLogger(CloudDriveIntegrationOAuthWindow.class);
+
+	private ICEPush pusher = new ICEPush();
+
+	private VerticalLayout mainLayout;
+	private VerticalLayout messageBox;
 
 	private ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo> listener;
 
@@ -50,6 +55,8 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		this.center();
 		constructBody();
 		registerListeners();
+
+		this.addComponent(pusher);
 	}
 
 	private void registerListeners() {
@@ -58,10 +65,13 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 
 			@Override
 			public void handle(ReceiveCloudDriveInfo event) {
-				CloudDriveInfo cloudDriveInfo = (CloudDriveInfo) event
-						.getData();
+				cloudDriveInfo = (CloudDriveInfo) event.getData();
+
 				log.debug("Receive cloud drive info: "
 						+ BeanUtility.printBeanObj(cloudDriveInfo));
+				messageBox.removeAllComponents();
+				messageBox.addComponent(new Label("Access token retrieved"));
+				pusher.push();
 			}
 
 			@Override
@@ -81,14 +91,17 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	}
 
 	private void constructBody() {
-		final VerticalLayout mainLayout = new VerticalLayout();
+		mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setSpacing(true);
 		mainLayout.setMargin(true);
 
-		messageInfoLbl = new Label(
+		messageBox = new VerticalLayout();
+		mainLayout.addComponent(messageBox);
+
+		Label messageInfoLbl = new Label(
 				"You can connect Cloud Drives (Google Drive, Dropbox) to Mycollab Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
-		mainLayout.addComponent(messageInfoLbl);
+		messageBox.addComponent(messageInfoLbl);
 
 		Button btnLogin = new Button("Login (" + getStorageName() + ")",
 				new Button.ClickListener() {
@@ -102,8 +115,8 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 					}
 				});
 		btnLogin.addStyleName(UIConstants.THEME_BLUE_LINK);
-		mainLayout.addComponent(btnLogin);
-		mainLayout.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
+		messageBox.addComponent(btnLogin);
+		messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
 
 		Label title = new Label("Folder Title");
 
@@ -154,8 +167,11 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 								return;
 							}
 							ExternalDrive externalDrive = new ExternalDrive();
-							// dropboxDrive.setAccesstoken("");
-							externalDrive.setCreatedtime(new Date());
+							externalDrive.setAccesstoken(cloudDriveInfo
+									.getAccessToken());
+							externalDrive
+									.setCreatedtime(new GregorianCalendar()
+											.getTime());
 							externalDrive.setFoldername(name);
 							externalDrive.setOwner(AppContext.getUsername());
 							externalDrive.setStoragename(getStorageName());

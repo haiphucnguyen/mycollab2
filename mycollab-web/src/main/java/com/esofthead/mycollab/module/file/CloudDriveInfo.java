@@ -4,6 +4,8 @@ public class CloudDriveInfo {
 	private String storageName;
 
 	private String accessToken;
+	
+	private String folderName;
 
 	public CloudDriveInfo(String storageName, String accessToken) {
 		this.storageName = storageName;
@@ -24,5 +26,13 @@ public class CloudDriveInfo {
 
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
+	}
+
+	public String getFolderName() {
+		return folderName;
+	}
+
+	public void setFolderName(String folderName) {
+		this.folderName = folderName;
 	}
 }
