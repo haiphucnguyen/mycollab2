@@ -38,6 +38,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 	protected MonitorItemService monitorItemService;
 	protected V bean;
 	protected Button btnSave;
+	protected Button followBtn;
 
 	protected CompFollowersSheet(V bean) {
 		this.bean = bean;
@@ -64,7 +65,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		this.addComponent(lbInstruct);
 
 		HorizontalLayout layoutAdd = new HorizontalLayout();
-		layoutAdd.setWidth("550px");
+		layoutAdd.setSpacing(true);
 
 		final ProjectMemberMultiSelectField memberSelection = new ProjectMemberMultiSelectField();
 		layoutAdd.addComponent(memberSelection);
@@ -98,6 +99,11 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 							&& member.getUsername() != null) {
 
 						if (saveMonitorItem(member.getUsername())) {
+							if (member.getUsername().equals(
+									AppContext.getUsername())) {
+								followBtn.setCaption("UnFollow by Me");
+								followBtn.setDescription("UnFollow");
+							}
 							canSendEmail = true;
 						}
 					}
@@ -118,6 +124,41 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 		layoutAdd.addComponent(btnSave);
 		layoutAdd.setComponentAlignment(btnSave, Alignment.MIDDLE_LEFT);
+
+		Label lbl = new Label("or");
+		layoutAdd.addComponent(lbl);
+		layoutAdd.setComponentAlignment(lbl, Alignment.MIDDLE_LEFT);
+
+		followBtn = new Button();
+		followBtn.addStyleName("link");
+		followBtn.setCaption("Follow by Me");
+		followBtn.setDescription("Follow");
+		followBtn.addListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (followBtn.getDescription().equals("Follow")) {
+					followBtn.setCaption("UnFollow by Me");
+					followBtn.setDescription("UnFollow");
+					saveMonitorItem(AppContext.getUsername());
+					loadMonitorItems();
+				} else if (followBtn.getDescription().equals("UnFollow")) {
+					followBtn.setCaption("Follow by Me");
+					followBtn.setDescription("Follow");
+					for (MonitorItem item : tableItem.getCurrentDataList()) {
+						if (item.getUser().equals(AppContext.getUsername())) {
+							monitorItemService.removeWithSession(item.getId(),
+									AppContext.getUsername(),
+									AppContext.getAccountId());
+							break;
+						}
+					}
+					loadMonitorItems();
+				}
+			}
+		});
+		layoutAdd.addComponent(followBtn);
+		layoutAdd.setComponentAlignment(followBtn, Alignment.MIDDLE_LEFT);
 
 		this.addComponent(layoutAdd);
 
@@ -222,7 +263,22 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		tableItem.setWidth("100%");
 
 		this.addComponent(tableItem);
+
 		loadMonitorItems();
+
+		for (SimpleMonitorItem monitorItem : tableItem.getCurrentDataList()) {
+			if (monitorItem.getUser().equals(AppContext.getUsername())) {
+				followBtn.setCaption("UnFollow by Me");
+				followBtn.setDescription("UnFollow");
+				break;
+			}
+		}
+		if (tableItem.getCurrentDataList().size() == 0
+				|| (followBtn.getDescription() != null && !followBtn
+						.getDescription().equals("UnFollow"))) {
+			followBtn.setCaption("Follow by Me");
+			followBtn.setDescription("Follow");
+		}
 	}
 
 }
