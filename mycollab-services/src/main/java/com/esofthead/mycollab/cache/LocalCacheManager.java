@@ -25,7 +25,7 @@ public class LocalCacheManager {
 			InputStream configInputStream;
 			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
 				configInputStream = LocalCacheManager.class.getClassLoader()
-						.getResourceAsStream("infinispan.xml");
+						.getResourceAsStream("infinispan-local.xml");
 				instance = new DefaultCacheManager(configInputStream);
 			} else {
 				configInputStream = LocalCacheManager.class.getClassLoader()

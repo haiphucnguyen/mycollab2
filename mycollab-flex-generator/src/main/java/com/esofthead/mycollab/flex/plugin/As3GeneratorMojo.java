@@ -24,7 +24,7 @@ public class As3GeneratorMojo extends AbstractMojo {
 		getLog().info("Hello world");
 
 		ComponentScanner scanner = new ComponentScanner();
-		Set<Class<?>> viewClasses = scanner.getClasses(new ComponentQuery() {
+		Set<Class<?>> domainClasses = scanner.getClasses(new ComponentQuery() {
 			@Override
 			protected void query() {
 				select().from("com.esofthead.mycollab.**.domain.**").returning(
@@ -34,9 +34,9 @@ public class As3GeneratorMojo extends AbstractMojo {
 
 		getLog().info(
 				"Scan packages to search domain classes. There are "
-						+ viewClasses.size() + " classes are found");
+						+ domainClasses.size() + " classes are found");
 
-		for (Class<?> domainClass : viewClasses) {
+		for (Class<?> domainClass : domainClasses) {
 			getLog().info("Domain class" + domainClass.getName());
 			Field[] fields = domainClass.getDeclaredFields();
 			for (Field field : fields) {
