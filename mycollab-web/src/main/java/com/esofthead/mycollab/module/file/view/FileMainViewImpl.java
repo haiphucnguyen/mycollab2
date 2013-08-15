@@ -18,6 +18,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.dropbox.core.DbxClient;
 import com.dropbox.core.DbxEntry;
+import com.dropbox.core.DbxEntry.WithChildren;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -1592,6 +1593,19 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									}
 								}
 							});
+		}
+	}
+
+	public static void main(String[] args) throws DbxException {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig,
+				"2qtgoUhfNbsAAAAAAAAAARkETVWVUdFB4-vExevabzAsv8RcTHocOoXmvXpRWsrz");
+		WithChildren children = client.getMetadataWithChildren("/");
+		if (children.children != null) {
+			for (DbxEntry entry : children.children) {
+				System.out.println(entry.name);
+			}
 		}
 	}
 }

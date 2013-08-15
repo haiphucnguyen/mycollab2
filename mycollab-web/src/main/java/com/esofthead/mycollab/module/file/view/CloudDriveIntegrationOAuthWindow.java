@@ -71,6 +71,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 						+ BeanUtility.printBeanObj(cloudDriveInfo));
 				messageBox.removeAllComponents();
 				messageBox.addComponent(new Label("Access token retrieved"));
+				CloudDriveIntegrationOAuthWindow.this.setHeight("200px");
 				pusher.push();
 			}
 
