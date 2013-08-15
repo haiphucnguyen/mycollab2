@@ -107,6 +107,7 @@ public class ProjectMemberAddPresenter extends
 		projectMember.setProjectid(CurrentProjectVariables.getProjectId());
 		projectMember.setJoindate(new GregorianCalendar().getTime());
 		projectMember.setStatus(ProjectMemberStatusContants.VERIFICATING);
+		projectMember.setSaccountid(AppContext.getAccountId());
 		if (projectMember.getId() == null) {
 			int saveId = projectMemberService.saveWithSession(projectMember,
 					AppContext.getUsername());

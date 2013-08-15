@@ -115,6 +115,8 @@ public class ProjectMemberReadPresenter extends
 								SearchField.AND, project.getId()));
 						criteria.setId(new NumberSearchField(data.getId(),
 								NumberSearchField.GREATER));
+						criteria.setSaccountid(new NumberSearchField(AppContext
+								.getAccountId()));
 						Integer nextId = projectMemberService
 								.getNextItemKey(criteria);
 						if (nextId != null) {

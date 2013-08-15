@@ -26,7 +26,7 @@ public class V1_47__Adjust_Add_SaccountId_To_2table implements
 
 	private void adjustAddSaccountIdtoPRJMember(JdbcTemplate jdbcTemplate) {
 		jdbcTemplate
-				.execute("ALTER TABLE `m_prj_member` ADD COLUMN `sAccountId` INT(11) NULL DEFAULT 0");
+				.execute("ALTER TABLE `m_prj_member` ADD COLUMN `sAccountId` INT(11) NOT NULL DEFAULT 0");
 		List<Record> members = jdbcTemplate
 				.query("select m_prj_member.id as id ,Project.sAccountId as sAccountId from m_prj_member JOIN m_prj_project as Project ON Project.id = m_prj_member.projectId",
 						new RowMapper<Record>() {
@@ -53,7 +53,7 @@ public class V1_47__Adjust_Add_SaccountId_To_2table implements
 
 	private void adjustAddSaccountIdtoMonitorItem(JdbcTemplate jdbcTemplate) {
 		jdbcTemplate
-				.execute("ALTER TABLE `m_monitor_item` ADD COLUMN `sAccountId` INT(11) NULL DEFAULT 0  AFTER `extraTypeId`");
+				.execute("ALTER TABLE `m_monitor_item` ADD COLUMN `sAccountId` INT(11) NOT NULL DEFAULT 0  AFTER `extraTypeId`");
 		List<Record> monitorItems = jdbcTemplate
 				.query("select m_monitor_item.id as id , Bug.sAccountId as sAccountId"
 						+ " from m_monitor_item JOIN m_tracker_bug as Bug ON "
