@@ -47,7 +47,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		mainLayout.setMargin(true);
 
 		Label messageInfoLal = new Label(
-				"You can connect the Dropbox account to Mycollab-Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
+				"You can connect Cloud Drives (Google Drive, Dropbox) to Mycollab Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
 		mainLayout.addComponent(messageInfoLal);
 
 		Button btnLogin = new Button("Login(Dropbox)",

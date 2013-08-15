@@ -26,8 +26,8 @@ public class V1_47__Adjust_Add_SaccountId_To_2table implements
 
 	private void adjustAddSaccountIdtoPRJMember(JdbcTemplate jdbcTemplate) {
 		jdbcTemplate
-				.execute("ALTER TABLE `mycollab_live`.`m_prj_member` ADD COLUMN `sAccountId` INT(11) NULL DEFAULT 0  AFTER `status`");
-		List<Record> messages = jdbcTemplate
+				.execute("ALTER TABLE `m_prj_member` ADD COLUMN `sAccountId` INT(11) NULL DEFAULT 0");
+		List<Record> members = jdbcTemplate
 				.query("select m_prj_member.id as id ,Project.sAccountId as sAccountId from m_prj_member JOIN m_prj_project as Project ON Project.id = m_prj_member.projectId",
 						new RowMapper<Record>() {
 
@@ -41,20 +41,20 @@ public class V1_47__Adjust_Add_SaccountId_To_2table implements
 								return message;
 							}
 						});
-		for (Record message : messages) {
+		for (Record message : members) {
 			String sql = "update m_prj_member set m_prj_member.sAccountId = "
 					+ message.getInt("sAccountId")
 					+ " where m_prj_member.id = " + message.getInt("id");
 			jdbcTemplate.execute(sql);
 		}
 		jdbcTemplate
-				.execute("ALTER TABLE `mycollab_live`.`m_prj_member` ADD CONSTRAINT `sAccountId` FOREIGN KEY (`sAccountId` ) REFERENCES `mycollab_live`.`s_account` (`id` ) ON DELETE NO ACTION ON UPDATE NO ACTION, ADD INDEX `sAccountId_idx` (`sAccountId` ASC)");
+				.execute("ALTER TABLE `m_prj_member` ADD CONSTRAINT `sAccountId` FOREIGN KEY (`sAccountId` ) REFERENCES `s_account` (`id` ) ON DELETE CASCADE ON UPDATE CASCADE, ADD INDEX `sAccountId_idx` (`sAccountId` ASC)");
 	}
 
 	private void adjustAddSaccountIdtoMonitorItem(JdbcTemplate jdbcTemplate) {
 		jdbcTemplate
-				.execute("ALTER TABLE `mycollab_live`.`m_monitor_item` ADD COLUMN `sAccountId` INT(11) NULL DEFAULT 0  AFTER `extraTypeId`");
-		List<Record> messages = jdbcTemplate
+				.execute("ALTER TABLE `m_monitor_item` ADD COLUMN `sAccountId` INT(11) NULL DEFAULT 0  AFTER `extraTypeId`");
+		List<Record> monitorItems = jdbcTemplate
 				.query("select m_monitor_item.id as id , Bug.sAccountId as sAccountId"
 						+ " from m_monitor_item JOIN m_tracker_bug as Bug ON "
 						+ " m_monitor_item.type=\"Project-Bug\" and m_monitor_item.typeid = Bug.id"
@@ -73,17 +73,17 @@ public class V1_47__Adjust_Add_SaccountId_To_2table implements
 								return message;
 							}
 						});
-		for (Record message : messages) {
+		for (Record message : monitorItems) {
 			String sql = "update m_monitor_item set m_monitor_item.sAccountId = "
 					+ message.getInt("sAccountId")
 					+ " where m_monitor_item.id = " + message.getInt("id");
 			jdbcTemplate.execute(sql);
 		}
-		jdbcTemplate.execute("ALTER TABLE `mycollab_live`.`m_monitor_item` "
+		jdbcTemplate.execute("ALTER TABLE `m_monitor_item` "
 				+ "ADD CONSTRAINT `sAccounId` "
 				+ "FOREIGN KEY (`sAccountId` ) "
-				+ "REFERENCES `mycollab_live`.`s_account` (`id` ) "
-				+ "ON DELETE NO ACTION " + "ON UPDATE NO ACTION "
+				+ "REFERENCES `s_account` (`id` ) " + "ON DELETE CASCADE "
+				+ "ON UPDATE CASCADE "
 				+ ", ADD INDEX `sAccounId_idx` (`sAccountId` ASC)");
 
 	}

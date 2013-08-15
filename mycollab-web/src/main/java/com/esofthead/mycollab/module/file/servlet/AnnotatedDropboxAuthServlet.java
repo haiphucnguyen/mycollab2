@@ -18,7 +18,6 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
-import com.esofthead.mycollab.web.AppContext;
 
 @Component("dropboxAuthServlet")
 public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
