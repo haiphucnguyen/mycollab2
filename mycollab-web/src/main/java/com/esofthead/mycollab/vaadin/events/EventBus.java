@@ -8,9 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
@@ -27,6 +29,13 @@ public class EventBus implements Serializable {
 			eventBus = new EventBus();
 			AppContext.putVariable(EVENT_BUS_VAL, eventBus);
 		}
+		return eventBus;
+	}
+
+	public static EventBus getInstanceSession(String sessionId) {
+		BasicCache<String, Object> cache = LocalCacheManager
+				.getCache(sessionId);
+		EventBus eventBus = (EventBus) cache.get(EVENT_BUS_VAL);
 		return eventBus;
 	}
 

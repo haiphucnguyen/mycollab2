@@ -39,6 +39,10 @@ public class MyCollabApplication extends Application implements
 
 	private static DatabaseReader reader = null;
 
+	private static ThreadLocal<MyCollabApplication> threadLocal = new ThreadLocal<MyCollabApplication>();
+
+	private AppContext sessionData;
+
 	static {
 		try {
 			URL url = MyCollabApplication.class.getClassLoader().getResource(
@@ -48,10 +52,6 @@ public class MyCollabApplication extends Application implements
 			log.error("Can not read geo database file", e);
 		}
 	}
-
-	private static ThreadLocal<MyCollabApplication> threadLocal = new ThreadLocal<MyCollabApplication>();
-
-	private AppContext sessionData;
 
 	// @return the current application instance
 	public static MyCollabApplication getInstance() {

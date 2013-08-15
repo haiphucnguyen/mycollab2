@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
@@ -18,9 +20,15 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
+import com.esofthead.mycollab.module.ecm.StorageNames;
+import com.esofthead.mycollab.module.file.CloudDriveInfo;
+import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 
 @Component("dropboxAuthServlet")
 public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
+	private static Logger log = LoggerFactory
+			.getLogger(AnnotatedDropboxAuthServlet.class);
 
 	private DbxWebAuth getWebAuth(final HttpServletRequest request) {
 		java.util.Locale locale = new Locale(Locale.US.getLanguage(),
@@ -58,8 +66,24 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 			out.println("</html>");
 			return;
 		}
+
 		String accessToken = authFinish.accessToken;
 		// Store accessToken ...
+		CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(
+				StorageNames.DROPBOX, accessToken);
+
+		HttpSession session = request.getSession();
+		String sessionId = session.getId();
+
+		EventBus eventBus = EventBus.getInstanceSession(sessionId);
+		if (eventBus != null) {
+			eventBus.fireEvent(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
+					AnnotatedDropboxAuthServlet.this, cloudDriveInfo));
+		} else {
+			log.error(
+					"Can not find eventbus for session id {}, this session is not initialized by user yet",
+					sessionId);
+		}
 
 		// response script close current window
 		PrintWriter out = response.getWriter();

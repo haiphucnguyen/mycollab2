@@ -102,7 +102,7 @@ public class AppContext implements Serializable {
 		}
 	}
 
-	public static void updateLastModuleVisit(String moduleName) {
+	public void updateLastModuleVisit(String moduleName) {
 		try {
 			UserPreference pref = getInstance().userPreference;
 			UserPreferenceService prefService = AppContext
@@ -116,14 +116,14 @@ public class AppContext implements Serializable {
 		}
 	}
 
-	public static void setSession(SimpleUser userSession,
-			UserPreference userPreference, SimpleBillingAccount billingAccount) {
-		getInstance().session = userSession;
-		getInstance().userPreference = userPreference;
-		getInstance().billingAccount = billingAccount;
+	public void setSession(SimpleUser userSession, UserPreference userPref,
+			SimpleBillingAccount billingAc) {
+		session = userSession;
+		userPreference = userPref;
+		billingAccount = billingAc;
 
 		TimeZone timezone = getTimezoneInContext();
-		getInstance().variables.put(USER_TIMEZONE, timezone);
+		variables.put(USER_TIMEZONE, timezone);
 	}
 
 	public static SimpleUser getSession() {
@@ -191,7 +191,6 @@ public class AppContext implements Serializable {
 	}
 
 	public static <T> T getSpringBean(Class<T> requiredType) {
-
 		return ApplicationContextUtil.getBean(requiredType);
 	}
 
@@ -249,6 +248,8 @@ public class AppContext implements Serializable {
 
 	public static Object getVariable(String key) {
 		if (getInstance() != null) {
+			log.debug("Get key {} from cache {}", key,
+					getInstance().variables.getName());
 			return getInstance().variables.get(key);
 		}
 		return null;

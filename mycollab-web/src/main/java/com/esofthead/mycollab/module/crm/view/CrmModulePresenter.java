@@ -37,6 +37,6 @@ public class CrmModulePresenter extends AbstractPresenter<CrmModule> {
 					params);
 		}
 
-		AppContext.updateLastModuleVisit(ModuleNameConstants.CRM);
+		AppContext.getInstance().updateLastModuleVisit(ModuleNameConstants.CRM);
 	}
 }

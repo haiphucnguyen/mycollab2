@@ -38,6 +38,6 @@ public class ProjectModulePresenter extends AbstractPresenter<ProjectModule> {
 					.handle(params);
 		}
 
-		AppContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
+		AppContext.getInstance().updateLastModuleVisit(ModuleNameConstants.PRJ);
 	}
 }

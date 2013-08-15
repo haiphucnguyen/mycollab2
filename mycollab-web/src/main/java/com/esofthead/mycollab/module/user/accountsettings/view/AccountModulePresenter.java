@@ -28,6 +28,7 @@ public class AccountModulePresenter extends AbstractPresenter<AccountModule> {
 					.handle(params);
 		}
 
-		AppContext.updateLastModuleVisit(ModuleNameConstants.ACCOUNT);
+		AppContext.getInstance().updateLastModuleVisit(
+				ModuleNameConstants.ACCOUNT);
 	}
 }

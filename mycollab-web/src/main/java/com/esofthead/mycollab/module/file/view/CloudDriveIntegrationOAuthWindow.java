@@ -7,9 +7,16 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
+import com.esofthead.mycollab.module.file.CloudDriveInfo;
+import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
+import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -32,12 +39,43 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static Logger log = LoggerFactory
 			.getLogger(CloudDriveIntegrationOAuthWindow.class);
 
+	private ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo> listener;
+
 	public CloudDriveIntegrationOAuthWindow(String title) {
 		super(title);
 		this.setWidth("420px");
 		this.setHeight("280px");
 		this.center();
 		constructBody();
+		registerListeners();
+	}
+
+	private void registerListeners() {
+		listener = new ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void handle(ReceiveCloudDriveInfo event) {
+				CloudDriveInfo cloudDriveInfo = (CloudDriveInfo) event
+						.getData();
+				log.debug("Receive cloud drive info: "
+						+ BeanUtility.printBeanObj(cloudDriveInfo));
+			}
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo.class;
+			}
+		};
+		EventBus.getInstance().addListener(listener);
+	}
+
+	@Override
+	protected void close() {
+		if (listener != null) {
+			EventBus.getInstance().removeListener(listener);
+		}
+		super.close();
 	}
 
 	private void constructBody() {

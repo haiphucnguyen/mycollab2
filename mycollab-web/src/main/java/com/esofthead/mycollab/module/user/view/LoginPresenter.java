@@ -79,7 +79,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		log.debug("Login to system successfully. Save user and preference "
 				+ pref + " to session");
 
-		AppContext.setSession(user, pref, billingAccount);
+		AppContext.getInstance().setSession(user, pref, billingAccount);
 		EventBus.getInstance().fireEvent(
 				new ShellEvent.GotoMainPage(this, null));
 
