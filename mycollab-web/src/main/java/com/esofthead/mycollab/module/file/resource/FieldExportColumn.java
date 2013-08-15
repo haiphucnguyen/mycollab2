@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.file;
+package com.esofthead.mycollab.module.file.resource;
 
 public class FieldExportColumn {
 

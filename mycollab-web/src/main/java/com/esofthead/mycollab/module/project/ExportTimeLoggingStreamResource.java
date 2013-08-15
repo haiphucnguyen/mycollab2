@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.module.file.ExportExcelStreamResource;
-import com.esofthead.mycollab.module.file.FieldExportColumn;
+import com.esofthead.mycollab.module.file.resource.ExportExcelStreamResource;
+import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.web.AppContext;
 

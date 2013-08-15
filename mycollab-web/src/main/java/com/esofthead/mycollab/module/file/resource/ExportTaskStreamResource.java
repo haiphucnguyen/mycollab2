@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.file;
+package com.esofthead.mycollab.module.file.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
