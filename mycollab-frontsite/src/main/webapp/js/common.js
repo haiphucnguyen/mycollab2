@@ -12,10 +12,8 @@ $(document).ready(function(){
 	// Footer position
 	var window_height = $(window).height();
 	var content_height = $('body').height();
-	console.log('window_height: '+window_height);
-	console.log('content_height: '+content_height);
 	if(content_height <= window_height) {
-		$('#footer').css({'position': 'absolute', 'bottom': 0});
+		$('#footer-home').css({'position': 'absolute', 'bottom': 0});
 	} 
 });
 

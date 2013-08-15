@@ -2210,6 +2210,22 @@ a.nivo-prevNav {
 }
 /* End Term of service style */
 
+/* Blog style */
+#blog-content {
+	width: 1100px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#iframe-blog {
+	width: 1100px;
+	height: 4000px;
+	margin-bottom: 20px;
+
+}
+
+/* End Blog style */
+
 /* Note */
 .develop {
 	color: #FFF;
