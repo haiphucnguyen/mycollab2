@@ -28,6 +28,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -172,7 +173,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							protected void handleReloadAfterConnectDropbox() {
+							protected void addExternalDrive(
+									ExternalDrive externalDrive) {
 								java.util.Locale locale = new Locale(Locale.US
 										.getLanguage(), Locale.US.getCountry());
 								String userLocale = locale.toString();
