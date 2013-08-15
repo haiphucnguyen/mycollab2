@@ -9,6 +9,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
@@ -34,6 +35,7 @@ import com.vaadin.ui.Window;
 public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
+	private Label messageInfoLbl;
 	private TextField folderName;
 
 	private static Logger log = LoggerFactory
@@ -84,11 +86,11 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		mainLayout.setSpacing(true);
 		mainLayout.setMargin(true);
 
-		Label messageInfoLal = new Label(
+		messageInfoLbl = new Label(
 				"You can connect Cloud Drives (Google Drive, Dropbox) to Mycollab Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
-		mainLayout.addComponent(messageInfoLal);
+		mainLayout.addComponent(messageInfoLbl);
 
-		Button btnLogin = new Button("Login(Dropbox)",
+		Button btnLogin = new Button("Login (" + getStorageName() + ")",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

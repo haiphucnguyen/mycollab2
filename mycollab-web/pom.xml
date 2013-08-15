@@ -349,7 +349,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-
+<!-- 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -358,6 +358,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -452,12 +453,7 @@
 
         </plugins>
         <!-- Instructing the resources plugin to filter certain directories -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+       
         <pluginManagement>
             <plugins>
                 <plugin>
