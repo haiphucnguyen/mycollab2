@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.file.ExportExcelStreamResource;
-import com.esofthead.mycollab.module.file.FieldExportColumn;
+import com.esofthead.mycollab.module.file.resource.ExportExcelStreamResource;
+import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;

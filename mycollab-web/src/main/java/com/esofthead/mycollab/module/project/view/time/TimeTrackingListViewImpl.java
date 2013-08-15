@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.FieldExportColumn;
+import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
