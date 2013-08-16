@@ -12,6 +12,7 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
@@ -29,7 +30,7 @@ public abstract class DropBoxOAuthWindow extends
 
 	@Override
 	protected String buildAuthUrl() {
-		String redirectUri = "http://localhost:8080/mycollab-web/drive/dropboxAuth";
+		String redirectUri = SiteConfiguration.getDropboxCallbackUrl();
 
 		java.util.Locale locale = new Locale(Locale.US.getLanguage(),
 				Locale.US.getCountry());

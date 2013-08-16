@@ -94,6 +94,8 @@ public class SiteConfiguration {
 		props.put("infinispan.client.hotrod.server_list", ApplicationProperties
 				.getString("infinispan.client.hotrod.server_list", ""));
 		instance.cacheProperties = props;
+		
+		instance.dropboxCallbackUrl = ApplicationProperties.getString("dropbox.callbackUrl");
 	}
 
 	private DeploymentMode deploymentMode;
@@ -106,6 +108,7 @@ public class SiteConfiguration {
 	private DatabaseConfiguration databaseConfiguration;
 	private String cdnUrl;
 	private Properties cacheProperties;
+	private String dropboxCallbackUrl;
 
 	public static Properties getCacheProperties() {
 		return instance.cacheProperties;
@@ -165,5 +168,9 @@ public class SiteConfiguration {
 					.getString(ApplicationProperties.APP_URL);
 		}
 		return siteUrl;
+	}
+	
+	public static String getDropboxCallbackUrl() {
+		return instance.dropboxCallbackUrl;
 	}
 }
