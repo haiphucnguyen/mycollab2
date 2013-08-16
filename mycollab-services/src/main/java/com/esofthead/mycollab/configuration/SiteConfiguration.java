@@ -94,8 +94,9 @@ public class SiteConfiguration {
 		props.put("infinispan.client.hotrod.server_list", ApplicationProperties
 				.getString("infinispan.client.hotrod.server_list", ""));
 		instance.cacheProperties = props;
-		
-		instance.dropboxCallbackUrl = ApplicationProperties.getString("dropbox.callbackUrl");
+
+		instance.dropboxCallbackUrl = ApplicationProperties
+				.getString("dropbox.callbackUrl");
 	}
 
 	private DeploymentMode deploymentMode;
@@ -169,8 +170,16 @@ public class SiteConfiguration {
 		}
 		return siteUrl;
 	}
-	
-	public static String getDropboxCallbackUrl() {
-		return instance.dropboxCallbackUrl;
+
+	public static String getDropboxCallbackUrl(String subdomain) {
+		String siteUrl = "";
+		if (instance.deploymentMode == DeploymentMode.SITE) {
+			siteUrl = String.format(ApplicationProperties
+					.getString(ApplicationProperties.APP_URL), subdomain);
+		} else {
+			siteUrl = ApplicationProperties
+					.getString(ApplicationProperties.APP_URL);
+		}
+		return siteUrl;
 	}
 }

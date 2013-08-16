@@ -46,7 +46,8 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 						Calendar createdDate = new GregorianCalendar();
 						createdDate.setTime(lastModifiedDate);
 						resource.setSize(Double
-								.parseDouble(((File) entry).numBytes/1024 + ""));
+								.parseDouble(((File) entry).numBytes / 1024
+										+ ""));
 						resource.setCreated(createdDate);
 						resource.setPath(entry.path);
 						resources.add(resource);
@@ -95,6 +96,50 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		}
 
 		return subFolders;
+	}
+
+	public static void main(String[] args) {
+		List<Resource> resources = new ArrayList<Resource>();
+		try {
+			ExternalDrive drive = new ExternalDrive();
+			drive.setAccesstoken("2qtgoUhfNbsAAAAAAAAAARkETVWVUdFB4-vExevabzAsv8RcTHocOoXmvXpRWsrz");
+			DbxRequestConfig requestConfig = new DbxRequestConfig(
+					"MyCollab/1.0", null);
+			DbxClient client = new DbxClient(requestConfig,
+					drive.getAccesstoken());
+			WithChildren children = client
+					.getMetadataWithChildren("/Camera Uploads");
+			if (children.children != null) {
+				for (DbxEntry entry : children.children) {
+					if (entry.isFile()) {
+						ExternalContent resource = new ExternalContent();
+						resource.setStorageName(StorageNames.DROPBOX);
+						resource.setExternalDrive(drive);
+						Date lastModifiedDate = ((File) entry).lastModified;
+						Calendar createdDate = new GregorianCalendar();
+						createdDate.setTime(lastModifiedDate);
+						resource.setSize(Double
+								.parseDouble(((File) entry).numBytes / 1024
+										+ ""));
+						resource.setCreated(createdDate);
+						resource.setPath(entry.path);
+						resources.add(resource);
+					} else if (entry.isFolder()) {
+						ExternalFolder resource = new ExternalFolder();
+						resource.setStorageName(StorageNames.DROPBOX);
+						resource.setExternalDrive(drive);
+						resource.setPath(entry.path);
+						resources.add(resource);
+					} else {
+						log.error("Do not support dropbox resource except file or folder");
+					}
+				}
+			}
+
+			System.out.println("Resources: " + resources.size());
+		} catch (Exception e) {
+			log.error("Error when get dropbox resource", e);
+		}
 	}
 
 }

@@ -30,7 +30,8 @@ public abstract class DropBoxOAuthWindow extends
 
 	@Override
 	protected String buildAuthUrl() {
-		String redirectUri = SiteConfiguration.getDropboxCallbackUrl();
+		String redirectUri = SiteConfiguration.getDropboxCallbackUrl(AppContext
+				.getSubDomain());
 
 		java.util.Locale locale = new Locale(Locale.US.getLanguage(),
 				Locale.US.getCountry());

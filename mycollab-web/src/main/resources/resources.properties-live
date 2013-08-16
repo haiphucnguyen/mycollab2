@@ -57,4 +57,4 @@ twitter.url=https://www.twitter.com/mycollab_vn
 #==================================
 # CLOUD DRIVE INTEGRATION
 #==================================
-dropbox.callbackUrl=https://app.mycollab.com/drive/dropboxAuth
+dropbox.callbackUrl=https://%s.mycollab.com/drive/dropboxAuth
