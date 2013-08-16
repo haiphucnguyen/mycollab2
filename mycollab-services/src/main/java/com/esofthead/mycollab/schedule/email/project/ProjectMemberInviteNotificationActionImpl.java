@@ -66,10 +66,10 @@ public class ProjectMemberInviteNotificationActionImpl implements
 				SiteConfiguration.getSiteUrl(subdomain)
 						+ "project/member/invitation/deny_invite/"
 						+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-								+ member.getId()) + "/" + user.getEmail());
+								+ member.getId() + "/" + user.getEmail()));
 
 		String userName = (member.getMemberFullName() != null) ? member
-				.getMemberFullName() : "there";
+				.getMemberFullName() : "";
 		templateGenerator.putVariable("userName", userName);
 		extMailService.sendHTMLMail("mail@esofthead.com", "No-reply", Arrays
 				.asList(new MailRecipientField(member.getEmail(), member

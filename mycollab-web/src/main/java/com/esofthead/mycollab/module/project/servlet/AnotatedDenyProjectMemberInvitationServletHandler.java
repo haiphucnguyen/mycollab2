@@ -1,12 +1,17 @@
 package com.esofthead.mycollab.module.project.servlet;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
@@ -19,10 +24,13 @@ import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.template.velocity.EngineFactory;
 
 @Component("denyInvitationMemberServletHandler")
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		HttpRequestHandler {
+
+	private static String DENY_FEEDBACK_TEMPLATE = "templates/email/project/memberInvitation/memberDenyInvitationPage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -40,9 +48,9 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 				pathInfo = pathInfo.substring(1);
 
 				String pathVariables = UrlEncodeDecoder.decode(pathInfo);
-				int sAccount = Integer.parseInt(pathVariables.substring(0,
+				int sAccountId = Integer.parseInt(pathVariables.substring(0,
 						pathVariables.indexOf("/")));
-				pathVariables = pathVariables.replace(sAccount + "/", "");
+				pathVariables = pathVariables.replace(sAccountId + "/", "");
 
 				String projectAdmin = "";
 				if (pathVariables.indexOf("/") != -1) {
@@ -56,37 +64,18 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 
 				int memberId = Integer.parseInt(pathVariables);
 				if (memberId > 0 && projectMemberService != null
-						&& sAccount > 0 && projectAdmin != null
+						&& sAccountId > 0 && projectAdmin != null
 						&& !projectAdmin.equals("")) {
 					SimpleProjectMember member = projectMemberService.findById(
-							memberId, AppContext.getAccountId());
+							memberId, sAccountId);
 					if (member != null
 							&& !member.getStatus().equals(
 									ProjectMemberStatusContants.ACTIVE)) {
 						member.setStatus(RegisterStatusConstants.DENY);
 						projectMemberService.removeWithSession(memberId,
 								projectAdmin, AppContext.getAccountId());
-						// TODO : send mail to visitor
 
-						// RelayEmailNotification relayNotification = new
-						// RelayEmailNotification();
-						// relayNotification.setChangeby(projectAdmin);
-						// relayNotification.setChangecomment(member
-						// .getMemberFullName());
-						// relayNotification.setSaccountid(sAccount);
-						// relayNotification.setType("invitationMember");
-						// relayNotification
-						// .setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
-						// relayNotification.setTypeid(member.getProjectid());
-						// relayNotification
-						// .setEmailhandlerbean(MessageRelayEmailNotificationActionImpl.class
-						// .getName());
-						// if (relayEmailService != null) {
-						// relayEmailService.saveWithSession(
-						// relayNotification, projectAdmin);
-						// }
-
-						String html = htmlRespone(
+						String html = generateDenyFeedbacktoInviter(
 								"cuongnguyen@esofthead.com",
 								"http://localhost:8080/mycollab-web");
 						PrintWriter out = response.getWriter();
@@ -99,16 +88,26 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		}
 	}
 
-	private String htmlRespone(String userEmail, String redirectURL) {
-		TemplateGenerator templateGenerator = new TemplateGenerator("hello",
-				"templates/email/project/memberInvitation/memberDenyInvitationPage.mt");
-		templateGenerator.putVariable("toUserEmail", userEmail);
-		templateGenerator.putVariable("redirectURL", redirectURL);
+	private String generateDenyFeedbacktoInviter(String userEmail,
+			String redirectURL) {
+		VelocityContext context = new VelocityContext(
+				EngineFactory.createContext());
 
-		String html = templateGenerator.generateSubjectContent() + " "
-				+ templateGenerator.generateBodyContent();
+		Reader reader;
+		try {
+			reader = new InputStreamReader(TemplateGenerator.class
+					.getClassLoader().getResourceAsStream(
+							DENY_FEEDBACK_TEMPLATE), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(TemplateGenerator.class
+					.getClassLoader().getResourceAsStream(
+							DENY_FEEDBACK_TEMPLATE));
+		}
 
-		return html;
+		StringWriter writer = new StringWriter();
+		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
+				reader);
+		return writer.toString();
 	}
 
 }

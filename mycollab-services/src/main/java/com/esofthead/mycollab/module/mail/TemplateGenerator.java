@@ -10,39 +10,20 @@ import java.util.Map;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.tools.Scope;
-import org.apache.velocity.tools.ToolManager;
-import org.apache.velocity.tools.config.EasyFactoryConfiguration;
-import org.apache.velocity.tools.generic.DateTool;
 
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.template.velocity.EngineFactory;
 
 public class TemplateGenerator {
 	private final String subjectTemplate;
 	private final String contentTemplatePathFile;
 	private final VelocityContext velocityContext;
 
-	private static ToolManager toolManager;
-	private VelocityEngine voEngine;
-
-	static {
-		EasyFactoryConfiguration config = new EasyFactoryConfiguration();
-		config.toolbox(Scope.APPLICATION).tool(DateTool.class);
-
-		toolManager = new ToolManager();
-		toolManager.configure(config);
-	}
-
 	public TemplateGenerator(String subjectTemplate,
 			String contentTemplatePathFile) {
-		voEngine = new VelocityEngine();
-		voEngine.init();
 
-		// Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, this);
-
-		velocityContext = new VelocityContext(toolManager.createContext());
+		velocityContext = new VelocityContext(EngineFactory.createContext());
 		this.subjectTemplate = subjectTemplate;
 		this.contentTemplatePathFile = contentTemplatePathFile;
 
@@ -83,7 +64,8 @@ public class TemplateGenerator {
 							contentTemplatePathFile));
 		}
 
-		voEngine.evaluate(velocityContext, writer, "log task", reader);
+		EngineFactory.getTemplateEngine().evaluate(velocityContext, writer,
+				"log task", reader);
 		return writer.toString();
 	}
 }
