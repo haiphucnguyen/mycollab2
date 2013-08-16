@@ -50,7 +50,7 @@ public abstract class DropBoxOAuthWindow extends
 				sessionKey);
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);
-		return webAuth.start();
+		return webAuth.start(session.getId());
 	}
 
 	@Override

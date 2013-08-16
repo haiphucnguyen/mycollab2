@@ -68,12 +68,14 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		}
 
 		String accessToken = authFinish.accessToken;
+		String sessionId = authFinish.urlState;
+		if (sessionId.startsWith("|")) {
+			sessionId = sessionId.substring(1);
+		}
+
 		// Store accessToken ...
 		CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(
 				StorageNames.DROPBOX, accessToken);
-
-		HttpSession session = request.getSession();
-		String sessionId = session.getId();
 
 		EventBus eventBus = EventBus.getInstanceSession(sessionId);
 		if (eventBus != null) {
