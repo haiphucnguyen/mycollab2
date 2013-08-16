@@ -2,8 +2,6 @@ package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
@@ -18,14 +16,9 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.cache.CacheUtils;
-import com.esofthead.mycollab.common.service.MonitorItemService;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
-import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 
 @Aspect
 @Component
@@ -34,18 +27,14 @@ public class L2CacheEvictAspect {
 
 	private Logger log = LoggerFactory.getLogger(L2CacheEvictAspect.class);
 
-	static List<Class> blacklistCls = Arrays.asList(new Class[] {
-			RelayEmailNotificationService.class, MonitorItemService.class,
-			BugRelatedItemService.class, RawContentServiceFactoryBean.class,
-			ResourceService.class });
-
 	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public void cacheEvict(JoinPoint pjp) throws Throwable {
 
 		Advised advised = (Advised) pjp.getThis();
 		Class cls = advised.getTargetSource().getTargetClass();
 
-		if (blacklistCls.contains(CacheUtils.getEnclosingServiceInterface(cls))) {
+		if (CacheServiceIgnoreList.isInBlackList(CacheUtils
+				.getEnclosingServiceInterface(cls))) {
 			return;
 		}
 
