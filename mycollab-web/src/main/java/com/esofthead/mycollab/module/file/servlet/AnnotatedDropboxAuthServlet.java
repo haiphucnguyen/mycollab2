@@ -23,6 +23,7 @@ import com.dropbox.core.DbxWebAuth;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
+import com.esofthead.mycollab.module.file.view.MyCollabDbxSessionStore;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 
 @Component("dropboxAuthServlet")
@@ -41,7 +42,7 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		String redirectUri = request.getRequestURL().toString();
 		HttpSession session = request.getSession(true);
 		String sessionKey = "dropbox-auth-csrf-token";
-		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
+		DbxSessionStore csrfTokenStore = new MyCollabDbxSessionStore(session,
 				sessionKey);
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);
