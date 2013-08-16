@@ -765,10 +765,30 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			informationLayout.addComponent(resourceLinkBtn);
 
 			HorizontalLayout moreInfoAboutResLayout = new HorizontalLayout();
-			moreInfoAboutResLayout.addComponent(new Label(res.getCreatedBy()));
+
+			// If resource is dropbox resource then we can not define the
+			// created user so we do not need to display, then we assume the
+			// current user is created user
+			if (res.getCreatedBy() == null
+					|| res.getCreatedBy().trim().equals("")) {
+				moreInfoAboutResLayout.addComponent(new Label(AppContext
+						.getUsername()));
+			} else {
+				moreInfoAboutResLayout.addComponent(new Label(res
+						.getCreatedBy()));
+			}
+
 			moreInfoAboutResLayout.addComponent(new Separator());
-			moreInfoAboutResLayout.addComponent(new Label(AppContext
-					.formatDate(res.getCreated().getTime())));
+
+			// If resource is dropbox resource then we can not define the
+			// created date so we do not need to display
+			if (res.getCreated() != null) {
+				moreInfoAboutResLayout.addComponent(new Label(AppContext
+						.formatDate(res.getCreated().getTime())));
+			} else {
+				moreInfoAboutResLayout.addComponent(new Label("Undefined"));
+			}
+
 			if (res instanceof Content) {
 				moreInfoAboutResLayout.addComponent(new Separator());
 				Double size = res.getSize();

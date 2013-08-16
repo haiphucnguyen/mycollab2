@@ -7,6 +7,8 @@ public class Resource {
 	protected String createdBy = "";
 	protected Calendar created;
 	protected String path = "";
+
+	// length is Kilobyte value
 	protected Double size = 0d;
 	protected String createdUser;
 	protected String name;

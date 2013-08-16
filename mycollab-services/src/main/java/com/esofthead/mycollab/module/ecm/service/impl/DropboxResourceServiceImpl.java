@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.module.ecm.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.dropbox.core.DbxClient;
 import com.dropbox.core.DbxEntry;
+import com.dropbox.core.DbxEntry.File;
 import com.dropbox.core.DbxEntry.WithChildren;
 import com.dropbox.core.DbxRequestConfig;
 import com.esofthead.mycollab.module.ecm.StorageNames;
@@ -38,6 +42,12 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 						ExternalContent resource = new ExternalContent();
 						resource.setStorageName(StorageNames.DROPBOX);
 						resource.setExternalDrive(drive);
+						Date lastModifiedDate = ((File) entry).lastModified;
+						Calendar createdDate = new GregorianCalendar();
+						createdDate.setTime(lastModifiedDate);
+						resource.setSize(Double
+								.parseDouble(((File) entry).numBytes/1024 + ""));
+						resource.setCreated(createdDate);
 						resource.setPath(entry.path);
 						resources.add(resource);
 					} else if (entry.isFolder()) {
