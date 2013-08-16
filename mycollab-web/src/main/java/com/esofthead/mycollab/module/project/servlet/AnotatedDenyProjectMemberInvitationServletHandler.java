@@ -23,7 +23,6 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.template.velocity.EngineFactory;
 
 @Component("denyInvitationMemberServletHandler")
@@ -52,32 +51,23 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 						pathVariables.indexOf("/")));
 				pathVariables = pathVariables.replace(sAccountId + "/", "");
 
-				String projectAdmin = "";
-				if (pathVariables.indexOf("/") != -1) {
-					projectAdmin = pathVariables.substring(0,
-							pathVariables.indexOf("/"));
-				} else {
-					projectAdmin = pathVariables;
-				}
+				int memberId = Integer.parseInt(pathVariables.substring(0,
+						pathVariables.indexOf("/")));
+				pathVariables = pathVariables.replace(memberId + "/", "");
 
-				pathVariables = pathVariables.replace(projectAdmin + "/", "");
+				String inviterEmail = pathVariables;
 
-				int memberId = Integer.parseInt(pathVariables);
-				if (memberId > 0 && projectMemberService != null
-						&& sAccountId > 0 && projectAdmin != null
-						&& !projectAdmin.equals("")) {
+				if (memberId > 0) {
 					SimpleProjectMember member = projectMemberService.findById(
 							memberId, sAccountId);
 					if (member != null
 							&& !member.getStatus().equals(
 									ProjectMemberStatusContants.ACTIVE)) {
 						member.setStatus(RegisterStatusConstants.DENY);
-						projectMemberService.removeWithSession(memberId,
-								projectAdmin, AppContext.getAccountId());
+						// projectMemberService.removeWithSession(memberId, "",
+						// AppContext.getAccountId());
 
-						String html = generateDenyFeedbacktoInviter(
-								"cuongnguyen@esofthead.com",
-								"http://localhost:8080/mycollab-web");
+						String html = generateDenyFeedbacktoInviter();
 						PrintWriter out = response.getWriter();
 						out.println(html);
 					}
@@ -88,8 +78,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		}
 	}
 
-	private String generateDenyFeedbacktoInviter(String userEmail,
-			String redirectURL) {
+	private String generateDenyFeedbacktoInviter() {
 		VelocityContext context = new VelocityContext(
 				EngineFactory.createContext());
 
