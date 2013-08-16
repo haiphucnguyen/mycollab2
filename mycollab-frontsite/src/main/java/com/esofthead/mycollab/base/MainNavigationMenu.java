@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import com.esofthead.mycollab.pages.BlogPage;
 import com.esofthead.mycollab.pages.HomePage;
 import com.esofthead.mycollab.pages.PricingPage;
 import com.esofthead.mycollab.pages.PrivacyPage;
@@ -24,8 +25,10 @@ public class MainNavigationMenu extends Panel {
 		add(signIn);
 		BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>("tour", TourPage.class);
 		add(tour);
-		ExternalLink blog = new ExternalLink("blog", "http://esofthead.com/blog/");
+		BookmarkablePageLink<Void> blog = new BookmarkablePageLink<Void>("blog", BlogPage.class);
 		add(blog);
+		/*ExternalLink blog = new ExternalLink("blog", "http://esofthead.com/blog/");
+		add(blog);*/
 		ExternalLink support = new ExternalLink("support", "mailto:sales@esofthead.com");
 		add(support);
 		BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>("pricing_signup", PricingPage.class);
