@@ -60,17 +60,17 @@ public class ProjectMemberInviteNotificationActionImpl implements
 				SiteConfiguration.getSiteUrl(subdomain)
 						+ "project/member/invitation/confirm_invite/"
 						+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-								+ member.getId() + "/" + user.getEmail()));
+								+ member.getId() + "/" + user.getEmail() + "/"
+								+ user.getUsername()));
 		templateGenerator.putVariable(
 				"urlDeny",
 				SiteConfiguration.getSiteUrl(subdomain)
 						+ "project/member/invitation/deny_invite/"
 						+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-								+ member.getId() + "/" + user.getEmail()));
+								+ member.getId() + "/" + user.getEmail() + "/"
+								+ user.getUsername()));
 
-		String userName = (member.getMemberFullName() != null) ? member
-				.getMemberFullName() : "";
-		templateGenerator.putVariable("userName", userName);
+		templateGenerator.putVariable("userName", member.getMemberFullName());
 		extMailService.sendHTMLMail("mail@esofthead.com", "No-reply", Arrays
 				.asList(new MailRecipientField(member.getEmail(), member
 						.getMemberFullName())), null, null, templateGenerator

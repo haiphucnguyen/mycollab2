@@ -2,56 +2,84 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style media="screen" type="text/css">
+#container {
+}
+
+#footer-home {
+    width: 100%;
+    height: 175px;
+    background: url("$!urlfooterPng") repeat-x scroll 0% 0% transparent;
+    clear: both;
+}
+
+#footer-home .footer-copyright {
+    color: #606060;
+}
+.footer-copyright {
+    color: #FFFFFF;
+    font-size: 12px;
+}
+#footer-home .footer-copyright h1 {
+    color: #FFFFFF;
+    font-family: 'Monda';
+}
+#footer-home .wrapper {
+    width: 1100px;
+    margin: 0px auto;
+}
+
+</style>
 <title>New bug created</title>
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Please tell me some reasons why you don't accept .</div>
-				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
-					<tr>
-						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
-							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
-								<tr>
-									<td style="display: block; padding: 8px;">Email to :</td>
-									<td style="display: block; padding: 8px;">$!toUserEmail</td>
-								</tr>
-								<tr></tr>
-								<tr>
-									<td style="display: block; padding: 8px;">Message:</td>
-									<td><textarea id="message" rows="5" cols="100"></textarea></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
 			<td>
+				fsfdsa
+				<div style="width: 440px; display: inline-block; vertical-align: middle; text-align: left;"><span style="font: bold 18px Tahoma, Geneva, sans-serif; color: white;">New Bug Comment</span></div><div style="width: 150px; display: inline-block; vertical-align: middle;"><img src="${defaultUrls.cdn_url}logo_new.png" alt="esofthead-logo" width="150" height="45" style="margin: 0px; padding: 0px;"></div>
+			</td>
+			<td>
+				<div style="display: block; padding: 8px;">Please feedback, why do you deny invatation ?</div>
+				<div style="display: block; padding: 8px;">
+					<textarea id="message" rows="5" cols="100">
+					</textarea>
+				</div>
 				<div style="align:center;">
-					<button type="button" onclick="return sendToEmail();">Send</button>
-					<button type="button" onclick="return skip();">Skip</button>
+					<button class="v-button-bluebtn" type="button" onclick="return sendEmailFeedBack();">Send</button>
+					<button class="v-button-bluebtn" type="button" onclick="return skip();">Skip</button>
 				</div>
 			</td>
 		</tr>
 	</table>
+	<div class="container"></div>
+	<div class="footer-home">
+		<div class="wrapper">
+			<div class="footer-copyright"><h1>MYCOLLAB</h1>
+                         ©2010-2013 MyCollab, LLC. All rights reserved.</div>
+        </div>
+	</div>
+	
+	<input type="hidden" id="inviterEmail" value="$!inviterEmail">
 	<input type="hidden" id="url" value="$!redirectURL">
+	<input type="hidden" id="memberEmail" value="$!memberEmail">
+	<input type="hidden" id="memberName" value="$!memberName">
+	<input type="hidden" id="inviterName" value="$!inviterName">
+	
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
-	var homePageURL = "";
-	function sendToEmail(){
+	function sendEmailFeedBack(){
+	var url = encodeURI($('#url').val() + $('#inviterEmail').val() + "/" + $('#memberEmail').val()+"/"+ $('#message').val().trim() + "/" + $('#memberName').val() + "/" + $('#inviterName').val());
 		 $.ajax({
 		      type: 'POST',
-		      url: $(#redirectURL).value(),
+		      url: url,
 		      complete: function(data){
-		         window.location.href = homePageURL;
+		         alert('Send Email successfully');
 		      }
 		    });
 	}
-	fuction skip(){
+	function skip(){
 		window.close();
 	}
 </script>				

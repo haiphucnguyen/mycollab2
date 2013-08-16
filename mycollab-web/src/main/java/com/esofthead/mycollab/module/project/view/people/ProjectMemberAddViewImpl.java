@@ -9,12 +9,19 @@ import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectRoleComboBox;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -22,6 +29,8 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -29,9 +38,14 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -45,6 +59,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
 	private ProjectMember user;
+	private UserService userService;
+	private MailRelayService mailRelayService;
+	private ProjectService projectService;
 
 	public ProjectMemberAddViewImpl() {
 		super();
@@ -124,25 +141,8 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 										CurrentProjectVariables.getProjectId(),
 										AppContext.getAccountId());
 
-						SimpleUser inviteUser = new SimpleUser();
-						inviteUser.setAccountId(0);
-						inviteUser.setFirstname("Invite outside member...");
-						inviteUser.setLastname(" ");
-						inviteUser.setUsername(AppContext.getUsername());
-						users.add(inviteUser);
-
 						final UserComboBox userBox = new UserComboBox(users);
 						userBox.setRequired(true);
-						userBox.addListener(new ValueChangeListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void valueChange(
-									com.vaadin.data.Property.ValueChangeEvent event) {
-//								SimpleUser user = (SimpleUser) userBox
-//										.getValue();
-							}
-						});
 						return userBox;
 					} else {
 						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
@@ -165,6 +165,23 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						roleBox.setRoleId(-1);
 					}
 					return roleBox;
+				} else if (propertyId.equals("projectid")) {
+					Button inviteOutSideUserBtn = new Button(
+							"Invite outside member",
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									ProjectMemberAddViewImpl.this
+											.getWindow()
+											.addWindow(
+													new InviteOutsideMemberWindow());
+								}
+							});
+					inviteOutSideUserBtn
+							.addStyleName(UIConstants.THEME_BLUE_LINK);
+					return inviteOutSideUserBtn;
 				}
 				return null;
 			}
@@ -228,6 +245,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 	}
 
 	private class InviteOutsideMemberWindow extends Window {
+		private static final long serialVersionUID = 1L;
+		private GridFormLayoutHelper informationLayout;
+
 		public InviteOutsideMemberWindow() {
 			super("Invite member window");
 			this.center();
@@ -237,7 +257,116 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 		}
 
 		private void initUI() {
+			VerticalLayout mainLayout = new VerticalLayout();
+			mainLayout.setMargin(true);
+			mainLayout.setSpacing(true);
 
+			informationLayout = new GridFormLayoutHelper(1, 1, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+
+			final TextField textField = new TextField();
+			textField.setWidth("250px");
+			informationLayout.addComponentSupportFieldCaption(textField,
+					new Label("Email"), "80px", "250px", 0, 0,
+					Alignment.MIDDLE_CENTER);
+			this.informationLayout.getLayout().setWidth("100%");
+			this.informationLayout.getLayout().setMargin(false);
+			this.informationLayout.getLayout().addStyleName(
+					"colored-gridlayout");
+			mainLayout.addComponent(informationLayout.getLayout());
+
+			HorizontalLayout controllGroupBtn = new HorizontalLayout();
+			controllGroupBtn.setSpacing(true);
+
+			Button sendBtn = new Button("Send", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					String[] lstEmailArr = textField.getValue().toString()
+							.trim().split(";");
+					userService = AppContext.getSpringBean(UserService.class);
+					mailRelayService = AppContext
+							.getSpringBean(MailRelayService.class);
+					projectService = AppContext
+							.getSpringBean(ProjectService.class);
+					for (String email : lstEmailArr) {
+
+						User user = userService.findUserByUserName(AppContext
+								.getUsername());
+						TemplateGenerator templateGenerator = new TemplateGenerator(
+								"$inviteUser has invited you to join the team for project \" $member.projectName\"",
+								"templates/email/project/memberInvitation/memberInvitationNotifier.mt");
+						SimpleProjectMember member = new SimpleProjectMember();
+						member.setProjectName(CurrentProjectVariables
+								.getProject().getName());
+
+						templateGenerator.putVariable("member", member);
+						templateGenerator.putVariable("inviteUser",
+								AppContext.getUsername());
+
+						String subdomain = projectService
+								.getSubdomainOfProject(CurrentProjectVariables
+										.getProjectId());
+
+						templateGenerator.putVariable(
+								"urlAccept",
+								SiteConfiguration.getSiteUrl(subdomain)
+										+ "project/member/invitation/confirm_invite/"
+										+ UrlEncodeDecoder.encode(member
+												.getsAccountId()
+												+ "/"
+												+ member.getId()
+												+ "/"
+												+ user.getEmail()
+												+ "/"
+												+ user.getUsername()));
+						templateGenerator.putVariable(
+								"urlDeny",
+								SiteConfiguration.getSiteUrl(subdomain)
+										+ "project/member/invitation/deny_invite/"
+										+ UrlEncodeDecoder.encode(member
+												.getsAccountId()
+												+ "/"
+												+ member.getId()
+												+ "/"
+												+ user.getEmail()
+												+ "/"
+												+ user.getUsername()));
+
+						templateGenerator.putVariable("userName",
+								member.getMemberFullName());
+
+						mailRelayService.saveRelayEmail(new String[] { " " },
+								new String[] { email },
+								templateGenerator.generateSubjectContent(),
+								templateGenerator.generateBodyContent());
+					}
+				}
+			});
+			sendBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controllGroupBtn.addComponent(sendBtn);
+
+			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					InviteOutsideMemberWindow.this.close();
+				}
+			});
+			cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controllGroupBtn.addComponent(cancelBtn);
+
+			mainLayout.addComponent(controllGroupBtn);
+			mainLayout.setComponentAlignment(controllGroupBtn,
+					Alignment.MIDDLE_CENTER);
+
+			Label noteLbl = new Label(
+					"Note: You can add many emails which be separated each others by semicolon (;)");
+			mainLayout.addComponent(noteLbl);
+
+			this.addComponent(mainLayout);
 		}
 	}
 }

@@ -90,7 +90,7 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 				Mailer mailer = new Mailer(
 						SiteConfiguration.getEmailConfiguration());
 				mailer.sendHTMLMail(relayEmail.getFromemail(),
-						relayEmail.getFromemail(), toMailList, null, null,
+						relayEmail.getFromname(), toMailList, null, null,
 						relayEmail.getSubject(), relayEmail.getBodycontent(),
 						null);
 			} catch (Exception e) {

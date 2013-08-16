@@ -21,15 +21,16 @@ public class MailRelayServiceImpl implements MailRelayService {
 	public void saveRelayEmail(String[] toNames, String[] toEmails,
 			String subject, String bodyContent) {
 		RelayEmailWithBLOBs relayEmail = new RelayEmailWithBLOBs();
-		relayEmail.setFromemail("hainguyen@esofthead.com");
-		relayEmail.setFromname("Nguyen Hai");
+		relayEmail.setFromemail("cuongnguyen@esofthead.com");
+		relayEmail.setFromname("No Reply");
 
 		XStream xmlSerializer = new XStream();
-		String recipientList = xmlSerializer.toXML(new String[][] { toNames,
-				toEmails });
+		String recipientList = xmlSerializer.toXML(new String[][] { toEmails,
+				toNames });
 		relayEmail.setRecipients(recipientList);
 		relayEmail.setSubject(subject);
 		relayEmail.setBodycontent(bodyContent);
+		relayEmail.setSaccountid(1);
 
 		relayEmailMapper.insert(relayEmail);
 	}

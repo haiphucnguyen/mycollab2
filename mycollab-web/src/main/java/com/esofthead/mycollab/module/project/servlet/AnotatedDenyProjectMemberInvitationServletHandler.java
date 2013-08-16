@@ -18,11 +18,13 @@ import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.template.velocity.EngineFactory;
 
 @Component("denyInvitationMemberServletHandler")
@@ -55,7 +57,11 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 						pathVariables.indexOf("/")));
 				pathVariables = pathVariables.replace(memberId + "/", "");
 
-				String inviterEmail = pathVariables;
+				String inviterEmail = pathVariables.substring(0,
+						pathVariables.indexOf("/"));
+				pathVariables = pathVariables.replace(inviterEmail + "/", "");
+
+				String inviterName = pathVariables;
 
 				if (memberId > 0) {
 					SimpleProjectMember member = projectMemberService.findById(
@@ -63,11 +69,23 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 					if (member != null
 							&& !member.getStatus().equals(
 									ProjectMemberStatusContants.ACTIVE)) {
-						member.setStatus(RegisterStatusConstants.DENY);
-						// projectMemberService.removeWithSession(memberId, "",
-						// AppContext.getAccountId());
+						String memberEmail = member.getEmail();
+						String memberName = member.getMemberFullName();
+						projectMemberService.removeWithSession(memberId, "",
+								AppContext.getAccountId());
 
-						String html = generateDenyFeedbacktoInviter();
+						ProjectService projectService = AppContext
+								.getSpringBean(ProjectService.class);
+						String subdomain = projectService
+								.getSubdomainOfProject(member.getProjectid());
+
+						String redirectURL = SiteConfiguration
+								.getSiteUrl(subdomain)
+								+ "project/member/feedback/";
+
+						String html = generateDenyFeedbacktoInviter(
+								inviterEmail, inviterName, redirectURL,
+								memberEmail, memberName);
 						PrintWriter out = response.getWriter();
 						out.println(html);
 					}
@@ -78,7 +96,9 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		}
 	}
 
-	private String generateDenyFeedbacktoInviter() {
+	private String generateDenyFeedbacktoInviter(String inviterEmail,
+			String inviterName, String redirectURL, String memberEmail,
+			String memberName) {
 		VelocityContext context = new VelocityContext(
 				EngineFactory.createContext());
 
@@ -92,6 +112,11 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 					.getClassLoader().getResourceAsStream(
 							DENY_FEEDBACK_TEMPLATE));
 		}
+		context.put("inviterEmail", inviterEmail);
+		context.put("redirectURL", redirectURL);
+		context.put("memberEmail", memberEmail);
+		context.put("memberName", memberName);
+		context.put("inviterName", inviterName);
 
 		StringWriter writer = new StringWriter();
 		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",

@@ -91,6 +91,10 @@ public abstract class ProjectMemberFormLayoutFactory implements
 				this.informationLayout.addComponent(field, "User", 0, 0);
 			} else if (propertyId.equals("isadmin")) {
 				this.informationLayout.addComponent(field, "Role", 0, 1);
+			} else if (propertyId.equals("projectid")) {
+				this.informationLayout.addComponentSupportFieldCaption(field,
+						new Label(""), "0px", "83px", 1, 0,
+						Alignment.MIDDLE_CENTER);
 			}
 		}
 	}
