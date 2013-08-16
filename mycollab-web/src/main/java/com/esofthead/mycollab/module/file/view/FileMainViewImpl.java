@@ -7,7 +7,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,8 +77,10 @@ import com.vaadin.ui.themes.Reindeer;
 @ViewComponent
 public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private static final long serialVersionUID = 1L;
+	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
+
 	private Tree menuTree;
-	private final ResourceService resourceService;
+
 	private Folder baseFolder;
 	private Folder rootECMFolder;
 	private String rootPath;
@@ -88,9 +89,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private ItemResourceContainerLayout itemResourceContainerLayout;
 	private MainBodyResourceLayout bodyResourceLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	public static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 	private Button eventBtn;
-	private DbxClient dropboxClient;
+	private final ResourceService resourceService;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -176,35 +176,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							@Override
 							protected void addExternalDrive(
 									ExternalDrive externalDrive) {
-								java.util.Locale locale = new Locale(Locale.US
-										.getLanguage(), Locale.US.getCountry());
-								String userLocale = locale.toString();
-								DbxRequestConfig requestConfig = new DbxRequestConfig(
-										"text-edit/0.1", userLocale);
-								dropboxClient = new DbxClient(requestConfig, "");
-
 								FileMainViewImpl.this.menuTree
 										.expandItem(rootECMFolder);
 
-								DbxEntry entry;
-								try {
-									entry = dropboxClient.getMetadata("/");
-									com.dropbox.core.DbxEntry.Folder dropboxRootFolder = entry
-											.asFolder();
-									FileMainViewImpl.this.menuTree
-											.addItem(dropboxRootFolder);
-									FileMainViewImpl.this.menuTree.setParent(
-											dropboxRootFolder, rootECMFolder);
-									FileMainViewImpl.this.menuTree
-											.setItemCaption(dropboxRootFolder,
-													"DropboxRootFolder");
-									FileMainViewImpl.this.menuTree.setItemIcon(
-											dropboxRootFolder,
-											MyCollabResource
-													.newResource("icons/16/ecm/folder_close.png"));
-								} catch (DbxException e) {
-									throw new MyCollabException(e);
-								}
 							}
 						};
 						FileMainViewImpl.this.getWindow().addWindow(

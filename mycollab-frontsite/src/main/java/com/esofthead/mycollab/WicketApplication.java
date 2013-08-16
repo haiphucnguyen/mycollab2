@@ -14,6 +14,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.pages.BlogPage;
 import com.esofthead.mycollab.pages.Error404Page;
 import com.esofthead.mycollab.pages.Error500Page;
 import com.esofthead.mycollab.pages.HomePage;
@@ -56,6 +57,7 @@ public class WicketApplication extends WebApplication {
 		this.mountPage("/pricing", PricingPage.class);
 		this.mountPage("/privacy", PrivacyPage.class);
 		this.mountPage("/signup", SignUpPage.class);
+		this.mountPage("/blog", BlogPage.class);
 		this.mountPage("/terms", TermOfServicePage.class);
 		this.mountPage("/signin", SignInPage.class);
 		this.mountPage("/error404", Error404Page.class);
