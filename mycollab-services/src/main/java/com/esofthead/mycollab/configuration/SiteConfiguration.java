@@ -174,11 +174,9 @@ public class SiteConfiguration {
 	public static String getDropboxCallbackUrl(String subdomain) {
 		String siteUrl = "";
 		if (instance.deploymentMode == DeploymentMode.SITE) {
-			siteUrl = String.format(ApplicationProperties
-					.getString(ApplicationProperties.APP_URL), subdomain);
+			siteUrl = String.format(instance.dropboxCallbackUrl, subdomain);
 		} else {
-			siteUrl = ApplicationProperties
-					.getString(ApplicationProperties.APP_URL);
+			siteUrl = instance.dropboxCallbackUrl;
 		}
 		return siteUrl;
 	}
