@@ -55,6 +55,7 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		try {
 			authFinish = getWebAuth(request).finish(request.getParameterMap());
 		} catch (Exception e) {
+			log.error("Authorize dropbox request failed", e);
 			PrintWriter out = response.getWriter();
 			out.println("<html>"
 					+ "<body></body>"
