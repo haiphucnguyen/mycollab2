@@ -18,12 +18,11 @@ public class MailRelayServiceImpl implements MailRelayService {
 	private RelayEmailMapper relayEmailMapper;
 
 	@Override
-	public void saveRelayEmail(int sAccountId, String[] toNames,
-			String[] toEmails, String subject, String bodyContent) {
+	public void saveRelayEmail(String[] toNames, String[] toEmails,
+			String subject, String bodyContent) {
 		RelayEmailWithBLOBs relayEmail = new RelayEmailWithBLOBs();
 		relayEmail.setFromemail("hainguyen@esofthead.com");
 		relayEmail.setFromname("Nguyen Hai");
-		relayEmail.setSaccountid(sAccountId);
 
 		XStream xmlSerializer = new XStream();
 		String recipientList = xmlSerializer.toXML(new String[][] { toNames,

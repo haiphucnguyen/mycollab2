@@ -10,14 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
-import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.web.AppContext;
 
 @Component("confirmInvitationMemberServletHandler")
@@ -43,8 +40,14 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						pathVariables.indexOf("/")));
 				pathVariables = pathVariables.replace(sAccount + "/", "");
 
-				String projectAdmin = pathVariables.substring(0,
-						pathVariables.indexOf("/"));
+				String projectAdmin = "";
+				if (pathVariables.indexOf("/") != -1) {
+					projectAdmin = pathVariables.substring(0,
+							pathVariables.indexOf("/"));
+				} else {
+					projectAdmin = pathVariables;
+				}
+
 				pathVariables = pathVariables.replace(projectAdmin + "/", "");
 
 				int memberId = Integer.parseInt(pathVariables);
@@ -54,32 +57,18 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						&& !projectAdmin.equals("")) {
 					SimpleProjectMember member = projectMemberService.findById(
 							memberId, AppContext.getAccountId());
-					if (member != null
-							&& member.getStatus().equals(
-									ProjectMemberStatusContants.VERIFICATING)) {
+					if (member != null) {
 						member.setStatus(ProjectMemberStatusContants.ACTIVE);
 						projectMemberService.updateWithSession(member,
 								projectAdmin);
 
-						RelayEmailNotification relayNotification = new RelayEmailNotification();
-						relayNotification.setChangeby(projectAdmin);
-						relayNotification.setChangecomment(member
-								.getMemberFullName());
-						relayNotification.setSaccountid(sAccount);
-						relayNotification.setType("invitationMember");
-						relayNotification
-								.setAction(MonitorTypeConstants.UPDATE_ACTION);
-						relayNotification.setTypeid(member.getProjectid());
-						relayNotification
-								.setEmailhandlerbean(MessageRelayEmailNotificationAction.class
-										.getName());
-						if (relayEmailService != null) {
-							relayEmailService.saveWithSession(
-									relayNotification, projectAdmin);
-						}
-
-						response.sendRedirect(request.getServletContext()
-								.getRealPath("/"));
+						String redirectURL = request.getRequestURL().toString();
+						redirectURL = redirectURL.substring(0,
+								redirectURL.indexOf("project"))
+								+ "project/dashboard/"
+								+ UrlEncodeDecoder
+										.encode(member.getProjectid());
+						response.sendRedirect(redirectURL);
 					}
 				}
 			}

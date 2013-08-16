@@ -32,6 +32,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -122,8 +123,26 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 								.getUsersNotInProject(
 										CurrentProjectVariables.getProjectId(),
 										AppContext.getAccountId());
-						UserComboBox userBox = new UserComboBox(users);
+
+						SimpleUser inviteUser = new SimpleUser();
+						inviteUser.setAccountId(0);
+						inviteUser.setFirstname("Invite outside member...");
+						inviteUser.setLastname(" ");
+						inviteUser.setUsername(AppContext.getUsername());
+						users.add(inviteUser);
+
+						final UserComboBox userBox = new UserComboBox(users);
 						userBox.setRequired(true);
+						userBox.addListener(new ValueChangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void valueChange(
+									com.vaadin.data.Property.ValueChangeEvent event) {
+//								SimpleUser user = (SimpleUser) userBox
+//										.getValue();
+							}
+						});
 						return userBox;
 					} else {
 						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
@@ -206,5 +225,19 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 	@Override
 	public HasEditFormHandlers<ProjectMember> getEditFormHandlers() {
 		return this.editForm;
+	}
+
+	private class InviteOutsideMemberWindow extends Window {
+		public InviteOutsideMemberWindow() {
+			super("Invite member window");
+			this.center();
+			this.setWidth("500px");
+
+			initUI();
+		}
+
+		private void initUI() {
+
+		}
 	}
 }
