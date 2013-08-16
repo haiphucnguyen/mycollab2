@@ -60,7 +60,7 @@ public class ProjectMemberInviteNotificationActionImpl implements
 				SiteConfiguration.getSiteUrl(subdomain)
 						+ "project/member/invitation/confirm_invite/"
 						+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-								+ member.getId()) + "/" + user.getEmail());
+								+ member.getId() + "/" + user.getEmail()));
 		templateGenerator.putVariable(
 				"urlDeny",
 				SiteConfiguration.getSiteUrl(subdomain)

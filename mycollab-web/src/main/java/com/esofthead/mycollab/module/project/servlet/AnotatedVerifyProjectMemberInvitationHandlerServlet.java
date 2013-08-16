@@ -50,7 +50,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 
 				pathVariables = pathVariables.replace(projectAdmin + "/", "");
 
-				int memberId = Integer.parseInt(pathVariables);
+				int memberId = Integer.parseInt(projectAdmin);
 
 				if (memberId > 0 && projectMemberService != null
 						&& sAccount > 0 && projectAdmin != null
