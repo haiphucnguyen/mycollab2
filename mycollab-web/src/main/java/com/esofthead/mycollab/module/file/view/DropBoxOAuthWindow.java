@@ -45,9 +45,7 @@ public abstract class DropBoxOAuthWindow extends
 				.getApplication().getContext();
 
 		HttpSession session = webContext.getHttpSession();
-		String sessionKey = "dropbox-auth-csrf-token";
-		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
-				sessionKey);
+		DbxSessionStore csrfTokenStore = new MyCollabDbxSessionStore();
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);
 		return webAuth.start(session.getId());
