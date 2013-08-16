@@ -104,6 +104,12 @@
             <version>5.3.0.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.dropbox.core</groupId>
+            <artifactId>dropbox-core-sdk</artifactId>
+            <version>[1.7,1.8)</version>
+        </dependency>
+
 
         <!-- Bonecp -->
         <dependency>
@@ -140,34 +146,19 @@
                     <!-- <execution> <id>Crm Artifacts Generator</id> <phase>validate</phase> 
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> -->
-                        <!-- 
-                    <execution>
-                        <id>User 
-                        Artifacts Generator</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                    -->
-                    <!-- 
-                     <execution> <id>Common Artifacts Generator</id> 
+                    <!-- <execution> <id>User Artifacts Generator</id> <phase>validate</phase> 
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>Common Artifacts Generator</id> 
                         <phase>validate</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution>
-                   <execution> <id>Project Artifacts Generator</id> 
-                        <phase>validate</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution>
-                        -->
-                        <!--  
-                        <execution> <id>Tracker 
+                        <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Project 
                         Artifacts Generator</id> <phase>validate</phase> <goals> <goal>generate</goal> 
-                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
+                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>Tracker Artifacts Generator</id> 
+                        <phase>validate</phase> <goals> <goal>generate</goal> </goals> <configuration> 
+                        <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Ecm 
                         Artifacts Generator</id> <phase>validate</phase> <goals> <goal>generate</goal> 
                         </goals> <configuration> <configurationFile>${basedir}/src/main/resources/EcmGeneratorConfig.xml</configurationFile> 

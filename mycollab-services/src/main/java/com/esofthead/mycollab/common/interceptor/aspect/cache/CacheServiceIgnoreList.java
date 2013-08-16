@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
 import com.esofthead.mycollab.module.project.service.esb.ProjectDeleteListener;
@@ -16,7 +17,7 @@ public class CacheServiceIgnoreList {
 			RelayEmailNotificationService.class, MonitorItemService.class,
 			BugRelatedItemService.class, RawContentServiceFactoryBean.class,
 			ResourceService.class, ProjectDeleteListener.class,
-			ProjectMemberDeleteListener.class });
+			ProjectMemberDeleteListener.class, ExternalResourceService.class });
 
 	static boolean isInBlackList(Class cls) {
 		return blacklistCls.contains(cls);

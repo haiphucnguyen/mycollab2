@@ -1,5 +1,11 @@
 package com.esofthead.mycollab.module.ecm.service;
 
-public interface ExternalResourceService {
+import java.util.List;
 
+import com.esofthead.mycollab.core.persistence.service.IService;
+import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
+import com.esofthead.mycollab.module.ecm.domain.Resource;
+
+public interface ExternalResourceService extends IService {
+	List<Resource> getResources(ExternalDrive drive, String path);
 }

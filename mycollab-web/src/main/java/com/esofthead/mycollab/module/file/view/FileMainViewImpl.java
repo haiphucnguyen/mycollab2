@@ -15,11 +15,6 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
-import com.dropbox.core.DbxClient;
-import com.dropbox.core.DbxEntry;
-import com.dropbox.core.DbxEntry.WithChildren;
-import com.dropbox.core.DbxException;
-import com.dropbox.core.DbxRequestConfig;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -31,6 +26,7 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
@@ -85,15 +81,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private Folder rootECMFolder;
 	private String rootPath;
 	private String rootFolderName;
-	private List<Resource> lstCheckedResource;
+
+	private List<Resource> selectedResourcesList;
 	private ItemResourceContainerLayout itemResourceContainerLayout;
 	private MainBodyResourceLayout bodyResourceLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	private Button eventBtn;
+	private Button switchViewBtn;
+
 	private final ResourceService resourceService;
+	private final ExternalDriveService externalDriveService;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
+		externalDriveService = AppContext
+				.getSpringBean(ExternalDriveService.class);
 		this.setSpacing(true);
 		this.setMargin(false);
 
@@ -119,29 +120,31 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		UiUtils.addComponent(topControlMenuLayoutWapper, navButton,
 				Alignment.MIDDLE_RIGHT);
 
-		eventBtn = new Button();
-		eventBtn.setDescription("Event");
-		eventBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/event.png"));
-		eventBtn.addListener(new Button.ClickListener() {
+		switchViewBtn = new Button();
+		switchViewBtn.setDescription("Event");
+		switchViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/event.png"));
+		switchViewBtn.addListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (eventBtn.getDescription().equals("Event")) {
-					eventBtn.setDescription("FileManagement");
-					eventBtn.setIcon(MyCollabResource
+				if (switchViewBtn.getDescription().equals("Event")) {
+					switchViewBtn.setDescription("FileManagement");
+					switchViewBtn.setIcon(MyCollabResource
 							.newResource("icons/16/ecm/file_managerment.png"));
 					gotoActionLogPage();
-				} else if (eventBtn.getDescription().equals("FileManagement")) {
-					eventBtn.setDescription("Event");
-					eventBtn.setIcon(MyCollabResource
+				} else if (switchViewBtn.getDescription().equals(
+						"FileManagement")) {
+					switchViewBtn.setDescription("Event");
+					switchViewBtn.setIcon(MyCollabResource
 							.newResource("icons/16/ecm/event.png"));
 					gotoFileMainViewPage(baseFolder);
 				}
 			}
 		});
-		eventBtn.addStyleName("graybtn2");
-		navButton.addButton(eventBtn);
+		switchViewBtn.addStyleName("graybtn2");
+		navButton.addButton(switchViewBtn);
 
 		Button settingBtn = new Button();
 		settingBtn.setIcon(MyCollabResource
@@ -279,6 +282,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		// here for MainBodyResourceLayout class
 		bodyResourceLayout = new MainBodyResourceLayout();
+		bodyResourceLayout.setSpacing(true);
 
 		mainView.addComponent(bodyResourceLayout);
 		mainView.setComponentAlignment(bodyResourceLayout, Alignment.TOP_LEFT);
@@ -348,32 +352,37 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	}
 
 	private void gotoFileMainViewPage(Folder baseFolder) {
+		this.baseFolder = baseFolder;
+		
 		bodyResourceLayout.removeAllComponents();
+		
 		bodyResourceLayout.setSpacing(true);
 		bodyResourceLayout.addComponent(bodyResourceLayout.filterPanel);
 		bodyResourceLayout.addComponent(bodyResourceLayout.fileBreadCrumb);
 		bodyResourceLayout.addComponent(bodyResourceLayout.controllGroupBtn);
 		bodyResourceLayout.addComponent(itemResourceContainerLayout);
-		this.baseFolder = baseFolder;
+		
+		
 		bodyResourceLayout.fileBreadCrumb.gotoFolder(baseFolder);
 		itemResourceContainerLayout.constructBody(baseFolder);
-		eventBtn.setDescription("Event");
-		eventBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/event.png"));
+		switchViewBtn.setDescription("Event");
+		switchViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/event.png"));
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
-		this.menuTree.removeAllItems();
 		this.rootFolderName = rootFolderName;
-
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = this.baseFolder;
+		
+		this.menuTree.removeAllItems();
 		this.menuTree.addItem(this.baseFolder);
 		this.menuTree.setItemCaption(this.baseFolder, rootFolderName);
 		this.menuTree.setItemIcon(this.baseFolder,
 				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
-
 		this.menuTree.collapseItem(this.baseFolder);
+		
 		bodyResourceLayout.fileBreadCrumb
 				.addSearchHandler(new SearchHandler<FileSearchCriteria>() {
 					@Override
@@ -393,7 +402,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	@Override
 	public void display() {
-		displayResources(rootPath, "My Documents");
+		displayResources(rootPath, "Documents");
 	}
 
 	class FilterPanel extends GenericSearchPanel<FileSearchCriteria> {
@@ -542,25 +551,26 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		public ItemResourceContainerLayout(Folder folder,
 				ResourceService resourceService) {
-			lstCheckedResource = new ArrayList<Resource>();
+			selectedResourcesList = new ArrayList<Resource>();
 			listAllCheckBox = new ArrayList<CheckBox>();
 			this.setMargin(true);
 			constructBody(folder);
 		}
 
-		private void constructBody(Folder curFolder) {
+		private void constructBody(Folder currentFolder) {
 			isSearchAction = false;
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
-			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
-				lstCheckedResource.clear();
+			if (selectedResourcesList != null
+					&& selectedResourcesList.size() > 0)
+				selectedResourcesList.clear();
 			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
 				listAllCheckBox.clear();
 			}
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
-			List<Resource> lstResource = resourceService.getResources(curFolder
+			List<Resource> lstResource = resourceService.getResources(currentFolder
 					.getPath());
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
@@ -578,8 +588,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
-			if (lstCheckedResource != null && lstCheckedResource.size() > 0)
-				lstCheckedResource.clear();
+			if (selectedResourcesList != null
+					&& selectedResourcesList.size() > 0)
+				selectedResourcesList.clear();
 			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
 				listAllCheckBox.clear();
 			}
@@ -633,9 +644,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				@Override
 				public void valueChange(ValueChangeEvent event) {
 					if ((Boolean) checkbox.getValue()) {
-						lstCheckedResource.add(res);
+						selectedResourcesList.add(res);
 					} else {
-						lstCheckedResource.remove(res);
+						selectedResourcesList.remove(res);
 					}
 				}
 			});
@@ -786,8 +797,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							lstCheckedResource.clear();
-							lstCheckedResource.add(res);
+							selectedResourcesList.clear();
+							selectedResourcesList.add(res);
 
 							bodyResourceLayout.deleteResourceAction();
 						}
@@ -907,7 +918,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						.getWindow()
 						.showNotification(
 								"Move finish, some items can't move to destination. Please check duplicated file-name and try again.");
-			FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+			FileMainViewImpl.this.selectedResourcesList = new ArrayList<Resource>();
 
 			Container dataSource = FileMainViewImpl.this.menuTree
 					.getContainerDataSource();
@@ -1359,7 +1370,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						Folder parentFolder = resourceService
 								.getParentFolder(FileMainViewImpl.this.baseFolder
 										.getPath());
-						FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+						FileMainViewImpl.this.selectedResourcesList = new ArrayList<Resource>();
 						itemResourceContainerLayout.constructBody(parentFolder);
 						FileMainViewImpl.this.baseFolder = parentFolder;
 						bodyResourceLayout.fileBreadCrumb
@@ -1410,19 +1421,19 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							if (lstCheckedResource != null
-									&& lstCheckedResource.size() > 0) {
+							if (selectedResourcesList != null
+									&& selectedResourcesList.size() > 0) {
 								List<String> lstPath = new ArrayList<String>();
-								for (Resource res : lstCheckedResource) {
+								for (Resource res : selectedResourcesList) {
 									lstPath.add(res.getPath());
 								}
 								com.vaadin.terminal.Resource downloadResource = null;
-								if (lstCheckedResource.size() == 1
-										&& lstCheckedResource.get(0) instanceof Content) {
+								if (selectedResourcesList.size() == 1
+										&& selectedResourcesList.get(0) instanceof Content) {
 									downloadResource = StreamDownloadResourceFactory
-											.getStreamResource(lstCheckedResource
+											.getStreamResource(selectedResourcesList
 													.get(0).getPath());
-								} else if (lstCheckedResource.size() > 0) {
+								} else if (selectedResourcesList.size() > 0) {
 									downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
 											lstPath.toArray(new String[lstPath
 													.size()]),
@@ -1450,9 +1461,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							if (lstCheckedResource.size() > 0) {
+							if (selectedResourcesList.size() > 0) {
 								MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-										lstCheckedResource,
+										selectedResourcesList,
 										FileMainViewImpl.this.resourceService);
 								FileMainViewImpl.this.getWindow().addWindow(
 										moveResourceWindow);
@@ -1479,7 +1490,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							if (lstCheckedResource.size() == 0) {
+							if (selectedResourcesList.size() == 0) {
 								FileMainViewImpl.this
 										.getParent()
 										.getWindow()
@@ -1530,9 +1541,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								@Override
 								public void onClose(final ConfirmDialog dialog) {
 									if (dialog.isConfirmed()) {
-										if (lstCheckedResource != null
-												&& lstCheckedResource.size() > 0) {
-											for (Resource res : lstCheckedResource) {
+										if (selectedResourcesList != null
+												&& selectedResourcesList.size() > 0) {
+											for (Resource res : selectedResourcesList) {
 												FileMainViewImpl.this.resourceService.removeResource(
 														res.getPath(),
 														AppContext
@@ -1562,24 +1573,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 													.getWindow()
 													.showNotification(
 															"Delete successfully.");
-											FileMainViewImpl.this.lstCheckedResource = new ArrayList<Resource>();
+											FileMainViewImpl.this.selectedResourcesList = new ArrayList<Resource>();
 										}
 									}
 								}
 							});
-		}
-	}
-
-	public static void main(String[] args) throws DbxException {
-		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-				null);
-		DbxClient client = new DbxClient(requestConfig,
-				"2qtgoUhfNbsAAAAAAAAAARkETVWVUdFB4-vExevabzAsv8RcTHocOoXmvXpRWsrz");
-		WithChildren children = client.getMetadataWithChildren("/");
-		if (children.children != null) {
-			for (DbxEntry entry : children.children) {
-				System.out.println(entry.name);
-			}
 		}
 	}
 }
