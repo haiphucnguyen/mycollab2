@@ -9,6 +9,7 @@ public class Resource {
 	protected String path = "";
 	protected Double size = 0d;
 	protected String createdUser;
+	protected String name;
 
 	public String getCreatedBy() {
 		return createdBy;
@@ -51,8 +52,12 @@ public class Resource {
 	}
 
 	public String getName() {
-		int index = path.lastIndexOf("/");
-		return path.substring(index + 1);
+		if (name == null) {
+			int index = path.lastIndexOf("/");
+			return path.substring(index + 1);
+		} else {
+			return name;
+		}
 	}
 
 	public String getCreatedUser() {
@@ -61,5 +66,9 @@ public class Resource {
 
 	public void setCreatedUser(String createdUser) {
 		this.createdUser = createdUser;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

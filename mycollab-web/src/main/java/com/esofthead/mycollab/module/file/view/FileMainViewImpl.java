@@ -24,9 +24,11 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
+import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
+import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
@@ -90,11 +92,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private final ResourceService resourceService;
 	private final ExternalDriveService externalDriveService;
+	private final ExternalResourceService externalResourceService;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
 		externalDriveService = AppContext
 				.getSpringBean(ExternalDriveService.class);
+		externalResourceService = AppContext
+				.getSpringBean(ExternalResourceService.class);
+
 		this.setSpacing(true);
 		this.setMargin(false);
 
@@ -211,13 +217,39 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				Object object = event.getItemId();
 				if (object instanceof Folder) {
 					final Folder expandFolder = (Folder) event.getItemId();
-					final List<Folder> subFolders = resourceService
-							.getSubFolders(expandFolder.getPath());
 
-					menuTree.setItemIcon(expandFolder, MyCollabResource
-							.newResource("icons/16/ecm/folder_open.png"));
+					// if expand folder is root, will load external drives also
+					if (rootPath.equals(expandFolder.getPath())) {
+						List<ExternalDrive> externalDrives = externalDriveService
+								.getExternalDrivesOfUser(AppContext
+										.getUsername());
+						for (ExternalDrive externalDrive : externalDrives) {
+							ExternalFolder externalMapFolder = new ExternalFolder();
+							externalMapFolder.setStorageName(externalDrive
+									.getStoragename());
+							externalMapFolder.setExternalDrive(externalDrive);
+							externalMapFolder.setPath("/");
+							externalMapFolder.setName(externalDrive
+									.getFoldername());
+							expandFolder.addChild(expandFolder);
+							menuTree.addItem(externalMapFolder);
 
-					if (subFolders != null) {
+							menuTree.setItemIcon(
+									externalMapFolder,
+									MyCollabResource
+											.newResource("icons/16/ecm/folder_close.png"));
+							menuTree.setItemCaption(externalMapFolder,
+									externalMapFolder.getName());
+							menuTree.setParent(externalMapFolder, expandFolder);
+						}
+
+					}
+
+					if (expandFolder instanceof ExternalFolder) {
+						List<ExternalFolder> subFolders = externalResourceService
+								.getSubFolders(((ExternalFolder) expandFolder)
+										.getExternalDrive(), expandFolder
+										.getPath());
 						for (final Folder subFolder : subFolders) {
 							expandFolder.addChild(subFolder);
 							menuTree.addItem(subFolder);
@@ -225,12 +257,34 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							menuTree.setItemIcon(
 									subFolder,
 									MyCollabResource
-											.newResource("icons/16/ecm/folder_close.png"));
+											.newResource("icons/16/ecm/dropbox_icon.png"));
 							menuTree.setItemCaption(subFolder,
 									subFolder.getName());
 							menuTree.setParent(subFolder, expandFolder);
 						}
+					} else {
+						final List<Folder> subFolders = resourceService
+								.getSubFolders(expandFolder.getPath());
+
+						menuTree.setItemIcon(expandFolder, MyCollabResource
+								.newResource("icons/16/ecm/folder_open.png"));
+
+						if (subFolders != null) {
+							for (final Folder subFolder : subFolders) {
+								expandFolder.addChild(subFolder);
+								menuTree.addItem(subFolder);
+
+								menuTree.setItemIcon(
+										subFolder,
+										MyCollabResource
+												.newResource("icons/16/ecm/folder_close.png"));
+								menuTree.setItemCaption(subFolder,
+										subFolder.getName());
+								menuTree.setParent(subFolder, expandFolder);
+							}
+						}
 					}
+
 				}
 			}
 		});
@@ -242,7 +296,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			public void nodeCollapse(final CollapseEvent event) {
 				final Folder collapseFolder = (Folder) event.getItemId();
 				menuTree.setItemIcon(collapseFolder, MyCollabResource
-						.newResource("icons/16/ecm/folder_close.png"));
+						.newResource("icons/16/ecm/dropbox_icon.png"));
 
 				Container dataSource = menuTree.getContainerDataSource();
 				final Object[] dataCollectionArray = dataSource.getItemIds()
@@ -353,17 +407,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private void gotoFileMainViewPage(Folder baseFolder) {
 		this.baseFolder = baseFolder;
-		
+
 		bodyResourceLayout.removeAllComponents();
-		
+
 		bodyResourceLayout.setSpacing(true);
 		bodyResourceLayout.addComponent(bodyResourceLayout.filterPanel);
 		bodyResourceLayout.addComponent(bodyResourceLayout.fileBreadCrumb);
 		bodyResourceLayout.addComponent(bodyResourceLayout.controllGroupBtn);
 		bodyResourceLayout.addComponent(itemResourceContainerLayout);
-		
-		
+
 		bodyResourceLayout.fileBreadCrumb.gotoFolder(baseFolder);
+
 		itemResourceContainerLayout.constructBody(baseFolder);
 		switchViewBtn.setDescription("Event");
 		switchViewBtn.setIcon(MyCollabResource
@@ -375,14 +429,14 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = this.baseFolder;
-		
+
 		this.menuTree.removeAllItems();
 		this.menuTree.addItem(this.baseFolder);
 		this.menuTree.setItemCaption(this.baseFolder, rootFolderName);
 		this.menuTree.setItemIcon(this.baseFolder,
 				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
 		this.menuTree.collapseItem(this.baseFolder);
-		
+
 		bodyResourceLayout.fileBreadCrumb
 				.addSearchHandler(new SearchHandler<FileSearchCriteria>() {
 					@Override
@@ -562,16 +616,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			if (mainLayout != null) {
 				this.removeAllComponents();
 			}
-			if (selectedResourcesList != null
-					&& selectedResourcesList.size() > 0)
-				selectedResourcesList.clear();
-			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
-				listAllCheckBox.clear();
-			}
+
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
-			List<Resource> lstResource = resourceService.getResources(currentFolder
-					.getPath());
+
+			List<Resource> lstResource;
+			if (currentFolder instanceof ExternalFolder) {
+				lstResource = externalResourceService.getResources(
+						((ExternalFolder) currentFolder).getExternalDrive(),
+						currentFolder.getPath());
+			} else {
+				lstResource = resourceService.getResources(currentFolder
+						.getPath());
+			}
+
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
 				for (Resource res : lstResource) {

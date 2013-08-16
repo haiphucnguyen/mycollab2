@@ -34,21 +34,21 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			WithChildren children = client.getMetadataWithChildren(path);
 			if (children.children != null) {
 				for (DbxEntry entry : children.children) {
-					Resource resource = null;
 					if (entry.isFile()) {
-						resource = new ExternalContent();
-						((ExternalContent) resource)
-								.setStorageName(StorageNames.DROPBOX);
+						ExternalContent resource = new ExternalContent();
+						resource.setStorageName(StorageNames.DROPBOX);
+						resource.setExternalDrive(drive);
 						resource.setPath(entry.path);
+						resources.add(resource);
 					} else if (entry.isFolder()) {
-						resource = new ExternalFolder();
-						((ExternalContent) resource)
-								.setStorageName(StorageNames.DROPBOX);
+						ExternalFolder resource = new ExternalFolder();
+						resource.setStorageName(StorageNames.DROPBOX);
+						resource.setExternalDrive(drive);
 						resource.setPath(entry.path);
+						resources.add(resource);
 					} else {
 						log.error("Do not support dropbox resource except file or folder");
 					}
-					resources.add(resource);
 				}
 			}
 		} catch (Exception e) {
@@ -56,6 +56,35 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		}
 
 		return resources;
+	}
+
+	@Override
+	public List<ExternalFolder> getSubFolders(ExternalDrive drive, String path) {
+		List<ExternalFolder> subFolders = new ArrayList<ExternalFolder>();
+
+		try {
+			DbxRequestConfig requestConfig = new DbxRequestConfig(
+					"MyCollab/1.0", null);
+			DbxClient client = new DbxClient(requestConfig,
+					drive.getAccesstoken());
+			WithChildren children = client.getMetadataWithChildren(path);
+			if (children.children != null) {
+				for (DbxEntry entry : children.children) {
+					if (entry.isFolder()) {
+						ExternalFolder resource = new ExternalFolder();
+						resource.setStorageName(StorageNames.DROPBOX);
+						resource.setPath(entry.path);
+						resource.setExternalDrive(drive);
+						subFolders.add(resource);
+					}
+
+				}
+			}
+		} catch (Exception e) {
+			log.error("Error when get dropbox resource", e);
+		}
+
+		return subFolders;
 	}
 
 }
