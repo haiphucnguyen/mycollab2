@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Service
@@ -51,18 +52,21 @@ public class ProjectMemberInviteNotificationActionImpl implements
 				"templates/email/project/memberInvitation/memberInvitationNotifier.mt");
 		templateGenerator.putVariable("member", member);
 		templateGenerator.putVariable("inviteUser", member.getMemberFullName());
+
+		String userChange = notification.getChangeby();
+		User user = userService.findUserByUserName(userChange);
 		templateGenerator.putVariable(
 				"urlAccept",
 				SiteConfiguration.getSiteUrl(subdomain)
 						+ "project/member/invitation/confirm_invite/"
 						+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-								+ member.getId()));
+								+ member.getId() + "/" + user.getEmail()));
 		templateGenerator.putVariable(
 				"urlDeny",
 				SiteConfiguration.getSiteUrl(subdomain)
 						+ "project/member/invitation/deny_invite/"
 						+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-								+ member.getId()));
+								+ member.getId()) + "/" + user.getEmail());
 
 		String userName = (member.getMemberFullName() != null) ? member
 				.getMemberFullName() : "there";
