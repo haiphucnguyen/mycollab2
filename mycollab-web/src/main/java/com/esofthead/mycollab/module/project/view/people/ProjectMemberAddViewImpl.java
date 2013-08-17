@@ -281,13 +281,20 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			mainLayout.setMargin(true);
 			mainLayout.setSpacing(true);
 
-			informationLayout = new GridFormLayoutHelper(1, 1, "100%", "167px",
+			informationLayout = new GridFormLayoutHelper(1, 2, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
 
-			final TextField textField = new TextField();
-			textField.setWidth("250px");
-			informationLayout.addComponentSupportFieldCaption(textField,
-					new Label("Email"), "80px", "250px", 0, 0,
+			final TextField emailTextField = new TextField();
+			emailTextField.setWidth("250px");
+			final TextField nameTextField = new TextField();
+			nameTextField.setWidth("250px");
+
+			informationLayout.addComponentSupportFieldCaption(nameTextField,
+					new Label("Name"), "80px", "250px", 0, 0,
+					Alignment.MIDDLE_CENTER);
+
+			informationLayout.addComponentSupportFieldCaption(emailTextField,
+					new Label("Email"), "80px", "250px", 0, 1,
 					Alignment.MIDDLE_CENTER);
 			this.informationLayout.getLayout().setWidth("100%");
 			this.informationLayout.getLayout().setMargin(false);
@@ -303,14 +310,19 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					String[] lstEmailArr = textField.getValue().toString()
+					String[] lstNameArr = nameTextField.getValue().toString()
+							.trim().split(";");
+					String[] lstEmailArr = emailTextField.getValue().toString()
 							.trim().split(";");
 					userService = AppContext.getSpringBean(UserService.class);
 					mailRelayService = AppContext
 							.getSpringBean(MailRelayService.class);
 					projectService = AppContext
 							.getSpringBean(ProjectService.class);
-					for (String email : lstEmailArr) {
+					for (int i = 0; i < lstEmailArr.length; i++) {
+						String email = lstEmailArr[i];
+						String name = (i > lstNameArr.length - 1) ? "YOU"
+								: lstNameArr[i];
 
 						User user = userService.findUserByUserName(AppContext
 								.getUsername());
@@ -354,13 +366,16 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 												+ "/"
 												+ user.getUsername()));
 
-						templateGenerator.putVariable("userName",
-								member.getMemberFullName());
+						templateGenerator.putVariable("userName", name);
 
-						mailRelayService.saveRelayEmail(new String[] { " " },
+						mailRelayService.saveRelayEmail(new String[] { name },
 								new String[] { email },
 								templateGenerator.generateSubjectContent(),
 								templateGenerator.generateBodyContent());
+						InviteOutsideMemberWindow.this.close();
+						ProjectMemberAddViewImpl.this.getWindow()
+								.showNotification(
+										"Your invitation has sent to partner.");
 					}
 				}
 			});
@@ -383,7 +398,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					Alignment.MIDDLE_CENTER);
 
 			Label noteLbl = new Label(
-					"Note: You can add many emails which be separated each others by semicolon (;)");
+					"Note: You can add many emails-address[name,email] which be separated each others by semicolon (;)");
 			mainLayout.addComponent(noteLbl);
 
 			this.addComponent(mainLayout);

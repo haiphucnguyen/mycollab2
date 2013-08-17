@@ -74,8 +74,8 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 									ProjectMemberStatusContants.ACTIVE)) {
 						String memberEmail = member.getEmail();
 						String memberName = member.getMemberFullName();
-//						projectMemberService.removeWithSession(memberId, "",
-//								AppContext.getAccountId());
+						projectMemberService.removeWithSession(memberId, "",
+								AppContext.getAccountId());
 
 						ProjectService projectService = AppContext
 								.getSpringBean(ProjectService.class);
@@ -120,7 +120,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		context.put("memberEmail", memberEmail);
 		context.put("memberName", memberName);
 		context.put("inviterName", inviterName);
-		
+
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 
 		SharingOptions sharingOptions = SiteConfiguration.getSharingOptions();

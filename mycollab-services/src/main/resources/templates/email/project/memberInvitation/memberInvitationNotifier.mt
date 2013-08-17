@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
-				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $!userName,</div>
+				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hello $!userName,</div>
 				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">MyCollab has invited you to join the team for project "$!member.projectName" at our online collaboration tool.</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
