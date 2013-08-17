@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
@@ -165,26 +166,45 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						roleBox.setRoleId(-1);
 					}
 					return roleBox;
-				} else if (propertyId.equals("projectid")) {
-					Button inviteOutSideUserBtn = new Button(
-							"Invite outside member",
-							new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
-
-								@Override
-								public void buttonClick(ClickEvent event) {
-									ProjectMemberAddViewImpl.this
-											.getWindow()
-											.addWindow(
-													new InviteOutsideMemberWindow());
-								}
-							});
-					inviteOutSideUserBtn
-							.addStyleName(UIConstants.THEME_BLUE_LINK);
-					return inviteOutSideUserBtn;
+				} else if (propertyId.equals("joindate")) {
+					return new InviteMemberBtn();
 				}
 				return null;
 			}
+		}
+
+		private class InviteMemberBtn extends CustomField {
+			private static final long serialVersionUID = 1L;
+			private final Button inviteOutSideUserBtn;
+
+			public InviteMemberBtn() {
+				inviteOutSideUserBtn = new Button("Invite outside member",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								ProjectMemberAddViewImpl.this
+										.getWindow()
+										.addWindow(
+												new InviteOutsideMemberWindow());
+							}
+						});
+				inviteOutSideUserBtn
+						.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+				this.setCompositionRoot(inviteOutSideUserBtn);
+			}
+
+			@Override
+			public Object getValue() {
+				return new Date();
+			}
+
+			@Override
+			public Class<?> getType() {
+				return Date.class;
+			}
+
 		}
 
 		private class AdminRoleSelectionField extends CustomField {
