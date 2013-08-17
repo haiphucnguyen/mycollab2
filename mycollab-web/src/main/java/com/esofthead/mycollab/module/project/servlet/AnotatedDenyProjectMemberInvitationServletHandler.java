@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
@@ -71,8 +74,8 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 									ProjectMemberStatusContants.ACTIVE)) {
 						String memberEmail = member.getEmail();
 						String memberName = member.getMemberFullName();
-						projectMemberService.removeWithSession(memberId, "",
-								AppContext.getAccountId());
+//						projectMemberService.removeWithSession(memberId, "",
+//								AppContext.getAccountId());
 
 						ProjectService projectService = AppContext
 								.getSpringBean(ProjectService.class);
@@ -117,6 +120,18 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		context.put("memberEmail", memberEmail);
 		context.put("memberName", memberName);
 		context.put("inviterName", inviterName);
+		
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		SharingOptions sharingOptions = SiteConfiguration.getSharingOptions();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		defaultUrls.put("facebook_url", sharingOptions.getFacebookUrl());
+		defaultUrls.put("google_url", sharingOptions.getGoogleplusUrl());
+		defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
+		defaultUrls.put("twitter_url", sharingOptions.getTwitterUrl());
+
+		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
 		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
