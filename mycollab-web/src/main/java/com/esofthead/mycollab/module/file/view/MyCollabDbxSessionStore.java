@@ -24,7 +24,7 @@ public class MyCollabDbxSessionStore implements DbxSessionStore {
 
 	@Override
 	public void set(String value) {
-		session.setAttribute(key, "mycollab");
+		session.setAttribute(key, "mycollab123456789123456789");
 	}
 
 	@Override

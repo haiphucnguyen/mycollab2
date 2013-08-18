@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,8 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
+import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
@@ -42,8 +45,32 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		String redirectUri = request.getRequestURL().toString();
 		HttpSession session = request.getSession(true);
 		String sessionKey = "dropbox-auth-csrf-token";
-		DbxSessionStore csrfTokenStore = new MyCollabDbxSessionStore(session,
+		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
 				sessionKey);
+		String stateParam = request.getParameter("state");
+		if (stateParam == null || stateParam.equals("")) {
+			throw new MyCollabException(
+					"Can not get state parameter successfully, Invalid request");
+		}
+
+		int index = stateParam.indexOf("|");
+		if (index < 0) {
+			throw new MyCollabException("Invalid parameter request "
+					+ stateParam);
+		}
+
+		String oldSessionId = stateParam.substring(index + 1);
+		BasicCache<String, Object> cache = LocalCacheManager
+				.getCache(oldSessionId);
+		Object csrfTokenVal = cache.get(sessionKey);
+
+		if (csrfTokenVal == null) {
+			throw new MyCollabException(
+					"Invalid parameter request, can not define csrfToken");
+		} else {
+			csrfTokenStore.set((String) csrfTokenVal);
+		}
+
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);
 		return webAuth;
