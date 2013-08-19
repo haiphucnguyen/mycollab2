@@ -341,18 +341,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 								.getSubdomainOfProject(CurrentProjectVariables
 										.getProjectId());
 
-						templateGenerator.putVariable(
-								"urlAccept",
-								SiteConfiguration.getSiteUrl(subdomain)
-										+ "project/member/invitation/confirm_invite/"
-										+ UrlEncodeDecoder.encode(member
-												.getsAccountId()
-												+ "/"
-												+ member.getId()
-												+ "/"
-												+ user.getEmail()
-												+ "/"
-												+ user.getUsername()));
+						templateGenerator.putVariable("urlAccept",
+								SiteConfiguration.getSiteUrl(subdomain));
+
 						templateGenerator.putVariable(
 								"urlDeny",
 								SiteConfiguration.getSiteUrl(subdomain)
@@ -360,11 +351,17 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 										+ UrlEncodeDecoder.encode(member
 												.getsAccountId()
 												+ "/"
-												+ member.getId()
+												+ "0"
 												+ "/"
 												+ user.getEmail()
 												+ "/"
-												+ user.getUsername()));
+												+ user.getUsername()
+												+ "/"
+												+ subdomain
+												+ "/"
+												+ email
+												+ "/"
+												+ name));
 
 						templateGenerator.putVariable("userName", name);
 

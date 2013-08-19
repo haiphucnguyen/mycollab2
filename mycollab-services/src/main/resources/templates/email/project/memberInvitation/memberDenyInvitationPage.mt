@@ -53,13 +53,13 @@
 		<tr>
 			<td style="height: 200px; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
 				<div>
-					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab_small.png" height="42" width="225"></a>
+					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
 				</div>
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div>
 					<div style="display: block; padding: 8px 8px 8px 20px;">
-						<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}fb_social_icon.png" height="25" width="25"></a>
+						<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}ticket_icon.png" height="25" width="25"></a>
 						Please feedback, why do you deny invitation ?
 					</div>
 					<div style="display: block; padding: 8px 8px 8px 20px;">
@@ -90,8 +90,8 @@
 	</footer>
 	<input type="hidden" id="inviterEmail" value="$!inviterEmail">
 	<input type="hidden" id="url" value="$!redirectURL">
-	<input type="hidden" id="memberEmail" value="$!memberEmail">
-	<input type="hidden" id="memberName" value="$!memberName">
+	<input type="hidden" id="toEmail" value="$!toEmail">
+	<input type="hidden" id="toName" value="$!toName">
 	<input type="hidden" id="inviterName" value="$!inviterName">
 	
 </body>
@@ -107,7 +107,7 @@
 			$('#requireMsg').show();
 			return;
 		}	
-		var url = encodeURI($('#url').val() + $('#inviterEmail').val() + "/" + $('#memberEmail').val()+"/"+ $('#message').val().trim() + "/" + $('#memberName').val() + "/" + $('#inviterName').val());
+		var url = encodeURI($('#url').val() + $('#inviterEmail').val() + "/" + $('#toEmail').val()+"/"+ $('#message').val().trim() + "/" + $('#toName').val() + "/" + $('#inviterName').val());
 			 $.ajax({
 			      type: 'POST',
 			      url: url,

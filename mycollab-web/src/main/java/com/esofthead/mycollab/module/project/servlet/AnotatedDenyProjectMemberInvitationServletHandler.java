@@ -54,17 +54,42 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 				String pathVariables = UrlEncodeDecoder.decode(pathInfo);
 				int sAccountId = Integer.parseInt(pathVariables.substring(0,
 						pathVariables.indexOf("/")));
-				pathVariables = pathVariables.replace(sAccountId + "/", "");
+				pathVariables = pathVariables.substring((sAccountId + "")
+						.length() + 1);
 
 				int memberId = Integer.parseInt(pathVariables.substring(0,
 						pathVariables.indexOf("/")));
-				pathVariables = pathVariables.replace(memberId + "/", "");
+				pathVariables = pathVariables.substring((memberId + "")
+						.length() + 1);
 
-				String inviterEmail = pathVariables.substring(0,
+				String senderEmail = pathVariables.substring(0,
 						pathVariables.indexOf("/"));
-				pathVariables = pathVariables.replace(inviterEmail + "/", "");
+				pathVariables = pathVariables.substring((senderEmail + "")
+						.length() + 1);
 
-				String inviterName = pathVariables;
+				String senderName = pathVariables;
+
+				String subdomain = "", toEmail = "", toName = "";
+				// ** update variables for handel outside member deny invitation
+				if (pathVariables.indexOf("/") != -1 && memberId == 0) {
+					senderName = pathVariables.substring(0,
+							pathVariables.indexOf("/"));
+					pathVariables = pathVariables
+							.substring(senderName.length() + 1);
+
+					subdomain = pathVariables.substring(0,
+							pathVariables.indexOf("mycollab-web")
+									+ "mycollab-web".length() + 1);
+					pathVariables = pathVariables
+							.substring(subdomain.length() + 1);
+
+					toEmail = pathVariables.substring(0,
+							pathVariables.indexOf("/"));
+					pathVariables = pathVariables
+							.substring(toEmail.length() + 1);
+
+					toName = pathVariables;
+				}
 
 				if (memberId > 0) {
 					SimpleProjectMember member = projectMemberService.findById(
@@ -72,26 +97,34 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 					if (member != null
 							&& !member.getStatus().equals(
 									ProjectMemberStatusContants.ACTIVE)) {
-						String memberEmail = member.getEmail();
-						String memberName = member.getMemberFullName();
+						toEmail = member.getEmail();
+						toName = member.getMemberFullName();
 						projectMemberService.removeWithSession(memberId, "",
 								AppContext.getAccountId());
 
 						ProjectService projectService = AppContext
 								.getSpringBean(ProjectService.class);
-						String subdomain = projectService
-								.getSubdomainOfProject(member.getProjectid());
+						subdomain = projectService.getSubdomainOfProject(member
+								.getProjectid());
 
 						String redirectURL = SiteConfiguration
 								.getSiteUrl(subdomain)
 								+ "project/member/feedback/";
 
 						String html = generateDenyFeedbacktoInviter(
-								inviterEmail, inviterName, redirectURL,
-								memberEmail, memberName);
+								senderEmail, senderName, redirectURL, toEmail,
+								toName);
 						PrintWriter out = response.getWriter();
 						out.println(html);
 					}
+				} else {
+					String redirectURL = SiteConfiguration
+							.getSiteUrl(subdomain) + "project/member/feedback/";
+
+					String html = generateDenyFeedbacktoInviter(senderEmail,
+							senderName, redirectURL, toEmail, toName);
+					PrintWriter out = response.getWriter();
+					out.println(html);
 				}
 			}
 		} else {
@@ -117,8 +150,8 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		}
 		context.put("inviterEmail", inviterEmail);
 		context.put("redirectURL", redirectURL);
-		context.put("memberEmail", memberEmail);
-		context.put("memberName", memberName);
+		context.put("toEmail", memberEmail);
+		context.put("toName", memberName);
 		context.put("inviterName", inviterName);
 
 		Map<String, String> defaultUrls = new HashMap<String, String>();
