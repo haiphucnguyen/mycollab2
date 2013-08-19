@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style media="screen" type="text/css">
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 .container {
 }
 
@@ -93,7 +94,6 @@
 		<form>
 		<table border="0">
 		<tbody>
-		
 		<tr>
 			<td><label>First name: </label> </td>
 			<td><input id="firstname" maxlength="30" name="firstname" type="text" /> </td>
@@ -101,24 +101,57 @@
 			<td style="padding-left: 15px;"><label>Last name: </label></td>
 			<td><input id="lastname" maxlength="30" name="lastname" type="text" /> </td>
 		</tr>
-		
 		<tr>
-		<td><label for="email">Email Address:</label> </td>
-		<td><input id="email" maxlength="45" name="email" type="text" /></td>
+			<td><label for="username">User Name:</label> </td>
+			<td><input id="username" maxlength="45" name="username" type="text" /> </td>
 		</tr>
-		
 		<tr>
-		<td><label for="username">User Name:</label> </td>
-		<td><input id="username" maxlength="45" name="username" type="text" /> </td>
+			<td><label >Birthdate:</label> </td>
+			<td><input id="birthdate" maxlength="45" name="birthdate" type="text" /></td>
 		</tr>
-		
 		<tr>
-		<td><label for="password">Password:</label></td>
-		<td><input id="password" maxlength="45" name="password" type="password" /></td>
+			<td><label for="email">Email Address:</label> </td>
+			<td><input id="email" maxlength="45" name="email" type="text" /></td>
 		</tr>
-
+		<tr>
+			<td><label>Website:</label> </td>
+			<td><input id="website" maxlength="45" name="website" type="text" /></td>
+		</tr>
+		<tr>
+			<td><label for="password">Password:</label></td>
+			<td><input id="password" maxlength="45" name="password" type="password" /></td>
+		</tr>
 		</tbody></table>
 		</form>
+		
+		<div style="display: block; padding: 10px 8px 8px 20px;">
+			<p><span style="color:blue; font-style:bold"> More informations
+			</span></p>
+		</div>
+		
+		<table border="0">
+		<tbody>
+		<tr>
+			<td><label>Country: </label> </td>
+			<td><input id="country" maxlength="30" name="country" type="text" /> </td>
+		</tr>
+		<tr>
+			<td><label>Company: </label> </td>
+			<td><input id="company" maxlength="30" name="company" type="text" /> </td>
+		</tr>
+		<tr>
+			<td><label>Home phone: </label> </td>
+			<td><input id="homePhone" maxlength="30" name="homePhone" type="text" /> </td>
+			
+			<td style="padding-left: 15px;"><label>Work phone: </label></td>
+			<td><input id="workphone" maxlength="30" name="workphone" type="text" /> </td>
+		</tr>
+		<tr>
+			<td><label>Skype: </label> </td>
+			<td><input id="skype" maxlength="30" name="skype" type="text" /> </td>
+		</tr>
+		</table>
+		
 		<div align="center" style="padding-top: 30px;">
 				<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Create</button>
 				<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
@@ -140,6 +173,7 @@
 <script>
 	$(document).ready(function(){
 		$('#divHolder').html($('#welcomeBody').html());
+		$('#birthdate').datepicker();
 	});
 	function createNewAccount(){
 		$('#divHolder').html($('#createNewAccountForm').html())
@@ -160,7 +194,11 @@
 		      data : {firstname: $('#firstname').val().trim(), lastname: $('#lastname').val().trim(), 
 		      			email : $('#email').val().trim() , username : $('#username').val().trim(), 
 		      			password : $('#password').val().trim(), projectId : $('#projectId').val().trim(),
-		      			roleId: $('#roleId').val().trim(), sAccountId : $('#sAccountId').val()},
+		      			roleId: $('#roleId').val().trim(), sAccountId : $('#sAccountId').val() ,
+		      			birthdate : $('#birthdate').val().trim(), website : $('website').val().trim(),
+		      			country : $('#country').val().trim() , company : $('#company').val().trim(),
+		      			homePhone : $('#homePhone').val().trim(), workphone : $('#workphone').val().trim(),
+		      			skype : $('#skype').val().trim()},
 		      success: function(data){
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
