@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.utils.ParsingUtils;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -310,7 +311,6 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					final String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 					String[] lstNameArr = nameTextField.getValue().toString()
 							.trim().split(";");
 					String[] lstEmailArr = emailTextField.getValue().toString()
@@ -322,7 +322,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 							.getSpringBean(ProjectService.class);
 					for (int i = 0; i < lstEmailArr.length; i++) {
 						String email = lstEmailArr[i];
-						if (!email.matches(EMAIL_REGEX)) {
+						if (!email.matches(ParsingUtils.EMAIL_PATTERN)) {
 							ProjectMemberAddViewImpl.this
 									.getWindow()
 									.showNotification(

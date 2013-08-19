@@ -10,7 +10,7 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 
 public class ParsingUtils {
 
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public static List<MailRecipientField> parseEmailField(String emailField)
