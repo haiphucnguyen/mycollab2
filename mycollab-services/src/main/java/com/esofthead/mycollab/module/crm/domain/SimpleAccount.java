@@ -17,6 +17,7 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
+
 public class SimpleAccount extends Account {
 	private static final long serialVersionUID = 1L;
 

@@ -2,33 +2,39 @@ package com.esofthead.mycollab.core.utils;
 
 import java.io.Serializable;
 
+import org.springframework.flex.core.io.AmfIgnoreField;
+
 public class ValuedBean implements Cloneable, Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private boolean selected = false;
-    private Object extraData;
+	private static final long serialVersionUID = 1L;
 
-    public Object getExtraData() {
-        return extraData;
-    }
+	@AmfIgnoreField
+	private boolean selected = false;
 
-    public void setExtraData(Object extraData) {
-        this.extraData = extraData;
-    }
+	@AmfIgnoreField
+	private Object extraData;
 
-    public boolean isSelected() {
-        return selected;
-    }
+	public Object getExtraData() {
+		return extraData;
+	}
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
+	public void setExtraData(Object extraData) {
+		this.extraData = extraData;
+	}
 
-    public Object copy() {
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            return null;
-        }
-    }
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public Object copy() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
 }

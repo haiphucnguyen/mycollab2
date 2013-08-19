@@ -1,6 +1,10 @@
 package com.esofthead.mycollab.common.domain;
 
-public class MailRecipientField {
+import com.esofthead.mycollab.core.utils.ValuedBean;
+
+public class MailRecipientField extends ValuedBean {
+	private static final long serialVersionUID = 1L;
+
 	private String email;
 	private String name;
 
@@ -12,7 +16,7 @@ public class MailRecipientField {
 			this.name = email;
 		}
 	}
-	
+
 	public MailRecipientField(String email) {
 		this(email, email);
 	}

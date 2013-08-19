@@ -1,6 +1,19 @@
 package com.esofthead.mycollab.flex.plugin;
 
+import groovy.lang.Writable;
+import groovy.text.GStringTemplateEngine;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sf.extcos.ComponentQuery;
@@ -13,6 +26,7 @@ import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ValuedBean;
 
 @Mojo(name = "flex-generator", defaultPhase = LifecyclePhase.COMPILE)
@@ -36,12 +50,93 @@ public class As3GeneratorMojo extends AbstractMojo {
 				"Scan packages to search domain classes. There are "
 						+ domainClasses.size() + " classes are found");
 
-		for (Class<?> domainClass : domainClasses) {
-			getLog().info("Domain class" + domainClass.getName());
-			Field[] fields = domainClass.getDeclaredFields();
-			for (Field field : fields) {
-				getLog().info("Field name: " + field.getName());
+		try {
+			for (Class<?> domainClass : domainClasses) {
+				GStringTemplateEngine engine = new GStringTemplateEngine();
+
+				Map binding = new HashMap();
+				binding.put("packageName", domainClass.getPackage().getName());
+				binding.put("aliasClassName", domainClass.getName());
+				binding.put("className", domainClass.getSimpleName());
+
+				Set<String> importClasses = new HashSet<String>();
+				binding.put("importClasses", importClasses);
+
+				Class<?> superClass = domainClass.getSuperclass();
+				if (superClass == ValuedBean.class) {
+					importClasses.add(superClass.getName());
+					binding.put("superClassName", superClass.getSimpleName());
+				} else {
+					binding.put("superClassName", superClass.getSimpleName());
+				}
+
+				binding.put("fields",
+						retrieveAs3FieldsMapping(domainClass, importClasses));
+
+				Writable template = engine.createTemplate(
+						As3GeneratorMojo.class.getClassLoader().getResource(
+								"domainGenerator.template")).make(binding);
+
+				String packageName = domainClass.getPackage().getName()
+						.replace(".", "/");
+				String filePath = "src" + "/" + packageName + "/"
+						+ domainClass.getSimpleName() + ".as";
+				File folder = new File(System.getProperty("user.dir") + "/"
+						+ "src" + "/" + packageName + "/");
+				folder.mkdirs();
+				FileWriter writer = new FileWriter(new File(folder,
+						domainClass.getSimpleName() + ".as"));
+				writer.write(template.toString());
+				writer.close();
+				getLog().info("Generated domain class " + filePath);
 			}
+		} catch (Exception e) {
+			getLog().error("Exception while generating classes", e);
+			throw new MyCollabException(e);
 		}
+	}
+
+	private List<As3Field> retrieveAs3FieldsMapping(Class domainCls,
+			Set<String> importClasses) {
+		List<As3Field> result = new ArrayList<As3Field>();
+		Field[] fields = domainCls.getDeclaredFields();
+
+		for (Field field : fields) {
+			As3Field as3Field;
+
+			Class<?> typeCls = field.getType();
+
+			if (Modifier.isStatic(field.getModifiers())) {
+				continue;
+			}
+
+			if (typeCls == Boolean.TYPE || typeCls == Boolean.class) {
+				as3Field = new As3Field("Boolean", field.getName());
+			} else if (typeCls == Integer.TYPE || typeCls == Integer.class) {
+				as3Field = new As3Field("int", field.getName());
+			} else if (typeCls == Long.TYPE || typeCls == Long.class) {
+				as3Field = new As3Field("int", field.getName());
+			} else if (typeCls == Double.TYPE || typeCls == Double.class) {
+				as3Field = new As3Field("double", field.getName());
+			} else if (typeCls == String.class) {
+				as3Field = new As3Field("String", field.getName());
+			} else if (typeCls == Date.class) {
+				as3Field = new As3Field("Date", field.getName());
+			} else if (Collection.class.isAssignableFrom(typeCls)) {
+				importClasses.add("mx.collections.ArrayCollection");
+				as3Field = new As3Field("ArrayCollection", field.getName());
+			} else {
+				importClasses.add(typeCls.getName());
+				as3Field = new As3Field(typeCls.getSimpleName(),
+						field.getName());
+			}
+
+			result.add(as3Field);
+		}
+		return result;
+	}
+
+	public static void main(String[] args) {
+
 	}
 }

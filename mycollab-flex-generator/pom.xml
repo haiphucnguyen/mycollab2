@@ -43,6 +43,11 @@
             <artifactId>extcos</artifactId>
             <version>0.4b</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.1.6</version>
+        </dependency>
     </dependencies>
 
     <build>

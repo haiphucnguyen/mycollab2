@@ -26,7 +26,6 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
-import com.esofthead.mycollab.module.file.view.MyCollabDbxSessionStore;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 
 @Component("dropboxAuthServlet")
