@@ -282,7 +282,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			mainLayout.setMargin(true);
 			mainLayout.setSpacing(true);
 
-			informationLayout = new GridFormLayoutHelper(1, 2, "100%", "167px",
+			informationLayout = new GridFormLayoutHelper(1, 3, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
 
 			final TextField emailTextField = new TextField();
@@ -297,6 +297,12 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			informationLayout.addComponentSupportFieldCaption(emailTextField,
 					new Label("Email"), "80px", "250px", 0, 1,
 					Alignment.MIDDLE_CENTER);
+
+			final ProjectRoleComboBox projectRoleComboBox = new ProjectRoleComboBox();
+
+			informationLayout.addComponentSupportFieldCaption(
+					projectRoleComboBox, new Label("Role"), "80px", "250px", 0,
+					2, Alignment.MIDDLE_CENTER);
 			this.informationLayout.getLayout().setWidth("100%");
 			this.informationLayout.getLayout().setMargin(false);
 			this.informationLayout.getLayout().addStyleName(
@@ -315,6 +321,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 							.trim().split(";");
 					String[] lstEmailArr = emailTextField.getValue().toString()
 							.trim().split(";");
+					int roleId = (Integer) projectRoleComboBox.getValue();
 					userService = AppContext.getSpringBean(UserService.class);
 					mailRelayService = AppContext
 							.getSpringBean(MailRelayService.class);
@@ -349,8 +356,24 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 								.getSubdomainOfProject(CurrentProjectVariables
 										.getProjectId());
 
-						templateGenerator.putVariable("urlAccept",
-								SiteConfiguration.getSiteUrl(subdomain));
+						templateGenerator.putVariable(
+								"urlAccept",
+								SiteConfiguration.getSiteUrl(subdomain)
+										+ "project/outside/invitation/"
+										+ UrlEncodeDecoder.encode(+AppContext
+												.getAccountId()
+												+ "/"
+												+ name
+												+ "/"
+												+ email
+												+ "/"
+												+ CurrentProjectVariables
+														.getProjectId()
+												+ "/"
+												+ roleId
+												+ "/"
+												+ SiteConfiguration
+														.getSiteUrl(subdomain)));
 
 						templateGenerator.putVariable(
 								"urlDeny",
