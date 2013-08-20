@@ -25,7 +25,7 @@ import com.esofthead.template.velocity.EngineFactory;
 @Component("inviteOutsideMemberHandlerServlet")
 public class AnotatedInviteOutsideMemberHandlerServlet implements
 		HttpRequestHandler {
-	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/email/project/memberInvitation/outsideMemberAcceptInvitationPage.mt";
+	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/outsideMemberAcceptInvitationPage.mt";
 
 	@Override
 	public void handleRequest(HttpServletRequest request,
@@ -77,13 +77,15 @@ public class AnotatedInviteOutsideMemberHandlerServlet implements
 
 		Reader reader;
 		try {
-			reader = new InputStreamReader(TemplateGenerator.class
-					.getClassLoader().getResourceAsStream(
-							OUTSIDE_MEMBER_WELCOME_PAGE), "UTF-8");
+			reader = new InputStreamReader(
+					AnotatedInviteOutsideMemberHandlerServlet.class
+							.getClassLoader().getResourceAsStream(
+									OUTSIDE_MEMBER_WELCOME_PAGE), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(TemplateGenerator.class
-					.getClassLoader().getResourceAsStream(
-							OUTSIDE_MEMBER_WELCOME_PAGE));
+			reader = new InputStreamReader(
+					AnotatedInviteOutsideMemberHandlerServlet.class
+							.getClassLoader().getResourceAsStream(
+									OUTSIDE_MEMBER_WELCOME_PAGE));
 		}
 		context.put("name", name);
 		context.put("email", email);

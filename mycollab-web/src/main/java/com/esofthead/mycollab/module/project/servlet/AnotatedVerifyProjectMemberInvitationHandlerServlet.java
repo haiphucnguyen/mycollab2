@@ -86,17 +86,17 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 	public static class PageNotFoundGenerator {
 		public static void responsePage404(HttpServletResponse response)
 				throws IOException {
-			String pageNotFoundTemplate = "templates/email/project/404Page.mt";
+			String pageNotFoundTemplate = "templates/page/404Page.mt";
 			VelocityContext context = new VelocityContext(
 					EngineFactory.createContext());
 
 			Reader reader;
 			try {
-				reader = new InputStreamReader(TemplateGenerator.class
+				reader = new InputStreamReader(PageNotFoundGenerator.class
 						.getClassLoader().getResourceAsStream(
 								pageNotFoundTemplate), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				reader = new InputStreamReader(TemplateGenerator.class
+				reader = new InputStreamReader(PageNotFoundGenerator.class
 						.getClassLoader().getResourceAsStream(
 								pageNotFoundTemplate));
 			}

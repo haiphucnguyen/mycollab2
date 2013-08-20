@@ -47,7 +47,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
-		String subdomain = "";
+		String subdomain = "", loginURL = "";
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
@@ -89,7 +89,8 @@ public class AnotatedVerifyUserServletRequestHandler implements
 							.getSiteUrl(subdomain)
 							+ "user/confirm_invite/update_info/";
 					String html = generateUserFillInformationPage(request,
-							accountId, username, user.getEmail(), redirectURL);
+							accountId, username, user.getEmail(), redirectURL,
+							loginURL);
 					PrintWriter out = response.getWriter();
 					out.print(html);
 				} else {
@@ -106,7 +107,8 @@ public class AnotatedVerifyUserServletRequestHandler implements
 	}
 
 	private String generateUserFillInformationPage(HttpServletRequest request,
-			int accountId, String username, String email, String redirectURL) {
+			int accountId, String username, String email, String redirectURL,
+			String loginURL) {
 		String template = "/templates/FillUserInformation.mt";
 		VelocityContext context = new VelocityContext(
 				EngineFactory.createContext());
@@ -126,6 +128,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 		context.put("accountId", accountId);
 		context.put("email", email);
 		context.put("redirectURL", redirectURL);
+		context.put("loginURL", loginURL);
 
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 

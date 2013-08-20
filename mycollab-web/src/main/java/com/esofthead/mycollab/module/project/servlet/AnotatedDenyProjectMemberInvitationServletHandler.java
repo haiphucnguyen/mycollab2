@@ -35,7 +35,7 @@ import com.esofthead.template.velocity.EngineFactory;
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		HttpRequestHandler {
 
-	private static String DENY_FEEDBACK_TEMPLATE = "templates/email/project/memberInvitation/memberDenyInvitationPage.mt";
+	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/memberDenyInvitationPage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -142,13 +142,15 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 
 		Reader reader;
 		try {
-			reader = new InputStreamReader(TemplateGenerator.class
-					.getClassLoader().getResourceAsStream(
-							DENY_FEEDBACK_TEMPLATE), "UTF-8");
+			reader = new InputStreamReader(
+					AnotatedDenyProjectMemberInvitationServletHandler.class
+							.getClassLoader().getResourceAsStream(
+									DENY_FEEDBACK_TEMPLATE), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(TemplateGenerator.class
-					.getClassLoader().getResourceAsStream(
-							DENY_FEEDBACK_TEMPLATE));
+			reader = new InputStreamReader(
+					AnotatedDenyProjectMemberInvitationServletHandler.class
+							.getClassLoader().getResourceAsStream(
+									DENY_FEEDBACK_TEMPLATE));
 		}
 		context.put("inviterEmail", inviterEmail);
 		context.put("redirectURL", redirectURL);

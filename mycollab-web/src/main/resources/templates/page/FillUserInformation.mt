@@ -47,7 +47,9 @@
 		#1377b3;
 	border: 1px solid #093768;
 }
-
+input[type="text"], input[type="password"]{
+    width: 180px;
+}
 </style>
 <title>Member accept the invitation page</title>
 </head>
@@ -84,87 +86,35 @@
 			What are you waiting? Now we take a tour . 
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			At frist you must update your informations!
-			<button class="v-button-bluebtn" type="button" onclick="return updateInfo();">Update your informations</button>
+			At frist you must update your password!
+			<div style="display:block ; padding: 20px 8px 8px 20px;">
+				<form>
+				<table border="0">
+				<tbody>
+				<tr>
+					<td><label for="password">Password:</label></td>
+					<td><input id="password" maxlength="45" name="password" type="password" /></td>
+					
+					<td style="padding-left: 15px;"><label for="password">Retype-Password:</label></td>
+					<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
+				</tr>
+				</tbody></table>
+				</form>
+				
+				<div align="center" style="padding-top: 30px;">
+						<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
+				</div>
+				<div style="display: block; padding: 12px 8px 8px 20px;">
+					<p><span id="requireMsg" style="color:red; font-style:italic">
+					</span></p>
+				</div>
+			</div>
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
 			Or use default password: 123456
 			<a href=""><span style="color:blue; font-style:italic">Go to login-page</span></a>
 		</div>
 	</div>	
-	<div id="createNewAccountForm" style="display:none;">
-		<div style="display:block ; padding: 20px 8px 8px 20px;">
-		<form>
-		<table border="0">
-		<tbody>
-		<tr>
-			<td><label>First name: </label> </td>
-			<td><input id="firstname" maxlength="30" name="firstname" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label>Last name: </label></td>
-			<td><input id="lastname" maxlength="30" name="lastname" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label>User Name:</label> </td>
-			<td><input disabled="disabled" maxlength="45" value="$!username" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label>Birthdate:</label> </td>
-			<td><input id="birthdate" maxlength="45" name="birthdate" type="text" /></td>
-		</tr>
-		<tr>
-			<td><label>Email Address:</label> </td>
-			<td><input disabled="disabled" maxlength="45" value="$!email" type="text" /></td>
-			
-			<td style="padding-left: 15px;"><label>Website:</label> </td>
-			<td><input id="website" maxlength="45" name="website" type="text" /></td>
-		</tr>
-		<tr>
-			<td><label for="password">Password:</label></td>
-			<td><input id="password" maxlength="45" name="password" type="password" /></td>
-			
-			<td style="padding-left: 15px;"><label for="password">Retype-Password:</label></td>
-			<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
-		</tr>
-		</tbody></table>
-		</form>
-		
-		<div style="display: block; padding: 10px 8px 8px 20px;">
-			<p><span style="color:blue; font-style:bold"> More informations
-			</span></p>
-		</div>
-		
-		<table border="0">
-		<tbody>
-		<tr>
-			<td><label>Country: </label> </td>
-			<td><input id="country" maxlength="30" name="country" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label>Company: </label> </td>
-			<td><input id="company" maxlength="30" name="company" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label>Home phone: </label> </td>
-			<td><input id="homePhone" maxlength="30" name="homePhone" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label>Work phone: </label></td>
-			<td><input id="workphone" maxlength="30" name="workphone" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label>Skype: </label> </td>
-			<td><input id="skype" maxlength="30" name="skype" type="text" /> </td>
-		</tr>
-		</table>
-		
-		<div align="center" style="padding-top: 30px;">
-				<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Update</button>
-				<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
-		</div>
-		<div style="display: block; padding: 12px 8px 8px 20px;">
-			<p><span id="requireMsg" style="color:red; font-style:italic">
-			</span></p>
-		</div>
-	</div>
-	</div>
 	
 	<input type="hidden" id="username" value="$!username">
 	<input type="hidden" id="accountId" value="$!accountId">
@@ -174,40 +124,35 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$('#divHolder').html($('#welcomeBody').html());
-		$('#birthdate').datepicker();
 	});
 	function updateInfo(){
 		$('#divHolder').html($('#createNewAccountForm').html())
 	}
 	function updateInfoAction(){
 		$('#requireMsg').html("").hide();
-		if ($('#password').val() == ""){
-			$('#requireMsg').html("Please enter user name");
+		if ($('#password').val() == "" || $('#repassword').val() == ""){
+			$('#requireMsg').html("Please enter password");
 			return;
 		}
-		if ($('#firstname').val().trim() == "" && $('#lastname').val().trim() == ""){
-			$('#requireMsg').html("Please enter last name");
+		if ($('#password').val().trim()!= $('#repassword').val().trim()){
+			$('#requireMsg').html("Type password not match.");
 			return;
 		}
 		var url = encodeURI($('#redirectURL').val());
 		 $.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : {firstname: $('#firstname').val().trim(), lastname: $('#lastname').val().trim(),
+		      data : {
 		      			username : $('#username').val().trim(), 
 		      			password : $('#password').val().trim(), accountId : $('#accountId').val() ,
-		      			birthdate : $('#birthdate').val().trim(), website : $('website').val().trim(),
-		      			country : $('#country').val().trim() , company : $('#company').val().trim(),
-		      			homePhone : $('#homePhone').val().trim(), workphone : $('#workphone').val().trim(),
-		      			skype : $('#skype').val().trim()},
+		      		},
 		      success: function(data){
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
 		      	 		$('#requireMsg').html(data).show();
 		      	 	}else{
-		      	 		alert("Your account has been created.");
-		      	 		window.location.assign("$!loginURL");
+		      	 		alert("Your account has been updated.");
+		      	 		//window.location.assign("$!loginURL");
 		      	 	}
 		      	 }
 		      }

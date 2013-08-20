@@ -11,9 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
+import com.esofthead.mycollab.module.user.dao.UserMapperExt;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.web.AppContext;
@@ -33,6 +36,7 @@ public class AnotatedDenyUserServletRequestHandler implements
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
 
+				pathInfo = UrlEncodeDecoder.decode(pathInfo);
 				int accountId = Integer.parseInt(pathInfo.substring(0,
 						pathInfo.indexOf("/")));
 				pathInfo = pathInfo.substring((accountId + "").length() + 1);
@@ -41,10 +45,14 @@ public class AnotatedDenyUserServletRequestHandler implements
 				try {
 					UserSearchCriteria criteria = new UserSearchCriteria();
 					criteria.setUsername(new StringSearchField(username));
+					criteria.setSaccountid(new NumberSearchField(accountId));
+
 					UserService userService = AppContext
 							.getSpringBean(UserService.class);
+					UserMapperExt userMapper = AppContext
+							.getSpringBean(UserMapperExt.class);
 
-					userService.removeByCriteria(criteria, accountId);
+					userMapper.removeByCriteria(criteria);
 					userService.removeUserAccount(username, accountId);
 
 					log.debug("Verify user successfully. Redirect to application page");
