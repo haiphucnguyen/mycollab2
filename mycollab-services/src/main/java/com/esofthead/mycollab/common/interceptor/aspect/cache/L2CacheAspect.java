@@ -29,8 +29,6 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 public class L2CacheAspect {
 	private Logger log = LoggerFactory.getLogger(L2CacheAspect.class);
 
-	
-
 	@Around("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {
 
@@ -99,6 +97,12 @@ public class L2CacheAspect {
 								if (returnVal == null) {
 									returnVal = pjp.proceed();
 									try {
+										if (returnVal == null) {
+											log.error(
+													"Get value is null, not put to cache {}",
+													key);
+											return returnVal;
+										}
 										cache.put(key, returnVal);
 										log.debug(
 												"There is no exist value of key {}, query from database then put it to cache",
