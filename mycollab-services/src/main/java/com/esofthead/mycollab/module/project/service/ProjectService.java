@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.project.service;
 
 import java.util.List;
 
+import org.springframework.flex.remoting.RemotingDestination;
+
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -30,6 +32,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 
+@RemotingDestination
 public interface ProjectService extends
 		IDefaultService<Integer, Project, ProjectSearchCriteria> {
 

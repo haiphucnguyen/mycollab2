@@ -17,9 +17,6 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
-import java.lang.reflect.Method;
-
-import com.esofthead.mycollab.module.crm.service.AccountService;
 
 public class SimpleAccount extends Account {
 	private static final long serialVersionUID = 1L;
@@ -42,18 +39,5 @@ public class SimpleAccount extends Account {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
-	}
-
-	public static void main(String[] args) {
-		Class serviceCls = AccountService.class;
-		Method[] methods = serviceCls.getMethods();
-		for (Method method : methods) {
-			System.out.println(method.getName());
-
-			Class<?>[] parameterTypes = method.getParameterTypes();
-			for (Class paramCls : parameterTypes) {
-				System.out.println("    Params: " + paramCls);
-			}
-		}
 	}
 }
