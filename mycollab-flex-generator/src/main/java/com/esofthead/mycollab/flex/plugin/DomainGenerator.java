@@ -64,6 +64,9 @@ public class DomainGenerator implements SourceGenerator {
 					importClasses.add(superClass.getName());
 					binding.put("superClassName", superClass.getSimpleName());
 				} else {
+					if (!packageName.equals(ClassUtils.getPackage(superClass))) {
+						importClasses.add(superClass.getName());
+					}
 					binding.put("superClassName", superClass.getSimpleName());
 				}
 
@@ -114,7 +117,7 @@ public class DomainGenerator implements SourceGenerator {
 			} else if (typeCls == Long.TYPE || typeCls == Long.class) {
 				as3Field = new As3Field("int", field.getName());
 			} else if (typeCls == Double.TYPE || typeCls == Double.class) {
-				as3Field = new As3Field("double", field.getName());
+				as3Field = new As3Field("Number", field.getName());
 			} else if (typeCls == String.class) {
 				as3Field = new As3Field("String", field.getName());
 			} else if (typeCls == Date.class) {

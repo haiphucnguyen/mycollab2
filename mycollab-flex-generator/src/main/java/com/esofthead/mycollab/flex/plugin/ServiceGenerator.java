@@ -139,7 +139,7 @@ public class ServiceGenerator implements SourceGenerator {
 				} else if (paramCls == Long.TYPE || paramCls == Long.class) {
 					typeName = "int";
 				} else if (paramCls == Double.TYPE || paramCls == Double.class) {
-					typeName = "double";
+					typeName = "Number";
 				} else if (paramCls == String.class) {
 					typeName = "String";
 				} else if (paramCls == Date.class) {
