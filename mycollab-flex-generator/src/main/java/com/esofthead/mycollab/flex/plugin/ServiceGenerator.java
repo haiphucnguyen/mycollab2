@@ -148,8 +148,7 @@ public class ServiceGenerator implements SourceGenerator {
 					importClasses.add("mx.collections.ArrayCollection");
 					typeName = "ArrayCollection";
 				} else if (Map.class.isAssignableFrom(paramCls)) {
-					importClasses.add("flash.utils.Dictionary");
-					typeName = "Dictionary";
+					typeName = "Object";
 				} else if (paramCls == Object.class
 						|| paramCls == Serializable.class) {
 					typeName = "Object";

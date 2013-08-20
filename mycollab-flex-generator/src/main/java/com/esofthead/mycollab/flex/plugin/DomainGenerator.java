@@ -126,8 +126,7 @@ public class DomainGenerator implements SourceGenerator {
 				importClasses.add("mx.collections.ArrayCollection");
 				as3Field = new As3Field("ArrayCollection", field.getName());
 			} else if (Map.class.isAssignableFrom(typeCls)) {
-				importClasses.add("flash.utils.Dictionary");
-				as3Field = new As3Field("Dictionary", field.getName());
+				as3Field = new As3Field("Object", field.getName());
 			} else {
 				importClasses.add(typeCls.getName());
 				as3Field = new As3Field(typeCls.getSimpleName(),
