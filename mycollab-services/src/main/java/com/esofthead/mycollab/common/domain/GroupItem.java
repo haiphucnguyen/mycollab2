@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.common.domain;
 
-import java.io.Serializable;
+import com.esofthead.mycollab.core.utils.ValuedBean;
 
-public class GroupItem implements Serializable {
+public class GroupItem extends ValuedBean {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String groupid;
 	private String groupname;
 	private int value;

@@ -22,46 +22,45 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.persistence.service.IService;
 
-public class SearchCriteriaGenerator implements SourceGenerator {
-	private static Logger log = LoggerFactory
-			.getLogger(SearchCriteriaGenerator.class);
+public class ServiceGenerator implements SourceGenerator {
+
+	private static Logger log = LoggerFactory.getLogger(ServiceGenerator.class);
 
 	@Override
 	public void generate() {
 		ComponentScanner scanner = new ComponentScanner();
-		Set<Class<?>> criteriaClasses = scanner
-				.getClasses(new ComponentQuery() {
-					@Override
-					protected void query() {
-						select().from(
-								"com.esofthead.mycollab.**.domain.criteria.**")
-								.returning(allExtending(SearchCriteria.class));
-					}
-				});
+		Set<Class<?>> serviceClasses = scanner.getClasses(new ComponentQuery() {
+			@Override
+			protected void query() {
+				select().from("com.esofthead.mycollab.**.service.**")
+						.returning(allImplementing(IService.class));
+			}
+		});
 
-		log.info("Scan packages to search criteria classes. There are "
-				+ criteriaClasses.size() + " classes are found");
+		log.info("Scan packages to service classes. There are "
+				+ serviceClasses.size() + " classes are found");
 
 		try {
-			for (Class<?> criteriaClass : criteriaClasses) {
-				if (criteriaClass == null) {
+			for (Class<?> serviceClass : serviceClasses) {
+				if (serviceClass == null) {
 					return;
 				}
 				GStringTemplateEngine engine = new GStringTemplateEngine();
 
-				String packageName = ClassUtils.getPackage(criteriaClass);
-				log.info("Package: " + criteriaClass + "  "
-						+ ClassUtils.getPackage(criteriaClass));
+				String packageName = ClassUtils.getPackage(serviceClass);
+				log.info("Package: " + serviceClass + "  "
+						+ ClassUtils.getPackage(serviceClass));
 				Map binding = new HashMap();
 				binding.put("packageName", packageName);
-				binding.put("aliasClassName", criteriaClass.getName());
-				binding.put("className", criteriaClass.getSimpleName());
+				binding.put("aliasClassName", serviceClass.getName());
+				binding.put("className", serviceClass.getSimpleName());
 
 				Set<String> importClasses = new HashSet<String>();
 				binding.put("importClasses", importClasses);
 
-				Class<?> superClass = criteriaClass.getSuperclass();
+				Class<?> superClass = serviceClass.getSuperclass();
 				if (superClass == SearchCriteria.class) {
 					importClasses.add(superClass.getName());
 					binding.put("superClassName", superClass.getSimpleName());
@@ -70,7 +69,7 @@ public class SearchCriteriaGenerator implements SourceGenerator {
 				}
 
 				binding.put("fields",
-						retrieveAs3FieldsMapping(criteriaClass, importClasses));
+						retrieveAs3FieldsMapping(serviceClass, importClasses));
 
 				Writable template = engine.createTemplate(
 						As3GeneratorMojo.class.getClassLoader().getResource(
@@ -79,12 +78,12 @@ public class SearchCriteriaGenerator implements SourceGenerator {
 
 				String packagePath = packageName.replace(".", "/");
 				String filePath = "src" + "/" + packagePath + "/"
-						+ criteriaClass.getSimpleName() + ".as";
+						+ serviceClass.getSimpleName() + ".as";
 				File folder = new File(System.getProperty("user.dir") + "/"
 						+ "src" + "/" + packagePath + "/");
 				folder.mkdirs();
 				FileWriter writer = new FileWriter(new File(folder,
-						criteriaClass.getSimpleName() + ".as"));
+						serviceClass.getSimpleName() + ".as"));
 				writer.write(template.toString());
 				writer.close();
 				log.info("Generated criteria class " + filePath);

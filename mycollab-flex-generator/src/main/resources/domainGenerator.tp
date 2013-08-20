@@ -1,0 +1,15 @@
+package $packageName
+{
+    <%importClasses.each { importClass -> %>
+    import $importClass;
+    <%}%>
+
+    [RemoteClass(alias="$aliasClassName")]
+    [Bindable]
+    public class $className extends $superClassName
+    {   
+        <%fields.each {field -> %>
+        public var $field.fieldName: $field.fieldCls;
+        <%}%>
+    }
+}

@@ -72,7 +72,7 @@ public class DomainGenerator implements SourceGenerator {
 
 				Writable template = engine.createTemplate(
 						As3GeneratorMojo.class.getClassLoader().getResource(
-								"domainGenerator.template")).make(binding);
+								"domainGenerator.tp")).make(binding);
 
 				String packagePath = packageName.replace(".", "/");
 				String filePath = "src" + "/" + packagePath + "/"

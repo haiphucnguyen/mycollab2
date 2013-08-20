@@ -15,5 +15,6 @@ public class As3GeneratorMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		new DomainGenerator().generate();
 		new SearchCriteriaGenerator().generate();
+		new ServiceGenerator().generate();
 	}
 }
