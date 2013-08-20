@@ -4,8 +4,6 @@ public class BooleanSearchField extends SearchField {
 
 	public static String IS = "is";
 
-	public static String NOT = "is not";
-
 	private boolean value;
 
 	private String comparision;
