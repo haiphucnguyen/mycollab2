@@ -3,7 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style media="screen" type="text/css">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 .container {
 }
 
@@ -73,8 +75,8 @@
 	</footer>
 	<div id="welcomeBody" style="display:none">
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $name , $email . <br>
-			thank you for accepted the invitation !
+			<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $!username . <br>
+			Thank you for accepted the invitation !
 			Come to MyCollab, you will feel new things in manage your business, experience new ways, 
 			faster and smarter, the maximum help you in managing your business. 
 			My Collab suitable for all small and large business management model. 
@@ -82,11 +84,12 @@
 			What are you waiting? Now we take a tour . 
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			if you already has account ,<a href="$loginURL"><span style="color:blue; font-style:italic">click here</span></a>  
+			At frist you must update your informations!
+			<button class="v-button-bluebtn" type="button" onclick="return updateInfo();">Update your informations</button>
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			Or
-			<button class="v-button-bluebtn" type="button" onclick="return createNewAccount();">Create new account</button>
+			Or use default password: 123456
+			<a href=""><span style="color:blue; font-style:italic">Go to login-page</span></a>
 		</div>
 	</div>	
 	<div id="createNewAccountForm" style="display:none;">
@@ -102,24 +105,25 @@
 			<td><input id="lastname" maxlength="30" name="lastname" type="text" /> </td>
 		</tr>
 		<tr>
-			<td><label for="username">User Name:</label> </td>
-			<td><input id="username" maxlength="45" name="username" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label >Birthdate:</label> </td>
+			<td><label>User Name:</label> </td>
+			<td><input disabled="disabled" maxlength="45" value="$!username" type="text" /> </td>
+			
+			<td style="padding-left: 15px;"><label>Birthdate:</label> </td>
 			<td><input id="birthdate" maxlength="45" name="birthdate" type="text" /></td>
 		</tr>
 		<tr>
-			<td><label for="email">Email Address:</label> </td>
-			<td><input id="email" maxlength="45" name="email" type="text" /></td>
-		</tr>
-		<tr>
-			<td><label>Website:</label> </td>
+			<td><label>Email Address:</label> </td>
+			<td><input disabled="disabled" maxlength="45" value="$!email" type="text" /></td>
+			
+			<td style="padding-left: 15px;"><label>Website:</label> </td>
 			<td><input id="website" maxlength="45" name="website" type="text" /></td>
 		</tr>
 		<tr>
 			<td><label for="password">Password:</label></td>
 			<td><input id="password" maxlength="45" name="password" type="password" /></td>
+			
+			<td style="padding-left: 15px;"><label for="password">Retype-Password:</label></td>
+			<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
 		</tr>
 		</tbody></table>
 		</form>
@@ -134,9 +138,8 @@
 		<tr>
 			<td><label>Country: </label> </td>
 			<td><input id="country" maxlength="30" name="country" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label>Company: </label> </td>
+			
+			<td style="padding-left: 15px;"><label>Company: </label> </td>
 			<td><input id="company" maxlength="30" name="company" type="text" /> </td>
 		</tr>
 		<tr>
@@ -153,7 +156,7 @@
 		</table>
 		
 		<div align="center" style="padding-top: 30px;">
-				<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Create</button>
+				<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Update</button>
 				<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
 		</div>
 		<div style="display: block; padding: 12px 8px 8px 20px;">
@@ -163,10 +166,9 @@
 	</div>
 	</div>
 	
-	<input type="hidden" id="handelCreateAccountURL" value="$!handelCreateAccountURL">
-	<input type="hidden" id="projectId" value="$!projectId">
-	<input type="hidden" id="roleId" value="$!roleId">
-	<input type="hidden" id="sAccountId" value="$!sAccountId">
+	<input type="hidden" id="username" value="$!username">
+	<input type="hidden" id="accountId" value="$!accountId">
+	<input type="hidden" id="redirectURL" value="$!redirectURL">
 	
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -175,11 +177,12 @@
 		$('#divHolder').html($('#welcomeBody').html());
 		$('#birthdate').datepicker();
 	});
-	function createNewAccount(){
+	function updateInfo(){
 		$('#divHolder').html($('#createNewAccountForm').html())
 	}
-	function createAccount(){
-		if ($('#username').val() == ""){
+	function updateInfoAction(){
+		$('#requireMsg').html("").hide();
+		if ($('#password').val() == ""){
 			$('#requireMsg').html("Please enter user name");
 			return;
 		}
@@ -187,14 +190,13 @@
 			$('#requireMsg').html("Please enter last name");
 			return;
 		}
-		var url = encodeURI($('#handelCreateAccountURL').val());
+		var url = encodeURI($('#redirectURL').val());
 		 $.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : {firstname: $('#firstname').val().trim(), lastname: $('#lastname').val().trim(), 
-		      			email : $('#email').val().trim() , username : $('#username').val().trim(), 
-		      			password : $('#password').val().trim(), projectId : $('#projectId').val().trim(),
-		      			roleId: $('#roleId').val().trim(), sAccountId : $('#sAccountId').val() ,
+		      data : {firstname: $('#firstname').val().trim(), lastname: $('#lastname').val().trim(),
+		      			username : $('#username').val().trim(), 
+		      			password : $('#password').val().trim(), accountId : $('#accountId').val() ,
 		      			birthdate : $('#birthdate').val().trim(), website : $('website').val().trim(),
 		      			country : $('#country').val().trim() , company : $('#company').val().trim(),
 		      			homePhone : $('#homePhone').val().trim(), workphone : $('#workphone').val().trim(),

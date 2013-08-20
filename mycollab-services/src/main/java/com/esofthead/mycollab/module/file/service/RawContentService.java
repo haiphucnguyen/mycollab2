@@ -2,7 +2,9 @@ package com.esofthead.mycollab.module.file.service;
 
 import java.io.InputStream;
 
-public interface RawContentService {
+import com.esofthead.mycollab.core.persistence.service.IService;
+
+public interface RawContentService extends IService {
 	void saveContent(String objectPath, InputStream stream);
 
 	InputStream getContent(String objectPath);

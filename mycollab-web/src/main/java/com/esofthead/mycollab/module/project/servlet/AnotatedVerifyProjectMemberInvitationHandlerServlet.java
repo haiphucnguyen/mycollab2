@@ -1,11 +1,19 @@
 package com.esofthead.mycollab.module.project.servlet;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
@@ -13,11 +21,13 @@ import org.springframework.web.HttpRequestHandler;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.template.velocity.EngineFactory;
 
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
@@ -65,11 +75,42 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 								+ UrlEncodeDecoder
 										.encode(member.getProjectid());
 						response.sendRedirect(redirectURL);
+						return;
 					}
 				}
 			}
-		} else {
-			// TODO: response to user invalid page
+		}
+		PageNotFoundGenerator.responsePage404(response);
+	}
+
+	public static class PageNotFoundGenerator {
+		public static void responsePage404(HttpServletResponse response)
+				throws IOException {
+			String pageNotFoundTemplate = "templates/email/project/404Page.mt";
+			VelocityContext context = new VelocityContext(
+					EngineFactory.createContext());
+
+			Reader reader;
+			try {
+				reader = new InputStreamReader(TemplateGenerator.class
+						.getClassLoader().getResourceAsStream(
+								pageNotFoundTemplate), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				reader = new InputStreamReader(TemplateGenerator.class
+						.getClassLoader().getResourceAsStream(
+								pageNotFoundTemplate));
+			}
+			Map<String, String> defaultUrls = new HashMap<String, String>();
+
+			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+			context.put("defaultUrls", defaultUrls);
+
+			StringWriter writer = new StringWriter();
+			EngineFactory.getTemplateEngine().evaluate(context, writer,
+					"log task", reader);
+			String html = writer.toString();
+			PrintWriter out = response.getWriter();
+			out.println(html);
 		}
 	}
 }

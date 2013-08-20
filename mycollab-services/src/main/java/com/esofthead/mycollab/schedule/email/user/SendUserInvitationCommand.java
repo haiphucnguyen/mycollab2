@@ -46,7 +46,8 @@ public class SendUserInvitationCommand {
 					SiteConfiguration.getSiteUrl(invitation.getSubdomain())
 							+ "user/confirm_invite/"
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
-									+ "/" + invitation.getUsername()));
+									+ "/" + invitation.getUsername() + "/"
+									+ invitation.getSubdomain()));
 			templateGenerator.putVariable(
 					"urlDeny",
 					SiteConfiguration.getSiteUrl(invitation.getSubdomain())

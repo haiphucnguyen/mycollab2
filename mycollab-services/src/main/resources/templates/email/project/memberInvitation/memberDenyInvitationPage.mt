@@ -80,7 +80,7 @@
 		</tr>
 	</table>
 	<div class="container"></div>
-	<footer>
+	<footer style="padding-top: 200px;">
 		<div class="footer-home">
 		<div class="wrapper">
 			<div class="footer-copyright"><h1>MYCOLLAB</h1>
@@ -107,10 +107,12 @@
 			$('#requireMsg').show();
 			return;
 		}	
-		var url = encodeURI($('#url').val() + $('#inviterEmail').val() + "/" + $('#toEmail').val()+"/"+ $('#message').val().trim() + "/" + $('#toName').val() + "/" + $('#inviterName').val());
+		var url = encodeURI($('#url').val().trim());
 			 $.ajax({
 			      type: 'POST',
 			      url: url,
+			      data : {inviterEmail : $('#inviterEmail').val().trim() ,toEmail : $('#toEmail').val().trim(), message : $('#message').val().trim(),
+			      	toName : $('#toName').val().trim() , inviterName: $('#inviterName').val().trim()},
 			      complete: function(data){
 			         alert('Send Email successfully');
 			         window.location.assign("https://www.mycollab.com/");

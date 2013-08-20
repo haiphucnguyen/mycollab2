@@ -1,24 +1,34 @@
 package com.esofthead.mycollab.module.billing.servlet;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.template.velocity.EngineFactory;
 
 @Component("verifyUserServletHandler")
 public class AnotatedVerifyUserServletRequestHandler implements
@@ -37,56 +47,94 @@ public class AnotatedVerifyUserServletRequestHandler implements
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
+		String subdomain = "";
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
 				pathInfo = UrlEncodeDecoder.decode(pathInfo);
-				String[] params = pathInfo.split("/");
-				if (params.length != 2) {
-					throw new MyCollabException("Invalid params");
-				} else {
-					int accountId = Integer.parseInt(params[0]);
-					String username = params[1];
-					boolean isCreatePassword = false;
-					User user = userService.findUserByUserName(username);
 
-					if (!RegisterStatusConstants.ACTIVE.equals(user
-							.getRegisterstatus())) {
-						user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-						isCreatePassword = true;
-						user.setPassword("123456");
-						userService.updateWithSession(user, user.getUsername());
-					}
+				int accountId = Integer.parseInt(pathInfo.substring(0,
+						pathInfo.indexOf("/")));
+				pathInfo = pathInfo.substring((accountId + "").length() + 1);
 
-					// update user account status
-					UserAccountExample userAccountEx = new UserAccountExample();
-					userAccountEx.createCriteria().andUsernameEqualTo(username)
-							.andAccountidEqualTo(accountId);
-					UserAccount userAccount = new UserAccount();
-					userAccount
-							.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-					userAccountMapper.updateByExampleSelective(userAccount,
-							userAccountEx);
+				String username = pathInfo.substring(0, pathInfo.indexOf("/"));
+				pathInfo = pathInfo.substring(username.length() + 1);
 
-					// remove account invitation
+				subdomain = pathInfo;
+				boolean isCreatePassword = false;
+				User user = userService.findUserByUserName(username);
 
-					if (true) {
-						// forward to page create password for new user
-						response.sendRedirect(request.getContextPath()
-								+ "/templates/FillUserInformation.mt");
-					} else {
-						// redirect to account site
-						request.getRequestDispatcher(
-								request.getContextPath() + "/").forward(
-								request, response);
-						request.setAttribute("username", user.getUsername());
-						request.setAttribute("password", user.getPassword());
-					}
-
+				if (!RegisterStatusConstants.ACTIVE.equals(user
+						.getRegisterstatus())) {
+					user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+					isCreatePassword = true;
+					user.setPassword("123456");
+					userService.updateWithSession(user, user.getUsername());
 				}
+
+				// update user account status
+				UserAccountExample userAccountEx = new UserAccountExample();
+				userAccountEx.createCriteria().andUsernameEqualTo(username)
+						.andAccountidEqualTo(accountId);
+				UserAccount userAccount = new UserAccount();
+				userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+				userAccountMapper.updateByExampleSelective(userAccount,
+						userAccountEx);
+
+				// remove account invitation
+
+				if (true) {
+					// forward to page create password for new user
+					String redirectURL = SiteConfiguration
+							.getSiteUrl(subdomain)
+							+ "user/confirm_invite/update_info/";
+					String html = generateUserFillInformationPage(request,
+							accountId, username, user.getEmail(), redirectURL);
+					PrintWriter out = response.getWriter();
+					out.print(html);
+				} else {
+					// redirect to account site
+					request.getRequestDispatcher(request.getContextPath() + "/")
+							.forward(request, response);
+					request.setAttribute("username", user.getUsername());
+					request.setAttribute("password", user.getPassword());
+				}
+				return;
 			}
-		} else {
-			// TODO: response to user invalid page
 		}
+		PageNotFoundGenerator.responsePage404(response);
+	}
+
+	private String generateUserFillInformationPage(HttpServletRequest request,
+			int accountId, String username, String email, String redirectURL) {
+		String template = "/templates/FillUserInformation.mt";
+		VelocityContext context = new VelocityContext(
+				EngineFactory.createContext());
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					AnotatedVerifyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(template),
+					"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(
+					AnotatedVerifyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(template));
+		}
+
+		context.put("username", username);
+		context.put("accountId", accountId);
+		context.put("email", email);
+		context.put("redirectURL", redirectURL);
+
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
+				reader);
+		return writer.toString();
 	}
 }

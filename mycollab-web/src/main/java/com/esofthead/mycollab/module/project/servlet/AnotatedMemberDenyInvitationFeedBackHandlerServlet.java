@@ -12,8 +12,9 @@ import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 
-@Component("denyInvitationHandleServlet")
-public class AnotatedDenyInvitationHandleServlet implements HttpRequestHandler {
+@Component("memberDenyInvitationFeedBackHandlerServlet")
+public class AnotatedMemberDenyInvitationFeedBackHandlerServlet implements
+		HttpRequestHandler {
 
 	@Autowired
 	private MailRelayService mailRelayService;
@@ -23,23 +24,15 @@ public class AnotatedDenyInvitationHandleServlet implements HttpRequestHandler {
 			HttpServletResponse respone) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
 		if (pathInfo != null) {
-			pathInfo = pathInfo.substring(1);
-			String toEmail = pathInfo.substring(0, pathInfo.indexOf("/"));
-			pathInfo = pathInfo.substring(toEmail.length() + 1);
-
-			String fromEmail = pathInfo.substring(0, pathInfo.indexOf("/"));
-			pathInfo = pathInfo.substring(fromEmail.length() + 1);
-
-			String message = pathInfo.substring(0, pathInfo.indexOf("/"));
-			pathInfo = pathInfo.substring(message.length() + 1);
-			String fromName = pathInfo.substring(0, pathInfo.indexOf("/"));
-			pathInfo = pathInfo.substring(fromName.length() + 1);
-
-			String toName = pathInfo;
+			String inviterEmail = request.getParameter("inviterEmail");
+			String toEmail = request.getParameter("toEmail");
+			String message = request.getParameter("message");
+			String toName = request.getParameter("toName");
+			String inviterName = request.getParameter("inviterName");
 
 			mailRelayService.saveRelayEmail(new String[] { toName },
 					new String[] { toEmail }, "Your invitation has been deny",
 					message);
 		}
 	}
-}
+};
