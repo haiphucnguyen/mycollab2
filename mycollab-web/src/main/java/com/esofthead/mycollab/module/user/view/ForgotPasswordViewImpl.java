@@ -4,11 +4,17 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
+import com.esofthead.mycollab.common.dao.RelayEmailMapper;
+import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
+import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAction;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -35,10 +41,11 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 		private final TextField nameOrEmailField;
 
 		public ForgotPwdForm() {
-			CustomLayout customLayout = CustomLayoutLoader.createLayout("forgotPassword");
+			CustomLayout customLayout = CustomLayoutLoader
+					.createLayout("forgotPassword");
 			customLayout.setStyleName("forgotPwdForm");
 
-			nameOrEmailField = new TextField("Username or email");
+			nameOrEmailField = new TextField("Username");
 			customLayout.addComponent(nameOrEmailField, "nameoremail");
 
 			Button sendEmail = new Button("Send verification email");
@@ -48,6 +55,40 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
+					String username = nameOrEmailField.getValue().toString();
+					UserService userService = AppContext
+							.getSpringBean(UserService.class);
+					User user = userService.findUserByUserName(username);
+					if (user == null) {
+						ForgotPasswordViewImpl.this.getWindow()
+								.showNotification("User not exist!!");
+						return;
+					} else {
+						String hideEmailStr = user.getEmail();
+						hideEmailStr = "***"
+								+ hideEmailStr.substring(hideEmailStr
+										.indexOf("@") - 1);
+						String remindStr = "An email for recovery password has sent to your email-address: "
+								+ hideEmailStr;
+
+						RelayEmailWithBLOBs relayEmail = new RelayEmailWithBLOBs();
+						relayEmail.setRecipients(username);
+						relayEmail
+								.setEmailhandlerbean(SendingRecoveryPasswordEmailAction.class
+										.getName());
+						relayEmail.setSaccountid(1);
+						relayEmail.setSubject("");
+						relayEmail.setBodycontent("");
+						relayEmail.setFromemail("");
+						relayEmail.setFromname("");
+
+						RelayEmailMapper relayEmailMapper = AppContext
+								.getSpringBean(RelayEmailMapper.class);
+						relayEmailMapper.insert(relayEmail);
+
+						ForgotPasswordViewImpl.this.getWindow()
+								.showNotification(remindStr);
+					}
 				}
 			});
 			customLayout.addComponent(sendEmail, "loginButton");
@@ -68,6 +109,5 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 
 			this.setLayout(customLayout);
 		}
-
 	}
 }

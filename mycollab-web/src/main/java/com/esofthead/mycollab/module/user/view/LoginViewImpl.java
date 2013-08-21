@@ -23,86 +23,86 @@ import com.vaadin.ui.TextField;
 @ViewComponent
 public class LoginViewImpl extends AbstractView implements LoginView {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public LoginViewImpl() {
-        this.addComponent(new LoginForm());
-    }
+	public LoginViewImpl() {
+		this.addComponent(new LoginForm());
+	}
 
-    private class LoginForm extends Form {
+	private class LoginForm extends Form {
 
-        private static final long serialVersionUID = 1L;
-        private final TextField usernameField;
-        private final PasswordField passwordField;
-        private final CheckBox rememberMe;
+		private static final long serialVersionUID = 1L;
+		private final TextField usernameField;
+		private final PasswordField passwordField;
+		private final CheckBox rememberMe;
 
-        public LoginForm() {
-            // this.setCaption("Login Form");
-            CustomLayout custom = CustomLayoutLoader.createLayout("loginForm");
-            custom.addStyleName("customLoginForm");
-            usernameField = new TextField("Email address");
-            usernameField.setValue("hainguyen@esofthead.com");
+		public LoginForm() {
+			// this.setCaption("Login Form");
+			CustomLayout custom = CustomLayoutLoader.createLayout("loginForm");
+			custom.addStyleName("customLoginForm");
+			usernameField = new TextField("Email address");
+			usernameField.setValue("hainguyen@esofthead.com");
 
-            custom.addComponent(usernameField, "usernameField");
+			custom.addComponent(usernameField, "usernameField");
 
-            passwordField = new PasswordField("Password");
-            passwordField.setValue("123456");
-            StringLengthValidator passwordValidator = new StringLengthValidator(
-                    "Password length must be greater than 6", 6,
-                    Integer.MAX_VALUE, false);
-            passwordField.addValidator(passwordValidator);
+			passwordField = new PasswordField("Password");
+			passwordField.setValue("123456");
+			StringLengthValidator passwordValidator = new StringLengthValidator(
+					"Password length must be greater than 6", 6,
+					Integer.MAX_VALUE, false);
+			passwordField.addValidator(passwordValidator);
 
-            custom.addComponent(passwordField, "passwordField");
+			custom.addComponent(passwordField, "passwordField");
 
-            rememberMe = new CheckBox("Remember me for a week", true);
-            custom.addComponent(rememberMe, "rememberMe");
+			rememberMe = new CheckBox("Remember me for a week", true);
+			custom.addComponent(rememberMe, "rememberMe");
 
-            Button loginBtn = new Button("Sign In", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+			Button loginBtn = new Button("Sign In", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    try {
-                        LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
-                                LoginViewImpl.this, new String[] {
-                                        (String) usernameField.getValue(),
-                                        (String) passwordField.getValue(),
-                                        String.valueOf(rememberMe
-                                                .booleanValue()) }));
-                    } catch (MyCollabException e) {
-                        LoginForm.this.setComponentError(new UserError(e
-                                .getMessage()));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					try {
+						LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
+								LoginViewImpl.this, new String[] {
+										(String) usernameField.getValue(),
+										(String) passwordField.getValue(),
+										String.valueOf(rememberMe
+												.booleanValue()) }));
+					} catch (MyCollabException e) {
+						LoginForm.this.setComponentError(new UserError(e
+								.getMessage()));
 
-                    } catch (Exception e) {
-                        throw new MyCollabException(e);
-                    }
-                }
-            });
+					} catch (Exception e) {
+						throw new MyCollabException(e);
+					}
+				}
+			});
 
-            loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-            custom.addComponent(loginBtn, "loginButton");
+			loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			custom.addComponent(loginBtn, "loginButton");
 
-            Link signupLink = new Link("Create an Account",
-                    new ExternalResource("https://www.mycollab.com/pricing"));
-            signupLink.setTargetName("_blank");
-            custom.addComponent(signupLink, "signupLink");
+			Link signupLink = new Link("Create an Account",
+					new ExternalResource("https://www.mycollab.com/pricing"));
+			signupLink.setTargetName("_blank");
+			custom.addComponent(signupLink, "signupLink");
 
-            Button forgotPasswordBtn = new Button("Forgot your password?",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+			Button forgotPasswordBtn = new Button("Forgot your password?",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            EventBus.getInstance().fireEvent(
-                                    new ShellEvent.GotoForgotPasswordPage(this,
-                                            null));
-                        }
-                    });
-            forgotPasswordBtn.setStyleName("link");
-            custom.addComponent(forgotPasswordBtn, "forgotLink");
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ShellEvent.GotoForgotPasswordPage(this,
+											null));
+						}
+					});
+			forgotPasswordBtn.setStyleName("link");
+			custom.addComponent(forgotPasswordBtn, "forgotLink");
 
-            this.setLayout(custom);
-            this.setHeight("100%");
-        }
-    }
+			this.setLayout(custom);
+			this.setHeight("100%");
+		}
+	}
 }
