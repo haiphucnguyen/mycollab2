@@ -209,10 +209,10 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <target>
-                                <copy
+                                <copy verbose="true"
                                     file="${basedir}/src/main/resources/settings.properties-live"
                                     tofile="${basedir}/src/main/resources/settings.properties" />
-                                <copy
+                                <copy verbose="true"
                                     file="${basedir}/src/main/resources/log4j.properties-live"
                                     tofile="${basedir}/src/main/resources/log4j.properties" />
                             </target>
