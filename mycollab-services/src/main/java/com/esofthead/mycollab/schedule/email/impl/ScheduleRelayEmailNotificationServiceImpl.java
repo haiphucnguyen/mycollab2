@@ -35,7 +35,6 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 		SendingRelayEmailNotificationAction emailNotificationAction = null;
 
 		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
-
 			try {
 				if (notification.getEmailhandlerbean() != null) {
 					emailNotificationAction = (SendingRelayEmailNotificationAction) getSpringBean(Class
