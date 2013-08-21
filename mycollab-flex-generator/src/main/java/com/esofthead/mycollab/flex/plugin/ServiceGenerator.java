@@ -86,6 +86,10 @@ public class ServiceGenerator implements SourceGenerator {
 						Set<String> importClasses = new HashSet<String>();
 						importClasses
 								.add("com.esofthead.mycollab.core.GenericService");
+						importClasses.add("mx.rpc.events.FaultEvent");
+						importClasses.add("mx.rpc.events.ResultEvent");
+						importClasses
+								.add("com.esofthead.mycollab.core.AbstractResponder");
 						binding.put("importClasses", importClasses);
 
 						binding.put(

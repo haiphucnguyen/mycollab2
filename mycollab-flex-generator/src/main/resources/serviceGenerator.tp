@@ -9,16 +9,17 @@ package $packageName
      */
     public class $className extends GenericService
     { 
-		public function $className() 
+		public function $className(responder:AbstractResponder) 
 		{
-			super();
-			this._ro.destination = "$serviceName";
+			super(responder, "$serviceName");
 		}
 		
 		<%methods.each {method -> %>
         public function $method.methodName(<%method.fields.each {field -> %> $field.fieldName:$field.fieldCls <%if(method.fields.indexOf(field)!=method.fields.size()-1) {%>, <%}}%>): void
         {
             this._ro.showBusyCursor = true;
+			this._ro.${method.methodName}.addEventListener(ResultEvent.RESULT, _responder.onResult);
+			this._ro.${method.methodName}.addEventListener(FaultEvent.FAULT, _responder.onFault);
             this._ro.$method.methodName(<%method.fields.each {field -> %> $field.fieldName <%if(method.fields.indexOf(field)!=method.fields.size()-1) {%>, <%}}%>);
         }
 		<%}%>
