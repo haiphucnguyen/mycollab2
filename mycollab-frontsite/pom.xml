@@ -212,6 +212,9 @@
                                 <copy
                                     file="${basedir}/src/main/resources/settings.properties-live"
                                     tofile="${basedir}/src/main/resources/settings.properties" />
+                                <copy
+                                    file="${basedir}/src/main/resources/log4j.properties-live"
+                                    tofile="${basedir}/src/main/resources/log4j.properties" />
                             </target>
                         </configuration>
                         <goals>
