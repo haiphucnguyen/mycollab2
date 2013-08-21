@@ -33,6 +33,8 @@ public class SignInPage extends BasePage {
 
 	public SignInPage(final PageParameters parameters) {
 		super(parameters);
+		
+		setStatelessHint(true);
 
 		final TextField<String> email = new TextField<String>("emailfield",
 				new Model<String>());
