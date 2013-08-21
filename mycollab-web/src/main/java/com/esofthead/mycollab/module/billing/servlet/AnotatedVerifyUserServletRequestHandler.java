@@ -23,9 +23,8 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
-import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.module.user.domain.UserAccountExample;
+import com.esofthead.mycollab.module.user.domain.UserAccountInvitationExample;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.template.velocity.EngineFactory;
 
@@ -35,9 +34,6 @@ public class AnotatedVerifyUserServletRequestHandler implements
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private UserAccountMapper userAccountMapper;
 
 	@Autowired
 	private UserAccountInvitationMapper userAccountInvitationMapper;
@@ -60,36 +56,36 @@ public class AnotatedVerifyUserServletRequestHandler implements
 				pathInfo = pathInfo.substring(username.length() + 1);
 
 				subdomain = pathInfo;
-				boolean isCreatePassword = false;
 				User user = userService.findUserByUserName(username);
 				if (user != null
 						&& user.getRegisterstatus().equals(
 								RegisterStatusConstants.ACTIVE)) {
-					isCreatePassword = true;
+					// redirect to account site
+					request.getRequestDispatcher(request.getContextPath() + "/")
+							.forward(request, response);
+					request.setAttribute("username", user.getUsername());
+					request.setAttribute("password", user.getPassword());
+					return;
+				} else if (user != null
+						&& user.getRegisterstatus().equals(
+								RegisterStatusConstants.VERIFICATING)) {
 					// remove account invitation
-					UserAccountExample userAccountEx = new UserAccountExample();
-					userAccountEx.createCriteria().andUsernameEqualTo(username)
+					UserAccountInvitationExample userAccountInvitationExample = new UserAccountInvitationExample();
+					userAccountInvitationExample.createCriteria()
+							.andUsernameEqualTo(username)
 							.andAccountidEqualTo(accountId);
-					userAccountMapper.deleteByExample(userAccountEx);
+					userAccountInvitationMapper
+							.deleteByExample(userAccountInvitationExample);
 
-					if (!isCreatePassword) {
-						// forward to page create password for new user
-						String redirectURL = SiteConfiguration
-								.getSiteUrl(subdomain)
-								+ "user/confirm_invite/update_info/";
-						String html = generateUserFillInformationPage(request,
-								accountId, username, user.getEmail(),
-								redirectURL, loginURL);
-						PrintWriter out = response.getWriter();
-						out.print(html);
-					} else {
-						// redirect to account site
-						request.getRequestDispatcher(
-								request.getContextPath() + "/").forward(
-								request, response);
-						request.setAttribute("username", user.getUsername());
-						request.setAttribute("password", user.getPassword());
-					}
+					// forward to page create password for new user
+					String redirectURL = SiteConfiguration
+							.getSiteUrl(subdomain)
+							+ "user/confirm_invite/update_info/";
+					String html = generateUserFillInformationPage(request,
+							accountId, username, user.getEmail(), redirectURL,
+							loginURL);
+					PrintWriter out = response.getWriter();
+					out.print(html);
 					return;
 				}
 			}

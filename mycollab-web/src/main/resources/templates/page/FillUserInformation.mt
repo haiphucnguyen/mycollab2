@@ -153,8 +153,5 @@ input[type="text"], input[type="password"]{
 		      }
 		});
 	}
-	function cancel(){
-		$('#divHolder').html($('#welcomeBody').html());
-	}
 </script>				
 </html>

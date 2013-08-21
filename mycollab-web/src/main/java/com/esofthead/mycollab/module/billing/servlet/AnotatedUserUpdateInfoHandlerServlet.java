@@ -60,6 +60,7 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 		try {
 			UserService userService = AppContext
 					.getSpringBean(UserService.class);
+			userService.updateUserAccount(simpleUser);
 			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {
 			error = true;
