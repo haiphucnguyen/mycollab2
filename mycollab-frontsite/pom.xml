@@ -209,9 +209,12 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <target>
-                                <copy
+                                <copy verbose="true" overwrite="true" force="true"
                                     file="${basedir}/src/main/resources/settings.properties-live"
                                     tofile="${basedir}/src/main/resources/settings.properties" />
+                                <copy verbose="true" overwrite="true" force="true"
+                                    file="${basedir}/src/main/resources/log4j.properties-live"
+                                    tofile="${basedir}/src/main/resources/log4j.properties" />
                             </target>
                         </configuration>
                         <goals>

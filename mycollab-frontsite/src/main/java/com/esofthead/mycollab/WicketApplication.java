@@ -1,13 +1,9 @@
 package com.esofthead.mycollab;
 
-import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.protocol.https.HttpsConfig;
-import org.apache.wicket.protocol.https.HttpsMapper;
-import org.apache.wicket.protocol.https.Scheme;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -59,7 +55,7 @@ public class WicketApplication extends WebApplication {
 		this.mountPage("/signup", SignUpPage.class);
 		this.mountPage("/blog", BlogPage.class);
 		this.mountPage("/terms", TermOfServicePage.class);
-		this.mountPage("/signin", SignInPage.class);
+		this.mountPage("/signin/#{param1}", SignInPage.class);
 		this.mountPage("/error404", Error404Page.class);
 		this.mountPage("/error500", Error500Page.class);
 
@@ -74,19 +70,19 @@ public class WicketApplication extends WebApplication {
 			}
 		});
 
-		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(),
-				new HttpsConfig()) {
-			@Override
-			protected Scheme getDesiredSchemeFor(Class pageClass) {
-				if (getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT) {
-					log.debug("in development mode, returning HTTP");
-					return Scheme.HTTP;
-				} else {
-					log.debug("not in development mode, letting the mapper decide");
-					return super.getDesiredSchemeFor(pageClass);
-				}
-			}
-		});
+//		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(),
+//				new HttpsConfig()) {
+//			@Override
+//			protected Scheme getDesiredSchemeFor(Class pageClass) {
+//				if (getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT) {
+//					log.debug("in development mode, returning HTTP");
+//					return Scheme.HTTP;
+//				} else {
+//					log.debug("not in development mode, letting the mapper decide");
+//					return super.getDesiredSchemeFor(pageClass);
+//				}
+//			}
+//		});
 	}
 
 }

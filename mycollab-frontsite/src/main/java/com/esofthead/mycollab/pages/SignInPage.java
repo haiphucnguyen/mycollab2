@@ -20,7 +20,7 @@ import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.ApplicationProperties;
+import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
@@ -33,6 +33,8 @@ public class SignInPage extends BasePage {
 
 	public SignInPage(final PageParameters parameters) {
 		super(parameters);
+		
+		setStatelessHint(true);
 
 		final TextField<String> email = new TextField<String>("emailfield",
 				new Model<String>());
@@ -55,7 +57,7 @@ public class SignInPage extends BasePage {
 			@Override
 			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				final ClientResource clientResource = new ClientResource(
-						ApplicationProperties.getProperty("signin.url"));
+						SiteConfiguration.getSigninUrl());
 				final UserHubResource userResource = clientResource
 						.wrap(UserHubResource.class);
 
@@ -68,8 +70,7 @@ public class SignInPage extends BasePage {
 					if (response.length == 1) {
 						String redirectUrl = "";
 						if (Application.get().usesDevelopmentConfig()) {
-							redirectUrl = ApplicationProperties
-									.getProperty("webapp.url");
+							redirectUrl = SiteConfiguration.getAppUrl();
 						} else {
 							redirectUrl = response[0];
 						}

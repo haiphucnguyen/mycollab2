@@ -20,20 +20,24 @@ public class MainNavigationMenu extends Panel {
 
 		BookmarkablePageLink<Void> homePageLink = new BookmarkablePageLink<Void>(
 				"backHome", HomePage.class);
-		add(homePageLink);		
-		BookmarkablePageLink<Void> signIn = new BookmarkablePageLink<Void>("signIn", SignInPage.class);
+		add(homePageLink);
+		BookmarkablePageLink<Void> signIn = new BookmarkablePageLink<Void>(
+				"signIn", SignInPage.class);
 		add(signIn);
-		BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>("tour", TourPage.class);
+		BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>(
+				"tour", TourPage.class);
 		add(tour);
-		BookmarkablePageLink<Void> blog = new BookmarkablePageLink<Void>("blog", BlogPage.class);
+		BookmarkablePageLink<Void> blog = new BookmarkablePageLink<Void>(
+				"blog", BlogPage.class);
 		add(blog);
-		/*ExternalLink blog = new ExternalLink("blog", "http://esofthead.com/blog/");
-		add(blog);*/
-		ExternalLink support = new ExternalLink("support", "mailto:sales@esofthead.com");
+		ExternalLink support = new ExternalLink("support",
+				"mailto:sales@esofthead.com");
 		add(support);
-		BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>("pricing_signup", PricingPage.class);
+		BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>(
+				"pricing_signup", PricingPage.class);
 		add(pricing);
-		BookmarkablePageLink<Void> privacy = new BookmarkablePageLink<Void>("privacy", PrivacyPage.class);
+		BookmarkablePageLink<Void> privacy = new BookmarkablePageLink<Void>(
+				"privacy", PrivacyPage.class);
 		add(privacy);
 
 		this.setRenderBodyOnly(true);
