@@ -439,10 +439,10 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <target>
-                                <copy verbose="true"
+                                <copy verbose="true" overwrite="true" force="true"
                                     file="${basedir}/src/main/resources/resources.properties-live"
                                     tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" />
-                                <copy verbose="true"
+                                <copy verbose="true" overwrite="true" force="true"
                                     file="${basedir}/src/main/resources/log4j.properties-live"
                                     tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/log4j.properties" />
                             </target>
