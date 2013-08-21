@@ -48,61 +48,61 @@ public class SignInPage extends BasePage {
 		subdomainList.setOutputMarkupId(true);
 		listContainer.add(subdomainList);
 
-//		form.add(new AjaxButton("ajax-button", form) {
-//
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
-//				final ClientResource clientResource = new ClientResource(
-//						ApplicationProperties.getProperty("signin.url"));
-//				final UserHubResource userResource = clientResource
-//						.wrap(UserHubResource.class);
-//
-//				try {
-//					String emailString = email.getModelObject();
-//
-//					final String[] response = userResource
-//							.getSubdomainsOfUser(emailString);
-//
-//					if (response.length == 1) {
-//						String redirectUrl = "";
-//						if (Application.get().usesDevelopmentConfig()) {
-//							redirectUrl = ApplicationProperties
-//									.getProperty("webapp.url");
-//						} else {
-//							redirectUrl = response[0];
-//						}
-//						this.getRequestCycle()
-//								.scheduleRequestHandlerAfterCurrent(
-//										new RedirectRequestHandler(redirectUrl));
-//					} else {
-//
-//						subdomainList.removeAll();
-//						for (String subdomainString : response) {
-//							final AbstractItem newItem = new AbstractItem(
-//									subdomainList.newChildId());
-//
-//							Label subdomain = new Label("subdomain",
-//									subdomainString + ".mycollab.com");
-//							newItem.add(subdomain);
-//
-//							ExternalLink gotosubdomainBtn = new ExternalLink(
-//									"gotosubdomain", "https://"
-//											+ subdomainString + ".mycollab.com");
-//							newItem.add(gotosubdomainBtn);
-//
-//							subdomainList.add(newItem);
-//						}
-//
-//						target.add(listContainer);
-//					}
-//
-//				} catch (Exception e) {
-//					log.error(e.getMessage());
-//				}
-//			}
-//		});
+		form.add(new AjaxButton("ajax-button", form) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				final ClientResource clientResource = new ClientResource(
+						ApplicationProperties.getProperty("signin.url"));
+				final UserHubResource userResource = clientResource
+						.wrap(UserHubResource.class);
+
+				try {
+					String emailString = email.getModelObject();
+
+					final String[] response = userResource
+							.getSubdomainsOfUser(emailString);
+
+					if (response.length == 1) {
+						String redirectUrl = "";
+						if (Application.get().usesDevelopmentConfig()) {
+							redirectUrl = ApplicationProperties
+									.getProperty("webapp.url");
+						} else {
+							redirectUrl = response[0];
+						}
+						this.getRequestCycle()
+								.scheduleRequestHandlerAfterCurrent(
+										new RedirectRequestHandler(redirectUrl));
+					} else {
+
+						subdomainList.removeAll();
+						for (String subdomainString : response) {
+							final AbstractItem newItem = new AbstractItem(
+									subdomainList.newChildId());
+
+							Label subdomain = new Label("subdomain",
+									subdomainString + ".mycollab.com");
+							newItem.add(subdomain);
+
+							ExternalLink gotosubdomainBtn = new ExternalLink(
+									"gotosubdomain", "https://"
+											+ subdomainString + ".mycollab.com");
+							newItem.add(gotosubdomainBtn);
+
+							subdomainList.add(newItem);
+						}
+
+						target.add(listContainer);
+					}
+
+				} catch (Exception e) {
+					log.error(e.getMessage());
+				}
+			}
+		});
 
 		add(form);
 		form.add(email);

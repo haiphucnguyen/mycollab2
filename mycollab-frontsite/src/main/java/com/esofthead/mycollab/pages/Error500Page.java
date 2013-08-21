@@ -11,8 +11,6 @@ public class Error500Page extends BaseErrorPage {
 	public Error500Page(Exception e) {
 		super(e);
 
-		// TODO: send stacktrace to admin
-
 		add(new Label("pagetitle", "Internal Error"));
 
 		add(new Label("error_code", "500"));
