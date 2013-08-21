@@ -50,7 +50,7 @@
     <select id="getSubdomainsOfUser" resultType="java.lang.String"
         parameterType="java.lang.String">
         <![CDATA[
-        SELECT s_account.subdomain
+        SELECT DISTINCT s_account.subdomain
         FROM s_account, s_user_account
         WHERE s_user_account.username=#{username} AND s_user_account.accountId=s_account.id
         ]]>

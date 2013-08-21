@@ -205,6 +205,7 @@ public class UserServiceDBImpl extends
 			String subdomain, boolean isPasswordEncrypt) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
+		criteria.setSaccountid(null);
 
 		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
 			criteria.setSubdomain(new StringSearchField(subdomain));
