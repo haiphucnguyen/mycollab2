@@ -62,20 +62,7 @@ input[type="text"], input[type="password"]{
 				</div>
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
-				<div id="divHolder"></div>
-			</td>
-		</tr>
-	</table>
-	<div class="container"></div>
-	<footer style="padding-top: 100px;">
-		<div class="footer-home">
-		<div class="wrapper">
-			<div class="footer-copyright"><h1>MYCOLLAB</h1>
-                          	&copy;2010-2013 MyCollab, LLC. All rights reserved.</div>
-        </div>
-	</div>
-	</footer>
-	<div id="welcomeBody" style="display:none">
+				<div id="welcomeBody" style="display:block">
 		<div style="display: block; padding: 8px 8px 8px 20px;">
 			<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $!username . <br>
 			Thank you for accepted the invitation !
@@ -114,8 +101,19 @@ input[type="text"], input[type="password"]{
 			Or use default password: 123456
 			<a href=""><span style="color:blue; font-style:italic">Go to login-page</span></a>
 		</div>
-	</div>	
-	
+	</div>
+			</td>
+		</tr>
+	</table>
+	<div class="container"></div>
+	<footer style="padding-top: 100px;">
+		<div class="footer-home">
+		<div class="wrapper">
+			<div class="footer-copyright"><h1>MYCOLLAB</h1>
+                          	&copy;2010-2013 MyCollab, LLC. All rights reserved.</div>
+        </div>
+	</div>
+	</footer>
 	<input type="hidden" id="username" value="$!username">
 	<input type="hidden" id="accountId" value="$!accountId">
 	<input type="hidden" id="redirectURL" value="$!redirectURL">
@@ -125,9 +123,6 @@ input[type="text"], input[type="password"]{
 <script>
 	$(document).ready(function(){
 	});
-	function updateInfo(){
-		$('#divHolder').html($('#createNewAccountForm').html())
-	}
 	function updateInfoAction(){
 		$('#requireMsg').html("").hide();
 		if ($('#password').val() == "" || $('#repassword').val() == ""){
@@ -152,7 +147,7 @@ input[type="text"], input[type="password"]{
 		      	 		$('#requireMsg').html(data).show();
 		      	 	}else{
 		      	 		alert("Your account has been updated.");
-		      	 		//window.location.assign("$!loginURL");
+		      	 		window.location.assign("$!loginURL");
 		      	 	}
 		      	 }
 		      }

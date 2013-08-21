@@ -21,7 +21,6 @@ import org.springframework.web.HttpRequestHandler;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -108,6 +107,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 			StringWriter writer = new StringWriter();
 			EngineFactory.getTemplateEngine().evaluate(context, writer,
 					"log task", reader);
+
 			String html = writer.toString();
 			PrintWriter out = response.getWriter();
 			out.println(html);

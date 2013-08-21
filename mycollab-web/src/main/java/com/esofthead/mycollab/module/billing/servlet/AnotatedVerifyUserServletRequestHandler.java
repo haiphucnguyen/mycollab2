@@ -25,7 +25,6 @@ import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMember
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.template.velocity.EngineFactory;
@@ -47,7 +46,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
-		String subdomain = "", loginURL = "";
+		String subdomain = "", loginURL = request.getContextPath() + "/";
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
@@ -63,44 +62,36 @@ public class AnotatedVerifyUserServletRequestHandler implements
 				subdomain = pathInfo;
 				boolean isCreatePassword = false;
 				User user = userService.findUserByUserName(username);
-
-				if (!RegisterStatusConstants.ACTIVE.equals(user
-						.getRegisterstatus())) {
-					user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+				if (user != null
+						&& user.getRegisterstatus().equals(
+								RegisterStatusConstants.ACTIVE)) {
 					isCreatePassword = true;
-					user.setPassword("123456");
-					userService.updateWithSession(user, user.getUsername());
+					// remove account invitation
+					UserAccountExample userAccountEx = new UserAccountExample();
+					userAccountEx.createCriteria().andUsernameEqualTo(username)
+							.andAccountidEqualTo(accountId);
+					userAccountMapper.deleteByExample(userAccountEx);
+
+					if (!isCreatePassword) {
+						// forward to page create password for new user
+						String redirectURL = SiteConfiguration
+								.getSiteUrl(subdomain)
+								+ "user/confirm_invite/update_info/";
+						String html = generateUserFillInformationPage(request,
+								accountId, username, user.getEmail(),
+								redirectURL, loginURL);
+						PrintWriter out = response.getWriter();
+						out.print(html);
+					} else {
+						// redirect to account site
+						request.getRequestDispatcher(
+								request.getContextPath() + "/").forward(
+								request, response);
+						request.setAttribute("username", user.getUsername());
+						request.setAttribute("password", user.getPassword());
+					}
+					return;
 				}
-
-				// update user account status
-				UserAccountExample userAccountEx = new UserAccountExample();
-				userAccountEx.createCriteria().andUsernameEqualTo(username)
-						.andAccountidEqualTo(accountId);
-				UserAccount userAccount = new UserAccount();
-				userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-				userAccountMapper.updateByExampleSelective(userAccount,
-						userAccountEx);
-
-				// remove account invitation
-
-				if (true) {
-					// forward to page create password for new user
-					String redirectURL = SiteConfiguration
-							.getSiteUrl(subdomain)
-							+ "user/confirm_invite/update_info/";
-					String html = generateUserFillInformationPage(request,
-							accountId, username, user.getEmail(), redirectURL,
-							loginURL);
-					PrintWriter out = response.getWriter();
-					out.print(html);
-				} else {
-					// redirect to account site
-					request.getRequestDispatcher(request.getContextPath() + "/")
-							.forward(request, response);
-					request.setAttribute("username", user.getUsername());
-					request.setAttribute("password", user.getPassword());
-				}
-				return;
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);
@@ -109,19 +100,16 @@ public class AnotatedVerifyUserServletRequestHandler implements
 	private String generateUserFillInformationPage(HttpServletRequest request,
 			int accountId, String username, String email, String redirectURL,
 			String loginURL) {
-		String template = "/templates/FillUserInformation.mt";
+		String template = "/templates/page/FillUserInformation.mt";
 		VelocityContext context = new VelocityContext(
 				EngineFactory.createContext());
 		Reader reader;
 		try {
-			reader = new InputStreamReader(
-					AnotatedVerifyUserServletRequestHandler.class
-							.getClassLoader().getResourceAsStream(template),
-					"UTF-8");
+			reader = new InputStreamReader(PageNotFoundGenerator.class
+					.getClassLoader().getResourceAsStream(template), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(
-					AnotatedVerifyUserServletRequestHandler.class
-							.getClassLoader().getResourceAsStream(template));
+			reader = new InputStreamReader(PageNotFoundGenerator.class
+					.getClassLoader().getResourceAsStream(template));
 		}
 
 		context.put("username", username);

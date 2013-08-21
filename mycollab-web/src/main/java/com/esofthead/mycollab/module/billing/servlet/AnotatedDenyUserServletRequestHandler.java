@@ -15,8 +15,9 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
-import com.esofthead.mycollab.module.user.dao.UserMapperExt;
+import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.web.AppContext;
@@ -42,26 +43,30 @@ public class AnotatedDenyUserServletRequestHandler implements
 				pathInfo = pathInfo.substring((accountId + "").length() + 1);
 
 				String username = pathInfo;
-				try {
-					UserSearchCriteria criteria = new UserSearchCriteria();
-					criteria.setUsername(new StringSearchField(username));
-					criteria.setSaccountid(new NumberSearchField(accountId));
-
-					UserService userService = AppContext
-							.getSpringBean(UserService.class);
-					UserMapperExt userMapper = AppContext
-							.getSpringBean(UserMapperExt.class);
-
-					userMapper.removeByCriteria(criteria);
-					userService.removeUserAccount(username, accountId);
-
-					log.debug("Verify user successfully. Redirect to application page");
-					response.sendRedirect(request.getContextPath() + "/");
-				} catch (UserInvalidInputException e) {
-					log.debug("Redirect user to user invalid page");
+				UserService userService = AppContext
+						.getSpringBean(UserService.class);
+				User curUser = userService.findUserByUserName(username);
+				if (curUser != null
+						&& curUser.getRegisterstatus().equals(
+								RegisterStatusConstants.ACTIVE)) {
 					PageNotFoundGenerator.responsePage404(response);
+					return;
+				} else if (curUser != null) {
+					try {
+						UserSearchCriteria criteria = new UserSearchCriteria();
+						criteria.setUsername(new StringSearchField(username));
+						criteria.setSaccountid(new NumberSearchField(accountId));
+
+						userService.removeUserAccount(username, accountId);
+
+						log.debug("Verify user successfully. Redirect to application page");
+						response.sendRedirect(request.getContextPath() + "/");
+					} catch (UserInvalidInputException e) {
+						log.debug("Redirect user to user invalid page");
+						PageNotFoundGenerator.responsePage404(response);
+					}
+					return;
 				}
-				return;
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);
