@@ -26,6 +26,12 @@
                             bean="restUserResource" />
                     </bean>
                 </entry>
+                <entry key="/errorReport">
+                    <bean class="org.restlet.ext.spring.SpringFinder">
+                        <lookup-method name="create"
+                            bean="errorReportingResource" />
+                    </bean>
+                </entry>
             </map>
         </property>
     </bean>

@@ -18,6 +18,7 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 
+import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
@@ -32,22 +33,27 @@ public class SignUpPage extends BasePage {
 	public SignUpPage(final PageParameters parameters) {
 		super(parameters);
 
-		final RequiredTextField<String> email = new RequiredTextField<String>("emailfield");
+		final RequiredTextField<String> email = new RequiredTextField<String>(
+				"emailfield");
 		email.add(EmailAddressValidator.getInstance());
 		email.setLabel(new ResourceModel("label.email"));
 
 		final CheckBox receiveupdate = new CheckBox("receiveupdatefield");
-		
-		final RequiredTextField<String> subdomain = new RequiredTextField<String>("subdomainfield");
+
+		final RequiredTextField<String> subdomain = new RequiredTextField<String>(
+				"subdomainfield");
 		subdomain.setLabel(new ResourceModel("label.subdomain"));
 
-		final PasswordTextField password = new PasswordTextField("passwordfield");
+		final PasswordTextField password = new PasswordTextField(
+				"passwordfield");
 		password.setLabel(new ResourceModel("label.password"));
 
-		final PasswordTextField cpassword = new PasswordTextField("cpasswordfield");
+		final PasswordTextField cpassword = new PasswordTextField(
+				"cpasswordfield");
 		cpassword.setLabel(new ResourceModel("label.password"));
 
-		final HiddenField<String> timezone = new HiddenField<String>("timezonefield");
+		final HiddenField<String> timezone = new HiddenField<String>(
+				"timezonefield");
 
 		final StatelessForm<Void> form = new StatelessForm<Void>("signupform") {
 
@@ -56,7 +62,7 @@ public class SignUpPage extends BasePage {
 			@Override
 			protected void onSubmit() {
 				final ClientResource clientResource = new ClientResource(
-						"http://localhost:8080/mycollab-web/api/signup");
+						SiteConfiguration.getSignupUrl());
 				final UserHubResource userResource = clientResource
 						.wrap(UserHubResource.class);
 
