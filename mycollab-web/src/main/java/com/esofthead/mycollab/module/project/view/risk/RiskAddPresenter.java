@@ -1,11 +1,15 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.domain.RelayEmailNotification;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -84,10 +88,32 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 		risk.setProjectid(CurrentProjectVariables.getProjectId());
 		risk.setSaccountid(AppContext.getAccountId());
 
+		RelayEmailNotification relayNotification = new RelayEmailNotification();
+		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
+		relayNotification.setChangeby(AppContext.getUsername());
+		relayNotification.setChangecomment("");
+		relayNotification.setSaccountid(AppContext.getAccountId());
+		relayNotification.setType(MonitorTypeConstants.PRJ_RISK);
+
+		relayNotification
+				.setEmailhandlerbean(ProjectRiskRelayEmailNotificationAction.class
+						.getName());
+
+		RelayEmailNotificationService relayEmailNotificationService = AppContext
+				.getSpringBean(RelayEmailNotificationService.class);
+
 		if (risk.getId() == null) {
-			riskService.saveWithSession(risk, AppContext.getUsername());
+			Integer id = riskService.saveWithSession(risk,
+					AppContext.getUsername());
+			relayNotification.setTypeid(id);
+			relayEmailNotificationService.saveWithSession(relayNotification,
+					AppContext.getUsername());
 		} else {
+			relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
 			riskService.updateWithSession(risk, AppContext.getUsername());
+			relayNotification.setTypeid(risk.getId());
+			relayEmailNotificationService.saveWithSession(relayNotification,
+					AppContext.getUsername());
 		}
 
 	}
