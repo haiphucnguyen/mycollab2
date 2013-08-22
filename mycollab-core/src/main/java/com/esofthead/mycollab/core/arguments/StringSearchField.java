@@ -3,6 +3,10 @@ package com.esofthead.mycollab.core.arguments;
 public class StringSearchField extends SearchField {
 	private String value;
 
+	public StringSearchField() {
+		this("");
+	}
+	
 	public StringSearchField(String value) {
 		this(SearchField.AND, value);
 	}

@@ -8,6 +8,10 @@ public class SearchRequest<S extends SearchCriteria> {
 	private int currentPage = 1;
 
 	private int numberOfItems = 1;
+	
+	public SearchRequest() {
+		this(null, 1, 1);
+	}
 
 	public SearchRequest(S searchCriteria, int currentPage, int numberOfItems) {
 		this.searchCriteria = searchCriteria;
