@@ -2,6 +2,8 @@ package com.esofthead.mycollab.configuration;
 
 import java.util.Properties;
 
+import com.esofthead.mycollab.core.DeploymentMode;
+
 public class SiteConfiguration {
 	private static SiteConfiguration instance;
 

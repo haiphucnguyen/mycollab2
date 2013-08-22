@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 @RequireHttps
@@ -68,7 +69,7 @@ public class SignInPage extends BasePage {
 
 					if (response.length == 1) {
 						String redirectUrl = "";
-						if (Application.get().usesDevelopmentConfig()) {
+						if (SiteConfiguration.getDeploymentMode() == DeploymentMode.LOCAL) {
 							redirectUrl = SiteConfiguration.getAppUrl();
 						} else {
 							redirectUrl = response[0];

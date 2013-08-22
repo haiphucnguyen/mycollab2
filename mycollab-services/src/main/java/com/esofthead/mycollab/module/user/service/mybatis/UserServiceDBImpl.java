@@ -34,8 +34,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
-import com.esofthead.mycollab.configuration.DeploymentMode;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;

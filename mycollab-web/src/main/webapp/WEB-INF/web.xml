@@ -35,12 +35,6 @@
         <param-name>org.restlet.component</param-name>
         <param-value>restletComponent</param-value>
     </context-param>
-    
-    <context-param>
-        <param-name>org.restlet.application</param-name>
-                <!-- bean name of your application -->
-        <param-value>restApp</param-value>
-    </context-param>
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>

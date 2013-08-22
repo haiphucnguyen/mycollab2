@@ -4,10 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
@@ -16,9 +12,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
-import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
