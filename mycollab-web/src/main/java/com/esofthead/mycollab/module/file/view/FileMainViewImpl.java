@@ -37,6 +37,7 @@ import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -89,6 +90,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private MainBodyResourceLayout bodyResourceLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
 	private Button switchViewBtn;
+	private PagingResourceWapper pagingResourceWapper;
 
 	private final ResourceService resourceService;
 	private final ExternalDriveService externalDriveService;
@@ -632,10 +634,24 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
-				for (Resource res : lstResource) {
-					mainLayout.addComponent(constructOneItemResourceLayout(res,
-							false));
-					mainLayout.addComponent(new Hr());
+				if (lstResource.size() <= PagingResourceWapper.pageItemNum) {
+					for (Resource res : lstResource) {
+						mainLayout.addComponent(constructOneItemResourceLayout(
+								res, false));
+						mainLayout.addComponent(new Hr());
+					}
+				} else if (lstResource.size() > PagingResourceWapper.pageItemNum) {
+					for (int i = 0; i < PagingResourceWapper.pageItemNum; i++) {
+						Resource res = lstResource.get(i);
+						mainLayout.addComponent(constructOneItemResourceLayout(
+								res, false));
+						mainLayout.addComponent(new Hr());
+					}
+					pagingResourceWapper = new PagingResourceWapper(lstResource);
+					pagingResourceWapper.setWidth("100%");
+					mainLayout.addComponent(pagingResourceWapper);
+					mainLayout.setComponentAlignment(pagingResourceWapper,
+							Alignment.MIDDLE_CENTER);
 				}
 			}
 			this.addComponent(mainLayout);
@@ -1656,6 +1672,170 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									}
 								}
 							});
+		}
+	}
+
+	private class PagingResourceWapper extends CssLayout {
+		private static final long serialVersionUID = 1L;
+		private int totalItem;
+		public static final int pageItemNum = 15;
+		private int currentPage = 1;
+		private CssLayout controlBarWrapper;
+		private HorizontalLayout pageManagement;
+		private int totalPage;
+		private List<Resource> lstResource;
+		private Button currentBtn;
+		private HorizontalLayout controlBar;
+
+		public PagingResourceWapper(List<Resource> lstResource) {
+			this.totalItem = lstResource.size();
+			this.totalPage = ((int) totalItem / pageItemNum) + 1;
+			this.lstResource = lstResource;
+
+			// defined layout here ---------------------------
+			this.controlBarWrapper = new CssLayout();
+			this.controlBarWrapper.setStyleName("listControl");
+			this.controlBarWrapper.setWidth("100%");
+
+			controlBar = new HorizontalLayout();
+			controlBar.setWidth("100%");
+			this.controlBarWrapper.addComponent(controlBar);
+
+			this.pageManagement = new HorizontalLayout();
+			createPageControls();
+		}
+
+		private void createPageControls() {
+			this.pageManagement.removeAllComponents();
+			if (this.currentPage > 1) {
+				final Button firstLink = new ButtonLink("1",
+						new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(1);
+							}
+						});
+				firstLink.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(firstLink);
+			}
+			if (this.currentPage >= 5) {
+				final Label ss1 = new Label("...");
+				ss1.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(ss1);
+			}
+			if (this.currentPage > 3) {
+				final Button previous2 = new ButtonLink(""
+						+ (this.currentPage - 2), new ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						pageChange(currentPage - 2);
+					}
+				});
+				previous2.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(previous2);
+			}
+			if (this.currentPage > 2) {
+				final Button previous1 = new ButtonLink(""
+						+ (this.currentPage - 1), new ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						pageChange(currentPage - 1);
+					}
+				});
+				previous1.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(previous1);
+			}
+			// Here add current ButtonLink
+			currentBtn = new ButtonLink("" + this.currentPage,
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							// pageChange(currentPage);
+						}
+					});
+			currentBtn.addStyleName("buttonPaging");
+			currentBtn.addStyleName("buttonPagingcurrent");
+
+			this.pageManagement.addComponent(currentBtn);
+			final int range = this.totalPage - this.currentPage;
+			if (range >= 1) {
+				final Button next1 = new ButtonLink(
+						"" + (this.currentPage + 1), new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(currentPage + 1);
+							}
+						});
+				next1.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(next1);
+			}
+			if (range >= 2) {
+				final Button next2 = new ButtonLink(
+						"" + (this.currentPage + 2), new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(currentPage + 2);
+							}
+						});
+				next2.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(next2);
+			}
+			if (range >= 4) {
+				final Label ss2 = new Label("...");
+				ss2.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(ss2);
+			}
+			if (range >= 3) {
+				final Button last = new ButtonLink("" + this.totalPage,
+						new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(totalPage);
+							}
+						});
+				last.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(last);
+			}
+
+			this.pageManagement.setWidth(null);
+			this.pageManagement.setSpacing(true);
+			controlBar.addComponent(this.pageManagement);
+			controlBar.setComponentAlignment(this.pageManagement,
+					Alignment.MIDDLE_RIGHT);
+			this.addComponent(controlBarWrapper);
+		}
+
+		public void pageChange(int currentPage) {
+			this.currentPage = currentPage;
+			itemResourceContainerLayout.mainLayout.removeAllComponents();
+			int index = currentPage - 1;
+			int start = (index == 0) ? index : index * pageItemNum;
+			int end = ((start + pageItemNum) > lstResource.size()) ? lstResource
+					.size() : start + pageItemNum;
+
+			for (int i = start; i < end; i++) {
+				Resource res = lstResource.get(i);
+				itemResourceContainerLayout.mainLayout
+						.addComponent(itemResourceContainerLayout
+								.constructOneItemResourceLayout(res, false));
+				itemResourceContainerLayout.mainLayout.addComponent(new Hr());
+			}
+			createPageControls();
+			itemResourceContainerLayout.mainLayout.addComponent(this);
 		}
 	}
 }
