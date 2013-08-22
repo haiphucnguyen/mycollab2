@@ -15,6 +15,7 @@ import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxEntry.File;
 import com.dropbox.core.DbxEntry.WithChildren;
 import com.dropbox.core.DbxRequestConfig;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
@@ -64,6 +65,8 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			}
 		} catch (Exception e) {
 			log.error("Error when get dropbox resource", e);
+			throw new UserInvalidInputException(
+					"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server");
 		}
 
 		return resources;
