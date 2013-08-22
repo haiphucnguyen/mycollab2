@@ -4,15 +4,21 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.esofthead.mycollab.common.MonitorTypeConstants;
-import com.esofthead.mycollab.common.domain.RelayEmailNotification;
+import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -33,6 +39,9 @@ import com.vaadin.ui.ComponentContainer;
 public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 
 	private static final long serialVersionUID = 1L;
+
+	@Autowired
+	private ProjectMemberService projectMemberService;
 
 	public MilestoneAddPresenter() {
 		super(MilestoneAddView.class);
@@ -99,16 +108,20 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 		milestone.setProjectid(CurrentProjectVariables.getProjectId());
 		milestone.setSaccountid(AppContext.getAccountId());
 
-		RelayEmailNotification relayNotification = new RelayEmailNotification();
+		SimpleRelayEmailNotification relayNotification = new SimpleRelayEmailNotification();
 		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
 		relayNotification.setChangeby(AppContext.getUsername());
 		relayNotification.setChangecomment("");
 		relayNotification.setSaccountid(AppContext.getAccountId());
 		relayNotification.setType(MonitorTypeConstants.PRJ_MILESTONE);
-
 		relayNotification
 				.setEmailhandlerbean(ProjectMilestoneRelayEmailNotificationAction.class
 						.getName());
+
+		relayNotification.setExtratypeid(milestone.getProjectid());
+		List<SimpleUser> usersInProject = projectMemberService
+				.getUsersInProject(milestone.getProjectid(), 0);
+		relayNotification.setNotifyUsers(usersInProject);
 
 		RelayEmailNotificationService relayEmailNotificationService = AppContext
 				.getSpringBean(RelayEmailNotificationService.class);

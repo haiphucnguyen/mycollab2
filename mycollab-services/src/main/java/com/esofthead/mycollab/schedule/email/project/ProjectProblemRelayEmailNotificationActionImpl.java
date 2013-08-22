@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
@@ -12,6 +13,7 @@ import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
+@Component
 public class ProjectProblemRelayEmailNotificationActionImpl extends
 		DefaultSendingRelayEmailNotificationAction implements
 		SendingRelayEmailNotificationAction {
