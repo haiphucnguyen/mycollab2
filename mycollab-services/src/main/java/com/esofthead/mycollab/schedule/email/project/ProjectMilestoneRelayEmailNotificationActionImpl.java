@@ -10,11 +10,11 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
-import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
 
 @Component
 public class ProjectMilestoneRelayEmailNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationAction implements
+		DefaultSendingRelayEmailNotificationForProjectAction implements
 		ProjectMilestoneRelayEmailNotificationAction {
 	@Autowired
 	private MilestoneService milestoneService;

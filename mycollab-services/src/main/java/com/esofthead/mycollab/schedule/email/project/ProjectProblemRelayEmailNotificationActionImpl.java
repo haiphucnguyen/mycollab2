@@ -10,12 +10,12 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.service.ProblemService;
-import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
 @Component
 public class ProjectProblemRelayEmailNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationAction implements
+		DefaultSendingRelayEmailNotificationForProjectAction implements
 		SendingRelayEmailNotificationAction {
 
 	@Autowired

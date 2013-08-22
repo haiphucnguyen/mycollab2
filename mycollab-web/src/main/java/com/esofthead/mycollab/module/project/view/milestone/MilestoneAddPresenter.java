@@ -40,9 +40,6 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private ProjectMemberService projectMemberService;
-
 	public MilestoneAddPresenter() {
 		super(MilestoneAddView.class);
 		bind();
@@ -119,9 +116,6 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 						.getName());
 
 		relayNotification.setExtratypeid(milestone.getProjectid());
-		List<SimpleUser> usersInProject = projectMemberService
-				.getUsersInProject(milestone.getProjectid(), 0);
-		relayNotification.setNotifyUsers(usersInProject);
 
 		RelayEmailNotificationService relayEmailNotificationService = AppContext
 				.getSpringBean(RelayEmailNotificationService.class);
