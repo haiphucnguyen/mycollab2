@@ -74,7 +74,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			this.informationLayout = new GridFormLayoutHelper(2, 2, "100%",
+			this.informationLayout = new GridFormLayoutHelper(1, 2, "100%",
 					"167px", Alignment.MIDDLE_LEFT);
 			this.informationLayout.getLayout().setWidth("100%");
 			this.informationLayout.getLayout().setMargin(false);
@@ -91,10 +91,6 @@ public abstract class ProjectMemberFormLayoutFactory implements
 				this.informationLayout.addComponent(field, "User", 0, 0);
 			} else if (propertyId.equals("isadmin")) {
 				this.informationLayout.addComponent(field, "Role", 0, 1);
-			} else if (propertyId.equals("joindate")) {
-				this.informationLayout.addComponentSupportFieldCaption(field,
-						new Label(""), "0px", "200px", 1, 0,
-						Alignment.MIDDLE_CENTER);
 			}
 		}
 	}
