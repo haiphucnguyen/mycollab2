@@ -7,6 +7,10 @@ public class RangeDateTimeSearchField extends SearchField {
 
 	protected Date to;
 
+	public RangeDateTimeSearchField() {
+		this(null, null);
+	}
+
 	public RangeDateTimeSearchField(Date from, Date to) {
 		this(SearchField.AND, from, to);
 	}
@@ -16,7 +20,7 @@ public class RangeDateTimeSearchField extends SearchField {
 		this.from = from;
 		this.to = to;
 	}
-	
+
 	public Date getFrom() {
 		return from;
 	}
