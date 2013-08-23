@@ -4,12 +4,12 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.module.user.service.AvatarService;
 
-@Service
+@Service(value = "avatarService")
 public class AvatarServiceImpl implements AvatarService {
 
-	@Override
-	public String getUserAvatarUrl(String username) {
-		return null;
-	}
+    @Override
+    public String getUserAvatarUrl(String username) {
+        return null;
+    }
 
 }

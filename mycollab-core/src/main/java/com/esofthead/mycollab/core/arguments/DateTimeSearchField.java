@@ -4,40 +4,44 @@ import java.util.Date;
 
 public class DateTimeSearchField extends SearchField {
 
-    public static String LESSTHAN = "<";
-    public static String LESSTHANEQUAL = "<=";
-    public static String GREATERTHAN = ">";
-    public static String GREATERTHANEQUAL = ">=";
-    public static String EQUAL = "=";
-    public static String NOTEQUAL = "<>";
-    
-    private Date value;
-    private String comparision;
+	public static String LESSTHAN = "<";
+	public static String LESSTHANEQUAL = "<=";
+	public static String GREATERTHAN = ">";
+	public static String GREATERTHANEQUAL = ">=";
+	public static String EQUAL = "=";
+	public static String NOTEQUAL = "<>";
 
-    public DateTimeSearchField(String oper, Date value) {
-        this(oper, DateTimeSearchField.LESSTHAN, value);
-    }
+	private Date value;
+	private String comparision;
 
-    public DateTimeSearchField(String oper, String comparision, Date value) {
-        this.operation = oper;
-        this.value = value;
-        this.comparision = comparision;
-    }
+	public DateTimeSearchField() {
+		this(AND, null);
+	}
 
-    public Date getValue() {
-        return value;
-    }
+	public DateTimeSearchField(String oper, Date value) {
+		this(oper, DateTimeSearchField.LESSTHAN, value);
+	}
 
-    public void setValue(Date value) {
-        this.value = value;
-    }
+	public DateTimeSearchField(String oper, String comparision, Date value) {
+		this.operation = oper;
+		this.value = value;
+		this.comparision = comparision;
+	}
 
-    public String getComparision() {
-        return comparision;
-    }
+	public Date getValue() {
+		return value;
+	}
 
-    public void setComparision(String comparision) {
-        this.comparision = comparision;
-    }
+	public void setValue(Date value) {
+		this.value = value;
+	}
+
+	public String getComparision() {
+		return comparision;
+	}
+
+	public void setComparision(String comparision) {
+		this.comparision = comparision;
+	}
 
 }

@@ -7,6 +7,10 @@ public class BooleanSearchField extends SearchField {
 	private boolean value;
 
 	private String comparision;
+	
+	public BooleanSearchField() {
+		this(false);
+	}
 
 	public BooleanSearchField(boolean value) {
 		this(SearchField.AND, value);

@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.core.arguments;
 
-
 public class NumberSearchField extends SearchField {
 
 	public static final String EQUAL = "=";
@@ -10,6 +9,10 @@ public class NumberSearchField extends SearchField {
 
 	private Number value;
 	private String compareOperator;
+
+	public NumberSearchField() {
+		this(0);
+	}
 
 	public NumberSearchField(Number value) {
 		this(SearchField.AND, value, EQUAL);

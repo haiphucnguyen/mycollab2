@@ -33,8 +33,6 @@ public class SignInPage extends BasePage {
 
 	public SignInPage(final PageParameters parameters) {
 		super(parameters);
-		
-		setStatelessHint(true);
 
 		final TextField<String> email = new TextField<String>("emailfield",
 				new Model<String>());
@@ -56,6 +54,7 @@ public class SignInPage extends BasePage {
 
 			@Override
 			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				log.debug("Signin page: " + SiteConfiguration.getSigninUrl());
 				final ClientResource clientResource = new ClientResource(
 						SiteConfiguration.getSigninUrl());
 				final UserHubResource userResource = clientResource
@@ -100,7 +99,7 @@ public class SignInPage extends BasePage {
 					}
 
 				} catch (Exception e) {
-					log.error(e.getMessage());
+					log.error("Error when retrieve sub domain of user", e);
 				}
 			}
 		});

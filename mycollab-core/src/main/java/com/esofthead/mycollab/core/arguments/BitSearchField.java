@@ -14,6 +14,10 @@ public class BitSearchField extends NumberSearchField {
     public static final BitSearchField TRUE = new BitSearchField(AND, 1);
     public static final BitSearchField FALSE = new BitSearchField(AND, 0);
     
+    public BitSearchField() {
+    	this(AND, 0);
+    }
+    
     public BitSearchField(Number value) {
         this(SearchField.AND, value, EQUAL);
     }

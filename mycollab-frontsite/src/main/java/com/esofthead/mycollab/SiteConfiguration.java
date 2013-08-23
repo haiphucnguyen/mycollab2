@@ -36,14 +36,14 @@ public class SiteConfiguration {
 	}
 
 	public static String getSigninUrl() {
-		return appInstance.apiUrl + "/signin";
+		return appInstance.apiUrl + "/signin/";
 	}
 
 	public static String getSignupUrl() {
-		return appInstance.apiUrl + "/signup";
+		return appInstance.apiUrl + "/signup/";
 	}
 
 	public static String getErrorReportingUrl() {
-		return appInstance.apiUrl + "/errorReport";
+		return appInstance.apiUrl + "/errorReport/";
 	}
 }

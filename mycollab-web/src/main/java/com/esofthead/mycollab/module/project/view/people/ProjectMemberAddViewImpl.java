@@ -5,7 +5,6 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
@@ -143,9 +142,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 										CurrentProjectVariables.getProjectId(),
 										AppContext.getAccountId());
 
-						final UserComboBox userBox = new UserComboBox(users);
-						userBox.setRequired(true);
-						return userBox;
+						final UserComboBoxWithInviteBtnCustomField userBoxCustomField = new UserComboBoxWithInviteBtnCustomField(
+								users);
+						return userBoxCustomField;
 					} else {
 						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
 							return new DefaultFormViewFieldFactory.FormViewField(
@@ -167,18 +166,21 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						roleBox.setRoleId(-1);
 					}
 					return roleBox;
-				} else if (propertyId.equals("joindate")) {
-					return new InviteMemberBtn();
 				}
 				return null;
 			}
 		}
 
-		private class InviteMemberBtn extends CustomField {
+		private class UserComboBoxWithInviteBtnCustomField extends CustomField {
 			private static final long serialVersionUID = 1L;
+			private final UserComboBox userBox;
 			private final Button inviteOutSideUserBtn;
 
-			public InviteMemberBtn() {
+			public UserComboBoxWithInviteBtnCustomField(List<SimpleUser> users) {
+				userBox = new UserComboBox(users);
+				userBox.setRequired(true);
+				userBox.setWidth("500px");
+
 				inviteOutSideUserBtn = new Button("Invite outside member",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -193,17 +195,27 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						});
 				inviteOutSideUserBtn
 						.addStyleName(UIConstants.THEME_ROUND_BUTTON);
-				this.setCompositionRoot(inviteOutSideUserBtn);
+
+				HorizontalLayout layout = new HorizontalLayout();
+				layout.setSpacing(true);
+
+				layout.addComponent(userBox);
+				layout.setComponentAlignment(userBox, Alignment.MIDDLE_LEFT);
+				layout.addComponent(inviteOutSideUserBtn);
+				layout.setComponentAlignment(inviteOutSideUserBtn,
+						Alignment.MIDDLE_LEFT);
+
+				this.setCompositionRoot(layout);
 			}
 
 			@Override
 			public Object getValue() {
-				return new Date();
+				return userBox.getValue();
 			}
 
 			@Override
 			public Class<?> getType() {
-				return Date.class;
+				return String.class;
 			}
 
 		}
@@ -282,27 +294,21 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			mainLayout.setMargin(true);
 			mainLayout.setSpacing(true);
 
-			informationLayout = new GridFormLayoutHelper(1, 3, "100%", "167px",
+			informationLayout = new GridFormLayoutHelper(1, 2, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
 
 			final TextField emailTextField = new TextField();
 			emailTextField.setWidth("250px");
-			final TextField nameTextField = new TextField();
-			nameTextField.setWidth("250px");
-
-			informationLayout.addComponentSupportFieldCaption(nameTextField,
-					new Label("Name"), "80px", "250px", 0, 0,
-					Alignment.MIDDLE_CENTER);
 
 			informationLayout.addComponentSupportFieldCaption(emailTextField,
-					new Label("Email"), "80px", "250px", 0, 1,
+					new Label("Email"), "80px", "250px", 0, 0,
 					Alignment.MIDDLE_CENTER);
 
 			final ProjectRoleComboBox projectRoleComboBox = new ProjectRoleComboBox();
 
 			informationLayout.addComponentSupportFieldCaption(
 					projectRoleComboBox, new Label("Role"), "80px", "250px", 0,
-					2, Alignment.MIDDLE_CENTER);
+					1, Alignment.MIDDLE_CENTER);
 			this.informationLayout.getLayout().setWidth("100%");
 			this.informationLayout.getLayout().setMargin(false);
 			this.informationLayout.getLayout().addStyleName(
@@ -317,8 +323,6 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					String[] lstNameArr = nameTextField.getValue().toString()
-							.trim().split(";");
 					String[] lstEmailArr = emailTextField.getValue().toString()
 							.trim().split(";");
 					int roleId = (Integer) projectRoleComboBox.getValue();
@@ -336,9 +340,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 											"Please enter correct email format type.");
 							return;
 						}
-						String name = (i > lstNameArr.length - 1) ? "YOU"
-								: lstNameArr[i];
-
+						String name = "You";
 						User user = userService.findUserByUserName(AppContext
 								.getUsername());
 						TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -426,7 +428,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					Alignment.MIDDLE_CENTER);
 
 			Label noteLbl = new Label(
-					"Note: You can add many emails-address[name,email] which be separated each others by semicolon (;)");
+					"Note: You can add many emails-address which be separated each others by semicolon (;)");
 			mainLayout.addComponent(noteLbl);
 
 			this.addComponent(mainLayout);

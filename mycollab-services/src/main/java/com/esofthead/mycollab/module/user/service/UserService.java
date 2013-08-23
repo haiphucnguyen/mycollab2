@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.user.service;
 import java.util.List;
 
 import org.springframework.flex.remoting.RemotingDestination;
+import org.springframework.flex.remoting.RemotingInclude;
 
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -30,23 +31,24 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
  */
 @RemotingDestination(channels = { "mycollab-amf", "mycollab-secure-amf" })
 public interface UserService extends
-		IDefaultService<String, User, UserSearchCriteria> {
-	public static int FREE_BILLING = 0;
+        IDefaultService<String, User, UserSearchCriteria> {
+    public static int FREE_BILLING = 0;
 
-	SimpleUser authentication(String username, String password,
-			String subdomain, boolean isPasswordEncrypt);
+    @RemotingInclude
+    SimpleUser authentication(String username, String password,
+            String subdomain, boolean isPasswordEncrypt);
 
-	void saveUserAccount(SimpleUser user);
+    void saveUserAccount(SimpleUser user);
 
-	void updateUserAccount(SimpleUser user);
+    void updateUserAccount(SimpleUser user);
 
-	void removeUserAccount(String username, int accountId);
+    void removeUserAccount(String username, int accountId);
 
-	void removeUserAccounts(List<String> usernames, int accountId);
+    void removeUserAccounts(List<String> usernames, int accountId);
 
-	SimpleUser findUserByUserNameInAccount(String username, int accountId);
+    SimpleUser findUserByUserNameInAccount(String username, int accountId);
 
-	User findUserByUserName(String username);
+    User findUserByUserName(String username);
 
-	void verifyUser(String username);
+    void verifyUser(String username);
 }
