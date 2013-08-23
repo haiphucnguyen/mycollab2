@@ -1,3 +1,5 @@
+package com.esofthead.mycollab.web;
+
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.vaadin.terminal.ExternalResource;
