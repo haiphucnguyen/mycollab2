@@ -18,41 +18,40 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 
 @Service
 public class BillingAccountServiceImpl extends
-		DefaultCrudService<Integer, BillingAccount> implements
-		BillingAccountService {
+        DefaultCrudService<Integer, BillingAccount> implements
+        BillingAccountService {
 
-	@Autowired
-	private BillingAccountMapper billingAccountMapper;
+    @Autowired
+    private BillingAccountMapper billingAccountMapper;
 
-	@Autowired
-	private BillingAccountMapperExt billingAccountMapperExt;
+    @Autowired
+    private BillingAccountMapperExt billingAccountMapperExt;
 
-	@Override
-	public ICrudGenericDAO<Integer, BillingAccount> getCrudMapper() {
-		return billingAccountMapper;
-	}
+    @Override
+    public ICrudGenericDAO<Integer, BillingAccount> getCrudMapper() {
+        return billingAccountMapper;
+    }
 
-	@Override
-	public SimpleBillingAccount getBillingAccountById(int accountId) {
-		return billingAccountMapperExt.getBillingAccountById(accountId);
-	}
+    @Override
+    public SimpleBillingAccount getBillingAccountById(int accountId) {
+        return billingAccountMapperExt.getBillingAccountById(accountId);
+    }
 
-	@Override
-	public BillingAccount getAccountByDomain(String domain) {
-		BillingAccountExample ex = new BillingAccountExample();
+    @Override
+    public BillingAccount getAccountByDomain(String domain) {
+        BillingAccountExample ex = new BillingAccountExample();
 
-		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
-			ex.createCriteria().andSubdomainEqualTo(domain);
-		}
+        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+            ex.createCriteria().andSubdomainEqualTo(domain);
+        }
 
-		List<BillingAccount> accounts = billingAccountMapper
-				.selectByExample(ex);
-		if ((accounts == null) || accounts.size() == 0) {
-			return null;
-		} else {
-			return accounts.get(0);
-		}
-	}
+        List<BillingAccount> accounts = billingAccountMapper
+                .selectByExample(ex);
+        if ((accounts == null) || accounts.size() == 0) {
+            return null;
+        } else {
+            return accounts.get(0);
+        }
+    }
 
 }
->>>>>>> branch 'master' of git@bitbucket.org:hainguyen/mycollab2.git

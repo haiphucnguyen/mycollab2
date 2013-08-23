@@ -33,29 +33,28 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
  */
 @RemotingDestination(channels = { "mycollab-amf", "mycollab-secure-amf" })
 public interface UserService extends
-		IDefaultService<String, User, UserSearchCriteria> {
-	public static int FREE_BILLING = 0;
+        IDefaultService<String, User, UserSearchCriteria> {
+    public static int FREE_BILLING = 0;
 
-	SimpleUser authentication(String username, String password,
-			String subdomain, boolean isPasswordEncrypt);
+    SimpleUser authentication(String username, String password,
+            String subdomain, boolean isPasswordEncrypt);
 
-	@CacheEvict
-	void saveUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
+    @CacheEvict
+    void saveUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
 
-	@CacheEvict
-	void updateUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
+    @CacheEvict
+    void updateUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
 
-	void removeUserAccount(String username, Integer accountId);
+    void removeUserAccount(String username, Integer accountId);
 
-	@CacheEvict
-	void removeUserAccounts(List<String> usernames, @CacheKey Integer accountId);
+    @CacheEvict
+    void removeUserAccounts(List<String> usernames, @CacheKey Integer accountId);
 
-	@Cacheable
-	SimpleUser findUserByUserNameInAccount(String username,
-			@CacheKey Integer accountId);
+    @Cacheable
+    SimpleUser findUserByUserNameInAccount(String username,
+            @CacheKey Integer accountId);
 
-	User findUserByUserName(String username);
+    User findUserByUserName(String username);
 
-	void verifyUser(String username);
+    void verifyUser(String username);
 }
->>>>>>> branch 'master' of git@bitbucket.org:hainguyen/mycollab2.git
