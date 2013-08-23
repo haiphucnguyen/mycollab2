@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.pages;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;

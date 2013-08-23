@@ -1,45 +1,45 @@
 package com.esofthead.mycollab.core.arguments;
 
 public class SearchRequest<S extends SearchCriteria> {
-	public static int DEFAULT_NUMBER_SEARCH_ITEMS = 25;
+    public static int DEFAULT_NUMBER_SEARCH_ITEMS = 25;
 
-	private S searchCriteria;
+    private S searchCriteria;
 
-	private int currentPage = 1;
+    private int currentPage = 1;
 
-	private int numberOfItems = 1;
+    private int numberOfItems = 1;
 
-	public SearchRequest() {
-		this(null, 1, 1);
-	}
+    public SearchRequest() {
+        this(null, 1, 1);
+    }
 
-	public SearchRequest(S searchCriteria, int currentPage, int numberOfItems) {
-		this.searchCriteria = searchCriteria;
-		this.currentPage = currentPage;
-		this.numberOfItems = numberOfItems;
-	}
+    public SearchRequest(S searchCriteria, int currentPage, int numberOfItems) {
+        this.searchCriteria = searchCriteria;
+        this.currentPage = currentPage;
+        this.numberOfItems = numberOfItems;
+    }
 
-	public S getSearchCriteria() {
-		return searchCriteria;
-	}
+    public S getSearchCriteria() {
+        return searchCriteria;
+    }
 
-	public void setSearchCriteria(S searchCriteria) {
-		this.searchCriteria = searchCriteria;
-	}
+    public void setSearchCriteria(S searchCriteria) {
+        this.searchCriteria = searchCriteria;
+    }
 
-	public int getCurrentPage() {
-		return currentPage;
-	}
+    public int getCurrentPage() {
+        return currentPage;
+    }
 
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
 
-	public int getNumberOfItems() {
-		return numberOfItems;
-	}
+    public int getNumberOfItems() {
+        return numberOfItems;
+    }
 
-	public void setNumberOfItems(int numberOfItems) {
-		this.numberOfItems = numberOfItems;
-	}
+    public void setNumberOfItems(int numberOfItems) {
+        this.numberOfItems = numberOfItems;
+    }
 }
