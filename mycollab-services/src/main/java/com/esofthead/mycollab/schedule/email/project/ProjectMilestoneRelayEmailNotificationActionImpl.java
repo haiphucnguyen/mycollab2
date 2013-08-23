@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
 
 @Component
@@ -19,6 +21,9 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	@Autowired
 	private MilestoneService milestoneService;
 
+	@Autowired
+	private ProjectService projectService;
+
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
@@ -27,7 +32,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$milestone.name]: Phase \"" + milestone.getName()
-						+ "\" created",
+						+ "\" has been created",
 				"templates/email/project/phaseCreatedNotifier.mt");
 
 		templateGenerator.putVariable("milestone", milestone);
@@ -46,6 +51,13 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
 		hyperLinks.put("ownerUserUrl", linkGenerator
 				.generateUserPreviewFullLink(milestone.getOwnerFullName()));
+
+		SimpleProject project = projectService.findById(
+				milestone.getProjectid(), milestone.getSaccountid());
+		if (project != null) {
+			hyperLinks.put("projectName", project.getName());
+		}
+
 		return hyperLinks;
 	}
 

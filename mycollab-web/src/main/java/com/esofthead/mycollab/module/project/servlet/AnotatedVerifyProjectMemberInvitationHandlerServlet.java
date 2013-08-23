@@ -21,6 +21,7 @@ import org.springframework.web.HttpRequestHandler;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -31,6 +32,7 @@ import com.esofthead.template.velocity.EngineFactory;
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		HttpRequestHandler {
+	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/outsideMemberAcceptInvitationPage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -50,36 +52,127 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 				pathInfo = pathInfo.substring(1);
 
 				String pathVariables = UrlEncodeDecoder.decode(pathInfo);
-				int sAccount = Integer.parseInt(pathVariables.substring(0,
-						pathVariables.indexOf("/")));
-				pathVariables = pathVariables.substring((new Integer(sAccount))
-						.toString().length() + 1);
-
-				int memberId = Integer.parseInt(pathVariables.substring(0,
-						pathVariables.indexOf("/")));
-
-				if (memberId > 0) {
-					SimpleProjectMember member = projectMemberService.findById(
-							memberId, AppContext.getAccountId());
-					if (member != null) {
-						member.setStatus(ProjectMemberStatusContants.ACTIVE);
-						projectMemberService.updateWithSession(member, "");
-
-						String subdomain = projectService
-								.getSubdomainOfProject(member.getProjectid());
-
-						String redirectURL = SiteConfiguration
-								.getSiteUrl(subdomain)
-								+ "project/dashboard/"
-								+ UrlEncodeDecoder
-										.encode(member.getProjectid());
-						response.sendRedirect(redirectURL);
-						return;
-					}
+				String identifyStr = pathVariables.substring(0,
+						pathVariables.indexOf("/"));
+				if (identifyStr.equals("OUTSIDE")) {
+					// handle outside here
+					pathVariables = pathVariables.substring(identifyStr
+							.length() + 1);
+					handleOutSideMemberInvite(pathVariables, response);
+				} else {
+					// handle inside member invite
+					handleInsideMemberInvite(pathVariables, response);
 				}
+				return;
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);
+	}
+
+	private void handleInsideMemberInvite(String pathVariables,
+			HttpServletResponse response) {
+		int sAccount = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+		pathVariables = pathVariables.substring((new Integer(sAccount))
+				.toString().length() + 1);
+
+		int memberId = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+
+		if (memberId > 0) {
+			SimpleProjectMember member = projectMemberService.findById(
+					memberId, AppContext.getAccountId());
+			if (member != null) {
+				member.setStatus(ProjectMemberStatusContants.ACTIVE);
+				projectMemberService.updateWithSession(member, "");
+
+				String subdomain = projectService.getSubdomainOfProject(member
+						.getProjectid());
+
+				String redirectURL = SiteConfiguration.getSiteUrl(subdomain)
+						+ "project/dashboard/"
+						+ UrlEncodeDecoder.encode(member.getProjectid());
+				try {
+					response.sendRedirect(redirectURL);
+				} catch (IOException e) {
+					throw new MyCollabException(e);
+				}
+			}
+		}
+	}
+
+	private void handleOutSideMemberInvite(String pathVariables,
+			HttpServletResponse response) {
+		int sAccountId = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+		pathVariables = pathVariables.substring((sAccountId + "").length() + 1);
+
+		String name = pathVariables.substring(0, pathVariables.indexOf("/"));
+		pathVariables = pathVariables.substring(name.length() + 1);
+
+		String email = pathVariables.substring(0, pathVariables.indexOf("/"));
+		pathVariables = pathVariables.substring(email.length() + 1);
+
+		int projectId = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+		pathVariables = pathVariables.substring((projectId + "").length() + 1);
+
+		int roleId = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+		pathVariables = pathVariables.substring((roleId + "").length() + 1);
+
+		String loginURL = pathVariables;
+
+		String handelCreateAccountURL = loginURL
+				+ "project/outside/createAccount/";
+
+		String html = generateOutsideMemberAcceptPage(sAccountId, name, email,
+				projectId, roleId, loginURL, handelCreateAccountURL);
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			throw new MyCollabException(e);
+		}
+		out.println(html);
+	}
+
+	private String generateOutsideMemberAcceptPage(int sAccountId, String name,
+			String email, int projectId, int roleId, String loginURL,
+			String handelCreateAccountURL) {
+		VelocityContext context = new VelocityContext(
+				EngineFactory.createContext());
+
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+							.getClassLoader().getResourceAsStream(
+									OUTSIDE_MEMBER_WELCOME_PAGE), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(
+					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+							.getClassLoader().getResourceAsStream(
+									OUTSIDE_MEMBER_WELCOME_PAGE));
+		}
+		context.put("name", name);
+		context.put("email", email);
+		context.put("projectId", projectId);
+		context.put("roleId", roleId);
+		context.put("loginURL", loginURL);
+		context.put("handelCreateAccountURL", handelCreateAccountURL);
+		context.put("sAccountId", sAccountId);
+
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
+				reader);
+		return writer.toString();
 	}
 
 	public static class PageNotFoundGenerator {

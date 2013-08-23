@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
@@ -21,6 +23,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	@Autowired
 	private ProblemService problemService;
 
+	@Autowired
+	private ProjectService projectService;
+
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
@@ -29,7 +34,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$problem.issuename]: Problem \"" + problem.getIssuename()
-						+ "\" created",
+						+ "\" has been created",
 				"templates/email/project/problemCreatedNotifier.mt");
 
 		templateGenerator.putVariable("problem", problem);
@@ -52,6 +57,13 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 				.put("raiseUserUrl", linkGenerator
 						.generateUserPreviewFullLink(problem
 								.getRaisedByUserFullName()));
+
+		SimpleProject project = projectService.findById(problem.getProjectid(),
+				problem.getSaccountid());
+		if (project != null) {
+			hyperLinks.put("projectName", project.getName());
+		}
+
 		return hyperLinks;
 	}
 

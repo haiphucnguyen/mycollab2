@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
 
@@ -20,6 +22,9 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	@Autowired
 	private RiskService riskService;
 
+	@Autowired
+	private ProjectService projectService;
+
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
@@ -27,7 +32,8 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 		SimpleRisk risk = riskService.findById(riskId, 0);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$risk.riskname]: Risk \"" + risk.getRiskname() + "\" created",
+				"[$risk.riskname]: Risk \"" + risk.getRiskname()
+						+ "\" has been created",
 				"templates/email/project/riskCreatedNotifier.mt");
 
 		templateGenerator.putVariable("risk", risk);
@@ -45,6 +51,12 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				.generateUserPreviewFullLink(risk.getRaisedByUserFullName()));
 		hyperLinks.put("assignUserURL", linkGenerator
 				.generateUserPreviewFullLink(risk.getAssignedToUserFullName()));
+
+		SimpleProject project = projectService.findById(risk.getProjectid(),
+				risk.getSaccountid());
+		if (project != null) {
+			hyperLinks.put("projectName", project.getName());
+		}
 		return hyperLinks;
 	}
 

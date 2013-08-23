@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
+import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
@@ -443,8 +444,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				.addSearchHandler(new SearchHandler<FileSearchCriteria>() {
 					@Override
 					public void onSearch(FileSearchCriteria criteria) {
-						Folder selectedFolder = (Folder) FileMainViewImpl.this.resourceService
-								.getResource(criteria.getBaseFolder());
+						Folder selectedFolder = null;
+						if (criteria.getStorageName() != null
+								&& criteria.getStorageName().equals(
+										StorageNames.DROPBOX)) {
+							selectedFolder = (Folder) externalResourceService
+									.getcurrentResourceByPath(
+											criteria.getExternalDrive(),
+											criteria.getBaseFolder());
+						} else {
+							selectedFolder = (Folder) FileMainViewImpl.this.resourceService
+									.getResource(criteria.getBaseFolder());
+						}
 						FileMainViewImpl.this.itemResourceContainerLayout
 								.constructBody(selectedFolder);
 						bodyResourceLayout.fileBreadCrumb
