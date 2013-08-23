@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -58,9 +59,9 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 		simpleUser.setUsername(username);
 
 		try {
-			UserService userService = AppContext
-					.getSpringBean(UserService.class);
-			userService.updateUserAccount(simpleUser);
+			UserService userService = ApplicationContextUtil
+					.getBean(UserService.class);
+			userService.updateUserAccount(simpleUser, sAccountId);
 			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {
 			error = true;

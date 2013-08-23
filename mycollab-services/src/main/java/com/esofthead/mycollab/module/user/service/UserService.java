@@ -20,6 +20,9 @@ import java.util.List;
 
 import org.springframework.flex.remoting.RemotingDestination;
 
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -36,15 +39,20 @@ public interface UserService extends
 	SimpleUser authentication(String username, String password,
 			String subdomain, boolean isPasswordEncrypt);
 
-	void saveUserAccount(SimpleUser user);
+	@CacheEvict
+	void saveUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
 
-	void updateUserAccount(SimpleUser user);
+	@CacheEvict
+	void updateUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
 
-	void removeUserAccount(String username, int accountId);
+	void removeUserAccount(String username, Integer accountId);
 
-	void removeUserAccounts(List<String> usernames, int accountId);
+	@CacheEvict
+	void removeUserAccounts(List<String> usernames, @CacheKey Integer accountId);
 
-	SimpleUser findUserByUserNameInAccount(String username, int accountId);
+	@Cacheable
+	SimpleUser findUserByUserNameInAccount(String username,
+			@CacheKey Integer accountId);
 
 	User findUserByUserName(String username);
 
