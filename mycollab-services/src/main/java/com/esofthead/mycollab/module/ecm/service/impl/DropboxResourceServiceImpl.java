@@ -14,6 +14,7 @@ import com.dropbox.core.DbxClient;
 import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxEntry.File;
 import com.dropbox.core.DbxEntry.WithChildren;
+import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
@@ -143,6 +144,39 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		} catch (Exception e) {
 			log.error("Error when get dropbox resource", e);
 		}
+	}
+
+	@Override
+	public Resource getcurrentResourceByPath(ExternalDrive drive, String path) {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+		Resource res = null;
+		try {
+			DbxEntry entry = client.getMetadata(path);
+			if (entry.isFile()) {
+				ExternalContent resource = new ExternalContent();
+				resource.setStorageName(StorageNames.DROPBOX);
+				resource.setExternalDrive(drive);
+				Date lastModifiedDate = ((File) entry).lastModified;
+				Calendar createdDate = new GregorianCalendar();
+				createdDate.setTime(lastModifiedDate);
+				resource.setSize(Double.parseDouble(((File) entry).numBytes
+						/ 1024 + ""));
+				resource.setCreated(createdDate);
+				resource.setPath(entry.path);
+				res = resource;
+			} else if (entry.isFolder()) {
+				ExternalFolder resource = new ExternalFolder();
+				resource.setStorageName(StorageNames.DROPBOX);
+				resource.setExternalDrive(drive);
+				resource.setPath(entry.path);
+				res = resource;
+			}
+		} catch (DbxException e) {
+			log.error("Error when get dropbox resource", e);
+		}
+		return res;
 	}
 
 }

@@ -82,10 +82,7 @@
 			What are you waiting? Now we take a tour . 
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			if you already has account ,<a href="$loginURL"><span style="color:blue; font-style:italic">click here</span></a>  
-		</div>
-		<div style="display: block; padding: 8px 8px 8px 20px;">
-			Or
+			At first, please create your account
 			<button class="v-button-bluebtn" type="button" onclick="return createNewAccount();">Create new account</button>
 		</div>
 	</div>	
@@ -104,17 +101,15 @@
 		<tr>
 			<td><label for="username">User Name:</label> </td>
 			<td><input id="username" maxlength="45" name="username" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label >Birthdate:</label> </td>
+			
+			<td style="padding-left: 15px;"><label >Birthdate:</label> </td>
 			<td><input id="birthdate" maxlength="45" name="birthdate" type="text" /></td>
 		</tr>
 		<tr>
 			<td><label for="email">Email Address:</label> </td>
 			<td><input id="email" maxlength="45" name="email" type="text" /></td>
-		</tr>
-		<tr>
-			<td><label>Website:</label> </td>
+			
+			<td style="padding-left: 15px;"><label>Website:</label> </td>
 			<td><input id="website" maxlength="45" name="website" type="text" /></td>
 		</tr>
 		<tr>
@@ -124,7 +119,7 @@
 		</tbody></table>
 		</form>
 		
-		<div style="display: block; padding: 10px 8px 8px 20px;">
+		<div style="display: block; padding: 8px 8px 8px 20px;">
 			<p><span style="color:blue; font-style:bold"> More informations
 			</span></p>
 		</div>
@@ -134,9 +129,8 @@
 		<tr>
 			<td><label>Country: </label> </td>
 			<td><input id="country" maxlength="30" name="country" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label>Company: </label> </td>
+			
+			<td style="padding-left: 15px;"><label>Company: </label> </td>
 			<td><input id="company" maxlength="30" name="company" type="text" /> </td>
 		</tr>
 		<tr>

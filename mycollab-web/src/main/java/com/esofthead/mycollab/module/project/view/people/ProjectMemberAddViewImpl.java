@@ -361,9 +361,10 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						templateGenerator.putVariable(
 								"urlAccept",
 								SiteConfiguration.getSiteUrl(subdomain)
-										+ "project/outside/invitation/"
-										+ UrlEncodeDecoder.encode(+AppContext
-												.getAccountId()
+										+ "project/member/invitation/confirm_invite/"
+										+ UrlEncodeDecoder.encode("OUTSIDE"
+												+ "/"
+												+ AppContext.getAccountId()
 												+ "/"
 												+ name
 												+ "/"

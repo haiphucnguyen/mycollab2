@@ -11,4 +11,6 @@ public interface ExternalResourceService extends IService {
 	List<Resource> getResources(ExternalDrive drive, String path);
 
 	List<ExternalFolder> getSubFolders(ExternalDrive drive, String path);
+
+	Resource getcurrentResourceByPath(ExternalDrive drive, String path);
 }
