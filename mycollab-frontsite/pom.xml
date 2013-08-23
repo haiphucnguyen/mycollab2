@@ -43,20 +43,19 @@
             <artifactId>mycollab-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        
         <!-- WICKET DEPENDENCIES -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
             <version>${wicket.version}</version>
         </dependency>
-        <!-- OPTIONAL DEPENDENCY <dependency> <groupId>org.apache.wicket</groupId> 
-            <artifactId>wicket-extensions</artifactId> <version>${wicket.version}</version> 
-            </dependency> -->
 
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
@@ -93,13 +92,6 @@
             <version>2.2.3</version>
         </dependency>
 
-        <!-- JETTY dependency -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <version>8.1.5.v20120716</version>
-            <artifactId>jetty-servlets</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>fr.xebia.web</groupId>
             <artifactId>xebia-servlet-extras</artifactId>
@@ -114,6 +106,13 @@
             <artifactId>junit</artifactId>
             <version>4.10</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- SOCIAL AUTH DEPENDENCY -->
+        <dependency>
+            <groupId>org.brickred</groupId>
+            <artifactId>socialauth</artifactId>
+            <version>4.2</version>
         </dependency>
 
 
@@ -209,10 +208,12 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <target>
-                                <copy verbose="true" overwrite="true" force="true"
+                                <copy verbose="true" overwrite="true"
+                                    force="true"
                                     file="${basedir}/src/main/resources/settings.properties-live"
                                     tofile="${basedir}/src/main/resources/settings.properties" />
-                                <copy verbose="true" overwrite="true" force="true"
+                                <copy verbose="true" overwrite="true"
+                                    force="true"
                                     file="${basedir}/src/main/resources/log4j.properties-live"
                                     tofile="${basedir}/src/main/resources/log4j.properties" />
                             </target>

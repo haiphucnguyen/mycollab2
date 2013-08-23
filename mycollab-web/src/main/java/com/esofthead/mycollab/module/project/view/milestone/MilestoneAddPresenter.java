@@ -4,12 +4,16 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -54,8 +58,8 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 				breadcrumb.gotoMilestoneEdit(milestone);
 			}
 		} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
+			MessageConstants.showMessagePermissionAlert();
+		}
 	}
 
 	private void bind() {
@@ -95,11 +99,35 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 		milestone.setProjectid(CurrentProjectVariables.getProjectId());
 		milestone.setSaccountid(AppContext.getAccountId());
 
+		SimpleRelayEmailNotification relayNotification = new SimpleRelayEmailNotification();
+		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
+		relayNotification.setChangeby(AppContext.getUsername());
+		relayNotification.setChangecomment("");
+		relayNotification.setSaccountid(AppContext.getAccountId());
+		relayNotification.setType(MonitorTypeConstants.PRJ_MILESTONE);
+		relayNotification
+				.setEmailhandlerbean(ProjectMilestoneRelayEmailNotificationAction.class
+						.getName());
+
+		relayNotification.setExtratypeid(milestone.getProjectid());
+
+		RelayEmailNotificationService relayEmailNotificationService = AppContext
+				.getSpringBean(RelayEmailNotificationService.class);
+
 		if (milestone.getId() == null) {
-			milestoneService.saveWithSession(milestone,
+			Integer id = milestoneService.saveWithSession(milestone,
+					AppContext.getUsername());
+
+			relayNotification.setTypeid(id);
+			relayEmailNotificationService.saveWithSession(relayNotification,
 					AppContext.getUsername());
 		} else {
+			relayNotification.setTypeid(milestone.getId());
+			relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
+
 			milestoneService.updateWithSession(milestone,
+					AppContext.getUsername());
+			relayEmailNotificationService.saveWithSession(relayNotification,
 					AppContext.getUsername());
 		}
 

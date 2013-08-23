@@ -78,7 +78,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private static final long serialVersionUID = 1L;
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
-	private Tree menuTree;
+	private final Tree menuTree;
 
 	private Folder baseFolder;
 	private Folder rootECMFolder;
@@ -87,9 +87,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private List<Resource> selectedResourcesList;
 	private ItemResourceContainerLayout itemResourceContainerLayout;
-	private MainBodyResourceLayout bodyResourceLayout;
+	private final MainBodyResourceLayout bodyResourceLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	private Button switchViewBtn;
+	private final Button switchViewBtn;
 	private PagingResourceWapper pagingResourceWapper;
 
 	private final ResourceService resourceService;
@@ -491,7 +491,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			final Embedded titleIcon = new Embedded();
 			titleIcon.setSource(MyCollabResource
-					.newResource("icons/24/document_preview.png"));
+					.newResource("icons/24/ecm/document_preview.png"));
 			layout.addComponent(titleIcon);
 			layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -743,10 +743,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			final Embedded resourceIcon = new Embedded();
 			if (res instanceof Folder)
 				resourceIcon.setSource(MyCollabResource
-						.newResource("icons/48/folder_blue_icon.png"));
+						.newResource("icons/48/ecm/folder_blue_icon.png"));
 			else
 				resourceIcon.setSource(MyCollabResource
-						.newResource("icons/48/file_blue_icon.png"));
+						.newResource("icons/48/ecm/file_blue_icon.png"));
 			resIconWapper.setWidth("70px");
 			resIconWapper.addComponent(resourceIcon);
 
@@ -961,7 +961,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			Button toContainFolder = new Button();
 			toContainFolder.setIcon(MyCollabResource
-					.newResource("icons/48/folder_arrow_right_icon.png"));
+					.newResource("icons/48/ecm/folder_arrow_right_icon.png"));
 			toContainFolder.setDescription("Go to folder");
 			toContainFolder.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -971,7 +971,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					Resource containFolder = FileMainViewImpl.this.resourceService
 							.getParentFolder(res.getPath());
 					FileMainViewImpl.this.menuTree
-							.expandItem((Folder) containFolder);
+							.expandItem(containFolder);
 					FileMainViewImpl.this.itemResourceContainerLayout
 							.constructBody((Folder) containFolder);
 					FileMainViewImpl.this.baseFolder = (Folder) containFolder;
@@ -1020,16 +1020,16 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			for (Object item : dataSourceArray) {
 				if (((Folder) item).getPath().equals(folder.getPath())) {
-					FileMainViewImpl.this.menuTree.collapseItem((Folder) item);
-					FileMainViewImpl.this.menuTree.expandItem((Folder) item);
+					FileMainViewImpl.this.menuTree.collapseItem(item);
+					FileMainViewImpl.this.menuTree.expandItem(item);
 					break;
 				}
 			}
 			for (Object item : dataSourceArray) {
 				if (((Folder) item).getPath().equals(
 						FileMainViewImpl.this.baseFolder.getPath())) {
-					FileMainViewImpl.this.menuTree.collapseItem((Folder) item);
-					FileMainViewImpl.this.menuTree.expandItem((Folder) item);
+					FileMainViewImpl.this.menuTree.collapseItem(item);
+					FileMainViewImpl.this.menuTree.expandItem(item);
 					break;
 				}
 			}
@@ -1387,11 +1387,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private class MainBodyResourceLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
-		private HorizontalLayout controllGroupBtn;
-		private Button deleteBtn;
-		private Button selectAllBtn;
-		private FileBreadcrumb fileBreadCrumb;
-		private FilterPanel filterPanel;
+		private final final HorizontalLayout controllGroupBtn;
+		private final final Button deleteBtn;
+		private final final Button selectAllBtn;
+		private final final FileBreadcrumb fileBreadCrumb;
+		private final final FilterPanel filterPanel;
 
 		public MainBodyResourceLayout() {
 			VerticalLayout mainBodyLayout = new VerticalLayout();
@@ -1644,7 +1644,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 																.getUsername());
 												if (res instanceof Folder) {
 													FileMainViewImpl.this.menuTree
-															.removeItem((Folder) res);
+															.removeItem(res);
 												}
 											}
 											if (itemResourceContainerLayout.isSearchAction) {
@@ -1677,19 +1677,19 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 	private class PagingResourceWapper extends CssLayout {
 		private static final long serialVersionUID = 1L;
-		private int totalItem;
+		private final final int totalItem;
 		public static final int pageItemNum = 15;
-		private int currentPage = 1;
-		private CssLayout controlBarWrapper;
-		private HorizontalLayout pageManagement;
-		private int totalPage;
-		private List<Resource> lstResource;
+		private final final int currentPage = 1;
+		private final final CssLayout controlBarWrapper;
+		private final final HorizontalLayout pageManagement;
+		private final final int totalPage;
+		private final final List<Resource> lstResource;
 		private Button currentBtn;
-		private HorizontalLayout controlBar;
+		private final final HorizontalLayout controlBar;
 
 		public PagingResourceWapper(List<Resource> lstResource) {
 			this.totalItem = lstResource.size();
-			this.totalPage = ((int) totalItem / pageItemNum) + 1;
+			this.totalPage = (totalItem / pageItemNum) + 1;
 			this.lstResource = lstResource;
 
 			// defined layout here ---------------------------
@@ -1839,3 +1839,4 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 	}
 }
+>>>>>>> branch 'master' of git@bitbucket.org:hainguyen/mycollab2.git

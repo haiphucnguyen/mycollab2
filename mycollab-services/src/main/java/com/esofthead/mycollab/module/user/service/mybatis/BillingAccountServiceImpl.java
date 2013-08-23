@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.configuration.DeploymentMode;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
@@ -55,3 +55,4 @@ public class BillingAccountServiceImpl extends
 	}
 
 }
+>>>>>>> branch 'master' of git@bitbucket.org:hainguyen/mycollab2.git

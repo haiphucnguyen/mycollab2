@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.user.service.mybatis;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -33,9 +34,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.domain.PermissionMap;
-import com.esofthead.mycollab.configuration.DeploymentMode;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -104,7 +106,7 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void saveUserAccount(SimpleUser record) {
+	public void saveUserAccount(SimpleUser record, Integer sAccountId) {
 		// check if user email has already in this account yet
 		UserAccountExample userAccountEx = new UserAccountExample();
 		userAccountEx.createCriteria().andUsernameEqualTo(record.getEmail());
@@ -179,7 +181,7 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void updateUserAccount(SimpleUser record) {
+	public void updateUserAccount(SimpleUser record, Integer sAccountId) {
 
 		userMapper.updateByPrimaryKeySelective(record);
 
@@ -257,7 +259,8 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public SimpleUser findUserByUserNameInAccount(String username, int accountId) {
+	public SimpleUser findUserByUserNameInAccount(String username,
+			Integer accountId) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
 		criteria.setSaccountid(new NumberSearchField(accountId));
@@ -295,7 +298,11 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void removeUserAccount(String username, int accountId) {
+	public void removeUserAccount(String username, Integer accountId) {
+		removeUserAccounts(Arrays.asList(username), accountId);
+	}
+
+	private void internalRemoveUserAccount(String username, Integer accountId) {
 		// check if current user is the unique account owner, then reject
 		// deletion
 		UserAccountExample userAccountEx = new UserAccountExample();
@@ -352,10 +359,15 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void removeUserAccounts(List<String> usernames, int accountId) {
+	public void removeUserAccounts(List<String> usernames, Integer accountId) {
 		for (String username : usernames) {
-			removeUserAccount(username, accountId);
+			internalRemoveUserAccount(username, accountId);
 		}
+
+		// clean cache of related items
+		String userPrefixKey = String.format("%s-%d",
+				UserService.class.getName(), accountId);
+		LocalCacheManager.removeCacheItems(accountId.toString(), userPrefixKey);
 	}
 
 	@Override

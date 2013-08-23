@@ -18,6 +18,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:/META-INF/spring/*-context.xml
+            classpath:/META-INF/spring-web/rest-context.xml
         </param-value>
     </context-param>
 
@@ -57,6 +58,7 @@
     <servlet>
         <servlet-name>RestletServlet</servlet-name>
         <servlet-class>org.restlet.ext.spring.SpringServerServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
     </servlet>
 
     <!-- Catch api request -->
@@ -94,7 +96,7 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value> 
-                classpath:/META-INF/spring-web/*-context.xml</param-value>
+                classpath:/META-INF/spring-web/flex-context.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

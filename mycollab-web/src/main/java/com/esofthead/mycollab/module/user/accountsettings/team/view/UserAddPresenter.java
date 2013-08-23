@@ -68,9 +68,9 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 		item.setTimezone(view.getTimezone().getId());
 
 		if (item.getUsername() == null) {
-			userService.saveUserAccount(item);
+			userService.saveUserAccount(item, AppContext.getAccountId());
 		} else {
-			userService.updateUserAccount(item);
+			userService.updateUserAccount(item, AppContext.getAccountId());
 		}
 
 	}
