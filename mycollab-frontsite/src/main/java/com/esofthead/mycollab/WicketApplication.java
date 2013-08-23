@@ -1,12 +1,16 @@
 package com.esofthead.mycollab;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,20 +73,14 @@ public class WicketApplication extends WebApplication {
 						new Error500Page(e)));
 			}
 		});
+	}
 
-//		setRootRequestMapper(new HttpsMapper(getRootRequestMapper(),
-//				new HttpsConfig()) {
-//			@Override
-//			protected Scheme getDesiredSchemeFor(Class pageClass) {
-//				if (getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT) {
-//					log.debug("in development mode, returning HTTP");
-//					return Scheme.HTTP;
-//				} else {
-//					log.debug("not in development mode, letting the mapper decide");
-//					return super.getDesiredSchemeFor(pageClass);
-//				}
-//			}
-//		});
+	@Override
+	public WebRequest newWebRequest(HttpServletRequest servletRequest,
+			String filterPath) {
+		WebRequest webRequest = super.newWebRequest(servletRequest, filterPath);
+		return new ServletWebRequest(servletRequest, filterPath, webRequest
+				.getUrl().canonical());
 	}
 
 }
