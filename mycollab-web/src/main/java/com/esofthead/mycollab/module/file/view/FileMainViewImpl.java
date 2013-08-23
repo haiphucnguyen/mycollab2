@@ -491,7 +491,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			final Embedded titleIcon = new Embedded();
 			titleIcon.setSource(MyCollabResource
-					.newResource("icons/24/document_preview.png"));
+					.newResource("icons/24/ecm/document_preview.png"));
 			layout.addComponent(titleIcon);
 			layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -743,10 +743,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			final Embedded resourceIcon = new Embedded();
 			if (res instanceof Folder)
 				resourceIcon.setSource(MyCollabResource
-						.newResource("icons/48/folder_blue_icon.png"));
+						.newResource("icons/48/ecm/folder_blue_icon.png"));
 			else
 				resourceIcon.setSource(MyCollabResource
-						.newResource("icons/48/file_blue_icon.png"));
+						.newResource("icons/48/ecm/file_blue_icon.png"));
 			resIconWapper.setWidth("70px");
 			resIconWapper.addComponent(resourceIcon);
 
@@ -961,7 +961,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			Button toContainFolder = new Button();
 			toContainFolder.setIcon(MyCollabResource
-					.newResource("icons/48/folder_arrow_right_icon.png"));
+					.newResource("icons/48/ecm/folder_arrow_right_icon.png"));
 			toContainFolder.setDescription("Go to folder");
 			toContainFolder.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
