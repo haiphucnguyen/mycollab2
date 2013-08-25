@@ -41,12 +41,16 @@ public class MonitorItemAspect {
 		Watchable watchableAnnotation = cls.getAnnotation(Watchable.class);
 		if (watchableAnnotation != null) {
 			try {
+				int sAccountId = (Integer) PropertyUtils.getProperty(bean,
+						"saccountid");
+
 				MonitorItem monitorItem = new MonitorItem();
 				monitorItem.setMonitorDate(new GregorianCalendar().getTime());
 				monitorItem.setType(watchableAnnotation.type());
 				monitorItem.setTypeid((Integer) PropertyUtils.getProperty(bean,
 						"id"));
 				monitorItem.setUser(username);
+				monitorItem.setSaccountid(sAccountId);
 
 				monitorItemService.saveWithSession(monitorItem, username);
 				log.debug("Save monitor item: "
@@ -66,8 +70,6 @@ public class MonitorItemAspect {
 				RelayEmailNotification relayNotification = new RelayEmailNotification();
 				relayNotification.setChangeby(username);
 				relayNotification.setChangecomment("");
-				int sAccountId = (Integer) PropertyUtils.getProperty(bean,
-						"saccountid");
 				relayNotification.setSaccountid(sAccountId);
 				relayNotification.setType(watchableAnnotation.type());
 				relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);

@@ -10,6 +10,10 @@
     </listener>
 
     <listener>
+        <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
+    </listener>
+
+    <listener>
         <listener-class>com.esofthead.mycollab.web.MyCollabSessionListener</listener-class>
     </listener>
 
@@ -58,7 +62,7 @@
     <servlet>
         <servlet-name>RestletServlet</servlet-name>
         <servlet-class>org.restlet.ext.spring.SpringServerServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <!-- Catch api request -->

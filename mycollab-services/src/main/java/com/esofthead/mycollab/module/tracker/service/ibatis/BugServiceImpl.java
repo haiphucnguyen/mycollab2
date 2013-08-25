@@ -12,14 +12,12 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
-import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
-import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -38,10 +36,6 @@ public class BugServiceImpl extends
 	protected BugMapper bugMapper;
 	@Autowired
 	protected BugMapperExt bugMapperExt;
-	@Autowired
-	protected ComponentMapperExt componentMapperExt;
-	@Autowired
-	protected MonitorItemService monitorItemService;
 
 	@Override
 	public ICrudGenericDAO<Integer, BugWithBLOBs> getCrudMapper() {

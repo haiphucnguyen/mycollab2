@@ -28,7 +28,7 @@
             <artifactId>mycollab-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-reporting</artifactId>
@@ -383,6 +383,7 @@
                 <version>2.3</version>
                 <configuration>
                     <warName>app</warName>
+                    <archiveClasses>false</archiveClasses>
                 </configuration>
             </plugin>
 
@@ -445,10 +446,12 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <target>
-                                <copy verbose="true" overwrite="true" force="true"
+                                <copy verbose="true" overwrite="true"
+                                    force="true"
                                     file="${basedir}/src/main/resources/resources.properties-live"
                                     tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" />
-                                <copy verbose="true" overwrite="true" force="true"
+                                <copy verbose="true" overwrite="true"
+                                    force="true"
                                     file="${basedir}/src/main/resources/log4j.properties-live"
                                     tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/log4j.properties" />
                             </target>
