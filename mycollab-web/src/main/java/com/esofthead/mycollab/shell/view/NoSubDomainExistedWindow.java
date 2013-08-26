@@ -40,7 +40,7 @@ public class NoSubDomainExistedWindow extends Window {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							NoSubDomainExistedWindow.this.open(new ExternalResource("http://www.mycollab.com"));
+							NoSubDomainExistedWindow.this.open(new ExternalResource("https://www.mycollab.com"));
 						}
 					});
 			backToHome.addStyleName(UIConstants.THEME_BLUE_LINK);
