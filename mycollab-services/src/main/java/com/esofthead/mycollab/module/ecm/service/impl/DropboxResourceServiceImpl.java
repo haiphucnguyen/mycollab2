@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.ecm.service.impl;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -73,7 +74,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			throw new UserInvalidInputException(
 					"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server");
 		}
-
+		Collections.sort(resources);
 		return resources;
 	}
 

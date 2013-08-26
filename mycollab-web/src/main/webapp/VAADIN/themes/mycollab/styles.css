@@ -1780,8 +1780,9 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:        DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=        '#DDD', GradientType=        0);
+	filter: progid:                         DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=                         '#DDD', GradientType=      
+		                  0);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -1828,11 +1829,34 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:        DXImageTransform.Microsoft.gradient(startColorstr=
+	filter: progid:                         DXImageTransform.Microsoft.gradient(startColorstr=
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		 
-		   '#F8F8F8', endColorstr=        '#EEEEEE', GradientType=        0);
+		   '#F8F8F8', endColorstr=                         '#EEEEEE',
+		GradientType=    
+		
+		
+		  
+		    
+		          0);
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
@@ -4482,4 +4506,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	height: 48px;
 	width: 48px;
 	background: url('icons/48/warn.png') no-repeat left top transparent;
+}
+
+.v-label.grayLabel {
+	color: gray;
 }

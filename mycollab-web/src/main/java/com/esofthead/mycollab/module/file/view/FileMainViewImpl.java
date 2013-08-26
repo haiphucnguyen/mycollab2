@@ -714,9 +714,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		private HorizontalLayout constructOneItemResourceLayout(
 				final Resource res, final boolean isSearchAction) {
 			final HorizontalLayout layout = new HorizontalLayout();
-			layout.addStyleName("resourceItem");
 			layout.setWidth("100%");
 			layout.setSpacing(true);
+			layout.addStyleName("resourceItem");
+			layout.setHeight("44px");
 
 			final CheckBox checkbox = new CheckBox();
 			checkbox.setWidth("30px");
@@ -799,22 +800,27 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			// current user is created user
 			if (res.getCreatedBy() == null
 					|| res.getCreatedBy().trim().equals("")) {
-				moreInfoAboutResLayout.addComponent(new Label(AppContext
-						.getUsername()));
+				Label usernameLbl = new Label(AppContext.getUsername());
+				usernameLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(usernameLbl);
 			} else {
-				moreInfoAboutResLayout.addComponent(new Label(res
-						.getCreatedBy()));
+				Label usernameLbl = new Label(res.getCreatedBy());
+				usernameLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(usernameLbl);
 			}
-
 			moreInfoAboutResLayout.addComponent(new Separator());
 
 			// If resource is dropbox resource then we can not define the
-			// created date so we do not need to display
+			// created date so we do not need to display\
 			if (res.getCreated() != null) {
-				moreInfoAboutResLayout.addComponent(new Label(AppContext
-						.formatDate(res.getCreated().getTime())));
+				Label createdTimeLbl = new Label((AppContext.formatDate(res
+						.getCreated().getTime())));
+				createdTimeLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(createdTimeLbl);
 			} else {
-				moreInfoAboutResLayout.addComponent(new Label("Undefined"));
+				Label createdTimeLbl = new Label("Undefined");
+				createdTimeLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(createdTimeLbl);
 			}
 
 			if (res instanceof Content) {
@@ -822,8 +828,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				Double size = res.getSize();
 				DecimalFormat df = new DecimalFormat("#");
 				df.setRoundingMode(RoundingMode.HALF_UP);
-				moreInfoAboutResLayout.addComponent(new Label(df.format(size)
-						+ " KB"));
+
+				Label lbl = new Label(df.format(size) + " KB");
+				lbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(lbl);
 			}
 			informationLayout.addComponent(moreInfoAboutResLayout);
 
