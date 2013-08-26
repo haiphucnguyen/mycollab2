@@ -31,7 +31,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 		SimpleMilestone milestone = milestoneService.findById(milestoneId, 0);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$milestone.name]: Phase \"" + milestone.getName()
+				"[$hyperLinks.projectName]: Phase \"" + milestone.getName()
 						+ "\" has been created",
 				"templates/email/project/phaseCreatedNotifier.mt");
 

@@ -1470,17 +1470,25 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					if (!FileMainViewImpl.this.baseFolder.getPath().equals(
-							FileMainViewImpl.this.rootPath)) {
-						Folder parentFolder = resourceService
+					Folder parentFolder = null;
+					if (FileMainViewImpl.this.baseFolder instanceof ExternalFolder) {
+						parentFolder = externalResourceService
+								.getParentResourceFolder(
+										((ExternalFolder) FileMainViewImpl.this.baseFolder)
+												.getExternalDrive(), baseFolder
+												.getPath());
+
+					} else if (!FileMainViewImpl.this.baseFolder.getPath()
+							.equals(FileMainViewImpl.this.rootPath)) {
+						parentFolder = resourceService
 								.getParentFolder(FileMainViewImpl.this.baseFolder
 										.getPath());
-						FileMainViewImpl.this.selectedResourcesList = new ArrayList<Resource>();
-						itemResourceContainerLayout.constructBody(parentFolder);
-						FileMainViewImpl.this.baseFolder = parentFolder;
-						bodyResourceLayout.fileBreadCrumb
-								.gotoFolder(FileMainViewImpl.this.baseFolder);
 					}
+					FileMainViewImpl.this.selectedResourcesList = new ArrayList<Resource>();
+					itemResourceContainerLayout.constructBody(parentFolder);
+					FileMainViewImpl.this.baseFolder = parentFolder;
+					bodyResourceLayout.fileBreadCrumb
+							.gotoFolder(FileMainViewImpl.this.baseFolder);
 				}
 			});
 			goUpBtn.setDescription("Back to parent folder");
@@ -1579,7 +1587,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										.showNotification(
 												"Please select items to move");
 							}
-
 						}
 					});
 			moveToBtn.setIcon(MyCollabResource

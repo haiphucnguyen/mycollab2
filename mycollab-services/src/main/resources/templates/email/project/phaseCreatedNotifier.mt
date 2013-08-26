@@ -22,26 +22,26 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Phase name:&nbsp;</td>
+									<td style="width: 60px; vertical-align: top; text-align: right;">Phase name:&nbsp;</td>
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.milestoneURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.name</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Start date:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!milestone.startdate)</td>
 									
+									<td style="text-align: right ; vertical-align: top;">Status:&nbsp;</td>
+									<td>$!milestone.status</td>	
+								</tr>
+								<tr>
 									<td style="text-align: right; vertical-align: top;">End date:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!milestone.enddate)</td>
-								</tr>
-								<tr>
+									
 									<td style="text-align: right; vertical-align: top;">Responsible User:&nbsp;</td>
 									<td><a href="${hyperLinks.ownerUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.ownerFullName</a></td>
-									
-									<td style="text-align: right; min-width: 90px;">Status:&nbsp;</td>
-									<td>$!milestone.status</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Description:&nbsp;</td>
-									<td>$!milestone.description</td>		
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!milestone.description</td>	
 								</tr>
 							</table>
 						</td>

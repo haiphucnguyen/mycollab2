@@ -32,7 +32,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 		SimpleRisk risk = riskService.findById(riskId, 0);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$risk.riskname]: Risk \"" + risk.getRiskname()
+				"[$hyperLinks.projectName]: Risk \"" + risk.getRiskname()
 						+ "\" has been created",
 				"templates/email/project/riskCreatedNotifier.mt");
 

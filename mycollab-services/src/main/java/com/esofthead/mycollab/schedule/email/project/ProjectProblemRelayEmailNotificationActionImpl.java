@@ -33,8 +33,8 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 		SimpleProblem problem = problemService.findById(problemId, 0);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$problem.issuename]: Problem \"" + problem.getIssuename()
-						+ "\" has been created",
+				"[$hyperLinks.projectName]: Problem \""
+						+ problem.getIssuename() + "\" has been created",
 				"templates/email/project/problemCreatedNotifier.mt");
 
 		templateGenerator.putVariable("problem", problem);

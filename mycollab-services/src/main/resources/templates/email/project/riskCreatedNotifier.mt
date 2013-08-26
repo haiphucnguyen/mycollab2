@@ -49,8 +49,8 @@
 									<td style="vertical-align: top;">$!risk.status</td>	
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Response:&nbsp;</td>
-									<td style="vertical-align: top;">$!risk.response</td>	
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Response:&nbsp;</td>
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!risk.response</td>	
 								</tr>
 							</table>
 						</td>

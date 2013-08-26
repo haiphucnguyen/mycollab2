@@ -55,6 +55,7 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 			UserService userService = AppContext
 					.getSpringBean(UserService.class);
 			userService.updateWithSession(simpleUser, username);
+			// response.sendRedirect(request.getContextPath() + "/");
 		} catch (Exception e) {
 			error = true;
 			errMsg = "Error in while update your informations. We so sorry for this inconvenience";

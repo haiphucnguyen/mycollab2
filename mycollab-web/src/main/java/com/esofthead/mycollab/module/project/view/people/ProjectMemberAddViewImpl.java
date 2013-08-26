@@ -358,26 +358,56 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 								.getSubdomainOfProject(CurrentProjectVariables
 										.getProjectId());
 
-						templateGenerator.putVariable(
-								"urlAccept",
-								SiteConfiguration.getSiteUrl(subdomain)
-										+ "project/member/invitation/confirm_invite/"
-										+ UrlEncodeDecoder.encode("OUTSIDE"
-												+ "/"
-												+ AppContext.getAccountId()
-												+ "/"
-												+ name
-												+ "/"
-												+ email
-												+ "/"
-												+ CurrentProjectVariables
-														.getProjectId()
-												+ "/"
-												+ roleId
-												+ "/"
-												+ SiteConfiguration
-														.getSiteUrl(subdomain)));
+						User inviteUser = userService.findUserByUserName(email);
+						if (inviteUser != null) { // user Already exist
+							templateGenerator.putVariable(
+									"urlAccept",
+									SiteConfiguration.getSiteUrl(subdomain)
+											+ "project/member/invitation/confirm_invite/"
+											+ UrlEncodeDecoder.encode("OUTSIDE_EXIST"
+													+ "/"
+													+ AppContext.getAccountId()
+													+ "/"
+													+ name
+													+ "/"
+													+ email
+													+ "/"
+													+ CurrentProjectVariables
+															.getProjectId()
+													+ "/"
+													+ roleId
+													+ "/"
+													+ SiteConfiguration
+															.getSiteUrl(subdomain)));
+							// TODO : save info into projectmember table &
+							// redirect to Login page
+							// MailLinkGenerator linkGenerator = new
+							// MailLinkGenerator(
+							// risk.getProjectid());
+							// hyperLinks.put("projectUrl",
+							// linkGenerator.generateProjectFullLink());
 
+						} else { // user not exist
+							templateGenerator.putVariable(
+									"urlAccept",
+									SiteConfiguration.getSiteUrl(subdomain)
+											+ "project/member/invitation/confirm_invite/"
+											+ UrlEncodeDecoder.encode("OUTSIDE"
+													+ "/"
+													+ AppContext.getAccountId()
+													+ "/"
+													+ name
+													+ "/"
+													+ email
+													+ "/"
+													+ CurrentProjectVariables
+															.getProjectId()
+													+ "/"
+													+ roleId
+													+ "/"
+													+ SiteConfiguration
+															.getSiteUrl(subdomain)));
+						}
 						templateGenerator.putVariable(
 								"urlDeny",
 								SiteConfiguration.getSiteUrl(subdomain)

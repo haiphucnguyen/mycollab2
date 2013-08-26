@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
+import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.DropboxResourceService;
 
@@ -177,6 +178,14 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			log.error("Error when get dropbox resource", e);
 		}
 		return res;
+	}
+
+	@Override
+	public Folder getParentResourceFolder(ExternalDrive drive, String childPath) {
+		String folderPath = childPath.substring(0, childPath.lastIndexOf("/"));
+		if (folderPath.length() == 0)
+			folderPath = "/";
+		return (Folder) this.getcurrentResourceByPath(drive, folderPath);
 	}
 
 }

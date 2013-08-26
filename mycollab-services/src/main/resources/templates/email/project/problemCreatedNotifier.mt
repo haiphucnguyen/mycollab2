@@ -50,11 +50,11 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Description:&nbsp;</td>
-									<td>$!problem.description</td>		
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.description</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Resolution:&nbsp;</td>
-									<td>$!problem.resolution</td>		
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.resolution</td>		
 								</tr>
 							</table>
 						</td>

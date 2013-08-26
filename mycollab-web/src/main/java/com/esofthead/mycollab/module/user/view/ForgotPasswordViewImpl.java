@@ -45,7 +45,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					.createLayout("forgotPassword");
 			customLayout.setStyleName("forgotPwdForm");
 
-			nameOrEmailField = new TextField("Username");
+			nameOrEmailField = new TextField("Username or email");
 			customLayout.addComponent(nameOrEmailField, "nameoremail");
 
 			Button sendEmail = new Button("Send verification email");

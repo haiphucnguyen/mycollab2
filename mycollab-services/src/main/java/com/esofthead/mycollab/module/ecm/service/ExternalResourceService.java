@@ -5,6 +5,7 @@ import java.util.List;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
+import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
 public interface ExternalResourceService extends IService {
@@ -13,4 +14,6 @@ public interface ExternalResourceService extends IService {
 	List<ExternalFolder> getSubFolders(ExternalDrive drive, String path);
 
 	Resource getcurrentResourceByPath(ExternalDrive drive, String path);
+
+	Folder getParentResourceFolder(ExternalDrive drive, String childPath);
 }
