@@ -79,8 +79,13 @@ public class L2CacheAspect {
 										return pjp.proceed();
 									}
 								} catch (Exception e) {
-									log.error("Error when retrieve cache key ",
-											e);
+									log.error(
+											"Error when retrieve cache key with "
+													+ BeanUtility
+															.printBeanObj(arg)
+													+ " in service class "
+													+ cls.getName() + "."
+													+ method.getName(), e);
 									return pjp.proceed();
 								}
 
