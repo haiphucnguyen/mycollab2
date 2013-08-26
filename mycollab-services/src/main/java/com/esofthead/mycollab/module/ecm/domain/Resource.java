@@ -2,7 +2,9 @@ package com.esofthead.mycollab.module.ecm.domain;
 
 import java.util.Calendar;
 
-public class Resource {
+import com.esofthead.mycollab.core.MyCollabException;
+
+public class Resource implements Comparable {
 	protected String uuid = "";
 	protected String createdBy = "";
 	protected Calendar created;
@@ -72,5 +74,16 @@ public class Resource {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		if (!(arg0 instanceof Resource)) {
+			throw new MyCollabException(
+					"Object compare is not a resource instance, it has type "
+							+ arg0.getClass().toString());
+		} else {
+			return 0;
+		}
 	}
 }
