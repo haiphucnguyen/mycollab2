@@ -83,7 +83,25 @@ public class Resource implements Comparable {
 					"Object compare is not a resource instance, it has type "
 							+ arg0.getClass().toString());
 		} else {
-			return 0;
+			Resource res = (Resource) arg0;
+			if (this instanceof Folder && res instanceof Content) {
+				return -1;
+			} else if (this instanceof Folder && res instanceof Folder) {
+				if (this.getCreated().getTime()
+						.compareTo(res.getCreated().getTime()) > 0) {
+					return -1;
+				} else if (this.getCreated().getTime()
+						.compareTo(res.getCreated().getTime()) < 0) {
+					return 1;
+				} else {
+					if (this.getName().compareTo(res.getName()) > 0) {
+						return 1;
+					} else
+						return -1;
+				}
+			} else {
+				return 1;
+			}
 		}
 	}
 }

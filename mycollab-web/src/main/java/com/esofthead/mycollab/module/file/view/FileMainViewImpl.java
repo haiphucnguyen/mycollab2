@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -1105,38 +1106,59 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				public void buttonClick(final ClickEvent event) {
 					final String oldPath = RenameResourceWindow.this.resource
 							.getPath();
-					final String parentPath = oldPath.substring(0,
+					String parentPath = oldPath.substring(0,
 							oldPath.lastIndexOf("/") + 1);
-					final String newNameValue = (String) newName.getValue();
-					final String newPath = parentPath + newNameValue;
-					try {
-						RenameResourceWindow.this.service.rename(oldPath,
-								newPath, AppContext.getUsername());
-						// reset layout
-						FileMainViewImpl.this.itemResourceContainerLayout
-								.constructBody(FileMainViewImpl.this.baseFolder);
-						// Set item caption for sub folder of base folder in
-						// folderTree
-
-						final List<Folder> childs = FileMainViewImpl.this.baseFolder
-								.getChilds();
-						for (final Folder folder : childs) {
-							if (folder.getName().equals(
-									RenameResourceWindow.this.resource
-											.getName())) {
-								menuTree.removeItem(folder);
-								folder.setPath(newPath);
-								menuTree.addItem(folder);
-								menuTree.setParent(folder, baseFolder);
-								menuTree.setItemCaption(folder, newNameValue);
-							}
-						}
-						RenameResourceWindow.this.close();
-
-					} catch (final ContentException e) {
-						RenameResourceWindow.this.getWindow().showNotification(
-								e.getMessage());
+					if (resource instanceof ExternalFolder
+							|| resource instanceof ExternalContent) {
+						parentPath = (parentPath.length() == 0) ? "/"
+								: parentPath;
 					}
+					String newNameValue = (String) newName.getValue();
+					String newPath = parentPath + newNameValue;
+
+					if (resource instanceof ExternalFolder
+							|| resource instanceof ExternalContent) {
+						if (resource instanceof ExternalFolder)
+							FileMainViewImpl.this.externalResourceService
+									.rename(((ExternalFolder) resource)
+											.getExternalDrive(), oldPath,
+											newPath);
+						else
+							FileMainViewImpl.this.externalResourceService
+									.rename(((ExternalContent) resource)
+											.getExternalDrive(), oldPath,
+											newPath);
+					} else {
+						try {
+							RenameResourceWindow.this.service.rename(oldPath,
+									newPath, AppContext.getUsername());
+							final List<Folder> childs = FileMainViewImpl.this.baseFolder
+									.getChilds();
+							for (final Folder folder : childs) {
+								if (folder.getName().equals(
+										RenameResourceWindow.this.resource
+												.getName())) {
+									menuTree.removeItem(folder);
+									folder.setPath(newPath);
+									menuTree.addItem(folder);
+									menuTree.setParent(folder, baseFolder);
+									menuTree.setItemCaption(folder,
+											newNameValue);
+								}
+							}
+						} catch (final ContentException e) {
+							RenameResourceWindow.this.getWindow()
+									.showNotification(e.getMessage());
+						}
+					}
+					FileMainViewImpl.this.itemResourceContainerLayout
+							.constructBody(FileMainViewImpl.this.baseFolder);
+
+					if ((resource instanceof ExternalFolder || resource instanceof ExternalContent)
+							&& pagingResourceWapper.getCurrentPage() != 1)
+						pagingResourceWapper.pageChange(pagingResourceWapper
+								.getCurrentPage());
+					RenameResourceWindow.this.close();
 				}
 			});
 			save.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -1223,12 +1245,21 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									baseFolder = (Folder) resourceService
 											.getResource(rootPath);
 								}
-
-								final Folder newFolder = FileMainViewImpl.this.resourceService
-										.createNewFolder(baseFolderPath,
-												folderVal,
-												AppContext.getUsername());
-
+								Folder newFolder = null;
+								if (FileMainViewImpl.this.baseFolder instanceof ExternalFolder) {
+									String path = FileMainViewImpl.this.baseFolder
+											.getPath() + "/" + folderVal;
+									newFolder = FileMainViewImpl.this.externalResourceService
+											.createFolder(
+													((ExternalFolder) FileMainViewImpl.this.baseFolder)
+															.getExternalDrive(),
+													path);
+								} else {
+									newFolder = FileMainViewImpl.this.resourceService
+											.createNewFolder(baseFolderPath,
+													folderVal,
+													AppContext.getUsername());
+								}
 								if (!FileMainViewImpl.this.menuTree
 										.isExpanded(FileMainViewImpl.this.baseFolder)) {
 									FileMainViewImpl.this.menuTree
@@ -1346,11 +1377,20 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										FileInputStream fileInputStream = new FileInputStream(
 												file);
 
-										FileMainViewImpl.this.resourceService
-												.saveContent(content,
-														AppContext
-																.getUsername(),
-														fileInputStream);
+										if (FileMainViewImpl.this.baseFolder instanceof ExternalFolder) {
+											FileMainViewImpl.this.externalResourceService
+													.saveContent(
+															((ExternalFolder) FileMainViewImpl.this.baseFolder)
+																	.getExternalDrive(),
+															content,
+															fileInputStream);
+										} else
+											FileMainViewImpl.this.resourceService
+													.saveContent(
+															content,
+															AppContext
+																	.getUsername(),
+															fileInputStream);
 									} catch (IOException e) {
 										throw new MyCollabException(e);
 									}
@@ -1656,13 +1696,29 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										if (selectedResourcesList != null
 												&& selectedResourcesList.size() > 0) {
 											for (Resource res : selectedResourcesList) {
-												FileMainViewImpl.this.resourceService.removeResource(
-														res.getPath(),
-														AppContext
-																.getUsername());
-												if (res instanceof Folder) {
-													FileMainViewImpl.this.menuTree
-															.removeItem((Folder) res);
+												if (res instanceof ExternalFolder
+														|| res instanceof ExternalContent) {
+													if (res instanceof ExternalFolder) {
+														FileMainViewImpl.this.externalResourceService
+																.deleteResource(
+																		((ExternalFolder) res)
+																				.getExternalDrive(),
+																		res.getPath());
+													} else
+														FileMainViewImpl.this.externalResourceService
+																.deleteResource(
+																		((ExternalContent) res)
+																				.getExternalDrive(),
+																		res.getPath());
+												} else {
+													FileMainViewImpl.this.resourceService.removeResource(
+															res.getPath(),
+															AppContext
+																	.getUsername());
+													if (res instanceof Folder) {
+														FileMainViewImpl.this.menuTree
+																.removeItem((Folder) res);
+													}
 												}
 											}
 											if (itemResourceContainerLayout.isSearchAction) {
@@ -1697,7 +1753,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		private static final long serialVersionUID = 1L;
 		private int totalItem;
 		public static final int pageItemNum = 15;
-		private int currentPage = 1;
+		private int currentPage;
 		private CssLayout controlBarWrapper;
 		private HorizontalLayout pageManagement;
 		private int totalPage;
@@ -1707,6 +1763,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		public PagingResourceWapper(List<Resource> lstResource) {
 			this.totalItem = lstResource.size();
+			this.currentPage = 1;
 			this.totalPage = ((int) totalItem / pageItemNum) + 1;
 			this.lstResource = lstResource;
 
@@ -1854,6 +1911,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			}
 			createPageControls();
 			itemResourceContainerLayout.mainLayout.addComponent(this);
+		}
+
+		public int getCurrentPage() {
+			return currentPage;
 		}
 	}
 }

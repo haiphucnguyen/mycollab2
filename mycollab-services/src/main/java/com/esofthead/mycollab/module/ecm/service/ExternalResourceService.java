@@ -19,9 +19,15 @@ public interface ExternalResourceService extends IService {
 
 	Folder getParentResourceFolder(ExternalDrive drive, String childPath);
 
-	void createFolder(ExternalDrive drive, String path);
+	Folder createFolder(ExternalDrive drive, String path);
 
 	void saveContent(ExternalDrive drive, Content content, InputStream in);
 
 	void rename(ExternalDrive drive, String oldPath, String newPath);
+
+	void deleteResource(ExternalDrive drive, String path);
+
+	void download(ExternalDrive drive, String path);
+
+	void move(ExternalDrive drive, String fromPath, String toPath);
 }

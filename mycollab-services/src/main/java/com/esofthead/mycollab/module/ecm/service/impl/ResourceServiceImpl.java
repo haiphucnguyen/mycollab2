@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.ecm.service.impl;
 
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -36,9 +35,9 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public List<Resource> getResources(String path) {
-		 List<Resource> resources = contentJcrDao.getResources(path);
-		  Collections.sort(resources);
-		  return resources;
+		List<Resource> resources = contentJcrDao.getResources(path);
+		Collections.sort(resources);
+		return resources;
 	}
 
 	@Override
@@ -156,7 +155,7 @@ public class ResourceServiceImpl implements ResourceService {
 			moveResoureAction = ContentActivityLogBuilder.makeMoveContent(
 					oldPath, destinationFolderPath);
 		}
-		
+
 		if ((oldResource instanceof Folder)
 				&& destinationFolderPath.contains(oldPath)) {
 			throw new UserInvalidInputException(

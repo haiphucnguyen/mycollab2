@@ -33,8 +33,6 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 	private static Logger log = LoggerFactory
 			.getLogger(DropboxResourceServiceImpl.class);
 
-	private static final int BUFFER_SIZE = 1024;
-
 	@Override
 	public List<Resource> getResources(ExternalDrive drive, String path) {
 		List<Resource> resources = new ArrayList<Resource>();
@@ -194,15 +192,17 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 	}
 
 	@Override
-	public void createFolder(ExternalDrive drive, String path) {
+	public Folder createFolder(ExternalDrive drive, String path) {
 		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
 				null);
 		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
 		try {
 			client.createFolder(path);
+			return (Folder) this.getcurrentResourceByPath(drive, path);
 		} catch (DbxException e) {
 			log.error("Error when createdFolder dropbox resource", e);
 		}
+		return null;
 	}
 
 	@Override
@@ -211,17 +211,60 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 				null);
 		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
 		try {
+			Double sizeDouble = content.getSize() * 1024;
 			client.uploadFile(content.getPath(), DbxWriteMode.add(),
-					BUFFER_SIZE, in);
+					sizeDouble.longValue(), in);
 		} catch (Exception e) {
 			log.error("Error when saveContent dropbox resource", e);
 		}
 	}
 
 	@Override
-	public void rename(ExternalDrive drive, String oldPath, String newName) {
+	public void rename(ExternalDrive drive, String oldPath, String newPath) {
 		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
 				null);
 		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+		try {
+			client.copy(oldPath, newPath);
+			client.delete(oldPath);
+		} catch (DbxException e) {
+			log.error("Error when rename dropbox resource", e);
+		}
+	}
+
+	@Override
+	public void deleteResource(ExternalDrive drive, String path) {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+		try {
+			client.delete(path);
+		} catch (DbxException e) {
+			log.error("Error when Delete dropbox resource", e);
+		}
+	}
+
+	@Override
+	public void download(ExternalDrive drive, String path) {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+		// client.getFile(path, "", target);
+	}
+
+	/**
+	 * @see only support move in Dropbox local, not implement move from Dropbox
+	 *      to MyCollab or against. Must implement it later
+	 */
+	@Override
+	public void move(ExternalDrive drive, String fromPath, String toPath) {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+		try {
+			client.move(fromPath, toPath);
+		} catch (DbxException e) {
+			log.error("Error when move dropbox resource", e);
+		}
 	}
 }
