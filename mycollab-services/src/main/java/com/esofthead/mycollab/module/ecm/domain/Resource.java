@@ -87,17 +87,11 @@ public class Resource implements Comparable {
 			if (this instanceof Folder && res instanceof Content) {
 				return -1;
 			} else if (this instanceof Folder && res instanceof Folder) {
-				if (this.getCreated().getTime()
-						.compareTo(res.getCreated().getTime()) > 0) {
-					return -1;
-				} else if (this.getCreated().getTime()
-						.compareTo(res.getCreated().getTime()) < 0) {
-					return 1;
+				if (this.getCreated() != null && res.getCreated() != null) {
+					return this.getCreated().getTime()
+							.compareTo(res.getCreated().getTime());
 				} else {
-					if (this.getName().compareTo(res.getName()) > 0) {
-						return 1;
-					} else
-						return -1;
+					return this.getName().compareTo(res.getName());
 				}
 			} else {
 				return 1;
