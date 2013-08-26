@@ -173,13 +173,7 @@ public class SiteConfiguration {
 		return siteUrl;
 	}
 
-	public static String getDropboxCallbackUrl(String subdomain) {
-		String siteUrl = "";
-		if (instance.deploymentMode == DeploymentMode.SITE) {
-			siteUrl = String.format(instance.dropboxCallbackUrl, subdomain);
-		} else {
-			siteUrl = instance.dropboxCallbackUrl;
-		}
-		return siteUrl;
+	public static String getDropboxCallbackUrl() {
+		return instance.dropboxCallbackUrl;
 	}
 }
