@@ -43,8 +43,7 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 				userLocale);
 		DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 				"rheskqqb6f8fo6a");
-		String redirectUri = SiteConfiguration.getDropboxCallbackUrl(AppContext
-				.getSubDomain());
+		String redirectUri = SiteConfiguration.getDropboxCallbackUrl();
 		HttpSession session = request.getSession(true);
 		String sessionKey = "dropbox-auth-csrf-token";
 		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
