@@ -1,10 +1,15 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
@@ -16,9 +21,6 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-
 @SuppressWarnings("serial")
 public class PasswordChangeWindow extends Window {
 
@@ -29,11 +31,11 @@ public class PasswordChangeWindow extends Window {
 
 	public PasswordChangeWindow(final User user) {
 		this.setWidth("500px");
-		// this.setHeight("270px");
 		this.initUI();
 		this.center();
 		this.user = user;
-		this.setCaption("Change your password");
+		this.setCaption(LocalizationHelper
+				.getMessage(UserI18nEnum.CHANGE_PASSWORD_WINDOW_TITLE));
 	}
 
 	private void initUI() {
@@ -44,12 +46,14 @@ public class PasswordChangeWindow extends Window {
 		mainLayout.setSpacing(true);
 
 		final Label lbInstruct1 = new Label(
-				"* Passwords are case-sensitive and must be at least 6 characters.");
+				LocalizationHelper
+						.getMessage(UserI18nEnum.PASSWORD_INSTRUCT_LABEL_1));
 		mainLayout.addComponent(lbInstruct1);
 		mainLayout.setComponentAlignment(lbInstruct1, Alignment.MIDDLE_LEFT);
 
 		final Label lbInstruct2 = new Label(
-				"* A good password should contain a mix of capital and lower-case letters, numbers and symbols.");
+				LocalizationHelper
+						.getMessage(UserI18nEnum.PASSWORD_INSTRUCT_LABEL_2));
 		mainLayout.addComponent(lbInstruct2);
 		mainLayout.setComponentAlignment(lbInstruct2, Alignment.MIDDLE_LEFT);
 
@@ -72,7 +76,9 @@ public class PasswordChangeWindow extends Window {
 
 		final HorizontalLayout hlayoutControls = new HorizontalLayout();
 
-		final Button cancelBtn = new Button("Cancel",
+		final Button cancelBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -89,14 +95,16 @@ public class PasswordChangeWindow extends Window {
 		hlayoutControls.setComponentAlignment(cancelBtn,
 				Alignment.MIDDLE_CENTER);
 
-		final Button sendBtn = new Button("Save", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button sendBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				PasswordChangeWindow.this.changePassword();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						PasswordChangeWindow.this.changePassword();
+					}
+				});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		hlayoutControls.addComponent(sendBtn);
 		hlayoutControls.setComponentAlignment(sendBtn, Alignment.MIDDLE_CENTER);
@@ -112,7 +120,8 @@ public class PasswordChangeWindow extends Window {
 	private void showMessage(final String title, final String message) {
 		final MessageBox mb = new MessageBox(AppContext.getApplication()
 				.getMainWindow(), title, MessageBox.Icon.WARN, message,
-				new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+				new MessageBox.ButtonConfig(ButtonType.OK, LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
 		mb.show();
 	}
 
@@ -123,9 +132,10 @@ public class PasswordChangeWindow extends Window {
 
 		if (!this.txtNewPassword.getValue().equals(
 				this.txtConfirmPassword.getValue())) {
-			this.showMessage(
-					"Warning!",
-					"Your new password is not matching with confirm password, please check it again.");
+			this.showMessage(LocalizationHelper
+					.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+					LocalizationHelper
+							.getMessage(UserI18nEnum.PASSWORDS_ARE_NOT_MATCH));
 			this.txtNewPassword.addStyleName("errorField");
 			this.txtConfirmPassword.addStyleName("errorField");
 			return;

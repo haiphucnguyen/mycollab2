@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -132,7 +134,8 @@ public class BasicInfoChangeWindow extends Window {
 	private void showMessage(final String title, final String message) {
 		final MessageBox mb = new MessageBox(AppContext.getApplication()
 				.getMainWindow(), title, MessageBox.Icon.WARN, message,
-				new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+				new MessageBox.ButtonConfig(ButtonType.OK, LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
 		mb.show();
 	}
 

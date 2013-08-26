@@ -12,8 +12,11 @@ import org.slf4j.LoggerFactory;
 
 import com.davengo.web.vaadin.crop.CropField;
 import com.davengo.web.vaadin.crop.widgetset.client.ui.VCropSelection;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -60,7 +63,7 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		try {
 			originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
 		} catch (IOException e) {
-			throw new MyCollabException("Invalid image type");
+			throw new UserInvalidInputException("Invalid image type");
 		}
 		originalImage = ImageUtil.scaleImage(originalImage, 650, 650);
 
@@ -88,45 +91,54 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		controlBtns.setSpacing(true);
 		controlBtns.setSizeUndefined();
 
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+		Button cancelBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				new Button.ClickListener() {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ProfileEvent.GotoProfileView(
-								ProfilePhotoUploadViewImpl.this, null));
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new ProfileEvent.GotoProfileView(
+										ProfilePhotoUploadViewImpl.this, null));
+					}
+				});
 		cancelBtn.setStyleName("link");
 		controlBtns.addComponent(cancelBtn);
 		controlBtns.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
 
-		Button acceptBtn = new Button("Accept", new Button.ClickListener() {
+		Button acceptBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_ACCEPT_LABEL),
+				new Button.ClickListener() {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (scaleImageData != null && scaleImageData.length > 0) {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						if (scaleImageData != null && scaleImageData.length > 0) {
 
-					try {
-						BufferedImage image = ImageIO
-								.read(new ByteArrayInputStream(scaleImageData));
-						UserAvatarService userAvatarService = AppContext
-								.getSpringBean(UserAvatarService.class);
-						userAvatarService.uploadAvatar(image,
-								AppContext.getUsername(),
-								AppContext.getUserAvatarId());
-						EventBus.getInstance().fireEvent(
-								new ProfileEvent.GotoProfileView(
-										ProfilePhotoUploadViewImpl.this, null));
-					} catch (IOException e) {
-						throw new MyCollabException(
-								"Error when saving user avatar", e);
+							try {
+								BufferedImage image = ImageIO
+										.read(new ByteArrayInputStream(
+												scaleImageData));
+								UserAvatarService userAvatarService = AppContext
+										.getSpringBean(UserAvatarService.class);
+								userAvatarService.uploadAvatar(image,
+										AppContext.getUsername(),
+										AppContext.getUserAvatarId());
+								EventBus.getInstance()
+										.fireEvent(
+												new ProfileEvent.GotoProfileView(
+														ProfilePhotoUploadViewImpl.this,
+														null));
+							} catch (IOException e) {
+								throw new MyCollabException(
+										"Error when saving user avatar", e);
+							}
+
+						}
+
 					}
-
-				}
-
-			}
-		});
+				});
 		acceptBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlBtns.addComponent(acceptBtn);
 		controlBtns.setComponentAlignment(acceptBtn, Alignment.TOP_LEFT);

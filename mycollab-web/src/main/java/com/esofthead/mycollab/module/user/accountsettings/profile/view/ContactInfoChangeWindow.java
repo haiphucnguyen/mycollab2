@@ -9,6 +9,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -43,12 +44,12 @@ public class ContactInfoChangeWindow extends Window {
 	public ContactInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		// this.setHeight("300px");
 		this.validation = AppContext
 				.getSpringBean(LocalValidatorFactoryBean.class);
 		this.initUI();
 		this.center();
-		this.setCaption("Change your contact information");
+		this.setCaption(LocalizationHelper
+				.getMessage(UserI18nEnum.CHANGE_CONTACT_INFO_WINDOW_TITLE));
 		((VerticalLayout) this.getContent()).setMargin(false, false, true,
 				false);
 	}
@@ -99,7 +100,9 @@ public class ContactInfoChangeWindow extends Window {
 		final HorizontalLayout hlayoutControls = new HorizontalLayout();
 		hlayoutControls.setSpacing(true);
 		hlayoutControls.setMargin(true);
-		final Button cancelBtn = new Button("Cancel",
+		final Button cancelBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -114,14 +117,16 @@ public class ContactInfoChangeWindow extends Window {
 		hlayoutControls.setComponentAlignment(cancelBtn,
 				Alignment.MIDDLE_CENTER);
 
-		final Button sendBtn = new Button("Save", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button sendBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				ContactInfoChangeWindow.this.changePassword();
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						ContactInfoChangeWindow.this.changePassword();
+					}
+				});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		hlayoutControls.addComponent(sendBtn);
 		hlayoutControls.setComponentAlignment(sendBtn, Alignment.MIDDLE_CENTER);
@@ -160,12 +165,15 @@ public class ContactInfoChangeWindow extends Window {
 
 			}
 
-			final MessageBox mb = new MessageBox(AppContext.getApplication()
-					.getMainWindow(),
+			final MessageBox mb = new MessageBox(
+					AppContext.getApplication().getMainWindow(),
 					LocalizationHelper
 							.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
-					MessageBox.Icon.ERROR, errorMsg.toString(),
-					new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+					MessageBox.Icon.ERROR,
+					errorMsg.toString(),
+					new MessageBox.ButtonConfig(ButtonType.OK,
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
 			mb.show();
 
 			return false;

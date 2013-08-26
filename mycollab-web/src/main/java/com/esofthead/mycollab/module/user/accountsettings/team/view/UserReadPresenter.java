@@ -95,9 +95,12 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 						AppContext.getApplication().getMainWindow(),
 						LocalizationHelper
 								.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-						MessageBox.Icon.WARN, "There is no user " + username
-								+ " in this account",
-						new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+						MessageBox.Icon.WARN,
+						"There is no user " + username + " in this account",
+						new MessageBox.ButtonConfig(
+								ButtonType.OK,
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
 				mb.show();
 			}
 

@@ -209,10 +209,13 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 							AppContext.getApplication().getMainWindow(),
 							LocalizationHelper
 									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN, "Can not delete role "
-									+ item.getRolename()
+							MessageBox.Icon.WARN,
+							"Can not delete role " + item.getRolename()
 									+ " because it is the system role.",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+							new MessageBox.ButtonConfig(
+									ButtonType.OK,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
 					mb.show();
 				}
 			}

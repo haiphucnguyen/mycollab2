@@ -6,6 +6,6 @@ import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearc
 
 public interface ContentActivityLogService
 		extends
-		IDefaultService<Integer, ContentActivityLogWithBLOBs, ContentActivityLogSearchCriteria> {
+		IDefaultService<Integer, ContentActivityLogWithBLOBs, ContentActivityLogSearchCriteria>{
 
 }

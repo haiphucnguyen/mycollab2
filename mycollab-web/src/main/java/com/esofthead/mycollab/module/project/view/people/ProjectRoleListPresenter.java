@@ -16,6 +16,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.file.resource.ExportStreamResource;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
+import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
@@ -48,7 +49,7 @@ public class ProjectRoleListPresenter extends
 	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
 			"rolename", "description" };
 	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Name",
-			"Description" };
+			LocalizationHelper.getMessage(GenericI18Enum.FORM_DESCRIPTION) };
 	private ProjectRoleService projectRoleService;
 	private ProjectRoleSearchCriteria searchCriteria;
 	private boolean isSelectAll = false;
@@ -236,10 +237,14 @@ public class ProjectRoleListPresenter extends
 							AppContext.getApplication().getMainWindow(),
 							LocalizationHelper
 									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN, "Can not delete role "
-									+ item.getRolename()
-									+ " because it is the system role.",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+							MessageBox.Icon.WARN,
+							LocalizationHelper.getMessage(
+									PeopleI18nEnum.CAN_NOT_DELETE_ROLE_MESSAGE,
+									item.getRolename()),
+							new MessageBox.ButtonConfig(
+									ButtonType.OK,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
 					mb.show();
 				}
 			}

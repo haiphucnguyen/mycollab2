@@ -3,9 +3,12 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
 
-import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -75,7 +78,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 				if (mimeType.equals("image/jpeg")) {
 					imageData = ImageUtil.convertJpgToPngFormat(imageData);
 					if (imageData == null) {
-						throw new MyCollabException(
+						throw new UserInvalidInputException(
 								"Do not support image format for avatar");
 					} else {
 						mimeType = "image/png";
@@ -87,7 +90,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 							new ProfileEvent.GotoUploadPhoto(
 									ProfileReadViewImpl.this, imageData));
 				} else {
-					throw new MyCollabException(
+					throw new UserInvalidInputException(
 							"Upload file does not have valid image format. The supported formats are jpg/png");
 				}
 			}
@@ -137,7 +140,9 @@ public class ProfileReadViewImpl extends AbstractView implements
 				avatarAndPass.setWidth("100%");
 				avatarAndPass.addStyleName("avatar-pass-wrapper");
 				avatarAndPass.addComponent(ProfileReadViewImpl.this.userAvatar);
-				final Button btnChangePassword = new Button("Change Password",
+				final Button btnChangePassword = new Button(
+						LocalizationHelper
+								.getMessage(UserI18nEnum.BUTTON_CHANGE_PASSWORD),
 						new Button.ClickListener() {
 
 							@Override
@@ -218,7 +223,9 @@ public class ProfileReadViewImpl extends AbstractView implements
 
 				layout.addComponent(basicInformationHeader);
 				layout.addComponent(this.basicInformation.getLayout());
-				final Button btnChangeBasicInfo = new Button("Edit",
+				final Button btnChangeBasicInfo = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
 
 							@Override
@@ -236,7 +243,9 @@ public class ProfileReadViewImpl extends AbstractView implements
 
 				layout.addComponent(contactInformationHeader);
 				layout.addComponent(this.contactInformation.getLayout());
-				final Button btnChangeContactInfo = new Button("Edit",
+				final Button btnChangeContactInfo = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
 
 							@Override
@@ -254,7 +263,9 @@ public class ProfileReadViewImpl extends AbstractView implements
 
 				layout.addComponent(advanceInfoHeader);
 				layout.addComponent(this.advanceInformation.getLayout());
-				final Button btnChangeAdvanceInfo = new Button("Edit",
+				final Button btnChangeAdvanceInfo = new Button(
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
 
 							@Override
