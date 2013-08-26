@@ -754,10 +754,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			final Embedded resourceIcon = new Embedded();
 			if (res instanceof Folder)
 				resourceIcon.setSource(MyCollabResource
-						.newResource("icons/48/ecm/folder_blue_icon.png"));
+						.newResource("icons/32/ecm/folder.png"));
 			else
 				resourceIcon.setSource(MyCollabResource
-						.newResource("icons/48/ecm/file_blue_icon.png"));
+						.newResource("icons/32/ecm/file.png"));
 			resIconWapper.setWidth("70px");
 			resIconWapper.addComponent(resourceIcon);
 

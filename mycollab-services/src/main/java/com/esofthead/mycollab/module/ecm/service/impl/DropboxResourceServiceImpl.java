@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.ecm.service.impl;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,8 +17,10 @@ import com.dropbox.core.DbxEntry.File;
 import com.dropbox.core.DbxEntry.WithChildren;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.DbxWriteMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
+import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
@@ -29,6 +32,8 @@ import com.esofthead.mycollab.module.ecm.service.DropboxResourceService;
 public class DropboxResourceServiceImpl implements DropboxResourceService {
 	private static Logger log = LoggerFactory
 			.getLogger(DropboxResourceServiceImpl.class);
+
+	private static final int BUFFER_SIZE = 1024;
 
 	@Override
 	public List<Resource> getResources(ExternalDrive drive, String path) {
@@ -188,4 +193,35 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		return (Folder) this.getcurrentResourceByPath(drive, folderPath);
 	}
 
+	@Override
+	public void createFolder(ExternalDrive drive, String path) {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+		try {
+			client.createFolder(path);
+		} catch (DbxException e) {
+			log.error("Error when createdFolder dropbox resource", e);
+		}
+	}
+
+	@Override
+	public void saveContent(ExternalDrive drive, Content content, InputStream in) {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+		try {
+			client.uploadFile(content.getPath(), DbxWriteMode.add(),
+					BUFFER_SIZE, in);
+		} catch (Exception e) {
+			log.error("Error when saveContent dropbox resource", e);
+		}
+	}
+
+	@Override
+	public void rename(ExternalDrive drive, String oldPath, String newName) {
+		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+				null);
+		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+	}
 }

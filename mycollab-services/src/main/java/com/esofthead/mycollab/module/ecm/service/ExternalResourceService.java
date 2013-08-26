@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.module.ecm.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.esofthead.mycollab.core.persistence.service.IService;
+import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -16,4 +18,10 @@ public interface ExternalResourceService extends IService {
 	Resource getcurrentResourceByPath(ExternalDrive drive, String path);
 
 	Folder getParentResourceFolder(ExternalDrive drive, String childPath);
+
+	void createFolder(ExternalDrive drive, String path);
+
+	void saveContent(ExternalDrive drive, Content content, InputStream in);
+
+	void rename(ExternalDrive drive, String oldPath, String newPath);
 }
