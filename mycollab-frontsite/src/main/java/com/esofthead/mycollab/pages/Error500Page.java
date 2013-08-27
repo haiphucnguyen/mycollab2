@@ -1,22 +1,13 @@
 package com.esofthead.mycollab.pages;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import org.apache.wicket.markup.html.basic.Label;
-import org.restlet.resource.ClientResource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.SiteConfiguration;
+import com.esofthead.mycollab.ErrorReportingUtils;
 import com.esofthead.mycollab.base.BaseErrorPage;
-import com.esofthead.mycollab.rest.server.resource.ErrorReportingResource;
 
 public class Error500Page extends BaseErrorPage {
 
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory.getLogger(Error500Page.class);
 
 	public Error500Page(Exception e) {
 		super(e);
@@ -27,18 +18,7 @@ public class Error500Page extends BaseErrorPage {
 		add(new Label("error_brief", "Oops, there is an error."));
 
 		// Send error report to server
-		try {
-			final ClientResource clientResource = new ClientResource(
-					SiteConfiguration.getErrorReportingUrl());
-			final ErrorReportingResource errorResource = clientResource
-					.wrap(ErrorReportingResource.class);
-			StringWriter writer = new StringWriter();
-			e.printStackTrace(new PrintWriter(writer));
-			errorResource.sendErrorTrace(writer.toString());
-		} catch (Exception e1) {
-			log.error("Exception when call restlet resource to report error",
-					e1);
-		}
+		ErrorReportingUtils.reportError(e);
 	}
 
 }
