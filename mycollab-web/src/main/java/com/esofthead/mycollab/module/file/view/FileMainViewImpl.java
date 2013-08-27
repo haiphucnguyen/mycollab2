@@ -97,6 +97,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private final ResourceService resourceService;
 	private final ExternalDriveService externalDriveService;
 	private final ExternalResourceService externalResourceService;
+	private SettingConnectionDrive settingConnectionDrive;
 
 	public FileMainViewImpl() {
 		resourceService = AppContext.getSpringBean(ResourceService.class);
@@ -164,6 +165,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				bodyResourceLayout.removeAllComponents();
+
+				settingConnectionDrive = new SettingConnectionDrive(
+						externalDriveService, externalResourceService);
+				bodyResourceLayout.addComponent(settingConnectionDrive);
 			}
 		});
 		settingBtn.addStyleName("graybtn2");
@@ -176,6 +182,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		filterBtnLayout.setMargin(true);
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("180px");
+
+		HorizontalLayout connectDropboxLayout = new HorizontalLayout();
+		connectDropboxLayout.setSpacing(true);
+
+		final Embedded titleIcon = new Embedded();
+		titleIcon.setSource(MyCollabResource
+				.newResource("icons/16/ecm/dropbox_icon.png"));
+		connectDropboxLayout.addComponent(titleIcon);
+
 		Button uploadDropboxBtn = new Button("Connect Dropbox",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -191,7 +206,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									ExternalDrive externalDrive) {
 								FileMainViewImpl.this.menuTree
 										.expandItem(rootECMFolder);
-
 							}
 						};
 						FileMainViewImpl.this.getWindow().addWindow(
@@ -199,7 +213,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					}
 				});
 		uploadDropboxBtn.addStyleName("link");
-		filterBtnLayout.addComponent(uploadDropboxBtn);
+		connectDropboxLayout.addComponent(uploadDropboxBtn);
+		filterBtnLayout.addComponent(connectDropboxLayout);
 
 		linkBtn.addComponent(filterBtnLayout);
 		linkBtn.addStyleName("graybtn2");
@@ -235,20 +250,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							externalMapFolder.setPath("/");
 							externalMapFolder.setName(externalDrive
 									.getFoldername());
-							expandFolder.addChild(expandFolder);
+							expandFolder.addChild(externalMapFolder);
 							menuTree.addItem(externalMapFolder);
 
 							menuTree.setItemIcon(
 									externalMapFolder,
 									MyCollabResource
-											.newResource("icons/16/ecm/folder_close.png"));
+											.newResource("icons/16/ecm/dropbox_icon.png"));
 							menuTree.setItemCaption(externalMapFolder,
 									externalMapFolder.getName());
 							menuTree.setParent(externalMapFolder, expandFolder);
 						}
-
 					}
-
 					if (expandFolder instanceof ExternalFolder) {
 						List<ExternalFolder> subFolders = externalResourceService
 								.getSubFolders(((ExternalFolder) expandFolder)
@@ -288,7 +301,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							}
 						}
 					}
-
 				}
 			}
 		});
@@ -299,8 +311,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			@Override
 			public void nodeCollapse(final CollapseEvent event) {
 				final Folder collapseFolder = (Folder) event.getItemId();
-				menuTree.setItemIcon(collapseFolder, MyCollabResource
-						.newResource("icons/16/ecm/dropbox_icon.png"));
+				if (collapseFolder instanceof ExternalFolder)
+					menuTree.setItemIcon(collapseFolder, MyCollabResource
+							.newResource("icons/16/ecm/dropbox_icon.png"));
 
 				Container dataSource = menuTree.getContainerDataSource();
 				final Object[] dataCollectionArray = dataSource.getItemIds()
@@ -309,8 +322,22 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					Folder folder = (Folder) id;
 					if (folder.getPath().contains(collapseFolder.getPath())
 							&& !folder.getPath().equals(
-									collapseFolder.getPath())) {
-						dataSource.removeItem(folder);
+									collapseFolder.getPath())
+							|| collapseFolder.getPath().equals(rootPath)) {
+						if (!folder.getPath().equals(rootPath)) {
+							if (collapseFolder instanceof ExternalFolder
+									&& folder instanceof ExternalFolder) {
+								if (((ExternalFolder) folder)
+										.getExternalDrive()
+										.getAccesstoken()
+										.equals(((ExternalFolder) folder)
+												.getExternalDrive()
+												.getAccesstoken()))
+									dataSource.removeItem(folder);
+							} else if (!(collapseFolder instanceof ExternalFolder)) {
+								dataSource.removeItem(folder);
+							}
+						}
 					}
 				}
 				FileMainViewImpl.this.menuTree
@@ -349,6 +376,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		this.addComponent(mainView);
 		this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
 
+	}
+
+	public boolean checkValidFolderName(String value) {
+		Pattern pattern = Pattern.compile(illegalFileNamePattern);
+		Matcher matcher = pattern.matcher(value);
+		return matcher.find();
 	}
 
 	private void gotoActionLogPage() {
@@ -643,7 +676,21 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				lstResource = resourceService.getResources(currentFolder
 						.getPath());
 			}
-
+			// TODO : load dropbox resource -- rootPath
+			if (currentFolder.getPath().equals(rootPath)) {
+				List<ExternalDrive> lst = externalDriveService
+						.getExternalDrivesOfUser(AppContext.getUsername());
+				if (lst != null && lst.size() > 0) {
+					for (ExternalDrive drive : lst) {
+						if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
+							Resource res = externalResourceService
+									.getcurrentResourceByPath(drive, "/");
+							res.setName(drive.getFoldername());
+							lstResource.add(0, res);
+						}
+					}
+				}
+			}
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
 				if (lstResource.size() <= PagingResourceWapper.pageItemNum) {
@@ -720,7 +767,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			layout.setHeight("44px");
 
 			final CheckBox checkbox = new CheckBox();
-			checkbox.setWidth("30px");
+			checkbox.setWidth("25px");
 			checkbox.setImmediate(true);
 			checkbox.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			listAllCheckBox.add(checkbox);
@@ -760,7 +807,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			else
 				resourceIcon.setSource(MyCollabResource
 						.newResource("icons/32/ecm/file.png"));
-			resIconWapper.setWidth("70px");
+			resIconWapper.setWidth("40px");
 			resIconWapper.addComponent(resourceIcon);
 
 			layout.addComponent(resIconWapper);
@@ -1520,12 +1567,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				public void buttonClick(ClickEvent event) {
 					Folder parentFolder = null;
 					if (FileMainViewImpl.this.baseFolder instanceof ExternalFolder) {
-						parentFolder = externalResourceService
-								.getParentResourceFolder(
-										((ExternalFolder) FileMainViewImpl.this.baseFolder)
-												.getExternalDrive(), baseFolder
-												.getPath());
-
+						if (baseFolder.getPath().equals("/")) {
+							parentFolder = rootECMFolder;
+						} else {
+							parentFolder = externalResourceService
+									.getParentResourceFolder(
+											((ExternalFolder) FileMainViewImpl.this.baseFolder)
+													.getExternalDrive(),
+											baseFolder.getPath());
+						}
 					} else if (!FileMainViewImpl.this.baseFolder.getPath()
 							.equals(FileMainViewImpl.this.rootPath)) {
 						parentFolder = resourceService
@@ -1924,5 +1974,324 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		public int getCurrentPage() {
 			return currentPage;
 		}
+	}
+
+	protected class SettingConnectionDrive extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
+
+		private Button connectAccountBtn;
+		private VerticalLayout bodyLayout;
+		private VerticalLayout mainLayout;
+		private ExternalDriveService externalDriveService;
+		private ExternalResourceService externalResourceService;
+		private boolean isEdit = false;
+
+		public SettingConnectionDrive(
+				ExternalDriveService externalDriveService,
+				ExternalResourceService externalResourceService) {
+			this.externalDriveService = externalDriveService;
+			this.externalResourceService = externalResourceService;
+			mainLayout = new VerticalLayout();
+			mainLayout.setSpacing(true);
+			mainLayout.setWidth("100%");
+			mainLayout.setMargin(true);
+
+			connectAccountBtn = new Button("Connect account",
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							DropBoxOAuthWindow dropboxConnectWindow = new DropBoxOAuthWindow() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								protected void addExternalDrive(
+										ExternalDrive externalDrive) {
+									FileMainViewImpl.this.menuTree
+											.expandItem(rootECMFolder);
+									VerticalLayout layout = constructBodyOfOneDriveConnection(externalDrive);
+									bodyLayout.addComponent(layout);
+									bodyLayout.addComponent(new Hr());
+								}
+							};
+							FileMainViewImpl.this.getWindow().addWindow(
+									dropboxConnectWindow);
+						}
+					});
+			connectAccountBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+			mainLayout.addComponent(connectAccountBtn);
+
+			bodyLayout = new VerticalLayout();
+			bodyLayout.setSpacing(false);
+			bodyLayout.setWidth("100%");
+			bodyLayout.setMargin(false);
+
+			mainLayout.addComponent(bodyLayout);
+			this.addComponent(mainLayout);
+
+			List<ExternalDrive> lst = externalDriveService
+					.getExternalDrivesOfUser(AppContext.getUsername());
+
+			bodyLayout.addComponent(new Hr());
+			for (final ExternalDrive drive : lst) {
+				VerticalLayout layout = constructBodyOfOneDriveConnection(drive);
+				bodyLayout.addComponent(layout);
+				bodyLayout.addComponent(new Hr());
+			}
+		}
+
+		private VerticalLayout constructBodyOfOneDriveConnection(
+				final ExternalDrive drive) {
+			final VerticalLayout externalDriveEditLayout = new VerticalLayout();
+			externalDriveEditLayout.setSpacing(true);
+			externalDriveEditLayout.setMargin(true);
+
+			final HorizontalLayout title = new HorizontalLayout();
+			title.setSpacing(true);
+			title.setWidth("100%");
+			externalDriveEditLayout.addComponent(title);
+
+			CssLayout iconWapper = new CssLayout();
+			iconWapper.setWidth("60px");
+			final Embedded embed = new Embedded();
+			if (drive.getStoragename().equals(StorageNames.DROPBOX))
+				embed.setSource(MyCollabResource
+						.newResource("icons/48/ecm/Dropbox.png"));
+			iconWapper.addComponent(embed);
+			title.addComponent(iconWapper);
+			title.setComponentAlignment(iconWapper, Alignment.MIDDLE_LEFT);
+
+			if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
+				Label lbl = new Label("Dropbox");
+				lbl.addStyleName("h2");
+				lbl.setWidth("100px");
+				title.addComponent(lbl);
+				title.setComponentAlignment(lbl, Alignment.MIDDLE_LEFT);
+
+				// ----construct title --------------
+				final Label foldernameLbl = new Label(drive.getFoldername());
+				foldernameLbl.addStyleName("h3");
+				title.addComponent(foldernameLbl);
+				title.setComponentAlignment(foldernameLbl,
+						Alignment.MIDDLE_LEFT);
+				title.setExpandRatio(foldernameLbl, 1.0f);
+
+				final PopupButton popupBtn = new PopupButton();
+				popupBtn.setIcon(MyCollabResource
+						.newResource("icons/16/item_settings.png"));
+				popupBtn.setWidth("18px");
+				popupBtn.addStyleName("link");
+
+				final VerticalLayout popupOptionActionLayout = new VerticalLayout();
+				popupOptionActionLayout.setMargin(true);
+				popupOptionActionLayout.setSpacing(true);
+				popupOptionActionLayout.setWidth("100px");
+
+				Button editBtn = new Button("Edit", new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						popupBtn.setPopupVisible(false);
+						if (!isEdit) {
+							isEdit = true;
+							externalDriveEditLayout
+									.addStyleName("driveEditting");
+							title.removeComponent(popupBtn);
+							title.removeComponent(foldernameLbl);
+							HorizontalLayout layout = editActionHorizontalLayout(
+									drive, title, foldernameLbl,
+									externalDriveEditLayout);
+							title.replaceComponent(foldernameLbl, layout);
+							title.setComponentAlignment(layout,
+									Alignment.MIDDLE_LEFT);
+							title.setExpandRatio(layout, 1.0f);
+							title.addComponent(popupBtn);
+							title.addComponent(popupBtn);
+							title.setComponentAlignment(popupBtn,
+									Alignment.MIDDLE_RIGHT);
+						}
+					}
+				});
+				editBtn.addStyleName("link");
+				popupOptionActionLayout.addComponent(editBtn);
+
+				Button deleteBtn = new Button("Delete",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								try {
+									ConfirmDialogExt.show(
+											FileMainViewImpl.this.getWindow(),
+											LocalizationHelper
+													.getMessage(
+															GenericI18Enum.DELETE_DIALOG_TITLE,
+															SiteConfiguration
+																	.getSiteName()),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+											new ConfirmDialog.Listener() {
+												private static final long serialVersionUID = 1L;
+
+												@Override
+												public void onClose(
+														final ConfirmDialog dialog) {
+													if (dialog.isConfirmed()) {
+														externalDriveService
+																.removeWithSession(
+																		drive.getId(),
+																		AppContext
+																				.getUsername(),
+																		AppContext
+																				.getAccountId());
+														int index = bodyLayout
+																.getComponentIndex(externalDriveEditLayout);
+														bodyLayout
+																.removeComponent(bodyLayout
+																		.getComponent(index + 1));
+														bodyLayout
+																.removeComponent(externalDriveEditLayout);
+														Resource res = externalResourceService
+																.getcurrentResourceByPath(
+																		drive,
+																		"/");
+														if (res != null
+																&& res instanceof Folder) {
+															Container dataSource = menuTree
+																	.getContainerDataSource();
+															final Object[] dataCollectionArray = dataSource
+																	.getItemIds()
+																	.toArray();
+															for (Object id : dataCollectionArray) {
+																Folder folder = (Folder) id;
+																if (folder
+																		.getName()
+																		.equals(res
+																				.getName())
+																		&& folder instanceof ExternalFolder) {
+																	dataSource
+																			.removeItem(folder);
+																}
+															}
+															FileMainViewImpl.this.menuTree
+																	.setContainerDataSource(dataSource);
+														}
+													}
+												}
+											});
+								} catch (Exception e) {
+									throw new MyCollabException(e);
+								}
+							}
+						});
+				deleteBtn.addStyleName("link");
+				popupOptionActionLayout.addComponent(deleteBtn);
+				popupBtn.addComponent(popupOptionActionLayout);
+				title.addComponent(popupBtn);
+				title.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
+
+			}
+			return externalDriveEditLayout;
+		}
+
+		private HorizontalLayout editActionHorizontalLayout(
+				final ExternalDrive drive, final HorizontalLayout parentLayout,
+				final Label lbl, final VerticalLayout externalDriveEditLayout) {
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.addStyleName("resourceItem");
+
+			Label folderTitleLbl = new Label("Folder title");
+			layout.addComponent(folderTitleLbl);
+
+			final TextField folderNameTextField = new TextField();
+			folderNameTextField.setImmediate(true);
+			folderNameTextField.setValue(drive.getFoldername());
+			layout.addComponent(folderNameTextField);
+
+			Button saveBtn = new Button("Save", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					String folderName = folderNameTextField.getValue()
+							.toString().trim();
+					try {
+						if (folderName != null && folderName.length() > 0) {
+							boolean checkingError = checkValidFolderName(folderName);
+							if (checkingError) {
+								FileMainViewImpl.this
+										.getWindow()
+										.showNotification(
+												"Please upload valid file-name except any follow characters : <>:&/\\|?*&");
+								return;
+							}
+							Resource res = externalResourceService
+									.getcurrentResourceByPath(drive, "/");
+
+							for (int i = 0; i < menuTree
+									.getContainerDataSource().getItemIds()
+									.toArray().length; i++) {
+								Folder folder = (Folder) menuTree
+										.getContainerDataSource().getItemIds()
+										.toArray()[i];
+								if (folder.getName().equals(res.getName())
+										&& folder instanceof ExternalFolder) {
+									((Folder) menuTree.getContainerDataSource()
+											.getItemIds().toArray()[i])
+											.setName(folderName);
+								}
+							}
+
+							ExternalDrive currentEditDrive = drive;
+							currentEditDrive.setFoldername(folderName);
+							externalDriveService.updateWithSession(
+									currentEditDrive, AppContext.getUsername());
+
+							final Label foldernameLbl = new Label(folderName);
+							foldernameLbl.addStyleName("h3");
+
+							turnBackMainLayout(parentLayout, foldernameLbl,
+									layout, externalDriveEditLayout);
+						}
+					} catch (Exception e) {
+						throw new MyCollabException(e);
+					}
+				}
+			});
+			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			layout.addComponent(saveBtn);
+
+			Button cancelBtn = new Button("Cancel", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					turnBackMainLayout(parentLayout, lbl, layout,
+							externalDriveEditLayout);
+				}
+			});
+			cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			layout.addComponent(cancelBtn);
+			return layout;
+		}
+
+		private void turnBackMainLayout(final HorizontalLayout parentLayout,
+				Label lbl, HorizontalLayout newComponent,
+				VerticalLayout externalDriveEditLayout) {
+			this.isEdit = false;
+			parentLayout.replaceComponent(newComponent, lbl);
+			parentLayout.setComponentAlignment(lbl, Alignment.MIDDLE_LEFT);
+			parentLayout.setExpandRatio(lbl, 1.0f);
+			externalDriveEditLayout.removeStyleName("driveEditting");
+		}
+
 	}
 }

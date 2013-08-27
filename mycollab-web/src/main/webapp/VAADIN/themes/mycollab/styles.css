@@ -1780,8 +1780,10 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:                         DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=                         '#DDD', GradientType=      
+	filter: progid:                                   DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=                                   '#DDD', GradientType= 
+		    
+		         
 		                  0);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -1829,7 +1831,17 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:                         DXImageTransform.Microsoft.gradient(startColorstr=
+	filter: progid:                                   DXImageTransform.Microsoft.gradient(startColorstr=
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -1850,8 +1862,8 @@ input.v-textfield-errorField {
 		
 		
 		 
-		   '#F8F8F8', endColorstr=                         '#EEEEEE',
-		GradientType=    
+		   '#F8F8F8', endColorstr=                                   '#EEEEEE',
+		GradientType=              
 		
 		
 		  
@@ -3095,8 +3107,6 @@ div.v-lazyloadingwrapper-loading {
 
 .v-horizontallayout.border-box2-no-margin .v-horizontallayout-margin {
 	padding: 0px 1px 1px 0px;
-	<<<<<<<
-	HEAD
 }
 
 /* Filter Select */
@@ -4426,6 +4436,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .v-horizontallayout .resourceItem:hover {
+	background-color: #ddd;
+}
+
+.v-verticallayout .driveEditting {
 	background-color: #ddd;
 }
 
