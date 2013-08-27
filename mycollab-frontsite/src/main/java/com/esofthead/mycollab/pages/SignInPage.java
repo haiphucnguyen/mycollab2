@@ -55,7 +55,7 @@ public class SignInPage extends BasePage {
 
 			@Override
 			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				log.debug("Signin page: " + SiteConfiguration.getSigninUrl());
+				log.info("Signin page: " + SiteConfiguration.getSigninUrl());
 				final ClientResource clientResource = new ClientResource(
 						SiteConfiguration.getSigninUrl());
 				final UserHubResource userResource = clientResource
@@ -104,7 +104,7 @@ public class SignInPage extends BasePage {
 					}
 
 				} catch (Exception e) {
-					log.error("Error when retrieve sub domain of user", e);
+					ErrorReportingUtils.reportError(e);
 				}
 			}
 		});
