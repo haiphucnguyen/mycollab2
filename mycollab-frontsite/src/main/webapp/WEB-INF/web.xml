@@ -5,11 +5,6 @@
 
     <display-name>mycollab-frontsite</display-name>
 
-    <context-param>
-        <param-name>org.eclipse.jetty.servlet.SessionIdPathParameterName</param-name>
-        <param-value>none</param-value>
-    </context-param>
-
     <!-- There are three means to configure Wickets configuration mode and 
         they are tested in the order given. 1) A system property: -Dwicket.configuration 
         2) servlet specific <init-param> 3) context specific <context-param> The 
