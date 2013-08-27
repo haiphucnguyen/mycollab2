@@ -35,10 +35,12 @@ public class ErrorReportingUtils {
 
 	public static void main(String[] args) {
 		final ClientResource clientResource = new ClientResource(
-				"http://esofthead.mycollab.com:8080/api/errorReport");
+				"https://esofthead.mycollab.com/api/errorReport");
 		final ErrorReportingResource userResource = clientResource
 				.wrap(ErrorReportingResource.class);
-		userResource.sendErrorTrace("a");
+		 userResource
+				.sendErrorTrace("AAA");
+		
 
 	}
 }
