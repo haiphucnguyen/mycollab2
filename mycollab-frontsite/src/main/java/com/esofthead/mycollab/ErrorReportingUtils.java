@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.rest.server.resource.ErrorReportingResource;
+import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 public class ErrorReportingUtils {
 	private static Logger log = LoggerFactory
@@ -30,5 +31,16 @@ public class ErrorReportingUtils {
 		StringWriter writer = new StringWriter();
 		e.printStackTrace(new PrintWriter(writer));
 		reportError(writer.toString());
+	}
+
+	public static void main(String[] args) {
+		final ClientResource clientResource = new ClientResource(
+				"https://esofthead.mycollab.com/api/signin");
+		final UserHubResource userResource = clientResource
+				.wrap(UserHubResource.class);
+		String[] subDomains = userResource
+				.getSubdomainsOfUser("hainguyen@esofthead.com");
+		System.out.println(subDomains);
+
 	}
 }
