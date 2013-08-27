@@ -99,6 +99,9 @@ public class SiteConfiguration {
 
 		instance.dropboxCallbackUrl = ApplicationProperties
 				.getString("dropbox.callbackUrl");
+
+		instance.ggDriveCallbackUrl = ApplicationProperties
+				.getString("ggDrive.callbackUrl");
 	}
 
 	private DeploymentMode deploymentMode;
@@ -112,6 +115,7 @@ public class SiteConfiguration {
 	private String cdnUrl;
 	private Properties cacheProperties;
 	private String dropboxCallbackUrl;
+	private String ggDriveCallbackUrl;
 
 	public static Properties getCacheProperties() {
 		return instance.cacheProperties;
@@ -175,5 +179,9 @@ public class SiteConfiguration {
 
 	public static String getDropboxCallbackUrl() {
 		return instance.dropboxCallbackUrl;
+	}
+
+	public static String getGGDriveCallbackUrl() {
+		return instance.ggDriveCallbackUrl;
 	}
 }
