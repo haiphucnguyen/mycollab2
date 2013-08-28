@@ -181,7 +181,7 @@ public class OpportunityTableDisplay
 						final SimpleOpportunity opportunity = OpportunityTableDisplay.this
 								.getBeanByIndex(itemId);
 						Label l = new Label();
-						l.setValue(AppContext.formatDateTime(opportunity
+						l.setValue(AppContext.formatDate(opportunity
 								.getExpectedcloseddate()));
 						return l;
 					}
