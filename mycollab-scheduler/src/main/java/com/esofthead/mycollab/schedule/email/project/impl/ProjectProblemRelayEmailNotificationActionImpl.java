@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.email.project;
+package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,19 +8,21 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 
 @Component
-public class ProjectRiskRelayEmailNotificationActionImpl extends
+public class ProjectProblemRelayEmailNotificationActionImpl extends
 		DefaultSendingRelayEmailNotificationForProjectAction implements
-		ProjectRiskRelayEmailNotificationAction {
+		SendingRelayEmailNotificationAction {
 
 	@Autowired
-	private RiskService riskService;
+	private ProblemService problemService;
 
 	@Autowired
 	private ProjectService projectService;
@@ -28,42 +30,48 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId, 0);
+		int problemId = emailNotification.getTypeid();
+		SimpleProblem problem = problemService.findById(problemId, 0);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$hyperLinks.projectName]: Risk \"" + risk.getRiskname()
-						+ "\" has been created",
-				"templates/email/project/riskCreatedNotifier.mt");
+				"[$hyperLinks.projectName]: Problem \""
+						+ problem.getIssuename() + "\" has been created",
+				"templates/email/project/problemCreatedNotifier.mt");
 
-		templateGenerator.putVariable("risk", risk);
-		templateGenerator.putVariable("hyperLinks", createHyperLinks(risk));
+		templateGenerator.putVariable("problem", problem);
+		templateGenerator.putVariable("hyperLinks", createHyperLinks(problem));
 
 		return templateGenerator;
 	}
 
-	private Map<String, String> createHyperLinks(SimpleRisk risk) {
+	private Map<String, String> createHyperLinks(SimpleProblem problem) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
-				risk.getProjectid());
-		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		hyperLinks.put("raiseUserUrl", linkGenerator
-				.generateUserPreviewFullLink(risk.getRaisedByUserFullName()));
-		hyperLinks.put("assignUserURL", linkGenerator
-				.generateUserPreviewFullLink(risk.getAssignedToUserFullName()));
+				problem.getProjectid());
 
-		SimpleProject project = projectService.findById(risk.getProjectid(),
-				risk.getSaccountid());
+		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
+		hyperLinks
+				.put("assignUserUrl", linkGenerator
+						.generateUserPreviewFullLink(problem
+								.getAssignedUserFullName()));
+		hyperLinks
+				.put("raiseUserUrl", linkGenerator
+						.generateUserPreviewFullLink(problem
+								.getRaisedByUserFullName()));
+
+		SimpleProject project = projectService.findById(problem.getProjectid(),
+				problem.getSaccountid());
 		if (project != null) {
 			hyperLinks.put("projectName", project.getName());
 		}
+
 		return hyperLinks;
 	}
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 

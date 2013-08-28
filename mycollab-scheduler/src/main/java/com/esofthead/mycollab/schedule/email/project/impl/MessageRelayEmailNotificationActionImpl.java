@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.email.project;
+package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +17,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 
 @Service
 public class MessageRelayEmailNotificationActionImpl implements

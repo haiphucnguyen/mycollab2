@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.email.project;
+package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,20 +8,20 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
-import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 
 @Component
-public class ProjectProblemRelayEmailNotificationActionImpl extends
+public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 		DefaultSendingRelayEmailNotificationForProjectAction implements
-		SendingRelayEmailNotificationAction {
-
+		ProjectMilestoneRelayEmailNotificationAction {
 	@Autowired
-	private ProblemService problemService;
+	private MilestoneService milestoneService;
 
 	@Autowired
 	private ProjectService projectService;
@@ -29,37 +29,33 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int problemId = emailNotification.getTypeid();
-		SimpleProblem problem = problemService.findById(problemId, 0);
+		int milestoneId = emailNotification.getTypeid();
+		SimpleMilestone milestone = milestoneService.findById(milestoneId, 0);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$hyperLinks.projectName]: Problem \""
-						+ problem.getIssuename() + "\" has been created",
-				"templates/email/project/problemCreatedNotifier.mt");
+				"[$hyperLinks.projectName]: Phase \"" + milestone.getName()
+						+ "\" has been created",
+				"templates/email/project/phaseCreatedNotifier.mt");
 
-		templateGenerator.putVariable("problem", problem);
-		templateGenerator.putVariable("hyperLinks", createHyperLinks(problem));
+		templateGenerator.putVariable("milestone", milestone);
+		templateGenerator
+				.putVariable("hyperLinks", createHyperLinks(milestone));
 
 		return templateGenerator;
 	}
 
-	private Map<String, String> createHyperLinks(SimpleProblem problem) {
+	private Map<String, String> createHyperLinks(SimpleMilestone milestone) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
-				problem.getProjectid());
-
+				milestone.getProjectid());
+		hyperLinks.put("milestoneURL", linkGenerator
+				.generateMilestonePreviewFullLink(milestone.getId()));
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		hyperLinks
-				.put("assignUserUrl", linkGenerator
-						.generateUserPreviewFullLink(problem
-								.getAssignedUserFullName()));
-		hyperLinks
-				.put("raiseUserUrl", linkGenerator
-						.generateUserPreviewFullLink(problem
-								.getRaisedByUserFullName()));
+		hyperLinks.put("ownerUserUrl", linkGenerator
+				.generateUserPreviewFullLink(milestone.getOwnerFullName()));
 
-		SimpleProject project = projectService.findById(problem.getProjectid(),
-				problem.getSaccountid());
+		SimpleProject project = projectService.findById(
+				milestone.getProjectid(), milestone.getSaccountid());
 		if (project != null) {
 			hyperLinks.put("projectName", project.getName());
 		}
@@ -77,7 +73,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 

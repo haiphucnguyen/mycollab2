@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.ui.components.CommentRowDisplayHandler;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
@@ -37,9 +38,13 @@ public class CommentListDepot extends Depot {
 		commentListBox.setMargin(true);
 	}
 
-	public CommentListDepot(final String type, final int typeid,
-			final int extraTypeId, final boolean isDisplayCommentInput,
-			final boolean isSendingRelayEmail, final Class emailHandler) {
+	public CommentListDepot(
+			final String type,
+			final int typeid,
+			final int extraTypeId,
+			final boolean isDisplayCommentInput,
+			final boolean isSendingRelayEmail,
+			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		super("Comments", new CommentDisplay(type, typeid, extraTypeId,
 				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
 		this.setWidth("900px");
@@ -62,16 +67,20 @@ public class CommentListDepot extends Depot {
 		private Integer numComments;
 		private ProjectCommentInput commentBox;
 
-		public CommentDisplay(final String type, final Integer typeid,
-				final Integer extraTypeId, final boolean isDisplayCommentInput,
-				final boolean isSendingRelayEmail, final Class emailHandler) {
+		public CommentDisplay(
+				final String type,
+				final Integer typeid,
+				final Integer extraTypeId,
+				final boolean isDisplayCommentInput,
+				final boolean isSendingRelayEmail,
+				final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 			setSpacing(true);
 			this.type = type;
 			this.typeid = typeid;
 
 			if (isDisplayCommentInput) {
-				commentBox = new ProjectCommentInput(this, type, typeid, extraTypeId,
-						false, isSendingRelayEmail, emailHandler);
+				commentBox = new ProjectCommentInput(this, type, typeid,
+						extraTypeId, false, isSendingRelayEmail, emailHandler);
 				this.addComponent(commentBox);
 			}
 
