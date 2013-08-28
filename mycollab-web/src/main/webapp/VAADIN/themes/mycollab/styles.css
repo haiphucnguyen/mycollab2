@@ -1780,8 +1780,11 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:                                   DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=                                   '#DDD', GradientType= 
+	filter: progid:                                      DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=                                      '#DDD', GradientType=
+		
+		
+		 
 		    
 		         
 		                  0);
@@ -1831,7 +1834,10 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:                                   DXImageTransform.Microsoft.gradient(startColorstr=
+	filter: progid:                                      DXImageTransform.Microsoft.gradient(startColorstr=
+		
+		
+		
 		
 		
 		
@@ -1862,8 +1868,8 @@ input.v-textfield-errorField {
 		
 		
 		 
-		   '#F8F8F8', endColorstr=                                   '#EEEEEE',
-		GradientType=              
+		   '#F8F8F8', endColorstr=                                      '#EEEEEE',
+		GradientType=                 
 		
 		
 		  
@@ -4268,6 +4274,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-label-h3 {
 	font-size: 13px;
 	font-weight: bold;
+}
+
+.v-label.h3-dropbox {
+	font-size: 13px;
+	padding: 0px;
 }
 
 .v-table-cell-wrapper .v-popupbutton.link .v-popup-indicator {

@@ -2021,6 +2021,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
 											externalDrive);
 									bodyLayout.addComponent(layout);
+									bodyLayout.setComponentAlignment(layout,
+											Alignment.MIDDLE_LEFT);
 									bodyLayout.addComponent(new Hr());
 								}
 							};
@@ -2047,6 +2049,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
 						drive);
 				bodyLayout.addComponent(layout);
+				bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
 				bodyLayout.addComponent(new Hr());
 			}
 		}
@@ -2085,7 +2088,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 					// ----construct title --------------
 					foldernameLbl = new Label(drive.getFoldername());
-					foldernameLbl.addStyleName("h3");
+					foldernameLbl.addStyleName("h3-dropbox");
 					title.addComponent(foldernameLbl);
 					title.setComponentAlignment(foldernameLbl,
 							Alignment.MIDDLE_LEFT);
@@ -2229,6 +2232,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 				Label folderTitleLbl = new Label("Folder title");
 				layout.addComponent(folderTitleLbl);
+				layout.setComponentAlignment(folderTitleLbl,
+						Alignment.MIDDLE_CENTER);
 
 				final TextField folderNameTextField = new TextField();
 				folderNameTextField.setImmediate(true);
