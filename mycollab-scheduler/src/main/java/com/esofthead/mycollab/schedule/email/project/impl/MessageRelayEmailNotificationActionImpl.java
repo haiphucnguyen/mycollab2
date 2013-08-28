@@ -39,7 +39,7 @@ public class MessageRelayEmailNotificationActionImpl implements
 		int messageId = notification.getTypeid();
 		int projectId = notification.getExtratypeid();
 		List<SimpleUser> usersInProject = projectMemberService
-				.getUsersInProject(projectId, 0);
+				.getActiveUsersInProject(projectId, 0);
 
 		SimpleMessage message = messageService.findMessageById(messageId, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -73,7 +73,7 @@ public class MessageRelayEmailNotificationActionImpl implements
 		int messageId = notification.getTypeid();
 		int projectId = notification.getExtratypeid();
 		List<SimpleUser> usersInProject = projectMemberService
-				.getUsersInProject(projectId, 0);
+				.getActiveUsersInProject(projectId, 0);
 
 		SimpleMessage message = messageService.findMessageById(messageId, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -125,7 +125,7 @@ public class MessageRelayEmailNotificationActionImpl implements
 
 		Integer projectid = message.getProjectid();
 		List<SimpleUser> usersInProject = projectMemberService
-				.getUsersInProject(projectid, 0);
+				.getActiveUsersInProject(projectid, 0);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$message.projectName]: $!message.fullPostedUserName has commented on \""
 						+ message.getTitle() + "\"",
