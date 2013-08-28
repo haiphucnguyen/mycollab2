@@ -76,7 +76,8 @@ public class SignInPage extends BasePage {
 						if (SiteConfiguration.getDeploymentMode() == DeploymentMode.LOCAL) {
 							redirectUrl = SiteConfiguration.getAppUrl();
 						} else {
-							redirectUrl = response[0];
+							redirectUrl = String.format(
+									SiteConfiguration.getAppUrl(), response[0]);
 						}
 
 						log.debug("Redirect user {} to subdomain {}",
