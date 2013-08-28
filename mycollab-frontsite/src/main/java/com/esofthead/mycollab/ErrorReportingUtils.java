@@ -35,12 +35,11 @@ public class ErrorReportingUtils {
 
 	public static void main(String[] args) {
 		final ClientResource clientResource = new ClientResource(
-				"https://esofthead.mycollab.com/api/errorReport");
-		final ErrorReportingResource userResource = clientResource
-				.wrap(ErrorReportingResource.class);
-		 userResource
-				.sendErrorTrace("AAA");
-		
+				"https://esofthead.mycollab.com/api/signin");
+		final UserHubResource userResource = clientResource
+				.wrap(UserHubResource.class);
+		System.out.println(userResource
+				.getSubdomainsOfUser("hainguyen@esofthead.com").length);
 
 	}
 }

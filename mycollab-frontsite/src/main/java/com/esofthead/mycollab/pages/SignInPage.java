@@ -76,8 +76,12 @@ public class SignInPage extends BasePage {
 						if (SiteConfiguration.getDeploymentMode() == DeploymentMode.LOCAL) {
 							redirectUrl = SiteConfiguration.getAppUrl();
 						} else {
-							redirectUrl = response[0];
+							redirectUrl = String.format(
+									SiteConfiguration.getAppUrl(), response[0]);
 						}
+
+						log.debug("Redirect user {} to subdomain {}",
+								emailString, redirectUrl);
 						this.getRequestCycle()
 								.scheduleRequestHandlerAfterCurrent(
 										new RedirectRequestHandler(redirectUrl));
@@ -85,6 +89,8 @@ public class SignInPage extends BasePage {
 
 						subdomainList.removeAll();
 						for (String subdomainString : response) {
+							log.debug("List subdomain {} to user {}",
+									subdomainString, emailString);
 							final AbstractItem newItem = new AbstractItem(
 									subdomainList.newChildId());
 

@@ -36,7 +36,10 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public List<Resource> getResources(String path) {
 		List<Resource> resources = contentJcrDao.getResources(path);
-		Collections.sort(resources);
+		if (resources != null) {
+			Collections.sort(resources);
+		}
+
 		return resources;
 	}
 

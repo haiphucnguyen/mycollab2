@@ -1,3 +1,3 @@
 running.mode=site
-api.url=https://esofthead.mycollab.com/api
-app.url=http://localhost:8080/mycollab-web
+api.url=http://localhost:8080/api
+app.url=https://%s.mycollab.com/
