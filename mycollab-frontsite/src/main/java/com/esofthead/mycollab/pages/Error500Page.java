@@ -12,6 +12,11 @@ public class Error500Page extends BaseErrorPage {
 
 	public Error500Page(PageParameters parameters) {
 		super(parameters);
+
+		add(new Label("pagetitle", "Internal Error"));
+
+		add(new Label("error_code", "500"));
+		add(new Label("error_brief", "Oops, there is an error."));
 	}
 
 	public Error500Page(Exception e) {
