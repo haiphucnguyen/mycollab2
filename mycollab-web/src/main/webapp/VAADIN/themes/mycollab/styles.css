@@ -754,9 +754,14 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	border-right: medium none;
 }
 
-.v-button.dropbox-icon-button .v-button-wrap {
-	padding: 3px 0px 5px 6px;
+.v-button.dropbox-icon-button .v-button-wrap, .v-button.dropbox-icon-button:active .v-button-wrap {
+	padding: 5px 0px 5px 6px;
 	background: none;
+	border: none;
+}
+
+.v-button.dropbox-icon-button > .v-button-wrap > .v-icon {
+	float: left;
 }
 
 .v-textfield.no-border-radius-left {
