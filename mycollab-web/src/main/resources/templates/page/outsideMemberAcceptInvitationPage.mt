@@ -52,161 +52,68 @@
 <body>
 	<table height="400" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
 		<tr>
-			<td style="height: 200px; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
+			<td style="height: 100%; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
 				<div>
 					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
+					&copy;2010-2013 MyCollab, LLC. All rights reserved.
 				</div>
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
-				<div id="divHolder"></div>
+				<div style="display: block; padding: 8px 8px 8px 20px;">
+					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $name , $email . <br>
+					Congratulations to join MyCollab!
+				</div>
+				<div style="display: block; padding: 8px 8px 8px 20px;">
+					Password: 
+					<input id="password" width="300px" maxlength="45" name="password" type="password" />
+				</div>
+				<div align="center" style="padding-top: 30px;">
+						<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Create</button>
+						<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
+				</div>
 			</td>
 		</tr>
 	</table>
 	<div class="container"></div>
-	<footer style="padding-top: 100px;">
-		<div class="footer-home">
-		<div class="wrapper">
-			<div class="footer-copyright"><h1>MYCOLLAB</h1>
-                          	&copy;2010-2013 MyCollab, LLC. All rights reserved.</div>
-        </div>
-	</div>
-	</footer>
-	<div id="welcomeBody" style="display:none">
-		<div style="display: block; padding: 8px 8px 8px 20px;">
-			<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $name , $email . <br>
-			thank you for accepted the invitation !
-			Come to MyCollab, you will feel new things in manage your business, experience new ways, 
-			faster and smarter, the maximum help you in managing your business. 
-			My Collab suitable for all small and large business management model. 
-			We always listen from you, and develop to reach the best customer satisfaction. 
-			What are you waiting? Now we take a tour . 
-		</div>
-		<div style="display: block; padding: 8px 8px 8px 20px;">
-			At first, please create your account
-			<button class="v-button-bluebtn" type="button" onclick="return createNewAccount();">Create new account</button>
-		</div>
-	</div>	
-	<div id="createNewAccountForm" style="display:none;">
-		<div style="display:block ; padding: 20px 8px 8px 20px;">
-		<form>
-		<table border="0">
-		<tbody>
-		<tr>
-			<td><label>First name: </label> </td>
-			<td><input id="firstname" maxlength="30" name="firstname" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label>Last name: </label></td>
-			<td><input id="lastname" maxlength="30" name="lastname" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label for="username">User Name:</label> </td>
-			<td><input id="username" maxlength="45" name="username" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label >Birthdate:</label> </td>
-			<td><input id="birthdate" maxlength="45" name="birthdate" type="text" /></td>
-		</tr>
-		<tr>
-			<td><label for="email">Email Address:</label> </td>
-			<td><input id="email" maxlength="45" name="email" type="text" /></td>
-			
-			<td style="padding-left: 15px;"><label>Website:</label> </td>
-			<td><input id="website" maxlength="45" name="website" type="text" /></td>
-		</tr>
-		<tr>
-			<td><label for="password">Password:</label></td>
-			<td><input id="password" maxlength="45" name="password" type="password" /></td>
-		</tr>
-		</tbody></table>
-		</form>
-		
-		<div style="display: block; padding: 8px 8px 8px 20px;">
-			<p><span style="color:blue; font-style:bold"> More informations
-			</span></p>
-		</div>
-		
-		<table border="0">
-		<tbody>
-		<tr>
-			<td><label>Country: </label> </td>
-			<td><input id="country" maxlength="30" name="country" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label>Company: </label> </td>
-			<td><input id="company" maxlength="30" name="company" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label>Home phone: </label> </td>
-			<td><input id="homePhone" maxlength="30" name="homePhone" type="text" /> </td>
-			
-			<td style="padding-left: 15px;"><label>Work phone: </label></td>
-			<td><input id="workphone" maxlength="30" name="workphone" type="text" /> </td>
-		</tr>
-		<tr>
-			<td><label>Skype: </label> </td>
-			<td><input id="skype" maxlength="30" name="skype" type="text" /> </td>
-		</tr>
-		</table>
-		
-		<div align="center" style="padding-top: 30px;">
-				<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Create</button>
-				<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
-		</div>
-		<div style="display: block; padding: 12px 8px 8px 20px;">
-			<p><span id="requireMsg" style="color:red; font-style:italic">
-			</span></p>
-		</div>
-	</div>
-	</div>
-	
 	<input type="hidden" id="handelCreateAccountURL" value="$!handelCreateAccountURL">
 	<input type="hidden" id="projectId" value="$!projectId">
-	<input type="hidden" id="roleId" value="$!roleId">
 	<input type="hidden" id="sAccountId" value="$!sAccountId">
+	<input type="hidden" id="email" value="$!email">
+	<input type="hidden" id="roleId" value="$!roleId">
 	
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$('#divHolder').html($('#welcomeBody').html());
-		$('#birthdate').datepicker();
 	});
-	function createNewAccount(){
-		$('#divHolder').html($('#createNewAccountForm').html())
-	}
 	function createAccount(){
 		if ($('#username').val() == ""){
 			$('#requireMsg').html("Please enter user name");
-			return;
-		}
-		if ($('#firstname').val().trim() == "" && $('#lastname').val().trim() == ""){
-			$('#requireMsg').html("Please enter last name");
 			return;
 		}
 		var url = encodeURI($('#handelCreateAccountURL').val());
 		 $.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : {firstname: $('#firstname').val().trim(), lastname: $('#lastname').val().trim(), 
-		      			email : $('#email').val().trim() , username : $('#username').val().trim(), 
-		      			password : $('#password').val().trim(), projectId : $('#projectId').val().trim(),
-		      			roleId: $('#roleId').val().trim(), sAccountId : $('#sAccountId').val() ,
-		      			birthdate : $('#birthdate').val().trim(), website : $('website').val().trim(),
-		      			country : $('#country').val().trim() , company : $('#company').val().trim(),
-		      			homePhone : $('#homePhone').val().trim(), workphone : $('#workphone').val().trim(),
-		      			skype : $('#skype').val().trim()},
+		      data : { email : $('#email').val().trim(),
+		      			password : $('#password').val().trim(), 
+		      			roleId : $('#roleId').val().trim(), 
+		      			projectId : $('#projectId').val().trim(),
+		      			sAccountId : $('#sAccountId').val()},
 		      success: function(data){
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
 		      	 		$('#requireMsg').html(data).show();
 		      	 	}else{
 		      	 		alert("Your account has been created.");
-		      	 		window.location.assign("$!loginURL");
+		      	 		window.location.assign("$!projectLinkURL");
 		      	 	}
 		      	 }
 		      }
 		});
 	}
 	function cancel(){
-		$('#divHolder').html($('#welcomeBody').html());
+		window.location.assign("$!projectLinkURL");
 	}
 </script>				
 </html>

@@ -49,11 +49,12 @@
 <title>Member deny invitation feedback page</title>
 </head>
 <body>
-	<table height="400" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
+	<table height="100%" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
 		<tr>
-			<td style="height: 200px; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
+			<td style="height: 100%; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
 				<div>
 					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
+					&copy;2010-2013 MyCollab, LLC. All rights reserved
 				</div>
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
@@ -80,14 +81,6 @@
 		</tr>
 	</table>
 	<div class="container"></div>
-	<footer style="padding-top: 200px;">
-		<div class="footer-home">
-		<div class="wrapper">
-			<div class="footer-copyright"><h1>MYCOLLAB</h1>
-                          	&copy;2010-2013 MyCollab, LLC. All rights reserved.</div>
-        </div>
-	</div>
-	</footer>
 	<input type="hidden" id="inviterEmail" value="$!inviterEmail">
 	<input type="hidden" id="url" value="$!redirectURL">
 	<input type="hidden" id="toEmail" value="$!toEmail">

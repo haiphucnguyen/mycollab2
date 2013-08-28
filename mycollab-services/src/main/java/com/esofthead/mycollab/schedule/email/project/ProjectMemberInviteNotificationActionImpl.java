@@ -51,7 +51,7 @@ public class ProjectMemberInviteNotificationActionImpl implements
 				"$inviteUser has invited you to join the team for project \" $member.projectName\"",
 				"templates/email/project/memberInvitation/memberInvitationNotifier.mt");
 		templateGenerator.putVariable("member", member);
-		templateGenerator.putVariable("inviteUser", member.getMemberFullName());
+		templateGenerator.putVariable("inviteUser", notification.getChangeby());
 
 		String userChange = notification.getChangeby();
 		User user = userService.findUserByUserName(userChange);

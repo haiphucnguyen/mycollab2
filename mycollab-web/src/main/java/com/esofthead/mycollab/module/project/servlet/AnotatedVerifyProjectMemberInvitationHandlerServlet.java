@@ -23,6 +23,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -58,13 +59,49 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 					// handle outside here
 					pathVariables = pathVariables.substring(identifyStr
 							.length() + 1);
-					handleOutSideMemberInvite(pathVariables, response);
+					handleOutSideMemberInvite(pathVariables, response, request);
+				} else if (identifyStr.equals("OUTSIDE_EXIST")) {
+					pathVariables = pathVariables.substring(identifyStr
+							.length() + 1);
+					handleOutSideMemberInviteWithExistAccount(pathVariables,
+							response);
 				} else {
 					// handle inside member invite
 					handleInsideMemberInvite(pathVariables, response);
 				}
 				return;
 			}
+		}
+		PageNotFoundGenerator.responsePage404(response);
+	}
+
+	private void handleOutSideMemberInviteWithExistAccount(
+			String pathVariables, HttpServletResponse response)
+			throws IOException {
+		int memberId = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+		pathVariables = pathVariables.substring((memberId + "").length() + 1);
+
+		int sAccountId = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+		pathVariables = pathVariables.substring((new Integer(sAccountId))
+				.toString().length() + 1);
+
+		String projectLinkURL = pathVariables;
+		if (memberId > 0) {
+			ProjectMember member = projectMemberService.findByPrimaryKey(
+					memberId, sAccountId);
+			if (member.getStatus().equals(
+					ProjectMemberStatusContants.VERIFICATING)) {
+				member.setStatus(ProjectMemberStatusContants.ACTIVE);
+				projectMemberService.updateWithSession(member, "");
+				try {
+					response.sendRedirect(projectLinkURL);
+				} catch (IOException e) {
+					throw new MyCollabException(e);
+				}
+			}
+			return;
 		}
 		PageNotFoundGenerator.responsePage404(response);
 	}
@@ -102,32 +139,34 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 	}
 
 	private void handleOutSideMemberInvite(String pathVariables,
-			HttpServletResponse response) {
-		int sAccountId = Integer.parseInt(pathVariables.substring(0,
-				pathVariables.indexOf("/")));
-		pathVariables = pathVariables.substring((sAccountId + "").length() + 1);
-
-		String name = pathVariables.substring(0, pathVariables.indexOf("/"));
-		pathVariables = pathVariables.substring(name.length() + 1);
+			HttpServletResponse response, HttpServletRequest request) {
+		// email , projectId, sAccountId,roleId,projectURL
 
 		String email = pathVariables.substring(0, pathVariables.indexOf("/"));
 		pathVariables = pathVariables.substring(email.length() + 1);
 
 		int projectId = Integer.parseInt(pathVariables.substring(0,
 				pathVariables.indexOf("/")));
-		pathVariables = pathVariables.substring((projectId + "").length() + 1);
+		pathVariables = pathVariables.substring((new Integer(projectId))
+				.toString().length() + 1);
+
+		int sAccountId = Integer.parseInt(pathVariables.substring(0,
+				pathVariables.indexOf("/")));
+		pathVariables = pathVariables.substring((new Integer(sAccountId))
+				.toString().length() + 1);
 
 		int roleId = Integer.parseInt(pathVariables.substring(0,
 				pathVariables.indexOf("/")));
-		pathVariables = pathVariables.substring((roleId + "").length() + 1);
+		pathVariables = pathVariables.substring((new Integer(roleId))
+				.toString().length() + 1);
 
-		String loginURL = pathVariables;
+		String projectLinkURL = pathVariables;
 
-		String handelCreateAccountURL = loginURL
+		String handelCreateAccountURL = request.getContextPath() + "/"
 				+ "project/outside/createAccount/";
 
-		String html = generateOutsideMemberAcceptPage(sAccountId, name, email,
-				projectId, roleId, loginURL, handelCreateAccountURL);
+		String html = generateOutsideMemberAcceptPage(sAccountId, email,
+				projectId, roleId, projectLinkURL, handelCreateAccountURL);
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
@@ -137,8 +176,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		out.println(html);
 	}
 
-	private String generateOutsideMemberAcceptPage(int sAccountId, String name,
-			String email, int projectId, int roleId, String loginURL,
+	private String generateOutsideMemberAcceptPage(int sAccountId,
+			String email, int projectId, int roleId, String projectLinkURL,
 			String handelCreateAccountURL) {
 		VelocityContext context = new VelocityContext(
 				EngineFactory.createContext());
@@ -155,13 +194,12 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 							.getClassLoader().getResourceAsStream(
 									OUTSIDE_MEMBER_WELCOME_PAGE));
 		}
-		context.put("name", name);
+		context.put("projectLinkURL", projectLinkURL);
 		context.put("email", email);
-		context.put("projectId", projectId);
-		context.put("roleId", roleId);
-		context.put("loginURL", loginURL);
 		context.put("handelCreateAccountURL", handelCreateAccountURL);
 		context.put("sAccountId", sAccountId);
+		context.put("projectId", projectId);
+		context.put("roleId", roleId);
 
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 

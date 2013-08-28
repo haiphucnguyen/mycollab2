@@ -29,10 +29,14 @@ public class AnotatedMemberDenyInvitationFeedBackHandlerServlet implements
 			String message = request.getParameter("message");
 			String toName = request.getParameter("toName");
 			String inviterName = request.getParameter("inviterName");
-
-			mailRelayService.saveRelayEmail(new String[] { toName },
-					new String[] { toEmail }, "Your invitation has been deny",
-					message);
+			if (inviterName.indexOf("/") != -1) {
+				inviterName = inviterName
+						.substring(0, inviterName.indexOf("/"));
+			}
+			toName = (toName.equals("You")) ? "" : toName;
+			mailRelayService.saveRelayEmail(new String[] { inviterName },
+					new String[] { inviterEmail }, toName + "(" + toEmail + ")"
+							+ " has been deny your invitation", message);
 		}
 	}
 };
