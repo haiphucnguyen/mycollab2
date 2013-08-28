@@ -1586,6 +1586,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						parentFolder = resourceService
 								.getParentFolder(FileMainViewImpl.this.baseFolder
 										.getPath());
+					} else {
+						parentFolder = rootECMFolder;
 					}
 					FileMainViewImpl.this.selectedResourcesList = new ArrayList<Resource>();
 					itemResourceContainerLayout.constructBody(parentFolder);
