@@ -60,13 +60,17 @@ public class L2CacheAspect {
 								try {
 									if (arg instanceof Integer) {
 										groupId = (Integer) arg;
-									} else if (arg instanceof SearchCriteria) {
+									} else if (arg instanceof SearchCriteria
+											&& (((SearchCriteria) arg)
+													.getSaccountid() != null)) {
 										groupId = (Integer) ((SearchCriteria) arg)
 												.getSaccountid().getValue();
 									} else if (arg instanceof SearchRequest) {
 										SearchCriteria criteria = ((SearchRequest) arg)
 												.getSearchCriteria();
-										if (criteria instanceof SearchCriteria) {
+										if (criteria instanceof SearchCriteria
+												&& (((SearchCriteria) criteria)
+														.getSaccountid() != null)) {
 											groupId = (Integer) ((SearchCriteria) criteria)
 													.getSaccountid().getValue();
 										} else {
