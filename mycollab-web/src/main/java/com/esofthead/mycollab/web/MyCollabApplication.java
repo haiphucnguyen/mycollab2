@@ -20,7 +20,6 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.maxmind.geoip2.DatabaseReader;
 import com.vaadin.Application;
-import com.vaadin.service.ApplicationContext.TransactionListener;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
 import com.vaadin.ui.Window.Notification;
@@ -66,30 +65,17 @@ public class MyCollabApplication extends Application implements
 		try {
 			sessionData.initDomain(initialSubDomain);
 		} catch (Exception e) {
-			log.error("System can not find subdomain " + initialSubDomain, e);
 			this.setMainWindow(new NoSubDomainExistedWindow(initialSubDomain));
+
+			AbstractWebApplicationContext webContext = (AbstractWebApplicationContext) this
+					.getContext();
+			String useragent = webContext.getBrowser().getBrowserApplication();
+			log.error("System can not find subdomain " + initialSubDomain
+					+ "with user agent: " + useragent, e);
 			return;
 		}
 		this.setMainWindow(new MainWindowContainer());
 		setInstance(this);
-
-		getContext().addTransactionListener(new TransactionListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void transactionStart(Application application,
-					Object transactionData) {
-				// log.debug("Trx start");
-
-			}
-
-			@Override
-			public void transactionEnd(Application application,
-					Object transactionData) {
-				// log.debug("Trx end");
-
-			}
-		});
 	}
 
 	public AppContext getSessionData() {
