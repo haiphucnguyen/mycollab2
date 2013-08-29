@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.billing.service.ibatis;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,9 @@ import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 
 @Service(value = "billingService")
 public class BillingServiceImpl implements BillingService {
+	private static Logger log = LoggerFactory
+			.getLogger(BillingServiceImpl.class);
+
 	@Autowired
 	private BillingPlanMapper billingPlanMapper;
 
@@ -70,6 +75,7 @@ public class BillingServiceImpl implements BillingService {
 			final String password, final String email, final String timezoneId) {
 
 		// check whether username is already existed
+		log.debug("Check whether username {} is existed", username);
 		final UserExample userEx = new UserExample();
 		userEx.createCriteria().andUsernameEqualTo(username);
 		if (this.userMapper.countByExample(userEx) > 0) {
@@ -79,6 +85,7 @@ public class BillingServiceImpl implements BillingService {
 							username));
 		}
 
+		log.debug("Check whether email {} is existed", email);
 		userEx.createCriteria().andUsernameEqualTo(email);
 		if (this.userMapper.countByExample(userEx) > 0) {
 			throw new ExistingEmailRegisterException(
@@ -87,6 +94,7 @@ public class BillingServiceImpl implements BillingService {
 							username));
 		}
 
+		log.debug("Check whether subdomain {} is existed", subdomain);
 		final BillingAccountExample billingEx = new BillingAccountExample();
 		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
 		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
@@ -99,6 +107,8 @@ public class BillingServiceImpl implements BillingService {
 		final BillingPlan billingPlan = this.billingPlanMapper
 				.selectByPrimaryKey(billingPlanId);
 		// Save billing account
+		log.debug("Saving billing account for user {} with subdomain {}",
+				username, subdomain);
 		final BillingAccount billingAccount = new BillingAccount();
 		billingAccount.setBillingplanid(billingPlan.getId());
 		billingAccount.setCreatedtime(new GregorianCalendar().getTime());
@@ -115,12 +125,14 @@ public class BillingServiceImpl implements BillingService {
 				.insertAndReturnKey(billingAccount);
 
 		// Save to account setting
+		log.debug("Save account setting for subdomain domain {}", subdomain);
 		final AccountSettings accountSettings = new AccountSettings();
 		accountSettings.setSaccountid(accountid);
 		accountSettings.setDefaulttimezone(timezoneId);
 		this.accountSettingMapper.insert(accountSettings);
 
 		// Register the new user to this account
+		log.debug("Create new user {} in database", username);
 		final User user = new User();
 		user.setEmail(email);
 		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
@@ -140,6 +152,7 @@ public class BillingServiceImpl implements BillingService {
 		this.userMapper.insert(user);
 
 		// save user account
+		log.debug("Register user {} to subdomain {}", username, subdomain);
 		UserAccount userAccount = new UserAccount();
 		userAccount.setAccountid(accountid);
 		userAccount.setIsaccountowner(true);
@@ -151,11 +164,13 @@ public class BillingServiceImpl implements BillingService {
 		userAccount.setUsername(username);
 
 		// save default roles
+		log.debug("Save default roles for account of subdomain {}", subdomain);
 		saveEmployeeRole(accountid, username);
 		saveAdminRole(accountid, username);
 		saveGuestRole(accountid, username);
 
 		// save default account currency
+		log.debug("Save default currency of account of subdomain {}", subdomain);
 		final AccountCurrency currency = new AccountCurrency();
 		currency.setAccountid(accountid);
 		currency.setCurrencyid(1);
