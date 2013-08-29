@@ -1,8 +1,10 @@
-package com.esofthead.mycollab.schedule.email.user;
+package com.esofthead.mycollab.schedule.email.user.impl;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,10 @@ import com.esofthead.mycollab.module.user.domain.SimpleUserAccountInvitation;
 import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 
 @Component
-public class SendUserInvitationCommand {
+public class SendUserInvitationCommandImpl {
+	private static Logger log = LoggerFactory
+			.getLogger(SendUserInvitationCommandImpl.class);
+
 	@Autowired
 	private UserAccountInvitationMapper userAccountInvitationMapper;
 
@@ -36,6 +41,9 @@ public class SendUserInvitationCommand {
 				.findAccountInvitations(RegisterStatusConstants.VERIFICATING);
 
 		for (SimpleUserAccountInvitation invitation : invitations) {
+			log.debug("Send invitation email to user {} of subdomain {}",
+					invitation.getUsername(), invitation.getSubdomain());
+
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"You are invited to join the mycollab site ",
 					"templates/email/user/userInvitationNotifier.mt");
