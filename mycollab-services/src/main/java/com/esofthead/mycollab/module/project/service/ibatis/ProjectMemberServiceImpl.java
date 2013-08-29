@@ -118,8 +118,8 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public List<SimpleUser> getActiveUsersInProject(int projectId, Integer sAccountId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SimpleUser> getActiveUsersInProject(int projectId,
+			Integer sAccountId) {
+		return projectMemberMapperExt.getActiveUsersInProject(projectId);
 	}
 }
