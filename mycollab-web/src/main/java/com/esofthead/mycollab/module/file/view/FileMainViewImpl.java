@@ -932,8 +932,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 												new String[] { res.getPath() },
 												false);
 							} else {
-								downloadResource = StreamDownloadResourceFactory
-										.getStreamResource(res.getPath());
+								if (res instanceof ExternalContent) {
+									downloadResource = null;
+									externalResourceService.download(((ExternalContent) res).getExternalDrive(), res.getPath());
+								} else
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamResource(res.getPath());
 							}
 							AppContext.getApplication().getMainWindow()
 									.open(downloadResource, "_blank");

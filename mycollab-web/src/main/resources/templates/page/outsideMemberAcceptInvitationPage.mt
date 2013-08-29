@@ -49,31 +49,33 @@
 </style>
 <title>Member accept the invitation page</title>
 </head>
-<body>
-	<table height="400" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
-		<tr>
-			<td style="height: 100%; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
-				<div>
-					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
-					&copy;2010-2013 MyCollab, LLC. All rights reserved.
-				</div>
-			</td>
-			<td style="width: 600px; display: inline-block; vertical-align: top;">
-				<div style="display: block; padding: 8px 8px 8px 20px;">
-					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $name , $email . <br>
-					Congratulations to join MyCollab!
-				</div>
-				<div style="display: block; padding: 8px 8px 8px 20px;">
-					Password: 
-					<input id="password" width="300px" maxlength="45" name="password" type="password" />
-				</div>
-				<div align="center" style="padding-top: 30px;">
-						<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Create</button>
-						<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
-				</div>
-			</td>
-		</tr>
-	</table>
+<body style="height:100%;">
+	<div style="height: 100%; padding-top:100px; padding-left: 150px;">
+		<table cellpadding="0" cellspacing="0" border="0" style="height: 100%;margin: 0px auto; padding-top: 50px;">
+			<tr>
+				<td style="height: 100%; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
+					<div>
+						<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
+						<p><span style="font-style:italic; font-size:14px;">&copy;2010-2013 MyCollab, LLC. All rights reserved.</span></p>
+					</div>
+				</td>
+				<td style="width: 600px; display: inline-block; vertical-align: top;">
+					<div style="display: block; padding: 40px 8px 8px 30px;">
+		  				 <a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $email.<br>
+						 Congratulations to join MyCollab!
+						<br><br>
+							Password: 
+						<br>
+		   				<input id="password" size="30" maxlength="50" name="password" type="password" />
+		    			<div style="padding-top: 10px;">
+							<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Create</button>
+							<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
+		     			</div>    
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>	
 	<div class="container"></div>
 	<input type="hidden" id="handelCreateAccountURL" value="$!handelCreateAccountURL">
 	<input type="hidden" id="projectId" value="$!projectId">
