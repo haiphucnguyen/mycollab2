@@ -17,6 +17,7 @@ import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -139,6 +140,8 @@ public class AppContext implements Serializable {
 			throw new UserInvalidInputException(LocalizationHelper.getMessage(
 					WebExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
 		} else {
+			log.debug("Get billing account {} of subdomain {}",
+					BeanUtility.printBeanObj(account), domain);
 			accountId = account.getId();
 		}
 	}
