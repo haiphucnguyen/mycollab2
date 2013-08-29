@@ -53,6 +53,7 @@ public class AppContext implements Serializable {
 	private long lastAccessTime = 0;
 
 	private String subdomain;
+	private Integer accountId = null;
 
 	public AppContext(Application application) {
 		WebApplicationContext context = (WebApplicationContext) application
@@ -137,15 +138,13 @@ public class AppContext implements Serializable {
 		if (account == null) {
 			throw new UserInvalidInputException(LocalizationHelper.getMessage(
 					WebExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
+		} else {
+			accountId = account.getId();
 		}
 	}
 
 	public static Integer getAccountId() {
-		try {
-			return getInstance().session.getAccountId();
-		} catch (Exception e) {
-			return 0;
-		}
+		return getInstance().accountId;
 	}
 
 	public static String getSubDomain() {
