@@ -440,7 +440,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		editProjectBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROJECT));
 		editProjectBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/edit_project_green.png"));
+				.newResource("icons/16/project/edit_project.png"));
 		editProjectBtn.setStyleName("link");
 		popupButtonsControl.addComponent(editProjectBtn);
 
@@ -492,7 +492,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 			deleteProjectBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.PROJECT));
 			deleteProjectBtn.setIcon(MyCollabResource
-					.newResource("icons/16/project/edit_project_green.png"));
+					.newResource("icons/16/project/delete_project.png"));
 			deleteProjectBtn.setStyleName("link");
 			popupButtonsControl.addComponent(deleteProjectBtn);
 		}
