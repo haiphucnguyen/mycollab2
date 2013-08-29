@@ -10,6 +10,7 @@ import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -40,10 +41,14 @@ public class ProjectCommentInput extends VerticalLayout {
 				isSendingEmailRelay, null);
 	}
 
-	ProjectCommentInput(final ReloadableComponent component,
-			final String typeVal, final Integer typeidVal,
-			final Integer extraTypeIdVal, final boolean cancelButtonEnable,
-			final boolean isSendingEmailRelay, final Class emailHandler) {
+	ProjectCommentInput(
+			final ReloadableComponent component,
+			final String typeVal,
+			final Integer typeidVal,
+			final Integer extraTypeIdVal,
+			final boolean cancelButtonEnable,
+			final boolean isSendingEmailRelay,
+			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		this.setWidth("600px");
 		setSpacing(true);
 		this.setMargin(true);

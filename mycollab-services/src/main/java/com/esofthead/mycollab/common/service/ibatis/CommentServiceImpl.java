@@ -14,6 +14,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
 @Service
 public class CommentServiceImpl extends
@@ -52,12 +53,15 @@ public class CommentServiceImpl extends
 			return saveId;
 		} else {
 			relayEmailNotificationService.saveWithSession(
-					getRelayEmailNotification(record, username, isSendingEmail, null), username);
+					getRelayEmailNotification(record, username, isSendingEmail,
+							null), username);
 			return saveId;
 		}
 	}
-	
-	private RelayEmailNotification getRelayEmailNotification(Comment record, String username, boolean isSendingEmail, Class emailHandler) {
+
+	private RelayEmailNotification getRelayEmailNotification(Comment record,
+			String username, boolean isSendingEmail,
+			Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		RelayEmailNotification relayEmailNotification = new RelayEmailNotification();
 		relayEmailNotification.setSaccountid(record.getSaccountid());
 		relayEmailNotification
@@ -71,15 +75,18 @@ public class CommentServiceImpl extends
 		}
 		return relayEmailNotification;
 	}
-	
+
 	@Override
-	public int saveWithSession(Comment record, String username, boolean isSendingEmail, Class emailHandler) {
+	public int saveWithSession(Comment record, String username,
+			boolean isSendingEmail,
+			Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		int saveId = super.saveWithSession(record, username);
 		if (!isSendingEmail) {
 			return saveId;
 		} else {
 			relayEmailNotificationService.saveWithSession(
-					getRelayEmailNotification(record, username, isSendingEmail, emailHandler), username);
+					getRelayEmailNotification(record, username, isSendingEmail,
+							emailHandler), username);
 			return saveId;
 		}
 	}

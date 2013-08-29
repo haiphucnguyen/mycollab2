@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.email.project;
+package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.Arrays;
 
@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.schedule.email.project.ProjectMemberInviteNotificationAction;
 
 @Service
 public class ProjectMemberInviteNotificationActionImpl implements

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.email.user;
+package com.esofthead.mycollab.schedule.email.user.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAction;
 
 @Service
 public class SendingRecoveryPasswordEmailActionImpl implements
