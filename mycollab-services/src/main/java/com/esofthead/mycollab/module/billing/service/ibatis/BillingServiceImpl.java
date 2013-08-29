@@ -125,8 +125,8 @@ public class BillingServiceImpl implements BillingService {
 		billingAccount.setStatus(AccountStatusConstants.ACTIVE);
 		billingAccount.setSubdomain(subdomain);
 
-		final Integer accountid = this.billingAccountMapper
-				.insertAndReturnKey(billingAccount);
+		this.billingAccountMapper.insertAndReturnKey(billingAccount);
+		int accountid = billingAccount.getId();
 
 		// Save to account setting
 		log.debug("Save account setting for subdomain domain {}", subdomain);

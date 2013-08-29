@@ -26,11 +26,11 @@ public class PasswordEncryptHelper {
 
 	public static boolean checkPassword(String plainPassword,
 			String encryptPassword, boolean isPasswordEncrypt) {
-		if (isPasswordEncrypt) {
-			return plainPassword.equals(encryptPassword);
-		} else {
+		if (!isPasswordEncrypt) {
 			return passwordEncryptor.checkPassword(plainPassword,
 					encryptPassword);
+		} else {
+			return plainPassword.equals(encryptPassword);
 		}
 	}
 
@@ -39,8 +39,8 @@ public class PasswordEncryptHelper {
 				.println(PasswordEncryptHelper
 						.checkPassword(
 								"123456",
-								"8Ik7q/G+X7EmJbCOC6ZmMEuZlfUePZqaRRvCAy2thRrlxwx5G9v2JYMt423xQxWo",
-								false));
+								"6Cb2D0XBfkuQBaNuwrvdpeEfb9+F1wtcQoIB4njIhaC70wz7COQ6zbXm8loVayML",
+								true));
 		System.out.println(decryptText("OksKWiyWRjGOtkVg4feU9Q=="));
 	}
 }
