@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.billing.service.ibatis;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,208 +44,222 @@ import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 
 @Service(value = "billingService")
 public class BillingServiceImpl implements BillingService {
-    @Autowired
-    private BillingPlanMapper billingPlanMapper;
+	private static Logger log = LoggerFactory
+			.getLogger(BillingServiceImpl.class);
 
-    @Autowired
-    private BillingAccountMapper billingAccountMapper;
+	@Autowired
+	private BillingPlanMapper billingPlanMapper;
 
-    @Autowired
-    private BillingAccountMapperExt billingAccountMapperExt;
+	@Autowired
+	private BillingAccountMapper billingAccountMapper;
 
-    @Autowired
-    private AccountSettingsMapper accountSettingMapper;
+	@Autowired
+	private BillingAccountMapperExt billingAccountMapperExt;
 
-    @Autowired
-    private UserMapper userMapper;
+	@Autowired
+	private AccountSettingsMapper accountSettingMapper;
 
-    @Autowired
-    private RoleService roleService;
+	@Autowired
+	private UserMapper userMapper;
 
-    @Autowired
-    private AccountCurrencyMapper accountCurrencyMapper;
+	@Autowired
+	private RoleService roleService;
 
-    @Override
-    @Transactional
-    public void registerAccount(final String subdomain,
-            final int billingPlanId, final String username,
-            final String password, final String email, final String timezoneId) {
+	@Autowired
+	private AccountCurrencyMapper accountCurrencyMapper;
 
-        // check whether username is already existed
-        final UserExample userEx = new UserExample();
-        userEx.createCriteria().andUsernameEqualTo(username);
-        if (this.userMapper.countByExample(userEx) > 0) {
-            throw new ExistingUserRegisterException(
-                    LocalizationHelper.getMessage(
-                            ExceptionI18nEnum.EXISTING_USER_REGISTER_ERROR,
-                            username));
-        }
+	@Override
+	@Transactional
+	public void registerAccount(final String subdomain,
+			final int billingPlanId, final String username,
+			final String password, final String email, final String timezoneId) {
 
-        userEx.createCriteria().andUsernameEqualTo(email);
-        if (this.userMapper.countByExample(userEx) > 0) {
-            throw new ExistingEmailRegisterException(
-                    LocalizationHelper.getMessage(
-                            ExceptionI18nEnum.EXISTING_EMAIL_REGISTER_ERROR,
-                            username));
-        }
+		// check whether username is already existed
+		log.debug("Check whether username {} is existed", username);
+		final UserExample userEx = new UserExample();
+		userEx.createCriteria().andUsernameEqualTo(username);
+		if (this.userMapper.countByExample(userEx) > 0) {
+			throw new ExistingUserRegisterException(
+					LocalizationHelper.getMessage(
+							ExceptionI18nEnum.EXISTING_USER_REGISTER_ERROR,
+							username));
+		}
 
-        final BillingAccountExample billingEx = new BillingAccountExample();
-        billingEx.createCriteria().andSubdomainEqualTo(subdomain);
-        if (this.billingAccountMapper.countByExample(billingEx) > 0) {
-            throw new SubdomainExistedException(
-                    LocalizationHelper.getMessage(
-                            ExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-                            subdomain));
-        }
+		log.debug("Check whether email {} is existed", email);
+		userEx.createCriteria().andUsernameEqualTo(email);
+		if (this.userMapper.countByExample(userEx) > 0) {
+			throw new ExistingEmailRegisterException(
+					LocalizationHelper.getMessage(
+							ExceptionI18nEnum.EXISTING_EMAIL_REGISTER_ERROR,
+							username));
+		}
 
-        final BillingPlan billingPlan = this.billingPlanMapper
-                .selectByPrimaryKey(billingPlanId);
-        // Save billing account
-        final BillingAccount billingAccount = new BillingAccount();
-        billingAccount.setBillingplanid(billingPlan.getId());
-        billingAccount.setCreatedtime(new GregorianCalendar().getTime());
-        billingAccount
-                .setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
-        billingAccount.setPricing(billingPlan.getPricing());
-        billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
-        billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31)
-                .getTime());
-        billingAccount.setStatus(AccountStatusConstants.ACTIVE);
-        billingAccount.setSubdomain(subdomain);
+		log.debug("Check whether subdomain {} is existed", subdomain);
+		final BillingAccountExample billingEx = new BillingAccountExample();
+		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
+		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
+			throw new SubdomainExistedException(
+					LocalizationHelper.getMessage(
+							ExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+							subdomain));
+		}
 
-        final Integer accountid = this.billingAccountMapper
-                .insertAndReturnKey(billingAccount);
+		final BillingPlan billingPlan = this.billingPlanMapper
+				.selectByPrimaryKey(billingPlanId);
+		// Save billing account
+		log.debug("Saving billing account for user {} with subdomain {}",
+				username, subdomain);
+		final BillingAccount billingAccount = new BillingAccount();
+		billingAccount.setBillingplanid(billingPlan.getId());
+		billingAccount.setCreatedtime(new GregorianCalendar().getTime());
+		billingAccount
+				.setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
+		billingAccount.setPricing(billingPlan.getPricing());
+		billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
+		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31)
+				.getTime());
+		billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+		billingAccount.setSubdomain(subdomain);
 
-        // Save to account setting
-        final AccountSettings accountSettings = new AccountSettings();
-        accountSettings.setSaccountid(accountid);
-        accountSettings.setDefaulttimezone(timezoneId);
-        this.accountSettingMapper.insert(accountSettings);
+		final Integer accountid = this.billingAccountMapper
+				.insertAndReturnKey(billingAccount);
 
-        // Register the new user to this account
-        final User user = new User();
-        user.setEmail(email);
-        user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
-        user.setTimezone(timezoneId);
-        user.setUsername(username);
-        user.setLastaccessedtime(new GregorianCalendar().getTime());
+		// Save to account setting
+		log.debug("Save account setting for subdomain domain {}", subdomain);
+		final AccountSettings accountSettings = new AccountSettings();
+		accountSettings.setSaccountid(accountid);
+		accountSettings.setDefaulttimezone(timezoneId);
+		this.accountSettingMapper.insert(accountSettings);
 
-        if (user.getFirstname() == null && user.getLastname() == null) {
-            user.setFirstname(username);
-            user.setLastname("");
-        } else if (user.getFirstname() == null) {
-            user.setFirstname("");
-        } else if (user.getLastname() == null) {
-            user.setLastname("");
-        }
-        this.userMapper.insert(user);
+		// Register the new user to this account
+		log.debug("Create new user {} in database", username);
+		final User user = new User();
+		user.setEmail(email);
+		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
+		user.setTimezone(timezoneId);
+		user.setUsername(username);
+		user.setLastaccessedtime(new GregorianCalendar().getTime());
+		user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 
-        // save user account
-        UserAccount userAccount = new UserAccount();
-        userAccount.setAccountid(accountid);
-        userAccount.setIsaccountowner(true);
-        userAccount.setIsadmin(true);
-        userAccount.setRegisteredtime(new GregorianCalendar().getTime());
-        userAccount.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
-        userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
-        userAccount.setRoleid(null);
-        userAccount.setUsername(username);
+		if (user.getFirstname() == null && user.getLastname() == null) {
+			user.setFirstname(username);
+			user.setLastname("");
+		} else if (user.getFirstname() == null) {
+			user.setFirstname("");
+		} else if (user.getLastname() == null) {
+			user.setLastname("");
+		}
+		this.userMapper.insert(user);
 
-        // save default roles
-        saveEmployeeRole(accountid, username);
-        saveAdminRole(accountid, username);
-        saveGuestRole(accountid, username);
+		// save user account
+		log.debug("Register user {} to subdomain {}", username, subdomain);
+		UserAccount userAccount = new UserAccount();
+		userAccount.setAccountid(accountid);
+		userAccount.setIsaccountowner(true);
+		userAccount.setIsadmin(true);
+		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
+		userAccount.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
+		userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
+		userAccount.setRoleid(null);
+		userAccount.setUsername(username);
 
-        // save default account currency
-        final AccountCurrency currency = new AccountCurrency();
-        currency.setAccountid(accountid);
-        currency.setCurrencyid(1);
-        this.accountCurrencyMapper.insert(currency);
-    }
+		// save default roles
+		log.debug("Save default roles for account of subdomain {}", subdomain);
+		saveEmployeeRole(accountid, username);
+		saveAdminRole(accountid, username);
+		saveGuestRole(accountid, username);
 
-    private void saveEmployeeRole(int accountid, String username) {
-        // Register default role for account
-        final Role role = new Role();
-        role.setRolename(SimpleRole.EMPLOYEE);
-        role.setDescription("");
-        role.setSaccountid(accountid);
-        role.setIssystemrole(true);
-        final int roleId = this.roleService.saveWithSession(role, username);
+		// save default account currency
+		log.debug("Save default currency of account of subdomain {}", subdomain);
+		final AccountCurrency currency = new AccountCurrency();
+		currency.setAccountid(accountid);
+		currency.setCurrencyid(1);
+		this.accountCurrencyMapper.insert(currency);
+	}
 
-        // save default permission to role
-        final PermissionMap permissionMap = new PermissionMap();
-        for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-            permissionMap.addPath(element, PermissionFlag.READ_ONLY);
-        }
+	private void saveEmployeeRole(int accountid, String username) {
+		// Register default role for account
+		final Role role = new Role();
+		role.setRolename(SimpleRole.EMPLOYEE);
+		role.setDescription("");
+		role.setSaccountid(accountid);
+		role.setIssystemrole(true);
+		final int roleId = this.roleService.saveWithSession(role, username);
 
-        for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
-            permissionMap.addPath(element, PermissionFlag.READ_ONLY);
-        }
-        this.roleService.savePermission(roleId, permissionMap, accountid);
-    }
+		// save default permission to role
+		final PermissionMap permissionMap = new PermissionMap();
+		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element, PermissionFlag.READ_ONLY);
+		}
 
-    private void saveAdminRole(int accountid, String username) {
-        // Register default role for account
-        final Role role = new Role();
-        role.setRolename(SimpleRole.ADMIN);
-        role.setDescription("");
-        role.setSaccountid(accountid);
-        role.setIssystemrole(true);
-        final int roleId = this.roleService.saveWithSession(role, username);
+		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element, PermissionFlag.READ_ONLY);
+		}
+		this.roleService.savePermission(roleId, permissionMap, accountid);
+	}
 
-        // save default permission to role
-        final PermissionMap permissionMap = new PermissionMap();
-        for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-            permissionMap.addPath(element, PermissionFlag.ACCESS);
-        }
+	private void saveAdminRole(int accountid, String username) {
+		// Register default role for account
+		final Role role = new Role();
+		role.setRolename(SimpleRole.ADMIN);
+		role.setDescription("");
+		role.setSaccountid(accountid);
+		role.setIssystemrole(true);
+		final int roleId = this.roleService.saveWithSession(role, username);
 
-        for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
-            permissionMap.addPath(element, PermissionFlag.ACCESS);
-        }
-        this.roleService.savePermission(roleId, permissionMap, accountid);
-    }
+		// save default permission to role
+		final PermissionMap permissionMap = new PermissionMap();
+		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element, PermissionFlag.ACCESS);
+		}
 
-    private void saveGuestRole(int accountid, String username) {
-        // Register default role for account
-        final Role role = new Role();
-        role.setRolename(SimpleRole.GUEST);
-        role.setDescription("");
-        role.setSaccountid(accountid);
-        role.setIssystemrole(true);
-        final int roleId = this.roleService.saveWithSession(role, username);
+		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element, PermissionFlag.ACCESS);
+		}
+		this.roleService.savePermission(roleId, permissionMap, accountid);
+	}
 
-        // save default permission to role
-        final PermissionMap permissionMap = new PermissionMap();
-        for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-            permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
-        }
+	private void saveGuestRole(int accountid, String username) {
+		// Register default role for account
+		final Role role = new Role();
+		role.setRolename(SimpleRole.GUEST);
+		role.setDescription("");
+		role.setSaccountid(accountid);
+		role.setIssystemrole(true);
+		final int roleId = this.roleService.saveWithSession(role, username);
 
-        for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
-            permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
-        }
-        this.roleService.savePermission(roleId, permissionMap, accountid);
-    }
+		// save default permission to role
+		final PermissionMap permissionMap = new PermissionMap();
+		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
+		}
 
-    @Override
-    public List<String> getSubdomainsOfUser(final String username) {
-        return this.billingAccountMapperExt.getSubdomainsOfUser(username);
-    }
+		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
+		}
+		this.roleService.savePermission(roleId, permissionMap, accountid);
+	}
 
-    @Override
-    public List<BillingPlan> getAvailablePlans() {
-        return billingPlanMapper.selectByExample(new BillingPlanExample());
-    }
+	@Override
+	public List<String> getSubdomainsOfUser(final String username) {
+		return this.billingAccountMapperExt.getSubdomainsOfUser(username);
+	}
 
-    @Override
-    public void updateBillingPlan(int accountid, int newBillingPlanId) {
-        // TODO Auto-generated method stub
+	@Override
+	public List<BillingPlan> getAvailablePlans() {
+		return billingPlanMapper.selectByExample(new BillingPlanExample());
+	}
 
-    }
+	@Override
+	public void updateBillingPlan(int accountid, int newBillingPlanId) {
+		// TODO Auto-generated method stub
 
-    @Override
-    public void cancelAccount(int accountid) {
-        // TODO Auto-generated method stub
+	}
 
-    }
+	@Override
+	public void cancelAccount(int accountid) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

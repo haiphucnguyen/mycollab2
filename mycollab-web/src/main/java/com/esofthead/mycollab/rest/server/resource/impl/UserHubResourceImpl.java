@@ -53,7 +53,7 @@ public class UserHubResourceImpl extends ServerResource implements
 	@Override
 	@Post("form")
 	public String signup(Form form) {
-		UserHubResourceImpl.log.debug("Start handling form request");
+		log.debug("Start handling form request");
 		String subdomain = form.getFirstValue("subdomain");
 		int planId = Integer.parseInt(form.getFirstValue("planId"));
 		String username = form.getFirstValue("username");
@@ -61,12 +61,15 @@ public class UserHubResourceImpl extends ServerResource implements
 		String email = form.getFirstValue("email");
 		String timezoneId = form.getFirstValue("timezoneId");
 		try {
+			log.debug("Register account with subdomain {}, username {}",
+					subdomain, username);
 			this.billingService.registerAccount(subdomain, planId, username,
 					password, email, timezoneId);
 		} catch (MyCollabException e) {
 			throw new ResourceException(e);
 		}
 		String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
+		log.debug("Return site url {} to sign up user {}", siteUrl, username);
 		return siteUrl;
 	}
 }
