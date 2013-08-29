@@ -75,16 +75,12 @@ input[type="text"], input[type="password"]{
 				<tr>
 					<td><label for="password">Password:</label></td>
 					<td><input id="password" maxlength="45" name="password" type="password" /></td>
-					
-					<td style="padding-left: 15px;"><label for="password">Retype-Password:</label></td>
-					<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
+					<td>
+						<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
+					</td>
 				</tr>
 				</tbody></table>
 				</form>
-				
-				<div align="center" style="padding-top: 30px;">
-						<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
-				</div>
 				<div style="display: block; padding: 12px 8px 8px 20px;">
 					<p><span id="requireMsg" style="color:red; font-style:italic">
 					</span></p>
@@ -96,14 +92,6 @@ input[type="text"], input[type="password"]{
 		</tr>
 	</table>
 	<div class="container"></div>
-	<footer style="padding-top: 100px;">
-		<div class="footer-home">
-		<div class="wrapper">
-			<div class="footer-copyright"><h1>MYCOLLAB</h1>
-                          	&copy;2010-2013 MyCollab, LLC. All rights reserved.</div>
-        </div>
-	</div>
-	</footer>
 	<input type="hidden" id="username" value="$!username">
 	<input type="hidden" id="loginURL" value="$!loginURL">
 	<input type="hidden" id="redirectURL" value="$!redirectURL">
@@ -117,10 +105,6 @@ input[type="text"], input[type="password"]{
 		$('#requireMsg').html("").hide();
 		if ($('#password').val() == "" || $('#repassword').val() == ""){
 			$('#requireMsg').html("Please enter password");
-			return;
-		}
-		if ($('#password').val().trim()!= $('#repassword').val().trim()){
-			$('#requireMsg').html("Type password not match.");
 			return;
 		}
 		var url = encodeURI($('#redirectURL').val());

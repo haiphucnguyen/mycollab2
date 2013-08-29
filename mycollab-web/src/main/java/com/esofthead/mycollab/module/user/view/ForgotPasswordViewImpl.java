@@ -45,7 +45,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					.createLayout("forgotPassword");
 			customLayout.setStyleName("forgotPwdForm");
 
-			nameOrEmailField = new TextField("Username or email");
+			nameOrEmailField = new TextField("Username");
 			customLayout.addComponent(nameOrEmailField, "nameoremail");
 
 			Button sendEmail = new Button("Send verification email");
@@ -59,6 +59,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					UserService userService = AppContext
 							.getSpringBean(UserService.class);
 					User user = userService.findUserByUserName(username);
+
 					if (user == null) {
 						ForgotPasswordViewImpl.this.getWindow()
 								.showNotification("User not exist!!");
