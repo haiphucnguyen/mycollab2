@@ -188,7 +188,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		final Embedded titleIcon = new Embedded();
 		titleIcon.setSource(MyCollabResource
-				.newResource("icons/16/ecm/dropbox_icon.png"));
+				.newResource("icons/16/ecm/dropbox.png"));
 		connectDropboxLayout.addComponent(titleIcon);
 
 		Button uploadDropboxBtn = new Button("Connect Dropbox",
@@ -256,7 +256,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							menuTree.setItemIcon(
 									externalMapFolder,
 									MyCollabResource
-											.newResource("icons/16/ecm/dropbox_icon.png"));
+											.newResource("icons/16/ecm/dropbox.png"));
 							menuTree.setItemCaption(externalMapFolder,
 									externalMapFolder.getName());
 							menuTree.setParent(externalMapFolder, expandFolder);
@@ -274,7 +274,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							menuTree.setItemIcon(
 									subFolder,
 									MyCollabResource
-											.newResource("icons/16/ecm/dropbox_subfolder_icon.png"));
+											.newResource("icons/16/ecm/dropbox_subfolder.png"));
 							menuTree.setItemCaption(subFolder,
 									subFolder.getName());
 							menuTree.setParent(subFolder, expandFolder);
@@ -1033,7 +1033,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			Button toContainFolder = new Button();
 			toContainFolder.setIcon(MyCollabResource
-					.newResource("icons/48/ecm/folder_arrow_right_icon.png"));
+					.newResource("icons/48/ecm/folder_arrow_right.png"));
 			toContainFolder.setDescription("Go to folder");
 			toContainFolder.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -2074,7 +2074,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				final Embedded embed = new Embedded();
 				if (drive.getStoragename().equals(StorageNames.DROPBOX))
 					embed.setSource(MyCollabResource
-							.newResource("icons/48/ecm/dropbox_icon.png"));
+							.newResource("icons/48/ecm/dropbox.png"));
 				iconWapper.addComponent(embed);
 				title.addComponent(iconWapper);
 				title.setComponentAlignment(iconWapper, Alignment.MIDDLE_LEFT);

@@ -73,16 +73,17 @@ public class FileActivityStreamPagedList
 
 		Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
 
-		Embedded fileIconEmbedded = new Embedded();
-		fileIconEmbedded.setSource(MyCollabResource
-				.newResource("icons/16/ecm/file_icon_16px.png"));
-
-		Embedded folderIconEmbedded = new Embedded();
-		folderIconEmbedded.setSource(MyCollabResource
-				.newResource("icons/16/ecm/folder_blue_16px.png"));
 		try {
 			for (final SimpleContentActivityLog activityStream : currentListData) {
 				final Date itemCreatedDate = activityStream.getCreatedtime();
+
+				Embedded fileIconEmbedded = new Embedded();
+				fileIconEmbedded.setSource(MyCollabResource
+						.newResource("icons/16/ecm/file_white.png"));
+
+				Embedded folderIconEmbedded = new Embedded();
+				folderIconEmbedded.setSource(MyCollabResource
+						.newResource("icons/16/ecm/folder_blue.png"));
 
 				if (!DateUtils.isSameDay(currentDate, itemCreatedDate)) {
 					final CssLayout dateWrapper = new CssLayout();
@@ -99,14 +100,23 @@ public class FileActivityStreamPagedList
 				final ContentActivityLogAction contentActivityAction = ContentActivityLogAction
 						.fromString(activityStream.getActiondesc());
 
-				Label IconEmbedded = new Label("<img src=\""
-						+ UserAvatarControlFactory.getAvatarLink(
-								activityStream.getUserAvatarId(), 16)
-						+ "\" alt=\"\">", Label.CONTENT_XHTML);
-				streamInfoLayout.addComponent(IconEmbedded);
+				if (activityStream.getUserAvatarId() != null) {
+					Label IconEmbedded = new Label("<img src=\""
+							+ UserAvatarControlFactory.getAvatarLink(
+									activityStream.getUserAvatarId(), 16)
+							+ "\" alt=\"\">", Label.CONTENT_XHTML);
+					streamInfoLayout.addComponent(IconEmbedded);
+				} else {
+					Button button = new Button();
+					button.setIcon(UserAvatarControlFactory
+							.createAvatarResource(null, 16));
+					button.setStyleName("link");
 
-				Button userNameBtn = new Button(
-						activityStream.getUserFullName(),
+					streamInfoLayout.addComponent(button);
+				}
+				String userName = (activityStream.getUserFullName() != null) ? activityStream
+						.getUserFullName() : activityStream.getCreateduser();
+				Button userNameBtn = new Button(userName,
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -141,7 +151,14 @@ public class FileActivityStreamPagedList
 					oldNameLbl.addStyleName("link");
 					oldNameLbl.setDescription(oldName);
 					streamInfoLayout.addComponent(oldNameLbl);
-					streamInfoLayout.addComponent(new Label(" to "));
+					streamInfoLayout.addComponent(new Label(" to folder"));
+
+					Embedded destinationFolderIconEmbedded = new Embedded();
+					destinationFolderIconEmbedded.setSource(MyCollabResource
+							.newResource("icons/16/ecm/folder_blue.png"));
+					streamInfoLayout
+							.addComponent(destinationFolderIconEmbedded);
+
 					String asbPath = ((Move) contentActivityAction)
 							.getNewPath();
 					asbPath = asbPath.substring(AppContext.getAccountId()

@@ -129,7 +129,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		Button dropboxIconBtn = new Button();
 		dropboxIconBtn.setStyleName("dropbox-icon-button");
 		dropboxIconBtn.setIcon(MyCollabResource
-				.newResource("icons/12/ecm/dropbox_icon.png"));
+				.newResource("icons/12/ecm/dropbox.png"));
 		folderNameLayout.addComponent(dropboxIconBtn);
 
 		folderName = new TextField();
