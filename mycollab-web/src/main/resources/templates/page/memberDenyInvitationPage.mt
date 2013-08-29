@@ -54,7 +54,7 @@
 			<td style="height: 100%; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
 				<div>
 					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
-					&copy;2010-2013 MyCollab, LLC. All rights reserved
+					<p><span style="font-style:italic; font-size:14px;">&copy;2010-2013 MyCollab, LLC. All rights reserved.</span></p>
 				</div>
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
