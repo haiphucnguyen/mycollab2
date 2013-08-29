@@ -43,7 +43,7 @@
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
-        <servlet-class>org.vaadin.artur.icepush.ICEPushServlet</servlet-class>
+        <servlet-class>com.esofthead.mycollab.web.MyCollabServlet</servlet-class>
         <init-param>
             <param-name>application</param-name>
             <param-value>com.esofthead.mycollab.web.MyCollabApplication</param-value>
