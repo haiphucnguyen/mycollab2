@@ -11,12 +11,14 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
@@ -28,32 +30,31 @@ public class SignUpPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
+	private static Logger log = LoggerFactory.getLogger(SignUpPage.class);
+
 	public String selected = "10";
 
 	public SignUpPage(final PageParameters parameters) {
 		super(parameters);
 
 		final RequiredTextField<String> email = new RequiredTextField<String>(
-				"emailfield");
+				"emailfield", new Model<String>());
 		email.add(EmailAddressValidator.getInstance());
-		email.setLabel(new ResourceModel("label.email"));
 
-		final CheckBox receiveupdate = new CheckBox("receiveupdatefield");
+		final CheckBox receiveupdate = new CheckBox("receiveupdatefield",
+				new Model<Boolean>());
 
 		final RequiredTextField<String> subdomain = new RequiredTextField<String>(
-				"subdomainfield");
-		subdomain.setLabel(new ResourceModel("label.subdomain"));
+				"subdomainfield", new Model<String>());
 
 		final PasswordTextField password = new PasswordTextField(
-				"passwordfield");
-		password.setLabel(new ResourceModel("label.password"));
+				"passwordfield", new Model<String>());
 
 		final PasswordTextField cpassword = new PasswordTextField(
-				"cpasswordfield");
-		cpassword.setLabel(new ResourceModel("label.password"));
+				"cpasswordfield", new Model<String>());
 
 		final HiddenField<String> timezone = new HiddenField<String>(
-				"timezonefield");
+				"timezonefield", new Model<String>());
 
 		final StatelessForm<Void> form = new StatelessForm<Void>("signupform") {
 
@@ -76,7 +77,10 @@ public class SignUpPage extends BasePage {
 					form.set("email", email.getModelObject());
 					form.set("timezoneId", timezone.getModelObject());
 
+					log.debug("Submit form {}",
+							SiteConfiguration.getSignupUrl());
 					final String response = userResource.signup(form);
+					log.debug("Response of site: {}", response);
 
 					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
 							new RedirectRequestHandler(response));
