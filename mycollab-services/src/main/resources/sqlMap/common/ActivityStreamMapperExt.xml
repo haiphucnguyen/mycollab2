@@ -27,6 +27,11 @@
             s_activitystream.createdUser =
             #{searchCriteria.createdUser.value}
         </if>
+        <if test="searchCriteria.saccountid != null">
+            ${searchCriteria.saccountid.operation}
+            s_activitystream.sAccountId =
+            #{searchCriteria.saccountid.value}
+        </if>
         <if test="searchCriteria.moduleSet != null">
             ${searchCriteria.moduleSet.operation}
             s_activitystream.module IN

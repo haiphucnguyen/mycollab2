@@ -147,7 +147,11 @@ public class AppContext implements Serializable {
 	}
 
 	public static Integer getAccountId() {
-		return getInstance().accountId;
+		try {
+			return getInstance().accountId;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	public static String getSubDomain() {
