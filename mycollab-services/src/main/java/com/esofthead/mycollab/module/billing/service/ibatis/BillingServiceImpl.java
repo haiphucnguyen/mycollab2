@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;
 import com.esofthead.mycollab.module.user.dao.BillingPlanMapper;
+import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.AccountSettings;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
@@ -58,6 +59,9 @@ public class BillingServiceImpl implements BillingService {
 
 	@Autowired
 	private AccountSettingsMapper accountSettingMapper;
+
+	@Autowired
+	private UserAccountMapper userAccountMapper;
 
 	@Autowired
 	private UserMapper userMapper;
@@ -121,8 +125,8 @@ public class BillingServiceImpl implements BillingService {
 		billingAccount.setStatus(AccountStatusConstants.ACTIVE);
 		billingAccount.setSubdomain(subdomain);
 
-		final Integer accountid = this.billingAccountMapper
-				.insertAndReturnKey(billingAccount);
+		this.billingAccountMapper.insertAndReturnKey(billingAccount);
+		int accountid = billingAccount.getId();
 
 		// Save to account setting
 		log.debug("Save account setting for subdomain domain {}", subdomain);
@@ -162,6 +166,8 @@ public class BillingServiceImpl implements BillingService {
 		userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
 		userAccount.setRoleid(null);
 		userAccount.setUsername(username);
+
+		userAccountMapper.insert(userAccount);
 
 		// save default roles
 		log.debug("Save default roles for account of subdomain {}", subdomain);

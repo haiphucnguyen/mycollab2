@@ -53,7 +53,6 @@ public class AppContext implements Serializable {
 	private long lastAccessTime = 0;
 
 	private String subdomain;
-	private int accountId;
 
 	public AppContext(Application application) {
 		WebApplicationContext context = (WebApplicationContext) application
@@ -135,9 +134,7 @@ public class AppContext implements Serializable {
 		BillingAccountService billingService = getSpringBean(BillingAccountService.class);
 		BillingAccount account = billingService.getAccountByDomain(domain);
 
-		if (account != null) {
-			accountId = account.getId();
-		} else {
+		if (account == null) {
 			throw new UserInvalidInputException(LocalizationHelper.getMessage(
 					WebExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
 		}
@@ -145,7 +142,7 @@ public class AppContext implements Serializable {
 
 	public static Integer getAccountId() {
 		try {
-			return getInstance().accountId;
+			return getInstance().session.getAccountId();
 		} catch (Exception e) {
 			return 0;
 		}
