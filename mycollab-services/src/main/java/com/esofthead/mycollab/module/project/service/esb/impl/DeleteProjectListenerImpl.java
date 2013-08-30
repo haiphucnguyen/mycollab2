@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service.esb;
+package com.esofthead.mycollab.module.project.service.esb.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,13 +10,14 @@ import com.esofthead.mycollab.common.dao.CommentMapper;
 import com.esofthead.mycollab.common.domain.ActivityStreamExample;
 import com.esofthead.mycollab.common.domain.CommentExample;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.project.service.esb.DeleteProjectListener;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component
-public class ProjectDeleteListenerImpl implements ProjectDeleteListener {
+public class DeleteProjectListenerImpl implements DeleteProjectListener {
 
 	private static Logger log = LoggerFactory
-			.getLogger(ProjectDeleteListenerImpl.class);
+			.getLogger(DeleteProjectListenerImpl.class);
 
 	@Override
 	public void projectRemoved(int accountId, int projectId) {
@@ -40,6 +41,7 @@ public class ProjectDeleteListenerImpl implements ProjectDeleteListener {
 	}
 
 	private void deleteRelatedComments(int projectId) {
+		log.debug("Delete related comments");
 		CommentMapper commentMapper = ApplicationContextUtil
 				.getBean(CommentMapper.class);
 

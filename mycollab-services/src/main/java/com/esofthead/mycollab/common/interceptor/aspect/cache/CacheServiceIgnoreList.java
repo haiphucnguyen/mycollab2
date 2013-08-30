@@ -10,16 +10,16 @@ import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
-import com.esofthead.mycollab.module.project.service.esb.ProjectDeleteListener;
-import com.esofthead.mycollab.module.project.service.esb.ProjectMemberDeleteListener;
+import com.esofthead.mycollab.module.project.service.esb.DeleteProjectListener;
+import com.esofthead.mycollab.module.project.service.esb.DeleteProjectMemberListener;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 
 public class CacheServiceIgnoreList {
 	static List<Class> blacklistCls = Arrays.asList(new Class[] {
 			RelayEmailNotificationService.class, MonitorItemService.class,
 			BugRelatedItemService.class, RawContentServiceFactoryBean.class,
-			ResourceService.class, ProjectDeleteListener.class,
-			ProjectMemberDeleteListener.class, ExternalResourceService.class,
+			ResourceService.class, DeleteProjectListener.class,
+			DeleteProjectMemberListener.class, ExternalResourceService.class,
 			ContentActivityLogService.class, ExternalDriveService.class });
 
 	static boolean isInBlackList(Class cls) {

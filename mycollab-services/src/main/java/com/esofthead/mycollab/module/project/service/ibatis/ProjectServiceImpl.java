@@ -19,8 +19,6 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.builder.ProxyBuilder;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +54,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.service.esb.ProjectDeleteListener;
+import com.esofthead.mycollab.module.project.service.esb.DeleteProjectListener;
 import com.esofthead.mycollab.module.project.service.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.user.PermissionFlag;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -259,9 +257,9 @@ public class ProjectServiceImpl extends
 		try {
 			Project project = findByPrimaryKey(projectId, accountId);
 
-			ProjectDeleteListener projectDeleteListener = new BeanProxyBuilder()
+			DeleteProjectListener projectDeleteListener = new BeanProxyBuilder()
 					.build(ProjectEndPoints.PROJECT_REMOVE_ENDPOINT,
-							ProjectDeleteListener.class);
+							DeleteProjectListener.class);
 			projectDeleteListener.projectRemoved(project.getSaccountid(),
 					projectId);
 		} catch (Exception e) {

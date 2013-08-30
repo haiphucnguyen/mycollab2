@@ -27,8 +27,9 @@ import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.service.esb.InviteOutsideProjectMemberListener;
 import com.esofthead.mycollab.module.project.service.esb.ProjectEndPoints;
-import com.esofthead.mycollab.module.project.service.esb.ProjectMemberDeleteListener;
+import com.esofthead.mycollab.module.project.service.esb.DeleteProjectMemberListener;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.project.ProjectMemberInviteNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -124,9 +125,9 @@ public class ProjectMemberServiceImpl extends
 			try {
 				Project project = projectMapper
 						.selectByPrimaryKey(projectMember.getProjectid());
-				ProjectMemberDeleteListener projectMemberDeleteListener = new BeanProxyBuilder()
+				DeleteProjectMemberListener projectMemberDeleteListener = new BeanProxyBuilder()
 						.build(ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT,
-								ProjectMemberDeleteListener.class);
+								DeleteProjectMemberListener.class);
 				projectMemberDeleteListener.projectMemberRemoved(username,
 						primaryKey, projectMember.getProjectid(),
 						project.getSaccountid());
@@ -145,9 +146,12 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public void inviteUsersOutsideAccount(String emails, int projectId,
-			String inviteUser) {
-		// TODO Auto-generated method stub
-
+	public void inviteUsersOutsideAccount(String[] email, int projectId,
+			int projectRoleId, String inviteUser, int sAccountId) {
+		InviteOutsideProjectMemberListener listener = new BeanProxyBuilder()
+				.build(ProjectEndPoints.PROJECT_SEND_INVITATION_USER,
+						InviteOutsideProjectMemberListener.class);
+		listener.inviteUsers(email, projectId, projectRoleId, inviteUser,
+				sAccountId);
 	}
 }

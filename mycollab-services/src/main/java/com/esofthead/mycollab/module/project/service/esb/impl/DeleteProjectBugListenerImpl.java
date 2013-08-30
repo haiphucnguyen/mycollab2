@@ -1,12 +1,16 @@
-package com.esofthead.mycollab.module.project.service.esb;
+package com.esofthead.mycollab.module.project.service.esb.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-public class ProjectBugDeleteListenerImpl implements ProjectBugDeleteListener {
+import com.esofthead.mycollab.module.project.service.esb.DeleteProjectBugListener;
+
+@Component
+public class DeleteProjectBugListenerImpl implements DeleteProjectBugListener {
 
 	private static Logger log = LoggerFactory
-			.getLogger(ProjectBugDeleteListenerImpl.class);
+			.getLogger(DeleteProjectBugListenerImpl.class);
 
 	@Override
 	public void bugRemoved(String username, int accountId, int projectId,

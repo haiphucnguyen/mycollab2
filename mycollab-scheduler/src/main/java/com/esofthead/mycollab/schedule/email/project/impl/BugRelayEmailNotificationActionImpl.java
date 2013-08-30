@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 
 @Component
 public class BugRelayEmailNotificationActionImpl extends

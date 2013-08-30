@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 
 @Component
 public class ProjectProblemRelayEmailNotificationActionImpl extends

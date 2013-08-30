@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.email.project.impl;
+package com.esofthead.mycollab.schedule.email.project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

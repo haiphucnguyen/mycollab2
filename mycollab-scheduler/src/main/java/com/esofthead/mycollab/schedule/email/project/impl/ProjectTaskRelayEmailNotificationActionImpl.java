@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 
 @Service

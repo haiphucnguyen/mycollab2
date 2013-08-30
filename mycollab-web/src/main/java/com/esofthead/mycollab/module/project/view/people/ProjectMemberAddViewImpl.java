@@ -5,27 +5,17 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectRoleComboBox;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
-import com.esofthead.mycollab.schedule.email.project.impl.MailLinkGenerator;
 import com.esofthead.mycollab.utils.ParsingUtils;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -63,9 +53,6 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
 	private ProjectMember user;
-	private UserService userService;
-	private MailRelayService mailRelayService;
-	private ProjectService projectService;
 
 	public ProjectMemberAddViewImpl() {
 		super();
@@ -336,12 +323,8 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 				public void buttonClick(ClickEvent event) {
 					String[] lstEmailArr = emailTextField.getValue().toString()
 							.trim().split(";");
-					int roleId = (Integer) projectRoleComboBox.getValue();
-					userService = AppContext.getSpringBean(UserService.class);
-					mailRelayService = AppContext
-							.getSpringBean(MailRelayService.class);
-					projectService = AppContext
-							.getSpringBean(ProjectService.class);
+					// validate emails
+
 					for (int i = 0; i < lstEmailArr.length; i++) {
 						String email = lstEmailArr[i];
 						if (!email.matches(ParsingUtils.EMAIL_PATTERN)) {
@@ -351,111 +334,18 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 											"Please enter correct email format type.");
 							return;
 						}
-						String name = "You";
-						User user = userService.findUserByUserName(AppContext
-								.getUsername());
-						TemplateGenerator templateGenerator = new TemplateGenerator(
-								"$inviteUser has invited you to join the team for project \" $member.projectName\"",
-								"templates/email/project/memberInvitation/memberInvitationNotifier.mt");
-						SimpleProjectMember member = new SimpleProjectMember();
-						member.setProjectName(CurrentProjectVariables
-								.getProject().getName());
-
-						templateGenerator.putVariable("member", member);
-						templateGenerator.putVariable("inviteUser",
-								AppContext.getUsername());
-
-						String subdomain = projectService
-								.getSubdomainOfProject(CurrentProjectVariables
-										.getProjectId());
-
-						User inviteUser = userService.findUserByUserName(email);
-						int memberId = 0;
-						if (inviteUser != null) { 
-							// TODO : save info into projectmember table &
-							// redirect to Login page
-
-							ProjectMemberService projectMemberService = AppContext
-									.getSpringBean(ProjectMemberService.class);
-
-							member.setProjectid(CurrentProjectVariables
-									.getProjectId());
-							member.setUsername(inviteUser.getUsername());
-							member.setProjectroleid(roleId);
-							member.setIsadmin(false);
-							member.setSaccountid(AppContext.getAccountId());
-							member.setStatus(ProjectMemberStatusContants.VERIFICATING);
-							member.setJoindate(new Date());
-
-							memberId = projectMemberService.saveWithSession(
-									member, AppContext.getUsername());
-
-							MailLinkGenerator linkGenerator = new MailLinkGenerator(
-									CurrentProjectVariables.getProjectId());
-							templateGenerator.putVariable(
-									"urlAccept",
-									SiteConfiguration.getSiteUrl(subdomain)
-											+ "project/member/invitation/confirm_invite/"
-											+ UrlEncodeDecoder.encode("OUTSIDE_EXIST"
-													+ "/"
-													+ memberId
-													+ "/"
-													+ AppContext.getAccountId()
-													+ "/"
-													+ linkGenerator
-															.generateProjectFullLink()));
-						} else { // user not exist
-							// email , projectId, sAccountId, projectURL
-							MailLinkGenerator linkGenerator = new MailLinkGenerator(
-									CurrentProjectVariables.getProjectId());
-							templateGenerator.putVariable(
-									"urlAccept",
-									SiteConfiguration.getSiteUrl(subdomain)
-											+ "project/member/invitation/confirm_invite/"
-											+ UrlEncodeDecoder.encode("OUTSIDE"
-													+ "/"
-													+ email
-													+ "/"
-													+ CurrentProjectVariables
-															.getProjectId()
-													+ "/"
-													+ AppContext.getAccountId()
-													+ "/"
-													+ roleId
-													+ "/"
-													+ linkGenerator
-															.generateProjectFullLink()));
-						}
-						templateGenerator.putVariable(
-								"urlDeny",
-								SiteConfiguration.getSiteUrl(subdomain)
-										+ "project/member/invitation/deny_invite/"
-										+ UrlEncodeDecoder.encode(member
-												.getsAccountId()
-												+ "/"
-												+ memberId
-												+ "/"
-												+ user.getEmail()
-												+ "/"
-												+ user.getUsername()
-												+ "/"
-												+ subdomain
-												+ "/"
-												+ email
-												+ "/"
-												+ name));
-
-						templateGenerator.putVariable("userName", name);
-
-						mailRelayService.saveRelayEmail(new String[] { name },
-								new String[] { email },
-								templateGenerator.generateSubjectContent(),
-								templateGenerator.generateBodyContent());
-						InviteOutsideMemberWindow.this.close();
-						ProjectMemberAddViewImpl.this.getWindow()
-								.showNotification(
-										"Your invitation has sent to partner.");
 					}
+
+					int roleId = (Integer) projectRoleComboBox.getValue();
+					ProjectMemberService projectMemberService = AppContext
+							.getSpringBean(ProjectMemberService.class);
+					projectMemberService.inviteUsersOutsideAccount(lstEmailArr,
+							CurrentProjectVariables.getProjectId(), roleId,
+							AppContext.getUsername(), AppContext.getAccountId());
+
+					InviteOutsideMemberWindow.this.close();
+					ProjectMemberAddViewImpl.this.getWindow().showNotification(
+							"Your invitation has sent to partner.");
 				}
 			});
 			sendBtn.addStyleName(UIConstants.THEME_BLUE_LINK);

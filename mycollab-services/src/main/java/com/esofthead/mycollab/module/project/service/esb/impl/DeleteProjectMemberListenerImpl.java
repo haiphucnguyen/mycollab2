@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service.esb;
+package com.esofthead.mycollab.module.project.service.esb.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.dao.ActivityStreamMapper;
 import com.esofthead.mycollab.common.domain.ActivityStream;
 import com.esofthead.mycollab.common.domain.ActivityStreamExample;
+import com.esofthead.mycollab.module.project.service.esb.DeleteProjectMemberListener;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component
-public class ProjectMemberDeleteListenerImpl implements
-		ProjectMemberDeleteListener {
+public class DeleteProjectMemberListenerImpl implements
+		DeleteProjectMemberListener {
 
 	private static Logger log = LoggerFactory
-			.getLogger(ProjectMemberDeleteListenerImpl.class);
+			.getLogger(DeleteProjectMemberListenerImpl.class);
 
 	@Autowired
 	private ActivityStreamMapper activityStreamMapper;
