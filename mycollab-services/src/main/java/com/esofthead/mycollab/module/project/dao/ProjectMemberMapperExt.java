@@ -21,11 +21,14 @@ public interface ProjectMemberMapperExt extends
 		ISearchableDAO<ProjectMemberSearchCriteria> {
 	SimpleProjectMember findMemberById(int memberId);
 
-	List<SimpleUser> getUsersNotInProject(int projectId);
+	List<SimpleUser> getUsersNotInProject(@Param("projectId") int projectId,
+			@Param("sAccountId") int sAccountId);
 
-	List<SimpleUser> getUsersInProject(int projectId);
-	
-	List<SimpleUser> getActiveUsersInProject(int projectId);
+	List<SimpleUser> getUsersInProject(@Param("projectId") int projectId,
+			@Param("sAccountId") int sAccountId);
+
+	List<SimpleUser> getActiveUsersInProject(@Param("projectId") int projectId,
+			@Param("sAccountId") int sAccountId);
 
 	SimpleProjectMember findMemberByUsername(
 			@Param("username") String username,

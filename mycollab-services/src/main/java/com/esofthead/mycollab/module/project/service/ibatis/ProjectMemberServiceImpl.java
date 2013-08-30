@@ -67,7 +67,8 @@ public class ProjectMemberServiceImpl extends
 	@Override
 	public List<SimpleUser> getUsersNotInProject(int projectId,
 			Integer sAccountId) {
-		return projectMemberMapperExt.getUsersNotInProject(projectId);
+		return projectMemberMapperExt.getUsersNotInProject(projectId,
+				sAccountId);
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class ProjectMemberServiceImpl extends
 
 	@Override
 	public List<SimpleUser> getUsersInProject(int projectId, Integer sAccountId) {
-		return projectMemberMapperExt.getUsersInProject(projectId);
+		return projectMemberMapperExt.getUsersInProject(projectId, sAccountId);
 	}
 
 	@Override
@@ -120,6 +121,7 @@ public class ProjectMemberServiceImpl extends
 	@Override
 	public List<SimpleUser> getActiveUsersInProject(int projectId,
 			Integer sAccountId) {
-		return projectMemberMapperExt.getActiveUsersInProject(projectId);
+		return projectMemberMapperExt.getActiveUsersInProject(projectId,
+				sAccountId);
 	}
 }
