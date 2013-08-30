@@ -38,12 +38,14 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 				"templates/email/project/problemCreatedNotifier.mt");
 
 		templateGenerator.putVariable("problem", problem);
-		templateGenerator.putVariable("hyperLinks", createHyperLinks(problem));
+		templateGenerator.putVariable("hyperLinks",
+				createHyperLinks(problem, emailNotification));
 
 		return templateGenerator;
 	}
 
-	private Map<String, String> createHyperLinks(SimpleProblem problem) {
+	private Map<String, String> createHyperLinks(SimpleProblem problem,
+			SimpleRelayEmailNotification emailNotification) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				problem.getProjectid());
@@ -59,7 +61,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 								.getRaisedByUserFullName()));
 
 		SimpleProject project = projectService.findById(problem.getProjectid(),
-				problem.getSaccountid());
+				emailNotification.getSaccountid());
 		if (project != null) {
 			hyperLinks.put("projectName", project.getName());
 		}
