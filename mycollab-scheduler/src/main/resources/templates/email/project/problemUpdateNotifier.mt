@@ -16,7 +16,7 @@
         <tr>
             <td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $!userName,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that the problem $problem.issuename in project <a href="$hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$hyperLinks.projectName</a> has been updated. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that the problem <a href="" style="color: rgb(216, 121, 55);">$problem.issuename</a> in project <a href="$hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$hyperLinks.projectName</a> has been updated. Here're details about it:</div>
                 <table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
                 	<tr>
                         <td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
@@ -58,7 +58,7 @@
 								</tr>
                                 <tr>
                                 	<td colspan="4">
-                                		<p>Changes (by $historyLog.postedUserFullName):</p>
+                                		<p>Changes (by $!historyLog.postedUserFullName):</p>
                                 		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
                                 				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Fields</td>
