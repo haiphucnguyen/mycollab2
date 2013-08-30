@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
@@ -18,6 +19,7 @@ import com.esofthead.mycollab.module.project.dao.TaskMapperExt;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 
@@ -62,6 +64,13 @@ public class ProjectTaskServiceImpl extends
 
 		Integer key = taskMapperExt.getMaxKey(record.getProjectid());
 		record.setTaskkey((key == null) ? 1 : (key + 1));
+
+		// Clean cache of task group
+		String taskGroupKey = String.format("%s-%d",
+				ProjectTaskListService.class.getName(), record.getSaccountid());
+		LocalCacheManager.removeCacheItems(record.getSaccountid() + "",
+				taskGroupKey);
+
 		return super.saveWithSession(record, username);
 	}
 
@@ -73,6 +82,13 @@ public class ProjectTaskServiceImpl extends
 		} else if (record.getStatus() == null) {
 			record.setStatus("Open");
 		}
+
+		// Clean cache of task group
+		String taskGroupKey = String.format("%s-%d",
+				ProjectTaskListService.class.getName(), record.getSaccountid());
+		LocalCacheManager.removeCacheItems(record.getSaccountid() + "",
+				taskGroupKey);
+
 		return super.updateWithSession(record, username);
 	}
 }
