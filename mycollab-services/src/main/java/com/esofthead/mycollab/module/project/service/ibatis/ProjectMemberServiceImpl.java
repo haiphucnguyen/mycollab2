@@ -6,8 +6,6 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 
 import java.util.List;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.builder.ProxyBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
@@ -122,15 +121,12 @@ public class ProjectMemberServiceImpl extends
 				.getBean(ProjectMapper.class);
 
 		if (projectMember != null) {
-			CamelContext camelContext = ApplicationContextUtil
-					.getBean(CamelContext.class);
 			try {
 				Project project = projectMapper
 						.selectByPrimaryKey(projectMember.getProjectid());
-				ProjectMemberDeleteListener projectMemberDeleteListener = new ProxyBuilder(
-						camelContext).endpoint(
-						ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT).build(
-						ProjectMemberDeleteListener.class);
+				ProjectMemberDeleteListener projectMemberDeleteListener = new BeanProxyBuilder()
+						.build(ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT,
+								ProjectMemberDeleteListener.class);
 				projectMemberDeleteListener.projectMemberRemoved(username,
 						primaryKey, projectMember.getProjectid(),
 						project.getSaccountid());
@@ -152,6 +148,6 @@ public class ProjectMemberServiceImpl extends
 	public void inviteUsersOutsideAccount(String emails, int projectId,
 			String inviteUser) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
