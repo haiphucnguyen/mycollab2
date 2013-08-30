@@ -103,6 +103,7 @@ public class ProjectServiceImpl extends
 		projectMember.setJoindate(new GregorianCalendar().getTime());
 		projectMember.setProjectid(projectid);
 		projectMember.setUsername(username);
+		projectMember.setSaccountid(record.getSaccountid());
 		projectMemberMapper.insert(projectMember);
 
 		// add client role to project
@@ -136,6 +137,7 @@ public class ProjectServiceImpl extends
 				permissionMapClient, record.getSaccountid());
 
 		// add consultant role to project
+		log.debug("Add consultant role to project {}", record.getName());
 		ProjectRole consultantRole = createProjectRole(projectid,
 				record.getSaccountid(), "Consultant",
 				"Default role for consultant");
@@ -165,6 +167,7 @@ public class ProjectServiceImpl extends
 				permissionMapConsultant, record.getSaccountid());
 
 		// add admin role to project
+		log.debug("Add admin role to project {}", record.getName());
 		ProjectRole adminRole = createProjectRole(projectid,
 				record.getSaccountid(), "Admin", "Default role for admin");
 		int adminRoleId = projectRoleService.saveWithSession(adminRole,
