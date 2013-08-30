@@ -4521,6 +4521,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	box-sizing: border-box;
 	width: 100%;
 }
+.v-Notification.v-Notification-warning h1 {
+	color: rgb(74, 74, 74);
+}
 
 .v-Notification table {
 	margin: 0px 10px 0px 3px;
