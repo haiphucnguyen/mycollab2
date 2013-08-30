@@ -6,7 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -25,6 +28,15 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private ProjectService projectService;
+
+	@Autowired
+	private AuditLogService auditLogService;
+
+	private final ProjectFieldNameMapper mapper;
+
+	public ProjectProblemRelayEmailNotificationActionImpl() {
+		mapper = new ProjectFieldNameMapper();
+	}
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
@@ -72,15 +84,85 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// do nothing
-		return null;
+		int problemId = emailNotification.getTypeid();
+		SimpleProblem problem = problemService.findById(problemId, 0);
+		if (problem == null) {
+			return null;
+		}
+
+		String subject = StringUtils.subString(problem.getIssuename(), 150);
+
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$hyperLinks.projectName]: Problem \"" + subject
+						+ "...\" edited",
+				"templates/email/project/problemUpdateNotifier.mt");
+
+		templateGenerator.putVariable("problem", problem);
+		templateGenerator.putVariable("hyperLinks",
+				createHyperLinks(problem, emailNotification));
+		if (emailNotification.getExtratypeid() != null) {
+			SimpleAuditLog auditLog = auditLogService.findById(
+					emailNotification.getExtratypeid(),
+					emailNotification.getSaccountid());
+			templateGenerator.putVariable("historyLog", auditLog);
+			templateGenerator.putVariable("mapper", mapper);
+		}
+
+		return templateGenerator;
 	}
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// TODO Auto-generated method stub
-		return null;
+		int problemId = emailNotification.getTypeid();
+		SimpleProblem problem = problemService.findById(problemId, 0);
+		if (problem == null) {
+			return null;
+		}
+		String comment = StringUtils.subString(
+				emailNotification.getChangecomment(), 150);
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$hyperLinks.projectName]: "
+						+ emailNotification.getChangeByUserFullName()
+						+ " add new comment \"" + comment
+						+ "...\" to problem \""
+						+ StringUtils.subString(problem.getIssuename(), 100)
+						+ "\"",
+				"templates/email/project/problemCommentNotifier.mt");
+
+		templateGenerator.putVariable("problem", problem);
+		templateGenerator.putVariable("hyperLinks",
+				createHyperLinks(problem, emailNotification));
+		templateGenerator.putVariable("comment", emailNotification);
+		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+				problem.getProjectid());
+		templateGenerator.putVariable("userComment", linkGenerator
+				.generateUserPreviewFullLink(emailNotification.getChangeby()));
+
+		return templateGenerator;
+	}
+
+	public class ProjectFieldNameMapper {
+		private final Map<String, String> fieldNameMap;
+
+		ProjectFieldNameMapper() {
+			fieldNameMap = new HashMap<String, String>();
+
+			fieldNameMap.put("issuename", "Issue name");
+			fieldNameMap.put("assignedUserFullName", "Assigned to");
+			fieldNameMap.put("datedue", "Due date");
+			fieldNameMap.put("status", "Status");
+			fieldNameMap.put("impact", "Impact");
+			fieldNameMap.put("priority", "Priority");
+		}
+
+		public boolean hasField(String fieldName) {
+			return fieldNameMap.containsKey(fieldName);
+		}
+
+		public String getFieldLabel(String fieldName) {
+			return fieldNameMap.get(fieldName);
+		}
 	}
 
 }

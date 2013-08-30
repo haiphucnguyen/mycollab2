@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -163,7 +164,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 				final CommentListDepot commentList = new CommentListDepot(
 						CommentTypeConstants.PRJ_RISK,
 						RiskReadViewImpl.this.risk.getId(),
-						CurrentProjectVariables.getProjectId(), true, false);
+						CurrentProjectVariables.getProjectId(), true, true,
+						ProjectRiskRelayEmailNotificationAction.class);
 				commentList.setWidth("100%");
 				return commentList;
 			}
@@ -247,7 +249,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_RISK,
 						PrintView.this.risk.getId(),
-						CurrentProjectVariables.getProjectId(), false, false);
+						CurrentProjectVariables.getProjectId(), false, true,
+						ProjectRiskRelayEmailNotificationAction.class);
 			}
 		}
 	}

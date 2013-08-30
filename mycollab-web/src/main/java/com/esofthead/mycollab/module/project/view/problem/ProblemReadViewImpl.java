@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -164,7 +165,8 @@ public class ProblemReadViewImpl extends AbstractView implements
 				final CommentListDepot commentList = new CommentListDepot(
 						CommentTypeConstants.PRJ_PROBLEM,
 						ProblemReadViewImpl.this.problem.getId(),
-						CurrentProjectVariables.getProjectId(), true, false);
+						CurrentProjectVariables.getProjectId(), true, true,
+						ProjectProblemRelayEmailNotificationAction.class);
 				commentList.setWidth("100%");
 				return commentList;
 			}
@@ -248,7 +250,8 @@ public class ProblemReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
 						PrintView.this.problem.getId(),
-						CurrentProjectVariables.getProjectId(), false, false);
+						CurrentProjectVariables.getProjectId(), false, true,
+						ProjectProblemRelayEmailNotificationAction.class);
 			}
 		}
 	}
