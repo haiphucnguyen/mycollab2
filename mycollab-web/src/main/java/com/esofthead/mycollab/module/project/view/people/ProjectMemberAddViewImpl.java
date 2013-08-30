@@ -371,8 +371,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 						User inviteUser = userService.findUserByUserName(email);
 						int memberId = 0;
-						if (inviteUser != null) { // user Already exist
-
+						if (inviteUser != null) { 
 							// TODO : save info into projectmember table &
 							// redirect to Login page
 

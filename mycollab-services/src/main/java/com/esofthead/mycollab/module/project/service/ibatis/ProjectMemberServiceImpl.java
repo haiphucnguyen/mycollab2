@@ -147,4 +147,11 @@ public class ProjectMemberServiceImpl extends
 		return projectMemberMapperExt.getActiveUsersInProject(projectId,
 				sAccountId);
 	}
+
+	@Override
+	public void inviteUsersOutsideAccount(String emails, int projectId,
+			String inviteUser) {
+		// TODO Auto-generated method stub
+		
+	}
 }

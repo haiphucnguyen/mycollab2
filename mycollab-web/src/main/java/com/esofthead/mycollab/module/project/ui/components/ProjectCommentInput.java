@@ -108,16 +108,9 @@ public class ProjectCommentInput extends VerticalLayout {
 
 						final CommentService commentService = AppContext
 								.getSpringBean(CommentService.class);
-						int commentId = 0;
-						if (isSendingEmailRelay) {
-							commentId = commentService.saveWithSession(comment,
-									AppContext.getUsername(),
-									isSendingEmailRelay, emailHandler);
-						} else {
-							commentId = commentService.saveWithSession(comment,
-									AppContext.getUsername(), false,
-									emailHandler);
-						}
+						int commentId = commentService.saveWithSession(comment,
+								AppContext.getUsername(), isSendingEmailRelay,
+								emailHandler);
 
 						String attachmentPath = "";
 						if (CommentTypeConstants.PRJ_BUG.equals(type)) {

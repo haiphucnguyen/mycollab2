@@ -38,8 +38,11 @@ public interface ProjectMemberService extends
 	@Cacheable
 	List<SimpleUser> getUsersInProject(int projectId,
 			@CacheKey Integer sAccountId);
-	
+
 	@Cacheable
 	List<SimpleUser> getActiveUsersInProject(int projectId,
 			@CacheKey Integer sAccountId);
+
+	void inviteUsersOutsideAccount(String emails, int projectId,
+			String inviteUser);
 }
