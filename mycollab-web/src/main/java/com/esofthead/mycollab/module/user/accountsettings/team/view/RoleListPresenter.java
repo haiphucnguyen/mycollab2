@@ -45,13 +45,13 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 		implements ListPresenter<RoleSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
-	private RoleService userService;
+	private RoleService roleService;
 	private RoleSearchCriteria searchCriteria;
 	private boolean isSelectAll = false;
 
 	public RoleListPresenter() {
 		super(RoleListView.class);
-		userService = AppContext.getSpringBean(RoleService.class);
+		roleService = AppContext.getSpringBean(RoleService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
@@ -221,12 +221,12 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 			}
 
 			if (keyList.size() > 0) {
-				userService.massRemoveWithSession(keyList,
+				roleService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {
-			userService.removeByCriteria(searchCriteria,
+			roleService.removeByCriteria(searchCriteria,
 					AppContext.getAccountId());
 			doSearch(searchCriteria);
 		}
@@ -240,7 +240,9 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 			RoleContainer roleContainer = (RoleContainer) container;
 			roleContainer.removeAllComponents();
 			roleContainer.addComponent(view.getWidget());
-			doSearch((RoleSearchCriteria) data.getParams());
+			RoleSearchCriteria roleSearchCriteria = (RoleSearchCriteria) data
+					.getParams();
+			doSearch(roleSearchCriteria);
 
 			AccountSettingBreadcrumb breadcrumb = ViewManager
 					.getView(AccountSettingBreadcrumb.class);

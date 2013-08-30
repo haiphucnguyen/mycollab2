@@ -98,7 +98,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 			public FormLayoutFactory() {
 				super(
-						(ProjectMemberAddViewImpl.this.user.getId() == null) ? "Create Project Member"
+						(ProjectMemberAddViewImpl.this.user.getId() == null) ? "Invite Member"
 								: ((SimpleProjectMember) ProjectMemberAddViewImpl.this.user)
 										.getMemberFullName(),
 						UserAvatarControlFactory.createAvatarResource(null, 24));

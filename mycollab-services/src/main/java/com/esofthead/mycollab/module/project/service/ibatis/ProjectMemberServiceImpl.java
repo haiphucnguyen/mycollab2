@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.domain.RelayEmailNotification;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -28,6 +31,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.esb.ProjectMemberDeleteListener;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.project.ProjectMemberInviteNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
@@ -35,11 +39,10 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * @author haiphucnguyen
  */
 @Service
-// @Auditable(module = ModuleNameConstants.PRJ, type =
-// ProjectContants.PROJECT_MEMBER)
 public class ProjectMemberServiceImpl extends
 		DefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria>
 		implements ProjectMemberService {
+
 	private static Logger log = LoggerFactory
 			.getLogger(ProjectMemberServiceImpl.class);
 
@@ -48,6 +51,9 @@ public class ProjectMemberServiceImpl extends
 
 	@Autowired
 	protected ProjectMemberMapperExt projectMemberMapperExt;
+
+	@Autowired
+	private RelayEmailNotificationService relayEmailNotificationService;
 
 	@Override
 	public ICrudGenericDAO getCrudMapper() {
@@ -82,7 +88,24 @@ public class ProjectMemberServiceImpl extends
 		if (record.getStatus() == null) {
 			record.setStatus(ProjectMemberStatusContants.VERIFICATING);
 		}
-		return super.saveWithSession(record, username);
+		int recordId = super.saveWithSession(record, username);
+		if (recordId > 0) {
+			RelayEmailNotification relayNotification = new RelayEmailNotification();
+			relayNotification.setChangeby(username);
+			relayNotification.setChangecomment("");
+			int sAccountId = record.getSaccountid();
+			relayNotification.setSaccountid(sAccountId);
+			relayNotification.setType("invitationMember");
+			relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
+			relayNotification.setTypeid(recordId);
+			relayNotification.setExtratypeid(record.getProjectid());
+			relayNotification
+					.setEmailhandlerbean(ProjectMemberInviteNotificationAction.class
+							.getName());
+			relayEmailNotificationService.saveWithSession(relayNotification,
+					username);
+		}
+		return recordId;
 	}
 
 	@Override
