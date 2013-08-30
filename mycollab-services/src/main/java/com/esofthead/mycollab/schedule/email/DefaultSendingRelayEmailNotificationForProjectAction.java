@@ -29,7 +29,8 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 			SimpleRelayEmailNotification notification) {
 
 		List<SimpleUser> usersInProject = projectMemberService
-				.getActiveUsersInProject(notification.getExtratypeid(), 0);
+				.getActiveUsersInProject(notification.getExtratypeid(),
+						notification.getSaccountid());
 		return usersInProject;
 	}
 

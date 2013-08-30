@@ -6,7 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
@@ -26,6 +29,15 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private ProjectService projectService;
+
+	@Autowired
+	private AuditLogService auditLogService;
+
+	private final ProjectFieldNameMapper mapper;
+
+	public ProjectRiskRelayEmailNotificationActionImpl() {
+		mapper = new ProjectFieldNameMapper();
+	}
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
@@ -68,15 +80,89 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// TODO Auto-generated method stub
-		return null;
+		int riskId = emailNotification.getTypeid();
+		SimpleRisk risk = riskService.findById(riskId,
+				emailNotification.getSaccountid());
+		if (risk == null) {
+			return null;
+		}
+
+		String subject = StringUtils.subString(risk.getRiskname(), 150);
+
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$hyperLinks.projectName]: Risk \"" + subject + "...\" edited",
+				"templates/email/project/riskUpdateNotifier.mt");
+
+		templateGenerator.putVariable("risk", risk);
+		templateGenerator.putVariable("hyperLinks",
+				createHyperLinks(risk, emailNotification));
+		if (emailNotification.getExtratypeid() != null) {
+			SimpleAuditLog auditLog = auditLogService.findById(
+					emailNotification.getExtratypeid(),
+					emailNotification.getSaccountid());
+			templateGenerator.putVariable("historyLog", auditLog);
+
+			templateGenerator.putVariable("mapper", mapper);
+		}
+
+		return templateGenerator;
 	}
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// TODO Auto-generated method stub
-		return null;
+		int riskId = emailNotification.getTypeid();
+		SimpleRisk risk = riskService.findById(riskId,
+				emailNotification.getSaccountid());
+		if (risk == null) {
+			return null;
+		}
+
+		String comment = StringUtils.subString(
+				emailNotification.getChangecomment(), 150);
+
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$hyperLinks.projectName]: "
+						+ emailNotification.getChangeByUserFullName()
+						+ " add new comment \"" + comment + "...\" to risk \""
+						+ StringUtils.subString(risk.getRiskname(), 100) + "\"",
+				"templates/email/project/riskCommentNotifier.mt");
+		templateGenerator.putVariable("risk", risk);
+		templateGenerator.putVariable("hyperLinks",
+				createHyperLinks(risk, emailNotification));
+		templateGenerator.putVariable("comment", emailNotification);
+
+		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+				risk.getProjectid());
+		templateGenerator.putVariable("userComment", linkGenerator
+				.generateUserPreviewFullLink(emailNotification.getChangeby()));
+
+		return templateGenerator;
+	}
+
+	public class ProjectFieldNameMapper {
+		private final Map<String, String> fieldNameMap;
+
+		ProjectFieldNameMapper() {
+			fieldNameMap = new HashMap<String, String>();
+
+			fieldNameMap.put("riskname", "Risk Name");
+			fieldNameMap.put("assignedToUserFullName", "Assigned to");
+			fieldNameMap.put("consequence", "Consequence");
+			fieldNameMap.put("probalitity", "Probability");
+
+			fieldNameMap.put("datedue", "Due date");
+			fieldNameMap.put("status", "Status");
+			fieldNameMap.put("response", "Response");
+		}
+
+		public boolean hasField(String fieldName) {
+			return fieldNameMap.containsKey(fieldName);
+		}
+
+		public String getFieldLabel(String fieldName) {
+			return fieldNameMap.get(fieldName);
+		}
 	}
 
 }

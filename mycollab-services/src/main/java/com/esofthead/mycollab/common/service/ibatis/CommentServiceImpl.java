@@ -73,6 +73,7 @@ public class CommentServiceImpl extends
 		if (emailHandler != null) {
 			relayEmailNotification.setEmailhandlerbean(emailHandler.getName());
 		}
+		relayEmailNotification.setExtratypeid(record.getExtratypeid());
 		return relayEmailNotification;
 	}
 

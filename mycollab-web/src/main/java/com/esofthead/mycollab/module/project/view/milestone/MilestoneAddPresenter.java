@@ -99,35 +99,11 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 		milestone.setProjectid(CurrentProjectVariables.getProjectId());
 		milestone.setSaccountid(AppContext.getAccountId());
 
-		SimpleRelayEmailNotification relayNotification = new SimpleRelayEmailNotification();
-		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
-		relayNotification.setChangeby(AppContext.getUsername());
-		relayNotification.setChangecomment("");
-		relayNotification.setSaccountid(AppContext.getAccountId());
-		relayNotification.setType(MonitorTypeConstants.PRJ_MILESTONE);
-		relayNotification
-				.setEmailhandlerbean(ProjectMilestoneRelayEmailNotificationAction.class
-						.getName());
-
-		relayNotification.setExtratypeid(milestone.getProjectid());
-
-		RelayEmailNotificationService relayEmailNotificationService = AppContext
-				.getSpringBean(RelayEmailNotificationService.class);
-
 		if (milestone.getId() == null) {
-			Integer id = milestoneService.saveWithSession(milestone,
-					AppContext.getUsername());
-
-			relayNotification.setTypeid(id);
-			relayEmailNotificationService.saveWithSession(relayNotification,
+			milestoneService.saveWithSession(milestone,
 					AppContext.getUsername());
 		} else {
-			relayNotification.setTypeid(milestone.getId());
-			relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
-
 			milestoneService.updateWithSession(milestone,
-					AppContext.getUsername());
-			relayEmailNotificationService.saveWithSession(relayNotification,
 					AppContext.getUsername());
 		}
 
