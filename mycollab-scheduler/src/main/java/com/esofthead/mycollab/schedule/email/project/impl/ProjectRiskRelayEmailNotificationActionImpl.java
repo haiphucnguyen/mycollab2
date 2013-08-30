@@ -30,7 +30,8 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId, 0);
+		SimpleRisk risk = riskService.findById(riskId,
+				emailNotification.getSaccountid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$hyperLinks.projectName]: Risk \"" + risk.getRiskname()
@@ -38,12 +39,14 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				"templates/email/project/riskCreatedNotifier.mt");
 
 		templateGenerator.putVariable("risk", risk);
-		templateGenerator.putVariable("hyperLinks", createHyperLinks(risk));
+		templateGenerator.putVariable("hyperLinks",
+				createHyperLinks(risk, emailNotification));
 
 		return templateGenerator;
 	}
 
-	private Map<String, String> createHyperLinks(SimpleRisk risk) {
+	private Map<String, String> createHyperLinks(SimpleRisk risk,
+			SimpleRelayEmailNotification emailNotification) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				risk.getProjectid());
@@ -54,7 +57,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				.generateUserPreviewFullLink(risk.getAssignedToUserFullName()));
 
 		SimpleProject project = projectService.findById(risk.getProjectid(),
-				risk.getSaccountid());
+				emailNotification.getSaccountid());
 		if (project != null) {
 			hyperLinks.put("projectName", project.getName());
 		}

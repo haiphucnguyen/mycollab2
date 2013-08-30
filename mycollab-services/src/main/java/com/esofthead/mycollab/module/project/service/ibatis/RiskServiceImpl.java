@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
-import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 
 @Service
 @Transactional
@@ -81,7 +81,7 @@ public class RiskServiceImpl extends
 		relayNotification.setType(MonitorTypeConstants.PRJ_RISK);
 		relayNotification.setAction(action);
 		relayNotification
-				.setEmailhandlerbean(ProjectProblemRelayEmailNotificationAction.class
+				.setEmailhandlerbean(ProjectRiskRelayEmailNotificationAction.class
 						.getName());
 		relayNotification.setTypeid(recordId);
 		relayNotification.setExtratypeid(record.getProjectid());

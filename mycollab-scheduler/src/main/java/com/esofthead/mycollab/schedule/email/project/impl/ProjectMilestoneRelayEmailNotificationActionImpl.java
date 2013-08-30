@@ -37,13 +37,14 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 				"templates/email/project/phaseCreatedNotifier.mt");
 
 		templateGenerator.putVariable("milestone", milestone);
-		templateGenerator
-				.putVariable("hyperLinks", createHyperLinks(milestone));
+		templateGenerator.putVariable("hyperLinks",
+				createHyperLinks(milestone, emailNotification));
 
 		return templateGenerator;
 	}
 
-	private Map<String, String> createHyperLinks(SimpleMilestone milestone) {
+	private Map<String, String> createHyperLinks(SimpleMilestone milestone,
+			SimpleRelayEmailNotification emailNotification) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				milestone.getProjectid());
@@ -54,7 +55,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 				.generateUserPreviewFullLink(milestone.getOwnerFullName()));
 
 		SimpleProject project = projectService.findById(
-				milestone.getProjectid(), milestone.getSaccountid());
+				milestone.getProjectid(), emailNotification.getSaccountid());
 		if (project != null) {
 			hyperLinks.put("projectName", project.getName());
 		}
