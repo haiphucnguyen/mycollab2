@@ -40,6 +40,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -255,15 +256,12 @@ public class ProjectServiceImpl extends
 			int accountId) {
 		// notify listener project is removed, then silently remove project in
 		// associate records
-		CamelContext camelContext = ApplicationContextUtil
-				.getBean(CamelContext.class);
 		try {
 			Project project = findByPrimaryKey(projectId, accountId);
 
-			ProjectDeleteListener projectDeleteListener = new ProxyBuilder(
-					camelContext).endpoint(
-					ProjectEndPoints.PROJECT_REMOVE_ENDPOINT).build(
-					ProjectDeleteListener.class);
+			ProjectDeleteListener projectDeleteListener = new BeanProxyBuilder()
+					.build(ProjectEndPoints.PROJECT_REMOVE_ENDPOINT,
+							ProjectDeleteListener.class);
 			projectDeleteListener.projectRemoved(project.getSaccountid(),
 					projectId);
 		} catch (Exception e) {

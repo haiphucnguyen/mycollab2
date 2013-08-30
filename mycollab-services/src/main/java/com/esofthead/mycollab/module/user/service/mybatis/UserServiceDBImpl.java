@@ -45,6 +45,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
@@ -344,13 +345,10 @@ public class UserServiceDBImpl extends
 		} else {
 			// notify listener user is removed, then silently remove user in
 			// associate records
-			CamelContext camelContext = ApplicationContextUtil
-					.getBean(CamelContext.class);
 			try {
-				UserDeleteListener userDeleteListener = new ProxyBuilder(
-						camelContext).endpoint(
-						UserEndpoints.USER_REMOVE_ENDPOINT).build(
-						UserDeleteListener.class);
+				UserDeleteListener userDeleteListener = new BeanProxyBuilder()
+						.build(UserEndpoints.USER_REMOVE_ENDPOINT,
+								UserDeleteListener.class);
 				userDeleteListener.userRemoved(username, accountId);
 			} catch (Exception e) {
 				log.error("Error while notify user delete", e);
