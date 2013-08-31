@@ -8,22 +8,20 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.template.velocity.EngineFactory;
+import com.esofthead.template.velocity.TemplateContext;
+import com.esofthead.template.velocity.TemplateEngine;
 
 public class TemplateGenerator {
 	private final String subjectTemplate;
 	private final String contentTemplatePathFile;
-	private final VelocityContext velocityContext;
+	private final TemplateContext templateContext;
 
 	public TemplateGenerator(String subjectTemplate,
 			String contentTemplatePathFile) {
 
-		velocityContext = new VelocityContext(EngineFactory.createContext());
+		templateContext = new TemplateContext();
 		this.subjectTemplate = subjectTemplate;
 		this.contentTemplatePathFile = contentTemplatePathFile;
 
@@ -37,17 +35,17 @@ public class TemplateGenerator {
 		defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
 		defaultUrls.put("twitter_url", sharingOptions.getTwitterUrl());
 
-		velocityContext.put("defaultUrls", defaultUrls);
+		templateContext.put("defaultUrls", defaultUrls);
 	}
 
 	public void putVariable(String key, Object value) {
-		velocityContext.put(key, value);
+		templateContext.put(key, value);
 	}
 
 	public String generateSubjectContent() {
 		StringWriter writer = new StringWriter();
 		Reader reader = new StringReader(subjectTemplate);
-		Velocity.evaluate(velocityContext, writer, "log task", reader);
+		TemplateEngine.evaluate(templateContext, writer, "log task", reader);
 		return writer.toString();
 	}
 
@@ -64,8 +62,7 @@ public class TemplateGenerator {
 							contentTemplatePathFile));
 		}
 
-		EngineFactory.getTemplateEngine().evaluate(velocityContext, writer,
-				"log task", reader);
+		TemplateEngine.evaluate(templateContext, writer, "log task", reader);
 		return writer.toString();
 	}
 }

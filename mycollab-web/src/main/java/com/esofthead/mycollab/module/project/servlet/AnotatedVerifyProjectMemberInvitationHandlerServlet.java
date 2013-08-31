@@ -13,13 +13,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
@@ -28,7 +26,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.template.velocity.EngineFactory;
+import com.esofthead.template.velocity.TemplateContext;
+import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
@@ -40,9 +39,6 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 
 	@Autowired
 	private ProjectService projectService;
-
-	@Autowired
-	private RelayEmailNotificationService relayEmailService;
 
 	@Override
 	public void handleRequest(HttpServletRequest request,
@@ -179,8 +175,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 	private String generateOutsideMemberAcceptPage(int sAccountId,
 			String email, int projectId, int roleId, String projectLinkURL,
 			String handelCreateAccountURL) {
-		VelocityContext context = new VelocityContext(
-				EngineFactory.createContext());
+		TemplateContext context = new TemplateContext();
 
 		Reader reader;
 		try {
@@ -208,8 +203,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
-				reader);
+		TemplateEngine.evaluate(context, writer, "log task", reader);
 		return writer.toString();
 	}
 
@@ -217,8 +211,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		public static void responsePage404(HttpServletResponse response)
 				throws IOException {
 			String pageNotFoundTemplate = "templates/page/404Page.mt";
-			VelocityContext context = new VelocityContext(
-					EngineFactory.createContext());
+			TemplateContext context = new TemplateContext();
 
 			Reader reader;
 			try {
@@ -236,8 +229,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 			context.put("defaultUrls", defaultUrls);
 
 			StringWriter writer = new StringWriter();
-			EngineFactory.getTemplateEngine().evaluate(context, writer,
-					"log task", reader);
+			TemplateEngine.evaluate(context, writer, "log task", reader);
 
 			String html = writer.toString();
 			PrintWriter out = response.getWriter();

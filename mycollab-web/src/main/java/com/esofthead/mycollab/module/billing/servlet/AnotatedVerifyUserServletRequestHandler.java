@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
@@ -26,7 +25,8 @@ import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitationExample;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.template.velocity.EngineFactory;
+import com.esofthead.template.velocity.TemplateContext;
+import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("verifyUserServletHandler")
 public class AnotatedVerifyUserServletRequestHandler implements
@@ -97,8 +97,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 			int accountId, String username, String email, String redirectURL,
 			String loginURL) {
 		String template = "/templates/page/FillUserInformation.mt";
-		VelocityContext context = new VelocityContext(
-				EngineFactory.createContext());
+		TemplateContext context = new TemplateContext();
 		Reader reader;
 		try {
 			reader = new InputStreamReader(PageNotFoundGenerator.class
@@ -120,8 +119,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
-				reader);
+		TemplateEngine.evaluate(context, writer, "log task", reader);
 		return writer.toString();
 	}
 }

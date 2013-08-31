@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
@@ -22,14 +21,14 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.template.velocity.EngineFactory;
+import com.esofthead.template.velocity.TemplateContext;
+import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("denyInvitationMemberServletHandler")
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
@@ -137,8 +136,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 	private String generateDenyFeedbacktoInviter(String inviterEmail,
 			String inviterName, String redirectURL, String memberEmail,
 			String memberName) {
-		VelocityContext context = new VelocityContext(
-				EngineFactory.createContext());
+		TemplateContext context = new TemplateContext();
 
 		Reader reader;
 		try {
@@ -171,8 +169,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
-				reader);
+		TemplateEngine.evaluate(context, writer, "log task", reader);
 		return writer.toString();
 	}
 

@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
@@ -24,7 +23,8 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.template.velocity.EngineFactory;
+import com.esofthead.template.velocity.TemplateContext;
+import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("userRecoveryPasswordHandlerServlet")
 public class AnotatedUserRecoveryPasswordHandlerServlet implements
@@ -66,8 +66,7 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 	private String generateUserRecoveryPasswordPage(String username,
 			String loginURL, String redirectURL) {
 		String template = "/templates/page/UserRecoveryPasswordPage.mt";
-		VelocityContext context = new VelocityContext(
-				EngineFactory.createContext());
+		TemplateContext context = new TemplateContext();
 		Reader reader;
 		try {
 			reader = new InputStreamReader(PageNotFoundGenerator.class
@@ -87,8 +86,7 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		EngineFactory.getTemplateEngine().evaluate(context, writer, "log task",
-				reader);
+		TemplateEngine.evaluate(context, writer, "log task", reader);
 		return writer.toString();
 	}
 }
