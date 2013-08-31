@@ -10,8 +10,8 @@ import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
-import com.esofthead.mycollab.module.project.service.esb.DeleteProjectListener;
-import com.esofthead.mycollab.module.project.service.esb.DeleteProjectMemberListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberListener;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 
 public class CacheServiceIgnoreList {

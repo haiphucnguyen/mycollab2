@@ -52,12 +52,11 @@ import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
+import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.service.esb.DeleteProjectListener;
-import com.esofthead.mycollab.module.project.service.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.user.PermissionFlag;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Service
 @Transactional

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service.esb.impl;
+package com.esofthead.mycollab.module.project.esb.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import com.esofthead.mycollab.common.dao.CommentMapper;
 import com.esofthead.mycollab.common.domain.ActivityStreamExample;
 import com.esofthead.mycollab.common.domain.CommentExample;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.project.service.esb.DeleteProjectListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component

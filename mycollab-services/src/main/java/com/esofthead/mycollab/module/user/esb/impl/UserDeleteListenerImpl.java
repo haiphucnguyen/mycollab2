@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.user.service.esb;
+package com.esofthead.mycollab.module.user.esb.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,7 @@ import com.esofthead.mycollab.common.dao.ActivityStreamMapper;
 import com.esofthead.mycollab.common.domain.ActivityStream;
 import com.esofthead.mycollab.common.domain.ActivityStreamExample;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.esb.UserDeleteListener;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component

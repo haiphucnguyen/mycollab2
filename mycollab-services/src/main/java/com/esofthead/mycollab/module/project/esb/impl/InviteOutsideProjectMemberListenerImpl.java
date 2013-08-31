@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service.esb.impl;
+package com.esofthead.mycollab.module.project.esb.impl;
 
 import java.util.Date;
 
@@ -15,9 +15,9 @@ import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberListener;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.service.esb.InviteOutsideProjectMemberListener;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;

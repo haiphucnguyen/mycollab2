@@ -1,10 +1,10 @@
-package com.esofthead.mycollab.module.project.service.esb.impl;
+package com.esofthead.mycollab.module.project.esb.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.module.project.service.esb.DeleteProjectBugListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectBugListener;
 
 @Component
 public class DeleteProjectBugListenerImpl implements DeleteProjectBugListener {

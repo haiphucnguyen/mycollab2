@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.service.esb;
+package com.esofthead.mycollab.module.project.esb;
 
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.spring.SpringRouteBuilder;
