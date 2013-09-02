@@ -130,6 +130,12 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ProjectRolePermissionMapper" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectFollowingTicketMapperExt">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.project.dao.ProjectFollowingTicketMapperExt" />
+    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />

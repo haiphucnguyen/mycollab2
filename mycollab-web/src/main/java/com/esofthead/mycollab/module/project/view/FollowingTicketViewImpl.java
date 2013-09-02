@@ -9,9 +9,10 @@ import org.vaadin.hene.splitbutton.SplitButtonExt;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.file.resource.ExportPdfStreamResource;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.service.ProjectFollowingTicketService;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
@@ -28,6 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -46,6 +48,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 	private SplitButtonExt exportButtonControl;
 	private final FollowingTicketTable ticketTable;
+	private MonitorSearchCriteria searchCriteria;
 
 	public FollowingTicketViewImpl() {
 		this.setSpacing(true);
@@ -116,12 +119,21 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		popupButtonsControl.setWidth("150px");
 		exportButtonControl.addComponent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("PDF", new Button.ClickListener() {
+		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
+				StreamResource res = new StreamResource(
+						new ExportPdfStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
+								new String[] {"status"},
+								new String[] {"Status"},
+								AppContext
+										.getSpringBean(ProjectFollowingTicketService.class),
+								searchCriteria, FollowingTicket.class),
+						"export.pdf", FollowingTicketViewImpl.this
+								.getApplication());
+				FollowingTicketViewImpl.this.getWindow().open(res, "_blank");
 
 			}
 		});
@@ -155,7 +167,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 	@Override
 	public void displayFollowingTicket(final List<Integer> prjKeys) {
 		if (prjKeys != null && prjKeys.size() > 0) {
-			final MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+			searchCriteria = new MonitorSearchCriteria();
 			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
 					.toArray(new Integer[0])));
 			searchCriteria.setUser(new StringSearchField(AppContext
@@ -168,7 +180,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			AbstractPagedBeanTable<MonitorSearchCriteria, FollowingTicket> {
 
 		private static final long serialVersionUID = 1L;
-		private ProjectService projectService;
+		private ProjectFollowingTicketService projectFollowingTicketService;
 
 		public FollowingTicketTable() {
 			super(FollowingTicket.class, Arrays.asList(new TableViewField(
@@ -180,8 +192,8 @@ public class FollowingTicketViewImpl extends AbstractView implements
 					new TableViewField("Created Date", "monitorDate",
 							UIConstants.TABLE_DATE_WIDTH)));
 
-			this.projectService = AppContext
-					.getSpringBean(ProjectService.class);
+			this.projectFollowingTicketService = AppContext
+					.getSpringBean(ProjectFollowingTicketService.class);
 
 			this.addGeneratedColumn("summary", new ColumnGenerator() {
 				private static final long serialVersionUID = 1L;
@@ -321,15 +333,14 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 		@Override
 		protected int queryTotalCount() {
-			return this.projectService
-					.getTotalFollowingTickets(this.searchRequest
-							.getSearchCriteria());
+			return this.projectFollowingTicketService
+					.getTotalCount(this.searchRequest.getSearchCriteria());
 		}
 
 		@Override
 		protected List<FollowingTicket> queryCurrentData() {
-			return this.projectService
-					.getProjectFollowingTickets(this.searchRequest);
+			return this.projectFollowingTicketService
+					.findPagableListByCriteria(this.searchRequest);
 		}
 
 	}

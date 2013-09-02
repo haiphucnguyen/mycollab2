@@ -21,12 +21,10 @@ import java.util.List;
 import org.springframework.flex.remoting.RemotingDestination;
 
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
-import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -51,11 +49,4 @@ public interface ProjectService extends
 	SimpleProject findById(int projectId, @CacheKey int sAccountId);
 
 	String getSubdomainOfProject(int projectId);
-
-	@Cacheable
-	int getTotalFollowingTickets(@CacheKey MonitorSearchCriteria searchRequest);
-
-	@Cacheable
-	List<FollowingTicket> getProjectFollowingTickets(
-			@CacheKey SearchRequest<MonitorSearchCriteria> searchRequest);
 }

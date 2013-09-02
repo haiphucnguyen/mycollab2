@@ -29,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
@@ -45,7 +44,6 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
-import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -231,21 +229,6 @@ public class ProjectServiceImpl extends
 		} else {
 			return SiteConfiguration.getSiteUrl("");
 		}
-	}
-
-	@Override
-	public List<FollowingTicket> getProjectFollowingTickets(
-			SearchRequest<MonitorSearchCriteria> searchRequest) {
-		return projectMapperExt.getProjectFollowingTickets(
-				searchRequest.getSearchCriteria(),
-				new RowBounds((searchRequest.getCurrentPage() - 1)
-						* searchRequest.getNumberOfItems(), searchRequest
-						.getNumberOfItems()));
-	}
-
-	@Override
-	public int getTotalFollowingTickets(MonitorSearchCriteria searchCriteria) {
-		return projectMapperExt.getTotalFollowingTickets(searchCriteria);
 	}
 
 	@Override
