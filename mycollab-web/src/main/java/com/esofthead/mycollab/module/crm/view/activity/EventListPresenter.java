@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
-import com.esofthead.mycollab.module.file.resource.ExportStreamResource;
+import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
@@ -152,7 +152,7 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 
 							if (isSelectAll) {
 								res = new StreamResource(
-										new ExportStreamResource.AllItems<EventSearchCriteria>(
+										new ExportCsvStreamResource.AllItems<EventSearchCriteria>(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES,
 												AppContext
@@ -163,7 +163,7 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 								List tableData = view.getPagedBeanTable()
 										.getCurrentDataList();
 								res = new StreamResource(
-										new ExportStreamResource.ListData(
+										new ExportCsvStreamResource.ListData(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES, tableData),
 										"export.csv", view.getApplication());

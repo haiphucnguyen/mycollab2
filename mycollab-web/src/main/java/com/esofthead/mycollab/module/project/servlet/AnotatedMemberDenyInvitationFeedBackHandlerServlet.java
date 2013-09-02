@@ -36,7 +36,7 @@ public class AnotatedMemberDenyInvitationFeedBackHandlerServlet implements
 			toName = (toName.equals("You")) ? "" : toName;
 			mailRelayService.saveRelayEmail(new String[] { inviterName },
 					new String[] { inviterEmail }, toName + "(" + toEmail + ")"
-							+ " has been deny your invitation", message);
+							+ " has denied your invitation", message);
 		}
 	}
 };

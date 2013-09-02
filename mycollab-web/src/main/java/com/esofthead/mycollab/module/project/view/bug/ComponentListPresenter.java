@@ -13,7 +13,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.ExportStreamResource;
+import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -157,7 +157,7 @@ public class ComponentListPresenter extends
 
 							if (isSelectAll) {
 								res = new StreamResource(
-										new ExportStreamResource.AllItems<ComponentSearchCriteria>(
+										new ExportCsvStreamResource.AllItems<ComponentSearchCriteria>(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES,
 												AppContext
@@ -168,7 +168,7 @@ public class ComponentListPresenter extends
 								List tableData = view.getPagedBeanTable()
 										.getCurrentDataList();
 								res = new StreamResource(
-										new ExportStreamResource.ListData(
+										new ExportCsvStreamResource.ListData(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES, tableData),
 										"export.csv", view.getApplication());

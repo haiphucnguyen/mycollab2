@@ -25,15 +25,15 @@ import com.vaadin.terminal.StreamResource;
  * 
  * @author haiphucnguyen
  */
-public abstract class ExportStreamResource implements
+public abstract class ExportCsvStreamResource implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
-			.getLogger(ExportStreamResource.class);
+			.getLogger(ExportCsvStreamResource.class);
 	protected String[] visibleColumns;
 	protected String[] headerNames;
 
-	public ExportStreamResource(String[] visibleColumns, String[] headerNames) {
+	public ExportCsvStreamResource(String[] visibleColumns, String[] headerNames) {
 		this.visibleColumns = visibleColumns;
 		this.headerNames = headerNames;
 	}
@@ -45,7 +45,7 @@ public abstract class ExportStreamResource implements
 	 * @param <S>
 	 */
 	public static class AllItems<S extends SearchCriteria> extends
-			ExportStreamResource {
+			ExportCsvStreamResource {
 		private static final long serialVersionUID = 1L;
 		private ISearchableService<S> searchService;
 		private S searchCriteria;
@@ -155,7 +155,7 @@ public abstract class ExportStreamResource implements
 	 * @author haiphucnguyen
 	 *
 	 */
-	public static class ListData extends ExportStreamResource {
+	public static class ListData extends ExportCsvStreamResource {
 		private static final long serialVersionUID = 1L;
 		private List data;
 		private static final String selectedFieldName = "selected";

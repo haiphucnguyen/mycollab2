@@ -13,7 +13,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.ExportStreamResource;
+import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
@@ -154,7 +154,7 @@ public class ProjectRoleListPresenter extends
 
 							if (isSelectAll) {
 								res = new StreamResource(
-										new ExportStreamResource.AllItems<ProjectRoleSearchCriteria>(
+										new ExportCsvStreamResource.AllItems<ProjectRoleSearchCriteria>(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES,
 												AppContext
@@ -166,7 +166,7 @@ public class ProjectRoleListPresenter extends
 										.getPagedBeanTable()
 										.getCurrentDataList();
 								res = new StreamResource(
-										new ExportStreamResource.ListData(
+										new ExportCsvStreamResource.ListData(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES, tableData),
 										"export.csv", view.getApplication());

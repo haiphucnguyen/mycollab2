@@ -31,13 +31,13 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
-public class ExportTaskStreamResource extends
+public class ExportTaskExcelStreamResource extends
 		ExportExcelStreamResource<TaskListSearchCriteria> {
 
 	private static Logger log = LoggerFactory
-			.getLogger(ExportTaskStreamResource.class);
+			.getLogger(ExportTaskExcelStreamResource.class);
 
-	public ExportTaskStreamResource(String title,
+	public ExportTaskExcelStreamResource(String title,
 			FieldExportColumn[] exportColumns,
 			ISearchableService searchService,
 			TaskListSearchCriteria searchCriteria) {

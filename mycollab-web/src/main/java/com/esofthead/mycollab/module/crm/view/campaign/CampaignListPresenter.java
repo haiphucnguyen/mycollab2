@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
-import com.esofthead.mycollab.module.file.resource.ExportStreamResource;
+import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
@@ -155,7 +155,7 @@ public class CampaignListPresenter extends
 
 							if (isSelectAll) {
 								res = new StreamResource(
-										new ExportStreamResource.AllItems<CampaignSearchCriteria>(
+										new ExportCsvStreamResource.AllItems<CampaignSearchCriteria>(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES,
 												AppContext
@@ -166,7 +166,7 @@ public class CampaignListPresenter extends
 								List tableData = view.getPagedBeanTable()
 										.getCurrentDataList();
 								res = new StreamResource(
-										new ExportStreamResource.ListData(
+										new ExportCsvStreamResource.ListData(
 												EXPORT_VISIBLE_COLUMNS,
 												EXPORT_DISPLAY_NAMES, tableData),
 										"export.csv", view.getApplication());

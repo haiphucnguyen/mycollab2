@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.vaadin.hene.splitbutton.SplitButtonExt;
+
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -42,6 +44,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		FollowingTicketView {
 	private static final long serialVersionUID = 1L;
 
+	private SplitButtonExt exportButtonControl;
 	private final FollowingTicketTable ticketTable;
 
 	public FollowingTicketViewImpl() {
@@ -89,9 +92,59 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
-		VerticalLayout controlBtns = new VerticalLayout();
+		HorizontalLayout controlBtns = new HorizontalLayout();
 		controlBtns.setMargin(true, false, true, false);
+		controlBtns.setWidth("100%");
 		controlBtns.addComponent(backBtn);
+		controlBtns.setExpandRatio(backBtn, 1.0f);
+
+		Button exportBtn = new Button("Export", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl.setIcon(MyCollabResource
+				.newResource("icons/16/export.png"));
+
+		VerticalLayout popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setWidth("150px");
+		exportButtonControl.addComponent(popupButtonsControl);
+
+		Button exportPdfBtn = new Button("PDF", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		exportPdfBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/pdf.png"));
+		exportPdfBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportPdfBtn);
+
+		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		exportExcelBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/excel.png"));
+		exportExcelBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportExcelBtn);
+
+		controlBtns.addComponent(exportButtonControl);
 
 		contentWrapper.addComponent(controlBtns);
 

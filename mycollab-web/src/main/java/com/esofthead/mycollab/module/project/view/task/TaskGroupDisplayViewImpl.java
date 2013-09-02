@@ -6,7 +6,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.ExportTaskStreamResource;
+import com.esofthead.mycollab.module.file.resource.ExportTaskExcelStreamResource;
 import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -241,7 +241,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 										CurrentProjectVariables.getProject()
 												.getId()));
 						final Resource res = new StreamResource(
-								new ExportTaskStreamResource(
+								new ExportTaskExcelStreamResource(
 										title,
 										TaskGroupDisplayViewImpl.EXPORT_COLUMNS,
 										AppContext
