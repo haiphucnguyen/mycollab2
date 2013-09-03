@@ -134,7 +134,6 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 						final UserComboBoxWithInviteBtnCustomField userBoxCustomField = new UserComboBoxWithInviteBtnCustomField(
 								users);
-						userBoxCustomField.setValue();
 						return userBoxCustomField;
 					} else {
 						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
@@ -171,6 +170,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 				userBox = new UserComboBox(users);
 				userBox.setRequired(true);
 				userBox.setWidth("500px");
+				userBox.setImmediate(true);
 
 				inviteOutSideUserBtn = new Button("Invite outside member",
 						new Button.ClickListener() {
@@ -199,15 +199,10 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 				this.setCompositionRoot(layout);
 			}
 
-			public void setValue() {
-				String username = (String) userBox.getValue();
-				ProjectMemberAddViewImpl.this.user.setUsername(username);
-			}
-
 			@Override
 			public Object getValue() {
 				String username = (String) userBox.getValue();
-				setValue();
+				ProjectMemberAddViewImpl.this.user.setUsername(username);
 				return username;
 			}
 

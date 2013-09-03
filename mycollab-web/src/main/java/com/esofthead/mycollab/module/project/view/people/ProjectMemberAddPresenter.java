@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -11,6 +12,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -99,15 +102,20 @@ public class ProjectMemberAddPresenter extends
 				.getSpringBean(ProjectMemberService.class);
 
 		if (projectMember.getId() == null) {
-			projectMemberService.saveWithSession(projectMember,
-					AppContext.getUsername());
-
-			projectMemberService.inviteProjectMember(
-					new String[] { projectMember.getUsername() },
-					CurrentProjectVariables.getProjectId(),
-					projectMember.getProjectroleid(), AppContext.getUsername(),
-					AppContext.getAccountId());
-
+			UserService userService = AppContext
+					.getSpringBean(UserService.class);
+			User user = userService.findUserByUserName(projectMember
+					.getUsername());
+			if (user != null) {
+				projectMemberService.inviteProjectMember(
+						new String[] { user.getEmail() },
+						CurrentProjectVariables.getProjectId(),
+						projectMember.getProjectroleid(),
+						AppContext.getUsername(), AppContext.getAccountId());
+			} else {
+				throw new MyCollabException(
+						"User not exist in projectMember table, something goes wrong in DB");
+			}
 		} else {
 			projectMemberService.updateWithSession(projectMember,
 					AppContext.getUsername());

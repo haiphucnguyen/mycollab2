@@ -21,12 +21,10 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
@@ -35,12 +33,16 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		HttpRequestHandler {
 
 	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/memberDenyInvitationPage.mt";
+	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/refuseMemberDenyActionPage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
 
 	@Autowired
 	private RelayEmailNotificationService relayEmailService;
+
+	@Autowired
+	private ProjectService projectService;
 
 	@Override
 	public void handleRequest(HttpServletRequest request,
@@ -51,86 +53,86 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
 
+				// email, projectId, sAccountId , inviterName, inviterEmail
 				String pathVariables = UrlEncodeDecoder.decode(pathInfo);
+
+				String email = pathVariables.substring(0,
+						pathVariables.indexOf("/"));
+				pathVariables = pathVariables.substring(email.length() + 1);
+
+				int projectId = Integer.parseInt(pathVariables.substring(0,
+						pathVariables.indexOf("/")));
+				pathVariables = pathVariables.substring((projectId + "")
+						.length() + 1);
+
 				int sAccountId = Integer.parseInt(pathVariables.substring(0,
 						pathVariables.indexOf("/")));
 				pathVariables = pathVariables.substring((sAccountId + "")
 						.length() + 1);
 
-				int memberId = Integer.parseInt(pathVariables.substring(0,
-						pathVariables.indexOf("/")));
-				pathVariables = pathVariables.substring((memberId + "")
-						.length() + 1);
-
-				String senderEmail = pathVariables.substring(0,
+				String inviterName = pathVariables.substring(0,
 						pathVariables.indexOf("/"));
-				pathVariables = pathVariables.substring((senderEmail + "")
-						.length() + 1);
+				pathVariables = pathVariables
+						.substring(inviterName.length() + 1);
 
-				String senderName = pathVariables;
+				String inviterEmail = pathVariables;
 
-				String subdomain = "", toEmail = "", toName = "";
-				// ** update variables for handel outside member deny invitation
-				if (pathVariables.indexOf("/") != -1 && memberId == 0) {
-					senderName = pathVariables.substring(0,
-							pathVariables.indexOf("/"));
-					pathVariables = pathVariables
-							.substring(senderName.length() + 1);
+				String subdomain = projectService
+						.getSubdomainOfProject(projectId);
 
-					subdomain = pathVariables.substring(0,
-							pathVariables.indexOf("mycollab-web")
-									+ "mycollab-web".length() + 1);
-					pathVariables = pathVariables
-							.substring(subdomain.length() + 1);
-
-					toEmail = pathVariables.substring(0,
-							pathVariables.indexOf("/"));
-					pathVariables = pathVariables
-							.substring(toEmail.length() + 1);
-
-					toName = pathVariables;
-				}
-
-				if (memberId > 0) {
-					SimpleProjectMember member = projectMemberService.findById(
-							memberId, sAccountId);
-					if (member != null
-							&& !member.getStatus().equals(
-									ProjectMemberStatusContants.ACTIVE)) {
-						toEmail = member.getEmail();
-						toName = member.getMemberFullName();
-						projectMemberService.removeWithSession(memberId, "",
-								AppContext.getAccountId());
-
-						ProjectService projectService = AppContext
-								.getSpringBean(ProjectService.class);
-						subdomain = projectService.getSubdomainOfProject(member
-								.getProjectid());
-
-						String redirectURL = SiteConfiguration
-								.getSiteUrl(subdomain)
-								+ "project/member/feedback/";
-
-						String html = generateDenyFeedbacktoInviter(
-								senderEmail, senderName, redirectURL, toEmail,
-								toName);
-						PrintWriter out = response.getWriter();
-						out.println(html);
-						return;
-					}
-				} else {
-					String redirectURL = SiteConfiguration
-							.getSiteUrl(subdomain) + "project/member/feedback/";
-
-					String html = generateDenyFeedbacktoInviter(senderEmail,
-							senderName, redirectURL, toEmail, toName);
+				// remove from ProjectMember Table if it exist ---------
+				ProjectMember projectMember = projectMemberService
+						.findMemberByUsername(email, projectId, sAccountId);
+				if (projectMember != null) {
+					String html = generateRefuseMemberDenyActionPage();
 					PrintWriter out = response.getWriter();
 					out.println(html);
 					return;
 				}
+
+				String redirectURL = SiteConfiguration.getSiteUrl(subdomain)
+						+ "project/member/feedback/";
+
+				String html = generateDenyFeedbacktoInviter(inviterEmail,
+						inviterName, redirectURL, email, "You");
+				PrintWriter out = response.getWriter();
+				out.println(html);
+				return;
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);
+	}
+
+	private String generateRefuseMemberDenyActionPage() {
+		TemplateContext context = new TemplateContext();
+
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					AnotatedDenyProjectMemberInvitationServletHandler.class
+							.getClassLoader().getResourceAsStream(
+									REFUSE_MEMBER_DENY_TEMPLATE), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(
+					AnotatedDenyProjectMemberInvitationServletHandler.class
+							.getClassLoader().getResourceAsStream(
+									REFUSE_MEMBER_DENY_TEMPLATE));
+		}
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		SharingOptions sharingOptions = SiteConfiguration.getSharingOptions();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		defaultUrls.put("facebook_url", sharingOptions.getFacebookUrl());
+		defaultUrls.put("google_url", sharingOptions.getGoogleplusUrl());
+		defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
+		defaultUrls.put("twitter_url", sharingOptions.getTwitterUrl());
+
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+		TemplateEngine.evaluate(context, writer, "log task", reader);
+		return writer.toString();
 	}
 
 	private String generateDenyFeedbacktoInviter(String inviterEmail,
