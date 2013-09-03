@@ -125,10 +125,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								Arrays.asList(FollowingTicketFieldDef.summary,
-										FollowingTicketFieldDef.project,
-										FollowingTicketFieldDef.assignee,
-										FollowingTicketFieldDef.createdDate),
+								ticketTable.getDefaultSelectedColumns(),
 								ExportItemsStreamResource.PDF_OUTPUT,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),
@@ -152,10 +149,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								Arrays.asList(FollowingTicketFieldDef.summary,
-										FollowingTicketFieldDef.project,
-										FollowingTicketFieldDef.assignee,
-										FollowingTicketFieldDef.createdDate),
+								ticketTable.getDefaultSelectedColumns(),
 								ExportItemsStreamResource.EXCEL_OUTPUT,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),
