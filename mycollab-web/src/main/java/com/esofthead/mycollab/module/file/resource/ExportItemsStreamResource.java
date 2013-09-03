@@ -14,6 +14,7 @@ import java.util.List;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
@@ -28,7 +29,6 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.reporting.Templates;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.terminal.StreamResource;
@@ -98,9 +98,10 @@ public abstract class ExportItemsStreamResource implements
 
 							Field fieldCls = ClassUtils.getField(classType,
 									field.getField());
+							DRIDataType<?, ?> jrType = type.detectType(fieldCls
+									.getType());
 							reportBuilder.addColumn(col.column(field.getDesc(),
-									field.getField(),
-									type.detectType(fieldCls.getType())));
+									field.getField(), jrType));
 						}
 
 						reportBuilder
@@ -224,9 +225,11 @@ public abstract class ExportItemsStreamResource implements
 
 								Field fieldCls = ClassUtils.getField(classType,
 										field.getField());
+								DRIDataType<?, ?> jrType = type
+										.detectType(fieldCls.getType());
 								reportBuilder.addColumn(col.column(
 										field.getDesc(), field.getField(),
-										type.detectType(fieldCls.getType())));
+										jrType));
 								visibleColumns.add(field.getField());
 							}
 
