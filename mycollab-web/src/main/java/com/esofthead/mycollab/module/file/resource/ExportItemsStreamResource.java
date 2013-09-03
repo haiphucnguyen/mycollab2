@@ -99,7 +99,7 @@ public abstract class ExportItemsStreamResource implements
 							Field fieldCls = ClassUtils.getField(classType,
 									field.getField());
 							DRIDataType<?, ?> jrType = type.detectType(fieldCls
-									.getType());
+									.getType().getName());
 							reportBuilder.addColumn(col.column(field.getDesc(),
 									field.getField(), jrType));
 						}
@@ -226,7 +226,8 @@ public abstract class ExportItemsStreamResource implements
 								Field fieldCls = ClassUtils.getField(classType,
 										field.getField());
 								DRIDataType<?, ?> jrType = type
-										.detectType(fieldCls.getType());
+										.detectType(fieldCls.getType()
+												.getName());
 								reportBuilder.addColumn(col.column(
 										field.getDesc(), field.getField(),
 										jrType));
