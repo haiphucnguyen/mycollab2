@@ -126,10 +126,10 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								new String[] { "summary", "projectName",
-										"assignUser", "monitorDate" },
-								new String[] { "Summary", "Project",
-										"Assignee", "Created Date" },
+								Arrays.asList(FollowingTicketFieldDef.summary,
+										FollowingTicketFieldDef.project,
+										FollowingTicketFieldDef.assignee,
+										FollowingTicketFieldDef.createdDate),
 								ExportItemsStreamResource.PDF_OUTPUT,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),
@@ -186,14 +186,11 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		private ProjectFollowingTicketService projectFollowingTicketService;
 
 		public FollowingTicketTable() {
-			super(FollowingTicket.class, Arrays.asList(new TableViewField(
-					"Summary", "summary", UIConstants.TABLE_EX_LABEL_WIDTH),
-					new TableViewField("Project", "projectName",
-							UIConstants.TABLE_X_LABEL_WIDTH),
-					new TableViewField("Assignee", "assignUser",
-							UIConstants.TABLE_X_LABEL_WIDTH),
-					new TableViewField("Created Date", "monitorDate",
-							UIConstants.TABLE_DATE_WIDTH)));
+			super(FollowingTicket.class, Arrays.asList(
+					FollowingTicketFieldDef.summary,
+					FollowingTicketFieldDef.project,
+					FollowingTicketFieldDef.assignee,
+					FollowingTicketFieldDef.createdDate));
 
 			this.projectFollowingTicketService = AppContext
 					.getSpringBean(ProjectFollowingTicketService.class);

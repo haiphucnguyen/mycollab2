@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.terminal.StreamResource;
 
 public abstract class ExportItemsStreamResource implements
@@ -41,14 +43,11 @@ public abstract class ExportItemsStreamResource implements
 	private static Logger log = LoggerFactory
 			.getLogger(ExportItemsStreamResource.class);
 
-	protected String[] visibleColumns;
-	protected String[] headerNames;
+	protected List<TableViewField> fields;
 	protected int outputForm;
 
-	public ExportItemsStreamResource(String[] visibleColumns,
-			String[] headerNames, int outputForm) {
-		this.visibleColumns = visibleColumns;
-		this.headerNames = headerNames;
+	public ExportItemsStreamResource(List<TableViewField> fields, int outputForm) {
+		this.fields = fields;
 		this.outputForm = outputForm;
 	}
 
@@ -59,10 +58,10 @@ public abstract class ExportItemsStreamResource implements
 		private S searchCriteria;
 		private Class<T> classType;
 
-		public AllItems(String[] visibleColumns, String[] headerNames,
-				int outputForm, ISearchableService searchService,
-				S searchCriteria, Class<T> classType) {
-			super(visibleColumns, headerNames, outputForm);
+		public AllItems(List<TableViewField> fields, int outputForm,
+				ISearchableService searchService, S searchCriteria,
+				Class<T> classType) {
+			super(fields, outputForm);
 			this.searchService = searchService;
 			this.searchCriteria = searchCriteria;
 			this.classType = classType;
@@ -91,14 +90,13 @@ public abstract class ExportItemsStreamResource implements
 						JasperReportBuilder reportBuilder = report();
 
 						// build columns of report
-						for (int i = 0; i < visibleColumns.length; i++) {
-							String visibleColumn = visibleColumns[i];
+						for (TableViewField field : fields) {
 
-							Field field = classType
-									.getDeclaredField(visibleColumn);
-							reportBuilder.addColumn(col.column(headerNames[i],
-									visibleColumn,
-									type.detectType(field.getType())));
+							Field fieldCls = classType.getDeclaredField(field
+									.getField());
+							reportBuilder.addColumn(col.column(field.getDesc(),
+									field.getField(),
+									type.detectType(fieldCls.getType())));
 						}
 
 						reportBuilder
@@ -188,9 +186,9 @@ public abstract class ExportItemsStreamResource implements
 		private Class<T> classType;
 		private List<T> data;
 
-		public ListData(String[] visibleColumns, String[] headerNames,
-				int outputForm, List<T> data, Class<T> classType) {
-			super(visibleColumns, headerNames, outputForm);
+		public ListData(List<TableViewField> fields, int outputForm,
+				List<T> data, Class<T> classType) {
+			super(fields, outputForm);
 			this.data = data;
 		}
 
@@ -216,18 +214,20 @@ public abstract class ExportItemsStreamResource implements
 						try {
 							JasperReportBuilder reportBuilder = report();
 
+							List<String> visibleColumns = new ArrayList<String>();
 							// build columns of report
-							for (int i = 0; i < visibleColumns.length; i++) {
-								String visibleColumn = visibleColumns[i];
+							for (TableViewField field : fields) {
 
-								Field field = classType
-										.getDeclaredField(visibleColumn);
+								Field fieldCls = classType
+										.getDeclaredField(field.getField());
 								reportBuilder.addColumn(col.column(
-										headerNames[i], visibleColumn,
-										type.detectType(field.getType())));
+										field.getDesc(), field.getField(),
+										type.detectType(fieldCls.getType())));
+								visibleColumns.add(field.getField());
 							}
 
-							DRDataSource ds = new DRDataSource(visibleColumns);
+							DRDataSource ds = new DRDataSource(visibleColumns
+									.toArray(new String[0]));
 							ds.add(data.toArray());
 							reportBuilder.setDataSource(ds);
 							if (outputForm == PDF_OUTPUT) {
