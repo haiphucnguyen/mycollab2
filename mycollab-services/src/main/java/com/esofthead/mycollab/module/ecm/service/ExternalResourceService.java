@@ -27,7 +27,7 @@ public interface ExternalResourceService extends IService {
 
 	void deleteResource(ExternalDrive drive, String path);
 
-	void download(ExternalDrive drive, String path);
+	InputStream download(ExternalDrive drive, String path);
 
 	void move(ExternalDrive drive, String fromPath, String toPath);
 }

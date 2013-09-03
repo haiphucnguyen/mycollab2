@@ -5,6 +5,7 @@ import java.io.File;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.FileResource;
@@ -30,6 +31,14 @@ public class StreamDownloadResourceFactory {
 				documentPath, isSearchAction), "out.zip",
 				AppContext.getApplication());
 
+	}
+
+	public static Resource getStreamDropboxResource(
+			com.esofthead.mycollab.module.ecm.domain.Resource res) {
+		String name = (res instanceof Folder) ? res.getName() + ".zip" : res
+				.getName();
+		return new StreamResource(new StreamFolderDropboxDownloadResource(res),
+				name, AppContext.getApplication());
 	}
 
 	public static Resource getImagePreviewResource(String documentPath) {

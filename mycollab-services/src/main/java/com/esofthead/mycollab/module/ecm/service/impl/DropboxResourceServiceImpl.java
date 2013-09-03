@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.ecm.service.impl;
 
 import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -19,6 +21,7 @@ import com.dropbox.core.DbxEntry.WithChildren;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWriteMode;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -246,11 +249,28 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 	}
 
 	@Override
-	public void download(ExternalDrive drive, String path) {
+	public InputStream download(ExternalDrive drive, final String path) {
 		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
 				null);
-		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
-		// client.getFile(path, "", target);
+		final DbxClient client = new DbxClient(requestConfig,
+				drive.getAccesstoken());
+		PipedInputStream in = new PipedInputStream();
+		try {
+			final PipedOutputStream out = new PipedOutputStream(in);
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						client.getFile(path, "", out);
+					} catch (Exception e) {
+						log.error("Error when get File from dropbox", e);
+					}
+				}
+			}).start();
+		} catch (Exception e) {
+			throw new MyCollabException(
+					"Error when get inputStream from dropbox file", e);
+		}
+		return in;
 	}
 
 	/**

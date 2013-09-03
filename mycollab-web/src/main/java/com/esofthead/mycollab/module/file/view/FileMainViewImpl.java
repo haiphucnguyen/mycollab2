@@ -927,14 +927,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						public void buttonClick(ClickEvent event) {
 							final com.vaadin.terminal.Resource downloadResource;
 							if (res instanceof Folder) {
-								downloadResource = StreamDownloadResourceFactory
-										.getStreamFolderResource(
-												new String[] { res.getPath() },
-												false);
+								if (res instanceof ExternalFolder) {
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamDropboxResource(res);
+								} else
+									downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
+											new String[] { res.getPath() },
+											false);
 							} else {
 								if (res instanceof ExternalContent) {
-									downloadResource = null;
-									externalResourceService.download(((ExternalContent) res).getExternalDrive(), res.getPath());
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamDropboxResource(res);
 								} else
 									downloadResource = StreamDownloadResourceFactory
 											.getStreamResource(res.getPath());
