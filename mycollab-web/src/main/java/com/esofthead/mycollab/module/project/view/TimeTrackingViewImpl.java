@@ -5,10 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.vaadin.hene.splitbutton.SplitButtonExt;
+
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -26,9 +29,9 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -51,6 +54,9 @@ public class TimeTrackingViewImpl extends AbstractView implements
 	private TimeTrackingTableDisplay tableItem;
 
 	private Label totalHoursLoggingLabel;
+	private SplitButtonExt exportButtonControl;
+
+	private ItemTimeLoggingSearchCriteria searchCriteria;
 
 	public TimeTrackingViewImpl() {
 		this.setSpacing(true);
@@ -98,7 +104,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
-		VerticalLayout controlBtns = new VerticalLayout();
+		HorizontalLayout controlBtns = new HorizontalLayout();
 		controlBtns.setMargin(true, false, true, false);
 		controlBtns.addComponent(backBtn);
 
@@ -135,23 +141,86 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 		dateSelectionLayout.addComponent(queryBtn);
 
-		HorizontalLayout hoursLoggingPanel = new HorizontalLayout();
-		hoursLoggingPanel.setSpacing(true);
-		hoursLoggingPanel.addComponent(new Label("Total Hours Logging:"));
-		totalHoursLoggingLabel = new Label("0 Hrs");
-		hoursLoggingPanel.addComponent(totalHoursLoggingLabel);
-		contentWrapper.addComponent(hoursLoggingPanel);
+		HorizontalLayout controlsPanel = new HorizontalLayout();
+		controlsPanel.setWidth("100%");
+		controlsPanel.setSpacing(true);
+		totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs");
+		controlsPanel.addComponent(totalHoursLoggingLabel);
+		controlsPanel.setExpandRatio(totalHoursLoggingLabel, 1.0f);
+
+		Button exportBtn = new Button("Export", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl.setIcon(MyCollabResource
+				.newResource("icons/16/export.png"));
+
+		VerticalLayout popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setWidth("150px");
+		exportButtonControl.addComponent(popupButtonsControl);
+
+		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				StreamResource res = new StreamResource(
+						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+								tableItem.getDefaultSelectedColumns(),
+								ExportItemsStreamResource.PDF_OUTPUT,
+								AppContext
+										.getSpringBean(ItemTimeLoggingService.class),
+								searchCriteria, SimpleItemTimeLogging.class),
+						"export.pdf", TimeTrackingViewImpl.this
+								.getApplication());
+				TimeTrackingViewImpl.this.getWindow().open(res, "_blank");
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		exportPdfBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/pdf.png"));
+		exportPdfBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportPdfBtn);
+
+		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				StreamResource res = new StreamResource(
+						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+								tableItem.getDefaultSelectedColumns(),
+								ExportItemsStreamResource.EXCEL_OUTPUT,
+								AppContext
+										.getSpringBean(ItemTimeLoggingService.class),
+								searchCriteria, SimpleItemTimeLogging.class),
+						"export.xlsx", TimeTrackingViewImpl.this
+								.getApplication());
+				TimeTrackingViewImpl.this.getWindow().open(res, "_blank");
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		exportExcelBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/excel.png"));
+		exportExcelBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportExcelBtn);
+
+		controlsPanel.addComponent(exportButtonControl);
+		contentWrapper.addComponent(controlsPanel);
 
 		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
-				new TableViewField("Summary", "summary",
-						UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
-						"User", "logUserFullName",
-						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"Project", "projectName",
-						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"Created Time", "createdtime",
-						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
-						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH)));
+				TimeTrackingFieldDef.summary, TimeTrackingFieldDef.logUser,
+				TimeTrackingFieldDef.project, TimeTrackingFieldDef.createdTime,
+				TimeTrackingFieldDef.timeLogValue));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -216,7 +285,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 	}
 
 	private void searchTimeReporting(Date from, Date to) {
-		final ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+		searchCriteria = new ItemTimeLoggingSearchCriteria();
 		searchCriteria.setLogUsers(new SetSearchField<String>(SearchField.AND,
 				new String[] { AppContext.getUsername() }));
 		searchCriteria.setRangeDate(new RangeDateSearchField(from, to));
@@ -224,11 +293,13 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 		ItemTimeLoggingService itemTimeLoggingService = AppContext
 				.getSpringBean(ItemTimeLoggingService.class);
-		Double totalHoursLogging = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
+		Double totalHoursLogging = itemTimeLoggingService
+				.getTotalHoursByCriteria(searchCriteria);
 		if (totalHoursLogging == null) {
-			totalHoursLoggingLabel.setValue("0 Hrs");
+			totalHoursLoggingLabel.setValue("Total hours logging: 0 Hrs");
 		} else {
-			totalHoursLoggingLabel.setValue(totalHoursLogging + " Hrs"); 
+			totalHoursLoggingLabel.setValue("Total hours logging: "
+					+ totalHoursLogging + " Hrs");
 		}
 	}
 
