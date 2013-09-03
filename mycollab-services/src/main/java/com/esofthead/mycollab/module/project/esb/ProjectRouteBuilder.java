@@ -28,7 +28,7 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 						.getBean(DeleteProjectMemberListener.class),
 						"projectMemberRemoved(String,int, int, int)");
 
-		// Configure project member removed
+		// Configure send project member invitation
 		from(ProjectEndPoints.PROJECT_SEND_INVITATION_USER).setExchangePattern(
 				ExchangePattern.InOnly)
 				.to("seda:projectMemberInvitation.queue");

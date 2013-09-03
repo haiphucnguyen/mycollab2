@@ -26,7 +26,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.StreamResource;
@@ -137,6 +136,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 						"export.pdf", FollowingTicketViewImpl.this
 								.getApplication());
 				FollowingTicketViewImpl.this.getWindow().open(res, "_blank");
+				exportButtonControl.setPopupVisible(false);
 
 			}
 		});
@@ -150,7 +150,20 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
+				StreamResource res = new StreamResource(
+						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
+								Arrays.asList(FollowingTicketFieldDef.summary,
+										FollowingTicketFieldDef.project,
+										FollowingTicketFieldDef.assignee,
+										FollowingTicketFieldDef.createdDate),
+								ExportItemsStreamResource.EXCEL_OUTPUT,
+								AppContext
+										.getSpringBean(ProjectFollowingTicketService.class),
+								searchCriteria, FollowingTicket.class),
+						"export.xlsx", FollowingTicketViewImpl.this
+								.getApplication());
+				FollowingTicketViewImpl.this.getWindow().open(res, "_blank");
+				exportButtonControl.setPopupVisible(false);
 
 			}
 		});

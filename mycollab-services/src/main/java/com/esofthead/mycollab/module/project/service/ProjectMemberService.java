@@ -43,6 +43,6 @@ public interface ProjectMemberService extends
 	List<SimpleUser> getActiveUsersInProject(int projectId,
 			@CacheKey Integer sAccountId);
 
-	void inviteUsersOutsideAccount(String[] email, int projectId,
+	void inviteProjectMember(String[] email, int projectId,
 			int projectRoleId, String inviteUser, int sAccountId);
 }

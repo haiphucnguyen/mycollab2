@@ -339,7 +339,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					int roleId = (Integer) projectRoleComboBox.getValue();
 					ProjectMemberService projectMemberService = AppContext
 							.getSpringBean(ProjectMemberService.class);
-					projectMemberService.inviteUsersOutsideAccount(lstEmailArr,
+					projectMemberService.inviteProjectMember(lstEmailArr,
 							CurrentProjectVariables.getProjectId(), roleId,
 							AppContext.getUsername(), AppContext.getAccountId());
 

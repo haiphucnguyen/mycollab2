@@ -27,6 +27,7 @@ import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.reporting.Templates;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.terminal.StreamResource;
 
@@ -87,7 +88,8 @@ public abstract class ExportItemsStreamResource implements
 				@Override
 				public void run() {
 					try {
-						JasperReportBuilder reportBuilder = report();
+						JasperReportBuilder reportBuilder = report()
+								.setColumnTitleStyle(Templates.columnTitleStyle);
 
 						// build columns of report
 						for (TableViewField field : fields) {
