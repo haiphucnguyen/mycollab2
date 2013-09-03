@@ -17,6 +17,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,32 +28,41 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.vaadin.terminal.StreamResource;
 
-public abstract class ExportPdfStreamResource implements
+public abstract class ExportItemsStreamResource implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
 
+	public static int CSV_OUTPUT = 1;
+
+	public static int PDF_OUTPUT = 2;
+
+	public static int EXCEL_OUTPUT = 3;
+
 	private static Logger log = LoggerFactory
-			.getLogger(ExportPdfStreamResource.class);
+			.getLogger(ExportItemsStreamResource.class);
 
 	protected String[] visibleColumns;
 	protected String[] headerNames;
+	protected int outputForm;
 
-	public ExportPdfStreamResource(String[] visibleColumns, String[] headerNames) {
+	public ExportItemsStreamResource(String[] visibleColumns,
+			String[] headerNames, int outputForm) {
 		this.visibleColumns = visibleColumns;
 		this.headerNames = headerNames;
+		this.outputForm = outputForm;
 	}
 
 	public static class AllItems<S extends SearchCriteria, T> extends
-			ExportPdfStreamResource {
+			ExportItemsStreamResource {
 
 		private ISearchableService<S> searchService;
 		private S searchCriteria;
 		private Class<T> classType;
 
 		public AllItems(String[] visibleColumns, String[] headerNames,
-				ISearchableService searchService, S searchCriteria,
-				Class<T> classType) {
-			super(visibleColumns, headerNames);
+				int outputForm, ISearchableService searchService,
+				S searchCriteria, Class<T> classType) {
+			super(visibleColumns, headerNames, outputForm);
 			this.searchService = searchService;
 			this.searchCriteria = searchCriteria;
 			this.classType = classType;
@@ -87,13 +97,24 @@ public abstract class ExportPdfStreamResource implements
 							Field field = classType
 									.getDeclaredField(visibleColumn);
 							reportBuilder.addColumn(col.column(headerNames[i],
-									visibleColumn, type.stringType()));
+									visibleColumn,
+									type.detectType(field.getType())));
 						}
 
-						// DRDataSource ds = new DRDataSource("");
 						reportBuilder
 								.setDataSource(new LazyLoadingDataSource());
-						reportBuilder.toPdf(outStream);
+
+						if (outputForm == PDF_OUTPUT) {
+							reportBuilder.toPdf(outStream);
+						} else if (outputForm == CSV_OUTPUT) {
+							reportBuilder.toCsv(outStream);
+						} else if (outputForm == EXCEL_OUTPUT) {
+							reportBuilder.toXlsx(outStream);
+						} else {
+							throw new IllegalArgumentException(
+									"Do not support output type " + outputForm);
+						}
+
 					} catch (Exception e) {
 						log.error("Exception while generating report ", e);
 						throw new MyCollabException(e);
@@ -109,6 +130,7 @@ public abstract class ExportPdfStreamResource implements
 			private int currentIndex = 0;
 			private int currentPage = 0;
 			private List currentData;
+			private Object currentItem;
 
 			private int totalItems;
 
@@ -123,36 +145,52 @@ public abstract class ExportPdfStreamResource implements
 			@Override
 			public boolean next() throws JRException {
 				boolean result = (currentIndex < totalItems);
-				currentIndex = currentIndex + 1;
+				if (result) {
+					if (currentIndex == (currentPage + 1) * ITEMS_PER_PAGE) {
+						currentPage = currentPage + 1;
+						SearchRequest searchRequest = new SearchRequest(
+								searchCriteria, currentPage, ITEMS_PER_PAGE);
+						currentData = searchService
+								.findPagableListByCriteria(searchRequest);
+						log.debug("Current data {}", currentData.size());
+					}
 
-				if (currentIndex == (currentPage + 1) * ITEMS_PER_PAGE) {
-					currentPage = currentPage + 1;
-					SearchRequest searchRequest = new SearchRequest(
-							searchCriteria, currentPage, ITEMS_PER_PAGE);
-					currentData = searchService
-							.findPagableListByCriteria(searchRequest);
+					log.debug("Current index {} - {} - {} - {}", new Object[] {
+							currentIndex, currentPage, currentData.size(),
+							totalItems });
+					if (currentIndex % ITEMS_PER_PAGE < currentData.size()) {
+						currentItem = currentData.get(currentIndex
+								% ITEMS_PER_PAGE);
+					}
+
+					currentIndex = currentIndex + 1;
 				}
+
 				return result;
 			}
 
 			@Override
 			public Object getFieldValue(JRField jrField) throws JRException {
-				// TODO Auto-generated method stub
-				return "A";
+				try {
+					String fieldName = jrField.getName();
+					return PropertyUtils.getProperty(currentItem, fieldName);
+				} catch (Exception e) {
+					throw new JRException(e);
+				}
 			}
 
 		}
 
 	}
 
-	public static class ListData<T> extends ExportPdfStreamResource {
+	public static class ListData<T> extends ExportItemsStreamResource {
 
 		private Class<T> classType;
 		private List<T> data;
 
 		public ListData(String[] visibleColumns, String[] headerNames,
-				List<T> data, Class<T> classType) {
-			super(visibleColumns, headerNames);
+				int outputForm, List<T> data, Class<T> classType) {
+			super(visibleColumns, headerNames, outputForm);
 			this.data = data;
 		}
 
@@ -182,12 +220,27 @@ public abstract class ExportPdfStreamResource implements
 							for (int i = 0; i < visibleColumns.length; i++) {
 								String visibleColumn = visibleColumns[i];
 
-								Field field = classType.getField(visibleColumn);
+								Field field = classType
+										.getDeclaredField(visibleColumn);
 								reportBuilder.addColumn(col.column(
-										visibleColumn, headerNames[i],
-										type.stringType()));
+										headerNames[i], visibleColumn,
+										type.detectType(field.getType())));
 							}
-							reportBuilder.toPdf(outStream);
+
+							DRDataSource ds = new DRDataSource(visibleColumns);
+							ds.add(data.toArray());
+							reportBuilder.setDataSource(ds);
+							if (outputForm == PDF_OUTPUT) {
+								reportBuilder.toPdf(outStream);
+							} else if (outputForm == CSV_OUTPUT) {
+								reportBuilder.toCsv(outStream);
+							} else if (outputForm == EXCEL_OUTPUT) {
+								reportBuilder.toXlsx(outStream);
+							} else {
+								throw new IllegalArgumentException(
+										"Do not support output type "
+												+ outputForm);
+							}
 						} catch (Exception e) {
 							log.error("Error while exporting pdf", e);
 						}

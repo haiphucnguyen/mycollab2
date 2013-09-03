@@ -9,7 +9,7 @@ import org.vaadin.hene.splitbutton.SplitButtonExt;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.file.resource.ExportPdfStreamResource;
+import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectFollowingTicketService;
@@ -125,9 +125,12 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
-						new ExportPdfStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								new String[] {"status"},
-								new String[] {"Status"},
+						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
+								new String[] { "summary", "projectName",
+										"assignUser", "monitorDate" },
+								new String[] { "Summary", "Project",
+										"Assignee", "Created Date" },
+								ExportItemsStreamResource.PDF_OUTPUT,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),
 								searchCriteria, FollowingTicket.class),
