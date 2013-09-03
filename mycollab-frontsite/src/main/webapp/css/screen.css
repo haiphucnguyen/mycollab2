@@ -1376,7 +1376,7 @@ a.nivo-prevNav {
 
 /* The Nivo Slider styles */
 #slider {
-	height: 345px!important;
+	height: 345px;
 }
 
 .nivoSlider {
@@ -1637,9 +1637,8 @@ a.nivo-prevNav {
 }
 
 .tour-mid-left {
-	width: 240px;
+	width: 230px;
 	float: left;
-	margin-right: 20px;
 	margin-bottom: 20px;
 }
 
@@ -1653,73 +1652,146 @@ a.nivo-prevNav {
 }
 
 .tour-mid-left ul li {
-	padding: 5px 0px 5px 45px;
+	padding: 5px 0px 5px 15px;
+	margin-bottom: 10px;
 	font-size: 15px;
-	background: url("../images/tour_icon_design.png") no-repeat 20px 7px;
-	border-left: solid 1px #ababab;
-	border-right: solid 1px #ababab;
-	border-bottom: solid 1px #ababab;
 	font-family: 'verdana';
-	background-color: #FFF;
+	color: #404040;
 }
 
 .tour-mid-left ul li:hover {
 	color: #FFF;
-	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #F78D13;
+	background: url("../images/tour_bg_menu.png") no-repeat top left transparent;
 	cursor: pointer;
 }
 
-.item-active {
+.tour-mid-left ul li:hover a {
 	color: #FFF;
-	background: url("../images/tour_icon_design.png") no-repeat 20px -33px #F78D13 !important;
+}
+
+.item-active {
+	color: #FFF !important;
+	background: url("../images/tour_bg_menu.png") no-repeat top left transparent !important;
 	cursor: pointer;
+}
+
+.item-active a {
+	color: #FFF;
 }
 
 .tour-mid-right {
 	float: right;
 	width: 840px;
+	background-color: #f9f9f9;
+	padding-left: 30px;
+	margin-bottom: 20px;
 }
 
 .tour-title {
-	font-size: 16px;
+	font-size: 32px;
 	font-weight: normal;
-	color: #228bc9;
-	padding-bottom: 5px;
+	color: #404040;
+	padding-bottom: 25px;
 	font-family: 'Monda';
+	padding-top: 30px;
 }
 
-.content-1 img {
+.tour-two-coll {
+	margin: 10px 0px 10px 0px;
+	display: block;
+}
+
+.two-coll-1 {
 	float: left;
-	margin: 0px 10px 5px 0px;
 }
 
-.content-1 p {
-	font-size: 14px;
-	padding-bottom: 12px;
-	text-align: justify;
+.nivo-caption {
+	display: none!important;
+}
+
+.tour-text {
+	display: inline-block;
+	clear: both;
+	font-size: 13px;
+}
+
+.tour-slide-1 {
+	height: 250px;
+	position: inherit;
+	display: block;
+}
+
+.tour-slide-1 #slider {
+	height: 250px;
+}
+
+.two-coll-2 {
+	float: left;
+}
+
+.tour-list {
+	margin-left: 60px;
+	list-style-image: url("../images/tour_list_icon_2.png");
+}
+
+.tour-list li {
+	padding: 3px;
+	font-size: 13px;
 	font-family: 'verdana';
 }
 
-.intro-block {
-	border-bottom: solid 1px #ababab;
-	margin-bottom: 20px;
-	clear: both;
+.tour-slide-1 .nivo-controlNav {
+	display: none!important;
 }
 
-.intro-block-bottom {
-	margin-bottom: 20px;
+.tour-items {
+	padding-left: 30px;
 }
 
-.block-2-1 {
-	width: 400px;
+.tour-control {
+	margin-bottom: 20px;
+	margin-top: 40px;
+	height: 55px;
+	display: block;
+}
+
+.tour-control a {
+	text-decoration: underline;
+	color: #585858;
+}
+
+.tour-control-disable {
+	opacity: 0.3;
+}
+
+.tour-control-disable:hover {
+	opacity: 0.3 !important;
+	cursor: default !important;
+}
+
+.tour-control a:hover {
+	cursor: pointer;
+	color: #585858;
+	opacity: 0.7;
+}
+
+.tour-pre {
+	background: url("../images/tour_left.png") no-repeat left center;
+	padding-left: 60px;
+	height: 52px;
+	display: inline-block;
+	line-height: 52px;
 	float: left;
-	margin-right: 30px;
 }
 
-.block-2-2 {
+.tour-next {
+	background: url("../images/tour_right.png") no-repeat right center;
+	padding-right: 60px;
+	height: 52px;
+	display: inline-block;
+	line-height: 52px;
 	float: right;
-	width: 400px;
-	padding-bottom: 10px; 
+	margin-right: 30px;
 }
 
 .free-trial {

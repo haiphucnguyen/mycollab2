@@ -1,8 +1,6 @@
 $(document).ready(function(){
 	$('.free-trial-cnt-2').hide();
-	$('.tour-items').hide();
-	$('.content-1').show(0);
-	$('.items-1').addClass('item-active');
+	//$('.items-1').addClass('item-active');
 	
 	// Redirect to pricing page
 	$('.free-trial').click(function(){
@@ -21,6 +19,17 @@ $(document).ready(function(){
 			TourSlide(items[1]);
 		}
 	})
+});
+
+$(window).load(function() {
+	$('#slider').nivoSlider({
+        pauseOnHover: false,
+        pauseTime: 3000,
+        onImageLoad: function(img) {
+        },
+        onImageChange: function(img) {
+        }
+      });
 });
 
 //Fixed scroll
@@ -42,12 +51,3 @@ $(window).scroll(function(){
 		$menu_left.css({'position': 'relative', 'top': 'auto'});
 	}
 });
-
-// Slide content
-function TourSlide($obj){
-	$('.tour-items').hide("slide", { direction: "left" }, 700);
-	setTimeout(function(){
-		$('.content-' + $obj).show("slide", { direction: "right" }, 700);
-	}, 500);	
-	
-}

@@ -24,6 +24,12 @@ import com.esofthead.mycollab.pages.SignInPage;
 import com.esofthead.mycollab.pages.SignUpPage;
 import com.esofthead.mycollab.pages.TermOfServicePage;
 import com.esofthead.mycollab.pages.TourPage;
+import com.esofthead.mycollab.pages.tour.CRMPage;
+import com.esofthead.mycollab.pages.tour.CollaborationPage;
+import com.esofthead.mycollab.pages.tour.DocumentManagementPage;
+import com.esofthead.mycollab.pages.tour.MyCollabCompetionsPage;
+import com.esofthead.mycollab.pages.tour.OnlineOfficeAppsPage;
+import com.esofthead.mycollab.pages.tour.ProjectManagementPage;
 
 /**
  * Application object for your web application. If you want to run this
@@ -54,6 +60,12 @@ public class WicketApplication extends WebApplication {
 		this.getMarkupSettings().setStripWicketTags(true);
 
 		this.mountPage("/tour", TourPage.class);
+		this.mountPage("/tour/collaboration", CollaborationPage.class);
+		this.mountPage("/tour/crm", CRMPage.class);
+		this.mountPage("/tour/document_management", DocumentManagementPage.class);
+		this.mountPage("/tour/mycollab_competion", MyCollabCompetionsPage.class);
+		this.mountPage("/tour/online_office_app", OnlineOfficeAppsPage.class);
+		this.mountPage("/tour/project_management", ProjectManagementPage.class);
 		this.mountPage("/pricing", PricingPage.class);
 		this.mountPage("/privacy", PrivacyPage.class);
 		this.mountPage("/signup", SignUpPage.class);
