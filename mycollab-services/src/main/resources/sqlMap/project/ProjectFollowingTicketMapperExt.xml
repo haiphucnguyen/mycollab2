@@ -54,7 +54,7 @@
         resultMap="FollowingTicketResult">
         (
         <include
-            refid="selectFollowingTicketOfTask" />
+            refid="com.esofthead.mycollab.module.project.dao.ProjectFollowingTicketMapperExt.selectFollowingTicketOfTask" />
         <if test="searchCriteria != null">
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
                 1=1
@@ -67,7 +67,7 @@
 
         (
         <include
-            refid="selectFollowingTicketOfBug" />
+            refid="com.esofthead.mycollab.module.project.dao.ProjectFollowingTicketMapperExt.selectFollowingTicketOfBug" />
         <if test="searchCriteria != null">
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
                 1=1

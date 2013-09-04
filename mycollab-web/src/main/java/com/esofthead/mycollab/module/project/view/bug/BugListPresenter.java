@@ -2,9 +2,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.Collection;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.file.resource.ExportExcelStreamResource;
 import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -12,7 +9,6 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -21,11 +17,6 @@ import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
@@ -91,27 +82,6 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 						checkWhetherEnableTableActionControl();
 					}
 				});
-		view.getExportBtn().addListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				String title = "Bugs of Project "
-						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-								.getProject().getName() != null) ? CurrentProjectVariables
-								.getProject().getName() : "");
-				BugSearchCriteria searchBugSearchCriteria = new BugSearchCriteria();
-				searchBugSearchCriteria.setProjectId(new NumberSearchField(
-						SearchField.AND, CurrentProjectVariables.getProject()
-								.getId()));
-				Resource res = new StreamResource(
-						new ExportExcelStreamResource<BugSearchCriteria>(title,
-								EXPORT_COLUMNS, AppContext
-										.getSpringBean(BugService.class),
-								searchBugSearchCriteria), "bug_list.xls", view
-								.getApplication());
-				view.getWidget().getWindow().open(res, "_blank");
-			}
-		});
 	}
 
 	private void selectAllItemsInCurrentPage() {
