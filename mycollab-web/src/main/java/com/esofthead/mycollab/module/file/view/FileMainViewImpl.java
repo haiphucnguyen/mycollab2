@@ -961,7 +961,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						@Override
 						public void buttonClick(ClickEvent event) {
 							MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-									res, FileMainViewImpl.this.resourceService);
+									res,
+									FileMainViewImpl.this.resourceService,
+									FileMainViewImpl.this.externalResourceService,
+									FileMainViewImpl.this.externalDriveService);
 							FileMainViewImpl.this.getWindow().addWindow(
 									moveResourceWindow);
 						}
@@ -1075,13 +1078,19 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		private static final long serialVersionUID = 1L;
 
 		public MoveResourceWindow(Resource resource,
-				ResourceService resourceService) {
-			super(resource, resourceService);
+				ResourceService resourceService,
+				ExternalResourceService externalResourceService,
+				ExternalDriveService exterDriveService) {
+			super(resource, resourceService, externalResourceService,
+					exterDriveService);
 		}
 
 		public MoveResourceWindow(List<Resource> lstResource,
-				ResourceService resourceService) {
-			super(lstResource, resourceService);
+				ResourceService resourceService,
+				ExternalResourceService externalResourceService,
+				ExternalDriveService exterDriveService) {
+			super(lstResource, resourceService, externalResourceService,
+					exterDriveService);
 		}
 
 		@Override
@@ -1127,6 +1136,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			this.baseFolder = new Folder();
 			baseFolder.setPath(FileMainViewImpl.this.rootPath);
+			this.rootPath = FileMainViewImpl.this.rootPath;
 			this.folderTree
 					.addItem(new Object[] {
 							FileMainViewImpl.this.rootFolderName, "" },
@@ -1715,7 +1725,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							if (selectedResourcesList.size() > 0) {
 								MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
 										selectedResourcesList,
-										FileMainViewImpl.this.resourceService);
+										FileMainViewImpl.this.resourceService,
+										FileMainViewImpl.this.externalResourceService,
+										FileMainViewImpl.this.externalDriveService);
 								FileMainViewImpl.this.getWindow().addWindow(
 										moveResourceWindow);
 							} else {

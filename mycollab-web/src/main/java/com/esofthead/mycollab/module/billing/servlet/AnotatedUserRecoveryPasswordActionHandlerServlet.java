@@ -30,7 +30,6 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 		String username = request.getParameter("username");
 
 		String password = request.getParameter("password");
-		// Integer roleId = Integer.parseInt(request.getParameter("roleId"));
 
 		if (password.length() < 8) {
 			error = true;
@@ -47,7 +46,6 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 		SimpleUser simpleUser = new SimpleUser();
 		simpleUser.setPassword(PasswordEncryptHelper
 				.encryptSaltPassword(password));
-		// simpleUser.setRoleid(roleId);
 		simpleUser.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 		simpleUser.setUsername(username);
 
@@ -55,18 +53,12 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 			UserService userService = AppContext
 					.getSpringBean(UserService.class);
 			userService.updateWithSession(simpleUser, username);
-			// response.sendRedirect(request.getContextPath() + "/");
 		} catch (Exception e) {
-			error = true;
 			errMsg = "Error in while update your informations. We so sorry for this inconvenience";
-		}
-		if (error) {
 			PrintWriter out = response.getWriter();
 			out.print(errMsg);
 			return;
 		}
-		PrintWriter out = response.getWriter();
-		out.print(errMsg);
 	}
 
 }

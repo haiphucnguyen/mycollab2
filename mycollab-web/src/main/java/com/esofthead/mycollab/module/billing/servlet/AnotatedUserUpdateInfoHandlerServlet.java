@@ -18,7 +18,6 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
-import com.esofthead.mycollab.web.AppContext;
 
 @Component("userUpdateInfoHandlerServlet")
 public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler {
@@ -36,7 +35,6 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 		int sAccountId = Integer.parseInt(request.getParameter("accountId"));
 
 		String password = request.getParameter("password");
-		// Integer roleId = Integer.parseInt(request.getParameter("roleId"));
 
 		if (password.length() < 8) {
 			error = true;
@@ -53,7 +51,6 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 		SimpleUser simpleUser = new SimpleUser();
 		simpleUser.setPassword(PasswordEncryptHelper
 				.encryptSaltPassword(password));
-		// simpleUser.setRoleid(roleId);
 		simpleUser.setAccountId(sAccountId);
 		simpleUser.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 		simpleUser.setUsername(username);
@@ -61,18 +58,12 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 		try {
 			UserService userService = ApplicationContextUtil
 					.getBean(UserService.class);
-			userService.updateUserAccount(simpleUser, sAccountId);
 			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {
-			error = true;
 			errMsg = "Error in while update your informations. We so sorry for this inconvenience";
-		}
-		if (error) {
 			PrintWriter out = response.getWriter();
 			out.print(errMsg);
 			return;
 		}
-		PrintWriter out = response.getWriter();
-		out.print(errMsg);
 	}
 }

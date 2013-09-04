@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.module.file.view.components;
 
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -16,8 +19,13 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
+import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
+import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
+import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
@@ -1091,26 +1099,36 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		protected Folder baseFolder;
 		private Resource resourceEditting;
 		private final ResourceService resourceService;
+		private final ExternalResourceService externalResourceService;
+		private final ExternalDriveService externalDriveService;
 		protected List<Resource> lstResEditting;
 
 		public AbstractMoveWindow(Resource resource,
-				ResourceService resourceService) {
+				ResourceService resourceService,
+				ExternalResourceService externalResourceService,
+				ExternalDriveService externalDriveService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
 			this.resourceEditting = resource;
 			this.resourceService = resourceService;
+			this.externalResourceService = externalResourceService;
+			this.externalDriveService = externalDriveService;
 
 			constructBody();
 		}
 
 		public AbstractMoveWindow(List<Resource> lstRes,
-				ResourceService resourceService) {
+				ResourceService resourceService,
+				ExternalResourceService externalResourceService,
+				ExternalDriveService externalDriveService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
 			this.lstResEditting = lstRes;
 			this.resourceService = resourceService;
+			this.externalResourceService = externalResourceService;
+			this.externalDriveService = externalDriveService;
 
 			constructBody();
 		}
@@ -1145,32 +1163,103 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				@Override
 				public void nodeExpand(final ExpandEvent event) {
 					final Folder expandFolder = (Folder) event.getItemId();
-					final List<Folder> subFolders = AbstractMoveWindow.this.resourceService
-							.getSubFolders(expandFolder.getPath());
+					// load externalResource if currentExpandFolder is
+					// rootFolder
+					if (rootPath.equals(expandFolder.getPath())
+							&& externalResourceService != null) {
+						List<ExternalDrive> externalDrives = externalDriveService
+								.getExternalDrivesOfUser(AppContext
+										.getUsername());
+						for (ExternalDrive externalDrive : externalDrives) {
+							ExternalFolder externalMapFolder = new ExternalFolder();
+							externalMapFolder.setStorageName(externalDrive
+									.getStoragename());
+							externalMapFolder.setExternalDrive(externalDrive);
+							externalMapFolder.setPath("/");
+							externalMapFolder.setName(externalDrive
+									.getFoldername());
 
-					AbstractMoveWindow.this.folderTree.setItemIcon(
-							expandFolder,
-							MyCollabResource
-									.newResource("icons/16/ecm/folder_open.png"));
+							Calendar cal = GregorianCalendar.getInstance();
+							cal.setTime(externalDrive.getCreatedtime());
 
-					if (subFolders != null) {
-						for (final Folder subFolder : subFolders) {
-							expandFolder.addChild(subFolder);
+							externalMapFolder.setCreated(cal);
+							expandFolder.addChild(externalMapFolder);
+
 							AbstractMoveWindow.this.folderTree.addItem(
 									new Object[] {
-											subFolder.getName(),
-											AppContext.formatDateTime(subFolder
-													.getCreated().getTime()) },
+											externalMapFolder.getName(),
+											AppContext
+													.formatDateTime(externalMapFolder
+															.getCreated()
+															.getTime()) },
+									externalMapFolder);
+
+							AbstractMoveWindow.this.folderTree.setItemIcon(
+									externalMapFolder,
+									MyCollabResource
+											.newResource("icons/16/ecm/dropbox.png"));
+							AbstractMoveWindow.this.folderTree.setItemCaption(
+									externalMapFolder,
+									externalMapFolder.getName());
+							AbstractMoveWindow.this.folderTree.setParent(
+									externalMapFolder, expandFolder);
+						}
+					}
+					if (expandFolder instanceof ExternalFolder) {
+						List<ExternalFolder> subFolders = externalResourceService
+								.getSubFolders(((ExternalFolder) expandFolder)
+										.getExternalDrive(), expandFolder
+										.getPath());
+						for (final Folder subFolder : subFolders) {
+							expandFolder.addChild(subFolder);
+							Date dateTime = ((ExternalFolder) subFolder)
+									.getExternalDrive().getCreatedtime();
+
+							AbstractMoveWindow.this.folderTree.addItem(
+									new Object[] { subFolder.getName(),
+											AppContext.formatDateTime(dateTime) },
 									subFolder);
 
 							AbstractMoveWindow.this.folderTree.setItemIcon(
 									subFolder,
 									MyCollabResource
-											.newResource("icons/16/ecm/folder_close.png"));
+											.newResource("icons/16/ecm/dropbox_subfolder.png"));
 							AbstractMoveWindow.this.folderTree.setItemCaption(
 									subFolder, subFolder.getName());
 							AbstractMoveWindow.this.folderTree.setParent(
 									subFolder, expandFolder);
+						}
+					} else {
+						final List<Folder> subFolders = AbstractMoveWindow.this.resourceService
+								.getSubFolders(expandFolder.getPath());
+
+						AbstractMoveWindow.this.folderTree.setItemIcon(
+								expandFolder,
+								MyCollabResource
+										.newResource("icons/16/ecm/folder_open.png"));
+
+						if (subFolders != null) {
+							for (final Folder subFolder : subFolders) {
+								expandFolder.addChild(subFolder);
+								AbstractMoveWindow.this.folderTree.addItem(
+										new Object[] {
+												subFolder.getName(),
+												AppContext
+														.formatDateTime(subFolder
+																.getCreated()
+																.getTime()) },
+										subFolder);
+
+								AbstractMoveWindow.this.folderTree.setItemIcon(
+										subFolder,
+										MyCollabResource
+												.newResource("icons/16/ecm/folder_close.png"));
+								AbstractMoveWindow.this.folderTree
+										.setItemCaption(subFolder,
+												subFolder.getName());
+								AbstractMoveWindow.this.folderTree.setParent(
+										subFolder, expandFolder);
+							}
 						}
 					}
 				}
@@ -1182,17 +1271,40 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				@Override
 				public void nodeCollapse(final CollapseEvent event) {
 					final Folder collapseFolder = (Folder) event.getItemId();
-					AbstractMoveWindow.this.folderTree.setItemIcon(
-							collapseFolder,
-							MyCollabResource
-									.newResource("icons/16/ecm/folder_close.png"));
-					final List<Folder> childs = collapseFolder.getChilds();
-					for (final Folder subFolder : childs) {
-						AbstractMoveWindow.this.folderTree
-								.removeItem(subFolder);
+					if (collapseFolder instanceof ExternalFolder) {
+						if (collapseFolder.getPath().equals("/"))
+							AbstractMoveWindow.this.folderTree.setItemIcon(
+									collapseFolder,
+									MyCollabResource
+											.newResource("icons/16/ecm/dropbox.png"));
+						else
+							AbstractMoveWindow.this.folderTree.setItemIcon(
+									collapseFolder,
+									MyCollabResource
+											.newResource("icons/16/ecm/dropbox_subfolder.png"));
+					} else {
+						AbstractMoveWindow.this.folderTree.setItemIcon(
+								collapseFolder,
+								MyCollabResource
+										.newResource("icons/16/ecm/folder_close.png"));
 					}
+					for (Folder folder : collapseFolder.getChilds()) {
+						recursiveRemoveSubItem(folder);
+					}
+				}
 
-					childs.clear();
+				private void recursiveRemoveSubItem(Folder collapseFolder) {
+					List<Folder> childs = collapseFolder.getChilds();
+					if (childs.size() > 0) {
+						for (final Folder subFolder : childs) {
+							recursiveRemoveSubItem(subFolder);
+						}
+						AbstractMoveWindow.this.folderTree
+								.removeItem(collapseFolder);
+					} else {
+						AbstractMoveWindow.this.folderTree
+								.removeItem(collapseFolder);
+					}
 				}
 			});
 
@@ -1219,16 +1331,29 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					if (resourceEditting != null) {
 						try {
-							AbstractMoveWindow.this.resourceService
-									.moveResource(
-											AbstractMoveWindow.this.resourceEditting
-													.getPath(),
-											AbstractMoveWindow.this.baseFolder
-													.getPath(), AppContext
-													.getUsername());
-							AbstractMoveWindow.this.close();
-							displayAfterMoveSuccess(
-									AbstractMoveWindow.this.baseFolder, false);
+							if (resourceEditting instanceof ExternalFolder
+									|| resourceEditting instanceof ExternalContent) {
+								ExternalDrive drive = (resourceEditting instanceof ExternalFolder) ? ((ExternalFolder) resourceEditting)
+										.getExternalDrive()
+										: ((ExternalContent) resourceEditting)
+												.getExternalDrive();
+								AbstractMoveWindow.this.externalResourceService
+										.move(drive,
+												resourceEditting.getPath(),
+												baseFolder.getPath());
+							} else {
+								AbstractMoveWindow.this.resourceService
+										.moveResource(
+												AbstractMoveWindow.this.resourceEditting
+														.getPath(),
+												AbstractMoveWindow.this.baseFolder
+														.getPath(), AppContext
+														.getUsername());
+								AbstractMoveWindow.this.close();
+								displayAfterMoveSuccess(
+										AbstractMoveWindow.this.baseFolder,
+										false);
+							}
 							AbstractMoveWindow.this.getWindow()
 									.showNotification(
 											"Move asset(s) successfully.");
@@ -1241,11 +1366,22 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						boolean checkingFail = false;
 						for (Resource res : lstResEditting) {
 							try {
-								AbstractMoveWindow.this.resourceService.moveResource(
-										res.getPath(),
-										AbstractMoveWindow.this.baseFolder
-												.getPath(), AppContext
-												.getUsername());
+								if (res instanceof ExternalFolder
+										|| res instanceof ExternalContent) {
+									ExternalDrive drive = (res instanceof ExternalFolder) ? ((ExternalFolder) res)
+											.getExternalDrive()
+											: ((ExternalContent) res)
+													.getExternalDrive();
+									AbstractMoveWindow.this.externalResourceService
+											.move(drive, res.getPath(),
+													baseFolder.getPath());
+								} else {
+									AbstractMoveWindow.this.resourceService.moveResource(
+											res.getPath(),
+											AbstractMoveWindow.this.baseFolder
+													.getPath(), AppContext
+													.getUsername());
+								}
 							} catch (Exception e) {
 								checkingFail = true;
 							}
@@ -1288,7 +1424,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 		public MoveResourceWindow(Resource resource,
 				ResourceService resourceService) {
-			super(resource, resourceService);
+			super(resource, resourceService, null, null);
 		}
 
 		@Override

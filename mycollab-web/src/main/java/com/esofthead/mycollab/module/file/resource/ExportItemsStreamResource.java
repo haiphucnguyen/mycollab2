@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.file.resource;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.export;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.jasper.builder.export.JasperCsvExporterBuilder;
+import net.sf.dynamicreports.jasper.builder.export.JasperXlsxExporterBuilder;
+import net.sf.dynamicreports.jasper.constant.JasperProperty;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
@@ -60,6 +64,35 @@ public abstract class ExportItemsStreamResource implements
 		this.outputForm = outputForm;
 	}
 
+	private static JasperReportBuilder createReport(int outputForm,
+			String reportTitle) {
+		JasperReportBuilder reportBuilder = report();
+		if (outputForm == PDF_OUTPUT) {
+			reportBuilder
+					.title(Templates.createTitleComponent(reportTitle))
+					.noData(Templates.createTitleComponent(reportTitle),
+							cmp.text("There is no data"))
+					.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE)
+					.setColumnTitleStyle(Templates.columnTitleStyle)
+					.highlightDetailEvenRows()
+					.pageFooter(
+							cmp.pageXofY()
+									.setStyle(Templates.boldCenteredStyle));
+		} else if (outputForm == CSV_OUTPUT) {
+			reportBuilder.setIgnorePagination(true);
+		} else if (outputForm == EXCEL_OUTPUT) {
+			reportBuilder.setColumnTitleStyle(Templates.columnTitleStyle)
+					.addProperty(JasperProperty.EXPORT_XLS_FREEZE_ROW, "2")
+					.ignorePageWidth().ignorePagination();
+
+		} else {
+			throw new IllegalArgumentException("Do not support output type "
+					+ outputForm);
+		}
+
+		return reportBuilder;
+	}
+
 	public static class AllItems<S extends SearchCriteria, T> extends
 			ExportItemsStreamResource {
 
@@ -96,19 +129,8 @@ public abstract class ExportItemsStreamResource implements
 				@Override
 				public void run() {
 					try {
-						JasperReportBuilder reportBuilder = report()
-								.setPageFormat(PageType.A4,
-										PageOrientation.LANDSCAPE)
-								.title(Templates
-										.createTitleComponent(reportTitle))
-								.noData(Templates
-										.createTitleComponent(reportTitle),
-										cmp.text("There is no data"))
-								.setColumnTitleStyle(Templates.columnTitleStyle)
-								.highlightDetailEvenRows()
-								.pageFooter(
-										cmp.pageXofY().setStyle(
-												Templates.boldCenteredStyle));
+						JasperReportBuilder reportBuilder = createReport(
+								outputForm, reportTitle);
 
 						// build columns of report
 						for (TableViewField field : fields) {
@@ -128,9 +150,17 @@ public abstract class ExportItemsStreamResource implements
 						if (outputForm == PDF_OUTPUT) {
 							reportBuilder.toPdf(outStream);
 						} else if (outputForm == CSV_OUTPUT) {
-							reportBuilder.toCsv(outStream);
+							JasperCsvExporterBuilder csvExporter = export
+									.csvExporter(outStream);
+							reportBuilder.toCsv(csvExporter);
 						} else if (outputForm == EXCEL_OUTPUT) {
-							reportBuilder.toXlsx(outStream);
+							JasperXlsxExporterBuilder xlsExporter = export
+									.xlsxExporter(outStream)
+									.setDetectCellType(true)
+									.setIgnorePageMargins(true)
+									.setWhitePageBackground(false)
+									.setRemoveEmptySpaceBetweenColumns(true);
+							reportBuilder.toXlsx(xlsExporter);
 						} else {
 							throw new IllegalArgumentException(
 									"Do not support output type " + outputForm);
@@ -259,9 +289,17 @@ public abstract class ExportItemsStreamResource implements
 							if (outputForm == PDF_OUTPUT) {
 								reportBuilder.toPdf(outStream);
 							} else if (outputForm == CSV_OUTPUT) {
-								reportBuilder.toCsv(outStream);
+								JasperCsvExporterBuilder csvExporter = export
+										.csvExporter(outStream);
+								reportBuilder.toCsv(csvExporter);
 							} else if (outputForm == EXCEL_OUTPUT) {
-								reportBuilder.toXlsx(outStream);
+								JasperXlsxExporterBuilder xlsExporter = export
+										.xlsxExporter(outStream)
+										.setDetectCellType(true)
+										.setIgnorePageMargins(true)
+										.setWhitePageBackground(false)
+										.setRemoveEmptySpaceBetweenColumns(true);
+								reportBuilder.toXlsx(xlsExporter);
 							} else {
 								throw new IllegalArgumentException(
 										"Do not support output type "

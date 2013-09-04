@@ -99,15 +99,10 @@ public class AnotatedInviteOutsideMemberCreateAccountHandlerServlet implements
 			projectMemberService.saveWithSession(member,
 					AppContext.getUsername());
 		} catch (Exception e) {
-			error = true;
 			errMsg = "Error in while create your account. We so sorry for this inconvenience";
-		}
-		if (error) {
 			PrintWriter out = response.getWriter();
 			out.print(errMsg);
 			return;
 		}
-		PrintWriter out = response.getWriter();
-		out.print(errMsg);
 	}
 }

@@ -2,13 +2,16 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.Arrays;
 
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import org.vaadin.hene.splitbutton.SplitButtonExt;
+
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -19,7 +22,9 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -35,7 +40,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private final BugSearchPanel bugSearchPanel;
 	private BugTableDisplay tableItem;
 	private final VerticalLayout bugListLayout;
-	private Button exportBtn;
+	private SplitButtonExt exportButtonControl;
 
 	public BugListViewImpl() {
 		this.setMargin(false, true, true, true);
@@ -120,20 +125,121 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		buttonControls.addComponent(customizeViewBtn);
 
-		this.exportBtn = new Button(
-				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
-		this.exportBtn.setIcon(MyCollabResource
-				.newResource("icons/16/export_excel.png"));
-		this.exportBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-		this.exportBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS));
-		buttonControls.addComponent(this.exportBtn);
-		return layoutWrapper;
-	}
+		Button exportBtn = new Button("Export", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-	@Override
-	public Button getExportBtn() {
-		return this.exportBtn;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
+		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl.setIcon(MyCollabResource
+				.newResource("icons/16/export.png"));
+
+		VerticalLayout popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setWidth("150px");
+		exportButtonControl.addComponent(popupButtonsControl);
+
+		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				String title = "Bugs of Project "
+						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+								.getProject().getName() != null) ? CurrentProjectVariables
+								.getProject().getName() : "");
+				BugSearchCriteria searchCriteria = new BugSearchCriteria();
+				searchCriteria.setProjectId(new NumberSearchField(
+						SearchField.AND, CurrentProjectVariables.getProject()
+								.getId()));
+
+				StreamResource res = new StreamResource(
+						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+								title, tableItem.getDisplayColumns(),
+								ExportItemsStreamResource.PDF_OUTPUT,
+								AppContext.getSpringBean(BugService.class),
+								searchCriteria, SimpleBug.class), "export.pdf",
+						BugListViewImpl.this.getApplication());
+				BugListViewImpl.this.getWindow().open(res, "_blank");
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		exportPdfBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/pdf.png"));
+		exportPdfBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportPdfBtn);
+
+		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				String title = "Bugs of Project "
+						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+								.getProject().getName() != null) ? CurrentProjectVariables
+								.getProject().getName() : "");
+				BugSearchCriteria searchCriteria = new BugSearchCriteria();
+				searchCriteria.setProjectId(new NumberSearchField(
+						SearchField.AND, CurrentProjectVariables.getProject()
+								.getId()));
+
+				StreamResource res = new StreamResource(
+						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+								title, tableItem.getDisplayColumns(),
+								ExportItemsStreamResource.EXCEL_OUTPUT,
+								AppContext.getSpringBean(BugService.class),
+								searchCriteria, SimpleBug.class), "export.xlsx",
+						BugListViewImpl.this.getApplication());
+				BugListViewImpl.this.getWindow().open(res, "_blank");
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		exportExcelBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/excel.png"));
+		exportExcelBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportExcelBtn);
+
+		Button exportCsvBtn = new Button("CSV", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				String title = "Bugs of Project "
+						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+								.getProject().getName() != null) ? CurrentProjectVariables
+								.getProject().getName() : "");
+				BugSearchCriteria searchCriteria = new BugSearchCriteria();
+				searchCriteria.setProjectId(new NumberSearchField(
+						SearchField.AND, CurrentProjectVariables.getProject()
+								.getId()));
+
+				StreamResource res = new StreamResource(
+						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+								title, tableItem.getDisplayColumns(),
+								ExportItemsStreamResource.CSV_OUTPUT,
+								AppContext.getSpringBean(BugService.class),
+								searchCriteria, SimpleBug.class), "export.csv",
+						BugListViewImpl.this.getApplication());
+				BugListViewImpl.this.getWindow().open(res, "_blank");
+				exportButtonControl.setPopupVisible(false);
+
+			}
+		});
+		
+		exportCsvBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/csv.png"));
+		exportCsvBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportCsvBtn);
+
+		buttonControls.addComponent(exportButtonControl);
+		return layoutWrapper;
 	}
 
 	@Override

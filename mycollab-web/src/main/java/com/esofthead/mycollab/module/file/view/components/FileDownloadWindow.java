@@ -4,6 +4,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -71,9 +72,14 @@ public class FileDownloadWindow extends Window {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-						.getStreamResource(FileDownloadWindow.this.content
-								.getPath());
+				com.vaadin.terminal.Resource downloadResource = null;
+				if (content instanceof ExternalContent) {
+					downloadResource = StreamDownloadResourceFactory
+							.getStreamDropboxResource(content);
+				} else
+					downloadResource = StreamDownloadResourceFactory
+							.getStreamResource(FileDownloadWindow.this.content
+									.getPath());
 				AppContext.getApplication().getMainWindow()
 						.open(downloadResource, "_blank");
 			}

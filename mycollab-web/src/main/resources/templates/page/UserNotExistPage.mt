@@ -47,7 +47,7 @@
 }
 
 </style>
-<title>Member accept the invitation page</title>
+<title>User not exist page</title>
 </head>
 <body style="height:100%;">
 	<div style="height: 100%; padding-top:100px; padding-left: 150px;">
@@ -61,9 +61,9 @@
 				</td>
 				<td style="width: 600px; display: inline-block; vertical-align: center;">
 					<div style="display: block; padding: 40px 8px 8px 30px;">
-		  				Sorry! You can not decide to leave this project by yourself. Please contact your project Admin for more information.
+		  				Sorry!This account is not exist on system.
 		    			<div style="padding-top: 10px;">
-							<button class="v-button-bluebtn" type="button" onclick="return login();">Login</button>
+							<button class="v-button-bluebtn" type="button" onclick="return login();">Go to Login</button>
 		     			</div>    
 					</div>
 				</td>
@@ -75,7 +75,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	function login(){
-		window.location.assign("$!projectLinkURL");
+		window.location.assign("$!loginURL");
 	}
 </script>				
 </html>

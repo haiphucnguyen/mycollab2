@@ -8,6 +8,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -24,11 +25,13 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
+import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 import com.esofthead.mycollab.web.AppContext;
@@ -38,7 +41,7 @@ import com.esofthead.template.velocity.TemplateEngine;
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		HttpRequestHandler {
-	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/outsideMemberAcceptInvitationPage.mt";
+	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/OutsideMemberAcceptInvitationPage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -106,31 +109,51 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 			Integer projectId, Integer sAccountId, Integer projectRoleId,
 			HttpServletResponse response) throws IOException {
 
-		UserAccount userAccount = new UserAccount();
-		userAccount.setUsername(username);
-		userAccount.setAccountid(sAccountId);
-		userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-		userAccount.setIsaccountowner(false);
-		userAccount.setRegisteredtime(new Date());
-		userAccount.setRoleid(projectRoleId);
-		userAccount.setIsadmin(false);
-
-		ProjectMember member = new ProjectMember();
-		member.setProjectid(projectId);
-		member.setUsername(username);
-		member.setJoindate(new Date());
-		member.setSaccountid(sAccountId);
-		member.setIsadmin(false);
-		member.setStatus(RegisterStatusConstants.ACTIVE);
+		// search has in table User account
+		UserAccountExample example = new UserAccountExample();
+		example.createCriteria().andUsernameEqualTo(username)
+				.andAccountidEqualTo(sAccountId);
 		try {
-			userAccountMapper.insert(userAccount);
-			projectMemberService.saveWithSession(member,
-					AppContext.getUsername());
+			List<UserAccount> lst = userAccountMapper.selectByExample(example);
+			if (lst.size() > 0) {
+				for (UserAccount record : lst) {
+					record.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+					userAccountMapper.updateByPrimaryKeySelective(record);
+				}
+			} else {
+				UserAccount userAccount = new UserAccount();
+				userAccount.setUsername(username);
+				userAccount.setAccountid(sAccountId);
+				userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+				userAccount.setIsaccountowner(false);
+				userAccount.setRegisteredtime(new Date());
+				userAccount.setIsadmin(false);
 
+				userAccountMapper.insert(userAccount);
+			}
+			// search has in table projectMember
+			SimpleProjectMember member = projectMemberService
+					.findMemberByUsername(username, projectId, sAccountId);
+			if (member == null) {
+				ProjectMember projectMember = new ProjectMember();
+				projectMember.setProjectid(projectId);
+				projectMember.setUsername(username);
+				projectMember.setJoindate(new Date());
+				projectMember.setSaccountid(sAccountId);
+				projectMember.setIsadmin(false);
+				projectMember.setStatus(RegisterStatusConstants.ACTIVE);
+				projectMemberService.saveWithSession(projectMember,
+						AppContext.getUsername());
+			} else if (member != null) {
+				member.setStatus(RegisterStatusConstants.ACTIVE);
+				member.setsAccountId(sAccountId);
+				member.setSaccountid(sAccountId);
+				projectMemberService.updateWithSession(member, " ");
+			}
 			MailLinkGenerator linkGenerator = new MailLinkGenerator(projectId);
 			response.sendRedirect(linkGenerator.generateProjectFullLink());
 		} catch (Exception e) {
-			log.debug("Error when insert DB in handle invite projectMember", e);
+			throw new MyCollabException(e);
 		}
 	}
 
