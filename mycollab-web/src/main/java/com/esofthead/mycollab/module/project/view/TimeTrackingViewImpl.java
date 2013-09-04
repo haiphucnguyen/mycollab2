@@ -173,7 +173,8 @@ public class TimeTrackingViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-								tableItem.getDefaultSelectedColumns(),
+								"Time Tracking Report",
+								tableItem.getDisplayColumns(),
 								ExportItemsStreamResource.PDF_OUTPUT,
 								AppContext
 										.getSpringBean(ItemTimeLoggingService.class),
@@ -197,7 +198,8 @@ public class TimeTrackingViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-								tableItem.getDefaultSelectedColumns(),
+								"Time Tracking Report",
+								tableItem.getDisplayColumns(),
 								ExportItemsStreamResource.EXCEL_OUTPUT,
 								AppContext
 										.getSpringBean(ItemTimeLoggingService.class),

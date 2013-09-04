@@ -125,7 +125,8 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								ticketTable.getDefaultSelectedColumns(),
+								"Following Tickets Report",
+								ticketTable.getDisplayColumns(),
 								ExportItemsStreamResource.PDF_OUTPUT,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),
@@ -149,7 +150,8 @@ public class FollowingTicketViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								ticketTable.getDefaultSelectedColumns(),
+								"Following Tickets Report",
+								ticketTable.getDisplayColumns(),
 								ExportItemsStreamResource.EXCEL_OUTPUT,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),

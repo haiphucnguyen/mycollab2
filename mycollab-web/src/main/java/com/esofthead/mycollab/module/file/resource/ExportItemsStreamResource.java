@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.file.resource;
 
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.constant.PageOrientation;
+import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -46,10 +49,13 @@ public abstract class ExportItemsStreamResource implements
 	private static Logger log = LoggerFactory
 			.getLogger(ExportItemsStreamResource.class);
 
+	protected String reportTitle;
 	protected List<TableViewField> fields;
 	protected int outputForm;
 
-	public ExportItemsStreamResource(List<TableViewField> fields, int outputForm) {
+	public ExportItemsStreamResource(String reportTitle,
+			List<TableViewField> fields, int outputForm) {
+		this.reportTitle = reportTitle;
 		this.fields = fields;
 		this.outputForm = outputForm;
 	}
@@ -61,10 +67,10 @@ public abstract class ExportItemsStreamResource implements
 		private S searchCriteria;
 		private Class<T> classType;
 
-		public AllItems(List<TableViewField> fields, int outputForm,
-				ISearchableService searchService, S searchCriteria,
-				Class<T> classType) {
-			super(fields, outputForm);
+		public AllItems(String reportTitle, List<TableViewField> fields,
+				int outputForm, ISearchableService searchService,
+				S searchCriteria, Class<T> classType) {
+			super(reportTitle, fields, outputForm);
 			this.searchService = searchService;
 			this.searchCriteria = searchCriteria;
 			this.classType = classType;
@@ -91,7 +97,18 @@ public abstract class ExportItemsStreamResource implements
 				public void run() {
 					try {
 						JasperReportBuilder reportBuilder = report()
-								.setColumnTitleStyle(Templates.columnTitleStyle);
+								.setPageFormat(PageType.A4,
+										PageOrientation.LANDSCAPE)
+								.title(Templates
+										.createTitleComponent(reportTitle))
+								.noData(Templates
+										.createTitleComponent(reportTitle),
+										cmp.text("There is no data"))
+								.setColumnTitleStyle(Templates.columnTitleStyle)
+								.highlightDetailEvenRows()
+								.pageFooter(
+										cmp.pageXofY().setStyle(
+												Templates.boldCenteredStyle));
 
 						// build columns of report
 						for (TableViewField field : fields) {
@@ -101,7 +118,8 @@ public abstract class ExportItemsStreamResource implements
 							DRIDataType<Object, ? extends Object> jrType = type
 									.detectType(fieldCls.getType().getName());
 							reportBuilder.addColumn(col.column(field.getDesc(),
-									field.getField(), jrType));
+									field.getField(), jrType).setWidth(
+									field.getDefaultWidth()));
 						}
 
 						reportBuilder
@@ -191,9 +209,9 @@ public abstract class ExportItemsStreamResource implements
 		private Class<T> classType;
 		private List<T> data;
 
-		public ListData(List<TableViewField> fields, int outputForm,
-				List<T> data, Class<T> classType) {
-			super(fields, outputForm);
+		public ListData(String reportTitle, List<TableViewField> fields,
+				int outputForm, List<T> data, Class<T> classType) {
+			super(reportTitle, fields, outputForm);
 			this.data = data;
 		}
 
@@ -217,7 +235,21 @@ public abstract class ExportItemsStreamResource implements
 					@Override
 					public void run() {
 						try {
-							JasperReportBuilder reportBuilder = report();
+							JasperReportBuilder reportBuilder = report()
+									.setPageFormat(PageType.A4,
+											PageOrientation.LANDSCAPE)
+									.title(Templates
+											.createTitleComponent(reportTitle))
+									.noData(Templates
+											.createTitleComponent(reportTitle),
+											cmp.text("There is no data"))
+									.setColumnTitleStyle(
+											Templates.columnTitleStyle)
+									.highlightDetailEvenRows()
+									.pageFooter(
+											cmp.pageXofY()
+													.setStyle(
+															Templates.boldCenteredStyle));
 
 							List<String> visibleColumns = new ArrayList<String>();
 							// build columns of report
