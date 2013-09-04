@@ -235,21 +235,7 @@ public abstract class ExportItemsStreamResource implements
 					@Override
 					public void run() {
 						try {
-							JasperReportBuilder reportBuilder = report()
-									.setPageFormat(PageType.A4,
-											PageOrientation.LANDSCAPE)
-									.title(Templates
-											.createTitleComponent(reportTitle))
-									.noData(Templates
-											.createTitleComponent(reportTitle),
-											cmp.text("There is no data"))
-									.setColumnTitleStyle(
-											Templates.columnTitleStyle)
-									.highlightDetailEvenRows()
-									.pageFooter(
-											cmp.pageXofY()
-													.setStyle(
-															Templates.boldCenteredStyle));
+							JasperReportBuilder reportBuilder = report();
 
 							List<String> visibleColumns = new ArrayList<String>();
 							// build columns of report

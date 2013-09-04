@@ -72,10 +72,6 @@
 							<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
 		     			</div>    
 					</div>
-					<div style="display: block; padding: 10px 8px 8px 20px;">
-						<p><span id="requireMsg" style="color:red; font-style:italic">
-						</span></p>
-					</div>
 				</td>
 			</tr>
 		</table>

@@ -1,22 +1,18 @@
-package com.esofthead.mycollab.pages;
+package com.esofthead.mycollab.pages.tour;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.esofthead.mycollab.base.BasePage;
-import com.esofthead.mycollab.pages.tour.CRMPage;
-import com.esofthead.mycollab.pages.tour.CollaborationPage;
-import com.esofthead.mycollab.pages.tour.DocumentManagementPage;
-import com.esofthead.mycollab.pages.tour.MyCollabCompetionsPage;
+import com.esofthead.mycollab.pages.TourPage;
 import com.esofthead.mycollab.pages.tour.OnlineOfficeAppsPage;
-import com.esofthead.mycollab.pages.tour.ProjectManagementPage;
 
-public class TourPage extends BasePage {
+public class DocumentManagementPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
-	public TourPage(PageParameters parameters) {
+	public DocumentManagementPage(PageParameters parameters) {
 		super(parameters);
 		add(new Label("pagetitle", "Tour"));
 		
