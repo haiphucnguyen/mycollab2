@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.module.file.resource;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -12,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
@@ -21,16 +17,16 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.StreamResource;
 
-public class StreamFolderDropboxDownloadResource implements
+public class StreamDropboxDownloadResource implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
 	private Resource res;
 	private ExternalResourceService externalResourceService;
 	private ExternalDrive drive;
 	private static Logger log = LoggerFactory
-			.getLogger(StreamFolderDropboxDownloadResource.class);
+			.getLogger(StreamDropboxDownloadResource.class);
 
-	public StreamFolderDropboxDownloadResource(Resource res) {
+	public StreamDropboxDownloadResource(Resource res) {
 		this.res = res;
 		externalResourceService = AppContext
 				.getSpringBean(ExternalResourceService.class);
@@ -46,8 +42,8 @@ public class StreamFolderDropboxDownloadResource implements
 	@Override
 	public InputStream getStream() {
 		return externalResourceService.download(
-				StreamFolderDropboxDownloadResource.this.drive,
-				StreamFolderDropboxDownloadResource.this.res.getPath());
+				StreamDropboxDownloadResource.this.drive,
+				StreamDropboxDownloadResource.this.res.getPath());
 	}
 
 	private void zipResource(ZipOutputStream zipOutStream, Resource res) {
