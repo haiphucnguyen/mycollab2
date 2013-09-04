@@ -33,8 +33,8 @@ import com.esofthead.template.velocity.TemplateEngine;
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		HttpRequestHandler {
 
-	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/memberDenyInvitationPage.mt";
-	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/refuseMemberDenyActionPage.mt";
+	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/MemberDenyInvitationPage.mt";
+	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/RefuseMemberDenyActionPage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -81,7 +81,6 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 				String subdomain = projectService
 						.getSubdomainOfProject(projectId);
 
-				// remove from ProjectMember Table if it exist ---------
 				ProjectMember projectMember = projectMemberService
 						.findMemberByUsername(email, projectId, sAccountId);
 				if (projectMember != null) {

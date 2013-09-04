@@ -20,6 +20,7 @@ import org.springframework.web.HttpRequestHandler;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -58,7 +59,9 @@ public class AnotatedVerifyUserServletRequestHandler implements
 				subdomain = pathInfo;
 				User user = userService.findUserByUserName(username);
 				if (user == null) {
-
+					PageUserNotExistGenerator.responeUserNotExistPage(response,
+							request.getContextPath());
+					return;
 				} else {
 					if (user.getRegisterstatus().equals(
 							RegisterStatusConstants.ACTIVE)) {

@@ -1127,6 +1127,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 			this.baseFolder = new Folder();
 			baseFolder.setPath(FileMainViewImpl.this.rootPath);
+			this.rootPath = FileMainViewImpl.this.rootPath;
 			this.folderTree
 					.addItem(new Object[] {
 							FileMainViewImpl.this.rootFolderName, "" },
