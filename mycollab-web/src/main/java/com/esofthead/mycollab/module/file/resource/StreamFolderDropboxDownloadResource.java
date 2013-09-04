@@ -37,47 +37,17 @@ public class StreamFolderDropboxDownloadResource implements
 		if (!(res instanceof ExternalFolder || res instanceof ExternalContent)) {
 			throw new MyCollabException("Only Support Dropbox drive");
 		} else {
-			if (res instanceof ExternalFolder)
-				drive = ((ExternalFolder) res).getExternalDrive();
-			else
-				drive = ((ExternalContent) res).getExternalDrive();
+			drive = (res instanceof ExternalFolder) ? ((ExternalFolder) res)
+					.getExternalDrive() : ((ExternalContent) res)
+					.getExternalDrive();
 		}
 	}
 
 	@Override
 	public InputStream getStream() {
-		if (res instanceof ExternalFolder) {
-			final PipedInputStream inStream = new PipedInputStream();
-			final PipedOutputStream outStream;
-			try {
-				outStream = new PipedOutputStream(inStream);
-			} catch (IOException ex) {
-				log.error("Can not create outstream file", ex);
-				return null;
-			}
-			Thread threadExport = new MyCollabThread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						ZipOutputStream zipOutStream = new ZipOutputStream(
-								outStream);
-						zipResource(zipOutStream, res);
-						zipOutStream.close();
-						outStream.close();
-					} catch (Exception e) {
-						log.error(
-								"Error while zip content stream from Dropbox",
-								e);
-					}
-				}
-			});
-			threadExport.start();
-			return inStream;
-		} else {
-			return externalResourceService.download(
-					StreamFolderDropboxDownloadResource.this.drive,
-					StreamFolderDropboxDownloadResource.this.res.getPath());
-		}
+		return externalResourceService.download(
+				StreamFolderDropboxDownloadResource.this.drive,
+				StreamFolderDropboxDownloadResource.this.res.getPath());
 	}
 
 	private void zipResource(ZipOutputStream zipOutStream, Resource res) {
