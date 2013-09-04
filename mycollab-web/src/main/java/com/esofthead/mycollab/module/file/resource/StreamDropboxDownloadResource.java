@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.module.file.resource;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -12,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
@@ -21,63 +17,33 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.StreamResource;
 
-public class StreamFolderDropboxDownloadResource implements
+public class StreamDropboxDownloadResource implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
 	private Resource res;
 	private ExternalResourceService externalResourceService;
 	private ExternalDrive drive;
 	private static Logger log = LoggerFactory
-			.getLogger(StreamFolderDropboxDownloadResource.class);
+			.getLogger(StreamDropboxDownloadResource.class);
 
-	public StreamFolderDropboxDownloadResource(Resource res) {
+	public StreamDropboxDownloadResource(Resource res) {
 		this.res = res;
 		externalResourceService = AppContext
 				.getSpringBean(ExternalResourceService.class);
 		if (!(res instanceof ExternalFolder || res instanceof ExternalContent)) {
 			throw new MyCollabException("Only Support Dropbox drive");
 		} else {
-			if (res instanceof ExternalFolder)
-				drive = ((ExternalFolder) res).getExternalDrive();
-			else
-				drive = ((ExternalContent) res).getExternalDrive();
+			drive = (res instanceof ExternalFolder) ? ((ExternalFolder) res)
+					.getExternalDrive() : ((ExternalContent) res)
+					.getExternalDrive();
 		}
 	}
 
 	@Override
 	public InputStream getStream() {
-		if (res instanceof ExternalFolder) {
-			final PipedInputStream inStream = new PipedInputStream();
-			final PipedOutputStream outStream;
-			try {
-				outStream = new PipedOutputStream(inStream);
-			} catch (IOException ex) {
-				log.error("Can not create outstream file", ex);
-				return null;
-			}
-			Thread threadExport = new MyCollabThread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						ZipOutputStream zipOutStream = new ZipOutputStream(
-								outStream);
-						zipResource(zipOutStream, res);
-						zipOutStream.close();
-						outStream.close();
-					} catch (Exception e) {
-						log.error(
-								"Error while zip content stream from Dropbox",
-								e);
-					}
-				}
-			});
-			threadExport.start();
-			return inStream;
-		} else {
-			return externalResourceService.download(
-					StreamFolderDropboxDownloadResource.this.drive,
-					StreamFolderDropboxDownloadResource.this.res.getPath());
-		}
+		return externalResourceService.download(
+				StreamDropboxDownloadResource.this.drive,
+				StreamDropboxDownloadResource.this.res.getPath());
 	}
 
 	private void zipResource(ZipOutputStream zipOutStream, Resource res) {

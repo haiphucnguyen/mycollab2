@@ -928,8 +928,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							final com.vaadin.terminal.Resource downloadResource;
 							if (res instanceof Folder) {
 								if (res instanceof ExternalFolder) {
-									downloadResource = StreamDownloadResourceFactory
-											.getStreamDropboxResource(res);
+									// downloadResource =
+									// StreamDownloadResourceFactory.getStreamDropboxResource(res);
+									FileMainViewImpl.this
+											.getWindow()
+											.showNotification(
+													"Sorry for this inconvenience! This function will update soon. Best regard.");
+									return;
 								} else
 									downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
 											new String[] { res.getPath() },
@@ -1649,8 +1654,29 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							if (selectedResourcesList != null
 									&& selectedResourcesList.size() > 0) {
 								List<String> lstPath = new ArrayList<String>();
-								for (Resource res : selectedResourcesList) {
-									lstPath.add(res.getPath());
+								for (int i = 0; i < selectedResourcesList
+										.size(); i++) {
+									Resource res = selectedResourcesList.get(i);
+									if (res instanceof ExternalFolder) {
+										FileMainViewImpl.this
+												.getWindow()
+												.showNotification(
+														"Sorry for this inconvenience, we not yet support download dropbox folder! This function will update soon. Best regard.");
+										return;
+									} else if (res instanceof ExternalContent) {
+										com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+												.getStreamDropboxResource(res);
+										AppContext
+												.getApplication()
+												.getMainWindow()
+												.open(downloadResource,
+														"_blank");
+										if (i == selectedResourcesList.size() - 1) {
+											return;
+										}
+									} else {
+										lstPath.add(res.getPath());
+									}
 								}
 								com.vaadin.terminal.Resource downloadResource = null;
 								if (selectedResourcesList.size() == 1

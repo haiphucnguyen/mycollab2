@@ -37,7 +37,7 @@ public class StreamDownloadResourceFactory {
 			com.esofthead.mycollab.module.ecm.domain.Resource res) {
 		String name = (res instanceof Folder) ? res.getName() + ".zip" : res
 				.getName();
-		return new StreamResource(new StreamFolderDropboxDownloadResource(res),
+		return new StreamResource(new StreamDropboxDownloadResource(res),
 				name, AppContext.getApplication());
 	}
 

@@ -523,6 +523,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		return defaultSelectedColumns;
 	}
 
+	public List<TableViewField> getDisplayColumns() {
+		return displayColumns;
+	}
+
 	public Object[] getVisibleColumns() {
 		return tableItem.getVisibleColumns();
 	}

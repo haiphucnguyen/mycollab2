@@ -11,7 +11,7 @@ public class FollowingTicketFieldDef {
 			"projectName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignee = new TableViewField("Assignee",
-			"assignUser", UIConstants.TABLE_X_LABEL_WIDTH);
+			"assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField createdDate = new TableViewField(
 			"Created Date", "monitorDate", UIConstants.TABLE_DATE_WIDTH);
