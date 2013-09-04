@@ -5,20 +5,7 @@ $(document).ready(function(){
 	// Redirect to pricing page
 	$('.free-trial').click(function(){
 		window.location = "/pricing";	
-	})
-	
-	// Event click on menu left
-	$('.tour-menu').click(function(){
-		$('.tour-menu').removeClass('item-active');
-		$(this).addClass('item-active');
-		//TourSlide(this);
-		var className = $(this).attr('class');
-		var classArray = className.split(" ");
-		if(classArray != null) {
-			items = classArray[0].split("-");
-			TourSlide(items[1]);
-		}
-	})
+	})	
 });
 
 $(window).load(function() {

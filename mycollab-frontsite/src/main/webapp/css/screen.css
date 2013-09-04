@@ -1725,6 +1725,58 @@ a.nivo-prevNav {
 	height: 250px!important;
 }
 
+.tour-slide-1 .nivo-controlNav {
+	display: none!important;
+}
+
+.tour-slide-2 {
+	height: 230px;
+	width: 450px;
+	position: inherit;
+	display: inline-block;
+	float: left;
+	text-align: center;
+	margin: 20px 0px 0px 70px;
+}
+
+.tour-slide-2 #slider {
+	height: 196px !important;
+	width: 340px !important;
+}
+
+.tour-slide-2 .nivo-controlNav {
+	display: none!important;
+}
+
+.tour-row {
+	display: inline-block;
+}
+
+.tour-block {
+	width: 240px;
+	display: inline-block;
+	margin-right: 25px;
+	text-align: justify;
+	float: left;
+}
+
+.tour-block h2 {
+	font-size: 20px;
+	color: #505050;
+	padding-left: 25px;
+	font-family: 'Monda';
+	background: url("../images/tour_list_icon_1.png") no-repeat left center transparent;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+.tour-block p {
+	font-size: 12px;
+	color: #505050;
+	font-family: 'Verdana';
+	line-height: 180%;
+}
+
 .two-coll-2 {
 	float: left;
 }
@@ -1740,12 +1792,8 @@ a.nivo-prevNav {
 	font-family: 'verdana';
 }
 
-.tour-slide-1 .nivo-controlNav {
-	display: none!important;
-}
-
 .tour-items {
-	padding-left: 30px;
+	padding-left: 25px;
 }
 
 .tour-control {
