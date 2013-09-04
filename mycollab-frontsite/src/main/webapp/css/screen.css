@@ -1376,7 +1376,7 @@ a.nivo-prevNav {
 
 /* The Nivo Slider styles */
 #slider {
-	height: 345px;
+	height: 345px!important;
 }
 
 .nivoSlider {
@@ -1722,7 +1722,7 @@ a.nivo-prevNav {
 }
 
 .tour-slide-1 #slider {
-	height: 250px;
+	height: 250px!important;
 }
 
 .two-coll-2 {
