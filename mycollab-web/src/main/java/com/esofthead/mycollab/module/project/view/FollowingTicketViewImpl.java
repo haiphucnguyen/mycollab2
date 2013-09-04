@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -127,7 +128,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
 								"Following Tickets Report",
 								ticketTable.getDisplayColumns(),
-								ExportItemsStreamResource.PDF_OUTPUT,
+								ReportExportType.PDF,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),
 								searchCriteria, FollowingTicket.class),
@@ -152,7 +153,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 						new ExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
 								"Following Tickets Report",
 								ticketTable.getDisplayColumns(),
-								ExportItemsStreamResource.EXCEL_OUTPUT,
+								ReportExportType.EXCEL,
 								AppContext
 										.getSpringBean(ProjectFollowingTicketService.class),
 								searchCriteria, FollowingTicket.class),

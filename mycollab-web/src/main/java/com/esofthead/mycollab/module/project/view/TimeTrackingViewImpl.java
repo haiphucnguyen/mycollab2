@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -175,7 +176,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 								"Time Tracking Report",
 								tableItem.getDisplayColumns(),
-								ExportItemsStreamResource.PDF_OUTPUT,
+								ReportExportType.PDF,
 								AppContext
 										.getSpringBean(ItemTimeLoggingService.class),
 								searchCriteria, SimpleItemTimeLogging.class),
@@ -200,7 +201,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 								"Time Tracking Report",
 								tableItem.getDisplayColumns(),
-								ExportItemsStreamResource.EXCEL_OUTPUT,
+								ReportExportType.EXCEL,
 								AppContext
 										.getSpringBean(ItemTimeLoggingService.class),
 								searchCriteria, SimpleItemTimeLogging.class),

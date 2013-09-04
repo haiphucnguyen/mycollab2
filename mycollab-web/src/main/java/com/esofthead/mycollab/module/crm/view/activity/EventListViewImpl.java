@@ -136,7 +136,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
 		this.tableActionControls.addOptionItem("export",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
 		this.tableActionControls.setVisible(false);
 
 		layout.addComponent(this.tableActionControls);

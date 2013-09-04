@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -161,8 +162,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, tableItem.getDisplayColumns(),
-								ExportItemsStreamResource.PDF_OUTPUT,
-								AppContext.getSpringBean(BugService.class),
+								ReportExportType.PDF, AppContext
+										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class), "export.pdf",
 						BugListViewImpl.this.getApplication());
 				BugListViewImpl.this.getWindow().open(res, "_blank");
@@ -192,10 +193,10 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, tableItem.getDisplayColumns(),
-								ExportItemsStreamResource.EXCEL_OUTPUT,
-								AppContext.getSpringBean(BugService.class),
-								searchCriteria, SimpleBug.class), "export.xlsx",
-						BugListViewImpl.this.getApplication());
+								ReportExportType.EXCEL, AppContext
+										.getSpringBean(BugService.class),
+								searchCriteria, SimpleBug.class),
+						"export.xlsx", BugListViewImpl.this.getApplication());
 				BugListViewImpl.this.getWindow().open(res, "_blank");
 				exportButtonControl.setPopupVisible(false);
 
@@ -223,7 +224,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, tableItem.getDisplayColumns(),
-								ExportItemsStreamResource.CSV_OUTPUT,
+								ReportExportType.CSV,
 								AppContext.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class), "export.csv",
 						BugListViewImpl.this.getApplication());
@@ -232,7 +233,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 			}
 		});
-		
+
 		exportCsvBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/csv.png"));
 		exportCsvBtn.setStyleName("link");

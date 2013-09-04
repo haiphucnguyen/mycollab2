@@ -118,7 +118,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
 		this.tableActionControls.addOptionItem("export",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
 		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));

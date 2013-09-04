@@ -4,150 +4,47 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
-import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
-import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
-import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
-import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
-import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
-		implements ListPresenter<AccountSearchCriteria>,
-		MassUpdatePresenter<Account> {
+public class AccountListPresenter
+		extends
+		CrmGenericListPresenter<AccountListView, AccountSearchCriteria, SimpleAccount>
+		implements MassUpdatePresenter<Account> {
 
 	private static final long serialVersionUID = 1L;
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"accountname", "city", "phoneoffice", "email", "assignUserFullName" };
-
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Name",
-			"City", "Phone Office", "Email Address", "Assign User" };
 
 	private AccountService accountService;
-	private AccountSearchCriteria searchCriteria;
-	private boolean isSelectAll = false;
 
 	public AccountListPresenter() {
 		super(AccountListView.class);
 		accountService = AppContext.getSpringBean(AccountService.class);
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
-
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
-
-				checkWhetherEnableTableActionControl();
-			}
-		});
-
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<AccountSearchCriteria>() {
-					@Override
-					public void onSearch(AccountSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
-
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleAccount> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleAccount item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
-
-						checkWhetherEnableTableActionControl();
-
-					}
-
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-				});
-
 		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
+				new DefaultPopupActionHandler(this) {
+
 					@Override
 					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialogExt.show(
-									view.getWindow(),
-									LocalizationHelper.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											SiteConfiguration.getSiteName()),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
+						super.onSelect(id, caption);
 
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteSelectedItems();
-											}
-										}
-									});
-
-						} else if ("mail".equals(id)) {
+						if ("mail".equals(id)) {
 							if (isSelectAll) {
 								AppContext
 										.getApplication()
@@ -169,30 +66,6 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 								view.getWidget().getWindow()
 										.addWindow(new MailFormWindow(lstMail));
 							}
-
-						} else if ("export".equals(id)) {
-							Resource res = null;
-
-							if (isSelectAll) {
-								res = new StreamResource(
-										new ExportCsvStreamResource.AllItems<AccountSearchCriteria>(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES,
-												AppContext
-														.getSpringBean(AccountService.class),
-												searchCriteria), "export.csv",
-										view.getApplication());
-							} else {
-								List tableData = view.getPagedBeanTable()
-										.getCurrentDataList();
-								res = new StreamResource(
-										new ExportCsvStreamResource.ListData(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES, tableData),
-										"export.csv", view.getApplication());
-							}
-
-							view.getWidget().getWindow().open(res, "_blank");
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow(
 									LocalizationHelper
@@ -203,54 +76,21 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 							view.getWindow().addWindow(massUpdateWindow);
 						}
 					}
-				});
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleAccount>() {
 					@Override
-					public void onSelect(SimpleAccount item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+					protected Class getReportModelClassType() {
+						return SimpleAccount.class;
+					}
 
-						checkWhetherEnableTableActionControl();
+					@Override
+					protected String getReportTitle() {
+						return "Account List";
 					}
 				});
 	}
 
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleAccount item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
-
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleAccount item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
-	}
-
 	@Override
-	public void doSearch(AccountSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-
-	private void deleteSelectedItems() {
+	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
 			Collection<SimpleAccount> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
@@ -313,5 +153,10 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 			accountService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
+	}
+
+	@Override
+	public ISearchableService<AccountSearchCriteria> getSearchService() {
+		return AppContext.getSpringBean(AccountService.class);
 	}
 }
