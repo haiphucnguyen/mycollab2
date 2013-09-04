@@ -41,9 +41,17 @@ public class AccountListPresenter
 				new DefaultPopupActionHandler(this) {
 
 					@Override
-					public void onSelect(String id, String caption) {
-						super.onSelect(id, caption);
+					protected Class getReportModelClassType() {
+						return SimpleAccount.class;
+					}
 
+					@Override
+					protected String getReportTitle() {
+						return "Account List";
+					}
+
+					@Override
+					protected void onSelectExtra(String id, String caption) {
 						if ("mail".equals(id)) {
 							if (isSelectAll) {
 								AppContext
@@ -75,16 +83,7 @@ public class AccountListPresenter
 									AccountListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
-					}
 
-					@Override
-					protected Class getReportModelClassType() {
-						return SimpleAccount.class;
-					}
-
-					@Override
-					protected String getReportTitle() {
-						return "Account List";
 					}
 				});
 	}
