@@ -51,9 +51,10 @@ input[type="text"], input[type="password"]{
     width: 180px;
 }
 </style>
-<title>Member accept the invitation page</title>
+<title>User recovery password page</title>
 </head>
-<body>
+<body style="height:100%;">
+	<div style="height: 100%; padding-top:100px; padding-left: 150px;">
 	<table height="400" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
 		<tr>
 			<td style="height: 200px; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
@@ -64,12 +65,12 @@ input[type="text"], input[type="password"]{
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div id="welcomeBody" style="display:block">
-		<div style="display: block; padding: 8px 8px 8px 20px;">
-			<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $!username . <br>
+		<div style="display: block; padding: 20px 8px 8px 20px;">
+			Welcome <span style="font-style:italic; font-size:14px;">$!username</span>.<br>
 			Sometimes, change password is good idea for secure your informations. You can renew your password bellow :
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			<div style="display:block ; padding: 20px 8px 8px 20px;">
+			<div style="display:block ; padding: 10px 8px 8px 20px;">
 				<form>
 				<table border="0">
 				<tbody>
@@ -96,7 +97,7 @@ input[type="text"], input[type="password"]{
 	<input type="hidden" id="username" value="$!username">
 	<input type="hidden" id="loginURL" value="$!loginURL">
 	<input type="hidden" id="redirectURL" value="$!redirectURL">
-	
+	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>

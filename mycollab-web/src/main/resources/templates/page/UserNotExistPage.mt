@@ -47,7 +47,7 @@
 }
 
 </style>
-<title>Member accept the invitation page</title>
+<title>User not exist page</title>
 </head>
 <body style="height:100%;">
 	<div style="height: 100%; padding-top:100px; padding-left: 150px;">
@@ -75,7 +75,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	function login(){
-		window.location.assign("$!LoginURL");
+		window.location.assign("$!loginURL");
 	}
 </script>				
 </html>

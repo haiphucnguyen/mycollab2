@@ -1104,31 +1104,31 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		protected List<Resource> lstResEditting;
 
 		public AbstractMoveWindow(Resource resource,
-				ResourceService resourceService) {
+				ResourceService resourceService,
+				ExternalResourceService externalResourceService,
+				ExternalDriveService externalDriveService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
 			this.resourceEditting = resource;
 			this.resourceService = resourceService;
-			this.externalResourceService = AppContext
-					.getSpringBean(ExternalResourceService.class);
-			this.externalDriveService = AppContext
-					.getSpringBean(ExternalDriveService.class);
+			this.externalResourceService = externalResourceService;
+			this.externalDriveService = externalDriveService;
 
 			constructBody();
 		}
 
 		public AbstractMoveWindow(List<Resource> lstRes,
-				ResourceService resourceService) {
+				ResourceService resourceService,
+				ExternalResourceService externalResourceService,
+				ExternalDriveService externalDriveService) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
 			this.lstResEditting = lstRes;
 			this.resourceService = resourceService;
-			this.externalResourceService = AppContext
-					.getSpringBean(ExternalResourceService.class);
-			this.externalDriveService = AppContext
-					.getSpringBean(ExternalDriveService.class);
+			this.externalResourceService = externalResourceService;
+			this.externalDriveService = externalDriveService;
 
 			constructBody();
 		}
@@ -1165,7 +1165,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					final Folder expandFolder = (Folder) event.getItemId();
 					// load externalResource if currentExpandFolder is
 					// rootFolder
-					if (rootPath.equals(expandFolder.getPath())) {
+					if (rootPath.equals(expandFolder.getPath())
+							&& externalResourceService != null) {
 						List<ExternalDrive> externalDrives = externalDriveService
 								.getExternalDrivesOfUser(AppContext
 										.getUsername());
@@ -1287,7 +1288,9 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								MyCollabResource
 										.newResource("icons/16/ecm/folder_close.png"));
 					}
-					recursiveRemoveSubItem(collapseFolder);
+					for (Folder folder : collapseFolder.getChilds()) {
+						recursiveRemoveSubItem(folder);
+					}
 				}
 
 				private void recursiveRemoveSubItem(Folder collapseFolder) {
@@ -1296,6 +1299,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						for (final Folder subFolder : childs) {
 							recursiveRemoveSubItem(subFolder);
 						}
+						AbstractMoveWindow.this.folderTree
+								.removeItem(collapseFolder);
 					} else {
 						AbstractMoveWindow.this.folderTree
 								.removeItem(collapseFolder);
@@ -1419,7 +1424,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 		public MoveResourceWindow(Resource resource,
 				ResourceService resourceService) {
-			super(resource, resourceService);
+			super(resource, resourceService, null, null);
 		}
 
 		@Override

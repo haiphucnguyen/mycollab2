@@ -47,7 +47,7 @@
 }
 
 </style>
-<title>Member accept the invitation page</title>
+<title>Refuse deny action page</title>
 </head>
 <body style="height:100%;">
 	<div style="height: 100%; padding-top:100px; padding-left: 150px;">

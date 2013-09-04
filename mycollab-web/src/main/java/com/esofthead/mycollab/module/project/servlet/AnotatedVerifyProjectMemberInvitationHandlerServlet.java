@@ -25,6 +25,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
@@ -131,22 +132,23 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 				userAccountMapper.insert(userAccount);
 			}
 			// search has in table projectMember
-			ProjectMember member = projectMemberService.findMemberByUsername(
-					username, projectId, sAccountId);
+			SimpleProjectMember member = projectMemberService
+					.findMemberByUsername(username, projectId, sAccountId);
 			if (member == null) {
-				member = new ProjectMember();
-				member.setProjectid(projectId);
-				member.setUsername(username);
-				member.setJoindate(new Date());
-				member.setSaccountid(sAccountId);
-				member.setIsadmin(false);
-				member.setStatus(RegisterStatusConstants.ACTIVE);
-				projectMemberService.saveWithSession(member,
+				ProjectMember projectMember = new ProjectMember();
+				projectMember.setProjectid(projectId);
+				projectMember.setUsername(username);
+				projectMember.setJoindate(new Date());
+				projectMember.setSaccountid(sAccountId);
+				projectMember.setIsadmin(false);
+				projectMember.setStatus(RegisterStatusConstants.ACTIVE);
+				projectMemberService.saveWithSession(projectMember,
 						AppContext.getUsername());
 			} else if (member != null) {
 				member.setStatus(RegisterStatusConstants.ACTIVE);
-				projectMemberService.updateWithSession(member,
-						AppContext.getUsername());
+				member.setsAccountId(sAccountId);
+				member.setSaccountid(sAccountId);
+				projectMemberService.updateWithSession(member, " ");
 			}
 			MailLinkGenerator linkGenerator = new MailLinkGenerator(projectId);
 			response.sendRedirect(linkGenerator.generateProjectFullLink());

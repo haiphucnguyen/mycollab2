@@ -134,7 +134,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 						final UserComboBoxWithInviteBtnCustomField userBoxCustomField = new UserComboBoxWithInviteBtnCustomField(
 								users);
-						userBoxCustomField.setValue();
+						user.setUsername((String) userBoxCustomField.getValue());
 						return userBoxCustomField;
 					} else {
 						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
@@ -201,14 +201,15 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 			public void setValue() {
 				String username = (String) userBox.getValue();
+				if (username == null)
+					username = "";
 				ProjectMemberAddViewImpl.this.user.setUsername(username);
 			}
 
 			@Override
 			public Object getValue() {
-				String username = (String) userBox.getValue();
 				setValue();
-				return username;
+				return (String) userBox.getValue();
 			}
 
 			@Override

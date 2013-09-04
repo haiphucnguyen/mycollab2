@@ -60,7 +60,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 				User user = userService.findUserByUserName(username);
 				if (user == null) {
 					PageUserNotExistGenerator.responeUserNotExistPage(response,
-							request.getContextPath());
+							request.getContextPath() + "/");
 					return;
 				} else {
 					if (user.getRegisterstatus().equals(
