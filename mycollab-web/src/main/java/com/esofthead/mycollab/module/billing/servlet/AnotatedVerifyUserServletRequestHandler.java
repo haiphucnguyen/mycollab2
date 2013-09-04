@@ -57,37 +57,40 @@ public class AnotatedVerifyUserServletRequestHandler implements
 
 				subdomain = pathInfo;
 				User user = userService.findUserByUserName(username);
-				if (user != null
-						&& user.getRegisterstatus().equals(
-								RegisterStatusConstants.ACTIVE)) {
-					// redirect to account site
-					request.getRequestDispatcher(request.getContextPath() + "/")
-							.forward(request, response);
-					request.setAttribute("username", user.getUsername());
-					request.setAttribute("password", user.getPassword());
-					return;
-				} else if (user != null
-						&& user.getRegisterstatus().equals(
-								RegisterStatusConstants.VERIFICATING)) {
-					// remove account invitation
-					UserAccountInvitationExample userAccountInvitationExample = new UserAccountInvitationExample();
-					userAccountInvitationExample.createCriteria()
-							.andUsernameEqualTo(username)
-							.andAccountidEqualTo(accountId);
-					userAccountInvitationMapper
-							.deleteByExample(userAccountInvitationExample);
+				if (user == null) {
 
-					// forward to page create password for new user
-					String redirectURL = SiteConfiguration
-							.getSiteUrl(subdomain)
-							+ "user/confirm_invite/update_info/";
-					String html = generateUserFillInformationPage(request,
-							accountId, username, user.getEmail(), redirectURL,
-							loginURL);
-					PrintWriter out = response.getWriter();
-					out.print(html);
-					return;
+				} else {
+					if (user.getRegisterstatus().equals(
+							RegisterStatusConstants.ACTIVE)) {
+						// redirect to account site
+						request.getRequestDispatcher(
+								request.getContextPath() + "/").forward(
+								request, response);
+						request.setAttribute("username", user.getUsername());
+						request.setAttribute("password", user.getPassword());
+						return;
+					} else {
+						// remove account invitation
+						UserAccountInvitationExample userAccountInvitationExample = new UserAccountInvitationExample();
+						userAccountInvitationExample.createCriteria()
+								.andUsernameEqualTo(username)
+								.andAccountidEqualTo(accountId);
+						userAccountInvitationMapper
+								.deleteByExample(userAccountInvitationExample);
+
+						// forward to page create password for new user
+						String redirectURL = SiteConfiguration
+								.getSiteUrl(subdomain)
+								+ "user/confirm_invite/update_info/";
+						String html = generateUserFillInformationPage(request,
+								accountId, username, user.getEmail(),
+								redirectURL, loginURL);
+						PrintWriter out = response.getWriter();
+						out.print(html);
+						return;
+					}
 				}
+
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);

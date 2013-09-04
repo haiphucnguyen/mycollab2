@@ -46,27 +46,32 @@ public class AnotatedDenyUserServletRequestHandler implements
 				UserService userService = AppContext
 						.getSpringBean(UserService.class);
 				User curUser = userService.findUserByUserName(username);
-				if (curUser != null
-						&& curUser.getRegisterstatus().equals(
-								RegisterStatusConstants.ACTIVE)) {
-					PageNotFoundGenerator.responsePage404(response);
-					return;
-				} else if (curUser != null) {
-					try {
-						UserSearchCriteria criteria = new UserSearchCriteria();
-						criteria.setUsername(new StringSearchField(username));
-						criteria.setSaccountid(new NumberSearchField(accountId));
-
-						userService.removeUserAccount(username, accountId);
-
-						log.debug("Verify user successfully. Redirect to application page");
-						response.sendRedirect(request.getContextPath() + "/");
-					} catch (UserInvalidInputException e) {
-						log.debug("Redirect user to user invalid page");
+				if (curUser == null) {
+					
+				} else {
+					if (curUser != null
+							&& curUser.getRegisterstatus().equals(
+									RegisterStatusConstants.ACTIVE)) {
 						PageNotFoundGenerator.responsePage404(response);
+						return;
+					} else if (curUser != null) {
+						try {
+							UserSearchCriteria criteria = new UserSearchCriteria();
+							criteria.setUsername(new StringSearchField(username));
+							criteria.setSaccountid(new NumberSearchField(accountId));
+
+							userService.removeUserAccount(username, accountId);
+
+							log.debug("Verify user successfully. Redirect to application page");
+							response.sendRedirect(request.getContextPath() + "/");
+						} catch (UserInvalidInputException e) {
+							log.debug("Redirect user to user invalid page");
+							PageNotFoundGenerator.responsePage404(response);
+						}
+						return;
 					}
-					return;
 				}
+				
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);
