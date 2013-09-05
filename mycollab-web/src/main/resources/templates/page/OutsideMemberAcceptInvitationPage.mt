@@ -90,7 +90,7 @@
 	});
 	function createAccount(){
 		if ($('#username').val() == ""){
-			$('#requireMsg').html("Please enter user name");
+			alert("Please enter user name");
 			return;
 		}
 		var url = encodeURI($('#handelCreateAccountURL').val());
@@ -105,7 +105,7 @@
 		      success: function(data){
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
-		      	 		$('#requireMsg').html(data).show();
+		      	 		alert(data);
 		      	 	}else{
 		      	 		alert("Your account has been created.");
 		      	 		window.location.assign("$!projectLinkURL");
