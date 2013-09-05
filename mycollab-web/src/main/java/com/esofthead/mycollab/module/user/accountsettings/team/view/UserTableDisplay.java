@@ -142,7 +142,7 @@ public class UserTableDisplay extends
             }
         });
 
-        this.addGeneratedColumn("lastAccessedTime",
+        this.addGeneratedColumn("lastaccessedtime",
                 new Table.ColumnGenerator() {
                     private static final long serialVersionUID = 1L;
 

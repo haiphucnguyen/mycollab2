@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -70,7 +70,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 				new TableViewField("User Name", "username",
 						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
 						"Email", "email", UIConstants.TABLE_EMAIL_WIDTH),
-				new TableViewField("Last Accessed Time", "lastAccessedTime",
+				new TableViewField("Last Accessed Time", "lastaccessedtime",
 						UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		this.tableItem
@@ -172,7 +172,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 	}
 
 	@Override
-	public IPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable() {
+	public AbstractPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable() {
 		return this.tableItem;
 	}
 }

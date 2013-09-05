@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -127,7 +126,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 							RoleBasicSearchLayout.this.nameField.setValue("");
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			clearBtn.addStyleName("cancel-button");
 			basicSearchBody.addComponent(clearBtn);
 			basicSearchBody.setComponentAlignment(clearBtn,
