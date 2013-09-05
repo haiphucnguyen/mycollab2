@@ -18,12 +18,13 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -223,10 +224,14 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.RISKS));
 
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail", "Mail");
-		this.tableActionControls.addOptionItem("export", "Export");
-		this.tableActionControls.addOptionItem("massUpdate", "Mass Update",
+		this.tableActionControls = new PopupButtonControl(
+				PopupActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
+				"Mail");
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_CSV_ACTION, "Export to Csv");
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.MASS_UPDATE_ACTION, "Mass Update",
 				CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.RISKS));
 
@@ -287,7 +292,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	}
 
 	@Override
-	public IPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
+	public AbstractPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
 		return this.tableItem;
 	}
 }

@@ -4,11 +4,11 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -111,26 +111,30 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_LEAD));
 
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		this.tableActionControls = new PopupButtonControl(
+				PopupActionHandler.DELETE_ACTION, deleteBtn);
 		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		this.tableActionControls.addOptionItem(
-				PopupActionHandler.EXPORT_CSV_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
-		this.tableActionControls.addOptionItem(
-				PopupActionHandler.EXPORT_PDF_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_PDF));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 		this.tableActionControls.addOptionItem(
 				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_EXCEL));
-		this.tableActionControls.addOptionItem(
-				PopupActionHandler.MASS_UPDATE_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE),
-				AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
+						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.MASS_UPDATE_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
+						AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
 
 		this.tableActionControls.setVisible(false);
 

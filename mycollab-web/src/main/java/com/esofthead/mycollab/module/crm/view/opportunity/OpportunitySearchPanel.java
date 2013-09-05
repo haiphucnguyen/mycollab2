@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -14,7 +15,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
@@ -131,7 +131,7 @@ public class OpportunitySearchPanel extends
 
 			this.myItemCheckbox = new CheckBox(
 					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
+							.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
 			this.myItemCheckbox.setWidth("75px");
 			UiUtils.addComponent(layout, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
@@ -140,8 +140,7 @@ public class OpportunitySearchPanel extends
 			UiUtils.addComponent(layout, separator1, Alignment.MIDDLE_LEFT);
 
 			final Button cancelBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addListener(new Button.ClickListener() {

@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -71,22 +72,22 @@ public class AccountListViewImpl extends AbstractView implements
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
 		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		this.tableActionControls.addOptionItem("mail",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls.addOptionItem("exportCsv", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
+				.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 		this.tableActionControls.addOptionItem("exportPdf", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_PDF));
+				.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 		this.tableActionControls.addOptionItem("exportExcel",
 				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_EXCEL));
+						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
+				.getMessage(GenericI18Enum.BUTTON_MASSUPDATE), AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		this.tableActionControls.setVisible(false);
 
