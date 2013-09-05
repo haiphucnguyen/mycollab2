@@ -48,7 +48,8 @@
 </style>
 <title>Member deny invitation feedback page</title>
 </head>
-<body>
+<body style="height:100%;">
+<div style="height: 100%; padding-top:100px; padding-left: 150px;">
 	<table height="100%" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
 		<tr>
 			<td style="height: 100%; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
@@ -59,7 +60,7 @@
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div>
-					<div style="display: block; padding: 8px 8px 8px 20px;">
+					<div style="display: block; padding: 40px 8px 8px 20px;">
 						<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}ticket_icon.png" height="25" width="25"></a>
 						Please feedback, why do you deny invitation ?
 					</div>
@@ -86,7 +87,7 @@
 	<input type="hidden" id="toEmail" value="$!toEmail">
 	<input type="hidden" id="toName" value="$!toName">
 	<input type="hidden" id="inviterName" value="$!inviterName">
-	
+	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>

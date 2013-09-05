@@ -43,7 +43,6 @@ public class AnotatedInviteOutsideMemberCreateAccountHandlerServlet implements
 	@Override
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		Boolean error = false;
 		String errMsg = "";
 
 		// email , projectId, sAccountId, projectURL
@@ -54,13 +53,12 @@ public class AnotatedInviteOutsideMemberCreateAccountHandlerServlet implements
 				.getParameter("sAccountId"));
 		Integer roleId = Integer.parseInt(request.getParameter("roleId"));
 		if (password.length() < 8) {
-			error = true;
 			errMsg = "Your password too short";
-		} else if (PasswordCheckerUtil.checkPasswordStrength(password)) {
-			error = true;
-			errMsg = "Recommend you should type password at least contain one digit and symbol";
-		}
-		if (error) {
+			PrintWriter out = response.getWriter();
+			out.print(errMsg);
+			return;
+		} else if (!PasswordCheckerUtil.checkPasswordStrength(password)) {
+			errMsg = "Recommend you should type password at least contain one digit, character and symbol";
 			PrintWriter out = response.getWriter();
 			out.print(errMsg);
 			return;
