@@ -8,6 +8,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
+import com.esofthead.mycollab.module.ecm.service.ResourceMover;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
@@ -22,7 +23,7 @@ public class CacheServiceIgnoreList {
 			RawContentServiceFactoryBean.class, ResourceService.class,
 			DeleteProjectListener.class, DeleteProjectMemberListener.class,
 			ExternalResourceService.class, ContentActivityLogService.class,
-			ExternalDriveService.class });
+			ExternalDriveService.class, ResourceMover.class });
 
 	static boolean isInBlackList(Class cls) {
 		return blacklistCls.contains(cls);
