@@ -162,6 +162,8 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		Resource res = null;
 		try {
 			DbxEntry entry = client.getMetadata(path);
+			if (entry == null)
+				return null;
 			if (entry.isFile()) {
 				ExternalContent resource = new ExternalContent();
 				resource.setStorageName(StorageNames.DROPBOX);
@@ -219,7 +221,21 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			client.uploadFile(content.getPath(), DbxWriteMode.add(),
 					sizeDouble.longValue(), in);
 		} catch (Exception e) {
-			log.error("Error when saveContent dropbox resource", e);
+			// That is cheat code ... must fix!!
+			String errorStr = e.getMessage();
+			int startindex = errorStr.indexOf("but you wrote ")
+					+ ("but you wrote ").length();
+			int endindex = errorStr.lastIndexOf(" bytes");
+			if (startindex != -1) {
+				String exactlyNumBytes = errorStr.substring(startindex,
+						endindex);
+				Long value = new Long(exactlyNumBytes);
+				try {
+					client.uploadFile(content.getPath(), DbxWriteMode.add(),
+							value, in);
+				} catch (Exception ee) {
+				}
+			}
 		}
 	}
 
@@ -261,6 +277,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 				public void run() {
 					try {
 						client.getFile(path, "", out);
+						out.close();
 					} catch (Exception e) {
 						log.error("Error when get File from dropbox", e);
 					}

@@ -65,7 +65,7 @@ input[type="text"], input[type="password"]{
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div id="welcomeBody" style="display:block">
-		<div style="display: block; padding: 20px 8px 8px 20px;">
+		<div style="display: block; padding: 35px 8px 8px 20px;">
 			Welcome <span style="font-style:italic; font-size:14px;">$!username</span>.<br>
 			Sometimes, change password is good idea for secure your informations. You can renew your password bellow :
 		</div>
@@ -83,10 +83,6 @@ input[type="text"], input[type="password"]{
 				</tr>
 				</tbody></table>
 				</form>
-				<div style="display: block; padding: 12px 8px 8px 20px;">
-					<p><span id="requireMsg" style="color:red; font-style:italic">
-					</span></p>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -104,9 +100,8 @@ input[type="text"], input[type="password"]{
 	$(document).ready(function(){
 	});
 	function updateInfoAction(){
-		$('#requireMsg').html("").hide();
-		if ($('#password').val() == "" || $('#repassword').val() == ""){
-			$('#requireMsg').html("Please enter password");
+		if ($('#password').val() == ""){
+			alert("Please enter password");
 			return;
 		}
 		var url = encodeURI($('#redirectURL').val());
@@ -120,7 +115,7 @@ input[type="text"], input[type="password"]{
 		      success: function(data){
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
-		      	 		$('#requireMsg').html(data).show();
+		      	 		alert(data);
 		      	 	}else{
 		      	 		alert("Your account has been updated.");
 		      	 		window.location.assign("$!loginURL");

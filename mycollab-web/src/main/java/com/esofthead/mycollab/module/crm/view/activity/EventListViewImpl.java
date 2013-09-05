@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
@@ -125,7 +126,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		boolean isDeleteEnable = AppContext
 				.canAccess(RolePermissionCollections.CRM_CALL)
 				|| AppContext.canAccess(RolePermissionCollections.CRM_MEETING)
@@ -134,9 +135,9 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 
 		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		this.tableActionControls.addOptionItem("mail",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls.addOptionItem("export",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 		this.tableActionControls.setVisible(false);
 
 		layout.addComponent(this.tableActionControls);

@@ -754,13 +754,14 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	border-right: medium none;
 }
 
-.v-button.dropbox-icon-button .v-button-wrap, .v-button.dropbox-icon-button:active .v-button-wrap {
+.v-button.dropbox-icon-button .v-button-wrap,.v-button.dropbox-icon-button:active .v-button-wrap
+	{
 	padding: 5px 0px 5px 6px;
 	background: none;
 	border: none;
 }
 
-.v-button.dropbox-icon-button > .v-button-wrap > .v-icon {
+.v-button.dropbox-icon-button>.v-button-wrap>.v-icon {
 	float: left;
 }
 
@@ -1785,8 +1786,9 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:                                      DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=                                      '#DDD', GradientType=
+	filter: progid:                                       DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=                                       '#DDD',
+		GradientType= 
 		
 		
 		 
@@ -1839,7 +1841,8 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:                                      DXImageTransform.Microsoft.gradient(startColorstr=
+	filter: progid:                                       DXImageTransform.Microsoft.gradient(startColorstr=
+		
 		
 		
 		
@@ -1873,8 +1876,8 @@ input.v-textfield-errorField {
 		
 		
 		 
-		   '#F8F8F8', endColorstr=                                      '#EEEEEE',
-		GradientType=                 
+		   '#F8F8F8', endColorstr=                                       '#EEEEEE',
+		GradientType=                  
 		
 		
 		  
@@ -2216,13 +2219,18 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .v-splitbutton-esofthead .v-button-esofthead.graybtn {
 	background-color: #b2b2b2;
-	border-color: rgb(47, 91, 183);
+	border-color: rgb(56, 56, 56);
 	margin: 0px;
 }
 
 .v-splitbutton-esofthead .v-button-esofthead:active {
 	background: none no-repeat 0 0 rgb(161, 161, 161);
 	border-color: rgb(171, 171, 171);
+}
+
+.v-splitbutton-esofthead .v-button-esofthead.graybtn:active {
+	border-color: rgb(56, 56, 56);
+	padding: 3px 8px;
 }
 
 .v-splitbutton-esofthead .v-button.v-button-esofthead .v-button-wrap,.v-splitbutton-esofthead .v-button.v-button-esofthead:active .v-button-wrap
@@ -4511,6 +4519,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-size: 14px;
 	padding: 7px 10px;
 	color: white;
+}
+
+.v-Notification.v-Notification-warning h1,.v-Notification.v-Notification-warning p
+	{
+	color: rgb(45, 45, 45);
 }
 
 .v-Notification p {

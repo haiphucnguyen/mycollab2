@@ -16,16 +16,15 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
+import com.esofthead.mycollab.module.ecm.service.ResourceMover;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
@@ -1062,7 +1061,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				final Button cancelBtn = new Button(
 						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+								.getMessage(GenericI18Enum.BUTTON_CLEAR));
 				cancelBtn.setStyleName(UIConstants.THEME_LINK);
 				cancelBtn.addStyleName("cancel-button");
 				cancelBtn.addListener(new Button.ClickListener() {
@@ -1102,6 +1101,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		private final ExternalResourceService externalResourceService;
 		private final ExternalDriveService externalDriveService;
 		protected List<Resource> lstResEditting;
+		private final ResourceMover resourceMover;
 
 		public AbstractMoveWindow(Resource resource,
 				ResourceService resourceService,
@@ -1114,7 +1114,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			this.resourceService = resourceService;
 			this.externalResourceService = externalResourceService;
 			this.externalDriveService = externalDriveService;
-
+			this.resourceMover = AppContext.getSpringBean(ResourceMover.class);
 			constructBody();
 		}
 
@@ -1129,6 +1129,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			this.resourceService = resourceService;
 			this.externalResourceService = externalResourceService;
 			this.externalDriveService = externalDriveService;
+			this.resourceMover = AppContext.getSpringBean(ResourceMover.class);
 
 			constructBody();
 		}
@@ -1331,32 +1332,12 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					if (resourceEditting != null) {
 						try {
-							if (resourceEditting instanceof ExternalFolder
-									|| resourceEditting instanceof ExternalContent) {
-								ExternalDrive drive = (resourceEditting instanceof ExternalFolder) ? ((ExternalFolder) resourceEditting)
-										.getExternalDrive()
-										: ((ExternalContent) resourceEditting)
-												.getExternalDrive();
-								AbstractMoveWindow.this.externalResourceService
-										.move(drive,
-												resourceEditting.getPath(),
-												baseFolder.getPath());
-							} else {
-								AbstractMoveWindow.this.resourceService
-										.moveResource(
-												AbstractMoveWindow.this.resourceEditting
-														.getPath(),
-												AbstractMoveWindow.this.baseFolder
-														.getPath(), AppContext
-														.getUsername());
-								AbstractMoveWindow.this.close();
-								displayAfterMoveSuccess(
-										AbstractMoveWindow.this.baseFolder,
-										false);
-							}
-							AbstractMoveWindow.this.getWindow()
-									.showNotification(
-											"Move asset(s) successfully.");
+							resourceMover.moveResource(resourceEditting,
+									baseFolder, AppContext.getUsername());
+
+							AbstractMoveWindow.this.close();
+							displayAfterMoveSuccess(
+									AbstractMoveWindow.this.baseFolder, false);
 						} catch (MyCollabException e) {
 							AbstractMoveWindow.this.getParent().getWindow()
 									.showNotification(e.getMessage());
@@ -1366,22 +1347,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						boolean checkingFail = false;
 						for (Resource res : lstResEditting) {
 							try {
-								if (res instanceof ExternalFolder
-										|| res instanceof ExternalContent) {
-									ExternalDrive drive = (res instanceof ExternalFolder) ? ((ExternalFolder) res)
-											.getExternalDrive()
-											: ((ExternalContent) res)
-													.getExternalDrive();
-									AbstractMoveWindow.this.externalResourceService
-											.move(drive, res.getPath(),
-													baseFolder.getPath());
-								} else {
-									AbstractMoveWindow.this.resourceService.moveResource(
-											res.getPath(),
-											AbstractMoveWindow.this.baseFolder
-													.getPath(), AppContext
-													.getUsername());
-								}
+								resourceMover.moveResource(res, baseFolder,
+										AppContext.getUsername());
 							} catch (Exception e) {
 								checkingFail = true;
 							}

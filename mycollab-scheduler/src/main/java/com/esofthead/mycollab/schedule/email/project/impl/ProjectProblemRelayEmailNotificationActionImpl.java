@@ -63,6 +63,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				problem.getProjectid());
 
+		hyperLinks.put("problemURL",
+				linkGenerator.generateProblemPreviewFullLink(problem.getId()));
+
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
 		hyperLinks
 				.put("assignUserUrl", linkGenerator

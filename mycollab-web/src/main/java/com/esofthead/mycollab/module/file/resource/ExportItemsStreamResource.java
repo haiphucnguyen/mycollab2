@@ -36,38 +36,104 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.Templates;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.terminal.StreamResource;
 
-public abstract class ExportItemsStreamResource implements
+public abstract class ExportItemsStreamResource<T> implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
-
-	public static int CSV_OUTPUT = 1;
-
-	public static int PDF_OUTPUT = 2;
-
-	public static int EXCEL_OUTPUT = 3;
 
 	private static Logger log = LoggerFactory
 			.getLogger(ExportItemsStreamResource.class);
 
 	protected String reportTitle;
 	protected List<TableViewField> fields;
-	protected int outputForm;
+	protected ReportExportType outputForm;
+	protected Class<T> classType;
 
 	public ExportItemsStreamResource(String reportTitle,
-			List<TableViewField> fields, int outputForm) {
+			List<TableViewField> fields, ReportExportType outputForm,
+			Class<T> classType) {
 		this.reportTitle = reportTitle;
 		this.fields = fields;
 		this.outputForm = outputForm;
+		this.classType = classType;
 	}
 
-	private static JasperReportBuilder createReport(int outputForm,
-			String reportTitle) {
+	@Override
+	public InputStream getStream() {
+
+		final PipedInputStream inStream = new PipedInputStream();
+		final PipedOutputStream outStream;
+
+		try {
+			outStream = new PipedOutputStream(inStream);
+		} catch (IOException ex) {
+			log.error("Can not create outstream file", ex);
+			return null;
+		}
+
+		Thread threadExport = new MyCollabThread(new Runnable() {
+			/**
+			 * @see java.lang.Runnable#run()
+			 */
+			@Override
+			public void run() {
+				try {
+					JasperReportBuilder reportBuilder = createReport(
+							outputForm, reportTitle);
+
+					// build columns of report
+					for (TableViewField field : fields) {
+
+						Field fieldCls = ClassUtils.getField(classType,
+								field.getField());
+						DRIDataType<Object, ? extends Object> jrType = type
+								.detectType(fieldCls.getType().getName());
+						reportBuilder.addColumn(col.column(field.getDesc(),
+								field.getField(), jrType).setWidth(
+								field.getDefaultWidth()));
+					}
+
+					reportBuilder.setDataSource(createDataSource());
+
+					if (outputForm == ReportExportType.PDF) {
+						reportBuilder.toPdf(outStream);
+					} else if (outputForm == ReportExportType.CSV) {
+						JasperCsvExporterBuilder csvExporter = export
+								.csvExporter(outStream);
+						reportBuilder.toCsv(csvExporter);
+					} else if (outputForm == ReportExportType.EXCEL) {
+						JasperXlsxExporterBuilder xlsExporter = export
+								.xlsxExporter(outStream)
+								.setDetectCellType(true)
+								.setIgnorePageMargins(true)
+								.setWhitePageBackground(false)
+								.setRemoveEmptySpaceBetweenColumns(true);
+						reportBuilder.toXlsx(xlsExporter);
+					} else {
+						throw new IllegalArgumentException(
+								"Do not support output type " + outputForm);
+					}
+
+				} catch (Exception e) {
+					log.error("Exception while generating report ", e);
+					throw new MyCollabException(e);
+				}
+			}
+		});
+		threadExport.start();
+		return inStream;
+	}
+
+	abstract protected JRDataSource createDataSource();
+
+	private static JasperReportBuilder createReport(
+			ReportExportType outputForm, String reportTitle) {
 		JasperReportBuilder reportBuilder = report();
-		if (outputForm == PDF_OUTPUT) {
+		if (outputForm == ReportExportType.PDF) {
 			reportBuilder
 					.title(Templates.createTitleComponent(reportTitle))
 					.noData(Templates.createTitleComponent(reportTitle),
@@ -78,9 +144,9 @@ public abstract class ExportItemsStreamResource implements
 					.pageFooter(
 							cmp.pageXofY()
 									.setStyle(Templates.boldCenteredStyle));
-		} else if (outputForm == CSV_OUTPUT) {
+		} else if (outputForm == ReportExportType.CSV) {
 			reportBuilder.setIgnorePagination(true);
-		} else if (outputForm == EXCEL_OUTPUT) {
+		} else if (outputForm == ReportExportType.EXCEL) {
 			reportBuilder.setColumnTitleStyle(Templates.columnTitleStyle)
 					.addProperty(JasperProperty.EXPORT_XLS_FREEZE_ROW, "2")
 					.ignorePageWidth().ignorePagination();
@@ -98,82 +164,18 @@ public abstract class ExportItemsStreamResource implements
 
 		private ISearchableService<S> searchService;
 		private S searchCriteria;
-		private Class<T> classType;
 
 		public AllItems(String reportTitle, List<TableViewField> fields,
-				int outputForm, ISearchableService searchService,
+				ReportExportType outputForm, ISearchableService searchService,
 				S searchCriteria, Class<T> classType) {
-			super(reportTitle, fields, outputForm);
+			super(reportTitle, fields, outputForm, classType);
 			this.searchService = searchService;
 			this.searchCriteria = searchCriteria;
-			this.classType = classType;
 		}
 
 		@Override
-		public InputStream getStream() {
-
-			final PipedInputStream inStream = new PipedInputStream();
-			final PipedOutputStream outStream;
-
-			try {
-				outStream = new PipedOutputStream(inStream);
-			} catch (IOException ex) {
-				log.error("Can not create outstream file", ex);
-				return null;
-			}
-
-			Thread threadExport = new MyCollabThread(new Runnable() {
-				/**
-				 * @see java.lang.Runnable#run()
-				 */
-				@Override
-				public void run() {
-					try {
-						JasperReportBuilder reportBuilder = createReport(
-								outputForm, reportTitle);
-
-						// build columns of report
-						for (TableViewField field : fields) {
-
-							Field fieldCls = ClassUtils.getField(classType,
-									field.getField());
-							DRIDataType<Object, ? extends Object> jrType = type
-									.detectType(fieldCls.getType().getName());
-							reportBuilder.addColumn(col.column(field.getDesc(),
-									field.getField(), jrType).setWidth(
-									field.getDefaultWidth()));
-						}
-
-						reportBuilder
-								.setDataSource(new LazyLoadingDataSource());
-
-						if (outputForm == PDF_OUTPUT) {
-							reportBuilder.toPdf(outStream);
-						} else if (outputForm == CSV_OUTPUT) {
-							JasperCsvExporterBuilder csvExporter = export
-									.csvExporter(outStream);
-							reportBuilder.toCsv(csvExporter);
-						} else if (outputForm == EXCEL_OUTPUT) {
-							JasperXlsxExporterBuilder xlsExporter = export
-									.xlsxExporter(outStream)
-									.setDetectCellType(true)
-									.setIgnorePageMargins(true)
-									.setWhitePageBackground(false)
-									.setRemoveEmptySpaceBetweenColumns(true);
-							reportBuilder.toXlsx(xlsExporter);
-						} else {
-							throw new IllegalArgumentException(
-									"Do not support output type " + outputForm);
-						}
-
-					} catch (Exception e) {
-						log.error("Exception while generating report ", e);
-						throw new MyCollabException(e);
-					}
-				}
-			});
-			threadExport.start();
-			return inStream;
+		protected JRDataSource createDataSource() {
+			return new LazyLoadingDataSource();
 		}
 
 		private class LazyLoadingDataSource implements JRDataSource {
@@ -234,87 +236,37 @@ public abstract class ExportItemsStreamResource implements
 
 	}
 
-	public static class ListData<T> extends ExportItemsStreamResource {
-
-		private Class<T> classType;
+	public static class ListData<T> extends ExportItemsStreamResource<T> {
 		private List<T> data;
 
 		public ListData(String reportTitle, List<TableViewField> fields,
-				int outputForm, List<T> data, Class<T> classType) {
-			super(reportTitle, fields, outputForm);
+				ReportExportType outputForm, List<T> data, Class<T> classType) {
+			super(reportTitle, fields, outputForm, classType);
 			this.data = data;
 		}
 
 		@Override
-		public InputStream getStream() {
-			try {
-				final PipedInputStream inStream = new PipedInputStream();
-				final PipedOutputStream outStream;
-
-				try {
-					outStream = new PipedOutputStream(inStream);
-				} catch (IOException ex) {
-					log.error("Can not create outstream file", ex);
-					return null;
-				}
-
-				new Thread(new Runnable() {
-					/**
-					 * @see java.lang.Runnable#run()
-					 */
-					@Override
-					public void run() {
-						try {
-							JasperReportBuilder reportBuilder = report();
-
-							List<String> visibleColumns = new ArrayList<String>();
-							// build columns of report
-							for (TableViewField field : fields) {
-
-								Field fieldCls = ClassUtils.getField(classType,
-										field.getField());
-								DRIDataType<Object, ? extends Object> jrType = type
-										.detectType(fieldCls.getType()
-												.getName());
-								reportBuilder.addColumn(col.column(
-										field.getDesc(), field.getField(),
-										jrType));
-								visibleColumns.add(field.getField());
-							}
-
-							DRDataSource ds = new DRDataSource(visibleColumns
-									.toArray(new String[0]));
-							ds.add(data.toArray());
-							reportBuilder.setDataSource(ds);
-							if (outputForm == PDF_OUTPUT) {
-								reportBuilder.toPdf(outStream);
-							} else if (outputForm == CSV_OUTPUT) {
-								JasperCsvExporterBuilder csvExporter = export
-										.csvExporter(outStream);
-								reportBuilder.toCsv(csvExporter);
-							} else if (outputForm == EXCEL_OUTPUT) {
-								JasperXlsxExporterBuilder xlsExporter = export
-										.xlsxExporter(outStream)
-										.setDetectCellType(true)
-										.setIgnorePageMargins(true)
-										.setWhitePageBackground(false)
-										.setRemoveEmptySpaceBetweenColumns(true);
-								reportBuilder.toXlsx(xlsExporter);
-							} else {
-								throw new IllegalArgumentException(
-										"Do not support output type "
-												+ outputForm);
-							}
-						} catch (Exception e) {
-							log.error("Error while exporting pdf", e);
-						}
-					}
-				}).start();
-
-				return inStream;
-			} catch (Exception e) {
-				throw new MyCollabException(e);
+		protected JRDataSource createDataSource() {
+			List<String> visibleColumns = new ArrayList<String>();
+			for (TableViewField field : fields) {
+				visibleColumns.add(field.getField());
 			}
+
+			DRDataSource ds = new DRDataSource(
+					visibleColumns.toArray(new String[0]));
+			try {
+				for (Object item : data) {
+					Object[] tempVals = new Object[visibleColumns.size()];
+					for (int i = 0; i < tempVals.length; i++) {
+						tempVals[i] = PropertyUtils.getProperty(item,
+								visibleColumns.get(i));
+					}
+					ds.add(tempVals);
+				}
+			} catch (Exception e) {
+				log.error("Error while generating data source", e);
+			}
+			return ds;
 		}
 	}
 }

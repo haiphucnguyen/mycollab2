@@ -59,6 +59,7 @@ public class ResourceServiceImpl implements ResourceService {
 		Folder folder = new Folder();
 		String folderPath = baseFolderPath + "/" + folderName;
 		folder.setPath(folderPath);
+		folder.setName(folderName);
 		folder.setCreatedBy(createdBy);
 		folder.setCreated(new GregorianCalendar());
 		contentJcrDao.createFolder(folder, createdBy);

@@ -6,6 +6,10 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +46,7 @@ import com.esofthead.template.velocity.TemplateEngine;
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		HttpRequestHandler {
 	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/OutsideMemberAcceptInvitationPage.mt";
+	private static String EXPIER_PAGE = "templates/page/ExpirePage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -61,7 +66,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 	@Override
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// email,projectId,sAccountId,projectRoleId, inviterName
+		// email,projectId,sAccountId,projectRoleId, inviterName , inviterEmail,
+		// timeStr
 		String pathInfo = request.getPathInfo();
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
@@ -86,7 +92,39 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						pathVariables.indexOf("/")));
 				pathVariables = pathVariables.substring((projectRoleId + "")
 						.length() + 1);
-				String inviterName = pathVariables;
+
+				String inviterName = pathVariables.substring(0,
+						pathVariables.indexOf("/"));
+				pathVariables = pathVariables
+						.substring(inviterName.length() + 1);
+
+				String inviterEmail = pathVariables.substring(0,
+						pathVariables.indexOf("/"));
+				pathVariables = pathVariables
+						.substring(inviterEmail.length() + 1);
+
+				String timeStr = pathVariables;
+				DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+				try {
+					Date invitedDate = df.parse(timeStr);
+
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.DATE, -7);
+					Date dateBefore7Days = cal.getTime();
+
+					if (invitedDate.compareTo(dateBefore7Days) < 0) { // expire
+						// print out page expire
+						String html = generateExpirePage(inviterName,
+								inviterEmail);
+						PrintWriter out = response.getWriter();
+						out.println(html);
+						return;
+					}
+				} catch (ParseException e) {
+					PrintWriter out = response.getWriter();
+					out.println("Ooh Sorry! Please try again later. Maybe has any problems which your Internet connection");
+					return;
+				}
 
 				log.debug("Checking Member status --------");
 				User user = userService.findUserByUserName(email);
@@ -103,6 +141,33 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);
+	}
+
+	private String generateExpirePage(String inviterEmail, String inviterName) {
+		TemplateContext context = new TemplateContext();
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+							.getClassLoader().getResourceAsStream(EXPIER_PAGE),
+					"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(
+					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+							.getClassLoader().getResourceAsStream(EXPIER_PAGE));
+		}
+		context.put("inviterEmail", inviterEmail);
+		context.put("inviterName", inviterName);
+
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+		TemplateEngine.evaluate(context, writer, "log task", reader);
+		return writer.toString();
 	}
 
 	private void handleMemberInviteWithExistAccount(String username,

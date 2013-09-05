@@ -82,6 +82,7 @@ public class MilestoneServiceImpl extends
 		RelayEmailNotification relayNotification = new RelayEmailNotification();
 		relayNotification.setChangeby(username);
 		relayNotification.setChangecomment("");
+		relayNotification.setAction(action);
 		relayNotification.setSaccountid(record.getSaccountid());
 		relayNotification.setType(MonitorTypeConstants.PRJ_MILESTONE);
 		relayNotification

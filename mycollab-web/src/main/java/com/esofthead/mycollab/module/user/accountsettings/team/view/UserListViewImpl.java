@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -21,11 +21,12 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -69,7 +70,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 				new TableViewField("User Name", "username",
 						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
 						"Email", "email", UIConstants.TABLE_EMAIL_WIDTH),
-				new TableViewField("Last Accessed Time", "lastAccessedTime",
+				new TableViewField("Last Accessed Time", "lastaccessedtime",
 						UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		this.tableItem
@@ -114,13 +115,25 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.USER_USER));
-		
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail", "Mail");
-		this.tableActionControls.addOptionItem("export", "Export");
+
+		this.tableActionControls = new PopupButtonControl(
+				PopupActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
@@ -159,7 +172,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 	}
 
 	@Override
-	public IPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable() {
+	public AbstractPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable() {
 		return this.tableItem;
 	}
 }

@@ -47,7 +47,7 @@
 }
 
 </style>
-<title>Member accept the invitation page</title>
+<title>Expire to registry</title>
 </head>
 <body style="height:100%;">
 	<div style="height: 100%; padding-top:100px; padding-left: 150px;">
@@ -59,17 +59,11 @@
 						<p><span style="font-style:italic; font-size:14px;">&copy;2010-2013 MyCollab, LLC. All rights reserved.</span></p>
 					</div>
 				</td>
-				<td style="width: 600px; display: inline-block; vertical-align: top;">
+				<td style="width: 600px; display: inline-block; vertical-align: center;">
 					<div style="display: block; padding: 40px 8px 8px 30px;">
-		  				 Welcome <span style="font-style:italic; font-size:14px;">$email</span>.<br>
-						 Congratulations to join MyCollab!
-						<br><br>
-							Password: 
-						<br>
-		   				<input id="password" size="30" maxlength="50" name="password" type="password" />
+		  				Sorry! You only can accept the invitation during 7 days. Please contact your Project Admin for renew the invitation.
 		    			<div style="padding-top: 10px;">
-							<button class="v-button-bluebtn" type="button" onclick="return createAccount();">Create</button>
-							<button class="v-button-bluebtn" type="button" onclick="return cancel();">Cancel</button>
+							<button class="v-button-bluebtn" type="button" onclick="return login();">Login</button>
 		     			</div>    
 					</div>
 				</td>
@@ -77,45 +71,12 @@
 		</table>
 	</div>	
 	<div class="container"></div>
-	<input type="hidden" id="handelCreateAccountURL" value="$!handelCreateAccountURL">
-	<input type="hidden" id="projectId" value="$!projectId">
-	<input type="hidden" id="sAccountId" value="$!sAccountId">
-	<input type="hidden" id="email" value="$!email">
-	<input type="hidden" id="roleId" value="$!roleId">
-	
+	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
-	$(document).ready(function(){
-	});
-	function createAccount(){
-		if ($('#username').val() == ""){
-			alert("Please enter user name");
-			return;
-		}
-		var url = encodeURI($('#handelCreateAccountURL').val());
-		 $.ajax({
-		      type: 'POST',
-		      url: url,
-		      data : { email : $('#email').val().trim(),
-		      			password : $('#password').val().trim(), 
-		      			roleId : $('#roleId').val().trim(), 
-		      			projectId : $('#projectId').val().trim(),
-		      			sAccountId : $('#sAccountId').val()},
-		      success: function(data){
-		      	 if(data!=null){
-		      	 	if(data.length > 0){
-		      	 		alert(data);
-		      	 	}else{
-		      	 		alert("Your account has been created.");
-		      	 		window.location.assign("$!projectLinkURL");
-		      	 	}
-		      	 }
-		      }
-		});
-	}
-	function cancel(){
-		window.location.assign("$!projectLinkURL");
+	function login(){
+		window.location.assign("$!loginURL");
 	}
 </script>				
 </html>

@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.project.esb.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +68,9 @@ public class InviteOutsideProjectMemberListenerImpl implements
 
 		String subdomain = projectService.getSubdomainOfProject(projectId);
 
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = new Date();
+
 		for (String email : emails) {
 			templateGenerator.putVariable(
 					"urlAccept",
@@ -71,7 +78,9 @@ public class InviteOutsideProjectMemberListenerImpl implements
 							+ "project/member/invitation/confirm_invite/"
 							+ UrlEncodeDecoder.encode(email + "/" + projectId
 									+ "/" + sAccountId + "/" + projectRoleId
-									+ "/" + inviterUserName));
+									+ "/" + inviterUserName + "/"
+									+ user.getEmail() + "/"
+									+ dateFormat.format(date)));
 
 			templateGenerator.putVariable(
 					"urlDeny",

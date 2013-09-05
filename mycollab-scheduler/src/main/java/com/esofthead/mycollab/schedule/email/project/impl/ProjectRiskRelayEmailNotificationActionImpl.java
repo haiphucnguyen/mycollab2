@@ -63,6 +63,9 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				risk.getProjectid());
+		hyperLinks.put("riskURL",
+				linkGenerator.generateRiskPreviewFullLink(risk.getId()));
+
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
 		hyperLinks.put("raiseUserUrl", linkGenerator
 				.generateUserPreviewFullLink(risk.getRaisedByUserFullName()));

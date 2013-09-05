@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -12,7 +13,6 @@ import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -299,7 +299,7 @@ public class AccountSearchPanel extends
 
             this.myItemCheckbox = new CheckBox(
                     LocalizationHelper
-                            .getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
+                            .getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
             this.myItemCheckbox.setWidth("75px");
             UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
                     Alignment.MIDDLE_CENTER);
@@ -311,7 +311,7 @@ public class AccountSearchPanel extends
 
             final Button cancelBtn = new Button(
                     LocalizationHelper
-                            .getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+                            .getMessage(GenericI18Enum.BUTTON_CLEAR));
             cancelBtn.setStyleName(UIConstants.THEME_LINK);
             cancelBtn.addStyleName("cancel-button");
             cancelBtn.addListener(new Button.ClickListener() {
@@ -329,7 +329,7 @@ public class AccountSearchPanel extends
 
             final Button advancedSearchBtn = new Button(
                     LocalizationHelper
-                            .getMessage(CrmCommonI18nEnum.BUTTON_ADVANCED_SEARCH),
+                            .getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
                     new Button.ClickListener() {
                         @Override
                         public void buttonClick(final ClickEvent event) {
