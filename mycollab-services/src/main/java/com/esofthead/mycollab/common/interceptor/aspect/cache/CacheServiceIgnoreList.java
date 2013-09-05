@@ -14,15 +14,16 @@ import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberListener;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
+import com.esofthead.mycollab.module.user.service.UserService;
 
 public class CacheServiceIgnoreList {
 	static List<Class> blacklistCls = Arrays.asList(new Class[] {
-			RelayEmailNotificationService.class, MonitorItemService.class,
-			BugRelatedItemService.class, RawContentServiceFactoryBean.class,
-			ResourceService.class, DeleteProjectListener.class,
-			DeleteProjectMemberListener.class, ExternalResourceService.class,
-			ContentActivityLogService.class, ExternalDriveService.class,
-			ResourceMover.class });
+			UserService.class, RelayEmailNotificationService.class,
+			MonitorItemService.class, BugRelatedItemService.class,
+			RawContentServiceFactoryBean.class, ResourceService.class,
+			DeleteProjectListener.class, DeleteProjectMemberListener.class,
+			ExternalResourceService.class, ContentActivityLogService.class,
+			ExternalDriveService.class, ResourceMover.class });
 
 	static boolean isInBlackList(Class cls) {
 		return blacklistCls.contains(cls);
