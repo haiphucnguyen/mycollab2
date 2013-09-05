@@ -4,13 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.crm.view.account.MassUpdateRiskWindow;
-import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
@@ -18,203 +13,57 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
-import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
-import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class RiskListPresenter extends AbstractPresenter<RiskListView>
+public class RiskListPresenter extends
+		ListSelectionPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
 		implements ListPresenter<RiskSearchCriteria>, MassUpdatePresenter<Risk> {
 
 	private static final long serialVersionUID = 1L;
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"riskname", "assignedToUserFullName", "datedue", "level" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Name",
-			"Assigned to", "Due Date", "Level" };
 	private RiskService riskService;
-	private RiskSearchCriteria searchCriteria;
-	private boolean isSelectAll = false;
 
 	public RiskListPresenter() {
 		super(RiskListView.class);
 
 		riskService = AppContext.getSpringBean(RiskService.class);
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
-
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
-
-				checkWhetherEnableTableActionControl();
-			}
-		});
-
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<RiskSearchCriteria>() {
-					@Override
-					public void onSearch(RiskSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
-
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleRisk> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleRisk item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
-
-						checkWhetherEnableTableActionControl();
-
-					}
-
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-				});
-
 		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialogExt.show(
-									view.getWindow(),
-									LocalizationHelper.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											SiteConfiguration.getSiteName()),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
+				new DefaultPopupActionHandler(this) {
 
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteSelectedItems();
-											}
-										}
-									});
-						} else if ("mail".equals(id)) {
+					@Override
+					protected void onSelectExtra(String id, String caption) {
+						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
-						} else if ("export".equals(id)) {
-							Resource res = null;
 
-							if (isSelectAll) {
-								res = new StreamResource(
-										new ExportCsvStreamResource.AllItems<RiskSearchCriteria>(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES,
-												AppContext
-														.getSpringBean(RiskService.class),
-												searchCriteria), "export.csv",
-										view.getApplication());
-							} else {
-								List<SimpleRisk> tableData = view
-										.getPagedBeanTable()
-										.getCurrentDataList();
-								res = new StreamResource(
-										new ExportCsvStreamResource.ListData(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES, tableData),
-										"export.csv", view.getApplication());
-							}
-
-							view.getWidget().getWindow().open(res, "_blank");
-						} else if ("massUpdate".equals(id)) {
+						} else if (PopupActionHandler.MASS_UPDATE_ACTION
+								.equals(id)) {
 							MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(
 									"Mass Update Risk", RiskListPresenter.this);
 							view.getWindow().addWindow(massUpdateWindow);
 						}
-					}
-				});
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleRisk>() {
+					}
+
 					@Override
-					public void onSelect(SimpleRisk item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+					protected String getReportTitle() {
+						return "Risk List";
+					}
 
-						checkWhetherEnableTableActionControl();
+					@Override
+					protected Class getReportModelClassType() {
+						return SimpleRisk.class;
 					}
 				});
-	}
-
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleRisk item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
-
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleRisk item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
 	}
 
 	@Override
@@ -235,13 +84,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 	}
 
 	@Override
-	public void doSearch(RiskSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-
-	private void deleteSelectedItems() {
+	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
 			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
@@ -287,5 +130,10 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView>
 			riskService.updateBySearchCriteria(value, searchCriteria);
 			doSearch(searchCriteria);
 		}
+	}
+
+	@Override
+	public ISearchableService<RiskSearchCriteria> getSearchService() {
+		return AppContext.getSpringBean(RiskService.class);
 	}
 }

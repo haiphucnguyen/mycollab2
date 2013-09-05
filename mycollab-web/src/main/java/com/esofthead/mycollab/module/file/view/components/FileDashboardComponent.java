@@ -16,7 +16,6 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
@@ -1062,7 +1061,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				final Button cancelBtn = new Button(
 						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+								.getMessage(GenericI18Enum.BUTTON_CLEAR));
 				cancelBtn.setStyleName(UIConstants.THEME_LINK);
 				cancelBtn.addStyleName("cancel-button");
 				cancelBtn.addListener(new Button.ClickListener() {

@@ -112,7 +112,7 @@ input[type="text"], input[type="password"]{
 	function updateInfoAction(){
 		$('#requireMsg').html("").hide();
 		if ($('#password').val() == "" || $('#repassword').val() == ""){
-			$('#requireMsg').html("Please enter password");
+			alert("Please enter password");
 			return;
 		}
 		var url = encodeURI($('#redirectURL').val());
@@ -126,7 +126,7 @@ input[type="text"], input[type="password"]{
 		      success: function(data){
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
-		      	 		$('#requireMsg').html(data).show();
+		      	 		alert(data);
 		      	 	}else{
 		      	 		alert("Your account has been updated.");
 		      	 		window.location.assign("$!loginURL");
