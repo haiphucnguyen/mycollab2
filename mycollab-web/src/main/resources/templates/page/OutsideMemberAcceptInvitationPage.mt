@@ -61,7 +61,7 @@
 				</td>
 				<td style="width: 600px; display: inline-block; vertical-align: top;">
 					<div style="display: block; padding: 40px 8px 8px 30px;">
-		  				 <a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}welcome.png" height="25" width="50"></a> $email.<br>
+		  				 Welcome <span style="font-style:italic; font-size:14px;">$email</span>.<br>
 						 Congratulations to join MyCollab!
 						<br><br>
 							Password: 

@@ -78,6 +78,18 @@ public class MailLinkGenerator {
 				+ "account/user/preview/" + UrlEncodeDecoder.encode(username);
 	}
 
+	public String generateRiskPreviewFullLink(Integer riskId) {
+		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
+				+ ProjectLinkUtils.generateRiskPreview(projectId, riskId);
+	}
+
+	public String generateProblemPreviewFullLink(Integer problemId) {
+		return siteUrl
+				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ ProjectLinkUtils.generateProblemPreviewLink(projectId,
+						problemId);
+	}
+
 	public String getSiteUrl() {
 		return siteUrl;
 	}

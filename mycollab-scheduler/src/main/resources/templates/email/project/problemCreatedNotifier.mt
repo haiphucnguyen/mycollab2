@@ -23,7 +23,7 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Issue name:&nbsp;</td>
-									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.issuename</a></td>
+									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.problemURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.issuename</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Raised by:&nbsp;</td>
