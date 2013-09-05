@@ -131,7 +131,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				exportButtonControl.setPopupVisible(false);
+				exportButtonControl.setPopupVisible(true);
 
 			}
 		});
@@ -224,8 +224,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 				StreamResource res = new StreamResource(
 						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, tableItem.getDisplayColumns(),
-								ReportExportType.CSV,
-								AppContext.getSpringBean(BugService.class),
+								ReportExportType.CSV, AppContext
+										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class), "export.csv",
 						BugListViewImpl.this.getApplication());
 				BugListViewImpl.this.getWindow().open(res, "_blank");
