@@ -4518,6 +4518,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	color: white;
 }
 
+.v-Notification.v-Notification-warning h1, .v-Notification.v-Notification-warning p {
+	color: rgb(45,45,45);
+}
+
 .v-Notification p {
 	padding: 5px 3px;
 	display: block;
