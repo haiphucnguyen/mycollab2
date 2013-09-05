@@ -170,7 +170,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 		@Override
 		public void onSelect(String id, String caption) {
-			if ("delete".equals(id)) {
+			if (PopupActionHandler.DELETE_ACTION.equals(id)) {
 				ConfirmDialogExt
 						.show(presenter.getView().getWindow(),
 								LocalizationHelper.getMessage(
@@ -193,7 +193,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 									}
 								});
 
-			} else if ("exportCsv".equals(id)) {
+			} else if (PopupActionHandler.EXPORT_CSV_ACTION.equals(id)) {
 				Resource res = null;
 				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 						.getView()).getPagedBeanTable();
@@ -218,7 +218,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				}
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");
-			} else if ("exportPdf".equals(id)) {
+			} else if (PopupActionHandler.EXPORT_PDF_ACTION.equals(id)) {
 				Resource res = null;
 				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 						.getView()).getPagedBeanTable();
@@ -245,7 +245,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				}
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");
-			} else if ("exportExcel".equals(id)) {
+			} else if (PopupActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
 				Resource res = null;
 				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 						.getView()).getPagedBeanTable();

@@ -17,11 +17,12 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -115,13 +116,21 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 				.canAccess(RolePermissionCollections.CRM_LEAD));
 
 		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail",
+		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		this.tableActionControls.addOptionItem("export",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
-		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
-				.canWrite(RolePermissionCollections.CRM_LEAD));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_CSV_ACTION, LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_PDF_ACTION, LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_PDF));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_EXCEL));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.MASS_UPDATE_ACTION, LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE),
+				AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
 
 		this.tableActionControls.setVisible(false);
 
@@ -200,7 +209,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	}
 
 	@Override
-	public IPagedBeanTable<LeadSearchCriteria, SimpleLead> getPagedBeanTable() {
+	public AbstractPagedBeanTable<LeadSearchCriteria, SimpleLead> getPagedBeanTable() {
 		return this.tableItem;
 	}
 }

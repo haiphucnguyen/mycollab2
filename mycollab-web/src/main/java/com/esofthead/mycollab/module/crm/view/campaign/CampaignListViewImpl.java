@@ -21,7 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -119,8 +119,13 @@ public class CampaignListViewImpl extends AbstractView implements
 		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		this.tableActionControls.addOptionItem("mail",
 				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		this.tableActionControls.addOptionItem("export",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
+		this.tableActionControls.addOptionItem("exportCsv", LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
+		this.tableActionControls.addOptionItem("exportPdf", LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_PDF));
+		this.tableActionControls.addOptionItem("exportExcel",
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_EXCEL));
 		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
@@ -204,7 +209,7 @@ public class CampaignListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public IPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable() {
+	public AbstractPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable() {
 		return this.tableItem;
 	}
 }
