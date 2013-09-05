@@ -141,7 +141,7 @@ public class ContactListViewImpl extends AbstractView implements
 
 		this.tableActionControls
 				.addOptionItem(
-						"massUpdate",
+						PopupActionHandler.MASS_UPDATE_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
 						AppContext

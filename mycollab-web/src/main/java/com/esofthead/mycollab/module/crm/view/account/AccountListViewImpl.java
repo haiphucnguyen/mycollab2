@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -76,19 +77,28 @@ public class AccountListViewImpl extends AbstractView implements
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail",
+		this.tableActionControls = new PopupButtonControl(
+				PopupActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls.addOptionItem("exportCsv", LocalizationHelper
-				.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls.addOptionItem("exportPdf", LocalizationHelper
-				.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem("exportExcel",
-				LocalizationHelper
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
-		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(GenericI18Enum.BUTTON_MASSUPDATE), AppContext
-				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+		this.tableActionControls
+				.addOptionItem(
+						PopupActionHandler.MASS_UPDATE_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
+						AppContext
+								.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		this.tableActionControls.setVisible(false);
 
 		layout.addComponent(this.tableActionControls);
