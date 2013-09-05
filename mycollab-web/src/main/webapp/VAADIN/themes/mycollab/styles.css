@@ -2216,13 +2216,18 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .v-splitbutton-esofthead .v-button-esofthead.graybtn {
 	background-color: #b2b2b2;
-	border-color: rgb(47, 91, 183);
+	border-color: rgb(56, 56, 56);
 	margin: 0px;
 }
 
 .v-splitbutton-esofthead .v-button-esofthead:active {
 	background: none no-repeat 0 0 rgb(161, 161, 161);
 	border-color: rgb(171, 171, 171);
+}
+
+.v-splitbutton-esofthead .v-button-esofthead.graybtn:active {
+	border-color: rgb(56,56,56);
+	padding: 3px 8px;
 }
 
 .v-splitbutton-esofthead .v-button.v-button-esofthead .v-button-wrap,.v-splitbutton-esofthead .v-button.v-button-esofthead:active .v-button-wrap

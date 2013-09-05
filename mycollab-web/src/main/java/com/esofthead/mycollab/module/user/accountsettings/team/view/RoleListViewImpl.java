@@ -12,6 +12,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -26,7 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -165,12 +166,12 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 	}
 
 	@Override
-	public HasSelectableItemHandlers<Role> getSelectableItemHandlers() {
+	public HasSelectableItemHandlers<SimpleRole> getSelectableItemHandlers() {
 		return this.tableItem;
 	}
 
 	@Override
-	public IPagedBeanTable<RoleSearchCriteria, Role> getPagedBeanTable() {
+	public AbstractPagedBeanTable<RoleSearchCriteria, SimpleRole> getPagedBeanTable() {
 		return this.tableItem;
 	}
 }
