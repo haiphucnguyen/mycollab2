@@ -27,7 +27,8 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 	protected void loadMonitorItems() {
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
-		searchCriteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_TASK));
+		searchCriteria.setType(new StringSearchField(
+				MonitorTypeConstants.PRJ_TASK));
 		tableItem.setSearchCriteria(searchCriteria);
 	}
 
@@ -41,6 +42,7 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 			monitorItem.setType(MonitorTypeConstants.PRJ_TASK);
 			monitorItem.setTypeid(bean.getId());
 			monitorItem.setUser(username);
+			monitorItem.setSaccountid(AppContext.getAccountId());
 			monitorItemService.saveWithSession(monitorItem,
 					AppContext.getUsername());
 			return true;
@@ -70,7 +72,8 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 
 	@Override
 	protected boolean isEnableAdd() {
-		return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS);
+		return CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.TASKS);
 	}
 
 }
