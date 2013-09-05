@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
@@ -114,27 +115,30 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
 		this.tableActionControls = new PopupButtonControl(
 				PopupActionHandler.DELETE_ACTION, deleteBtn);
 		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		this.tableActionControls.addOptionItem(
-				PopupActionHandler.EXPORT_CSV_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
-		this.tableActionControls.addOptionItem(
-				PopupActionHandler.EXPORT_PDF_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_PDF));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 		this.tableActionControls.addOptionItem(
 				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_EXCEL));
-		this.tableActionControls.addOptionItem(
-				PopupActionHandler.MASS_UPDATE_ACTION, LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE),
-				AppContext.canWrite(RolePermissionCollections.CRM_CASE));
+						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.MASS_UPDATE_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
+						AppContext.canWrite(RolePermissionCollections.CRM_CASE));
 
 		this.tableActionControls.setVisible(false);
 

@@ -17,7 +17,6 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
@@ -83,7 +82,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
 		final Button searchBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH),
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SEARCH),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -94,7 +93,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 		final Button clearBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR),
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -105,7 +104,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_CENTER);
 		final Button basicSearchBtn = new Button(
 				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_BASIC_SEARCH),
+						.getMessage(GenericI18Enum.BUTTON_BASIC_SEARCH),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -138,7 +137,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		// tableActionControll for Update group controls
 		tableActionControls = new PopupButtonControl("updateSearch", updateBtn);
 		tableActionControls.addOptionItem("delete",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		tableActionControls.addOptionItem("new", "New");
 		tableActionControls.setVisible(true);
 

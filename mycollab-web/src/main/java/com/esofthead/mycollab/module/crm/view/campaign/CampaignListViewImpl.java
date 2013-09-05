@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -112,23 +114,32 @@ public class CampaignListViewImpl extends AbstractView implements
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_CAMPAIGN));
 
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail",
-				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
-		this.tableActionControls.addOptionItem("exportCsv", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_CSV));
-		this.tableActionControls.addOptionItem("exportPdf", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem("exportExcel",
-				LocalizationHelper
-						.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT_EXCEL));
-		this.tableActionControls.addOptionItem("massUpdate", LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.BUTTON_MASSUPDATE), AppContext
-				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
+		this.tableActionControls = new PopupButtonControl(
+				PopupActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+		this.tableActionControls
+				.addOptionItem(
+						PopupActionHandler.MASS_UPDATE_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
+						AppContext
+								.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
 
 		this.tableActionControls.setVisible(false);
 

@@ -106,11 +106,12 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				exportButtonControl.setPopupVisible(false);
+				exportButtonControl.setPopupVisible(true);
 
 			}
 		});
 		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
