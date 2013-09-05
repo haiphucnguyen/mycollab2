@@ -121,6 +121,9 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						return;
 					}
 				} catch (ParseException e) {
+					PrintWriter out = response.getWriter();
+					out.println("Ooh Sorry! Please try again later. Maybe has any problems which your Internet connection");
+					return;
 				}
 
 				log.debug("Checking Member status --------");
