@@ -2111,24 +2111,28 @@ a.nivo-prevNav {
 }
 
 .sig-mid-left input[type="submit"] {
-	font-size: 17px;
-	color: #FFF;
-	border-color: #116093;
-	border-radius: 5px;
-	padding: 8px 15px;
-	display: block;
-	margin: 0 auto;
-	cursor: pointer;
-	width: 170px;
-	height: 40px;
-	background-color: #228bc9;
-	margin-bottom: 26px;
-	clear: both;
-	font-family: 'verdana';
+	background-color: #1680C5;
+    border-color: #0C5D91;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    height: 35px;
+    letter-spacing: 1px;
+    line-height: 31px;
+    padding: 0;
+    text-decoration: none;
+    width: 170px;
+    font-family: 'verdana';
+    margin-left: 160px;
 }
 
 .sig-mid-left input[type="submit"]:hover {
 	opacity: 0.7;
+	cursor: pointer;
 }
 
 .sig-mid-right {
@@ -2252,18 +2256,23 @@ a.nivo-prevNav {
 }
 
 .signin-box [type="submit"] {
-	background-color: #4196C7;
-	border-color: #506A75;
-	border-radius: 5px;
-	-webkit-border-radius: 5px; 
-	color: #FFF;
-	height: 28px;
-	width: 200px;
-	font-size: 15px;
-	float: right;
-	cursor: pointer;
-	padding-bottom: 3px;
-	font-family: 'Arial';
+	background-color: #1680C5;
+    border-color: #0C5D91;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+    height: 28px;
+    letter-spacing: 1px;
+    line-height: 31px;
+    margin-right: 1px;
+    padding: 0;
+    text-decoration: none;
+    width: 200px;
+    font-family: 'verdana';
 }
 
 .signin-lblemail {
