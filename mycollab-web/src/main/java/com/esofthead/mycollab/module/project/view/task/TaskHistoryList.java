@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 public class TaskHistoryList extends HistoryLogComponent {
@@ -27,7 +28,8 @@ public class TaskHistoryList extends HistoryLogComponent {
 		this.generateFieldDisplayHandler("isestimated", "Is Estimated");
 		this.generateFieldDisplayHandler("assignuser", LocalizationHelper
 				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
-		this.generateFieldDisplayHandler("tasklistid", "Task List");
+		this.generateFieldDisplayHandler("tasklistid", LocalizationHelper
+				.getMessage(TaskI18nEnum.FORM_TASKGROUP_FIELD));
 		this.generateFieldDisplayHandler("percentagecomplete", "Complete(%)");
 		this.generateFieldDisplayHandler("notes", "Notes");
 	}

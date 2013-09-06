@@ -133,7 +133,7 @@ public class TaskStatusComponent extends Depot {
 					ButtonLink projectLink = new ButtonLink(taskCount
 							.getProjectName()
 							+ " - "
-							+ taskCount.getTaskCount() + " openned items",
+							+ taskCount.getTaskCount() + " open tasks",
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 

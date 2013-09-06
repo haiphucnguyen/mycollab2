@@ -98,10 +98,6 @@ public class TaskGroupAddWindow extends Window {
 						"167px", Alignment.MIDDLE_LEFT);
 
 				final VerticalLayout bodyLayout = new VerticalLayout();
-				// final Label organizationHeader = new Label(
-				// "Task List Information");
-				// organizationHeader.setStyleName("h2");
-				// bodyLayout.addComponent(organizationHeader);
 				this.informationLayout.getLayout().setMargin(false);
 				this.informationLayout.getLayout().setWidth("100%");
 				this.informationLayout.getLayout().addStyleName(
