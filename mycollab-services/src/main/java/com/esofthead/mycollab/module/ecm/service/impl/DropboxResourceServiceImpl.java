@@ -217,25 +217,9 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 				null);
 		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
 		try {
-			Double sizeDouble = content.getSize() * 1024;
-			client.uploadFile(content.getPath(), DbxWriteMode.add(),
-					sizeDouble.longValue(), in);
+			client.uploadFile(content.getPath(), DbxWriteMode.add(), -1, in);
 		} catch (Exception e) {
-			// That is cheat code ... must fix!!
-			String errorStr = e.getMessage();
-			int startindex = errorStr.indexOf("but you wrote ")
-					+ ("but you wrote ").length();
-			int endindex = errorStr.lastIndexOf(" bytes");
-			if (startindex != -1) {
-				String exactlyNumBytes = errorStr.substring(startindex,
-						endindex);
-				Long value = new Long(exactlyNumBytes);
-				try {
-					client.uploadFile(content.getPath(), DbxWriteMode.add(),
-							value, in);
-				} catch (Exception ee) {
-				}
-			}
+			log.error("Error when upload file to Dropbox", e);
 		}
 	}
 
