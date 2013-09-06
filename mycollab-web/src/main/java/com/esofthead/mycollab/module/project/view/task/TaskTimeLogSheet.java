@@ -26,6 +26,7 @@ public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
 		item.setLogvalue(getInvestValue());
 		item.setTypeid(bean.getId());
 		item.setType(MonitorTypeConstants.PRJ_TASK);
+		item.setSaccountid(AppContext.getAccountId());
 		item.setProjectid(CurrentProjectVariables.getProjectId());
 
 		itemTimeLoggingService.saveWithSession(item, AppContext.getUsername());
@@ -33,7 +34,8 @@ public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
 
 	@Override
 	protected void updateTimeRemain() {
-		ProjectTaskService bugService = AppContext.getSpringBean(ProjectTaskService.class);
+		ProjectTaskService bugService = AppContext
+				.getSpringBean(ProjectTaskService.class);
 		bean.setRemainestimate(getUpdateRemainTime());
 		bugService.updateWithSession(bean, AppContext.getUsername());
 	}
@@ -59,7 +61,8 @@ public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
 
 	@Override
 	protected boolean isEnableAdd() {
-		return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS);
+		return CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.TASKS);
 	}
 
 }

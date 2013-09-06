@@ -257,7 +257,9 @@ public class LeadSearchPanel extends
 			this.stateField = (TextField) gridLayout.addComponent(
 					new TextField(), "State", 2, 2);
 			this.userField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assigned User", 2, 3);
+					new UserListSelect(), LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 2,
+					3);
 
 			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();

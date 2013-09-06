@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -124,8 +126,12 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
 					this.informationLayout
 							.addComponent(field, "Campaign", 1, 4);
 				} else if (propertyId.equals("assignuser")) {
-					this.informationLayout.addComponent(field, "Assigned User",
-							1, 5);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									1, 5);
 				}
 			}
 		}

@@ -11,14 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.MonitorTypeConstants;
-import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.esb.BeanProxyBuilder;
-import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt;
@@ -31,7 +28,6 @@ import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberListe
 import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.project.ProjectMemberInviteNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
@@ -81,31 +77,6 @@ public class ProjectMemberServiceImpl extends
 	public SimpleProjectMember findMemberByUsername(String username,
 			int projectId, Integer sAccountId) {
 		return projectMemberMapperExt.findMemberByUsername(username, projectId);
-	}
-
-	@Override
-	public int saveWithSession(ProjectMember record, String username) {
-		if (record.getStatus() == null) {
-			record.setStatus(ProjectMemberStatusContants.VERIFICATING);
-		}
-		int recordId = super.saveWithSession(record, username);
-		if (recordId > 0) {
-			RelayEmailNotification relayNotification = new RelayEmailNotification();
-			relayNotification.setChangeby(username);
-			relayNotification.setChangecomment("");
-			int sAccountId = record.getSaccountid();
-			relayNotification.setSaccountid(sAccountId);
-			relayNotification.setType("invitationMember");
-			relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
-			relayNotification.setTypeid(recordId);
-			relayNotification.setExtratypeid(record.getProjectid());
-			relayNotification
-					.setEmailhandlerbean(ProjectMemberInviteNotificationAction.class
-							.getName());
-			relayEmailNotificationService.saveWithSession(relayNotification,
-					username);
-		}
-		return recordId;
 	}
 
 	@Override

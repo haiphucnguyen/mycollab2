@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -24,7 +25,7 @@ public interface RiskTableFieldDef {
 			"raisedByUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			LocalizationHelper.getMessage(RiskI18nEnum.FORM_ASSIGN_USER),
+			LocalizationHelper.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 			"assignedToUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField datedue = new TableViewField(

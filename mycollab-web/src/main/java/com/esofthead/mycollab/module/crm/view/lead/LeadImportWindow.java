@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.crm.view.lead;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVBooleanFormatter;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -40,7 +42,9 @@ public class LeadImportWindow extends EntityImportWindow<SimpleLead> {
 				new FieldMapperDef("otherphone", "Other Phone"),
 				new FieldMapperDef("mobile", "Mobile"),
 				new FieldMapperDef("fax", "Fax"),
-				new FieldMapperDef("assignuser", "Assign User"),
+				new FieldMapperDef("assignuser",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)),
 				new FieldMapperDef("status", "Status"),
 				new FieldMapperDef("source", "Source"),
 				new FieldMapperDef("website", "Website"),

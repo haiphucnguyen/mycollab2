@@ -187,8 +187,12 @@ public class WontFixExplainWindow extends Window {
 					this.informationLayout.addComponent(field, "Resolution", 0,
 							0);
 				} else if (propertyId.equals("assignuser")) {
-					this.informationLayout.addComponent(field, "Assign User",
-							0, 1);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									0, 1);
 				} else if (propertyId.equals("fixedVersions")) {
 					this.informationLayout.addComponent(field,
 							"Fixed Versions", 0, 2);

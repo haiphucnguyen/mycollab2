@@ -7,10 +7,12 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
@@ -112,9 +114,11 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("priority")) {
 				this.informationLayout.addComponent(field, "Priority", 1, 3);
 			} else if (propertyId.equals("assignuser")) {
-				this.informationLayout.addComponent(field, "Assign", 0, 4);
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 4);
 			} else if (propertyId.equals("tasklistid")) {
-				this.informationLayout.addComponent(field, "Task List", 1, 4);
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(TaskI18nEnum.FORM_TASKGROUP_FIELD), 1, 4);
 			} else if (propertyId.equals("percentagecomplete")) {
 				this.informationLayout.addComponent(field, "Complete(%)", 0, 5,
 						2, "100%", Alignment.MIDDLE_LEFT);

@@ -170,14 +170,14 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 
 	@Override
 	public void enableActionControls(final int numOfSelectedItems) {
-		this.tableActionControls.setEnabled(true);
+		this.tableActionControls.setVisible(true);
 		this.selectedItemsNumberLabel.setValue("Selected: "
 				+ numOfSelectedItems);
 	}
 
 	@Override
 	public void disableActionControls() {
-		this.tableActionControls.setEnabled(false);
+		this.tableActionControls.setVisible(false);
 		this.selectOptionButton.setSelectedChecbox(false);
 		this.selectedItemsNumberLabel.setValue("");
 	}

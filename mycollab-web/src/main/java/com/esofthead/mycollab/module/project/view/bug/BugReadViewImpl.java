@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
@@ -94,11 +95,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 					this.informationLayout.addComponent(field, "Logged by", 0,
 							6);
 				} else if (propertyId.equals("assignuserFullName")) {
-					this.informationLayout.addComponent(field, "Assigned to",
-							1, 6);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									1, 6);
 				} else if (propertyId.equals("milestoneName")) {
-					this.informationLayout.addComponent(field, "Phase", 0, 7,
-							2, "100%");
+					this.informationLayout.addComponent(field,
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.FORM_PHASE_FIELD),
+							0, 7, 2, "100%");
 				} else if (propertyId.equals("components")) {
 					this.informationLayout.addComponent(field, "Components", 0,
 							8, 2, "100%");

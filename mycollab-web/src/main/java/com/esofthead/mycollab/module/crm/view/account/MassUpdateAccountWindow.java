@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
@@ -116,7 +117,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 
 				this.informationLayout.addComponent(propertyId
 						.equals("assignuser"), field, LocalizationHelper
-						.getMessage(AccountI18nEnum.FORM_ASSIGNED_TO), 1, 1);
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 1);
 
 				this.addressLayout.addComponent(propertyId.equals("city"),
 						field, LocalizationHelper

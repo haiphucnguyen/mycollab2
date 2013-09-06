@@ -3,13 +3,16 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVBooleanFormatter;
 import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -35,16 +38,21 @@ public class ContactImportWindow extends EntityImportWindow<Contact> {
 				new FieldMapperDef("assistant", "Assistant"),
 				new FieldMapperDef("assistantphone", "Assistant Phone"),
 				new FieldMapperDef("leadsource", "Leader Source"),
-				new FieldMapperDef("officephone", "Phone Office"),
+				new FieldMapperDef(
+						"officephone",
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD)),
 				new FieldMapperDef("mobile", "Mobile"),
-				new FieldMapperDef("homephone", "Home phone"),
+				new FieldMapperDef("homephone", "Home Phone"),
 				new FieldMapperDef("otherphone", "Other Phone"),
 				new FieldMapperDef("fax", "Fax"),
 				new FieldMapperDef("birthday", "Birthday",
 						new CSVDateFormatter()),
 				new FieldMapperDef("iscallable", "Callable",
 						new CSVBooleanFormatter()),
-				new FieldMapperDef("assignuser", "Assign User"),
+				new FieldMapperDef("assignuser",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)),
 				new FieldMapperDef("primaddress", "Address"),
 				new FieldMapperDef("primcity", "City"),
 				new FieldMapperDef("primstate", "State"),
@@ -64,7 +72,8 @@ public class ContactImportWindow extends EntityImportWindow<Contact> {
 		ContactSearchCriteria contactSearchCriteria = new ContactSearchCriteria();
 		contactSearchCriteria.setContactName(new StringSearchField(""));
 		EventBus.getInstance().fireEvent(
-				new ContactEvent.GotoList(ContactListView.class,contactSearchCriteria));
+				new ContactEvent.GotoList(ContactListView.class,
+						contactSearchCriteria));
 	}
 
 }

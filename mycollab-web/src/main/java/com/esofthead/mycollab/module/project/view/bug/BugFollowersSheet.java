@@ -24,37 +24,39 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 	protected void loadMonitorItems() {
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
-		searchCriteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_BUG));
+		searchCriteria.setType(new StringSearchField(
+				MonitorTypeConstants.PRJ_BUG));
 		tableItem.setSearchCriteria(searchCriteria);
 	}
 
 	@Override
 	protected boolean saveMonitorItem(String username) {
-		
+
 		if (!monitorItemService.isUserWatchingItem(username,
 				MonitorTypeConstants.PRJ_BUG, bean.getId())) {
 
 			MonitorItem monitorItem = new MonitorItem();
-			monitorItem.setMonitorDate(new GregorianCalendar()
-					.getTime());
+			monitorItem.setMonitorDate(new GregorianCalendar().getTime());
 			monitorItem.setType(MonitorTypeConstants.PRJ_BUG);
 			monitorItem.setTypeid(bean.getId());
 			monitorItem.setUser(username);
+			monitorItem.setSaccountid(AppContext.getAccountId());
 			monitorItemService.saveWithSession(monitorItem,
 					AppContext.getUsername());
 			return true;
-			
+
 		}
 		return false;
 	}
 
 	@Override
 	protected void saveRelayNotification() {
-		
+
 	}
 
 	@Override
 	protected boolean isEnableAdd() {
-		return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
+		return CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS);
 	}
 }

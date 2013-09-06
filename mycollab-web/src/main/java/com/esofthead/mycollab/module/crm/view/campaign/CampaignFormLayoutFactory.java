@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -116,7 +118,8 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 					field, "Expected Revenue", 0, 2);
 
 			if (propertyId.equals("assignuser")) {
-				informationLayout.addComponent(field, "Assigned to", 1, 2);
+				informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 2);
 			} else if (propertyId.equals("description")) {
 				descriptionLayout.addComponent(field, "Description", 0, 0, 2,
 						"100%", Alignment.TOP_LEFT);

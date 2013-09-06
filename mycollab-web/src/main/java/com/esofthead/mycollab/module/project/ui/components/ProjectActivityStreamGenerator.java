@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
 public class ProjectActivityStreamGenerator {
@@ -85,9 +88,11 @@ public class ProjectActivityStreamGenerator {
 					"Actual Start Date", AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("actualenddate",
 					"Actual End Date", AuditLogShowHandler.DATE_FIELD);
-			this.generateFieldDisplayHandler("taskListName", "Task List");
+			this.generateFieldDisplayHandler("taskListName", LocalizationHelper
+					.getMessage(TaskI18nEnum.FORM_TASKGROUP_FIELD));
 			this.generateFieldDisplayHandler("assignUserFullName",
-					"Assign User");
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 
@@ -98,7 +103,9 @@ public class ProjectActivityStreamGenerator {
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("description", "Description");
 			this.generateFieldDisplayHandler("milestoneName", "Milestone");
-			this.generateFieldDisplayHandler("ownerFullName", "Assign User");
+			this.generateFieldDisplayHandler("ownerFullName",
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 
@@ -112,7 +119,9 @@ public class ProjectActivityStreamGenerator {
 					AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("description", "Description");
-			this.generateFieldDisplayHandler("ownerFullName", "Assign User");
+			this.generateFieldDisplayHandler("ownerFullName",
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 
@@ -133,7 +142,8 @@ public class ProjectActivityStreamGenerator {
 			this.generateFieldDisplayHandler("raisedByUserFullName",
 					"Raised By");
 			this.generateFieldDisplayHandler("assignedToUserFullName",
-					"Assign User");
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 
@@ -158,7 +168,8 @@ public class ProjectActivityStreamGenerator {
 			this.generateFieldDisplayHandler("raisedByUserFullName",
 					"Raised By");
 			this.generateFieldDisplayHandler("assignedUserFullName",
-					"Assign User");
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 

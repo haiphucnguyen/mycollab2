@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 
 @SuppressWarnings("serial")
@@ -16,7 +18,8 @@ public class CaseHistoryLogWindow extends HistoryLogWindow {
 		this.generateFieldDisplayHandler("reason", "Reason");
 		this.generateFieldDisplayHandler("subject", "Subject");
 		this.generateFieldDisplayHandler("email", "Email");
-		this.generateFieldDisplayHandler("assignuser", "Assigned User");
+		this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		this.generateFieldDisplayHandler("description", "Description");
 		this.generateFieldDisplayHandler("resolution", "Resolution");
 	}

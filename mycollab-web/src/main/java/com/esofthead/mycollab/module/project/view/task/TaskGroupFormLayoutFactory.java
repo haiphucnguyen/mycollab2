@@ -7,6 +7,8 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -33,8 +35,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout accountAddLayout = new AddViewLayout(this.title,
-				MyCollabResource
-				.newResource("icons/24/project/task.png"));
+				MyCollabResource.newResource("icons/24/project/task.png"));
 
 		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
 			accountAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));
@@ -98,8 +99,8 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 				this.informationLayout.addComponent(field, "Description", 0, 1,
 						2, "100%");
 			} else if (propertyId.equals("owner")) {
-				this.informationLayout.addComponent(field, "Responsible User",
-						0, 2);
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 2);
 			} else if (propertyId.equals("milestoneid")) {
 				this.informationLayout.addComponent(field, "Related Milestone",
 						1, 2);

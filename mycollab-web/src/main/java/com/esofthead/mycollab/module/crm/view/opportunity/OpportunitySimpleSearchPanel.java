@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -39,8 +41,14 @@ public class OpportunitySimpleSearchPanel extends
 		layoutSearchPane = new GridLayout(3, 3);
 		layoutSearchPane.setSpacing(true);
 
-		final ValueComboBox group = new ValueComboBox(false, new String[] {
-				"Name", "Account Name", "Sales Stage", "Assigned to" });
+		final ValueComboBox group = new ValueComboBox(
+				false,
+				new String[] {
+						"Name",
+						"Account Name",
+						"Sales Stage",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD) });
 		group.select("Name");
 		group.setImmediate(true);
 		group.addListener(new Property.ValueChangeListener() {
@@ -55,7 +63,8 @@ public class OpportunitySimpleSearchPanel extends
 					addTextFieldSearch();
 				} else if (searchType.equals("Sales Stage")) {
 					addTextFieldSearch();
-				} else if (searchType.equals("Assigned to")) {
+				} else if (searchType.equals(LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))) {
 					addUserListSelectField();
 				}
 			}

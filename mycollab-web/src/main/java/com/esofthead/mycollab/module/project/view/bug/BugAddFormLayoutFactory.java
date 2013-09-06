@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -61,7 +64,8 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("duedate")) {
 			this.informationLayout.addComponent(field, "Due Date", 0, 3);
 		} else if (propertyId.equals("assignuser")) {
-			this.informationLayout.addComponent(field, "Assignee", 0, 4);
+			this.informationLayout.addComponent(field, LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 4);
 		} else if (propertyId.equals("components")) {
 			this.informationLayout.addComponent(field, "Components", 1, 1);
 		} else if (propertyId.equals("affectedVersions")) {
@@ -84,7 +88,8 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 			this.informationLayout.addComponent(field, "Attachment", 0, 8, 2,
 					"100%");
 		} else if (propertyId.equals("milestoneid")) {
-			this.informationLayout.addComponent(field, "Phase", 1, 4);
+			this.informationLayout.addComponent(field, LocalizationHelper
+					.getMessage(TaskI18nEnum.FORM_PHASE_FIELD), 1, 4);
 		}
 
 	}

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -24,8 +26,7 @@ public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory 
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 taskAddLayout = new AddViewLayout2(title,
-				MyCollabResource
-				.newResource("icons/18/crm/task.png"));
+				MyCollabResource.newResource("icons/18/crm/task.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {
@@ -34,7 +35,7 @@ public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory 
 
 		informationLayout = new AssignmentInformationLayout();
 		taskAddLayout.addBody(informationLayout.getLayout());
-		
+
 		return taskAddLayout;
 	}
 
@@ -60,12 +61,12 @@ public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory 
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(2, 5,"100%", "167px",
+			informationLayout = new GridFormLayoutHelper(2, 5, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
 			informationLayout.getLayout().setWidth("100%");
 			informationLayout.getLayout().setMargin(false);
 			informationLayout.getLayout().setSpacing(false);
-			
+
 			layout.addComponent(informationLayout.getLayout());
 
 			return layout;
@@ -82,15 +83,18 @@ public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory 
 			} else if (propertyId.equals("priority")) {
 				informationLayout.addComponent(field, "Priority", 0, 3);
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 4, 2,"100%", Alignment.TOP_LEFT);
+				informationLayout.addComponent(field, "Description", 0, 4, 2,
+						"100%", Alignment.TOP_LEFT);
 			} else if (propertyId.equals("status")) {
 				informationLayout.addComponent(field, "Status", 1, 0);
 			} else if (propertyId.equals("type")) {
-				informationLayout.addComponent(field, "Related To", 1, 1,UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
+				informationLayout.addComponent(field, "Related To", 1, 1,
+						UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
 			} else if (propertyId.equals("contactid")) {
 				informationLayout.addComponent(field, "Contact", 1, 2);
 			} else if (propertyId.equals("assignuser")) {
-				informationLayout.addComponent(field, "Assigned to", 1, 3);
+				informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 3);
 			}
 
 		}

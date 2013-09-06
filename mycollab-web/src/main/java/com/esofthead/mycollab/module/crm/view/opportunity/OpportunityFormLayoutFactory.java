@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -24,8 +26,7 @@ public abstract class OpportunityFormLayoutFactory implements
 	@Override
 	public Layout getLayout() {
 		AddViewLayout2 opportunityAddLayout = new AddViewLayout2(title,
-				MyCollabResource
-				.newResource("icons/22/crm/opportunity.png"));
+				MyCollabResource.newResource("icons/22/crm/opportunity.png"));
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {
@@ -113,7 +114,8 @@ public abstract class OpportunityFormLayoutFactory implements
 			} else if (propertyId.equals("campaignid")) {
 				informationLayout.addComponent(field, "Campaign", 1, 4);
 			} else if (propertyId.equals("assignuser")) {
-				informationLayout.addComponent(field, "Assigned User", 1, 5);
+				informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 5);
 			} else if (propertyId.equals("description")) {
 				descriptionLayout.addComponent(field, "Description", 0, 0, 2,
 						"100%", Alignment.TOP_LEFT);

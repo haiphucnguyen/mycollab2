@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -63,7 +64,8 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 						.getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME), 0, 0);
 			} else if (propertyId.equals("phoneoffice")) {
 				informationLayout.addComponent(field, LocalizationHelper
-						.getMessage(AccountI18nEnum.FORM_PHONE_OFFICE), 1, 0);
+						.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD),
+						1, 0);
 			} else if (propertyId.equals("website")) {
 				informationLayout.addComponent(field, LocalizationHelper
 						.getMessage(AccountI18nEnum.FORM_WEBSITE), 0, 1);
@@ -91,13 +93,10 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(propertyId.equals("ownership"),
 					field, LocalizationHelper
 							.getMessage(AccountI18nEnum.FORM_OWNERSHIP), 1, 4);
-			informationLayout
-					.addComponent(
-							propertyId.equals("assignuser"),
-							field,
-							LocalizationHelper
-									.getMessage(AccountI18nEnum.FORM_ASSIGNED_TO),
-							0, 5);
+			informationLayout.addComponent(propertyId.equals("assignuser"),
+					field, LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
+					5);
 			informationLayout.addComponent(propertyId.equals("annualrevenue"),
 					field, LocalizationHelper
 							.getMessage(AccountI18nEnum.FORM_ANNUAL_REVENUE),

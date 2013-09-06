@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -27,87 +29,101 @@ public class ContactSimpleSearchPanel extends
 	private TextField textValueField;
 	private UserComboBox userBox;
 	private GridLayout layoutSearchPane;
-	
+
 	@Override
 	public void attach() {
 		super.attach();
 		this.setHeight("32px");
 		createBasicSearchLayout();
 	}
-	
+
 	private void createBasicSearchLayout() {
 		layoutSearchPane = new GridLayout(3, 3);
-        layoutSearchPane.setSpacing(true);
+		layoutSearchPane.setSpacing(true);
 
-        final ValueComboBox group = new ValueComboBox(false, new String[]{
-                    "Name", "Email", "Phone", "Assigned to"});
-        group.select("Name");
-        group.setImmediate(true);
-        group.addListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(ValueChangeEvent event) {
-                removeComponents();
-                String searchType = (String) group.getValue();
-                if (searchType.equals("Name")) {
-                    addTextFieldSearch();
-                } else if (searchType.equals("Email")) {
-                    addTextFieldSearch();
-                } else if (searchType.equals("Phone")) {
-                    addTextFieldSearch();
-                } else if (searchType.equals("Assigned to")) {
-                    addUserListSelectField();
-                }
-            }
-        });
+		final ValueComboBox group = new ValueComboBox(
+				false,
+				new String[] {
+						"Name",
+						"Email",
+						"Phone",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD) });
+		group.select("Name");
+		group.setImmediate(true);
+		group.addListener(new Property.ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				removeComponents();
+				String searchType = (String) group.getValue();
+				if (searchType.equals("Name")) {
+					addTextFieldSearch();
+				} else if (searchType.equals("Email")) {
+					addTextFieldSearch();
+				} else if (searchType.equals("Phone")) {
+					addTextFieldSearch();
+				} else if (searchType.equals(LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))) {
+					addUserListSelectField();
+				}
+			}
+		});
 
-        layoutSearchPane.addComponent(group, 1, 0);
-        layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
-        addTextFieldSearch();
+		layoutSearchPane.addComponent(group, 1, 0);
+		layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
+		addTextFieldSearch();
 
-        Button searchBtn = new Button("Search");
-        searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        searchBtn.addListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                searchCriteria = new ContactSearchCriteria();
-                searchCriteria.setSaccountid(new NumberSearchField(
-                        SearchField.AND, AppContext.getAccountId()));
+		Button searchBtn = new Button("Search");
+		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		searchBtn.addListener(new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				searchCriteria = new ContactSearchCriteria();
+				searchCriteria.setSaccountid(new NumberSearchField(
+						SearchField.AND, AppContext.getAccountId()));
 
-                String searchType = (String) group.getValue();
-                if (StringUtil.isNotNullOrEmpty(searchType)) {
+				String searchType = (String) group.getValue();
+				if (StringUtil.isNotNullOrEmpty(searchType)) {
 
-                    if (textValueField != null) {
-                        String strSearch = (String) textValueField.getValue();
-                        if (StringUtil.isNotNullOrEmpty(strSearch)) {
+					if (textValueField != null) {
+						String strSearch = (String) textValueField.getValue();
+						if (StringUtil.isNotNullOrEmpty(strSearch)) {
 
-                            if (searchType.equals("Name")) {
-                                searchCriteria
-                                        .setContactName(new StringSearchField(
-                                        SearchField.AND, strSearch));
-                            } else if (searchType.equals("Email")) {
-                                searchCriteria.setAnyEmail(new StringSearchField(
-                                        SearchField.AND, strSearch));
-                            } else if (searchType.equals("Phone")) {
-                                searchCriteria.setAnyPhone(new StringSearchField(
-                                        SearchField.AND, strSearch));
-                            }
-                        }
-                    }
+							if (searchType.equals("Name")) {
+								searchCriteria
+										.setContactName(new StringSearchField(
+												SearchField.AND, strSearch));
+							} else if (searchType.equals("Email")) {
+								searchCriteria
+										.setAnyEmail(new StringSearchField(
+												SearchField.AND, strSearch));
+							} else if (searchType.equals("Phone")) {
+								searchCriteria
+										.setAnyPhone(new StringSearchField(
+												SearchField.AND, strSearch));
+							}
+						}
+					}
 
-                    if (userBox != null) {
-                        String user = (String) userBox.getValue();
-                        if (StringUtil.isNotNullOrEmpty(user)) {
-                            searchCriteria.setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[]{user}));
-                        }
-                    }
-                }
+					if (userBox != null) {
+						String user = (String) userBox.getValue();
+						if (StringUtil.isNotNullOrEmpty(user)) {
+							searchCriteria
+									.setAssignUsers(new SetSearchField<String>(
+											SearchField.AND,
+											new String[] { user }));
+						}
+					}
+				}
 
-               ContactSimpleSearchPanel.this.notifySearchHandler(searchCriteria);
-            }
-        });
-        layoutSearchPane.addComponent(searchBtn, 2, 0);
-        layoutSearchPane.setComponentAlignment(searchBtn, Alignment.MIDDLE_CENTER);
-        this.setCompositionRoot(layoutSearchPane);
+				ContactSimpleSearchPanel.this
+						.notifySearchHandler(searchCriteria);
+			}
+		});
+		layoutSearchPane.addComponent(searchBtn, 2, 0);
+		layoutSearchPane.setComponentAlignment(searchBtn,
+				Alignment.MIDDLE_CENTER);
+		this.setCompositionRoot(layoutSearchPane);
 	}
 
 	private void addTextFieldSearch() {

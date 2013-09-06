@@ -26,6 +26,7 @@ public class BugTimeLogSheet extends CompTimeLogSheet<SimpleBug> {
 		item.setLogvalue(getInvestValue());
 		item.setTypeid(bean.getId());
 		item.setType(MonitorTypeConstants.PRJ_BUG);
+		item.setSaccountid(AppContext.getAccountId());
 		item.setProjectid(CurrentProjectVariables.getProjectId());
 
 		itemTimeLoggingService.saveWithSession(item, AppContext.getUsername());
@@ -60,7 +61,8 @@ public class BugTimeLogSheet extends CompTimeLogSheet<SimpleBug> {
 
 	@Override
 	protected boolean isEnableAdd() {
-		return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
+		return CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS);
 	}
 
 }

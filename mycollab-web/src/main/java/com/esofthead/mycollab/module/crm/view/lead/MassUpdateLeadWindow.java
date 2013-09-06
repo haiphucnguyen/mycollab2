@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -29,8 +31,7 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 
 		this.setWidth("1000px");
 
-		this.setIcon(MyCollabResource
-				.newResource("icons/18/crm/lead.png"));
+		this.setIcon(MyCollabResource.newResource("icons/18/crm/lead.png"));
 
 		this.leadAddLayout = new ReadViewLayout(null, false);
 
@@ -120,9 +121,9 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 
 				this.informationLayout.addComponent(
 						propertyId.equals("status"), field, "Status", 0, 2);
-				this.informationLayout.addComponent(
-						propertyId.equals("assignuser"), field,
-						"Assigned User", 1, 2);
+				this.informationLayout.addComponent(propertyId
+						.equals("assignuser"), field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 2);
 
 				this.addressLayout.addComponent(propertyId.equals("primcity"),
 						field, "City", 0, 0);

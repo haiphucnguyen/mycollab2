@@ -98,10 +98,6 @@ public class TaskGroupAddWindow extends Window {
 						"167px", Alignment.MIDDLE_LEFT);
 
 				final VerticalLayout bodyLayout = new VerticalLayout();
-				// final Label organizationHeader = new Label(
-				// "Task List Information");
-				// organizationHeader.setStyleName("h2");
-				// bodyLayout.addComponent(organizationHeader);
 				this.informationLayout.getLayout().setMargin(false);
 				this.informationLayout.getLayout().setWidth("100%");
 				this.informationLayout.getLayout().addStyleName(
@@ -201,8 +197,12 @@ public class TaskGroupAddWindow extends Window {
 					this.informationLayout.addComponent(field, "Description",
 							0, 1, 2, "100%");
 				} else if (propertyId.equals("owner")) {
-					this.informationLayout.addComponent(field,
-							"Responsible User", 0, 2);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									0, 2);
 				} else if (propertyId.equals("milestoneid")) {
 					this.informationLayout.addComponent(field,
 							"Related Milestone", 1, 2);

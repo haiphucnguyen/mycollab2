@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.LeadI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -40,7 +42,8 @@ public interface LeadTableFieldDef {
 			UIConstants.TABLE_EMAIL_WIDTH);
 
 	public static TableViewField phoneoffice = new TableViewField(
-			LocalizationHelper.getMessage(LeadI18nEnum.FORM_OFFICE_PHONE),
+			LocalizationHelper
+					.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD),
 			"officephone", UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField mobile = new TableViewField(
@@ -60,7 +63,7 @@ public interface LeadTableFieldDef {
 			"website", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignedUser = new TableViewField(
-			LocalizationHelper.getMessage(LeadI18nEnum.FORM_ASSIGNED_USER),
+			LocalizationHelper.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 			"assignUserFullName");
 
 }

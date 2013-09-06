@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -30,8 +32,7 @@ public class MassUpdateCampaignWindow extends
 
 		this.setWidth("1000px");
 
-		this.setIcon(MyCollabResource
-				.newResource("icons/18/crm/campaign.png"));
+		this.setIcon(MyCollabResource.newResource("icons/18/crm/campaign.png"));
 
 		this.campaginAddLayout = new ReadViewLayout(null, false);
 
@@ -106,9 +107,9 @@ public class MassUpdateCampaignWindow extends
 			@Override
 			public void attachField(final Object propertyId, final Field field) {
 
-				this.informationLayout.addComponent(
-						propertyId.equals("assignuser"), field, "Assigned to",
-						0, 0);
+				this.informationLayout.addComponent(propertyId
+						.equals("assignuser"), field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 0);
 
 				this.informationLayout.addComponent(
 						propertyId.equals("status"), field, "Status", 1, 0);

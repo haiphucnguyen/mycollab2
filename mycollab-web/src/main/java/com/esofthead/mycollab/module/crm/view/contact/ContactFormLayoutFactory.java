@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -43,7 +46,9 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("leadsource")) {
 				informationLayout.addComponent(field, "Leader Source", 0, 8, 2);
 			} else if (propertyId.equals("officephone")) {
-				informationLayout.addComponent(field, "Phone Office", 1, 0);
+				informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD),
+						1, 0);
 			} else if (propertyId.equals("mobile")) {
 				informationLayout.addComponent(field, "Mobile", 1, 1);
 			} else if (propertyId.equals("homephone")) {
@@ -57,7 +62,8 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("iscallable")) {
 				informationLayout.addComponent(field, "Callable", 1, 6);
 			} else if (propertyId.equals("assignuser")) {
-				informationLayout.addComponent(field, "Assign User", 1, 7);
+				informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 7);
 			} else if (propertyId.equals("primaddress")) {
 				addressLayout.addComponent(field, "Address", 0, 0);
 			} else if (propertyId.equals("primcity")) {
