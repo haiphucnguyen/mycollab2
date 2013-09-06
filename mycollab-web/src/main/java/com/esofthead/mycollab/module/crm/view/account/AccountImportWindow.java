@@ -9,6 +9,7 @@ import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -27,7 +28,10 @@ public class AccountImportWindow extends EntityImportWindow<Account> {
 		FieldMapperDef[] fields = {
 				new FieldMapperDef("accountname", "Account Name"),
 				new FieldMapperDef("website", "Website"),
-				new FieldMapperDef("phoneoffice", "Phone Office"),
+				new FieldMapperDef(
+						"phoneoffice",
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD)),
 				new FieldMapperDef("fax", "Fax"),
 				new FieldMapperDef("alternatephone", "Alternate Phone"),
 				new FieldMapperDef("annualrevenue", "Annual Revenue"),

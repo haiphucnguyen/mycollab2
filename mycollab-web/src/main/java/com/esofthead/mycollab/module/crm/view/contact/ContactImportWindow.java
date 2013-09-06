@@ -12,6 +12,7 @@ import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -37,9 +38,12 @@ public class ContactImportWindow extends EntityImportWindow<Contact> {
 				new FieldMapperDef("assistant", "Assistant"),
 				new FieldMapperDef("assistantphone", "Assistant Phone"),
 				new FieldMapperDef("leadsource", "Leader Source"),
-				new FieldMapperDef("officephone", "Phone Office"),
+				new FieldMapperDef(
+						"officephone",
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD)),
 				new FieldMapperDef("mobile", "Mobile"),
-				new FieldMapperDef("homephone", "Home phone"),
+				new FieldMapperDef("homephone", "Home Phone"),
 				new FieldMapperDef("otherphone", "Other Phone"),
 				new FieldMapperDef("fax", "Fax"),
 				new FieldMapperDef("birthday", "Birthday",

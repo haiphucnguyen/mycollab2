@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
@@ -19,7 +20,8 @@ public class ContactHistoryLogWindow extends HistoryLogWindow {
 		this.generateFieldDisplayHandler("assistant", "Assistant");
 		this.generateFieldDisplayHandler("assistantphone", "Assistant Phone");
 		this.generateFieldDisplayHandler("leadsource", "Leade Source");
-		this.generateFieldDisplayHandler("officephone", "Phone Office");
+		this.generateFieldDisplayHandler("officephone", LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD));
 		this.generateFieldDisplayHandler("mobile", "Mobile");
 		this.generateFieldDisplayHandler("homephone", "Home Phone");
 		this.generateFieldDisplayHandler("otherphone", "Other Phone");

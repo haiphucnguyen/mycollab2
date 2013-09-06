@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
 public class CrmActivityStreamGenerator {
@@ -59,7 +60,8 @@ public class CrmActivityStreamGenerator {
 	private static class AccountAuditLogShowHandler extends AuditLogShowHandler {
 		public AccountAuditLogShowHandler() {
 			this.generateFieldDisplayHandler("accountname", "Account Name");
-			this.generateFieldDisplayHandler("phoneoffice", "Phone Office");
+			this.generateFieldDisplayHandler("phoneoffice", LocalizationHelper
+					.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD));
 			this.generateFieldDisplayHandler("website", "Website");
 			this.generateFieldDisplayHandler("fax", "Fax");
 			this.generateFieldDisplayHandler("numemployees", "Employees");
@@ -96,7 +98,8 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("assistantphone",
 					"Assistant Phone");
 			this.generateFieldDisplayHandler("leadsource", "Leade Source");
-			this.generateFieldDisplayHandler("officephone", "Phone Office");
+			this.generateFieldDisplayHandler("officephone", LocalizationHelper
+					.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD));
 			this.generateFieldDisplayHandler("mobile", "Mobile");
 			this.generateFieldDisplayHandler("homephone", "Home Phone");
 			this.generateFieldDisplayHandler("otherphone", "Other Phone");

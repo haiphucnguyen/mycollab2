@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -50,7 +51,7 @@ public interface CampaignTableFieldDef {
 			"startdate", UIConstants.TABLE_DATE_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			LocalizationHelper.getMessage(CampaignI18nEnum.FORM_ASSIGN_USER),
+			LocalizationHelper.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 			"assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 }

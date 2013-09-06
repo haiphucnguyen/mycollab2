@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -83,8 +84,9 @@ public class TaskDisplayComponent extends CssLayout {
 
 			this.layoutHelper.addComponent(new ProjectUserFormLinkField(
 					this.taskList.getOwner(), this.taskList.getOwnerAvatarId(),
-					this.taskList.getOwnerFullName()), "Responsible User", 0,
-					1, Alignment.TOP_RIGHT);
+					this.taskList.getOwnerFullName()), LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 1,
+					Alignment.TOP_RIGHT);
 
 			final DefaultFormViewFieldFactory.FormLinkViewField milestoneLink = new DefaultFormViewFieldFactory.FormLinkViewField(
 					this.taskList.getMilestoneName(),

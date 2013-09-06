@@ -140,7 +140,8 @@ public class ProjectActivityStreamGenerator {
 			this.generateFieldDisplayHandler("raisedByUserFullName",
 					"Raised By");
 			this.generateFieldDisplayHandler("assignedToUserFullName",
-					"Assign User");
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 
@@ -165,7 +166,8 @@ public class ProjectActivityStreamGenerator {
 			this.generateFieldDisplayHandler("raisedByUserFullName",
 					"Raised By");
 			this.generateFieldDisplayHandler("assignedUserFullName",
-					"Assign User");
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 

@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -35,8 +37,8 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("enddate")) {
 				this.informationLayout.addComponent(field, "End Date", 0, 2);
 			} else if (propertyId.equals("owner")) {
-				this.informationLayout.addComponent(field, "Responsible User",
-						1, 1);
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 1);
 			} else if (propertyId.equals("status")) {
 				this.informationLayout.addComponent(field, "Status", 1, 2);
 			} else if (propertyId.equals("numOpenTasks")) {
@@ -92,8 +94,7 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout milestoneAddLayout = new AddViewLayout(this.title,
-				MyCollabResource
-				.newResource("icons/24/project/phase.png"));
+				MyCollabResource.newResource("icons/24/project/phase.png"));
 
 		final Layout topLayout = this.createTopPanel();
 		if (topLayout != null) {
