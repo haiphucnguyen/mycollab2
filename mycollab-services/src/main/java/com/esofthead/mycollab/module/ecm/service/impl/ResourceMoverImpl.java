@@ -43,6 +43,7 @@ public class ResourceMoverImpl implements ResourceMover {
 		String desResourcePath = (descRes.getPath().equals("/")) ? "" : descRes
 				.getPath();
 		String desPath = desResourcePath + "/" + scrRes.getName();
+		String scrPath = scrRes.getPath();
 		try {
 			if (descRes instanceof Content)
 				throw new MyCollabException(
@@ -58,7 +59,11 @@ public class ResourceMoverImpl implements ResourceMover {
 				ExternalDrive srcDrive = getExternalDrive(scrRes);
 				ExternalDrive desDrive = getExternalDrive(descRes);
 
-				if (srcDrive.getAccesstoken() == desDrive.getAccesstoken()) {
+				// in the same dropbox
+				if (srcDrive.getAccesstoken().equals(desDrive.getAccesstoken())) {
+					if (checkDuplicateName(scrRes, descRes))
+						throw new MyCollabException(
+								"Duplicate file/name, please check it before move!");
 					externalResourceService.move(srcDrive, scrRes.getPath(),
 							desPath);
 				} else { // Dropbox -> another Dropbox
@@ -86,6 +91,7 @@ public class ResourceMoverImpl implements ResourceMover {
 						throw new MyCollabException(
 								"Not support, it' a strange file type");
 					}
+					externalResourceService.deleteResource(srcDrive, scrPath);
 				}
 			} else { // MyCollab -> Dropbox : uploader
 				if (checkDuplicateName(scrRes, descRes))
@@ -112,7 +118,11 @@ public class ResourceMoverImpl implements ResourceMover {
 						externalResourceService
 								.saveContent(getExternalDrive(descRes),
 										(Content) scrRes, in);
+					} else {
+						throw new MyCollabException(
+								"Not support, it' a strange file type");
 					}
+					resourceService.removeResource(scrPath, userMove);
 				} else { // Dropbox -> MyCollab : createNewFolder & saveContent
 					if (checkDuplicateName(scrRes, descRes))
 						throw new MyCollabException(
@@ -138,16 +148,13 @@ public class ResourceMoverImpl implements ResourceMover {
 							}
 						}
 					} else {
-						throw new MyCollabException("Not support yet!");
+						throw new MyCollabException(
+								"Not support, it' a strange file type");
 					}
+					externalResourceService.deleteResource(
+							getExternalDrive(scrRes), scrPath);
 				}
 			}
-			// if (srcTypeDrive == 0) {
-			// resourceService.removeResource(scrRes.getPath(), userMove);
-			// } else if (srcTypeDrive == 1) {
-			// externalResourceService.deleteResource(
-			// getExternalDrive(scrRes), scrRes.getPath());
-			// }
 			// TODO : more handle for GoogleDrive here
 		} catch (Exception e) {
 			throw new MyCollabException(e);
