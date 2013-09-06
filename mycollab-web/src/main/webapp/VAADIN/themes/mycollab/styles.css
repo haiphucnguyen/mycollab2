@@ -2208,13 +2208,15 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .v-splitbutton-esofthead .v-button-esofthead.bluebtn {
-	background-color: #357ed0;
-	border-color: rgb(47, 91, 183);
+	background-color: rgb(37, 153, 200);
+	border-color: rgb(9, 55, 104);
 	margin: 0px;
 }
 
 .v-splitbutton-esofthead .v-button-esofthead.bluebtn:active {
-	background-color: #146cfd;
+	background-color: rgb(19, 119, 179);
+	padding: 3px 8px;
+	border-color: rgb(9, 55, 104);
 }
 
 .v-splitbutton-esofthead .v-button-esofthead.graybtn {
