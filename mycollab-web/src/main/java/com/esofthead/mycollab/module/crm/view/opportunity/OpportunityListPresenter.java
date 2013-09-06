@@ -27,8 +27,7 @@ import com.vaadin.ui.ComponentContainer;
 public class OpportunityListPresenter
 		extends
 		CrmGenericListPresenter<OpportunityListView, OpportunitySearchCriteria, SimpleOpportunity>
-		implements ListPresenter<OpportunitySearchCriteria>,
-		MassUpdatePresenter<Opportunity> {
+		implements MassUpdatePresenter<Opportunity> {
 
 	private static final long serialVersionUID = 1L;
 	private OpportunityService opportunityService;

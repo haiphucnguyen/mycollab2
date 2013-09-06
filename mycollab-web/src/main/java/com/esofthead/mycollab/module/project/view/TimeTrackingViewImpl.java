@@ -11,7 +11,7 @@ import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
+import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -174,7 +174,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
-						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+						new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 								"Time Tracking Report",
 								tableItem.getDisplayColumns(),
 								ReportExportType.PDF,
@@ -199,7 +199,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				StreamResource res = new StreamResource(
-						new ExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+						new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 								"Time Tracking Report",
 								tableItem.getDisplayColumns(),
 								ReportExportType.EXCEL,
