@@ -9,9 +9,12 @@ import java.util.GregorianCalendar;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
@@ -20,12 +23,13 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -51,7 +55,7 @@ public class VersionListViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 	private final VersionSearchPanel componentSearchPanel;
 	private SelectionOptionButton selectOptionButton;
-	private PagedBeanTable2<VersionService, VersionSearchCriteria, Version> tableItem;
+	private PagedBeanTable2<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
 	private final VerticalLayout componentListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
@@ -69,9 +73,9 @@ public class VersionListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new PagedBeanTable2<VersionService, VersionSearchCriteria, Version>(
-				AppContext.getSpringBean(VersionService.class), Version.class,
-				new TableViewField("", "selected",
+		this.tableItem = new PagedBeanTable2<VersionService, VersionSearchCriteria, SimpleVersion>(
+				AppContext.getSpringBean(VersionService.class),
+				SimpleVersion.class, new TableViewField("", "selected",
 						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
 						new TableViewField("Name", "versionname",
 								UIConstants.TABLE_EX_LABEL_WIDTH),
@@ -93,7 +97,7 @@ public class VersionListViewImpl extends AbstractView implements
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
-								final Version version = VersionListViewImpl.this.tableItem
+								final SimpleVersion version = VersionListViewImpl.this.tableItem
 										.getBeanByIndex(itemId);
 								VersionListViewImpl.this.tableItem
 										.fireSelectItemEvent(version);
@@ -168,9 +172,21 @@ public class VersionListViewImpl extends AbstractView implements
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.VERSIONS));
 
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail", "Mail");
-		this.tableActionControls.addOptionItem("export", "Export");
+		this.tableActionControls = new PopupButtonControl(
+				PopupActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
@@ -204,12 +220,12 @@ public class VersionListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasSelectableItemHandlers<Version> getSelectableItemHandlers() {
+	public HasSelectableItemHandlers<SimpleVersion> getSelectableItemHandlers() {
 		return this.tableItem;
 	}
 
 	@Override
-	public IPagedBeanTable<VersionSearchCriteria, Version> getPagedBeanTable() {
+	public AbstractPagedBeanTable<VersionSearchCriteria, SimpleVersion> getPagedBeanTable() {
 		return this.tableItem;
 	}
 
