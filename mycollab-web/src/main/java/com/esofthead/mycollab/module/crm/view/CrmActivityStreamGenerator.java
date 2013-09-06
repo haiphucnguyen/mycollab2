@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
@@ -101,7 +103,8 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("birthday", "Birthday",
 					AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("iscallable", "Callable");
-			this.generateFieldDisplayHandler("assignuser", "Assign User");
+			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("primaddress", "Address");
 			this.generateFieldDisplayHandler("primcity", "City");
 			this.generateFieldDisplayHandler("primstate", "State");
@@ -133,7 +136,8 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("actualcost", "Actual Cost");
 			this.generateFieldDisplayHandler("expectedrevenue",
 					"Expected Revenue");
-			this.generateFieldDisplayHandler("assignuser", "Assigned to");
+			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("description", "Description");
 		}
 	}
@@ -156,7 +160,8 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("fax", "Fax");
 			this.generateFieldDisplayHandler("website", "Web Site");
 			this.generateFieldDisplayHandler("status", "Status");
-			this.generateFieldDisplayHandler("assignuser", "Assigned User");
+			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("primaddress", "Address");
 			this.generateFieldDisplayHandler("primcity", "City");
 			this.generateFieldDisplayHandler("primstate", "State");
@@ -188,7 +193,8 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("opportunitytype", "Type");
 			this.generateFieldDisplayHandler("source", "Lead Source");
 			this.generateFieldDisplayHandler("campaignid", "Campaign");
-			this.generateFieldDisplayHandler("assignuser", "Assigned User");
+			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("description", "Description");
 		}
 	}
@@ -204,7 +210,8 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("reason", "Reason");
 			this.generateFieldDisplayHandler("subject", "Subject");
 			this.generateFieldDisplayHandler("email", "Email");
-			this.generateFieldDisplayHandler("assignuser", "Assigned User");
+			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("description", "Description");
 			this.generateFieldDisplayHandler("resolution", "Resolution");
 		}
@@ -227,7 +234,8 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("startdate", "Start Date");
 			this.generateFieldDisplayHandler("duedate", "Due Date");
 			this.generateFieldDisplayHandler("status", "Status");
-			this.generateFieldDisplayHandler("assignuser", "Assign User");
+			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("priority", "Priority");
 			this.generateFieldDisplayHandler("description", "Description");
 		}
@@ -237,7 +245,8 @@ public class CrmActivityStreamGenerator {
 		public CallAuditLogShowHandler() {
 			this.generateFieldDisplayHandler("subject", "Subject");
 			this.generateFieldDisplayHandler("startdate", "Start Date");
-			this.generateFieldDisplayHandler("assignuser", "Assign User");
+			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("purpose", "Purpose");
 		}

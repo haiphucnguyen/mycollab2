@@ -3,7 +3,9 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVBooleanFormatter;
 import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
@@ -44,7 +46,9 @@ public class ContactImportWindow extends EntityImportWindow<Contact> {
 						new CSVDateFormatter()),
 				new FieldMapperDef("iscallable", "Callable",
 						new CSVBooleanFormatter()),
-				new FieldMapperDef("assignuser", "Assign User"),
+				new FieldMapperDef("assignuser",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)),
 				new FieldMapperDef("primaddress", "Address"),
 				new FieldMapperDef("primcity", "City"),
 				new FieldMapperDef("primstate", "State"),
@@ -64,7 +68,8 @@ public class ContactImportWindow extends EntityImportWindow<Contact> {
 		ContactSearchCriteria contactSearchCriteria = new ContactSearchCriteria();
 		contactSearchCriteria.setContactName(new StringSearchField(""));
 		EventBus.getInstance().fireEvent(
-				new ContactEvent.GotoList(ContactListView.class,contactSearchCriteria));
+				new ContactEvent.GotoList(ContactListView.class,
+						contactSearchCriteria));
 	}
 
 }

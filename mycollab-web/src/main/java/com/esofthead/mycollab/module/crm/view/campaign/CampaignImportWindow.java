@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -37,7 +39,9 @@ public class CampaignImportWindow extends EntityImportWindow<SimpleCampaign> {
 				new FieldMapperDef("impression", "Impression"),
 				new FieldMapperDef("status", "Status"),
 				new FieldMapperDef("type", "Type"),
-				new FieldMapperDef("assignuser", "Assign User") };
+				new FieldMapperDef("assignuser",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)) };
 		return Arrays.asList(fields);
 	}
 

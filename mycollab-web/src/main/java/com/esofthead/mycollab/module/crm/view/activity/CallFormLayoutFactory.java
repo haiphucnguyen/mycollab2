@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -87,8 +89,9 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("purpose")) {
 				informationLayout.addComponent(field, "Purpose", 1, 2);
 			} else if (propertyId.equals("assignuser")) {
-				informationLayout.addComponent(field, "Assigned to", 0, 3, 2,
-						"100%", Alignment.TOP_LEFT);
+				informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 3,
+						2, "100%", Alignment.TOP_LEFT);
 			} else if (propertyId.equals("description")) {
 				informationLayout.addComponent(field, "Description", 0, 4, 2,
 						"100%", Alignment.TOP_LEFT);

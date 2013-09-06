@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.Collection;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -28,7 +30,9 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
 			new FieldExportColumn("bugkey", "Key"),
 			new FieldExportColumn("summary", "Summary", 40),
-			new FieldExportColumn("assignuserFullName", "Assigned User"),
+			new FieldExportColumn("assignuserFullName",
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)),
 			new FieldExportColumn("severity", "Severity"),
 			new FieldExportColumn("priority", "Priority"),
 			new FieldExportColumn("status", "Status"),

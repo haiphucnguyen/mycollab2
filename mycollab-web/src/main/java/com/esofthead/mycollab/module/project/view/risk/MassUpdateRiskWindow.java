@@ -1,7 +1,8 @@
-package com.esofthead.mycollab.module.crm.view.account;
+package com.esofthead.mycollab.module.project.view.risk;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.domain.Risk;
-import com.esofthead.mycollab.module.project.view.risk.RiskEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -96,8 +97,12 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 					this.informationLayout.addComponent(field, "Raised by", 0,
 							0);
 				} else if (propertyId.equals("assigntouser")) {
-					this.informationLayout.addComponent(field, "Assigned to",
-							1, 0);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									1, 0);
 				} else if (propertyId.equals("consequence")) {
 					this.informationLayout.addComponent(field, "Consequence",
 							0, 1);

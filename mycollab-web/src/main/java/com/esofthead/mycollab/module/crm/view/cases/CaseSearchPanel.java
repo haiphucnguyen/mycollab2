@@ -75,14 +75,6 @@ public class CaseSearchPanel extends
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setMargin(true, true, true, false);
 
-			// if (ScreenSize.hasSupport1024Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3,
-			// UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-			// "90px");
-			// } else if (ScreenSize.hasSupport1280Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3, "90px");
-			// }
-
 			this.numberField = (TextField) gridLayout.addComponent(
 					new TextField(), "Number", 0, 0);
 			this.subjectField = (TextField) gridLayout.addComponent(
@@ -93,7 +85,9 @@ public class CaseSearchPanel extends
 			this.statusField = (CaseStatusListSelect) gridLayout.addComponent(
 					new CaseStatusListSelect(), "Status", 0, 1);
 			this.userField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assigned to", 1, 1);
+					new UserListSelect(), LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1,
+					1);
 			this.priorityField = (CasePriorityListSelect) gridLayout
 					.addComponent(new CasePriorityListSelect(), "Priority", 2,
 							1);

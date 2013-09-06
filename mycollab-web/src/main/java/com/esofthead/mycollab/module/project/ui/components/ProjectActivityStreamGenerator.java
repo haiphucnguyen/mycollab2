@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
@@ -87,7 +89,8 @@ public class ProjectActivityStreamGenerator {
 					"Actual End Date", AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("taskListName", "Task List");
 			this.generateFieldDisplayHandler("assignUserFullName",
-					"Assign User");
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 
@@ -98,7 +101,9 @@ public class ProjectActivityStreamGenerator {
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("description", "Description");
 			this.generateFieldDisplayHandler("milestoneName", "Milestone");
-			this.generateFieldDisplayHandler("ownerFullName", "Assign User");
+			this.generateFieldDisplayHandler("ownerFullName",
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 
@@ -112,7 +117,9 @@ public class ProjectActivityStreamGenerator {
 					AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("description", "Description");
-			this.generateFieldDisplayHandler("ownerFullName", "Assign User");
+			this.generateFieldDisplayHandler("ownerFullName",
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 		}
 	}
 

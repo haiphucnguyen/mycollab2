@@ -226,14 +226,6 @@ public class OpportunitySearchPanel extends
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setMargin(true, true, true, false);
 
-			// if (ScreenSize.hasSupport1024Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3,
-			// UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-			// "90px");
-			// } else if (ScreenSize.hasSupport1280Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3, "90px");
-			// }
-
 			this.opportunityNameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Name", 0, 0);
 			this.accountField = (AccountSelectionField) gridLayout
@@ -242,7 +234,9 @@ public class OpportunitySearchPanel extends
 					new TextField(), "Next Step", 2, 0);
 
 			this.userField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assigned to", 0, 1);
+					new UserListSelect(), LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
+					1);
 			this.stageField = (OpportunitySalesStageListSelect) gridLayout
 					.addComponent(new OpportunitySalesStageListSelect(),
 							"Sales Stage", 1, 1);

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -61,7 +63,8 @@ public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("type")) {
 			this.informationLayout.addComponent(field, "Related to", 1, 2);
 		} else if (propertyId.equals("assigntouser")) {
-			this.informationLayout.addComponent(field, "Assigned to", 0, 3);
+			this.informationLayout.addComponent(field, LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 3);
 		} else if (propertyId.equals("impact")) {
 			this.informationLayout.addComponent(field, "Impact", 1, 3);
 		} else if (propertyId.equals("datedue")) {

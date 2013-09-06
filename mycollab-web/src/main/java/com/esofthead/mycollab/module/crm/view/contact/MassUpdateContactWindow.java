@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -29,8 +31,7 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 
 		this.setWidth("1000px");
 
-		this.setIcon(MyCollabResource
-				.newResource("icons/18/crm/contact.png"));
+		this.setIcon(MyCollabResource.newResource("icons/18/crm/contact.png"));
 
 		this.contactAddLayout = new ReadViewLayout(null, false);
 
@@ -111,8 +112,12 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 					this.informationLayout.addComponent(field, "Leader Source",
 							0, 1);
 				} else if (propertyId.equals("assignuser")) {
-					this.informationLayout.addComponent(field, "Assign User",
-							1, 1);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									1, 1);
 				} else if (propertyId.equals("iscallable")) {
 					this.informationLayout.addComponent(field, "Callable", 0,
 							2, 2, "100%", Alignment.TOP_LEFT);

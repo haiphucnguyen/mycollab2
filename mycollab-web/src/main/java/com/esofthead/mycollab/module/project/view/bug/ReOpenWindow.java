@@ -8,7 +8,9 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -171,8 +173,12 @@ public class ReOpenWindow extends Window {
 					this.informationLayout.addComponent(field, "Resolution", 0,
 							0);
 				} else if (propertyId.equals("assignuser")) {
-					this.informationLayout.addComponent(field, "Assign User",
-							0, 1);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									0, 1);
 				} else if (propertyId.equals("fixedVersions")) {
 					this.informationLayout.addComponent(field,
 							"Fixed Versions", 0, 2);

@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -39,8 +41,14 @@ public class LeadSimpleSearchPanel extends
 		layoutSearchPane = new GridLayout(3, 3);
 		layoutSearchPane.setSpacing(true);
 
-		final ValueComboBox group = new ValueComboBox(false, new String[] {
-				"Name", "Email", "Phone", "Assigned to" });
+		final ValueComboBox group = new ValueComboBox(
+				false,
+				new String[] {
+						"Name",
+						"Email",
+						"Phone",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD) });
 		group.select("Name");
 		group.setImmediate(true);
 		group.addListener(new Property.ValueChangeListener() {
@@ -55,7 +63,8 @@ public class LeadSimpleSearchPanel extends
 					addTextFieldSearch();
 				} else if (searchType.equals("Phone")) {
 					addTextFieldSearch();
-				} else if (searchType.equals("Assigned to")) {
+				} else if (searchType.equals(LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))) {
 					addUserListSelectField();
 				}
 			}

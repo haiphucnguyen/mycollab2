@@ -242,7 +242,9 @@ public class ContactSearchPanel extends
 							"accountnameField"), "Account Name", 0, 2);
 			this.assignUserField = (UserListSelect) gridLayout.addComponent(
 					this.createSeachSupportComboBox(new UserListSelect()),
-					"Assign User", 0, 3);
+					LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
+					3);
 
 			this.anyEmailField = (TextField) gridLayout.addComponent(this
 					.createSeachSupportTextField(new TextField(),

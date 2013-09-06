@@ -246,7 +246,9 @@ public class CampaignSearchPanel extends
 					.addComponent(new CampaignStatusListSelect(), "Status", 1,
 							1);
 			this.assignUserField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assign User", 2, 1);
+					new UserListSelect(), LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 2,
+					1);
 
 			gridLayout.getLayout().setSpacing(true);
 

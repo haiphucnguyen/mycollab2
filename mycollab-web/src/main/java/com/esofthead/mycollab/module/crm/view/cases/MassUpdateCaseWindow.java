@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -29,8 +31,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 
 		this.setWidth("1000px");
 
-		this.setIcon(MyCollabResource
-				.newResource("icons/18/crm/case.png"));
+		this.setIcon(MyCollabResource.newResource("icons/18/crm/case.png"));
 
 		this.caseAddLayout = new ReadViewLayout(null, false);
 
@@ -106,8 +107,12 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 				} else if (propertyId.equals("reason")) {
 					this.informationLayout.addComponent(field, "Reason", 1, 2);
 				} else if (propertyId.equals("assignuser")) {
-					this.informationLayout.addComponent(field, "Assigned User",
-							0, 3, 2, "297px", Alignment.TOP_LEFT);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									0, 3, 2, "297px", Alignment.TOP_LEFT);
 				}
 			}
 		}

@@ -100,7 +100,8 @@ public class TaskDisplayComponent extends CssLayout {
 													.getMilestoneid()));
 						}
 					});
-			this.layoutHelper.addComponent(milestoneLink, "Phase", 1, 1,
+			this.layoutHelper.addComponent(milestoneLink, LocalizationHelper
+					.getMessage(TaskI18nEnum.FORM_PHASE_FIELD), 1, 1,
 					Alignment.TOP_RIGHT);
 
 			this.taskListProgress = (ProgressPercentageIndicator) this.layoutHelper
@@ -189,33 +190,37 @@ public class TaskDisplayComponent extends CssLayout {
 					}
 				});
 
-		this.createTaskBtn = new Button("Add Task", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		this.createTaskBtn = new Button(
+				LocalizationHelper.getMessage(TaskI18nEnum.NEW_TASK_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(final Button.ClickEvent event) {
+					@Override
+					public void buttonClick(final Button.ClickEvent event) {
 
-				TaskDisplayComponent.this.removeAllComponents();
+						TaskDisplayComponent.this.removeAllComponents();
 
-				final TaskAddPopup taskAddView = new TaskAddPopup(
-						TaskDisplayComponent.this,
-						TaskDisplayComponent.this.taskList);
-				if (TaskDisplayComponent.this.layoutHelper != null) {
-					TaskDisplayComponent.this.addComponent(
-							TaskDisplayComponent.this.layoutHelper.getLayout(),
-							0);
-					TaskDisplayComponent.this.addComponent(
-							TaskDisplayComponent.this.taskDisplay, 1);
-					TaskDisplayComponent.this.addComponent(taskAddView, 2);
-				} else {
-					TaskDisplayComponent.this.addComponent(
-							TaskDisplayComponent.this.taskDisplay, 0);
-					TaskDisplayComponent.this.addComponent(taskAddView, 1);
-				}
-				TaskDisplayComponent.this
-						.removeComponent(TaskDisplayComponent.this.createTaskBtn);
-			}
-		});
+						final TaskAddPopup taskAddView = new TaskAddPopup(
+								TaskDisplayComponent.this,
+								TaskDisplayComponent.this.taskList);
+						if (TaskDisplayComponent.this.layoutHelper != null) {
+							TaskDisplayComponent.this.addComponent(
+									TaskDisplayComponent.this.layoutHelper
+											.getLayout(), 0);
+							TaskDisplayComponent.this.addComponent(
+									TaskDisplayComponent.this.taskDisplay, 1);
+							TaskDisplayComponent.this.addComponent(taskAddView,
+									2);
+						} else {
+							TaskDisplayComponent.this.addComponent(
+									TaskDisplayComponent.this.taskDisplay, 0);
+							TaskDisplayComponent.this.addComponent(taskAddView,
+									1);
+						}
+						TaskDisplayComponent.this
+								.removeComponent(TaskDisplayComponent.this.createTaskBtn);
+					}
+				});
 		this.createTaskBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 		this.createTaskBtn.setIcon(MyCollabResource

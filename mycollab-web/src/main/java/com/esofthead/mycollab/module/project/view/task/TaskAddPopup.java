@@ -194,7 +194,8 @@ public class TaskAddPopup extends CustomComponent {
 			} else if (propertyId.equals("priority")) {
 				this.informationLayout.addComponent(field, "Priority", 1, 3);
 			} else if (propertyId.equals("assignuser")) {
-				this.informationLayout.addComponent(field, "Assign", 0, 4);
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 4);
 			} else if (propertyId.equals("percentagecomplete")) {
 				this.informationLayout.addComponent(field, "Complete(%)", 1, 4);
 			}

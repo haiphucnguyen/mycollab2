@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -133,7 +135,9 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(propertyId.equals("status"), field,
 					"Status", 1, 6);
 			informationLayout.addComponent(propertyId.equals("assignuser"),
-					field, "Assigned User", 1, 7);
+					field, LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1,
+					7);
 
 			addressLayout.addComponent(propertyId.equals("primaddress"), field,
 					"Address", 0, 0);

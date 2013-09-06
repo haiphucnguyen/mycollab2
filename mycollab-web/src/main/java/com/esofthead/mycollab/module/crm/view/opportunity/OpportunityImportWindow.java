@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -34,7 +36,9 @@ public class OpportunityImportWindow extends
 						"Expected Closed Date", new CSVDateFormatter()),
 				new FieldMapperDef("nextstep", "Next Step"),
 				new FieldMapperDef("probability", "Probability"),
-				new FieldMapperDef("assignuser", "Assign User"),
+				new FieldMapperDef("assignuser",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)),
 				new FieldMapperDef("opportunitytype", "Opportunity Type"),
 				new FieldMapperDef("salesstage", "Sales Stage"),
 				new FieldMapperDef("description", "Description") };

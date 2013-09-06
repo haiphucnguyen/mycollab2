@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.crm.view.account;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -40,7 +42,9 @@ public class AccountImportWindow extends EntityImportWindow<Account> {
 				new FieldMapperDef("shippingpostalcode", "Shipping Postal Code"),
 				new FieldMapperDef("shippingstate", "Shipping State"),
 				new FieldMapperDef("numemployees", "Number Employees"),
-				new FieldMapperDef("assignuser", "Assign User"),
+				new FieldMapperDef("assignuser",
+						LocalizationHelper
+								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)),
 				new FieldMapperDef("type", "Type"),
 				new FieldMapperDef("industry", "Industry"),
 				new FieldMapperDef("billingcountry", "Billing Country"),
