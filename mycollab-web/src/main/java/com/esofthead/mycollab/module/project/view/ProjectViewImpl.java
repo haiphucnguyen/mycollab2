@@ -15,6 +15,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -444,6 +445,62 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		editProjectBtn.setStyleName("link");
 		popupButtonsControl.addComponent(editProjectBtn);
 
+//		if (CurrentProjectVariables
+//				.canAccess(ProjectRolePermissionCollections.PROJECT)) {
+//			Button archievedProjectBtn = new Button(
+//					LocalizationHelper
+//							.getMessage(ProjectCommonI18nEnum.ARCHIVE_PROJECT_ACTION),
+//					new Button.ClickListener() {
+//						@Override
+//						public void buttonClick(ClickEvent event) {
+//							controlsBtn.setPopupVisible(false);
+//							ConfirmDialogExt.show(
+//									ProjectViewImpl.this.getWindow(),
+//									LocalizationHelper
+//											.getMessage(
+//													ProjectCommonI18nEnum.DIALOG_ARCHIVE_PROJECT_TITLE,
+//													SiteConfiguration
+//															.getSiteName()),
+//									LocalizationHelper
+//											.getMessage(ProjectCommonI18nEnum.CONFIRM_PROJECT_ARCHIVE_MESSAGE),
+//									LocalizationHelper
+//											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+//									LocalizationHelper
+//											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+//									new ConfirmDialog.Listener() {
+//										private static final long serialVersionUID = 1L;
+//
+//										@Override
+//										public void onClose(ConfirmDialog dialog) {
+//											if (dialog.isConfirmed()) {
+//												ProjectService projectService = AppContext
+//														.getSpringBean(ProjectService.class);
+//												SimpleProject project = CurrentProjectVariables
+//														.getProject();
+//												project.setProjectstatus(ProjectStatusConstants.ARCHIVE);
+//												projectService
+//														.updateWithSession(
+//																project,
+//																AppContext
+//																		.getUsername());
+//												EventBus.getInstance()
+//														.fireEvent(
+//																new ShellEvent.GotoProjectModule(
+//																		this,
+//																		null));
+//											}
+//										}
+//									});
+//						}
+//					});
+//			archievedProjectBtn.setEnabled(CurrentProjectVariables
+//					.canAccess(ProjectRolePermissionCollections.PROJECT));
+//			archievedProjectBtn.setIcon(MyCollabResource
+//					.newResource("icons/16/project/delete_project.png"));
+//			archievedProjectBtn.setStyleName("link");
+//			popupButtonsControl.addComponent(archievedProjectBtn);
+//		}
+
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PROJECT)) {
 			Button deleteProjectBtn = new Button(
@@ -490,7 +547,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						}
 					});
 			deleteProjectBtn.setEnabled(CurrentProjectVariables
-					.canWrite(ProjectRolePermissionCollections.PROJECT));
+					.canAccess(ProjectRolePermissionCollections.PROJECT));
 			deleteProjectBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/delete_project.png"));
 			deleteProjectBtn.setStyleName("link");

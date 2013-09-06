@@ -211,7 +211,6 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						AppContext.getUsername());
 			} else if (member != null) {
 				member.setStatus(RegisterStatusConstants.ACTIVE);
-				member.setsAccountId(sAccountId);
 				member.setSaccountid(sAccountId);
 				projectMemberService.updateWithSession(member, " ");
 			}

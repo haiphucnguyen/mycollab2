@@ -5,7 +5,9 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -40,6 +42,8 @@ public class ProjectMemberListPresenter extends
 				criteria = new ProjectMemberSearchCriteria();
 				criteria.setProjectId(new NumberSearchField(
 						CurrentProjectVariables.getProjectId()));
+				criteria.setStatus(new StringSearchField(
+						ProjectMemberStatusConstants.ACTIVE));
 			} else {
 				criteria = (ProjectMemberSearchCriteria) data.getParams();
 			}

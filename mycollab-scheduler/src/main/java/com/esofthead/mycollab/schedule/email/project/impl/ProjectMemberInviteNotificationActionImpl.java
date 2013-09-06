@@ -45,7 +45,7 @@ public class ProjectMemberInviteNotificationActionImpl implements
 		int memberId = notification.getTypeid();
 		SimpleProjectMember member = projectMemberService.findById(memberId,
 				notification.getSaccountid());
-		if (member != null){
+		if (member != null) {
 			String subdomain = projectService.getSubdomainOfProject(member
 					.getProjectid());
 
@@ -53,7 +53,8 @@ public class ProjectMemberInviteNotificationActionImpl implements
 					"$inviteUser has invited you to join the team for project \" $member.projectName\"",
 					"templates/email/project/memberInvitation/memberInvitationNotifier.mt");
 			templateGenerator.putVariable("member", member);
-			templateGenerator.putVariable("inviteUser", notification.getChangeby());
+			templateGenerator.putVariable("inviteUser",
+					notification.getChangeby());
 
 			String userChange = notification.getChangeby();
 			User user = userService.findUserByUserName(userChange);
@@ -61,23 +62,26 @@ public class ProjectMemberInviteNotificationActionImpl implements
 					"urlAccept",
 					SiteConfiguration.getSiteUrl(subdomain)
 							+ "project/member/invitation/confirm_invite/"
-							+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-									+ member.getId() + "/" + user.getEmail() + "/"
+							+ UrlEncodeDecoder.encode(member.getSaccountid()
+									+ "/" + member.getId() + "/"
+									+ user.getEmail() + "/"
 									+ user.getUsername()));
 			templateGenerator.putVariable(
 					"urlDeny",
 					SiteConfiguration.getSiteUrl(subdomain)
 							+ "project/member/invitation/deny_invite/"
-							+ UrlEncodeDecoder.encode(member.getsAccountId() + "/"
-									+ member.getId() + "/" + user.getEmail() + "/"
+							+ UrlEncodeDecoder.encode(member.getSaccountid()
+									+ "/" + member.getId() + "/"
+									+ user.getEmail() + "/"
 									+ user.getUsername()));
 
-			templateGenerator.putVariable("userName", member.getMemberFullName());
-			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply", Arrays
-					.asList(new MailRecipientField(member.getEmail(), member
-							.getMemberFullName())), null, null, templateGenerator
-					.generateSubjectContent(), templateGenerator
-					.generateBodyContent(), null);
+			templateGenerator.putVariable("userName",
+					member.getMemberFullName());
+			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
+					Arrays.asList(new MailRecipientField(member.getEmail(),
+							member.getMemberFullName())), null, null,
+					templateGenerator.generateSubjectContent(),
+					templateGenerator.generateBodyContent(), null);
 
 			// Send email and change register status of user to
 			// RegisterStatusConstants.SENT_VERIFICATION_EMAIL
