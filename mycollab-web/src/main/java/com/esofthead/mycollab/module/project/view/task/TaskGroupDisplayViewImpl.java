@@ -1,13 +1,12 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.ExportTaskExcelStreamResource;
-import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -15,16 +14,13 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -42,26 +38,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 	private TaskGroupDisplayWidget taskLists;
 	private Button reOrderBtn;
 
-	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
-			new FieldExportColumn("taskkey",
-					LocalizationHelper
-							.getMessage(TaskI18nEnum.TABLE_KEY_HEADER)),
-			new FieldExportColumn("taskname",
-					LocalizationHelper
-							.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
-					40),
-			new FieldExportColumn("startdate",
-					LocalizationHelper
-							.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER)),
-			new FieldExportColumn("deadline",
-					LocalizationHelper
-							.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER)),
-			new FieldExportColumn("percentagecomplete",
-					LocalizationHelper
-							.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER)),
-			new FieldExportColumn("assignUserFullName",
-					LocalizationHelper
-							.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER)) };
+	private SplitButtonExt exportButtonControl;
 
 	public TaskGroupDisplayViewImpl() {
 		super();
@@ -225,46 +202,80 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 		mainLayout.addComponent(header);
 
-		final Button exportBtn = new Button("Export",
-				new Button.ClickListener() {
+		Button exportBtn = new Button("Export", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						final String title = "Task report of Project "
-								+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-										.getProject().getName() != null) ? CurrentProjectVariables
-										.getProject().getName() : "");
-						final TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
-						tasklistSearchCriteria
-								.setProjectId(new NumberSearchField(
-										SearchField.AND,
-										CurrentProjectVariables.getProject()
-												.getId()));
-						final Resource res = new StreamResource(
-								new ExportTaskExcelStreamResource(
-										title,
-										TaskGroupDisplayViewImpl.EXPORT_COLUMNS,
-										AppContext
-												.getSpringBean(ProjectTaskListService.class),
-										tasklistSearchCriteria),
-								"task_list.xls", TaskGroupDisplayViewImpl.this
-										.getApplication());
-						TaskGroupDisplayViewImpl.this.getWindow().open(res,
-								"_blank");
-					}
-				});
-		exportBtn.setIcon(MyCollabResource
-				.newResource("icons/16/export_excel.png"));
-		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		exportBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS));
-		header.addComponent(exportBtn);
-		header.setComponentAlignment(exportBtn, Alignment.MIDDLE_RIGHT);
-		
+			@Override
+			public void buttonClick(ClickEvent event) {
+				exportButtonControl.setPopupVisible(true);
+			}
+		});
+		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl.setStyleName(UIConstants.THEME_BLUE_LINK);
+		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl.setIcon(MyCollabResource
+				.newResource("icons/16/export.png"));
+
+		VerticalLayout popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setWidth("150px");
+		exportButtonControl.addComponent(popupButtonsControl);
+
+		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				downloadExportStreamCommand(ReportExportType.PDF);
+			}
+		});
+		exportPdfBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/pdf.png"));
+		exportPdfBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportPdfBtn);
+
+		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				downloadExportStreamCommand(ReportExportType.EXCEL);
+			}
+		});
+		exportExcelBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/excel.png"));
+		exportExcelBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportExcelBtn);
+
+		header.addComponent(exportButtonControl);
+		header.setComponentAlignment(exportButtonControl,
+				Alignment.MIDDLE_RIGHT);
+
 		mainLayout.setWidth("100%");
 		this.addComponent(headerWrapper);
 		this.taskLists = new TaskGroupDisplayWidget();
 		this.addComponent(this.taskLists);
+	}
+
+	private void downloadExportStreamCommand(ReportExportType exportType) {
+		final String title = "Task report of Project "
+				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+						.getProject().getName() != null) ? CurrentProjectVariables
+						.getProject().getName() : "");
+		final TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
+		tasklistSearchCriteria.setProjectId(new NumberSearchField(
+				SearchField.AND, CurrentProjectVariables.getProject().getId()));
+		// final Resource res = new StreamResource(
+		// new ExportTaskExcelStreamResource(
+		// title,
+		// TaskGroupDisplayViewImpl.EXPORT_COLUMNS,
+		// AppContext
+		// .getSpringBean(ProjectTaskListService.class),
+		// tasklistSearchCriteria),
+		// "task_list.xls", TaskGroupDisplayViewImpl.this
+		// .getApplication());
+		// TaskGroupDisplayViewImpl.this.getWindow().open(res,
+		// "_blank");
+		exportButtonControl.setPopupVisible(false);
 	}
 
 	private TaskListSearchCriteria createBaseSearchCriteria() {

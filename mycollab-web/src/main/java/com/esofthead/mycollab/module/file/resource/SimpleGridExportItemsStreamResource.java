@@ -10,18 +10,15 @@ import java.util.List;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRField;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
+import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
@@ -73,63 +70,8 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 
 		@Override
 		protected void fillReport() {
-			reportBuilder.setDataSource(new LazyLoadingDataSource());
-		}
-
-		private class LazyLoadingDataSource implements JRDataSource {
-			private static final int ITEMS_PER_PAGE = 20;
-			private int currentIndex = 0;
-			private int currentPage = 0;
-			private List currentData;
-			private Object currentItem;
-
-			private int totalItems;
-
-			public LazyLoadingDataSource() {
-				totalItems = searchService.getTotalCount(searchCriteria);
-				SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
-						currentPage, ITEMS_PER_PAGE);
-				currentData = searchService
-						.findPagableListByCriteria(searchRequest);
-			}
-
-			@Override
-			public boolean next() throws JRException {
-				boolean result = (currentIndex < totalItems);
-				if (result) {
-					if (currentIndex == (currentPage + 1) * ITEMS_PER_PAGE) {
-						currentPage = currentPage + 1;
-						SearchRequest<S> searchRequest = new SearchRequest<S>(
-								searchCriteria, currentPage, ITEMS_PER_PAGE);
-						currentData = searchService
-								.findPagableListByCriteria(searchRequest);
-						log.debug("Current data {}", currentData.size());
-					}
-
-					log.debug("Current index {} - {} - {} - {}", new Object[] {
-							currentIndex, currentPage, currentData.size(),
-							totalItems });
-					if (currentIndex % ITEMS_PER_PAGE < currentData.size()) {
-						currentItem = currentData.get(currentIndex
-								% ITEMS_PER_PAGE);
-					}
-
-					currentIndex = currentIndex + 1;
-				}
-
-				return result;
-			}
-
-			@Override
-			public Object getFieldValue(JRField jrField) throws JRException {
-				try {
-					String fieldName = jrField.getName();
-					return PropertyUtils.getProperty(currentItem, fieldName);
-				} catch (Exception e) {
-					throw new JRException(e);
-				}
-			}
-
+			reportBuilder.setDataSource(new GroupIteratorDataSource(
+					searchService, searchCriteria));
 		}
 
 	}
