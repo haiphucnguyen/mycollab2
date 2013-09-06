@@ -108,7 +108,7 @@
         <![CDATA[
         SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId,
             m_prj_member.joinDate, m_prj_member.projectRoleId,
-            m_prj_member.isAdmin, s_user.email as email,
+            m_prj_member.isAdmin, m_prj_member.status, s_user.email as email,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')),  s_user.lastname) AS  memberFullName ,
             m_prj_member.sAccountId AS sAccountId 
         FROM m_prj_member, s_user

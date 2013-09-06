@@ -4,6 +4,9 @@
  */
 package com.esofthead.mycollab.module.user.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -14,6 +17,8 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
  */
 public class SimpleRole extends Role {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory.getLogger(SimpleRole.class);
 
 	public static final String ADMIN = "Administrator";
 	public static final String EMPLOYEE = "Employee";
@@ -36,8 +41,13 @@ public class SimpleRole extends Role {
 			if (permissionVal == null || "".equals(permissionVal)) {
 				permissionMap = new PermissionMap();
 			} else {
-				XStream xstream = new XStream(new StaxDriver());
-				permissionMap = (PermissionMap) xstream.fromXML(permissionVal);
+				try {
+					XStream xstream = new XStream(new StaxDriver());
+					permissionMap = (PermissionMap) xstream
+							.fromXML(permissionVal);
+				} catch (Exception e) {
+					log.error("Error while get permission", e);
+				}
 			}
 		}
 		return permissionMap;

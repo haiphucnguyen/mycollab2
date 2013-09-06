@@ -13,6 +13,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -186,14 +187,18 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 					this.setFormLayoutFactory(new ProjectMemberFormLayoutFactory.ProjectMemberInformationLayout());
 					this.setFormFieldFactory(new ProjectMemberFormFieldFactory());
 					super.setItemDataSource(newDataSource);
+
+					String formTitle = (ProjectMemberStatusConstants.INACTIVE
+							.equals(projectMember.getStatus())) ? (projectMember
+							.getMemberFullName() + " (In active)")
+							: projectMember.getMemberFullName();
 					ReadView.this.projectMemberReadViewLayout
-							.setTitle(ReadView.this.projectMember
-									.getMemberFullName());
+							.setTitle(formTitle);
 					ReadView.this.projectMemberReadViewLayout
 							.setTitleIcon(UserAvatarControlFactory
 									.createAvatarResource(
-											ReadView.this.projectMember
-													.getMemberAvatarId(), 24));
+											projectMember.getMemberAvatarId(),
+											24));
 					ReadView.this.standupReportViewLayout.removeAllComponents();
 					ReadView.this.assignmentViewLayout.removeAllComponents();
 					ReadView.this.basicInformationLayout.removeAllComponents();
@@ -390,13 +395,13 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			filterBtnLayout.addComponent(pendingTasksFilterBtn);
 
 			final Button archievedTasksFilterBtn = new Button(
-					"Archieved Tasks Only", new Button.ClickListener() {
+					"Archived Tasks Only", new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
 							UserTaskDepot.this.taskListFilterControl
-									.setCaption("Archieved Tasks");
+									.setCaption("Archived Tasks");
 							UserTaskDepot.this.taskListFilterControl
 									.setPopupVisible(false);
 							UserTaskDepot.this.displayInActiveTasks();

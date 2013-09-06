@@ -4,7 +4,9 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
@@ -30,6 +32,8 @@ public class ProjectMemberMultiSelectField extends MultiSelectComp {
 		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
 				.getProjectId()));
+		criteria.setStatus(new StringSearchField(
+				ProjectMemberStatusConstants.ACTIVE));
 
 		ProjectMemberService userService = AppContext
 				.getSpringBean(ProjectMemberService.class);

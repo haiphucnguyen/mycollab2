@@ -10,8 +10,10 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -117,6 +119,9 @@ public class ProjectMemberReadPresenter extends
 								NumberSearchField.GREATER));
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
+						criteria.setStatus(new StringSearchField(
+								ProjectMemberStatusConstants.ACTIVE));
+
 						Integer nextId = projectMemberService
 								.getNextItemKey(criteria);
 						if (nextId != null) {
@@ -137,7 +142,7 @@ public class ProjectMemberReadPresenter extends
 
 					@Override
 					public void gotoPrevious(ProjectMember data) {
-						ProjectMemberService riskeService = AppContext
+						ProjectMemberService projectMemberService = AppContext
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -146,7 +151,10 @@ public class ProjectMemberReadPresenter extends
 								SearchField.AND, project.getId()));
 						criteria.setId(new NumberSearchField(data.getId(),
 								NumberSearchField.LESSTHAN));
-						Integer nextId = riskeService
+						criteria.setStatus(new StringSearchField(
+								ProjectMemberStatusConstants.ACTIVE));
+
+						Integer nextId = projectMemberService
 								.getPreviousItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(
