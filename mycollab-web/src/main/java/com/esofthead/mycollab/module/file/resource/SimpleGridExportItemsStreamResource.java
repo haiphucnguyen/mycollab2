@@ -58,8 +58,8 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 	}
 
 	public static class AllItems<S extends SearchCriteria, T> extends
-			SimpleGridExportItemsStreamResource {
-
+			SimpleGridExportItemsStreamResource<T> {
+		private static final long serialVersionUID = 1L;
 		private ISearchableService<S> searchService;
 		private S searchCriteria;
 
@@ -87,7 +87,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 
 			public LazyLoadingDataSource() {
 				totalItems = searchService.getTotalCount(searchCriteria);
-				SearchRequest searchRequest = new SearchRequest(searchCriteria,
+				SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
 						currentPage, ITEMS_PER_PAGE);
 				currentData = searchService
 						.findPagableListByCriteria(searchRequest);
@@ -99,7 +99,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 				if (result) {
 					if (currentIndex == (currentPage + 1) * ITEMS_PER_PAGE) {
 						currentPage = currentPage + 1;
-						SearchRequest searchRequest = new SearchRequest(
+						SearchRequest<S> searchRequest = new SearchRequest<S>(
 								searchCriteria, currentPage, ITEMS_PER_PAGE);
 						currentData = searchService
 								.findPagableListByCriteria(searchRequest);
@@ -136,6 +136,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 
 	public static class ListData<T> extends
 			SimpleGridExportItemsStreamResource<T> {
+		private static final long serialVersionUID = 1L;
 		private List<T> data;
 
 		public ListData(String reportTitle, List<TableViewField> fields,

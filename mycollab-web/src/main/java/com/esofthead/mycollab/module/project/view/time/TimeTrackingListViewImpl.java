@@ -99,15 +99,16 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 								.getProject().getName() != null) ? CurrentProjectVariables
 								.getProject().getName() : "");
-				final Resource res = new StreamResource(
-						new ExportTimeLoggingStreamResource(
-								title,
-								TimeTrackingListViewImpl.EXPORT_COLUMNS,
-								AppContext
-										.getSpringBean(ItemTimeLoggingService.class),
-								TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria),
-						"timeLogging_list.xls", AppContext.getApplication());
-				AppContext.getApplication().getMainWindow().open(res, "_blank");
+				// final Resource res = new StreamResource(
+				// new ExportTimeLoggingStreamResource(
+				// title,
+				// TimeTrackingListViewImpl.EXPORT_COLUMNS,
+				// AppContext
+				// .getSpringBean(ItemTimeLoggingService.class),
+				// TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria),
+				// "timeLogging_list.xls", AppContext.getApplication());
+				// AppContext.getApplication().getMainWindow().open(res,
+				// "_blank");
 			}
 		});
 		headerLayout.setComponentAlignment(this.exportBtn,

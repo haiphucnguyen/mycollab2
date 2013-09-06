@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
 import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -173,18 +174,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				StreamResource res = new StreamResource(
-						new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-								"Time Tracking Report",
-								tableItem.getDisplayColumns(),
-								ReportExportType.PDF,
-								AppContext
-										.getSpringBean(ItemTimeLoggingService.class),
-								searchCriteria, SimpleItemTimeLogging.class),
-						"export.pdf", TimeTrackingViewImpl.this
-								.getApplication());
-				TimeTrackingViewImpl.this.getWindow().open(res, "_blank");
-				exportButtonControl.setPopupVisible(false);
+				downloadExportStreamCommand(ReportExportType.PDF);
 
 			}
 		});
@@ -198,19 +188,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				StreamResource res = new StreamResource(
-						new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-								"Time Tracking Report",
-								tableItem.getDisplayColumns(),
-								ReportExportType.EXCEL,
-								AppContext
-										.getSpringBean(ItemTimeLoggingService.class),
-								searchCriteria, SimpleItemTimeLogging.class),
-						"export.xlsx", TimeTrackingViewImpl.this
-								.getApplication());
-				TimeTrackingViewImpl.this.getWindow().open(res, "_blank");
-				exportButtonControl.setPopupVisible(false);
-
+				downloadExportStreamCommand(ReportExportType.EXCEL);
 			}
 		});
 		exportExcelBtn.setIcon(MyCollabResource
@@ -272,6 +250,19 @@ public class TimeTrackingViewImpl extends AbstractView implements
 					}
 				});
 		contentWrapper.addComponent(this.tableItem);
+	}
+
+	private void downloadExportStreamCommand(ReportExportType exportType) {
+		ExportItemsStreamResource<SimpleItemTimeLogging> stream = new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+				"Time Tracking Report", tableItem.getDisplayColumns(),
+				exportType,
+				AppContext.getSpringBean(ItemTimeLoggingService.class),
+				searchCriteria, SimpleItemTimeLogging.class);
+		StreamResource res = new StreamResource(stream,
+				stream.getDefaultExportFileName(),
+				TimeTrackingViewImpl.this.getApplication());
+		TimeTrackingViewImpl.this.getWindow().open(res, "_blank");
+		exportButtonControl.setPopupVisible(false);
 	}
 
 	@Override

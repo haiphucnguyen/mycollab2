@@ -9,6 +9,7 @@ import org.vaadin.hene.splitbutton.SplitButtonExt;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
 import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -125,19 +126,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				StreamResource res = new StreamResource(
-						new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								"Following Tickets Report",
-								ticketTable.getDisplayColumns(),
-								ReportExportType.PDF,
-								AppContext
-										.getSpringBean(ProjectFollowingTicketService.class),
-								searchCriteria, FollowingTicket.class),
-						"export.pdf", FollowingTicketViewImpl.this
-								.getApplication());
-				FollowingTicketViewImpl.this.getWindow().open(res, "_blank");
-				exportButtonControl.setPopupVisible(false);
-
+				downloadExportStreamCommand(ReportExportType.PDF);
 			}
 		});
 		exportPdfBtn.setIcon(MyCollabResource
@@ -150,19 +139,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				StreamResource res = new StreamResource(
-						new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-								"Following Tickets Report",
-								ticketTable.getDisplayColumns(),
-								ReportExportType.EXCEL,
-								AppContext
-										.getSpringBean(ProjectFollowingTicketService.class),
-								searchCriteria, FollowingTicket.class),
-						"export.xlsx", FollowingTicketViewImpl.this
-								.getApplication());
-				FollowingTicketViewImpl.this.getWindow().open(res, "_blank");
-				exportButtonControl.setPopupVisible(false);
-
+				downloadExportStreamCommand(ReportExportType.EXCEL);
 			}
 		});
 		exportExcelBtn.setIcon(MyCollabResource
@@ -176,6 +153,20 @@ public class FollowingTicketViewImpl extends AbstractView implements
 
 		this.ticketTable = new FollowingTicketTable();
 		contentWrapper.addComponent(this.ticketTable);
+	}
+
+	private void downloadExportStreamCommand(ReportExportType exportType) {
+		ExportItemsStreamResource<FollowingTicket> exportResource = new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
+				"Following Tickets Report", ticketTable.getDisplayColumns(),
+				exportType,
+				AppContext.getSpringBean(ProjectFollowingTicketService.class),
+				searchCriteria, FollowingTicket.class);
+
+		StreamResource res = new StreamResource(exportResource,
+				exportResource.getDefaultExportFileName(),
+				FollowingTicketViewImpl.this.getApplication());
+		FollowingTicketViewImpl.this.getWindow().open(res, "_blank");
+		exportButtonControl.setPopupVisible(false);
 	}
 
 	@Override
