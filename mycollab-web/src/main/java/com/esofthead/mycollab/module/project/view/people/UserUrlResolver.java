@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
@@ -25,6 +27,8 @@ public class UserUrlResolver extends ProjectUrlResolver {
 
 			ProjectMemberSearchCriteria memberSearchCriteria = new ProjectMemberSearchCriteria();
 			memberSearchCriteria.setProjectId(new NumberSearchField(projectId));
+			memberSearchCriteria.setStatus(new StringSearchField(
+					ProjectMemberStatusConstants.ACTIVE));
 
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),

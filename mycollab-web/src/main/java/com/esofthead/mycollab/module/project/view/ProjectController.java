@@ -8,9 +8,11 @@ import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -1139,6 +1141,8 @@ public class ProjectController implements IController {
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 						criteria.setProjectId(new NumberSearchField(project
 								.getId()));
+						criteria.setStatus(new StringSearchField(
+								ProjectMemberStatusConstants.ACTIVE));
 						projectView
 								.gotoUsersAndGroup(new ProjectMemberScreenData.Search(
 										criteria));
