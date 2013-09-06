@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -25,7 +26,7 @@ public interface ProblemTableFieldDef {
 			"raisedByUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_ASSIGN_USER),
+			LocalizationHelper.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 			"assignedUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField datedue = new TableViewField(

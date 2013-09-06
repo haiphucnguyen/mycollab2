@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.CaseI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -48,7 +49,7 @@ public interface CaseTableFieldDef {
 			UIConstants.TABLE_EMAIL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			LocalizationHelper.getMessage(CaseI18nEnum.FORM_ASSIGN_USER),
+			LocalizationHelper.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 			"assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField createdTime = new TableViewField(

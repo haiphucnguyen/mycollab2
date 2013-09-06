@@ -201,8 +201,12 @@ public class TaskGroupAddWindow extends Window {
 					this.informationLayout.addComponent(field, "Description",
 							0, 1, 2, "100%");
 				} else if (propertyId.equals("owner")) {
-					this.informationLayout.addComponent(field,
-							"Responsible User", 0, 2);
+					this.informationLayout
+							.addComponent(
+									field,
+									LocalizationHelper
+											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+									0, 2);
 				} else if (propertyId.equals("milestoneid")) {
 					this.informationLayout.addComponent(field,
 							"Related Milestone", 1, 2);

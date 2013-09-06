@@ -93,13 +93,10 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(propertyId.equals("ownership"),
 					field, LocalizationHelper
 							.getMessage(AccountI18nEnum.FORM_OWNERSHIP), 1, 4);
-			informationLayout
-					.addComponent(
-							propertyId.equals("assignuser"),
-							field,
-							LocalizationHelper
-									.getMessage(AccountI18nEnum.FORM_ASSIGNED_TO),
-							0, 5);
+			informationLayout.addComponent(propertyId.equals("assignuser"),
+					field, LocalizationHelper
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
+					5);
 			informationLayout.addComponent(propertyId.equals("annualrevenue"),
 					field, LocalizationHelper
 							.getMessage(AccountI18nEnum.FORM_ANNUAL_REVENUE),
