@@ -6,7 +6,7 @@
         <bold>com/esofthead/mycollab/reporting/resources/fonts/DejaVuSerif-Bold.ttf</bold>
         <italic>com/esofthead/mycollab/reporting/resources/fonts/DejaVuSerif-Italic.ttf</italic>
         <boldItalic>com/esofthead/mycollab/reporting/resources/fonts/DejaVuSerif-Bold.ttf</boldItalic>
-        <pdfEncoding>UTF-8</pdfEncoding>
+        <pdfEncoding>Identity-H</pdfEncoding>
         <pdfEmbedded>true</pdfEmbedded>
     </fontFamily>
 
