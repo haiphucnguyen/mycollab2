@@ -65,11 +65,8 @@ public class ProjectTaskServiceImpl extends
 		Integer key = taskMapperExt.getMaxKey(record.getProjectid());
 		record.setTaskkey((key == null) ? 1 : (key + 1));
 
-		// Clean cache of task group
-		String taskGroupKey = String.format("%s-%d",
-				ProjectTaskListService.class.getName(), record.getSaccountid());
 		LocalCacheManager.removeCacheItems(record.getSaccountid() + "",
-				taskGroupKey);
+				ProjectTaskListService.class.getName());
 
 		return super.saveWithSession(record, username);
 	}
@@ -84,10 +81,8 @@ public class ProjectTaskServiceImpl extends
 		}
 
 		// Clean cache of task group
-		String taskGroupKey = String.format("%s-%d",
-				ProjectTaskListService.class.getName(), record.getSaccountid());
 		LocalCacheManager.removeCacheItems(record.getSaccountid() + "",
-				taskGroupKey);
+				ProjectTaskListService.class.getName());
 
 		return super.updateWithSession(record, username);
 	}

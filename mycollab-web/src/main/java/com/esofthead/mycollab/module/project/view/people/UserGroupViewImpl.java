@@ -5,7 +5,9 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
@@ -79,6 +81,8 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 							final ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 							criteria.setProjectId(new NumberSearchField(project
 									.getId()));
+							criteria.setStatus(new StringSearchField(
+									ProjectMemberStatusConstants.ACTIVE));
 							UserGroupViewImpl.this.userPresenter
 									.go(UserGroupViewImpl.this,
 											new ScreenData.Search<ProjectMemberSearchCriteria>(

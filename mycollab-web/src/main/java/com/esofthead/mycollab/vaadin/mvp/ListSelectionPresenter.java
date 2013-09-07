@@ -12,7 +12,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.ValuedBean;
-import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
+import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
@@ -199,7 +199,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 						.getView()).getPagedBeanTable();
 				if (presenter.isSelectAll) {
 					res = new StreamResource(
-							new ExportItemsStreamResource.AllItems("",
+							new SimpleGridExportItemsStreamResource.AllItems("",
 									pagedBeanTable.getDisplayColumns(),
 									ReportExportType.CSV,
 									presenter.getSearchService(),
@@ -209,7 +209,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				} else {
 
 					res = new StreamResource(
-							new ExportItemsStreamResource.ListData("",
+							new SimpleGridExportItemsStreamResource.ListData("",
 									pagedBeanTable.getDisplayColumns(),
 									ReportExportType.CSV,
 									presenter.getSelectedItems(),
@@ -224,7 +224,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 						.getView()).getPagedBeanTable();
 				if (presenter.isSelectAll) {
 					res = new StreamResource(
-							new ExportItemsStreamResource.AllItems(
+							new SimpleGridExportItemsStreamResource.AllItems(
 									getReportTitle(),
 									pagedBeanTable.getDisplayColumns(),
 									ReportExportType.PDF,
@@ -235,7 +235,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				} else {
 
 					res = new StreamResource(
-							new ExportItemsStreamResource.ListData(
+							new SimpleGridExportItemsStreamResource.ListData(
 									getReportTitle(),
 									pagedBeanTable.getDisplayColumns(),
 									ReportExportType.PDF,
@@ -251,7 +251,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 						.getView()).getPagedBeanTable();
 				if (presenter.isSelectAll) {
 					res = new StreamResource(
-							new ExportItemsStreamResource.AllItems(
+							new SimpleGridExportItemsStreamResource.AllItems(
 									getReportTitle(),
 									pagedBeanTable.getDisplayColumns(),
 									ReportExportType.EXCEL,
@@ -262,7 +262,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				} else {
 
 					res = new StreamResource(
-							new ExportItemsStreamResource.ListData(
+							new SimpleGridExportItemsStreamResource.ListData(
 									getReportTitle(),
 									pagedBeanTable.getDisplayColumns(),
 									ReportExportType.EXCEL,

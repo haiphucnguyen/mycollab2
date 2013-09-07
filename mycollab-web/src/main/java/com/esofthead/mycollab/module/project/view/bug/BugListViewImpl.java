@@ -6,7 +6,7 @@ import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
+import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -160,7 +160,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 								.getId()));
 
 				StreamResource res = new StreamResource(
-						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, tableItem.getDisplayColumns(),
 								ReportExportType.PDF, AppContext
 										.getSpringBean(BugService.class),
@@ -191,7 +191,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 								.getId()));
 
 				StreamResource res = new StreamResource(
-						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, tableItem.getDisplayColumns(),
 								ReportExportType.EXCEL, AppContext
 										.getSpringBean(BugService.class),
@@ -222,7 +222,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 								.getId()));
 
 				StreamResource res = new StreamResource(
-						new ExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, tableItem.getDisplayColumns(),
 								ReportExportType.CSV, AppContext
 										.getSpringBean(BugService.class),

@@ -32,13 +32,16 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 	private List<SearchHandler<FileSearchCriteria>> handers;
 	private Folder currentBreadCrumbFolder;
+	private String rootFolderPath;
 
-	public FileBreadcrumb() {
+	public void setRootFolderPath(String rootPath) {
+		this.rootFolderPath = rootPath;
+	}
+
+	public FileBreadcrumb(String rootFolderPath) {
 		this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
 		this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
 		this.setUseDefaultClickBehaviour(false);
-
-		initBreadcrumb();
 	}
 
 	public void initBreadcrumb() {
@@ -49,10 +52,8 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 			@Override
 			public void buttonClick(ClickEvent event) {
 				FileSearchCriteria criteria = new FileSearchCriteria();
-				criteria.setBaseFolder(AppContext.getAccountId().toString()
-						+ "/Documents");
-				criteria.setRootFolder(AppContext.getAccountId().toString()
-						+ "/Documents");
+				criteria.setBaseFolder(rootFolderPath);
+				criteria.setRootFolder(rootFolderPath);
 				notifySelectHandler(criteria);
 			}
 		}));
@@ -66,10 +67,8 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 					@Override
 					public void buttonClick(ClickEvent event) {
 						FileSearchCriteria criteria = new FileSearchCriteria();
-						criteria.setBaseFolder(AppContext.getAccountId()
-								.toString() + "/Documents");
-						criteria.setRootFolder(AppContext.getAccountId()
-								.toString() + "/Documents");
+						criteria.setBaseFolder(rootFolderPath);
+						criteria.setRootFolder(rootFolderPath);
 						notifySelectHandler(criteria);
 					}
 				});
@@ -81,8 +80,21 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 	public void gotoFolder(final Folder folder) {
 		initBreadcrumb();
 		currentBreadCrumbFolder = folder;
-		String[] path = folder.getPath().split("/");
+		String[] path;
+		String headPath = "";
+
+		// --- get path for algrothim ----
+		if (rootFolderPath.split("/").length >= 3) {
+			String folderPath = folder.getPath();
+			headPath = folderPath.substring(0, folderPath.indexOf("/"));
+			folderPath = folderPath.substring(folderPath.indexOf("/") + 1);
+			path = folderPath.split("/");
+		} else
+			path = folder.getPath().split("/");
+
 		final StringBuffer curPath = new StringBuffer("");
+		curPath.append(headPath);
+
 		boolean isNeedAdd3dot = (path.length > 6) ? true : false;
 		int holder = 0;
 		if (folder instanceof ExternalFolder && path.length == 0) { // home
@@ -149,8 +161,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 							criteria.setExternalDrive(((ExternalFolder) folder)
 									.getExternalDrive());
 						} else {
-							criteria.setRootFolder(AppContext.getAccountId()
-									.toString() + "/Documents");
+							criteria.setRootFolder(rootFolderPath);
 						}
 						notifySelectHandler(criteria);
 					}

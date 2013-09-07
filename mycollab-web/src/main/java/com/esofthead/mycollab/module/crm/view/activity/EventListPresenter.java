@@ -4,213 +4,50 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
-import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
-import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
-import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class EventListPresenter extends AbstractPresenter<EventListView>
-		implements ListPresenter<EventSearchCriteria> {
+public class EventListPresenter extends
+		ListSelectionPresenter<EventListView, EventSearchCriteria, SimpleEvent> {
 	private static final long serialVersionUID = 1L;
-
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"status", "eventType", "subject", "startDate", "endDate" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] {
-			"Status", "Type", "Subject", "Start Date", "End Date" };
-
-	private EventSearchCriteria searchCriteria;
-
-	private boolean isSelectAll = false;
 
 	public EventListPresenter() {
 		super(EventListView.class);
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
-
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
-
-				checkWhetherEnableTableActionControl();
-			}
-		});
-
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<EventSearchCriteria>() {
-
-					@Override
-					public void onSearch(EventSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
-
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
-
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleEvent> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleEvent item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
-
-						checkWhetherEnableTableActionControl();
-
-					}
-
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-
-					}
-				});
-
 		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
+				new DefaultPopupActionHandler(this) {
 
 					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialogExt.show(
-									view.getWindow(),
-									LocalizationHelper.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											SiteConfiguration.getSiteName()),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteSelectedItems();
-											}
-										}
-									});
-						} else if ("mail".equals(id)) {
+					protected void onSelectExtra(String id, String caption) {
+						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
-						} else if ("export".equals(id)) {
-							Resource res = null;
-
-							if (isSelectAll) {
-								res = new StreamResource(
-										new ExportCsvStreamResource.AllItems<EventSearchCriteria>(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES,
-												AppContext
-														.getSpringBean(EventService.class),
-												searchCriteria), "export.csv",
-										view.getApplication());
-							} else {
-								List tableData = view.getPagedBeanTable()
-										.getCurrentDataList();
-								res = new StreamResource(
-										new ExportCsvStreamResource.ListData(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES, tableData),
-										"export.csv", view.getApplication());
-							}
-
-							view.getWidget().getWindow().open(res, "_blank");
 						}
 					}
-				});
-
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleEvent>() {
 
 					@Override
-					public void onSelect(SimpleEvent item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+					protected String getReportTitle() {
+						return "Event List";
+					}
 
-						checkWhetherEnableTableActionControl();
+					@Override
+					protected Class getReportModelClassType() {
+						return SimpleEvent.class;
 					}
 				});
-	}
-
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleEvent> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleEvent item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
-
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleEvent> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleEvent item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
 	}
 
 	@Override
@@ -229,18 +66,12 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 		}
 	}
 
-	@Override
-	public void doSearch(EventSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-
 	private static final String CALL = "Call";
 	private static final String MEETING = "Meeting";
 	private static final String TASK = "Task";
 
-	private void deleteSelectedItems() {
+	@Override
+	protected void deleteSelectedItems() {
 		Collection<SimpleEvent> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		List<Integer> keyListCall = new ArrayList<Integer>();
@@ -292,6 +123,11 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 		}
 		doSearch(searchCriteria);
 		checkWhetherEnableTableActionControl();
+	}
+
+	@Override
+	public ISearchableService<EventSearchCriteria> getSearchService() {
+		return AppContext.getSpringBean(EventService.class);
 	}
 
 }

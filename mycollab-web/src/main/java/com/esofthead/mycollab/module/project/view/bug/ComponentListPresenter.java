@@ -8,213 +8,59 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.ExportCsvStreamResource;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
-import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
-import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.CheckBox;
 
 /**
  * 
  * @author haiphucnguyen
  */
-public class ComponentListPresenter extends
-		AbstractPresenter<ComponentListView> implements
-		ListPresenter<ComponentSearchCriteria> {
+public class ComponentListPresenter
+		extends
+		ListSelectionPresenter<ComponentListView, ComponentSearchCriteria, SimpleComponent> {
 
 	private static final long serialVersionUID = 1L;
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"componentname", "description" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Name",
-			"Description" };
 	private ComponentService componentService;
-	private ComponentSearchCriteria searchCriteria;
-	private boolean isSelectAll = false;
 
 	public ComponentListPresenter() {
 		super(ComponentListView.class);
 
 		componentService = AppContext.getSpringBean(ComponentService.class);
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
-
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
-
-				checkWhetherEnableTableActionControl();
-			}
-		});
-
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<ComponentSearchCriteria>() {
-					@Override
-					public void onSearch(ComponentSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
-
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleComponent> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleComponent item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
-
-						checkWhetherEnableTableActionControl();
-
-					}
-
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-				});
-
 		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialogExt.show(
-									view.getWindow(),
-									LocalizationHelper.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											SiteConfiguration.getSiteName()),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
+				new DefaultPopupActionHandler(this) {
 
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteSelectedItems();
-											}
-										}
-									});
-						} else if ("mail".equals(id)) {
+					@Override
+					protected void onSelectExtra(String id, String caption) {
+						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
-						} else if ("export".equals(id)) {
-							Resource res = null;
-
-							if (isSelectAll) {
-								res = new StreamResource(
-										new ExportCsvStreamResource.AllItems<ComponentSearchCriteria>(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES,
-												AppContext
-														.getSpringBean(ComponentService.class),
-												searchCriteria), "export.csv",
-										view.getApplication());
-							} else {
-								List tableData = view.getPagedBeanTable()
-										.getCurrentDataList();
-								res = new StreamResource(
-										new ExportCsvStreamResource.ListData(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES, tableData),
-										"export.csv", view.getApplication());
-							}
-
-							view.getWidget().getWindow().open(res, "_blank");
 						}
-					}
-				});
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleComponent>() {
+					}
+
 					@Override
-					public void onSelect(SimpleComponent item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+					protected String getReportTitle() {
+						return "Component List";
+					}
 
-						checkWhetherEnableTableActionControl();
+					@Override
+					protected Class getReportModelClassType() {
+						return SimpleComponent.class;
 					}
 				});
-	}
-
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleComponent> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleComponent item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
-
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleComponent> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleComponent item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
 	}
 
 	@Override
@@ -237,13 +83,7 @@ public class ComponentListPresenter extends
 	}
 
 	@Override
-	public void doSearch(ComponentSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-
-	private void deleteSelectedItems() {
+	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
 			Collection<SimpleComponent> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
@@ -266,5 +106,10 @@ public class ComponentListPresenter extends
 			doSearch(searchCriteria);
 		}
 
+	}
+
+	@Override
+	public ISearchableService<ComponentSearchCriteria> getSearchService() {
+		return AppContext.getSpringBean(ComponentService.class);
 	}
 }

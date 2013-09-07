@@ -80,11 +80,6 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public List<SimpleUser> getUsersInProject(int projectId, Integer sAccountId) {
-		return projectMemberMapperExt.getUsersInProject(projectId, sAccountId);
-	}
-
-	@Override
 	public int removeWithSession(Integer primaryKey, String username,
 			int accountId) {
 		SimpleProjectMember projectMember = projectMemberMapperExt

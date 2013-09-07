@@ -24,9 +24,6 @@ public interface ProjectMemberMapperExt extends
 	List<SimpleUser> getUsersNotInProject(@Param("projectId") int projectId,
 			@Param("sAccountId") int sAccountId);
 
-	List<SimpleUser> getUsersInProject(@Param("projectId") int projectId,
-			@Param("sAccountId") int sAccountId);
-
 	List<SimpleUser> getActiveUsersInProject(@Param("projectId") int projectId,
 			@Param("sAccountId") int sAccountId);
 

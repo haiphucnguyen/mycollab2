@@ -36,13 +36,9 @@ public interface ProjectMemberService extends
 			@CacheKey Integer sAccountId);
 
 	@Cacheable
-	List<SimpleUser> getUsersInProject(int projectId,
-			@CacheKey Integer sAccountId);
-
-	@Cacheable
 	List<SimpleUser> getActiveUsersInProject(int projectId,
 			@CacheKey Integer sAccountId);
 
-	void inviteProjectMember(String[] email, int projectId,
-			int projectRoleId, String inviteUser, int sAccountId);
+	void inviteProjectMember(String[] email, int projectId, int projectRoleId,
+			String inviteUser, int sAccountId);
 }

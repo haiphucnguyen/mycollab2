@@ -15,6 +15,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -136,10 +137,9 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 								if (dialog.isConfirmed()) {
 									ProjectMemberService prjMemberService = AppContext
 											.getSpringBean(ProjectMemberService.class);
-									prjMemberService.removeWithSession(
-											member.getId(),
-											AppContext.getUsername(),
-											AppContext.getAccountId());
+									member.setStatus(ProjectMemberStatusConstants.INACTIVE);
+									prjMemberService.updateWithSession(member,
+											AppContext.getUsername());
 
 									EventBus.getInstance()
 											.fireEvent(

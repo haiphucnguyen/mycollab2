@@ -1,0 +1,1504 @@
+package com.esofthead.mycollab.module.file.view;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.easyuploads.MultiFileUploadExt;
+import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.ecm.ContentException;
+import com.esofthead.mycollab.module.ecm.StorageNames;
+import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
+import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
+import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
+import com.esofthead.mycollab.module.ecm.domain.Folder;
+import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
+import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
+import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
+import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.Hr;
+import com.esofthead.mycollab.vaadin.ui.Separator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Container;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.terminal.Sizeable;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.Tree;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+
+public class ResourceHandlerComponent extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+	private HorizontalLayout controllGroupBtn;
+	private Button deleteBtn;
+	private Button selectAllBtn;
+	private FileBreadcrumb fileBreadCrumb;
+	private ItemResourceContainerLayout itemResourceContainerLayout;
+	private Folder baseFolder;
+	private Folder rootFolder;
+	private String rootFolderName;
+	private ResourceService resourceService;
+	private ExternalResourceService externalResourceService;
+	private ExternalDriveService externalDriveService;
+	private String rootPath;
+	private List<Resource> selectedResourcesList;
+	private Tree menuTree;
+	private PagingResourceWapper pagingResourceWapper;
+	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
+	private boolean isNeedLoadExternalDirve = false;
+
+	public void setCurrentBaseFolder(Folder baseFolder) {
+		this.baseFolder = baseFolder;
+	}
+
+	public Folder getCurrentBaseFolder() {
+		return baseFolder;
+	}
+
+	/**
+	 * this method show Component when star loading
+	 * 
+	 * @param baseFolder
+	 */
+	public void displayComponent(Folder baseFolder, String rootPath,
+			String rootFolderName, boolean isNeedLoadExternalDrive) {
+		this.isNeedLoadExternalDirve = isNeedLoadExternalDrive;
+		if (isNeedLoadExternalDrive == false) {
+			externalResourceService = null;
+			externalDriveService = null;
+		}
+		this.baseFolder = baseFolder;
+		this.rootFolder = baseFolder;
+		this.rootPath = rootPath;
+		this.rootFolderName = rootFolderName;
+		this.fileBreadCrumb.setRootFolderPath(rootPath);
+		this.fileBreadCrumb.initBreadcrumb();
+		this.itemResourceContainerLayout.constructBody(this.baseFolder);
+	}
+
+	public ResourceHandlerComponent(final Folder baseFolder,
+			final String rootPath, Tree menuTree) {
+		this.menuTree = menuTree;
+		this.baseFolder = baseFolder;
+		this.rootPath = rootPath;
+		this.rootFolder = baseFolder;
+		externalResourceService = AppContext
+				.getSpringBean(ExternalResourceService.class);
+		externalDriveService = AppContext
+				.getSpringBean(ExternalDriveService.class);
+		resourceService = AppContext.getSpringBean(ResourceService.class);
+
+		VerticalLayout mainBodyLayout = new VerticalLayout();
+		mainBodyLayout.setSpacing(true);
+		mainBodyLayout.addStyleName("box-no-border-left");
+
+		// file bread Crum ---------------------
+		fileBreadCrumb = new FileBreadcrumb(rootPath);
+		fileBreadCrumb.setCurrentBreadCrumbFolder(baseFolder);
+		mainBodyLayout.addComponent(fileBreadCrumb);
+
+		// Construct controllGroupBtn
+		controllGroupBtn = new HorizontalLayout();
+		controllGroupBtn.setMargin(true, false, false, true);
+		controllGroupBtn.setSpacing(true);
+
+		selectAllBtn = new Button();
+		selectAllBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		selectAllBtn.setIcon(MyCollabResource
+				.newResource("icons/16/checkbox_empty.png"));
+		selectAllBtn.setValue(false);
+		selectAllBtn.setImmediate(true);
+
+		selectAllBtn.addListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (!(Boolean) selectAllBtn.getValue()) {
+					selectAllBtn.setIcon(MyCollabResource
+							.newResource("icons/16/checkbox.png"));
+					selectAllBtn.setValue(true);
+					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
+						for (CheckBox cb : itemResourceContainerLayout
+								.getListAllCheckBox()) {
+							if (!(Boolean) cb.getValue())
+								cb.setValue(true);
+						}
+					}
+				} else {
+					selectAllBtn.setValue(false);
+					selectAllBtn.setIcon(MyCollabResource
+							.newResource("icons/16/checkbox_empty.png"));
+					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
+						for (CheckBox cb : itemResourceContainerLayout
+								.getListAllCheckBox()) {
+							if ((Boolean) cb.getValue())
+								cb.setValue(false);
+						}
+					}
+				}
+			}
+		});
+		UiUtils.addComponent(controllGroupBtn, selectAllBtn,
+				Alignment.MIDDLE_LEFT);
+
+		Button goUpBtn = new Button();
+		goUpBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/up_to_root.png"));
+		goUpBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Folder parentFolder = null;
+				if (ResourceHandlerComponent.this.baseFolder instanceof ExternalFolder) {
+					if (baseFolder.getPath().equals("/")) {
+						parentFolder = rootFolder;
+					} else {
+						parentFolder = externalResourceService
+								.getParentResourceFolder(
+										((ExternalFolder) baseFolder)
+												.getExternalDrive(), baseFolder
+												.getPath());
+					}
+				} else if (!ResourceHandlerComponent.this.baseFolder.getPath()
+						.equals(ResourceHandlerComponent.this.rootPath)) {
+					parentFolder = resourceService
+							.getParentFolder(ResourceHandlerComponent.this.baseFolder
+									.getPath());
+				} else {
+					parentFolder = rootFolder;
+				}
+				selectedResourcesList = new ArrayList<Resource>();
+				itemResourceContainerLayout.constructBody(parentFolder);
+				ResourceHandlerComponent.this.baseFolder = parentFolder;
+				fileBreadCrumb
+						.gotoFolder(ResourceHandlerComponent.this.baseFolder);
+			}
+		});
+		goUpBtn.setDescription("Back to parent folder");
+		goUpBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		UiUtils.addComponent(controllGroupBtn, goUpBtn, Alignment.MIDDLE_LEFT);
+
+		ButtonGroup navButton = new ButtonGroup();
+		navButton.addStyleName(UIConstants.THEME_GRAY_LINK);
+		Button createBtn = new Button("Create", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				AddNewFolderWindow addnewFolderWindow = new AddNewFolderWindow();
+				ResourceHandlerComponent.this.getWindow().addWindow(
+						addnewFolderWindow);
+			}
+		});
+		createBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/add.png"));
+		createBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		navButton.addButton(createBtn);
+
+		Button uploadBtn = new Button("Upload", new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
+				ResourceHandlerComponent.this.getWindow().addWindow(
+						multiUploadWindow);
+			}
+		});
+		uploadBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/upload.png"));
+		uploadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		navButton.addButton(uploadBtn);
+
+		Button downloadBtn = new Button("Download", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (selectedResourcesList != null
+						&& selectedResourcesList.size() > 0) {
+					List<String> lstPath = new ArrayList<String>();
+					for (int i = 0; i < selectedResourcesList.size(); i++) {
+						Resource res = selectedResourcesList.get(i);
+						if (res instanceof ExternalFolder) {
+							ResourceHandlerComponent.this
+									.getWindow()
+									.showNotification(
+											"Sorry for this inconvenience, we not yet support download dropbox folder! This function will update soon. Best regard.");
+							return;
+						} else if (res instanceof ExternalContent) {
+							com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+									.getStreamDropboxResource(res);
+							AppContext.getApplication().getMainWindow()
+									.open(downloadResource, "_blank");
+							if (i == selectedResourcesList.size() - 1) {
+								return;
+							}
+						} else {
+							lstPath.add(res.getPath());
+						}
+					}
+					com.vaadin.terminal.Resource downloadResource = null;
+					if (selectedResourcesList.size() == 1
+							&& selectedResourcesList.get(0) instanceof Content) {
+						downloadResource = StreamDownloadResourceFactory
+								.getStreamResource(selectedResourcesList.get(0)
+										.getPath());
+					} else if (selectedResourcesList.size() > 0) {
+						downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
+								lstPath.toArray(new String[lstPath.size()]),
+								itemResourceContainerLayout.isSearchAction);
+					}
+					AppContext.getApplication().getMainWindow()
+							.open(downloadResource, "_blank");
+
+				} else {
+					ResourceHandlerComponent.this.getWindow().showNotification(
+							"Please choose items to download.");
+				}
+			}
+		});
+		downloadBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/download.png"));
+		downloadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		navButton.addButton(downloadBtn);
+
+		Button moveToBtn = new Button("Move to", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (selectedResourcesList.size() > 0) {
+					MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+							selectedResourcesList,
+							ResourceHandlerComponent.this.isNeedLoadExternalDirve);
+					ResourceHandlerComponent.this.getWindow().addWindow(
+							moveResourceWindow);
+				} else {
+					ResourceHandlerComponent.this.getParent().getWindow()
+							.showNotification("Please select items to move");
+				}
+			}
+		});
+		moveToBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/move_up.png"));
+		moveToBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		navButton.addButton(moveToBtn);
+
+		deleteBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						if (selectedResourcesList.size() == 0) {
+							ResourceHandlerComponent.this
+									.getParent()
+									.getWindow()
+									.showNotification(
+											"Please select items to delete");
+						} else {
+							deleteResourceAction();
+						}
+					}
+				});
+		deleteBtn.setIcon(MyCollabResource
+				.newResource("icons/16/ecm/delete.png"));
+		deleteBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		deleteBtn.setImmediate(true);
+		navButton.addButton(deleteBtn);
+		controllGroupBtn.addComponent(navButton);
+
+		mainBodyLayout.addComponent(controllGroupBtn);
+
+		itemResourceContainerLayout = new ItemResourceContainerLayout(
+				baseFolder, resourceService);
+		itemResourceContainerLayout.setWidth("100%");
+
+		mainBodyLayout.addComponent(itemResourceContainerLayout);
+		this.addComponent(mainBodyLayout);
+	}
+
+	protected void deleteResourceAction() {
+		ConfirmDialogExt
+				.show(ResourceHandlerComponent.this.getWindow(),
+						LocalizationHelper.getMessage(
+								GenericI18Enum.DELETE_DIALOG_TITLE,
+								SiteConfiguration.getSiteName()),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+						new ConfirmDialog.Listener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onClose(final ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									if (selectedResourcesList != null
+											&& selectedResourcesList.size() > 0) {
+										for (Resource res : selectedResourcesList) {
+											if (res instanceof ExternalFolder
+													|| res instanceof ExternalContent) {
+												if (res instanceof ExternalFolder) {
+													ResourceHandlerComponent.this.externalResourceService
+															.deleteResource(
+																	((ExternalFolder) res)
+																			.getExternalDrive(),
+																	res.getPath());
+												} else
+													ResourceHandlerComponent.this.externalResourceService
+															.deleteResource(
+																	((ExternalContent) res)
+																			.getExternalDrive(),
+																	res.getPath());
+											} else {
+												if (res instanceof Folder
+														&& menuTree != null) {
+													menuTree.removeItem((Folder) res);
+												}
+												ResourceHandlerComponent.this.resourceService.removeResource(
+														res.getPath(),
+														AppContext
+																.getUsername());
+											}
+										}
+										if (itemResourceContainerLayout.isSearchAction) {
+											itemResourceContainerLayout
+													.constructBody((Folder) resourceService
+															.getResource(rootPath));
+										} else {
+											itemResourceContainerLayout
+													.constructBody(baseFolder);
+										}
+										if ((Boolean) selectAllBtn.getValue())
+											selectAllBtn.click();
+
+										if (menuTree != null) {
+											ResourceHandlerComponent.this.menuTree
+													.collapseItem(ResourceHandlerComponent.this.baseFolder);
+											ResourceHandlerComponent.this.menuTree
+													.expandItem(ResourceHandlerComponent.this.baseFolder);
+										}
+
+										ResourceHandlerComponent.this
+												.getWindow().showNotification(
+														"Delete successfully.");
+										ResourceHandlerComponent.this.selectedResourcesList = new ArrayList<Resource>();
+									}
+								}
+							}
+						});
+	}
+
+	public void gotoFolderBreadCumb(Folder folder) {
+		selectedResourcesList.clear();
+		this.baseFolder = folder;
+		fileBreadCrumb.gotoFolder(folder);
+	}
+
+	public void constructBodyItemContainer(Folder folder) {
+		this.selectedResourcesList.clear();
+		this.baseFolder = folder;
+		itemResourceContainerLayout.constructBody(folder);
+	}
+
+	public void constructBodyItemContainerSearchActionResult(List<Resource> lst) {
+		this.selectedResourcesList.clear();
+		itemResourceContainerLayout.constructBodySearchActionResult(lst);
+	}
+
+	public void addSearchHandlerToBreadCrumb(
+			final SearchHandler<FileSearchCriteria> handler) {
+		fileBreadCrumb.addSearchHandler(handler);
+	}
+
+	public void initBreadCrumb() {
+		fileBreadCrumb.initBreadcrumb();
+	}
+
+	private class ItemResourceContainerLayout extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
+		private final List<CheckBox> listAllCheckBox;
+		private VerticalLayout mainLayout;
+		private boolean isSearchAction = false;
+
+		public List<CheckBox> getListAllCheckBox() {
+			return listAllCheckBox;
+		}
+
+		public ItemResourceContainerLayout(Folder folder,
+				ResourceService resourceService) {
+			selectedResourcesList = new ArrayList<Resource>();
+			listAllCheckBox = new ArrayList<CheckBox>();
+			this.setMargin(true);
+		}
+
+		private void constructBody(Folder currentFolder) {
+			isSearchAction = false;
+			if (mainLayout != null) {
+				this.removeAllComponents();
+			}
+
+			mainLayout = new VerticalLayout();
+			mainLayout.setSpacing(false);
+
+			List<Resource> lstResource;
+			if (currentFolder instanceof ExternalFolder) {
+				lstResource = externalResourceService.getResources(
+						((ExternalFolder) currentFolder).getExternalDrive(),
+						currentFolder.getPath());
+			} else {
+				lstResource = resourceService.getResources(currentFolder
+						.getPath());
+			}
+			if (currentFolder.getPath().equals(rootPath)
+					&& ResourceHandlerComponent.this.isNeedLoadExternalDirve) {
+				List<ExternalDrive> lst = externalDriveService
+						.getExternalDrivesOfUser(AppContext.getUsername());
+				if (lst != null && lst.size() > 0) {
+					for (ExternalDrive drive : lst) {
+						if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
+							Resource res = externalResourceService
+									.getcurrentResourceByPath(drive, "/");
+							res.setName(drive.getFoldername());
+							lstResource.add(0, res);
+						}
+					}
+				}
+			}
+			this.addComponent(new Hr());
+			if (lstResource != null && lstResource.size() > 0) {
+				if (lstResource.size() <= PagingResourceWapper.pageItemNum) {
+					for (Resource res : lstResource) {
+						mainLayout.addComponent(constructOneItemResourceLayout(
+								res, false));
+						mainLayout.addComponent(new Hr());
+					}
+				} else if (lstResource.size() > PagingResourceWapper.pageItemNum) {
+					for (int i = 0; i < PagingResourceWapper.pageItemNum; i++) {
+						Resource res = lstResource.get(i);
+						mainLayout.addComponent(constructOneItemResourceLayout(
+								res, false));
+						mainLayout.addComponent(new Hr());
+					}
+					pagingResourceWapper = new PagingResourceWapper(lstResource);
+					pagingResourceWapper.setWidth("100%");
+					mainLayout.addComponent(pagingResourceWapper);
+					mainLayout.setComponentAlignment(pagingResourceWapper,
+							Alignment.MIDDLE_CENTER);
+				}
+			}
+			this.addComponent(mainLayout);
+		}
+
+		private void constructBodySearchActionResult(List<Resource> lstResource) {
+			isSearchAction = true;
+			if (mainLayout != null) {
+				this.removeAllComponents();
+			}
+			if (selectedResourcesList != null
+					&& selectedResourcesList.size() > 0)
+				selectedResourcesList.clear();
+			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
+				listAllCheckBox.clear();
+			}
+			mainLayout = new VerticalLayout();
+			mainLayout.setSpacing(false);
+
+			HorizontalLayout messageSearchLayout = new HorizontalLayout();
+			messageSearchLayout.setWidth("100%");
+			Label titleLabel = new Label("Search result: ");
+			titleLabel.setWidth("115px");
+			titleLabel.addStyleName("h3");
+			messageSearchLayout.addComponent(titleLabel);
+
+			Label nameLabel = new Label("Name");
+			nameLabel.addStyleName("h3");
+			nameLabel.setWidth("350px");
+			messageSearchLayout.addComponent(nameLabel);
+			Label pathLabel = new Label("Path");
+			pathLabel.addStyleName("h3");
+			messageSearchLayout.addComponent(pathLabel);
+			messageSearchLayout.setExpandRatio(pathLabel, 1.0f);
+
+			this.addComponent(messageSearchLayout);
+			this.addComponent(new Hr());
+			if (lstResource != null && lstResource.size() > 0) {
+				for (Resource res : lstResource) {
+					mainLayout.addComponent(constructOneItemResourceLayout(res,
+							true));
+					mainLayout.addComponent(new Hr());
+				}
+			}
+			this.addComponent(mainLayout);
+		}
+
+		private HorizontalLayout constructOneItemResourceLayout(
+				final Resource res, final boolean isSearchAction) {
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			layout.setSpacing(true);
+			layout.addStyleName("resourceItem");
+			layout.setHeight("44px");
+
+			final CheckBox checkbox = new CheckBox();
+			checkbox.setWidth("25px");
+			checkbox.setImmediate(true);
+			checkbox.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			listAllCheckBox.add(checkbox);
+
+			checkbox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(ValueChangeEvent event) {
+					if ((Boolean) checkbox.getValue()) {
+						selectedResourcesList.add(res);
+					} else {
+						selectedResourcesList.remove(res);
+					}
+				}
+			});
+			layout.addComponent(checkbox);
+			layout.setComponentAlignment(checkbox, Alignment.MIDDLE_LEFT);
+
+			layout.addListener(new LayoutClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void layoutClick(LayoutClickEvent event) {
+					if ((Boolean) checkbox.getValue())
+						checkbox.setValue(false);
+					else
+						checkbox.setValue(true);
+				}
+			});
+
+			CssLayout resIconWapper = new CssLayout();
+			final Embedded resourceIcon = new Embedded();
+			if (res instanceof Folder)
+				if (res instanceof ExternalFolder)
+					resourceIcon.setSource(MyCollabResource
+							.newResource("icons/32/ecm/folder_dropbox.png"));
+				else
+					resourceIcon.setSource(MyCollabResource
+							.newResource("icons/32/ecm/folder.png"));
+			else {
+				if (res instanceof ExternalContent)
+					resourceIcon.setSource(MyCollabResource
+							.newResource("icons/32/ecm/file_dropbox.png"));
+				else
+					resourceIcon.setSource(MyCollabResource
+							.newResource("icons/32/ecm/file.png"));
+			}
+
+			resIconWapper.setWidth("40px");
+			resIconWapper.addComponent(resourceIcon);
+
+			layout.addComponent(resIconWapper);
+			layout.setComponentAlignment(resIconWapper, Alignment.MIDDLE_LEFT);
+
+			VerticalLayout informationLayout = new VerticalLayout();
+			informationLayout.setWidth("345px");
+
+			Button resourceLinkBtn = new Button(res.getName(),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							if (res instanceof Folder) {
+								ResourceHandlerComponent.this.baseFolder = (Folder) res;
+								itemResourceContainerLayout
+										.constructBody((Folder) res);
+								ResourceHandlerComponent.this.fileBreadCrumb
+										.gotoFolder((Folder) res);
+							} else {
+								FileDownloadWindow fileDownloadWindow = new FileDownloadWindow(
+										(Content) res);
+								ResourceHandlerComponent.this.getWindow()
+										.addWindow(fileDownloadWindow);
+							}
+						}
+					});
+			resourceLinkBtn.addStyleName("link");
+			resourceLinkBtn.addStyleName("h3");
+			informationLayout.addComponent(resourceLinkBtn);
+
+			HorizontalLayout moreInfoAboutResLayout = new HorizontalLayout();
+
+			// If resource is dropbox resource then we can not define the
+			// created user so we do not need to display, then we assume the
+			// current user is created user
+			if (res.getCreatedBy() == null
+					|| res.getCreatedBy().trim().equals("")) {
+				Label usernameLbl = new Label(AppContext.getUsername());
+				usernameLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(usernameLbl);
+			} else {
+				Label usernameLbl = new Label(res.getCreatedBy());
+				usernameLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(usernameLbl);
+			}
+			moreInfoAboutResLayout.addComponent(new Separator());
+
+			// If resource is dropbox resource then we can not define the
+			// created date so we do not need to display\
+			if (res.getCreated() != null) {
+				Label createdTimeLbl = new Label((AppContext.formatDate(res
+						.getCreated().getTime())));
+				createdTimeLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(createdTimeLbl);
+			} else {
+				Label createdTimeLbl = new Label("Undefined");
+				createdTimeLbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(createdTimeLbl);
+			}
+
+			if (res instanceof Content) {
+				moreInfoAboutResLayout.addComponent(new Separator());
+				Double size = res.getSize();
+				DecimalFormat df = new DecimalFormat("#");
+				df.setRoundingMode(RoundingMode.HALF_UP);
+
+				Label lbl = new Label(df.format(size) + " KB");
+				lbl.addStyleName("grayLabel");
+				moreInfoAboutResLayout.addComponent(lbl);
+			}
+			informationLayout.addComponent(moreInfoAboutResLayout);
+
+			layout.addComponent(informationLayout);
+			layout.setComponentAlignment(informationLayout,
+					Alignment.MIDDLE_LEFT);
+
+			if (isSearchAction) {
+				HorizontalLayout resourcePathLayout = constructBreadcrumbPathLayout(res);
+				layout.addComponent(resourcePathLayout);
+				layout.setExpandRatio(resourcePathLayout, 1.0f);
+			} else {
+				layout.setExpandRatio(informationLayout, 1.0f);
+			}
+
+			final PopupButton resourceSettingPopupBtn = new PopupButton();
+			resourceSettingPopupBtn.setWidth("18px");
+			final VerticalLayout filterBtnLayout = new VerticalLayout();
+
+			final Button renameBtn = new Button("Rename",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							resourceSettingPopupBtn.setPopupVisible(false);
+							final RenameResourceWindow renameWindow = new RenameResourceWindow(
+									res, resourceService);
+							ResourceHandlerComponent.this.getWindow()
+									.addWindow(renameWindow);
+						}
+					});
+			renameBtn.addStyleName("link");
+			filterBtnLayout.addComponent(renameBtn);
+
+			final Button downloadBtn = new Button("Download",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							final com.vaadin.terminal.Resource downloadResource;
+							if (res instanceof Folder) {
+								if (res instanceof ExternalFolder) {
+									// downloadResource =
+									// StreamDownloadResourceFactory.getStreamDropboxResource(res);
+									ResourceHandlerComponent.this
+											.getWindow()
+											.showNotification(
+													"Sorry for this inconvenience! This function will update soon. Best regard.");
+									return;
+								} else
+									downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
+											new String[] { res.getPath() },
+											false);
+							} else {
+								if (res instanceof ExternalContent) {
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamDropboxResource(res);
+								} else
+									downloadResource = StreamDownloadResourceFactory
+											.getStreamResource(res.getPath());
+							}
+							AppContext.getApplication().getMainWindow()
+									.open(downloadResource, "_blank");
+						}
+					});
+			downloadBtn.addStyleName("link");
+			filterBtnLayout.addComponent(downloadBtn);
+
+			final Button moveBtn = new Button("Move to",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
+									res,
+									ResourceHandlerComponent.this.isNeedLoadExternalDirve);
+							ResourceHandlerComponent.this.getWindow()
+									.addWindow(moveResourceWindow);
+						}
+					});
+			moveBtn.addStyleName("link");
+			filterBtnLayout.addComponent(moveBtn);
+
+			final Button deleteBtn = new Button("Delete",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							selectedResourcesList.clear();
+							selectedResourcesList.add(res);
+
+							ResourceHandlerComponent.this
+									.deleteResourceAction();
+						}
+					});
+			deleteBtn.addStyleName("link");
+			filterBtnLayout.addComponent(deleteBtn);
+			// ------------------------------------------------------------------------
+
+			filterBtnLayout.setMargin(true);
+			filterBtnLayout.setSpacing(true);
+			filterBtnLayout.setWidth("100px");
+			resourceSettingPopupBtn.setIcon(MyCollabResource
+					.newResource("icons/16/item_settings.png"));
+			resourceSettingPopupBtn.setStyleName("link");
+			resourceSettingPopupBtn.addComponent(filterBtnLayout);
+
+			layout.addComponent(resourceSettingPopupBtn);
+			layout.setComponentAlignment(resourceSettingPopupBtn,
+					Alignment.MIDDLE_RIGHT);
+			return layout;
+		}
+
+		private HorizontalLayout constructBreadcrumbPathLayout(
+				final Resource res) {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+
+			String parentFolderPath = resourceService.getParentFolder(
+					res.getPath()).getPath();
+			StringBuffer parentFolderPathStrBuffer;
+			if (parentFolderPath.equals(rootPath)) {
+				parentFolderPathStrBuffer = new StringBuffer(rootFolderName);
+			} else
+				parentFolderPathStrBuffer = new StringBuffer(rootFolderName
+						+ parentFolderPath.substring(parentFolderPath.indexOf(
+								"/", 2)));
+			if (parentFolderPathStrBuffer.toString().split("/").length > 6) {
+				String[] parentFolderPathArray = parentFolderPath.split("/");
+				parentFolderPathStrBuffer = new StringBuffer("");
+				parentFolderPathStrBuffer
+						.append(rootFolderName)
+						.append("/")
+						.append((parentFolderPathArray[2].length() > 25) ? parentFolderPathArray[2]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[2])
+						.append("/")
+						.append((parentFolderPathArray[3].length() > 25) ? parentFolderPathArray[3]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[3])
+						.append("/")
+						.append("...")
+						.append("/")
+						.append((parentFolderPathArray[parentFolderPathArray.length - 2]
+								.length() > 25) ? parentFolderPathArray[parentFolderPathArray.length - 2]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[parentFolderPathArray.length - 2])
+						.append("/")
+						.append((parentFolderPathArray[parentFolderPathArray.length - 1]
+								.length() > 25) ? parentFolderPathArray[parentFolderPathArray.length - 1]
+								.substring(0, 10) + "..."
+								: parentFolderPathArray[parentFolderPathArray.length - 1]);
+			}
+			Label pathLabel = new Label(parentFolderPathStrBuffer.toString());
+			pathLabel.addStyleName("h3");
+			UiUtils.addComponent(layout, pathLabel, Alignment.MIDDLE_CENTER);
+
+			Button toContainFolder = new Button();
+			toContainFolder.setIcon(MyCollabResource
+					.newResource("icons/48/ecm/folder_arrow_right.png"));
+			toContainFolder.setDescription("Go to folder");
+			toContainFolder.addListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					Resource containFolder = resourceService
+							.getParentFolder(res.getPath());
+					if (menuTree != null)
+						menuTree.expandItem((Folder) containFolder);
+					itemResourceContainerLayout
+							.constructBody((Folder) containFolder);
+					baseFolder = (Folder) containFolder;
+					fileBreadCrumb.gotoFolder(baseFolder);
+				}
+			});
+			toContainFolder.addStyleName("link");
+			UiUtils.addComponent(layout, toContainFolder,
+					Alignment.MIDDLE_CENTER);
+
+			return layout;
+		}
+	}
+
+	protected class RenameResourceWindow extends Window {
+		private static final long serialVersionUID = 1L;
+		private final Resource resource;
+		private final ResourceService service;
+
+		public RenameResourceWindow(final Resource resource,
+				final ResourceService service) {
+			super("Rename folder/file");
+			this.center();
+			this.setWidth("400px");
+
+			this.service = service;
+			this.resource = resource;
+			this.constructBody();
+		}
+
+		private void constructBody() {
+			final VerticalLayout layout = new VerticalLayout();
+			final HorizontalLayout topRename = new HorizontalLayout();
+			topRename.setSpacing(true);
+			topRename.setMargin(true);
+
+			final Label label = new Label("Enter new name: ");
+			UiUtils.addComponent(topRename, label, Alignment.MIDDLE_LEFT);
+
+			final TextField newName = new TextField();
+			newName.setWidth("150px");
+			UiUtils.addComponent(topRename, newName, Alignment.MIDDLE_LEFT);
+
+			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
+
+			final HorizontalLayout controlButton = new HorizontalLayout();
+			controlButton.setSpacing(true);
+			final Button save = new Button("Save", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					final String oldPath = RenameResourceWindow.this.resource
+							.getPath();
+					String parentPath = oldPath.substring(0,
+							oldPath.lastIndexOf("/") + 1);
+					if (resource instanceof ExternalFolder
+							|| resource instanceof ExternalContent) {
+						parentPath = (parentPath.length() == 0) ? "/"
+								: parentPath;
+					}
+					String newNameValue = (String) newName.getValue();
+					String newPath = parentPath + newNameValue;
+
+					if (resource instanceof ExternalFolder
+							|| resource instanceof ExternalContent) {
+						if (resource instanceof ExternalFolder)
+							externalResourceService.rename(
+									((ExternalFolder) resource)
+											.getExternalDrive(), oldPath,
+									newPath);
+						else
+							externalResourceService.rename(
+									((ExternalContent) resource)
+											.getExternalDrive(), oldPath,
+									newPath);
+					} else {
+						try {
+							RenameResourceWindow.this.service.rename(oldPath,
+									newPath, AppContext.getUsername());
+							if (menuTree != null) {
+								final List<Folder> childs = baseFolder
+										.getChilds();
+								for (final Folder folder : childs) {
+									if (folder.getName().equals(
+											RenameResourceWindow.this.resource
+													.getName())) {
+										menuTree.removeItem(folder);
+										folder.setPath(newPath);
+										menuTree.addItem(folder);
+										menuTree.setParent(folder, baseFolder);
+										menuTree.setItemCaption(folder,
+												newNameValue);
+									}
+								}
+							}
+						} catch (final ContentException e) {
+							RenameResourceWindow.this.getWindow()
+									.showNotification(e.getMessage());
+						}
+					}
+					itemResourceContainerLayout.constructBody(baseFolder);
+
+					if ((resource instanceof ExternalFolder || resource instanceof ExternalContent)
+							&& pagingResourceWapper.getCurrentPage() != 1)
+						pagingResourceWapper.pageChange(pagingResourceWapper
+								.getCurrentPage());
+					RenameResourceWindow.this.close();
+				}
+			});
+			save.addStyleName(UIConstants.THEME_BLUE_LINK);
+
+			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
+
+			final Button cancel = new Button("Cancel", new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					RenameResourceWindow.this.close();
+				}
+			});
+			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
+			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
+			this.addComponent(layout);
+		}
+	}
+
+	private class AddNewFolderWindow extends Window {
+		private static final long serialVersionUID = 1L;
+
+		private final TextField folderName;
+
+		public AddNewFolderWindow() {
+			((VerticalLayout) this.getContent()).setWidth(
+					Sizeable.SIZE_UNDEFINED, 0);
+			this.setModal(true);
+			this.setCaption("New Folder");
+			this.center();
+
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.setSizeUndefined();
+			final Label captionLbl = new Label("Enter folder name: ");
+			layout.addComponent(captionLbl);
+			layout.setComponentAlignment(captionLbl, Alignment.MIDDLE_LEFT);
+
+			this.folderName = new TextField();
+			layout.addComponent(this.folderName);
+			layout.setComponentAlignment(this.folderName, Alignment.MIDDLE_LEFT);
+			layout.setExpandRatio(this.folderName, 1.0f);
+
+			this.addComponent(layout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(layout,
+					Alignment.MIDDLE_CENTER);
+
+			final HorizontalLayout controlsLayout = new HorizontalLayout();
+			controlsLayout.setSpacing(true);
+			controlsLayout.setMargin(true, false, false, false);
+
+			final Button saveBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+
+							final String folderVal = (String) AddNewFolderWindow.this.folderName
+									.getValue();
+
+							if (folderVal != null
+									&& !folderVal.trim().equals("")) {
+								Pattern pattern = Pattern
+										.compile(illegalFileNamePattern);
+								Matcher matcher = pattern.matcher(folderVal);
+								if (matcher.find()) {
+									ResourceHandlerComponent.this
+											.getWindow()
+											.showNotification(
+													"Please enter valid folder name except any follow characters : <>:&/\\|?*&");
+									return;
+								}
+
+								String baseFolderPath = (baseFolder == null) ? rootPath
+										: baseFolder.getPath();
+								if (itemResourceContainerLayout.isSearchAction) {
+									baseFolderPath = rootPath;
+									baseFolder = (Folder) resourceService
+											.getResource(rootPath);
+								}
+								Folder newFolder = null;
+								if (baseFolder instanceof ExternalFolder) {
+									String path = baseFolder.getPath() + "/"
+											+ folderVal;
+									newFolder = externalResourceService
+											.createFolder(
+													((ExternalFolder) baseFolder)
+															.getExternalDrive(),
+													path);
+								} else {
+									newFolder = resourceService
+											.createNewFolder(baseFolderPath,
+													folderVal,
+													AppContext.getUsername());
+								}
+								if (menuTree != null) {
+									if (!menuTree.isExpanded(baseFolder)) {
+										menuTree.expandItem(baseFolder);
+									} else {
+										menuTree.addItem(newFolder);
+										menuTree.setItemCaption(newFolder,
+												newFolder.getName());
+										menuTree.setParent(newFolder,
+												baseFolder);
+										menuTree.setItemIcon(
+												newFolder,
+												MyCollabResource
+														.newResource("icons/16/ecm/folder_close.png"));
+									}
+								}
+								itemResourceContainerLayout
+										.constructBody(baseFolder);
+								AddNewFolderWindow.this.close();
+							}
+						}
+					});
+			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controlsLayout.addComponent(saveBtn);
+
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							AddNewFolderWindow.this.close();
+						}
+					});
+			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			controlsLayout.addComponent(cancelBtn);
+			controlsLayout.setComponentAlignment(cancelBtn,
+					Alignment.MIDDLE_RIGHT);
+
+			this.addComponent(controlsLayout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(
+					controlsLayout, Alignment.MIDDLE_CENTER);
+		}
+	}
+
+	private class MultiUploadContentWindow extends Window {
+		private static final long serialVersionUID = 1L;
+
+		private final GridFormLayoutHelper layoutHelper;
+		private final MultiFileUploadExt multiFileUploadExt;
+
+		public MultiUploadContentWindow() {
+			super("Multi Upload Content");
+			this.setWidth("500px");
+			((VerticalLayout) this.getContent()).setMargin(false, false, true,
+					false);
+			this.setModal(true);
+			final AttachmentPanel attachments = new AttachmentPanel();
+
+			this.layoutHelper = new GridFormLayoutHelper(1, 2, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+
+			multiFileUploadExt = new MultiFileUploadExt(attachments);
+			multiFileUploadExt.addComponent(attachments);
+			multiFileUploadExt.setWidth("100%");
+
+			this.layoutHelper.addComponent(multiFileUploadExt, "File", 0, 0);
+
+			this.layoutHelper.getLayout().setWidth("100%");
+			this.layoutHelper.getLayout().setMargin(false);
+			this.layoutHelper.getLayout().addStyleName("colored-gridlayout");
+			this.addComponent(this.layoutHelper.getLayout());
+
+			final HorizontalLayout controlsLayout = new HorizontalLayout();
+			controlsLayout.setSpacing(true);
+			controlsLayout.setMargin(true, false, false, false);
+
+			final Button uploadBtn = new Button("Upload",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							List<File> lstFileAttachments = attachments
+									.getListFile();
+							if (lstFileAttachments != null
+									&& lstFileAttachments.size() > 0) {
+								for (File file : lstFileAttachments) {
+									try {
+										if (file.getName() != null
+												&& file.getName().length() > 0) {
+											Pattern pattern = Pattern
+													.compile(illegalFileNamePattern);
+											Matcher matcher = pattern
+													.matcher(file.getName());
+											if (matcher.find()) {
+												ResourceHandlerComponent.this
+														.getWindow()
+														.showNotification(
+																"Please upload valid file-name except any follow characters : <>:&/\\|?*&");
+												return;
+											}
+										}
+										final Content content = new Content();
+										content.setPath(baseFolder.getPath()
+												+ "/" + file.getName());
+										double sizeInByte = file.length();
+										content.setSize(sizeInByte / 1024);
+										FileInputStream fileInputStream = new FileInputStream(
+												file);
+
+										if (baseFolder instanceof ExternalFolder) {
+											externalResourceService
+													.saveContent(
+															((ExternalFolder) baseFolder)
+																	.getExternalDrive(),
+															content,
+															fileInputStream);
+										} else
+											resourceService.saveContent(
+													content,
+													AppContext.getUsername(),
+													fileInputStream);
+									} catch (IOException e) {
+										throw new MyCollabException(e);
+									}
+								}
+								itemResourceContainerLayout
+										.constructBody(baseFolder);
+								MultiUploadContentWindow.this.close();
+								ResourceHandlerComponent.this.getWindow()
+										.showNotification(
+												"Upload successfully.");
+							} else {
+								AppContext
+										.getApplication()
+										.getMainWindow()
+										.showNotification(
+												"It seems you did not attach file yet!");
+							}
+						}
+					});
+			uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controlsLayout.addComponent(uploadBtn);
+
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							MultiUploadContentWindow.this.close();
+						}
+					});
+			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			controlsLayout.addComponent(cancelBtn);
+			controlsLayout.setComponentAlignment(cancelBtn,
+					Alignment.MIDDLE_RIGHT);
+
+			this.addComponent(controlsLayout);
+			((VerticalLayout) this.getContent()).setComponentAlignment(
+					controlsLayout, Alignment.MIDDLE_CENTER);
+		}
+
+	}
+
+	private class PagingResourceWapper extends CssLayout {
+		private static final long serialVersionUID = 1L;
+		private int totalItem;
+		public static final int pageItemNum = 15;
+		private int currentPage;
+		private CssLayout controlBarWrapper;
+		private HorizontalLayout pageManagement;
+		private int totalPage;
+		private List<Resource> lstResource;
+		private Button currentBtn;
+		private HorizontalLayout controlBar;
+
+		public PagingResourceWapper(List<Resource> lstResource) {
+			this.totalItem = lstResource.size();
+			this.currentPage = 1;
+			this.totalPage = ((int) totalItem / pageItemNum) + 1;
+			this.lstResource = lstResource;
+
+			// defined layout here ---------------------------
+			this.controlBarWrapper = new CssLayout();
+			this.controlBarWrapper.setStyleName("listControl");
+			this.controlBarWrapper.setWidth("100%");
+
+			controlBar = new HorizontalLayout();
+			controlBar.setWidth("100%");
+			this.controlBarWrapper.addComponent(controlBar);
+
+			this.pageManagement = new HorizontalLayout();
+			createPageControls();
+		}
+
+		private void createPageControls() {
+			this.pageManagement.removeAllComponents();
+			if (this.currentPage > 1) {
+				final Button firstLink = new ButtonLink("1",
+						new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(1);
+							}
+						});
+				firstLink.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(firstLink);
+			}
+			if (this.currentPage >= 5) {
+				final Label ss1 = new Label("...");
+				ss1.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(ss1);
+			}
+			if (this.currentPage > 3) {
+				final Button previous2 = new ButtonLink(""
+						+ (this.currentPage - 2), new ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						pageChange(currentPage - 2);
+					}
+				});
+				previous2.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(previous2);
+			}
+			if (this.currentPage > 2) {
+				final Button previous1 = new ButtonLink(""
+						+ (this.currentPage - 1), new ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						pageChange(currentPage - 1);
+					}
+				});
+				previous1.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(previous1);
+			}
+			// Here add current ButtonLink
+			currentBtn = new ButtonLink("" + this.currentPage,
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							// pageChange(currentPage);
+						}
+					});
+			currentBtn.addStyleName("buttonPaging");
+			currentBtn.addStyleName("buttonPagingcurrent");
+
+			this.pageManagement.addComponent(currentBtn);
+			final int range = this.totalPage - this.currentPage;
+			if (range >= 1) {
+				final Button next1 = new ButtonLink(
+						"" + (this.currentPage + 1), new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(currentPage + 1);
+							}
+						});
+				next1.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(next1);
+			}
+			if (range >= 2) {
+				final Button next2 = new ButtonLink(
+						"" + (this.currentPage + 2), new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(currentPage + 2);
+							}
+						});
+				next2.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(next2);
+			}
+			if (range >= 4) {
+				final Label ss2 = new Label("...");
+				ss2.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(ss2);
+			}
+			if (range >= 3) {
+				final Button last = new ButtonLink("" + this.totalPage,
+						new ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								pageChange(totalPage);
+							}
+						});
+				last.addStyleName("buttonPaging");
+				this.pageManagement.addComponent(last);
+			}
+
+			this.pageManagement.setWidth(null);
+			this.pageManagement.setSpacing(true);
+			controlBar.addComponent(this.pageManagement);
+			controlBar.setComponentAlignment(this.pageManagement,
+					Alignment.MIDDLE_RIGHT);
+			this.addComponent(controlBarWrapper);
+		}
+
+		public void pageChange(int currentPage) {
+			this.currentPage = currentPage;
+			itemResourceContainerLayout.mainLayout.removeAllComponents();
+			int index = currentPage - 1;
+			int start = (index == 0) ? index : index * pageItemNum;
+			int end = ((start + pageItemNum) > lstResource.size()) ? lstResource
+					.size() : start + pageItemNum;
+
+			for (int i = start; i < end; i++) {
+				Resource res = lstResource.get(i);
+				itemResourceContainerLayout.mainLayout
+						.addComponent(itemResourceContainerLayout
+								.constructOneItemResourceLayout(res, false));
+				itemResourceContainerLayout.mainLayout.addComponent(new Hr());
+			}
+			createPageControls();
+			itemResourceContainerLayout.mainLayout.addComponent(this);
+		}
+
+		public int getCurrentPage() {
+			return currentPage;
+		}
+	}
+
+	protected class MoveResourceWindow extends AbstractMoveWindow {
+		private static final long serialVersionUID = 1L;
+
+		public MoveResourceWindow(Resource resource,
+				boolean isNeedLoadExternalDrive) {
+			super(resource, isNeedLoadExternalDrive);
+		}
+
+		public MoveResourceWindow(List<Resource> lstResource,
+				boolean isNeedLoadExternalDrive) {
+			super(lstResource, isNeedLoadExternalDrive);
+		}
+
+		@Override
+		public void displayAfterMoveSuccess(Folder folder, boolean checking) {
+			itemResourceContainerLayout.constructBody(baseFolder);
+			if (!checking)
+				ResourceHandlerComponent.this.getWindow().showNotification(
+						"Move asset(s) successfully.");
+			else
+				ResourceHandlerComponent.this
+						.getWindow()
+						.showNotification(
+								"Move finish, some items can't move to destination. Please check duplicated file-name and try again.");
+			ResourceHandlerComponent.this.selectedResourcesList = new ArrayList<Resource>();
+
+			if (menuTree != null) {
+				Container dataSource = ResourceHandlerComponent.this.menuTree
+						.getContainerDataSource();
+				Object[] dataSourceArray = dataSource.getItemIds().toArray();
+
+				for (Object item : dataSourceArray) {
+					if (((Folder) item).getPath().equals(folder.getPath())) {
+						ResourceHandlerComponent.this.menuTree
+								.collapseItem((Folder) item);
+						ResourceHandlerComponent.this.menuTree
+								.expandItem((Folder) item);
+						break;
+					}
+				}
+				for (Object item : dataSourceArray) {
+					if (((Folder) item).getPath().equals(
+							ResourceHandlerComponent.this.baseFolder.getPath())) {
+						ResourceHandlerComponent.this.menuTree
+								.collapseItem((Folder) item);
+						ResourceHandlerComponent.this.menuTree
+								.expandItem((Folder) item);
+						break;
+					}
+				}
+			}
+
+			if ((Boolean) ResourceHandlerComponent.this.selectAllBtn.getValue())
+				ResourceHandlerComponent.this.selectAllBtn.click();
+		}
+
+		@Override
+		protected void displayFiles() {
+			this.folderTree.removeAllItems();
+
+			this.baseFolder = new Folder();
+			baseFolder.setPath(ResourceHandlerComponent.this.rootPath);
+			this.rootPath = ResourceHandlerComponent.this.rootPath;
+			this.folderTree.addItem(new Object[] {
+					ResourceHandlerComponent.this.rootFolderName, "" },
+					this.baseFolder);
+			this.folderTree.setItemCaption(this.baseFolder,
+					ResourceHandlerComponent.this.rootFolderName);
+
+			this.folderTree.setCollapsed(this.baseFolder, false);
+		}
+	}
+
+}

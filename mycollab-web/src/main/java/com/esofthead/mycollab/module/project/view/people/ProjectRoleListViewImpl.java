@@ -8,9 +8,12 @@ import java.util.Arrays;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
@@ -19,12 +22,13 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -49,7 +53,7 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 
 	private final ProjectRoleSearchPanel searchPanel;
 	private SelectionOptionButton selectOptionButton;
-	private PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, ProjectRole> tableItem;
+	private PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
 	private final VerticalLayout listLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
@@ -66,9 +70,9 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, ProjectRole>(
+		this.tableItem = new PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole>(
 				AppContext.getSpringBean(ProjectRoleService.class),
-				ProjectRole.class, new TableViewField("", "selected",
+				SimpleProjectRole.class, new TableViewField("", "selected",
 						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
 						new TableViewField("Name", "rolename",
 								UIConstants.TABLE_EX_LABEL_WIDTH),
@@ -90,7 +94,7 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
-								final ProjectRole role = ProjectRoleListViewImpl.this.tableItem
+								final SimpleProjectRole role = ProjectRoleListViewImpl.this.tableItem
 										.getBeanByIndex(itemId);
 								ProjectRoleListViewImpl.this.tableItem
 										.fireSelectItemEvent(role);
@@ -153,13 +157,26 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
-		final Button deleteBtn = new Button("Delete");
+		final Button deleteBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.ROLES));
 
-		this.tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		this.tableActionControls.addOptionItem("mail", "Mail");
-		this.tableActionControls.addOptionItem("export", "Export");
+		this.tableActionControls = new PopupButtonControl(
+				PopupActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+		this.tableActionControls
+				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+		this.tableActionControls.addOptionItem(
+				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
@@ -193,12 +210,12 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasSelectableItemHandlers<ProjectRole> getSelectableItemHandlers() {
+	public HasSelectableItemHandlers<SimpleProjectRole> getSelectableItemHandlers() {
 		return this.tableItem;
 	}
 
 	@Override
-	public IPagedBeanTable<ProjectRoleSearchCriteria, ProjectRole> getPagedBeanTable() {
+	public AbstractPagedBeanTable<ProjectRoleSearchCriteria, SimpleProjectRole> getPagedBeanTable() {
 		return this.tableItem;
 	}
 }

@@ -2,19 +2,20 @@ package com.esofthead.mycollab.module.project.view.time;
 
 import java.util.Arrays;
 
+import org.vaadin.hene.splitbutton.SplitButtonExt;
+
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -34,6 +35,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class TimeTrackingListViewImpl extends AbstractView implements
@@ -43,13 +45,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private TimeTrackingTableDisplay tableItem;
 	private final ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
-	private final Button exportBtn;
+
+	private SplitButtonExt exportButtonControl;
 	private final ItemTimeLoggingService itemTimeLoggingService;
-	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
-			new FieldExportColumn("logUserFullName", "User"),
-			new FieldExportColumn("type", "Summary", 70),
-			new FieldExportColumn("createdtime", "Created Time"),
-			new FieldExportColumn("logvalue", "Hours"), };
 
 	private final Label lbTimeRange;
 
@@ -84,33 +82,52 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_LEFT);
 		headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
 
-		this.exportBtn = new Button(
-				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
-		this.exportBtn.setIcon(MyCollabResource
-				.newResource("icons/16/export_excel.png"));
-		this.exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		headerLayout.addComponent(this.exportBtn);
-		this.exportBtn.addListener(new Button.ClickListener() {
+		Button exportBtn = new Button("Export", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(final ClickEvent event) {
-				final String title = "Time of Project "
-						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-								.getProject().getName() != null) ? CurrentProjectVariables
-								.getProject().getName() : "");
-				final Resource res = new StreamResource(
-						new ExportTimeLoggingStreamResource(
-								title,
-								TimeTrackingListViewImpl.EXPORT_COLUMNS,
-								AppContext
-										.getSpringBean(ItemTimeLoggingService.class),
-								TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria),
-						"timeLogging_list.xls", AppContext.getApplication());
-				AppContext.getApplication().getMainWindow().open(res, "_blank");
+			public void buttonClick(ClickEvent event) {
+				exportButtonControl.setPopupVisible(true);
 			}
 		});
-		headerLayout.setComponentAlignment(this.exportBtn,
+		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
+		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl.setIcon(MyCollabResource
+				.newResource("icons/16/export.png"));
+
+		VerticalLayout popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setWidth("150px");
+		exportButtonControl.addComponent(popupButtonsControl);
+
+		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				downloadExportStreamCommand(ReportExportType.PDF);
+			}
+		});
+		exportPdfBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/pdf.png"));
+		exportPdfBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportPdfBtn);
+
+		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				downloadExportStreamCommand(ReportExportType.EXCEL);
+			}
+		});
+		exportExcelBtn.setIcon(MyCollabResource
+				.newResource("icons/16/filetypes/excel.png"));
+		exportExcelBtn.setStyleName("link");
+		popupButtonsControl.addComponent(exportExcelBtn);
+
+		headerLayout.addComponent(exportButtonControl);
+		headerLayout.setComponentAlignment(this.exportButtonControl,
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
@@ -119,9 +136,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
 						"User", "logUserFullName",
 						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"Created Time", "createdtime",
-						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
-						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH)));
+						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH),
+				new TableViewField("Created Time", "createdtime",
+						UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -153,6 +170,22 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				});
 
 		this.addComponent(this.tableItem);
+	}
+
+	private void downloadExportStreamCommand(ReportExportType exportType) {
+		final String title = "Time of Project "
+				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+						.getProject().getName() != null) ? CurrentProjectVariables
+						.getProject().getName() : "");
+		ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
+				title, exportType,
+				AppContext.getSpringBean(ItemTimeLoggingService.class),
+				TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
+		final Resource res = new StreamResource(exportStream,
+				exportStream.getDefaultExportFileName(),
+				AppContext.getApplication());
+		AppContext.getApplication().getMainWindow().open(res, "_blank");
+		exportButtonControl.setPopupVisible(false);
 	}
 
 	private void setTimeRange() {

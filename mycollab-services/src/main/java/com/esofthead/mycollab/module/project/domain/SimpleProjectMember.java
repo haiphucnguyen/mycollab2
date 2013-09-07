@@ -99,14 +99,6 @@ public class SimpleProjectMember extends ProjectMember {
 		this.memberAvatarId = memberAvatarId;
 	}
 
-	public int getsAccountId() {
-		return sAccountId;
-	}
-
-	public void setsAccountId(int sAccountId) {
-		this.sAccountId = sAccountId;
-	}
-
 	public Date getLastAccessTime() {
 		return lastAccessTime;
 	}

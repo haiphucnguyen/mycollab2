@@ -2,14 +2,12 @@ package com.esofthead.mycollab.module.file.view.components;
 
 import java.io.InputStream;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
-import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -27,8 +25,8 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceMover;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.module.file.view.ResourceHandlerComponent;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -37,10 +35,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.HierarchicalContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
@@ -52,7 +46,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
@@ -65,13 +58,12 @@ import com.vaadin.ui.themes.Reindeer;
 
 public abstract class FileDashboardComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
-	private final TreeTable folderTree;
-	private final ResourceTableDisplay resourceTable;
 	private String rootPath;
 	private String rootFolderName;
 	private final FileSearchPanel fileSearchPanel;
-
+	private ResourceHandlerComponent resourceHandlerComponent;
 	private Folder baseFolder;
+	private HorizontalLayout resourceContainer;
 
 	private final ResourceService resourceService;
 
@@ -91,11 +83,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						if (FileDashboardComponent.this.folderTree.getValue() != null) {
-							FileDashboardComponent.this.baseFolder = (Folder) FileDashboardComponent.this.folderTree
-									.getValue();
-						}
-
 						FileDashboardComponent.this.getWindow().addWindow(
 								new AddNewFolderWindow());
 					}
@@ -153,7 +140,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 										}
 									});
 						}
-
 					}
 				});
 		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
@@ -164,101 +150,16 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 		this.addComponent(this.fileSearchPanel);
 
-		final HorizontalLayout resourceContainer = new HorizontalLayout();
+		resourceContainer = new HorizontalLayout();
 		resourceContainer.setSizeFull();
 
-		this.folderTree = new TreeTable();
-		this.folderTree.setMultiSelect(false);
-		this.folderTree.setSelectable(true);
-		this.folderTree.setImmediate(true);
-		this.folderTree.addContainerProperty("Name", String.class, "");
-		this.folderTree.addContainerProperty("Date Modified", String.class, "");
-		this.folderTree.setColumnWidth("Date Modified",
-				UIConstants.TABLE_DATE_TIME_WIDTH);
-		this.folderTree.setColumnExpandRatio("Name", 1.0f);
-		this.folderTree.setWidth("300px");
-		this.folderTree.setHeight("500px");
-		this.folderTree.addStyleName("folder-tree");
-
-		resourceContainer.addComponent(this.folderTree);
-
-		this.folderTree.addListener(new Tree.ExpandListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void nodeExpand(final ExpandEvent event) {
-				final Folder expandFolder = (Folder) event.getItemId();
-				final List<Folder> subFolders = FileDashboardComponent.this.resourceService
-						.getSubFolders(expandFolder.getPath());
-
-				FileDashboardComponent.this.folderTree.setItemIcon(
-						expandFolder, MyCollabResource
-								.newResource("icons/16/ecm/folder_open.png"));
-
-				if (subFolders != null) {
-					for (final Folder subFolder : subFolders) {
-						expandFolder.addChild(subFolder);
-						FileDashboardComponent.this.folderTree.addItem(
-								new Object[] {
-										subFolder.getName(),
-										AppContext.formatDateTime(subFolder
-												.getCreated().getTime()) },
-								subFolder);
-
-						FileDashboardComponent.this.folderTree.setItemIcon(
-								subFolder,
-								MyCollabResource
-										.newResource("icons/16/ecm/folder_close.png"));
-						FileDashboardComponent.this.folderTree.setItemCaption(
-								subFolder, subFolder.getName());
-						FileDashboardComponent.this.folderTree.setParent(
-								subFolder, expandFolder);
-					}
-				}
-			}
-		});
-
-		this.folderTree.addListener(new Tree.CollapseListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void nodeCollapse(final CollapseEvent event) {
-				final Folder collapseFolder = (Folder) event.getItemId();
-				FileDashboardComponent.this.folderTree.setItemIcon(
-						collapseFolder, MyCollabResource
-								.newResource("icons/16/ecm/folder_close.png"));
-				final List<Folder> childs = collapseFolder.getChilds();
-				for (final Folder subFolder : childs) {
-					FileDashboardComponent.this.folderTree
-							.removeItem(subFolder);
-				}
-
-				childs.clear();
-			}
-		});
-
-		this.folderTree.addListener(new ItemClickEvent.ItemClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void itemClick(final ItemClickEvent event) {
-				FileDashboardComponent.this.baseFolder = (Folder) event
-						.getItemId();
-				FileDashboardComponent.this
-						.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
-			}
-		});
-
-		this.resourceTable = new ResourceTableDisplay();
-		this.resourceTable.setWidth("100%");
-
-		final VerticalLayout rightColumn = new VerticalLayout();
-		rightColumn.setWidth("100%");
-		rightColumn.setMargin(false, false, false, true);
-		rightColumn.addComponent(this.resourceTable);
-
-		resourceContainer.addComponent(rightColumn);
-		resourceContainer.setExpandRatio(rightColumn, 1.0f);
+		this.resourceHandlerComponent = new ResourceHandlerComponent(
+				baseFolder, rootPath, null);
+		this.resourceHandlerComponent.setSpacing(true);
+		resourceContainer.addComponent(resourceHandlerComponent);
+		resourceContainer.setComponentAlignment(resourceHandlerComponent,
+				Alignment.TOP_LEFT);
+		resourceContainer.setExpandRatio(resourceHandlerComponent, 1.0f);
 
 		this.addComponent(resourceContainer);
 	}
@@ -266,378 +167,35 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	abstract protected void doSearch(FileSearchCriteria searchCriteria);
 
 	private void displayResourcesInTable(final Folder folder) {
-		final List<Resource> resources = this.resourceService
-				.getResources(folder.getPath());
-		if (!folder.getPath().equals(FileDashboardComponent.this.rootPath)) {
-			Resource firstLineResource = new Resource();
-			firstLineResource.setUuid("firstLine");
-			resources.add(0, firstLineResource);
-		}
-		this.resourceTable
-				.setContainerDataSource(new BeanItemContainer<Resource>(
-						Resource.class, resources));
-
-		this.resourceTable.setVisibleColumns(new String[] { "uuid", "path",
-				"size", "created" });
-		this.resourceTable.setColumnHeaders(new String[] { "", "Name",
-				"Size (Kb)", "Created" });
-
-		FileDashboardComponent.this.baseFolder = folder;
-	}
-
-	private void displayResourcesInTable(final String foldername) {
-		List<Folder> childs = FileDashboardComponent.this.resourceService
-				.getSubFolders(this.baseFolder.getPath());
-		if (childs == null) {
-			childs = this.resourceService.getSubFolders(this.baseFolder
-					.getPath());
-
-			for (final Folder subFolder : childs) {
-				this.baseFolder.addChild(subFolder);
-				this.folderTree.addItem(
-						new Object[] {
-								subFolder.getName(),
-								AppContext.formatDateTime(subFolder
-										.getCreated().getTime()) }, subFolder);
-				this.folderTree.setItemCaption(subFolder, subFolder.getName());
-				this.folderTree.setParent(subFolder, this.baseFolder);
-				if (foldername.equals(subFolder.getName())) {
-					this.folderTree.setCollapsed(subFolder, false);
-					this.displayResourcesInTable(subFolder);
-				} else {
-					this.folderTree.setItemIcon(subFolder, MyCollabResource
-							.newResource("icons/16/ecm/folder_close.png"));
-				}
-			}
-		} else {
-			for (final Folder subFolder : childs) {
-				if (foldername.equals(subFolder.getName())) {
-					HierarchicalContainer containerDataSource = (HierarchicalContainer) this.folderTree
-							.getContainerDataSource();
-					Collection<?> itemIds = containerDataSource.getItemIds();
-					for (Object itemId : itemIds) {
-						if ((itemId instanceof Folder)
-								&& (((Folder) itemId).getName()
-										.equals(foldername))) {
-							this.folderTree.setCollapsed(itemId, false);
-							this.folderTree.setValue(itemId);
-							this.displayResourcesInTable((Folder) itemId);
-							return;
-						}
-
-					}
-				}
-			}
-		}
+		resourceHandlerComponent.displayComponent(folder, rootPath,
+				rootFolderName, false);
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
-		this.folderTree.removeAllItems();
 		this.rootPath = rootPath;
 		this.rootFolderName = rootFolderName;
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(this.rootPath);
-		this.folderTree.addItem(new Object[] { rootFolderName, "" },
-				this.baseFolder);
-		this.folderTree.setItemCaption(this.baseFolder, rootFolderName);
 
-		this.folderTree.setCollapsed(this.baseFolder, false);
 		this.displayResourcesInTable(this.baseFolder);
-	}
 
-	@SuppressWarnings("serial")
-	private class ResourceTableDisplay extends Table {
-		public ResourceTableDisplay() {
-
-			this.addGeneratedColumn("uuid", new Table.ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-
-					final Resource resource = ResourceTableDisplay.this
-							.getResource(itemId);
-					if (resource != null) {
-						if (resource.getUuid().equals("firstLine")) {
-							Button upBtn = new Button();
-							upBtn.addStyleName("link");
-
-							upBtn.setIcon(MyCollabResource
-									.newResource("icons/16/ecm/up_to_root.png"));
-							upBtn.setDescription("Up to root Folder");
-
-							upBtn.addListener(new ClickListener() {
-								@Override
-								public void buttonClick(ClickEvent event) {
-									displayResources(
-											FileDashboardComponent.this.rootPath,
-											FileDashboardComponent.this.rootFolderName);
-								}
-							});
-							return upBtn;
-						}
+		resourceHandlerComponent
+				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
+					@Override
+					public void onSearch(FileSearchCriteria criteria) {
+						Folder selectedFolder = null;
+						selectedFolder = (Folder) FileDashboardComponent.this.resourceService
+								.getResource(criteria.getBaseFolder());
+						resourceHandlerComponent
+								.constructBodyItemContainer(selectedFolder);
+						resourceHandlerComponent
+								.gotoFolderBreadCumb(selectedFolder);
+						FileDashboardComponent.this.baseFolder = selectedFolder;
+						resourceHandlerComponent
+								.setCurrentBaseFolder(selectedFolder);
 					}
-					final PopupButton resourceSettingPopupBtn = new PopupButton();
-					final VerticalLayout filterBtnLayout = new VerticalLayout();
-
-					final Button renameBtn = new Button("Rename",
-							new Button.ClickListener() {
-
-								@Override
-								public void buttonClick(final ClickEvent event) {
-									resourceSettingPopupBtn
-											.setPopupVisible(false);
-									final RenameResourceWindow renameWindow = new RenameResourceWindow(
-											resource,
-											FileDashboardComponent.this.resourceService);
-									ResourceTableDisplay.this.getWindow()
-											.addWindow(renameWindow);
-								}
-							});
-					renameBtn.setStyleName("link");
-					filterBtnLayout.addComponent(renameBtn);
-
-					final Button downloadBtn = new Button("Download",
-							new Button.ClickListener() {
-
-								@Override
-								public void buttonClick(final ClickEvent event) {
-									resourceSettingPopupBtn
-											.setPopupVisible(false);
-									if (resource instanceof Content) {
-										resourceSettingPopupBtn
-												.setPopupVisible(false);
-										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-												.getStreamResource(((Content) resource)
-														.getPath());
-										AppContext
-												.getApplication()
-												.getMainWindow()
-												.open(downloadResource,
-														"_blank");
-									} else {
-										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-												.getStreamFolderResource(
-														new String[] { ((Folder) resource)
-																.getPath() },
-														false);
-										AppContext
-												.getApplication()
-												.getMainWindow()
-												.open(downloadResource,
-														"_blank");
-									}
-
-								}
-							});
-					downloadBtn.setStyleName("link");
-					filterBtnLayout.addComponent(downloadBtn);
-
-					final Button deleteBtn = new Button("Delete",
-							new Button.ClickListener() {
-
-								@Override
-								public void buttonClick(final ClickEvent event) {
-									resourceSettingPopupBtn
-											.setPopupVisible(false);
-									ConfirmDialogExt.show(
-											FileDashboardComponent.this
-													.getWindow(),
-											LocalizationHelper
-													.getMessage(
-															GenericI18Enum.DELETE_DIALOG_TITLE,
-															SiteConfiguration
-																	.getSiteName()),
-											LocalizationHelper
-													.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-											LocalizationHelper
-													.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-											LocalizationHelper
-													.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-											new ConfirmDialog.Listener() {
-												private static final long serialVersionUID = 1L;
-
-												@Override
-												public void onClose(
-														final ConfirmDialog dialog) {
-													if (dialog.isConfirmed()) {
-														FileDashboardComponent.this.resourceService
-																.removeResource(
-																		resource.getPath(),
-																		AppContext
-																				.getUsername());
-
-														FileDashboardComponent.this
-																.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
-
-														FileDashboardComponent.this.folderTree
-																.setCollapsed(
-																		FileDashboardComponent.this.baseFolder,
-																		true);
-														FileDashboardComponent.this.folderTree
-																.setCollapsed(
-																		FileDashboardComponent.this.baseFolder,
-																		false);
-													}
-												}
-											});
-
-								}
-							});
-					deleteBtn.setStyleName("link");
-					filterBtnLayout.addComponent(deleteBtn);
-
-					final Button moveFolderBtn = new Button("Move",
-							new Button.ClickListener() {
-								@Override
-								public void buttonClick(ClickEvent event) {
-									resourceSettingPopupBtn
-											.setPopupVisible(false);
-
-									final MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-											resource, resourceService);
-									ResourceTableDisplay.this.getWindow()
-											.addWindow(moveResourceWindow);
-								}
-							});
-					moveFolderBtn.setStyleName("link");
-					filterBtnLayout.addComponent(moveFolderBtn);
-
-					filterBtnLayout.setMargin(true);
-					filterBtnLayout.setSpacing(true);
-					filterBtnLayout.setWidth("100px");
-					resourceSettingPopupBtn.setIcon(MyCollabResource
-							.newResource("icons/16/item_settings.png"));
-					resourceSettingPopupBtn.setStyleName("link");
-					resourceSettingPopupBtn.addComponent(filterBtnLayout);
-					return resourceSettingPopupBtn;
-				}
-			});
-
-			this.addGeneratedColumn("path", new Table.ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final Resource resource = ResourceTableDisplay.this
-							.getResource(itemId);
-
-					if (resource != null) {
-						if (resource.getUuid().equals("firstLine")) {
-							Button gotoParentBtn = new Button("...");
-							gotoParentBtn.addStyleName("link");
-							gotoParentBtn.setDescription("Up to parent Folder");
-
-							gotoParentBtn.addListener(new ClickListener() {
-								@Override
-								public void buttonClick(ClickEvent event) {
-									Folder parentFolder = FileDashboardComponent.this.resourceService
-											.getParentFolder(FileDashboardComponent.this.baseFolder
-													.getPath());
-
-									displayResourcesInTable(parentFolder);
-								}
-							});
-							return gotoParentBtn;
-						}
-					}
-
-					String path = resource.getPath();
-					final int pathIndex = path.lastIndexOf("/");
-					if (pathIndex > -1) {
-						path = path.substring(pathIndex + 1);
-					}
-					final HorizontalLayout resourceLabel = new HorizontalLayout();
-
-					com.vaadin.terminal.Resource iconResource = null;
-					if (resource instanceof Content) {
-						iconResource = UiUtils
-								.getFileIconResource(((Content) resource)
-										.getPath());
-					} else {
-						iconResource = MyCollabResource
-								.newResource("icons/16/ecm/folder_close.png");
-					}
-					final Embedded iconEmbed = new Embedded(null, iconResource);
-
-					resourceLabel.addComponent(iconEmbed);
-					resourceLabel.setComponentAlignment(iconEmbed,
-							Alignment.MIDDLE_CENTER);
-
-					final ButtonLink resourceLink = new ButtonLink(path,
-							new Button.ClickListener() {
-
-								@Override
-								public void buttonClick(final ClickEvent event) {
-									if (resource instanceof Folder) {
-										FileDashboardComponent.this
-												.displayResourcesInTable(resource
-														.getName());
-									} else if (resource instanceof Content) {
-										final FileDownloadWindow downloadFileWindow = new FileDownloadWindow(
-												(Content) resource);
-										ResourceTableDisplay.this.getWindow()
-												.addWindow(downloadFileWindow);
-									}
-								}
-							});
-
-					resourceLink.setWidth("100%");
-					resourceLabel.addComponent(resourceLink);
-					resourceLabel.setExpandRatio(resourceLink, 1.0f);
-					resourceLabel.setWidth("100%");
-					return resourceLabel;
-				}
-			});
-
-			this.addGeneratedColumn("created", new Table.ColumnGenerator() {
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final Resource resource = ResourceTableDisplay.this
-							.getResource(itemId);
-					if (resource != null) {
-						if (resource.getUuid().equals("firstLine")) {
-							return "";
-						}
-					}
-					return new Label(AppContext.formatDateTime(resource
-							.getCreated().getTime()));
-				}
-			});
-
-			this.addGeneratedColumn("size", new Table.ColumnGenerator() {
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final Resource resource = ResourceTableDisplay.this
-							.getResource(itemId);
-					if (resource != null) {
-						if (resource.getUuid().equals("firstLine")) {
-							return "";
-						}
-					}
-					return new Label(Math.round(resource.getSize() / 1024) + "");
-				}
-			});
-
-			this.setColumnExpandRatio("path", 1);
-			this.setColumnWidth("uuid", 22);
-			this.setColumnWidth("size", UIConstants.TABLE_S_LABEL_WIDTH);
-			this.setColumnWidth("created", UIConstants.TABLE_DATE_TIME_WIDTH);
-		}
-
-		private Resource getResource(final Object itemId) {
-			final Container container = this.getContainerDataSource();
-			final BeanItem<Resource> item = (BeanItem<Resource>) container
-					.getItem(itemId);
-			return (item != null) ? item.getBean() : null;
-		}
+				});
 	}
 
 	/**
@@ -701,33 +259,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 												AppContext.getUsername());
 								FileDashboardComponent.this.baseFolder
 										.addChild(newFolder);
-								FileDashboardComponent.this.folderTree.addItem(
-										new Object[] {
-												newFolder.getName(),
-												AppContext
-														.formatDateTime(newFolder
-																.getCreated()
-																.getTime()) },
-										newFolder);
-								FileDashboardComponent.this.folderTree
-										.setItemCaption(newFolder,
-												newFolder.getName());
-								FileDashboardComponent.this.folderTree
-										.setParent(
-												newFolder,
-												FileDashboardComponent.this.baseFolder);
-								FileDashboardComponent.this.folderTree
-										.setItemIcon(
-												newFolder,
-												MyCollabResource
-														.newResource("icons/16/ecm/folder_close.png"));
-								if (FileDashboardComponent.this.folderTree
-										.isCollapsed(FileDashboardComponent.this.baseFolder)) {
-									FileDashboardComponent.this.folderTree
-											.setCollapsed(
-													FileDashboardComponent.this.baseFolder,
-													false);
-								}
 								AddNewFolderWindow.this.close();
 
 							}
@@ -810,29 +341,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						FileDashboardComponent.this
 								.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
 
-						// Set item caption for sub folder of base folder in
-						// folderTree
-
-						final List<Folder> childs = FileDashboardComponent.this.baseFolder
-								.getChilds();
-						for (final Folder folder : childs) {
-							if (folder.getName().equals(
-									RenameResourceWindow.this.resource
-											.getName())) {
-								folder.setPath(newPath);
-								folderTree.removeItem(folder);
-								folderTree.addItem(
-										new Object[] {
-												folder.getName(),
-												AppContext
-														.formatDate(folder
-																.getCreated()
-																.getTime()) },
-										folder);
-								folderTree.setParent(folder, baseFolder);
-								folderTree.setItemCaption(folder, newNameValue);
-							}
-						}
 						RenameResourceWindow.this.close();
 
 					} catch (final ContentException e) {
@@ -1102,34 +610,39 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		private final ExternalDriveService externalDriveService;
 		protected List<Resource> lstResEditting;
 		private final ResourceMover resourceMover;
+		private final boolean isNeedLoadExternalDrive;
 
 		public AbstractMoveWindow(Resource resource,
-				ResourceService resourceService,
-				ExternalResourceService externalResourceService,
-				ExternalDriveService externalDriveService) {
+				boolean isNeedLoadExternalDrive) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
 			this.resourceEditting = resource;
-			this.resourceService = resourceService;
-			this.externalResourceService = externalResourceService;
-			this.externalDriveService = externalDriveService;
+			this.resourceService = AppContext
+					.getSpringBean(ResourceService.class);
+			this.externalResourceService = AppContext
+					.getSpringBean(ExternalResourceService.class);
+			this.externalDriveService = AppContext
+					.getSpringBean(ExternalDriveService.class);
+			this.isNeedLoadExternalDrive = isNeedLoadExternalDrive;
 			this.resourceMover = AppContext.getSpringBean(ResourceMover.class);
 			constructBody();
 		}
 
 		public AbstractMoveWindow(List<Resource> lstRes,
-				ResourceService resourceService,
-				ExternalResourceService externalResourceService,
-				ExternalDriveService externalDriveService) {
+				boolean isNeedLoadExternalDrive) {
 			super("Move File/Foler");
 			center();
 			this.setWidth("600px");
 			this.lstResEditting = lstRes;
-			this.resourceService = resourceService;
-			this.externalResourceService = externalResourceService;
-			this.externalDriveService = externalDriveService;
+			this.resourceService = AppContext
+					.getSpringBean(ResourceService.class);
+			this.externalResourceService = AppContext
+					.getSpringBean(ExternalResourceService.class);
+			this.externalDriveService = AppContext
+					.getSpringBean(ExternalDriveService.class);
 			this.resourceMover = AppContext.getSpringBean(ResourceMover.class);
+			this.isNeedLoadExternalDrive = isNeedLoadExternalDrive;
 
 			constructBody();
 		}
@@ -1167,7 +680,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					// load externalResource if currentExpandFolder is
 					// rootFolder
 					if (rootPath.equals(expandFolder.getPath())
-							&& externalResourceService != null) {
+							&& AbstractMoveWindow.this.isNeedLoadExternalDrive) {
 						List<ExternalDrive> externalDrives = externalDriveService
 								.getExternalDrivesOfUser(AppContext
 										.getUsername());
@@ -1391,7 +904,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 		public MoveResourceWindow(Resource resource,
 				ResourceService resourceService) {
-			super(resource, resourceService, null, null);
+			super(resource, false);
 		}
 
 		@Override

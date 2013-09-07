@@ -24,8 +24,8 @@ public class FileDashboardViewImpl extends AbstractView implements
 			@Override
 			protected void doSearch(FileSearchCriteria searchCriteria) {
 				EventBus.getInstance().fireEvent(
-						new ProjectContentEvent.Search(FileDashboardViewImpl.this,
-								searchCriteria));
+						new ProjectContentEvent.Search(
+								FileDashboardViewImpl.this, searchCriteria));
 
 			}
 
