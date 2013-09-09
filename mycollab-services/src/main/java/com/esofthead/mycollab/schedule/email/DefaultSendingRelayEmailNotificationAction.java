@@ -34,7 +34,8 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 						userName = user.getFirstname() + " "
 								+ user.getLastname();
 					} catch (Exception e) {
-						userName = user.getUsername();
+						userName = (user.getUsername().length() > 0) ? user
+								.getUsername() : user.getEmail();
 					}
 					templateGenerator.putVariable("userName", userName);
 
@@ -65,10 +66,11 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 						userName = user.getFirstname() + " "
 								+ user.getLastname();
 					} catch (Exception e) {
-						userName = user.getUsername();
+						userName = (user.getUsername().length() > 0) ? user
+								.getUsername() : user.getEmail();
 					}
 					templateGenerator.putVariable("userName", userName);
-					
+
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
@@ -97,10 +99,11 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 						userName = user.getFirstname() + " "
 								+ user.getLastname();
 					} catch (Exception e) {
-						userName = user.getUsername();
+						userName = (user.getUsername().length() > 0) ? user
+								.getUsername() : user.getEmail();
 					}
 					templateGenerator.putVariable("userName", userName);
-					
+
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
