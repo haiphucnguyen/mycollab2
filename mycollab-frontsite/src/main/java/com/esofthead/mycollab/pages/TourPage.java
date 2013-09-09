@@ -8,8 +8,6 @@ import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.pages.tour.CRMPage;
 import com.esofthead.mycollab.pages.tour.CollaborationPage;
 import com.esofthead.mycollab.pages.tour.DocumentManagementPage;
-import com.esofthead.mycollab.pages.tour.MyCollabCompetionsPage;
-import com.esofthead.mycollab.pages.tour.OnlineOfficeAppsPage;
 import com.esofthead.mycollab.pages.tour.ProjectManagementPage;
 
 public class TourPage extends BasePage {
@@ -22,8 +20,6 @@ public class TourPage extends BasePage {
 		
 		BookmarkablePageLink<Void> highlight = new BookmarkablePageLink<Void>("highlightLink", TourPage.class);
 		add(highlight);
-		BookmarkablePageLink<Void> officeApp = new BookmarkablePageLink<Void>("officeAppLink", OnlineOfficeAppsPage.class);
-		add(officeApp);
 		BookmarkablePageLink<Void> document = new BookmarkablePageLink<Void>("documentLink", DocumentManagementPage.class);
 		add(document);
 		BookmarkablePageLink<Void> project = new BookmarkablePageLink<Void>("projectLink", ProjectManagementPage.class);
@@ -32,8 +28,8 @@ public class TourPage extends BasePage {
 		add(crm);
 		BookmarkablePageLink<Void> collaboration = new BookmarkablePageLink<Void>("collaborationLink", CollaborationPage.class);
 		add(collaboration);
-		BookmarkablePageLink<Void> competion = new BookmarkablePageLink<Void>("competionsLink", MyCollabCompetionsPage.class);
-		add(competion);
+//		BookmarkablePageLink<Void> competion = new BookmarkablePageLink<Void>("competionsLink", MyCollabCompetionsPage.class);
+//		add(competion);
 	}
 
 }

@@ -20,8 +20,8 @@ public class CRMPage extends BasePage {
 		
 		BookmarkablePageLink<Void> highlight = new BookmarkablePageLink<Void>("highlightLink", TourPage.class);
 		add(highlight);
-		BookmarkablePageLink<Void> officeApp = new BookmarkablePageLink<Void>("officeAppLink", OnlineOfficeAppsPage.class);
-		add(officeApp);
+//		BookmarkablePageLink<Void> officeApp = new BookmarkablePageLink<Void>("officeAppLink", OnlineOfficeAppsPage.class);
+//		add(officeApp);
 		BookmarkablePageLink<Void> document = new BookmarkablePageLink<Void>("documentLink", DocumentManagementPage.class);
 		add(document);
 		BookmarkablePageLink<Void> project = new BookmarkablePageLink<Void>("projectLink", ProjectManagementPage.class);
@@ -30,8 +30,8 @@ public class CRMPage extends BasePage {
 		add(crm);
 		BookmarkablePageLink<Void> collaboration = new BookmarkablePageLink<Void>("collaborationLink", CollaborationPage.class);
 		add(collaboration);
-		BookmarkablePageLink<Void> competion = new BookmarkablePageLink<Void>("competionsLink", MyCollabCompetionsPage.class);
-		add(competion);
+//		BookmarkablePageLink<Void> competion = new BookmarkablePageLink<Void>("competionsLink", MyCollabCompetionsPage.class);
+//		add(competion);
 	}
 
 }
