@@ -95,6 +95,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 				}
 			}
 		};
+		avatarUploadField.setButtonCaption("Change Avatar");
 		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
 		avatarUploadField.setWidth("100px");
 		this.userAvatar.addComponent(avatarUploadField);
