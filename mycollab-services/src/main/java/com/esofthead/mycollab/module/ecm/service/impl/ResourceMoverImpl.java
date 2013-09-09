@@ -26,7 +26,7 @@ public class ResourceMoverImpl implements ResourceMover {
 	@Autowired
 	private ResourceService resourceService;
 
-	private void moveResourceInTheSameExternalStorages(Resource srcRes,
+	private void moveResourceInDifferentStoreage(Resource srcRes,
 			Resource destRes, String userMove) {
 
 	}

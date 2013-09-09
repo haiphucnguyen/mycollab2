@@ -22,6 +22,9 @@ public class UserLink extends Button {
 			public void buttonClick(ClickEvent event) {
 			}
 		});
+		if (displayName != null && displayName.trim().equals("")) {
+			this.setCaption(username);
+		}
 
 		this.addStyleName("link");
 

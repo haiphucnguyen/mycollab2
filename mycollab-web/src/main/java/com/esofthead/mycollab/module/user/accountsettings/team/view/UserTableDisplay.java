@@ -71,14 +71,8 @@ public class UserTableDisplay extends
 					final Object itemId, Object columnId) {
 				final SimpleUser user = UserTableDisplay.this
 						.getBeanByIndex(itemId);
-				UserLink b = null;
-				if (user.getDisplayName() != null) {
-					b = new UserLink(user.getUsername(), user.getAvatarid(),
-							user.getDisplayName(), false);
-				} else {
-					b = new UserLink(user.getUsername(), user.getAvatarid(),
-							user.getEmail(), false);
-				}
+				UserLink b = new UserLink(user.getUsername(), user
+						.getAvatarid(), user.getDisplayName(), false);
 
 				b.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
