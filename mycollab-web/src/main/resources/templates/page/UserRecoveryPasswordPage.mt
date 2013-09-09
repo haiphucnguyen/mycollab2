@@ -65,7 +65,7 @@ input[type="text"], input[type="password"]{
 			</td>
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div id="welcomeBody" style="display:block">
-		<div style="display: block; padding: 35px 8px 8px 20px;">
+		<div style="display: block; padding: 40px 8px 8px 20px;">
 			Welcome <span style="font-style:italic; font-size:14px;">$!username</span>.<br>
 			Sometimes, change password is good idea for secure your informations. You can renew your password bellow :
 		</div>

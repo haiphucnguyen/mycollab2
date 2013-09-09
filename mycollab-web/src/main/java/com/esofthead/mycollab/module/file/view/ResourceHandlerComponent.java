@@ -190,13 +190,15 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				Folder parentFolder = null;
 				if (ResourceHandlerComponent.this.baseFolder instanceof ExternalFolder) {
-					if (baseFolder.getPath().equals("/")) {
+					if (ResourceHandlerComponent.this.baseFolder.getPath()
+							.equals("/")) {
 						parentFolder = rootFolder;
 					} else {
 						parentFolder = externalResourceService
 								.getParentResourceFolder(
-										((ExternalFolder) baseFolder)
-												.getExternalDrive(), baseFolder
+										((ExternalFolder) ResourceHandlerComponent.this.baseFolder)
+												.getExternalDrive(),
+										ResourceHandlerComponent.this.baseFolder
 												.getPath());
 					}
 				} else if (!ResourceHandlerComponent.this.baseFolder.getPath()

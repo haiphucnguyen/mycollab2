@@ -170,7 +170,19 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 				userBox = new UserComboBox(users);
 				userBox.setRequired(true);
 				userBox.setWidth("500px");
+				userBox.setImmediate(true);
 
+				userBox.addListener(new ValueChangeListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void valueChange(
+							com.vaadin.data.Property.ValueChangeEvent event) {
+						if (user != null)
+							user.setUsername((String) UserComboBoxWithInviteBtnCustomField.this
+									.getValue());
+					}
+				});
 				inviteOutSideUserBtn = new Button("Invite outside member",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -200,7 +212,6 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 			@Override
 			public Object getValue() {
-				user.setUsername((String) userBox.getValue());
 				return (String) userBox.getValue();
 			}
 
