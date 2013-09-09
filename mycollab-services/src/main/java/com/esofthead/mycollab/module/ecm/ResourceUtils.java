@@ -5,6 +5,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
+import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.DropboxResourceService;
@@ -30,6 +31,15 @@ public class ResourceUtils {
 			throw new MyCollabException(
 					"Current support only dropbox resource service");
 		}
+	}
+
+	public static ExternalDrive getExternalDrive(Resource res) {
+		if (res instanceof ExternalFolder) {
+			return ((ExternalFolder) res).getExternalDrive();
+		} else if (res instanceof ExternalContent) {
+			return ((ExternalContent) res).getExternalDrive();
+		}
+		return null;
 	}
 
 	public static ResourceType getType(Resource resource) {
