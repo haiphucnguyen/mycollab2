@@ -27,12 +27,6 @@ public class CRMPage extends BasePage {
 		BookmarkablePageLink<Void> crm = new BookmarkablePageLink<Void>(
 				"crmLink", CRMPage.class);
 		add(crm);
-		BookmarkablePageLink<Void> collaboration = new BookmarkablePageLink<Void>(
-				"collaborationLink", CollaborationPage.class);
-		add(collaboration);
-		BookmarkablePageLink<Void> team = new BookmarkablePageLink<Void>(
-				"teamLink", TeamManagementPage.class);
-		add(team);
 	}
 
 }
