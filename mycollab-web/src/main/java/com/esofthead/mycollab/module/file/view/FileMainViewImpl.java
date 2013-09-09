@@ -486,7 +486,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								&& criteria.getStorageName().equals(
 										StorageNames.DROPBOX)) {
 							selectedFolder = (Folder) externalResourceService
-									.getcurrentResourceByPath(
+									.getCurrentResourceByPath(
 											criteria.getExternalDrive(),
 											criteria.getBaseFolder());
 						} else {
@@ -839,7 +839,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 															bodyLayout
 																	.removeComponent(OneDriveConnectionBodyLayout.this);
 															ExternalFolder res = (ExternalFolder) externalResourceService
-																	.getcurrentResourceByPath(
+																	.getCurrentResourceByPath(
 																			drive,
 																			"/");
 															if (res != null
@@ -919,7 +919,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									return;
 								}
 								ExternalFolder res = (ExternalFolder) externalResourceService
-										.getcurrentResourceByPath(drive, "/");
+										.getCurrentResourceByPath(drive, "/");
 
 								Container dataSource = menuTree
 										.getContainerDataSource();

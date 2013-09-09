@@ -155,7 +155,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 	}
 
 	@Override
-	public Resource getcurrentResourceByPath(ExternalDrive drive, String path) {
+	public Resource getCurrentResourceByPath(ExternalDrive drive, String path) {
 		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
 				null);
 		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
@@ -194,7 +194,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		String folderPath = childPath.substring(0, childPath.lastIndexOf("/"));
 		if (folderPath.length() == 0)
 			folderPath = "/";
-		return (Folder) this.getcurrentResourceByPath(drive, folderPath);
+		return (Folder) this.getCurrentResourceByPath(drive, folderPath);
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
 		try {
 			client.createFolder(path);
-			return (Folder) this.getcurrentResourceByPath(drive, path);
+			return (Folder) this.getCurrentResourceByPath(drive, path);
 		} catch (DbxException e) {
 			log.error("Error when createdFolder dropbox resource", e);
 		}

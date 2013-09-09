@@ -505,7 +505,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					for (ExternalDrive drive : lst) {
 						if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
 							Resource res = externalResourceService
-									.getcurrentResourceByPath(drive, "/");
+									.getCurrentResourceByPath(drive, "/");
 							res.setName(drive.getFoldername());
 							lstResource.add(0, res);
 						}
