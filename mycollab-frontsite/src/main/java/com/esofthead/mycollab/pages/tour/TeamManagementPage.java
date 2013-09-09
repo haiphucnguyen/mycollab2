@@ -7,11 +7,11 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.pages.TourPage;
 
-public class ProjectManagementPage extends BasePage {
+public class TeamManagementPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
-	public ProjectManagementPage(PageParameters parameters) {
+	public TeamManagementPage(PageParameters parameters) {
 		super(parameters);
 		add(new Label("pagetitle", "Tour"));
 

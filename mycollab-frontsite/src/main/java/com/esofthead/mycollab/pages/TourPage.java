@@ -9,6 +9,7 @@ import com.esofthead.mycollab.pages.tour.CRMPage;
 import com.esofthead.mycollab.pages.tour.CollaborationPage;
 import com.esofthead.mycollab.pages.tour.DocumentManagementPage;
 import com.esofthead.mycollab.pages.tour.ProjectManagementPage;
+import com.esofthead.mycollab.pages.tour.TeamManagementPage;
 
 public class TourPage extends BasePage {
 
@@ -17,19 +18,25 @@ public class TourPage extends BasePage {
 	public TourPage(PageParameters parameters) {
 		super(parameters);
 		add(new Label("pagetitle", "Tour"));
-		
-		BookmarkablePageLink<Void> highlight = new BookmarkablePageLink<Void>("highlightLink", TourPage.class);
+
+		BookmarkablePageLink<Void> highlight = new BookmarkablePageLink<Void>(
+				"highlightLink", TourPage.class);
 		add(highlight);
-		BookmarkablePageLink<Void> document = new BookmarkablePageLink<Void>("documentLink", DocumentManagementPage.class);
+		BookmarkablePageLink<Void> document = new BookmarkablePageLink<Void>(
+				"documentLink", DocumentManagementPage.class);
 		add(document);
-		BookmarkablePageLink<Void> project = new BookmarkablePageLink<Void>("projectLink", ProjectManagementPage.class);
+		BookmarkablePageLink<Void> project = new BookmarkablePageLink<Void>(
+				"projectLink", ProjectManagementPage.class);
 		add(project);
-		BookmarkablePageLink<Void> crm = new BookmarkablePageLink<Void>("crmLink", CRMPage.class);
+		BookmarkablePageLink<Void> crm = new BookmarkablePageLink<Void>(
+				"crmLink", CRMPage.class);
 		add(crm);
-		BookmarkablePageLink<Void> collaboration = new BookmarkablePageLink<Void>("collaborationLink", CollaborationPage.class);
+		BookmarkablePageLink<Void> collaboration = new BookmarkablePageLink<Void>(
+				"collaborationLink", CollaborationPage.class);
 		add(collaboration);
-//		BookmarkablePageLink<Void> competion = new BookmarkablePageLink<Void>("competionsLink", MyCollabCompetionsPage.class);
-//		add(competion);
+		BookmarkablePageLink<Void> team = new BookmarkablePageLink<Void>(
+				"teamLink", TeamManagementPage.class);
+		add(team);
 	}
 
 }
