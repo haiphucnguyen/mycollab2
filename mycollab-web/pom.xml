@@ -40,7 +40,7 @@
             <artifactId>mycollab-services</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-scheduler</artifactId>
@@ -58,6 +58,7 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin</artifactId>
             <version>${vaadinVersion}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -370,6 +371,32 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-my-lib</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.vaadin</groupId>
+                                    <artifactId>vaadin</artifactId>
+                                    <version>${vaadinVersion}</version>
+                                    <type>jar</type>
+                                    <overWrite>false</overWrite>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
