@@ -106,7 +106,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 				if (propertyId.equals("owner")) {
 					final ProjectMemberComboBox userbox = new ProjectMemberComboBox();
 					userbox.setRequired(true);
-					userbox.setRequiredError("Please enter a owner");
+					userbox.setRequiredError("Please select an assignee");
 					return userbox;
 				} else if (propertyId.equals("status")) {
 					if (MilestoneAddViewImpl.this.milestone.getStatus() == null) {
@@ -118,7 +118,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
-					tf.setRequiredError("Please enter a Name");
+					tf.setRequiredError("Please enter name");
 					return tf;
 				} else if (propertyId.equals("description")) {
 					final RichTextArea descArea = new RichTextArea();
@@ -159,12 +159,15 @@ public class MilestoneAddViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		public ProgressStatusComboBox() {
-			super(false, "In Progress", "Future", "Closed");
-			this.setItemIcon("In Progress", MyCollabResource
-					.newResource("icons/16/project/phase_progress.png"));
-			this.setItemIcon("Future", MyCollabResource
+			super(false, MilestoneStatusConstant.IN_PROGRESS,
+					MilestoneStatusConstant.FUTURE,
+					MilestoneStatusConstant.CLOSED);
+			this.setItemIcon(MilestoneStatusConstant.IN_PROGRESS,
+					MyCollabResource
+							.newResource("icons/16/project/phase_progress.png"));
+			this.setItemIcon(MilestoneStatusConstant.FUTURE, MyCollabResource
 					.newResource("icons/16/project/phase_future.png"));
-			this.setItemIcon("Closed", MyCollabResource
+			this.setItemIcon(MilestoneStatusConstant.CLOSED, MyCollabResource
 					.newResource("icons/16/project/phase_closed.png"));
 		}
 	}

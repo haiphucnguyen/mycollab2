@@ -232,7 +232,7 @@ public class TaskGroupAddWindow extends Window {
 					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
-					tf.setRequiredError("Please enter a Name");
+					tf.setRequiredError("Please enter task group name");
 					return tf;
 				}
 

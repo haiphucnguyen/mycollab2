@@ -25,7 +25,7 @@ public class SimpleUser extends User {
 	public static final String INACTION_STATUS = "inactive";
 	public static final String PENDING_STATUS = "pending";
 	public static final int ADMIN_VAL = 1;
-	
+
 	private Boolean isAdmin;
 	private Integer roleid;
 	private String roleName;
@@ -35,7 +35,11 @@ public class SimpleUser extends User {
 	private Integer accountId;
 
 	public String getDisplayName() {
-		return getFirstname() + " " + getLastname();
+		String result = getFirstname() + " " + getLastname();
+		if (result.trim().equals("")) {
+			return getUsername();
+		}
+		return result;
 	}
 
 	public PermissionMap getPermissionMaps() {
