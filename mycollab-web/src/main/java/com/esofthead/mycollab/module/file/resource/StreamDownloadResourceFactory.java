@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.file.resource;
 
 import java.io.File;
+import java.util.List;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
@@ -25,20 +26,20 @@ public class StreamDownloadResourceFactory {
 		}
 	}
 
-	public static Resource getStreamFolderResource(String[] documentPath,
+	public static Resource getStreamResourceSupportExtDrive(
+			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
 			boolean isSearchAction) {
-		return new StreamResource(new StreamFolderDownloadResource(
-				documentPath, isSearchAction), "out.zip",
-				AppContext.getApplication());
-
-	}
-
-	public static Resource getStreamDropboxResource(
-			com.esofthead.mycollab.module.ecm.domain.Resource res) {
-		String name = (res instanceof Folder) ? res.getName() + ".zip" : res
-				.getName();
-		return new StreamResource(new StreamDropboxDownloadResource(res),
-				name, AppContext.getApplication());
+		if (lstRes == null || lstRes.isEmpty())
+			return null;
+		if (lstRes.size() == 1) {
+			String name = (lstRes.get(0) instanceof Folder) ? lstRes.get(0)
+					.getName() + ".zip" : lstRes.get(0).getName();
+			return new StreamResource(
+					new StreamDownloadResourceSupportExtDrive(lstRes,
+							isSearchAction), name, AppContext.getApplication());
+		}
+		return new StreamResource(new StreamDownloadResourceSupportExtDrive(
+				lstRes, isSearchAction), "out.zip", AppContext.getApplication());
 	}
 
 	public static Resource getImagePreviewResource(String documentPath) {

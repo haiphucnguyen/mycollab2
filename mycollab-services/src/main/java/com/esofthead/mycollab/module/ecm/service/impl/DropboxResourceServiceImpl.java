@@ -260,7 +260,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-						client.getFile(path, "", out);
+						client.getFile(path, null, out);
 						out.close();
 					} catch (Exception e) {
 						log.error("Error when get File from dropbox", e);
