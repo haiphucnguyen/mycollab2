@@ -3,6 +3,8 @@ package com.esofthead.mycollab.schedule.email.user.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAc
 public class SendingRecoveryPasswordEmailActionImpl implements
 		SendingRecoveryPasswordEmailAction {
 
+	private static Logger log = LoggerFactory
+			.getLogger(SendingRecoveryPasswordEmailActionImpl.class);
+
 	@Autowired
 	protected ExtMailService extMailService;
 
@@ -34,6 +39,7 @@ public class SendingRecoveryPasswordEmailActionImpl implements
 
 		String username = relayEmail.getRecipients();
 		if (username != null) {
+			log.debug("Send recovery password email to user {}", username);
 			User user = userService.findUserByUserName(username);
 			String subdomain = "";
 			String recoveryPasswordURL = SiteConfiguration

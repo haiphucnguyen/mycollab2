@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.esofthead.mycollab.module.mail.service.RelayEmailService;
 
 @Component("memberDenyInvitationFeedBackHandlerServlet")
 public class AnotatedMemberDenyInvitationFeedBackHandlerServlet implements
 		HttpRequestHandler {
 
 	@Autowired
-	private MailRelayService mailRelayService;
+	private RelayEmailService mailRelayService;
 
 	@Override
 	public void handleRequest(HttpServletRequest request,

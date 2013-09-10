@@ -4,8 +4,8 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
-import com.esofthead.mycollab.common.dao.RelayEmailMapper;
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
+import com.esofthead.mycollab.module.mail.service.RelayEmailService;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAction;
@@ -61,15 +61,17 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					User user = userService.findUserByUserName(username);
 
 					if (user == null) {
-						ForgotPasswordViewImpl.this.getWindow()
-								.showNotification("User not exist!!");
+						ForgotPasswordViewImpl.this
+								.getWindow()
+								.showNotification(
+										"There is no user available for this username or email.");
 						return;
 					} else {
 						String hideEmailStr = user.getEmail();
 						hideEmailStr = "***"
 								+ hideEmailStr.substring(hideEmailStr
 										.indexOf("@") - 1);
-						String remindStr = "An email for recovery password has sent to your email-address: "
+						String remindStr = "Email with password reset instructions has been sent to your email address: "
 								+ hideEmailStr;
 
 						RelayEmailWithBLOBs relayEmail = new RelayEmailWithBLOBs();
@@ -77,15 +79,15 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 						relayEmail
 								.setEmailhandlerbean(SendingRecoveryPasswordEmailAction.class
 										.getName());
-						relayEmail.setSaccountid(1);
+						relayEmail.setSaccountid(AppContext.getAccountId());
 						relayEmail.setSubject("");
 						relayEmail.setBodycontent("");
 						relayEmail.setFromemail("");
 						relayEmail.setFromname("");
 
-						RelayEmailMapper relayEmailMapper = AppContext
-								.getSpringBean(RelayEmailMapper.class);
-						relayEmailMapper.insert(relayEmail);
+						RelayEmailService relayEmailService = AppContext
+								.getSpringBean(RelayEmailService.class);
+						relayEmailService.saveWithSession(relayEmail, "");
 
 						ForgotPasswordViewImpl.this.getWindow()
 								.showNotification(remindStr);

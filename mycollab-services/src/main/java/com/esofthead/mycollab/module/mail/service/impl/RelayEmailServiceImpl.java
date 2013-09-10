@@ -8,11 +8,15 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.common.dao.RelayEmailMapper;
 import com.esofthead.mycollab.common.domain.RelayEmailExample;
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import com.esofthead.mycollab.module.mail.service.RelayEmailService;
 import com.thoughtworks.xstream.XStream;
 
 @Service
-public class MailRelayServiceImpl implements MailRelayService {
+public class RelayEmailServiceImpl extends
+		DefaultCrudService<Integer, RelayEmailWithBLOBs> implements
+		RelayEmailService {
 
 	@Autowired
 	private RelayEmailMapper relayEmailMapper;
@@ -21,8 +25,8 @@ public class MailRelayServiceImpl implements MailRelayService {
 	public void saveRelayEmail(String[] toNames, String[] toEmails,
 			String subject, String bodyContent) {
 		RelayEmailWithBLOBs relayEmail = new RelayEmailWithBLOBs();
-		relayEmail.setFromemail("cuongnguyen@esofthead.com");
-		relayEmail.setFromname("No Reply");
+		relayEmail.setFromemail("noreply@esofthead.com");
+		relayEmail.setFromname("MyCollab");
 
 		XStream xmlSerializer = new XStream();
 		String recipientList = xmlSerializer.toXML(new String[][] { toEmails,
@@ -44,6 +48,11 @@ public class MailRelayServiceImpl implements MailRelayService {
 	@Override
 	public void cleanEmails() {
 		relayEmailMapper.deleteByExample(new RelayEmailExample());
+	}
+
+	@Override
+	public ICrudGenericDAO<Integer, RelayEmailWithBLOBs> getCrudMapper() {
+		return relayEmailMapper;
 	}
 
 }

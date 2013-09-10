@@ -15,7 +15,7 @@ import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.mail.Mailer;
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.esofthead.mycollab.module.mail.service.RelayEmailService;
 import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailsAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -27,7 +27,7 @@ public class ScheduleSendingRelayEmailsServiceImpl {
 			.getLogger(ScheduleSendingRelayEmailsServiceImpl.class);
 
 	@Autowired
-	private MailRelayService mailRelayService;
+	private RelayEmailService mailRelayService;
 
 	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_RELAY_INTERVAL)
 	public void sendRelayEmails() {

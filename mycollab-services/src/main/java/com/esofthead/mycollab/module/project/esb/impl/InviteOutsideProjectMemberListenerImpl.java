@@ -13,7 +13,7 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.esofthead.mycollab.module.mail.service.RelayEmailService;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberListener;
@@ -33,7 +33,7 @@ public class InviteOutsideProjectMemberListenerImpl implements
 	private UserService userService;
 
 	@Autowired
-	private MailRelayService mailRelayService;
+	private RelayEmailService mailRelayService;
 
 	@Autowired
 	private ProjectService projectService;
