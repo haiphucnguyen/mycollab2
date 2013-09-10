@@ -688,7 +688,7 @@ h1, h2, h3, h4, h5, h6 {
 #footer {
 	width: 100%;
 	height: 40px;
-	background: url("../images/bg_footer.png") repeat-x transparent;
+	background: url("static/images/bg_footer.png") repeat-x transparent;
 	clear: both;
 }
 
@@ -738,25 +738,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .foo-cal {
-	background: url("../images/icon_call.png") no-repeat left center;
+	background: url("static/images/icon_call.png") no-repeat left center;
 	padding-left: 25px;
 	
 }
 
 .foo-email {
-	background: url("../images/icon_email.png") no-repeat left center;
+	background: url("static/images/icon_email.png") no-repeat left center;
 	padding-left: 25px;
 }
 
 .foo-twitter {
-	background: url("../images/icon_twitter.png") no-repeat left center;
+	background: url("static/images/icon_twitter.png") no-repeat left center;
 	padding-left: 25px;
 }
 
 #footer-home {
 	width: 100%;
 	height: 175px;
-	background: url("../images/footer_home_bg.png") repeat-x transparent;
+	background: url("static/images/footer_home_bg.png") repeat-x transparent;
 	clear: both;
 }
 
@@ -782,14 +782,14 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: 30px;
     position: relative;
     width: 700px;
-    background: url("../images/footer_home_bg.png") repeat-x scroll 0 0 transparent;
+    background: url("static/images/footer_home_bg.png") repeat-x scroll 0 0 transparent;
 }
 
 .footer-sitemap .sitemap-col {
 	width: 180px;
 	height: 125px;
 	float: left;
-	background: url("../images/footer_home_line.png") no-repeat right top transparent;
+	background: url("static/images/footer_home_line.png") no-repeat right top transparent;
 }
 
 .footer-sitemap .sitemap-col-last {
@@ -861,13 +861,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .col-style2 {
-	background: url("../images/pricing_bg1.png") no-repeat top left transparent;
+	background: url("static/images/pricing_bg1.png") no-repeat top left transparent;
 	height: 199px;
 	margin-right: 1px;
 }
 
 .col-style3 {
-	background: url("../images/pricing_bg2.png") no-repeat top left transparent;
+	background: url("static/images/pricing_bg2.png") no-repeat top left transparent;
     position: relative;
     width: 180px;
     z-index: 1;
@@ -1003,7 +1003,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prig-bottom-cnt h2 {
-	background: url("../images/pricing_question.png") no-repeat left center transparent;
+	background: url("static/images/pricing_question.png") no-repeat left center transparent;
 }
 
 .prig-block-1 {
@@ -1164,7 +1164,7 @@ h1, h2, h3, h4, h5, h6 {
 .hom-box1-title {
 	border-top: solid 15px #228BC9;
 	text-align: center;
-	background: url("../images/home_border.png") no-repeat bottom center;
+	background: url("static/images/home_border.png") no-repeat bottom center;
 	margin-bottom: 5px;
 }
 
@@ -1207,19 +1207,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .home-followup {
-	background: url("../images/home_icon_automatic.png") no-repeat left center;
+	background: url("static/images/home_icon_automatic.png") no-repeat left center;
 }
 
 .home-history {
-	background: url("../images/home_icon_history.png") no-repeat left center;
+	background: url("static/images/home_icon_history.png") no-repeat left center;
 }
 
 .home-contact {
-	background: url("../images/home_icon_contact.png") no-repeat left center;
+	background: url("static/images/home_icon_contact.png") no-repeat left center;
 }
 
 .home-address {
-	background: url("../images/home_icon_address.png") no-repeat left center;
+	background: url("static/images/home_icon_address.png") no-repeat left center;
 }
 
 .home-box2 {
@@ -1462,14 +1462,14 @@ a.nivo-prevNav {
 	width: 1100px;
 	margin: 0 auto 20px;
 	border: solid 1px #ababab;
-	background: url("../images/home_banner_bg.jpg") no-repeat top center;
+	background: url("static/images/home_banner_bg.jpg") no-repeat top center;
 }
 
 .pri-top {
 	text-align: center;
 	border-top: solid 15px #228BC9;
 	padding: 0px 30px;
-	background: url("../images/home_border.png") no-repeat bottom center;
+	background: url("static/images/home_border.png") no-repeat bottom center;
 	margin-bottom: 20px;
 }
 
@@ -1478,7 +1478,7 @@ a.nivo-prevNav {
 	color: #228bc9;
 	line-height: 100%;
 	font-weight: normal;
-	background: url("../images/pri_lock.png") no-repeat left center;
+	background: url("static/images/pri_lock.png") no-repeat left center;
 	display: inline-block;
 	padding: 35px 0px 15px 70px;
 	margin-top: 5px;
@@ -1494,7 +1494,7 @@ a.nivo-prevNav {
 
 .pri-mid {
 	padding: 0px 30px;
-	background: url("../images/home_border.png") no-repeat bottom center;
+	background: url("static/images/home_border.png") no-repeat bottom center;
 	height: 480px;
 	margin-bottom: 20px;
 }
@@ -1502,7 +1502,7 @@ a.nivo-prevNav {
 .pri-mid-left {
 	width: 650px;
 	float: left;
-	background: url("../images/pri_border_mid.png") no-repeat bottom center transparent;
+	background: url("static/images/pri_border_mid.png") no-repeat bottom center transparent;
 }
 
 .pri-mid-left-cnt {
@@ -1580,19 +1580,19 @@ a.nivo-prevNav {
 }
 
 .pri-aggrerate {
-	background: url("../images/pri_aggre.png") no-repeat left center transparent;
+	background: url("static/images/pri_aggre.png") no-repeat left center transparent;
 }
 
 .pri-links {
-	background: url("../images/pri_link.png") no-repeat left center transparent;
+	background: url("static/images/pri_link.png") no-repeat left center transparent;
 }
 
 .pri-cookie {
-	background: url("../images/pri_cookie.png") no-repeat left center transparent;
+	background: url("static/images/pri_cookie.png") no-repeat left center transparent;
 }
 
 .pri-protect {
-	background: url("../images/pri_protect.png") no-repeat left center transparent;
+	background: url("static/images/pri_protect.png") no-repeat left center transparent;
 }
 
 .clear {
@@ -1604,17 +1604,17 @@ a.nivo-prevNav {
 #tour-content {
 	width: 1100px;
 	margin: 0 auto;
-	background: url("../images/home_banner_bg.jpg") no-repeat top center;
+	background: url("static/images/home_banner_bg.jpg") no-repeat top center;
 }
 
 .tour-top {
 	text-align: center;
-	background: url("../images/home_border_2.png") no-repeat bottom center;
+	background: url("static/images/home_border_2.png") no-repeat bottom center;
 	margin-bottom: 20px;
 }
 
 .tour-top-content {
-	background: url("../images/icon_tour.png") no-repeat top left transparent;
+	background: url("static/images/icon_tour.png") no-repeat top left transparent;
 	padding-left: 70px;
 	display: inline-block;
 	padding-bottom: 20px;
@@ -1661,7 +1661,7 @@ a.nivo-prevNav {
 
 .tour-mid-left ul li:hover {
 	color: #FFF;
-	background: url("../images/tour_bg_menu.png") no-repeat top left transparent;
+	background: url("static/images/tour_bg_menu.png") no-repeat top left transparent;
 	cursor: pointer;
 }
 
@@ -1671,7 +1671,7 @@ a.nivo-prevNav {
 
 .item-active {
 	color: #FFF !important;
-	background: url("../images/tour_bg_menu.png") no-repeat top left transparent !important;
+	background: url("static/images/tour_bg_menu.png") no-repeat top left transparent !important;
 	cursor: pointer;
 }
 
@@ -1765,7 +1765,7 @@ a.nivo-prevNav {
 	color: #505050;
 	padding-left: 25px;
 	font-family: 'Monda';
-	background: url("../images/tour_list_icon_1.png") no-repeat left center transparent;
+	background: url("static/images/tour_list_icon_1.png") no-repeat left center transparent;
 	margin-bottom: 20px;
 	margin-top: 20px;
 }
@@ -1783,7 +1783,7 @@ a.nivo-prevNav {
 
 .tour-list {
 	margin-left: 60px;
-	list-style-image: url("../images/tour_list_icon_2.png");
+	list-style-image: url("static/images/tour_list_icon_2.png");
 }
 
 .tour-list li {
@@ -1824,7 +1824,7 @@ a.nivo-prevNav {
 }
 
 .tour-pre {
-	background: url("../images/tour_left.png") no-repeat left center;
+	background: url("static/images/tour_left.png") no-repeat left center;
 	padding-left: 60px;
 	height: 52px;
 	display: inline-block;
@@ -1833,7 +1833,7 @@ a.nivo-prevNav {
 }
 
 .tour-next {
-	background: url("../images/tour_right.png") no-repeat right center;
+	background: url("static/images/tour_right.png") no-repeat right center;
 	padding-right: 60px;
 	height: 52px;
 	display: inline-block;
@@ -1966,7 +1966,7 @@ a.nivo-prevNav {
 
 .btn-facbook {
 	border: none;
-	background: url("../images/signup_facebook.png") no-repeat transparent;
+	background: url("static/images/signup_facebook.png") no-repeat transparent;
 	width: 236px;
 	height: 39px;
 	color: #FFF;
@@ -1980,7 +1980,7 @@ a.nivo-prevNav {
 
 .btn-google {
 	border: none;
-	background: url("../images/signup_google.png") no-repeat transparent;
+	background: url("static/images/signup_google.png") no-repeat transparent;
 	width: 236px;
 	height: 39px;
 	color: #000;
@@ -2033,7 +2033,7 @@ a.nivo-prevNav {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	background: url("../images/signup_selectbox.png") no-repeat center right #FFF;
+	background: url("static/images/signup_selectbox.png") no-repeat center right #FFF;
 	background-size: 10%; 
 	border-radius: 3px;
 }
@@ -2170,7 +2170,7 @@ a.nivo-prevNav {
 	font-size: 13px;
 	font-weight: bold;
 	padding-left: 25px;
-	background: url("../images/pricing_question.png") no-repeat scroll left center transparent;
+	background: url("static/images/pricing_question.png") no-repeat scroll left center transparent;
 	font-family: 'Monda';
 }
 
@@ -2224,7 +2224,7 @@ a.nivo-prevNav {
 .signin-main h1 {
 	font-size: 25px;
 	padding-left: 35px;
-	background: url("../images/signin_icon.png") no-repeat top left;
+	background: url("static/images/signin_icon.png") no-repeat top left;
 	color: #228BC9;
 	margin-bottom: 20px;
 	border-bottom: solid 6px #E3E3E3;
