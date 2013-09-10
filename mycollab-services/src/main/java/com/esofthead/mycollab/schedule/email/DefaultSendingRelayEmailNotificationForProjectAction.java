@@ -3,6 +3,8 @@ package com.esofthead.mycollab.schedule.email;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
@@ -14,6 +16,10 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 		implements SendingRelayEmailNotificationAction {
+
+	private static Logger log = LoggerFactory
+			.getLogger(DefaultSendingRelayEmailNotificationForProjectAction.class);
+
 	@Autowired
 	protected ExtMailService extMailService;
 
@@ -42,14 +48,8 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					String userName = "";
-					try {
-						userName = user.getFirstname() + " "
-								+ user.getLastname();
-					} catch (Exception e) {
-						userName = user.getUsername();
-					}
-					templateGenerator.putVariable("userName", userName);
+					templateGenerator.putVariable("userName",
+							user.getDisplayName());
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
@@ -62,6 +62,9 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 							templateGenerator.generateBodyContent(), null);
 				}
 			}
+		} else {
+			log.error("Can not get project members for project id {}",
+					notification.getExtratypeid());
 		}
 	}
 
@@ -93,6 +96,9 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 							templateGenerator.generateBodyContent(), null);
 				}
 			}
+		} else {
+			log.error("Can not get project members for project id {}",
+					notification.getExtratypeid());
 		}
 
 	}
@@ -125,6 +131,9 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 							templateGenerator.generateBodyContent(), null);
 				}
 			}
+		} else {
+			log.error("Can not get project members for project id {}",
+					notification.getExtratypeid());
 		}
 	}
 
