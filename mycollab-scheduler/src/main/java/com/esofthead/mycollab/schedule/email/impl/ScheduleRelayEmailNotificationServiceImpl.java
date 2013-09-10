@@ -14,6 +14,7 @@ import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearc
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -57,16 +58,21 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 							}
 
 							relayEmailNotificationService.removeWithSession(
-									notification.getId(), "", -1);
+									notification.getId(), "",
+									notification.getSaccountid());
 
 						} catch (Exception e) {
 							log.error("Error when sending notification email",
 									e);
 						}
 					}
+				} else {
+					throw new MyCollabException(
+							"Can not get email handler bean for item "
+									+ BeanUtility.printBeanObj(notification));
 				}
 
-			} catch (ClassNotFoundException ex) {
+			} catch (Exception ex) {
 				throw new MyCollabException("no class found toget spring bean "
 						+ ex.getMessage());
 			}
