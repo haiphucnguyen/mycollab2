@@ -258,41 +258,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				if (selectedResourcesList != null
 						&& selectedResourcesList.size() > 0) {
-					List<String> lstPath = new ArrayList<String>();
-					for (int i = 0; i < selectedResourcesList.size(); i++) {
-						Resource res = selectedResourcesList.get(i);
-						if (res instanceof ExternalFolder) {
-							ResourceHandlerComponent.this
-									.getWindow()
-									.showNotification(
-											"Sorry for this inconvenience, we not yet support download dropbox folder! This function will update soon. Best regard.");
-							return;
-						} else if (res instanceof ExternalContent) {
-							com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-									.getStreamDropboxResource(res);
-							AppContext.getApplication().getMainWindow()
-									.open(downloadResource, "_blank");
-							if (i == selectedResourcesList.size() - 1) {
-								return;
-							}
-						} else {
-							lstPath.add(res.getPath());
-						}
-					}
-					com.vaadin.terminal.Resource downloadResource = null;
-					if (selectedResourcesList.size() == 1
-							&& selectedResourcesList.get(0) instanceof Content) {
-						downloadResource = StreamDownloadResourceFactory
-								.getStreamResource(selectedResourcesList.get(0)
-										.getPath());
-					} else if (selectedResourcesList.size() > 0) {
-						downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
-								lstPath.toArray(new String[lstPath.size()]),
-								itemResourceContainerLayout.isSearchAction);
-					}
+					com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+							.getStreamResourceSupportExtDrive(
+									selectedResourcesList,
+									itemResourceContainerLayout.isSearchAction);
 					AppContext.getApplication().getMainWindow()
 							.open(downloadResource, "_blank");
-
 				} else {
 					ResourceHandlerComponent.this.getWindow().showNotification(
 							"Please choose items to download.");
@@ -400,7 +371,10 @@ public class ResourceHandlerComponent extends VerticalLayout {
 											} else {
 												if (res instanceof Folder
 														&& menuTree != null) {
-													menuTree.removeItem((Folder) res);
+													ResourceHandlerComponent.this.menuTree
+															.collapseItem(ResourceHandlerComponent.this.baseFolder);
+													ResourceHandlerComponent.this.menuTree
+															.expandItem(ResourceHandlerComponent.this.baseFolder);
 												}
 												ResourceHandlerComponent.this.resourceService.removeResource(
 														res.getPath(),
@@ -751,28 +725,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							final com.vaadin.terminal.Resource downloadResource;
-							if (res instanceof Folder) {
-								if (res instanceof ExternalFolder) {
-									// downloadResource =
-									// StreamDownloadResourceFactory.getStreamDropboxResource(res);
-									ResourceHandlerComponent.this
-											.getWindow()
-											.showNotification(
-													"Sorry for this inconvenience! This function will update soon. Best regard.");
-									return;
-								} else
-									downloadResource = StreamDownloadResourceFactory.getStreamFolderResource(
-											new String[] { res.getPath() },
+							List<Resource> lstRes = new ArrayList<Resource>();
+							lstRes.add(res);
+							final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+									.getStreamResourceSupportExtDrive(lstRes,
 											false);
-							} else {
-								if (res instanceof ExternalContent) {
-									downloadResource = StreamDownloadResourceFactory
-											.getStreamDropboxResource(res);
-								} else
-									downloadResource = StreamDownloadResourceFactory
-											.getStreamResource(res.getPath());
-							}
+
 							AppContext.getApplication().getMainWindow()
 									.open(downloadResource, "_blank");
 						}

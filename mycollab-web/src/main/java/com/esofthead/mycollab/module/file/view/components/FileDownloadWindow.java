@@ -2,9 +2,11 @@ package com.esofthead.mycollab.module.file.view.components;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
+import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -72,14 +74,11 @@ public class FileDownloadWindow extends Window {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				com.vaadin.terminal.Resource downloadResource = null;
-				if (content instanceof ExternalContent) {
-					downloadResource = StreamDownloadResourceFactory
-							.getStreamDropboxResource(content);
-				} else
-					downloadResource = StreamDownloadResourceFactory
-							.getStreamResource(FileDownloadWindow.this.content
-									.getPath());
+				List<Resource> lstRes = new ArrayList<Resource>();
+				lstRes.add(content);
+
+				com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+						.getStreamResourceSupportExtDrive(lstRes, false);
 				AppContext.getApplication().getMainWindow()
 						.open(downloadResource, "_blank");
 			}

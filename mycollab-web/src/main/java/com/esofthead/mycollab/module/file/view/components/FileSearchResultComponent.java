@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.file.view.components;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -10,7 +11,6 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
@@ -161,30 +161,13 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 								public void buttonClick(final ClickEvent event) {
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
-									if (resource instanceof Content) {
-										resourceSettingPopupBtn
-												.setPopupVisible(false);
-										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-												.getStreamResource(((Content) resource)
-														.getPath());
-										AppContext
-												.getApplication()
-												.getMainWindow()
-												.open(downloadResource,
-														"_blank");
-									} else {
-										final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-												.getStreamFolderResource(
-														new String[] { ((Folder) resource)
-																.getPath() },
-														false);
-										AppContext
-												.getApplication()
-												.getMainWindow()
-												.open(downloadResource,
-														"_blank");
-									}
-
+									List<Resource> lstRes = new ArrayList<Resource>();
+									lstRes.add(resource);
+									final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+											.getStreamResourceSupportExtDrive(
+													lstRes, false);
+									AppContext.getApplication().getMainWindow()
+											.open(downloadResource, "_blank");
 								}
 							});
 					downloadBtn.setStyleName("link");
