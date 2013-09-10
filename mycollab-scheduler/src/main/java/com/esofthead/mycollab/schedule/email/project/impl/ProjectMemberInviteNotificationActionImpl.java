@@ -42,9 +42,8 @@ public class ProjectMemberInviteNotificationActionImpl implements
 	@Override
 	public void sendNotificationForCreateAction(
 			SimpleRelayEmailNotification notification) {
-		int memberId = notification.getTypeid();
-		SimpleProjectMember member = projectMemberService.findById(memberId,
-				notification.getSaccountid());
+		SimpleProjectMember member = projectMemberService.findById(
+				notification.getTypeid(), notification.getSaccountid());
 		if (member != null) {
 			String subdomain = projectService.getSubdomainOfProject(member
 					.getProjectid());

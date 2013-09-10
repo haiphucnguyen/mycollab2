@@ -42,8 +42,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int problemId = emailNotification.getTypeid();
-		SimpleProblem problem = problemService.findById(problemId, 0);
+		SimpleProblem problem = problemService.findById(
+				emailNotification.getTypeid(),
+				emailNotification.getSaccountid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$hyperLinks.projectName]: Problem \""
@@ -88,8 +89,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int problemId = emailNotification.getTypeid();
-		SimpleProblem problem = problemService.findById(problemId, 0);
+		SimpleProblem problem = problemService.findById(
+				emailNotification.getTypeid(),
+				emailNotification.getSaccountid());
 		if (problem == null) {
 			return null;
 		}
@@ -118,8 +120,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int problemId = emailNotification.getTypeid();
-		SimpleProblem problem = problemService.findById(problemId, 0);
+		SimpleProblem problem = problemService.findById(
+				emailNotification.getTypeid(),
+				emailNotification.getSaccountid());
 		if (problem == null) {
 			return null;
 		}

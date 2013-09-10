@@ -42,8 +42,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId,
+		SimpleRisk risk = riskService.findById(emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -83,8 +82,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId,
+		SimpleRisk risk = riskService.findById(emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 		if (risk == null) {
 			return null;
@@ -114,8 +112,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId,
+		SimpleRisk risk = riskService.findById(emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 		if (risk == null) {
 			return null;

@@ -36,7 +36,8 @@ public class BugRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findById(bugId, 0);
+		SimpleBug bug = bugService.findById(bugId,
+				emailNotification.getSaccountid());
 		if (bug != null) {
 			String subject = bug.getSummary();
 
@@ -78,7 +79,8 @@ public class BugRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findById(bugId, 0);
+		SimpleBug bug = bugService.findById(bugId,
+				emailNotification.getSaccountid());
 
 		String subject = StringUtils.subString(bug.getSummary(), 150);
 
@@ -103,7 +105,8 @@ public class BugRelayEmailNotificationActionImpl extends
 	public TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findById(bugId, 0);
+		SimpleBug bug = bugService.findById(bugId,
+				emailNotification.getSaccountid());
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				bug.getProjectid());
 
