@@ -32,15 +32,31 @@ public class ResourceMoverImpl implements ResourceMover {
 		String destMovePath = destRes.getPath() + "/" + srcRes.getName();
 
 		if (srcRes instanceof Folder) {
-			ExternalResourceService destService = ResourceUtils
-					.getExternalResourceService(ResourceUtils.getType(destRes));
-			Folder createdFolder = destService.createFolder(
-					ResourceUtils.getExternalDrive(destRes), destMovePath);
+			Folder createdFolder = null;
+			List<Resource> lstRes = null;
 
-			ExternalResourceService srcService = ResourceUtils
-					.getExternalResourceService(ResourceUtils.getType(srcRes));
-			List<Resource> lstRes = srcService.getResources(
-					ResourceUtils.getExternalDrive(srcRes), srcRes.getPath());
+			if (ResourceUtils.getType(destRes) != ResourceType.MyCollab) {
+				ExternalResourceService destService = ResourceUtils
+						.getExternalResourceService(ResourceUtils
+								.getType(destRes));
+				createdFolder = destService.createFolder(
+						ResourceUtils.getExternalDrive(destRes), destMovePath);
+			} else {
+				createdFolder = resourceService.createNewFolder(
+						destRes.getPath(), srcRes.getName(), userMove);
+			}
+
+			if (ResourceUtils.getType(srcRes) != ResourceType.MyCollab) {
+				ExternalResourceService srcService = ResourceUtils
+						.getExternalResourceService(ResourceUtils
+								.getType(srcRes));
+				lstRes = srcService.getResources(
+						ResourceUtils.getExternalDrive(srcRes),
+						srcRes.getPath());
+			} else {
+				lstRes = resourceService.getResources(srcRes.getPath());
+			}
+
 			for (Resource res : lstRes) {
 				if (res instanceof Folder)
 					moveResourceInDifferentStorage(res, createdFolder, userMove);
@@ -57,47 +73,63 @@ public class ResourceMoverImpl implements ResourceMover {
 		String destMovePath = destRes.getPath() + "/" + srcRes.getName();
 		String srcPath = srcRes.getPath();
 
-		ExternalResourceService srcService = ResourceUtils
-				.getExternalResourceService(ResourceUtils.getType(srcRes));
+		InputStream in = null;
+		ExternalResourceService srcService = null;
+		if (ResourceUtils.getType(srcRes) != ResourceType.MyCollab) {
+			srcService = ResourceUtils.getExternalResourceService(ResourceUtils
+					.getType(srcRes));
 
-		InputStream in = srcService.download(
-				ResourceUtils.getExternalDrive(srcRes), srcRes.getPath());
+			in = srcService.download(ResourceUtils.getExternalDrive(srcRes),
+					srcRes.getPath());
+		} else {
+			in = resourceService.getContentStream(srcPath);
+		}
 
 		// upload to dest source
-		ExternalResourceService destService = ResourceUtils
-				.getExternalResourceService(ResourceUtils.getType(destRes));
 		srcRes.setPath(destMovePath);
-		destService.saveContent(ResourceUtils.getExternalDrive(destRes),
-				srcRes, in);
-
-		// delete src resource
-		srcService.deleteResource(ResourceUtils.getExternalDrive(srcRes),
-				srcPath);
-
-	}
-
-	private void moveResourceMyCollabToDifferentStorage(Resource srcRes,
-			Resource destRes, String userMove) {
-		String destMovePath = destRes.getPath() + "/" + srcRes.getName();
-
-		if (srcRes instanceof Folder) {
+		if (ResourceUtils.getType(destRes) != ResourceType.MyCollab) {
 			ExternalResourceService destService = ResourceUtils
 					.getExternalResourceService(ResourceUtils.getType(destRes));
-			Folder createdFolder = destService.createFolder(
-					ResourceUtils.getExternalDrive(destRes), destMovePath);
+			destService.saveContent(ResourceUtils.getExternalDrive(destRes),
+					srcRes, in);
+		} else {
+			resourceService.saveContent(srcRes, userMove, in);
+		}
+	}
 
-			List<Resource> lstRes = resourceService.getResources(srcRes
+	private boolean checkIsTheSameAccountInStorage(Resource srcRes,
+			Resource destRes) {
+		if (ResourceUtils.getType(srcRes) == ResourceUtils.getType(destRes)
+				&& ResourceUtils
+						.getExternalDrive(srcRes)
+						.getAccesstoken()
+						.equals(ResourceUtils.getExternalDrive(destRes)
+								.getAccesstoken())) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isDuplicateFileName(Resource srcRes, Resource destRes) {
+		if (ResourceUtils.getType(destRes) == ResourceType.MyCollab) {
+			List<Resource> lstRes = resourceService.getResources(destRes
 					.getPath());
 			for (Resource res : lstRes) {
-				if (res instanceof Folder)
-					moveResourceMyCollabToDifferentStorage(res, createdFolder,
-							userMove);
-				else
-					moveFile((Content) res, createdFolder, userMove);
+				if (srcRes.getName().equals(res.getName()))
+					return true;
 			}
 		} else {
-			moveFile((Content) srcRes, destRes, userMove);
+			ExternalResourceService service = ResourceUtils
+					.getExternalResourceService(ResourceUtils.getType(destRes));
+			List<Resource> lstRes = service.getResources(
+					ResourceUtils.getExternalDrive(destRes), destRes.getPath());
+			for (Resource res : lstRes) {
+				if (srcRes.getName().equals(res.getName())) {
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 
 	/**
@@ -111,16 +143,47 @@ public class ResourceMoverImpl implements ResourceMover {
 		if (destRes instanceof Content)
 			throw new MyCollabException(
 					"You cant move somethings to content path.That is impossible.");
+		if (isDuplicateFileName(srcRes, destRes)) {
+			throw new MyCollabException(
+					"Please check duplicate file, before move");
+		}
 
 		if (srcType == ResourceType.MyCollab
 				&& destType == ResourceType.MyCollab) {
 			resourceService.moveResource(srcRes.getPath(), destRes.getPath(),
 					userMove);
 		} else if (srcType == destType && srcType != ResourceType.MyCollab) {
-			moveResourceInDifferentStorage(srcRes, destRes, userMove);
+			if (checkIsTheSameAccountInStorage(srcRes, destRes)) {
+				ExternalResourceService service = ResourceUtils
+						.getExternalResourceService(ResourceUtils
+								.getType(srcRes));
+				service.move(ResourceUtils.getExternalDrive(srcRes),
+						srcRes.getPath(),
+						destRes.getPath() + "/" + srcRes.getName());
+			} else {
+				moveResourceInDifferentStorage(srcRes, destRes, userMove);
+				// delete src resource
+				ExternalResourceService srcService = ResourceUtils
+						.getExternalResourceService(ResourceUtils
+								.getType(srcRes));
+				srcService.deleteResource(
+						ResourceUtils.getExternalDrive(srcRes),
+						srcRes.getPath());
+			}
 		} else {
-			// tu myCollab toi' cac storage khac
-			moveResourceMyCollabToDifferentStorage(srcRes, destRes, userMove);
+			moveResourceInDifferentStorage(srcRes, destRes, userMove);
+
+			if (ResourceUtils.getType(srcRes) != ResourceType.MyCollab) {
+				ExternalResourceService srcService = ResourceUtils
+						.getExternalResourceService(ResourceUtils
+								.getType(srcRes));
+				srcService.deleteResource(
+						ResourceUtils.getExternalDrive(srcRes),
+						srcRes.getPath());
+			} else {
+				resourceService.removeResource(srcRes.getPath(), userMove);
+			}
+
 		}
 	}
 }

@@ -1445,7 +1445,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 		@Override
 		public void displayAfterMoveSuccess(Folder folder, boolean checking) {
-			itemResourceContainerLayout.constructBody(baseFolder);
+			fileBreadCrumb.gotoFolder(folder);
+			itemResourceContainerLayout.constructBody(folder);
 			if (!checking)
 				ResourceHandlerComponent.this.getWindow().showNotification(
 						"Move asset(s) successfully.");
