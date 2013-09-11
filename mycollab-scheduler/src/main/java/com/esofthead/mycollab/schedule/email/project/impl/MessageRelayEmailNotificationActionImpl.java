@@ -41,7 +41,8 @@ public class MessageRelayEmailNotificationActionImpl implements
 		List<SimpleUser> usersInProject = projectMemberService
 				.getActiveUsersInProject(projectId, 0);
 
-		SimpleMessage message = messageService.findMessageById(messageId, 0);
+		SimpleMessage message = messageService.findMessageById(messageId,
+				notification.getSaccountid());
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$message.projectName]: $message.fullPostedUserName sent a message \""
 						+ message.getTitle() + "\"",
@@ -75,7 +76,8 @@ public class MessageRelayEmailNotificationActionImpl implements
 		List<SimpleUser> usersInProject = projectMemberService
 				.getActiveUsersInProject(projectId, 0);
 
-		SimpleMessage message = messageService.findMessageById(messageId, 0);
+		SimpleMessage message = messageService.findMessageById(messageId,
+				notification.getSaccountid());
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$message.projectName]: $message.fullPostedUserName posted a new message \""
 						+ message.getTitle() + "\"",
@@ -119,7 +121,8 @@ public class MessageRelayEmailNotificationActionImpl implements
 	public void sendNotificationForCommentAction(
 			SimpleRelayEmailNotification notification) {
 		int messageId = notification.getTypeid();
-		SimpleMessage message = messageService.findMessageById(messageId, 0);
+		SimpleMessage message = messageService.findMessageById(messageId,
+				notification.getSaccountid());
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(
 				message.getProjectid());
 

@@ -42,7 +42,8 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int milestoneId = emailNotification.getTypeid();
-		SimpleMilestone milestone = milestoneService.findById(milestoneId, 0);
+		SimpleMilestone milestone = milestoneService.findById(milestoneId,
+				emailNotification.getSaccountid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$hyperLinks.projectName]: Phase \"" + milestone.getName()
@@ -80,7 +81,8 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int milestoneId = emailNotification.getTypeid();
-		SimpleMilestone milestone = milestoneService.findById(milestoneId, 0);
+		SimpleMilestone milestone = milestoneService.findById(milestoneId,
+				emailNotification.getSaccountid());
 		if (milestone == null) {
 			return null;
 		}
@@ -111,7 +113,8 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int milestoneId = emailNotification.getTypeid();
-		SimpleMilestone milestone = milestoneService.findById(milestoneId, 0);
+		SimpleMilestone milestone = milestoneService.findById(milestoneId,
+				emailNotification.getSaccountid());
 		if (milestone == null) {
 			return null;
 		}
