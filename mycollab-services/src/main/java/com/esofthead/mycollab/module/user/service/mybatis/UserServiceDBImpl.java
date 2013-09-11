@@ -107,7 +107,16 @@ public class UserServiceDBImpl extends
 	public void saveUserAccount(SimpleUser record, Integer sAccountId) {
 		// check if user email has already in this account yet
 		UserAccountExample userAccountEx = new UserAccountExample();
-		userAccountEx.createCriteria().andUsernameEqualTo(record.getEmail());
+
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+			userAccountEx.createCriteria()
+					.andUsernameEqualTo(record.getEmail())
+					.andAccountidEqualTo(sAccountId);
+		} else {
+			userAccountEx.createCriteria()
+					.andUsernameEqualTo(record.getEmail());
+		}
+
 		if (userAccountMapper.countByExample(userAccountEx) > 0) {
 			throw new UserInvalidInputException(
 					"There is already user has email " + record.getEmail()
