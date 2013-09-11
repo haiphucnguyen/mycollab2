@@ -64,7 +64,7 @@ public class AnotatedDenyUserServletRequestHandler implements
 				} else {
 					if (curUser.getRegisterstatus().equals(
 							RegisterStatusConstants.ACTIVE)) {
-						// YOu cant deny , Userhas active , go to login Page
+						// You cant deny , Userhas active , go to login Page
 						String html = generateRefuseUserDenyActionPage(request
 								.getContextPath() + "/");
 						PrintWriter out = response.getWriter();

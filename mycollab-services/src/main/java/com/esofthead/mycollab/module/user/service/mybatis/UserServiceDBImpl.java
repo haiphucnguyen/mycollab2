@@ -25,8 +25,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.builder.ProxyBuilder;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +64,6 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.esb.UserDeleteListener;
 import com.esofthead.mycollab.module.user.esb.UserEndpoints;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 

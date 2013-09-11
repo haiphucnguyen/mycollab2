@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
@@ -36,16 +38,17 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 		String password = request.getParameter("password");
 
 		if (password.length() < 8) {
-			errMsg = "Your password too short";
+			errMsg = "Your password is too short";
 			PrintWriter out = response.getWriter();
 			out.print(errMsg);
 			return;
 		} else if (!PasswordCheckerUtil.checkPasswordStrength(password)) {
-			errMsg = "Recommend you should type password at least contain one digit, character and symbol";
+			errMsg = "Your password must contain at least one digit, character and symbol";
 			PrintWriter out = response.getWriter();
 			out.print(errMsg);
 			return;
 		}
+
 		SimpleUser simpleUser = new SimpleUser();
 		simpleUser.setPassword(PasswordEncryptHelper
 				.encryptSaltPassword(password));
@@ -58,7 +61,8 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 					.getBean(UserService.class);
 			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {
-			errMsg = "Error in while update your informations. We so sorry for this inconvenience";
+			errMsg = LocalizationHelper
+					.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
 			PrintWriter out = response.getWriter();
 			out.print(errMsg);
 			return;
