@@ -74,7 +74,7 @@
                     </div>
                     <div id="requireMsg" style="display: none; padding: 12px 8px 8px 20px;">
                         <p><span style="color:red; font-style:italic">
-                            (*) Plz, give a reason to inviter
+                            (*) Reason
                         </span></p>
                     </div>
                 </div>  
