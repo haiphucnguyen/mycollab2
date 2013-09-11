@@ -54,7 +54,7 @@ input[type="text"], input[type="password"]{
 <title>User recovery password page</title>
 </head>
 <body style="height:100%;">
-	<div style="height: 100%; padding-top:100px; padding-left: 150px;">
+	<div style="height: 100%; padding-top:30px; padding-left: 150px;">
 	<table height="400" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
 		<tr>
 			<td style="height: 200px; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
@@ -66,23 +66,26 @@ input[type="text"], input[type="password"]{
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div id="welcomeBody" style="display:block">
 		<div style="display: block; padding: 40px 8px 8px 20px;">
-			Welcome <span style="font-style:italic; font-size:14px;">$!username</span>.<br>
-			Sometimes, change password is good idea for secure your informations. You can renew your password bellow :
+			Hello <span style="font-style:italic; font-size:14px;">$!username</span>.<br>
+			You can renew your password bellow :
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			<div style="display:block ; padding: 10px 8px 8px 20px;">
+			<div>
 				<form>
 				<table border="0">
 				<tbody>
 				<tr>
 					<td><label for="password">Password:</label></td>
 					<td><input id="password" maxlength="45" name="password" type="password" /></td>
-					<td>
-						<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
-					</td>
+					
+					<td style="padding-left:10px;"><label for="password">Retype password:</label></td>
+					<td><input id="repassword" maxlength="45" name="rePassword" type="password" /></td>
 				</tr>
 				</tbody></table>
 				</form>
+			</div>
+			<div style="padding-top:10px;" align="center">
+				<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
 			</div>
 		</div>
 	</div>
@@ -102,6 +105,14 @@ input[type="text"], input[type="password"]{
 	function updateInfoAction(){
 		if ($('#password').val() == ""){
 			alert("Please enter password");
+			return;
+		}
+		if($('#repassword').val()==""){
+			alert("Please retype password");
+			return;
+		}
+		if($('#password').val() != $('#repassword').val()){
+			alert("You enter password mismatch with retype password, please re-enter");
 			return;
 		}
 		var url = encodeURI($('#redirectURL').val());
