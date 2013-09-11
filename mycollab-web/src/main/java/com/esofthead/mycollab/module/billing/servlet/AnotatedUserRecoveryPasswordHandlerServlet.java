@@ -100,7 +100,7 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 
 	private String generateUserRecoveryPasswordPage(String username,
 			String loginURL, String redirectURL) {
-		String template = "/templates/page/UserRecoveryPasswordPage.mt";
+		String template = "/templates/page/user/UserRecoveryPasswordPage.mt";
 		TemplateContext context = new TemplateContext();
 		Reader reader;
 		try {

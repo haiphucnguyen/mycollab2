@@ -102,7 +102,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 	private String generateUserFillInformationPage(HttpServletRequest request,
 			int accountId, String username, String email, String redirectURL,
 			String loginURL) {
-		String template = "/templates/page/FillUserInformation.mt";
+		String template = "/templates/page/user/FillUserInformation.mt";
 		TemplateContext context = new TemplateContext();
 		Reader reader;
 		try {
