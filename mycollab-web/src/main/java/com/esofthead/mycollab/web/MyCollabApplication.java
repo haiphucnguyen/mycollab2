@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +33,7 @@ public class MyCollabApplication extends Application implements
 	private String initialUrl = "";
 	private String initialSubDomain = "1";
 	private boolean isInitializeApp = false;
+	private Throwable currentThrowable;
 
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
@@ -136,6 +138,49 @@ public class MyCollabApplication extends Application implements
 		if (sessionData != null) {
 			sessionData.transactionEnd();
 		}
+
+		if (currentThrowable != null) {
+			String errorMsg = "An uncaught exception occurred with username %s, in account %d, useragent %s, ip %s and country code %s ";
+			try {
+				String username = AppContext.getUsername();
+				int accountId = AppContext.getAccountId();
+				AbstractWebApplicationContext webContext = (AbstractWebApplicationContext) this
+						.getContext();
+
+				StringBuffer userinfo = new StringBuffer(webContext
+						.getBrowser().getBrowserApplication()).append(" - ");
+
+				Enumeration<String> headerNames = request.getHeaderNames();
+				while (headerNames.hasMoreElements()) {
+					String headerName = headerNames.nextElement();
+					String headerVal = request.getHeader(headerName);
+					userinfo.append(headerName).append("=").append(headerVal)
+							.append(", ");
+				}
+
+				String ipaddress = webContext.getBrowser().getAddress();
+				String countryCode = "<no defined>";
+				InetAddress address = InetAddress.getByName(ipaddress);
+				if (address != null && reader != null) {
+					try {
+						countryCode = reader.country(address).getCountry()
+								.getName();
+					} catch (Exception e2) {
+						log.error("Can not read country code", e2);
+					}
+				}
+
+				errorMsg = String.format(errorMsg, username, accountId,
+						userinfo.toString(), ipaddress, countryCode);
+
+			} catch (Exception e1) {
+				errorMsg = "An uncaught exception occurred ";
+			}
+
+			log.error(errorMsg, currentThrowable);
+			currentThrowable = null;
+		}
+
 		threadLocal.remove();
 	}
 
@@ -157,40 +202,14 @@ public class MyCollabApplication extends Application implements
 							GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
 							invalidException.getMessage()),
 					Notification.TYPE_WARNING_MESSAGE);
+			currentThrowable = null;
 		} else {
 			getMainWindow()
 					.showNotification(
 							LocalizationHelper
 									.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
 							Notification.TYPE_ERROR_MESSAGE);
-			String errorMsg = "An uncaught exception occurred with username %s, in account %d, useragent %s, ip %s and country code %s ";
-			try {
-				String username = AppContext.getUsername();
-				int accountId = AppContext.getAccountId();
-				AbstractWebApplicationContext webContext = (AbstractWebApplicationContext) this
-						.getContext();
-				String useragent = webContext.getBrowser()
-						.getBrowserApplication();
-				String ipaddress = webContext.getBrowser().getAddress();
-				String countryCode = "<no defined>";
-				InetAddress address = InetAddress.getByName(ipaddress);
-				if (address != null && reader != null) {
-					try {
-						countryCode = reader.country(address).getCountry()
-								.getName();
-					} catch (Exception e2) {
-						log.error("Can not read country code", e2);
-					}
-				}
-
-				errorMsg = String.format(errorMsg, username, accountId,
-						useragent, ipaddress, countryCode);
-
-			} catch (Exception e1) {
-				errorMsg = "An uncaught exception occurred ";
-			}
-
-			log.error(errorMsg, event.getThrowable());
+			currentThrowable = e;
 		}
 
 	}
