@@ -22,6 +22,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
@@ -80,6 +81,13 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 
 				String subdomain = projectService
 						.getSubdomainOfProject(projectId);
+				SimpleProject project = projectService.findById(projectId,
+						sAccountId);
+				if (project == null) {
+					ProjectRemovedGenerator.responePageProjectHasRemoved(
+							request, response);
+					return;
+				}
 
 				ProjectMember projectMember = projectMemberService
 						.findMemberByUsername(email, projectId, sAccountId);
@@ -97,7 +105,8 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 						+ "project/member/feedback/";
 
 				String html = generateDenyFeedbacktoInviter(inviterEmail,
-						inviterName, redirectURL, email, "You");
+						inviterName, redirectURL, email, "You",
+						project.getName());
 				PrintWriter out = response.getWriter();
 				out.println(html);
 				return;
@@ -141,7 +150,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 
 	private String generateDenyFeedbacktoInviter(String inviterEmail,
 			String inviterName, String redirectURL, String memberEmail,
-			String memberName) {
+			String memberName, String projectName) {
 		TemplateContext context = new TemplateContext();
 
 		Reader reader;
@@ -161,6 +170,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		context.put("toEmail", memberEmail);
 		context.put("toName", memberName);
 		context.put("inviterName", inviterName);
+		context.put("projectName", projectName);
 
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 
@@ -177,6 +187,39 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		StringWriter writer = new StringWriter();
 		TemplateEngine.evaluate(context, writer, "log task", reader);
 		return writer.toString();
+	}
+
+	public static class ProjectRemovedGenerator {
+		public static void responePageProjectHasRemoved(
+				HttpServletRequest request, HttpServletResponse response)
+				throws IOException {
+			String pageNotFoundTemplate = "templates/page/project/ProjectNotAvaiablePage.mt";
+			TemplateContext context = new TemplateContext();
+
+			Reader reader;
+			try {
+				reader = new InputStreamReader(PageNotFoundGenerator.class
+						.getClassLoader().getResourceAsStream(
+								pageNotFoundTemplate), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				reader = new InputStreamReader(PageNotFoundGenerator.class
+						.getClassLoader().getResourceAsStream(
+								pageNotFoundTemplate));
+			}
+			context.put("loginURL", request.getContextPath() + "/");
+
+			Map<String, String> defaultUrls = new HashMap<String, String>();
+
+			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+			context.put("defaultUrls", defaultUrls);
+
+			StringWriter writer = new StringWriter();
+			TemplateEngine.evaluate(context, writer, "log task", reader);
+
+			String html = writer.toString();
+			PrintWriter out = response.getWriter();
+			out.println(html);
+		}
 	}
 
 }

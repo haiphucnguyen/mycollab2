@@ -147,15 +147,19 @@ class GoogleDriveTest {
 	static GoogleAuthorizationCodeFlow getFlow() throws IOException {
 		if (flow == null) {
 			HttpTransport httpTransport = new NetHttpTransport();
-			// TODO : settup JacksonFactory
-			// JacksonFactory jsonFactory = new JacksonFactory();
+			//
 			// GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
 			// jsonFactory, GoogleDriveTest.class
 			// .getResourceAsStream(CLIENTSECRETS_LOCATION));
+
+			// GoogleClientSecrets clientSecrets = new GoogleClientSecrets();
+			// clientSecrets.set
+			//
 			// flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport,
 			// jsonFactory, clientSecrets, SCOPES)
 			// .setAccessType("offline").setApprovalPrompt("force")
 			// .build();
+
 		}
 		return flow;
 	}
