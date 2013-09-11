@@ -100,6 +100,10 @@ public class Mailer {
 		try {
 			HtmlEmail email = getBasicEmail(fromEmail, fromName, toEmail,
 					ccEmail, bccEmail, subject, html);
+
+			if (log.isDebugEnabled()) {
+				email.setDebug(true);
+			}
 			email.send();
 		} catch (EmailException e) {
 			throw new MyCollabException(e);
@@ -120,6 +124,10 @@ public class Mailer {
 
 				for (EmailAttachementSource attachment : attachments) {
 					email.attach(attachment.getAttachmentObj());
+				}
+
+				if (log.isDebugEnabled()) {
+					email.setDebug(true);
 				}
 
 				email.send();
@@ -149,14 +157,4 @@ public class Mailer {
 	private boolean isValidate(String val) {
 		return (val != null) && (val.trim().length() > 0);
 	}
-
-	// public static void main(String[] args) throws EmailException {
-	// Mailer mailer = new Mailer("smtp.gmail.com", "mail@esofthead.com",
-	// "esofthead321", 465, true);
-	// mailer.sendHTMLMail("mail@esofthead.com", "A", Arrays
-	// .asList(new MailRecipientField("linhnguyen@esofthead.com",
-	// "Linh Nguyen")), Arrays.asList(new MailRecipientField(
-	// "manhlinh1905Manu@gmail.com", "Linh Nguyen")), null, "Test",
-	// "bbb");
-	// }
 }
