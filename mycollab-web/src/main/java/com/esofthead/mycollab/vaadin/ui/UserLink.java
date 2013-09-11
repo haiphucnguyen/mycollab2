@@ -15,16 +15,7 @@ public class UserLink extends Button {
 
 	public UserLink(final String username, String userAvatarLink,
 			final String displayName, boolean useWordWrap) {
-		super(displayName, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-			}
-		});
-		if (displayName != null && displayName.trim().equals("")) {
-			this.setCaption(username);
-		}
+		super(displayName);
 
 		this.addStyleName("link");
 
