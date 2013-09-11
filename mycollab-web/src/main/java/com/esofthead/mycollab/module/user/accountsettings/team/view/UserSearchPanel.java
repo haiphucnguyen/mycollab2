@@ -52,7 +52,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 		layout.addComponent(searchtitle);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		final Button createBtn = new Button("Create",
+		final Button createBtn = new Button("Invite",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

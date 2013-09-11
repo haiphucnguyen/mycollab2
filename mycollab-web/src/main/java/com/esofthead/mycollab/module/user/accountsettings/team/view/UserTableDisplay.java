@@ -4,11 +4,14 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
@@ -93,10 +96,17 @@ public class UserTableDisplay extends
 					layout.setWidth("100%");
 					layout.setSpacing(true);
 
-					if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL
-							.equals(user.getRegisterstatus())
-							|| RegisterStatusConstants.VERIFICATING.equals(user
-									.getRegisterstatus())) {
+					if (RegisterStatusConstants.PENDING.equals(user
+							.getRegisterstatus())) {
+						layout.addComponent(b);
+						Label statusLbl = new Label("(Pending)");
+						layout.addComponent(statusLbl);
+						layout.addComponent(statusLbl);
+					} else {
+						// if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL
+						// .equals(user.getRegisterstatus())
+						// || RegisterStatusConstants.VERIFICATING.equals(user
+						// .getRegisterstatus())) {
 						HorizontalLayout userLayout = new HorizontalLayout();
 						userLayout.addComponent(b);
 						userLayout.setWidth("100%");
@@ -114,18 +124,26 @@ public class UserTableDisplay extends
 
 									@Override
 									public void buttonClick(ClickEvent event) {
-										// TODO Auto-generated method stub
+										UserAccountInvitationMapper userAccountInvitationMapper = AppContext
+												.getSpringBean(UserAccountInvitationMapper.class);
+										UserAccountInvitation invitation = new UserAccountInvitation();
+										invitation.setAccountid(user
+												.getAccountId());
+										invitation
+												.setCreatedtime(new GregorianCalendar()
+														.getTime());
+										invitation.setUsername(user
+												.getUsername());
+										invitation.setInvitationstatus((user
+												.getRegisterstatus() == null) ? RegisterStatusConstants.VERIFICATING
+												: user.getRegisterstatus());
+										userAccountInvitationMapper
+												.insert(invitation);
 
 									}
 								});
 						resendBtn.addStyleName("link");
 						layout.addComponent(resendBtn);
-					} else if (RegisterStatusConstants.PENDING.equals(user
-							.getRegisterstatus())) {
-						layout.addComponent(b);
-						Label statusLbl = new Label("(Pending)");
-						layout.addComponent(statusLbl);
-						layout.addComponent(statusLbl);
 					}
 					return layout;
 				}
