@@ -33,8 +33,8 @@ import com.esofthead.template.velocity.TemplateEngine;
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		HttpRequestHandler {
 
-	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/MemberDenyInvitationPage.mt";
-	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/RefuseMemberDenyActionPage.mt";
+	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/project/MemberDenyInvitationPage.mt";
+	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/project/RefuseMemberDenyActionPage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;

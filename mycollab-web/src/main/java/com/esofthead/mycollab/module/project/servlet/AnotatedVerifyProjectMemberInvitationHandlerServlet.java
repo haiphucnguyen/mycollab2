@@ -45,7 +45,7 @@ import com.esofthead.template.velocity.TemplateEngine;
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		HttpRequestHandler {
-	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/OutsideMemberAcceptInvitationPage.mt";
+	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/project/OutsideMemberAcceptInvitationPage.mt";
 	private static String EXPIER_PAGE = "templates/page/ExpirePage.mt";
 
 	@Autowired

@@ -127,7 +127,7 @@ public class AnotatedDenyUserServletRequestHandler implements
 	}
 
 	private String generateRefuseUserDenyActionPage(String loginURL) {
-		String pageNotFoundTemplate = "templates/page/RefuseUserDenyActionPage.mt";
+		String pageNotFoundTemplate = "templates/page/project/RefuseUserDenyActionPage.mt";
 		TemplateContext context = new TemplateContext();
 
 		Reader reader;
