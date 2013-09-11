@@ -66,16 +66,9 @@ input[type="text"], input[type="password"]{
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div id="welcomeBody" style="display:block">
 		<div style="display: block; padding: 40px 8px 8px 20px;">
-			Welcome <span style="font-style:italic; font-size:14px;">$!username</span> . <br>
-			Thank you for accepted the invitation !
-			Come to MyCollab, you will feel new things in manage your business, experience new ways, 
-			faster and smarter, the maximum help you in managing your business. 
-			My Collab suitable for all small and large business management model. 
-			We always listen from you, and develop to reach the best customer satisfaction. 
-			What are you waiting? Now we take a tour . 
+			Welcome <span style="font-style:italic; font-size:14px;">$!username</span>. Thank you for accepting the invitation! Please enter your password:
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
-			At frist you must update your password!
 			<div style="display:block ; padding: 20px 8px 8px 20px;">
 				<form>
 				<table border="0">

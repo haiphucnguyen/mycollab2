@@ -51,9 +51,7 @@ public class MessageRelayEmailNotificationActionImpl implements
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
 		for (SimpleUser user : usersInProject) {
-			String userName = (user.getUsername() != null) ? user.getUsername()
-					: user.getFirstname() + " " + user.getLastname();
-			templateGenerator.putVariable("userName", userName);
+			templateGenerator.putVariable("userName", user.getDisplayName());
 
 			MailRecipientField userMail = new MailRecipientField(
 					user.getEmail(), user.getUsername());
@@ -86,9 +84,7 @@ public class MessageRelayEmailNotificationActionImpl implements
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
 		for (SimpleUser user : usersInProject) {
-			String userName = (user.getUsername() != null) ? user.getUsername()
-					: user.getFirstname() + " " + user.getLastname();
-			templateGenerator.putVariable("userName", userName);
+			templateGenerator.putVariable("userName", user.getDisplayName());
 
 			MailRecipientField userMail = new MailRecipientField(
 					user.getEmail(), user.getUsername());
@@ -140,9 +136,7 @@ public class MessageRelayEmailNotificationActionImpl implements
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
 		for (SimpleUser user : usersInProject) {
-			String userName = (user.getUsername() != null) ? user.getUsername()
-					: user.getFirstname() + " " + user.getLastname();
-			templateGenerator.putVariable("userName", userName);
+			templateGenerator.putVariable("userName", user.getDisplayName());
 
 			MailRecipientField userMail = new MailRecipientField(
 					user.getEmail(), user.getUsername());

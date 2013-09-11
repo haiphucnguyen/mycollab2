@@ -61,7 +61,7 @@
 				</td>
 				<td style="width: 600px; display: inline-block; vertical-align: center;">
 					<div style="display: block; padding: 40px 8px 8px 30px;">
-		  				Sorry! You only can accept the invitation during 7 days. Please contact your Project Admin for renew the invitation.
+		  				Sorry! You can only accept this invitation within 7 days. Please ask your Project Admin to resend the invitation.
 		    			<div style="padding-top: 10px;">
 							<button class="v-button-bluebtn" type="button" onclick="return login();">Login</button>
 		     			</div>    

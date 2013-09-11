@@ -61,7 +61,7 @@
 				</td>
 				<td style="width: 600px; display: inline-block; vertical-align: center;">
 					<div style="display: block; padding: 40px 8px 8px 30px;">
-		  				Sorry! Your account has not actived yet. Please go to MyCollab page for more action.
+		  				Sorry! Your account has not been activated yet. Please click on the link in the email we sent to activate or you can contact our Customer Support team for assistance.
 		    			<div style="padding-top: 10px;">
 							<button class="v-button-bluebtn" type="button" onclick="return login();">Login</button>
 		     			</div>    

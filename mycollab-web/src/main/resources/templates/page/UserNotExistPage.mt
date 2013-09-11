@@ -61,7 +61,7 @@
 				</td>
 				<td style="width: 600px; display: inline-block; vertical-align: center;">
 					<div style="display: block; padding: 40px 8px 8px 30px;">
-		  				Sorry!This account is not exist on system.
+		  				Sorry! This account does not exist in the system. Please enter the registered email to be able to receive the information helping you to recover the password. 
 		    			<div style="padding-top: 10px;">
 							<button class="v-button-bluebtn" type="button" onclick="return login();">Go to Login</button>
 		     			</div>    

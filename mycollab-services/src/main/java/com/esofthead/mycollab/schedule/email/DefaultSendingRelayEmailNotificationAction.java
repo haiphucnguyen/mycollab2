@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 public abstract class DefaultSendingRelayEmailNotificationAction implements
 		SendingRelayEmailNotificationAction {
+	
 	@Autowired
 	protected ExtMailService extMailService;
 
@@ -29,15 +30,8 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					String userName = "";
-					try {
-						userName = user.getFirstname() + " "
-								+ user.getLastname();
-					} catch (Exception e) {
-						userName = (user.getUsername().length() > 0) ? user
-								.getUsername() : user.getEmail();
-					}
-					templateGenerator.putVariable("userName", userName);
+					templateGenerator.putVariable("userName",
+							user.getDisplayName());
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
@@ -61,15 +55,8 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					String userName = "";
-					try {
-						userName = user.getFirstname() + " "
-								+ user.getLastname();
-					} catch (Exception e) {
-						userName = (user.getUsername().length() > 0) ? user
-								.getUsername() : user.getEmail();
-					}
-					templateGenerator.putVariable("userName", userName);
+					templateGenerator.putVariable("userName",
+							user.getDisplayName());
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
@@ -94,15 +81,8 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			TemplateGenerator templateGenerator = templateGeneratorForCommentAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					String userName = "";
-					try {
-						userName = user.getFirstname() + " "
-								+ user.getLastname();
-					} catch (Exception e) {
-						userName = (user.getUsername().length() > 0) ? user
-								.getUsername() : user.getEmail();
-					}
-					templateGenerator.putVariable("userName", userName);
+					templateGenerator.putVariable("userName",
+							user.getDisplayName());
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());

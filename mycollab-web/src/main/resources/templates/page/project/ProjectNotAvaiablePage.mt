@@ -61,7 +61,7 @@
 				</td>
 				<td style="width: 600px; display: inline-block; vertical-align: center;">
 					<div style="display: block; padding: 40px 8px 8px 30px;">
-		  				Sorry! This project has been removed. Please contact your project admin for more informations.
+		  				Sorry! This project has been removed. Please contact your project admin for more information.
 		    			<div style="padding-top: 10px;">
 							<button class="v-button-bluebtn" type="button" onclick="return login();">Login</button>
 		     			</div>    

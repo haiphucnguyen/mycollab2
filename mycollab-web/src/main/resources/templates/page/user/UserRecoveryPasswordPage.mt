@@ -66,8 +66,7 @@ input[type="text"], input[type="password"]{
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div id="welcomeBody" style="display:block">
 		<div style="display: block; padding: 40px 8px 8px 20px;">
-			Hello <span style="font-style:italic; font-size:14px;">$!username</span>.<br>
-			You can renew your password bellow :
+			Hello <span style="font-style:italic; font-size:14px;">$!username</span>. Please reset your password
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
 			<div>
