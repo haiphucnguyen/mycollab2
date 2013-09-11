@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -38,6 +39,7 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 		this.task = beanItem.getBean();
 
 		this.setFormLayoutFactory(this.getFormLayoutFactory());
+
 		this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 			private static final long serialVersionUID = 1L;
 
@@ -46,37 +48,30 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 					final Object propertyId, final Component uiContext) {
 
 				if (propertyId.equals("assignuser")) {
-					return new ProjectUserFormLinkField(
-							TaskFormComponent.this.task.getAssignuser(),
-							TaskFormComponent.this.task.getAssignUserAvatarId(),
-							TaskFormComponent.this.task.getAssignUserFullName());
+					return new ProjectUserFormLinkField(task.getAssignuser(),
+							task.getAssignUserAvatarId(), task
+									.getAssignUserFullName());
 				} else if (propertyId.equals("taskListName")) {
-					return new DefaultFormViewFieldFactory.FormViewField(
-							TaskFormComponent.this.task.getTaskListName());
+					return new DefaultFormViewFieldFactory.FormViewField(task
+							.getTaskListName());
 				} else if (propertyId.equals("startdate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(TaskFormComponent.this.task
-									.getStartdate()));
+							AppContext.formatDate(task.getStartdate()));
 				} else if (propertyId.equals("enddate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(TaskFormComponent.this.task
-									.getEnddate()));
+							AppContext.formatDate(task.getEnddate()));
 				} else if (propertyId.equals("actualstartdate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(TaskFormComponent.this.task
-									.getActualstartdate()));
+							AppContext.formatDate(task.getActualstartdate()));
 				} else if (propertyId.equals("actualenddate")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(TaskFormComponent.this.task
-									.getActualenddate()));
+							AppContext.formatDate(task.getActualenddate()));
 				} else if (propertyId.equals("deadline")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
-							AppContext.formatDate(TaskFormComponent.this.task
-									.getDeadline()));
+							AppContext.formatDate(task.getDeadline()));
 				} else if (propertyId.equals("tasklistid")) {
 					return new DefaultFormViewFieldFactory.FormLinkViewField(
-							TaskFormComponent.this.task.getTaskListName(),
-							new Button.ClickListener() {
+							task.getTaskListName(), new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
 								@Override
@@ -84,24 +79,20 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 										final Button.ClickEvent event) {
 									EventBus.getInstance().fireEvent(
 											new TaskListEvent.GotoRead(this,
-													TaskFormComponent.this.task
-															.getTasklistid()));
+													task.getTasklistid()));
 								}
 							});
 				} else if (propertyId.equals("id")) {
-					return new FormAttachmentDisplayField(
-							AttachmentUtils.PROJECT_TASK_TYPE,
-							TaskFormComponent.this.task.getId());
+					return new ProjectFormAttachmentDisplayField(task
+							.getProjectid(), AttachmentUtils.PROJECT_TASK_TYPE,
+							task.getId());
 				} else if (propertyId.equals("priority")) {
-					if (StringUtil.isNotNullOrEmpty(TaskFormComponent.this.task
-							.getPriority())) {
+					if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
 						final Resource iconPriority = TaskPriorityComboBox
-								.getIconResourceByPriority(TaskFormComponent.this.task
-										.getPriority());
+								.getIconResourceByPriority(task.getPriority());
 						final Embedded iconEmbedded = new Embedded(null,
 								iconPriority);
-						final Label lbPriority = new Label(
-								TaskFormComponent.this.task.getPriority());
+						final Label lbPriority = new Label(task.getPriority());
 
 						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
@@ -109,13 +100,11 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 								iconEmbedded, Alignment.MIDDLE_LEFT);
 						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
-						containerField.getLayout().setExpandRatio(lbPriority,
-								1.0f);
 						return containerField;
 					}
 				} else if (propertyId.equals("notes")) {
-					return new FormViewField(TaskFormComponent.this.task
-							.getNotes(), Label.CONTENT_XHTML);
+					return new FormViewField(task.getNotes(),
+							Label.CONTENT_XHTML);
 				}
 				return null;
 			}

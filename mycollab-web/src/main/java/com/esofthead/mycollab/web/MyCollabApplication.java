@@ -68,12 +68,7 @@ public class MyCollabApplication extends Application implements
 			sessionData.initDomain(initialSubDomain);
 		} catch (Exception e) {
 			this.setMainWindow(new NoSubDomainExistedWindow(initialSubDomain));
-
-			AbstractWebApplicationContext webContext = (AbstractWebApplicationContext) this
-					.getContext();
-			String useragent = webContext.getBrowser().getBrowserApplication();
-			log.error("System can not find subdomain " + initialSubDomain
-					+ "with user agent: " + useragent, e);
+			currentThrowable = e;
 			return;
 		}
 		this.setMainWindow(new MainWindowContainer());
@@ -147,8 +142,8 @@ public class MyCollabApplication extends Application implements
 				AbstractWebApplicationContext webContext = (AbstractWebApplicationContext) this
 						.getContext();
 
-				StringBuffer userinfo = new StringBuffer(webContext
-						.getBrowser().getBrowserApplication()).append(" - ");
+				StringBuffer userinfo = new StringBuffer("Request Headers: ")
+						.append(" - ");
 
 				Enumeration<String> headerNames = request.getHeaderNames();
 				while (headerNames.hasMoreElements()) {
