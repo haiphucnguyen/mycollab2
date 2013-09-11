@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 public abstract class DefaultSendingRelayEmailNotificationAction implements
 		SendingRelayEmailNotificationAction {
-	
+
 	@Autowired
 	protected ExtMailService extMailService;
 

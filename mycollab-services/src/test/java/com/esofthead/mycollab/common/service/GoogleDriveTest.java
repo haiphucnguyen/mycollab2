@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.common.service;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 
 class GoogleDriveTest {
 
@@ -147,18 +150,15 @@ class GoogleDriveTest {
 	static GoogleAuthorizationCodeFlow getFlow() throws IOException {
 		if (flow == null) {
 			HttpTransport httpTransport = new NetHttpTransport();
-			//
-			// GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-			// jsonFactory, GoogleDriveTest.class
-			// .getResourceAsStream(CLIENTSECRETS_LOCATION));
+			JacksonFactory jsonFactory = new JacksonFactory();
 
-			// GoogleClientSecrets clientSecrets = new GoogleClientSecrets();
-			// clientSecrets.set
-			//
-			// flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport,
-			// jsonFactory, clientSecrets, SCOPES)
-			// .setAccessType("offline").setApprovalPrompt("force")
-			// .build();
+			GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
+					jsonFactory, new FileReader(CLIENTSECRETS_LOCATION));
+
+			flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport,
+					jsonFactory, clientSecrets, SCOPES)
+					.setAccessType("offline").setApprovalPrompt("force")
+					.build();
 
 		}
 		return flow;
@@ -285,7 +285,6 @@ class GoogleDriveTest {
 		private String email;
 
 		public Userinfo(Credential credentials) {
-			// TODO : more code
 		}
 
 		public String getEmail() {
