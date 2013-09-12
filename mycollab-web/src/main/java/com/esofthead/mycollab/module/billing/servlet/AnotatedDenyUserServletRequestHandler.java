@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.project.servlet.AnotatedDenyProjectMemberInvitationServletHandler.FeedBackPageGenerator;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -35,6 +36,8 @@ import com.esofthead.template.velocity.TemplateEngine;
 @Component("denyUserServletHandler")
 public class AnotatedDenyUserServletRequestHandler implements
 		HttpRequestHandler {
+
+	private static String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnotatedDenyUserServletRequestHandler.class);
@@ -52,7 +55,19 @@ public class AnotatedDenyUserServletRequestHandler implements
 						pathInfo.indexOf("/")));
 				pathInfo = pathInfo.substring((accountId + "").length() + 1);
 
-				String username = pathInfo;
+				String username = pathInfo.substring(0, pathInfo.indexOf("/"));
+				pathInfo = pathInfo.substring(username.length() + 1);
+
+				String inviterName = pathInfo.substring(0,
+						pathInfo.indexOf("/"));
+				pathInfo = pathInfo.substring(inviterName.length() + 1);
+
+				String inviterEmail = pathInfo.substring(0,
+						pathInfo.indexOf("/"));
+				pathInfo = pathInfo.substring(inviterEmail.length() + 1);
+
+				String subdomain = pathInfo;
+
 				UserService userService = AppContext
 						.getSpringBean(UserService.class);
 				SimpleUser checkUser = userService.findUserByUserNameInAccount(
@@ -78,14 +93,19 @@ public class AnotatedDenyUserServletRequestHandler implements
 							criteria.setUsername(new StringSearchField(username));
 							criteria.setSaccountid(new NumberSearchField(
 									accountId));
-
 							userService.removeUserAccount(username, accountId);
 
-							log.debug(
-									"Verify user successfully. Redirect to application page {}",
-									request.getContextPath());
-							response.sendRedirect(request.getContextPath()
-									+ "/");
+							String redirectURL = SiteConfiguration
+									.getSiteUrl(subdomain)
+									+ "project/member/feedback/";
+							String html = FeedBackPageGenerator
+									.generateDenyFeedbacktoInviter(
+											inviterEmail, inviterName,
+											redirectURL, checkUser.getEmail(),
+											checkUser.getUsername(), "",
+											USER_DENY_FEEDBACK_TEMPLATE);
+							PrintWriter out = response.getWriter();
+							out.println(html);
 						} catch (UserInvalidInputException e) {
 							log.debug("Redirect user to user invalid page");
 							PageNotFoundGenerator.responsePage404(response);

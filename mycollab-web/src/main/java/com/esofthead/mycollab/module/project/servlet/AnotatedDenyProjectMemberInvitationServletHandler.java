@@ -104,9 +104,10 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 				String redirectURL = SiteConfiguration.getSiteUrl(subdomain)
 						+ "project/member/feedback/";
 
-				String html = generateDenyFeedbacktoInviter(inviterEmail,
-						inviterName, redirectURL, email, "You",
-						project.getName());
+				String html = FeedBackPageGenerator
+						.generateDenyFeedbacktoInviter(inviterEmail,
+								inviterName, redirectURL, email, "You",
+								project.getName(), DENY_FEEDBACK_TEMPLATE);
 				PrintWriter out = response.getWriter();
 				out.println(html);
 				return;
@@ -148,45 +149,48 @@ public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		return writer.toString();
 	}
 
-	private String generateDenyFeedbacktoInviter(String inviterEmail,
-			String inviterName, String redirectURL, String memberEmail,
-			String memberName, String projectName) {
-		TemplateContext context = new TemplateContext();
+	public static class FeedBackPageGenerator {
+		public static String generateDenyFeedbacktoInviter(String inviterEmail,
+				String inviterName, String redirectURL, String memberEmail,
+				String memberName, String projectName, String templateURL) {
+			TemplateContext context = new TemplateContext();
 
-		Reader reader;
-		try {
-			reader = new InputStreamReader(
-					AnotatedDenyProjectMemberInvitationServletHandler.class
-							.getClassLoader().getResourceAsStream(
-									DENY_FEEDBACK_TEMPLATE), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(
-					AnotatedDenyProjectMemberInvitationServletHandler.class
-							.getClassLoader().getResourceAsStream(
-									DENY_FEEDBACK_TEMPLATE));
+			Reader reader;
+			try {
+				reader = new InputStreamReader(
+						AnotatedDenyProjectMemberInvitationServletHandler.class
+								.getClassLoader().getResourceAsStream(
+										templateURL), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				reader = new InputStreamReader(
+						AnotatedDenyProjectMemberInvitationServletHandler.class
+								.getClassLoader().getResourceAsStream(
+										templateURL));
+			}
+			context.put("inviterEmail", inviterEmail);
+			context.put("redirectURL", redirectURL);
+			context.put("toEmail", memberEmail);
+			context.put("toName", memberName);
+			context.put("inviterName", inviterName);
+			context.put("projectName", projectName);
+
+			Map<String, String> defaultUrls = new HashMap<String, String>();
+
+			SharingOptions sharingOptions = SiteConfiguration
+					.getSharingOptions();
+
+			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+			defaultUrls.put("facebook_url", sharingOptions.getFacebookUrl());
+			defaultUrls.put("google_url", sharingOptions.getGoogleplusUrl());
+			defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
+			defaultUrls.put("twitter_url", sharingOptions.getTwitterUrl());
+
+			context.put("defaultUrls", defaultUrls);
+
+			StringWriter writer = new StringWriter();
+			TemplateEngine.evaluate(context, writer, "log task", reader);
+			return writer.toString();
 		}
-		context.put("inviterEmail", inviterEmail);
-		context.put("redirectURL", redirectURL);
-		context.put("toEmail", memberEmail);
-		context.put("toName", memberName);
-		context.put("inviterName", inviterName);
-		context.put("projectName", projectName);
-
-		Map<String, String> defaultUrls = new HashMap<String, String>();
-
-		SharingOptions sharingOptions = SiteConfiguration.getSharingOptions();
-
-		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-		defaultUrls.put("facebook_url", sharingOptions.getFacebookUrl());
-		defaultUrls.put("google_url", sharingOptions.getGoogleplusUrl());
-		defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
-		defaultUrls.put("twitter_url", sharingOptions.getTwitterUrl());
-
-		context.put("defaultUrls", defaultUrls);
-
-		StringWriter writer = new StringWriter();
-		TemplateEngine.evaluate(context, writer, "log task", reader);
-		return writer.toString();
 	}
 
 	public static class ProjectRemovedGenerator {

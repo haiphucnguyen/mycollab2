@@ -1,12 +1,14 @@
 package com.esofthead.mycollab.module.file.resource;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -100,8 +102,19 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 				for (Object item : data) {
 					Object[] tempVals = new Object[visibleColumns.size()];
 					for (int i = 0; i < tempVals.length; i++) {
-						tempVals[i] = PropertyUtils.getProperty(item,
-								visibleColumns.get(i));
+						// tempVals[i] = PropertyUtils.getProperty(item,
+						// visibleColumns.get(i));
+						try {
+							String embeedLink = (String) PropertyUtils
+									.getProperty(item, visibleColumns.get(i));
+							HyperLinkBuilder link = hyperLink(embeedLink);
+
+							tempVals[i] = link;
+						} catch (Exception e) {
+							tempVals[i] = PropertyUtils.getProperty(item,
+									visibleColumns.get(i));
+							continue;
+						}
 					}
 					ds.add(tempVals);
 				}

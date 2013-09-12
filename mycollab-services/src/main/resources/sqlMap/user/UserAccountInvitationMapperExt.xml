@@ -14,6 +14,7 @@
         parameterType="java.lang.String">
         SELECT  s_user_account_invitation.id, s_user_account_invitation.username, s_user_account_invitation.accountId, s_user_account_invitation.invitationStatus, 
             s_user_account_invitation.sentDate, s_user_account_invitation.createdTime, s_account.subdomain,
+            s_user_account_invitation.inviteUser AS inviteuser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS inviterFullName
         FROM s_user_account_invitation    
             LEFT OUTER JOIN s_account ON (s_user_account_invitation.accountId=s_account.id)

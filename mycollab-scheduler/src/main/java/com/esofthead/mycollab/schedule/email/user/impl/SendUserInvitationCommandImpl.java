@@ -56,15 +56,22 @@ public class SendUserInvitationCommandImpl {
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
 									+ "/" + invitation.getUsername() + "/"
 									+ invitation.getSubdomain()));
+
+			String inviterName = invitation.getInviterFullName();
+			String inviterMail = invitation.getInviteuser();
+			String subdomain = invitation.getSubdomain();
 			templateGenerator.putVariable(
 					"urlDeny",
 					SiteConfiguration.getSiteUrl(invitation.getSubdomain())
 							+ "user/deny_invite/"
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
-									+ "/" + invitation.getUsername()));
+									+ "/" + invitation.getUsername() + "/"
+									+ inviterName + "/" + inviterMail + "/"
+									+ subdomain));
 			String userName = (invitation.getUsername() != null) ? invitation
 					.getUsername() : "there";
 			templateGenerator.putVariable("userName", userName);
+			templateGenerator.putVariable("inviterName", inviterName);
 			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
 					Arrays.asList(new MailRecipientField(invitation
 							.getUsername(), invitation.getUsername())), null,
