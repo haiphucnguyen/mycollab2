@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.module.user.dao.RoleMapperExt">
-    
+
     <resultMap
         extends="com.esofthead.mycollab.module.user.dao.RoleMapper.BaseResultMap"
         id="SimpleRoleUser" type="com.esofthead.mycollab.module.user.domain.SimpleRole">
@@ -52,7 +52,7 @@
         </if>
     </select>
 
-    <select id="findRoleById" parameterType="java.lang.Integer"
+    <select id="findById" parameterType="java.lang.Integer"
         resultMap="SimpleRoleUser">
         <include
             refid="com.esofthead.mycollab.module.user.dao.RoleMapperExt.selectSimpleRole" />
