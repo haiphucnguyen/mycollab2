@@ -53,27 +53,58 @@ public class AnotatedVerifyUserServletRequestHandler implements
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
-				pathInfo = UrlEncodeDecoder.decode(pathInfo);
+			}
+			pathInfo = UrlEncodeDecoder.decode(pathInfo);
 
-				int accountId = Integer.parseInt(pathInfo.substring(0,
-						pathInfo.indexOf("/")));
-				pathInfo = pathInfo.substring((accountId + "").length() + 1);
+			int accountId = Integer.parseInt(pathInfo.substring(0,
+					pathInfo.indexOf("/")));
+			pathInfo = pathInfo.substring((accountId + "").length() + 1);
 
-				String username = pathInfo.substring(0, pathInfo.indexOf("/"));
-				pathInfo = pathInfo.substring(username.length() + 1);
+			String username = pathInfo.substring(0, pathInfo.indexOf("/"));
+			pathInfo = pathInfo.substring(username.length() + 1);
 
-				subdomain = pathInfo;
-				User user = userService.findUserByUserName(username);
-				SimpleUser userInAccount = userService
-						.findUserByUserNameInAccount(username, accountId);
+			subdomain = pathInfo;
+			User user = userService.findUserByUserName(username);
+			SimpleUser userInAccount = userService.findUserByUserNameInAccount(
+					username, accountId);
 
-				if (user == null || userInAccount == null) {
-					PageUserNotExistGenerator.responeUserNotExistPage(response,
-							request.getContextPath() + "/");
+			if (user == null || userInAccount == null) {
+				PageUserNotExistGenerator.responeUserNotExistPage(response,
+						request.getContextPath() + "/");
+				return;
+			} else {
+				if (userInAccount.getRegisterstatus().equals(
+						RegisterStatusConstants.ACTIVE)) {
+					log.debug("Forward user {} to page {}", user.getUsername(),
+							request.getContextPath());
+					// redirect to account site
+					request.getRequestDispatcher(request.getContextPath() + "/")
+							.forward(request, response);
 					return;
 				} else {
-					if (userInAccount.getRegisterstatus().equals(
-							RegisterStatusConstants.ACTIVE)) {
+					// remove account invitation
+					UserAccountInvitationExample userAccountInvitationExample = new UserAccountInvitationExample();
+					userAccountInvitationExample.createCriteria()
+							.andUsernameEqualTo(username)
+							.andAccountidEqualTo(accountId);
+					userAccountInvitationMapper
+							.deleteByExample(userAccountInvitationExample);
+
+					userService.updateUserAccountStatus(username, accountId,
+							RegisterStatusConstants.ACTIVE);
+
+					if (user.getPassword() == null
+							|| user.getPassword().trim().equals("")) {
+						// forward to page create password for new user
+						String redirectURL = SiteConfiguration
+								.getSiteUrl(subdomain)
+								+ "user/confirm_invite/update_info/";
+						String html = generateUserFillInformationPage(request,
+								accountId, username, user.getEmail(),
+								redirectURL, loginURL);
+						PrintWriter out = response.getWriter();
+						out.print(html);
+					} else {
 						log.debug("Forward user {} to page {}",
 								user.getUsername(), request.getContextPath());
 						// redirect to account site
@@ -81,44 +112,12 @@ public class AnotatedVerifyUserServletRequestHandler implements
 								request.getContextPath() + "/").forward(
 								request, response);
 						return;
-					} else {
-						// remove account invitation
-						UserAccountInvitationExample userAccountInvitationExample = new UserAccountInvitationExample();
-						userAccountInvitationExample.createCriteria()
-								.andUsernameEqualTo(username)
-								.andAccountidEqualTo(accountId);
-						userAccountInvitationMapper
-								.deleteByExample(userAccountInvitationExample);
-
-						userService.updateUserAccountStatus(username,
-								accountId, RegisterStatusConstants.ACTIVE);
-
-						if (user.getPassword() == null
-								|| user.getPassword().trim().equals("")) {
-							// forward to page create password for new user
-							String redirectURL = SiteConfiguration
-									.getSiteUrl(subdomain)
-									+ "user/confirm_invite/update_info/";
-							String html = generateUserFillInformationPage(
-									request, accountId, username,
-									user.getEmail(), redirectURL, loginURL);
-							PrintWriter out = response.getWriter();
-							out.print(html);
-						} else {
-							log.debug("Forward user {} to page {}",
-									user.getUsername(),
-									request.getContextPath());
-							// redirect to account site
-							request.getRequestDispatcher(
-									request.getContextPath() + "/").forward(
-									request, response);
-						}
 					}
 				}
-
 			}
+		} else {
+			PageNotFoundGenerator.responsePage404(response);
 		}
-		PageNotFoundGenerator.responsePage404(response);
 	}
 
 	private String generateUserFillInformationPage(HttpServletRequest request,
