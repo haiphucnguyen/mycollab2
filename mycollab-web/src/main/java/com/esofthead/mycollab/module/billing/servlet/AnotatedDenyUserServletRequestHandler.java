@@ -25,7 +25,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
-import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.web.AppContext;
@@ -55,14 +55,16 @@ public class AnotatedDenyUserServletRequestHandler implements
 				String username = pathInfo;
 				UserService userService = AppContext
 						.getSpringBean(UserService.class);
-				User curUser = userService.findUserByUserName(username);
-				if (curUser == null) {
+				SimpleUser checkUser = userService.findUserByUserNameInAccount(
+						username, accountId);
+				
+				if (checkUser == null) {
 					// this user no long exist on System page
 					PageUserNotExistGenerator.responeUserNotExistPage(response,
 							request.getContextPath() + "/");
 					return;
 				} else {
-					if (curUser.getRegisterstatus().equals(
+					if (checkUser.getRegisterstatus().equals(
 							RegisterStatusConstants.ACTIVE)) {
 						// You cant deny , Userhas active , go to login Page
 						String html = generateRefuseUserDenyActionPage(request
