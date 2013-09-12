@@ -33,5 +33,5 @@ public interface RoleService extends IDefaultService<Integer, Role, RoleSearchCr
     void savePermission(int roleId, PermissionMap permissionMap, @CacheKey int sAccountId);
     
     @Cacheable
-    SimpleRole findRoleById(int roleId, @CacheKey int sAccountId);
+    SimpleRole findById(int roleId, @CacheKey int sAccountId);
 }

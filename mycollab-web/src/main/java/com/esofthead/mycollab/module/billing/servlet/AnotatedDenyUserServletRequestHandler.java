@@ -57,7 +57,7 @@ public class AnotatedDenyUserServletRequestHandler implements
 						.getSpringBean(UserService.class);
 				SimpleUser checkUser = userService.findUserByUserNameInAccount(
 						username, accountId);
-				
+
 				if (checkUser == null) {
 					// this user no long exist on System page
 					PageUserNotExistGenerator.responeUserNotExistPage(response,
@@ -81,7 +81,9 @@ public class AnotatedDenyUserServletRequestHandler implements
 
 							userService.removeUserAccount(username, accountId);
 
-							log.debug("Verify user successfully. Redirect to application page");
+							log.debug(
+									"Verify user successfully. Redirect to application page {}",
+									request.getContextPath());
 							response.sendRedirect(request.getContextPath()
 									+ "/");
 						} catch (UserInvalidInputException e) {

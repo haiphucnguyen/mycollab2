@@ -237,7 +237,7 @@ public class UserAccountController implements IController {
 						} else if (event.getData() instanceof Integer) {
 							RoleService roleService = AppContext
 									.getSpringBean(RoleService.class);
-							SimpleRole role = roleService.findRoleById(
+							SimpleRole role = roleService.findById(
 									(Integer) event.getData(),
 									AppContext.getAccountId());
 							if (role == null) {

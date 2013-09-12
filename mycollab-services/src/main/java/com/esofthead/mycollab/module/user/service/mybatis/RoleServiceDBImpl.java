@@ -80,7 +80,7 @@ public class RoleServiceDBImpl extends
 	}
 
 	@Override
-	public SimpleRole findRoleById(int roleId, int sAccountId) {
+	public SimpleRole findById(int roleId, int sAccountId) {
 		return roleMapperExt.findById(roleId);
 	}
 }

@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
@@ -23,6 +25,7 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitationExample;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -32,6 +35,9 @@ import com.esofthead.template.velocity.TemplateEngine;
 @Component("verifyUserServletHandler")
 public class AnotatedVerifyUserServletRequestHandler implements
 		HttpRequestHandler {
+
+	private static Logger log = LoggerFactory
+			.getLogger(AnotatedVerifyUserServletRequestHandler.class);
 
 	@Autowired
 	private UserService userService;
@@ -57,7 +63,8 @@ public class AnotatedVerifyUserServletRequestHandler implements
 				pathInfo = pathInfo.substring(username.length() + 1);
 
 				subdomain = pathInfo;
-				User user = userService.findUserByUserName(username);
+				SimpleUser user = userService.findUserByUserNameInAccount(
+						username, accountId);
 				if (user == null) {
 					PageUserNotExistGenerator.responeUserNotExistPage(response,
 							request.getContextPath() + "/");
@@ -65,6 +72,8 @@ public class AnotatedVerifyUserServletRequestHandler implements
 				} else {
 					if (user.getRegisterstatus().equals(
 							RegisterStatusConstants.ACTIVE)) {
+						log.debug("Forward user {} to page {}",
+								user.getUsername(), request.getContextPath());
 						// redirect to account site
 						request.getRequestDispatcher(
 								request.getContextPath() + "/").forward(
