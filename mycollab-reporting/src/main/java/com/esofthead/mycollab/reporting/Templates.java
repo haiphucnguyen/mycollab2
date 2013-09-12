@@ -12,8 +12,6 @@ import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.VerticalAlignment;
 
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-
 public class Templates {
 	public static final StyleBuilder rootStyle;
 	public static final StyleBuilder boldStyle;
@@ -44,7 +42,6 @@ public class Templates {
 	 * component
 	 */
 	public static ComponentBuilder<?, ?> createTitleComponent(String label) {
-		DefaultListableBeanFactory a;
 		HyperLinkBuilder link = hyperLink("http://www.mycollab.com");
 		ComponentBuilder<?, ?> dynamicReportsComponent = cmp.horizontalList(
 				cmp.image(
