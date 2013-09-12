@@ -143,7 +143,6 @@ public class BillingServiceImpl implements BillingService {
 		user.setTimezone(timezoneId);
 		user.setUsername(username);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
-		user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 
 		if (user.getFirstname() == null) {
 			user.setFirstname("");

@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMember
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitationExample;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.template.velocity.TemplateContext;
@@ -63,14 +64,16 @@ public class AnotatedVerifyUserServletRequestHandler implements
 				pathInfo = pathInfo.substring(username.length() + 1);
 
 				subdomain = pathInfo;
-				SimpleUser user = userService.findUserByUserNameInAccount(
-						username, accountId);
-				if (user == null) {
+				User user = userService.findUserByUserName(username);
+				SimpleUser userInAccount = userService
+						.findUserByUserNameInAccount(username, accountId);
+
+				if (user == null || userInAccount == null) {
 					PageUserNotExistGenerator.responeUserNotExistPage(response,
 							request.getContextPath() + "/");
 					return;
 				} else {
-					if (user.getRegisterstatus().equals(
+					if (userInAccount.getRegisterstatus().equals(
 							RegisterStatusConstants.ACTIVE)) {
 						log.debug("Forward user {} to page {}",
 								user.getUsername(), request.getContextPath());
@@ -78,8 +81,6 @@ public class AnotatedVerifyUserServletRequestHandler implements
 						request.getRequestDispatcher(
 								request.getContextPath() + "/").forward(
 								request, response);
-						request.setAttribute("username", user.getUsername());
-						request.setAttribute("password", user.getPassword());
 						return;
 					} else {
 						// remove account invitation
@@ -90,16 +91,33 @@ public class AnotatedVerifyUserServletRequestHandler implements
 						userAccountInvitationMapper
 								.deleteByExample(userAccountInvitationExample);
 
-						// forward to page create password for new user
-						String redirectURL = SiteConfiguration
-								.getSiteUrl(subdomain)
-								+ "user/confirm_invite/update_info/";
-						String html = generateUserFillInformationPage(request,
-								accountId, username, user.getEmail(),
-								redirectURL, loginURL);
-						PrintWriter out = response.getWriter();
-						out.print(html);
-						return;
+						// Update status of user account
+						UserAccount userAccount = new UserAccount();
+						userAccount.setAccountid(accountId);
+						userAccount.setUsername(username);
+						userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+						
+
+						if (user.getPassword() == null
+								|| user.getPassword().trim().equals("")) {
+							// forward to page create password for new user
+							String redirectURL = SiteConfiguration
+									.getSiteUrl(subdomain)
+									+ "user/confirm_invite/update_info/";
+							String html = generateUserFillInformationPage(
+									request, accountId, username,
+									user.getEmail(), redirectURL, loginURL);
+							PrintWriter out = response.getWriter();
+							out.print(html);
+						} else {
+							log.debug("Forward user {} to page {}",
+									user.getUsername(),
+									request.getContextPath());
+							// redirect to account site
+							request.getRequestDispatcher(
+									request.getContextPath() + "/").forward(
+									request, response);
+						}
 					}
 				}
 

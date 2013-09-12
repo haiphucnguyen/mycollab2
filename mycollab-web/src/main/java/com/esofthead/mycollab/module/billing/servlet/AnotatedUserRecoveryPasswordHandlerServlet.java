@@ -19,7 +19,6 @@ import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -51,23 +50,13 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 							request.getContextPath() + "/");
 					return;
 				} else {
-					if (user.getRegisterstatus().equals(
-							RegisterStatusConstants.ACTIVE)) {
-						String redirectURL = loginURL
-								+ "user/recoverypassword/action";
+					String redirectURL = loginURL
+							+ "user/recoverypassword/action";
 
-						String html = generateUserRecoveryPasswordPage(
-								username, loginURL, redirectURL);
-						PrintWriter out = response.getWriter();
-						out.print(html);
-						return;
-					} else {
-						String html = generateUserNotActivePage(request
-								.getContextPath() + "/");
-						PrintWriter out = response.getWriter();
-						out.print(html);
-						return;
-					}
+					String html = generateUserRecoveryPasswordPage(
+							username, loginURL, redirectURL);
+					PrintWriter out = response.getWriter();
+					out.print(html);
 				}
 			}
 		}

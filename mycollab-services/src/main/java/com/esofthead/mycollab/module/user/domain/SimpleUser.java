@@ -33,6 +33,7 @@ public class SimpleUser extends User {
 	private Boolean isAccountOwner;
 	private String subdomain;
 	private Integer accountId;
+	private String registerstatus;
 
 	public String getDisplayName() {
 		String result = getFirstname() + " " + getLastname();
@@ -100,5 +101,13 @@ public class SimpleUser extends User {
 
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
+	}
+
+	public String getRegisterstatus() {
+		return registerstatus;
+	}
+
+	public void setRegisterstatus(String registerstatus) {
+		this.registerstatus = registerstatus;
 	}
 }
