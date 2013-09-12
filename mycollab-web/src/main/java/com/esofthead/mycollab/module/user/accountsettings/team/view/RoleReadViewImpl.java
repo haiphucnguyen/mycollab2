@@ -5,7 +5,11 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
-import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.user.AccessPermissionFlag;
+import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
+import com.esofthead.mycollab.module.user.PermissionChecker;
+import com.esofthead.mycollab.module.user.PermissionDefItem;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -55,6 +59,25 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 	@Override
 	public HasPreviewFormHandlers<Role> getPreviewFormHandlers() {
 		return this.previewForm;
+	}
+	
+	private static String getValueFromPerPath(
+			final PermissionMap permissionMap,
+			final String permissionItem) {
+		final Integer perVal = permissionMap.get(permissionItem);
+		if (perVal == null) {
+			return "Undefined";
+		} else {
+			if (PermissionChecker.isAccessPermission(perVal)) {
+				return AccessPermissionFlag.toString(perVal);
+			} else if (PermissionChecker.isBooleanPermission(perVal)) {
+				return BooleanPermissionFlag.toString(perVal);
+			} else {
+				throw new MyCollabException(
+						"Do not support permission value " + perVal);
+			}
+
+		}
 	}
 
 	private class PreviewForm extends AdvancedPreviewBeanForm<Role> {
@@ -142,10 +165,11 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						crmFormHelper.getLayout());
 
 				for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
-					final String permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
+					final PermissionDefItem permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
 					crmFormHelper.addComponent(
-							new Label(this.getValueFromPerPath(permissionMap,
-									permissionPath)), permissionPath, 0, i);
+							new Label(getValueFromPerPath(permissionMap,
+									permissionPath.getKey())), permissionPath
+									.getCaption(), 0, i);
 				}
 
 				permissionsPanel.addComponent(crmHeader);
@@ -162,27 +186,40 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						userFormHelper.getLayout());
 
 				for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
-					final String permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
+					final PermissionDefItem permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
 					userFormHelper.addComponent(
-							new Label(this.getValueFromPerPath(permissionMap,
-									permissionPath)), permissionPath, 0, i);
+							new Label(getValueFromPerPath(permissionMap,
+									permissionPath.getKey())), permissionPath
+									.getCaption(), 0, i);
 				}
 
 				permissionsPanel.addComponent(userHeader);
 
+				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
+						2,
+						RolePermissionCollections.PROJECT_PERMISSION_ARR.length,
+						"100%", "167px", Alignment.MIDDLE_LEFT);
+				projectFormHelper.getLayout().setMargin(false);
+				projectFormHelper.getLayout().setWidth("100%");
+				projectFormHelper.getLayout().addStyleName(
+						UIConstants.COLORED_GRIDLAYOUT);
+				final Depot projectHeader = new Depot("Project",
+						projectFormHelper.getLayout());
+
+				for (int i = 0; i < RolePermissionCollections.PROJECT_PERMISSION_ARR.length; i++) {
+					final PermissionDefItem permissionPath = RolePermissionCollections.PROJECT_PERMISSION_ARR[i];
+					projectFormHelper.addComponent(
+							new Label(getValueFromPerPath(permissionMap,
+									permissionPath.getKey())), permissionPath
+									.getCaption(), 0, i);
+				}
+
+				permissionsPanel.addComponent(projectHeader);
+
 				return permissionsPanel;
 			}
 
-			private String getValueFromPerPath(
-					final PermissionMap permissionMap,
-					final String permissionItem) {
-				final Integer perVal = permissionMap.get(permissionItem);
-				if (perVal == null) {
-					return "No Access";
-				} else {
-					return PermissionFlag.toString(perVal);
-				}
-			}
+			
 		}
 	}
 
@@ -243,10 +280,11 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						crmFormHelper.getLayout());
 
 				for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
-					final String permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
+					final PermissionDefItem permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
 					crmFormHelper.addComponent(
-							new Label(this.getValueFromPerPath(permissionMap,
-									permissionPath)), permissionPath, 0, i);
+							new Label(getValueFromPerPath(permissionMap,
+									permissionPath.getKey())), permissionPath
+									.getCaption(), 0, i);
 				}
 
 				permissionsPanel.addComponent(crmHeader);
@@ -259,26 +297,37 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						userFormHelper.getLayout());
 
 				for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
-					final String permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
+					final PermissionDefItem permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
 					userFormHelper.addComponent(
-							new Label(this.getValueFromPerPath(permissionMap,
-									permissionPath)), permissionPath, 0, i);
+							new Label(getValueFromPerPath(permissionMap,
+									permissionPath.getKey())), permissionPath
+									.getCaption(), 0, i);
 				}
+
+				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
+						2,
+						RolePermissionCollections.PROJECT_PERMISSION_ARR.length,
+						"100%", "167px", Alignment.MIDDLE_LEFT);
+				projectFormHelper.getLayout().setMargin(false);
+				projectFormHelper.getLayout().setWidth("100%");
+				projectFormHelper.getLayout().addStyleName(
+						UIConstants.COLORED_GRIDLAYOUT);
+				final Depot projectHeader = new Depot("Project",
+						projectFormHelper.getLayout());
+
+				for (int i = 0; i < RolePermissionCollections.PROJECT_PERMISSION_ARR.length; i++) {
+					final PermissionDefItem permissionPath = RolePermissionCollections.PROJECT_PERMISSION_ARR[i];
+					projectFormHelper.addComponent(
+							new Label(getValueFromPerPath(permissionMap,
+									permissionPath.getKey())), permissionPath
+									.getCaption(), 0, i);
+				}
+
+				permissionsPanel.addComponent(projectHeader);
 
 				permissionsPanel.addComponent(userHeader);
 
 				return permissionsPanel;
-			}
-
-			private String getValueFromPerPath(
-					final PermissionMap permissionMap,
-					final String permissionItem) {
-				final Integer perVal = permissionMap.get(permissionItem);
-				if (perVal == null) {
-					return "No Access";
-				} else {
-					return PermissionFlag.toString(perVal);
-				}
 			}
 		}
 	}

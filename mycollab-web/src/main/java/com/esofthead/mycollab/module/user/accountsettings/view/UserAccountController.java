@@ -1,9 +1,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingSummaryPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
@@ -13,20 +11,17 @@ import com.esofthead.mycollab.module.user.accountsettings.view.parameters.Profil
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.RoleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.esofthead.mycollab.module.user.domain.Role;
-import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent;
-import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Window;
 
 public class UserAccountController implements IController {
 	private static final long serialVersionUID = 1L;
@@ -231,30 +226,8 @@ public class UserAccountController implements IController {
 					public void handle(RoleEvent.GotoRead event) {
 						UserPermissionManagementPresenter presenter = PresenterResolver
 								.getPresenter(UserPermissionManagementPresenter.class);
-						if (event.getData() instanceof SimpleRole) {
-							presenter.go(container, new RoleScreenData.Read(
-									(Role) event.getData()));
-						} else if (event.getData() instanceof Integer) {
-							RoleService roleService = AppContext
-									.getSpringBean(RoleService.class);
-							SimpleRole role = roleService.findById(
-									(Integer) event.getData(),
-									AppContext.getAccountId());
-							if (role == null) {
-								AppContext
-										.getApplication()
-										.getMainWindow()
-										.showNotification(
-												LocalizationHelper
-														.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-												Window.Notification.TYPE_HUMANIZED_MESSAGE);
-							} else {
-								presenter.go(container,
-										new RoleScreenData.Read(role));
-							}
-						}
+						presenter.go(container, new RoleScreenData.Read(
+								(Integer) event.getData()));
 					}
 				});
 

@@ -5,9 +5,9 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 public class RoleScreenData {
-	public static class Read extends ScreenData<Object> {
+	public static class Read extends ScreenData<Integer> {
 
-		public Read(Object params) {
+		public Read(Integer params) {
 			super(params);
 		}
 	}

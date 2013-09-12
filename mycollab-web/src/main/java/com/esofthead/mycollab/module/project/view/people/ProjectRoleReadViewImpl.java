@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
-import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.module.user.AccessPermissionFlag;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -165,7 +165,7 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 				if (perVal == null) {
 					return "No Access";
 				} else {
-					return PermissionFlag.toString(perVal);
+					return AccessPermissionFlag.toString(perVal);
 				}
 			}
 		}
@@ -242,7 +242,7 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 				if (perVal == null) {
 					return "No Access";
 				} else {
-					return PermissionFlag.toString(perVal);
+					return AccessPermissionFlag.toString(perVal);
 				}
 			}
 		}

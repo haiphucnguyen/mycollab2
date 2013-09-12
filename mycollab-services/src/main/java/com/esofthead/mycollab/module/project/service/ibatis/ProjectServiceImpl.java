@@ -54,7 +54,7 @@ import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
 import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.module.user.AccessPermissionFlag;
 
 @Service
 @Transactional
@@ -121,12 +121,12 @@ public class ProjectServiceImpl extends
 				permissionMapClient
 						.addPath(
 								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-								PermissionFlag.NO_ACCESS);
+								AccessPermissionFlag.NO_ACCESS);
 			} else {
 				permissionMapClient
 						.addPath(
 								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-								PermissionFlag.READ_ONLY);
+								AccessPermissionFlag.READ_ONLY);
 			}
 		}
 		projectRoleService.savePermission(projectid, clientRoleId,
@@ -151,12 +151,12 @@ public class ProjectServiceImpl extends
 				permissionMapConsultant
 						.addPath(
 								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-								PermissionFlag.READ_ONLY);
+								AccessPermissionFlag.READ_ONLY);
 			} else {
 				permissionMapConsultant
 						.addPath(
 								ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-								PermissionFlag.ACCESS);
+								AccessPermissionFlag.ACCESS);
 			}
 		}
 		projectRoleService.savePermission(projectid, consultantRoleId,
@@ -174,7 +174,7 @@ public class ProjectServiceImpl extends
 
 			permissionMapAdmin.addPath(
 					ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-					PermissionFlag.ACCESS);
+					AccessPermissionFlag.ACCESS);
 		}
 		projectRoleService.savePermission(projectid, adminRoleId,
 				permissionMapAdmin, record.getSaccountid());

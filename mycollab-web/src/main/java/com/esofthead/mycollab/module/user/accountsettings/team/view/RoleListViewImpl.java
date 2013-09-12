@@ -86,9 +86,11 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 					public void handle(final TableClickEvent event) {
 						final Role role = (Role) event.getData();
 						if ("rolename".equals(event.getFieldName())) {
-							EventBus.getInstance().fireEvent(
-									new RoleEvent.GotoRead(
-											RoleListViewImpl.this, role));
+							EventBus.getInstance()
+									.fireEvent(
+											new RoleEvent.GotoRead(
+													RoleListViewImpl.this, role
+															.getId()));
 						}
 					}
 				});

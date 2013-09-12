@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.core.utils.ValuedBean;
-import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.module.user.AccessPermissionFlag;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class PermissionMap extends ValuedBean {
 	public Integer getPermissionFlag(String permissionItem) {
 		Object value = perMap.get(permissionItem);
 		if (value == null) {
-			return PermissionFlag.NO_ACCESS;
+			return AccessPermissionFlag.NO_ACCESS;
 		}
 
 		return (Integer) value;
@@ -37,7 +37,7 @@ public class PermissionMap extends ValuedBean {
 		if (value == null) {
 			return false;
 		} else {
-			return PermissionFlag.canRead((Integer) value);
+			return AccessPermissionFlag.canRead((Integer) value);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class PermissionMap extends ValuedBean {
 		if (value == null) {
 			return false;
 		} else {
-			return PermissionFlag.canWrite((Integer) value);
+			return AccessPermissionFlag.canWrite((Integer) value);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class PermissionMap extends ValuedBean {
 		if (value == null) {
 			return false;
 		} else {
-			return PermissionFlag.canAccess((Integer) value);
+			return AccessPermissionFlag.canAccess((Integer) value);
 		}
 	}
 

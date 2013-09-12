@@ -4,8 +4,9 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -19,6 +20,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -71,17 +73,31 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.ROLES)) {
-			SimpleRole role = (SimpleRole) data.getParams();
-			RoleContainer roleContainer = (RoleContainer) container;
-			roleContainer.removeAllComponents();
-			roleContainer.addComponent(view.getWidget());
-			view.previewItem(role);
+		if (AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
+			RoleService roleService = AppContext
+					.getSpringBean(RoleService.class);
+			SimpleRole role = roleService.findById((Integer) data.getParams(),
+					AppContext.getAccountId());
+			if (role != null) {
+				RoleContainer roleContainer = (RoleContainer) container;
+				roleContainer.removeAllComponents();
+				roleContainer.addComponent(view.getWidget());
+				view.previewItem(role);
 
-			AccountSettingBreadcrumb breadcrumb = ViewManager
-					.getView(AccountSettingBreadcrumb.class);
-			breadcrumb.gotoRoleRead(role);
+				AccountSettingBreadcrumb breadcrumb = ViewManager
+						.getView(AccountSettingBreadcrumb.class);
+				breadcrumb.gotoRoleRead(role);
+			} else {
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification(
+								LocalizationHelper
+										.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

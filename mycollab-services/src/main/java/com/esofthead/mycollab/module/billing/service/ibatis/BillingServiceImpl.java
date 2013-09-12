@@ -20,8 +20,10 @@ import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
 import com.esofthead.mycollab.module.billing.RegisterSourceConstants;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.user.AccessPermissionFlag;
+import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
-import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.module.user.PermissionDefItem;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
@@ -190,13 +192,21 @@ public class BillingServiceImpl implements BillingService {
 
 		// save default permission to role
 		final PermissionMap permissionMap = new PermissionMap();
-		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-			permissionMap.addPath(element, PermissionFlag.READ_ONLY);
+		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element.getKey(),
+					AccessPermissionFlag.READ_ONLY);
 		}
 
-		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap.addPath(element, PermissionFlag.READ_ONLY);
+		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element.getKey(),
+					AccessPermissionFlag.READ_ONLY);
 		}
+
+		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
+			permissionMap
+					.addPath(element.getKey(), BooleanPermissionFlag.FALSE);
+		}
+
 		this.roleService.savePermission(roleId, permissionMap, accountid);
 	}
 
@@ -211,13 +221,20 @@ public class BillingServiceImpl implements BillingService {
 
 		// save default permission to role
 		final PermissionMap permissionMap = new PermissionMap();
-		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-			permissionMap.addPath(element, PermissionFlag.ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap
+					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
 		}
 
-		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap.addPath(element, PermissionFlag.ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap
+					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
 		}
+
+		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
+			permissionMap.addPath(element.getKey(), BooleanPermissionFlag.TRUE);
+		}
+
 		this.roleService.savePermission(roleId, permissionMap, accountid);
 	}
 
@@ -232,13 +249,21 @@ public class BillingServiceImpl implements BillingService {
 
 		// save default permission to role
 		final PermissionMap permissionMap = new PermissionMap();
-		for (final String element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-			permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
+			permissionMap.addPath(element.getKey(),
+					AccessPermissionFlag.NO_ACCESS);
 		}
 
-		for (final String element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap.addPath(element, PermissionFlag.NO_ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
+			permissionMap.addPath(element.getKey(),
+					AccessPermissionFlag.NO_ACCESS);
 		}
+
+		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
+			permissionMap
+					.addPath(element.getKey(), BooleanPermissionFlag.FALSE);
+		}
+
 		this.roleService.savePermission(roleId, permissionMap, accountid);
 	}
 

@@ -45,12 +45,8 @@ public class UserUrlResolver extends AccountUrlResolver {
 	private class PreviewUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			String username = UrlEncodeDecoder.decode(params[0]);
-			UserService userService = AppContext
-					.getSpringBean(UserService.class);
-			SimpleUser user = userService.findUserByUserNameInAccount(username,
-					AppContext.getAccountId());
 			EventBus.getInstance().fireEvent(
-					new UserEvent.GotoRead(PreviewUrlResolver.this, user));
+					new UserEvent.GotoRead(PreviewUrlResolver.this, username));
 		}
 	}
 }

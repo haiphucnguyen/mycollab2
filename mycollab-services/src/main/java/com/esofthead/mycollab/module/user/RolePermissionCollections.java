@@ -23,8 +23,30 @@ public class RolePermissionCollections {
 
 	public static final String USER_USER = "User";
 	public static final String USER_ROLE = "Role";
-	public static final String[] CRM_PERMISSIONS_ARR = { CRM_ACCOUNT,
-			CRM_CONTACT, CRM_CAMPAIGN, CRM_LEAD, CRM_OPPORTUNITY, CRM_CASE,
-			CRM_TASK, CRM_MEETING, CRM_CALL };
-	public static final String[] USER_PERMISSION_ARR = { USER_USER, USER_ROLE };
+
+	public static final String CREATE_NEW_PROJECT = "CreateNewProject";
+
+	public static final PermissionDefItem[] CRM_PERMISSIONS_ARR = {
+			new PermissionDefItem(CRM_ACCOUNT, "Account",
+					AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_CONTACT, "Contact",
+					AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_CAMPAIGN, "Campaign",
+					AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_LEAD, "Lead", AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_OPPORTUNITY, "Opportunity",
+					AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_CASE, "Case", AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_TASK, "Task", AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_MEETING, "Meeting",
+					AccessPermissionFlag.class),
+			new PermissionDefItem(CRM_CALL, "Call", AccessPermissionFlag.class) };
+
+	public static final PermissionDefItem[] USER_PERMISSION_ARR = {
+			new PermissionDefItem(USER_USER, "User", AccessPermissionFlag.class),
+			new PermissionDefItem(USER_ROLE, "Role", AccessPermissionFlag.class) };
+
+	public static final PermissionDefItem[] PROJECT_PERMISSION_ARR = { new PermissionDefItem(
+			CREATE_NEW_PROJECT, "Create New Project",
+			BooleanPermissionFlag.class) };
 }

@@ -9,10 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.module.user.PermissionDefItem;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
-import com.esofthead.mycollab.module.user.view.component.PermissionComboBox;
+import com.esofthead.mycollab.module.user.view.component.PermissionComboBoxFactory;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -64,7 +66,7 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 	public class EditForm extends AdvancedEditBeanForm<Role> {
 
 		private static final long serialVersionUID = 1L;
-		private final Map<String, PermissionComboBox> permissionControlsMap = new HashMap<String, PermissionComboBox>();
+		private final Map<String, KeyCaptionComboBox> permissionControlsMap = new HashMap<String, KeyCaptionComboBox>();
 
 		@Override
 		public void setItemDataSource(final Item newDataSource,
@@ -127,16 +129,18 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 						crmFormHelper.getLayout());
 
 				for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
-					final String permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
-					final PermissionComboBox permissionBox = new PermissionComboBox();
+					PermissionDefItem permissionDefItem = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
+					KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
+							.createPermissionSelection(permissionDefItem
+									.getPermissionCls());
 
 					final Integer flag = perMap
-							.getPermissionFlag(permissionPath);
+							.getPermissionFlag(permissionDefItem.getKey());
 					permissionBox.setValue(flag);
-					EditForm.this.permissionControlsMap.put(permissionPath,
-							permissionBox);
-					crmFormHelper.addComponent(permissionBox, permissionPath,
-							0, i);
+					EditForm.this.permissionControlsMap.put(
+							permissionDefItem.getKey(), permissionBox);
+					crmFormHelper.addComponent(permissionBox,
+							permissionDefItem.getCaption(), 0, i);
 				}
 
 				permissionsPanel.addComponent(crmHeader);
@@ -153,18 +157,47 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 						userFormHelper.getLayout());
 
 				for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
-					final String permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
-					final PermissionComboBox permissionBox = new PermissionComboBox();
+					final PermissionDefItem permissionDefItem = RolePermissionCollections.USER_PERMISSION_ARR[i];
+					KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
+							.createPermissionSelection(permissionDefItem
+									.getPermissionCls());
 					final Integer flag = perMap
-							.getPermissionFlag(permissionPath);
+							.getPermissionFlag(permissionDefItem.getKey());
 					permissionBox.setValue(flag);
-					EditForm.this.permissionControlsMap.put(permissionPath,
-							permissionBox);
-					userFormHelper.addComponent(permissionBox, permissionPath,
-							0, i);
+					EditForm.this.permissionControlsMap.put(
+							permissionDefItem.getKey(), permissionBox);
+					userFormHelper.addComponent(permissionBox,
+							permissionDefItem.getCaption(), 0, i);
 				}
 
 				permissionsPanel.addComponent(userHeader);
+
+				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
+						2,
+						RolePermissionCollections.PROJECT_PERMISSION_ARR.length,
+						"100%", "167px", Alignment.MIDDLE_LEFT);
+				projectFormHelper.getLayout().setMargin(false);
+				projectFormHelper.getLayout().setWidth("100%");
+				projectFormHelper.getLayout().addStyleName(
+						UIConstants.COLORED_GRIDLAYOUT);
+				final Depot projectHeader = new Depot("Project",
+						projectFormHelper.getLayout());
+
+				for (int i = 0; i < RolePermissionCollections.PROJECT_PERMISSION_ARR.length; i++) {
+					final PermissionDefItem permissionDefItem = RolePermissionCollections.PROJECT_PERMISSION_ARR[i];
+					KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
+							.createPermissionSelection(permissionDefItem
+									.getPermissionCls());
+					final Integer flag = perMap
+							.getPermissionFlag(permissionDefItem.getKey());
+					permissionBox.setValue(flag);
+					EditForm.this.permissionControlsMap.put(
+							permissionDefItem.getKey(), permissionBox);
+					projectFormHelper.addComponent(permissionBox,
+							permissionDefItem.getCaption(), 0, i);
+				}
+
+				permissionsPanel.addComponent(projectHeader);
 
 				return permissionsPanel;
 			}
@@ -175,7 +208,7 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 
 			for (final String permissionItem : this.permissionControlsMap
 					.keySet()) {
-				final PermissionComboBox permissionBox = this.permissionControlsMap
+				final KeyCaptionComboBox permissionBox = this.permissionControlsMap
 						.get(permissionItem);
 				final Integer perValue = (Integer) permissionBox.getValue();
 				permissionMap.addPath(permissionItem, perValue);
