@@ -363,4 +363,20 @@ public class UserServiceDBImpl extends
 		}
 	}
 
+	@Override
+	public void updateUserAccountStatus(String username, Integer sAccountId,
+			String registerStatus) {
+		// Update status of user account
+		UserAccount userAccount = new UserAccount();
+		userAccount.setAccountid(sAccountId);
+		userAccount.setUsername(username);
+		userAccount.setRegisterstatus(registerStatus);
+
+		UserAccountExample ex = new UserAccountExample();
+		ex.createCriteria().andAccountidEqualTo(sAccountId)
+				.andUsernameEqualTo(username);
+		userAccountMapper.updateByExampleSelective(userAccount, ex);
+
+	}
+
 }

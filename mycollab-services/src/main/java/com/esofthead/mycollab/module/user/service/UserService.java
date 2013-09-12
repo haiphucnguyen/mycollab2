@@ -47,6 +47,10 @@ public interface UserService extends
 	void updateUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
 
 	@CacheEvict
+	void updateUserAccountStatus(String username, @CacheKey Integer sAccountId,
+			String registerStatus);
+
+	@CacheEvict
 	void removeUserAccount(String username, @CacheKey Integer accountId);
 
 	@CacheEvict

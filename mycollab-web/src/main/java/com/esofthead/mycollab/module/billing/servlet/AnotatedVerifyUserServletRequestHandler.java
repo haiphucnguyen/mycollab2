@@ -27,7 +27,6 @@ import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMember
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitationExample;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.template.velocity.TemplateContext;
@@ -91,12 +90,8 @@ public class AnotatedVerifyUserServletRequestHandler implements
 						userAccountInvitationMapper
 								.deleteByExample(userAccountInvitationExample);
 
-						// Update status of user account
-						UserAccount userAccount = new UserAccount();
-						userAccount.setAccountid(accountId);
-						userAccount.setUsername(username);
-						userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-						
+						userService.updateUserAccountStatus(username,
+								accountId, RegisterStatusConstants.ACTIVE);
 
 						if (user.getPassword() == null
 								|| user.getPassword().trim().equals("")) {
