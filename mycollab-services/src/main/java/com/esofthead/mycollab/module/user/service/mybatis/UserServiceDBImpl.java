@@ -104,7 +104,8 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void saveUserAccount(SimpleUser record, Integer sAccountId) {
+	public void saveUserAccount(SimpleUser record, Integer sAccountId,
+			String inviteUser) {
 		// check if user email has already in this account yet
 		UserAccountExample userAccountEx = new UserAccountExample();
 
@@ -180,6 +181,7 @@ public class UserServiceDBImpl extends
 			invitation.setAccountid(record.getAccountId());
 			invitation.setCreatedtime(new GregorianCalendar().getTime());
 			invitation.setUsername(record.getUsername());
+			invitation.setInviteuser(inviteUser);
 			invitation
 					.setInvitationstatus((record.getRegisterstatus() == null) ? RegisterStatusConstants.VERIFICATING
 							: record.getRegisterstatus());

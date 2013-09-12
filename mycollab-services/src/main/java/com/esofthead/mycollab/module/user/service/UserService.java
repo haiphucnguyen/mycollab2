@@ -40,7 +40,8 @@ public interface UserService extends
 			String subdomain, boolean isPasswordEncrypt);
 
 	@CacheEvict
-	void saveUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
+	void saveUserAccount(SimpleUser user, @CacheKey Integer sAccountId,
+			String inviteUser);
 
 	@CacheEvict
 	void updateUserAccount(SimpleUser user, @CacheKey Integer sAccountId);
