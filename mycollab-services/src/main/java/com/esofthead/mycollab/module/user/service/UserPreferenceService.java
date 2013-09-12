@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.user.service;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.user.domain.UserPreference;
 
@@ -13,5 +15,6 @@ import com.esofthead.mycollab.module.user.domain.UserPreference;
  */
 public interface UserPreferenceService extends
 		ICrudService<Integer, UserPreference> {
-	UserPreference getPreferenceOfUser(String username, int accountId);
+	@Cacheable
+	UserPreference getPreferenceOfUser(String username, @CacheKey int accountId);
 }

@@ -6,8 +6,6 @@ package com.esofthead.mycollab.module.user.view.component;
 
 import java.util.List;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
@@ -27,6 +25,7 @@ public class RoleComboBox extends ComboBox {
 	@SuppressWarnings("unchecked")
 	public RoleComboBox() {
 		super();
+		this.setNullSelectionAllowed(false);
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
 		RoleSearchCriteria criteria = new RoleSearchCriteria();

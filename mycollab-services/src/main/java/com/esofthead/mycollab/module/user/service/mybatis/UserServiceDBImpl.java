@@ -189,7 +189,6 @@ public class UserServiceDBImpl extends
 
 	@Override
 	public void updateUserAccount(SimpleUser record, Integer sAccountId) {
-
 		userMapper.updateByPrimaryKeySelective(record);
 
 		UserAccountExample userAccountEx = new UserAccountExample();
@@ -278,30 +277,6 @@ public class UserServiceDBImpl extends
 		} else {
 			return users.get(0);
 		}
-	}
-
-	@Override
-	public void verifyUser(String username) {
-		// TODO: fix issue of account
-		// SimpleUser user = findUserByUserName(username);
-		// if (user != null) {
-		// if (RegisterStatusConstants.VERIFICATING.equals(user
-		// .getRegisterstatus())) {
-		// user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-		// updateWithSession(user, username);
-		//
-		// } else if (RegisterStatusConstants.ACTIVE.equals(user
-		// .getRegisterstatus())) {
-		// // do nothing
-		// } else if (RegisterStatusConstants.PENDING.equals(user
-		// .getRegisterstatus())) {
-		// throw new UserInvalidInputException("User " + username
-		// + " is pending");
-		// }
-		// } else {
-		// throw new UserIsNotExistedException("There is no user name "
-		// + username + " in database");
-		// }
 	}
 
 	@Override

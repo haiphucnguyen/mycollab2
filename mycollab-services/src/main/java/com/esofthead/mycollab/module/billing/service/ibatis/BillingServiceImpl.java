@@ -145,10 +145,7 @@ public class BillingServiceImpl implements BillingService {
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
 		user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 
-		if (user.getFirstname() == null && user.getLastname() == null) {
-			user.setFirstname(username);
-			user.setLastname("");
-		} else if (user.getFirstname() == null) {
+		if (user.getFirstname() == null) {
 			user.setFirstname("");
 		} else if (user.getLastname() == null) {
 			user.setLastname("");
