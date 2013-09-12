@@ -67,9 +67,10 @@
             s_user_preference.lastAccessedTime, s_user.company, 
             s_user.timezone, s_user.language, 
             s_user.country, s_user.workPhone, s_user.homePhone, 
-            s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact, s_user.registerStatus,
+            s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact,
             s_user.password, s_user.avatarId,
-            s_roles.rolename AS roleName, s_user_account.isAdmin,  s_user_account.isAccountOwner, s_user_account.roleid, s_user_account.accountId AS accountId
+            s_roles.rolename AS roleName, s_user_account.isAdmin,  s_user_account.isAccountOwner, s_user_account.roleid, s_user_account.accountId AS accountId, 
+            s_user_account.registerStatus
         FROM s_user 
                 LEFT OUTER JOIN s_user_account ON (s_user.username=s_user_account.username)
                 LEFT OUTER JOIN s_roles ON (s_roles.id = s_user_account.roleid)
