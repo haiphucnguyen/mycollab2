@@ -15,6 +15,9 @@ public class ProjectManagementPage extends BasePage {
 		super(parameters);
 		add(new Label("pagetitle", "Tour"));
 
+		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
+				"whoisitforLink", WhoisitForPage.class);
+		add(whoisitfor);
 		BookmarkablePageLink<Void> highlight = new BookmarkablePageLink<Void>(
 				"highlightLink", TourPage.class);
 		add(highlight);

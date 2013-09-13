@@ -7,11 +7,11 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.pages.TourPage;
 
-public class DocumentManagementPage extends BasePage {
+public class WhoisitForPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
-	public DocumentManagementPage(PageParameters parameters) {
+	public WhoisitForPage(PageParameters parameters) {
 		super(parameters);
 		add(new Label("pagetitle", "Tour"));
 
@@ -22,7 +22,7 @@ public class DocumentManagementPage extends BasePage {
 				"highlightLink", TourPage.class);
 		add(highlight);
 		BookmarkablePageLink<Void> document = new BookmarkablePageLink<Void>(
-				"documentLink", DocumentManagementPage.class);
+				"documentLink", WhoisitForPage.class);
 		add(document);
 		BookmarkablePageLink<Void> project = new BookmarkablePageLink<Void>(
 				"projectLink", ProjectManagementPage.class);

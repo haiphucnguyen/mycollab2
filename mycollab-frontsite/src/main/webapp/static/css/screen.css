@@ -621,10 +621,11 @@ h1, h2, h3, h4, h5, h6 {
  */
 /* Header style */
 #header {
-	height: 50px;
+	height: 90px;
 	width: 100%;
-	background-color: #575757;
+	background-color: #fff;
 	margin-bottom: 25px;
+	border-bottom: solid 6px #77bae0;
 }
 
 .header-mid {
@@ -635,37 +636,42 @@ h1, h2, h3, h4, h5, h6 {
 
 .header-mid img {
 	float: left;
-	margin: 4px 0px 0px 0px;
-	height: 40px;
+	margin: 19px 0px 0px 0px;
+	height: 52px;
 	width: auto;
 }
 
 .header-mid ul {
 	list-style: none;
 	float: right;
+	margin-top: 8px;
 }
 
 .header-mid ul li {
-	line-height: 50px;
+	line-height: 82px;
 	display: inline-block;
-	padding: 0px 15px;
-	height: 50px;
+	padding: 0px;
+	height: 82px;
 	transition: 0.5s;
-	background-color: #575757;
+	background-color: #fff;
 	margin: 0px -3px !important
 }
 
 .header-mid ul li a{	
-	color: #FFFFFF;
+	color: #4b4b4b;
     display: block;
     font-size: 16px;
-    font-weight: bold;
-    height: 50px;
+    height: 82px;
+    padding: 0 20px;
     font-family: 'Monda';
 }
 
 .header-mid ul li:hover {
-	background-color: #F78D13;
+	background-color: #77bae0;
+}
+
+.header-mid ul li:hover > a {
+	color: #fff;
 }
 
 .header-mid .btn-signin {
@@ -680,7 +686,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header-mid .btn-signin:hover {
-	background-color: #1684c4;
+	background-color: #77bae0;
+	color: #fff;
 }
 /* End Header style */
 
@@ -756,8 +763,9 @@ h1, h2, h3, h4, h5, h6 {
 #footer-home {
 	width: 100%;
 	height: 175px;
-	background: url("../images/footer_home_bg.png") repeat-x transparent;
+	background-color: #6b6b6b;
 	clear: both;
+	border-top: solid 6px #77bae0;
 }
 
 #footer-home .wrapper {
@@ -767,12 +775,21 @@ h1, h2, h3, h4, h5, h6 {
 
 #footer-home .footer-copyright {
 	padding-top: 30px;
-	color: #606060;
+	color: #fff;
 }
 
 #footer-home .footer-copyright h1 {
 	color: #FFF;
 	font-family: 'Monda';
+}
+
+#footer-home .footer-copyright p {
+	padding: 0px;
+	color: #fff;
+}
+
+.copyright-txt1 {
+	margin-top: 20px;
 }
 
 .footer-sitemap {
@@ -782,7 +799,6 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: 30px;
     position: relative;
     width: 700px;
-    background: url("../images/footer_home_bg.png") repeat-x scroll 0 0 transparent;
 }
 
 .footer-sitemap .sitemap-col {
@@ -812,7 +828,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer-sitemap .sitemap-col ul li a {
-	color: #8a8a8a;
+	color: #c7c7c7;
 	font-size: 12px;
 	font-family: 'verdana';
 }
@@ -820,6 +836,10 @@ h1, h2, h3, h4, h5, h6 {
 .footer-sitemap .sitemap-col ul li a:hover {
 	cursor: pointer;
 	text-decoration: underline;
+}
+
+.copyright-txt1 {
+	margin-top: 20px;
 }
 /* End Footer style */
 
@@ -1029,7 +1049,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .home-banner {
 	height: 400px;
-	background-color: #F5F4F4;
+	background-color: #b9d8ea;
 	clear: inherit;
 	margin-bottom: 20px;
 	background-size: 80%; 
@@ -1060,7 +1080,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .home-banner-left-1 h1 {
-	color: #db8603;
+	color: #06517d;
     font-size: 30px;
     font-weight: normal;
     line-height: 100%;
@@ -1079,7 +1099,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .home-banner-left-2 h1 {
 	font-size: 36px;
-	color: #606060;
+	color: #06517d;
 	font-weight: bold;
 	line-height: 100%;
 	padding-bottom: 5px;
@@ -1238,15 +1258,15 @@ h1, h2, h3, h4, h5, h6 {
  }
  
 .coll-style1 {
- 	background-color: #42b3e5;
+ 	background-color: #f1f1f1;
 }
 
 .coll-style2 {
-	background-color: #008ecd;
+	background-color: #e2e2e2;
 }
 
 .home-box2-coll h2 {
-	color: #fff;
+	color: #4b4b4b;
 	font-size: 20px;
 	font-weight: normal;
 	padding-bottom: 25px;
@@ -1256,7 +1276,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .home-box2-coll p {
 	font-size: 13px;
-	color: #fff;
+	color: #4b4b4b;
 	height: 100px;
 	text-align: left;
 	margin-bottom: 10px;
@@ -1266,7 +1286,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .home-button-3 {
-	color: #ffffff;
+	color: #4b4b4b;
 	font-size: 12px;
 	line-height: 30px;
 	display: inline-block;
@@ -1275,8 +1295,8 @@ h1, h2, h3, h4, h5, h6 {
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 4px;
-	background-color: #1782c6;
-	border-color: #0f5c89;
+	background-color: #bdbdbd;
+	border-color: #9a9a9a;
 	width: 100px;
 	height: 30px;
 	text-align: center;
@@ -1756,16 +1776,16 @@ a.nivo-prevNav {
 	width: 240px;
 	display: inline-block;
 	margin-right: 25px;
-	text-align: justify;
+	text-align: left;
 	float: left;
 }
 
 .tour-block h2 {
 	font-size: 20px;
 	color: #505050;
-	padding-left: 25px;
+	padding-left: 28px;
 	font-family: 'Monda';
-	background: url("../images/tour_list_icon_1.png") no-repeat left center transparent;
+	background: url("../images/tour_list_icon_1.png") no-repeat 0px 3px transparent;
 	margin-bottom: 20px;
 	margin-top: 20px;
 }
@@ -1779,6 +1799,7 @@ a.nivo-prevNav {
 
 .two-coll-2 {
 	float: left;
+	width: 350px;
 }
 
 .tour-list {
@@ -1878,6 +1899,31 @@ a.nivo-prevNav {
 
 .free-trial p span {
 	font-size: 12px;
+}
+
+.tour-whoisitfor {
+	width: 765px;
+}
+
+.tour-whoisitfor p {
+	padding-bottom: 10px;
+}
+
+.tour-whoisitfor ul {
+	list-style: disc;
+	margin-left: 40px;
+}
+
+.tour-whoisitfor ul li {
+	margin-bottom: 15px;
+}
+
+.tour-whoisitfor ol {
+	margin-left: 40px;
+}
+
+.tour-whoisitfor ol li {
+	margin-bottom: 15px;
 }
 /* End Tour style */
 
@@ -2357,11 +2403,10 @@ a.nivo-prevNav {
 
 /* Note */
 .develop {
-	color: #FFF;
+	color: #4b4b4b;
     display: inline-block;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 14px 0 0 32px;
+    font-size: 20px;
+    padding: 36px 0 0 32px;
     font-family: 'Monda';
 }
 /* End Note */

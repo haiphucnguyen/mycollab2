@@ -8,6 +8,7 @@ import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.pages.tour.CRMPage;
 import com.esofthead.mycollab.pages.tour.DocumentManagementPage;
 import com.esofthead.mycollab.pages.tour.ProjectManagementPage;
+import com.esofthead.mycollab.pages.tour.WhoisitForPage;
 
 public class TourPage extends BasePage {
 
@@ -17,6 +18,9 @@ public class TourPage extends BasePage {
 		super(parameters);
 		add(new Label("pagetitle", "Tour"));
 
+		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
+				"whoisitforLink", WhoisitForPage.class);
+		add(whoisitfor);
 		BookmarkablePageLink<Void> highlight = new BookmarkablePageLink<Void>(
 				"highlightLink", TourPage.class);
 		add(highlight);

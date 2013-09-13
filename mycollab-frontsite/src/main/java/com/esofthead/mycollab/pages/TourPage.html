@@ -32,6 +32,8 @@
 			<div class="tour-mid">
 				<div class="tour-mid-left">
 					<ul>
+						<li class="items-1 tour-menu"><a wicket:id="whoisitforLink">
+							Who is it for?</a></li>
 						<li class="items-1 tour-menu item-active"><a
 							wicket:id="highlightLink">MyCollab Highlights</a></li>
 						<li class="items-3 tour-menu"><a wicket:id="documentLink">Document
@@ -88,7 +90,7 @@
 							to all the features MyCollab provides.</p>
 					</div>
 					<div class="tour-control">
-						<a class="tour-pre tour-control-disable">Previous</a> <a
+						<a class="tour-pre" wicket:id="whoisitforLink">Previous</a> <a
 							class="tour-next" wicket:id="documentLink">Next</a>
 					</div>
 				</div>
@@ -97,7 +99,10 @@
 		</div>
 		<style>
 .mnu-tour {
-	background-color: #F78D13 !important;
+	background-color: #77bae0 !important;
+}
+.mnu-tour > a {
+    color: #fff !important;
 }
 </style>
 	</wicket:extend>
