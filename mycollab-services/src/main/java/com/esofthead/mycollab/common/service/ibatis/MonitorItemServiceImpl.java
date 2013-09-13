@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.common.service.ibatis;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,43 +32,6 @@ public class MonitorItemServiceImpl extends
 	@Override
 	public ISearchableDAO<MonitorSearchCriteria> getSearchMapper() {
 		return monitorItemMapperExt;
-	}
-
-	@Override
-	public int countMonitorsOfItem(String type, int typeid) {
-		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid);
-		return monitorItemMapper.countByExample(ex);
-	}
-
-	@Override
-	public Boolean isWatchingItem(String username, String type, int typeid) {
-		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid)
-				.andUserEqualTo(username);
-		return (monitorItemMapper.countByExample(ex) != 0);
-	}
-
-	@Override
-	public List<MonitorItem> getMonitorItems(String type, int typeid) {
-		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid);
-		return monitorItemMapper.selectByExample(ex);
-	}
-
-	@Override
-	public void deleteWatchingItems(String type, int typeid) {
-		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid);
-		monitorItemMapper.deleteByExample(ex);
-	}
-
-	@Override
-	public void deleteWatchingItem(String username, String type, int typeid) {
-		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid)
-				.andUserEqualTo(username);
-		monitorItemMapper.deleteByExample(ex);
 	}
 
 	@Override
