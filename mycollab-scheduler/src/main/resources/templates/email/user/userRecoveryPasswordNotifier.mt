@@ -22,6 +22,8 @@
 				<span style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!urlRecoveryPassword" style="color: #4283c4; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; text-decoration: underline;">$!urlRecoveryPassword</a></span><br><br>
 				
 				<span style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">If you did not ask to change your password, then please ignore this email. Another user may have entered your username by mistake. No chages will be make to your account.</span>
+				<br>
+				<br>
             </td>
         </tr>
         <tr>
