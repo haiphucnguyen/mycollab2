@@ -355,7 +355,7 @@ public class UserServiceDBImpl extends
 	public User findUserByUserName(String username) {
 		UserExample ex = new UserExample();
 		ex.createCriteria().andUsernameEqualTo(username);
-		List<User> users = userMapper.selectByExample(ex);
+		List<User> users = userMapper.selectByExampleWithBLOBs(ex);
 		if (users == null || users.size() == 0) {
 			return null;
 		} else {

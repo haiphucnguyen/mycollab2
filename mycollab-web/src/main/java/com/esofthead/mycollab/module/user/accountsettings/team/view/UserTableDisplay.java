@@ -96,17 +96,13 @@ public class UserTableDisplay extends
 					layout.setWidth("100%");
 					layout.setSpacing(true);
 
-					if (RegisterStatusConstants.PENDING.equals(user
+					if (RegisterStatusConstants.DELETE.equals(user
 							.getRegisterstatus())) {
 						layout.addComponent(b);
-						Label statusLbl = new Label("(Pending)");
+						Label statusLbl = new Label("(Removed)");
 						layout.addComponent(statusLbl);
 						layout.addComponent(statusLbl);
 					} else {
-						// if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL
-						// .equals(user.getRegisterstatus())
-						// || RegisterStatusConstants.VERIFICATING.equals(user
-						// .getRegisterstatus())) {
 						HorizontalLayout userLayout = new HorizontalLayout();
 						userLayout.addComponent(b);
 						userLayout.setWidth("100%");
