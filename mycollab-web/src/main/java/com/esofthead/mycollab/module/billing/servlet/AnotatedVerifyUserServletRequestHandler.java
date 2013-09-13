@@ -21,6 +21,7 @@ import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
@@ -95,6 +96,10 @@ public class AnotatedVerifyUserServletRequestHandler implements
 
 					if (user.getPassword() == null
 							|| user.getPassword().trim().equals("")) {
+						log.debug(
+								"User {} has null password. It seems he is the new user join to mycollab. Redirect him to page let him update his password {}",
+								user.getUsername(),
+								BeanUtility.printBeanObj(user));
 						// forward to page create password for new user
 						String redirectURL = SiteConfiguration
 								.getSiteUrl(subdomain)
