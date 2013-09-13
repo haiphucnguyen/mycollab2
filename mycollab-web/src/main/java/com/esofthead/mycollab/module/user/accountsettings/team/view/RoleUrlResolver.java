@@ -45,12 +45,8 @@ public class RoleUrlResolver extends AccountUrlResolver {
 	private class PreviewUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			int roleId = Integer.parseInt(UrlEncodeDecoder.decode(params[0]));
-			RoleService roleService = AppContext
-					.getSpringBean(RoleService.class);
-			SimpleRole role = roleService.findById(roleId,
-					AppContext.getAccountId());
 			EventBus.getInstance().fireEvent(
-					new RoleEvent.GotoRead(PreviewUrlResolver.this, role));
+					new RoleEvent.GotoRead(PreviewUrlResolver.this, roleId));
 		}
 	}
 }

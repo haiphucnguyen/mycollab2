@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.esofthead.mycollab.core.utils.ValuedBean;
 import com.esofthead.mycollab.module.user.AccessPermissionFlag;
+import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
 
 /**
  * 
@@ -30,6 +31,24 @@ public class PermissionMap extends ValuedBean {
 		}
 
 		return (Integer) value;
+	}
+
+	public boolean canBeYes(String permissionItem) {
+		Object value = perMap.get(permissionItem);
+		if (value == null) {
+			return false;
+		} else {
+			return BooleanPermissionFlag.beTrue((Integer) value);
+		}
+	}
+
+	public boolean canBeFalse(String permissionItem) {
+		Object value = perMap.get(permissionItem);
+		if (value == null) {
+			return false;
+		} else {
+			return BooleanPermissionFlag.beFalse((Integer) value);
+		}
 	}
 
 	public boolean canRead(String permissionItem) {

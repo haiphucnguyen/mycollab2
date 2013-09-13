@@ -207,6 +207,11 @@ public class BillingServiceImpl implements BillingService {
 					.addPath(element.getKey(), BooleanPermissionFlag.FALSE);
 		}
 
+		for (final PermissionDefItem element : RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
+			permissionMap.addPath(element.getKey(),
+					AccessPermissionFlag.READ_WRITE);
+		}
+
 		this.roleService.savePermission(roleId, permissionMap, accountid);
 	}
 
@@ -233,6 +238,11 @@ public class BillingServiceImpl implements BillingService {
 
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
 			permissionMap.addPath(element.getKey(), BooleanPermissionFlag.TRUE);
+		}
+
+		for (final PermissionDefItem element : RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
+			permissionMap
+					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
 		}
 
 		this.roleService.savePermission(roleId, permissionMap, accountid);
@@ -262,6 +272,11 @@ public class BillingServiceImpl implements BillingService {
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
 			permissionMap
 					.addPath(element.getKey(), BooleanPermissionFlag.FALSE);
+		}
+
+		for (final PermissionDefItem element : RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
+			permissionMap.addPath(element.getKey(),
+					AccessPermissionFlag.NO_ACCESS);
 		}
 
 		this.roleService.savePermission(roleId, permissionMap, accountid);

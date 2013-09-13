@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
 import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -86,25 +87,27 @@ public class UserDashboardViewImpl extends AbstractView implements
 		headerContentTop.setComponentAlignment(headerLabel,
 				Alignment.MIDDLE_LEFT);
 
-		final Button createProjectBtn = new Button(
-				LocalizationHelper
-						.getMessage(ProjectCommonI18nEnum.NEW_PROJECT_ACTION),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
+			final Button createProjectBtn = new Button(
+					LocalizationHelper
+							.getMessage(ProjectCommonI18nEnum.NEW_PROJECT_ACTION),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(final Button.ClickEvent event) {
-						final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
-						UserDashboardViewImpl.this.getWindow().addWindow(
-								projectNewWindow);
-					}
-				});
-		createProjectBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		headerContentTop.addComponent(createProjectBtn);
-		headerContentTop.setComponentAlignment(createProjectBtn,
-				Alignment.MIDDLE_LEFT);
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
+							UserDashboardViewImpl.this.getWindow().addWindow(
+									projectNewWindow);
+						}
+					});
+			createProjectBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecord.png"));
+			createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			headerContentTop.addComponent(createProjectBtn);
+			headerContentTop.setComponentAlignment(createProjectBtn,
+					Alignment.MIDDLE_LEFT);
+		}
 
 		final HorizontalLayout headerContentBottom = new HorizontalLayout();
 		headerContentBottom.setSpacing(true);

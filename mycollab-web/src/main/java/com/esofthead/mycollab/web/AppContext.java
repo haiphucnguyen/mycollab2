@@ -206,6 +206,32 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	public static boolean canBeYes(String permissionItem) {
+		if (isAdmin()) {
+			return true;
+		}
+
+		PermissionMap permissionMap = getInstance().session.getPermissionMaps();
+		if (permissionMap == null) {
+			return false;
+		} else {
+			return permissionMap.canBeYes(permissionItem);
+		}
+	}
+
+	public static boolean canBeFalse(String permissionItem) {
+		if (isAdmin()) {
+			return true;
+		}
+
+		PermissionMap permissionMap = getInstance().session.getPermissionMaps();
+		if (permissionMap == null) {
+			return false;
+		} else {
+			return permissionMap.canBeFalse(permissionItem);
+		}
+	}
+
 	public static boolean canRead(String permissionItem) {
 		if (isAdmin()) {
 			return true;

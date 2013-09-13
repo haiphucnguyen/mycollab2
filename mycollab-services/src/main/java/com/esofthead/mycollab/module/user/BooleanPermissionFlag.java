@@ -8,11 +8,11 @@ public class BooleanPermissionFlag implements PermissionFlag {
 	public static final int FALSE = 129;
 
 	public static boolean beTrue(int flag) {
-		return true;
+		return (flag == TRUE);
 	}
 
 	public static boolean beFalse(int flag) {
-		return true;
+		return (flag == FALSE);
 	}
 
 	public static String toString(int flag) {

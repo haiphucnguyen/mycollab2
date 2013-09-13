@@ -26,6 +26,8 @@ public class RolePermissionCollections {
 
 	public static final String CREATE_NEW_PROJECT = "CreateNewProject";
 
+	public static final String PUBLIC_DOCUMENT_ACCESS = "PublicDocumentAccess";
+
 	public static final PermissionDefItem[] CRM_PERMISSIONS_ARR = {
 			new PermissionDefItem(CRM_ACCOUNT, "Account",
 					AccessPermissionFlag.class),
@@ -49,4 +51,8 @@ public class RolePermissionCollections {
 	public static final PermissionDefItem[] PROJECT_PERMISSION_ARR = { new PermissionDefItem(
 			CREATE_NEW_PROJECT, "Create New Project",
 			BooleanPermissionFlag.class) };
+
+	public static final PermissionDefItem[] DOCUMENT_PERMISSION_ARR = { new PermissionDefItem(
+			PUBLIC_DOCUMENT_ACCESS, "Public Documents",
+			AccessPermissionFlag.class) };
 }

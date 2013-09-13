@@ -60,10 +60,9 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 	public HasPreviewFormHandlers<Role> getPreviewFormHandlers() {
 		return this.previewForm;
 	}
-	
+
 	private static String getValueFromPerPath(
-			final PermissionMap permissionMap,
-			final String permissionItem) {
+			final PermissionMap permissionMap, final String permissionItem) {
 		final Integer perVal = permissionMap.get(permissionItem);
 		if (perVal == null) {
 			return "Undefined";
@@ -73,11 +72,30 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 			} else if (PermissionChecker.isBooleanPermission(perVal)) {
 				return BooleanPermissionFlag.toString(perVal);
 			} else {
-				throw new MyCollabException(
-						"Do not support permission value " + perVal);
+				throw new MyCollabException("Do not support permission value "
+						+ perVal);
 			}
 
 		}
+	}
+
+	protected Depot constructPermissionSectionView(String depotTitle,
+			PermissionMap permissionMap, PermissionDefItem[] defItems) {
+		final GridFormLayoutHelper formHelper = new GridFormLayoutHelper(2,
+				defItems.length, "100%", "167px", Alignment.MIDDLE_LEFT);
+		formHelper.getLayout().setMargin(false);
+		formHelper.getLayout().setWidth("100%");
+		formHelper.getLayout().addStyleName(UIConstants.COLORED_GRIDLAYOUT);
+		final Depot component = new Depot(depotTitle, formHelper.getLayout());
+
+		for (int i = 0; i < defItems.length; i++) {
+			final PermissionDefItem permissionDefItem = defItems[i];
+			formHelper.addComponent(
+					new Label(getValueFromPerPath(permissionMap,
+							permissionDefItem.getKey())), permissionDefItem
+							.getCaption(), 0, i);
+		}
+		return component;
 	}
 
 	private class PreviewForm extends AdvancedPreviewBeanForm<Role> {
@@ -152,74 +170,25 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 				final PermissionMap permissionMap = RoleReadViewImpl.this.role
 						.getPermissionMap();
 
-				final GridFormLayoutHelper crmFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.CRM_PERMISSIONS_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				crmFormHelper.getLayout().setMargin(false);
-				crmFormHelper.getLayout().setWidth("100%");
-				crmFormHelper.getLayout().addStyleName(
-						UIConstants.COLORED_GRIDLAYOUT);
-				final Depot crmHeader = new Depot(
-						"Customer Relationship Management",
-						crmFormHelper.getLayout());
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"Project", permissionMap,
+						RolePermissionCollections.PROJECT_PERMISSION_ARR));
 
-				for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
-					final PermissionDefItem permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
-					crmFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
-									permissionPath.getKey())), permissionPath
-									.getCaption(), 0, i);
-				}
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"Customer Management", permissionMap,
+						RolePermissionCollections.CRM_PERMISSIONS_ARR));
 
-				permissionsPanel.addComponent(crmHeader);
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"Document", permissionMap,
+						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
-				final GridFormLayoutHelper userFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.USER_PERMISSION_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				userFormHelper.getLayout().setMargin(false);
-				userFormHelper.getLayout().setWidth("100%");
-				userFormHelper.getLayout().addStyleName(
-						UIConstants.COLORED_GRIDLAYOUT);
-				final Depot userHeader = new Depot("User Management",
-						userFormHelper.getLayout());
-
-				for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
-					final PermissionDefItem permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
-					userFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
-									permissionPath.getKey())), permissionPath
-									.getCaption(), 0, i);
-				}
-
-				permissionsPanel.addComponent(userHeader);
-
-				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.PROJECT_PERMISSION_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				projectFormHelper.getLayout().setMargin(false);
-				projectFormHelper.getLayout().setWidth("100%");
-				projectFormHelper.getLayout().addStyleName(
-						UIConstants.COLORED_GRIDLAYOUT);
-				final Depot projectHeader = new Depot("Project",
-						projectFormHelper.getLayout());
-
-				for (int i = 0; i < RolePermissionCollections.PROJECT_PERMISSION_ARR.length; i++) {
-					final PermissionDefItem permissionPath = RolePermissionCollections.PROJECT_PERMISSION_ARR[i];
-					projectFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
-									permissionPath.getKey())), permissionPath
-									.getCaption(), 0, i);
-				}
-
-				permissionsPanel.addComponent(projectHeader);
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"User Management", permissionMap,
+						RolePermissionCollections.USER_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}
 
-			
 		}
 	}
 
@@ -271,61 +240,21 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 				final PermissionMap permissionMap = PrintView.this.role
 						.getPermissionMap();
 
-				final GridFormLayoutHelper crmFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.CRM_PERMISSIONS_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				final Depot crmHeader = new Depot(
-						"Customer Relationship Management",
-						crmFormHelper.getLayout());
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"Project", permissionMap,
+						RolePermissionCollections.PROJECT_PERMISSION_ARR));
 
-				for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
-					final PermissionDefItem permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
-					crmFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
-									permissionPath.getKey())), permissionPath
-									.getCaption(), 0, i);
-				}
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"Customer Management", permissionMap,
+						RolePermissionCollections.CRM_PERMISSIONS_ARR));
 
-				permissionsPanel.addComponent(crmHeader);
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"Document", permissionMap,
+						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
-				final GridFormLayoutHelper userFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.USER_PERMISSION_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				final Depot userHeader = new Depot("User Management",
-						userFormHelper.getLayout());
-
-				for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
-					final PermissionDefItem permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
-					userFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
-									permissionPath.getKey())), permissionPath
-									.getCaption(), 0, i);
-				}
-
-				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.PROJECT_PERMISSION_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				projectFormHelper.getLayout().setMargin(false);
-				projectFormHelper.getLayout().setWidth("100%");
-				projectFormHelper.getLayout().addStyleName(
-						UIConstants.COLORED_GRIDLAYOUT);
-				final Depot projectHeader = new Depot("Project",
-						projectFormHelper.getLayout());
-
-				for (int i = 0; i < RolePermissionCollections.PROJECT_PERMISSION_ARR.length; i++) {
-					final PermissionDefItem permissionPath = RolePermissionCollections.PROJECT_PERMISSION_ARR[i];
-					projectFormHelper.addComponent(
-							new Label(getValueFromPerPath(permissionMap,
-									permissionPath.getKey())), permissionPath
-									.getCaption(), 0, i);
-				}
-
-				permissionsPanel.addComponent(projectHeader);
-
-				permissionsPanel.addComponent(userHeader);
+				permissionsPanel.addComponent(constructPermissionSectionView(
+						"User Management", permissionMap,
+						RolePermissionCollections.USER_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}

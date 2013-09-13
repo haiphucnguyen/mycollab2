@@ -143,67 +143,52 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 							permissionDefItem.getCaption(), 0, i);
 				}
 
-				permissionsPanel.addComponent(crmHeader);
-
-				final GridFormLayoutHelper userFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.USER_PERMISSION_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				userFormHelper.getLayout().setMargin(false);
-				userFormHelper.getLayout().setWidth("100%");
-				userFormHelper.getLayout().addStyleName(
-						UIConstants.COLORED_GRIDLAYOUT);
-				final Depot userHeader = new Depot("User Management",
-						userFormHelper.getLayout());
-
-				for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
-					final PermissionDefItem permissionDefItem = RolePermissionCollections.USER_PERMISSION_ARR[i];
-					KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
-							.createPermissionSelection(permissionDefItem
-									.getPermissionCls());
-					final Integer flag = perMap
-							.getPermissionFlag(permissionDefItem.getKey());
-					permissionBox.setValue(flag);
-					EditForm.this.permissionControlsMap.put(
-							permissionDefItem.getKey(), permissionBox);
-					userFormHelper.addComponent(permissionBox,
-							permissionDefItem.getCaption(), 0, i);
-				}
-
-				permissionsPanel.addComponent(userHeader);
-
-				final GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(
-						2,
-						RolePermissionCollections.PROJECT_PERMISSION_ARR.length,
-						"100%", "167px", Alignment.MIDDLE_LEFT);
-				projectFormHelper.getLayout().setMargin(false);
-				projectFormHelper.getLayout().setWidth("100%");
-				projectFormHelper.getLayout().addStyleName(
-						UIConstants.COLORED_GRIDLAYOUT);
-				final Depot projectHeader = new Depot("Project",
-						projectFormHelper.getLayout());
-
-				for (int i = 0; i < RolePermissionCollections.PROJECT_PERMISSION_ARR.length; i++) {
-					final PermissionDefItem permissionDefItem = RolePermissionCollections.PROJECT_PERMISSION_ARR[i];
-					KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
-							.createPermissionSelection(permissionDefItem
-									.getPermissionCls());
-					final Integer flag = perMap
-							.getPermissionFlag(permissionDefItem.getKey());
-					permissionBox.setValue(flag);
-					EditForm.this.permissionControlsMap.put(
-							permissionDefItem.getKey(), permissionBox);
-					projectFormHelper.addComponent(permissionBox,
-							permissionDefItem.getCaption(), 0, i);
-				}
-
-				permissionsPanel.addComponent(projectHeader);
+				permissionsPanel.addComponent(constructGridLayout(
+						"Project Management", perMap,
+						RolePermissionCollections.PROJECT_PERMISSION_ARR));
+				permissionsPanel.addComponent(constructGridLayout(
+						"Customer Management", perMap,
+						RolePermissionCollections.CRM_PERMISSIONS_ARR));
+				permissionsPanel.addComponent(constructGridLayout("Document",
+						perMap,
+						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
+				permissionsPanel.addComponent(constructGridLayout(
+						"User Management", perMap,
+						RolePermissionCollections.USER_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}
 		}
 
-		public PermissionMap getPermissionMap() {
+		private Depot constructGridLayout(String depotTitle,
+				PermissionMap perMap, PermissionDefItem[] defItems) {
+			final GridFormLayoutHelper formHelper = new GridFormLayoutHelper(2,
+					defItems.length, "100%", "167px", Alignment.MIDDLE_LEFT);
+			formHelper.getLayout().setMargin(false);
+			formHelper.getLayout().setWidth("100%");
+			formHelper.getLayout().addStyleName(UIConstants.COLORED_GRIDLAYOUT);
+			final Depot component = new Depot(depotTitle,
+					formHelper.getLayout());
+
+			for (int i = 0; i < defItems.length; i++) {
+				final PermissionDefItem permissionDefItem = defItems[i];
+				KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
+						.createPermissionSelection(permissionDefItem
+								.getPermissionCls());
+				final Integer flag = perMap.getPermissionFlag(permissionDefItem
+						.getKey());
+				permissionBox.setValue(flag);
+				EditForm.this.permissionControlsMap.put(
+						permissionDefItem.getKey(), permissionBox);
+				formHelper.addComponent(permissionBox,
+						permissionDefItem.getCaption(), 0, i);
+
+			}
+
+			return component;
+		}
+
+		protected PermissionMap getPermissionMap() {
 			final PermissionMap permissionMap = new PermissionMap();
 
 			for (final String permissionItem : this.permissionControlsMap
