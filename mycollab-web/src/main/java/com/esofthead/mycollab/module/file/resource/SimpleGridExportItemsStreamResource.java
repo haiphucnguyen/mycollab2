@@ -8,8 +8,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
 
@@ -50,10 +52,22 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 			Field fieldCls = ClassUtils.getField(classType, field.getField());
 			DRIDataType<Object, ? extends Object> jrType = type
 					.detectType(fieldCls.getType().getName());
-			reportBuilder
-					.addColumn(col.column(field.getDesc(), field.getField(),
-							jrType).setWidth(field.getDefaultWidth()));
+			reportBuilder.addField(field.getField(), jrType);
+			reportBuilder.addColumn(col
+					.column(field.getDesc(), field.getField(), jrType)
+					.setWidth(field.getDefaultWidth())
+					.setHyperLink(hyperLink(new TestExpression())));
 		}
+	}
+
+	private class TestExpression extends AbstractSimpleExpression<String> {
+
+		@Override
+		public String evaluate(ReportParameters reportParameters) {
+			Integer value = reportParameters.getFieldValue("sAccountId");
+			return "http://www." + value;
+		}
+
 	}
 
 	public static class AllItems<S extends SearchCriteria, T> extends
@@ -102,8 +116,6 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 				for (Object item : data) {
 					Object[] tempVals = new Object[visibleColumns.size()];
 					for (int i = 0; i < tempVals.length; i++) {
-						// tempVals[i] = PropertyUtils.getProperty(item,
-						// visibleColumns.get(i));
 						try {
 							String embeedLink = (String) PropertyUtils
 									.getProperty(item, visibleColumns.get(i));
