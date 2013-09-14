@@ -55,8 +55,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 			reportBuilder.addField(field.getField(), jrType);
 			reportBuilder.addColumn(col
 					.column(field.getDesc(), field.getField(), jrType)
-					.setWidth(field.getDefaultWidth())
-					.setHyperLink(hyperLink(new TestExpression())));
+					.setWidth(field.getDefaultWidth()));
 		}
 	}
 
