@@ -55,7 +55,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 		Field[] clsFields = ClassUtils.getAllFields(classType);
 		for (Field objField : clsFields) {
 			DRIDataType<Object, ? extends Object> jrType = type
-					.detectType(objField.getType());
+					.detectType(objField.getType().getName());
 			reportBuilder.addField(objField.getName(), jrType);
 
 		}
@@ -81,7 +81,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 
 			Field fieldCls = ClassUtils.getField(classType, field.getField());
 			DRIDataType<Object, ? extends Object> jrType = type
-					.detectType(fieldCls.getType());
+					.detectType(fieldCls.getType().getName());
 			TextColumnBuilder<? extends Object> columnBuilder = col.column(
 					field.getDesc(), field.getField(), jrType).setWidth(
 					field.getDefaultWidth());
