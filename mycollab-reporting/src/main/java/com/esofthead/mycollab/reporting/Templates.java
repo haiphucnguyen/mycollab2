@@ -16,6 +16,7 @@ public class Templates {
 	public static final StyleBuilder rootStyle;
 	public static final StyleBuilder boldStyle;
 	public static final StyleBuilder italicStyle;
+	public static final StyleBuilder underlineStyle;
 	public static final StyleBuilder boldCenteredStyle;
 	public static final StyleBuilder bold18CenteredStyle;
 	public static final StyleBuilder bold22CenteredStyle;
@@ -25,6 +26,7 @@ public class Templates {
 		rootStyle = stl.style().setPadding(2);
 		boldStyle = stl.style(rootStyle).bold();
 		italicStyle = stl.style(rootStyle).italic();
+		underlineStyle = stl.style(rootStyle).underline();
 		boldCenteredStyle = stl.style(boldStyle).setAlignment(
 				HorizontalAlignment.CENTER, VerticalAlignment.MIDDLE);
 		bold18CenteredStyle = stl.style(boldCenteredStyle).setFontSize(18);
@@ -46,7 +48,7 @@ public class Templates {
 		ComponentBuilder<?, ?> dynamicReportsComponent = cmp.horizontalList(
 				cmp.image(
 						Templates.class.getClassLoader().getResourceAsStream(
-								"images/logo.png")).setFixedDimension(160, 30),
+								"images/logo.png")).setFixedDimension(150, 28),
 				cmp.verticalList(cmp.text(label).setStyle(bold22CenteredStyle)
 						.setHorizontalAlignment(HorizontalAlignment.LEFT), cmp
 						.text("http://www.mycollab.com").setStyle(italicStyle)

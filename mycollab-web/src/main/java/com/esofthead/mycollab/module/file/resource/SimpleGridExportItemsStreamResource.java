@@ -20,12 +20,14 @@ import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.reporting.BeanDataSource;
 import com.esofthead.mycollab.reporting.ColumnInjectionRenderer;
+import com.esofthead.mycollab.reporting.EmailColumnInjectionRenderer;
 import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
 import com.esofthead.mycollab.reporting.HyperLinkColumnInjectionRenderer;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.SimpleColumnInjectionMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
+import com.esofthead.mycollab.reporting.Templates;
 
 public abstract class SimpleGridExportItemsStreamResource<T> extends
 		ExportItemsStreamResource<T> {
@@ -90,6 +92,12 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 					columnBuilder
 							.setHyperLink(hyperLink(((HyperLinkColumnInjectionRenderer) columnRenderer)
 									.getExpression()));
+					columnBuilder.setStyle(Templates.underlineStyle);
+				} else if (columnRenderer instanceof EmailColumnInjectionRenderer) {
+					columnBuilder
+							.setHyperLink(hyperLink(((EmailColumnInjectionRenderer) columnRenderer)
+									.getExpression()));
+					columnBuilder.setStyle(Templates.underlineStyle);
 				} else {
 					throw new MyCollabException(
 							"Does not support column renderer "

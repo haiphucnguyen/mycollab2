@@ -14,16 +14,17 @@ public class SimpleColumnInjectionMap {
 	private static Map<Class, List<? extends ColumnInjectionRenderer>> mapInjection = new HashMap<Class, List<? extends ColumnInjectionRenderer>>();
 
 	static {
-		mapInjection.put(SimpleAccount.class, Arrays
-				.asList(new HyperLinkColumnInjectionRenderer("accountname",
-						new AccountExpression())));
+		mapInjection.put(SimpleAccount.class, Arrays.asList(
+				new HyperLinkColumnInjectionRenderer("accountname",
+						new AccountLinkExpression()),
+				new EmailColumnInjectionRenderer("email")));
 	}
 
 	public static List<? extends ColumnInjectionRenderer> getRenderers(Class cls) {
 		return mapInjection.get(cls);
 	}
 
-	private static class AccountExpression extends
+	private static class AccountLinkExpression extends
 			AbstractSimpleExpression<String> {
 
 		@Override

@@ -3,7 +3,7 @@ package com.esofthead.mycollab.reporting;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
 public class HyperLinkColumnInjectionRenderer implements
-		ColumnInjectionRenderer {
+		ColumnInjectionRenderer<String> {
 
 	private String fieldName;
 
@@ -15,6 +15,7 @@ public class HyperLinkColumnInjectionRenderer implements
 		this.expression = expression;
 	}
 
+	@Override
 	public DRIExpression<String> getExpression() {
 		return expression;
 	}

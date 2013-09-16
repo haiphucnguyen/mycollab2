@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.reporting;
 
-public interface ColumnInjectionRenderer {
+import net.sf.dynamicreports.report.definition.expression.DRIExpression;
+
+public interface ColumnInjectionRenderer<T> {
 	String getFieldName();
+
+	DRIExpression<T> getExpression();
 }
