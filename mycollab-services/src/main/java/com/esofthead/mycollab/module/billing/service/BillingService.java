@@ -2,13 +2,11 @@ package com.esofthead.mycollab.module.billing.service;
 
 import java.util.List;
 
-import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.flex.remoting.RemotingInclude;
 
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 
-@RemotingDestination(channels = { "mycollab-amf", "mycollab-secure-amf" })
 public interface BillingService extends IService {
     void registerAccount(String subdomain, int billingPlanId, String username,
             String password, String email, String timezoneId);

@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -161,7 +162,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 				StreamResource res = new StreamResource(
 						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
-								title, tableItem.getDisplayColumns(),
+								title, new RpParameterBuilder(tableItem
+										.getDisplayColumns()),
 								ReportExportType.PDF, AppContext
 										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class), "export.pdf",
@@ -192,7 +194,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 				StreamResource res = new StreamResource(
 						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
-								title, tableItem.getDisplayColumns(),
+								title, new RpParameterBuilder(tableItem
+										.getDisplayColumns()),
 								ReportExportType.EXCEL, AppContext
 										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class),
@@ -223,7 +226,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 				StreamResource res = new StreamResource(
 						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
-								title, tableItem.getDisplayColumns(),
+								title, new RpParameterBuilder(tableItem
+										.getDisplayColumns()),
 								ReportExportType.CSV, AppContext
 										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class), "export.csv",

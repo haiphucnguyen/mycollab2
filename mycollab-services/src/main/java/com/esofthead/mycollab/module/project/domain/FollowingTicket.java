@@ -6,13 +6,13 @@ import java.util.Date;
 public class FollowingTicket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int projectId;
+	private Integer projectId;
 
 	private String projectName;
 
 	private String type;
 
-	private int typeId;
+	private Integer typeId;
 
 	private String summary;
 
@@ -28,11 +28,11 @@ public class FollowingTicket implements Serializable {
 
 	private Date monitorDate;
 
-	public int getProjectId() {
+	public Integer getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(int projectId) {
+	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
 	}
 
@@ -92,11 +92,11 @@ public class FollowingTicket implements Serializable {
 		this.monitorDate = monitorDate;
 	}
 
-	public int getTypeId() {
+	public Integer getTypeId() {
 		return typeId;
 	}
 
-	public void setTypeId(int typeId) {
+	public void setTypeId(Integer typeId) {
 		this.typeId = typeId;
 	}
 

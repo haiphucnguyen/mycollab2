@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
+import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -254,8 +255,8 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 	private void downloadExportStreamCommand(ReportExportType exportType) {
 		ExportItemsStreamResource<SimpleItemTimeLogging> stream = new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-				"Time Tracking Report", tableItem.getDisplayColumns(),
-				exportType,
+				"Time Tracking Report", new RpParameterBuilder(
+						tableItem.getDisplayColumns()), exportType,
 				AppContext.getSpringBean(ItemTimeLoggingService.class),
 				searchCriteria, SimpleItemTimeLogging.class);
 		StreamResource res = new StreamResource(stream,

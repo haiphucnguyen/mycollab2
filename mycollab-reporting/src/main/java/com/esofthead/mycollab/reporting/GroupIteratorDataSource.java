@@ -2,6 +2,10 @@ package com.esofthead.mycollab.reporting;
 
 import java.util.List;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRField;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +13,6 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRField;
 
 public class GroupIteratorDataSource<SearchService extends ISearchableService<S>, S extends SearchCriteria>
 		implements JRDataSource {

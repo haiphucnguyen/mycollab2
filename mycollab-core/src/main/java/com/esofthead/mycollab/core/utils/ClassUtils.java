@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.core.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,25 @@ public class ClassUtils {
 			fields.addAll(Arrays.asList(c.getDeclaredFields()));
 		}
 		return fields;
+	}
+
+	public static Field[] getAllFields(Class<?> type) {
+		List<Field> fields = new ArrayList<Field>();
+		populateFields(type, fields);
+		return fields.toArray(new Field[0]);
+	}
+
+	private static void populateFields(Class<?> type, List<Field> fields) {
+		if (type != null && type != ValuedBean.class) {
+			Field[] declaredFields = type.getDeclaredFields();
+			for (Field declaredField : declaredFields) {
+				if (!Modifier.isStatic(declaredField.getModifiers())) {
+					fields.add(declaredField);
+				}
+			}
+
+			populateFields(type.getSuperclass(), fields);
+		}
 	}
 
 	public static Field getField(Class<?> type, String fieldname) {
