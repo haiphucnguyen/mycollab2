@@ -14,6 +14,17 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'MyriadPro-Semibold';
+    src: url('../fonts/MyriadPro-Semibold.eot');
+    src: url('../fonts/MyriadPro-Semibold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/MyriadPro-Semibold.svg#MyriadPro-Semibold') format('svg'),
+         url('../fonts/MyriadPro-Semibold.woff') format('woff'),
+         url('../fonts/MyriadPro-Semibold.otf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, quote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
 	margin: 0;
 	padding: 0;
@@ -1043,16 +1054,18 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Home style */
 #home-content {
-	width: 1100px;
-	margin: 0 auto;
+	width: 100%;
+	margin: -25px auto 0;
+	background-color: #b9d8ea;
 }
 
 .home-banner {
+	width: 1100px;
 	height: 400px;
-	background-color: #b9d8ea;
 	clear: inherit;
-	margin-bottom: 20px;
 	background-size: 80%; 
+	margin: 0 auto 20px;
+	padding: 25px 0 15px;
 }
 
 .home-banner-left {
@@ -1246,16 +1259,22 @@ h1, h2, h3, h4, h5, h6 {
 	width: 1100px;
 	margin: 0 auto;
 	margin-bottom: 30px;
-	height: 232px;
  }
  
 .home-box2-coll {
  	clear: inherit;
     float: left;
-    padding: 20px;
     text-align: center;
-    width: 326px;
+    width: 366px;
  }
+ 
+.home-box2-coll > h2 {
+ 	padding: 20px 20px 0px 20px;
+}
+ 
+.home-box2-coll > p {
+	padding: 0 20px;
+}
  
 .coll-style1 {
  	background-color: #f1f1f1;
@@ -1301,6 +1320,7 @@ h1, h2, h3, h4, h5, h6 {
 	height: 30px;
 	text-align: center;
 	font-family: 'verdana';
+	margin-bottom: 30px;
 }
 
 .home-button-3 img {
@@ -1310,6 +1330,91 @@ h1, h2, h3, h4, h5, h6 {
 .home-button-3:hover {
 	color: #FFF;
 	opacity: 0.7;
+}
+
+.home-block {
+	background-color: #b9d8ea;
+	padding-top: 10px;
+}
+
+.home-block > p {
+	width: 145px;
+	text-align: center;
+	float: left;
+	height: 115px;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.home-block h2 {
+	display: inline-block;
+	font-size: 15px;
+	color: #06517d;
+	background-color: #e8f2f8;
+	padding: 6px;
+	float: left;
+	margin-top: 15px;
+	width: 190px;
+	margin-bottom: 5px;
+}
+
+.home-block ul {
+	list-style: disc;
+	text-align: left;
+	color: #4b4b4b;
+	font-size: 13px;
+	font-family: 'Verdana';
+	float: left;
+	padding-left: 15px;
+}
+
+.home-block ul li {
+	margin: 0px;
+	padding: 1px 0px;
+	line-height: 120%;
+}
+
+.home-block-border {
+	border-right: solid 1px #ecf4f9;
+}
+
+.home-mobile {
+	margin: 40px 0 0;
+	display: inline-block;
+	width: 1100px;
+}
+
+.home-mobile > p {
+	float: left; 
+	margin-right: 35px;
+}
+
+.home-mobile .home-mobile-info {
+	float: left;
+	width: 560px;
+}
+
+.home-mobile-info h1 {
+	font-size: 30px;
+	font-family: 'Monda';
+	color: #4d5a61;
+	margin-bottom: 35px;
+	font-weight: normal;
+	margin-top: 30px;
+}
+
+.home-mobile-info p {
+	font-size: 13px;
+	color: #8f8f8f;
+	font-family: 'Verdana';
+	margin-bottom: 50px;
+}
+
+.home-mobile-info h2 {
+	font-size: 32.5px;
+	color: #4b4b4b;
+	font-family: 'MyriadPro-Semibold';
+	text-align: center;
 }
 
 .nivoSlider {
@@ -1354,7 +1459,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nivo-directionNav a {
 	display: block;
-	width: 30px;
+	width: 25px;
 	height: 30px;
 	background: url(../images/slides/arrows.png) no-repeat;
 	text-indent: -9999px;
@@ -1362,7 +1467,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a.nivo-nextNav {
-	background-position: -30px 0;
+	background-position: -25px 0;
 	right: 15px;
 }
 
