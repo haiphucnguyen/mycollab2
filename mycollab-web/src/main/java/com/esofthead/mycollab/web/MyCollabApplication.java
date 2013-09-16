@@ -17,6 +17,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.maxmind.geoip2.DatabaseReader;
@@ -197,7 +198,8 @@ public class MyCollabApplication extends Application implements
 							GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
 							invalidException.getMessage()),
 					Notification.TYPE_WARNING_MESSAGE);
-			currentThrowable = null;
+			currentThrowable = (invalidException instanceof SubDomainNotExistException) ? e
+					: null;
 		} else {
 			getMainWindow()
 					.showNotification(

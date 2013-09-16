@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -137,7 +138,7 @@ public class AppContext implements Serializable {
 		BillingAccount account = billingService.getAccountByDomain(domain);
 
 		if (account == null) {
-			throw new UserInvalidInputException(LocalizationHelper.getMessage(
+			throw new SubDomainNotExistException(LocalizationHelper.getMessage(
 					WebExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
 		} else {
 			log.debug("Get billing account {} of subdomain {}",
