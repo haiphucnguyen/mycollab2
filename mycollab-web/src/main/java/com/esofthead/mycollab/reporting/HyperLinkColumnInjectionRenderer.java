@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.reporting;
 
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
 public class HyperLinkColumnInjectionRenderer implements
@@ -23,6 +24,10 @@ public class HyperLinkColumnInjectionRenderer implements
 	@Override
 	public String getFieldName() {
 		return fieldName;
+	}
+
+	public StyleBuilder getStyle() {
+		return Templates.underlineStyle;
 	}
 
 }

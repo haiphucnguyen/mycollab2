@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -70,8 +71,9 @@ public class UserListPresenter extends
 			}
 
 			if (keyList.size() > 0) {
-				userService.removeUserAccounts(keyList,
-						AppContext.getAccountId());
+				userService.updateUserAccountsStatus(keyList,
+						AppContext.getAccountId(),
+						RegisterStatusConstants.DELETE);
 				doSearch(searchCriteria);
 			}
 		} else {

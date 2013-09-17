@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.reporting;
 
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
@@ -12,6 +13,10 @@ public class EmailColumnInjectionRenderer implements
 	public EmailColumnInjectionRenderer(String fieldName) {
 		this.fieldName = fieldName;
 		expression = new FieldEmailExpression(fieldName);
+	}
+	
+	public StyleBuilder getStyle() {
+		return Templates.underlineStyle;
 	}
 
 	@Override

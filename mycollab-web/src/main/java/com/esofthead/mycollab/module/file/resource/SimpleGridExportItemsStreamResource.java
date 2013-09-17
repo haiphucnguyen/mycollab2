@@ -92,12 +92,16 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 					columnBuilder
 							.setHyperLink(hyperLink(((HyperLinkColumnInjectionRenderer) columnRenderer)
 									.getExpression()));
-					columnBuilder.setStyle(Templates.underlineStyle);
+					columnBuilder
+							.setStyle(((HyperLinkColumnInjectionRenderer) columnRenderer)
+									.getStyle());
 				} else if (columnRenderer instanceof EmailColumnInjectionRenderer) {
 					columnBuilder
 							.setHyperLink(hyperLink(((EmailColumnInjectionRenderer) columnRenderer)
 									.getExpression()));
-					columnBuilder.setStyle(Templates.underlineStyle);
+					columnBuilder
+							.setStyle(((EmailColumnInjectionRenderer) columnRenderer)
+									.getStyle());
 				} else {
 					throw new MyCollabException(
 							"Does not support column renderer "

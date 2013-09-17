@@ -123,7 +123,7 @@
             ${searchCriteria.sortDirection},
         </if>
         <![CDATA[
-            m_prj_task.startdate DESC, m_prj_task.enddate DESC
+            m_prj_task.startdate ASC, m_prj_task.enddate ASC
         ]]>
     </sql>
 

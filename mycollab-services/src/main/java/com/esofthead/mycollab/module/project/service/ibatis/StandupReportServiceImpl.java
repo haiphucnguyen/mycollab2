@@ -63,6 +63,7 @@ public class StandupReportServiceImpl
 		criteria.setOnDate(new DateSearchField(SearchField.AND, onDate));
 		List reports = standupReportMapperExt.findPagableListByCriteria(
 				criteria, new RowBounds(0, Integer.MAX_VALUE));
+		
 		if (reports != null && reports.size() > 0) {
 			return (SimpleStandupReport) reports.get(0);
 		}

@@ -51,6 +51,10 @@ public interface UserService extends
 			String registerStatus);
 
 	@CacheEvict
+	void updateUserAccountsStatus(List<String> usernames,
+			@CacheKey Integer sAccountId, String registerStatus);
+
+	@CacheEvict
 	void removeUserAccount(String username, @CacheKey Integer accountId);
 
 	@CacheEvict

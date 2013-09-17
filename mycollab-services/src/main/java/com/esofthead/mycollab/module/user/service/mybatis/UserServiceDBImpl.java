@@ -40,10 +40,11 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
@@ -61,8 +62,6 @@ import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
-import com.esofthead.mycollab.module.user.esb.UserDeleteListener;
-import com.esofthead.mycollab.module.user.esb.UserEndpoints;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -315,28 +314,9 @@ public class UserServiceDBImpl extends
 		userAccountEx = new UserAccountExample();
 		userAccountEx.createCriteria().andUsernameEqualTo(username)
 				.andAccountidEqualTo(accountId);
-		userAccountMapper.deleteByExample(userAccountEx);
-
-		// if user does not belong to any account then remove this user
-		userAccountEx = new UserAccountExample();
-		userAccountEx.createCriteria().andUsernameEqualTo(username);
-		int userPresentNum = userAccountMapper.countByExample(userAccountEx);
-		if (userPresentNum == 0) {
-			UserExample userEx = new UserExample();
-			userEx.createCriteria().andUsernameEqualTo(username);
-			userMapper.deleteByExample(userEx);
-		} else {
-			// notify listener user is removed, then silently remove user in
-			// associate records
-			try {
-				UserDeleteListener userDeleteListener = new BeanProxyBuilder()
-						.build(UserEndpoints.USER_REMOVE_ENDPOINT,
-								UserDeleteListener.class);
-				userDeleteListener.userRemoved(username, accountId);
-			} catch (Exception e) {
-				log.error("Error while notify user delete", e);
-			}
-		}
+		UserAccount userAccount = new UserAccount();
+		userAccount.setRegisterstatus(RegisterStatusConstants.DELETE);
+		userAccountMapper.updateByExampleSelective(userAccount, userAccountEx);
 	}
 
 	@Override
@@ -379,4 +359,13 @@ public class UserServiceDBImpl extends
 
 	}
 
+	@Override
+	@CacheEvict
+	public void updateUserAccountsStatus(List<String> usernames,
+			@CacheKey Integer sAccountId, String registerStatus) {
+		for (String username : usernames) {
+			updateUserAccountStatus(username, sAccountId, registerStatus);
+		}
+
+	}
 }

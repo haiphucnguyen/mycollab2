@@ -107,7 +107,7 @@
             ${searchCriteria.sortDirection},
         </if>
         <![CDATA[
-            m_prj_task_list.groupIndex, m_prj_task_list.lastUpdatedTime DESC
+            m_prj_task_list.groupIndex, m_prj_task_list.lastUpdatedTime ASC
         ]]>
     </sql>
 
