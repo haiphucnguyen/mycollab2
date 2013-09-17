@@ -151,7 +151,8 @@ input.v-textfield[type="text"],.v-filterselect {
 
 .v-app,.v-window,.v-popupview-popup,.v-tooltip,.v-app input,.v-app select,.v-app button,.v-app textarea,.v-window input,.v-window select,.v-window button,.v-window textarea,.v-popupview-popup input,.v-popupview-popup select,.v-popupview-popup button,.v-popupview-popup textarea,.v-filterselect-suggestpopup,.v-datefield-popup,.v-contextmenu,.v-Notification,.v-menubar-submenu,.v-table-header-drag,.v-menubar-submenu,.v-drag-element
 	{
-	font: 12px/18px Arial, Verdana, Helvetica, sans-serif !important;
+	font: 12px Arial, Verdana, Helvetica, sans-serif !important;
+	line-height: normal;
 }
 
 .popupContent .v-window-contents {
