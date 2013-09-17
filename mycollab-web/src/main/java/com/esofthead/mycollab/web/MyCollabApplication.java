@@ -170,6 +170,7 @@ public class MyCollabApplication extends Application implements
 						userinfo.toString(), ipaddress, countryCode);
 
 			} catch (Exception e1) {
+				log.error("Error while generating issue", e1);
 				errorMsg = "An uncaught exception occurred ";
 			}
 

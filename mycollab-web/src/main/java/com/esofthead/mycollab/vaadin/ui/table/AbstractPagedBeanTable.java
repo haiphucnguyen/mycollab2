@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.esofthead.mycollab.common.domain.CustomViewStore;
+import com.esofthead.mycollab.common.domain.NullCustomViewStore;
 import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -91,7 +92,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			CustomViewStore viewLayoutDef = customViewStoreService
 					.getViewLayoutDef(AppContext.getAccountId(),
 							AppContext.getUsername(), viewId);
-			if (viewLayoutDef != null) {
+			if (!(viewLayoutDef instanceof NullCustomViewStore)) {
 				XStream xstream = new XStream(new StaxDriver());
 				List<TableViewField> selectedColumns = (List<TableViewField>) xstream
 						.fromXML(viewLayoutDef.getViewinfo());
