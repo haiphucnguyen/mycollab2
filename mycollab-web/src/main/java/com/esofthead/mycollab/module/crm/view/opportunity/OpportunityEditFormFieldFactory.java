@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.web.AppContext;
@@ -75,7 +75,7 @@ public class OpportunityEditFormFieldFactory extends
 			descArea.setNullRepresentation("");
 			return descArea;
 		} else if (propertyId.equals("assignuser")) {
-			UserComboBox userBox = new UserComboBox();
+			ActiveUserComboBox userBox = new ActiveUserComboBox();
 			return userBox;
 		}
 

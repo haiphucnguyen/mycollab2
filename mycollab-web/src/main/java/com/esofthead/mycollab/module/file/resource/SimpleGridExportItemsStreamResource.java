@@ -27,7 +27,6 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.SimpleColumnInjectionMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
-import com.esofthead.mycollab.reporting.Templates;
 
 public abstract class SimpleGridExportItemsStreamResource<T> extends
 		ExportItemsStreamResource<T> {

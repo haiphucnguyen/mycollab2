@@ -93,7 +93,7 @@ public class AnotatedDenyUserServletRequestHandler implements
 							criteria.setUsername(new StringSearchField(username));
 							criteria.setSaccountid(new NumberSearchField(
 									accountId));
-							userService.removeUserAccount(username, accountId);
+							userService.pendingUserAccount(username, accountId);
 
 							String redirectURL = SiteConfiguration
 									.getSiteUrl(subdomain)

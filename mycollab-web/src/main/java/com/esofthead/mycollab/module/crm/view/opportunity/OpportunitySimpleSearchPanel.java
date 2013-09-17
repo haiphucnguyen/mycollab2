@@ -8,7 +8,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
@@ -27,7 +27,7 @@ public class OpportunitySimpleSearchPanel extends
 
 	private OpportunitySearchCriteria searchCriteria;
 	private TextField textValueField;
-	private UserComboBox userBox;
+	private ActiveUserComboBox userBox;
 	private GridLayout layoutSearchPane;
 
 	@Override
@@ -137,7 +137,7 @@ public class OpportunitySimpleSearchPanel extends
 	}
 
 	private void addUserListSelectField() {
-		userBox = new UserComboBox();
+		userBox = new ActiveUserComboBox();
 		userBox.setImmediate(true);
 		layoutSearchPane.addComponent(userBox, 0, 0);
 		layoutSearchPane

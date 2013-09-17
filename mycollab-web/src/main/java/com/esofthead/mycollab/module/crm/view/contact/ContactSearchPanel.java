@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
@@ -197,7 +197,7 @@ public class ContactSearchPanel extends
 		private TextField firstnameField;
 		private TextField lastnameField;
 		private TextField accountnameField;
-		private UserListSelect assignUserField;
+		private ActiveUserListSelect assignUserField;
 		private TextField anyEmailField;
 		private TextField anyAddressField;
 		private TextField stateField;
@@ -240,8 +240,8 @@ public class ContactSearchPanel extends
 			this.accountnameField = (TextField) gridLayout.addComponent(this
 					.createSeachSupportTextField(new TextField(),
 							"accountnameField"), "Account Name", 0, 2);
-			this.assignUserField = (UserListSelect) gridLayout.addComponent(
-					this.createSeachSupportComboBox(new UserListSelect()),
+			this.assignUserField = (ActiveUserListSelect) gridLayout.addComponent(
+					this.createSeachSupportComboBox(new ActiveUserListSelect()),
 					LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
 					3);

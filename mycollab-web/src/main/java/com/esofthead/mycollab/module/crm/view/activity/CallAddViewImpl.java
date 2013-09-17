@@ -7,7 +7,7 @@ import org.vaadin.addon.customfield.CustomField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -103,7 +103,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
                     tf.setRequiredError("Subject must not be null");
                     return tf;
                 } else if (propertyId.equals("assignuser")) {
-                    UserComboBox userBox = new UserComboBox();
+                    ActiveUserComboBox userBox = new ActiveUserComboBox();
                     return userBox;
                 } else if (propertyId.equals("description")) {
                     TextArea descArea = new TextArea();

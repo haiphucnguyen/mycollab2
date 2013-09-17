@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.vaadin.data.Item;
@@ -31,7 +31,7 @@ public class AccountEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			IndustryComboBox accountIndustryBox = new IndustryComboBox();
 			return accountIndustryBox;
 		} else if ("assignuser".equals(propertyId)) {
-			UserComboBox userBox = new UserComboBox();
+			ActiveUserComboBox userBox = new ActiveUserComboBox();
 			userBox.select(account.getAssignuser());
 			return userBox;
 		} else if ("description".equals(propertyId)) {

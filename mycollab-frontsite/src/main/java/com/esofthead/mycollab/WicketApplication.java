@@ -27,6 +27,7 @@ import com.esofthead.mycollab.pages.TourPage;
 import com.esofthead.mycollab.pages.tour.CRMPage;
 import com.esofthead.mycollab.pages.tour.DocumentManagementPage;
 import com.esofthead.mycollab.pages.tour.ProjectManagementPage;
+import com.esofthead.mycollab.pages.tour.WhoisitForPage;
 
 /**
  * Application object for your web application. If you want to run this
@@ -56,6 +57,7 @@ public class WicketApplication extends WebApplication {
 		getDebugSettings().setAjaxDebugModeEnabled(false);
 		this.getMarkupSettings().setStripWicketTags(true);
 
+		this.mountPage("/tour/whoisit", WhoisitForPage.class);
 		this.mountPage("/tour", TourPage.class);
 		this.mountPage("/tour/crm", CRMPage.class);
 		this.mountPage("/tour/document_management",

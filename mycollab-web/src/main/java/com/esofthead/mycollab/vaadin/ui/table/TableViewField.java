@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui.table;
 
-
 public class TableViewField {
 
 	private String desc;
@@ -8,6 +7,8 @@ public class TableViewField {
 	private String field;
 
 	private int defaultWidth;
+
+	private String embedLink;
 
 	public TableViewField() {
 		this("", "");
@@ -45,5 +46,13 @@ public class TableViewField {
 
 	public void setDefaultWidth(int defaultWidth) {
 		this.defaultWidth = defaultWidth;
+	}
+
+	public String getEmbedLink() {
+		return embedLink;
+	}
+
+	public void setEmbedLink(String embedLink) {
+		this.embedLink = embedLink;
 	}
 }

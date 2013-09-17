@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -50,7 +50,7 @@ public class AccountSearchPanel extends
 		private TextField cityField;
 		private AccountIndustryListSelect industryField;
 		private AccountTypeListSelect typeField;
-		private UserListSelect userField;
+		private ActiveUserListSelect userField;
 
 		public AccountAdvancedSearchLayout() {
 			super(AccountSearchPanel.this, CrmTypeConstants.ACCOUNT);
@@ -106,8 +106,8 @@ public class AccountSearchPanel extends
 							this.createSeachSupportComboBox(new AccountTypeListSelect()),
 							"Type", 1, 2);
 
-			this.userField = (UserListSelect) gridLayout.addComponent(this
-					.createSeachSupportComboBox(new UserListSelect()),
+			this.userField = (ActiveUserListSelect) gridLayout.addComponent(this
+					.createSeachSupportComboBox(new ActiveUserListSelect()),
 					LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 2,
 					2);

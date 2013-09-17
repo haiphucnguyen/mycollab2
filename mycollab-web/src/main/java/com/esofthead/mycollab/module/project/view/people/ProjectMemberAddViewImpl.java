@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectRoleComboBox;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.utils.ParsingUtils;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -163,11 +163,11 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 		private class UserComboBoxWithInviteBtnCustomField extends CustomField {
 			private static final long serialVersionUID = 1L;
-			private final UserComboBox userBox;
+			private final ActiveUserComboBox userBox;
 			private final Button inviteOutSideUserBtn;
 
 			public UserComboBoxWithInviteBtnCustomField(List<SimpleUser> users) {
-				userBox = new UserComboBox(users);
+				userBox = new ActiveUserComboBox(users);
 				userBox.setRequired(true);
 				userBox.setWidth("500px");
 				userBox.setImmediate(true);
