@@ -40,7 +40,13 @@
             <artifactId>mycollab-services</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-esb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-scheduler</artifactId>
@@ -297,22 +303,22 @@
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet</artifactId>
-            <version>2.1.2</version>
+            <version>2.1.4</version>
         </dependency>
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.json</artifactId>
-            <version>2.1.2</version>
+            <version>2.1.4</version>
         </dependency>
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.servlet</artifactId>
-            <version>2.1.2</version>
+            <version>2.1.4</version>
         </dependency>
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.spring</artifactId>
-            <version>2.1.2</version>
+            <version>2.1.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -335,7 +341,7 @@
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.xml</artifactId>
-            <version>2.1.2</version>
+            <version>2.1.4</version>
         </dependency>
 
         <dependency>

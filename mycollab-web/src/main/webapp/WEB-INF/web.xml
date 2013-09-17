@@ -36,7 +36,7 @@
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
-    <!-- MONITORING PARAMS -->
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
