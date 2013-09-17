@@ -182,6 +182,12 @@ public class TaskGroupAddWindow extends Window {
 				TaskGroupAddWindow.this.taskList.setStatus("Open");
 				TaskGroupAddWindow.this.taskList
 						.setProjectid(CurrentProjectVariables.getProjectId());
+				TaskGroupAddWindow.this.taskList.setOwner(AppContext
+						.getUsername());
+				TaskGroupAddWindow.this.taskList.setOwnerAvatarId(AppContext
+						.getUserAvatarId());
+				TaskGroupAddWindow.this.taskList.setOwnerFullName(AppContext
+						.getSession().getDisplayName());
 				taskListService.saveWithSession(
 						TaskGroupAddWindow.this.taskList,
 						AppContext.getUsername());
