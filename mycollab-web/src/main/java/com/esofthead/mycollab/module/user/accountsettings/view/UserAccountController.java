@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingSummaryPresenter;
@@ -171,8 +172,12 @@ public class UserAccountController implements IController {
 						UserSearchCriteria criteria = new UserSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
-						criteria.setRegisterStatus(new StringSearchField(
-								RegisterStatusConstants.ACTIVE));
+						criteria.setRegisterStatuses(new SetSearchField<String>(
+								SearchField.AND,
+								new String[] {
+										RegisterStatusConstants.ACTIVE,
+										RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
+										RegisterStatusConstants.VERIFICATING }));
 
 						presenter.go(container, new UserScreenData.Search(
 								criteria));

@@ -17,13 +17,14 @@
 package com.esofthead.mycollab.module.user.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class UserSearchCriteria extends SearchCriteria {
 
 	private StringSearchField displayName;
 	private StringSearchField username;
-	private StringSearchField registerStatus;
+	private SetSearchField<String> registerStatuses;
 	private StringSearchField subdomain;
 
 	public StringSearchField getDisplayName() {
@@ -42,12 +43,12 @@ public class UserSearchCriteria extends SearchCriteria {
 		this.username = username;
 	}
 
-	public StringSearchField getRegisterStatus() {
-		return registerStatus;
+	public SetSearchField<String> getRegisterStatuses() {
+		return registerStatuses;
 	}
 
-	public void setRegisterStatus(StringSearchField registerStatus) {
-		this.registerStatus = registerStatus;
+	public void setRegisterStatuses(SetSearchField<String> registerStatuses) {
+		this.registerStatuses = registerStatuses;
 	}
 
 	public StringSearchField getSubdomain() {

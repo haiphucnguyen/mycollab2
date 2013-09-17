@@ -5,6 +5,7 @@ import java.util.List;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -31,8 +32,9 @@ class ActiveUserListSelect extends ListSelect {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setRegisterStatus(new StringSearchField(
-				RegisterStatusConstants.ACTIVE));
+		criteria.setRegisterStatuses(new SetSearchField<String>(
+				SearchField.AND,
+				new String[] { RegisterStatusConstants.ACTIVE }));
 
 		UserService userService = AppContext.getSpringBean(UserService.class);
 		userList = userService

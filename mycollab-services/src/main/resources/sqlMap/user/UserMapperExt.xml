@@ -33,6 +33,13 @@
             ) > 0                                
             ]]>
 		</if>
+        <if test="searchCriteria.registerStatuses != null">
+            ${searchCriteria.registerStatuses.operation} s_user_account.registerStatus IN
+            <foreach close=")" collection="searchCriteria.registerStatuses.values"
+                item="registerStatus" open="(" separator=",">
+                #{registerStatus}
+            </foreach>
+        </if>
 	</sql>
 
 	<sql id="queryTotalCountSearchCriteria">
@@ -58,6 +65,16 @@
             ) > 0                                
             ]]>
 		</if>
+        <if test="searchCriteria.registerStatuses != null">
+            ${searchCriteria.registerStatuses.operation}
+            (SELECT COUNT(*) FROM s_user_account WHERE s_user.username=s_user_account.username AND 
+             s_user_account.registerStatus IN
+            <foreach close=")" collection="searchCriteria.registerStatuses.values"
+                item="registerStatus" open="(" separator=",">
+                #{registerStatus}
+            </foreach>
+            ) > 0
+        </if>
 	</sql>
 
 	<sql id="selectUser">

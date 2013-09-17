@@ -8,6 +8,7 @@ import java.util.Map;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
@@ -65,9 +66,10 @@ public class SimpleColumnInjectionMap {
 
 		@Override
 		public String evaluate(ReportParameters reportParameters) {
-			Integer accountId = reportParameters.getFieldValue("id");
-			return AppContext.getSiteUrl() + "/"
-					+ CrmLinkGenerator.generateAccountPreviewLink(accountId);
+			Integer id = reportParameters.getFieldValue("id");
+			Integer sAccountId = reportParameters.getFieldValue("saccountid");
+			return SiteConfiguration.getSiteUrl(sAccountId) + "#"
+					+ CrmLinkGenerator.generateAccountPreviewLink(id);
 		}
 
 	}

@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
@@ -141,8 +142,12 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 					.setSaccountid(new NumberSearchField(AppContext
 							.getAccountId()));
 			UserSearchPanel.this.searchCriteria
-					.setRegisterStatus(new StringSearchField(
-							RegisterStatusConstants.ACTIVE));
+					.setRegisterStatuses(new SetSearchField<String>(
+							SearchField.AND,
+							new String[] {
+									RegisterStatusConstants.ACTIVE,
+									RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
+									RegisterStatusConstants.VERIFICATING }));
 
 			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				UserSearchPanel.this.searchCriteria

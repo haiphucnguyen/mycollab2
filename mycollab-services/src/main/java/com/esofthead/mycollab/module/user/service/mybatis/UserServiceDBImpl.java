@@ -109,12 +109,24 @@ public class UserServiceDBImpl extends
 		UserAccountExample userAccountEx = new UserAccountExample();
 
 		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
-			userAccountEx.createCriteria()
+			userAccountEx
+					.createCriteria()
 					.andUsernameEqualTo(record.getEmail())
-					.andAccountidEqualTo(sAccountId);
+					.andAccountidEqualTo(sAccountId)
+					.andRegisterstatusIn(
+							Arrays.asList(
+									RegisterStatusConstants.ACTIVE,
+									RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
+									RegisterStatusConstants.VERIFICATING));
 		} else {
-			userAccountEx.createCriteria()
-					.andUsernameEqualTo(record.getEmail());
+			userAccountEx
+					.createCriteria()
+					.andUsernameEqualTo(record.getEmail())
+					.andRegisterstatusIn(
+							Arrays.asList(
+									RegisterStatusConstants.ACTIVE,
+									RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
+									RegisterStatusConstants.VERIFICATING));
 		}
 
 		if (userAccountMapper.countByExample(userAccountEx) > 0) {
@@ -172,7 +184,24 @@ public class UserServiceDBImpl extends
 		userAccount
 				.setRegisterstatus((record.getRegisterstatus() == null) ? RegisterStatusConstants.VERIFICATING
 						: record.getRegisterstatus());
-		userAccountMapper.insert(userAccount);
+
+		log.debug("Check whether user is already in this account with status different than ACTIVE, then change status of him");
+		userAccountEx = new UserAccountExample();
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+			userAccountEx.createCriteria()
+					.andUsernameEqualTo(record.getEmail())
+					.andAccountidEqualTo(sAccountId);
+		} else {
+			userAccountEx.createCriteria()
+					.andUsernameEqualTo(record.getEmail());
+		}
+
+		if (userAccountMapper.countByExample(userAccountEx) > 0) {
+			userAccountMapper.updateByExampleSelective(userAccount,
+					userAccountEx);
+		} else {
+			userAccountMapper.insert(userAccount);
+		}
 
 		if (!RegisterStatusConstants.ACTIVE.equals(record.getRegisterstatus())) {
 			// save to invitation user
