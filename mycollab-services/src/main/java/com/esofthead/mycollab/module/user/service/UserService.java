@@ -55,10 +55,10 @@ public interface UserService extends
 			@CacheKey Integer sAccountId, String registerStatus);
 
 	@CacheEvict
-	void removeUserAccount(String username, @CacheKey Integer accountId);
+	void pendingUserAccount(String username, @CacheKey Integer accountId);
 
 	@CacheEvict
-	void removeUserAccounts(List<String> usernames, @CacheKey Integer accountId);
+	void pendingUserAccounts(List<String> usernames, @CacheKey Integer accountId);
 
 	@Cacheable
 	SimpleUser findUserByUserNameInAccount(String username,

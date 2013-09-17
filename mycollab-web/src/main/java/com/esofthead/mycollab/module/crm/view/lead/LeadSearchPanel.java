@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
@@ -206,7 +206,7 @@ public class LeadSearchPanel extends
 		private TextField anyPhoneField;
 		private TextField cityField;
 		private TextField stateField;
-		private UserListSelect userField;
+		private ActiveUserListSelect userField;
 
 		public LeadAdvancedSearchLayout() {
 			super(LeadSearchPanel.this, CrmTypeConstants.LEAD);
@@ -256,8 +256,8 @@ public class LeadSearchPanel extends
 					new TextField(), "City", 2, 1);
 			this.stateField = (TextField) gridLayout.addComponent(
 					new TextField(), "State", 2, 2);
-			this.userField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), LocalizationHelper
+			this.userField = (ActiveUserListSelect) gridLayout.addComponent(
+					new ActiveUserListSelect(), LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 2,
 					3);
 

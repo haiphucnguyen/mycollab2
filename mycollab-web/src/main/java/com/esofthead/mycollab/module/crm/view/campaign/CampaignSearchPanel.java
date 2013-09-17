@@ -19,7 +19,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
@@ -203,7 +203,7 @@ public class CampaignSearchPanel extends
 		private DateSelectionField endDateField;
 		private CampaignTypeListSelect typeField;
 		private CampaignStatusListSelect statusField;
-		private UserListSelect assignUserField;
+		private ActiveUserListSelect assignUserField;
 
 		public CampaignAdvancedSearchLayout() {
 			super(CampaignSearchPanel.this, CrmTypeConstants.CAMPAIGN);
@@ -245,8 +245,8 @@ public class CampaignSearchPanel extends
 			this.statusField = (CampaignStatusListSelect) gridLayout
 					.addComponent(new CampaignStatusListSelect(), "Status", 1,
 							1);
-			this.assignUserField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), LocalizationHelper
+			this.assignUserField = (ActiveUserListSelect) gridLayout.addComponent(
+					new ActiveUserListSelect(), LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 2,
 					1);
 

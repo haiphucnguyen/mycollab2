@@ -17,7 +17,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -60,7 +60,7 @@ public class CaseSearchPanel extends
 		private TextField subjectField;
 		private AccountSelectionField accountField;
 		private CaseStatusListSelect statusField;
-		private UserListSelect userField;
+		private ActiveUserListSelect userField;
 		private CasePriorityListSelect priorityField;
 
 		@Override
@@ -84,8 +84,8 @@ public class CaseSearchPanel extends
 
 			this.statusField = (CaseStatusListSelect) gridLayout.addComponent(
 					new CaseStatusListSelect(), "Status", 0, 1);
-			this.userField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), LocalizationHelper
+			this.userField = (ActiveUserListSelect) gridLayout.addComponent(
+					new ActiveUserListSelect(), LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1,
 					1);
 			this.priorityField = (CasePriorityListSelect) gridLayout

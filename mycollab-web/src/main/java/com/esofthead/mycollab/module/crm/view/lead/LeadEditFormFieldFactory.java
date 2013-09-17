@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PrefixListSelect;
@@ -35,7 +35,7 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
             IndustryComboBox industryComboBox = new IndustryComboBox();
             return industryComboBox;
         } else if (propertyId.equals("assignuser")) {
-            UserComboBox userComboBox = new UserComboBox();
+            ActiveUserComboBox userComboBox = new ActiveUserComboBox();
             return userComboBox;
         } else if (propertyId.equals("source")) {
             LeadSourceComboBox statusComboBox = new LeadSourceComboBox();

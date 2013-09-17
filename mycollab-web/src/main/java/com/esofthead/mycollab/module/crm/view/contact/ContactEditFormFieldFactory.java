@@ -7,7 +7,7 @@ import org.vaadin.addon.customfield.CustomField;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -47,7 +47,7 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			descArea.setNullRepresentation("");
 			return descArea;
 		} else if (propertyId.equals("assignuser")) {
-			UserComboBox userBox = new UserComboBox();
+			ActiveUserComboBox userBox = new ActiveUserComboBox();
 			userBox.select(contact.getAssignuser());
 			return userBox;
 		} else if (propertyId.equals("primcountry")

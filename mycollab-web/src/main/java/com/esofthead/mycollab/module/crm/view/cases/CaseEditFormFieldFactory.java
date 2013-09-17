@@ -4,7 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -62,7 +62,7 @@ public class CaseEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			tf.setRequiredError("Subject must not be null");
 			return tf;
 		} else if (propertyId.equals("assignuser")) {
-			UserComboBox userBox = new UserComboBox();
+			ActiveUserComboBox userBox = new ActiveUserComboBox();
 			userBox.select(cases.getAssignuser());
 			return userBox;
 		}

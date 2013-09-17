@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -145,7 +145,7 @@ public class AssignmentAddViewImpl extends AbstractView implements
 
 					return field;
 				} else if (propertyId.equals("assignuser")) {
-					UserComboBox userBox = new UserComboBox();
+					ActiveUserComboBox userBox = new ActiveUserComboBox();
 					userBox.select(task.getAssignuser());
 					return userBox;
 				}

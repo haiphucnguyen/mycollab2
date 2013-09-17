@@ -281,8 +281,8 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void removeUserAccount(String username, Integer accountId) {
-		removeUserAccounts(Arrays.asList(username), accountId);
+	public void pendingUserAccount(String username, Integer accountId) {
+		pendingUserAccounts(Arrays.asList(username), accountId);
 	}
 
 	private void internalRemoveUserAccount(String username, Integer accountId) {
@@ -320,7 +320,7 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public void removeUserAccounts(List<String> usernames, Integer accountId) {
+	public void pendingUserAccounts(List<String> usernames, Integer accountId) {
 		for (String username : usernames) {
 			internalRemoveUserAccount(username, accountId);
 		}
