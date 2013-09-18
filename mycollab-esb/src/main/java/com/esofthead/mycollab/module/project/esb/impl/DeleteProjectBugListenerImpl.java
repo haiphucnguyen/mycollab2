@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.dao.CommentMapper;
 import com.esofthead.mycollab.common.domain.CommentExample;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -38,12 +39,13 @@ public class DeleteProjectBugListenerImpl implements DeleteProjectBugListener {
 	}
 
 	private void removeBugComments(int bugId) {
-		log.debug("Delete related comments");
+		log.debug("Delete related comments of bug {}", bugId);
 		CommentMapper commentMapper = ApplicationContextUtil
 				.getBean(CommentMapper.class);
 
 		CommentExample ex = new CommentExample();
-//		ex.createCriteria().andExtratypeidEqualTo(projectId);
+		ex.createCriteria().andTypeEqualTo(CommentType.PRJ_BUG.toString())
+				.andExtratypeidEqualTo(bugId);
 		commentMapper.deleteByExample(ex);
 	}
 

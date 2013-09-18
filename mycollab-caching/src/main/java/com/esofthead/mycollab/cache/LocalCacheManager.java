@@ -11,9 +11,6 @@ import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.DeploymentMode;
-
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
 			.getLogger(LocalCacheManager.class);
@@ -23,15 +20,14 @@ public class LocalCacheManager {
 	static {
 		try {
 			InputStream configInputStream;
-			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+			configInputStream = LocalCacheManager.class.getClassLoader()
+					.getResourceAsStream("infinispan-local.xml");
+
+			if (configInputStream == null) {
 				configInputStream = LocalCacheManager.class.getClassLoader()
-						.getResourceAsStream("infinispan-local.xml");
-				instance = new DefaultCacheManager(configInputStream);
-			} else {
-				configInputStream = LocalCacheManager.class.getClassLoader()
-						.getResourceAsStream("infinispan-local.xml");
-				instance = new DefaultCacheManager(configInputStream);
+						.getResourceAsStream("infinispan-local-default.xml");
 			}
+			instance = new DefaultCacheManager(configInputStream);
 		} catch (Exception e) {
 			log.debug(
 					"Error while set up infinispan cache manager. Will initiate the default",

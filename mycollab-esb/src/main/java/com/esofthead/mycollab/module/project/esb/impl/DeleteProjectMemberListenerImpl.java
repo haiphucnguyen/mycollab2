@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.dao.ActivityStreamMapper;
-import com.esofthead.mycollab.common.domain.ActivityStream;
-import com.esofthead.mycollab.common.domain.ActivityStreamExample;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberListener;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component
@@ -32,18 +29,6 @@ public class DeleteProjectMemberListenerImpl implements
 				"Remove project member has username {}, project member id {} and project id {}",
 				new Object[] { username, projectMemberId, projectId });
 
-		removeProjectMemberActivityStreams(username, projectId, accountId);
-
-	}
-
-	private void removeProjectMemberActivityStreams(String username,
-			Integer projectId, int accountId) {
-		SimpleUser user = userService.findUserByUserNameInAccount(username,
-				accountId);
-		ActivityStreamExample ex = new ActivityStreamExample();
-		ActivityStream record = new ActivityStream();
-		record.setCreateduserdisplayname(user.getDisplayName());
-		activityStreamMapper.updateByExampleSelective(record, ex);
 	}
 
 }
