@@ -14,8 +14,6 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.AttachmentType;
-import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -149,19 +147,5 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 		downloadBtn.setStyleName("link");
 		attachmentLayout.addComponent(downloadBtn);
 		return attachmentLayout;
-	}
-
-	public static Component getAttachmentDisplayComponent(AttachmentType type,
-			int typeid) {
-		ResourceService attachmentService = AppContext
-				.getSpringBean(ResourceService.class);
-		List<Content> attachments = attachmentService
-				.getContents(AttachmentUtils.getAttachmentPath(
-						AppContext.getAccountId(), type, typeid));
-		if (attachments != null && !attachments.isEmpty()) {
-			return new AttachmentDisplayComponent(attachments);
-		} else {
-			return new VerticalLayout();
-		}
 	}
 }

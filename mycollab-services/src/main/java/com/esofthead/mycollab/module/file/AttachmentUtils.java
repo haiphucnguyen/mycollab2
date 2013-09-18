@@ -10,43 +10,6 @@ package com.esofthead.mycollab.module.file;
  */
 public class AttachmentUtils {
 
-	@Deprecated
-	public static String getAttachmentPath(int accountId, AttachmentType type,
-			int typeId) {
-		return String.format("%d/.attachments/%s/%d", accountId,
-				type.toString(), typeId);
-	}
-
-	@Deprecated
-	public static String getCommentPath(int accountId, int commentId) {
-		return getAttachmentPath(accountId, AttachmentType.COMMON_COMMENT,
-				commentId);
-	}
-
-	@Deprecated
-	public static String getCrmNotePath(int accountId, int noteId) {
-		return getAttachmentPath(accountId, AttachmentType.CRM_NOTE_TYPE,
-				noteId);
-	}
-
-	@Deprecated
-	public static String getBugPath(int accountId, int bugId) {
-		return getAttachmentPath(accountId, AttachmentType.PROJECT_BUG_TYPE,
-				bugId);
-	}
-
-	@Deprecated
-	public static String getTaskPath(int accountId, int bugId) {
-		return getAttachmentPath(accountId, AttachmentType.PROJECT_TASK_TYPE,
-				bugId);
-	}
-
-	@Deprecated
-	public static String getMessagePath(int accountId, int bugId) {
-		return getAttachmentPath(accountId, AttachmentType.PROJECT_MESSAGE,
-				bugId);
-	}
-
 	public static String getCrmNoteAttachmentPath(int accountId, int noteId) {
 		return String.format("%d/crm/.attachments/%s/%d", accountId,
 				AttachmentType.CRM_NOTE_TYPE, noteId);
