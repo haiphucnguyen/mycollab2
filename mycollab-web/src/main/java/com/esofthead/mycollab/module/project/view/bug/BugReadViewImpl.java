@@ -11,7 +11,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtil;
-import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
@@ -377,7 +377,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("id")) {
 					return new ProjectFormAttachmentDisplayField(
 							bug.getProjectid(),
-							AttachmentUtils.PROJECT_BUG_TYPE,
+							AttachmentType.PROJECT_BUG_TYPE,
 							BugReadViewImpl.this.bug.getId());
 				} else if (propertyId.equals("components")) {
 					final List<Component> components = BugReadViewImpl.this.bug

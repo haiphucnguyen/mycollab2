@@ -8,6 +8,7 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -231,7 +232,7 @@ public class TaskAddPopup extends CustomComponent {
 			String attachmentPath = AttachmentUtils
 					.getProjectEntityAttachmentPath(AppContext.getAccountId(),
 							CurrentProjectVariables.getProjectId(),
-							AttachmentUtils.PROJECT_TASK_TYPE, typeid);
+							AttachmentType.PROJECT_TASK_TYPE, typeid);
 			this.attachmentPanel.saveContentsToRepo(attachmentPath);
 		}
 	}

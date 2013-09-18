@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.ui.components;
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
@@ -16,7 +17,7 @@ public class DefaultProjectFormViewFieldFactory {
 		private static final long serialVersionUID = 1L;
 
 		public ProjectFormAttachmentDisplayField(final int projectid,
-				final String type, final int typeid) {
+				final AttachmentType type, final int typeid) {
 			final Component comp = ProjectAttachmentDisplayComponentFactory
 					.getAttachmentDisplayComponent(projectid, type, typeid);
 			if (comp == null || !(comp instanceof AttachmentDisplayComponent)) {
@@ -47,8 +48,8 @@ public class DefaultProjectFormViewFieldFactory {
 			setCompositionRoot(layout);
 		}
 
-		public void getAttachments(int projectId, final String type,
-				final int typeid) {
+		public void getAttachments(int projectId, AttachmentType type,
+				int typeid) {
 			String attachmentPath = AttachmentUtils
 					.getProjectEntityAttachmentPath(AppContext.getAccountId(),
 							projectId, type, typeid);
@@ -60,8 +61,8 @@ public class DefaultProjectFormViewFieldFactory {
 			return Object.class;
 		}
 
-		public void saveContentsToRepo(int projectid, final String type,
-				final int typeId) {
+		public void saveContentsToRepo(int projectid, AttachmentType type,
+				int typeId) {
 			String attachmentPath = AttachmentUtils
 					.getProjectEntityAttachmentPath(AppContext.getAccountId(),
 							projectid, type, typeId);

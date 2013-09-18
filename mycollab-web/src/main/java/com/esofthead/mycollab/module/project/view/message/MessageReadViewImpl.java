@@ -10,6 +10,7 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
@@ -158,8 +159,7 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				Component attachmentDisplayComp = ProjectAttachmentDisplayComponentFactory
 						.getAttachmentDisplayComponent(message.getProjectid(),
-								AttachmentUtils.PROJECT_MESSAGE,
-								message.getId());
+								AttachmentType.PROJECT_MESSAGE, message.getId());
 				rowLayout.addComponent(attachmentDisplayComp);
 
 				ResourceService attachmentService = AppContext
@@ -169,7 +169,7 @@ public class MessageReadViewImpl extends AbstractView implements
 								.getProjectEntityAttachmentPath(
 										AppContext.getAccountId(),
 										message.getProjectid(),
-										AttachmentUtils.PROJECT_MESSAGE,
+										AttachmentType.PROJECT_MESSAGE,
 										message.getId()));
 				if (attachments == null || attachments.isEmpty()) {
 					attachmentField.setVisible(false);

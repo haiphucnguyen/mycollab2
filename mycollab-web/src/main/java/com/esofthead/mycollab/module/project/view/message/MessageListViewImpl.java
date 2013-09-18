@@ -12,6 +12,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -33,6 +34,8 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -55,9 +58,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 @ViewComponent
 public class MessageListViewImpl extends AbstractView implements
@@ -443,11 +443,12 @@ public class MessageListViewImpl extends AbstractView implements
 										.getValue());
 								MessageListViewImpl.this.fireSaveItem(message);
 
-								String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(
-										AppContext.getAccountId(),
-										message.getProjectid(),
-										AttachmentUtils.PROJECT_MESSAGE,
-										message.getId());
+								String attachmentPath = AttachmentUtils
+										.getProjectEntityAttachmentPath(
+												AppContext.getAccountId(),
+												message.getProjectid(),
+												AttachmentType.PROJECT_MESSAGE,
+												message.getId());
 								attachments.saveContentsToRepo(attachmentPath);
 							} else {
 								titleField.addStyleName("errorField");

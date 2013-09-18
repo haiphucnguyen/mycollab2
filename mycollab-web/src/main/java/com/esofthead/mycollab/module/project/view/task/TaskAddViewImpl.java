@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.Collection;
 
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -138,7 +139,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 								.getProjectEntityAttachmentPath(
 										AppContext.getAccountId(),
 										CurrentProjectVariables.getProjectId(),
-										AttachmentUtils.PROJECT_TASK_TYPE,
+										AttachmentType.PROJECT_TASK_TYPE,
 										TaskAddViewImpl.this.task.getId());
 						TaskAddViewImpl.this.attachmentUploadField
 								.getAttachments(attachmentPath);

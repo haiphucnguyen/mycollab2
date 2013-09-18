@@ -6,6 +6,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -30,7 +31,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	public static class FormAttachmentDisplayField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
-		public FormAttachmentDisplayField(final String type, final int typeid) {
+		public FormAttachmentDisplayField(final AttachmentType type,
+				final int typeid) {
 			final Component comp = AttachmentDisplayComponent
 					.getAttachmentDisplayComponent(type, typeid);
 			if (comp == null || !(comp instanceof AttachmentDisplayComponent)) {
