@@ -60,16 +60,6 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 						.getBean(DeleteProjectComponentCommand.class),
 						"componentRemoved(String,int, int, int)");
 
-		log.debug("Configure project component remove route");
-		from(ProjectEndPoints.PROJECT_COMPONENT_REMOVE_ENDPOINT)
-				.setExchangePattern(ExchangePattern.InOnly).to(
-						"seda:projectComponentDelete.queue");
-		from("seda:projectComponentDelete.queue")
-				.threads()
-				.bean(ApplicationContextUtil
-						.getBean(DeleteProjectComponentCommand.class),
-						"componentRemoved(String,int, int, int)");
-
 		log.debug("Configure project version remove route");
 		from(ProjectEndPoints.PROJECT_VERSION_REMOVE_ENDPOINT)
 				.setExchangePattern(ExchangePattern.InOnly).to(
