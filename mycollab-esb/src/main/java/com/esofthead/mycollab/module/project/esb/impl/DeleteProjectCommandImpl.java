@@ -10,14 +10,14 @@ import com.esofthead.mycollab.common.dao.CommentMapper;
 import com.esofthead.mycollab.common.domain.ActivityStreamExample;
 import com.esofthead.mycollab.common.domain.CommentExample;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectCommand;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component
-public class DeleteProjectListenerImpl implements DeleteProjectListener {
+public class DeleteProjectCommandImpl implements DeleteProjectCommand {
 
 	private static Logger log = LoggerFactory
-			.getLogger(DeleteProjectListenerImpl.class);
+			.getLogger(DeleteProjectCommandImpl.class);
 
 	@Override
 	public void projectRemoved(int accountId, int projectId) {

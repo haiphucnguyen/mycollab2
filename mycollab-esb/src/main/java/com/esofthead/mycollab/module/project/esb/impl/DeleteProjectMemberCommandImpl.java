@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.dao.ActivityStreamMapper;
-import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberCommand;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component
-public class DeleteProjectMemberListenerImpl implements
-		DeleteProjectMemberListener {
+public class DeleteProjectMemberCommandImpl implements
+		DeleteProjectMemberCommand {
 
 	private static Logger log = LoggerFactory
-			.getLogger(DeleteProjectMemberListenerImpl.class);
+			.getLogger(DeleteProjectMemberCommandImpl.class);
 
 	@Autowired
 	private ActivityStreamMapper activityStreamMapper;

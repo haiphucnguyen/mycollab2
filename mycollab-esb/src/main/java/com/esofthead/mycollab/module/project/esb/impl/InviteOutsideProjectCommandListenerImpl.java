@@ -16,18 +16,18 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberListener;
+import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberCommand;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component
-public class InviteOutsideProjectMemberListenerImpl implements
-		InviteOutsideProjectMemberListener {
+public class InviteOutsideProjectCommandListenerImpl implements
+		InviteOutsideProjectMemberCommand {
 
 	private static Logger log = LoggerFactory
-			.getLogger(InviteOutsideProjectMemberListenerImpl.class);
+			.getLogger(InviteOutsideProjectCommandListenerImpl.class);
 
 	@Autowired
 	private UserService userService;

@@ -50,7 +50,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectCommand;
 import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -239,9 +239,9 @@ public class ProjectServiceImpl extends
 		try {
 			Project project = findByPrimaryKey(projectId, accountId);
 
-			DeleteProjectListener projectDeleteListener = new BeanProxyBuilder()
+			DeleteProjectCommand projectDeleteListener = new BeanProxyBuilder()
 					.build(ProjectEndPoints.PROJECT_REMOVE_ENDPOINT,
-							DeleteProjectListener.class);
+							DeleteProjectCommand.class);
 			projectDeleteListener.projectRemoved(project.getSaccountid(),
 					projectId);
 		} catch (Exception e) {

@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberListener;
-import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberCommand;
+import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberCommand;
 import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -91,9 +91,9 @@ public class ProjectMemberServiceImpl extends
 			try {
 				Project project = projectMapper
 						.selectByPrimaryKey(projectMember.getProjectid());
-				DeleteProjectMemberListener projectMemberDeleteListener = new BeanProxyBuilder()
+				DeleteProjectMemberCommand projectMemberDeleteListener = new BeanProxyBuilder()
 						.build(ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT,
-								DeleteProjectMemberListener.class);
+								DeleteProjectMemberCommand.class);
 				projectMemberDeleteListener.projectMemberRemoved(username,
 						primaryKey, projectMember.getProjectid(),
 						project.getSaccountid());
@@ -114,9 +114,9 @@ public class ProjectMemberServiceImpl extends
 	@Override
 	public void inviteProjectMember(String[] email, int projectId,
 			int projectRoleId, String inviteUser, int sAccountId) {
-		InviteOutsideProjectMemberListener listener = new BeanProxyBuilder()
+		InviteOutsideProjectMemberCommand listener = new BeanProxyBuilder()
 				.build(ProjectEndPoints.PROJECT_SEND_INVITATION_USER,
-						InviteOutsideProjectMemberListener.class);
+						InviteOutsideProjectMemberCommand.class);
 		listener.inviteUsers(email, projectId, projectRoleId, inviteUser,
 				sAccountId);
 	}

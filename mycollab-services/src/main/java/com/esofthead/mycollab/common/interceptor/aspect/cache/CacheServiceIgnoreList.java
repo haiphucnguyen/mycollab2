@@ -11,8 +11,8 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceMover;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
-import com.esofthead.mycollab.module.project.esb.DeleteProjectListener;
-import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectCommand;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberCommand;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -22,8 +22,8 @@ public class CacheServiceIgnoreList {
 			UserService.class, RelayEmailNotificationService.class,
 			RelatedBugService.class, MonitorItemService.class,
 			BugRelatedItemService.class, RawContentServiceFactoryBean.class,
-			ResourceService.class, DeleteProjectListener.class,
-			DeleteProjectMemberListener.class, ExternalResourceService.class,
+			ResourceService.class, DeleteProjectCommand.class,
+			DeleteProjectMemberCommand.class, ExternalResourceService.class,
 			ContentActivityLogService.class, ExternalDriveService.class,
 			ResourceMover.class });
 

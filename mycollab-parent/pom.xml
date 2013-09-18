@@ -18,6 +18,7 @@
     <modules>
         <module>../mycollab-core</module>
         <module>../mycollab-api</module>
+        <module>../mycollab-caching</module>
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-test</module>
         <module>../mycollab-services</module>

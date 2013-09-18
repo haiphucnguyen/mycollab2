@@ -9,14 +9,14 @@ import com.esofthead.mycollab.common.dao.CommentMapper;
 import com.esofthead.mycollab.common.domain.CommentExample;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
-import com.esofthead.mycollab.module.project.esb.DeleteProjectBugListener;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectBugCommand;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component
-public class DeleteProjectBugListenerImpl implements DeleteProjectBugListener {
+public class DeleteProjectBugCommandImpl implements DeleteProjectBugCommand {
 
 	private static Logger log = LoggerFactory
-			.getLogger(DeleteProjectBugListenerImpl.class);
+			.getLogger(DeleteProjectBugCommandImpl.class);
 
 	@Override
 	public void bugRemoved(String username, int accountId, int projectId,
