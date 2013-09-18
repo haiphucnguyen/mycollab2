@@ -4,7 +4,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
 public class TableViewFieldDecorator extends TableViewField {
 	private TableViewField tableField;
-	
+
 	private ColumnInjectionRenderer columnRenderer;
 
 	public TableViewFieldDecorator(TableViewField tableField) {

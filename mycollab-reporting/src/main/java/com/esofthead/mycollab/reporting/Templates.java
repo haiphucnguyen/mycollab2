@@ -3,10 +3,13 @@ package com.esofthead.mycollab.reporting;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
 import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+import static net.sf.dynamicreports.report.builder.DynamicReports.template;
 
 import java.awt.Color;
+import java.util.Locale;
 
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
+import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
@@ -22,6 +25,11 @@ public class Templates {
 	public static final StyleBuilder bold22CenteredStyle;
 	public static final StyleBuilder columnTitleStyle;
 	public static final StyleBuilder columnStyle;
+	public static final StyleBuilder bold12CenteredStyle;
+	public static final StyleBuilder groupStyle;
+	public static final StyleBuilder subtotalStyle;
+	public static final ReportTemplateBuilder reportTemplate;
+
 	static {
 		rootStyle = stl.style().setPadding(2);
 		boldStyle = stl.style(rootStyle).bold();
@@ -29,6 +37,7 @@ public class Templates {
 		underlineStyle = stl.style(rootStyle).underline();
 		boldCenteredStyle = stl.style(boldStyle).setAlignment(
 				HorizontalAlignment.CENTER, VerticalAlignment.MIDDLE);
+		bold12CenteredStyle = stl.style(boldCenteredStyle).setFontSize(12);
 		bold18CenteredStyle = stl.style(boldCenteredStyle).setFontSize(18);
 		bold22CenteredStyle = stl.style(boldCenteredStyle).setFontSize(22);
 		columnStyle = stl.style(rootStyle).setVerticalAlignment(
@@ -36,7 +45,28 @@ public class Templates {
 		columnTitleStyle = stl.style(columnStyle).setBorder(stl.pen1Point())
 				.setHorizontalAlignment(HorizontalAlignment.CENTER)
 				.setBackgroundColor(Color.LIGHT_GRAY).bold();
+		groupStyle = stl.style(boldStyle).setHorizontalAlignment(
+				HorizontalAlignment.LEFT);
+		subtotalStyle = stl.style(boldStyle).setTopBorder(stl.pen1Point());
 
+		StyleBuilder crosstabGroupStyle = stl.style(columnTitleStyle);
+		StyleBuilder crosstabGroupTotalStyle = stl.style(columnTitleStyle)
+				.setBackgroundColor(new Color(170, 170, 170));
+		StyleBuilder crosstabGrandTotalStyle = stl.style(columnTitleStyle)
+				.setBackgroundColor(new Color(140, 140, 140));
+		StyleBuilder crosstabCellStyle = stl.style(columnStyle).setBorder(
+				stl.pen1Point());
+
+		reportTemplate = template().setLocale(Locale.ENGLISH)
+				.setColumnStyle(columnStyle)
+				.setColumnTitleStyle(columnTitleStyle)
+				.setGroupStyle(groupStyle).setGroupTitleStyle(groupStyle)
+				.setSubtotalStyle(subtotalStyle).highlightDetailEvenRows()
+				.crosstabHighlightEvenRows()
+				.setCrosstabGroupStyle(crosstabGroupStyle)
+				.setCrosstabGroupTotalStyle(crosstabGroupTotalStyle)
+				.setCrosstabGrandTotalStyle(crosstabGrandTotalStyle)
+				.setCrosstabCellStyle(crosstabCellStyle);
 	}
 
 	/**

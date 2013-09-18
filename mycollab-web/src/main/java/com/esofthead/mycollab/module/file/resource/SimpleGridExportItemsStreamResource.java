@@ -19,6 +19,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.reporting.BeanDataSource;
+import com.esofthead.mycollab.reporting.BugCustomLinkRenderer;
 import com.esofthead.mycollab.reporting.ColumnInjectionRenderer;
 import com.esofthead.mycollab.reporting.EmailColumnInjectionRenderer;
 import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
@@ -81,11 +82,13 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 			Field fieldCls = ClassUtils.getField(classType, field.getField());
 			DRIDataType<Object, ? extends Object> jrType = type
 					.detectType(fieldCls.getType().getName());
+
 			TextColumnBuilder<? extends Object> columnBuilder = col.column(
 					field.getDesc(), field.getField(), jrType).setWidth(
 					field.getDefaultWidth());
 
 			ColumnInjectionRenderer columnRenderer = field.getColumnRenderer();
+
 			if (columnRenderer != null) {
 				if (columnRenderer instanceof HyperLinkColumnInjectionRenderer) {
 					columnBuilder
@@ -101,6 +104,10 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 					columnBuilder
 							.setStyle(((EmailColumnInjectionRenderer) columnRenderer)
 									.getStyle());
+				} else if (columnRenderer instanceof BugCustomLinkRenderer) {
+					columnBuilder = col.column(field.getDesc(),
+							((BugCustomLinkRenderer) columnRenderer)
+									.getExpression());
 				} else {
 					throw new MyCollabException(
 							"Does not support column renderer "

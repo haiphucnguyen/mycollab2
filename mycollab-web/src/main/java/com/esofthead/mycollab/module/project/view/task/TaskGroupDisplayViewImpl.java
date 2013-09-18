@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -261,20 +262,34 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 						.getProject().getName() != null) ? CurrentProjectVariables
 						.getProject().getName() : "");
+
 		final TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
 		tasklistSearchCriteria.setProjectId(new NumberSearchField(
 				SearchField.AND, CurrentProjectVariables.getProject().getId()));
-		// final Resource res = new StreamResource(
-		// new ExportTaskExcelStreamResource(
-		// title,
-		// TaskGroupDisplayViewImpl.EXPORT_COLUMNS,
-		// AppContext
-		// .getSpringBean(ProjectTaskListService.class),
-		// tasklistSearchCriteria),
-		// "task_list.xls", TaskGroupDisplayViewImpl.this
-		// .getApplication());
-		// TaskGroupDisplayViewImpl.this.getWindow().open(res,
-		// "_blank");
+
+		Resource res = null;
+		// if (exportType.equals(ReportExportType.PDF)) {
+		// res = new StreamResource(new ExportTaskListExcelStreamResource(
+		// title, exportType,
+		// AppContext.getSpringBean(ProjectTaskListService.class),
+		// tasklistSearchCriteria,new RpParameterBuilder(taskLists.get
+		// .getDisplayColumns())), "task_list.pdf",
+		// TaskGroupDisplayViewImpl.this.getApplication());
+		// } else if (exportType.equals(ReportExportType.CSV)) {
+		// res = new StreamResource(new ExportTaskListExcelStreamResource(
+		// title, exportType,
+		// AppContext.getSpringBean(ProjectTaskListService.class),
+		// tasklistSearchCriteria), "task_list.csv",
+		// TaskGroupDisplayViewImpl.this.getApplication());
+		// } else {
+		// res = new StreamResource(new ExportTaskListExcelStreamResource(
+		// title, exportType,
+		// AppContext.getSpringBean(ProjectTaskListService.class),
+		// tasklistSearchCriteria), "task_list.xls",
+		// TaskGroupDisplayViewImpl.this.getApplication());
+		// }
+
+		TaskGroupDisplayViewImpl.this.getWindow().open(res, "_blank");
 		exportButtonControl.setPopupVisible(false);
 	}
 
