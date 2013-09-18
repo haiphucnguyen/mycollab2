@@ -2418,9 +2418,9 @@ a.nivo-prevNav {
     font-weight: bold;
     height: 28px;
     letter-spacing: 1px;
-    line-height: 31px;
+    line-height: 27px;
     margin-right: 1px;
-    padding: 0;
+    padding: 0 0 1px 0;
     text-decoration: none;
     width: 200px;
     font-family: 'verdana';
