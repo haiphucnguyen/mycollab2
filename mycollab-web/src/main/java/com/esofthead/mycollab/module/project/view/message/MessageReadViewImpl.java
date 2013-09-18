@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view.message;
 
 import java.util.List;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -187,7 +187,7 @@ public class MessageReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				VerticalLayout bottomPanel = new VerticalLayout();
 				bottomPanel.addComponent(new CommentListDepot(
-						CommentTypeConstants.PRJ_MESSAGE, message.getId(),
+						CommentType.PRJ_MESSAGE, message.getId(),
 						CurrentProjectVariables.getProjectId(), true, true,
 						MessageRelayEmailNotificationAction.class));
 				return bottomPanel;

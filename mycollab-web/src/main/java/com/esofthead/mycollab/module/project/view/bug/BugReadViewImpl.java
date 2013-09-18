@@ -6,7 +6,7 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -126,7 +126,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				tabBugDetail.setWidth("100%");
 
 				final CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_BUG,
+						CommentType.PRJ_BUG,
 						BugReadViewImpl.this.bug.getId(),
 						CurrentProjectVariables.getProjectId(), true, true,
 						BugRelayEmailNotificationAction.class);

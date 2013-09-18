@@ -36,7 +36,7 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 				.threads()
 				.bean(ApplicationContextUtil
 						.getBean(InviteOutsideProjectMemberListener.class),
-						"inviteUsers(String[],int, String, int)");
+						"inviteUsers(String[],int, int, String, int)");
 	}
 
 }

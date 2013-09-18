@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
@@ -138,7 +138,8 @@ public class ApproveInputWindow extends Window {
 											.getUsername());
 									comment.setSaccountid(AppContext
 											.getAccountId());
-									comment.setType(CommentTypeConstants.PRJ_BUG);
+									comment.setType(CommentType.PRJ_BUG
+											.toString());
 									comment.setTypeid(ApproveInputWindow.this.bug
 											.getId());
 

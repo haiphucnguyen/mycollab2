@@ -4,7 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.dao.CommentMapper;
+import com.esofthead.mycollab.common.domain.CommentExample;
+import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectBugListener;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component
 public class DeleteProjectBugListenerImpl implements DeleteProjectBugListener {
@@ -23,11 +28,23 @@ public class DeleteProjectBugListenerImpl implements DeleteProjectBugListener {
 	}
 
 	private void removeBugFiles(int accountId, int projectId, int bugId) {
+		log.debug("Delete files of bug {} in project {}", projectId, bugId);
 
+		ResourceService resourceService = ApplicationContextUtil
+				.getBean(ResourceService.class);
+		String bugAttachmentPath = AttachmentUtils.getProjectBugAttachmentPath(
+				accountId, projectId, bugId);
+		resourceService.removeResource(bugAttachmentPath, "");
 	}
 
 	private void removeBugComments(int bugId) {
+		log.debug("Delete related comments");
+		CommentMapper commentMapper = ApplicationContextUtil
+				.getBean(CommentMapper.class);
 
+		CommentExample ex = new CommentExample();
+//		ex.createCriteria().andExtratypeidEqualTo(projectId);
+		commentMapper.deleteByExample(ex);
 	}
 
 }

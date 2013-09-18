@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.ui.components;
 
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
@@ -26,7 +27,7 @@ public class CommentListDepot extends Depot {
 
 	private final CommentDisplay commentListBox;
 
-	public CommentListDepot(final String type, final Integer typeid,
+	public CommentListDepot(final CommentType type, final Integer typeid,
 			final Integer extraTypeId, final boolean isDisplayCommentInput,
 			final boolean isSendingRelayEmail) {
 		super("Comments", new CommentDisplay(type, typeid, extraTypeId,
@@ -39,7 +40,7 @@ public class CommentListDepot extends Depot {
 	}
 
 	public CommentListDepot(
-			final String type,
+			final CommentType type,
 			final int typeid,
 			final int extraTypeId,
 			final boolean isDisplayCommentInput,
@@ -54,7 +55,7 @@ public class CommentListDepot extends Depot {
 		commentListBox.setMargin(true);
 	}
 
-	public void loadComments(final String type, final int typeid) {
+	public void loadComments(final CommentType type, final int typeid) {
 		commentListBox.loadComments(type, typeid);
 		setTitle("Comments(" + commentListBox.getNumComments() + ")");
 	}
@@ -62,13 +63,13 @@ public class CommentListDepot extends Depot {
 	public static class CommentDisplay extends VerticalLayout implements
 			ReloadableComponent {
 		private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
-		private String type;
+		private CommentType type;
 		private Integer typeid;
 		private Integer numComments;
 		private ProjectCommentInput commentBox;
 
 		public CommentDisplay(
-				final String type,
+				final CommentType type,
 				final Integer typeid,
 				final Integer extraTypeId,
 				final boolean isDisplayCommentInput,
@@ -104,7 +105,7 @@ public class CommentListDepot extends Depot {
 			}
 
 			final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-			searchCriteria.setType(new StringSearchField(type));
+			searchCriteria.setType(new StringSearchField(type.toString()));
 			searchCriteria.setTypeid(new NumberSearchField(typeid));
 			numComments = commentList.setSearchCriteria(searchCriteria);
 		}
@@ -113,7 +114,7 @@ public class CommentListDepot extends Depot {
 			return numComments;
 		}
 
-		public void loadComments(final String type, final int typeid) {
+		public void loadComments(final CommentType type, final int typeid) {
 			this.type = type;
 			this.typeid = typeid;
 			displayCommentList();

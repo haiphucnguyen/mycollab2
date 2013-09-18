@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.view.risk;
 
 import org.vaadin.teemu.ratingstars.RatingStars;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -162,7 +162,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				final CommentListDepot commentList = new CommentListDepot(
-						CommentTypeConstants.PRJ_RISK,
+						CommentType.PRJ_RISK,
 						RiskReadViewImpl.this.risk.getId(),
 						CurrentProjectVariables.getProjectId(), true, true,
 						ProjectRiskRelayEmailNotificationAction.class);
@@ -247,7 +247,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
 			@Override
 			protected Layout createBottomPanel() {
-				return new CommentListDepot(CommentTypeConstants.PRJ_RISK,
+				return new CommentListDepot(CommentType.PRJ_RISK,
 						PrintView.this.risk.getId(),
 						CurrentProjectVariables.getProjectId(), false, true,
 						ProjectRiskRelayEmailNotificationAction.class);

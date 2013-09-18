@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -198,7 +198,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				final CommentListDepot commentList = new CommentListDepot(
-						CommentTypeConstants.PRJ_TASK_LIST,
+						CommentType.PRJ_TASK_LIST,
 						TaskGroupReadViewImpl.this.taskList.getId(),
 						CurrentProjectVariables.getProjectId(), true, true);
 				commentList.setWidth("100%");
@@ -301,9 +301,9 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.addComponent(new CommentListDepot(
-						CommentTypeConstants.PRJ_TASK_LIST,
-						PrintView.this.taskList.getId(),
-						CurrentProjectVariables.getProjectId(), false, false));
+						CommentType.PRJ_TASK_LIST, PrintView.this.taskList
+								.getId(), CurrentProjectVariables
+								.getProjectId(), false, false));
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}

@@ -4,11 +4,17 @@
  */
 package com.esofthead.mycollab.module.file;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.common.CommentType;
+
 /**
  * 
  * @author haiphucnguyen
  */
 public class AttachmentUtils {
+	private static Logger log = LoggerFactory.getLogger(AttachmentUtils.class);
 
 	public static String getCrmNoteAttachmentPath(int accountId, int noteId) {
 		return String.format("%d/crm/.attachments/%s/%d", accountId,
@@ -93,5 +99,46 @@ public class AttachmentUtils {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",
 				accountId, projectId, AttachmentType.PROJECT_PROBLEM,
 				problemId, AttachmentType.COMMON_COMMENT, commentId);
+	}
+
+	public static String getProjectEntityCommentAttachmentPath(
+			CommentType type, int accountId, int projectId, int typeid,
+			int commentId) {
+		String attachmentPath = "";
+
+		if (CommentType.PRJ_BUG.equals(type)) {
+			attachmentPath = AttachmentUtils
+					.getProjectBugCommentAttachmentPath(accountId, projectId,
+							typeid, commentId);
+		} else if (CommentType.PRJ_MESSAGE.equals(type)) {
+			attachmentPath = AttachmentUtils
+					.getProjectMessageCommentAttachmentPath(accountId,
+							projectId, typeid, commentId);
+		} else if (CommentType.PRJ_MILESTONE.equals(type)) {
+			attachmentPath = AttachmentUtils
+					.getProjectMilestoneCommentAttachmentPath(accountId,
+							projectId, typeid, commentId);
+		} else if (CommentType.PRJ_PROBLEM.equals(type)) {
+			attachmentPath = AttachmentUtils
+					.getProjectProblemCommentAttachmentPath(accountId,
+							projectId, typeid, commentId);
+		} else if (CommentType.PRJ_RISK.equals(type)) {
+			attachmentPath = AttachmentUtils
+					.getProjectRiskCommentAttachmentPath(accountId, projectId,
+							typeid, commentId);
+		} else if (CommentType.PRJ_TASK.equals(type)) {
+			attachmentPath = AttachmentUtils
+					.getProjectTaskCommentAttachmentPath(accountId, projectId,
+							typeid, commentId);
+		} else if (CommentType.PRJ_TASK_LIST.equals(type)) {
+			attachmentPath = AttachmentUtils
+					.getProjectTaskListCommentAttachmentPath(accountId,
+							projectId, typeid, commentId);
+		} else {
+			log.error("Do not support comment attachment path " + type);
+		}
+
+		return attachmentPath;
+
 	}
 }

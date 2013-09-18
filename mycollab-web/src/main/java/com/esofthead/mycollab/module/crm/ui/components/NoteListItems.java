@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
@@ -201,8 +201,8 @@ public class NoteListItems extends Depot {
 						if (!(component instanceof CommentInput)) {
 							commentInput = new CommentInput(
 									NoteRowDisplayHandler.this,
-									CommentTypeConstants.CRM_NOTE,
-									note.getId(), null, true, false);
+									CommentType.CRM_NOTE, note.getId(), null,
+									true, false);
 							noteContentLayout.addComponent(commentInput,
 									noteContentLayout.getComponentCount());
 							replyBtn.setVisible(false);
@@ -224,8 +224,8 @@ public class NoteListItems extends Depot {
 
 		private void displayComments() {
 			final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-			searchCriteria.setType(new StringSearchField(
-					CommentTypeConstants.CRM_NOTE));
+			searchCriteria.setType(new StringSearchField(CommentType.CRM_NOTE
+					.toString()));
 			searchCriteria.setTypeid(new NumberSearchField(note.getId()));
 			commentList.setSearchCriteria(searchCriteria);
 		}

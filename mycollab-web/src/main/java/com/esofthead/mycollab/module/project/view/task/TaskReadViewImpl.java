@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -103,7 +103,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				tabTaskDetail.setWidth("100%");
 
 				final CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_TASK,
+						CommentType.PRJ_TASK,
 						TaskReadViewImpl.this.task.getId(),
 						CurrentProjectVariables.getProjectId(), true, true,
 						ProjectTaskRelayEmailNotificationAction.class);
@@ -192,7 +192,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 			@Override
 			protected ComponentContainer createBottomPanel() {
-				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
+				return new CommentListDepot(CommentType.PRJ_TASK,
 						PrintView.this.task.getId(),
 						CurrentProjectVariables.getProjectId(), false, false);
 			}

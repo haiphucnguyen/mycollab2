@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
@@ -131,7 +131,8 @@ public class AssignTaskWindow extends Window {
 											.getUsername());
 									comment.setSaccountid(AppContext
 											.getAccountId());
-									comment.setType(CommentTypeConstants.PRJ_TASK);
+									comment.setType(CommentType.PRJ_TASK
+											.toString());
 									comment.setTypeid(task.getId());
 
 									CommentService commentService = AppContext

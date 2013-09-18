@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.view.problem;
 
 import org.vaadin.teemu.ratingstars.RatingStars;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -163,7 +163,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				final CommentListDepot commentList = new CommentListDepot(
-						CommentTypeConstants.PRJ_PROBLEM,
+						CommentType.PRJ_PROBLEM,
 						ProblemReadViewImpl.this.problem.getId(),
 						CurrentProjectVariables.getProjectId(), true, true,
 						ProjectProblemRelayEmailNotificationAction.class);
@@ -248,7 +248,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createBottomPanel() {
-				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
+				return new CommentListDepot(CommentType.PRJ_PROBLEM,
 						PrintView.this.problem.getId(),
 						CurrentProjectVariables.getProjectId(), false, true,
 						ProjectProblemRelayEmailNotificationAction.class);

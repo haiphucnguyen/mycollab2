@@ -6,7 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -46,42 +46,42 @@ public class SimpleComment extends Comment {
 						.getBean(ContentJcrDao.class);
 
 				String commentPath = "";
-				if (CommentTypeConstants.PRJ_BUG.equals(getType())) {
+				if (CommentType.PRJ_BUG.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getProjectBugCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									getTypeid(), getId());
-				} else if (CommentTypeConstants.PRJ_MESSAGE.equals(getType())) {
+				} else if (CommentType.PRJ_MESSAGE.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getProjectMessageCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									getTypeid(), getId());
-				} else if (CommentTypeConstants.PRJ_MILESTONE.equals(getType())) {
+				} else if (CommentType.PRJ_MILESTONE.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getProjectMilestoneCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									getTypeid(), getId());
-				} else if (CommentTypeConstants.PRJ_PROBLEM.equals(getType())) {
+				} else if (CommentType.PRJ_PROBLEM.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getProjectProblemCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									getTypeid(), getId());
-				} else if (CommentTypeConstants.PRJ_RISK.equals(getType())) {
+				} else if (CommentType.PRJ_RISK.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getProjectRiskCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									getTypeid(), getId());
-				} else if (CommentTypeConstants.PRJ_TASK.equals(getType())) {
+				} else if (CommentType.PRJ_TASK.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getProjectTaskCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									getTypeid(), getId());
-				} else if (CommentTypeConstants.PRJ_TASK_LIST.equals(getType())) {
+				} else if (CommentType.PRJ_TASK_LIST.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getProjectTaskListCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									getTypeid(), getId());
-				} else if (CommentTypeConstants.CRM_NOTE.equals(getType())) {
+				} else if (CommentType.CRM_NOTE.equals(getType())) {
 					commentPath = AttachmentUtils
 							.getCrmNoteCommentAttachmentPath(getSaccountid(),
 									getTypeid(), getId());

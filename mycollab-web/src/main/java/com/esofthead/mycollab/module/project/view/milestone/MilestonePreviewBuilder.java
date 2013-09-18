@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Milestone;
@@ -47,7 +47,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 	private void displayComments() {
 		this.associateCommentListComp.loadComments(
-				CommentTypeConstants.PRJ_MILESTONE, this.milestone.getId());
+				CommentType.PRJ_MILESTONE, this.milestone.getId());
 	}
 
 	protected void displayTaskGroups() {
@@ -160,7 +160,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				relatedItemsPanel
 						.addComponent(PrintView.this.associateBugListComp);
 				PrintView.this.associateCommentListComp = new CommentDisplay(
-						CommentTypeConstants.PRJ_MILESTONE, milestone.getId(),
+						CommentType.PRJ_MILESTONE, milestone.getId(),
 						CurrentProjectVariables.getProjectId(), false, true,
 						ProjectMilestoneRelayEmailNotificationAction.class);
 				PrintView.this.associateCommentListComp.setMargin(true);
@@ -265,7 +265,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			this.tabContainer.setHeight(Sizeable.SIZE_UNDEFINED, 0);
 
 			this.associateCommentListComp = new CommentDisplay(
-					CommentTypeConstants.PRJ_MILESTONE, null,
+					CommentType.PRJ_MILESTONE, null,
 					CurrentProjectVariables.getProjectId(), true, true,
 					ProjectMilestoneRelayEmailNotificationAction.class);
 

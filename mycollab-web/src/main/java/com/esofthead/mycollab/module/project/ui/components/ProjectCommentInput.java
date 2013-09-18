@@ -4,7 +4,7 @@ import java.util.GregorianCalendar;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
@@ -29,13 +29,13 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectCommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private final RichTextArea commentArea;
-	private String type;
+	private CommentType type;
 	private Integer typeid;
 	private Integer extraTypeId;
 
 	ProjectCommentInput(
 			final ReloadableComponent component,
-			final String typeVal,
+			final CommentType typeVal,
 			final Integer typeidVal,
 			final Integer extraTypeIdVal,
 			final boolean cancelButtonEnable,
@@ -94,7 +94,7 @@ public class ProjectCommentInput extends VerticalLayout {
 								.getTime());
 						comment.setCreateduser(AppContext.getUsername());
 						comment.setSaccountid(AppContext.getAccountId());
-						comment.setType(type);
+						comment.setType(type.toString());
 						comment.setTypeid(typeid);
 						comment.setExtratypeid(extraTypeId);
 
@@ -104,63 +104,11 @@ public class ProjectCommentInput extends VerticalLayout {
 								AppContext.getUsername(), isSendingEmailRelay,
 								emailHandler);
 
-						String attachmentPath = "";
-						if (CommentTypeConstants.PRJ_BUG.equals(type)) {
-							attachmentPath = AttachmentUtils
-									.getProjectBugCommentAttachmentPath(
-											AppContext.getAccountId(),
-											CurrentProjectVariables
-													.getProjectId(), typeid,
-											commentId);
-						} else if (CommentTypeConstants.PRJ_MESSAGE
-								.equals(type)) {
-							attachmentPath = AttachmentUtils
-									.getProjectMessageCommentAttachmentPath(
-											AppContext.getAccountId(),
-											CurrentProjectVariables
-													.getProjectId(), typeid,
-											commentId);
-						} else if (CommentTypeConstants.PRJ_MILESTONE
-								.equals(type)) {
-							attachmentPath = AttachmentUtils
-									.getProjectMilestoneCommentAttachmentPath(
-											AppContext.getAccountId(),
-											CurrentProjectVariables
-													.getProjectId(), typeid,
-											commentId);
-						} else if (CommentTypeConstants.PRJ_PROBLEM
-								.equals(type)) {
-							attachmentPath = AttachmentUtils
-									.getProjectProblemCommentAttachmentPath(
-											AppContext.getAccountId(),
-											CurrentProjectVariables
-													.getProjectId(), typeid,
-											commentId);
-						} else if (CommentTypeConstants.PRJ_RISK.equals(type)) {
-							attachmentPath = AttachmentUtils
-									.getProjectRiskCommentAttachmentPath(
-											AppContext.getAccountId(),
-											CurrentProjectVariables
-													.getProjectId(), typeid,
-											commentId);
-						} else if (CommentTypeConstants.PRJ_TASK.equals(type)) {
-							attachmentPath = AttachmentUtils
-									.getProjectTaskCommentAttachmentPath(
-											AppContext.getAccountId(),
-											CurrentProjectVariables
-													.getProjectId(), typeid,
-											commentId);
-						} else if (CommentTypeConstants.PRJ_TASK_LIST
-								.equals(type)) {
-							attachmentPath = AttachmentUtils
-									.getProjectTaskListCommentAttachmentPath(
-											AppContext.getAccountId(),
-											CurrentProjectVariables
-													.getProjectId(), typeid,
-											commentId);
-						} else {
-							// do nothing
-						}
+						String attachmentPath = AttachmentUtils
+								.getProjectEntityCommentAttachmentPath(typeVal,
+										AppContext.getAccountId(),
+										CurrentProjectVariables.getProjectId(),
+										typeid, commentId);
 
 						if (!"".equals(attachmentPath)) {
 							attachments.saveContentsToRepo(attachmentPath);
@@ -181,7 +129,7 @@ public class ProjectCommentInput extends VerticalLayout {
 		this.addComponent(controlsLayout);
 	}
 
-	void setTypeAndId(final String type, final int typeid) {
+	void setTypeAndId(final CommentType type, final int typeid) {
 		this.type = type;
 		this.typeid = typeid;
 	}

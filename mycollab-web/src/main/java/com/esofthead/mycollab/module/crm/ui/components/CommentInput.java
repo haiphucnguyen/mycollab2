@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
@@ -31,21 +31,21 @@ import com.vaadin.ui.VerticalLayout;
 public class CommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private final RichTextArea commentArea;
-	private String type;
+	private CommentType type;
 	private Integer typeid;
 	private Integer extraTypeId;
 
 	public CommentInput(final ReloadableComponent component,
-			final String typeVal, final Integer typeidVal,
+			final CommentType typeVal, final Integer typeidVal,
 			final Integer extraTypeIdVal, final boolean cancelButtonEnable,
 			final boolean isSendingEmailRelay) {
 		this(component, typeVal, typeidVal, extraTypeIdVal, cancelButtonEnable,
 				isSendingEmailRelay, null);
 	}
 
-	CommentInput(final ReloadableComponent component, final String typeVal,
-			final Integer typeidVal, final Integer extraTypeIdVal,
-			final boolean cancelButtonEnable,
+	CommentInput(final ReloadableComponent component,
+			final CommentType typeVal, final Integer typeidVal,
+			final Integer extraTypeIdVal, final boolean cancelButtonEnable,
 			final boolean isSendingEmailRelay, final Class emailHandler) {
 		this.setWidth("600px");
 		setSpacing(true);
@@ -100,7 +100,7 @@ public class CommentInput extends VerticalLayout {
 								.getTime());
 						comment.setCreateduser(AppContext.getUsername());
 						comment.setSaccountid(AppContext.getAccountId());
-						comment.setType(type);
+						comment.setType(type.toString());
 						comment.setTypeid(typeid);
 						comment.setExtratypeid(extraTypeId);
 
@@ -118,7 +118,7 @@ public class CommentInput extends VerticalLayout {
 						}
 
 						String attachmentPath = "";
-						if (CommentTypeConstants.CRM_NOTE.equals(type)) {
+						if (CommentType.CRM_NOTE.equals(type)) {
 							attachmentPath = AttachmentUtils
 									.getCrmNoteCommentAttachmentPath(
 											AppContext.getAccountId(), typeid,
@@ -146,7 +146,7 @@ public class CommentInput extends VerticalLayout {
 		this.addComponent(controlsLayout);
 	}
 
-	void setTypeAndId(final String type, final int typeid) {
+	void setTypeAndId(final CommentType type, final int typeid) {
 		this.type = type;
 		this.typeid = typeid;
 	}
