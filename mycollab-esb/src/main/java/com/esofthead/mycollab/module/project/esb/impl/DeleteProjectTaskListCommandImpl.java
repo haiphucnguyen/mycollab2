@@ -8,6 +8,8 @@ import com.esofthead.mycollab.module.project.esb.DeleteProjectTaskListCommand;
 public class DeleteProjectTaskListCommandImpl implements
 		DeleteProjectTaskListCommand {
 
+//	private static 
+	
 	@Override
 	public void taskListRemoved(String username, int accountId, int projectId,
 			int taskListId) {

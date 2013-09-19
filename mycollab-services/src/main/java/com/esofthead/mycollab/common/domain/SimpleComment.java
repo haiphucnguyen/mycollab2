@@ -93,8 +93,7 @@ public class SimpleComment extends Comment {
 				attachments = contentJcr.getContents(commentPath);
 			}
 		} catch (Exception e) {
-			log.error("Error while get attachments of comment {}",
-					new Object[] { getId() });
+			log.error("Error while get attachments of comment " + getId(), e);
 		}
 
 		if (attachments == null) {

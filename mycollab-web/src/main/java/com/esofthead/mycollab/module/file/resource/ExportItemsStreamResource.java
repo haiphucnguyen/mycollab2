@@ -122,7 +122,7 @@ public abstract class ExportItemsStreamResource<T> implements
 					.title(Templates.createTitleComponent(reportTitle))
 					.noData(Templates.createTitleComponent(reportTitle),
 							cmp.text("There is no data"))
-					.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE)
+					.setPageFormat(PageType.A3, PageOrientation.LANDSCAPE)
 					.setColumnTitleStyle(Templates.columnTitleStyle)
 					.highlightDetailEvenRows()
 					.pageFooter(

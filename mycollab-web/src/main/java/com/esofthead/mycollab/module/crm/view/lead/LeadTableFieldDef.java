@@ -64,6 +64,6 @@ public interface LeadTableFieldDef {
 
 	public static TableViewField assignedUser = new TableViewField(
 			LocalizationHelper.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
-			"assignUserFullName");
+			"assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 }

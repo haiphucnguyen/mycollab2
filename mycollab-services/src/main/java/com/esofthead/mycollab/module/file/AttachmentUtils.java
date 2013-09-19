@@ -60,6 +60,12 @@ public class AttachmentUtils {
 				AttachmentType.COMMON_COMMENT, commentId);
 	}
 
+	public static String getProjectMilestoneAttachmentPath(int accountId,
+			int projectId, int milestoneId) {
+		return String.format("%d/project/%d/.attachments/%s/%d", accountId,
+				projectId, AttachmentType.PROJECT_MILESTONE, milestoneId);
+	}
+
 	public static String getProjectMilestoneCommentAttachmentPath(
 			int accountId, int projectId, int milestoneId, int commentId) {
 		return String.format("%d/project/%d/.attachments/%s/%d/%s/%d",

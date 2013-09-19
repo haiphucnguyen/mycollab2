@@ -24,21 +24,21 @@ public class DeleteProjectBugCommandImpl implements DeleteProjectBugCommand {
 		log.debug("Remove bug {} of project {} by user {}", new Object[] {
 				bugId, projectId, username });
 
-		removeBugFiles(accountId, projectId, bugId);
-		removeBugComments(bugId);
+		removeRelatedFiles(accountId, projectId, bugId);
+		removeRelatedComments(bugId);
 	}
 
-	private void removeBugFiles(int accountId, int projectId, int bugId) {
-		log.debug("Delete files of bug {} in project {}", projectId, bugId);
+	private void removeRelatedFiles(int accountId, int projectId, int bugId) {
+		log.debug("Delete files of bug {} in project {}", bugId, projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
 				.getBean(ResourceService.class);
-		String bugAttachmentPath = AttachmentUtils.getProjectBugAttachmentPath(
+		String attachmentPath = AttachmentUtils.getProjectBugAttachmentPath(
 				accountId, projectId, bugId);
-		resourceService.removeResource(bugAttachmentPath, "");
+		resourceService.removeResource(attachmentPath, "");
 	}
 
-	private void removeBugComments(int bugId) {
+	private void removeRelatedComments(int bugId) {
 		log.debug("Delete related comments of bug {}", bugId);
 		CommentMapper commentMapper = ApplicationContextUtil
 				.getBean(CommentMapper.class);

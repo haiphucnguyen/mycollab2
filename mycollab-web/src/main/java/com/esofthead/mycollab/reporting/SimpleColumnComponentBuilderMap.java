@@ -100,7 +100,7 @@ public class SimpleColumnComponentBuilderMap {
 			this.typeRender = typeRender;
 		}
 
-		private class FieldComponetBuilderExpression extends
+		private class CrmFieldComponetBuilderExpression extends
 				AbstractSimpleExpression<String> {
 			private static final long serialVersionUID = 1L;
 
@@ -133,7 +133,7 @@ public class SimpleColumnComponentBuilderMap {
 
 		@Override
 		public DRIExpression getDriExpression() {
-			return new FieldComponetBuilderExpression();
+			return new CrmFieldComponetBuilderExpression();
 		}
 
 		@Override
