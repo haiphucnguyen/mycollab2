@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class ProjectSearchCriteria extends SearchCriteria {
@@ -8,7 +9,7 @@ public class ProjectSearchCriteria extends SearchCriteria {
 	private StringSearchField username;
 	private StringSearchField ownerName;
 	private StringSearchField accountName;
-	private StringSearchField projectStatus;
+	private SetSearchField<String> projectStatuses;
 	private StringSearchField projectType;
 	private StringSearchField projectName;
 	private StringSearchField involvedMember;
@@ -37,12 +38,12 @@ public class ProjectSearchCriteria extends SearchCriteria {
 		this.accountName = accountName;
 	}
 
-	public StringSearchField getProjectStatus() {
-		return projectStatus;
+	public SetSearchField<String> getProjectStatuses() {
+		return projectStatuses;
 	}
 
-	public void setProjectStatus(StringSearchField projectStatus) {
-		this.projectStatus = projectStatus;
+	public void setProjectStatuses(SetSearchField<String> projectStatuses) {
+		this.projectStatuses = projectStatuses;
 	}
 
 	public StringSearchField getProjectType() {

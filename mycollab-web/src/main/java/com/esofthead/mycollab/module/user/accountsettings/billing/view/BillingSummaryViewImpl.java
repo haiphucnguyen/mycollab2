@@ -2,9 +2,14 @@ package com.esofthead.mycollab.module.user.accountsettings.billing.view;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -23,9 +28,12 @@ import com.vaadin.ui.Window;
 @ViewComponent
 public class BillingSummaryViewImpl extends AbstractView implements
 		BillingSummaryView {
-	BillingService billingService;
+	private static Logger log = LoggerFactory
+			.getLogger(BillingSummaryViewImpl.class);
 
-	VerticalLayout currentPlan = null;
+	private BillingService billingService;
+
+	private VerticalLayout currentPlan = null;
 
 	public BillingSummaryViewImpl() {
 		super();
@@ -178,12 +186,13 @@ public class BillingSummaryViewImpl extends AbstractView implements
 	public void loadCurrentPlan() {
 		currentPlan.removeAllComponents();
 
-		Label introText = new Label("Your current plan:");
-		introText.addStyleName("intro-text");
-		currentPlan.addComponent(introText);
-
 		BillingPlan currentBillingPlan = AppContext.getBillingAccount()
 				.getBillingPlan();
+
+		Label introText = new Label("Your current plan: "
+				+ currentBillingPlan.getBillingtype());
+		introText.addStyleName("intro-text");
+		currentPlan.addComponent(introText);
 
 		Label currentBillingPrice = new Label("<span class='current-price'>$"
 				+ currentBillingPlan.getPricing() + "</span>/Month",
@@ -192,7 +201,25 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		currentBillingPrice.setImmediate(true);
 		currentPlan.addComponent(currentBillingPrice);
 
-		Label currentUsage = new Label("Spaces: 1 of 1 | User: 1 of 3");
+		String planInfo = "Spaces: %d of %d | Users: %d of %d";
+		log.debug("Get number of active users in account {}",
+				AppContext.getAccountId());
+		UserService userService = AppContext.getSpringBean(UserService.class);
+		int numActiveUsers = userService
+				.getTotalActiveUsersInAccount(AppContext.getAccountId());
+
+		log.debug("Get number of active projects in account {}",
+				AppContext.getAccountId());
+		ProjectService projectService = AppContext
+				.getSpringBean(ProjectService.class);
+		int numActiveProjects = projectService
+				.getTotalActiveProjectsInAccount(AppContext.getAccountId());
+
+		planInfo = String.format(planInfo, numActiveProjects,
+				currentBillingPlan.getNumprojects(), numActiveUsers,
+				currentBillingPlan.getNumusers());
+
+		Label currentUsage = new Label(planInfo);
 		currentUsage.addStyleName("current-usage");
 		currentPlan.addComponent(currentUsage);
 	}

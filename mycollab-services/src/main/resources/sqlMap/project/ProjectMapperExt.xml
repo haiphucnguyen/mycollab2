@@ -56,11 +56,13 @@
                  AND m_crm_account.accountName LIKE '%${searchCriteria.accountName.value}%') > 0
             ]]>
 		</if>
-		<if test="searchCriteria.projectStatus != null">
-			${searchCriteria.projectStatus.operation}
-			m_prj_project.projectStatus
-			like
-			'%${searchCriteria.projectStatus.value}%'
+		<if test="searchCriteria.projectStatuses != null">
+			${searchCriteria.projectStatuses.operation}
+			m_prj_project.projectStatus IN
+			<foreach close=")" collection="searchCriteria.projectStatuses.values"
+                item="status" open="(" separator=",">
+                #{status}
+            </foreach>
 		</if>
 		<if test="searchCriteria.projectType != null">
 			${searchCriteria.projectType.operation}
@@ -111,10 +113,14 @@
                     AND m_crm_account.accountName LIKE '%${searchCriteria.accountName.value}%') > 0
             ]]>
 		</if>
-		<if test="searchCriteria.projectStatus != null">
-			m_prj_project.projectStatus like
-			'%${searchCriteria.projectStatus.value}%'
-		</if>
+		<if test="searchCriteria.projectStatuses != null">
+            ${searchCriteria.projectStatuses.operation}
+            m_prj_project.projectStatus IN
+            <foreach close=")" collection="searchCriteria.projectStatuses.values"
+                item="status" open="(" separator=",">
+                #{status}
+            </foreach>
+        </if>
 		<if test="searchCriteria.projectType != null">
 			${searchCriteria.projectType.operation}
 			m_prj_project.projectType

@@ -64,5 +64,8 @@ public interface UserService extends
 	SimpleUser findUserByUserNameInAccount(String username,
 			@CacheKey Integer accountId);
 
+	@Cacheable
+	int getTotalActiveUsersInAccount(@CacheKey Integer accountId);
+
 	User findUserByUserName(String username);
 }

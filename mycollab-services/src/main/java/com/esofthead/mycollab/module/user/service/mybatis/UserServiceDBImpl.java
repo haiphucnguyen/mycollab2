@@ -39,8 +39,8 @@ import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -389,12 +389,20 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	@CacheEvict
 	public void updateUserAccountsStatus(List<String> usernames,
 			@CacheKey Integer sAccountId, String registerStatus) {
 		for (String username : usernames) {
 			updateUserAccountStatus(username, sAccountId, registerStatus);
 		}
 
+	}
+
+	@Override
+	public int getTotalActiveUsersInAccount(@CacheKey Integer accountId) {
+		UserSearchCriteria criteria = new UserSearchCriteria();
+		criteria.setRegisterStatuses(new SetSearchField<String>(
+				new String[] { RegisterStatusConstants.ACTIVE }));
+		criteria.setSaccountid(new NumberSearchField(accountId));
+		return userMapperExt.getTotalCount(criteria);
 	}
 }

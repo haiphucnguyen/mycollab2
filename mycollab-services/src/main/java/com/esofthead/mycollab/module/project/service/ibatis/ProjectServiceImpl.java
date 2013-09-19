@@ -32,8 +32,12 @@ import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteri
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -41,6 +45,7 @@ import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectStatusConstants;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
@@ -248,5 +253,14 @@ public class ProjectServiceImpl extends
 			log.error("Error while notify user delete", e);
 		}
 		return super.removeWithSession(projectId, username, accountId);
+	}
+
+	@Override
+	public Integer getTotalActiveProjectsInAccount(@CacheKey Integer sAccountId) {
+		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(sAccountId));
+		criteria.setProjectStatuses(new SetSearchField<String>(
+				new String[] { ProjectStatusConstants.OPEN }));
+		return projectMapperExt.getTotalCount(criteria);
 	}
 }

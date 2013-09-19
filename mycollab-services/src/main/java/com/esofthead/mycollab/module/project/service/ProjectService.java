@@ -47,6 +47,9 @@ public interface ProjectService extends
 
 	@Cacheable
 	SimpleProject findById(int projectId, @CacheKey int sAccountId);
+	
+	@Cacheable
+	Integer getTotalActiveProjectsInAccount(@CacheKey Integer sAccountId);
 
 	String getSubdomainOfProject(int projectId);
 }
