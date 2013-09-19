@@ -34,7 +34,7 @@
         SELECT m_audit_log.id, m_audit_log.object_class, m_audit_log.posteddate, m_audit_log.posteduser, 
             m_audit_log.sAccountId, m_audit_log.type, m_audit_log.typeid, m_audit_log.module, m_audit_log.changeset,
             s_user.avatarId AS postedUserAvatarId,
-            concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as postedUserFullName
+            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as postedUserFullName
         FROM m_audit_log
         LEFT OUTER JOIN s_user ON (s_user.username = m_audit_log.posteduser)
         ]]>
@@ -54,12 +54,14 @@
         </if>
     </select>
 
-    <select id="findById" parameterType="java.lang.Integer"
+    <select id="findLatestLog" parameterType="java.lang.Integer"
         resultMap="SimpleAuditLogResult">
         <include
             refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.selectSimpleAuditLog" />
 
-        WHERE m_audit_log.id=#{auditLogId, javaType=INTEGER}
+        WHERE m_audit_log.typeid=#{auditLogId, javaType=INTEGER}
+        ORDER BY m_audit_log.id
+        LIMIT 1
     </select>
 
     <sql id="orderStatement">

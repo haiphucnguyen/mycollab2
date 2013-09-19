@@ -142,7 +142,7 @@ public class AuditLogServiceImpl extends
 	}
 
 	@Override
-	public SimpleAuditLog findById(int auditLogId, int sAccountId) {
-		return auditLogMapperExt.findById(auditLogId);
+	public SimpleAuditLog findLatestLog(int auditLogId, int sAccountId) {
+		return auditLogMapperExt.findLatestLog(auditLogId);
 	}
 }

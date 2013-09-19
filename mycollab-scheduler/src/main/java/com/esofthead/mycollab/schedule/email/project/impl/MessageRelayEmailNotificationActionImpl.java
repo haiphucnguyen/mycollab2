@@ -39,7 +39,8 @@ public class MessageRelayEmailNotificationActionImpl implements
 		int messageId = notification.getTypeid();
 		int projectId = notification.getExtratypeid();
 		List<SimpleUser> usersInProject = projectMemberService
-				.getActiveUsersInProject(projectId, 0);
+				.getActiveUsersInProject(projectId,
+						notification.getSaccountid());
 
 		SimpleMessage message = messageService.findMessageById(messageId,
 				notification.getSaccountid());

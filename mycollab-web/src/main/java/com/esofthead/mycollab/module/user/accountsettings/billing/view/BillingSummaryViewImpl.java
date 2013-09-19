@@ -62,7 +62,8 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		FAQLayout.addComponent(header);
 
 		Label contentText = new Label(
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit...");
+				"For specific questions related to billing, features, plans, upgrades, downgrades or cancellations, please send email to <a href=\"mailto:support@esofthead.com\">support@esofthead.com</a>",
+				Label.CONTENT_XHTML);
 		contentText.addStyleName("faq-content");
 		FAQLayout.addComponent(contentText);
 
@@ -99,7 +100,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 			singlePlan.addComponent(billingPrice);
 
 			Label billingUser = new Label("<span class='billing-user'>"
-					+ plan.getNumusers() + "</span>&nbsp;User",
+					+ plan.getNumusers() + "</span>&nbsp;Users",
 					Label.CONTENT_XHTML);
 			singlePlan.addComponent(billingUser);
 

@@ -9,10 +9,10 @@ import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public interface AuditLogMapperExt extends
-        ISearchableDAO<AuditLogSearchCriteria> {
-	SimpleAuditLog findById(int auditLogId);
+		ISearchableDAO<AuditLogSearchCriteria> {
+	SimpleAuditLog findLatestLog(int auditLogId);
 }

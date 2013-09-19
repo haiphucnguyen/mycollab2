@@ -104,9 +104,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("problem", problem);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(problem, emailNotification));
-		if (emailNotification.getExtratypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findById(
-					emailNotification.getExtratypeid(),
+		if (emailNotification.getTypeid() != null) {
+			SimpleAuditLog auditLog = auditLogService.findLatestLog(
+					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);

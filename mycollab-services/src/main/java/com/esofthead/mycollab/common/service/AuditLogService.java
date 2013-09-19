@@ -11,5 +11,5 @@ public interface AuditLogService extends
 		IDefaultService<Integer, AuditLog, AuditLogSearchCriteria> {
 
 	@Cacheable
-	SimpleAuditLog findById(int auditLogId, @CacheKey int sAccountId);
+	SimpleAuditLog findLatestLog(int auditLogId, @CacheKey int sAccountId);
 }

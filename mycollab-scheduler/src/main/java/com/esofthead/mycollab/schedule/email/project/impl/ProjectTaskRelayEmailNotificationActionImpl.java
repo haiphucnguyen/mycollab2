@@ -85,9 +85,9 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("task", task);
 		templateGenerator.putVariable("hyperLinks", createHyperLinks(task));
 
-		if (emailNotification.getExtratypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findById(
-					emailNotification.getExtratypeid(),
+		if (emailNotification.getTypeid() != null) {
+			SimpleAuditLog auditLog = auditLogService.findLatestLog(
+					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
 

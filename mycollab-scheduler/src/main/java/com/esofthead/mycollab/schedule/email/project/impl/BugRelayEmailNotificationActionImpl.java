@@ -91,9 +91,10 @@ public class BugRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 
-		if (emailNotification.getExtratypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findById(
-					emailNotification.getExtratypeid(), 0);
+		if (emailNotification.getTypeid() != null) {
+			SimpleAuditLog auditLog = auditLogService.findLatestLog(
+					emailNotification.getTypeid(),
+					emailNotification.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
