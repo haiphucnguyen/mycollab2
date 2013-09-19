@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -34,6 +33,10 @@ public class BillingSummaryViewImpl extends AbstractView implements
 	private BillingService billingService;
 
 	private VerticalLayout currentPlan = null;
+
+	private Integer numOfActiveProjects = 0;
+
+	private Integer numOfActiveUsers = 0;
 
 	public BillingSummaryViewImpl() {
 		super();
@@ -140,16 +143,6 @@ public class BillingSummaryViewImpl extends AbstractView implements
 			billingBugTracking.addStyleName("billing-bug-feature");
 			singlePlan.addComponent(billingBugTracking);
 
-			Label billingStandup;
-			if (plan.getHasstandupmeetingenable()) {
-				billingStandup = new Label("Standup Meeting",
-						Label.CONTENT_DEFAULT);
-			} else {
-				billingStandup = new Label("&nbsp;", Label.CONTENT_XHTML);
-			}
-			billingStandup.addStyleName("billing-standup-feature");
-			singlePlan.addComponent(billingStandup);
-
 			Label billingTimeTracking;
 			if (plan.getHastimetracking()) {
 				billingTimeTracking = new Label("Time Tracking",
@@ -159,6 +152,16 @@ public class BillingSummaryViewImpl extends AbstractView implements
 			}
 			billingTimeTracking.addStyleName("billing-timetrack-feature");
 			singlePlan.addComponent(billingTimeTracking);
+
+			Label billingStandup;
+			if (plan.getHasstandupmeetingenable()) {
+				billingStandup = new Label("Standup Meeting",
+						Label.CONTENT_DEFAULT);
+			} else {
+				billingStandup = new Label("&nbsp;", Label.CONTENT_XHTML);
+			}
+			billingStandup.addStyleName("billing-standup-feature");
+			singlePlan.addComponent(billingStandup);
 
 			Button selectThisPlan = new Button("Select", new ClickListener() {
 
@@ -205,18 +208,18 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		log.debug("Get number of active users in account {}",
 				AppContext.getAccountId());
 		UserService userService = AppContext.getSpringBean(UserService.class);
-		int numActiveUsers = userService
-				.getTotalActiveUsersInAccount(AppContext.getAccountId());
+		numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext
+				.getAccountId());
 
 		log.debug("Get number of active projects in account {}",
 				AppContext.getAccountId());
 		ProjectService projectService = AppContext
 				.getSpringBean(ProjectService.class);
-		int numActiveProjects = projectService
+		numOfActiveProjects = projectService
 				.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
-		planInfo = String.format(planInfo, numActiveProjects,
-				currentBillingPlan.getNumprojects(), numActiveUsers,
+		planInfo = String.format(planInfo, numOfActiveProjects,
+				currentBillingPlan.getNumprojects(), numOfActiveUsers,
 				currentBillingPlan.getNumusers());
 
 		Label currentUsage = new Label(planInfo);
@@ -281,17 +284,32 @@ public class BillingSummaryViewImpl extends AbstractView implements
 			controlBtns.setComponentAlignment(cancelBtn,
 					Alignment.MIDDLE_CENTER);
 
-			final Button saveBtn = new Button("Save",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+			final Button saveBtn = new Button("Ok", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							BillingAccount billingAccount;
-							UpdateBillingPlanWindow.this.updateBillingPlan();
-							UpdateBillingPlanWindow.this.close();
-						}
-					});
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					log.debug("Check choose plan valid");
+
+					if (chosenPlan.getNumprojects() > numOfActiveProjects) {
+						
+						UpdateBillingPlanWindow.this.close();
+						return;
+					}
+
+					if (chosenPlan.getNumusers() > numOfActiveUsers) {
+						
+						UpdateBillingPlanWindow.this.close();
+						return;
+					}
+
+					log.debug("It is possible to update plan");
+					billingService.updateBillingPlan(AppContext.getAccountId(),
+							chosenPlan.getId());
+					UpdateBillingPlanWindow.this.updateBillingPlan();
+					UpdateBillingPlanWindow.this.close();
+				}
+			});
 			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			controlBtns.addComponent(saveBtn);
 			controlBtns.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);

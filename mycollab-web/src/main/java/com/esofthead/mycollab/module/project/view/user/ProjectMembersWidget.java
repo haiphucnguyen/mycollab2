@@ -5,8 +5,10 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -45,6 +47,8 @@ public class ProjectMembersWidget extends Depot {
 		ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
+		searchCriteria.setStatus(new StringSearchField(
+				ProjectMemberStatusConstants.ACTIVE));
 		memberList.setSearchCriteria(searchCriteria);
 	}
 

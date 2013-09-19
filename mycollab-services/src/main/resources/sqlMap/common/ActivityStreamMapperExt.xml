@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt">
-    
+
     <resultMap id="SimpleActivityStreamResult"
         extends="com.esofthead.mycollab.common.dao.ActivityStreamMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.common.domain.SimpleActivityStream">
@@ -57,9 +57,9 @@
                s_activitystream.module, m_comment.comment as comment_comment, m_comment.createdUser as comment_createdUser,
                m_comment.createdTime as comment_createdTime, m_comment.type as comment_type, m_comment.typeid as comment_typeid,
                m_comment.sAccountId as comment_sAccountId, 
-               concat(comment_user.firstname, ' ', LTRIM(IFNULL(comment_user.middlename || ' ', '')), comment_user.lastname) as comment_ownerFullName,
+               concat(comment_user.firstname, ' ', LTRIM(IFNULL(comment_user.middlename, '')), comment_user.lastname) as comment_ownerFullName,
                s_user.avatarId AS createdUserAvatarId,
-               concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as createdUserFullName,
+               concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename, '')), s_user.lastname) as createdUserFullName,
                m_audit_log.id AS log_id, m_audit_log.object_class AS log_object_class, m_audit_log.posteddate AS log_posteddate, m_audit_log.posteduser AS log_posteduser, 
                m_audit_log.sAccountId AS log_sAccountId, m_audit_log.type AS log_type, m_audit_log.typeid AS log_typeid, m_audit_log.module AS log_module, 
                m_audit_log.changeset AS log_changeset

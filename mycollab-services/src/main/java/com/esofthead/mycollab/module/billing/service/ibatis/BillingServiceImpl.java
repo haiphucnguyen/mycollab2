@@ -294,13 +294,15 @@ public class BillingServiceImpl implements BillingService {
 	}
 
 	@Override
-	public void updateBillingPlan(int accountid, int newBillingPlanId) {
-		// TODO Auto-generated method stub
-
+	public void updateBillingPlan(Integer accountid, int newBillingPlanId) {
+		BillingAccount record = new BillingAccount();
+		record.setId(accountid);
+		record.setBillingplanid(newBillingPlanId);
+		billingAccountMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
-	public void cancelAccount(int accountid) {
+	public void cancelAccount(Integer accountid) {
 		// TODO Auto-generated method stub
 
 	}
