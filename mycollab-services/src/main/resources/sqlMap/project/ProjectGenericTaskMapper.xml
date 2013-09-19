@@ -131,7 +131,7 @@
                  
           FROM m_prj_risk
               LEFT OUTER JOIN s_user ON (m_prj_risk.assigntouser=s_user.username)
-              LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectid=m_prj_project.id)
+              LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
@@ -145,7 +145,7 @@
                  
           FROM m_prj_problem
               LEFT OUTER JOIN s_user ON (m_prj_problem.assigntouser=s_user.username)
-              LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid=m_prj_project.id)
+              LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
@@ -159,7 +159,7 @@
                  
           FROM m_tracker_bug
               LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser=s_user.username)
-              LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid=m_prj_project.id)
+              LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
@@ -173,7 +173,7 @@
           
           FROM m_prj_task
             LEFT OUTER JOIN s_user ON (m_prj_task.assignUser=s_user.username)
-            LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid=m_prj_project.id)
+            LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
@@ -300,7 +300,7 @@
           
           FROM m_prj_task
             LEFT OUTER JOIN s_user ON (m_prj_task.assignUser=s_user.username)
-            LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid=m_prj_project.id)
+            LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
@@ -313,7 +313,7 @@
                  
           FROM m_tracker_bug
               LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser=s_user.username)
-              LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid=m_prj_project.id)
+              LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
@@ -326,7 +326,7 @@
                  
           FROM m_prj_risk
               LEFT OUTER JOIN s_user ON (m_prj_risk.assigntouser=s_user.username)
-              LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectid=m_prj_project.id)
+              LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
@@ -339,7 +339,7 @@
                  
           FROM m_prj_problem
               LEFT OUTER JOIN s_user ON (m_prj_problem.assigntouser=s_user.username)
-              LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid=m_prj_project.id)
+              LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 

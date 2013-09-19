@@ -37,7 +37,6 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.cache.CacheKey;
-import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -224,6 +223,8 @@ public class ProjectServiceImpl extends
 	public List<Integer> getUserProjectKeys(String username, Integer sAccountId) {
 		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(username));
+		searchCriteria.setProjectStatuses(new SetSearchField<String>(
+				new String[] { ProjectStatusConstants.OPEN }));
 		return projectMapperExt.getUserProjectKeys(searchCriteria);
 	}
 
@@ -262,5 +263,16 @@ public class ProjectServiceImpl extends
 		criteria.setProjectStatuses(new SetSearchField<String>(
 				new String[] { ProjectStatusConstants.OPEN }));
 		return projectMapperExt.getTotalCount(criteria);
+	}
+
+	@Override
+	public List<SimpleProject> getActiveProjectsInAccount(Integer sAccountId) {
+		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(sAccountId));
+		criteria.setProjectStatuses(new SetSearchField<String>(
+				new String[] { ProjectStatusConstants.OPEN }));
+		return (List<SimpleProject>) projectMapperExt
+				.findPagableListByCriteria(criteria, new RowBounds(0,
+						Integer.MAX_VALUE));
 	}
 }

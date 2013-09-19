@@ -3,8 +3,10 @@ package com.esofthead.mycollab.module.project.view.user;
 import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.project.ProjectStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -51,6 +53,8 @@ public class MyProjectListComponent extends Depot {
 		final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));
+		searchCriteria.setProjectStatuses(new SetSearchField<String>(
+				new String[] { ProjectStatusConstants.OPEN }));
 		this.projectList.setSearchCriteria(searchCriteria);
 	}
 
