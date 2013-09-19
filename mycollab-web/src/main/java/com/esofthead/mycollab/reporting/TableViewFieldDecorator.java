@@ -1,14 +1,23 @@
 package com.esofthead.mycollab.reporting;
 
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.definition.expression.DRIExpression;
+
+import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap.StringFieldExpression;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
 public class TableViewFieldDecorator extends TableViewField {
 	private TableViewField tableField;
 
-	private ColumnInjectionRenderer columnRenderer;
+	private DRIExpression fieldComponentExpression;
+
+	private ComponentBuilder componentBuilder;
 
 	public TableViewFieldDecorator(TableViewField tableField) {
 		this.tableField = tableField;
+		this.fieldComponentExpression = new StringFieldExpression(
+				tableField.getField());
 	}
 
 	@Override
@@ -41,11 +50,25 @@ public class TableViewFieldDecorator extends TableViewField {
 		tableField.setDefaultWidth(defaultWidth);
 	}
 
-	public ColumnInjectionRenderer getColumnRenderer() {
-		return columnRenderer;
+	public DRIExpression getFieldComponentExpression() {
+		return fieldComponentExpression;
 	}
 
-	public void setColumnRenderer(ColumnInjectionRenderer columnRenderer) {
-		this.columnRenderer = columnRenderer;
+	public void setFieldComponentExpression(
+			DRIExpression fieldComponentExpression) {
+		this.fieldComponentExpression = fieldComponentExpression;
+	}
+
+	public ComponentBuilder getComponentBuilder() {
+		if (componentBuilder == null) {
+			componentBuilder = cmp.text(
+					new StringFieldExpression(tableField.getField())).setWidth(
+					tableField.getDefaultWidth());
+		}
+		return componentBuilder;
+	}
+
+	public void setComponentBuilder(ComponentBuilder componentBuilder) {
+		this.componentBuilder = componentBuilder;
 	}
 }

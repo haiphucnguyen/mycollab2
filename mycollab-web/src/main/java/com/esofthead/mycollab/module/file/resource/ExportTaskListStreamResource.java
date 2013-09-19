@@ -1,8 +1,6 @@
 package com.esofthead.mycollab.module.file.resource;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
@@ -11,7 +9,6 @@ import java.util.List;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
-import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.definition.ReportParameters;
@@ -26,13 +23,11 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.reporting.ColumnInjectionRenderer;
-import com.esofthead.mycollab.reporting.EmailColumnInjectionRenderer;
+import com.esofthead.mycollab.reporting.ColumnFieldComponentBuilder;
 import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
-import com.esofthead.mycollab.reporting.HyperLinkColumnInjectionRenderer;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
-import com.esofthead.mycollab.reporting.SimpleColumnInjectionMap;
+import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 import com.esofthead.mycollab.reporting.Templates;
 
@@ -95,59 +90,64 @@ public class ExportTaskListStreamResource<SimpleTaskList, S extends SearchCriter
 				report.addField(objField.getName(), jrType);
 			}
 			List<TableViewFieldDecorator> fields = parameters.getFields();
-			List<? extends ColumnInjectionRenderer> renderers = SimpleColumnInjectionMap
-					.getRenderers(classType);
+			List<? extends ColumnFieldComponentBuilder> renderers = SimpleColumnComponentBuilderMap
+					.getListFieldBuilder(classType);
 			// build columns of report
 			for (TableViewFieldDecorator field : fields) {
 
 				log.debug("Inject renderer if any");
 				if (renderers != null) {
 					for (int i = renderers.size() - 1; i >= 0; i--) {
-						ColumnInjectionRenderer columnInjectionRenderer = renderers
+						ColumnFieldComponentBuilder columnInjectionRenderer = renderers
 								.get(i);
 						if (field.getField().equals(
 								columnInjectionRenderer.getFieldName())) {
-							field.setColumnRenderer(columnInjectionRenderer);
+							// field.setFieldComponentBuilder(columnInjectionRenderer);
 						}
 					}
 				}
 
-				Field fieldCls = ClassUtils.getField(classType,
-						field.getField());
-				DRIDataType<Object, ? extends Object> jrType = null;
-				try {
-					jrType = type.detectType(fieldCls.getType().getName());
-				} catch (DRException e) {
-					throw new MyCollabException(e);
-				}
-				TextColumnBuilder<? extends Object> columnBuilder = col.column(
-						field.getDesc(), field.getField(), jrType).setWidth(
-						field.getDefaultWidth());
-
-				ColumnInjectionRenderer columnRenderer = field
-						.getColumnRenderer();
-				if (columnRenderer != null) {
-					if (columnRenderer instanceof HyperLinkColumnInjectionRenderer) {
-						columnBuilder
-								.setHyperLink(hyperLink(((HyperLinkColumnInjectionRenderer) columnRenderer)
-										.getExpression()));
-						columnBuilder
-								.setStyle(((HyperLinkColumnInjectionRenderer) columnRenderer)
-										.getStyle());
-					} else if (columnRenderer instanceof EmailColumnInjectionRenderer) {
-						columnBuilder
-								.setHyperLink(hyperLink(((EmailColumnInjectionRenderer) columnRenderer)
-										.getExpression()));
-						columnBuilder
-								.setStyle(((EmailColumnInjectionRenderer) columnRenderer)
-										.getStyle());
-					} else {
-						throw new MyCollabException(
-								"Does not support column renderer "
-										+ columnRenderer);
-					}
-				}
-				report.addColumn(columnBuilder);
+				// Field fieldCls = ClassUtils.getField(classType,
+				// field.getField());
+				// DRIDataType<Object, ? extends Object> jrType = null;
+				// try {
+				// jrType = type.detectType(fieldCls.getType().getName());
+				// } catch (DRException e) {
+				// throw new MyCollabException(e);
+				// }
+				// TextColumnBuilder<? extends Object> columnBuilder =
+				// col.column(
+				// field.getDesc(), field.getField(), jrType).setWidth(
+				// field.getDefaultWidth());
+				//
+				// ColumnFieldComponentBuilder columnRenderer = field
+				// .getColumnRenderer();
+				// if (columnRenderer != null) {
+				// if (columnRenderer instanceof
+				// HyperLinkColumnInjectionRenderer) {
+				// columnBuilder
+				// .setHyperLink(hyperLink(((HyperLinkColumnInjectionRenderer)
+				// columnRenderer)
+				// .getExpression()));
+				// columnBuilder
+				// .setStyle(((HyperLinkColumnInjectionRenderer) columnRenderer)
+				// .getStyle());
+				// } else if (columnRenderer instanceof
+				// EmailColumnInjectionRenderer) {
+				// columnBuilder
+				// .setHyperLink(hyperLink(((EmailColumnInjectionRenderer)
+				// columnRenderer)
+				// .getExpression()));
+				// columnBuilder
+				// .setStyle(((EmailColumnInjectionRenderer) columnRenderer)
+				// .getStyle());
+				// } else {
+				// throw new MyCollabException(
+				// "Does not support column renderer "
+				// + columnRenderer);
+				// }
+				// }
+				// report.addColumn(columnBuilder);
 			}
 
 			log.debug("Accomplish init report for task list ---------");

@@ -1,16 +1,16 @@
 package com.esofthead.mycollab.reporting;
 
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
 public class BugCustomLinkRenderer implements
-		ColumnInjectionRenderer<HorizontalListBuilder> {
+		ColumnFieldComponentBuilder<HorizontalListBuilder> {
 
 	private String fieldName;
-	private DRIExpression<HorizontalListBuilder> expression;
+	private DRIExpression expression;
 
-	public BugCustomLinkRenderer(String fieldName,
-			DRIExpression<HorizontalListBuilder> expression) {
+	public BugCustomLinkRenderer(String fieldName, DRIExpression expression) {
 		this.fieldName = fieldName;
 		this.expression = expression;
 	}
@@ -21,7 +21,13 @@ public class BugCustomLinkRenderer implements
 	}
 
 	@Override
-	public DRIExpression<HorizontalListBuilder> getExpression() {
+	public DRIExpression<HorizontalListBuilder> getDriExpression() {
 		return expression;
+	}
+
+	@Override
+	public ComponentBuilder getComponentBuilder() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

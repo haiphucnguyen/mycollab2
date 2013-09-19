@@ -1,32 +1,27 @@
 package com.esofthead.mycollab.module.file.resource;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
-import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
+import net.sf.dynamicreports.report.builder.column.ComponentColumnBuilder;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.reporting.BeanDataSource;
-import com.esofthead.mycollab.reporting.BugCustomLinkRenderer;
-import com.esofthead.mycollab.reporting.ColumnInjectionRenderer;
-import com.esofthead.mycollab.reporting.EmailColumnInjectionRenderer;
+import com.esofthead.mycollab.reporting.ColumnFieldComponentBuilder;
 import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
-import com.esofthead.mycollab.reporting.HyperLinkColumnInjectionRenderer;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
-import com.esofthead.mycollab.reporting.SimpleColumnInjectionMap;
+import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 
 public abstract class SimpleGridExportItemsStreamResource<T> extends
@@ -57,63 +52,31 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 			DRIDataType<Object, ? extends Object> jrType = type
 					.detectType(objField.getType().getName());
 			reportBuilder.addField(objField.getName(), jrType);
-
 		}
-
 		List<TableViewFieldDecorator> fields = parameters.getFields();
 
-		List<? extends ColumnInjectionRenderer> renderers = SimpleColumnInjectionMap
-				.getRenderers(classType);
+		List<? extends ColumnFieldComponentBuilder> lstFieldBuilder = SimpleColumnComponentBuilderMap
+				.getListFieldBuilder(classType);
 		// build columns of report
 		for (TableViewFieldDecorator field : fields) {
 
 			log.debug("Inject renderer if any");
-			if (renderers != null) {
-				for (int i = renderers.size() - 1; i >= 0; i--) {
-					ColumnInjectionRenderer columnInjectionRenderer = renderers
+			if (lstFieldBuilder != null) {
+				for (int i = lstFieldBuilder.size() - 1; i >= 0; i--) {
+					ColumnFieldComponentBuilder fieldBuilder = lstFieldBuilder
 							.get(i);
-					if (field.getField().equals(
-							columnInjectionRenderer.getFieldName())) {
-						field.setColumnRenderer(columnInjectionRenderer);
+					if (field.getField().equals(fieldBuilder.getFieldName())) {
+						field.setFieldComponentExpression(fieldBuilder
+								.getDriExpression());
+						field.setComponentBuilder(fieldBuilder
+								.getComponentBuilder());
 					}
 				}
 			}
-
-			Field fieldCls = ClassUtils.getField(classType, field.getField());
-			DRIDataType<Object, ? extends Object> jrType = type
-					.detectType(fieldCls.getType().getName());
-
-			TextColumnBuilder<? extends Object> columnBuilder = col.column(
-					field.getDesc(), field.getField(), jrType).setWidth(
+			ComponentColumnBuilder columnBuilder = col.componentColumn(
+					field.getDesc(), field.getComponentBuilder()).setWidth(
 					field.getDefaultWidth());
 
-			ColumnInjectionRenderer columnRenderer = field.getColumnRenderer();
-
-			if (columnRenderer != null) {
-				if (columnRenderer instanceof HyperLinkColumnInjectionRenderer) {
-					columnBuilder
-							.setHyperLink(hyperLink(((HyperLinkColumnInjectionRenderer) columnRenderer)
-									.getExpression()));
-					columnBuilder
-							.setStyle(((HyperLinkColumnInjectionRenderer) columnRenderer)
-									.getStyle());
-				} else if (columnRenderer instanceof EmailColumnInjectionRenderer) {
-					columnBuilder
-							.setHyperLink(hyperLink(((EmailColumnInjectionRenderer) columnRenderer)
-									.getExpression()));
-					columnBuilder
-							.setStyle(((EmailColumnInjectionRenderer) columnRenderer)
-									.getStyle());
-				} else if (columnRenderer instanceof BugCustomLinkRenderer) {
-					columnBuilder = col.column(field.getDesc(),
-							((BugCustomLinkRenderer) columnRenderer)
-									.getExpression());
-				} else {
-					throw new MyCollabException(
-							"Does not support column renderer "
-									+ columnRenderer);
-				}
-			}
 			reportBuilder.addColumn(columnBuilder);
 		}
 
