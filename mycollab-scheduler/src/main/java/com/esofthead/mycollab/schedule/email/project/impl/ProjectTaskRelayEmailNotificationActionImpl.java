@@ -137,11 +137,12 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 			fieldNameMap.put("enddate", "End Date");
 			fieldNameMap.put("actualstartdate", "Actual Start Date");
 			fieldNameMap.put("actualenddate", "Actual End Date");
-			fieldNameMap.put("assignuser", "Assigned to");
+			fieldNameMap.put("assignUserFullName", "Assignee");
 			fieldNameMap.put("percentagecomplete", "Complete (%)");
 			fieldNameMap.put("notes", "Notes");
 			fieldNameMap.put("priority", "Priority");
 			fieldNameMap.put("deadline", "Deadline");
+			fieldNameMap.put("taskListName", "Task Group");
 		}
 
 		public boolean hasField(String fieldName) {

@@ -60,7 +60,7 @@
             refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.selectSimpleAuditLog" />
 
         WHERE m_audit_log.typeid=#{auditLogId, javaType=INTEGER}
-        ORDER BY m_audit_log.id
+        ORDER BY m_audit_log.id DESC
         LIMIT 1
     </select>
 
