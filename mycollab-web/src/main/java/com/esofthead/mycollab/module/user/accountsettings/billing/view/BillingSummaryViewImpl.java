@@ -291,14 +291,14 @@ public class BillingSummaryViewImpl extends AbstractView implements
 				public void buttonClick(final ClickEvent event) {
 					log.debug("Check choose plan valid");
 
-					if (chosenPlan.getNumprojects() > numOfActiveProjects) {
-						
+					if (chosenPlan.getNumprojects() < numOfActiveProjects) {
+
 						UpdateBillingPlanWindow.this.close();
 						return;
 					}
 
-					if (chosenPlan.getNumusers() > numOfActiveUsers) {
-						
+					if (chosenPlan.getNumusers() < numOfActiveUsers) {
+
 						UpdateBillingPlanWindow.this.close();
 						return;
 					}
