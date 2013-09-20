@@ -4397,6 +4397,81 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-weight: bold;
 }
 
+.current-plan-information #currentPlanInfo {
+	background-color: rgb(212, 224, 240);
+	padding: 0px 10px;
+}
+
+.current-plan-information #currentPlanInfo .infoBlock {
+	padding: 10px 0px;
+	display:table-cell;
+}
+
+.current-plan-information #currentPlanInfo .blockSeparator {
+	display:table-cell;
+	width: 25px;
+	height: 100%;
+	background: url('icons/block-separator.png') no-repeat center center transparent;
+}
+.current-plan-information #currentPlanInfo .infoTitle {
+	font-weight: bold;
+	color: rgb(25, 115, 154);
+}
+
+/* styles copy from frontsite */
+.prig-bottom {
+	width: 100%;
+	margin-top: 20px;
+	border: solid 1px #ABABAB;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.prig-bottom-cnt {
+	border-top: solid 15px #228BC9;	
+	padding-left: 30px;
+	padding-top: 20px;
+}
+
+.prig-block-1 {
+	height: 107px;
+}
+
+.prig-block-2 {
+	height: 124px;
+}
+
+.pricing-top-title {
+	font-size: 18px;
+	text-align: left;
+	padding: 10px 10px 0px 15px;
+}
+.pri-coll-1 {
+	padding-right: 35px;
+}
+
+.pri-bott-block h2 {
+    font-weight: bold;
+}
+
+.pri-bott-block p {
+	font-size: 12px;
+	color: #5f5c5c;
+	padding-bottom: 10px;
+	text-align:justify;
+	font-family: 'verdana';
+}
+.pri-bott-coll {
+	display:table-cell;
+    padding-right: 20px;
+    width: 50%;
+    -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+/* end styles */
+
 .billing-plan {
 	text-align: center;
 	-moz-box-sizing: border-box;
@@ -4444,12 +4519,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-weight: bold;
 }
 
-.billing-plan .billing-timetrack-feature {
-	padding-bottom: 15px;
-}
-
 .billing-plan .bluebtn,.billing-plan .graybtn {
 	margin-bottom: 15px;
+	margin-top: 15px;
 }
 
 .updateplan-window {
