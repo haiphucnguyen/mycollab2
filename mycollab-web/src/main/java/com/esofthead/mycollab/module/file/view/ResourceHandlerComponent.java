@@ -1173,7 +1173,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 											resourceService.saveContent(
 													content,
 													AppContext.getUsername(),
-													fileInputStream);
+													fileInputStream,
+													AppContext.getAccountId());
 									} catch (IOException e) {
 										throw new MyCollabException(e);
 									}

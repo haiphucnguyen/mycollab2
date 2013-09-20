@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.esb.BeanProxyBuilder;
+import com.esofthead.mycollab.module.ecm.MimeTypesUtil;
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction;
@@ -17,6 +19,8 @@ import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogBuilder;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogWithBLOBs;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.esb.EcmEndPoints;
+import com.esofthead.mycollab.module.ecm.esb.SaveContentCommand;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
@@ -75,7 +79,11 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public void saveContent(Content content, String createdUser,
-			InputStream refStream) {
+			InputStream refStream, Integer sAccountId) {
+		// detect mimeType and set to content
+		String mimeType = MimeTypesUtil.detectMimeType(content.getPath());
+		content.setMimeType(mimeType);
+
 		contentJcrDao.saveContent(content, createdUser);
 
 		String contentPath = content.getPath();
@@ -88,6 +96,10 @@ public class ResourceServiceImpl implements ResourceService {
 		activityLog.setActiondesc(createContentAction.toString());
 		activityLog.setBasefolderpath(contentPath);
 		contentActivityLogService.saveWithSession(activityLog, "");
+
+		SaveContentCommand saveContentCommand = new BeanProxyBuilder().build(
+				EcmEndPoints.SAVE_CONTENT_ENDPOINT, SaveContentCommand.class);
+		saveContentCommand.saveContent(content, createdUser, sAccountId);
 	}
 
 	@Override

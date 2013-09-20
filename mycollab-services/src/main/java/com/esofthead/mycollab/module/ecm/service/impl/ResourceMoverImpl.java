@@ -93,7 +93,9 @@ public class ResourceMoverImpl implements ResourceMover {
 			destService.saveContent(ResourceUtils.getExternalDrive(destRes),
 					srcRes, in);
 		} else {
-			resourceService.saveContent(srcRes, userMove, in);
+			
+			//TODO: SHOULD CALL MOVE METHOD NOT SAVE
+//			resourceService.saveContent(srcRes, userMove, in);
 		}
 	}
 

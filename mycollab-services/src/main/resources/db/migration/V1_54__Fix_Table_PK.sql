@@ -1,0 +1,2 @@
+ALTER TABLE `m_ecm_driveinfo` 
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;

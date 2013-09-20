@@ -36,6 +36,9 @@
 
         <table domainObjectName="ExternalDrive" schema="mycollab"
             tableName="m_ecm_external_drive" />
+
+        <table domainObjectName="DriveInfo" schema="mycollab"
+            tableName="m_ecm_driveinfo" />
     </context>
 
 </generatorConfiguration>

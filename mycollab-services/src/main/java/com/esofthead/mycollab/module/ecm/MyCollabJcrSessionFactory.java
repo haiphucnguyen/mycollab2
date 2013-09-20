@@ -19,6 +19,7 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 
 	@Override
 	protected void registerNodeTypes() throws Exception {
+		log.info("Register node types");
 		final String[] jcrNamespaces = getSession().getWorkspace()
 				.getNamespaceRegistry().getPrefixes();
 		boolean createNamespace = true;
@@ -42,13 +43,13 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 
 		NodeTypeManager manager = (NodeTypeManager) getSession().getWorkspace()
 				.getNodeTypeManager();
-
 		manager.registerNodeType(createMyCollabContentType(manager), true);
 		manager.registerNodeType(createMyCollabFolderType(manager), true);
 	}
 
 	private NodeTypeTemplate createMyCollabContentType(NodeTypeManager manager)
 			throws NoSuchNodeTypeException, RepositoryException {
+		log.info("Register mycollab content type");
 		NodeType hierachyNode = manager.getNodeType(NodeType.NT_HIERARCHY_NODE);
 		// Create content node type
 		NodeTypeTemplate contentTypeTemplate = manager
@@ -62,7 +63,7 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 				.setDeclaredSuperTypeNames(new String[] { NodeType.NT_HIERARCHY_NODE });
 		contentTypeTemplate.setQueryable(true);
 		contentTypeTemplate.setOrderableChildNodes(false);
-		log.debug("PROERTY {} {}",
+		log.debug("PROPERTY {} {}",
 				contentTypeTemplate.getDeclaredPropertyDefinitions().length,
 				contentTypeTemplate.getDeclaredChildNodeDefinitions().length);
 
@@ -83,6 +84,15 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 		lastModifiedUserPropertyTemplate.setRequiredType(PropertyType.STRING);
 		contentTypeTemplate.getPropertyDefinitionTemplates().add(
 				lastModifiedUserPropertyTemplate);
+
+		PropertyDefinitionTemplate mimeTypePropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		mimeTypePropertyTemplate.setMultiple(false);
+		mimeTypePropertyTemplate.setName("mycollab:mimeType");
+		mimeTypePropertyTemplate.setMandatory(false);
+		mimeTypePropertyTemplate.setRequiredType(PropertyType.STRING);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				mimeTypePropertyTemplate);
 
 		PropertyDefinitionTemplate sizePropertyTemplate = manager
 				.createPropertyDefinitionTemplate();
@@ -109,9 +119,6 @@ public class MyCollabJcrSessionFactory extends JcrSessionFactory {
 				.setDeclaredSuperTypeNames(new String[] { NodeType.NT_FOLDER });
 		contentTypeTemplate.setQueryable(true);
 		contentTypeTemplate.setOrderableChildNodes(false);
-		// log.debug("PROERTY {} {}",
-		// contentTypeTemplate.getDeclaredPropertyDefinitions().length,
-		// contentTypeTemplate.getDeclaredChildNodeDefinitions().length);
 
 		PropertyDefinitionTemplate createdPropertyTemplate = manager
 				.createPropertyDefinitionTemplate();

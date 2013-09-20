@@ -26,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.ContentException;
+import com.esofthead.mycollab.module.ecm.MimeTypesUtil;
+import com.esofthead.mycollab.module.ecm.NodesUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
@@ -366,13 +368,14 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 		try {
 			Content content = new Content();
 			content.setCreated(node.getProperty("jcr:created").getDate());
-			content.setCreatedBy(node.getProperty("jcr:createdBy").getString());
-			content.setTitle(node.getProperty("jcr:title").getString());
-			content.setDescription(node.getProperty("jcr:description")
-					.getString());
+			content.setCreatedBy(NodesUtil.getString(node, "jcr:createdBy"));
+			content.setTitle(NodesUtil.getString(node, "jcr:title"));
+			content.setDescription(NodesUtil.getString(node, "jcr:description"));
+			content.setMimeType(NodesUtil.getString(node, "mycollab:mimeType",
+					MimeTypesUtil.BINARY_MIME_TYPE));
 			content.setSize(node.getProperty("mycollab:size").getDouble());
-			content.setCreatedUser(node.getProperty("mycollab:createdUser")
-					.getString());
+			content.setCreatedUser(NodesUtil.getString(node,
+					"mycollab:createdUser"));
 			String contentPath = node.getPath();
 			if (contentPath.startsWith("/")) {
 				contentPath = contentPath.substring(1);

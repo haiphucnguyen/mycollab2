@@ -422,7 +422,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								FileDashboardComponent.this.resourceService
 										.saveContent(content,
 												AppContext.getUsername(),
-												contentStream);
+												contentStream,
+												AppContext.getAccountId());
 								UploadContentWindow.this.close();
 								FileDashboardComponent.this
 										.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
