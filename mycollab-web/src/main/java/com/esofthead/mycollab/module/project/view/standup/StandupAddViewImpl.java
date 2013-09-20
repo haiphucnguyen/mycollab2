@@ -21,89 +21,89 @@ import com.vaadin.ui.RichTextArea;
 @ViewComponent
 public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 
-	private static final long serialVersionUID = 1L;
-	private final EditForm editForm;
+    private static final long serialVersionUID = 1L;
+    private final EditForm editForm;
 
-	public StandupAddViewImpl() {
-		super();
-		this.setMargin(true);
-		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
-	}
+    public StandupAddViewImpl() {
+        super();
+        this.setMargin(true);
+        this.editForm = new EditForm();
+        this.addComponent(this.editForm);
+    }
 
-	@Override
-	public void editItem(final StandupReportWithBLOBs StandupReport) {
-		this.editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(
-				StandupReport));
-	}
+    @Override
+    public void editItem(final StandupReportWithBLOBs StandupReport) {
+        this.editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(
+                StandupReport));
+    }
 
-	private class EditForm extends AdvancedEditBeanForm<StandupReportWithBLOBs> {
+    private class EditForm extends AdvancedEditBeanForm<StandupReportWithBLOBs> {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+        @Override
+        public void setItemDataSource(final Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource);
+        }
 
-		class FormLayoutFactory extends StandupReportFormLayoutFactory {
+        class FormLayoutFactory extends StandupReportFormLayoutFactory {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			public FormLayoutFactory() {
-				super("Create Standup Report for "
-						+ AppContext.formatDate(new GregorianCalendar()
-								.getTime()));
-			}
+            public FormLayoutFactory() {
+                super("Create Standup Report for "
+                        + AppContext.formatDate(new GregorianCalendar()
+                                .getTime()));
+            }
 
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<StandupReportWithBLOBs>(
-						EditForm.this)).createButtonControls(true, false, true);
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
+            private Layout createButtonControls() {
+                final HorizontalLayout controlPanel = new HorizontalLayout();
+                final Layout controlButtons = (new EditFormControlsGenerator<StandupReportWithBLOBs>(
+                        EditForm.this)).createButtonControls(true, false, true);
+                controlButtons.setSizeUndefined();
+                controlPanel.addComponent(controlButtons);
+                controlPanel.setWidth("100%");
+                controlPanel.setComponentAlignment(controlButtons,
+                        Alignment.MIDDLE_CENTER);
+                return controlPanel;
+            }
 
-			@Override
-			protected Layout createTopPanel() {
-				return this.createButtonControls();
-			}
+            @Override
+            protected Layout createTopPanel() {
+                return this.createButtonControls();
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return this.createButtonControls();
-			}
-		}
+            @Override
+            protected Layout createBottomPanel() {
+                return this.createButtonControls();
+            }
+        }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
-				if (propertyId.equals("whatlastday")
-						|| propertyId.equals("whattoday")
-						|| propertyId.equals("whatproblem")) {
-					final RichTextArea richText = new RichTextArea();
-					richText.setWidth("500px");
-					return richText;
-				}
-				return null;
-			}
-		}
-	}
+            @Override
+            protected Field onCreateField(final Item item,
+                    final Object propertyId,
+                    final com.vaadin.ui.Component uiContext) {
+                if (propertyId.equals("whatlastday")
+                        || propertyId.equals("whattoday")
+                        || propertyId.equals("whatproblem")) {
+                    final RichTextArea richText = new RichTextArea();
+                    richText.setWidth("100%");
+                    return richText;
+                }
+                return null;
+            }
+        }
+    }
 
-	@Override
-	public HasEditFormHandlers<StandupReportWithBLOBs> getEditFormHandlers() {
-		return this.editForm;
-	}
+    @Override
+    public HasEditFormHandlers<StandupReportWithBLOBs> getEditFormHandlers() {
+        return this.editForm;
+    }
 
 }
