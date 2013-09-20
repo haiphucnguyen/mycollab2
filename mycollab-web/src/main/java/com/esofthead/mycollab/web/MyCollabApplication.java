@@ -139,7 +139,7 @@ public class MyCollabApplication extends Application implements
 			String errorMsg = "An uncaught exception occurred with username %s, in account %d, useragent %s, ip %s and country code %s ";
 			try {
 				String username = AppContext.getUsername();
-				int accountId = AppContext.getAccountId();
+				Integer accountId = AppContext.getAccountId();
 				AbstractWebApplicationContext webContext = (AbstractWebApplicationContext) this
 						.getContext();
 

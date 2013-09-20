@@ -107,9 +107,6 @@ public class L2CacheAspect {
 									returnVal = pjp.proceed();
 									try {
 										if (returnVal == null) {
-											log.error(
-													"Get value is null, not put to cache {}",
-													key);
 											return returnVal;
 										}
 										cache.put(key, returnVal);
