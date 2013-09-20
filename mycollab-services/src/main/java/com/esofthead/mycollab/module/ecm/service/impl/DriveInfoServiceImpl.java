@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
-import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.ecm.dao.DriveInfoMapper;
@@ -51,6 +49,26 @@ public class DriveInfoServiceImpl extends
 			driveInfo.setSaccountid(sAccountId);
 			return driveInfo;
 		}
+	}
+
+	@Override
+	public Double getUsedStorageVolume(@CacheKey Integer sAccountId) {
+		DriveInfo driveInfo = getDriveInfo(sAccountId);
+		Double result = 0d;
+
+		result += (driveInfo.getAudiovolume() != null) ? driveInfo
+				.getAudiovolume() : 0;
+		result += (driveInfo.getBinaryvolume() != null) ? driveInfo
+				.getBinaryvolume() : 0;
+		result += (driveInfo.getDocvolume() != null) ? driveInfo.getDocvolume()
+				: 0;
+		result += (driveInfo.getImagevolume() != null) ? driveInfo
+				.getImagevolume() : 0;
+		result += (driveInfo.getTextvolume() != null) ? driveInfo
+				.getTextvolume() : 0;
+		result += (driveInfo.getVideovolume() != null) ? driveInfo
+				.getVideovolume() : 0;
+		return result;
 	}
 
 }
