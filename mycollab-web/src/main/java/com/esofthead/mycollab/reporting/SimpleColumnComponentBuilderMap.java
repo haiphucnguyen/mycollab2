@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
+import org.jfree.util.Log;
+
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -32,6 +35,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
+import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.view.bug.BugPriorityStatusConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -45,8 +49,17 @@ public class SimpleColumnComponentBuilderMap {
 	public static class TypeRender {
 		public static final String HYPERLINK = "hyperLink";
 		public static final String EMAILTYPE = "emailType";
-		public static final String BUG_CUSTOM_TYPE = "bug_custom";
+		public static final String BUG_CUSTOM_TYPE = "bug_custom_type";
 		public static final String RATING = "rating";
+		public static final String RISK_NAME_TYPE = "risk_name_type";
+		public static final String PROBLEM_NAME_TYPE = "problem_name_type";
+	}
+
+	public static class ProjectMoulde {
+		public static final String BUG = "bug";
+		public static final String TASKLIST = "taskList";
+		public static final String RISK = "risk";
+		public static final String PROBLEM = "problem";
 	}
 
 	static {
@@ -85,16 +98,18 @@ public class SimpleColumnComponentBuilderMap {
 								.asList(TypeRender.HYPERLINK))));
 
 		mapInjection.put(SimpleBug.class, Arrays
-				.asList(new BugCustomLinkExpression("summary", Arrays
-						.asList(TypeRender.HYPERLINK))));
+				.asList(new ProjectFieldBuilderFactory("summary",
+						ProjectMoulde.BUG, TypeRender.HYPERLINK)));
 
 		mapInjection.put(SimpleRisk.class, Arrays.asList(
-				new CrmFieldComponentBuilder("name", "RISK", Arrays
-						.asList(TypeRender.HYPERLINK)),
-				new RatingComponentBuilder("level", "RISK", Arrays
-						.asList(TypeRender.RATING))));
+				new ProjectFieldBuilderFactory("riskname", ProjectMoulde.RISK,
+						TypeRender.HYPERLINK), new RatingComponentBuilder(
+						"level", ProjectMoulde.RISK)));
 
-		// mapInjection.put(SimpleProblem.class)
+		mapInjection.put(SimpleProblem.class, Arrays.asList(
+				new ProjectFieldBuilderFactory("issuename",
+						ProjectMoulde.PROBLEM, TypeRender.HYPERLINK),
+				new RatingComponentBuilder("level", ProjectMoulde.PROBLEM)));
 	}
 
 	public static List<? extends ColumnFieldComponentBuilder> getListFieldBuilder(
@@ -176,16 +191,19 @@ public class SimpleColumnComponentBuilderMap {
 	 * ----------------------------------------
 	 */
 
-	private static class BugCustomLinkExpression implements
+	private static class ProjectFieldBuilderFactory implements
 			ColumnFieldComponentBuilder {
 		private static final long serialVersionUID = 1L;
 
 		private String field;
-		private List<String> lstTypeRender;
+		private String typeRender;
+		private String projectModule;
 
-		public BugCustomLinkExpression(String field, List<String> lstTypeRender) {
+		public ProjectFieldBuilderFactory(String field, String projectModule,
+				String typeRender) {
 			this.field = field;
-			this.lstTypeRender = lstTypeRender;
+			this.typeRender = typeRender;
+			this.projectModule = projectModule;
 		}
 
 		@Override
@@ -201,73 +219,142 @@ public class SimpleColumnComponentBuilderMap {
 		@Override
 		public ComponentBuilder getComponentBuilder() {
 			HorizontalListBuilder lstBuilder = cmp.horizontalList();
-			lstBuilder.add(cmp.image(new ImageBugExpression())
-					.setFixedDimension(12, 12));
+			if (projectModule.equals(ProjectMoulde.BUG)) {
+				if (typeRender.equals(TypeRender.HYPERLINK)) {
+					Log.debug("HyperLink for name field ------" + field);
+					lstBuilder.add(cmp.image(new ImageBugExpression())
+							.setFixedDimension(12, 12));
 
-			ConditionalStyleBuilder overDueStyle = stl.conditionalStyle(
-					new BugOverDueExpression()).setForegroundColor(Color.RED);
-			ConditionalStyleBuilder isCompleteStyle = stl.conditionalStyle(
-					new BugIsCompleteExpression()).setStrikeThrough(true);
+					ConditionalStyleBuilder overDueStyle = stl
+							.conditionalStyle(
+									new OverDueExpression(projectModule))
+							.setForegroundColor(Color.RED);
+					ConditionalStyleBuilder isCompleteStyle = stl
+							.conditionalStyle(
+									new IsCompleteExpression(projectModule))
+							.setStrikeThrough(true);
 
-			StyleBuilder bugStyleBuilder = stl.style()
-					.addConditionalStyle(overDueStyle)
-					.addConditionalStyle(isCompleteStyle);
+					StyleBuilder bugStyleBuilder = stl.style()
+							.addConditionalStyle(overDueStyle)
+							.addConditionalStyle(isCompleteStyle);
 
-			lstBuilder.add(cmp.text(new StringFieldExpression(field))
-					.setHyperLink(hyperLink(new BugHyperLinkExpression()))
-					.setStyle(bugStyleBuilder));
+					lstBuilder.add(cmp
+							.text(new StringFieldExpression(field))
+							.setHyperLink(
+									hyperLink(new ProjectHyperLinkExpression(
+											projectModule)))
+							.setStyle(bugStyleBuilder));
+				}
+			} else {
+				Log.debug("Start make field builder component-------RISK, PROBLEM");
+				ConditionalStyleBuilder overDueStyle = stl.conditionalStyle(
+						new OverDueExpression(projectModule))
+						.setForegroundColor(Color.RED);
+				ConditionalStyleBuilder isCompleteStyle = stl.conditionalStyle(
+						new IsCompleteExpression(projectModule))
+						.setStrikeThrough(true);
+
+				StyleBuilder styleBuilder = stl.style()
+						.addConditionalStyle(overDueStyle)
+						.addConditionalStyle(isCompleteStyle);
+
+				lstBuilder
+						.add(cmp.text(new StringFieldExpression(field))
+								.setHyperLink(
+										hyperLink(new ProjectHyperLinkExpression(
+												projectModule)))
+								.setStyle(styleBuilder));
+
+			}
 			return lstBuilder;
 		}
 
-		private class BugOverDueExpression extends
+		private class OverDueExpression extends
 				AbstractSimpleExpression<Boolean> {
 			private static final long serialVersionUID = 1L;
+			private String projectModule;
+
+			public OverDueExpression(String projectModule) {
+				this.projectModule = projectModule;
+			}
 
 			@Override
 			public Boolean evaluate(ReportParameters param) {
-				String status = param.getFieldValue("status");
-				Date duedate = param.getFieldValue("duedate");
-				Boolean isOverDue;
-				if (BugStatusConstants.RESOLVED.equals(status)
-						|| BugStatusConstants.VERIFIED.equals(status)) {
-					isOverDue = false;
-				}
+				if (projectModule.equals(ProjectMoulde.BUG)) {
+					String status = param.getFieldValue("status");
+					Date duedate = param.getFieldValue("duedate");
+					if (BugStatusConstants.RESOLVED.equals(status)
+							|| BugStatusConstants.VERIFIED.equals(status)) {
+						return false;
+					}
+					if (duedate != null) {
+						Calendar today = Calendar.getInstance();
+						today.set(Calendar.HOUR_OF_DAY, 0);
+						Date todayDate = today.getTime();
 
-				if (duedate != null) {
-					Calendar today = Calendar.getInstance();
-					today.set(Calendar.HOUR_OF_DAY, 0);
-					Date todayDate = today.getTime();
-
-					isOverDue = todayDate.after(duedate);
+						return todayDate.after(duedate);
+					} else {
+						return false;
+					}
 				} else {
-					isOverDue = false;
+					Date datedue = param.getFieldValue("datedue");
+					if (datedue != null
+							&& (datedue.before(new GregorianCalendar()
+									.getTime()))) {
+						return true;
+					} else
+						return false;
 				}
-				return isOverDue;
 			}
+
 		}
 
-		private class BugIsCompleteExpression extends
+		private class IsCompleteExpression extends
 				AbstractSimpleExpression<Boolean> {
 			private static final long serialVersionUID = 1L;
+
+			private String projectModule;
+
+			public IsCompleteExpression(String projectModule) {
+				this.projectModule = projectModule;
+			}
 
 			@Override
 			public Boolean evaluate(ReportParameters param) {
 				String status = param.getFieldValue("status");
-				return BugStatusConstants.VERIFIED.equals(status);
+				if (projectModule.equals(ProjectMoulde.BUG)) {
+					return BugStatusConstants.VERIFIED.equals(status);
+				} else {
+					return "Closed".equals(status);
+				}
 			}
 		}
 
-		private static class BugHyperLinkExpression extends
+		private static class ProjectHyperLinkExpression extends
 				AbstractSimpleExpression<String> {
 			private static final long serialVersionUID = 1L;
 
+			private String projectModule;
+
+			public ProjectHyperLinkExpression(String projectModule) {
+				this.projectModule = projectModule;
+			}
+
 			@Override
 			public String evaluate(ReportParameters reportParameters) {
-				Integer bugId = reportParameters.getFieldValue("id");
+				Integer id = reportParameters.getFieldValue("id");
 				Integer projectId = reportParameters.getFieldValue("projectid");
 				MailLinkGenerator linkGenerator = new MailLinkGenerator(
 						projectId);
-				return linkGenerator.generateBugPreviewFullLink(bugId);
+
+				if (projectModule.equals(ProjectMoulde.BUG)) {
+					return linkGenerator.generateBugPreviewFullLink(id);
+				} else if (projectModule.equals(ProjectMoulde.RISK)) {
+					return linkGenerator.generateRiskPreviewFullLink(id);
+				} else if (projectModule.equals(ProjectMoulde.PROBLEM)) {
+					return linkGenerator.generateProblemPreviewFullLink(id);
+				}
+				return "";
 			}
 		}
 
@@ -296,36 +383,15 @@ public class SimpleColumnComponentBuilderMap {
 		}
 	}
 
-	private static class RiskLinkExpression extends
-			AbstractSimpleExpression<String> {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public String evaluate(ReportParameters reportParameters) {
-			Integer riskId = reportParameters.getFieldValue("id");
-			Integer sAccountId = reportParameters.getFieldValue("saccountid");
-			Integer projectId = reportParameters.getFieldValue("projectid");
-
-			MailLinkGenerator linkGenerator = new MailLinkGenerator(projectId);
-
-			return SiteConfiguration.getSiteUrl(sAccountId)
-					+ linkGenerator.generateRiskPreviewFullLink(riskId);
-		}
-
-	}
-
 	public static class RatingComponentBuilder implements
 			ColumnFieldComponentBuilder {
 		private static final long serialVersionUID = 1L;
 		private String field;
 		private String classType;
-		private List<String> lstTypeRender;
 
-		public RatingComponentBuilder(String field, String classType,
-				List<String> lstTypeRender) {
+		public RatingComponentBuilder(String field, String classType) {
 			this.field = field;
 			this.classType = classType;
-			this.lstTypeRender = lstTypeRender;
 		}
 
 		private class RatingComponentBuilderExpression extends
@@ -335,7 +401,7 @@ public class SimpleColumnComponentBuilderMap {
 			public String evaluate(ReportParameters param) {
 				Double level = param.getFieldValue(field);
 				// TODO : must comlish rating
-				return null;
+				return "images/severity_major.png";
 			}
 		}
 
@@ -353,8 +419,7 @@ public class SimpleColumnComponentBuilderMap {
 		public ComponentBuilder getComponentBuilder() {
 			HorizontalListBuilder componentBuilder = cmp.horizontalList();
 			ImageBuilder imgBuilder = cmp.image(this.getDriExpression())
-					.setFixedDimension(24, 24);
-			;
+					.setFixedDimension(12, 12);
 			componentBuilder.add(imgBuilder);
 			return componentBuilder;
 		}
