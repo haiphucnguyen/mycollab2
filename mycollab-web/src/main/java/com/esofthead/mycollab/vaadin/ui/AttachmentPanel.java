@@ -140,20 +140,23 @@ public class AttachmentPanel extends VerticalLayout implements
 									constructContent(fileName, attachmentPath),
 									AppContext.getUsername(),
 									new ByteArrayInputStream(outStream
-											.toByteArray()));
+											.toByteArray()), AppContext
+											.getAccountId());
 						} catch (IOException e) {
-							e.printStackTrace();
+							log.error("Error in upload file", e);
 							resourceService.saveContent(
 									constructContent(fileName, attachmentPath),
 									AppContext.getUsername(),
 									new FileInputStream(fileStores
-											.get(fileName)));
+											.get(fileName)), AppContext
+											.getAccountId());
 						}
 					} else {
 						resourceService.saveContent(
 								constructContent(fileName, attachmentPath),
 								AppContext.getUsername(), new FileInputStream(
-										fileStores.get(fileName)));
+										fileStores.get(fileName)), AppContext
+										.getAccountId());
 					}
 
 				} catch (FileNotFoundException e) {

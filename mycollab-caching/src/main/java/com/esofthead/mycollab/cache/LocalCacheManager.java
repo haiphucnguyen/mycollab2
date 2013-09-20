@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
 			.getLogger(LocalCacheManager.class);
+	
+	private static String GLOBAL_CACHE = "global";
 
 	private static BasicCacheContainer instance;
 
@@ -28,6 +30,7 @@ public class LocalCacheManager {
 						.getResourceAsStream("infinispan-local-default.xml");
 			}
 			instance = new DefaultCacheManager(configInputStream);
+
 		} catch (Exception e) {
 			log.debug(
 					"Error while set up infinispan cache manager. Will initiate the default",
@@ -36,7 +39,7 @@ public class LocalCacheManager {
 		}
 	}
 
-	private static String GLOBAL_CACHE = "global";
+	
 
 	public static BasicCache<String, Object> getCache(String id) {
 		BasicCache<String, Object> cache = instance.getCache(id);

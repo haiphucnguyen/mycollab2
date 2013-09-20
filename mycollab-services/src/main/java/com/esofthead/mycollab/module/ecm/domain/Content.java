@@ -7,6 +7,7 @@ public class Content extends Resource {
 	private String description = "";
 	private Calendar lastModified;
 	private String lastModifiedBy;
+	private String mimeType;
 
 	public String getTitle() {
 		return title;
@@ -38,5 +39,13 @@ public class Content extends Resource {
 
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public String getMimeType() {
+		return mimeType;
+	}
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 }

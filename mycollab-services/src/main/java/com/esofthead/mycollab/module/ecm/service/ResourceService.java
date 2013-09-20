@@ -20,7 +20,8 @@ public interface ResourceService extends IService {
 
 	List<Folder> getSubFolders(String path);
 
-	void saveContent(Content content, String createdUser, InputStream refStream);
+	void saveContent(Content content, String createdUser,
+			InputStream refStream, Integer sAccountId);
 
 	void removeResource(String path, String userDelete);
 
