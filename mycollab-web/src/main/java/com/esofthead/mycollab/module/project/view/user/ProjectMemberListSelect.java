@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ListSelect;
 
@@ -29,7 +29,7 @@ class ProjectMemberListSelect extends ListSelect {
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
-        ProjectMemberService userService = AppContext.getSpringBean(ProjectMemberService.class);
+        ProjectMemberService userService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleProjectMember> userList = userService
                 .findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
                 criteria, 0, Integer.MAX_VALUE));

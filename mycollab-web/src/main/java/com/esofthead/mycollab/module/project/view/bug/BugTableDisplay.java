@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -62,8 +63,8 @@ public class BugTableDisplay extends
 
 	public BugTableDisplay(String viewId, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(BugService.class), SimpleBug.class,
-				viewId, requiredColumn, displayColumns);
+		super(ApplicationContextUtil.getSpringBean(BugService.class),
+				SimpleBug.class, viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("id", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -101,7 +102,7 @@ public class BugTableDisplay extends
 							} else if (BugStatusConstants.INPROGRESS
 									.equals(value)) {
 								bug.setStatus(BugStatusConstants.INPROGRESS);
-								BugService bugService = AppContext
+								BugService bugService = ApplicationContextUtil
 										.getSpringBean(BugService.class);
 								bugService.updateWithSession(bug,
 										AppContext.getUsername());
@@ -125,14 +126,14 @@ public class BugTableDisplay extends
 							}
 						} else if ("severity".equals(category)) {
 							bug.setSeverity(value);
-							BugService bugService = AppContext
+							BugService bugService = ApplicationContextUtil
 									.getSpringBean(BugService.class);
 							bugService.updateWithSession(bug,
 									AppContext.getUsername());
 							refresh();
 						} else if ("priority".equals(category)) {
 							bug.setPriority(value);
-							BugService bugService = AppContext
+							BugService bugService = ApplicationContextUtil
 									.getSpringBean(BugService.class);
 							bugService.updateWithSession(bug,
 									AppContext.getUsername());
@@ -163,7 +164,7 @@ public class BugTableDisplay extends
 											public void onClose(
 													ConfirmDialog dialog) {
 												if (dialog.isConfirmed()) {
-													BugService bugService = AppContext
+													BugService bugService = ApplicationContextUtil
 															.getSpringBean(BugService.class);
 													bugService.removeWithSession(
 															bug.getId(),

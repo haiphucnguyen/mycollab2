@@ -40,7 +40,7 @@ public class StreamDownloadResourceSupportExtDrive implements
 	public StreamDownloadResourceSupportExtDrive(List<Resource> lstRes,
 			boolean isSearchAction) {
 		this.lstResource = lstRes;
-		resourceService = ApplicationContextUtil.getBean(ResourceService.class);
+		resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
 		this.isSearchAction = isSearchAction;
 	}
 

@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -61,7 +62,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											MeetingService campaignService = AppContext
+											MeetingService campaignService = ApplicationContextUtil
 													.getSpringBean(MeetingService.class);
 											campaignService.removeWithSession(
 													data.getId(),
@@ -92,7 +93,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
 					@Override
 					public void gotoNext(Meeting data) {
-						MeetingService accountService = AppContext
+						MeetingService accountService = ApplicationContextUtil
 								.getSpringBean(MeetingService.class);
 						MeetingSearchCriteria criteria = new MeetingSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -120,7 +121,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
 					@Override
 					public void gotoPrevious(Meeting data) {
-						MeetingService accountService = AppContext
+						MeetingService accountService = ApplicationContextUtil
 								.getSpringBean(MeetingService.class);
 						MeetingSearchCriteria criteria = new MeetingSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -152,7 +153,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 		if (AppContext.canRead(RolePermissionCollections.CRM_MEETING)) {
 			SimpleMeeting meeting = null;
 			if (data.getParams() instanceof Integer) {
-				MeetingService meetingService = AppContext
+				MeetingService meetingService = ApplicationContextUtil
 						.getSpringBean(MeetingService.class);
 				meeting = meetingService.findById((Integer) data.getParams(),
 						AppContext.getAccountId());

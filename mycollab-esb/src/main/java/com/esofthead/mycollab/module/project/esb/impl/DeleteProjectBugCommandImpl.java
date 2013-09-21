@@ -32,16 +32,16 @@ public class DeleteProjectBugCommandImpl implements DeleteProjectBugCommand {
 		log.debug("Delete files of bug {} in project {}", bugId, projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
-				.getBean(ResourceService.class);
+				.getSpringBean(ResourceService.class);
 		String attachmentPath = AttachmentUtils.getProjectBugAttachmentPath(
 				accountId, projectId, bugId);
-		resourceService.removeResource(attachmentPath, "");
+		resourceService.removeResource(attachmentPath, "", accountId);
 	}
 
 	private void removeRelatedComments(int bugId) {
 		log.debug("Delete related comments of bug {}", bugId);
 		CommentMapper commentMapper = ApplicationContextUtil
-				.getBean(CommentMapper.class);
+				.getSpringBean(CommentMapper.class);
 
 		CommentExample ex = new CommentExample();
 		ex.createCriteria().andTypeEqualTo(CommentType.PRJ_BUG.toString())

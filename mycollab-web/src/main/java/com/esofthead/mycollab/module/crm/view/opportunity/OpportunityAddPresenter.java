@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -80,7 +81,7 @@ public class OpportunityAddPresenter extends
 			if (data.getParams() instanceof Opportunity) {
 				opportunity = (Opportunity) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				OpportunityService accountService = AppContext
+				OpportunityService accountService = ApplicationContextUtil
 						.getSpringBean(OpportunityService.class);
 				opportunity = accountService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
@@ -122,7 +123,7 @@ public class OpportunityAddPresenter extends
 	}
 
 	public void saveOpportunity(Opportunity opportunity) {
-		OpportunityService opportunityService = AppContext
+		OpportunityService opportunityService = ApplicationContextUtil
 				.getSpringBean(OpportunityService.class);
 
 		opportunity.setSaccountid(AppContext.getAccountId());
@@ -138,7 +139,7 @@ public class OpportunityAddPresenter extends
 						.getExtraData()).getId());
 				associateOpportunity.setCreatedtime(new GregorianCalendar()
 						.getTime());
-				ContactService contactService = AppContext
+				ContactService contactService = ApplicationContextUtil
 						.getSpringBean(ContactService.class);
 				contactService.saveContactOpportunityRelationship(
 						Arrays.asList(associateOpportunity),

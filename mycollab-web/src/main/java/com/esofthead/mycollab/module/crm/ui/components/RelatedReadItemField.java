@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.web.AppContext;
@@ -54,7 +55,7 @@ public class RelatedReadItemField extends CustomField {
 			ButtonLink relatedLink = null;
 
 			if ("Account".equals(type)) {
-				AccountService accountService = AppContext
+				AccountService accountService = ApplicationContextUtil
 						.getSpringBean(AccountService.class);
 				final SimpleAccount account = accountService.findById(typeid,
 						AppContext.getAccountId());
@@ -72,7 +73,7 @@ public class RelatedReadItemField extends CustomField {
 							});
 				}
 			} else if ("Campaign".equals(type)) {
-				CampaignService campaignService = AppContext
+				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
 				final SimpleCampaign campaign = campaignService.findById(
 						typeid, AppContext.getAccountId());
@@ -91,7 +92,7 @@ public class RelatedReadItemField extends CustomField {
 							});
 				}
 			} else if ("Contact".equals(type)) {
-				ContactService contactService = AppContext
+				ContactService contactService = ApplicationContextUtil
 						.getSpringBean(ContactService.class);
 				final SimpleContact contact = contactService.findById(typeid,
 						AppContext.getAccountId());
@@ -109,7 +110,7 @@ public class RelatedReadItemField extends CustomField {
 							});
 				}
 			} else if ("Lead".equals(type)) {
-				LeadService leadService = AppContext
+				LeadService leadService = ApplicationContextUtil
 						.getSpringBean(LeadService.class);
 				final SimpleLead lead = leadService.findById(typeid,
 						AppContext.getAccountId());
@@ -127,7 +128,7 @@ public class RelatedReadItemField extends CustomField {
 							});
 				}
 			} else if ("Opportunity".equals(type)) {
-				OpportunityService opportunityService = AppContext
+				OpportunityService opportunityService = ApplicationContextUtil
 						.getSpringBean(OpportunityService.class);
 				final SimpleOpportunity opportunity = opportunityService
 						.findById(typeid, AppContext.getAccountId());
@@ -146,7 +147,7 @@ public class RelatedReadItemField extends CustomField {
 							});
 				}
 			} else if ("Case".equals(type)) {
-				CaseService caseService = AppContext
+				CaseService caseService = ApplicationContextUtil
 						.getSpringBean(CaseService.class);
 				final SimpleCase cases = caseService.findById(typeid,
 						AppContext.getAccountId());

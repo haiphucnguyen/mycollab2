@@ -35,16 +35,16 @@ public class DeleteProjectTaskListCommandImpl implements
 				projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
-				.getBean(ResourceService.class);
+				.getSpringBean(ResourceService.class);
 		String attachmentPath = AttachmentUtils.getProjectTaskAttachmentPath(
 				accountId, projectId, taskListId);
-		resourceService.removeResource(attachmentPath, "");
+		resourceService.removeResource(attachmentPath, "", accountId);
 	}
 
 	private void removeRelatedComments(int taskListId) {
 		log.debug("Delete related comments of task list id {}", taskListId);
 		CommentMapper commentMapper = ApplicationContextUtil
-				.getBean(CommentMapper.class);
+				.getSpringBean(CommentMapper.class);
 
 		CommentExample ex = new CommentExample();
 		ex.createCriteria()

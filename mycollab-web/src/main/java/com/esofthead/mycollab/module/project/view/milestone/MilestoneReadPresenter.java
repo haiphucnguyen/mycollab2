@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCrit
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -74,7 +75,7 @@ public class MilestoneReadPresenter extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											MilestoneService milestoneService = AppContext
+											MilestoneService milestoneService = ApplicationContextUtil
 													.getSpringBean(MilestoneService.class);
 											milestoneService.removeWithSession(
 													data.getId(),
@@ -105,7 +106,7 @@ public class MilestoneReadPresenter extends
 
 					@Override
 					public void gotoNext(Milestone data) {
-						MilestoneService milestoneService = AppContext
+						MilestoneService milestoneService = ApplicationContextUtil
 								.getSpringBean(MilestoneService.class);
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -133,7 +134,7 @@ public class MilestoneReadPresenter extends
 
 					@Override
 					public void gotoPrevious(Milestone data) {
-						MilestoneService milestoneService = AppContext
+						MilestoneService milestoneService = ApplicationContextUtil
 								.getSpringBean(MilestoneService.class);
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -165,7 +166,7 @@ public class MilestoneReadPresenter extends
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.MILESTONES)) {
 			if (data.getParams() instanceof Integer) {
-				MilestoneService riskService = AppContext
+				MilestoneService riskService = ApplicationContextUtil
 						.getSpringBean(MilestoneService.class);
 				SimpleMilestone milestone = riskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

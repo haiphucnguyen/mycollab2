@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -46,7 +47,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		this.setMargin(true);
 		this.setSpacing(true);
 
-		this.itemTimeLoggingService = AppContext
+		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
 
 		this.initUI();
@@ -155,7 +156,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
 
 			CompTimeLogSheet.this.tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-					AppContext.getSpringBean(ItemTimeLoggingService.class),
+					ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
 					SimpleItemTimeLogging.class, Arrays.asList(
 							new TableViewField("User", "logUserFullName",
 									UIConstants.TABLE_X_LABEL_WIDTH),
@@ -268,7 +269,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 									.newResource("icons/16/delete.png"));
 							itemTimeLogging.setExtraData(deleteBtn);
 
-							final ProjectMemberService memberService = AppContext
+							final ProjectMemberService memberService = ApplicationContextUtil
 									.getSpringBean(ProjectMemberService.class);
 							final SimpleProjectMember member = memberService
 									.findMemberByUsername(AppContext

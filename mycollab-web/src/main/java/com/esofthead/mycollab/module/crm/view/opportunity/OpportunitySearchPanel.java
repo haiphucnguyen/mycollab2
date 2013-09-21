@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -321,7 +322,7 @@ public class OpportunitySearchPanel extends
 						.getValue());
 			}
 			if (value.getAccountId() != null) {
-				final AccountService accountService = AppContext
+				final AccountService accountService = ApplicationContextUtil
 						.getSpringBean(AccountService.class);
 				final SimpleAccount account = accountService.findById(
 						(Integer) value.getAccountId().getValue(),

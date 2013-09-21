@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -187,7 +188,7 @@ public class ContactOpportunityListComp extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											ContactService contactService = AppContext
+											ContactService contactService = ApplicationContextUtil
 													.getSpringBean(ContactService.class);
 											ContactOpportunity associateOpportunity = new ContactOpportunity();
 											associateOpportunity

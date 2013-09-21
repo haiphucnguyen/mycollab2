@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
 
@@ -34,7 +34,7 @@ public class ProjectTaskListComboBox extends ComboBox {
 		criteria.setProjectId(new NumberSearchField(SearchField.AND,
 				CurrentProjectVariables.getProjectId()));
 
-		ProjectTaskListService taskListService = AppContext
+		ProjectTaskListService taskListService = ApplicationContextUtil
 				.getSpringBean(ProjectTaskListService.class);
 		List<SimpleTaskList> taskLists = taskListService
 				.findPagableListByCriteria(new SearchRequest<TaskListSearchCriteria>(

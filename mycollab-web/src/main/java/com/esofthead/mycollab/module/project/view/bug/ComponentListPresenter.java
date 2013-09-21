@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -37,7 +38,7 @@ public class ComponentListPresenter
 	public ComponentListPresenter() {
 		super(ComponentListView.class);
 
-		componentService = AppContext.getSpringBean(ComponentService.class);
+		componentService = ApplicationContextUtil.getSpringBean(ComponentService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -110,6 +111,6 @@ public class ComponentListPresenter
 
 	@Override
 	public ISearchableService<ComponentSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(ComponentService.class);
+		return ApplicationContextUtil.getSpringBean(ComponentService.class);
 	}
 }

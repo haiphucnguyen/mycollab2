@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectRoleComboBox;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.ParsingUtils;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -125,7 +126,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 				if (propertyId.equals("username")) {
 					if (ProjectMemberAddViewImpl.this.user.getUsername() == null) {
-						final ProjectMemberService prjMemberService = AppContext
+						final ProjectMemberService prjMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						final List<SimpleUser> users = prjMemberService
 								.getUsersNotInProject(
@@ -341,7 +342,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					}
 
 					int roleId = (Integer) projectRoleComboBox.getValue();
-					ProjectMemberService projectMemberService = AppContext
+					ProjectMemberService projectMemberService = ApplicationContextUtil
 							.getSpringBean(ProjectMemberService.class);
 					projectMemberService.inviteProjectMember(lstEmailArr,
 							CurrentProjectVariables.getProjectId(), roleId,

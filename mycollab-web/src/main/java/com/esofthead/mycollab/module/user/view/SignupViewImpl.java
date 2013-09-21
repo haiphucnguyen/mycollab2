@@ -3,13 +3,13 @@ package com.esofthead.mycollab.module.user.view;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.GenericForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -60,7 +60,7 @@ public class SignupViewImpl extends AbstractView implements SignupView {
 			public void buttonClick(ClickEvent event) {
 				user.setUsername(user.getEmail());
 				try {
-					UserService userService = AppContext
+					UserService userService = ApplicationContextUtil
 							.getSpringBean(UserService.class);
 				} catch (Exception e) {
 					UserError message = new UserError(e.getMessage());

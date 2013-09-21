@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.ui.components.CompTimeLogSheet;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
@@ -35,7 +36,7 @@ public class BugTimeLogSheet extends CompTimeLogSheet<SimpleBug> {
 
 	@Override
 	protected void updateTimeRemain() {
-		BugService bugService = AppContext.getSpringBean(BugService.class);
+		BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
 		bean.setEstimateremaintime(getUpdateRemainTime());
 		bugService.updateWithSession(bean, AppContext.getUsername());
 	}

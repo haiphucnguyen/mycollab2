@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.shell.view.ScreenSize;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -180,7 +181,7 @@ public class TaskDisplayComponent extends CssLayout {
 								|| "reopenTask".equals(event.getFieldName())
 								|| "deleteTask".equals(event.getFieldName())) {
 							TaskDisplayComponent.this.removeAllComponents();
-							final ProjectTaskListService taskListService = AppContext
+							final ProjectTaskListService taskListService = ApplicationContextUtil
 									.getSpringBean(ProjectTaskListService.class);
 							TaskDisplayComponent.this.taskList = taskListService
 									.findById(

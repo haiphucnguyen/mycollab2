@@ -15,13 +15,14 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
 public class CSVImportEntityProcess<S extends ICrudService, E> {
 	private Validator validation;
 
 	public CSVImportEntityProcess() {
-		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
+		validation = ApplicationContextUtil.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
 	/**

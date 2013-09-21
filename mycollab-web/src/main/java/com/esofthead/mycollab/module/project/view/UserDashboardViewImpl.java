@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
 import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -183,7 +184,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	@Override
 	public void display() {
-		final ProjectService prjService = AppContext
+		final ProjectService prjService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		prjKeys = prjService.getUserProjectKeys(AppContext.getUsername(),
 				AppContext.getAccountId());
@@ -204,7 +205,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 				AppContext.getUsername()));
 		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
 				.toArray(new Integer[0])));
-		MonitorItemService monitorService = AppContext
+		MonitorItemService monitorService = ApplicationContextUtil
 				.getSpringBean(MonitorItemService.class);
 		int followingItemsCount = monitorService.getTotalCount(searchCriteria);
 		followingTicketsLink.setCaption("My Following Tickets ("

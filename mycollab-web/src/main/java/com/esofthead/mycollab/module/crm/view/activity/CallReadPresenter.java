@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -61,7 +62,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											CallService callService = AppContext
+											CallService callService = ApplicationContextUtil
 													.getSpringBean(CallService.class);
 											callService.removeWithSession(
 													data.getId(),
@@ -92,7 +93,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 
 					@Override
 					public void gotoNext(SimpleCall data) {
-						CallService callService = AppContext
+						CallService callService = ApplicationContextUtil
 								.getSpringBean(CallService.class);
 						CallSearchCriteria criteria = new CallSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -117,7 +118,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 
 					@Override
 					public void gotoPrevious(SimpleCall data) {
-						CallService callService = AppContext
+						CallService callService = ApplicationContextUtil
 								.getSpringBean(CallService.class);
 						CallSearchCriteria criteria = new CallSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -147,7 +148,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 		if (AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
 			SimpleCall call = null;
 			if (data.getParams() instanceof Integer) {
-				CallService callService = AppContext
+				CallService callService = ApplicationContextUtil
 						.getSpringBean(CallService.class);
 				call = callService.findById((Integer) data.getParams(),
 						AppContext.getAccountId());

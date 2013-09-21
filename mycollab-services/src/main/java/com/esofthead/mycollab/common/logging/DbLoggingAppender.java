@@ -56,7 +56,7 @@ public class DbLoggingAppender extends AppenderSkeleton {
 	private static final void commitLog(ReportBugIssueWithBLOBs record) {
 		try {
 			ReportBugIssueMapper mapper = ApplicationContextUtil
-					.getBean(ReportBugIssueMapper.class);
+					.getSpringBean(ReportBugIssueMapper.class);
 			mapper.insertSelective(record);
 		} catch (Exception e) {
 			e.printStackTrace();

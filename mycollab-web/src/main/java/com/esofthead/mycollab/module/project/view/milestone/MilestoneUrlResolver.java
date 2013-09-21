@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -63,7 +64,7 @@ public class MilestoneUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int milestoneid = Integer.parseInt(tokens[1]);
 
-			MilestoneService milestoneService = AppContext
+			MilestoneService milestoneService = ApplicationContextUtil
 					.getSpringBean(MilestoneService.class);
 			SimpleMilestone milestone = milestoneService.findById(milestoneid,
 					AppContext.getAccountId());

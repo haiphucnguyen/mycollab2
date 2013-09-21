@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTyp
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityStreamGenerator;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -81,7 +82,7 @@ public class ActivityStreamComponent extends Depot {
 		public ProjectActivityStreamPagedList() {
 			super(null, 20);
 
-			this.projectService = AppContext
+			this.projectService = ApplicationContextUtil
 					.getSpringBean(ProjectService.class);
 		}
 

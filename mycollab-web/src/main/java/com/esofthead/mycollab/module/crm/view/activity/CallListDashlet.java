@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -63,7 +64,7 @@ public class CallListDashlet extends Depot {
 						final SimpleCall call = (SimpleCall) event.getData();
 						if ("isClosed".equals(event.getFieldName())) {
 							call.setIsclosed(true);
-							final CallService callService = AppContext
+							final CallService callService = ApplicationContextUtil
 									.getSpringBean(CallService.class);
 							callService.updateWithSession(call,
 									AppContext.getUsername());

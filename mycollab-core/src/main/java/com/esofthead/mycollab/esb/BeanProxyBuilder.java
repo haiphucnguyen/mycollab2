@@ -11,7 +11,7 @@ public class BeanProxyBuilder {
 	public <S> S build(String endpoint, Class<S> buildCls) {
 		try {
 			CamelContext camelContext = ApplicationContextUtil
-					.getBean(CamelContext.class);
+					.getSpringBean(CamelContext.class);
 			return new ProxyBuilder(camelContext).endpoint(endpoint).build(
 					buildCls);
 		} catch (Exception e) {

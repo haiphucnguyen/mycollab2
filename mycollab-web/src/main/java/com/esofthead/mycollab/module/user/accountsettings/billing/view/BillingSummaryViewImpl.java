@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -39,13 +40,13 @@ public class BillingSummaryViewImpl extends AbstractView implements
 
 	private Integer numOfActiveUsers = 0;
 
-	private Double usedStorageVolume = 0d;
+	private Long usedStorageVolume = 0L;
 
 	public BillingSummaryViewImpl() {
 		super();
 
 		this.setMargin(true);
-		this.billingService = AppContext.getSpringBean(BillingService.class);
+		this.billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
 		initUI();
 		this.setImmediate(true);
 	}
@@ -214,19 +215,19 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		String planInfo = "<div id='currentPlanInfo'><div class='infoBlock'><span class='infoTitle'>Projects:</span> %d of %d</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Storage:</span> %s of %d Gb</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Users:</span> %d of %d</div></div>";
 		log.debug("Get number of active users in account {}",
 				AppContext.getAccountId());
-		UserService userService = AppContext.getSpringBean(UserService.class);
+		UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
 		numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext
 				.getAccountId());
 
 		log.debug("Get number of active projects in account {}",
 				AppContext.getAccountId());
-		ProjectService projectService = AppContext
+		ProjectService projectService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		numOfActiveProjects = projectService
 				.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
 		log.debug("Get used storage volum");
-		DriveInfoService driveInfoService = AppContext
+		DriveInfoService driveInfoService = ApplicationContextUtil
 				.getSpringBean(DriveInfoService.class);
 		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext
 				.getAccountId());

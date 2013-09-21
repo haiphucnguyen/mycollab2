@@ -7,11 +7,15 @@ import com.esofthead.mycollab.core.persistence.service.IService;
 public interface RawContentService extends IService {
 	void saveContent(String objectPath, InputStream stream);
 
-	InputStream getContent(String objectPath);
+	InputStream getContentStream(String objectPath);
 
 	void removeContent(String objectPath);
 
-	void rename(String oldPath, String newName);
+	void rename(String oldPath, String newPath);
 
 	void moveContent(String oldPath, String destinationPath);
+	
+	long getSize(String path);
+	
+	
 }

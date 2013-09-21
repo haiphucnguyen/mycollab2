@@ -50,6 +50,7 @@ import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -530,7 +531,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 										@Override
 										public void onClose(ConfirmDialog dialog) {
 											if (dialog.isConfirmed()) {
-												ProjectService projectService = AppContext
+												ProjectService projectService = ApplicationContextUtil
 														.getSpringBean(ProjectService.class);
 												projectService.removeWithSession(
 														CurrentProjectVariables

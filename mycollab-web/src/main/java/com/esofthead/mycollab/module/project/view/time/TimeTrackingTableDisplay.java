@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -28,7 +29,7 @@ public class TimeTrackingTableDisplay
 	private static final long serialVersionUID = 1L;
 
 	public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(ItemTimeLoggingService.class),
+		super(ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
 				SimpleItemTimeLogging.class, displayColumns);
 
 		this.addGeneratedColumn("logUserFullName", new Table.ColumnGenerator() {

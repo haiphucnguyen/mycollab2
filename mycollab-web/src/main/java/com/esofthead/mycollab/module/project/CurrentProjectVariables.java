@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectRolePermissionExample
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -31,7 +32,7 @@ public class CurrentProjectVariables {
 		AppContext.putVariable(ProjectContants.CURRENT_PROJECT, project);
 
 		// get member permission
-		ProjectMemberService prjMemberService = AppContext
+		ProjectMemberService prjMemberService = ApplicationContextUtil
 				.getSpringBean(ProjectMemberService.class);
 		SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(
 				AppContext.getUsername(), project.getId(),
@@ -45,7 +46,7 @@ public class CurrentProjectVariables {
 						.andRoleidEqualTo(prjMember.getProjectroleid())
 						.andProjectidEqualTo(
 								CurrentProjectVariables.getProjectId());
-				ProjectRolePermissionMapper rolePermissionMapper = AppContext
+				ProjectRolePermissionMapper rolePermissionMapper = ApplicationContextUtil
 						.getSpringBean(ProjectRolePermissionMapper.class);
 				List<ProjectRolePermission> rolePermissions = rolePermissionMapper
 						.selectByExampleWithBLOBs(ex);

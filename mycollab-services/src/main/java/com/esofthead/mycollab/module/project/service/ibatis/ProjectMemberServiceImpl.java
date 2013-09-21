@@ -85,7 +85,7 @@ public class ProjectMemberServiceImpl extends
 		SimpleProjectMember projectMember = projectMemberMapperExt
 				.findMemberById(primaryKey);
 		ProjectMapper projectMapper = ApplicationContextUtil
-				.getBean(ProjectMapper.class);
+				.getSpringBean(ProjectMapper.class);
 
 		if (projectMember != null) {
 			try {

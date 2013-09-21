@@ -14,12 +14,12 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -37,7 +37,7 @@ public class UserTableDisplay extends
 
 	public UserTableDisplay(TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(UserService.class), SimpleUser.class,
+		super(ApplicationContextUtil.getSpringBean(UserService.class), SimpleUser.class,
 				requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
@@ -120,7 +120,7 @@ public class UserTableDisplay extends
 
 									@Override
 									public void buttonClick(ClickEvent event) {
-										UserAccountInvitationMapper userAccountInvitationMapper = AppContext
+										UserAccountInvitationMapper userAccountInvitationMapper = ApplicationContextUtil
 												.getSpringBean(UserAccountInvitationMapper.class);
 										UserAccountInvitation invitation = new UserAccountInvitation();
 										invitation.setAccountid(user

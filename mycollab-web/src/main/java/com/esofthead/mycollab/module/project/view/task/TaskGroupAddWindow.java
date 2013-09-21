@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -173,7 +174,7 @@ public class TaskGroupAddWindow extends Window {
 			}
 
 			private void saveTaskList() {
-				final ProjectTaskListService taskListService = AppContext
+				final ProjectTaskListService taskListService = ApplicationContextUtil
 						.getSpringBean(ProjectTaskListService.class);
 				TaskGroupAddWindow.this.taskList.setSaccountid(AppContext
 						.getAccountId());

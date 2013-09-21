@@ -21,9 +21,10 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
-import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -257,7 +258,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 		ExportItemsStreamResource<SimpleItemTimeLogging> stream = new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 				"Time Tracking Report", new RpParameterBuilder(
 						tableItem.getDisplayColumns()), exportType,
-				AppContext.getSpringBean(ItemTimeLoggingService.class),
+				ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
 				searchCriteria, SimpleItemTimeLogging.class);
 		StreamResource res = new StreamResource(stream,
 				stream.getDefaultExportFileName(),
@@ -287,7 +288,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 		searchCriteria.setRangeDate(new RangeDateSearchField(from, to));
 		this.tableItem.setSearchCriteria(searchCriteria);
 
-		ItemTimeLoggingService itemTimeLoggingService = AppContext
+		ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
 		Double totalHoursLogging = itemTimeLoggingService
 				.getTotalHoursByCriteria(searchCriteria);

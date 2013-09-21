@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMember
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
@@ -68,7 +68,7 @@ public class AnotatedDenyUserServletRequestHandler implements
 
 				String subdomain = pathInfo;
 
-				UserService userService = AppContext
+				UserService userService = ApplicationContextUtil
 						.getSpringBean(UserService.class);
 				SimpleUser checkUser = userService.findUserByUserNameInAccount(
 						username, accountId);

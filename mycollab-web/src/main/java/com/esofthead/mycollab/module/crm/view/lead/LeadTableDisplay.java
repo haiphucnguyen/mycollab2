@@ -9,6 +9,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlLink;
@@ -16,7 +17,6 @@ import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -44,7 +44,7 @@ public class LeadTableDisplay extends
 
 	public LeadTableDisplay(String viewId, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(LeadService.class), SimpleLead.class,
+		super(ApplicationContextUtil.getSpringBean(LeadService.class), SimpleLead.class,
 				viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {

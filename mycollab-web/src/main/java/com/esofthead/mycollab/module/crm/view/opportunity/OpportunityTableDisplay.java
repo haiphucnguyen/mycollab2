@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -46,7 +47,7 @@ public class OpportunityTableDisplay
 
 	public OpportunityTableDisplay(String viewId,
 			TableViewField requiredColumn, List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(OpportunityService.class),
+		super(ApplicationContextUtil.getSpringBean(OpportunityService.class),
 				SimpleOpportunity.class, viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {

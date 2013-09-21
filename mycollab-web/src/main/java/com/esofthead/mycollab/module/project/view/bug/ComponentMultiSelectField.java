@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
 /**
@@ -37,7 +38,7 @@ public class ComponentMultiSelectField extends MultiSelectComp {
         searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
                 project.getId()));
 
-        ComponentService componentService = AppContext
+        ComponentService componentService = ApplicationContextUtil
                 .getSpringBean(ComponentService.class);
         dataList = componentService
                 .findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(

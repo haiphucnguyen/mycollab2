@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -31,7 +32,7 @@ public class MeetingTableDisplay extends
 	private static final long serialVersionUID = 1L;
 
 	public MeetingTableDisplay(List<TableViewField> displaycolumns) {
-		super(AppContext.getSpringBean(MeetingService.class),
+		super(ApplicationContextUtil.getSpringBean(MeetingService.class),
 				SimpleMeeting.class, displaycolumns);
 
 		this.addGeneratedColumn("subject", new Table.ColumnGenerator() {

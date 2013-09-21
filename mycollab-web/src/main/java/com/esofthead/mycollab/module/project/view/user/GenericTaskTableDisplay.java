@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -34,7 +35,7 @@ public class GenericTaskTableDisplay
 	private static final long serialVersionUID = 1L;
 
 	public GenericTaskTableDisplay(List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(ProjectGenericTaskService.class),
+		super(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
 				ProjectGenericTask.class, displayColumns);
 
 		addGeneratedColumn("name", new Table.ColumnGenerator() {

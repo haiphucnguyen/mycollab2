@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -64,7 +65,7 @@ public class AssignmentAddPresenter extends
 			if (data.getParams() instanceof Task) {
 				task = (Task) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				TaskService taskService = AppContext
+				TaskService taskService = ApplicationContextUtil
 						.getSpringBean(TaskService.class);
 				task = taskService.findByPrimaryKey((Integer) data.getParams(),
 						AppContext.getAccountId());
@@ -103,7 +104,7 @@ public class AssignmentAddPresenter extends
 	}
 
 	public void save(Task item) {
-		TaskService taskService = AppContext.getSpringBean(TaskService.class);
+		TaskService taskService = ApplicationContextUtil.getSpringBean(TaskService.class);
 
 		item.setSaccountid(AppContext.getAccountId());
 		if (item.getId() == null) {

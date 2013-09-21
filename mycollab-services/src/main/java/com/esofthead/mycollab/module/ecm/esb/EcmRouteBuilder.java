@@ -19,8 +19,15 @@ public class EcmRouteBuilder extends SpringRouteBuilder {
 				ExchangePattern.InOnly).to("seda:saveContent.queue");
 		from("seda:saveContent.queue")
 				.threads()
-				.bean(ApplicationContextUtil.getBean(SaveContentCommand.class),
+				.bean(ApplicationContextUtil.getSpringBean(SaveContentCommand.class),
 						"saveContent(com.esofthead.mycollab.module.ecm.domain.Content, int, int)");
+
+		log.debug("Configure contents deleted route");
+		from(EcmEndPoints.DELETE_RESOURCES_ENDPOINT).setExchangePattern(
+				ExchangePattern.InOnly).to("seda:deleteResources.queue");
+		from("seda:deleteResources.queue").threads().bean(
+				ApplicationContextUtil.getSpringBean(DeleteResourcesCommand.class),
+				"removeResource(String, int, int)");
 
 	}
 

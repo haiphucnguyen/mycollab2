@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -34,7 +34,7 @@ public class OpportunityListPresenter
 
 	public OpportunityListPresenter() {
 		super(OpportunityListView.class);
-		opportunityService = AppContext.getSpringBean(OpportunityService.class);
+		opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -136,6 +136,6 @@ public class OpportunityListPresenter
 
 	@Override
 	public ISearchableService<OpportunitySearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(OpportunityService.class);
+		return ApplicationContextUtil.getSpringBean(OpportunityService.class);
 	}
 }

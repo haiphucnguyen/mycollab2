@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -60,7 +61,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 	}
 
 	public void saveStandupReport(StandupReportWithBLOBs standupReport) {
-		StandupReportService standupReportService = AppContext
+		StandupReportService standupReportService = ApplicationContextUtil
 				.getSpringBean(StandupReportService.class);
 		standupReport.setProjectid(CurrentProjectVariables.getProjectId());
 		standupReport.setSaccountid(AppContext.getAccountId());

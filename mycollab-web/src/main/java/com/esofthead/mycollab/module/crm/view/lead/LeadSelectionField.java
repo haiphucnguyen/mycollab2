@@ -5,6 +5,7 @@ import org.vaadin.addon.customfield.FieldWrapper;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
@@ -79,7 +80,7 @@ public class LeadSelectionField extends FieldWrapper<Lead> implements
 				try {
 					Integer leadId = Integer.parseInt((String) event
 							.getProperty().getValue());
-					LeadService leadService = AppContext
+					LeadService leadService = ApplicationContextUtil
 							.getSpringBean(LeadService.class);
 					SimpleLead lead = leadService.findById(leadId,
 							AppContext.getAccountId());

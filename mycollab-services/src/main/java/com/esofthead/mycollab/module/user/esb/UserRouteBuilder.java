@@ -14,7 +14,7 @@ public class UserRouteBuilder extends SpringRouteBuilder {
 		from(UserEndpoints.USER_REMOVE_ENDPOINT).setExchangePattern(
 				ExchangePattern.InOnly).to("seda:userDelete.queue");
 		from("seda:userDelete.queue").threads().bean(
-				ApplicationContextUtil.getBean(UserDeleteListener.class),
+				ApplicationContextUtil.getSpringBean(UserDeleteListener.class),
 				"userRemoved(String, int)");
 
 	}

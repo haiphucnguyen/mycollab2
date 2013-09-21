@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -64,10 +65,10 @@ public class MyProjectListComponent extends Depot {
 		private final ProjectService projectService;
 
 		public ProjectPagedList() {
-			super(null, AppContext.getSpringBean(ProjectService.class),
+			super(null, ApplicationContextUtil.getSpringBean(ProjectService.class),
 					ProjectRowDisplayHandler.class);
 
-			this.projectService = AppContext
+			this.projectService = ApplicationContextUtil
 					.getSpringBean(ProjectService.class);
 		}
 	}

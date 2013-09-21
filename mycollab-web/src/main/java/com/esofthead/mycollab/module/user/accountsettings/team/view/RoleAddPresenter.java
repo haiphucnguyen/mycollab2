@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBre
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -62,7 +63,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 	}
 
 	public void save(Role item) {
-		RoleService roleService = AppContext.getSpringBean(RoleService.class);
+		RoleService roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
 		item.setSaccountid(AppContext.getAccountId());
 
 		if (item.getId() == null) {

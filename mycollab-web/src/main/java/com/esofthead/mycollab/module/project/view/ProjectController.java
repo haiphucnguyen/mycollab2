@@ -75,6 +75,7 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -929,7 +930,7 @@ public class ProjectController implements IController {
 					public void handle(StandUpEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						StandupReportService reportService = AppContext
+						StandupReportService reportService = ApplicationContextUtil
 								.getSpringBean(StandupReportService.class);
 						SimpleStandupReport report = reportService
 								.findStandupReportByDateUser(

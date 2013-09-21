@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -46,7 +47,7 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
 					@Override
 					public void onDelete(Role data) {
-						RoleService roleService = AppContext
+						RoleService roleService = ApplicationContextUtil
 								.getSpringBean(RoleService.class);
 						roleService.removeWithSession(data.getId(),
 								AppContext.getUsername(),
@@ -74,7 +75,7 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
-			RoleService roleService = AppContext
+			RoleService roleService = ApplicationContextUtil
 					.getSpringBean(RoleService.class);
 			SimpleRole role = roleService.findById((Integer) data.getParams(),
 					AppContext.getAccountId());

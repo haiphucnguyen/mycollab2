@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -79,7 +80,7 @@ public class ProblemUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int problemId = Integer.parseInt(tokens[1]);
 
-			ProblemService problemService = AppContext
+			ProblemService problemService = ApplicationContextUtil
 					.getSpringBean(ProblemService.class);
 			SimpleProblem problem = problemService.findById(problemId,
 					AppContext.getAccountId());

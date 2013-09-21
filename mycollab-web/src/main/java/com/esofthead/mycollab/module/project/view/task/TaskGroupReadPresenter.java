@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -58,7 +59,7 @@ public class TaskGroupReadPresenter extends
 
 					@Override
 					public void onDelete(SimpleTaskList data) {
-						ProjectTaskListService taskListService = AppContext
+						ProjectTaskListService taskListService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskListService.class);
 						taskListService.removeWithSession(data.getId(),
 								AppContext.getUsername(),
@@ -87,7 +88,7 @@ public class TaskGroupReadPresenter extends
 
 					@Override
 					public void gotoNext(SimpleTaskList data) {
-						ProjectTaskListService tasklistService = AppContext
+						ProjectTaskListService tasklistService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskListService.class);
 						TaskListSearchCriteria criteria = new TaskListSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -115,7 +116,7 @@ public class TaskGroupReadPresenter extends
 
 					@Override
 					public void gotoPrevious(SimpleTaskList data) {
-						ProjectTaskListService tasklistService = AppContext
+						ProjectTaskListService tasklistService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskListService.class);
 						TaskListSearchCriteria criteria = new TaskListSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -152,7 +153,7 @@ public class TaskGroupReadPresenter extends
 			taskContainer.addComponent(view.getWidget());
 
 			if (data.getParams() instanceof Integer) {
-				ProjectTaskListService taskService = AppContext
+				ProjectTaskListService taskService = ApplicationContextUtil
 						.getSpringBean(ProjectTaskListService.class);
 				SimpleTaskList taskgroup = taskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

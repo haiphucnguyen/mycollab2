@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -94,7 +95,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 	}
 
 	public void saveMilestone(Milestone milestone) {
-		MilestoneService milestoneService = AppContext
+		MilestoneService milestoneService = ApplicationContextUtil
 				.getSpringBean(MilestoneService.class);
 		milestone.setProjectid(CurrentProjectVariables.getProjectId());
 		milestone.setSaccountid(AppContext.getAccountId());

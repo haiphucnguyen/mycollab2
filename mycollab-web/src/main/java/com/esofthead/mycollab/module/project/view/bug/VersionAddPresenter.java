@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -63,7 +64,7 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 	}
 
 	public void save(Version item) {
-		VersionService versionService = AppContext
+		VersionService versionService = ApplicationContextUtil
 				.getSpringBean(VersionService.class);
 		item.setSaccountid(AppContext.getAccountId());
 		item.setProjectid(CurrentProjectVariables.getProjectId());

@@ -21,6 +21,7 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -42,7 +43,7 @@ public class AttachmentPanel extends VerticalLayout implements
 	private ResourceService resourceService;
 
 	public AttachmentPanel() {
-		resourceService = AppContext.getSpringBean(ResourceService.class);
+		resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
 		this.setSpacing(true);
 	}
 

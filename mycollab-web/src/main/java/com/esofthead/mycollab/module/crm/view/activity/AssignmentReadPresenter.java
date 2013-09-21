@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -62,7 +63,7 @@ public class AssignmentReadPresenter extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											TaskService taskService = AppContext
+											TaskService taskService = ApplicationContextUtil
 													.getSpringBean(TaskService.class);
 											taskService.removeWithSession(
 													data.getId(),
@@ -93,7 +94,7 @@ public class AssignmentReadPresenter extends
 
 					@Override
 					public void gotoNext(SimpleTask data) {
-						TaskService taskService = AppContext
+						TaskService taskService = ApplicationContextUtil
 								.getSpringBean(TaskService.class);
 						TodoSearchCriteria criteria = new TodoSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -118,7 +119,7 @@ public class AssignmentReadPresenter extends
 
 					@Override
 					public void gotoPrevious(SimpleTask data) {
-						TaskService taskService = AppContext
+						TaskService taskService = ApplicationContextUtil
 								.getSpringBean(TaskService.class);
 						TodoSearchCriteria criteria = new TodoSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -148,7 +149,7 @@ public class AssignmentReadPresenter extends
 		if (AppContext.canRead(RolePermissionCollections.CRM_TASK)) {
 			SimpleTask task = null;
 			if (data.getParams() instanceof Integer) {
-				TaskService taskService = AppContext
+				TaskService taskService = ApplicationContextUtil
 						.getSpringBean(TaskService.class);
 				task = taskService.findById((Integer) data.getParams(),
 						AppContext.getAccountId());

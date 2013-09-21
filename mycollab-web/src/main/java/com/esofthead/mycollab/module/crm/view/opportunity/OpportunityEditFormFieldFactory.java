@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.web.AppContext;
@@ -32,7 +33,7 @@ public class OpportunityEditFormFieldFactory extends
 		if (propertyId.equals("campaignid")) {
 			CampaignSelectionField campaignField = new CampaignSelectionField();
 			if (opportunity.getCampaignid() != null) {
-				CampaignService campaignService = AppContext
+				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
 				SimpleCampaign campaign = campaignService.findById(
 						opportunity.getCampaignid(), AppContext.getAccountId());
@@ -45,7 +46,7 @@ public class OpportunityEditFormFieldFactory extends
 			AccountSelectionField accountField = new AccountSelectionField();
 			accountField.setRequired(true);
 			if (opportunity.getAccountid() != null) {
-				AccountService accountService = AppContext
+				AccountService accountService = ApplicationContextUtil
 						.getSpringBean(AccountService.class);
 				SimpleAccount account = accountService.findById(
 						opportunity.getAccountid(), AppContext.getAccountId());

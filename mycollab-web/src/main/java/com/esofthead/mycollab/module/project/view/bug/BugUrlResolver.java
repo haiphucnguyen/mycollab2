@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -75,7 +76,7 @@ public class BugUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int bugId = Integer.parseInt(tokens[1]);
 
-			BugService bugService = AppContext.getSpringBean(BugService.class);
+			BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
 			SimpleBug bug = bugService.findById(bugId,
 					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(

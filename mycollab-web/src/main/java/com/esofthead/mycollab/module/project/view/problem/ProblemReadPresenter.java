@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -64,7 +65,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											ProblemService riskService = AppContext
+											ProblemService riskService = ApplicationContextUtil
 													.getSpringBean(ProblemService.class);
 											riskService.removeWithSession(
 													data.getId(),
@@ -94,7 +95,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 					@Override
 					public void gotoNext(Problem data) {
-						ProblemService problemService = AppContext
+						ProblemService problemService = ApplicationContextUtil
 								.getSpringBean(ProblemService.class);
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -122,7 +123,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 					@Override
 					public void gotoPrevious(Problem data) {
-						ProblemService problemService = AppContext
+						ProblemService problemService = ApplicationContextUtil
 								.getSpringBean(ProblemService.class);
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -154,7 +155,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
 			if (data.getParams() instanceof Integer) {
-				ProblemService problemService = AppContext
+				ProblemService problemService = ApplicationContextUtil
 						.getSpringBean(ProblemService.class);
 				SimpleProblem problem = problemService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -29,7 +30,7 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.BUGS)) {
 			if (data.getParams() instanceof Integer) {
-				BugService bugService = AppContext
+				BugService bugService = ApplicationContextUtil
 						.getSpringBean(BugService.class);
 				SimpleBug bug = bugService.findById((Integer) data.getParams(),
 						AppContext.getAccountId());

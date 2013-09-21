@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBre
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -33,7 +34,7 @@ public class UserListPresenter extends
 
 	public UserListPresenter() {
 		super(UserListView.class);
-		userService = AppContext.getSpringBean(UserService.class);
+		userService = ApplicationContextUtil.getSpringBean(UserService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -98,7 +99,7 @@ public class UserListPresenter extends
 
 	@Override
 	public ISearchableService<UserSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(UserService.class);
+		return ApplicationContextUtil.getSpringBean(UserService.class);
 	}
 
 }

@@ -59,7 +59,7 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 		try {
 			log.debug("Update password of user {}", username);
 			UserService userService = ApplicationContextUtil
-					.getBean(UserService.class);
+					.getSpringBean(UserService.class);
 			userService.updateWithSession(user, username);
 		} catch (Exception e) {
 			errMsg = LocalizationHelper

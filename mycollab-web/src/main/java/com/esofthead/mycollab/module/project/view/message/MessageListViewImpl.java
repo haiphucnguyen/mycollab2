@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.localization.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.shell.view.ScreenSize;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -89,7 +90,7 @@ public class MessageListViewImpl extends AbstractView implements
 				});
 		this.addComponent(this.topMessagePanel);
 		this.tableItem = new DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage>(
-				AppContext.getSpringBean(MessageService.class),
+				ApplicationContextUtil.getSpringBean(MessageService.class),
 				new MessageRowDisplayHandler());
 		this.tableItem.setStyleName("message-list");
 		this.addComponent(this.tableItem);

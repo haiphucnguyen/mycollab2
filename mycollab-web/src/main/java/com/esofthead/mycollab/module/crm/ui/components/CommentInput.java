@@ -13,6 +13,7 @@ import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -104,7 +105,7 @@ public class CommentInput extends VerticalLayout {
 						comment.setTypeid(typeid);
 						comment.setExtratypeid(extraTypeId);
 
-						final CommentService commentService = AppContext
+						final CommentService commentService = ApplicationContextUtil
 								.getSpringBean(CommentService.class);
 						int commentId = 0;
 						if (isSendingEmailRelay) {

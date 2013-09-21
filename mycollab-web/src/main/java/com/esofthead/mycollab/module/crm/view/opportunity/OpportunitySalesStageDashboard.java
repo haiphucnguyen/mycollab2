@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
@@ -43,7 +44,7 @@ public class OpportunitySalesStageDashboard extends
 		// create the dataset...
 		final DefaultPieDataset dataset = new DefaultPieDataset();
 
-		final OpportunityService opportunityService = AppContext
+		final OpportunityService opportunityService = ApplicationContextUtil
 				.getSpringBean(OpportunityService.class);
 
 		final List<GroupItem> groupItems = opportunityService

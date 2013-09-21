@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
@@ -291,7 +292,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 															final ConfirmDialog dialog) {
 														if (dialog
 																.isConfirmed()) {
-															final BugService bugService = AppContext
+															final BugService bugService = ApplicationContextUtil
 																	.getSpringBean(BugService.class);
 															bugService
 																	.removeWithSession(
@@ -586,7 +587,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						public void buttonClick(final ClickEvent event) {
 							BugReadViewImpl.this.bug
 									.setStatus(BugStatusConstants.INPROGRESS);
-							final BugService bugService = AppContext
+							final BugService bugService = ApplicationContextUtil
 									.getSpringBean(BugService.class);
 							bugService.updateWithSession(
 									BugReadViewImpl.this.bug,
@@ -637,7 +638,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						public void buttonClick(final ClickEvent event) {
 							BugReadViewImpl.this.bug
 									.setStatus(BugStatusConstants.OPEN);
-							final BugService bugService = AppContext
+							final BugService bugService = ApplicationContextUtil
 									.getSpringBean(BugService.class);
 							bugService.updateWithSession(
 									BugReadViewImpl.this.bug,

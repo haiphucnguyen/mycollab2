@@ -15,14 +15,14 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.web.AppContext;
 
 public class ContactImportWindow extends EntityImportWindow<Contact> {
 	private static final long serialVersionUID = 1L;
 
 	public ContactImportWindow() {
-		super(true, "Import Contact Window", AppContext
+		super(true, "Import Contact Window", ApplicationContextUtil
 				.getSpringBean(ContactService.class), Contact.class);
 	}
 

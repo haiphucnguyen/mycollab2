@@ -9,6 +9,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UrlLink;
@@ -16,7 +17,6 @@ import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -42,7 +42,7 @@ public class AccountTableDisplay extends
 
 	public AccountTableDisplay(String viewId, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(AccountService.class),
+		super(ApplicationContextUtil.getSpringBean(AccountService.class),
 				SimpleAccount.class, viewId, requiredColumn, displayColumns);
 
 		addGeneratedColumn("selected", new Table.ColumnGenerator() {

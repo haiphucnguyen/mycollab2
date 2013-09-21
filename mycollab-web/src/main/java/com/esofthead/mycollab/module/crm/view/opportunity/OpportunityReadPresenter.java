@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -83,7 +84,7 @@ public class OpportunityReadPresenter extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											OpportunityService OpportunityService = AppContext
+											OpportunityService OpportunityService = ApplicationContextUtil
 													.getSpringBean(OpportunityService.class);
 											OpportunityService.removeWithSession(
 													data.getId(),
@@ -114,7 +115,7 @@ public class OpportunityReadPresenter extends
 
 					@Override
 					public void gotoNext(Opportunity data) {
-						OpportunityService opportunityService = AppContext
+						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -142,7 +143,7 @@ public class OpportunityReadPresenter extends
 
 					@Override
 					public void gotoPrevious(Opportunity data) {
-						OpportunityService opportunityService = AppContext
+						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -231,7 +232,7 @@ public class OpportunityReadPresenter extends
 							associateContacts.add(associateContact);
 						}
 
-						OpportunityService opportunityService = AppContext
+						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						opportunityService.saveOpportunityContactRelationship(
 								associateContacts, AppContext.getAccountId());
@@ -264,7 +265,7 @@ public class OpportunityReadPresenter extends
 							associateLeads.add(associateLead);
 						}
 
-						OpportunityService opportunityService = AppContext
+						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						opportunityService.saveOpportunityLeadRelationship(
 								associateLeads, AppContext.getAccountId());
@@ -281,7 +282,7 @@ public class OpportunityReadPresenter extends
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER));
 
 			if (data.getParams() instanceof Integer) {
-				OpportunityService opportunityService = AppContext
+				OpportunityService opportunityService = ApplicationContextUtil
 						.getSpringBean(OpportunityService.class);
 				SimpleOpportunity opportunity = opportunityService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

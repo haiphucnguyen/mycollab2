@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -88,7 +89,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 	}
 
 	public void saveProblem(Problem problem) {
-		ProblemService problemService = AppContext
+		ProblemService problemService = ApplicationContextUtil
 				.getSpringBean(ProblemService.class);
 		problem.setProjectid(CurrentProjectVariables.getProjectId());
 		problem.setSaccountid(AppContext.getAccountId());

@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -48,7 +49,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 
 					@Override
 					public void onDelete(User data) {
-						UserService userService = AppContext
+						UserService userService = ApplicationContextUtil
 								.getSpringBean(UserService.class);
 						userService.pendingUserAccount(data.getUsername(),
 								AppContext.getAccountId());
@@ -77,7 +78,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 		if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
 			String username = (String) data.getParams();
 
-			UserService userService = AppContext
+			UserService userService = ApplicationContextUtil
 					.getSpringBean(UserService.class);
 			SimpleUser user = userService.findUserByUserNameInAccount(username,
 					AppContext.getAccountId());

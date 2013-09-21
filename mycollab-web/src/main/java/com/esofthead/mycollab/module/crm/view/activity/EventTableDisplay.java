@@ -10,6 +10,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -35,7 +36,7 @@ public class EventTableDisplay extends
 
 	public EventTableDisplay(TableViewField requireColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(EventService.class), SimpleEvent.class,
+		super(ApplicationContextUtil.getSpringBean(EventService.class), SimpleEvent.class,
 				requireColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {

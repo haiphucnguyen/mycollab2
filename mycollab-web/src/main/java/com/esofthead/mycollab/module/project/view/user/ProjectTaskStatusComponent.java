@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
@@ -93,7 +94,7 @@ public class ProjectTaskStatusComponent extends Depot {
 				new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
-				AppContext.getSpringBean(ProjectGenericTaskService.class),
+				ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
 				new TaskRowDisplayHandler(), 10);
 		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);

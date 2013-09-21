@@ -75,7 +75,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		}
 	}
 
-	public InputStream getContent(String objectPath) {
+	public InputStream getContentStream(String objectPath) {
 		AmazonS3 s3client = storageConfiguration.newS3Client();
 
 		try {
@@ -193,5 +193,25 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	public void moveContent(String oldPath, String destinationPath) {
 		removeContent(destinationPath);
 		rename(oldPath, destinationPath);
+	}
+
+	@Override
+	public long getSize(String path) {
+		AmazonS3 s3client = storageConfiguration.newS3Client();
+
+		try {
+			ObjectListing listObjects = s3client.listObjects(
+					storageConfiguration.getBucket(), path);
+			long size = 0;
+			for (S3ObjectSummary objectSummary : listObjects
+					.getObjectSummaries()) {
+				size += objectSummary.getSize();
+			}
+
+			return size;
+
+		} catch (Exception e) {
+			throw new MyCollabException(e);
+		}
 	}
 }

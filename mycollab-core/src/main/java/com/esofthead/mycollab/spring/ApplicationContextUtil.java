@@ -16,11 +16,12 @@ public class ApplicationContextUtil implements ApplicationContextAware {
 		ctx = appContext;
 	}
 
+	public static <T> T getSpringBean(Class<T> classType) {
+		return ctx.getBean(classType);
+	}
+
 	public static ApplicationContext getApplicationContext() {
 		return ctx;
 	}
 
-	public static <T> T getBean(Class<T> classType) {
-		return ctx.getBean(classType);
-	}
 }

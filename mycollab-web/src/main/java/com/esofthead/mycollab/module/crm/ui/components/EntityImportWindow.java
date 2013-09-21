@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListView;
 import com.esofthead.mycollab.module.crm.view.contact.iexport.ContactVCardObjectEntityConverter;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -148,7 +149,7 @@ public abstract class EntityImportWindow<E> extends Window {
 														ConfirmDialog dialog) {
 													if (dialog.isConfirmed()) {
 														try {
-															ContactService contactService = AppContext
+															ContactService contactService = ApplicationContextUtil
 																	.getSpringBean(ContactService.class);
 															List<VCard> lstVcard = Ezvcard
 																	.parse(contentStream)

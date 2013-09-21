@@ -23,7 +23,7 @@ public interface ResourceService extends IService {
 	void saveContent(Content content, String createdUser,
 			InputStream refStream, Integer sAccountId);
 
-	void removeResource(String path, String userDelete);
+	void removeResource(String path, String userDelete, Integer sAccountId);
 
 	InputStream getContentStream(String path);
 

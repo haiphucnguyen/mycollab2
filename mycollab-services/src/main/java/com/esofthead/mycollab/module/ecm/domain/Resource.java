@@ -11,7 +11,7 @@ public class Resource implements Comparable {
 	protected String path = "";
 
 	// length is Kilobyte value
-	protected Double size = 0d;
+	protected Long size = 0L;
 	protected String createdUser;
 	protected String name;
 
@@ -39,11 +39,11 @@ public class Resource implements Comparable {
 		return path;
 	}
 
-	public Double getSize() {
+	public Long getSize() {
 		return size;
 	}
 
-	public void setSize(Double size) {
+	public void setSize(Long size) {
 		this.size = size;
 	}
 

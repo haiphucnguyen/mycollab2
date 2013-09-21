@@ -4,10 +4,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -19,7 +19,7 @@ public class TaskDisplayWidget extends
 	private static final long serialVersionUID = 1L;
 
 	public TaskDisplayWidget() {
-		super(null, AppContext.getSpringBean(ProjectTaskService.class),
+		super(null, ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
 				TaskRowDisplayHandler.class, false);
 	}
 

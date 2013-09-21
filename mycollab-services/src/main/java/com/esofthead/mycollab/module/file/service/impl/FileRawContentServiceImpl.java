@@ -68,7 +68,7 @@ public class FileRawContentServiceImpl implements RawContentService {
 	}
 
 	@Override
-	public InputStream getContent(String objectPath) {
+	public InputStream getContentStream(String objectPath) {
 		try {
 			File file = new File(baseFolder, objectPath);
 			return new FileInputStream(file);
@@ -133,5 +133,21 @@ public class FileRawContentServiceImpl implements RawContentService {
 		} catch (IOException e) {
 			throw new MyCollabException(e);
 		}
+	}
+
+	@Override
+	public long getSize(String path) {
+		File file = new File(baseFolder + "/" + path);
+		if (file.exists()) {
+			if (file.isFile()) {
+				return FileUtils.sizeOf(file);
+			} else if (file.isDirectory()) {
+				return FileUtils.sizeOfDirectory(file);
+			} else {
+				return 0;
+			}
+		}
+
+		return 0;
 	}
 }

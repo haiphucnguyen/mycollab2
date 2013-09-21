@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
@@ -33,7 +34,7 @@ public class RiskListPresenter extends
 	public RiskListPresenter() {
 		super(RiskListView.class);
 
-		riskService = AppContext.getSpringBean(RiskService.class);
+		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -133,6 +134,6 @@ public class RiskListPresenter extends
 
 	@Override
 	public ISearchableService<RiskSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(RiskService.class);
+		return ApplicationContextUtil.getSpringBean(RiskService.class);
 	}
 }

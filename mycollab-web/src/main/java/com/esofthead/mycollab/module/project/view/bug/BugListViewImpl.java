@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -24,7 +25,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Button;
@@ -164,7 +164,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, new RpParameterBuilder(tableItem
 										.getDisplayColumns()),
-								ReportExportType.PDF, AppContext
+								ReportExportType.PDF, ApplicationContextUtil
 										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class), "export.pdf",
 						BugListViewImpl.this.getApplication());
@@ -196,7 +196,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, new RpParameterBuilder(tableItem
 										.getDisplayColumns()),
-								ReportExportType.EXCEL, AppContext
+								ReportExportType.EXCEL, ApplicationContextUtil
 										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class),
 						"export.xlsx", BugListViewImpl.this.getApplication());
@@ -228,7 +228,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
 								title, new RpParameterBuilder(tableItem
 										.getDisplayColumns()),
-								ReportExportType.CSV, AppContext
+								ReportExportType.CSV, ApplicationContextUtil
 										.getSpringBean(BugService.class),
 								searchCriteria, SimpleBug.class), "export.csv",
 						BugListViewImpl.this.getApplication());

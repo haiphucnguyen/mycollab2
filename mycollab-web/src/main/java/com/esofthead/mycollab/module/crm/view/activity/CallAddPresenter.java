@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -63,7 +64,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 			CallWithBLOBs call = null;
 
 			if (data.getParams() instanceof Integer) {
-				CallService callService = AppContext
+				CallService callService = ApplicationContextUtil
 						.getSpringBean(CallService.class);
 				call = callService.findByPrimaryKey((Integer) data.getParams(),
 						AppContext.getAccountId());
@@ -107,7 +108,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 	}
 
 	public void save(CallWithBLOBs item) {
-		CallService taskService = AppContext.getSpringBean(CallService.class);
+		CallService taskService = ApplicationContextUtil.getSpringBean(CallService.class);
 
 		item.setSaccountid(AppContext.getAccountId());
 		if (item.getId() == null) {

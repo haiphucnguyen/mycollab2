@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nE
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -44,7 +45,7 @@ public class ContactInfoChangeWindow extends Window {
 	public ContactInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		this.validation = AppContext
+		this.validation = ApplicationContextUtil
 				.getSpringBean(LocalValidatorFactoryBean.class);
 		this.initUI();
 		this.center();
@@ -194,7 +195,7 @@ public class ContactInfoChangeWindow extends Window {
 		this.user.setSkypecontact((String) this.txtSkype.getValue());
 
 		if (this.validateForm(this.user)) {
-			final UserService userService = AppContext
+			final UserService userService = ApplicationContextUtil
 					.getSpringBean(UserService.class);
 			userService.updateWithSession(this.user, AppContext.getUsername());
 

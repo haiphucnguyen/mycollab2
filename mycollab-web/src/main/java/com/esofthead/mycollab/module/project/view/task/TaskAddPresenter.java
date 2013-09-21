@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -89,7 +90,7 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 	}
 
 	public void save(Task item) {
-		ProjectTaskService taskService = AppContext
+		ProjectTaskService taskService = ApplicationContextUtil
 				.getSpringBean(ProjectTaskService.class);
 
 		item.setSaccountid(AppContext.getAccountId());

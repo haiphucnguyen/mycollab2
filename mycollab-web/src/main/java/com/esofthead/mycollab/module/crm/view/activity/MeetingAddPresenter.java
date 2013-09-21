@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -63,7 +64,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 			if (data.getParams() instanceof Meeting) {
 				meeting = (Meeting) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				MeetingService meetingService = AppContext
+				MeetingService meetingService = ApplicationContextUtil
 						.getSpringBean(MeetingService.class);
 				meeting = meetingService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
@@ -104,7 +105,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 	}
 
 	public void save(Meeting item) {
-		MeetingService meetingService = AppContext
+		MeetingService meetingService = ApplicationContextUtil
 				.getSpringBean(MeetingService.class);
 
 		item.setSaccountid(AppContext.getAccountId());

@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -48,7 +49,7 @@ public class TaskTableDisplay extends
 	private static final long serialVersionUID = 1L;
 
 	public TaskTableDisplay(String[] visibleColumns, String[] columnHeaders) {
-		super(AppContext.getSpringBean(ProjectTaskService.class),
+		super(ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
 				SimpleTask.class, visibleColumns, columnHeaders);
 
 		this.addGeneratedColumn("taskname", new Table.ColumnGenerator() {
@@ -198,7 +199,7 @@ public class TaskTableDisplay extends
 									task.setStatus("Closed");
 									task.setPercentagecomplete(100d);
 
-									ProjectTaskService projectTaskService = AppContext
+									ProjectTaskService projectTaskService = ApplicationContextUtil
 											.getSpringBean(ProjectTaskService.class);
 									projectTaskService.updateWithSession(task,
 											AppContext.getUsername());
@@ -222,7 +223,7 @@ public class TaskTableDisplay extends
 									task.setStatus("Open");
 									task.setPercentagecomplete(0d);
 
-									ProjectTaskService projectTaskService = AppContext
+									ProjectTaskService projectTaskService = ApplicationContextUtil
 											.getSpringBean(ProjectTaskService.class);
 									projectTaskService.updateWithSession(task,
 											AppContext.getUsername());
@@ -248,7 +249,7 @@ public class TaskTableDisplay extends
 										task.setStatus("Pending");
 										task.setPercentagecomplete(0d);
 
-										ProjectTaskService projectTaskService = AppContext
+										ProjectTaskService projectTaskService = ApplicationContextUtil
 												.getSpringBean(ProjectTaskService.class);
 										projectTaskService.updateWithSession(
 												task, AppContext.getUsername());
@@ -272,7 +273,7 @@ public class TaskTableDisplay extends
 									task.setStatus("Open");
 									task.setPercentagecomplete(0d);
 
-									ProjectTaskService projectTaskService = AppContext
+									ProjectTaskService projectTaskService = ApplicationContextUtil
 											.getSpringBean(ProjectTaskService.class);
 									projectTaskService.updateWithSession(task,
 											AppContext.getUsername());
@@ -314,7 +315,7 @@ public class TaskTableDisplay extends
 											public void onClose(
 													ConfirmDialog dialog) {
 												if (dialog.isConfirmed()) {
-													ProjectTaskService projectTaskService = AppContext
+													ProjectTaskService projectTaskService = ApplicationContextUtil
 															.getSpringBean(ProjectTaskService.class);
 													projectTaskService.removeWithSession(
 															task.getId(),

@@ -32,7 +32,7 @@ public class DeleteProjectCommandImpl implements DeleteProjectCommand {
 		log.debug("Delete activity stream of project {}", projectId);
 
 		ActivityStreamMapper activityStreamMapper = ApplicationContextUtil
-				.getBean(ActivityStreamMapper.class);
+				.getSpringBean(ActivityStreamMapper.class);
 		ActivityStreamExample ex = new ActivityStreamExample();
 		ex.createCriteria().andExtratypeidEqualTo(projectId)
 				.andModuleEqualTo(ModuleNameConstants.PRJ);
@@ -43,7 +43,7 @@ public class DeleteProjectCommandImpl implements DeleteProjectCommand {
 	private void deleteRelatedComments(int projectId) {
 		log.debug("Delete related comments");
 		CommentMapper commentMapper = ApplicationContextUtil
-				.getBean(CommentMapper.class);
+				.getSpringBean(CommentMapper.class);
 
 		CommentExample ex = new CommentExample();
 		ex.createCriteria().andExtratypeidEqualTo(projectId);
@@ -54,10 +54,10 @@ public class DeleteProjectCommandImpl implements DeleteProjectCommand {
 		log.debug("Delete files of project {}", projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
-				.getBean(ResourceService.class);
+				.getSpringBean(ResourceService.class);
 
 		String rootPath = String.format("%d/project/%d", accountid, projectId);
-		resourceService.removeResource(rootPath, "");
+		resourceService.removeResource(rootPath, "", accountid);
 	}
 
 }

@@ -38,6 +38,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -85,7 +86,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											AccountService accountService = AppContext
+											AccountService accountService = ApplicationContextUtil
 													.getSpringBean(AccountService.class);
 											accountService.removeWithSession(
 													data.getId(),
@@ -116,7 +117,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
 					@Override
 					public void gotoNext(Account data) {
-						AccountService accountService = AppContext
+						AccountService accountService = ApplicationContextUtil
 								.getSpringBean(AccountService.class);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -142,7 +143,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
 					@Override
 					public void gotoPrevious(Account data) {
-						AccountService accountService = AppContext
+						AccountService accountService = ApplicationContextUtil
 								.getSpringBean(AccountService.class);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -179,7 +180,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					@Override
 					public void selectAssociateItems(Set<SimpleContact> items) {
 						if (items.size() > 0) {
-							ContactService contactService = AppContext
+							ContactService contactService = ApplicationContextUtil
 									.getSpringBean(ContactService.class);
 							SimpleAccount account = view.getItem();
 							for (SimpleContact contact : items) {
@@ -230,7 +231,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 								associateLeads.add(assoLead);
 							}
 
-							AccountService accountService = AppContext
+							AccountService accountService = ApplicationContextUtil
 									.getSpringBean(AccountService.class);
 							accountService.saveAccountLeadRelationship(
 									associateLeads, AppContext.getAccountId());
@@ -292,7 +293,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER));
 
 			if (data.getParams() instanceof Integer) {
-				AccountService accountService = AppContext
+				AccountService accountService = ApplicationContextUtil
 						.getSpringBean(AccountService.class);
 				SimpleAccount account = accountService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

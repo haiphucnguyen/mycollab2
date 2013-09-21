@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -62,7 +63,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 					.getParams()) {
 				// do nothing
 			} else {
-				ProjectService projectService = (ProjectService) AppContext
+				ProjectService projectService = (ProjectService) ApplicationContextUtil
 						.getSpringBean(ProjectService.class);
 				SimpleProject project = (SimpleProject) projectService
 						.findById((Integer) data.getParams(),

@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -49,7 +50,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 	private String searchString;
 
 	public FileSearchResultComponent() {
-		this.resourceService = AppContext.getSpringBean(ResourceService.class);
+		this.resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
 
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
@@ -205,7 +206,9 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 																.removeResource(
 																		resource.getPath(),
 																		AppContext
-																				.getUsername());
+																				.getUsername(),
+																		AppContext
+																				.getAccountId());
 
 														FileSearchResultComponent.this
 																.displaySearchResult(

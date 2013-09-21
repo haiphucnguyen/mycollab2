@@ -55,9 +55,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 						Date lastModifiedDate = ((File) entry).lastModified;
 						Calendar createdDate = new GregorianCalendar();
 						createdDate.setTime(lastModifiedDate);
-						resource.setSize(Double
-								.parseDouble(((File) entry).numBytes / 1024
-										+ ""));
+						resource.setSize(((File) entry).numBytes);
 						resource.setCreated(createdDate);
 						resource.setPath(entry.path);
 						resources.add(resource);
@@ -130,9 +128,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 						Date lastModifiedDate = ((File) entry).lastModified;
 						Calendar createdDate = new GregorianCalendar();
 						createdDate.setTime(lastModifiedDate);
-						resource.setSize(Double
-								.parseDouble(((File) entry).numBytes / 1024
-										+ ""));
+						resource.setSize(((File) entry).numBytes);
 						resource.setCreated(createdDate);
 						resource.setPath(entry.path);
 						resources.add(resource);
@@ -171,8 +167,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 				Date lastModifiedDate = ((File) entry).lastModified;
 				Calendar createdDate = new GregorianCalendar();
 				createdDate.setTime(lastModifiedDate);
-				resource.setSize(Double.parseDouble(((File) entry).numBytes
-						/ 1024 + ""));
+				resource.setSize(((File) entry).numBytes);
 				resource.setCreated(createdDate);
 				resource.setPath(entry.path);
 				res = resource;

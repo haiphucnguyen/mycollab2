@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -86,7 +87,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 	}
 
 	public void saveRisk(Risk risk) {
-		RiskService riskService = AppContext.getSpringBean(RiskService.class);
+		RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 		risk.setProjectid(CurrentProjectVariables.getProjectId());
 		risk.setSaccountid(AppContext.getAccountId());
 

@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCr
 import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -39,7 +40,7 @@ public class ProjectRoleListPresenter
 
 	public ProjectRoleListPresenter() {
 		super(ProjectRoleListView.class);
-		projectRoleService = AppContext.getSpringBean(ProjectRoleService.class);
+		projectRoleService = ApplicationContextUtil.getSpringBean(ProjectRoleService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -120,6 +121,6 @@ public class ProjectRoleListPresenter
 
 	@Override
 	public ISearchableService<ProjectRoleSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(ProjectRoleService.class);
+		return ApplicationContextUtil.getSpringBean(ProjectRoleService.class);
 	}
 }

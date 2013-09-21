@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -98,11 +99,11 @@ public class ProjectMemberAddPresenter extends
 	}
 
 	public void saveProjectMember(ProjectMember projectMember) {
-		ProjectMemberService projectMemberService = AppContext
+		ProjectMemberService projectMemberService = ApplicationContextUtil
 				.getSpringBean(ProjectMemberService.class);
 
 		if (projectMember.getId() == null) {
-			UserService userService = AppContext
+			UserService userService = ApplicationContextUtil
 					.getSpringBean(UserService.class);
 			User user = userService.findUserByUserName(projectMember
 					.getUsername());

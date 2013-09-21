@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
@@ -33,7 +34,7 @@ public class ProblemListPresenter
 	public ProblemListPresenter() {
 		super(ProblemListView.class);
 
-		problemService = AppContext.getSpringBean(ProblemService.class);
+		problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -134,6 +135,6 @@ public class ProblemListPresenter
 
 	@Override
 	public ISearchableService<ProblemSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(ProblemService.class);
+		return ApplicationContextUtil.getSpringBean(ProblemService.class);
 	}
 }

@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -38,7 +39,7 @@ public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
 			messageContainer.addComponent(view.getWidget());
 
 			if (data.getParams() instanceof Integer) {
-				MessageService messageService = AppContext
+				MessageService messageService = ApplicationContextUtil
 						.getSpringBean(MessageService.class);
 				SimpleMessage message = messageService.findMessageById(
 						(Integer) data.getParams(), AppContext.getAccountId());

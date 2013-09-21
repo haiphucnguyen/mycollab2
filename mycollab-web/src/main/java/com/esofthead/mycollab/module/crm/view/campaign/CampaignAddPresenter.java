@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -79,7 +80,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 			if (data.getParams() instanceof SimpleCampaign) {
 				campaign = (SimpleCampaign) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				CampaignService campaignService = AppContext
+				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
 				campaign = (CampaignWithBLOBs) campaignService
 						.findByPrimaryKey((Integer) data.getParams(),
@@ -119,7 +120,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 	}
 
 	public void saveCampaign(CampaignWithBLOBs campaign) {
-		CampaignService campaignService = AppContext
+		CampaignService campaignService = ApplicationContextUtil
 				.getSpringBean(CampaignService.class);
 
 		campaign.setSaccountid(AppContext.getAccountId());

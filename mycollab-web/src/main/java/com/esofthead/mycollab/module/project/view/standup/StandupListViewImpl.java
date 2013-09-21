@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -58,7 +59,7 @@ public class StandupListViewImpl extends AbstractView implements
 		this.getListReport();
 
 		this.reportInDay = new BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport>(
-				AppContext.getSpringBean(StandupReportService.class),
+				ApplicationContextUtil.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
 		this.reportInDay.addStyleName("standupreport-list-content");
 		this.addComponent(this.reportInDay);
@@ -155,7 +156,7 @@ public class StandupListViewImpl extends AbstractView implements
 				.getProjectId()));
 		criteria.setReportDateRange(this.getRangeDateSearchField(new Date(),
 				this.standupCalendar.getStyleCalendar().getShowingDate()));
-		final StandupReportService reportService = AppContext
+		final StandupReportService reportService = ApplicationContextUtil
 				.getSpringBean(StandupReportService.class);
 		final List<GroupItem> reportsCount = reportService
 				.getReportsCount(criteria);

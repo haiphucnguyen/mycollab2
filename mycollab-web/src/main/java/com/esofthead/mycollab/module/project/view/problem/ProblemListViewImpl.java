@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -68,7 +69,7 @@ public class ProblemListViewImpl extends AbstractView implements
 
 	private void generateDisplayTable() {
 		this.tableItem = new PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem>(
-				AppContext.getSpringBean(ProblemService.class),
+				ApplicationContextUtil.getSpringBean(ProblemService.class),
 				SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
 				ProblemTableFieldDef.selected, Arrays.asList(
 						ProblemTableFieldDef.name,

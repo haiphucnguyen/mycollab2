@@ -12,15 +12,15 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.web.AppContext;
 
 public class OpportunityImportWindow extends
 		EntityImportWindow<SimpleOpportunity> {
 	private static final long serialVersionUID = 1L;
 
 	public OpportunityImportWindow() {
-		super(false, "Import Opportunity Window", AppContext
+		super(false, "Import Opportunity Window", ApplicationContextUtil
 				.getSpringBean(OpportunityService.class),
 				SimpleOpportunity.class);
 	}

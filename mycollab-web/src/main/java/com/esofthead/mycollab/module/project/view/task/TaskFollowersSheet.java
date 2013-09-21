@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
@@ -64,7 +65,7 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 						.getName());
 		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
 
-		RelayEmailNotificationService relayEmailNotificationService = AppContext
+		RelayEmailNotificationService relayEmailNotificationService = ApplicationContextUtil
 				.getSpringBean(RelayEmailNotificationService.class);
 		relayEmailNotificationService.saveWithSession(relayNotification,
 				AppContext.getUsername());

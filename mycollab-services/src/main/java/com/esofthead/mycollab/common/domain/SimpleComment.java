@@ -43,7 +43,7 @@ public class SimpleComment extends Comment {
 		try {
 			if (attachments == null) {
 				ContentJcrDao contentJcr = ApplicationContextUtil
-						.getBean(ContentJcrDao.class);
+						.getSpringBean(ContentJcrDao.class);
 
 				String commentPath = "";
 				if (CommentType.PRJ_BUG.toString().equals(getType())) {

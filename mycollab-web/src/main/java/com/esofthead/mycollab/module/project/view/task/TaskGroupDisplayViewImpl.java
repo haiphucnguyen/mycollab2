@@ -271,20 +271,20 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		// if (exportType.equals(ReportExportType.PDF)) {
 		// res = new StreamResource(new ExportTaskListExcelStreamResource(
 		// title, exportType,
-		// AppContext.getSpringBean(ProjectTaskListService.class),
+		// ApplicationContextUtil.getBean(ProjectTaskListService.class),
 		// tasklistSearchCriteria,new RpParameterBuilder(taskLists.get
 		// .getDisplayColumns())), "task_list.pdf",
 		// TaskGroupDisplayViewImpl.this.getApplication());
 		// } else if (exportType.equals(ReportExportType.CSV)) {
 		// res = new StreamResource(new ExportTaskListExcelStreamResource(
 		// title, exportType,
-		// AppContext.getSpringBean(ProjectTaskListService.class),
+		// ApplicationContextUtil.getBean(ProjectTaskListService.class),
 		// tasklistSearchCriteria), "task_list.csv",
 		// TaskGroupDisplayViewImpl.this.getApplication());
 		// } else {
 		// res = new StreamResource(new ExportTaskListExcelStreamResource(
 		// title, exportType,
-		// AppContext.getSpringBean(ProjectTaskListService.class),
+		// ApplicationContextUtil.getBean(ProjectTaskListService.class),
 		// tasklistSearchCriteria), "task_list.xls",
 		// TaskGroupDisplayViewImpl.this.getApplication());
 		// }

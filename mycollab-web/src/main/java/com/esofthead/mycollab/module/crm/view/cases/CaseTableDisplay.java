@@ -5,6 +5,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
@@ -35,7 +36,7 @@ public class CaseTableDisplay extends
 
 	public CaseTableDisplay(String viewId, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(CaseService.class), SimpleCase.class,
+		super(ApplicationContextUtil.getSpringBean(CaseService.class), SimpleCase.class,
 				viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new ColumnGenerator() {

@@ -39,6 +39,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -87,7 +88,7 @@ public class CampaignReadPresenter extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											CampaignService campaignService = AppContext
+											CampaignService campaignService = ApplicationContextUtil
 													.getSpringBean(CampaignService.class);
 											campaignService.removeWithSession(
 													data.getId(),
@@ -118,7 +119,7 @@ public class CampaignReadPresenter extends
 
 					@Override
 					public void gotoNext(CampaignWithBLOBs data) {
-						CampaignService contactService = AppContext
+						CampaignService contactService = ApplicationContextUtil
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -144,7 +145,7 @@ public class CampaignReadPresenter extends
 
 					@Override
 					public void gotoPrevious(CampaignWithBLOBs data) {
-						CampaignService contactService = AppContext
+						CampaignService contactService = ApplicationContextUtil
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -226,7 +227,7 @@ public class CampaignReadPresenter extends
 								associateAccounts.add(assoAccount);
 							}
 
-							CampaignService accountService = AppContext
+							CampaignService accountService = ApplicationContextUtil
 									.getSpringBean(CampaignService.class);
 							accountService.saveCampaignAccountRelationship(
 									associateAccounts,
@@ -264,7 +265,7 @@ public class CampaignReadPresenter extends
 								associateContacts.add(associateContact);
 							}
 
-							CampaignService campaignService = AppContext
+							CampaignService campaignService = ApplicationContextUtil
 									.getSpringBean(CampaignService.class);
 							campaignService.saveCampaignContactRelationship(
 									associateContacts,
@@ -301,7 +302,7 @@ public class CampaignReadPresenter extends
 								associateLeads.add(associateLead);
 							}
 
-							CampaignService campaignService = AppContext
+							CampaignService campaignService = ApplicationContextUtil
 									.getSpringBean(CampaignService.class);
 							campaignService.saveCampaignLeadRelationship(
 									associateLeads, AppContext.getAccountId());
@@ -321,7 +322,7 @@ public class CampaignReadPresenter extends
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER));
 
 			if (data.getParams() instanceof Integer) {
-				CampaignService campaignService = AppContext
+				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
 				SimpleCampaign campaign = campaignService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

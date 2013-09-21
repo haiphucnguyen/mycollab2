@@ -93,9 +93,9 @@ public class ResourceMoverImpl implements ResourceMover {
 			destService.saveContent(ResourceUtils.getExternalDrive(destRes),
 					srcRes, in);
 		} else {
-			
-			//TODO: SHOULD CALL MOVE METHOD NOT SAVE
-//			resourceService.saveContent(srcRes, userMove, in);
+
+			// TODO: SHOULD CALL MOVE METHOD NOT SAVE
+			// resourceService.saveContent(srcRes, userMove, in);
 		}
 	}
 
@@ -138,7 +138,8 @@ public class ResourceMoverImpl implements ResourceMover {
 	 * destRes must be instanceof Folder
 	 */
 	@Override
-	public void moveResource(Resource srcRes, Resource destRes, String userMove) {
+	public void moveResource(Resource srcRes, Resource destRes,
+			String userMove, Integer sAccountId) {
 		ResourceType srcType = ResourceUtils.getType(srcRes);
 		ResourceType destType = ResourceUtils.getType(destRes);
 
@@ -183,7 +184,8 @@ public class ResourceMoverImpl implements ResourceMover {
 						ResourceUtils.getExternalDrive(srcRes),
 						srcRes.getPath());
 			} else {
-				resourceService.removeResource(srcRes.getPath(), userMove);
+				resourceService.removeResource(srcRes.getPath(), userMove,
+						sAccountId);
 			}
 
 		}

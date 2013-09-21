@@ -36,17 +36,17 @@ public class DeleteProjectMilestoneCommandImpl implements
 				projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
-				.getBean(ResourceService.class);
+				.getSpringBean(ResourceService.class);
 		String attachmentPath = AttachmentUtils
 				.getProjectMilestoneAttachmentPath(accountId, projectId,
 						milestoneId);
-		resourceService.removeResource(attachmentPath, "");
+		resourceService.removeResource(attachmentPath, "", accountId);
 	}
 
 	private void removeRelatedComments(int milestoneId) {
 		log.debug("Delete related comments of milestone id {}", milestoneId);
 		CommentMapper commentMapper = ApplicationContextUtil
-				.getBean(CommentMapper.class);
+				.getSpringBean(CommentMapper.class);
 
 		CommentExample ex = new CommentExample();
 		ex.createCriteria()

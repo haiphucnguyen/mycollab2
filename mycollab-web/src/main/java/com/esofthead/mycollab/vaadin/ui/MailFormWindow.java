@@ -26,6 +26,7 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
@@ -220,7 +221,7 @@ public class MailFormWindow extends Window {
 				}
 				if (AppContext.getSession().getEmail() != null
 						&& AppContext.getSession().getEmail().length() > 0) {
-					ExtMailService systemMailService = AppContext
+					ExtMailService systemMailService = ApplicationContextUtil
 							.getSpringBean(ExtMailService.class);
 
 					List<File> listFile = attachments.getListFile();

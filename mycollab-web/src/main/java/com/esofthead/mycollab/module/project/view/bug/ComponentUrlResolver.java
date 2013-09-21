@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -79,7 +80,7 @@ public class ComponentUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int componentId = Integer.parseInt(tokens[1]);
 
-			ComponentService componentService = AppContext
+			ComponentService componentService = ApplicationContextUtil
 					.getSpringBean(ComponentService.class);
 			SimpleComponent component = componentService.findById(componentId,
 					AppContext.getAccountId());

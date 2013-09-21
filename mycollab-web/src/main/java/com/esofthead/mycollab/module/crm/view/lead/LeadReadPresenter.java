@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -79,7 +80,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											LeadService LeadService = AppContext
+											LeadService LeadService = ApplicationContextUtil
 													.getSpringBean(LeadService.class);
 											LeadService.removeWithSession(
 													data.getId(),
@@ -109,7 +110,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 					@Override
 					public void gotoNext(Lead data) {
-						LeadService contactService = AppContext
+						LeadService contactService = ApplicationContextUtil
 								.getSpringBean(LeadService.class);
 						LeadSearchCriteria criteria = new LeadSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -135,7 +136,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 					@Override
 					public void gotoPrevious(Lead data) {
-						LeadService contactService = AppContext
+						LeadService contactService = ApplicationContextUtil
 								.getSpringBean(LeadService.class);
 						LeadSearchCriteria criteria = new LeadSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -215,7 +216,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 								associateCampaigns.add(associateCampaign);
 							}
 
-							CampaignService campaignService = AppContext
+							CampaignService campaignService = ApplicationContextUtil
 									.getSpringBean(CampaignService.class);
 							campaignService.saveCampaignLeadRelationship(
 									associateCampaigns,
@@ -233,7 +234,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
 
 			if (data.getParams() instanceof Integer) {
-				LeadService leadService = AppContext
+				LeadService leadService = ApplicationContextUtil
 						.getSpringBean(LeadService.class);
 				SimpleLead lead = leadService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

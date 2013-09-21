@@ -5,6 +5,7 @@ import org.vaadin.addon.customfield.FieldWrapper;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
@@ -76,7 +77,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
 				try {
-					AccountService accountService = AppContext
+					AccountService accountService = ApplicationContextUtil
 							.getSpringBean(AccountService.class);
 
 					Integer accountId = Integer.parseInt((String) event

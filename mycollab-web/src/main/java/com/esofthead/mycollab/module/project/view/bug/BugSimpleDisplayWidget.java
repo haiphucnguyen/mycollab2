@@ -4,10 +4,10 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -19,7 +19,7 @@ public class BugSimpleDisplayWidget extends
 	private static final long serialVersionUID = 1L;
 
 	public BugSimpleDisplayWidget() {
-		super(null, AppContext.getSpringBean(BugService.class),
+		super(null, ApplicationContextUtil.getSpringBean(BugService.class),
 				TaskRowDisplayHandler.class, false);
 	}
 

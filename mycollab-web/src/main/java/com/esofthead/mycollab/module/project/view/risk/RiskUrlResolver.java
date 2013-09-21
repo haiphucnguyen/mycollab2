@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -78,7 +79,7 @@ public class RiskUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int riskId = Integer.parseInt(tokens[1]);
 
-			RiskService riskService = AppContext
+			RiskService riskService = ApplicationContextUtil
 					.getSpringBean(RiskService.class);
 			SimpleRisk risk = riskService.findById(riskId,
 					AppContext.getAccountId());

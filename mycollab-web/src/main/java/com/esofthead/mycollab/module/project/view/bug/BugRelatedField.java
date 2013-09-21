@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugRelatedSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -59,7 +60,7 @@ public class BugRelatedField extends CustomField {
 	public BugRelatedField(final SimpleBug bean) {
 		this.bean = bean;
 
-		relatedBugService = AppContext.getSpringBean(RelatedBugService.class);
+		relatedBugService = ApplicationContextUtil.getSpringBean(RelatedBugService.class);
 
 		VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
@@ -124,7 +125,7 @@ public class BugRelatedField extends CustomField {
 		btnRelate.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 
-		ProjectMemberService memberService = AppContext
+		ProjectMemberService memberService = ApplicationContextUtil
 				.getSpringBean(ProjectMemberService.class);
 		SimpleProjectMember member = memberService.findMemberByUsername(
 				AppContext.getUsername(),
@@ -186,7 +187,7 @@ public class BugRelatedField extends CustomField {
 							.equals(BugRelationConstants.DUPLICATED)) {
 						oppositeRelation
 								.setRelatetype(BugRelationConstants.DUPLICATED);
-						BugService bugService = AppContext
+						BugService bugService = ApplicationContextUtil
 								.getSpringBean(BugService.class);
 						bean.setStatus(BugStatusConstants.RESOLVED);
 						bean.setResolution(BugResolutionConstants.DUPLICATE);
@@ -228,7 +229,7 @@ public class BugRelatedField extends CustomField {
 		mainLayout.addComponent(layoutComment);
 
 		tableItem = new PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug>(
-				AppContext.getSpringBean(RelatedBugService.class),
+				ApplicationContextUtil.getSpringBean(RelatedBugService.class),
 				SimpleRelatedBug.class, Arrays.asList(
 						new TableViewField("Bug Name", "bugName",
 								UIConstants.TABLE_EX_LABEL_WIDTH),
@@ -252,7 +253,7 @@ public class BugRelatedField extends CustomField {
 						.getProject().getShortname(), relatedItem
 						.getRelatedid(), relatedItem.getBugName());
 
-				BugService bugService = AppContext
+				BugService bugService = ApplicationContextUtil
 						.getSpringBean(BugService.class);
 				final SimpleBug bug = bugService.findById(
 						relatedItem.getRelatedid(), AppContext.getAccountId());
@@ -373,7 +374,7 @@ public class BugRelatedField extends CustomField {
 						.newResource("icons/16/delete.png"));
 				relatedItem.setExtraData(deleteBtn);
 
-				ProjectMemberService memberService = AppContext
+				ProjectMemberService memberService = ApplicationContextUtil
 						.getSpringBean(ProjectMemberService.class);
 				SimpleProjectMember member = memberService
 						.findMemberByUsername(AppContext.getUsername(),

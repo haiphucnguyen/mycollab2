@@ -12,13 +12,12 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.validator.constraints.DateComparision;
 import com.esofthead.mycollab.web.AppContext;
-
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
 public class AdvancedEditBeanForm<T> extends GenericForm implements
@@ -30,7 +29,7 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 	public AdvancedEditBeanForm() {
 		this.setImmediate(true);
 		this.setWriteThrough(true);
-		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
+		validation = ApplicationContextUtil.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
 	public boolean validateForm(Object data) {

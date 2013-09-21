@@ -5,6 +5,7 @@ import org.vaadin.addon.customfield.FieldWrapper;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
@@ -77,7 +78,7 @@ public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs>
 				try {
 					Integer campaignId = Integer.parseInt((String) event
 							.getProperty().getValue());
-					CampaignService campaignService = AppContext
+					CampaignService campaignService = ApplicationContextUtil
 							.getSpringBean(CampaignService.class);
 					SimpleCampaign campaign = campaignService.findById(
 							campaignId, AppContext.getAccountId());

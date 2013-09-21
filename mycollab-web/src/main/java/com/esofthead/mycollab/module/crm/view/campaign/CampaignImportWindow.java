@@ -12,14 +12,14 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.web.AppContext;
 
 public class CampaignImportWindow extends EntityImportWindow<SimpleCampaign> {
 	private static final long serialVersionUID = 1L;
 
 	public CampaignImportWindow() {
-		super(false, "Import Campaign Window", AppContext
+		super(false, "Import Campaign Window", ApplicationContextUtil
 				.getSpringBean(CampaignService.class), SimpleCampaign.class);
 	}
 

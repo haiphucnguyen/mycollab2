@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceMover;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.ResourceHandlerComponent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -71,7 +72,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		this.setWidth("100%");
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
-		this.resourceService = AppContext.getSpringBean(ResourceService.class);
+		this.resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
 
 		final HorizontalLayout menuBar = new HorizontalLayout();
 		menuBar.setSpacing(true);
@@ -416,9 +417,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 										+ "/"
 										+ UploadContentWindow.this.uploadField
 												.getFileName());
-								content.setSize(Double.parseDouble(""
-										+ UploadContentWindow.this.uploadField
-												.getFileSize()));
+								content.setSize(UploadContentWindow.this.uploadField
+										.getFileSize());
 								FileDashboardComponent.this.resourceService
 										.saveContent(content,
 												AppContext.getUsername(),
@@ -619,14 +619,14 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			center();
 			this.setWidth("600px");
 			this.resourceEditting = resource;
-			this.resourceService = AppContext
+			this.resourceService = ApplicationContextUtil
 					.getSpringBean(ResourceService.class);
-			this.externalResourceService = AppContext
+			this.externalResourceService = ApplicationContextUtil
 					.getSpringBean(ExternalResourceService.class);
-			this.externalDriveService = AppContext
+			this.externalDriveService = ApplicationContextUtil
 					.getSpringBean(ExternalDriveService.class);
 			this.isNeedLoadExternalDrive = isNeedLoadExternalDrive;
-			this.resourceMover = AppContext.getSpringBean(ResourceMover.class);
+			this.resourceMover = ApplicationContextUtil.getSpringBean(ResourceMover.class);
 			constructBody();
 		}
 
@@ -636,13 +636,13 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			center();
 			this.setWidth("600px");
 			this.lstResEditting = lstRes;
-			this.resourceService = AppContext
+			this.resourceService = ApplicationContextUtil
 					.getSpringBean(ResourceService.class);
-			this.externalResourceService = AppContext
+			this.externalResourceService = ApplicationContextUtil
 					.getSpringBean(ExternalResourceService.class);
-			this.externalDriveService = AppContext
+			this.externalDriveService = ApplicationContextUtil
 					.getSpringBean(ExternalDriveService.class);
-			this.resourceMover = AppContext.getSpringBean(ResourceMover.class);
+			this.resourceMover = ApplicationContextUtil.getSpringBean(ResourceMover.class);
 			this.isNeedLoadExternalDrive = isNeedLoadExternalDrive;
 
 			constructBody();
@@ -847,7 +847,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					if (resourceEditting != null) {
 						try {
 							resourceMover.moveResource(resourceEditting,
-									baseFolder, AppContext.getUsername());
+									baseFolder, AppContext.getUsername(),
+									AppContext.getAccountId());
 
 							AbstractMoveWindow.this.close();
 							displayAfterMoveSuccess(
@@ -862,7 +863,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						for (Resource res : lstResEditting) {
 							try {
 								resourceMover.moveResource(res, baseFolder,
-										AppContext.getUsername());
+										AppContext.getUsername(),
+										AppContext.getAccountId());
 							} catch (Exception e) {
 								checkingFail = true;
 							}

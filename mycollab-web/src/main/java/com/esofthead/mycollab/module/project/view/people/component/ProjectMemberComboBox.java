@@ -10,8 +10,8 @@ import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComboBox;
 
 public class ProjectMemberComboBox extends ComboBox {
@@ -29,7 +29,7 @@ public class ProjectMemberComboBox extends ComboBox {
 		criteria.setStatus(new StringSearchField(
 				ProjectMemberStatusConstants.ACTIVE));
 
-		ProjectMemberService userService = AppContext
+		ProjectMemberService userService = ApplicationContextUtil
 				.getSpringBean(ProjectMemberService.class);
 		List<SimpleProjectMember> memberList = userService
 				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(

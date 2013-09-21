@@ -21,10 +21,10 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -57,7 +57,7 @@ public class BugResolutionSummaryChartWidget extends
 		// create the dataset...
 		final DefaultPieDataset dataset = new DefaultPieDataset();
 
-		BugService bugService = AppContext.getSpringBean(BugService.class);
+		BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
 
 		List<GroupItem> groupItems = bugService
 				.getResolutionDefectsSummary(searchCriteria);

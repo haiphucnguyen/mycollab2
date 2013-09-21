@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -35,7 +36,7 @@ public class AccountListPresenter
 
 	public AccountListPresenter() {
 		super(AccountListView.class);
-		accountService = AppContext.getSpringBean(AccountService.class);
+		accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -156,6 +157,6 @@ public class AccountListPresenter
 
 	@Override
 	public ISearchableService<AccountSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(AccountService.class);
+		return ApplicationContextUtil.getSpringBean(AccountService.class);
 	}
 }

@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -94,7 +95,7 @@ public class ProjectAddWindow extends Window {
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								final ProjectService projectService = AppContext
+								final ProjectService projectService = ApplicationContextUtil
 										.getSpringBean(ProjectService.class);
 								ProjectAddWindow.this.project
 										.setSaccountid(AppContext

@@ -13,12 +13,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -53,7 +53,7 @@ public class MilestoneListPresenter extends
 
 	@Override
 	public void doSearch(MilestoneSearchCriteria searchCriteria) {
-		MilestoneService milestoneService = AppContext
+		MilestoneService milestoneService = ApplicationContextUtil
 				.getSpringBean(MilestoneService.class);
 		List<SimpleMilestone> milestones = milestoneService
 				.findPagableListByCriteria(new SearchRequest<MilestoneSearchCriteria>(

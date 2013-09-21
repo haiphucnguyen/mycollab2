@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -67,7 +68,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
 	private void generateDisplayTable() {
 		this.tableItem = new PagedBeanTable2<RiskService, RiskSearchCriteria, SimpleRisk>(
-				AppContext.getSpringBean(RiskService.class), SimpleRisk.class,
+				ApplicationContextUtil.getSpringBean(RiskService.class), SimpleRisk.class,
 				RiskListView.VIEW_DEF_ID, RiskTableFieldDef.selected,
 				Arrays.asList(RiskTableFieldDef.name,
 						RiskTableFieldDef.assignUser,

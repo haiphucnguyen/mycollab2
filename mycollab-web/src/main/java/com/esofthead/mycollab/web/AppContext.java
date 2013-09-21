@@ -15,7 +15,6 @@ import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -86,7 +85,7 @@ public class AppContext implements Serializable {
 			try {
 				if (userPreference != null) {
 					UserPreference pref = userPreference;
-					UserPreferenceService prefService = AppContext
+					UserPreferenceService prefService = ApplicationContextUtil
 							.getSpringBean(UserPreferenceService.class);
 					pref.setLastaccessedtime(new GregorianCalendar().getTime());
 					prefService.updateWithSession(pref,
@@ -107,7 +106,7 @@ public class AppContext implements Serializable {
 	public void updateLastModuleVisit(String moduleName) {
 		try {
 			UserPreference pref = getInstance().userPreference;
-			UserPreferenceService prefService = AppContext
+			UserPreferenceService prefService = ApplicationContextUtil
 					.getSpringBean(UserPreferenceService.class);
 			pref.setLastmodulevisit(moduleName);
 			prefService.updateWithSession(pref, AppContext.getUsername());
@@ -134,7 +133,7 @@ public class AppContext implements Serializable {
 
 	public void initDomain(String domain) {
 		this.subdomain = domain;
-		BillingAccountService billingService = getSpringBean(BillingAccountService.class);
+		BillingAccountService billingService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
 		BillingAccount account = billingService.getAccountByDomain(domain);
 
 		if (account == null) {
@@ -192,10 +191,6 @@ public class AppContext implements Serializable {
 
 	public static Application getApplication() {
 		return MyCollabApplication.getInstance();
-	}
-
-	public static <T> T getSpringBean(Class<T> requiredType) {
-		return ApplicationContextUtil.getBean(requiredType);
 	}
 
 	public static boolean isAdmin() {

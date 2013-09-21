@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -172,7 +173,7 @@ public class OpportunityLeadListComp extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											OpportunityService opportunityService = AppContext
+											OpportunityService opportunityService = ApplicationContextUtil
 													.getSpringBean(OpportunityService.class);
 											OpportunityLead associateLead = new OpportunityLead();
 											associateLead.setLeadid(lead

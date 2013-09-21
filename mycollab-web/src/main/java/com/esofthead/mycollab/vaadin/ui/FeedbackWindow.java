@@ -15,6 +15,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Sizeable;
@@ -152,7 +153,7 @@ public class FeedbackWindow extends Window {
 					return;
 				}
 				if (!email.equals("") && !subject.equals("")) {
-					ExtMailService systemMailService = AppContext
+					ExtMailService systemMailService = ApplicationContextUtil
 							.getSpringBean(ExtMailService.class);
 					List<File> listFile = attachments.getListFile();
 					List<EmailAttachementSource> emailAttachmentSource = null;

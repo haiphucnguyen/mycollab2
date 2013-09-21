@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.service.CurrencyService;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
 
@@ -20,7 +20,7 @@ public class CurrencyComboBox extends ComboBox {
 	public void attach() {
 		super.attach();
 		this.removeAllItems();
-		CurrencyService currencyService = AppContext
+		CurrencyService currencyService = ApplicationContextUtil
 				.getSpringBean(CurrencyService.class);
 		List<Currency> currencyList = currencyService.getCurrencies();
 		BeanContainer<String, Currency> beanItem = new BeanContainer<String, Currency>(

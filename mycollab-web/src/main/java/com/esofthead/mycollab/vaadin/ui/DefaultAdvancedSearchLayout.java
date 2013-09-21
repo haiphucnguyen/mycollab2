@@ -17,6 +17,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
@@ -55,7 +56,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		super(parent, "advancedSearch");
 		setStyleName("advancedSearchLayout");
 
-		saveSearchResultService = AppContext
+		saveSearchResultService = ApplicationContextUtil
 				.getSpringBean(SaveSearchResultService.class);
 		this.type = type;
 		initLayout();

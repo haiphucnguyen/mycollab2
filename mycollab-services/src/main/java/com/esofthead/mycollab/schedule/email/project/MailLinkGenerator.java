@@ -20,7 +20,7 @@ public class MailLinkGenerator {
 		this.projectId = projectId;
 
 		ProjectService projectService = ApplicationContextUtil
-				.getBean(ProjectService.class);
+				.getSpringBean(ProjectService.class);
 		String subdomain = projectService.getSubdomainOfProject(projectId);
 		if (subdomain != null) {
 			siteUrl = SiteConfiguration.getSiteUrl(subdomain);

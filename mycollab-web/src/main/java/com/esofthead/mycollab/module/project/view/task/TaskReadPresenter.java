@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -81,7 +82,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 									public void onClose(
 											final ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											final ProjectTaskService taskService = AppContext
+											final ProjectTaskService taskService = ApplicationContextUtil
 													.getSpringBean(ProjectTaskService.class);
 											taskService.removeWithSession(
 													data.getId(),
@@ -114,7 +115,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
 					@Override
 					public void gotoNext(final Task data) {
-						final ProjectTaskService taskService = AppContext
+						final ProjectTaskService taskService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskService.class);
 
 						final TaskSearchCriteria criteria = new TaskSearchCriteria();
@@ -144,7 +145,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
 					@Override
 					public void gotoPrevious(final Task data) {
-						final ProjectTaskService taskService = AppContext
+						final ProjectTaskService taskService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskService.class);
 
 						final TaskSearchCriteria criteria = new TaskSearchCriteria();
@@ -183,7 +184,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
 			taskContainer.addComponent(this.view.getWidget());
 			if (data.getParams() instanceof Integer) {
-				final ProjectTaskService taskService = AppContext
+				final ProjectTaskService taskService = ApplicationContextUtil
 						.getSpringBean(ProjectTaskService.class);
 				final SimpleTask task = taskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

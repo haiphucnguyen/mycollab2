@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -243,7 +244,7 @@ public class NoteListItems extends Depot {
 			noteContentLayout.addComponent(constructNoteHeader(note));
 
 			commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(
-					AppContext.getSpringBean(CommentService.class),
+					ApplicationContextUtil.getSpringBean(CommentService.class),
 					CommentRowDisplayHandler.class);
 			commentList.setDisplayEmptyListText(false);
 			commentList.setWidth("100%");
@@ -284,7 +285,7 @@ public class NoteListItems extends Depot {
 		this.setMargin(false);
 		addStyleName("note-list");
 
-		noteService = AppContext.getSpringBean(NoteService.class);
+		noteService = ApplicationContextUtil.getSpringBean(NoteService.class);
 		this.type = type;
 		this.typeid = typeid;
 

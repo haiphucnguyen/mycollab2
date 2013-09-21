@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -120,11 +121,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		this.baseFolder = baseFolder;
 		this.rootPath = rootPath;
 		this.rootFolder = baseFolder;
-		externalResourceService = AppContext
+		externalResourceService = ApplicationContextUtil
 				.getSpringBean(ExternalResourceService.class);
-		externalDriveService = AppContext
+		externalDriveService = ApplicationContextUtil
 				.getSpringBean(ExternalDriveService.class);
-		resourceService = AppContext.getSpringBean(ResourceService.class);
+		resourceService = ApplicationContextUtil
+				.getSpringBean(ResourceService.class);
 
 		VerticalLayout mainBodyLayout = new VerticalLayout();
 		mainBodyLayout.setSpacing(true);
@@ -379,7 +381,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 												ResourceHandlerComponent.this.resourceService.removeResource(
 														res.getPath(),
 														AppContext
-																.getUsername());
+																.getUsername(),
+														AppContext
+																.getAccountId());
 											}
 										}
 										if (itemResourceContainerLayout.isSearchAction) {
@@ -677,7 +681,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 			if (res instanceof Content) {
 				moreInfoAboutResLayout.addComponent(new Separator());
-				Double size = res.getSize();
+				Long size = res.getSize() / 1024;
 				DecimalFormat df = new DecimalFormat("#");
 				df.setRoundingMode(RoundingMode.HALF_UP);
 
@@ -1157,8 +1161,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 										final Content content = new Content();
 										content.setPath(baseFolder.getPath()
 												+ "/" + file.getName());
-										double sizeInByte = file.length();
-										content.setSize(sizeInByte / 1024);
+										content.setSize(file.length());
 										FileInputStream fileInputStream = new FileInputStream(
 												file);
 

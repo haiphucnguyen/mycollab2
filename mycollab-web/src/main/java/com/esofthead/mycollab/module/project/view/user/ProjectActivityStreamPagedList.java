@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityStreamGenerator;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
@@ -33,7 +34,7 @@ public class ProjectActivityStreamPagedList
 
 	public ProjectActivityStreamPagedList() {
 		super(null, 20);
-		this.activityStreamService = AppContext
+		this.activityStreamService = ApplicationContextUtil
 				.getSpringBean(ActivityStreamService.class);
 
 	}

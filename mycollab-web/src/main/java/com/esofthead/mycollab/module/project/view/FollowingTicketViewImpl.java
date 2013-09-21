@@ -18,9 +18,10 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
-import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -160,7 +161,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		ExportItemsStreamResource<FollowingTicket> exportResource = new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
 				"Following Tickets Report", new RpParameterBuilder(
 						ticketTable.getDisplayColumns()), exportType,
-				AppContext.getSpringBean(ProjectFollowingTicketService.class),
+				ApplicationContextUtil.getSpringBean(ProjectFollowingTicketService.class),
 				searchCriteria, FollowingTicket.class);
 
 		StreamResource res = new StreamResource(exportResource,
@@ -195,7 +196,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 					FollowingTicketFieldDef.assignee,
 					FollowingTicketFieldDef.createdDate));
 
-			this.projectFollowingTicketService = AppContext
+			this.projectFollowingTicketService = ApplicationContextUtil
 					.getSpringBean(ProjectFollowingTicketService.class);
 
 			this.addGeneratedColumn("summary", new ColumnGenerator() {

@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -173,7 +174,7 @@ public class AccountLeadListComp extends
 															final ConfirmDialog dialog) {
 														if (dialog
 																.isConfirmed()) {
-															final AccountService accountService = AppContext
+															final AccountService accountService = ApplicationContextUtil
 																	.getSpringBean(AccountService.class);
 															final AccountLead associateLead = new AccountLead();
 															associateLead

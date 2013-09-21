@@ -5,6 +5,7 @@ import org.vaadin.addon.customfield.FieldWrapper;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
@@ -78,7 +79,7 @@ public class CaseSelectionField extends FieldWrapper<CaseWithBLOBs> implements
 				try {
 					Integer casesId = Integer.parseInt((String) event
 							.getProperty().getValue());
-					CaseService casesService = AppContext
+					CaseService casesService = ApplicationContextUtil
 							.getSpringBean(CaseService.class);
 					SimpleCase cases = casesService.findById(casesId,
 							AppContext.getAccountId());

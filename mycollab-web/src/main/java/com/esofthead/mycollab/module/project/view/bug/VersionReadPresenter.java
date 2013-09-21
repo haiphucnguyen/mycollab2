@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -50,7 +51,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 
 					@Override
 					public void onDelete(Version data) {
-						VersionService versionService = AppContext
+						VersionService versionService = ApplicationContextUtil
 								.getSpringBean(VersionService.class);
 						versionService.removeWithSession(data.getId(),
 								AppContext.getUsername(),
@@ -75,7 +76,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 
 					@Override
 					public void gotoNext(Version data) {
-						VersionService componentService = AppContext
+						VersionService componentService = ApplicationContextUtil
 								.getSpringBean(VersionService.class);
 						VersionSearchCriteria criteria = new VersionSearchCriteria();
 						criteria.setProjectId(new NumberSearchField(
@@ -102,7 +103,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 
 					@Override
 					public void gotoPrevious(Version data) {
-						VersionService componentService = AppContext
+						VersionService componentService = ApplicationContextUtil
 								.getSpringBean(VersionService.class);
 						VersionSearchCriteria criteria = new VersionSearchCriteria();
 						criteria.setProjectId(new NumberSearchField(
@@ -133,7 +134,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.VERSIONS)) {
 			if (data.getParams() instanceof Integer) {
-				VersionService componentService = AppContext
+				VersionService componentService = ApplicationContextUtil
 						.getSpringBean(VersionService.class);
 				Version version = componentService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

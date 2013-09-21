@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -79,7 +80,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											CaseService caseService = AppContext
+											CaseService caseService = ApplicationContextUtil
 													.getSpringBean(CaseService.class);
 											caseService.removeWithSession(
 													data.getId(),
@@ -109,7 +110,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
 					@Override
 					public void gotoNext(CaseWithBLOBs data) {
-						CaseService caseService = AppContext
+						CaseService caseService = ApplicationContextUtil
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -134,7 +135,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
 					@Override
 					public void gotoPrevious(CaseWithBLOBs data) {
-						CaseService caseService = AppContext
+						CaseService caseService = ApplicationContextUtil
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -213,7 +214,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 							associateContacts.add(associateContact);
 						}
 
-						ContactService contactService = AppContext
+						ContactService contactService = ApplicationContextUtil
 								.getSpringBean(ContactService.class);
 						contactService.saveContactCaseRelationship(
 								associateContacts, AppContext.getAccountId());
@@ -231,7 +232,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
 
 			if (data.getParams() instanceof Integer) {
-				CaseService caseService = AppContext
+				CaseService caseService = ApplicationContextUtil
 						.getSpringBean(CaseService.class);
 				SimpleCase cases = caseService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

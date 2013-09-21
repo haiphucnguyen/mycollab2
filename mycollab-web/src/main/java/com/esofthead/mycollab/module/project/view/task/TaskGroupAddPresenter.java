@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -88,7 +89,7 @@ public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
 	}
 
 	public void save(TaskList item) {
-		ProjectTaskListService taskService = AppContext
+		ProjectTaskListService taskService = ApplicationContextUtil
 				.getSpringBean(ProjectTaskListService.class);
 
 		item.setSaccountid(AppContext.getAccountId());

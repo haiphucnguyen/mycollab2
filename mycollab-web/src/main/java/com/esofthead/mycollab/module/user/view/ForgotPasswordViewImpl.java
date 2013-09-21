@@ -10,11 +10,11 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAction;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -56,7 +56,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					String username = nameOrEmailField.getValue().toString();
-					UserService userService = AppContext
+					UserService userService = ApplicationContextUtil
 							.getSpringBean(UserService.class);
 					User user = userService.findUserByUserName(username);
 
@@ -83,7 +83,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 						relayEmail.setFromemail("");
 						relayEmail.setFromname("");
 
-						RelayEmailMapper relayEmailMapper = AppContext
+						RelayEmailMapper relayEmailMapper = ApplicationContextUtil
 								.getSpringBean(RelayEmailMapper.class);
 						relayEmailMapper.insert(relayEmail);
 

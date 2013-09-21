@@ -10,10 +10,10 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Component;
@@ -77,7 +77,7 @@ public class ProjectMessageListComponent extends Depot {
 		super("Latest News", new VerticalLayout());
 
 		messageList = new DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage>(
-				AppContext.getSpringBean(MessageService.class),
+				ApplicationContextUtil.getSpringBean(MessageService.class),
 				new MessageRowDisplayHandler(), 5);
 		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);

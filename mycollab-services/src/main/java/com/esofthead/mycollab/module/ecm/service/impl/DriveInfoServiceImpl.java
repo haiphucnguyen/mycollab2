@@ -52,23 +52,9 @@ public class DriveInfoServiceImpl extends
 	}
 
 	@Override
-	public Double getUsedStorageVolume(@CacheKey Integer sAccountId) {
+	public Long getUsedStorageVolume(@CacheKey Integer sAccountId) {
 		DriveInfo driveInfo = getDriveInfo(sAccountId);
-		Double result = 0d;
-
-		result += (driveInfo.getAudiovolume() != null) ? driveInfo
-				.getAudiovolume() : 0;
-		result += (driveInfo.getBinaryvolume() != null) ? driveInfo
-				.getBinaryvolume() : 0;
-		result += (driveInfo.getDocvolume() != null) ? driveInfo.getDocvolume()
-				: 0;
-		result += (driveInfo.getImagevolume() != null) ? driveInfo
-				.getImagevolume() : 0;
-		result += (driveInfo.getTextvolume() != null) ? driveInfo
-				.getTextvolume() : 0;
-		result += (driveInfo.getVideovolume() != null) ? driveInfo
-				.getVideovolume() : 0;
-		return result;
+		return driveInfo.getUsedvolume();
 	}
 
 }

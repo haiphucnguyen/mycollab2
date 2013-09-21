@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -102,21 +103,21 @@ public class EventListPresenter extends
 		}
 
 		if (keyListCall.size() > 0) {
-			CallService callService = AppContext
+			CallService callService = ApplicationContextUtil
 					.getSpringBean(CallService.class);
 			callService.massRemoveWithSession(keyListCall,
 					AppContext.getUsername(), AppContext.getAccountId());
 		}
 
 		if (keyListMeeting.size() > 0) {
-			MeetingService meetingService = AppContext
+			MeetingService meetingService = ApplicationContextUtil
 					.getSpringBean(MeetingService.class);
 			meetingService.massRemoveWithSession(keyListMeeting,
 					AppContext.getUsername(), AppContext.getAccountId());
 		}
 
 		if (keyListTask.size() > 0) {
-			TaskService taskService = AppContext
+			TaskService taskService = ApplicationContextUtil
 					.getSpringBean(TaskService.class);
 			taskService.massRemoveWithSession(keyListTask,
 					AppContext.getUsername(), AppContext.getAccountId());
@@ -127,7 +128,7 @@ public class EventListPresenter extends
 
 	@Override
 	public ISearchableService<EventSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(EventService.class);
+		return ApplicationContextUtil.getSpringBean(EventService.class);
 	}
 
 }

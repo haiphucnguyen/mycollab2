@@ -26,7 +26,7 @@ public class ContentServiceImpl implements ContentService {
 	public InputStream getContent(Integer accountId, String objectPath) {
 		String newPath = ((accountId == null) ? "" : accountId + "/")
 				+ objectPath;
-		return rawContentService.getContent(newPath);
+		return rawContentService.getContentStream(newPath);
 	}
 
 	@Override

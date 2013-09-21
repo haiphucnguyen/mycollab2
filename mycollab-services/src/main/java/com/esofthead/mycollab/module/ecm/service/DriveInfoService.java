@@ -15,5 +15,5 @@ public interface DriveInfoService extends ICrudService<Integer, DriveInfo> {
 	DriveInfo getDriveInfo(@CacheKey Integer sAccountId);
 
 	@Cacheable
-	Double getUsedStorageVolume(@CacheKey Integer sAccountId);
+	Long getUsedStorageVolume(@CacheKey Integer sAccountId);
 }

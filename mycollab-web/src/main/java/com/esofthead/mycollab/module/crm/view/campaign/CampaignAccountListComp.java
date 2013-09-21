@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableFieldDef;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -173,7 +174,7 @@ public class CampaignAccountListComp extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											CampaignService campaignService = AppContext
+											CampaignService campaignService = ApplicationContextUtil
 													.getSpringBean(CampaignService.class);
 											CampaignAccount associateAccount = new CampaignAccount();
 											associateAccount

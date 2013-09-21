@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.domain.CustomViewStore;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.thoughtworks.xstream.XStream;
@@ -42,7 +43,7 @@ public abstract class CustomizedTableWindow extends Window {
 		this.center();
 
 		this.tableItem = table;
-		customViewStoreService = AppContext
+		customViewStoreService = ApplicationContextUtil
 				.getSpringBean(CustomViewStoreService.class);
 
 		final VerticalLayout body = new VerticalLayout();

@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -34,7 +35,7 @@ public class ContactListPresenter
 
 	public ContactListPresenter() {
 		super(ContactListView.class);
-		contactService = AppContext.getSpringBean(ContactService.class);
+		contactService = ApplicationContextUtil.getSpringBean(ContactService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -154,6 +155,6 @@ public class ContactListPresenter
 
 	@Override
 	public ISearchableService<ContactSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(ContactService.class);
+		return ApplicationContextUtil.getSpringBean(ContactService.class);
 	}
 }

@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -39,7 +40,7 @@ public class VersionListPresenter
 	public VersionListPresenter() {
 		super(VersionListView.class);
 
-		versionService = AppContext.getSpringBean(VersionService.class);
+		versionService = ApplicationContextUtil.getSpringBean(VersionService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -110,7 +111,7 @@ public class VersionListPresenter
 
 	@Override
 	public ISearchableService<VersionSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(VersionService.class);
+		return ApplicationContextUtil.getSpringBean(VersionService.class);
 	}
 
 }

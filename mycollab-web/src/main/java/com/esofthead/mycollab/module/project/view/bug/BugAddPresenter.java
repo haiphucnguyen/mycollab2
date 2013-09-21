@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -88,7 +89,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 	}
 
 	public void saveBug(SimpleBug bug) {
-		BugService bugService = AppContext.getSpringBean(BugService.class);
+		BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
 		bug.setProjectid(CurrentProjectVariables.getProjectId());
 		bug.setSaccountid(AppContext.getAccountId());
 		if (bug.getId() == null) {
@@ -104,7 +105,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 					AttachmentType.PROJECT_BUG_TYPE, bugId);
 
 			// save component
-			BugRelatedItemService bugRelatedItemService = AppContext
+			BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 					.getSpringBean(BugRelatedItemService.class);
 			bugRelatedItemService.saveAffectedVersionsOfBug(bugId,
 					view.getAffectedVersions());
@@ -122,7 +123,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 					AttachmentType.PROJECT_BUG_TYPE, bug.getId());
 
 			int bugId = bug.getId();
-			BugRelatedItemService bugRelatedItemService = AppContext
+			BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 					.getSpringBean(BugRelatedItemService.class);
 			bugRelatedItemService.updateAfftedVersionsOfBug(bugId,
 					view.getAffectedVersions());

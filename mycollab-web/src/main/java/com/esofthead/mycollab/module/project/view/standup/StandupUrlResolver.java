@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -53,7 +54,7 @@ public class StandupUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			Date onDate = AppContext.convertDate(tokens[2]);
 
-			StandupReportService reportService = AppContext
+			StandupReportService reportService = ApplicationContextUtil
 					.getSpringBean(StandupReportService.class);
 			SimpleStandupReport report = reportService
 					.findStandupReportByDateUser(projectId,

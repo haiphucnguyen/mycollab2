@@ -21,7 +21,7 @@ public class ScheduleSendingErrorReportsServiceImpl {
 	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_RELAY_INTERVAL)
 	public void sendErrorReports() {
 		ReportBugIssueMapper mapper = ApplicationContextUtil
-				.getBean(ReportBugIssueMapper.class);
+				.getSpringBean(ReportBugIssueMapper.class);
 		List<ReportBugIssueWithBLOBs> listIssues = mapper
 				.selectByExampleWithBLOBs(new ReportBugIssueExample());
 

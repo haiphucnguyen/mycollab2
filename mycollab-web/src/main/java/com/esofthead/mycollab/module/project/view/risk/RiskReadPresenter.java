@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -66,7 +67,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											RiskService riskService = AppContext
+											RiskService riskService = ApplicationContextUtil
 													.getSpringBean(RiskService.class);
 											riskService.removeWithSession(
 													data.getId(),
@@ -96,7 +97,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
 					@Override
 					public void gotoNext(SimpleRisk data) {
-						RiskService riskeService = AppContext
+						RiskService riskeService = ApplicationContextUtil
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -123,7 +124,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
 					@Override
 					public void gotoPrevious(SimpleRisk data) {
-						RiskService riskeService = AppContext
+						RiskService riskeService = ApplicationContextUtil
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -155,7 +156,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.RISKS)) {
 			if (data.getParams() instanceof Integer) {
-				RiskService riskService = AppContext
+				RiskService riskService = ApplicationContextUtil
 						.getSpringBean(RiskService.class);
 				SimpleRisk risk = riskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -75,7 +76,7 @@ public class ProjectMemberReadPresenter extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											ProjectMemberService projectMemberService = AppContext
+											ProjectMemberService projectMemberService = ApplicationContextUtil
 													.getSpringBean(ProjectMemberService.class);
 											projectMemberService.removeWithSession(
 													data.getId(),
@@ -108,7 +109,7 @@ public class ProjectMemberReadPresenter extends
 
 					@Override
 					public void gotoNext(ProjectMember data) {
-						ProjectMemberService projectMemberService = AppContext
+						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -142,7 +143,7 @@ public class ProjectMemberReadPresenter extends
 
 					@Override
 					public void gotoPrevious(ProjectMember data) {
-						ProjectMemberService projectMemberService = AppContext
+						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -177,7 +178,7 @@ public class ProjectMemberReadPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.USERS)) {
-			ProjectMemberService prjMemberService = AppContext
+			ProjectMemberService prjMemberService = ApplicationContextUtil
 					.getSpringBean(ProjectMemberService.class);
 			SimpleProjectMember prjMember = null;
 			if (data.getParams() instanceof Integer) {

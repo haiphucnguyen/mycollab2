@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -34,7 +35,7 @@ public class CaseListPresenter extends
 
 	public CaseListPresenter() {
 		super(CaseListView.class);
-		caseService = AppContext.getSpringBean(CaseService.class);
+		caseService = ApplicationContextUtil.getSpringBean(CaseService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -163,6 +164,6 @@ public class CaseListPresenter extends
 
 	@Override
 	public ISearchableService<CaseSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(CaseService.class);
+		return ApplicationContextUtil.getSpringBean(CaseService.class);
 	}
 }

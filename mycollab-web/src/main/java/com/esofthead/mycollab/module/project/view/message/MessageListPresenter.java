@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
@@ -36,7 +37,7 @@ public class MessageListPresenter extends AbstractPresenter<MessageListView>
 
 					@Override
 					public void onSave(Message message) {
-						MessageService messageService = AppContext
+						MessageService messageService = ApplicationContextUtil
 								.getSpringBean(MessageService.class);
 						messageService.saveWithSession(message,
 								AppContext.getUsername());

@@ -7,12 +7,12 @@ import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -33,7 +33,7 @@ public abstract class BugDisplayWidget extends Depot {
 		super(title, new VerticalLayout());
 
 		dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
-				AppContext.getSpringBean(BugService.class), rowDisplayHandler);
+				ApplicationContextUtil.getSpringBean(BugService.class), rowDisplayHandler);
 		bodyContent.addComponent(dataList);
 		bodyContent.setStyleName(UIConstants.BUG_LIST);
 		

@@ -16,7 +16,7 @@ public class ResourceUtils {
 	public static ExternalResourceService getExternalResourceService(
 			String storageName) {
 		if (StorageNames.DROPBOX.equals(storageName)) {
-			return ApplicationContextUtil.getBean(DropboxResourceService.class);
+			return ApplicationContextUtil.getSpringBean(DropboxResourceService.class);
 		} else {
 			throw new MyCollabException(
 					"Current support only dropbox resource service");
@@ -26,7 +26,7 @@ public class ResourceUtils {
 	public static ExternalResourceService getExternalResourceService(
 			ResourceType resourceType) {
 		if (ResourceType.Dropbox == resourceType) {
-			return ApplicationContextUtil.getBean(DropboxResourceService.class);
+			return ApplicationContextUtil.getSpringBean(DropboxResourceService.class);
 		} else {
 			throw new MyCollabException(
 					"Current support only dropbox resource service");

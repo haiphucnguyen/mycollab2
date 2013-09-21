@@ -5,6 +5,7 @@ import org.vaadin.addon.customfield.FieldWrapper;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
@@ -81,7 +82,7 @@ public class ContactSelectionField extends FieldWrapper<Contact> implements
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
 				try {
-					ContactService accountService = AppContext
+					ContactService accountService = ApplicationContextUtil
 							.getSpringBean(ContactService.class);
 					Integer accountId = Integer.parseInt((String) event
 							.getProperty().getValue());

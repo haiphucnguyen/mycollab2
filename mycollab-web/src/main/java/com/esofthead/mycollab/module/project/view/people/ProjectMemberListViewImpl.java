@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -54,7 +55,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 	@Override
 	public void setSearchCriteria(ProjectMemberSearchCriteria searchCriteria) {
-		ProjectMemberService prjMemberService = AppContext
+		ProjectMemberService prjMemberService = ApplicationContextUtil
 				.getSpringBean(ProjectMemberService.class);
 		List<SimpleProjectMember> memberLists = prjMemberService
 				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
@@ -135,7 +136,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 							@Override
 							public void onClose(ConfirmDialog dialog) {
 								if (dialog.isConfirmed()) {
-									ProjectMemberService prjMemberService = AppContext
+									ProjectMemberService prjMemberService = ApplicationContextUtil
 											.getSpringBean(ProjectMemberService.class);
 									member.setStatus(ProjectMemberStatusConstants.INACTIVE);
 									prjMemberService.updateWithSession(member,
@@ -197,7 +198,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							ProjectMemberMapper projectMemberMapper = AppContext
+							ProjectMemberMapper projectMemberMapper = ApplicationContextUtil
 									.getSpringBean(ProjectMemberMapper.class);
 							member.setStatus(RegisterStatusConstants.VERIFICATING);
 							projectMemberMapper

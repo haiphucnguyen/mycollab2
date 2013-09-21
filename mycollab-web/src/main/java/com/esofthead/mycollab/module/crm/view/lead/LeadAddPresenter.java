@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -82,7 +83,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			if (data.getParams() instanceof Lead) {
 				lead = (Lead) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				LeadService leadService = AppContext
+				LeadService leadService = ApplicationContextUtil
 						.getSpringBean(LeadService.class);
 				lead = (Lead) leadService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
@@ -122,7 +123,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 	}
 
 	public void saveLead(Lead lead) {
-		LeadService leadService = AppContext.getSpringBean(LeadService.class);
+		LeadService leadService = ApplicationContextUtil.getSpringBean(LeadService.class);
 
 		lead.setSaccountid(AppContext.getAccountId());
 		if (lead.getId() == null) {
@@ -136,7 +137,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 				associateLead.setLeadid(lead.getId());
 				associateLead.setCreatedtime(new GregorianCalendar().getTime());
 
-				CampaignService campaignService = AppContext
+				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
 				campaignService
 						.saveCampaignLeadRelationship(
@@ -150,7 +151,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 				associateLead.setLeadid(lead.getId());
 				associateLead.setCreatedtime(new GregorianCalendar().getTime());
 
-				OpportunityService opportunityService = AppContext
+				OpportunityService opportunityService = ApplicationContextUtil
 						.getSpringBean(OpportunityService.class);
 				opportunityService
 						.saveOpportunityLeadRelationship(

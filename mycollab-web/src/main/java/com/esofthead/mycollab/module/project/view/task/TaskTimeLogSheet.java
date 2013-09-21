@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.CompTimeLogSheet;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
@@ -34,7 +35,7 @@ public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
 
 	@Override
 	protected void updateTimeRemain() {
-		ProjectTaskService bugService = AppContext
+		ProjectTaskService bugService = ApplicationContextUtil
 				.getSpringBean(ProjectTaskService.class);
 		bean.setRemainestimate(getUpdateRemainTime());
 		bugService.updateWithSession(bean, AppContext.getUsername());

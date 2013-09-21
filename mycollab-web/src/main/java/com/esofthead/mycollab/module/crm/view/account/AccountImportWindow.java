@@ -12,16 +12,16 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.web.AppContext;
 
 public class AccountImportWindow extends EntityImportWindow<Account> {
+	private static final long serialVersionUID = 1L;
+
 	public AccountImportWindow() {
-		super(false, "Import Account Window", AppContext
+		super(false, "Import Account Window", ApplicationContextUtil
 				.getSpringBean(AccountService.class), Account.class);
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected List<FieldMapperDef> constructCSVFieldMapper() {

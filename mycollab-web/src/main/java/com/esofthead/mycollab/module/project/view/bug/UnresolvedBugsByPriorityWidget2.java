@@ -12,10 +12,10 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBar;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,7 +38,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
 		this.bugSearchCriteria = searchCriteria;
 		this.bodyContent.removeAllComponents();
-		final BugService bugService = AppContext
+		final BugService bugService = ApplicationContextUtil
 				.getSpringBean(BugService.class);
 		final int totalCount = bugService.getTotalCount(searchCriteria);
 		final List<GroupItem> groupItems = bugService

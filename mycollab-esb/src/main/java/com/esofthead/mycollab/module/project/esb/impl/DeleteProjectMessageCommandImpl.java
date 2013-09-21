@@ -33,17 +33,17 @@ public class DeleteProjectMessageCommandImpl implements
 		log.debug("Delete files of bug {} in project {}", messageId, projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
-				.getBean(ResourceService.class);
+				.getSpringBean(ResourceService.class);
 		String attachmentPath = AttachmentUtils
 				.getProjectMessageAttachmentPath(accountId, projectId,
 						messageId);
-		resourceService.removeResource(attachmentPath, "");
+		resourceService.removeResource(attachmentPath, "", accountId);
 	}
 
 	private void removeRelatedComments(int messageId) {
 		log.debug("Delete related comments of message id {}", messageId);
 		CommentMapper commentMapper = ApplicationContextUtil
-				.getBean(CommentMapper.class);
+				.getSpringBean(CommentMapper.class);
 
 		CommentExample ex = new CommentExample();
 		ex.createCriteria().andTypeEqualTo(CommentType.PRJ_MESSAGE.toString())

@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -51,7 +52,7 @@ public class ProjectRoleReadPresenter extends
 
 					@Override
 					public void onDelete(ProjectRole data) {
-						ProjectRoleService projectRoleService = AppContext
+						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						projectRoleService.removeWithSession(data.getId(),
 								AppContext.getUsername(),
@@ -76,7 +77,7 @@ public class ProjectRoleReadPresenter extends
 
 					@Override
 					public void gotoNext(ProjectRole data) {
-						ProjectRoleService projectRoleService = AppContext
+						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -106,7 +107,7 @@ public class ProjectRoleReadPresenter extends
 
 					@Override
 					public void gotoPrevious(ProjectRole data) {
-						ProjectRoleService projectRoleService = AppContext
+						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
 						SimpleProject project = (SimpleProject) AppContext
@@ -140,7 +141,7 @@ public class ProjectRoleReadPresenter extends
 		ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
 
 		if (data.getParams() instanceof Integer) {
-			ProjectRoleService projectRoleService = AppContext
+			ProjectRoleService projectRoleService = ApplicationContextUtil
 					.getSpringBean(ProjectRoleService.class);
 			SimpleProjectRole role = projectRoleService.findById(
 					(Integer) data.getParams(), AppContext.getAccountId());

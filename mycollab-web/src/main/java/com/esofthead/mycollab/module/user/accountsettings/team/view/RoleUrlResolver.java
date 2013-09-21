@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.AccountUrlResolve
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -33,7 +34,7 @@ public class RoleUrlResolver extends AccountUrlResolver {
 	private class EditUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			int roleId = Integer.parseInt(UrlEncodeDecoder.decode(params[0]));
-			RoleService roleService = AppContext
+			RoleService roleService = ApplicationContextUtil
 					.getSpringBean(RoleService.class);
 			SimpleRole role = roleService.findById(roleId,
 					AppContext.getAccountId());

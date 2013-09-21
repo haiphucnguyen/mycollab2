@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -112,7 +113,7 @@ public class AssignTaskWindow extends Window {
 							public void buttonClick(Button.ClickEvent event) {
 
 								// Save task status and assignee
-								ProjectTaskService bugService = AppContext
+								ProjectTaskService bugService = ApplicationContextUtil
 										.getSpringBean(ProjectTaskService.class);
 								bugService.updateWithSession(task,
 										AppContext.getUsername());
@@ -135,7 +136,7 @@ public class AssignTaskWindow extends Window {
 											.toString());
 									comment.setTypeid(task.getId());
 
-									CommentService commentService = AppContext
+									CommentService commentService = ApplicationContextUtil
 											.getSpringBean(CommentService.class);
 									commentService.saveWithSession(comment,
 											AppContext.getUsername());

@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -79,7 +80,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											ContactService ContactService = AppContext
+											ContactService ContactService = ApplicationContextUtil
 													.getSpringBean(ContactService.class);
 											ContactService.removeWithSession(
 													data.getId(),
@@ -109,7 +110,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 					@Override
 					public void gotoNext(Contact data) {
-						ContactService contactService = AppContext
+						ContactService contactService = ApplicationContextUtil
 								.getSpringBean(ContactService.class);
 						ContactSearchCriteria criteria = new ContactSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -135,7 +136,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 					@Override
 					public void gotoPrevious(Contact data) {
-						ContactService contactService = AppContext
+						ContactService contactService = ApplicationContextUtil
 								.getSpringBean(ContactService.class);
 						ContactSearchCriteria criteria = new ContactSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
@@ -219,7 +220,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 								associateOpportunities.add(assoOpportunity);
 							}
 
-							ContactService contactService = AppContext
+							ContactService contactService = ApplicationContextUtil
 									.getSpringBean(ContactService.class);
 							contactService.saveContactOpportunityRelationship(
 									associateOpportunities,
@@ -239,7 +240,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
 
 			if (data.getParams() instanceof Integer) {
-				ContactService contactService = AppContext
+				ContactService contactService = ApplicationContextUtil
 						.getSpringBean(ContactService.class);
 				SimpleContact contact = contactService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

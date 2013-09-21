@@ -11,14 +11,14 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.web.AppContext;
 
 public class CaseImportWindow extends EntityImportWindow<SimpleCase> {
 	private static final long serialVersionUID = 1L;
 
 	public CaseImportWindow() {
-		super(false, "Import Case Window", AppContext
+		super(false, "Import Case Window", ApplicationContextUtil
 				.getSpringBean(CaseService.class), SimpleCase.class);
 	}
 

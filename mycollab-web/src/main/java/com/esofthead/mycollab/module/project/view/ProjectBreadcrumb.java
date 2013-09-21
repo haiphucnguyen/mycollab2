@@ -43,6 +43,7 @@ import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -104,7 +105,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("260px");
 
-		ProjectService projectService = AppContext
+		ProjectService projectService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
 		criteria.setInvolvedMember(new StringSearchField(StringSearchField.AND,

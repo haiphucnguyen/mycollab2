@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -36,7 +37,7 @@ public class CallTableDisplay extends
 
 	public CallTableDisplay(TableViewField requireColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(CallService.class), SimpleCall.class,
+		super(ApplicationContextUtil.getSpringBean(CallService.class), SimpleCall.class,
 				requireColumn, displayColumns);
 
 		this.addGeneratedColumn("subject", new Table.ColumnGenerator() {

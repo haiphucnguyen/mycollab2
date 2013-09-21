@@ -16,8 +16,8 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
-import com.esofthead.mycollab.web.AppContext;
 
 @Component("userRecoveryPasswordActionHandlerServlet")
 public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
@@ -50,7 +50,7 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 		simpleUser.setUsername(username);
 
 		try {
-			UserService userService = AppContext
+			UserService userService = ApplicationContextUtil
 					.getSpringBean(UserService.class);
 			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {

@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -79,7 +80,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 			if (data.getParams() instanceof Account) {
 				account = (Account) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				AccountService accountService = AppContext
+				AccountService accountService = ApplicationContextUtil
 						.getSpringBean(AccountService.class);
 				account = accountService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
@@ -118,7 +119,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 	}
 
 	public void saveAccount(Account account) {
-		AccountService accountService = AppContext
+		AccountService accountService = ApplicationContextUtil
 				.getSpringBean(AccountService.class);
 
 		account.setSaccountid(AppContext.getAccountId());
@@ -133,7 +134,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 						.getExtraData()).getId());
 				assoAccount.setCreatedtime(new GregorianCalendar().getTime());
 
-				CampaignService campaignService = AppContext
+				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
 				campaignService.saveCampaignAccountRelationship(
 						Arrays.asList(assoAccount), AppContext.getAccountId());

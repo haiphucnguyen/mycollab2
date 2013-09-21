@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -73,7 +74,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 			if (data.getParams() instanceof CaseWithBLOBs) {
 				cases = (CaseWithBLOBs) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				CaseService caseService = AppContext
+				CaseService caseService = ApplicationContextUtil
 						.getSpringBean(CaseService.class);
 				cases = caseService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
@@ -111,7 +112,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 	}
 
 	public void saveCase(CaseWithBLOBs cases) {
-		CaseService caseService = AppContext.getSpringBean(CaseService.class);
+		CaseService caseService = ApplicationContextUtil.getSpringBean(CaseService.class);
 
 		cases.setSaccountid(AppContext.getAccountId());
 		if (cases.getId() == null) {

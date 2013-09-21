@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberMultiSelectField;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -46,7 +47,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		this.setSpacing(true);
 		this.setWidth("100%");
 
-		monitorItemService = AppContext.getSpringBean(MonitorItemService.class);
+		monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
 
 		initUI();
 	}
@@ -83,7 +84,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 				for (ProjectMember member : members) {
 
-					ProjectMemberService memberService = AppContext
+					ProjectMemberService memberService = ApplicationContextUtil
 							.getSpringBean(ProjectMemberService.class);
 
 					SimpleProjectMember projectMember = memberService
@@ -163,7 +164,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		this.addComponent(layoutAdd);
 
 		tableItem = new PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem>(
-				AppContext.getSpringBean(MonitorItemService.class),
+				ApplicationContextUtil.getSpringBean(MonitorItemService.class),
 				SimpleMonitorItem.class, Arrays.asList(new TableViewField(
 						"Name", "user", UIConstants.TABLE_EX_LABEL_WIDTH),
 						new TableViewField("Created Date", "monitorDate",
@@ -224,7 +225,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 											public void onClose(
 													ConfirmDialog dialog) {
 												if (dialog.isConfirmed()) {
-													MonitorItemService monitorItemService = AppContext
+													MonitorItemService monitorItemService = ApplicationContextUtil
 															.getSpringBean(MonitorItemService.class);
 													monitorItemService.removeWithSession(
 															monitorItem.getId(),
@@ -244,7 +245,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 						.newResource("icons/16/delete.png"));
 				monitorItem.setExtraData(deleteBtn);
 
-				ProjectMemberService memberService = AppContext
+				ProjectMemberService memberService = ApplicationContextUtil
 						.getSpringBean(ProjectMemberService.class);
 				SimpleProjectMember member = memberService
 						.findMemberByUsername(AppContext.getUsername(),

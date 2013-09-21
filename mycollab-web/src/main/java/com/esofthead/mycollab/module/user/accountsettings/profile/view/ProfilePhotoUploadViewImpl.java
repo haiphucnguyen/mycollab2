@@ -19,6 +19,7 @@ import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
@@ -120,7 +121,7 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 								BufferedImage image = ImageIO
 										.read(new ByteArrayInputStream(
 												scaleImageData));
-								UserAvatarService userAvatarService = AppContext
+								UserAvatarService userAvatarService = ApplicationContextUtil
 										.getSpringBean(UserAvatarService.class);
 								userAvatarService.uploadAvatar(image,
 										AppContext.getUsername(),

@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -115,7 +116,7 @@ public class ReOpenWindow extends Window {
 								ReOpenWindow.this.bug
 										.setStatus(BugStatusConstants.REOPENNED);
 
-								final BugRelatedItemService bugRelatedItemService = AppContext
+								final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 										.getSpringBean(BugRelatedItemService.class);
 								bugRelatedItemService.updateFixedVersionsOfBug(
 										ReOpenWindow.this.bug.getId(),
@@ -123,7 +124,7 @@ public class ReOpenWindow extends Window {
 												.getSelectedItems());
 
 								// Save bug status and assignee
-								final BugService bugService = AppContext
+								final BugService bugService = ApplicationContextUtil
 										.getSpringBean(BugService.class);
 								bugService.updateWithSession(
 										ReOpenWindow.this.bug,
@@ -147,7 +148,7 @@ public class ReOpenWindow extends Window {
 									comment.setTypeid(ReOpenWindow.this.bug
 											.getId());
 
-									final CommentService commentService = AppContext
+									final CommentService commentService = ApplicationContextUtil
 											.getSpringBean(CommentService.class);
 									commentService.saveWithSession(comment,
 											AppContext.getUsername());

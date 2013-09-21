@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.standup;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -20,7 +21,7 @@ public class StandupReportListDisplay
 	private static final long serialVersionUID = 1L;
 
 	public StandupReportListDisplay() {
-		super(AppContext.getSpringBean(StandupReportService.class),
+		super(ApplicationContextUtil.getSpringBean(StandupReportService.class),
 				new StandupReportRowDisplay());
 	}
 

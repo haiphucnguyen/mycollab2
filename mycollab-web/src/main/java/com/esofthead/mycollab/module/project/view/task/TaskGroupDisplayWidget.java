@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -36,7 +37,7 @@ public class TaskGroupDisplayWidget
 	private static final long serialVersionUID = 1L;
 
 	public TaskGroupDisplayWidget() {
-		super(null, AppContext.getSpringBean(ProjectTaskListService.class),
+		super(null, ApplicationContextUtil.getSpringBean(ProjectTaskListService.class),
 				TaskListRowDisplayHandler.class, true);
 		this.setDisplayEmptyListText(false);
 	}
@@ -207,7 +208,7 @@ public class TaskGroupDisplayWidget
 							TaskListDepot.this.taskListActionControl
 									.setPopupVisible(false);
 							TaskListDepot.this.taskList.setStatus("Closed");
-							final ProjectTaskListService taskListService = AppContext
+							final ProjectTaskListService taskListService = ApplicationContextUtil
 									.getSpringBean(ProjectTaskListService.class);
 							taskListService.updateWithSession(
 									TaskListDepot.this.taskList,
@@ -249,7 +250,7 @@ public class TaskGroupDisplayWidget
 										public void onClose(
 												final ConfirmDialog dialog) {
 											if (dialog.isConfirmed()) {
-												final ProjectTaskListService taskListService = AppContext
+												final ProjectTaskListService taskListService = ApplicationContextUtil
 														.getSpringBean(ProjectTaskListService.class);
 												taskListService
 														.removeWithSession(

@@ -64,6 +64,7 @@ import com.esofthead.mycollab.module.crm.view.parameters.AssignmentScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.CallScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.MeetingScreenData;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -256,7 +257,7 @@ public class CrmController implements IController {
 								.getPresenter(ActivityRootPresenter.class);
 						Task task = null;
 						if (event.getData() instanceof Integer) {
-							TaskService taskService = AppContext
+							TaskService taskService = ApplicationContextUtil
 									.getSpringBean(TaskService.class);
 							task = taskService.findById(
 									(Integer) event.getData(),
@@ -326,7 +327,7 @@ public class CrmController implements IController {
 
 						Meeting meeting = null;
 						if (event.getData() instanceof Integer) {
-							MeetingService meetingService = AppContext
+							MeetingService meetingService = ApplicationContextUtil
 									.getSpringBean(MeetingService.class);
 							meeting = meetingService.findById(
 									(Integer) event.getData(),
@@ -397,7 +398,7 @@ public class CrmController implements IController {
 
 						CallWithBLOBs call = null;
 						if (event.getData() instanceof Integer) {
-							CallService callService = AppContext
+							CallService callService = ApplicationContextUtil
 									.getSpringBean(CallService.class);
 							call = callService.findById(
 									(Integer) event.getData(),

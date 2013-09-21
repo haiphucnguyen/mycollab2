@@ -17,7 +17,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.addon.calendar.event.BasicEvent;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.event.CalendarEventProvider;
@@ -34,7 +34,7 @@ public class ActivityEventProvider implements CalendarEventProvider {
 	private EventService eventService;
 
 	public ActivityEventProvider() {
-		eventService = AppContext.getSpringBean(EventService.class);
+		eventService = ApplicationContextUtil.getSpringBean(EventService.class);
 	}
 
 	@SuppressWarnings("unchecked")

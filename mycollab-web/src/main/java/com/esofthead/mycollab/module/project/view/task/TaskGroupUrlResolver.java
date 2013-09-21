@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -42,7 +43,7 @@ public class TaskGroupUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int taskgroupId = Integer.parseInt(tokens[1]);
 
-			ProjectTaskListService taskGroupService = AppContext
+			ProjectTaskListService taskGroupService = ApplicationContextUtil
 					.getSpringBean(ProjectTaskListService.class);
 			SimpleTaskList taskgroup = taskGroupService.findById(taskgroupId,
 					AppContext.getAccountId());

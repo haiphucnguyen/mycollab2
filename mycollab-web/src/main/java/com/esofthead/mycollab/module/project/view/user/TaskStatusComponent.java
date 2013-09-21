@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -89,7 +90,7 @@ public class TaskStatusComponent extends Depot {
 					searchCriteria.setIsOpenned(new SearchField());
 					searchCriteria.setProjectId(new NumberSearchField(taskCount
 							.getProjectId()));
-					ProjectGenericTaskService prjGenericTaskService = AppContext
+					ProjectGenericTaskService prjGenericTaskService = ApplicationContextUtil
 							.getSpringBean(ProjectGenericTaskService.class);
 					List<ProjectGenericTask> genericTasks = prjGenericTaskService
 							.findPagableListByCriteria(new SearchRequest<ProjectGenericTaskSearchCriteria>(
@@ -110,7 +111,7 @@ public class TaskStatusComponent extends Depot {
 		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));
 
-		ProjectGenericTaskService prjGenericTaskService = AppContext
+		ProjectGenericTaskService prjGenericTaskService = ApplicationContextUtil
 				.getSpringBean(ProjectGenericTaskService.class);
 
 		List<ProjectGenericTaskCount> taskCountList = prjGenericTaskService

@@ -13,9 +13,9 @@ import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -86,7 +86,7 @@ public class CommentListDepot extends Depot {
 			}
 
 			commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(
-					AppContext.getSpringBean(CommentService.class),
+					ApplicationContextUtil.getSpringBean(CommentService.class),
 					CommentRowDisplayHandler.class);
 			commentList.setDisplayEmptyListText(false);
 			this.addComponent(commentList);

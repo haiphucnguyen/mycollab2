@@ -5,6 +5,7 @@ import org.vaadin.addon.customfield.FieldWrapper;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.UIHelper;
 import com.esofthead.mycollab.web.AppContext;
@@ -80,7 +81,7 @@ public class OpportunitySelectionField extends FieldWrapper<Opportunity>
 				try {
 					Integer opportunityId = Integer.parseInt((String) event
 							.getProperty().getValue());
-					OpportunityService opportunityService = AppContext
+					OpportunityService opportunityService = ApplicationContextUtil
 							.getSpringBean(OpportunityService.class);
 					SimpleOpportunity opportunity = opportunityService
 							.findById(opportunityId, AppContext.getAccountId());

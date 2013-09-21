@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -64,7 +65,7 @@ public class ProjectRoleAddPresenter extends
 	}
 
 	public void save(ProjectRole item) {
-		ProjectRoleService roleService = AppContext
+		ProjectRoleService roleService = ApplicationContextUtil
 				.getSpringBean(ProjectRoleService.class);
 		item.setSaccountid(AppContext.getAccountId());
 

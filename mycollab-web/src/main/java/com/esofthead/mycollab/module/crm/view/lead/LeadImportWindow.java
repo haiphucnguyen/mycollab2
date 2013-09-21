@@ -12,14 +12,14 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.web.AppContext;
 
 public class LeadImportWindow extends EntityImportWindow<SimpleLead> {
 	private static final long serialVersionUID = 1L;
 
 	public LeadImportWindow() {
-		super(false, "Import Lead Import", AppContext
+		super(false, "Import Lead Import", ApplicationContextUtil
 				.getSpringBean(LeadService.class), SimpleLead.class);
 	}
 

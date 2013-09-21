@@ -22,9 +22,9 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.ui.chart.TimeSeriesChartWrapper;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -62,7 +62,7 @@ public class BugTrendReportChartWidget extends
 
 	@Override
 	protected XYDataset createDataset() {
-		final BugService bugService = AppContext
+		final BugService bugService = ApplicationContextUtil
 				.getSpringBean(BugService.class);
 		final List<GroupItem> groupItems = bugService
 				.getBugStatusTrendSummary(searchCriteria);

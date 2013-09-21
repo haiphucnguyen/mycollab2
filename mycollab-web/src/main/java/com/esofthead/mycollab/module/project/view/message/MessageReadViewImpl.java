@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentDisplayComponentFactory;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -162,7 +163,7 @@ public class MessageReadViewImpl extends AbstractView implements
 								AttachmentType.PROJECT_MESSAGE, message.getId());
 				rowLayout.addComponent(attachmentDisplayComp);
 
-				ResourceService attachmentService = AppContext
+				ResourceService attachmentService = ApplicationContextUtil
 						.getSpringBean(ResourceService.class);
 				List<Content> attachments = attachmentService
 						.getContents(AttachmentUtils

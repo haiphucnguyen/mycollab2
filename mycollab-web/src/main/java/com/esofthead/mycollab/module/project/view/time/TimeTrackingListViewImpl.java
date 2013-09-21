@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -54,7 +55,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	public TimeTrackingListViewImpl() {
 		this.setMargin(false, true, true, true);
 
-		this.itemTimeLoggingService = AppContext
+		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
 
 		this.itemTimeLoggingPanel = new ItemTimeLoggingSearchPanel();
@@ -179,7 +180,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 						.getProject().getName() : "");
 		ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
 				title, exportType,
-				AppContext.getSpringBean(ItemTimeLoggingService.class),
+				ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
 				TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
 		final Resource res = new StreamResource(exportStream,
 				exportStream.getDefaultExportFileName(),

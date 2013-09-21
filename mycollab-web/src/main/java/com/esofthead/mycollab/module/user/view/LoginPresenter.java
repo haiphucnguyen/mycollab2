@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -53,7 +54,8 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 	public void doLogin(String username, String password,
 			boolean isRemmeberPassword) {
-		UserService userService = AppContext.getSpringBean(UserService.class);
+		UserService userService = ApplicationContextUtil
+				.getSpringBean(UserService.class);
 		SimpleUser user = userService.authentication(username, password,
 				AppContext.getSubDomain(), false);
 
@@ -62,7 +64,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 					.rememberPassword(username, password);
 		}
 
-		BillingAccountService billingAccountService = AppContext
+		BillingAccountService billingAccountService = ApplicationContextUtil
 				.getSpringBean(BillingAccountService.class);
 
 		SimpleBillingAccount billingAccount = billingAccountService
@@ -71,7 +73,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		log.debug("Get billing account successfully: "
 				+ BeanUtility.printBeanObj(billingAccount));
 
-		UserPreferenceService preferenceService = AppContext
+		UserPreferenceService preferenceService = ApplicationContextUtil
 				.getSpringBean(UserPreferenceService.class);
 		UserPreference pref = preferenceService.getPreferenceOfUser(username,
 				AppContext.getAccountId());

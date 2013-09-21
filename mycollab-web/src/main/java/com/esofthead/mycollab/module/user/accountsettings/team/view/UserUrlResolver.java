@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.AccountUrlResolve
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -33,7 +34,7 @@ public class UserUrlResolver extends AccountUrlResolver {
 	private class EditUrlResolver extends AccountUrlResolver {
 		protected void handlePage(String... params) {
 			String username = UrlEncodeDecoder.decode(params[0]);
-			UserService userService = AppContext
+			UserService userService = ApplicationContextUtil
 					.getSpringBean(UserService.class);
 			SimpleUser user = userService.findUserByUserNameInAccount(username,
 					AppContext.getAccountId());

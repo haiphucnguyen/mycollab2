@@ -373,7 +373,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			content.setDescription(NodesUtil.getString(node, "jcr:description"));
 			content.setMimeType(NodesUtil.getString(node, "mycollab:mimeType",
 					MimeTypesUtil.BINARY_MIME_TYPE));
-			content.setSize(node.getProperty("mycollab:size").getDouble());
+			content.setSize(node.getProperty("mycollab:size").getLong());
 			content.setCreatedUser(NodesUtil.getString(node,
 					"mycollab:createdUser"));
 			String contentPath = node.getPath();

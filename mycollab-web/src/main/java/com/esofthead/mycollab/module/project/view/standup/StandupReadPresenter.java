@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -20,7 +21,7 @@ public class StandupReadPresenter extends AbstractPresenter<StandupReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (data.getParams() instanceof Integer) {
-			StandupReportService standupService = AppContext
+			StandupReportService standupService = ApplicationContextUtil
 					.getSpringBean(StandupReportService.class);
 			SimpleStandupReport standupReport = standupService
 					.findStandupReportById((Integer) data.getParams(),

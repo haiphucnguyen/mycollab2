@@ -14,12 +14,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -153,7 +153,7 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
         });
 
         taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(
-                null, AppContext.getSpringBean(ProjectTaskListService.class),
+                null, ApplicationContextUtil.getSpringBean(ProjectTaskListService.class),
                 TaskListRowDisplayHandler.class, ddLayout, false);
         this.addComponent(taskLists);
     }

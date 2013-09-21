@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
@@ -86,7 +87,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 			if (data.getParams() instanceof Contact) {
 				contact = (Contact) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
-				ContactService contactService = AppContext
+				ContactService contactService = ApplicationContextUtil
 						.getSpringBean(ContactService.class);
 				contact = (Contact) contactService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
@@ -124,7 +125,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 	}
 
 	public void saveContact(Contact contact) {
-		ContactService contactService = AppContext
+		ContactService contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
 
 		contact.setSaccountid(AppContext.getAccountId());
@@ -140,7 +141,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 				associateContact.setCreatedtime(new GregorianCalendar()
 						.getTime());
 
-				CampaignService campaignService = AppContext
+				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
 				campaignService.saveCampaignContactRelationship(
 						Arrays.asList(associateContact),
@@ -153,7 +154,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 						.getExtraData()).getId());
 				associateContact.setCreatedtime(new GregorianCalendar()
 						.getTime());
-				OpportunityService opportunityService = AppContext
+				OpportunityService opportunityService = ApplicationContextUtil
 						.getSpringBean(OpportunityService.class);
 				opportunityService.saveOpportunityContactRelationship(
 						Arrays.asList(associateContact),

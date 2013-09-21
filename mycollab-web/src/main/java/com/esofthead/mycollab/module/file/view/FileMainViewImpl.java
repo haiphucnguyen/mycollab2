@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -79,10 +80,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private VerticalLayout mainBodyResourceLayout;
 
 	public FileMainViewImpl() {
-		resourceService = AppContext.getSpringBean(ResourceService.class);
-		externalDriveService = AppContext
+		resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
+		externalDriveService = ApplicationContextUtil
 				.getSpringBean(ExternalDriveService.class);
-		externalResourceService = AppContext
+		externalResourceService = ApplicationContextUtil
 				.getSpringBean(ExternalResourceService.class);
 
 		this.setSpacing(true);

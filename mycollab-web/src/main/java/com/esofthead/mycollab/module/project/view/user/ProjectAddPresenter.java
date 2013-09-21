@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -82,7 +83,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 	}
 
 	public void saveProject(Project project) {
-		ProjectService projectService = AppContext
+		ProjectService projectService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		project.setSaccountid(AppContext.getAccountId());
 

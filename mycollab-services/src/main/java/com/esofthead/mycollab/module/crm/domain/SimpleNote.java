@@ -36,7 +36,7 @@ public class SimpleNote extends Note {
 	public List<Content> getAttachments() {
 		if (attachments == null) {
 			ContentJcrDao contentJcr = ApplicationContextUtil
-					.getBean(ContentJcrDao.class);
+					.getSpringBean(ContentJcrDao.class);
 			String notePath = AttachmentUtils.getCrmNoteAttachmentPath(
 					this.getSaccountid(), this.getId());
 			attachments = contentJcr.getContents(notePath);

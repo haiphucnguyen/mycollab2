@@ -172,7 +172,7 @@ public class SiteConfiguration {
 		String siteUrl = "";
 		if (instance.deploymentMode == DeploymentMode.SITE) {
 			BillingAccountService billingAccountService = ApplicationContextUtil
-					.getBean(BillingAccountService.class);
+					.getSpringBean(BillingAccountService.class);
 			BillingAccount account = billingAccountService
 					.getAccountById(accountId);
 			if (account != null) {

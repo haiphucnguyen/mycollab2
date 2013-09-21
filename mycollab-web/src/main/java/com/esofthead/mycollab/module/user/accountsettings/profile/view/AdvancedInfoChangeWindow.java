@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -115,7 +116,7 @@ public class AdvancedInfoChangeWindow extends Window {
 		this.user.setCompany((String) this.txtCompany.getValue());
 		this.user.setCountry((String) this.cboCountry.getValue());
 
-		final UserService userService = AppContext
+		final UserService userService = ApplicationContextUtil
 				.getSpringBean(UserService.class);
 		userService.updateWithSession(this.user, AppContext.getUsername());
 

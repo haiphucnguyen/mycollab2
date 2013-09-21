@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
@@ -65,7 +66,7 @@ public class VersionUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int versionId = Integer.parseInt(tokens[1]);
 
-			VersionService versionService = AppContext
+			VersionService versionService = ApplicationContextUtil
 					.getSpringBean(VersionService.class);
 			SimpleVersion version = versionService.findById(versionId,
 					AppContext.getAccountId());

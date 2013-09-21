@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -52,7 +53,7 @@ public class ComponentReadPresenter extends
 
 					@Override
 					public void onDelete(SimpleComponent data) {
-						ComponentService riskService = AppContext
+						ComponentService riskService = ApplicationContextUtil
 								.getSpringBean(ComponentService.class);
 						riskService.removeWithSession(data.getId(),
 								AppContext.getUsername(),
@@ -79,7 +80,7 @@ public class ComponentReadPresenter extends
 
 					@Override
 					public void gotoNext(SimpleComponent data) {
-						ComponentService componentService = AppContext
+						ComponentService componentService = ApplicationContextUtil
 								.getSpringBean(ComponentService.class);
 						ComponentSearchCriteria criteria = new ComponentSearchCriteria();
 						criteria.setProjectid(new NumberSearchField(
@@ -108,7 +109,7 @@ public class ComponentReadPresenter extends
 
 					@Override
 					public void gotoPrevious(SimpleComponent data) {
-						ComponentService componentService = AppContext
+						ComponentService componentService = ApplicationContextUtil
 								.getSpringBean(ComponentService.class);
 						ComponentSearchCriteria criteria = new ComponentSearchCriteria();
 						criteria.setProjectid(new NumberSearchField(
@@ -141,7 +142,7 @@ public class ComponentReadPresenter extends
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
 			if (data.getParams() instanceof Integer) {
-				ComponentService componentService = AppContext
+				ComponentService componentService = ApplicationContextUtil
 						.getSpringBean(ComponentService.class);
 				SimpleComponent component = componentService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());

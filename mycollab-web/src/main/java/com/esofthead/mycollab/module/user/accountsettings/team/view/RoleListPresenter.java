@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -40,7 +41,7 @@ public class RoleListPresenter extends
 
 	public RoleListPresenter() {
 		super(RoleListView.class);
-		roleService = AppContext.getSpringBean(RoleService.class);
+		roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -126,6 +127,6 @@ public class RoleListPresenter extends
 
 	@Override
 	public ISearchableService<RoleSearchCriteria> getSearchService() {
-		return AppContext.getSpringBean(RoleService.class);
+		return ApplicationContextUtil.getSpringBean(RoleService.class);
 	}
 }

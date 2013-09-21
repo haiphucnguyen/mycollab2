@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogBuilder;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogWithBLOBs;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.esb.DeleteResourcesCommand;
 import com.esofthead.mycollab.module.ecm.esb.EcmEndPoints;
 import com.esofthead.mycollab.module.ecm.esb.SaveContentCommand;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
@@ -103,7 +104,8 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public void removeResource(String path, String deleteUser) {
+	public void removeResource(String path, String deleteUser,
+			Integer sAccountId) {
 		Resource res = contentJcrDao.getResource(path);
 		ContentActivityLogAction deleteResourceAction;
 		if (res instanceof Folder)
@@ -121,11 +123,16 @@ public class ResourceServiceImpl implements ResourceService {
 		activityLog.setActiondesc(deleteResourceAction.toString());
 		activityLog.setBasefolderpath(path);
 		contentActivityLogService.saveWithSession(activityLog, "");
+
+		DeleteResourcesCommand deleteResourcesCommand = new BeanProxyBuilder()
+				.build(EcmEndPoints.SAVE_CONTENT_ENDPOINT,
+						DeleteResourcesCommand.class);
+		deleteResourcesCommand.removeResource(path, deleteUser, sAccountId);
 	}
 
 	@Override
 	public InputStream getContentStream(String path) {
-		return rawContentService.getContent(path);
+		return rawContentService.getContentStream(path);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
@@ -55,7 +56,7 @@ public class HistoryLogComponent extends VerticalLayout {
 		this.typeid = typeid;
 
 		logTable = new BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog>(
-				this, AppContext.getSpringBean(AuditLogService.class),
+				this, ApplicationContextUtil.getSpringBean(AuditLogService.class),
 				HistoryLogRowDisplay.class);
 		this.addComponent(logTable);
 	}

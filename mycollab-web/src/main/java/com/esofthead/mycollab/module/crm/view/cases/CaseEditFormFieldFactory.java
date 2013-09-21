@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -46,7 +47,7 @@ public class CaseEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			accountField.setRequired(true);
 
 			if (cases.getAccountid() != null) {
-				AccountService accountService = AppContext
+				AccountService accountService = ApplicationContextUtil
 						.getSpringBean(AccountService.class);
 				SimpleAccount account = accountService.findById(
 						cases.getAccountid(), AppContext.getAccountId());

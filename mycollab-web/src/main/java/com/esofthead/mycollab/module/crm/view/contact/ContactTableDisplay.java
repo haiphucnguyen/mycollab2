@@ -5,6 +5,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
@@ -35,7 +36,7 @@ public class ContactTableDisplay extends
 
 	public ContactTableDisplay(String viewId, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(AppContext.getSpringBean(ContactService.class),
+		super(ApplicationContextUtil.getSpringBean(ContactService.class),
 				SimpleContact.class, viewId, requiredColumn, displayColumns);
 
 		addGeneratedColumn("selected", new Table.ColumnGenerator() {

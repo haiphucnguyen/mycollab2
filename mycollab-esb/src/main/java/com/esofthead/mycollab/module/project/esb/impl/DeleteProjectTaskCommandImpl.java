@@ -33,16 +33,16 @@ public class DeleteProjectTaskCommandImpl implements DeleteProjectTaskCommand {
 		log.debug("Delete files of task id {} in project {}", taskId, projectId);
 
 		ResourceService resourceService = ApplicationContextUtil
-				.getBean(ResourceService.class);
+				.getSpringBean(ResourceService.class);
 		String attachmentPath = AttachmentUtils.getProjectTaskAttachmentPath(
 				accountId, projectId, taskId);
-		resourceService.removeResource(attachmentPath, "");
+		resourceService.removeResource(attachmentPath, "", accountId);
 	}
 
 	private void removeRelatedComments(int taskId) {
 		log.debug("Delete related comments of task id {}", taskId);
 		CommentMapper commentMapper = ApplicationContextUtil
-				.getBean(CommentMapper.class);
+				.getSpringBean(CommentMapper.class);
 
 		CommentExample ex = new CommentExample();
 		ex.createCriteria().andTypeEqualTo(CommentType.PRJ_TASK.toString())
