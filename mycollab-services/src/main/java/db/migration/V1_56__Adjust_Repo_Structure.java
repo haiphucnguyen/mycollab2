@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.S3StorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.BeanUtility;
@@ -19,7 +18,6 @@ import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.file.service.RawContentService;
-import com.esofthead.mycollab.module.file.service.impl.AmazonRawContentServiceImpl;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
@@ -34,26 +32,22 @@ public class V1_56__Adjust_Repo_Structure implements SpringJdbcMigration {
 		contentJcrDao = ApplicationContextUtil
 				.getSpringBean(ContentJcrDao.class);
 
-		if (rawContentService instanceof AmazonRawContentServiceImpl) {
-			S3StorageConfiguration storageConfiguration = (S3StorageConfiguration) SiteConfiguration
-					.getStorageConfiguration();
-			AmazonS3 s3client = storageConfiguration.newS3Client();
-			ObjectListing listObjects = s3client.listObjects(
-					storageConfiguration.getBucket(), "/");
-			for (S3ObjectSummary objectSummary : listObjects
-					.getObjectSummaries()) {
-				Content content = new Content();
-				content.setMimeType(MimeTypesUtil.detectMimeType(objectSummary
-						.getKey()));
-				content.setSize(objectSummary.getSize());
-				content.setPath(objectSummary.getKey());
-				log.debug("Save content {}", BeanUtility.printBeanObj(content));
-				contentJcrDao.saveContent(content, "");
-			}
+		log.debug("Content service {} in mode ", rawContentService,
+				SiteConfiguration.getDeploymentMode());
 
-		} else {
-			File baseFolder = FileStorageConfiguration.baseContentFolder;
-			migrateAccountFiles(jdbcTemplate, baseFolder);
+		S3StorageConfiguration storageConfiguration = (S3StorageConfiguration) SiteConfiguration
+				.getStorageConfiguration();
+		AmazonS3 s3client = storageConfiguration.newS3Client();
+		ObjectListing listObjects = s3client.listObjects(
+				storageConfiguration.getBucket(), "/");
+		for (S3ObjectSummary objectSummary : listObjects.getObjectSummaries()) {
+			Content content = new Content();
+			content.setMimeType(MimeTypesUtil.detectMimeType(objectSummary
+					.getKey()));
+			content.setSize(objectSummary.getSize());
+			content.setPath(objectSummary.getKey());
+			log.debug("Save content {}", BeanUtility.printBeanObj(content));
+			contentJcrDao.saveContent(content, "");
 		}
 	}
 
