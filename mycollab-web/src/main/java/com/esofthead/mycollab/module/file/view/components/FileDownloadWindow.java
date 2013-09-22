@@ -58,7 +58,8 @@ public class FileDownloadWindow extends Window {
 
 		DecimalFormat df = new DecimalFormat("#");
 		df.setRoundingMode(RoundingMode.HALF_UP);
-		final Label size = new Label(df.format(this.content.getSize()) + "KB");
+		final Label size = new Label(df.format(Math.floor(this.content
+				.getSize() / 1024)) + "KB");
 		info.addComponent(size, "Size", 0, 2);
 
 		final Label dateCreate = new Label(AppContext.formatDate(this.content

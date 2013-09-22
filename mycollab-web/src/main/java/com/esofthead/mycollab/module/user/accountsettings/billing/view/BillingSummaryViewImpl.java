@@ -233,6 +233,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 				.getAccountId());
 
 		String usedStorageTxt = "";
+		
 		if (usedStorageVolume < 1024) {
 			usedStorageTxt = Math.floor(usedStorageVolume) + " Kb";
 		} else if (usedStorageVolume < 1024 * 1024) {
