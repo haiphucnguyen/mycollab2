@@ -3,6 +3,8 @@ package db.migration;
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -11,6 +13,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.S3StorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.ecm.MimeTypesUtil;
 import com.esofthead.mycollab.module.ecm.dao.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -21,7 +24,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
 public class V1_56__Adjust_Repo_Structure implements SpringJdbcMigration {
-
+	private static Logger log = LoggerFactory
+			.getLogger(V1_56__Adjust_Repo_Structure.class);
 	private ContentJcrDao contentJcrDao;
 
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
@@ -43,6 +47,7 @@ public class V1_56__Adjust_Repo_Structure implements SpringJdbcMigration {
 						.getKey()));
 				content.setSize(objectSummary.getSize());
 				content.setPath(objectSummary.getKey());
+				log.debug("Save content {}", BeanUtility.printBeanObj(content));
 				contentJcrDao.saveContent(content, "");
 			}
 
