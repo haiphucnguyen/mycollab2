@@ -78,7 +78,7 @@ public class FileRawContentServiceImpl implements RawContentService {
 	}
 
 	@Override
-	public void removeContent(String object) {
+	public void removePath(String object) {
 		try {
 			File file = new File(baseFolder, object);
 			if (file.exists()) {
@@ -94,7 +94,7 @@ public class FileRawContentServiceImpl implements RawContentService {
 	}
 
 	@Override
-	public void rename(String oldPath, String newPath) {
+	public void renamePath(String oldPath, String newPath) {
 		File file = new File(baseFolder, oldPath);
 		if (file.exists()) {
 			boolean result = file
@@ -111,7 +111,7 @@ public class FileRawContentServiceImpl implements RawContentService {
 	}
 
 	@Override
-	public void moveContent(String oldPath, String destinationPath) {
+	public void movePath(String oldPath, String destinationPath) {
 		try {
 			File src = new File(baseFolder + "/" + oldPath);
 			File dest = new File(baseFolder + "/" + destinationPath);

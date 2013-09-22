@@ -9,13 +9,12 @@ public interface RawContentService extends IService {
 
 	InputStream getContentStream(String objectPath);
 
-	void removeContent(String objectPath);
+	void removePath(String objectPath);
 
-	void rename(String oldPath, String newPath);
+	void renamePath(String oldPath, String newPath);
 
-	void moveContent(String oldPath, String destinationPath);
+	void movePath(String oldPath, String destinationPath);
 	
 	long getSize(String path);
-	
 	
 }

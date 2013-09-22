@@ -33,6 +33,6 @@ public class ContentServiceImpl implements ContentService {
 	public void removeContent(Integer accountId, String objectPath) {
 		String newPath = ((accountId == null) ? "" : accountId + "/")
 				+ objectPath;
-		rawContentService.removeContent(newPath);
+		rawContentService.removePath(newPath);
 	}
 }

@@ -88,7 +88,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		}
 	}
 
-	public void removeContent(String object) {
+	public void removePath(String object) {
 		AmazonS3 s3client = storageConfiguration.newS3Client();
 
 		try {
@@ -106,7 +106,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	}
 
 	@Override
-	public void rename(String oldPath, String newPath) {
+	public void renamePath(String oldPath, String newPath) {
 		AmazonS3 s3client = storageConfiguration.newS3Client();
 
 		try {
@@ -185,14 +185,26 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	// }
 
 	public static void main(String[] args) {
-		AmazonRawContentServiceImpl service = new AmazonRawContentServiceImpl();
-		service.rename("1/common-comment1", "1/common-comment");
+		S3StorageConfiguration storageConfiguration = (S3StorageConfiguration) SiteConfiguration
+				.getStorageConfiguration();
+		AmazonS3 s3client = storageConfiguration.newS3Client();
+
+		try {
+			ObjectListing listObjects = s3client.listObjects("mycollab_assets",
+					"icons");
+			for (S3ObjectSummary objectSummary : listObjects
+					.getObjectSummaries()) {
+				System.out.println("Key: " + objectSummary.getKey());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void moveContent(String oldPath, String destinationPath) {
-		removeContent(destinationPath);
-		rename(oldPath, destinationPath);
+	public void movePath(String oldPath, String destinationPath) {
+		removePath(destinationPath);
+		renamePath(oldPath, destinationPath);
 	}
 
 	@Override

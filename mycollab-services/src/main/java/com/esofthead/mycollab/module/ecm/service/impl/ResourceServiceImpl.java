@@ -116,7 +116,7 @@ public class ResourceServiceImpl implements ResourceService {
 					.makeDeleteContent(path);
 
 		contentJcrDao.removeResource(path);
-		rawContentService.removeContent(path);
+		rawContentService.removePath(path);
 
 		ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 		activityLog.setCreateduser(deleteUser);
@@ -147,7 +147,7 @@ public class ResourceServiceImpl implements ResourceService {
 					newPath);
 
 		contentJcrDao.rename(oldPath, newPath);
-		rawContentService.rename(oldPath, newPath);
+		rawContentService.renamePath(oldPath, newPath);
 
 		ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 		activityLog.setCreateduser(userUpdate);
@@ -187,7 +187,7 @@ public class ResourceServiceImpl implements ResourceService {
 			String destinationPath = destinationFolderPath + "/"
 					+ oldResourceName;
 			contentJcrDao.moveResource(oldPath, destinationPath);
-			rawContentService.moveContent(oldPath, destinationPath);
+			rawContentService.movePath(oldPath, destinationPath);
 
 			ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 			activityLog.setCreateduser(userMove);
