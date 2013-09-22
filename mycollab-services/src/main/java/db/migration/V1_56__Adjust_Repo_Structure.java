@@ -39,7 +39,7 @@ public class V1_56__Adjust_Repo_Structure implements SpringJdbcMigration {
 				.getStorageConfiguration();
 		AmazonS3 s3client = storageConfiguration.newS3Client();
 		ObjectListing listObjects = s3client.listObjects(
-				storageConfiguration.getBucket(), "/");
+				storageConfiguration.getBucket(), "");
 		for (S3ObjectSummary objectSummary : listObjects.getObjectSummaries()) {
 			Content content = new Content();
 			content.setMimeType(MimeTypesUtil.detectMimeType(objectSummary
