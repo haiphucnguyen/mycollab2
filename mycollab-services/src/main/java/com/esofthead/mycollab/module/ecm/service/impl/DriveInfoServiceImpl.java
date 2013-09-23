@@ -31,6 +31,7 @@ public class DriveInfoServiceImpl extends
 		DriveInfoExample ex = new DriveInfoExample();
 		ex.createCriteria().andSaccountidEqualTo(sAccountId);
 		if (driveInfoMapper.countByExample(ex) > 0) {
+			driveInfo.setId(null);
 			driveInfoMapper.updateByExampleSelective(driveInfo, ex);
 		} else {
 			driveInfoMapper.insert(driveInfo);

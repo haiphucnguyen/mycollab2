@@ -17,6 +17,9 @@ public class ApplicationContextUtil implements ApplicationContextAware {
 	}
 
 	public static <T> T getSpringBean(Class<T> classType) {
+		if (ctx == null) {
+			return null;
+		}
 		return ctx.getBean(classType);
 	}
 

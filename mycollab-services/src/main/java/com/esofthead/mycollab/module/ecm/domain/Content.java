@@ -8,6 +8,7 @@ public class Content extends Resource {
 	private Calendar lastModified;
 	private String lastModifiedBy;
 	private String mimeType;
+	private String contentPath;
 
 	public String getTitle() {
 		return title;
@@ -47,5 +48,16 @@ public class Content extends Resource {
 
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
+	}
+
+	public String getContentPath() {
+		if (contentPath == null) {
+			return path;
+		}
+		return contentPath;
+	}
+
+	public void setContentPath(String contentPath) {
+		this.contentPath = contentPath;
 	}
 }

@@ -15,7 +15,7 @@ import org.springframework.extensions.jcr.JcrSessionFactory;
 public class MyCollabJcrSessionFactory2 extends JcrSessionFactory {
 
 	private static Logger log = LoggerFactory
-			.getLogger(MyCollabJcrSessionFactory.class);
+			.getLogger(MyCollabJcrSessionFactory2.class);
 
 	@Override
 	protected void registerNodeTypes() throws Exception {
@@ -75,6 +75,15 @@ public class MyCollabJcrSessionFactory2 extends JcrSessionFactory {
 		createdUserPropertyTemplate.setRequiredType(PropertyType.STRING);
 		contentTypeTemplate.getPropertyDefinitionTemplates().add(
 				createdUserPropertyTemplate);
+
+		PropertyDefinitionTemplate contentPathPropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		contentPathPropertyTemplate.setMultiple(false);
+		contentPathPropertyTemplate.setName("mycollab:contentPath");
+		contentPathPropertyTemplate.setMandatory(false);
+		contentPathPropertyTemplate.setRequiredType(PropertyType.STRING);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				contentPathPropertyTemplate);
 
 		PropertyDefinitionTemplate lastModifiedUserPropertyTemplate = manager
 				.createPropertyDefinitionTemplate();

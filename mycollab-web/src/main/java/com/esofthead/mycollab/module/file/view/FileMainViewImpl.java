@@ -121,7 +121,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (switchViewBtn.getDescription().equals("Event")) {
-					switchViewBtn.setDescription("FileManagement");
+					switchViewBtn.setDescription("File Management");
 					switchViewBtn.setIcon(MyCollabResource
 							.newResource("icons/16/ecm/file_managerment.png"));
 					gotoActionLogPage();

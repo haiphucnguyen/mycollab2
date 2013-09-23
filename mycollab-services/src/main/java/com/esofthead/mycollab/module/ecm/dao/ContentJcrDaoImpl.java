@@ -97,6 +97,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 							}
 							parentNode = childNode;
 						}
+						
 						Node addNode = parentNode.addNode(
 								pathStr[pathStr.length - 1],
 								"{http://www.esofthead.com/mycollab}content");
@@ -376,6 +377,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			content.setSize(node.getProperty("mycollab:size").getLong());
 			content.setCreatedUser(NodesUtil.getString(node,
 					"mycollab:createdUser"));
+			content.setContentPath(NodesUtil.getString(node,
+					"mycollab:contentPath"));
 			String contentPath = node.getPath();
 			if (contentPath.startsWith("/")) {
 				contentPath = contentPath.substring(1);
