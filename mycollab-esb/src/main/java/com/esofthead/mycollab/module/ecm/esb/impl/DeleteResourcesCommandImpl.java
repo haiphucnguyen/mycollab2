@@ -18,7 +18,7 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 
 	@Autowired
 	private RawContentService rawContentService;
-	
+
 	@Autowired
 	private DriveInfoService driveInfoService;
 
@@ -30,7 +30,17 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 		long size = rawContentService.getSize(path);
 		if (size > 0) {
 			DriveInfo driveInfo = driveInfoService.getDriveInfo(sAccountId);
-			
+			if (driveInfo.getUsedvolume() == null
+					|| (driveInfo.getUsedvolume() < size)) {
+				log.error(
+						"Inconsistent storage volumne site of account {}, used storage is less than removed storage ",
+						sAccountId);
+				driveInfo.setUsedvolume(0L);
+			} else {
+				driveInfo.setUsedvolume(driveInfo.getUsedvolume() - size);
+			}
+
+			driveInfoService.saveOrUpdateDriveInfo(driveInfo);
 		}
 	}
 

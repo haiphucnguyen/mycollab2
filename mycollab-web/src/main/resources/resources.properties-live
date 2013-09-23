@@ -46,7 +46,7 @@ infinispan.client.hotrod.server_list=cache.mycollab.com:11222
 #====================================
 # LINK CONFIGURATION
 #====================================
-cdn.url=http://app.mycollab.com/assets/images/email/
+cdn.url=https://s3.amazonaws.com/mycollab_assets/assets/images/email/
 app.url=http://%s.mycollab.com/
 
 facebook.url=https://www.facebook.com

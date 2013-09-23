@@ -38,9 +38,9 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("mail@esofthead.com",
-							notification.getChangeByUserFullName(), lst, null,
-							null, templateGenerator.generateSubjectContent(),
+					extMailService.sendHTMLMail("noreply@esofthead.com",
+							"noreply@esofthead.com", lst, null, null,
+							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
 			}
@@ -63,9 +63,9 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("mail@esofthead.com",
-							notification.getChangeByUserFullName(), lst, null,
-							null, templateGenerator.generateSubjectContent(),
+					extMailService.sendHTMLMail("noreply@esofthead.com",
+							"noreply@esofthead.com", lst, null, null,
+							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
 			}
@@ -89,9 +89,9 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("mail@esofthead.com",
-							notification.getChangeByUserFullName(), lst, null,
-							null, templateGenerator.generateSubjectContent(),
+					extMailService.sendHTMLMail("noreply@esofthead.com",
+							"noreply@esofthead.com", lst, null, null,
+							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
 			}

@@ -9,9 +9,9 @@ import com.amazonaws.services.s3.AmazonS3Client;
 
 public class S3StorageConfiguration implements StorageConfiguration {
 
-	private static final String AWS_KEY = "s3.key";
-	private static final String AWS_SECRET_KEY = "s3.secretKey";
-	private static final String BUCKET = "s3.bucket";
+	public static final String AWS_KEY = "s3.key";
+	public static final String AWS_SECRET_KEY = "s3.secretKey";
+	public static final String BUCKET = "s3.bucket";
 	private static final String S3_DOWNLOAD_URL = "s3.downloadurl";
 
 	private String awsKey;
@@ -19,9 +19,9 @@ public class S3StorageConfiguration implements StorageConfiguration {
 	private String bucket;
 
 	private S3StorageConfiguration(Properties props) {
-		awsKey = ApplicationProperties.getString(AWS_KEY);
-		awsSecretKey = ApplicationProperties.getString(AWS_SECRET_KEY);
-		bucket = ApplicationProperties.getString(BUCKET);
+		awsKey = props.getProperty(AWS_KEY);
+		awsSecretKey = props.getProperty(AWS_SECRET_KEY);
+		bucket = props.getProperty(BUCKET);
 
 		if ("".equals(awsKey) || "".equals(awsSecretKey) || "".equals(bucket)) {
 			throw new IllegalArgumentException(
