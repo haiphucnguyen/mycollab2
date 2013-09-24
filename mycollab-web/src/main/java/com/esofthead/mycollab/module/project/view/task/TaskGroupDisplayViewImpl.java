@@ -18,11 +18,11 @@ import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
@@ -275,19 +275,22 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		if (exportType.equals(ReportExportType.PDF)) {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
-					AppContext.getSpringBean(ProjectTaskListService.class),
+					ApplicationContextUtil
+							.getSpringBean(ProjectTaskListService.class),
 					tasklistSearchCriteria, null), "task_list.pdf",
 					TaskGroupDisplayViewImpl.this.getApplication());
 		} else if (exportType.equals(ReportExportType.CSV)) {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
-					AppContext.getSpringBean(ProjectTaskListService.class),
+					ApplicationContextUtil
+							.getSpringBean(ProjectTaskListService.class),
 					tasklistSearchCriteria, null), "task_list.csv",
 					TaskGroupDisplayViewImpl.this.getApplication());
 		} else {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
-					AppContext.getSpringBean(ProjectTaskListService.class),
+					ApplicationContextUtil
+							.getSpringBean(ProjectTaskListService.class),
 					tasklistSearchCriteria, null), "task_list.xls",
 					TaskGroupDisplayViewImpl.this.getApplication());
 		}
