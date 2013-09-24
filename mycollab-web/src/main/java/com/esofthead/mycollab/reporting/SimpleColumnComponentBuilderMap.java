@@ -402,12 +402,26 @@ public class SimpleColumnComponentBuilderMap {
 
 		private class RatingComponentBuilderExpression extends
 				AbstractSimpleExpression<String> {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public String evaluate(ReportParameters param) {
 				Double level = param.getFieldValue(field);
-				// TODO : must comlish rating
-				return "images/severity_major.png";
+				switch (level.intValue()) {
+				case 1:
+					return "images/1.png";
+				case 2:
+					return "images/2.png";
+				case 3:
+					return "images/3.png";
+				case 4:
+					return "images/4.png";
+				case 5:
+					return "images/5.png";
+				default:
+					return "images/severity_major.png";
+				}
+
 			}
 		}
 
@@ -423,9 +437,10 @@ public class SimpleColumnComponentBuilderMap {
 
 		@Override
 		public ComponentBuilder getComponentBuilder() {
-			HorizontalListBuilder componentBuilder = cmp.horizontalList();
+			HorizontalListBuilder componentBuilder = cmp.horizontalList()
+					.setFixedWidth(120);
 			ImageBuilder imgBuilder = cmp.image(this.getDriExpression())
-					.setFixedDimension(12, 12);
+					.setFixedDimension(80, 15);
 			componentBuilder.add(imgBuilder);
 			return componentBuilder;
 		}

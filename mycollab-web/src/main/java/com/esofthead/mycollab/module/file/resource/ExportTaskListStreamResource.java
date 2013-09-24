@@ -22,6 +22,7 @@ import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.constant.VerticalAlignment;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -106,11 +107,33 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 			StyleBuilder styleHyperLink = stl.style(Templates.bold12TitleStyle)
 					.setBorder(stl.penThin()).setUnderline(true);
 
+			MailLinkGenerator linkGenerator = new MailLinkGenerator(
+					taskList.getProjectid());
+			String phaseHyperLink = linkGenerator
+					.generateMilestonePreviewFullLink(taskList.getMilestoneid());
+
+			HorizontalListBuilder taskGroupLabel = cmp.horizontalList();
+			taskGroupLabel.add(cmp.text("Task group: ").setFixedWidth(50)
+					.setStyle(Templates.columnTitleStyle));
+
 			// TaskList Name
+			StyleBuilder taskGroupStyle = stl
+					.style(Templates.boldStyle)
+					.setUnderline(true)
+					.setFontSize(12)
+					.setAlignment(HorizontalAlignment.CENTER,
+							VerticalAlignment.MIDDLE);
 			TextFieldBuilder<String> taskListNameHeader = cmp
 					.text(taskList.getName())
-					.setStyle(Templates.columnTitleStyle).setFixedWidth(1100)
-					.setHorizontalAlignment(HorizontalAlignment.CENTER);
+					.setFixedWidth(1046)
+					.setHorizontalAlignment(HorizontalAlignment.CENTER)
+					.setHyperLink(
+							hyperLink(linkGenerator
+									.generateTaskGroupPreviewFullLink(taskList
+											.getId())))
+					.setStyle(taskGroupStyle);
+			taskGroupLabel.add(taskListNameHeader).setStyle(
+					Templates.columnTitleStyle);
 
 			// label
 			log.debug("Label value : " + taskList.getDescription());
@@ -132,11 +155,6 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 
 			TextFieldBuilder<String> phaseLbl = cmp.text("Phase name :")
 					.setStyle(style).setFixedWidth(150);
-
-			MailLinkGenerator linkGenerator = new MailLinkGenerator(
-					taskList.getProjectid());
-			String phaseHyperLink = linkGenerator
-					.generateMilestonePreviewFullLink(taskList.getMilestoneid());
 
 			TextFieldBuilder<String> phase = cmp
 					.text(taskList.getMilestoneName())
@@ -177,12 +195,13 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 					.add(numberTaskLbl).add(taskNumText);
 
 			// Add to Vertical List Builder -------
-			componetBuilder.add(taskListNameHeader).add(deshorizontal)
+			componetBuilder.add(taskGroupLabel).add(deshorizontal)
 					.add(assingeeAndPhaseHorizontal)
 					.add(horizontalOfProgressAndNumberTask);
 			SimpleTaskJasperReportBuilder subReportBuilder = new SimpleTaskJasperReportBuilder(
 					taskList.getSubTasks(), parameters);
-			componetBuilder.add(subReportBuilder.getSubreportBuilder());
+			componetBuilder.add(subReportBuilder.getSubreportBuilder()).add(
+					cmp.horizontalList().setHeight(8));
 			reportBuilder.addDetail(componetBuilder);
 		}
 	}
@@ -260,9 +279,6 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 
 	@Override
 	protected void fillReport() {
-		// reportBuilder.setDataSource(new
-		// GroupIteratorDataSource(searchService,
-		// searchCriteria));
 		reportBuilder.setDataSource(new JREmptyDataSource());
 	}
 }
