@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.module.ecm.MimeTypesUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.DriveInfo;
 import com.esofthead.mycollab.module.ecm.esb.SaveContentCommand;
@@ -25,9 +24,6 @@ public class SaveContentCommandImpl implements SaveContentCommand {
 			Integer sAccountId) {
 		log.debug("Save content {} by {}", BeanUtility.printBeanObj(content),
 				createdUser);
-
-		String mimeType = content.getMimeType();
-		String mycollabType = MimeTypesUtil.detectMyCollabContentType(mimeType);
 
 		DriveInfo driveInfo = driveInfoService.getDriveInfo(sAccountId);
 		if (driveInfo.getUsedvolume() == null) {

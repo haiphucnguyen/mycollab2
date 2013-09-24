@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.ecm.VolumeUtils;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
@@ -46,7 +47,8 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		super();
 
 		this.setMargin(true);
-		this.billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
+		this.billingService = ApplicationContextUtil
+				.getSpringBean(BillingService.class);
 		initUI();
 		this.setImmediate(true);
 	}
@@ -215,7 +217,8 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		String planInfo = "<div id='currentPlanInfo'><div class='infoBlock'><span class='infoTitle'>Projects:</span> %d of %d</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Storage:</span> %s of %d Gb</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Users:</span> %d of %d</div></div>";
 		log.debug("Get number of active users in account {}",
 				AppContext.getAccountId());
-		UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+		UserService userService = ApplicationContextUtil
+				.getSpringBean(UserService.class);
 		numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext
 				.getAccountId());
 
@@ -232,16 +235,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext
 				.getAccountId());
 
-		String usedStorageTxt = "";
-		
-		if (usedStorageVolume < 1024) {
-			usedStorageTxt = Math.floor(usedStorageVolume) + " Kb";
-		} else if (usedStorageVolume < 1024 * 1024) {
-			usedStorageTxt = Math.floor(usedStorageVolume / 1024) + " Mb";
-		} else {
-			usedStorageTxt = Math.floor(usedStorageVolume / (1024 * 1024))
-					+ " Gb";
-		}
+		String usedStorageTxt = VolumeUtils.getVolumeDisplay(usedStorageVolume);
 
 		planInfo = String.format(planInfo, numOfActiveProjects,
 				currentBillingPlan.getNumprojects(), usedStorageTxt,

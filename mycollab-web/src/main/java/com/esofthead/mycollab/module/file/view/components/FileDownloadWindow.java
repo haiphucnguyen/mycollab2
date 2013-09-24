@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esofthead.mycollab.module.ecm.VolumeUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
@@ -56,10 +57,8 @@ public class FileDownloadWindow extends Window {
 		final Label author = new Label(this.content.getCreatedBy());
 		info.addComponent(author, "Created by", 0, 1);
 
-		DecimalFormat df = new DecimalFormat("#");
-		df.setRoundingMode(RoundingMode.HALF_UP);
-		final Label size = new Label(df.format(Math.floor(this.content
-				.getSize() / 1024)) + "KB");
+		final Label size = new Label(VolumeUtils.getVolumeDisplay(this.content
+				.getSize()));
 		info.addComponent(size, "Size", 0, 2);
 
 		final Label dateCreate = new Label(AppContext.formatDate(this.content

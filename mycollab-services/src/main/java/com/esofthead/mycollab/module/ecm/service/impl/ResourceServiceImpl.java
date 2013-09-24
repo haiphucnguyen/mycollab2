@@ -116,7 +116,6 @@ public class ResourceServiceImpl implements ResourceService {
 					.makeDeleteContent(path);
 
 		contentJcrDao.removeResource(path);
-		rawContentService.removePath(path);
 
 		ContentActivityLogWithBLOBs activityLog = new ContentActivityLogWithBLOBs();
 		activityLog.setCreateduser(deleteUser);

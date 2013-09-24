@@ -42,6 +42,8 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 
 			driveInfoService.saveOrUpdateDriveInfo(driveInfo);
 		}
+
+		rawContentService.removePath(path);
 	}
 
 }

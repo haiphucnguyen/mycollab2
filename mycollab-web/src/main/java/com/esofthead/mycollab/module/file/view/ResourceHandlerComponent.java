@@ -21,6 +21,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
+import com.esofthead.mycollab.module.ecm.VolumeUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
@@ -681,11 +682,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 			if (res instanceof Content) {
 				moreInfoAboutResLayout.addComponent(new Separator());
-				Long size = res.getSize() / 1024;
-				DecimalFormat df = new DecimalFormat("#");
-				df.setRoundingMode(RoundingMode.HALF_UP);
 
-				Label lbl = new Label(df.format(size) + " KB");
+				Label lbl = new Label(VolumeUtils.getVolumeDisplay(res
+						.getSize()));
 				lbl.addStyleName("grayLabel");
 				moreInfoAboutResLayout.addComponent(lbl);
 			}
