@@ -2451,7 +2451,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .message .message-container>.v-csslayout-margin {
 	background-color: #fff;
-	padding: 10px 15px 10px 10px;
+	padding: 10px;
 	border: 2px solid #a9a9a9;
 	border-radius: 5px;
 	margin-left: 10px;
@@ -2460,10 +2460,6 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .v-ie7 .message .message-container>.v-csslayout-margin {
 	margin-left: 0px;
-}
-
-.message .message-container>.v-csslayout-margin>.v-csslayout-container {
-	margin-right: 10px;
 }
 
 .message .message-container>.v-csslayout-margin:before {
