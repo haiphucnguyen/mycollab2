@@ -1,28 +1,42 @@
 package com.esofthead.mycollab.module.file.resource;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
 import java.lang.reflect.Field;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
+import net.sf.dynamicreports.report.builder.column.ComponentColumnBuilder;
+import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
-import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
+import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
-import net.sf.jasperreports.engine.JRDataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.reporting.BeanDataSource;
 import com.esofthead.mycollab.reporting.ColumnFieldComponentBuilder;
 import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
 import com.esofthead.mycollab.reporting.ReportExportType;
@@ -30,9 +44,12 @@ import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 import com.esofthead.mycollab.reporting.Templates;
+import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
-public class ExportTaskListStreamResource<SimpleTaskList, S extends SearchCriteria>
-		extends ExportItemsStreamResource<SimpleTaskList> {
+public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
+		ExportItemsStreamResource<SimpleTaskList> {
 	private static final long serialVersionUID = 1L;
 
 	private ISearchableService searchService;
@@ -47,136 +64,203 @@ public class ExportTaskListStreamResource<SimpleTaskList, S extends SearchCriter
 		super(reportTitle, outputForm);
 		this.searchCriteria = searchCriteria;
 		this.searchService = searchService;
-		this.parameters = parameters;
+		List<TableViewField> fields = Arrays.asList(TaskTableFieldDef.taskname,
+				TaskTableFieldDef.startdate, TaskTableFieldDef.dueDate,
+				TaskTableFieldDef.complete, TaskTableFieldDef.assignUser);
+		this.parameters = new RpParameterBuilder(fields);
+	}
+
+	public interface TaskTableFieldDef {
+		public static TableViewField selected = new TableViewField("",
+				"selected", UIConstants.TABLE_CONTROL_WIDTH);
+
+		public static TableViewField taskname = new TableViewField("Task Name",
+				"taskname", UIConstants.TABLE_X_LABEL_WIDTH);
+
+		public static TableViewField startdate = new TableViewField(
+				"Start Date", "startdate", UIConstants.TABLE_DATE_WIDTH);
+
+		public static TableViewField dueDate = new TableViewField("Due Date",
+				"deadline", UIConstants.TABLE_DATE_WIDTH);
+
+		public static TableViewField complete = new TableViewField(
+				"% Complete", "percentagecomplete",
+				UIConstants.TABLE_S_LABEL_WIDTH);
+
+		public static TableViewField assignUser = new TableViewField(
+				"Assignee", "assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 	}
 
 	@Override
 	protected void initReport() throws Exception {
-		SubreportBuilder subreport = cmp.subreport(new TaskListSubReportInit())
-				.setDataSource(new TaskListSubReportFillDataExpression());
+		SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
+				0, Integer.MAX_VALUE);
+		List<SimpleTaskList> lstSimleTaskList = searchService
+				.findPagableListByCriteria(searchRequest);
+
+		for (SimpleTaskList taskList : lstSimleTaskList) {
+			VerticalListBuilder componetBuilder = cmp.verticalList();
+			StyleBuilder style = stl.style(Templates.bold12TitleStyle)
+					.setBorder(stl.penThin());
+
+			StyleBuilder styleHyperLink = stl.style(Templates.bold12TitleStyle)
+					.setBorder(stl.penThin()).setUnderline(true);
+
+			// TaskList Name
+			TextFieldBuilder<String> taskListNameHeader = cmp
+					.text(taskList.getName())
+					.setStyle(Templates.columnTitleStyle).setFixedWidth(1100)
+					.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+			// label
+			log.debug("Label value : " + taskList.getDescription());
+			TextFieldBuilder<String> desLabel = cmp.text("Desciption :")
+					.setStyle(style).setFixedWidth(150);
+			TextFieldBuilder<String> descriptText = cmp
+					.text(taskList.getDescription()).setFixedWidth(950)
+					.setStyle(style);
+			HorizontalListBuilder deshorizontal = cmp.horizontalList();
+			deshorizontal.add(desLabel).add(descriptText);
+
+			// Assignee
+			log.debug("Assignee value : " + taskList.getOwnerFullName());
+			TextFieldBuilder<String> assigneeLbl = cmp.text("Assignee :")
+					.setStyle(style).setFixedWidth(150);
+			TextFieldBuilder<String> assignee = cmp
+					.text(taskList.getOwnerFullName()).setStyle(style)
+					.setFixedWidth(400);
+
+			TextFieldBuilder<String> phaseLbl = cmp.text("Phase name :")
+					.setStyle(style).setFixedWidth(150);
+
+			MailLinkGenerator linkGenerator = new MailLinkGenerator(
+					taskList.getProjectid());
+			String phaseHyperLink = linkGenerator
+					.generateMilestonePreviewFullLink(taskList.getMilestoneid());
+
+			TextFieldBuilder<String> phase = cmp
+					.text(taskList.getMilestoneName())
+					.setHyperLink(hyperLink(phaseHyperLink))
+					.setStyle(Templates.underlineStyle)
+					.setStyle(styleHyperLink).setFixedWidth(400);
+
+			HorizontalListBuilder assingeeAndPhaseHorizontal = cmp
+					.horizontalList();
+			assingeeAndPhaseHorizontal.add(assigneeLbl).add(assignee)
+					.add(phaseLbl).add(phase);
+
+			// progress
+			log.debug("Progress start ----");
+			TextFieldBuilder<String> progressLbl = cmp.text("Progress :")
+					.setStyle(style).setFixedWidth(150);
+
+			DecimalFormat df = new DecimalFormat("#");
+			df.setRoundingMode(RoundingMode.HALF_EVEN);
+
+			TextFieldBuilder<String> progress = cmp
+					.text(df.format(taskList.getPercentageComplete()) + "%")
+					.setStyle(style).setFixedWidth(400);
+
+			TextFieldBuilder<String> numberTaskLbl = cmp
+					.text("Number of open tasks :").setStyle(style)
+					.setFixedWidth(150);
+
+			TextFieldBuilder<String> taskNumText = cmp
+					.text("(" + taskList.getNumOpenTasks() + "/"
+							+ taskList.getNumAllTasks() + ")")
+					.setFixedWidth(400).setStyle(style);
+
+			HorizontalListBuilder horizontalOfProgressAndNumberTask = cmp
+					.horizontalList();
+
+			horizontalOfProgressAndNumberTask.add(progressLbl).add(progress)
+					.add(numberTaskLbl).add(taskNumText);
+
+			// Add to Vertical List Builder -------
+			componetBuilder.add(taskListNameHeader).add(deshorizontal)
+					.add(assingeeAndPhaseHorizontal)
+					.add(horizontalOfProgressAndNumberTask);
+			SimpleTaskJasperReportBuilder subReportBuilder = new SimpleTaskJasperReportBuilder(
+					taskList.getSubTasks(), parameters);
+			componetBuilder.add(subReportBuilder.getSubreportBuilder());
+			reportBuilder.addDetail(componetBuilder);
+		}
+	}
+
+	private static class SimpleTaskJasperReportBuilder {
+
+		private BeanDataSource dataSource;
+		private RpParameterBuilder parameters;
+
+		public SimpleTaskJasperReportBuilder(List data,
+				RpParameterBuilder parameters) {
+			this.dataSource = new BeanDataSource(data);
+			this.parameters = parameters;
+		}
+
+		public SubreportBuilder getSubreportBuilder() {
+			SubreportBuilder subreport = cmp.subreport(
+					new SimpleTaskExpression()).setDataSource(dataSource);
+			return subreport;
+		}
+
+		private class SimpleTaskExpression extends
+				AbstractSimpleExpression<JasperReportBuilder> {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public JasperReportBuilder evaluate(ReportParameters param) {
+				JasperReportBuilder report = report();
+				report.setTemplate(Templates.reportTemplate);
+
+				Field[] clsFields = ClassUtils.getAllFields(Task.class);
+				for (Field objField : clsFields) {
+					DRIDataType<Object, ? extends Object> jrType = null;
+					try {
+						jrType = type.detectType(objField.getType().getName());
+					} catch (DRException e) {
+						throw new MyCollabException(e);
+					}
+					report.addField(objField.getName(), jrType);
+				}
+
+				List<TableViewFieldDecorator> fields = parameters.getFields();
+
+				List<? extends ColumnFieldComponentBuilder> lstFieldBuilder = SimpleColumnComponentBuilderMap
+						.getListFieldBuilder(Task.class);
+				// build columns of report
+				for (TableViewFieldDecorator field : fields) {
+
+					log.debug("Inject renderer if any");
+					if (lstFieldBuilder != null) {
+						for (int i = lstFieldBuilder.size() - 1; i >= 0; i--) {
+							ColumnFieldComponentBuilder fieldBuilder = lstFieldBuilder
+									.get(i);
+							if (field.getField().equals(
+									fieldBuilder.getFieldName())) {
+								field.setFieldComponentExpression(fieldBuilder
+										.getDriExpression());
+								field.setComponentBuilder(fieldBuilder
+										.getComponentBuilder());
+							}
+						}
+					}
+					log.debug("Construct component builder {} and width {}",
+							field.getField(), field.getDefaultWidth());
+					ComponentColumnBuilder columnBuilder = col.componentColumn(
+							field.getDesc(), field.getComponentBuilder())
+							.setWidth(field.getDefaultWidth());
+
+					report.addColumn(columnBuilder);
+				}
+				return report;
+			}
+		}
 	}
 
 	@Override
-	protected void fillReport() throws Exception {
+	protected void fillReport() {
 		reportBuilder.setDataSource(new GroupIteratorDataSource(searchService,
 				searchCriteria));
-	}
-
-	private class TaskListSubReportInit extends
-			AbstractSimpleExpression<JasperReportBuilder> {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public JasperReportBuilder evaluate(ReportParameters reportParameters) {
-			int masterRowNumber = reportParameters.getReportRowNumber();
-			String taskListName = reportParameters.getFieldValue("name");
-
-			JasperReportBuilder report = report();
-			report.setTemplate(Templates.reportTemplate).title(
-					cmp.text(taskListName).setStyle(
-							Templates.bold12CenteredStyle));
-
-			Class<?> classType = com.esofthead.mycollab.module.project.domain.SimpleTaskList.class;
-			log.debug("Init report for task list--------");
-			// Add field of report
-			Field[] clsFields = ClassUtils.getAllFields(classType);
-			for (Field objField : clsFields) {
-				DRIDataType<Object, ? extends Object> jrType = null;
-				try {
-					jrType = type.detectType(objField.getType().getName());
-				} catch (DRException e) {
-					throw new MyCollabException(e);
-				}
-				report.addField(objField.getName(), jrType);
-			}
-			List<TableViewFieldDecorator> fields = parameters.getFields();
-			List<? extends ColumnFieldComponentBuilder> renderers = SimpleColumnComponentBuilderMap
-					.getListFieldBuilder(classType);
-			// build columns of report
-			for (TableViewFieldDecorator field : fields) {
-
-				log.debug("Inject renderer if any");
-				if (renderers != null) {
-					for (int i = renderers.size() - 1; i >= 0; i--) {
-						ColumnFieldComponentBuilder columnInjectionRenderer = renderers
-								.get(i);
-						if (field.getField().equals(
-								columnInjectionRenderer.getFieldName())) {
-							// field.setFieldComponentBuilder(columnInjectionRenderer);
-						}
-					}
-				}
-
-				// Field fieldCls = ClassUtils.getField(classType,
-				// field.getField());
-				// DRIDataType<Object, ? extends Object> jrType = null;
-				// try {
-				// jrType = type.detectType(fieldCls.getType().getName());
-				// } catch (DRException e) {
-				// throw new MyCollabException(e);
-				// }
-				// TextColumnBuilder<? extends Object> columnBuilder =
-				// col.column(
-				// field.getDesc(), field.getField(), jrType).setWidth(
-				// field.getDefaultWidth());
-				//
-				// ColumnFieldComponentBuilder columnRenderer = field
-				// .getColumnRenderer();
-				// if (columnRenderer != null) {
-				// if (columnRenderer instanceof
-				// HyperLinkColumnInjectionRenderer) {
-				// columnBuilder
-				// .setHyperLink(hyperLink(((HyperLinkColumnInjectionRenderer)
-				// columnRenderer)
-				// .getExpression()));
-				// columnBuilder
-				// .setStyle(((HyperLinkColumnInjectionRenderer) columnRenderer)
-				// .getStyle());
-				// } else if (columnRenderer instanceof
-				// EmailColumnInjectionRenderer) {
-				// columnBuilder
-				// .setHyperLink(hyperLink(((EmailColumnInjectionRenderer)
-				// columnRenderer)
-				// .getExpression()));
-				// columnBuilder
-				// .setStyle(((EmailColumnInjectionRenderer) columnRenderer)
-				// .getStyle());
-				// } else {
-				// throw new MyCollabException(
-				// "Does not support column renderer "
-				// + columnRenderer);
-				// }
-				// }
-				// report.addColumn(columnBuilder);
-			}
-
-			log.debug("Accomplish init report for task list ---------");
-			return report;
-		}
-	}
-
-	private class TaskListSubReportFillDataExpression extends
-			AbstractSimpleExpression<JRDataSource> {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public JRDataSource evaluate(ReportParameters reportParameters) {
-			int masterRowNumber = reportParameters.getReportRowNumber();
-			String[] columns = new String[masterRowNumber];
-			for (int i = 1; i <= masterRowNumber; i++) {
-				columns[i - 1] = "column" + i;
-			}
-			DRDataSource dataSource = new DRDataSource(columns);
-
-			for (int i = 1; i <= masterRowNumber; i++) {
-				Object[] values = new Object[masterRowNumber];
-				for (int j = 1; j <= masterRowNumber; j++) {
-					values[j - 1] = "row" + i + "_column" + j;
-				}
-				dataSource.add(values);
-			}
-
-			return dataSource;
-		}
 	}
 }

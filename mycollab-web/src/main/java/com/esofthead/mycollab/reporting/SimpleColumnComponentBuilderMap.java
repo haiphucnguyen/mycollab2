@@ -6,6 +6,8 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
 
 import java.awt.Color;
 import java.io.InputStream;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,8 +26,6 @@ import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
-import org.jfree.util.Log;
-
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -37,7 +37,9 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.view.bug.BugPriorityStatusConstants;
+import com.esofthead.mycollab.module.project.view.task.TaskPriorityComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
@@ -52,7 +54,7 @@ public class SimpleColumnComponentBuilderMap {
 		public static final String BUG_CUSTOM_TYPE = "bug_custom_type";
 		public static final String RATING = "rating";
 		public static final String RISK_NAME_TYPE = "risk_name_type";
-		public static final String PROBLEM_NAME_TYPE = "problem_name_type";
+		public static final String PERCENT = "percent";
 	}
 
 	public static class ProjectMoulde {
@@ -110,6 +112,12 @@ public class SimpleColumnComponentBuilderMap {
 				new ProjectFieldBuilderFactory("issuename",
 						ProjectMoulde.PROBLEM, TypeRender.HYPERLINK),
 				new RatingComponentBuilder("level", ProjectMoulde.PROBLEM)));
+
+		mapInjection.put(Task.class, Arrays.asList(
+				new ProjectFieldBuilderFactory("taskname",
+						ProjectMoulde.TASKLIST, TypeRender.HYPERLINK),
+				new ProjectFieldBuilderFactory("percentagecomplete",
+						ProjectMoulde.TASKLIST, TypeRender.PERCENT)));
 	}
 
 	public static List<? extends ColumnFieldComponentBuilder> getListFieldBuilder(
@@ -219,53 +227,34 @@ public class SimpleColumnComponentBuilderMap {
 		@Override
 		public ComponentBuilder getComponentBuilder() {
 			HorizontalListBuilder lstBuilder = cmp.horizontalList();
-			if (projectModule.equals(ProjectMoulde.BUG)) {
-				if (typeRender.equals(TypeRender.HYPERLINK)) {
-					Log.debug("HyperLink for name field ------" + field);
-					lstBuilder.add(cmp.image(new ImageBugExpression())
-							.setFixedDimension(12, 12));
-
-					ConditionalStyleBuilder overDueStyle = stl
-							.conditionalStyle(
-									new OverDueExpression(projectModule))
-							.setForegroundColor(Color.RED);
-					ConditionalStyleBuilder isCompleteStyle = stl
-							.conditionalStyle(
-									new IsCompleteExpression(projectModule))
-							.setStrikeThrough(true);
-
-					StyleBuilder bugStyleBuilder = stl.style()
-							.addConditionalStyle(overDueStyle)
-							.addConditionalStyle(isCompleteStyle);
-
-					lstBuilder.add(cmp
-							.text(new StringFieldExpression(field))
-							.setHyperLink(
-									hyperLink(new ProjectHyperLinkExpression(
-											projectModule)))
-							.setStyle(bugStyleBuilder));
-				}
-			} else {
-				Log.debug("Start make field builder component-------RISK, PROBLEM");
-				ConditionalStyleBuilder overDueStyle = stl.conditionalStyle(
-						new OverDueExpression(projectModule))
-						.setForegroundColor(Color.RED);
-				ConditionalStyleBuilder isCompleteStyle = stl.conditionalStyle(
-						new IsCompleteExpression(projectModule))
-						.setStrikeThrough(true);
-
-				StyleBuilder styleBuilder = stl.style()
-						.addConditionalStyle(overDueStyle)
-						.addConditionalStyle(isCompleteStyle);
-
-				lstBuilder
-						.add(cmp.text(new StringFieldExpression(field))
-								.setHyperLink(
-										hyperLink(new ProjectHyperLinkExpression(
-												projectModule)))
-								.setStyle(styleBuilder));
-
+			if (projectModule.equals(ProjectMoulde.TASKLIST)
+					&& typeRender.equals(TypeRender.PERCENT)) {
+				lstBuilder.add(cmp.text(new StringPercentExpression(field)));
+				return lstBuilder;
 			}
+			if (projectModule.equals(ProjectMoulde.BUG)
+					|| projectModule.equals(ProjectMoulde.TASKLIST)) {
+				if (typeRender.equals(TypeRender.HYPERLINK)) {
+					lstBuilder.add(cmp.image(new ImagePriorityExpression())
+							.setFixedDimension(12, 12));
+				}
+			}
+			ConditionalStyleBuilder overDueStyle = stl.conditionalStyle(
+					new OverDueExpression(projectModule)).setForegroundColor(
+					Color.RED);
+			ConditionalStyleBuilder isCompleteStyle = stl.conditionalStyle(
+					new IsCompleteExpression(projectModule)).setStrikeThrough(
+					true);
+
+			StyleBuilder styleBuilder = stl.style(Templates.underlineStyle)
+					.addConditionalStyle(overDueStyle)
+					.addConditionalStyle(isCompleteStyle);
+
+			lstBuilder.add(cmp
+					.text(new StringFieldExpression(field))
+					.setHyperLink(
+							hyperLink(new ProjectHyperLinkExpression(
+									projectModule))).setStyle(styleBuilder));
 			return lstBuilder;
 		}
 
@@ -297,7 +286,12 @@ public class SimpleColumnComponentBuilderMap {
 						return false;
 					}
 				} else {
-					Date datedue = param.getFieldValue("datedue");
+					Date datedue = null;
+					if (projectModule.equals(ProjectMoulde.TASKLIST)) {
+						datedue = param.getFieldValue("deadline");
+					} else {
+						param.getFieldValue("datedue");
+					}
 					if (datedue != null
 							&& (datedue.before(new GregorianCalendar()
 									.getTime()))) {
@@ -353,12 +347,14 @@ public class SimpleColumnComponentBuilderMap {
 					return linkGenerator.generateRiskPreviewFullLink(id);
 				} else if (projectModule.equals(ProjectMoulde.PROBLEM)) {
 					return linkGenerator.generateProblemPreviewFullLink(id);
+				} else if (projectModule.equals(ProjectMoulde.TASKLIST)) {
+					return linkGenerator.generateTaskPreviewFullLink(id);
 				}
 				return "";
 			}
 		}
 
-		private static class ImageBugExpression extends
+		private static class ImagePriorityExpression extends
 				AbstractSimpleExpression<InputStream> {
 			private static final long serialVersionUID = 1L;
 
@@ -366,17 +362,27 @@ public class SimpleColumnComponentBuilderMap {
 			public InputStream evaluate(ReportParameters reportParameters) {
 				String priority = reportParameters.getFieldValue("priority");
 
-				if (priority.equals(BugPriorityStatusConstants.PRIORITY_MAJOR)) {
+				if (priority.equals(BugPriorityStatusConstants.PRIORITY_MAJOR)
+						|| priority
+								.equals(TaskPriorityComboBox.PRIORITY_MEDIUM)) {
 					return Templates.class.getClassLoader()
 							.getResourceAsStream("images/priority_medium.png");
 				} else if (priority
-						.equals(BugPriorityStatusConstants.PRIORITY_MINOR)) {
+						.equals(BugPriorityStatusConstants.PRIORITY_MINOR)
+						|| priority.equals(TaskPriorityComboBox.PRIORITY_LOW)) {
 					return Templates.class.getClassLoader()
 							.getResourceAsStream("images/priority_low.png");
 				} else if (priority
-						.equals(BugPriorityStatusConstants.PRIORITY_CRITICAL)) {
+						.equals(BugPriorityStatusConstants.PRIORITY_CRITICAL)
+						|| priority.equals(TaskPriorityComboBox.PRIORITY_HIGHT)) {
 					return Templates.class.getClassLoader()
 							.getResourceAsStream("images/priority_high.png");
+				} else if (priority
+						.equals(BugPriorityStatusConstants.PRIORITY_BLOCKER)
+						|| priority
+								.equals(TaskPriorityComboBox.PRIORITY_URGENT)) {
+					return Templates.class.getClassLoader()
+							.getResourceAsStream("images/priority_urgent.png");
 				} else
 					return null;
 			}
@@ -432,6 +438,26 @@ public class SimpleColumnComponentBuilderMap {
 	 * ------------------------------------------
 	 * ----------------------------------------
 	 */
+	public static class StringPercentExpression extends
+			AbstractSimpleExpression<String> {
+		private static final long serialVersionUID = 1L;
+
+		private String field;
+
+		public StringPercentExpression(String field) {
+			this.field = field;
+		}
+
+		@Override
+		public String evaluate(ReportParameters reportParameters) {
+			DecimalFormat df = new DecimalFormat("#");
+			df.setRoundingMode(RoundingMode.HALF_EVEN);
+			Double percentValue = reportParameters.getValue(field);
+
+			return df.format(percentValue) + "%";
+		}
+	}
+
 	public static class StringFieldExpression extends
 			AbstractSimpleExpression<String> {
 		private static final long serialVersionUID = 1L;

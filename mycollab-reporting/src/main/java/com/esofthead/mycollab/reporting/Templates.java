@@ -11,6 +11,7 @@ import java.util.Locale;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.style.PaddingBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.VerticalAlignment;
@@ -21,8 +22,11 @@ public class Templates {
 	public static final StyleBuilder italicStyle;
 	public static final StyleBuilder underlineStyle;
 	public static final StyleBuilder boldCenteredStyle;
+	public static final StyleBuilder boldLeftStyle;
 	public static final StyleBuilder bold18CenteredStyle;
 	public static final StyleBuilder bold22CenteredStyle;
+	public static final StyleBuilder bold12TitleStyle;
+	public static final StyleBuilder bold18TitleStyle;
 	public static final StyleBuilder columnTitleStyle;
 	public static final StyleBuilder columnStyle;
 	public static final StyleBuilder bold12CenteredStyle;
@@ -37,9 +41,20 @@ public class Templates {
 		underlineStyle = stl.style(rootStyle).underline();
 		boldCenteredStyle = stl.style(boldStyle).setAlignment(
 				HorizontalAlignment.CENTER, VerticalAlignment.MIDDLE);
+
+		PaddingBuilder padding = stl.padding();
+		padding.setLeft(8);
+		boldLeftStyle = stl
+				.style(boldStyle)
+				.setAlignment(HorizontalAlignment.LEFT,
+						VerticalAlignment.MIDDLE).setPadding(padding);
+
 		bold12CenteredStyle = stl.style(boldCenteredStyle).setFontSize(12);
 		bold18CenteredStyle = stl.style(boldCenteredStyle).setFontSize(18);
 		bold22CenteredStyle = stl.style(boldCenteredStyle).setFontSize(22);
+		bold12TitleStyle = stl.style(boldLeftStyle).setFontSize(12);
+		bold18TitleStyle = stl.style(boldLeftStyle).setFontSize(18);
+
 		columnStyle = stl.style(rootStyle).setVerticalAlignment(
 				VerticalAlignment.MIDDLE);
 		columnTitleStyle = stl.style(columnStyle).setBorder(stl.pen1Point())

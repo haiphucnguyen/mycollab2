@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.file.resource.ExportTaskListStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -14,14 +15,17 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -268,26 +272,25 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				SearchField.AND, CurrentProjectVariables.getProject().getId()));
 
 		Resource res = null;
-		// if (exportType.equals(ReportExportType.PDF)) {
-		// res = new StreamResource(new ExportTaskListExcelStreamResource(
-		// title, exportType,
-		// ApplicationContextUtil.getBean(ProjectTaskListService.class),
-		// tasklistSearchCriteria,new RpParameterBuilder(taskLists.get
-		// .getDisplayColumns())), "task_list.pdf",
-		// TaskGroupDisplayViewImpl.this.getApplication());
-		// } else if (exportType.equals(ReportExportType.CSV)) {
-		// res = new StreamResource(new ExportTaskListExcelStreamResource(
-		// title, exportType,
-		// ApplicationContextUtil.getBean(ProjectTaskListService.class),
-		// tasklistSearchCriteria), "task_list.csv",
-		// TaskGroupDisplayViewImpl.this.getApplication());
-		// } else {
-		// res = new StreamResource(new ExportTaskListExcelStreamResource(
-		// title, exportType,
-		// ApplicationContextUtil.getBean(ProjectTaskListService.class),
-		// tasklistSearchCriteria), "task_list.xls",
-		// TaskGroupDisplayViewImpl.this.getApplication());
-		// }
+		if (exportType.equals(ReportExportType.PDF)) {
+			res = new StreamResource(new ExportTaskListStreamResource(title,
+					exportType,
+					AppContext.getSpringBean(ProjectTaskListService.class),
+					tasklistSearchCriteria, null), "task_list.pdf",
+					TaskGroupDisplayViewImpl.this.getApplication());
+		} else if (exportType.equals(ReportExportType.CSV)) {
+			res = new StreamResource(new ExportTaskListStreamResource(title,
+					exportType,
+					AppContext.getSpringBean(ProjectTaskListService.class),
+					tasklistSearchCriteria, null), "task_list.csv",
+					TaskGroupDisplayViewImpl.this.getApplication());
+		} else {
+			res = new StreamResource(new ExportTaskListStreamResource(title,
+					exportType,
+					AppContext.getSpringBean(ProjectTaskListService.class),
+					tasklistSearchCriteria, null), "task_list.xls",
+					TaskGroupDisplayViewImpl.this.getApplication());
+		}
 
 		TaskGroupDisplayViewImpl.this.getWindow().open(res, "_blank");
 		exportButtonControl.setPopupVisible(false);
