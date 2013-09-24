@@ -127,8 +127,13 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 					pathName = ((ExternalFolder) folder).getExternalDrive()
 							.getFoldername();
 					curPath.append("");
-				} else
-					curPath.append(pathName);
+				} else {
+					if (curPath.toString().length() > 0) {
+						curPath.append("/").append(pathName);
+					} else {
+						curPath.append(pathName);
+					}
+				}
 			} else {
 				curPath.append("/").append(pathName);
 			}
