@@ -1,8 +1,15 @@
 package com.esofthead.mycollab.shell.view;
 
+import java.util.Date;
+
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.module.billing.AccountStatusConstants;
+import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.user.domain.BillingPlan;
+import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
@@ -24,6 +31,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -141,6 +149,36 @@ public final class MainView extends AbstractView {
 		layout.addComponent(serviceMenu, "serviceMenu");
 
 		final HorizontalLayout accountLayout = new HorizontalLayout();
+
+		// display trial box if user in trial mode
+		SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
+		if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
+			Label informLbl = new Label("", Label.CONTENT_XHTML);
+			accountLayout.addComponent(informLbl);
+			accountLayout.setComponentAlignment(informLbl,
+					Alignment.MIDDLE_LEFT);
+
+			Date createdtime = billingAccount.getCreatedtime();
+			long timeDeviation = System.currentTimeMillis()
+					- createdtime.getTime();
+			double daysLeft = Math.floor(timeDeviation / (1000 * 60 * 60 * 24));
+			if (daysLeft > 30) {
+				BillingService billingService = ApplicationContextUtil
+						.getSpringBean(BillingService.class);
+				BillingPlan freeBillingPlan = billingService
+						.getFreeBillingPlan();
+				billingAccount.setBillingPlan(freeBillingPlan);
+			} else {
+				if (AppContext.isAdmin()) {
+					informLbl.setCaption("Trial ending. " + (30 - daysLeft)
+							+ " DAYS LEFT");
+				} else {
+					informLbl.setCaption("Trial ending. " + (30 - daysLeft)
+							+ " DAYS LEFT");
+				}
+			}
+		}
+
 		final Embedded userAvatar = UserAvatarControlFactory
 				.createUserAvatarEmbeddedComponent(
 						AppContext.getUserAvatarId(), 24);

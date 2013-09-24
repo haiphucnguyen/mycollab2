@@ -13,6 +13,7 @@ import com.esofthead.mycollab.common.dao.AccountCurrencyMapper;
 import com.esofthead.mycollab.common.domain.AccountCurrency;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localtization.ExceptionI18nEnum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
@@ -307,6 +308,18 @@ public class BillingServiceImpl implements BillingService {
 	public void cancelAccount(Integer accountid) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public BillingPlan getFreeBillingPlan() {
+		BillingPlanExample ex = new BillingPlanExample();
+		ex.createCriteria().andBillingtypeEqualTo("Free");
+		List<BillingPlan> billingPlans = billingPlanMapper.selectByExample(ex);
+		if (billingPlans != null && billingPlans.size() == 1) {
+			return billingPlans.get(0);
+		} else {
+			throw new MyCollabException("Can not query free billing plan");
+		}
 	}
 
 }

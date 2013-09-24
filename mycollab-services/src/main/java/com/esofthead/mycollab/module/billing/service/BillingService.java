@@ -21,4 +21,6 @@ public interface BillingService extends IService {
 	List<String> getSubdomainsOfUser(String username);
 
 	List<BillingPlan> getAvailablePlans();
+
+	BillingPlan getFreeBillingPlan();
 }
