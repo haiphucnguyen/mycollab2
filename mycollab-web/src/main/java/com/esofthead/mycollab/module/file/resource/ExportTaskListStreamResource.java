@@ -25,6 +25,7 @@ import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.reporting.BeanDataSource;
 import com.esofthead.mycollab.reporting.ColumnFieldComponentBuilder;
-import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap;
@@ -260,7 +260,9 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 
 	@Override
 	protected void fillReport() {
-		reportBuilder.setDataSource(new GroupIteratorDataSource(searchService,
-				searchCriteria));
+		// reportBuilder.setDataSource(new
+		// GroupIteratorDataSource(searchService,
+		// searchCriteria));
+		reportBuilder.setDataSource(new JREmptyDataSource());
 	}
 }
