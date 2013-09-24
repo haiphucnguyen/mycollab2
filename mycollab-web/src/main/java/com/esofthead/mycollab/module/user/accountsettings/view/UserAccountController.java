@@ -5,11 +5,13 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingSummaryPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.ProfileScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.RoleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
@@ -43,6 +45,26 @@ public class UserAccountController implements IController {
 	private void bindBillingEvents() {
 		EventBus.getInstance()
 				.addListener(
+						new ApplicationEventListener<AccountBillingEvent.CancelAccount>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return AccountBillingEvent.CancelAccount.class;
+							}
+
+							@Override
+							public void handle(
+									AccountBillingEvent.CancelAccount event) {
+								BillingPresenter presenter = PresenterResolver
+										.getPresenter(BillingPresenter.class);
+								presenter.go(container,
+										new BillingScreenData.CancelAccount());
+							}
+						});
+
+		EventBus.getInstance()
+				.addListener(
 						new ApplicationEventListener<AccountBillingEvent.GotoSummary>() {
 							private static final long serialVersionUID = 1L;
 
@@ -54,9 +76,10 @@ public class UserAccountController implements IController {
 							@Override
 							public void handle(
 									AccountBillingEvent.GotoSummary event) {
-								BillingSummaryPresenter presenter = PresenterResolver
-										.getPresenter(BillingSummaryPresenter.class);
-								presenter.go(container, null);
+								BillingPresenter presenter = PresenterResolver
+										.getPresenter(BillingPresenter.class);
+								presenter.go(container,
+										new BillingScreenData.BillingSummary());
 							}
 						});
 	}

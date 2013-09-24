@@ -9,9 +9,11 @@ import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.ecm.VolumeUtils;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -72,6 +74,23 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		topLayout.setExpandRatio(currentPlan, 1.0f);
 
 		VerticalLayout FAQLayout = new VerticalLayout();
+
+		if (AppContext.isAdmin()) {
+			Button cancelAccountBtn = new Button("Cancel entire account",
+					new Button.ClickListener() {
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new AccountBillingEvent.CancelAccount(
+											BillingSummaryViewImpl.this, null));
+						}
+					});
+			cancelAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+
+			FAQLayout.addComponent(cancelAccountBtn);
+		}
+
 		FAQLayout.setWidth("285px");
 		FAQLayout.addStyleName("faq-layout");
 		Label header = new Label("Question?");
@@ -315,13 +334,11 @@ public class BillingSummaryViewImpl extends AbstractView implements
 					log.debug("Check choose plan valid");
 
 					if (chosenPlan.getNumprojects() < numOfActiveProjects) {
-
 						UpdateBillingPlanWindow.this.close();
 						return;
 					}
 
 					if (chosenPlan.getNumusers() < numOfActiveUsers) {
-
 						UpdateBillingPlanWindow.this.close();
 						return;
 					}

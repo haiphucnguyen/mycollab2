@@ -56,6 +56,12 @@ public class AccountSettingBreadcrumb extends Breadcrumb implements View {
 		AppContext.addFragment("account/billing", "Billing");
 	}
 
+	public void gotoCancelAccountPage() {
+		this.select(0);
+		this.addLink(new Button("Cancel Account"));
+		AppContext.addFragment("account/cancel_account", "Cancel Account");
+	}
+
 	public void gotoUserList() {
 		this.select(0);
 		this.addLink(new Button("Users"));

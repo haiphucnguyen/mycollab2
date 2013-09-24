@@ -6,12 +6,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.ComponentContainer;
 
-public class BillingSummaryPresenter extends
-		AbstractPresenter<BillingSummaryView> {
+public class CancelAccountPresenter extends
+		AbstractPresenter<CancelAccountView> {
 	private static final long serialVersionUID = 1L;
 
-	public BillingSummaryPresenter() {
-		super(BillingSummaryView.class);
+	public CancelAccountPresenter() {
+		super(CancelAccountView.class);
 	}
 
 	@Override
@@ -20,9 +20,9 @@ public class BillingSummaryPresenter extends
 		accountContainer.removeAllComponents();
 		accountContainer.addComponent(view.getWidget());
 
-		view.loadCurrentPlan();
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getView(AccountSettingBreadcrumb.class);
-		breadcrumb.gotoBillingPage();
+		breadcrumb.gotoCancelAccountPage();
 	}
+
 }

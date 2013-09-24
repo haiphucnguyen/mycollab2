@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingSummaryPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
@@ -30,7 +32,7 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 
 	private ProfilePresenter profilePresenter;
 	private UserPermissionManagementPresenter userPermissionPresenter;
-	private BillingSummaryPresenter accountSettingPresenter;
+	private BillingPresenter billingPresenter;
 
 	private final AccountSettingBreadcrumb breadcrumb;
 
@@ -99,8 +101,8 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 							AccountModuleImpl.this.profilePresenter.go(
 									AccountModuleImpl.this, null);
 						} else if ("Billing".equals(caption)) {
-							accountSettingPresenter.go(AccountModuleImpl.this,
-									null);
+							billingPresenter.go(AccountModuleImpl.this,
+									new BillingScreenData.BillingSummary());
 						} else if ("Users & Permissions".equals(caption)) {
 							AccountModuleImpl.this.userPermissionPresenter.go(
 									AccountModuleImpl.this, null);
@@ -110,9 +112,9 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 	}
 
 	private ComponentContainer constructAccountSettingsComponent() {
-		this.accountSettingPresenter = PresenterResolver
-				.getPresenter(BillingSummaryPresenter.class);
-		return this.accountSettingPresenter.getView();
+		this.billingPresenter = PresenterResolver
+				.getPresenter(BillingPresenter.class);
+		return this.billingPresenter.getView();
 	}
 
 	private ComponentContainer constructUserInformationComponent() {

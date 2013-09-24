@@ -22,26 +22,30 @@ public class ScheduleSendingErrorReportsServiceImpl {
 	public void sendErrorReports() {
 		ReportBugIssueMapper mapper = ApplicationContextUtil
 				.getSpringBean(ReportBugIssueMapper.class);
-		List<ReportBugIssueWithBLOBs> listIssues = mapper
-				.selectByExampleWithBLOBs(new ReportBugIssueExample());
+		if (mapper != null) {
+			List<ReportBugIssueWithBLOBs> listIssues = mapper
+					.selectByExampleWithBLOBs(new ReportBugIssueExample());
 
-		if (!listIssues.isEmpty()) {
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					"My Collab Error Report", "templates/email/errorReport.mt");
-			templateGenerator.putVariable("issueCol", listIssues);
-			Mailer mailer = new Mailer(
-					SiteConfiguration.getEmailConfiguration());
-			mailer.sendHTMLMail("mail@esofthead.com", "Error Agent", Arrays
-					.asList(new MailRecipientField(SiteConfiguration
-							.getSendErrorEmail(), SiteConfiguration
-							.getSendErrorEmail())), null, null,
-					templateGenerator.generateSubjectContent(),
-					templateGenerator.generateBodyContent(), null);
+			if (!listIssues.isEmpty()) {
+				TemplateGenerator templateGenerator = new TemplateGenerator(
+						"My Collab Error Report",
+						"templates/email/errorReport.mt");
+				templateGenerator.putVariable("issueCol", listIssues);
+				Mailer mailer = new Mailer(
+						SiteConfiguration.getEmailConfiguration());
+				mailer.sendHTMLMail("mail@esofthead.com", "Error Agent", Arrays
+						.asList(new MailRecipientField(SiteConfiguration
+								.getSendErrorEmail(), SiteConfiguration
+								.getSendErrorEmail())), null, null,
+						templateGenerator.generateSubjectContent(),
+						templateGenerator.generateBodyContent(), null);
 
-			// Remove all issues in table
-			ReportBugIssueExample ex = new ReportBugIssueExample();
-			ex.createCriteria().andIdGreaterThan(0);
-			mapper.deleteByExample(ex);
+				// Remove all issues in table
+				ReportBugIssueExample ex = new ReportBugIssueExample();
+				ex.createCriteria().andIdGreaterThan(0);
+				mapper.deleteByExample(ex);
+			}
+
 		}
 	}
 
