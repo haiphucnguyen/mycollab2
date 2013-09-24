@@ -124,7 +124,7 @@ public class BillingServiceImpl implements BillingService {
 		billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
 		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31)
 				.getTime());
-		billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+		billingAccount.setStatus(AccountStatusConstants.TRIAL);
 		billingAccount.setSubdomain(subdomain);
 
 		this.billingAccountMapper.insertAndReturnKey(billingAccount);
@@ -148,7 +148,9 @@ public class BillingServiceImpl implements BillingService {
 
 		if (user.getFirstname() == null) {
 			user.setFirstname("");
-		} else if (user.getLastname() == null) {
+		}
+
+		if (user.getLastname() == null) {
 			user.setLastname("");
 		}
 		this.userMapper.insert(user);
