@@ -16,6 +16,7 @@ import java.util.List;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.column.ComponentColumnBuilder;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
@@ -125,7 +126,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 							VerticalAlignment.MIDDLE);
 			TextFieldBuilder<String> taskListNameHeader = cmp
 					.text(taskList.getName())
-					.setFixedWidth(1046)
+					.setFixedWidth(1116)
 					.setHorizontalAlignment(HorizontalAlignment.CENTER)
 					.setHyperLink(
 							hyperLink(linkGenerator
@@ -140,7 +141,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 			TextFieldBuilder<String> desLabel = cmp.text("Desciption :")
 					.setStyle(style).setFixedWidth(150);
 			TextFieldBuilder<String> descriptText = cmp
-					.text(taskList.getDescription()).setFixedWidth(950)
+					.text(taskList.getDescription()).setFixedWidth(1020)
 					.setStyle(style);
 			HorizontalListBuilder deshorizontal = cmp.horizontalList();
 			deshorizontal.add(desLabel).add(descriptText);
@@ -151,7 +152,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 					.setStyle(style).setFixedWidth(150);
 			TextFieldBuilder<String> assignee = cmp
 					.text(taskList.getOwnerFullName()).setStyle(style)
-					.setFixedWidth(400);
+					.setFixedWidth(435);
 
 			TextFieldBuilder<String> phaseLbl = cmp.text("Phase name :")
 					.setStyle(style).setFixedWidth(150);
@@ -160,7 +161,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 					.text(taskList.getMilestoneName())
 					.setHyperLink(hyperLink(phaseHyperLink))
 					.setStyle(Templates.underlineStyle)
-					.setStyle(styleHyperLink).setFixedWidth(400);
+					.setStyle(styleHyperLink).setFixedWidth(435);
 
 			HorizontalListBuilder assingeeAndPhaseHorizontal = cmp
 					.horizontalList();
@@ -177,7 +178,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 
 			TextFieldBuilder<String> progress = cmp
 					.text(df.format(taskList.getPercentageComplete()) + "%")
-					.setStyle(style).setFixedWidth(400);
+					.setStyle(style).setFixedWidth(435);
 
 			TextFieldBuilder<String> numberTaskLbl = cmp
 					.text("Number of open tasks :").setStyle(style)
@@ -186,7 +187,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 			TextFieldBuilder<String> taskNumText = cmp
 					.text("(" + taskList.getNumOpenTasks() + "/"
 							+ taskList.getNumAllTasks() + ")")
-					.setFixedWidth(400).setStyle(style);
+					.setFixedWidth(435).setStyle(style);
 
 			HorizontalListBuilder horizontalOfProgressAndNumberTask = cmp
 					.horizontalList();
@@ -200,8 +201,11 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 					.add(horizontalOfProgressAndNumberTask);
 			SimpleTaskJasperReportBuilder subReportBuilder = new SimpleTaskJasperReportBuilder(
 					taskList.getSubTasks(), parameters);
-			componetBuilder.add(subReportBuilder.getSubreportBuilder()).add(
-					cmp.horizontalList().setHeight(8));
+			if (taskList.getSubTasks() != null
+					&& taskList.getSubTasks().size() > 0) {
+				componetBuilder.add(subReportBuilder.getSubreportBuilder());
+			}
+			componetBuilder.add(cmp.horizontalList().setHeight(7));
 			reportBuilder.addDetail(componetBuilder);
 		}
 	}
@@ -217,10 +221,14 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 			this.parameters = parameters;
 		}
 
-		public SubreportBuilder getSubreportBuilder() {
+		public ComponentBuilder getSubreportBuilder() {
+			HorizontalListBuilder horizontalBuilder = cmp.horizontalList();
+			horizontalBuilder.setStyle(stl.style(Templates.boldCenteredStyle)
+					.setBorder(stl.penThin()));
 			SubreportBuilder subreport = cmp.subreport(
 					new SimpleTaskExpression()).setDataSource(dataSource);
-			return subreport;
+			horizontalBuilder.add(subreport);
+			return horizontalBuilder;
 		}
 
 		private class SimpleTaskExpression extends

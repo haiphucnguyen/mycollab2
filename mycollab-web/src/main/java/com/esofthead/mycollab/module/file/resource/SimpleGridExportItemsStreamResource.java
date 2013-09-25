@@ -45,7 +45,6 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 	@Override
 	protected void initReport() throws DRException {
 		log.debug("Init report");
-
 		// Add field of report
 		Field[] clsFields = ClassUtils.getAllFields(classType);
 		for (Field objField : clsFields) {
@@ -82,7 +81,6 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 
 			reportBuilder.addColumn(columnBuilder);
 		}
-
 		log.debug("Accomplish init report");
 	}
 
