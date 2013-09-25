@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.pages;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -7,14 +9,20 @@ import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.link.StatelessLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.time.Time;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.brickred.socialauth.SocialAuthConfig;
+import org.brickred.socialauth.SocialAuthManager;
 import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
@@ -22,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
@@ -133,6 +142,50 @@ public class SignUpPage extends BasePage {
 				}
 			}
 		}
+
+		form.add(new StatelessLink<Void>("signupGoogle") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+				try {
+					// Create an instance of SocialAuthConfgi object
+					SocialAuthConfig config = SocialAuthConfig.getDefault();
+
+					// load configuration. By default load the configuration
+					// from
+					// oauth_consumer.properties.
+					// You can also pass input stream, properties object or
+					// properties file name.
+					config.load();
+
+					// Create an instance of SocialAuthManager and set config
+					SocialAuthManager manager = new SocialAuthManager();
+					manager.setSocialAuthConfig(config);
+
+					// URL of YOUR application which will be called after
+					// authentication
+					String successUrl = "http://localhost:7070/oauth2/google";
+
+					// get Provider URL to which you should redirect for
+					// authentication.
+					// id can have values "facebook", "twitter", "yahoo" etc. or
+					// the
+					// OpenID URL
+					String url = manager.getAuthenticationUrl("google",
+							successUrl);
+
+					log.debug("Redirect url {}", url);
+
+					// Store in session
+					getSession().setAttribute("authManager", manager);
+					getRequestCycle().scheduleRequestHandlerAfterCurrent(
+							new RedirectRequestHandler(url));
+				} catch (Exception e) {
+					throw new MyCollabException(e);
+				}
+			}
+		});
 
 		this.add(new Label("pagetitle", "Sign Up"));
 	}
