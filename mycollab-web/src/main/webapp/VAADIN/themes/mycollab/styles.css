@@ -4627,3 +4627,25 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-label.grayLabel {
 	color: gray;
 }
+
+/* Cancel Account Page */
+.cancelAccountHeader .first-line {
+	font-size: 20px;
+}
+.cancelAccountHeader .header-content {
+	text-align: center;
+}
+.cancelAccountHeader .header-note {
+	font-size: 11px;
+	color: rgb(137, 137, 137);
+}
+.cancelAccountBody > .v-csslayout-margin {
+	border-top: 15px solid rgb(34, 139, 201);
+	background-color: rgb(243,243,243);
+}
+.cancelAccountBody .v-gridlayout > div > div > div {
+	padding: 8px;
+}
+.cancelAccountBody .v-gridlayout .v-label {
+	text-align: right;
+}
