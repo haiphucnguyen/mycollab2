@@ -7,12 +7,89 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
                 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
-    <context:component-scan base-package="com.esofthead.mycollab.schedule.email" />
-    <context:component-scan base-package="com.esofthead.mycollab.**.service" />
-    <!-- Activates @Scheduled and @Async annotations for scheduling -->
-    <task:annotation-driven executor="myExecutor"
-        scheduler="myScheduler" />
+    <!-- <context:component-scan base-package="com.esofthead.mycollab.schedule.email" 
+        /> <context:component-scan base-package="com.esofthead.mycollab.**.service" 
+        /> <task:annotation-driven executor="myExecutor" scheduler="myScheduler" 
+        /> <task:executor id="myExecutor" pool-size="5" /> <task:scheduler id="myScheduler" 
+        pool-size="10"/> -->
 
-    <task:executor id="myExecutor" pool-size="5" />
-    <task:scheduler id="myScheduler" pool-size="10"/>
+    <bean id="sendRelayEmailJob"
+        class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+            value="com.esofthead.mycollab.schedule.jobs.SendingRelayEmailJob" />
+        <property name="durability" value="true" />
+    </bean>
+
+    <bean id="sendRelayNotificationEmailJob"
+        class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+            value="com.esofthead.mycollab.schedule.jobs.SendingRelayNotificationEmailJob" />
+        <property name="durability" value="true" />
+    </bean>
+
+    <bean id="sendErrorReportEmailJob"
+        class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+            value="com.esofthead.mycollab.schedule.jobs.SendingErrorReportEmailJob" />
+        <property name="durability" value="true" />
+    </bean>
+
+    <bean id="sendingRelayEmailTrigger"
+        class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
+        <property name="jobDetail" ref="sendRelayEmailJob" />
+        <property name="cronExpression" value="0 * * * * ?" />
+    </bean>
+
+    <bean id="sendRelayNotificationEmailTrigger"
+        class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
+        <property name="jobDetail" ref="sendRelayNotificationEmailJob" />
+        <property name="cronExpression" value="0 * * * * ?" />
+    </bean>
+
+    <bean id="sendErrorReportEmailTrigger"
+        class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
+        <property name="jobDetail" ref="sendErrorReportEmailJob" />
+        <property name="cronExpression" value="0 * * * * ?" />
+    </bean>
+
+    <bean id="quartzScheduler"
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+
+        <property name="configLocation" value="classpath:quartz.properties" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="transactionManager" ref="txManager" />
+
+        <!-- This name is persisted as SCHED_NAME in db. for local testing 
+            could change to unique name to avoid collision with dev server -->
+        <property name="schedulerName" value="quartzScheduler" />
+
+        <!-- Will update database cron triggers to what is in this jobs file 
+            on each deploy. Replaces all previous trigger and job data that was in the 
+            database. YMMV -->
+        <property name="overwriteExistingJobs" value="true" />
+
+        <property name="autoStartup" value="true" />
+        <property name="applicationContextSchedulerContextKey"
+            value="applicationContext" />
+        <property name="jobFactory">
+            <bean
+                class="com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory" />
+        </property>
+
+        <!-- NOTE: Must add both the jobDetail and trigger to the scheduler! -->
+        <property name="jobDetails">
+            <list>
+                <ref bean="sendRelayEmailJob" />
+                <ref bean="sendRelayNotificationEmailJob" />
+                <ref bean="sendErrorReportEmailJob" />
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="sendingRelayEmailTrigger" />
+                <ref bean="sendRelayNotificationEmailTrigger" />
+                <ref bean="sendErrorReportEmailTrigger" />
+            </list>
+        </property>
+    </bean>
 </beans>

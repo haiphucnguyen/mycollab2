@@ -1,10 +1,15 @@
-package com.esofthead.mycollab.schedule.email.impl;
+package com.esofthead.mycollab.schedule.jobs;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.quartz.JobExecutionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
@@ -13,13 +18,16 @@ import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-@Service
-public class ScheduleSendingErrorReportsServiceImpl {
-	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_RELAY_INTERVAL)
-	public void sendErrorReports() {
+@Component
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+public class SendingErrorReportEmailJob extends QuartzJobBean {
+	private static Logger log = LoggerFactory
+			.getLogger(SendingErrorReportEmailJob.class);
+
+	@Override
+	protected void executeInternal(JobExecutionContext context) {
 		ReportBugIssueMapper mapper = ApplicationContextUtil
 				.getSpringBean(ReportBugIssueMapper.class);
 		if (mapper != null) {
