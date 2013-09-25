@@ -1,14 +1,16 @@
-package com.esofthead.mycollab.schedule.email.impl;
+package com.esofthead.mycollab.schedule.jobs;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
@@ -16,21 +18,21 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
-import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailsAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.thoughtworks.xstream.XStream;
 
-@Service
-public class ScheduleSendingRelayEmailsServiceImpl {
-	private static final Logger log = LoggerFactory
-			.getLogger(ScheduleSendingRelayEmailsServiceImpl.class);
+@Component
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+public class SendingRelayNotificationEmailJob extends QuartzJobBean {
+	private static Logger log = LoggerFactory
+			.getLogger(SendingRelayNotificationEmailJob.class);
 
 	@Autowired
 	private MailRelayService mailRelayService;
 
-	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_RELAY_INTERVAL)
-	public void sendRelayEmails() {
+	@Override
+	protected void executeInternal(JobExecutionContext context) {
 		List<RelayEmailWithBLOBs> relayEmails = mailRelayService
 				.getRelayEmails();
 		mailRelayService.cleanEmails();
@@ -58,20 +60,14 @@ public class ScheduleSendingRelayEmailsServiceImpl {
 				}
 			} else {
 				try {
-					SendingRelayEmailsAction emailNotificationAction = (SendingRelayEmailsAction) getSpringBean(Class
-							.forName(relayEmail.getEmailhandlerbean()));
+					SendingRelayEmailsAction emailNotificationAction = (SendingRelayEmailsAction) ApplicationContextUtil
+							.getSpringBean(Class.forName(relayEmail
+									.getEmailhandlerbean()));
 					emailNotificationAction.sendEmail(relayEmail);
 				} catch (ClassNotFoundException e) {
 					throw new MyCollabException(e);
 				}
 			}
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private static Object getSpringBean(Class clazz) {
-		ApplicationContext context = ApplicationContextUtil
-				.getApplicationContext();
-		return context.getBean(clazz);
 	}
 }

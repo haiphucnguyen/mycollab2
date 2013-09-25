@@ -1,12 +1,14 @@
-package com.esofthead.mycollab.schedule.email.impl;
+package com.esofthead.mycollab.schedule.jobs;
 
 import java.util.List;
 
+import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
@@ -15,19 +17,20 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-@Service
-public class ScheduleRelayEmailNotificationServiceImpl {
+@Component
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+public class SendingRelayEmailJob extends QuartzJobBean {
 	private static Logger log = LoggerFactory
-			.getLogger(ScheduleRelayEmailNotificationServiceImpl.class);
+			.getLogger(SendingRelayEmailJob.class);
 
-	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
-	public void runNotification() {
+	@Override
+	protected void executeInternal(JobExecutionContext context) {
 		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
-		RelayEmailNotificationService relayEmailNotificationService = (RelayEmailNotificationService) getSpringBean(RelayEmailNotificationService.class);
+		RelayEmailNotificationService relayEmailNotificationService = (RelayEmailNotificationService) ApplicationContextUtil
+				.getSpringBean(RelayEmailNotificationService.class);
 		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailNotificationService
 				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
@@ -38,8 +41,9 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
 			try {
 				if (notification.getEmailhandlerbean() != null) {
-					emailNotificationAction = (SendingRelayEmailNotificationAction) getSpringBean(Class
-							.forName(notification.getEmailhandlerbean()));
+					emailNotificationAction = (SendingRelayEmailNotificationAction) ApplicationContextUtil
+							.getSpringBean(Class.forName(notification
+									.getEmailhandlerbean()));
 
 					if (emailNotificationAction != null) {
 						try {
@@ -76,12 +80,5 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 			}
 
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private static Object getSpringBean(Class clazz) {
-		ApplicationContext context = ApplicationContextUtil
-				.getApplicationContext();
-		return context.getBean(clazz);
 	}
 }

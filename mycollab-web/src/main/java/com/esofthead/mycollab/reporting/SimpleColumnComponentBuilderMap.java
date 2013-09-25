@@ -117,7 +117,9 @@ public class SimpleColumnComponentBuilderMap {
 				new ProjectFieldBuilderFactory("taskname",
 						ProjectMoulde.TASKLIST, TypeRender.HYPERLINK),
 				new ProjectFieldBuilderFactory("percentagecomplete",
-						ProjectMoulde.TASKLIST, TypeRender.PERCENT)));
+						ProjectMoulde.TASKLIST, TypeRender.PERCENT),
+				new ProjectFieldBuilderFactory("assignuser",
+						ProjectMoulde.TASKLIST, TypeRender.EMAILTYPE)));
 	}
 
 	public static List<? extends ColumnFieldComponentBuilder> getListFieldBuilder(
@@ -184,7 +186,7 @@ public class SimpleColumnComponentBuilderMap {
 		public ComponentBuilder getComponentBuilder() {
 			HorizontalListBuilder componentBuilder = cmp.horizontalList();
 			TextFieldBuilder textBuilder = cmp
-					.text(new StringFieldExpression(field))
+					.text(new StringFieldUtilExpression(field, null))
 					.setHyperLink(hyperLink(this.getDriExpression()))
 					.setStyle(Templates.underlineStyle);
 			componentBuilder.add(textBuilder);
@@ -229,7 +231,17 @@ public class SimpleColumnComponentBuilderMap {
 			HorizontalListBuilder lstBuilder = cmp.horizontalList();
 			if (projectModule.equals(ProjectMoulde.TASKLIST)
 					&& typeRender.equals(TypeRender.PERCENT)) {
-				lstBuilder.add(cmp.text(new StringPercentExpression(field)));
+				lstBuilder.add(cmp.text(new StringFieldUtilExpression(field,
+						null)));
+				return lstBuilder;
+			}
+			if (typeRender.equals(TypeRender.EMAILTYPE)) {
+				lstBuilder.add(cmp
+						.text(new StringFieldUtilExpression(field, null))
+						.setHyperLink(
+								hyperLink(new StringFieldUtilExpression(field,
+										TypeRender.EMAILTYPE)))
+						.setStyle(Templates.underlineStyle));
 				return lstBuilder;
 			}
 			if (projectModule.equals(ProjectMoulde.BUG)
@@ -251,7 +263,7 @@ public class SimpleColumnComponentBuilderMap {
 					.addConditionalStyle(isCompleteStyle);
 
 			lstBuilder.add(cmp
-					.text(new StringFieldExpression(field))
+					.text(new StringFieldUtilExpression(field, null))
 					.setHyperLink(
 							hyperLink(new ProjectHyperLinkExpression(
 									projectModule))).setStyle(styleBuilder));
@@ -453,40 +465,33 @@ public class SimpleColumnComponentBuilderMap {
 	 * ------------------------------------------
 	 * ----------------------------------------
 	 */
-	public static class StringPercentExpression extends
+	public static class StringFieldUtilExpression extends
 			AbstractSimpleExpression<String> {
+
 		private static final long serialVersionUID = 1L;
 
 		private String field;
+		private String typeRender;
 
-		public StringPercentExpression(String field) {
+		public StringFieldUtilExpression(String field, String typeRender) {
 			this.field = field;
+			this.typeRender = typeRender;
 		}
 
 		@Override
-		public String evaluate(ReportParameters reportParameters) {
-			DecimalFormat df = new DecimalFormat("#");
-			df.setRoundingMode(RoundingMode.HALF_EVEN);
-			Double percentValue = reportParameters.getValue(field);
-
-			return df.format(percentValue) + "%";
+		public String evaluate(ReportParameters param) {
+			if (typeRender == null)
+				return param.getFieldValue(field).toString();
+			if (typeRender.equals(TypeRender.EMAILTYPE)) {
+				String stringValue = param.getFieldValue(field).toString();
+				return "mailto:" + stringValue;
+			} else if (typeRender.equals(TypeRender.PERCENT)) {
+				DecimalFormat df = new DecimalFormat("#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				Double percentValue = param.getValue(field);
+				return df.format(percentValue) + "%";
+			} else
+				return "";
 		}
 	}
-
-	public static class StringFieldExpression extends
-			AbstractSimpleExpression<String> {
-		private static final long serialVersionUID = 1L;
-
-		private String field;
-
-		public StringFieldExpression(String field) {
-			this.field = field;
-		}
-
-		@Override
-		public String evaluate(ReportParameters reportParameters) {
-			return reportParameters.getValue(field).toString();
-		}
-	}
-
 }
