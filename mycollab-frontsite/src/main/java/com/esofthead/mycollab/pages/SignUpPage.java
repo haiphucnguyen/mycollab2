@@ -164,7 +164,8 @@ public class SignUpPage extends BasePage {
 
 					// URL of YOUR application which will be called after
 					// authentication
-					String successUrl = "http://localhost:7070/oauth2/google";
+					String successUrl = SiteConfiguration.getSiteUrl()
+							+ "oath2/google";
 
 					// get Provider URL to which you should redirect for
 					// authentication.
