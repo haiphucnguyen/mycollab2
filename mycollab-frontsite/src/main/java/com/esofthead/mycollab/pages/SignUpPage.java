@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.pages;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
@@ -15,11 +15,10 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.Response;
-import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.time.Time;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.brickred.socialauth.SocialAuthConfig;
 import org.brickred.socialauth.SocialAuthManager;
@@ -178,7 +177,10 @@ public class SignUpPage extends BasePage {
 					log.debug("Redirect url {}", url);
 
 					// Store in session
-					getSession().setAttribute("authManager", manager);
+					HttpSession session = ((ServletWebRequest) RequestCycle
+							.get().getRequest()).getContainerRequest()
+							.getSession();
+					session.setAttribute("authManager", manager);
 					getRequestCycle().scheduleRequestHandlerAfterCurrent(
 							new RedirectRequestHandler(url));
 				} catch (Exception e) {
