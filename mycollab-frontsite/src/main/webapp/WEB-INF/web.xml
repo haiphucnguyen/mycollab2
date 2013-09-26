@@ -30,12 +30,12 @@
 
     <servlet>
         <servlet-name>OAuthCodeCallbackHandlerServlet</servlet-name>
-        <servlet-class>com.esofthead.mycollab.oauth.GoogleCallbackServlet</servlet-class>
+        <servlet-class>com.esofthead.mycollab.oauth.ExternalAuthCallbackServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>OAuthCodeCallbackHandlerServlet</servlet-name>
-        <url-pattern>/oauth2/google</url-pattern>
+        <url-pattern>/oauth2/externalCallbackCommand</url-pattern>
     </servlet-mapping>
 
     <error-page>

@@ -38,6 +38,12 @@ public class SignUpPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String GOOGLE_PLUS_LINK = "signupGoogle";
+
+	private static final String FACEBOOK_LINK = "signupFacebook";
+
+	private static final String TWITTER_LINK = "signupTwitter";
+
 	private static Logger log = LoggerFactory.getLogger(SignUpPage.class);
 
 	public String selected = "10";
@@ -147,50 +153,88 @@ public class SignUpPage extends BasePage {
 
 			@Override
 			public void onClick() {
-				try {
-					// Create an instance of SocialAuthConfgi object
-					SocialAuthConfig config = SocialAuthConfig.getDefault();
+				doAuthenticate(GOOGLE_PLUS_LINK);
+			}
+		});
 
-					// load configuration. By default load the configuration
-					// from
-					// oauth_consumer.properties.
-					// You can also pass input stream, properties object or
-					// properties file name.
-					config.load();
+		form.add(new StatelessLink<Void>("signupFacebook") {
+			private static final long serialVersionUID = 1L;
 
-					// Create an instance of SocialAuthManager and set config
-					SocialAuthManager manager = new SocialAuthManager();
-					manager.setSocialAuthConfig(config);
+			@Override
+			public void onClick() {
+				doAuthenticate(FACEBOOK_LINK);
+			}
+		});
 
-					// URL of YOUR application which will be called after
-					// authentication
-					String successUrl = SiteConfiguration.getSiteUrl()
-							+ "oauth2/google";
+		form.add(new StatelessLink<Void>("signupTwitter") {
+			private static final long serialVersionUID = 1L;
 
-					// get Provider URL to which you should redirect for
-					// authentication.
-					// id can have values "facebook", "twitter", "yahoo" etc. or
-					// the
-					// OpenID URL
-					String url = manager.getAuthenticationUrl("googleapis",
-							successUrl);
-
-					log.debug("Redirect url {}", url);
-
-					// Store in session
-					HttpSession session = ((ServletWebRequest) RequestCycle
-							.get().getRequest()).getContainerRequest()
-							.getSession();
-					session.setAttribute("authManager", manager);
-					getRequestCycle().scheduleRequestHandlerAfterCurrent(
-							new RedirectRequestHandler(url));
-				} catch (Exception e) {
-					throw new MyCollabException(e);
-				}
+			@Override
+			public void onClick() {
+				doAuthenticate(TWITTER_LINK);
 			}
 		});
 
 		this.add(new Label("pagetitle", "Sign Up"));
+	}
+
+	private void doAuthenticate(String authId) {
+		try {
+			// Create an instance of SocialAuthConfgi object
+			SocialAuthConfig config = SocialAuthConfig.getDefault();
+
+			// load configuration. By default load the configuration
+			// from
+			// oauth_consumer.properties.
+			// You can also pass input stream, properties object or
+			// properties file name.
+			config.load();
+
+			// Create an instance of SocialAuthManager and set config
+			SocialAuthManager manager = new SocialAuthManager();
+			manager.setSocialAuthConfig(config);
+
+			// URL of YOUR application which will be called after
+			// authentication
+			String successUrl = "";
+			String providerId = "";
+
+			if (GOOGLE_PLUS_LINK.equals(authId)) {
+				successUrl = SiteConfiguration.getSiteUrl()
+						+ "oauth2/externalCallbackCommand";
+				providerId = "googleplus";
+			} else if (FACEBOOK_LINK.equals(authId)) {
+				successUrl = SiteConfiguration.getSiteUrl()
+						+ "oauth2/externalCallbackCommand";
+				providerId = "facebook";
+			} else if (TWITTER_LINK.equals(authId)) {
+				successUrl = SiteConfiguration.getSiteUrl()
+						+ "oauth2/externalCallbackCommand";
+				providerId = "twitter";
+			} else {
+				throw new MyCollabException(
+						"Do not support authentication with external service with id "
+								+ authId);
+			}
+
+			// get Provider URL to which you should redirect for
+			// authentication.
+			// id can have values "facebook", "twitter", "yahoo" etc. or
+			// the
+			// OpenID URL
+			String url = manager.getAuthenticationUrl(providerId, successUrl);
+
+			log.debug("Redirect url {}", url);
+
+			// Store in session
+			HttpSession session = ((ServletWebRequest) RequestCycle.get()
+					.getRequest()).getContainerRequest().getSession();
+			session.setAttribute("authManager", manager);
+			getRequestCycle().scheduleRequestHandlerAfterCurrent(
+					new RedirectRequestHandler(url));
+		} catch (Exception e) {
+			throw new MyCollabException(e);
+		}
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.oauth;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,22 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.brickred.socialauth.AuthProvider;
-import org.brickred.socialauth.Contact;
 import org.brickred.socialauth.Profile;
 import org.brickred.socialauth.SocialAuthManager;
-import org.brickred.socialauth.util.OAuthConsumer;
 import org.brickred.socialauth.util.SocialAuthUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 
-public class GoogleCallbackServlet extends HttpServlet {
+public class ExternalAuthCallbackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
-			.getLogger(GoogleCallbackServlet.class);
+			.getLogger(ExternalAuthCallbackServlet.class);
 
 	@Override
 	protected void doGet(HttpServletRequest request,
@@ -46,13 +42,8 @@ public class GoogleCallbackServlet extends HttpServlet {
 			Profile p = provider.getUserProfile();
 
 			// you can obtain profile information
-			System.out.println(p.getFirstName());
-
-			// OR also obtain list of contacts
-			List<Contact> contactsList = provider.getContactList();
-			log.debug("Contacts {}", BeanUtility.printBeanObj(contactsList));
-			
-			OAuthConsumer a;
+			log.debug(p.getFirstName() + "--" + p.getLastName() + "--"
+					+ p.getEmail());
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
