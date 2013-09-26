@@ -22,13 +22,7 @@ class ActiveUserListSelect extends ListSelect {
 	public ActiveUserListSelect() {
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
 		this.setMultiSelect(true);
-	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void attach() {
-		super.attach();
-		this.removeAllItems();
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
@@ -36,14 +30,12 @@ class ActiveUserListSelect extends ListSelect {
 				SearchField.AND,
 				new String[] { RegisterStatusConstants.ACTIVE }));
 
-		UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+		UserService userService = ApplicationContextUtil
+				.getSpringBean(UserService.class);
 		userList = userService
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		loadData(userList);
-	}
 
-	public void loadData(List<SimpleUser> userList) {
 		for (SimpleUser user : userList) {
 			this.addItem(user.getUsername());
 			this.setItemCaption(user.getUsername(), user.getDisplayName());
