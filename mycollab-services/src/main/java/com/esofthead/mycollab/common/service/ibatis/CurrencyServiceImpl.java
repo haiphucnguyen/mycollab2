@@ -16,9 +16,11 @@ import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 public class CurrencyServiceImpl extends DefaultCrudService<Integer, Currency>
 		implements CurrencyService {
 
+	private static List<Currency> currencies;
+
 	@Autowired
 	private CurrencyMapper currencyMapper;
-	
+
 	@Override
 	public ICrudGenericDAO<Integer, Currency> getCrudMapper() {
 		return currencyMapper;
@@ -26,8 +28,12 @@ public class CurrencyServiceImpl extends DefaultCrudService<Integer, Currency>
 
 	@Override
 	public List<Currency> getCurrencies() {
-		CurrencyExample ex = new CurrencyExample();
-		return currencyMapper.selectByExample(ex);
+		if (currencies == null) {
+			CurrencyExample ex = new CurrencyExample();
+			currencies = currencyMapper.selectByExample(ex);
+		}
+
+		return currencies;
 	}
 
 }
