@@ -4649,3 +4649,25 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .cancelAccountBody .v-gridlayout .v-label {
 	text-align: right;
 }
+
+.trialEndingNotification {
+	background-color: rgb(232, 160, 82);
+	color: white;
+	padding: 0px 10px;
+	display: table-cell;
+	vertical-align: middle;
+}
+.trialEndingNotification a {
+	color: white;
+	display: block;
+}
+.trialEndingNotification .informBlock {
+	display: table-cell;
+	vertical-align: middle;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.trialEndingNotification .informBlock:first-child {
+	padding-right: 5px;
+}

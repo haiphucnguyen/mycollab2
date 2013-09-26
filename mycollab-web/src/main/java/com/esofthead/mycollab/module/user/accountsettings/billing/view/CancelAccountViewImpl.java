@@ -6,9 +6,11 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
@@ -25,14 +27,20 @@ public class CancelAccountViewImpl extends AbstractView implements
         this.setWidth("100%");
         this.setMargin(true);
         this.setSpacing(true);
-        this.addComponent(createHeader());
+        HorizontalLayout header = createHeader();
+        this.addComponent(header);
+        this.setComponentAlignment(header, Alignment.TOP_CENTER);
         this.addComponent(createBody());
     }
 
-    protected VerticalLayout createHeader() {
+    protected HorizontalLayout createHeader() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeUndefined();
+        layout.setSpacing(true);
+        layout.addComponent(new Embedded(null, MyCollabResource
+                .newResource("icons/sad_face.png")));
         VerticalLayout header = new VerticalLayout();
         header.setSpacing(true);
-        header.setWidth("100%");
         header.addStyleName("cancelAccountHeader");
 
         Label headerTopLine = new Label(
@@ -58,8 +66,9 @@ public class CancelAccountViewImpl extends AbstractView implements
         headerNote.setWidth(SIZE_UNDEFINED, 0);
         header.addComponent(headerNote);
         header.setComponentAlignment(headerNote, Alignment.MIDDLE_CENTER);
+        layout.addComponent(header);
 
-        return header;
+        return layout;
     }
 
     protected CssLayout createBody() {

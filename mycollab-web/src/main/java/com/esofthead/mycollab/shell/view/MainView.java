@@ -153,11 +153,14 @@ public final class MainView extends AbstractView {
         // display trial box if user in trial mode
         SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
         if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
-            Label informLbl = new Label("TRIAL ENDING");
-            VerticalLayout informBox = new VerticalLayout();
-            informBox.setHeight("100%");
-            informBox.addComponent(informLbl);
+            Label informLbl = new Label("", Label.CONTENT_XHTML);
+            informLbl.addStyleName("trialEndingNotification");
+            informLbl.setHeight("100%");
+            HorizontalLayout informBox = new HorizontalLayout();
             informBox.addStyleName("trialInformBox");
+            informBox.setSizeFull();
+            informBox.addComponent(informLbl);
+            informBox.setMargin(false, true, false, false);
             accountLayout.addComponent(informBox);
             accountLayout.setSpacing(true);
             accountLayout.setComponentAlignment(informBox,
@@ -175,11 +178,15 @@ public final class MainView extends AbstractView {
                 billingAccount.setBillingPlan(freeBillingPlan);
             } else {
                 if (AppContext.isAdmin()) {
-                    informBox.addComponent(new Label("TRIAL ENDING. "
-                            + (30 - daysLeft) + " DAYS LEFT"));
+                    informLbl
+                            .setValue("<a href='#'><div class='informBlock'>TRIAL ENDING<br>"
+                                    + (30 - daysLeft)
+                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div></a>");
                 } else {
-                    informBox.addComponent(new Label("TRIAL ENDING. "
-                            + (30 - daysLeft) + " DAYS LEFT"));
+                    informLbl
+                            .setValue("<a href='#'><div class='informBlock'>TRIAL ENDING<br>"
+                                    + (30 - daysLeft)
+                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div></a>");
                 }
             }
         }
