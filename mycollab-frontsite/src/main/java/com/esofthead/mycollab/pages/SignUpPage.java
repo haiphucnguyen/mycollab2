@@ -44,6 +44,10 @@ public class SignUpPage extends BasePage {
 
 	private static final String TWITTER_LINK = "signupTwitter";
 
+	private static final String LINKEDIN_LINK = "signupLinkedIn";
+
+	private static final String YAHOO_LINK = "signupYahoo";
+
 	private static Logger log = LoggerFactory.getLogger(SignUpPage.class);
 
 	public String selected = "10";
@@ -175,6 +179,24 @@ public class SignUpPage extends BasePage {
 			}
 		});
 
+		form.add(new StatelessLink<Void>("signupLinkedIn") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+				doAuthenticate(LINKEDIN_LINK);
+			}
+		});
+
+		form.add(new StatelessLink<Void>("signupYahoo") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+				doAuthenticate(YAHOO_LINK);
+			}
+		});
+
 		this.add(new Label("pagetitle", "Sign Up"));
 	}
 
@@ -211,6 +233,14 @@ public class SignUpPage extends BasePage {
 				successUrl = SiteConfiguration.getSiteUrl()
 						+ "oauth2/externalCallbackCommand";
 				providerId = "twitter";
+			} else if (LINKEDIN_LINK.equals(authId)) {
+				successUrl = SiteConfiguration.getSiteUrl()
+						+ "oauth2/externalCallbackCommand";
+				providerId = "linkedin";
+			} else if (YAHOO_LINK.equals(authId)) {
+				successUrl = SiteConfiguration.getSiteUrl()
+						+ "oauth2/externalCallbackCommand";
+				providerId = "yahoo";
 			} else {
 				throw new MyCollabException(
 						"Do not support authentication with external service with id "

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.brickred.socialauth.AuthProvider;
 import org.brickred.socialauth.Profile;
 import org.brickred.socialauth.SocialAuthManager;
+import org.brickred.socialauth.provider.GooglePlusImpl;
 import org.brickred.socialauth.util.SocialAuthUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,8 @@ public class ExternalAuthCallbackServlet extends HttpServlet {
 			// you can obtain profile information
 			log.debug(p.getFirstName() + "--" + p.getLastName() + "--"
 					+ p.getEmail());
+			
+			GooglePlusImpl a;
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
