@@ -28,7 +28,7 @@ public class SiteConfiguration {
 					.getResourceAsStream(RESOURCE_PROPERTIES));
 			appInstance.apiUrl = properties.getProperty(API_URL);
 			appInstance.appUrl = properties.getProperty("app.url");
-			appInstance.siteUrl = properties.getProperty("siteUrl.url");
+			appInstance.siteUrl = properties.getProperty("site.url");
 
 			// load Deployment Mode
 			String runningMode = properties.getProperty("running.mode");
