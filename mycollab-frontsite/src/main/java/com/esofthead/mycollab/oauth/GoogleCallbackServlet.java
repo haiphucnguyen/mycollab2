@@ -13,6 +13,7 @@ import org.brickred.socialauth.AuthProvider;
 import org.brickred.socialauth.Contact;
 import org.brickred.socialauth.Profile;
 import org.brickred.socialauth.SocialAuthManager;
+import org.brickred.socialauth.util.OAuthConsumer;
 import org.brickred.socialauth.util.SocialAuthUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,8 @@ public class GoogleCallbackServlet extends HttpServlet {
 			// OR also obtain list of contacts
 			List<Contact> contactsList = provider.getContactList();
 			log.debug("Contacts {}", BeanUtility.printBeanObj(contactsList));
+			
+			OAuthConsumer a;
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}

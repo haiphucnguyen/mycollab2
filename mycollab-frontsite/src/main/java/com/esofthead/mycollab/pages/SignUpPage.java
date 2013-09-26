@@ -172,7 +172,7 @@ public class SignUpPage extends BasePage {
 					// id can have values "facebook", "twitter", "yahoo" etc. or
 					// the
 					// OpenID URL
-					String url = manager.getAuthenticationUrl("google",
+					String url = manager.getAuthenticationUrl("googleapis",
 							successUrl);
 
 					log.debug("Redirect url {}", url);
