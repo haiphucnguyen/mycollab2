@@ -1,5 +1,5 @@
 ALTER TABLE `s_currency` 
-CHANGE COLUMN `shortname` `shortname` VARCHAR(45) CHARACTER SET 'utf8mb4' NOT NULL ;
+CHANGE COLUMN `name` `shortname` VARCHAR(45) CHARACTER SET 'utf8mb4' NOT NULL ;
 ALTER TABLE `s_currency` 
 ADD COLUMN `fullname` VARCHAR(100) NULL;
 

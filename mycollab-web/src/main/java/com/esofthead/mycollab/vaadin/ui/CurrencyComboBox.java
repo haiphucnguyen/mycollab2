@@ -5,7 +5,6 @@ import java.util.List;
 import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
 
 @SuppressWarnings("serial")
@@ -13,7 +12,7 @@ public class CurrencyComboBox extends ComboBox {
 
 	public CurrencyComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
 	}
 
 	@Override
@@ -23,15 +22,10 @@ public class CurrencyComboBox extends ComboBox {
 		CurrencyService currencyService = ApplicationContextUtil
 				.getSpringBean(CurrencyService.class);
 		List<Currency> currencyList = currencyService.getCurrencies();
-		BeanContainer<String, Currency> beanItem = new BeanContainer<String, Currency>(
-				Currency.class);
-		beanItem.setBeanIdProperty("id");
-
 		for (Currency currency : currencyList) {
-			beanItem.addBean(currency);
+			this.addItem(currency.getId());
+			this.setItemCaption(currency.getId(), currency.getShortname() + " ("
+					+ currency.getSymbol() + ")");
 		}
-
-		this.setContainerDataSource(beanItem);
-		this.setItemCaptionPropertyId("name");
 	}
 }
