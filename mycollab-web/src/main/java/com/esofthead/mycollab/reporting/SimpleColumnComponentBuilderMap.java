@@ -119,19 +119,26 @@ public class SimpleColumnComponentBuilderMap {
 						CrmTypeConstants.CASE, Arrays
 								.asList(TypeRender.ASSIGNEE))));
 
-		mapInjection.put(SimpleBug.class, Arrays
-				.asList(new ProjectFieldBuilderFactory("summary",
-						ProjectMoulde.BUG, TypeRender.HYPERLINK)));
+		mapInjection.put(SimpleBug.class, Arrays.asList(
+				new ProjectFieldBuilderFactory("summary", ProjectMoulde.BUG,
+						TypeRender.HYPERLINK), new ProjectFieldBuilderFactory(
+						"assignuserFullName", ProjectMoulde.BUG,
+						TypeRender.ASSIGNEE), new ProjectFieldBuilderFactory(
+						"duedate", ProjectMoulde.BUG, TypeRender.DATE)));
 
 		mapInjection.put(SimpleRisk.class, Arrays.asList(
 				new ProjectFieldBuilderFactory("riskname", ProjectMoulde.RISK,
 						TypeRender.HYPERLINK), new RatingComponentBuilder(
-						"level", ProjectMoulde.RISK)));
+						"level", ProjectMoulde.RISK),
+				new ProjectFieldBuilderFactory("assignedToUserFullName",
+						ProjectMoulde.RISK, TypeRender.ASSIGNEE)));
 
 		mapInjection.put(SimpleProblem.class, Arrays.asList(
 				new ProjectFieldBuilderFactory("issuename",
 						ProjectMoulde.PROBLEM, TypeRender.HYPERLINK),
-				new RatingComponentBuilder("level", ProjectMoulde.PROBLEM)));
+				new RatingComponentBuilder("level", ProjectMoulde.PROBLEM),
+				new ProjectFieldBuilderFactory("assignuserFullName",
+						ProjectMoulde.PROBLEM, TypeRender.ASSIGNEE)));
 
 		mapInjection.put(Task.class, Arrays.asList(
 				new ProjectFieldBuilderFactory("taskname",
@@ -272,15 +279,38 @@ public class SimpleColumnComponentBuilderMap {
 				return cmp.text(new StringFieldUtilExpression(field,
 						TypeRender.DATE));
 			}
-			if (typeRender.equals(TypeRender.ASSIGNEE)
-					&& projectModule.equals(ProjectMoulde.TASKLIST)) {
-				lstBuilder.add(cmp
-						.text(new StringFieldUtilExpression(field,
-								TypeRender.ASSIGNEE))
-						.setHyperLink(
-								hyperLink(new StringFieldUtilExpression(field,
-										TypeRender.EMAILTYPE)))
-						.setStyle(Templates.underlineStyle));
+			if (typeRender.equals(TypeRender.ASSIGNEE)) {
+				if (projectModule.equals(ProjectMoulde.TASKLIST)) {
+					lstBuilder.add(cmp
+							.text(new StringFieldUtilExpression(field,
+									TypeRender.ASSIGNEE))
+							.setHyperLink(
+									hyperLink(new StringFieldUtilExpression(
+											field, TypeRender.EMAILTYPE)))
+							.setStyle(Templates.underlineStyle));
+				} else {
+					if (!projectModule.equals(ProjectMoulde.BUG)) {
+						lstBuilder
+								.add(cmp.text(
+										new StringFieldUtilExpression(field,
+												null))
+										.setHyperLink(
+												hyperLink(new StringFieldUtilExpression(
+														"assigntouser",
+														TypeRender.EMAILTYPE)))
+										.setStyle(Templates.underlineStyle));
+					} else {
+						lstBuilder
+								.add(cmp.text(
+										new StringFieldUtilExpression(field,
+												null))
+										.setHyperLink(
+												hyperLink(new StringFieldUtilExpression(
+														"assignuser",
+														TypeRender.EMAILTYPE)))
+										.setStyle(Templates.underlineStyle));
+					}
+				}
 				return lstBuilder;
 			}
 			if (typeRender.equals(TypeRender.EMAILTYPE)) {
