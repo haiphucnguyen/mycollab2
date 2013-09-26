@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.project.view.risk;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.domain.Risk;
-import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -27,7 +27,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 	private VerticalLayout layout;
 
 	public MassUpdateRiskWindow(String title,
-			MassUpdatePresenter<Risk> massUpdatePresenter) {
+			MassUpdateCommand<Risk> massUpdatePresenter) {
 		super(title, massUpdatePresenter);
 		this.setWidth("1000px");
 

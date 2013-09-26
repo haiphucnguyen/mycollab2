@@ -317,7 +317,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 			} else if (propertyId.equals("currencyid")) {
 				if (opportunity.getCurrency() != null) {
 					return new FormViewField(opportunity.getCurrency()
-							.getName());
+							.getShortname());
 				} else {
 					return new FormViewField("");
 				}

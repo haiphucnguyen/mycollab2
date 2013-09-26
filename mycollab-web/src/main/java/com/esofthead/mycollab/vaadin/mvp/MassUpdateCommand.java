@@ -1,5 +1,5 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-public interface MassUpdatePresenter<V> extends Presenter {
+public interface MassUpdateCommand<V> {
 	void massUpdate(V value);
 }

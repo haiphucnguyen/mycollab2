@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ListCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
@@ -27,7 +27,7 @@ import com.vaadin.ui.ComponentContainer;
  */
 public class MilestoneListPresenter extends
 		AbstractPresenter<MilestoneListView> implements
-		ListPresenter<MilestoneSearchCriteria> {
+		ListCommand<MilestoneSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	public MilestoneListPresenter() {

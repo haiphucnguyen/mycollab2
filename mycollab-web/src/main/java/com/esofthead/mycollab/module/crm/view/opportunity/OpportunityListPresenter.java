@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -27,7 +27,7 @@ import com.vaadin.ui.ComponentContainer;
 public class OpportunityListPresenter
 		extends
 		CrmGenericListPresenter<OpportunityListView, OpportunitySearchCriteria, SimpleOpportunity>
-		implements MassUpdatePresenter<Opportunity> {
+		implements MassUpdateCommand<Opportunity> {
 
 	private static final long serialVersionUID = 1L;
 	private OpportunityService opportunityService;

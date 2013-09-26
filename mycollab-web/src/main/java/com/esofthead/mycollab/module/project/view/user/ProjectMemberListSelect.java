@@ -15,35 +15,31 @@ import com.vaadin.ui.ListSelect;
 public @SuppressWarnings("serial")
 class ProjectMemberListSelect extends ListSelect {
 
-    public ProjectMemberListSelect() {
-        super("username");
-        this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
-        this.setMultiSelect(true);
-    }
+	public ProjectMemberListSelect() {
+		super("username");
+		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setMultiSelect(true);
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void attach() {
-        super.attach();
-        this.removeAllItems();
-        ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
 
-        ProjectMemberService userService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
-        List<SimpleProjectMember> userList = userService
-                .findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
-                criteria, 0, Integer.MAX_VALUE));
+		ProjectMemberService userService = ApplicationContextUtil
+				.getSpringBean(ProjectMemberService.class);
+		List<SimpleProjectMember> userList = userService
+				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
 
-        BeanContainer<String, SimpleProjectMember> beanItem = new BeanContainer<String, SimpleProjectMember>(
-        		SimpleProjectMember.class);
-        beanItem.setBeanIdProperty("username");
+		BeanContainer<String, SimpleProjectMember> beanItem = new BeanContainer<String, SimpleProjectMember>(
+				SimpleProjectMember.class);
+		beanItem.setBeanIdProperty("username");
 
-        for (SimpleProjectMember user : userList) {
-            beanItem.addBean(user);
-        }
+		for (SimpleProjectMember user : userList) {
+			beanItem.addBean(user);
+		}
 
-        this.setContainerDataSource(beanItem);
-        this.setItemCaptionPropertyId("memberFullName");
-        this.setRows(4);
-    }
+		this.setContainerDataSource(beanItem);
+		this.setItemCaptionPropertyId("memberFullName");
+		this.setRows(4);
+	}
 }

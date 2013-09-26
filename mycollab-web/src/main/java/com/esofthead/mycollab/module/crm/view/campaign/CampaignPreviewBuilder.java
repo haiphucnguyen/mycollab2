@@ -131,7 +131,8 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 						.getEnddate()));
 			} else if (propertyId.equals("currencyid")) {
 				if (campaign.getCurrency() != null) {
-					return new FormViewField(campaign.getCurrency().getName());
+					return new FormViewField(campaign.getCurrency()
+							.getShortname());
 				} else {
 					return new FormViewField("");
 				}
