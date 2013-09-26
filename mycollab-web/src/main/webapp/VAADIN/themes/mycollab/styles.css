@@ -4649,13 +4649,16 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .cancelAccountBody .v-gridlayout .v-label {
 	text-align: right;
 }
-
+.trialInformBox {
+	cursor: pointer;
+}
 .trialEndingNotification {
 	background-color: rgb(232, 160, 82);
 	color: white;
 	padding: 0px 10px;
 	display: table-cell;
 	vertical-align: middle;
+	cursor: pointer;
 }
 .trialEndingNotification a {
 	color: white;

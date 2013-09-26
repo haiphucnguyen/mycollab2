@@ -22,6 +22,8 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.event.LayoutEvents;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -161,6 +163,13 @@ public final class MainView extends AbstractView {
             informBox.setSizeFull();
             informBox.addComponent(informLbl);
             informBox.setMargin(false, true, false, false);
+            informBox.addListener(new LayoutEvents.LayoutClickListener() {
+
+                @Override
+                public void layoutClick(LayoutClickEvent event) {
+                    // TODO: go to upgrade billing plan page
+                }
+            });
             accountLayout.addComponent(informBox);
             accountLayout.setSpacing(true);
             accountLayout.setComponentAlignment(informBox,
@@ -179,14 +188,14 @@ public final class MainView extends AbstractView {
             } else {
                 if (AppContext.isAdmin()) {
                     informLbl
-                            .setValue("<a href='#'><div class='informBlock'>TRIAL ENDING<br>"
+                            .setValue("<div class='informBlock'>TRIAL ENDING<br>"
                                     + (30 - daysLeft)
-                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div></a>");
+                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
                 } else {
                     informLbl
-                            .setValue("<a href='#'><div class='informBlock'>TRIAL ENDING<br>"
+                            .setValue("<div class='informBlock'>TRIAL ENDING<br>"
                                     + (30 - daysLeft)
-                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div></a>");
+                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
                 }
             }
         }
