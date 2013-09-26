@@ -87,6 +87,7 @@ public class ResourceMoverImpl implements ResourceMover {
 
 		// upload to dest source
 		srcRes.setPath(destMovePath);
+		
 		if (ResourceUtils.getType(destRes) != ResourceType.MyCollab) {
 			ExternalResourceService destService = ResourceUtils
 					.getExternalResourceService(ResourceUtils.getType(destRes));

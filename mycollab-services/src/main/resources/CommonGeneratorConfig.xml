@@ -52,9 +52,6 @@
         <table domainObjectName="RelayEmailNotification" schema="mycollab"
             tableName="s_relay_email_notification" />
 
-        <table domainObjectName="AccountCurrency" schema="mycollab"
-            tableName="s_account_currency" />
-
         <table schema="mycollab" tableName="m_audit_log"
             domainObjectName="AuditLog" />
 

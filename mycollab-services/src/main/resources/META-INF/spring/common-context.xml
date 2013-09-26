@@ -40,12 +40,6 @@
             value="com.esofthead.mycollab.common.dao.CommentMapperExt" />
     </bean>
 
-    <bean id="accountCurrencyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.AccountCurrencyMapper" />
-    </bean>
-
     <bean id="currencyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
@@ -99,7 +93,7 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt" />
     </bean>
-    
+
     <bean id="reportBugIssueMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"

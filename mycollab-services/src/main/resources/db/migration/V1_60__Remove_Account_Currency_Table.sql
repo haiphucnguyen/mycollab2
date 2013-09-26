@@ -1,0 +1,1 @@
+DROP TABLE `s_account_currency`;

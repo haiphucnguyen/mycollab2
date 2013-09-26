@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esofthead.mycollab.common.dao.AccountCurrencyMapper;
-import com.esofthead.mycollab.common.domain.AccountCurrency;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localtization.ExceptionI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -71,9 +69,6 @@ public class BillingServiceImpl implements BillingService {
 
 	@Autowired
 	private RoleService roleService;
-
-	@Autowired
-	private AccountCurrencyMapper accountCurrencyMapper;
 
 	@Override
 	@Transactional
@@ -175,13 +170,6 @@ public class BillingServiceImpl implements BillingService {
 		saveEmployeeRole(accountid, username);
 		saveAdminRole(accountid, username);
 		saveGuestRole(accountid, username);
-
-		// save default account currency
-		log.debug("Save default currency of account of subdomain {}", subdomain);
-		final AccountCurrency currency = new AccountCurrency();
-		currency.setAccountid(accountid);
-		currency.setCurrencyid(1);
-		this.accountCurrencyMapper.insert(currency);
 	}
 
 	private void saveEmployeeRole(int accountid, String username) {
