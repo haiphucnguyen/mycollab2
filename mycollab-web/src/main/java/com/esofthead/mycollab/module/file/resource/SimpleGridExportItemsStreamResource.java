@@ -48,8 +48,11 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 		// Add field of report
 		Field[] clsFields = ClassUtils.getAllFields(classType);
 		for (Field objField : clsFields) {
-			DRIDataType<Object, ? extends Object> jrType = type
+			DRIDataType<Object, ? extends Object> jrType = CustomDataType
 					.detectType(objField.getType().getName());
+			if (jrType == null) {
+				jrType = type.detectType(objField.getType().getName());
+			}
 			reportBuilder.addField(objField.getName(), jrType);
 		}
 		List<TableViewFieldDecorator> fields = parameters.getFields();
