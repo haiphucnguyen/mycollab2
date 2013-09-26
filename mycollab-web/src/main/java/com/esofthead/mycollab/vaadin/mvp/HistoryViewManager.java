@@ -34,12 +34,17 @@ public class HistoryViewManager {
 			ViewState viewState = history.get(history.size() - 2);
 			history.remove(history.size() - 1);
 			history.remove(history.size() - 1);
-			
-			log.debug("Back to view: " + viewState.getPresenter());
-			
-			viewState.getPresenter().go(viewState.getContainer(),
-					viewState.getParams());
-			return viewState;
+
+			if (viewState.getContainer() instanceof IModule) {
+				return new NullViewState();
+			} else {
+				log.debug("Back to view: " + viewState.getPresenter());
+
+				viewState.getPresenter().go(viewState.getContainer(),
+						viewState.getParams());
+				return viewState;
+			}
+
 		} else {
 			return new NullViewState();
 		}

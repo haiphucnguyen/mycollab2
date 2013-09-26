@@ -63,7 +63,9 @@ public class OpportunityEditFormFieldFactory extends
 			return tf;
 		} else if (propertyId.equals("currencyid")) {
 			CurrencyComboBox currencyBox = new CurrencyComboBox();
-
+			if (opportunity.getCurrencyid() != null) {
+				currencyBox.setValue(opportunity.getCurrencyid());
+			}
 			return currencyBox;
 		} else if (propertyId.equals("salesstage")) {
 			return new OpportunitySalesStageComboBox();
