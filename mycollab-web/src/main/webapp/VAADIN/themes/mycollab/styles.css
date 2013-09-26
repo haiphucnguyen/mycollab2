@@ -4674,3 +4674,32 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .trialEndingNotification .informBlock:first-child {
 	padding-right: 5px;
 }
+
+/* volume usage info */
+.v-horizontallayout.border-box2-no-margin.file-topcontrols {
+	border-radius: 5px 5px 0px 0px;
+}
+.v-horizontallayout.border-box2-no-margin.file-topcontrols .v-buttongroup .v-button.v-button-right {
+	border-radius: 0px 3px 0px 0px;
+}
+.v-label.volumeUsageInfo {
+	display: table;
+}
+.v-label.volumeUsageInfo div {
+	display: table-cell;
+}
+.v-label.volumeUsageInfo #left-side {
+	width: 30px;
+	height: 100%;
+	background: url('icons/volume-usage-corners.png') no-repeat top left transparent;
+}
+.v-label.volumeUsageInfo #right-side {
+	width: 30px;
+	background: url('icons/volume-usage-corners.png') no-repeat top right transparent;
+}
+.v-label.volumeUsageInfo #info-content {
+	background-color: rgb(190, 167, 118);
+	padding: 3px 0px;
+	color: white;
+	text-align: center;
+}
