@@ -28,7 +28,7 @@ public class ResourceMoverImpl implements ResourceMover {
 	private ResourceService resourceService;
 
 	private void moveResourceInDifferentStorage(Resource srcRes,
-			Resource destRes, String userMove) {
+			Resource destRes, String userMove, Integer sAccountId) {
 		String destMovePath = destRes.getPath() + "/" + srcRes.getName();
 
 		if (srcRes instanceof Folder) {
@@ -58,17 +58,20 @@ public class ResourceMoverImpl implements ResourceMover {
 			}
 
 			for (Resource res : lstRes) {
-				if (res instanceof Folder)
-					moveResourceInDifferentStorage(res, createdFolder, userMove);
-				else
-					moveFile((Content) res, createdFolder, userMove);
+				if (res instanceof Folder) {
+					moveResourceInDifferentStorage(res, createdFolder,
+							userMove, sAccountId);
+				} else {
+					copyFile((Content) res, createdFolder, userMove, sAccountId);
+				}
 			}
 		} else {
-			moveFile((Content) srcRes, destRes, userMove);
+			copyFile((Content) srcRes, destRes, userMove, sAccountId);
 		}
 	}
 
-	private void moveFile(Content srcRes, Resource destRes, String userMove) {
+	private void copyFile(Content srcRes, Resource destRes, String userMove,
+			Integer sAccountId) {
 		// get input stream of download
 		String destMovePath = destRes.getPath() + "/" + srcRes.getName();
 		String srcPath = srcRes.getPath();
@@ -85,18 +88,17 @@ public class ResourceMoverImpl implements ResourceMover {
 			in = resourceService.getContentStream(srcPath);
 		}
 
-		// upload to dest source
+		// update path of srcRes -------------------------
 		srcRes.setPath(destMovePath);
-		
+
+		// ------------------------------------------------
 		if (ResourceUtils.getType(destRes) != ResourceType.MyCollab) {
 			ExternalResourceService destService = ResourceUtils
 					.getExternalResourceService(ResourceUtils.getType(destRes));
 			destService.saveContent(ResourceUtils.getExternalDrive(destRes),
 					srcRes, in);
 		} else {
-
-			// TODO: SHOULD CALL MOVE METHOD NOT SAVE
-			// resourceService.saveContent(srcRes, userMove, in);
+			resourceService.saveContent(srcRes, userMove, in, sAccountId);
 		}
 	}
 
@@ -165,7 +167,8 @@ public class ResourceMoverImpl implements ResourceMover {
 						srcRes.getPath(),
 						destRes.getPath() + "/" + srcRes.getName());
 			} else {
-				moveResourceInDifferentStorage(srcRes, destRes, userMove);
+				moveResourceInDifferentStorage(srcRes, destRes, userMove,
+						sAccountId);
 				// delete src resource
 				ExternalResourceService srcService = ResourceUtils
 						.getExternalResourceService(ResourceUtils
@@ -175,7 +178,8 @@ public class ResourceMoverImpl implements ResourceMover {
 						srcRes.getPath());
 			}
 		} else {
-			moveResourceInDifferentStorage(srcRes, destRes, userMove);
+			moveResourceInDifferentStorage(srcRes, destRes, userMove,
+					sAccountId);
 
 			if (ResourceUtils.getType(srcRes) != ResourceType.MyCollab) {
 				ExternalResourceService srcService = ResourceUtils
@@ -188,7 +192,6 @@ public class ResourceMoverImpl implements ResourceMover {
 				resourceService.removeResource(srcRes.getPath(), userMove,
 						sAccountId);
 			}
-
 		}
 	}
 }

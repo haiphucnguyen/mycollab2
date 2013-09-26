@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.file.resource;
 
+import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 import net.sf.dynamicreports.report.base.datatype.AbstractDataType;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -8,7 +9,7 @@ import org.apache.commons.lang3.Validate;
 
 import com.esofthead.mycollab.common.domain.Currency;
 
-public class CustomDataType {
+public class DRIDataTypeFactory {
 	private static final CurrencyType currencyType = new CurrencyType();
 
 	@SuppressWarnings("unchecked")
@@ -20,8 +21,9 @@ public class CustomDataType {
 		if (dataTypeLC.equals("currency")
 				|| dataType.equals(Currency.class.getName())) {
 			return (T) currencyType;
+		} else {
+			return type.detectType(dataType);
 		}
-		return null;
 	}
 
 	public static class CurrencyType extends

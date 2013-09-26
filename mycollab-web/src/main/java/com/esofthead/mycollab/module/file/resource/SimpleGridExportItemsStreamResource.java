@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.file.resource;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -48,11 +47,8 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 		// Add field of report
 		Field[] clsFields = ClassUtils.getAllFields(classType);
 		for (Field objField : clsFields) {
-			DRIDataType<Object, ? extends Object> jrType = CustomDataType
+			DRIDataType<Object, ? extends Object> jrType = DRIDataTypeFactory
 					.detectType(objField.getType().getName());
-			if (jrType == null) {
-				jrType = type.detectType(objField.getType().getName());
-			}
 			reportBuilder.addField(objField.getName(), jrType);
 		}
 		List<TableViewFieldDecorator> fields = parameters.getFields();

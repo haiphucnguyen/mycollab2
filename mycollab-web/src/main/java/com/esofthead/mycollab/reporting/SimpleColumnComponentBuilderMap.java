@@ -26,6 +26,7 @@ import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
+import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -59,6 +60,8 @@ public class SimpleColumnComponentBuilderMap {
 		public static final String RATING = "rating";
 		public static final String ASSIGNEE = "assignee";
 		public static final String PERCENT = "percent";
+		public static final String CURRENCY = "currency";
+		public static final String ACOUNT_LINK = "account_link";
 	}
 
 	public static class ProjectMoulde {
@@ -71,53 +74,58 @@ public class SimpleColumnComponentBuilderMap {
 	static {
 		mapInjection.put(SimpleAccount.class, Arrays.asList(
 				new CrmFieldComponentBuilder("accountname",
-						CrmTypeConstants.ACCOUNT, Arrays
-								.asList(TypeRender.HYPERLINK)),
+						CrmTypeConstants.ACCOUNT, TypeRender.HYPERLINK),
 				new CrmFieldComponentBuilder("email", CrmTypeConstants.ACCOUNT,
-						Arrays.asList(TypeRender.EMAILTYPE)),
-				new CrmFieldComponentBuilder("assignUserFullName",
-						CrmTypeConstants.ACCOUNT, Arrays
-								.asList(TypeRender.ASSIGNEE))));
+						TypeRender.EMAILTYPE), new CrmFieldComponentBuilder(
+						"assignUserFullName", CrmTypeConstants.ACCOUNT,
+						TypeRender.ASSIGNEE)));
 
 		mapInjection.put(SimpleContact.class, Arrays.asList(
 				new CrmFieldComponentBuilder("contactName",
-						CrmTypeConstants.CONTACT, Arrays
-								.asList(TypeRender.HYPERLINK)),
+						CrmTypeConstants.CONTACT, TypeRender.HYPERLINK),
 				new CrmFieldComponentBuilder("email", CrmTypeConstants.CONTACT,
-						Arrays.asList(TypeRender.EMAILTYPE)),
-				new CrmFieldComponentBuilder("assignUserFullName",
-						CrmTypeConstants.CONTACT, Arrays
-								.asList(TypeRender.ASSIGNEE))));
+						TypeRender.EMAILTYPE), new CrmFieldComponentBuilder(
+						"assignUserFullName", CrmTypeConstants.CONTACT,
+						TypeRender.ASSIGNEE), new CrmFieldComponentBuilder(
+						"accountName", CrmTypeConstants.CONTACT,
+						TypeRender.ACOUNT_LINK)));
 
 		mapInjection.put(SimpleCampaign.class, Arrays.asList(
 				new CrmFieldComponentBuilder("campaignname",
-						CrmTypeConstants.CAMPAIGN, Arrays
-								.asList(TypeRender.HYPERLINK)),
+						CrmTypeConstants.CAMPAIGN, TypeRender.HYPERLINK),
 				new CrmFieldComponentBuilder("assignUserFullName",
-						CrmTypeConstants.CAMPAIGN, Arrays
-								.asList(TypeRender.ASSIGNEE))));
+						CrmTypeConstants.CAMPAIGN, TypeRender.ASSIGNEE),
+				new CrmFieldComponentBuilder("enddate",
+						CrmTypeConstants.CAMPAIGN, TypeRender.DATE),
+				new CrmFieldComponentBuilder("expectedrevenue",
+						CrmTypeConstants.CAMPAIGN, TypeRender.CURRENCY)));
 
 		mapInjection.put(SimpleLead.class, Arrays.asList(
 				new CrmFieldComponentBuilder("leadName", CrmTypeConstants.LEAD,
-						Arrays.asList(TypeRender.HYPERLINK)),
-				new CrmFieldComponentBuilder("assignUserFullName",
-						CrmTypeConstants.LEAD, Arrays
-								.asList(TypeRender.ASSIGNEE))));
+						TypeRender.HYPERLINK), new CrmFieldComponentBuilder(
+						"assignUserFullName", CrmTypeConstants.LEAD,
+						TypeRender.ASSIGNEE)));
 
 		mapInjection.put(SimpleOpportunity.class, Arrays.asList(
 				new CrmFieldComponentBuilder("opportunityname",
-						CrmTypeConstants.OPPORTUNITY, Arrays
-								.asList(TypeRender.HYPERLINK)),
+						CrmTypeConstants.OPPORTUNITY, TypeRender.HYPERLINK),
 				new CrmFieldComponentBuilder("assignUserFullName",
-						CrmTypeConstants.OPPORTUNITY, Arrays
-								.asList(TypeRender.ASSIGNEE))));
+						CrmTypeConstants.OPPORTUNITY, TypeRender.ASSIGNEE),
+				new CrmFieldComponentBuilder("amount",
+						CrmTypeConstants.OPPORTUNITY, TypeRender.CURRENCY),
+				new CrmFieldComponentBuilder("expectedcloseddate",
+						CrmTypeConstants.OPPORTUNITY, TypeRender.DATE),
+				new CrmFieldComponentBuilder("accountName",
+						CrmTypeConstants.OPPORTUNITY, TypeRender.ACOUNT_LINK)));
 
 		mapInjection.put(SimpleCase.class, Arrays.asList(
 				new CrmFieldComponentBuilder("subject", CrmTypeConstants.CASE,
-						Arrays.asList(TypeRender.HYPERLINK)),
-				new CrmFieldComponentBuilder("assignUserFullName",
-						CrmTypeConstants.CASE, Arrays
-								.asList(TypeRender.ASSIGNEE))));
+						TypeRender.HYPERLINK), new CrmFieldComponentBuilder(
+						"assignUserFullName", CrmTypeConstants.CASE,
+						TypeRender.ASSIGNEE), new CrmFieldComponentBuilder(
+						"createdtime", CrmTypeConstants.CASE, TypeRender.DATE),
+				new CrmFieldComponentBuilder("accountName",
+						CrmTypeConstants.CASE, TypeRender.ACOUNT_LINK)));
 
 		mapInjection.put(SimpleBug.class, Arrays.asList(
 				new ProjectFieldBuilderFactory("summary", ProjectMoulde.BUG,
@@ -131,14 +139,18 @@ public class SimpleColumnComponentBuilderMap {
 						TypeRender.HYPERLINK), new RatingComponentBuilder(
 						"level", ProjectMoulde.RISK),
 				new ProjectFieldBuilderFactory("assignedToUserFullName",
-						ProjectMoulde.RISK, TypeRender.ASSIGNEE)));
+						ProjectMoulde.RISK, TypeRender.ASSIGNEE),
+				new ProjectFieldBuilderFactory("datedue", ProjectMoulde.RISK,
+						TypeRender.DATE)));
 
 		mapInjection.put(SimpleProblem.class, Arrays.asList(
 				new ProjectFieldBuilderFactory("issuename",
 						ProjectMoulde.PROBLEM, TypeRender.HYPERLINK),
 				new RatingComponentBuilder("level", ProjectMoulde.PROBLEM),
 				new ProjectFieldBuilderFactory("assignuserFullName",
-						ProjectMoulde.PROBLEM, TypeRender.ASSIGNEE)));
+						ProjectMoulde.PROBLEM, TypeRender.ASSIGNEE),
+				new ProjectFieldBuilderFactory("datedue",
+						ProjectMoulde.PROBLEM, TypeRender.DATE)));
 
 		mapInjection.put(Task.class, Arrays.asList(
 				new ProjectFieldBuilderFactory("taskname",
@@ -170,13 +182,13 @@ public class SimpleColumnComponentBuilderMap {
 
 		private String field;
 		private String classType;
-		private List<String> lstTypeRender;
+		private String typeRender;
 
 		public CrmFieldComponentBuilder(String field, String classType,
-				List<String> lstTypeRender) {
+				String typeRender) {
 			this.field = field;
 			this.classType = classType;
-			this.lstTypeRender = lstTypeRender;
+			this.typeRender = typeRender;
 		}
 
 		private class CrmFieldComponetBuilderExpression extends
@@ -188,25 +200,34 @@ public class SimpleColumnComponentBuilderMap {
 				Integer id = reportParameters.getFieldValue("id");
 				Integer sAccountId = reportParameters
 						.getFieldValue("saccountid");
-				String fieldName = reportParameters.getFieldValue(field);
+				String fieldName = reportParameters.getFieldValue(field)
+						.toString();
 				String assignUser = "";
+				Currency currency = null;
 				try {
 					assignUser = reportParameters.getFieldValue("assignuser");
+					currency = reportParameters.getFieldValue("currency");
 				} catch (Exception e) {
 				}
 
 				String hyperLinkStr = fieldName;
-
-				for (String typeRender : lstTypeRender) {
-					if (typeRender.equals(TypeRender.ASSIGNEE)) {
-						hyperLinkStr = "mailto:" + assignUser;
-					} else if (typeRender.equals(TypeRender.HYPERLINK)) {
-						hyperLinkStr = SiteConfiguration.getSiteUrl(sAccountId)
-								+ CrmLinkGenerator.generateCrmItemLink(
-										classType, id);
-					} else if (typeRender.equals(TypeRender.EMAILTYPE)) {
-						hyperLinkStr = "mailto:" + fieldName;
-					}
+				if (typeRender.equals(TypeRender.ACOUNT_LINK)) {
+					Integer accountid = reportParameters
+							.getFieldValue("accountid");
+					hyperLinkStr = SiteConfiguration.getSiteUrl(sAccountId)
+							+ CrmLinkGenerator.generateCrmItemLink(
+									CrmTypeConstants.ACCOUNT, accountid);
+				} else if (typeRender.equals(TypeRender.CURRENCY)) {
+					return fieldName
+							+ ((currency != null) ? currency.getSymbol() : "");
+				} else if (typeRender.equals(TypeRender.ASSIGNEE)) {
+					hyperLinkStr = "mailto:" + assignUser;
+				} else if (typeRender.equals(TypeRender.HYPERLINK)) {
+					hyperLinkStr = SiteConfiguration.getSiteUrl(sAccountId)
+							+ CrmLinkGenerator.generateCrmItemLink(classType,
+									id);
+				} else if (typeRender.equals(TypeRender.EMAILTYPE)) {
+					hyperLinkStr = "mailto:" + fieldName;
 				}
 				return hyperLinkStr;
 			}
@@ -225,12 +246,80 @@ public class SimpleColumnComponentBuilderMap {
 		@Override
 		public ComponentBuilder getComponentBuilder() {
 			HorizontalListBuilder componentBuilder = cmp.horizontalList();
-			TextFieldBuilder textBuilder = cmp
-					.text(new StringFieldUtilExpression(field, null))
-					.setHyperLink(hyperLink(this.getDriExpression()))
-					.setStyle(Templates.underlineStyle);
+			TextFieldBuilder textBuilder = null;
+			if (classType.equals(CrmTypeConstants.OPPORTUNITY)
+					&& field.equals("opportunityname")) {
+				// TODO
+				ConditionalStyleBuilder overDueStyle = stl.conditionalStyle(
+						new IsOpportunityOverDue()).setForegroundColor(
+						Color.RED);
+				ConditionalStyleBuilder isCompleteStyle = stl.conditionalStyle(
+						new IsOpportunityComplete()).setStrikeThrough(true);
+
+				StyleBuilder styleBuilder = stl.style(Templates.underlineStyle)
+						.addConditionalStyle(overDueStyle)
+						.addConditionalStyle(isCompleteStyle);
+				textBuilder = cmp
+						.text(new StringFieldUtilExpression(field, null))
+						.setHyperLink(
+								hyperLink(new CrmFieldComponetBuilderExpression()))
+						.setStyle(styleBuilder);
+			} else if (typeRender.equals(TypeRender.ACOUNT_LINK)) {
+				textBuilder = cmp
+						.text(new StringFieldUtilExpression(field, null))
+						.setHyperLink(
+								hyperLink(new CrmFieldComponetBuilderExpression()))
+						.setStyle(Templates.underlineStyle);
+			} else if (typeRender.equals(TypeRender.DATE)) {
+				textBuilder = cmp.text(new StringFieldUtilExpression(field,
+						typeRender));
+			} else if (typeRender.equals(TypeRender.CURRENCY)) {
+				textBuilder = cmp.text(new CrmFieldComponetBuilderExpression());
+			} else {
+				textBuilder = cmp
+						.text(new StringFieldUtilExpression(field, null))
+						.setHyperLink(hyperLink(this.getDriExpression()))
+						.setStyle(Templates.underlineStyle);
+			}
 			componentBuilder.add(textBuilder);
 			return componentBuilder;
+		}
+	}
+
+	public static class IsOpportunityComplete extends
+			AbstractSimpleExpression<Boolean> {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public Boolean evaluate(ReportParameters reportParameters) {
+			String saleStage = reportParameters.getFieldValue("salesstage");
+			if ("Closed Won".equals(saleStage)
+					|| "Closed Lost".equals(saleStage)) {
+				return true;
+			}
+			return false;
+		}
+	}
+
+	public static class IsOpportunityOverDue extends
+			AbstractSimpleExpression<Boolean> {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public Boolean evaluate(ReportParameters reportParameters) {
+			Date expectedCloseDate = reportParameters
+					.getFieldValue("expectedcloseddate");
+			if (expectedCloseDate != null
+					&& (expectedCloseDate.before(new GregorianCalendar()
+							.getTime()))) {
+				String saleStage = reportParameters.getFieldValue("salesstage");
+				if ("Closed Won".equals(saleStage)
+						|| "Closed Lost".equals(saleStage)) {
+					return false;
+				}
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -322,10 +411,6 @@ public class SimpleColumnComponentBuilderMap {
 						.setStyle(Templates.underlineStyle));
 				return lstBuilder;
 			}
-			if (typeRender.equals(TypeRender.DATE)) {
-
-			}
-
 			if (projectModule.equals(ProjectMoulde.BUG)
 					|| projectModule.equals(ProjectMoulde.TASKLIST)) {
 				if (typeRender.equals(TypeRender.HYPERLINK)) {
