@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.vaadin.ui.ComponentContainer;
 
-public abstract class AbstractPresenter<V extends View> implements Presenter {
+public abstract class AbstractPresenter<V extends View> implements Presenter<V> {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
@@ -17,6 +17,7 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
 		view = ViewManager.getView(viewClass);
 	}
 
+	@Override
 	public V getView() {
 		return view;
 	}

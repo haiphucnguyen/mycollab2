@@ -4,11 +4,15 @@ import java.io.Serializable;
 
 import com.vaadin.ui.ComponentContainer;
 
-public interface Presenter extends Serializable {
-    
-    void handleChain(ComponentContainer container, PageActionChain pageActionChain);
+public interface Presenter<V extends View> extends Serializable {
 
-    void go(ComponentContainer container, ScreenData<?> data);
+	void handleChain(ComponentContainer container,
+			PageActionChain pageActionChain);
 
-    void go(ComponentContainer container, ScreenData<?> data, boolean isHistoryTrack);
+	void go(ComponentContainer container, ScreenData<?> data);
+
+	void go(ComponentContainer container, ScreenData<?> data,
+			boolean isHistoryTrack);
+
+	V getView();
 }

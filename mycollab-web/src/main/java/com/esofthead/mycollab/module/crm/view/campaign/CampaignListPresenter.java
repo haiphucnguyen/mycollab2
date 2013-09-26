@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -27,7 +27,7 @@ import com.vaadin.ui.ComponentContainer;
 public class CampaignListPresenter
 		extends
 		CrmGenericListPresenter<CampaignListView, CampaignSearchCriteria, SimpleCampaign>
-		implements MassUpdatePresenter<CampaignWithBLOBs> {
+		implements MassUpdateCommand<CampaignWithBLOBs> {
 
 	private static final long serialVersionUID = 1L;
 	private CampaignService campaignService;

@@ -3,13 +3,13 @@ package com.esofthead.mycollab.module.project.view.standup;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ListCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.ComponentContainer;
 
 public class StandupListPresenter extends AbstractPresenter<StandupListView>
-		implements ListPresenter<StandupReportSearchCriteria> {
+		implements ListCommand<StandupReportSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	public StandupListPresenter() {

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -11,13 +11,13 @@ import com.vaadin.ui.Window;
 public abstract class MassUpdateWindow<V> extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private MassUpdatePresenter<V> massUpdatePresenter;
+	private MassUpdateCommand<V> massUpdatePresenter;
 
 	private VerticalLayout layout;
 	private Button updateBtn, closeBtn;
 
 	public MassUpdateWindow(String title,
-			MassUpdatePresenter<V> massUpdatePresenter) {
+			MassUpdateCommand<V> massUpdatePresenter) {
 		super(title);
 		center();
 

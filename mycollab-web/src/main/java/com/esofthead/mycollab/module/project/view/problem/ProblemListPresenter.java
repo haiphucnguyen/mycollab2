@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
-import com.esofthead.mycollab.vaadin.mvp.MassUpdatePresenter;
+import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -26,7 +26,7 @@ import com.vaadin.ui.ComponentContainer;
 public class ProblemListPresenter
 		extends
 		ListSelectionPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
-		implements MassUpdatePresenter<Problem> {
+		implements MassUpdateCommand<Problem> {
 
 	private static final long serialVersionUID = 1L;
 	private ProblemService problemService;
