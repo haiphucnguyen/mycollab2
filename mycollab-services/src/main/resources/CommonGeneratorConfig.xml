@@ -46,6 +46,9 @@
         <table domainObjectName="Comment" schema="mycollab"
             tableName="m_comment" />
 
+        <table domainObjectName="CustomerFeedback" schema="mycollab"
+            tableName="s_customer_feedback" />
+
         <table domainObjectName="RelayEmail" schema="mycollab"
             tableName="s_relay_mail" />
 

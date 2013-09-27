@@ -46,6 +46,12 @@
             value="com.esofthead.mycollab.common.dao.CurrencyMapper" />
     </bean>
 
+    <bean id="customerFeedbackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.common.dao.CustomerFeedbackMapper" />
+    </bean>
+
     <bean id="customViewStoreMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
