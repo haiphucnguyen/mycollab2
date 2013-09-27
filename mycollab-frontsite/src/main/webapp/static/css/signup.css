@@ -83,17 +83,81 @@
 	position: relative;
 	z-index: 2;
 }
-.signup-table {
+.sig-left-otherservices {
+	float: left;
+	width: 230px;
+}
+.sig-left-otherservices ul {
+	display: table-cell;
+}
+.sig-left-otherservices ul li:first-child {
+	margin-top: 0px;
+}
+.sig-left-otherservices ul li {
 	width: 100%;
+	float: left;
+	margin: 20px 0 0;
+	background-color: transparent;
+}
+.sig-left-otherservices ul li:hover {
+	background-color: rgb(35, 139, 202);
+}
+.sig-left-otherservices ul li img {
+	float: left;
+}
+.sig-left-otherservices ul li a {
+	display: block;
+}
+.sig-left-otherservices ul li .service-disabled img {
+	opacity: .5;
+}
+.sig-left-otherservices ul li a.service-selected {
+	background-color: rgb(35, 139, 202);
+}
+.sig-left-otherservices ul li a.service-selected .service-title {
+	color: rgb(255, 255, 255);
+}
+.sig-left-otherservices ul li .service-title {
+	float: left;
+	color: rgb(97, 97, 97);
+	font-size: 13px;
+	font-family: "Monda";
+	padding: 4px 0px 0px 10px;
+}
+.sig-left-otherservices ul li:hover .service-title {
+	color: rgb(255, 255, 255);
+}
+.sig-left-otherservices .sig-lef-separator {
+	height: 100%;
+	width: 40px;
+	background: url('../images/signup_separator.png') repeat-y center center rgb(255, 255, 255);
+	display: table-cell;
+	vertical-align: middle;
+}
+.sig-left-otherservices .sig-lef-separator .separator-text {
+	display: table-cell;
+	width: 40px;
+	height: 40px;
+	color: rgb(97, 97, 97);
+	background-color: rgb(255, 255, 255);
+	text-align: center;
+	vertical-align: middle;
+}
+.sig-left-otherservices .sig-lef-separator .hidding {
+	display: none;
+}
+.sig-left-normal-signup {
+	float: left;
+	width: 300px;
 }
 
-.signup-table .formfield {
-	width: 237px;
-	margin: 0 auto;
+.sig-left-normal-signup .formfield {
+	width: 265px;
+	margin: 0 auto 10px;
 	position: relative;
 }
 
-.signup-table .formfield-expand {
+.sig-left-normal-signup .formfield-expand {
 	width: 100%;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;

@@ -6,21 +6,11 @@
 @font-face {
     font-family: 'verdana';
     src: url('../fonts/verdana.eot');
-    src: url('../fonts/verdana.eot?#iefix') format('embedded-opentype'),
+    src: local('Verdana'),
+    	 url('../fonts/verdana.eot?#iefix') format('embedded-opentype'),
          url('../fonts/verdana.svg#verdana') format('svg'),
          url('../fonts/verdana.woff') format('woff'),
          url('../fonts/verdana.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'MyriadPro-Semibold';
-    src: url('../fonts/MyriadPro-Semibold.eot');
-    src: url('../fonts/MyriadPro-Semibold.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/MyriadPro-Semibold.svg#MyriadPro-Semibold') format('svg'),
-         url('../fonts/MyriadPro-Semibold.woff') format('woff'),
-         url('../fonts/MyriadPro-Semibold.otf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
@@ -2065,7 +2055,7 @@ a.nivo-prevNav {
 }
 
 .sig-mid {
-	padding: 0px 30px;
+	padding: 0px 20px;
 	border-radius: 5px;
 	border: solid 1px #cacaca; 
 	margin-top: -3px;
@@ -2157,27 +2147,33 @@ a.nivo-prevNav {
 }
 
 .sig-mid-left input[type="text"] {
-	height: 25px;
-	width: 225px;
+	height: 28px;
+	width: 100%;
 	font-size: 14px;
 	padding: 0px 5px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	border-radius: 3px;
 	font-family: 'verdana';
 }
 
 .sig-mid-left input[type="password"] {
-	height: 25px;
-	width: 225px;
+	height: 28px;
+	width: 100%;
 	font-size: 14px;
 	padding: 0px 5px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	border-radius: 3px;
 	font-family: 'verdana';
 }
 
 .timezone_input{
-	height: 25px;
+	height: 28px;
     padding: 0px 8px;
-    width: 237px;
+    width: 100%;
 	cursor: pointer;
 	font-size: 14px;
 	border: 1px solid rgb(133, 133, 133);
@@ -2215,8 +2211,9 @@ a.nivo-prevNav {
 	background-color: #F9EAE2;
     clear: both;
     line-height: 110%;
-    margin: 15px;
+    margin: 15px 0px;
     padding: 5px 10px;
+    text-align: center;
 }
 
 .sig-left-using {
@@ -2268,7 +2265,7 @@ a.nivo-prevNav {
     border-style: solid;
     border-width: 1px;
     color: #FFFFFF;
-    display: inline-block;
+    display: block;
     font-size: 16px;
     font-weight: bold;
     height: 35px;
@@ -2278,7 +2275,7 @@ a.nivo-prevNav {
     text-decoration: none;
     width: 170px;
     font-family: 'verdana';
-    margin-left: 160px;
+    margin: 0 auto;
 }
 
 .sig-mid-left input[type="submit"]:hover {
@@ -2343,7 +2340,7 @@ a.nivo-prevNav {
 	background-color: #228bc9;
     color: #FFFFFF;
     font-size: 14px;
-    height: 25px;
+    height: 26px;
     margin-left: -100px;
     margin-top: 1px;
     padding-left: 4px;

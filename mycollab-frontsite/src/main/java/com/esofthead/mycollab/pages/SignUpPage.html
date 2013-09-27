@@ -25,84 +25,71 @@
 							after your 30 - day free trial
 						</p>
 					</div>
+					<div wicket:id="feedback"></div>
 					<div class="sig-left-ctn">
-						<form method="post" wicket:id="signupform">
+						<div class="sig-left-otherservices">
+							<ul>
+								<li><a wicket:id="signupFacebook"><img alt="" src="static/images/signup_facebook.png"><div class="service-title">Sign up with Facebook</div><div class="clear"></div></a></li>
+								<li><a wicket:id="signupGoogle"><img alt="" src="static/images/signup_google.png"><div class="service-title">Sign up with Google</div><div class="clear"></div></a></li>
+								<li><a wicket:id="signupYahoo"><img alt="" src="static/images/signup_twitter.png"><div class="service-title">Sign up with Yahoo</div><div class="clear"></div></a></li>
+								<li><a wicket:id="signupLinkedIn"><img alt="" src="static/images/signup_twitter.png"><div class="service-title">Sign up with LinkedIn</div><div class="clear"></div></a></li>
+							</ul>
+							<div class="sig-lef-separator">
+								<div wicket:id="separator-text" class="separator-text">Or</div>
+							</div>
+						</div>
+						<div class="sig-left-normal-signup">
+							<form method="post" wicket:id="signupform">
+								<div class="formfield">
+									<p>Email</p>
+									<input type="text" wicket:id="emailfield" />
+								</div>
+								<div class="formfield">
+									<p>Subdomain</p>
+									<input id="subdomainfield" type="text"
+										wicket:id="subdomainfield" />
+									<span class="sig-subdomain">.mycollab.com</span>
+								</div>
+								<div class="formfield">
+									<p>Password</p>
+									<input type="password" wicket:id="passwordfield" />
+								</div>
+								<div class="formfield">
+									<p>Confirm Password</p>
+									<input type="password" wicket:id="cpasswordfield" />
+								</div>
+								<div class="formfield">
+									<p>Timezone</p>
+									<div class="timezone_dropdown">
+										<div class="timezone_input">
+											<span class="timezone_value"></span>
+										</div>
+									</div>
+									<input type="hidden" id="timezonefield"
+										wicket:id="timezonefield" />
+									<div id="timezone_dropdown_hidden">
+										<wicket:container wicket:id="arearepeat">
+											<div class="single_area">
+												<span wicket:id="one_area"></span>
+											</div>
+											<div class="single_timezone" wicket:id="timezonerepeat">
+												<span wicket:id="one_timezone">US/Alaska: (UTC-0800)</span>
+											</div>
+										</wicket:container>
+									</div>
+								</div>
 							
-							<div wicket:id="feedback"></div>
-							<table class="signup-table" cellpadding="5">
-								<tr>
-									<td>
-										<div class="formfield">
-											<p>Email</p>
-											<input type="text" wicket:id="emailfield" />
-										</div>
-									</td>
-									<td>
-										<div class="formfield">
-											<p>Subdomain</p>
-											<input id="subdomainfield" type="text"
-												wicket:id="subdomainfield" />
-											<span class="sig-subdomain">.mycollab.com</span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="formfield">
-											<p>Password</p>
-											<input type="password" wicket:id="passwordfield" />
-										</div>
-									</td>
-									<td>
-										<div class="formfield">
-											<p>Confirm Password</p>
-											<input type="password" wicket:id="cpasswordfield" />
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<div class="formfield-expand">
-											<p>Timezone</p>
-											<div class="timezone_dropdown">
-												<div class="timezone_input">
-													<span class="timezone_value"></span>
-												</div>
-											</div>
-											<input type="hidden" id="timezonefield"
-												wicket:id="timezonefield" />
-											<div id="timezone_dropdown_hidden">
-												<wicket:container wicket:id="arearepeat">
-													<div class="single_area">
-														<span wicket:id="one_area"></span>
-													</div>
-													<div class="single_timezone" wicket:id="timezonerepeat">
-														<span wicket:id="one_timezone">US/Alaska: (UTC-0800)</span>
-													</div>
-												</wicket:container>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</table>
-							<div class="sig-left-chk">
-								<input type="checkbox" wicket:id="receiveupdatefield" name="receiveUpdate" id="receiveUpdate">
-								<label for="receiveUpdate">I want to receive Mycollab
-									updates. By Sign up, I agree to the term of <a href="#">Privacy</a>
-								</label>
-							</div>
-							<div class="sig-left-using">
-								<ul>
-									<li class="using-title">Sign up using:</li>
-									<li><a wicket:id="signupFacebook"><img alt="" src="static/images/signup_facebook.png"></a></li>
-									<li><a wicket:id="signupGoogle"><img alt="" src="static/images/signup_google.png"></a></li>
-									<li><a wicket:id="signupTwitter"><img alt="" src="static/images/signup_twitter.png"></a></li>
-									<li><a wicket:id="signupLinkedIn"><img alt="" src="static/images/signup_twitter.png"></a></li>
-									<li><a wicket:id="signupYahoo"><img alt="" src="static/images/signup_twitter.png"></a></li>
-								</ul>
-							</div>
-							<input type="submit" value="Start My Trial" />
-						</form>
+								<div class="sig-left-chk">
+									<input type="checkbox" wicket:id="receiveupdatefield" name="receiveUpdate" id="receiveUpdate">
+									<label for="receiveUpdate">I want to receive Mycollab
+										updates. By Sign up, I agree to the term of <a href="#">Privacy</a>
+									</label>
+								</div>
+								
+								<input type="submit" value="Start My Trial" />
+							</form>
+						</div>
+						<div class="clear"></div>
 					</div>
 					<!-- End left coll -->
 				</div>

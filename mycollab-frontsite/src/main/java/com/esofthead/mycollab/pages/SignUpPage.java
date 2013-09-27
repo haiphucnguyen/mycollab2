@@ -3,6 +3,7 @@ package com.esofthead.mycollab.pages;
 import javax.servlet.http.HttpSession;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.HiddenField;
@@ -36,235 +37,343 @@ import com.esofthead.mycollab.rest.server.resource.UserHubResource;
 
 public class SignUpPage extends BasePage {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final String GOOGLE_PLUS_LINK = "signupGoogle";
+    private static final String GOOGLE_PLUS_LINK = "signupGoogle";
 
-	private static final String FACEBOOK_LINK = "signupFacebook";
+    private static final String FACEBOOK_LINK = "signupFacebook";
 
-	private static final String TWITTER_LINK = "signupTwitter";
+    private static final String TWITTER_LINK = "signupTwitter";
 
-	private static final String LINKEDIN_LINK = "signupLinkedIn";
+    private static final String LINKEDIN_LINK = "signupLinkedIn";
 
-	private static final String YAHOO_LINK = "signupYahoo";
+    private static final String YAHOO_LINK = "signupYahoo";
 
-	private static Logger log = LoggerFactory.getLogger(SignUpPage.class);
+    private static Logger log = LoggerFactory.getLogger(SignUpPage.class);
 
-	public String selected = "10";
+    public String selected = "10";
 
-	public SignUpPage(final PageParameters parameters) {
-		super(parameters);
+    private int planId = 1;
 
-		final RequiredTextField<String> email = new RequiredTextField<String>(
-				"emailfield", new Model<String>());
-		email.add(EmailAddressValidator.getInstance());
+    private HttpSession session;
 
-		final CheckBox receiveupdate = new CheckBox("receiveupdatefield",
-				new Model<Boolean>());
+    public SignUpPage(final PageParameters parameters) {
+        super(parameters);
 
-		final RequiredTextField<String> subdomain = new RequiredTextField<String>(
-				"subdomainfield", new Model<String>());
+        session = ((ServletWebRequest) RequestCycle.get().getRequest())
+                .getContainerRequest().getSession();
 
-		final PasswordTextField password = new PasswordTextField(
-				"passwordfield", new Model<String>());
+        if (parameters.get("planId") != null) {
+            planId = parameters.get("planId").toInt();
+        }
 
-		final PasswordTextField cpassword = new PasswordTextField(
-				"cpasswordfield", new Model<String>());
+        final RequiredTextField<String> email = new RequiredTextField<String>(
+                "emailfield", new Model<String>());
+        email.add(EmailAddressValidator.getInstance());
+        if (session.getAttribute("authEmail") != null) {
+            String authenticatedEmail = session.getAttribute("authEmail")
+                    .toString();
+            session.removeAttribute("authEmail");
+            Model<String> nameModel = new Model<String>(authenticatedEmail);
+            email.add(AttributeAppender.append("value", nameModel));
+            email.setEnabled(false);
+        }
 
-		final HiddenField<String> timezone = new HiddenField<String>(
-				"timezonefield", new Model<String>());
+        final CheckBox receiveupdate = new CheckBox("receiveupdatefield",
+                new Model<Boolean>());
 
-		final StatelessForm<Void> form = new StatelessForm<Void>("signupform") {
+        final RequiredTextField<String> subdomain = new RequiredTextField<String>(
+                "subdomainfield", new Model<String>());
 
-			private static final long serialVersionUID = 1L;
+        final PasswordTextField password = new PasswordTextField(
+                "passwordfield", new Model<String>());
 
-			@Override
-			protected void onSubmit() {
-				final ClientResource clientResource = new ClientResource(
-						SiteConfiguration.getSignupUrl());
-				final UserHubResource userResource = clientResource
-						.wrap(UserHubResource.class);
+        final PasswordTextField cpassword = new PasswordTextField(
+                "cpasswordfield", new Model<String>());
 
-				try {
+        final HiddenField<String> timezone = new HiddenField<String>(
+                "timezonefield", new Model<String>());
 
-					final Form form = new Form();
-					form.set("subdomain", subdomain.getModelObject());
-					form.set("planId", parameters.get("planId").toString());
-					form.set("username", email.getModelObject());
-					form.set("password", password.getModelObject());
-					form.set("email", email.getModelObject());
-					form.set("timezoneId", timezone.getModelObject());
+        final StatelessForm<Void> form = new StatelessForm<Void>("signupform") {
 
-					log.debug("Submit form {}",
-							SiteConfiguration.getSignupUrl());
-					final String response = userResource.signup(form);
-					log.debug("Response of site: {}", response);
+            private static final long serialVersionUID = 1L;
 
-					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
-							new RedirectRequestHandler(response));
-				} catch (final Exception e) {
-					this.error(e.getMessage());
-				}
-			}
-		};
+            @Override
+            protected void onSubmit() {
+                final ClientResource clientResource = new ClientResource(
+                        SiteConfiguration.getSignupUrl());
+                final UserHubResource userResource = clientResource
+                        .wrap(UserHubResource.class);
 
-		this.add(form);
-		form.add(new FeedbackPanel("feedback"));
-		form.add(subdomain);
-		form.add(email);
-		form.add(password);
-		form.add(cpassword);
-		form.add(timezone);
-		form.add(receiveupdate);
+                try {
 
-		final RepeatingView timezoneAreaRepeat = new RepeatingView("arearepeat");
-		form.add(timezoneAreaRepeat);
+                    final Form form = new Form();
+                    form.set("subdomain", subdomain.getModelObject());
+                    form.set("planId", Integer.toString(planId));
+                    form.set("username", email.getModelObject());
+                    form.set("password", password.getModelObject());
+                    form.set("email", email.getModelObject());
+                    form.set("timezoneId", timezone.getModelObject());
 
-		for (final String timezoneArea : TimezoneMapper.AREAS) {
-			final AbstractItem areaItem = new AbstractItem(
-					timezoneAreaRepeat.newChildId());
-			timezoneAreaRepeat.add(areaItem);
+                    log.debug("Submit form {}",
+                            SiteConfiguration.getSignupUrl());
+                    final String response = userResource.signup(form);
+                    log.debug("Response of site: {}", response);
 
-			areaItem.add(new Label("one_area", timezoneArea));
+                    this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
+                            new RedirectRequestHandler(response));
+                } catch (final Exception e) {
+                    this.error(e.getMessage());
+                }
+            }
+        };
 
-			final RepeatingView timezoneRepeat = new RepeatingView(
-					"timezonerepeat");
-			areaItem.add(timezoneRepeat);
+        this.add(form);
+        this.add(new FeedbackPanel("feedback"));
+        form.add(subdomain);
+        form.add(email);
+        form.add(password);
+        form.add(cpassword);
+        form.add(timezone);
+        form.add(receiveupdate);
 
-			for (final TimezoneExt oneTimezone : TimezoneMapper.timeMap
-					.values()) {
-				if (oneTimezone.getArea().equals(timezoneArea)) {
-					final AbstractItem timezoneItem = new AbstractItem(
-							timezoneRepeat.newChildId());
-					timezoneRepeat.add(timezoneItem);
-					timezoneItem.add(new Label("one_timezone", oneTimezone
-							.getDisplayName()));
-					timezoneItem.add(AttributeModifier.replace("data-tag",
-							new AbstractReadOnlyModel<String>() {
-								private static final long serialVersionUID = 1L;
+        final RepeatingView timezoneAreaRepeat = new RepeatingView("arearepeat");
+        form.add(timezoneAreaRepeat);
 
-								@Override
-								public String getObject() {
-									return oneTimezone.getId();
-								}
-							}));
-				}
-			}
-		}
+        for (final String timezoneArea : TimezoneMapper.AREAS) {
+            final AbstractItem areaItem = new AbstractItem(
+                    timezoneAreaRepeat.newChildId());
+            timezoneAreaRepeat.add(areaItem);
 
-		form.add(new StatelessLink<Void>("signupGoogle") {
-			private static final long serialVersionUID = 1L;
+            areaItem.add(new Label("one_area", timezoneArea));
 
-			@Override
-			public void onClick() {
-				doAuthenticate(GOOGLE_PLUS_LINK);
-			}
-		});
+            final RepeatingView timezoneRepeat = new RepeatingView(
+                    "timezonerepeat");
+            areaItem.add(timezoneRepeat);
 
-		form.add(new StatelessLink<Void>("signupFacebook") {
-			private static final long serialVersionUID = 1L;
+            for (final TimezoneExt oneTimezone : TimezoneMapper.timeMap
+                    .values()) {
+                if (oneTimezone.getArea().equals(timezoneArea)) {
+                    final AbstractItem timezoneItem = new AbstractItem(
+                            timezoneRepeat.newChildId());
+                    timezoneRepeat.add(timezoneItem);
+                    timezoneItem.add(new Label("one_timezone", oneTimezone
+                            .getDisplayName()));
+                    timezoneItem.add(AttributeModifier.replace("data-tag",
+                            new AbstractReadOnlyModel<String>() {
+                                private static final long serialVersionUID = 1L;
 
-			@Override
-			public void onClick() {
-				doAuthenticate(FACEBOOK_LINK);
-			}
-		});
+                                @Override
+                                public String getObject() {
+                                    return oneTimezone.getId();
+                                }
+                            }));
+                }
+            }
+        }
 
-		form.add(new StatelessLink<Void>("signupTwitter") {
-			private static final long serialVersionUID = 1L;
+        final String currentService;
+        if (session.getAttribute("authManager") != null) {
+            SocialAuthManager manager = (SocialAuthManager) session
+                    .getAttribute("authManager");
+            currentService = manager.getCurrentAuthProvider().getProviderId();
+        } else {
+            currentService = "";
+        }
 
-			@Override
-			public void onClick() {
-				doAuthenticate(TWITTER_LINK);
-			}
-		});
+        StatelessLink<Void> googleLink = new StatelessLink<Void>("signupGoogle") {
+            private static final long serialVersionUID = 1L;
 
-		form.add(new StatelessLink<Void>("signupLinkedIn") {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void onClick() {
+                doAuthenticate(GOOGLE_PLUS_LINK);
+            }
+        };
+        googleLink.add(AttributeModifier.replace("class",
+                new AbstractReadOnlyModel<String>() {
+                    private static final long serialVersionUID = 1L;
 
-			@Override
-			public void onClick() {
-				doAuthenticate(LINKEDIN_LINK);
-			}
-		});
+                    @Override
+                    public String getObject() {
+                        if (currentService == ""
+                                || currentService == "googleplus") {
+                            if (currentService == "googleplus")
+                                return "service-selected";
+                            return "service-enabled";
+                        }
+                        return "service-disabled";
+                    }
+                }));
+        if (currentService != "" && currentService != "googleplus")
+            googleLink.setEnabled(false);
+        this.add(googleLink);
 
-		form.add(new StatelessLink<Void>("signupYahoo") {
-			private static final long serialVersionUID = 1L;
+        StatelessLink<Void> facebookLink = new StatelessLink<Void>(
+                "signupFacebook") {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void onClick() {
-				doAuthenticate(YAHOO_LINK);
-			}
-		});
+            @Override
+            public void onClick() {
+                doAuthenticate(FACEBOOK_LINK);
+            }
 
-		this.add(new Label("pagetitle", "Sign Up"));
-	}
+        };
+        facebookLink.add(AttributeModifier.replace("class",
+                new AbstractReadOnlyModel<String>() {
+                    private static final long serialVersionUID = 1L;
 
-	private void doAuthenticate(String authId) {
-		try {
-			// Create an instance of SocialAuthConfgi object
-			SocialAuthConfig config = SocialAuthConfig.getDefault();
+                    @Override
+                    public String getObject() {
+                        if (currentService == ""
+                                || currentService == "facebook") {
+                            if (currentService == "facebook")
+                                return "service-selected";
+                            return "service-enabled";
+                        }
+                        return "service-disabled";
+                    }
+                }));
+        if (currentService != "" && currentService != "facebook")
+            facebookLink.setEnabled(false);
+        this.add(facebookLink);
 
-			// load configuration. By default load the configuration
-			// from
-			// oauth_consumer.properties.
-			// You can also pass input stream, properties object or
-			// properties file name.
-			config.load();
+        StatelessLink<Void> linkedInLink = new StatelessLink<Void>(
+                "signupLinkedIn") {
+            private static final long serialVersionUID = 1L;
 
-			// Create an instance of SocialAuthManager and set config
-			SocialAuthManager manager = new SocialAuthManager();
-			manager.setSocialAuthConfig(config);
+            @Override
+            public void onClick() {
+                doAuthenticate(LINKEDIN_LINK);
+            }
+        };
+        linkedInLink.add(AttributeModifier.replace("class",
+                new AbstractReadOnlyModel<String>() {
+                    private static final long serialVersionUID = 1L;
 
-			// URL of YOUR application which will be called after
-			// authentication
-			String successUrl = "";
-			String providerId = "";
+                    @Override
+                    public String getObject() {
+                        if (currentService == ""
+                                || currentService == "LinkedIn") {
+                            if (currentService == "LinkedIn")
+                                return "service-selected";
+                            return "service-enabled";
+                        }
+                        return "service-disabled";
+                    }
+                }));
+        if (currentService != "" && currentService != "LinkedIn")
+            linkedInLink.setEnabled(false);
+        this.add(linkedInLink);
 
-			if (GOOGLE_PLUS_LINK.equals(authId)) {
-				successUrl = SiteConfiguration.getSiteUrl()
-						+ "oauth2/externalCallbackCommand";
-				providerId = "googleplus";
-			} else if (FACEBOOK_LINK.equals(authId)) {
-				successUrl = SiteConfiguration.getSiteUrl()
-						+ "oauth2/externalCallbackCommand";
-				providerId = "facebook";
-			} else if (TWITTER_LINK.equals(authId)) {
-				successUrl = SiteConfiguration.getSiteUrl()
-						+ "oauth2/externalCallbackCommand";
-				providerId = "twitter";
-			} else if (LINKEDIN_LINK.equals(authId)) {
-				successUrl = SiteConfiguration.getSiteUrl()
-						+ "oauth2/externalCallbackCommand";
-				providerId = "linkedin";
-			} else if (YAHOO_LINK.equals(authId)) {
-				successUrl = SiteConfiguration.getSiteUrl()
-						+ "oauth2/externalCallbackCommand";
-				providerId = "yahoo";
-			} else {
-				throw new MyCollabException(
-						"Do not support authentication with external service with id "
-								+ authId);
-			}
+        StatelessLink<Void> yahooLink = new StatelessLink<Void>("signupYahoo") {
+            private static final long serialVersionUID = 1L;
 
-			// get Provider URL to which you should redirect for
-			// authentication.
-			// id can have values "facebook", "twitter", "yahoo" etc. or
-			// the
-			// OpenID URL
-			String url = manager.getAuthenticationUrl(providerId, successUrl);
+            @Override
+            public void onClick() {
+                doAuthenticate(YAHOO_LINK);
+            }
+        };
+        yahooLink.add(AttributeModifier.replace("class",
+                new AbstractReadOnlyModel<String>() {
+                    private static final long serialVersionUID = 1L;
 
-			log.debug("Redirect url {}", url);
+                    @Override
+                    public String getObject() {
+                        if (currentService == "" || currentService == "yahoo") {
+                            if (currentService == "yahoo")
+                                return "service-selected";
+                            return "service-enabled";
+                        }
+                        return "service-disabled";
+                    }
+                }));
+        if (currentService != "" && currentService != "yahoo")
+            yahooLink.setEnabled(false);
+        this.add(yahooLink);
 
-			// Store in session
-			HttpSession session = ((ServletWebRequest) RequestCycle.get()
-					.getRequest()).getContainerRequest().getSession();
-			session.setAttribute("authManager", manager);
-			getRequestCycle().scheduleRequestHandlerAfterCurrent(
-					new RedirectRequestHandler(url));
-		} catch (Exception e) {
-			throw new MyCollabException(e);
-		}
-	}
+        Label separatorText = new Label("separator-text", "Or");
+        if (currentService != "") {
+            separatorText.add(AttributeModifier.replace("class",
+                    new AbstractReadOnlyModel<String>() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public String getObject() {
+                            return "hidding";
+                        }
+                    }));
+        }
+        this.add(separatorText);
+
+        this.add(new Label("pagetitle", "Sign Up"));
+    }
+
+    private void doAuthenticate(String authId) {
+        try {
+            // Create an instance of SocialAuthConfgi object
+            SocialAuthConfig config = SocialAuthConfig.getDefault();
+
+            // load configuration. By default load the configuration
+            // from
+            // oauth_consumer.properties.
+            // You can also pass input stream, properties object or
+            // properties file name.
+            config.load();
+
+            // Create an instance of SocialAuthManager and set config
+            SocialAuthManager manager = new SocialAuthManager();
+            manager.setSocialAuthConfig(config);
+
+            // URL of YOUR application which will be called after
+            // authentication
+            String successUrl = "";
+            String providerId = "";
+
+            if (GOOGLE_PLUS_LINK.equals(authId)) {
+                successUrl = SiteConfiguration.getSiteUrl()
+                        + "oauth2/externalCallbackCommand";
+                providerId = "googleplus";
+            } else if (FACEBOOK_LINK.equals(authId)) {
+                successUrl = SiteConfiguration.getSiteUrl()
+                        + "oauth2/externalCallbackCommand";
+                providerId = "facebook";
+            } else if (TWITTER_LINK.equals(authId)) {
+                successUrl = SiteConfiguration.getSiteUrl()
+                        + "oauth2/externalCallbackCommand";
+                providerId = "twitter";
+            } else if (LINKEDIN_LINK.equals(authId)) {
+                successUrl = SiteConfiguration.getSiteUrl()
+                        + "oauth2/externalCallbackCommand";
+                providerId = "linkedin";
+            } else if (YAHOO_LINK.equals(authId)) {
+                successUrl = SiteConfiguration.getSiteUrl()
+                        + "oauth2/externalCallbackCommand";
+                providerId = "yahoo";
+            } else {
+                throw new MyCollabException(
+                        "Do not support authentication with external service with id "
+                                + authId);
+            }
+
+            // get Provider URL to which you should redirect for
+            // authentication.
+            // id can have values "facebook", "twitter", "yahoo" etc. or
+            // the
+            // OpenID URL
+            String url = manager.getAuthenticationUrl(providerId, successUrl);
+
+            log.debug("Redirect url {}", url);
+
+            // Store in session
+            session = ((ServletWebRequest) RequestCycle.get().getRequest())
+                    .getContainerRequest().getSession();
+            session.setAttribute("authManager", manager);
+            session.setAttribute("planId", planId);
+            getRequestCycle().scheduleRequestHandlerAfterCurrent(
+                    new RedirectRequestHandler(url));
+        } catch (Exception e) {
+            throw new MyCollabException(e);
+        }
+    }
 
 }
