@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localtization.ExceptionI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
@@ -308,6 +309,17 @@ public class BillingServiceImpl implements BillingService {
 		} else {
 			throw new MyCollabException("Can not query free billing plan");
 		}
+	}
+
+	@Override
+	public BillingPlan findBillingPlan(@CacheKey Integer sAccountId) {
+		BillingAccount billingAccount = billingAccountMapper
+				.selectByPrimaryKey(sAccountId);
+		if (billingAccount != null) {
+			Integer billingplanid = billingAccount.getBillingplanid();
+			return billingPlanMapper.selectByPrimaryKey(billingplanid);
+		}
+		return null;
 	}
 
 }

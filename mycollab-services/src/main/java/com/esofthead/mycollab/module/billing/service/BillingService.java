@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 
@@ -14,6 +15,9 @@ public interface BillingService extends IService {
 
 	@CacheEvict
 	void cancelAccount(@CacheKey Integer accountid);
+	
+	@Cacheable
+	BillingPlan findBillingPlan(@CacheKey Integer sAccountId);
 
 	@CacheEvict
 	void updateBillingPlan(@CacheKey Integer accountid, int newBillingPlanId);
