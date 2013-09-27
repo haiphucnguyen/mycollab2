@@ -177,6 +177,7 @@ public class SignUpPage extends BasePage {
             SocialAuthManager manager = (SocialAuthManager) session
                     .getAttribute("authManager");
             currentService = manager.getCurrentAuthProvider().getProviderId();
+            session.removeAttribute("authManager");
         } else {
             currentService = "";
         }
