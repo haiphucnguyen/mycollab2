@@ -31,7 +31,8 @@ import com.vaadin.ui.HorizontalLayout;
 @ViewComponent
 public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 	private static final long serialVersionUID = 1L;
-	private ProjectSettingPresenter userPresenter;
+	
+	private ProjectUserPresenter userPresenter;
 	private ProjectRolePresenter rolePresenter;
 	private final DetachedTabs myProjectTab;
 	private final CssLayout mySpaceArea = new CssLayout();
@@ -60,7 +61,7 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 
 	private void buildComponents() {
 		this.userPresenter = PresenterResolver
-				.getPresenter(ProjectSettingPresenter.class);
+				.getPresenter(ProjectUserPresenter.class);
 		this.myProjectTab.addTab(this.userPresenter.getView(), "Users");
 
 		this.rolePresenter = PresenterResolver

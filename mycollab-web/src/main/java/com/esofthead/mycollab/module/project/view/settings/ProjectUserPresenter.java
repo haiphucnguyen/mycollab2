@@ -14,12 +14,12 @@ import com.vaadin.ui.ComponentContainer;
  * 
  * @author haiphucnguyen
  */
-public class ProjectSettingPresenter extends
-		AbstractPresenter<ProjectSettingContainer> {
+public class ProjectUserPresenter extends
+		AbstractPresenter<ProjectUserContainer> {
 	private static final long serialVersionUID = 1L;
 
-	public ProjectSettingPresenter() {
-		super(ProjectSettingContainer.class);
+	public ProjectUserPresenter() {
+		super(ProjectUserContainer.class);
 	}
 
 	@Override

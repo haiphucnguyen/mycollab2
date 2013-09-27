@@ -79,7 +79,7 @@ public class ProjectMemberAddPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.USERS)) {
-			ProjectSettingContainer userGroupContainer = (ProjectSettingContainer) container;
+			ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 			userGroupContainer.removeAllComponents();
 			userGroupContainer.addComponent(view.getWidget());
 

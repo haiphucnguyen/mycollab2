@@ -34,7 +34,7 @@ public class ProjectMemberListPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.USERS)) {
-			ProjectSettingContainer userGroupContainer = (ProjectSettingContainer) container;
+			ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 			userGroupContainer.removeAllComponents();
 			userGroupContainer.addComponent(view.getWidget());
 			ProjectMemberSearchCriteria criteria = null;

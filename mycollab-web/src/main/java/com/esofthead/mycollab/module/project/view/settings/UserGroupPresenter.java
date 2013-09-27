@@ -48,7 +48,7 @@ public class UserGroupPresenter extends AbstractPresenter<UserGroupView> {
 				ProjectMemberScreenData.Add.class)) {
 			view.gotoSubView("Users");
 			presenter = PresenterResolver
-					.getPresenter(ProjectSettingPresenter.class);
+					.getPresenter(ProjectUserPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data: " + data);
 		}

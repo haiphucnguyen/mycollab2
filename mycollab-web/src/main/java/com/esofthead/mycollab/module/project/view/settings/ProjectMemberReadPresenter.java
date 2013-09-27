@@ -193,7 +193,7 @@ public class ProjectMemberReadPresenter extends
 			}
 
 			if (prjMember != null) {
-				ProjectSettingContainer userGroupContainer = (ProjectSettingContainer) container;
+				ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 				userGroupContainer.removeAllComponents();
 				userGroupContainer.addComponent(view.getWidget());
 				view.previewItem(prjMember);

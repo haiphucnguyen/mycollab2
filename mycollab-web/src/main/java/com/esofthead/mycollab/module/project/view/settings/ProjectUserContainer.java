@@ -12,7 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectSettingContainer extends AbstractView {
+public class ProjectUserContainer extends AbstractView {
 	private static final long serialVersionUID = 1L;
     
 }
