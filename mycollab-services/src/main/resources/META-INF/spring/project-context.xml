@@ -10,7 +10,7 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapper" />
     </bean>
-    
+
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="itemTimeLoggingMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
@@ -63,6 +63,12 @@
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ProjectGenericTaskMapper" />
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectNotificationSettingMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.project.dao.ProjectNotificationSettingMapper" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMapper">
@@ -130,7 +136,7 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ProjectRolePermissionMapper" />
     </bean>
-    
+
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectFollowingTicketMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"

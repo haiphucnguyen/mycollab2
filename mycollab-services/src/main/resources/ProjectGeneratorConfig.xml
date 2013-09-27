@@ -47,6 +47,9 @@
         <table domainObjectName="Project" schema="mycollab"
             tableName="m_prj_project" />
 
+        <table domainObjectName="ProjectNotificationSetting"
+            schema="mycollab" tableName="m_prj_notifications" />
+
         <table domainObjectName="Risk" schema="mycollab"
             tableName="m_prj_risk" />
 

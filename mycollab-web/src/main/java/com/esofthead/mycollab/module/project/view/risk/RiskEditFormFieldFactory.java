@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.project.view.risk;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.module.project.domain.Risk;
-import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
