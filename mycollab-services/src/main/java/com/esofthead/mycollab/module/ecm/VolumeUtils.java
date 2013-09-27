@@ -20,4 +20,8 @@ public class VolumeUtils {
 			return Math.floor(volume / GB_SIZE) + " Gb";
 		}
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(getVolumeDisplay(10737418240L));
+	}
 }
