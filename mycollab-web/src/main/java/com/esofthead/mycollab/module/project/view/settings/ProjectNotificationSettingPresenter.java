@@ -1,7 +1,12 @@
 package com.esofthead.mycollab.module.project.view.settings;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
+import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class ProjectNotificationSettingPresenter extends
@@ -14,7 +19,15 @@ public class ProjectNotificationSettingPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		// TODO Auto-generated method stub
+		UserSettingView userSettingView = (UserSettingView) container;
+		userSettingView.gotoSubView("Notification Settings");
 
+		ProjectNotificationSettingService projectNotificationSettingService = ApplicationContextUtil
+				.getSpringBean(ProjectNotificationSettingService.class);
+		ProjectNotificationSetting notification = projectNotificationSettingService
+				.findNotification(AppContext.getUsername(),
+						CurrentProjectVariables.getProjectId(),
+						AppContext.getAccountId());
+		view.showNotificationSettings(notification);
 	}
 }

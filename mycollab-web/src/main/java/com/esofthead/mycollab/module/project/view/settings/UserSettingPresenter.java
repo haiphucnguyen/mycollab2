@@ -18,11 +18,11 @@ import com.vaadin.ui.ComponentContainer;
  * 
  * @author haiphucnguyen
  */
-public class UserGroupPresenter extends AbstractPresenter<UserGroupView> {
+public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 	private static final long serialVersionUID = 1L;
 
-	public UserGroupPresenter() {
-		super(UserGroupView.class);
+	public UserSettingPresenter() {
+		super(UserSettingView.class);
 	}
 
 	@Override

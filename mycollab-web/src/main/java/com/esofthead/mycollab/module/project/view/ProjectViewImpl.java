@@ -44,7 +44,7 @@ import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
-import com.esofthead.mycollab.module.project.view.settings.UserGroupPresenter;
+import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
@@ -91,7 +91,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 	private TimeTrackingPresenter timePresenter;
-	private UserGroupPresenter userPresenter;
+	private UserSettingPresenter userPresenter;
 	private StandupPresenter standupPresenter;
 	private final ProjectBreadcrumb breadCrumb;
 	private SplitButtonExt controlsBtn;
@@ -284,7 +284,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private Component constructProjectUsers() {
 		userPresenter = PresenterResolver
-				.getPresenter(UserGroupPresenter.class);
+				.getPresenter(UserSettingPresenter.class);
 		return userPresenter.getView();
 	}
 

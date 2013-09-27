@@ -11,6 +11,6 @@ import com.vaadin.ui.Component;
  * 
  * @author haiphucnguyen
  */
-public interface UserGroupView extends View {
+public interface UserSettingView extends View {
 	Component gotoSubView(String name);
 }

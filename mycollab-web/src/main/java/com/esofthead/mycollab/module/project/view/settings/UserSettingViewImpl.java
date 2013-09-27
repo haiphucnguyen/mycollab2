@@ -29,15 +29,18 @@ import com.vaadin.ui.HorizontalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserGroupViewImpl extends AbstractView implements UserGroupView {
+public class UserSettingViewImpl extends AbstractView implements
+		UserSettingView {
 	private static final long serialVersionUID = 1L;
-	
+
 	private ProjectUserPresenter userPresenter;
 	private ProjectRolePresenter rolePresenter;
+	private ProjectNotificationSettingPresenter notificationSettingPresenter;
+
 	private final DetachedTabs myProjectTab;
 	private final CssLayout mySpaceArea = new CssLayout();
 
-	public UserGroupViewImpl() {
+	public UserSettingViewImpl() {
 
 		this.myProjectTab = new DetachedTabs.Horizontal(this.mySpaceArea);
 		this.myProjectTab.setSizeUndefined();
@@ -68,6 +71,11 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 				.getPresenter(ProjectRolePresenter.class);
 		this.myProjectTab.addTab(this.rolePresenter.getView(), "Roles");
 
+		this.notificationSettingPresenter = PresenterResolver
+				.getPresenter(ProjectNotificationSettingPresenter.class);
+		this.myProjectTab.addTab(this.notificationSettingPresenter.getView(),
+				"Notification Settings");
+
 		this.myProjectTab
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
 					@Override
@@ -84,17 +92,20 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 									.getId()));
 							criteria.setStatus(new StringSearchField(
 									ProjectMemberStatusConstants.ACTIVE));
-							UserGroupViewImpl.this.userPresenter
-									.go(UserGroupViewImpl.this,
+							UserSettingViewImpl.this.userPresenter
+									.go(UserSettingViewImpl.this,
 											new ScreenData.Search<ProjectMemberSearchCriteria>(
 													criteria));
 						} else if ("Roles".equals(caption)) {
 							final ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
 							criteria.setProjectId(new NumberSearchField(project
 									.getId()));
-							UserGroupViewImpl.this.rolePresenter.go(
-									UserGroupViewImpl.this,
+							UserSettingViewImpl.this.rolePresenter.go(
+									UserSettingViewImpl.this,
 									new ProjectRoleScreenData.Search(criteria));
+						} else if ("Notification Settings".equals(caption)) {
+							notificationSettingPresenter.go(
+									UserSettingViewImpl.this, null);
 						}
 					}
 				});
