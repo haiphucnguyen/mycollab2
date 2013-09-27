@@ -29,12 +29,15 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 
 	private CssLayout mainLayout;
 	private String level;
+	private ProjectNotificationSetting notificationSetting;
 
 	@Override
 	public void showNotificationSettings(
 			final ProjectNotificationSetting notification) {
 		this.removeAllComponents();
 		this.setSizeFull();
+
+		this.notificationSetting = notification;
 
 		mainLayout = new CssLayout();
 		mainLayout.setSizeFull();
@@ -63,10 +66,18 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 		body.addComponent(optionGroup);
 		body.setComponentAlignment(optionGroup, Alignment.MIDDLE_LEFT);
 
-		if (notification == null)
+		if (notificationSetting == null) {
 			optionGroup.select(options.get(0));
+			notificationSetting = new ProjectNotificationSetting();
+			notificationSetting.setLevel("Default");
+			notificationSetting.setProjectid(CurrentProjectVariables
+					.getProjectId());
+			notificationSetting.setSaccountid(AppContext.getAccountId());
+			notificationSetting.setUsername(AppContext.getUsername());
+		}
+
 		for (String str : options) {
-			if (str.startsWith(notification.getLevel())) {
+			if (str.startsWith(notificationSetting.getLevel())) {
 				optionGroup.select(str);
 				break;
 			}
@@ -97,18 +108,13 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 				ProjectNotificationSettingService service = ApplicationContextUtil
 						.getSpringBean(ProjectNotificationSettingService.class);
 				try {
-					if (notification == null) {
-						ProjectNotificationSetting notification = new ProjectNotificationSetting();
-						notification.setLevel(level);
-						notification.setProjectid(CurrentProjectVariables
-								.getProjectId());
-						notification.setSaccountid(AppContext.getAccountId());
-						notification.setUsername(AppContext.getUsername());
-						service.saveWithSession(notification,
+					notificationSetting.setLevel(level);
+
+					if (notificationSetting.getId() == null) {
+						service.saveWithSession(notificationSetting,
 								AppContext.getUsername());
 					} else {
-						notification.setLevel(level);
-						service.updateWithSession(notification,
+						service.updateWithSession(notificationSetting,
 								AppContext.getUsername());
 					}
 					getWindow().showNotification(
