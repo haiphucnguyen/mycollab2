@@ -1787,9 +1787,9 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:                                        DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=                                        '#DDD',
-		GradientType=  
+	filter: progid:                                             DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=                                             '#DDD',
+		GradientType=       
 		
 		
 		 
@@ -1842,7 +1842,12 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:                                        DXImageTransform.Microsoft.gradient(startColorstr=
+	filter: progid:                                             DXImageTransform.Microsoft.gradient(startColorstr=
+		
+		
+		
+		
+		
 		
 		
 		
@@ -1878,8 +1883,9 @@ input.v-textfield-errorField {
 		
 		
 		 
-		   '#F8F8F8', endColorstr=                                        '#EEEEEE',
-		GradientType=                   
+		   '#F8F8F8', endColorstr=
+		                                            '#EEEEEE', GradientType=
+		                       
 		
 		
 		  
@@ -4401,15 +4407,17 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .current-plan-information #currentPlanInfo .infoBlock {
 	padding: 10px 0px;
-	display:table-cell;
+	display: table-cell;
 }
 
 .current-plan-information #currentPlanInfo .blockSeparator {
-	display:table-cell;
+	display: table-cell;
 	width: 25px;
 	height: 100%;
-	background: url('icons/block-separator.png') no-repeat center center transparent;
+	background: url('icons/block-separator.png') no-repeat center center
+		transparent;
 }
+
 .current-plan-information #currentPlanInfo .infoTitle {
 	font-weight: bold;
 	color: rgb(25, 115, 154);
@@ -4426,7 +4434,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .prig-bottom-cnt {
-	border-top: solid 15px #228BC9;	
+	border-top: solid 15px #228BC9;
 	padding-left: 30px;
 	padding-top: 20px;
 }
@@ -4444,31 +4452,32 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	text-align: left;
 	padding: 10px 10px 0px 15px;
 }
+
 .pri-coll-1 {
 	padding-right: 35px;
 }
 
 .pri-bott-block h2 {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .pri-bott-block p {
 	font-size: 12px;
 	color: #5f5c5c;
 	padding-bottom: 10px;
-	text-align:justify;
+	text-align: justify;
 	font-family: 'verdana';
 }
+
 .pri-bott-coll {
-	display:table-cell;
-    padding-right: 20px;
-    width: 50%;
-    -moz-box-sizing: border-box;
+	display: table-cell;
+	padding-right: 20px;
+	width: 50%;
+	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 /* end styles */
-
 .billing-plan {
 	text-align: center;
 	-moz-box-sizing: border-box;
@@ -4632,26 +4641,33 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .cancelAccountHeader .first-line {
 	font-size: 20px;
 }
+
 .cancelAccountHeader .header-content {
 	text-align: center;
 }
+
 .cancelAccountHeader .header-note {
 	font-size: 11px;
 	color: rgb(137, 137, 137);
 }
-.cancelAccountBody > .v-csslayout-margin {
+
+.cancelAccountBody>.v-csslayout-margin {
 	border-top: 15px solid rgb(34, 139, 201);
-	background-color: rgb(243,243,243);
+	background-color: rgb(243, 243, 243);
 }
-.cancelAccountBody .v-gridlayout > div > div > div {
+
+.cancelAccountBody .v-gridlayout>div>div>div {
 	padding: 8px;
 }
+
 .cancelAccountBody .v-gridlayout .v-label {
 	text-align: right;
 }
+
 .trialInformBox {
 	cursor: pointer;
 }
+
 .trialEndingNotification {
 	background-color: rgb(232, 160, 82);
 	color: white;
@@ -4660,10 +4676,12 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	vertical-align: middle;
 	cursor: pointer;
 }
+
 .trialEndingNotification a {
 	color: white;
 	display: block;
 }
+
 .trialEndingNotification .informBlock {
 	display: table-cell;
 	vertical-align: middle;
@@ -4671,6 +4689,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
+
 .trialEndingNotification .informBlock:first-child {
 	padding-right: 5px;
 }
@@ -4679,27 +4698,40 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-horizontallayout.border-box2-no-margin.file-topcontrols {
 	border-radius: 5px 5px 0px 0px;
 }
-.v-horizontallayout.border-box2-no-margin.file-topcontrols .v-buttongroup .v-button.v-button-right {
+
+.v-horizontallayout.border-box2-no-margin.file-topcontrols .v-buttongroup .v-button.v-button-right
+	{
 	border-radius: 0px 3px 0px 0px;
 }
+
 .v-label.volumeUsageInfo {
 	display: table;
 }
+
 .v-label.volumeUsageInfo div {
 	display: table-cell;
 }
+
 .v-label.volumeUsageInfo #left-side {
 	width: 30px;
 	height: 100%;
-	background: url('icons/volume-usage-corners.png') no-repeat top left transparent;
+	background: url('icons/volume-usage-corners.png') no-repeat top left
+		transparent;
 }
+
 .v-label.volumeUsageInfo #right-side {
 	width: 30px;
-	background: url('icons/volume-usage-corners.png') no-repeat top right transparent;
+	background: url('icons/volume-usage-corners.png') no-repeat top right
+		transparent;
 }
+
 .v-label.volumeUsageInfo #info-content {
 	background-color: rgb(190, 167, 118);
 	padding: 3px 0px;
 	color: white;
 	text-align: center;
+}
+
+.v-select-optiongroup .v-select-option {
+	white-space: pre-wrap;
 }

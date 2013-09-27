@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
+import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -32,6 +33,7 @@ import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.project.events.ProjectNotificationEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
@@ -786,6 +788,14 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				"View Project Role: " + role.getRolename());
 	}
 
+	public void gotoNotificationSetting(ProjectNotificationSetting notify) {
+		this.select(1);
+		this.addLink(new Button("Notification Setting",
+				new GotoNotificationSetttingListener()));
+		AppContext.addFragment("project/notificationsetting",
+				"Notification Setting");
+	}
+
 	public void gotoRoleAdd() {
 		this.select(1);
 		this.addLink(new Button("Roles", new GotoRoleListener()));
@@ -806,6 +816,17 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
 								+ role.getId()),
 				"Edit Project Role: " + role.getRolename());
+	}
+
+	private static class GotoNotificationSetttingListener implements
+			Button.ClickListener {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			EventBus.getInstance().fireEvent(
+					new ProjectNotificationEvent.GotoList(this, null));
+		}
 	}
 
 	private static class GotoRoleListener implements Button.ClickListener {
