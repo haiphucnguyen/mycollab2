@@ -5,14 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.module.user.esb.UserDeleteListener;
+import com.esofthead.mycollab.module.user.esb.UserRemovedCommand;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component
-public class UserDeleteListenerImpl implements UserDeleteListener {
+public class UserRemovedCommandImpl implements UserRemovedCommand {
 
 	private static Logger log = LoggerFactory
-			.getLogger(UserDeleteListenerImpl.class);
+			.getLogger(UserRemovedCommandImpl.class);
 
 	@Autowired
 	private UserService userService;

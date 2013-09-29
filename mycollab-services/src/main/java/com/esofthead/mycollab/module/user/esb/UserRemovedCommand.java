@@ -1,5 +1,5 @@
 package com.esofthead.mycollab.module.user.esb;
 
-public interface UserDeleteListener {
+public interface UserRemovedCommand {
 	void userRemoved(String username, int accountid);
 }

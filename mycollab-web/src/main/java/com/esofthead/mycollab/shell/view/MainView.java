@@ -167,7 +167,9 @@ public final class MainView extends AbstractView {
 
 				@Override
 				public void layoutClick(LayoutClickEvent event) {
-					// TODO: go to upgrade billing plan page
+					EventBus.getInstance().fireEvent(
+							new ShellEvent.GotoUserAccountModule(this,
+									new String[] { "billing" }));
 				}
 			});
 			accountLayout.addComponent(informBox);

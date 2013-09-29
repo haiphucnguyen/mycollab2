@@ -14,11 +14,14 @@ import com.esofthead.mycollab.common.localtization.ExceptionI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
 import com.esofthead.mycollab.module.billing.RegisterSourceConstants;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand;
+import com.esofthead.mycollab.module.billing.esb.BillingEndpoints;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.AccessPermissionFlag;
 import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
@@ -295,8 +298,11 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	public void cancelAccount(Integer accountid) {
-		// TODO Auto-generated method stub
-
+		AccountDeletedCommand accountDeletedCommand = new BeanProxyBuilder()
+				.build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
+						AccountDeletedCommand.class);
+		billingAccountMapper.deleteByPrimaryKey(accountid);
+		accountDeletedCommand.accountDeleted(accountid);
 	}
 
 	@Override
