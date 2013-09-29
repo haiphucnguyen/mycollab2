@@ -122,7 +122,7 @@ public class AuditLogShowHandler {
 			HistoryFieldFormat {
 		@Override
 		public String formatField(String value) {
-			if (value != null) {
+			if (value != null && !"".equals(value)) {
 				try {
 					Integer currencyid = Integer.parseInt(value);
 					CurrencyService currencyService = ApplicationContextUtil
@@ -131,11 +131,11 @@ public class AuditLogShowHandler {
 					return currency.getSymbol();
 				} catch (Exception e) {
 					log.error("Error while get currency id" + value, e);
-					return "";
+					return "&lt;Empty&gt;";
 				}
 			}
 
-			return "";
+			return "&lt;Empty&gt;";
 		}
 	}
 
@@ -147,7 +147,7 @@ public class AuditLogShowHandler {
 				return (value.length() > 200) ? (value.substring(0, 150) + "...")
 						: value;
 			} else {
-				return "<Null>";
+				return "&lt;Empty&gt;";
 			}
 		}
 	}
@@ -162,7 +162,7 @@ public class AuditLogShowHandler {
 						value, formatW3C);
 				return AppContext.formatDate(formatDate);
 			} else {
-				return "";
+				return "&lt;Empty&gt;";
 			}
 
 		}

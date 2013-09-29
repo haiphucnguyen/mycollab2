@@ -248,7 +248,7 @@ public class HistoryLogComponent extends VerticalLayout {
 
 		@Override
 		public Component formatField(String value) {
-			if (value != null) {
+			if (value != null && !"".equals(value)) {
 				try {
 					Integer currencyid = Integer.parseInt(value);
 					CurrencyService currencyService = ApplicationContextUtil
