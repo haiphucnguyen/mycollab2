@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -124,6 +125,54 @@ public class CampaignTableDisplay
 
 					}
 				});
+
+		this.addGeneratedColumn("expectedrevenue", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleCampaign campaign = CampaignTableDisplay.this
+						.getBeanByIndex(itemId);
+				if (campaign.getExpectedrevenue() != null) {
+					String expectedRevenueText = campaign.getExpectedrevenue()
+							+ "";
+					Currency currency = campaign.getCurrency();
+					if (currency != null) {
+						expectedRevenueText += " " + currency.getSymbol();
+					}
+
+					return new Label(expectedRevenueText);
+				} else {
+					return new Label("");
+				}
+
+			}
+		});
+		
+		this.addGeneratedColumn("expectedcost", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleCampaign campaign = CampaignTableDisplay.this
+						.getBeanByIndex(itemId);
+				if (campaign.getExpectedrevenue() != null) {
+					String expectedCostText = campaign.getExpectedcost()
+							+ "";
+					Currency currency = campaign.getCurrency();
+					if (currency != null) {
+						expectedCostText += " " + currency.getSymbol();
+					}
+
+					return new Label(expectedCostText);
+				} else {
+					return new Label("");
+				}
+
+			}
+		});
 
 		this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;

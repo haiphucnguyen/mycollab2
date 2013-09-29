@@ -145,7 +145,8 @@ public class CrmActivityStreamGenerator {
 					AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("type", "Type");
-			this.generateFieldDisplayHandler("currencyid", "Currency");
+			this.generateFieldDisplayHandler("currencyid", "Currency",
+					AuditLogShowHandler.CURRENCY_FIELD);
 			this.generateFieldDisplayHandler("budget", "Budget");
 			this.generateFieldDisplayHandler("expectedcost", "Expected Cost");
 			this.generateFieldDisplayHandler("actualcost", "Actual Cost");
