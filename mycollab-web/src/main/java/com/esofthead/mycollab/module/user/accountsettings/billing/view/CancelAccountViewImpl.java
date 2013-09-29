@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.billing.view;
 
+import com.esofthead.mycollab.common.dao.CustomerFeedbackMapper;
+import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -126,6 +128,11 @@ public class CancelAccountViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
+						// Save cancel account reason
+						CustomerFeedbackMapper customerFeedbackMapper = ApplicationContextUtil
+								.getSpringBean(CustomerFeedbackMapper.class);
+						CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
+
 						BillingService billingService = ApplicationContextUtil
 								.getSpringBean(BillingService.class);
 						billingService.cancelAccount(AppContext.getAccountId());

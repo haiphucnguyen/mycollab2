@@ -7,4 +7,6 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 public interface CurrencyService extends ICrudService<Integer, Currency> {
 	List<Currency> getCurrencies();
+	
+	Currency getCurrency(int currencyid);
 }

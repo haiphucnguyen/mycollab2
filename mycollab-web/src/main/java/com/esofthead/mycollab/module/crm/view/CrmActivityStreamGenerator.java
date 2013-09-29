@@ -1,13 +1,25 @@
 package com.esofthead.mycollab.module.crm.view;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
 public class CrmActivityStreamGenerator {
+	private static Logger log = LoggerFactory
+			.getLogger(CrmActivityStreamGenerator.class);
+
 	private static AuditLogShowHandler accountHandler = new AccountAuditLogShowHandler();
 	private static AuditLogShowHandler contactHandler = new ContactAuditLogShowHandler();
 	private static AuditLogShowHandler campaignHandler = new CampaignAuditLogShowHandler();
@@ -185,7 +197,8 @@ public class CrmActivityStreamGenerator {
 		public OpportunityAuditLogShowHandler() {
 			this.generateFieldDisplayHandler("opportunityname",
 					"Opportunity Name");
-			this.generateFieldDisplayHandler("currencyid", "Currency");
+			this.generateFieldDisplayHandler("currencyid", "Currency",
+					AuditLogShowHandler.CURRENCY_FIELD);
 			this.generateFieldDisplayHandler("amount", "Amount");
 			this.generateFieldDisplayHandler("salesstage", "Sales Stage");
 			this.generateFieldDisplayHandler("probability", "Probability (%)");

@@ -36,4 +36,16 @@ public class CurrencyServiceImpl extends DefaultCrudService<Integer, Currency>
 		return currencies;
 	}
 
+	@Override
+	public Currency getCurrency(int currencyid) {
+		List<Currency> currencies2 = getCurrencies();
+		for (Currency currency : currencies2) {
+			if (currency.getId() == currencyid) {
+				return currency;
+			}
+		}
+
+		return null;
+	}
+
 }

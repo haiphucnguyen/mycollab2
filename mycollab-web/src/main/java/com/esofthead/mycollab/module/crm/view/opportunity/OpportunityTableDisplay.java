@@ -113,6 +113,26 @@ public class OpportunityTableDisplay
 			}
 		});
 
+		this.addGeneratedColumn("amount", new Table.ColumnGenerator() {
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final SimpleOpportunity opportunity = OpportunityTableDisplay.this
+						.getBeanByIndex(itemId);
+
+				String amount = "";
+				if (opportunity.getAmount() != null) {
+					amount = opportunity.getAmount() + "";
+
+					if (opportunity.getCurrency() != null) {
+						amount += " " + opportunity.getCurrency().getSymbol();
+					}
+				}
+
+				return new Label(amount);
+			}
+		});
+
 		this.addGeneratedColumn("assignUserFullName",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;

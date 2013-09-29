@@ -5,17 +5,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.common.domain.AuditChangeItem;
+import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
+import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
 public class AuditLogShowHandler {
+
+	private static Logger log = LoggerFactory
+			.getLogger(AuditLogShowHandler.class);
 
 	protected Map<String, FieldDisplayHandler> fieldsFormat = new HashMap<String, FieldDisplayHandler>();
 	public static final String DEFAULT_FIELD = "default";
 	public static final String DATE_FIELD = "date";
 	public static final String DATETIME_FIELD = "datetime";
+	public static final String CURRENCY_FIELD = "currency";
 	private static Map<String, HistoryFieldFormat> defaultFieldHandlers;
 
 	static {
@@ -23,6 +33,8 @@ public class AuditLogShowHandler {
 		defaultFieldHandlers
 				.put(DEFAULT_FIELD, new DefaultHistoryFieldFormat());
 		defaultFieldHandlers.put(DATE_FIELD, new DateHistoryFieldFormat());
+		defaultFieldHandlers.put(CURRENCY_FIELD,
+				new CurrencyHistoryFieldFormat());
 	}
 
 	public void generateFieldDisplayHandler(String fieldname, String displayName) {
@@ -53,19 +65,7 @@ public class AuditLogShowHandler {
 						.get(fieldName);
 				if (fieldDisplayHandler != null) {
 					isAppended = true;
-					str.append("<li>");
-					str.append(fieldDisplayHandler.getDisplayName())
-							.append(": ")
-							.append("<i>")
-							.append(fieldDisplayHandler.getFormat()
-									.formatField(item.getOldvalue()))
-							.append("</i>")
-							.append("&nbsp; &rarr; &nbsp; ")
-							.append("<i>")
-							.append(fieldDisplayHandler.getFormat()
-									.formatField(item.getNewvalue()))
-							.append("</i>");
-					str.append("</li>");
+					str.append(fieldDisplayHandler.generateLogItem(item));
 				}
 			}
 
@@ -98,11 +98,45 @@ public class AuditLogShowHandler {
 		public HistoryFieldFormat getFormat() {
 			return format;
 		}
+
+		public String generateLogItem(AuditChangeItem item) {
+			StringBuffer str = new StringBuffer();
+			str.append("<li>");
+			str.append(this.getDisplayName()).append(": ").append("<i>")
+					.append(this.getFormat().formatField(item.getOldvalue()))
+					.append("</i>").append("&nbsp; &rarr; &nbsp; ")
+					.append("<i>")
+					.append(this.getFormat().formatField(item.getNewvalue()))
+					.append("</i>");
+			str.append("</li>");
+			return str.toString();
+		}
 	}
 
 	public static interface HistoryFieldFormat {
 
 		String formatField(String value);
+	}
+
+	public static class CurrencyHistoryFieldFormat implements
+			HistoryFieldFormat {
+		@Override
+		public String formatField(String value) {
+			if (value != null) {
+				try {
+					Integer currencyid = Integer.parseInt(value);
+					CurrencyService currencyService = ApplicationContextUtil
+							.getSpringBean(CurrencyService.class);
+					Currency currency = currencyService.getCurrency(currencyid);
+					return currency.getSymbol();
+				} catch (Exception e) {
+					log.error("Error while get currency id" + value, e);
+					return "";
+				}
+			}
+
+			return "";
+		}
 	}
 
 	public static class DefaultHistoryFieldFormat implements HistoryFieldFormat {

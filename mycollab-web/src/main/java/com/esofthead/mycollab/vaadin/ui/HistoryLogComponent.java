@@ -9,10 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.common.domain.AuditChangeItem;
+import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
 import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -32,10 +37,13 @@ import com.vaadin.ui.VerticalLayout;
  */
 @SuppressWarnings("serial")
 public class HistoryLogComponent extends VerticalLayout {
+	private static Logger log = LoggerFactory
+			.getLogger(HistoryLogComponent.class);
 
 	public static final String DEFAULT_FIELD = "default";
 	public static final String DATE_FIELD = "date";
 	public static final String DATETIME_FIELD = "datetime";
+	public static final String CURRENCY_FIELD = "currency";
 	private static Map<String, HistoryFieldFormat> defaultFieldHandlers;
 
 	static {
@@ -43,6 +51,8 @@ public class HistoryLogComponent extends VerticalLayout {
 		defaultFieldHandlers
 				.put(DEFAULT_FIELD, new DefaultHistoryFieldFormat());
 		defaultFieldHandlers.put(DATE_FIELD, new DateHistoryFieldFormat());
+		defaultFieldHandlers.put(CURRENCY_FIELD,
+				new CurrencyHistoryFieldFormat());
 	}
 	protected BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog> logTable;
 	protected Map<String, FieldDisplayHandler> fieldsFormat = new HashMap<String, FieldDisplayHandler>();
@@ -56,7 +66,8 @@ public class HistoryLogComponent extends VerticalLayout {
 		this.typeid = typeid;
 
 		logTable = new BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog>(
-				this, ApplicationContextUtil.getSpringBean(AuditLogService.class),
+				this,
+				ApplicationContextUtil.getSpringBean(AuditLogService.class),
 				HistoryLogRowDisplay.class);
 		this.addComponent(logTable);
 	}
@@ -229,6 +240,28 @@ public class HistoryLogComponent extends VerticalLayout {
 			Date formatDate = DateTimeUtils.getDateByStringWithFormat(value,
 					formatW3C);
 			return new Label(AppContext.formatDate(formatDate));
+		}
+	}
+
+	public static class CurrencyHistoryFieldFormat implements
+			HistoryFieldFormat {
+
+		@Override
+		public Component formatField(String value) {
+			if (value != null) {
+				try {
+					Integer currencyid = Integer.parseInt(value);
+					CurrencyService currencyService = ApplicationContextUtil
+							.getSpringBean(CurrencyService.class);
+					Currency currency = currencyService.getCurrency(currencyid);
+					return new Label(currency.getSymbol());
+				} catch (Exception e) {
+					log.error("Error while get currency id" + value, e);
+					return new Label("");
+				}
+			}
+
+			return new Label("");
 		}
 	}
 }
