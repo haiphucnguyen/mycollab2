@@ -40,6 +40,9 @@ public interface OpportunityService extends
 			@CacheKey OpportunitySearchCriteria criteria);
 
 	@Cacheable
+	List<GroupItem> getPipeline(@CacheKey OpportunitySearchCriteria criteria);
+
+	@Cacheable
 	List<GroupItem> getLeadSourcesSummary(
 			@CacheKey OpportunitySearchCriteria criteria);
 

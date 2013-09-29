@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 
 public interface OpportunityMapperExt extends
 		ISearchableDAO<OpportunitySearchCriteria>,
-		IMassUpdateDAO<Opportunity, OpportunitySearchCriteria>{
+		IMassUpdateDAO<Opportunity, OpportunitySearchCriteria> {
 
 	SimpleOpportunity findById(int opportunityId);
 
@@ -23,4 +23,6 @@ public interface OpportunityMapperExt extends
 	List<GroupItem> getLeadSourcesSummary(
 			@Param("searchCriteria") OpportunitySearchCriteria criteria);
 
+	public List<GroupItem> getPipeline(
+			@Param("searchCriteria") OpportunitySearchCriteria criteria);
 }

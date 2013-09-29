@@ -60,4 +60,8 @@
     <inherits name="org.tepi.listbuilder.gwt.ListBuilderWidgetset" />
 
     <inherits name="org.vaadin.artur.icepush.IcepushaddonWidgetset" />
+
+    <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
+
+    <inherits name="com.vaadin.addon.charts.Widgetset" />
 </module>

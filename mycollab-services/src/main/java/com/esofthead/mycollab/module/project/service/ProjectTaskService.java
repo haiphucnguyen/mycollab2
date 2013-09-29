@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 @RemotingDestination
 public interface ProjectTaskService extends
 		IDefaultService<Integer, Task, TaskSearchCriteria> {
+	
 	@Cacheable
 	SimpleTask findById(int taskId, @CacheKey int sAccountId);
 }

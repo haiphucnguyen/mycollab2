@@ -19,9 +19,11 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 		log.debug("Configure project remove route");
 		from(ProjectEndPoints.PROJECT_REMOVE_ENDPOINT).setExchangePattern(
 				ExchangePattern.InOnly).to("seda:projectDelete.queue");
-		from("seda:projectDelete.queue").threads().bean(
-				ApplicationContextUtil.getSpringBean(DeleteProjectCommand.class),
-				"projectRemoved(int, int)");
+		from("seda:projectDelete.queue")
+				.threads()
+				.bean(ApplicationContextUtil
+						.getSpringBean(DeleteProjectCommand.class),
+						"projectRemoved(int, int)");
 
 		log.debug("Configure project member remove route");
 		from(ProjectEndPoints.PROJECT_MEMBER_DELETE_ENDPOINT)
@@ -46,9 +48,11 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 		log.debug("Configure project bug remove route");
 		from(ProjectEndPoints.PROJECT_BUG_REMOVE_ENDPOINT).setExchangePattern(
 				ExchangePattern.InOnly).to("seda:projectBugDelete.queue");
-		from("seda:projectBugDelete.queue").threads().bean(
-				ApplicationContextUtil.getSpringBean(DeleteProjectBugCommand.class),
-				"bugRemoved(String,int, int, int)");
+		from("seda:projectBugDelete.queue")
+				.threads()
+				.bean(ApplicationContextUtil
+						.getSpringBean(DeleteProjectBugCommand.class),
+						"bugRemoved(String,int, int, int)");
 
 		log.debug("Configure project component remove route");
 		from(ProjectEndPoints.PROJECT_COMPONENT_REMOVE_ENDPOINT)
@@ -73,9 +77,11 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 		log.debug("Configure project task remove route");
 		from(ProjectEndPoints.PROJECT_TASK_REMOVE_ENDPOINT).setExchangePattern(
 				ExchangePattern.InOnly).to("seda:projectTaskDelete.queue");
-		from("seda:projectTaskDelete.queue").threads().bean(
-				ApplicationContextUtil.getSpringBean(DeleteProjectTaskCommand.class),
-				"taskRemoved(String,int, int, int)");
+		from("seda:projectTaskDelete.queue")
+				.threads()
+				.bean(ApplicationContextUtil
+						.getSpringBean(DeleteProjectTaskCommand.class),
+						"taskRemoved(String,int, int, int)");
 
 		log.debug("Configure project task list remove route");
 		from(ProjectEndPoints.PROJECT_TASKLIST_REMOVE_ENDPOINT)
@@ -106,6 +112,16 @@ public class ProjectRouteBuilder extends SpringRouteBuilder {
 				.bean(ApplicationContextUtil
 						.getSpringBean(InviteOutsideProjectMemberCommand.class),
 						"inviteUsers(String[],int, int, String, int)");
+
+		log.debug("Configure project assignments clean cache route");
+		from(ProjectEndPoints.PROJECT_CLEAN_ASSIGNMENTS_CACHE)
+				.setExchangePattern(ExchangePattern.InOnly).to(
+						"seda:projectCleanAssignmentsCache.queue");
+		from("seda:projectCleanAssignmentsCache.queue")
+				.threads()
+				.bean(ApplicationContextUtil
+						.getSpringBean(CleanProjectAssignmentsCacheCommand.class),
+						"cleanAssignmentsCache(int, int)");
 	}
 
 }

@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -83,6 +84,12 @@ public class OpportunityServiceImpl extends
 	public List<GroupItem> getLeadSourcesSummary(
 			OpportunitySearchCriteria criteria) {
 		return opportunityMapperExt.getLeadSourcesSummary(criteria);
+	}
+
+	@Override
+	public List<GroupItem> getPipeline(
+			@CacheKey OpportunitySearchCriteria criteria) {
+		return opportunityMapperExt.getPipeline(criteria);
 	}
 
 	@Override

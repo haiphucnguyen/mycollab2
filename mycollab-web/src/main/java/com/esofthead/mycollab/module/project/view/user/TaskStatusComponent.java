@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.user;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -212,6 +213,11 @@ public class TaskStatusComponent extends Depot {
 							});
 					taskLink.setIcon(ProjectResources.getResource(task
 							.getType()));
+					if (task.getDueDate() != null
+							&& task.getDueDate().before(
+									new GregorianCalendar().getTime())) {
+						taskLink.addStyleName(UIConstants.LINK_OVERDUE);
+					}
 					return taskLink;
 				}
 			}

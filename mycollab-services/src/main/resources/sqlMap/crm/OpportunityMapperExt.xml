@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt">
-    
+
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.OpportunityMapper.ResultMapWithBLOBs"
         id="SimpleOpportunityResult" type="com.esofthead.mycollab.module.crm.domain.SimpleOpportunity">
@@ -241,8 +241,7 @@
         </if>
     </select>
 
-    <select id="findById" parameterType="int"
-        resultMap="SimpleOpportunityResult">
+    <select id="findById" parameterType="int" resultMap="SimpleOpportunityResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.selectSimpleOpportunity" />
 
@@ -270,6 +269,22 @@
         </trim>
     </select>
 
+    <select id="getPipeline" parameterType="OpportunitySearchCriteria"
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap">
+        SELECT m_crm_opportunity.salesStage AS groupid,
+        SUM(m_crm_opportunity.amount) AS value, '' AS groupname
+        FROM
+        m_crm_opportunity
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+            </trim>
+        </if>
+        GROUP BY m_crm_opportunity.salesStage
+    </select>
+
     <select id="getSalesStageSummary" parameterType="OpportunitySearchCriteria"
         resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap">
         SELECT m_crm_opportunity.salesStage AS groupid,
@@ -294,7 +309,8 @@
         m_crm_opportunity.id AND n.salesStage = 'Closed Won'))AS value,
         (SELECT count(*) FROM m_crm_opportunity mm WHERE
         m_crm_opportunity.source = mm.source) AS countNum,
-        '' AS groupname
+        '' AS
+        groupname
         FROM
         m_crm_opportunity
         <if test="searchCriteria != null">
