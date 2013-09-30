@@ -307,7 +307,7 @@ public class VersionReadViewImpl extends AbstractView implements
 				bugChartComponent = new BugChartComponent(chartSearchCriteria,
 						400, 200);
 				rightColumn.addComponent(bugChartComponent);
-				rightColumn.setWidth("400px");
+				rightColumn.setWidth("410px");
 			}
 
 			@Override
