@@ -41,4 +41,14 @@ public class ProjectNotificationSettingServiceImpl extends
 		return null;
 	}
 
+	@Override
+	public List<ProjectNotificationSetting> findNotifications(
+			Integer projectId, @CacheKey Integer sAccountId) {
+		ProjectNotificationSettingExample ex = new ProjectNotificationSettingExample();
+		ex.createCriteria().andProjectidEqualTo(projectId)
+				.andSaccountidEqualTo(sAccountId);
+
+		return projectNotificationSettingMapper.selectByExample(ex);
+	}
+
 }

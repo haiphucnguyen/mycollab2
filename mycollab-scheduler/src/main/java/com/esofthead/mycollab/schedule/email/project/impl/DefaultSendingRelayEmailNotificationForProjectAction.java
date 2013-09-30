@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.schedule.email;
+package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,30 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
-public abstract class DefaultSendingRelayEmailNotificationAction implements
-		SendingRelayEmailNotificationAction {
-
+public abstract class DefaultSendingRelayEmailNotificationForProjectAction
+		implements SendingRelayEmailNotificationAction {
 	@Autowired
 	protected ExtMailService extMailService;
 
+	@Autowired
+	protected ProjectMemberService projectMemberService;
+
+	/**
+	 * @see Remember add extratypeID = projectID for action relay email for any
+	 *      Project Action
+	 * 
+	 */
 	protected List<SimpleUser> getNotifyUsers(
 			SimpleRelayEmailNotification notification) {
-		return notification.getNotifyUsers();
+
+		List<SimpleUser> usersInProject = projectMemberService
+				.getActiveUsersInProject(notification.getExtratypeid(),
+						notification.getSaccountid());
+		return usersInProject;
 	}
 
 	@Override
@@ -30,8 +43,8 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					templateGenerator.putVariable("userName",
-							user.getDisplayName());
+					String userName = user.getDisplayName();
+					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
@@ -55,8 +68,8 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					templateGenerator.putVariable("userName",
-							user.getDisplayName());
+					String userName = user.getDisplayName();
+					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
@@ -81,8 +94,8 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			TemplateGenerator templateGenerator = templateGeneratorForCommentAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					templateGenerator.putVariable("userName",
-							user.getDisplayName());
+					String userName = user.getDisplayName();
+					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());

@@ -17,7 +17,6 @@ import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -142,10 +141,9 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		chartSearchCriteria.setMilestoneIds(new SetSearchField<Integer>(
 				this.milestone.getId()));
 		BugChartComponent bugChartComponent = null;
-		bugChartComponent = new BugChartComponent(chartSearchCriteria, "400px",
-				"200px");
+		bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
 		rightColumn.addComponent(bugChartComponent);
-		rightColumn.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+		rightColumn.setWidth("410px");
 
 		this.addComponent(bodyLayout);
 	}

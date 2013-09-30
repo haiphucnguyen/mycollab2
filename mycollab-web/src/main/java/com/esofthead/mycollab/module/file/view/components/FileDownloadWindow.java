@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.file.view.components;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

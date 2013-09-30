@@ -15,13 +15,12 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.rits.cloning.Cloner;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -39,36 +38,25 @@ public class BugChartComponent extends Depot {
 	public BugChartComponent(final BugSearchCriteria baseSearchCriteria,
 			final int headerWidth, final int titleWidth) {
 		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
-				null, new VerticalLayout(), headerWidth
-						+ "px", titleWidth + "px");
+				null, new CssLayout(), headerWidth + "px", titleWidth + "px");
+		this.setSizeFull();
 		this.baseSearchCriteria = baseSearchCriteria;
-		initUI();
-	}
-
-	public BugChartComponent(final BugSearchCriteria baseSearchCriteria,
-			final String headerWidth, final String titleWidth) {
-		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
-				null, new VerticalLayout(), headerWidth, titleWidth);
-		this.baseSearchCriteria = baseSearchCriteria;
+		this.setContentBorder(true);
+		this.bodyContent.setSizeFull();
 		initUI();
 	}
 
 	public void displayReport() {
 		final String reportName = reportDashboard[currentReportIndex];
 
-		final VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
+		final CssLayout bodyContent = (CssLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
 
 		if ("BugTrend".equals(reportName)) {
 			BugTrendReportChartWidget bugTrendWidget = null;
-			if (ScreenSize.hasSupport1024Pixels()) {
-				bugTrendWidget = new BugTrendReportChartWidget(300, 200);
-			} else if (ScreenSize.hasSupport1280Pixels()) {
-				bugTrendWidget = new BugTrendReportChartWidget();
-			}
+			bugTrendWidget = new BugTrendReportChartWidget();
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(bugTrendWidget);
 			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			final BugSearchCriteria trendSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
@@ -80,16 +68,10 @@ public class BugChartComponent extends Depot {
 			bugTrendWidget.setSearchCriteria(trendSearchCriteria);
 		} else if ("BugsByPriority".equals(reportName)) {
 			PrioritySummaryChartWidget prioritySummaryChartWidget = null;
-			if (ScreenSize.hasSupport1024Pixels()) {
-				prioritySummaryChartWidget = new PrioritySummaryChartWidget(
-						300, 220);
-			} else if (ScreenSize.hasSupport1280Pixels()) {
-				prioritySummaryChartWidget = new PrioritySummaryChartWidget();
-			}
+			prioritySummaryChartWidget = new PrioritySummaryChartWidget();
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					prioritySummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			final BugSearchCriteria prioritySearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
@@ -97,32 +79,20 @@ public class BugChartComponent extends Depot {
 					.setSearchCriteria(prioritySearchCriteria);
 		} else if ("BugsByStatus".equals(reportName)) {
 			StatusSummaryChartWidget statusSummaryChartWidget = null;
-			if (ScreenSize.hasSupport1024Pixels()) {
-				statusSummaryChartWidget = new StatusSummaryChartWidget(300,
-						220);
-			} else if (ScreenSize.hasSupport1280Pixels()) {
-				statusSummaryChartWidget = new StatusSummaryChartWidget();
-			}
+			statusSummaryChartWidget = new StatusSummaryChartWidget();
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					statusSummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			final BugSearchCriteria statusSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
 			statusSummaryChartWidget.setSearchCriteria(statusSearchCriteria);
 		} else if ("BugByResolution".equals(reportName)) {
 			BugResolutionSummaryChartWidget resolutionSummaryWdiget = null;
-			if (ScreenSize.hasSupport1024Pixels()) {
-				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget(
-						300, 220);
-			} else if (ScreenSize.hasSupport1280Pixels()) {
-				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget();
-			}
+			resolutionSummaryWdiget = new BugResolutionSummaryChartWidget();
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					resolutionSummaryWdiget);
 			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			final BugSearchCriteria statusSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
@@ -131,12 +101,6 @@ public class BugChartComponent extends Depot {
 	}
 
 	private void initUI() {
-//		final HorizontalLayout headerContainer = (HorizontalLayout) headerContent;
-		// headerContainer.setWidth("100%");
-		// headerContainer.setSpacing(true);
-//		final Label emptySpace = new Label();
-//		headerContainer.addComponent(emptySpace);
-//		headerContainer.setExpandRatio(emptySpace, 1.0f);
 
 		final PopupButton bugChartPopup = new PopupButton("Bug Trend");
 		bugChartPopup.addStyleName("link");

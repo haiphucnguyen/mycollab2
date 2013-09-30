@@ -15,7 +15,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationForProjectAction;
 import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 

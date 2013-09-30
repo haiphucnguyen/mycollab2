@@ -4734,4 +4734,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .v-select-optiongroup .v-select-option {
 	white-space: pre-wrap;
+	line-height: 1.7em;
+}
+
+.v-select-optiongroup{
+	spacing : true;
 }
