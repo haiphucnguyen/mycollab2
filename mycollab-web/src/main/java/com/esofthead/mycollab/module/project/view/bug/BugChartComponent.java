@@ -39,6 +39,7 @@ public class BugChartComponent extends Depot {
 			final int headerWidth, final int titleWidth) {
 		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
 				null, new CssLayout(), headerWidth + "px", titleWidth + "px");
+		this.setSizeFull();
 		this.baseSearchCriteria = baseSearchCriteria;
 		this.setContentBorder(true);
 		this.bodyContent.setSizeFull();

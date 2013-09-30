@@ -29,7 +29,6 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -323,7 +322,7 @@ public class ComponentReadViewImpl extends AbstractView implements
 				bugChartComponent = new BugChartComponent(chartSearchCriteria,
 						400, 200);
 				rightColumn.addComponent(bugChartComponent);
-				rightColumn.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+				rightColumn.setWidth("400px");
 
 			}
 
