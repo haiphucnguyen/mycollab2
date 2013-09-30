@@ -142,8 +142,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		chartSearchCriteria.setMilestoneIds(new SetSearchField<Integer>(
 				this.milestone.getId()));
 		BugChartComponent bugChartComponent = null;
-		bugChartComponent = new BugChartComponent(chartSearchCriteria, "400px",
-				"200px");
+		bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
 		rightColumn.addComponent(bugChartComponent);
 		rightColumn.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 

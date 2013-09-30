@@ -45,14 +45,6 @@ public class BugChartComponent extends Depot {
 		initUI();
 	}
 
-	public BugChartComponent(final BugSearchCriteria baseSearchCriteria,
-			final String headerWidth, final String titleWidth) {
-		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
-				null, new VerticalLayout(), headerWidth, titleWidth);
-		this.baseSearchCriteria = baseSearchCriteria;
-		initUI();
-	}
-
 	public void displayReport() {
 		final String reportName = reportDashboard[currentReportIndex];
 
