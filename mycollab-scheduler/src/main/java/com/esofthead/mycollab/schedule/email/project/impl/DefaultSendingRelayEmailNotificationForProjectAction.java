@@ -43,13 +43,7 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					String userName = "";
-					try {
-						userName = user.getFirstname() + " "
-								+ user.getLastname();
-					} catch (Exception e) {
-						userName = user.getUsername();
-					}
+					String userName = user.getDisplayName();
 					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(
@@ -74,13 +68,7 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					String userName = "";
-					try {
-						userName = user.getFirstname() + " "
-								+ user.getLastname();
-					} catch (Exception e) {
-						userName = user.getUsername();
-					}
+					String userName = user.getDisplayName();
 					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(

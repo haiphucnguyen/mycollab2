@@ -13,7 +13,6 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.schedule.email.DefaultSendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 
