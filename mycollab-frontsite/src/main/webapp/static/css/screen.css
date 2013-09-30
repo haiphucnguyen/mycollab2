@@ -6,7 +6,7 @@
 @font-face {
     font-family: 'verdana';
     src: url('../fonts/verdana.eot');
-    src: local('Verdana'),
+    src: local('?'),
     	 url('../fonts/verdana.eot?#iefix') format('embedded-opentype'),
          url('../fonts/verdana.svg#verdana') format('svg'),
          url('../fonts/verdana.woff') format('woff'),
@@ -2197,7 +2197,7 @@ a.nivo-prevNav {
 #timezone_dropdown_hidden {
 	display: none;
 	height: 150px;
-	width: 237px;
+	width: 100%;
 	box-shadow: 0px 0px 20px rgb(112, 112, 112);
 	position: absolute;
 	z-index: 100;
@@ -2276,6 +2276,7 @@ a.nivo-prevNav {
     width: 170px;
     font-family: 'verdana';
     margin: 0 auto;
+    float: right;
 }
 
 .sig-mid-left input[type="submit"]:hover {

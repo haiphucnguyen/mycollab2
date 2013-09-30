@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.StatelessLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -34,6 +35,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.rest.server.resource.UserHubResource;
+import com.esofthead.mycollab.uicomponents.OAuthServiceSignupPanel;
 
 public class SignUpPage extends BasePage {
 
@@ -57,6 +59,8 @@ public class SignUpPage extends BasePage {
 
     private HttpSession session;
 
+    private String authEmail = null;
+
     public SignUpPage(final PageParameters parameters) {
         super(parameters);
 
@@ -68,15 +72,14 @@ public class SignUpPage extends BasePage {
         }
 
         final RequiredTextField<String> email = new RequiredTextField<String>(
-                "emailfield", new Model<String>());
+                "emailfield", new Model<String>(authEmail));
         email.add(EmailAddressValidator.getInstance());
         if (session.getAttribute("authEmail") != null) {
-            String authenticatedEmail = session.getAttribute("authEmail")
-                    .toString();
+            authEmail = session.getAttribute("authEmail").toString();
             session.removeAttribute("authEmail");
-            Model<String> nameModel = new Model<String>(authenticatedEmail);
-            email.add(AttributeAppender.append("value", nameModel));
-            email.setEnabled(false);
+            email.add(AttributeAppender.append("readonly", new Model<String>(
+                    "true")));
+            email.setDefaultModel(new Model<String>(authEmail));
         }
 
         final CheckBox receiveupdate = new CheckBox("receiveupdatefield",
@@ -110,9 +113,14 @@ public class SignUpPage extends BasePage {
                     final Form form = new Form();
                     form.set("subdomain", subdomain.getModelObject());
                     form.set("planId", Integer.toString(planId));
-                    form.set("username", email.getModelObject());
+                    if (authEmail != null) {
+                        form.set("username", authEmail);
+                        form.set("email", authEmail);
+                    } else {
+                        form.set("username", email.getModelObject());
+                        form.set("email", email.getModelObject());
+                    }
                     form.set("password", password.getModelObject());
-                    form.set("email", email.getModelObject());
                     form.set("timezoneId", timezone.getModelObject());
 
                     log.debug("Submit form {}",
@@ -181,6 +189,9 @@ public class SignUpPage extends BasePage {
         } else {
             currentService = "";
         }
+
+        this.add(new OAuthServiceSignupPanel("oauth-service-panel",
+                currentService));
 
         StatelessLink<Void> googleLink = new StatelessLink<Void>("signupGoogle") {
             private static final long serialVersionUID = 1L;
@@ -305,6 +316,14 @@ public class SignUpPage extends BasePage {
                     }));
         }
         this.add(separatorText);
+
+        BookmarkablePageLink<Void> backToNormal = new BookmarkablePageLink<Void>(
+                "getback-to-normal", SignUpPage.class,
+                new PageParameters().add("planId", String.valueOf(planId)));
+        form.add(backToNormal);
+        if (currentService == "") {
+            backToNormal.setVisible(false);
+        }
 
         this.add(new Label("pagetitle", "Sign Up"));
     }

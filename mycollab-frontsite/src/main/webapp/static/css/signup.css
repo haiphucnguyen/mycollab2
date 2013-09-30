@@ -99,7 +99,7 @@
 	margin: 20px 0 0;
 	background-color: transparent;
 }
-.sig-left-otherservices ul li:hover {
+.sig-left-otherservices ul li a:hover {
 	background-color: rgb(35, 139, 202);
 }
 .sig-left-otherservices ul li img {
@@ -124,7 +124,7 @@
 	font-family: "Monda";
 	padding: 4px 0px 0px 10px;
 }
-.sig-left-otherservices ul li:hover .service-title {
+.sig-left-otherservices ul li a:hover .service-title {
 	color: rgb(255, 255, 255);
 }
 .sig-left-otherservices .sig-lef-separator {
@@ -150,7 +150,20 @@
 	float: left;
 	width: 300px;
 }
-
+.sig-left-normal-signup .instruction-text {
+	font-size: 13px;
+	font-family: "Monda", Arial, sans-serif;
+	line-height: 1.2em;
+	text-align: justify;
+	display: block;
+	margin: 5px 0px 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgb(176, 176, 176);
+	color: rgb(171, 171, 171);
+}
+.sig-left-normal-signup input[readonly] {
+	background: url('../images/tick.png') no-repeat right center #ffffff;
+}
 .sig-left-normal-signup .formfield {
 	width: 265px;
 	margin: 0 auto 10px;
@@ -163,6 +176,15 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	padding: 0px 12px 0px 7px;
+}
+.sig-left-normal-signup .getback-to-normal {
+	color: rgb(2, 103, 168);
+	float: left;
+	margin-top: 6px;
+	font-size: 12px;
+}
+.sig-left-normal-signup .getback-to-normal:hover {
+	text-decoration: underline;
 }
 
 .single_area {
