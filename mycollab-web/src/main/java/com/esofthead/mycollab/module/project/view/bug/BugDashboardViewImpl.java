@@ -241,16 +241,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		chartSearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		BugChartComponent bugChartComponent = null;
-		if (ScreenSize.hasSupport1024Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300,
-					200);
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
-					200);
-		} else {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
-					200);
-		}
+		bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
 		this.rightColumn.addComponent(bugChartComponent);
 
 	}

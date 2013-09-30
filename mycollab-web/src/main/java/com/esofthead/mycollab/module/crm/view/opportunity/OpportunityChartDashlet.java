@@ -19,13 +19,14 @@ import com.vaadin.addon.charts.model.DataSeriesItem;
 import com.vaadin.addon.charts.model.Labels;
 import com.vaadin.addon.charts.model.PlotOptionsFunnel;
 import com.vaadin.addon.charts.model.style.SolidColor;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.CssLayout;
 
 public class OpportunityChartDashlet extends Depot {
 	private static final long serialVersionUID = 1L;
 
 	public OpportunityChartDashlet() {
-		super("My Pipeline", new VerticalLayout());
+		super("My Pipeline", new CssLayout());
+		this.setContentBorder(true);
 	}
 
 	public void display() {
@@ -65,7 +66,7 @@ public class OpportunityChartDashlet extends Depot {
 		Chart chart = new Chart();
 
 		Configuration conf = chart.getConfiguration();
-
+		conf.getChart().setSpacingRight(150);
 		Long totalPipelineCount = 0L;
 		for (final GroupItem item : groupItems) {
 			totalPipelineCount += item.getValue();
@@ -73,15 +74,13 @@ public class OpportunityChartDashlet extends Depot {
 		conf.setTitle("Pipeline total is $" + totalPipelineCount);
 		conf.getLegend().setEnabled(true);
 		conf.setCredits(new Credits(""));
-		conf.setExporting(true);
 
 		PlotOptionsFunnel options = new PlotOptionsFunnel();
 		options.setNeckWidthPercentage(10);
 		options.setNeckHeightPercentage(10);
-		options.setLineWidth(10);
 
 		Labels dataLabels = new Labels();
-		dataLabels.setFormat("{point.name} ({point.y:,.0f})");
+		dataLabels.setFormat("{point.name} (${point.y:,.0f})");
 		dataLabels.setSoftConnector(false);
 		dataLabels.setColor(new SolidColor("black"));
 		options.setDataLabels(dataLabels);

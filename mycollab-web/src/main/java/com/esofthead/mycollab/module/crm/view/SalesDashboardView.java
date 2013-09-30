@@ -13,9 +13,9 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySalesStageD
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -29,16 +29,17 @@ public class SalesDashboardView extends Depot {
 	private int currentReportIndex = 0;
 
 	public SalesDashboardView() {
-		super("Sales Dashboard", null, new VerticalLayout(), "100%", "200px");
-
+		super("Sales Dashboard", null, new CssLayout(), "100%", "200px");
+		this.bodyContent.setSizeFull();
 		this.initUI();
 		this.setHeaderColor(true);
+		this.setContentBorder(true);
 	}
 
 	public void displayReport() {
 		final String reportName = this.reportDashboard[this.currentReportIndex];
 
-		final VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
+		final CssLayout bodyContent = (CssLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
 
 		if ("OpportunitySalesStage".equals(reportName)) {
@@ -46,7 +47,6 @@ public class SalesDashboardView extends Depot {
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					salesStageDashboard);
 			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 			criteria.setSaccountid(new NumberSearchField(AppContext
@@ -57,7 +57,6 @@ public class SalesDashboardView extends Depot {
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					leadSourceDashboard);
 			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 			criteria.setSaccountid(new NumberSearchField(AppContext
@@ -67,13 +66,6 @@ public class SalesDashboardView extends Depot {
 	}
 
 	private void initUI() {
-		// final HorizontalLayout headerContainer = (HorizontalLayout)
-		// headerContent;
-		// // headerContainer.setWidth("100%");
-		// // ///headerContainer.setSpacing(true);
-		// final Label emptySpace = new Label();
-		// headerContainer.addComponent(emptySpace);
-		// headerContainer.setExpandRatio(emptySpace, 1.0f);
 
 		final PopupButton saleChartPopup = new PopupButton(
 				"Opportunity Sales Stage");
