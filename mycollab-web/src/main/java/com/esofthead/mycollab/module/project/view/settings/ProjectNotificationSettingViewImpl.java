@@ -40,11 +40,11 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 		this.notificationSetting = notification;
 
 		mainLayout = new CssLayout();
-		mainLayout.setSizeFull();
 		mainLayout.addStyleName(UIConstants.BORDER_BOX_2);
+		mainLayout.setSizeFull();
 
 		VerticalLayout body = new VerticalLayout();
-		body.setMargin(true, true, false, true);
+		body.setMargin(false, true, false, true);
 		body.setSpacing(true);
 		body.setSizeFull();
 
