@@ -3,8 +3,6 @@ package com.esofthead.mycollab.module.file.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

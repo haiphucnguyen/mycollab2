@@ -10,6 +10,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -21,9 +23,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
 public class BasicInfoChangeWindow extends Window {
