@@ -27,7 +27,9 @@ import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
 import com.esofthead.mycollab.common.domain.Currency;
+import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -43,7 +45,9 @@ import com.esofthead.mycollab.module.project.view.bug.BugPriorityStatusConstants
 import com.esofthead.mycollab.module.project.view.task.TaskPriorityComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -166,6 +170,26 @@ public class SimpleColumnComponentBuilderMap {
 
 	}
 
+	public static String getSiteUrl(int accountId) {
+		String siteUrl = "";
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+			BillingAccountService billingAccountService = ApplicationContextUtil
+					.getSpringBean(BillingAccountService.class);
+			BillingAccount account = billingAccountService
+					.getAccountById(accountId);
+			if (account != null) {
+				siteUrl = String.format(ApplicationProperties
+						.getString(ApplicationProperties.APP_URL), account
+						.getSubdomain());
+			}
+		} else {
+			siteUrl = ApplicationProperties
+					.getString(ApplicationProperties.APP_URL);
+		}
+		return siteUrl;
+
+	}
+
 	public static List<? extends ColumnFieldComponentBuilder> getListFieldBuilder(
 			Class cls) {
 		return mapInjection.get(cls);
@@ -214,7 +238,7 @@ public class SimpleColumnComponentBuilderMap {
 				if (typeRender.equals(TypeRender.ACOUNT_LINK)) {
 					Integer accountid = reportParameters
 							.getFieldValue("accountid");
-					hyperLinkStr = SiteConfiguration.getSiteUrl(sAccountId)
+					hyperLinkStr = getSiteUrl(sAccountId)
 							+ CrmLinkGenerator.generateCrmItemLink(
 									CrmTypeConstants.ACCOUNT, accountid);
 				} else if (typeRender.equals(TypeRender.CURRENCY)) {
@@ -223,7 +247,7 @@ public class SimpleColumnComponentBuilderMap {
 				} else if (typeRender.equals(TypeRender.ASSIGNEE)) {
 					hyperLinkStr = "mailto:" + assignUser;
 				} else if (typeRender.equals(TypeRender.HYPERLINK)) {
-					hyperLinkStr = SiteConfiguration.getSiteUrl(sAccountId)
+					hyperLinkStr = getSiteUrl(sAccountId)
 							+ CrmLinkGenerator.generateCrmItemLink(classType,
 									id);
 				} else if (typeRender.equals(TypeRender.EMAILTYPE)) {

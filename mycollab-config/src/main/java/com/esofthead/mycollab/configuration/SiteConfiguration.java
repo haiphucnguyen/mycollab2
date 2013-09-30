@@ -3,9 +3,6 @@ package com.esofthead.mycollab.configuration;
 import java.util.Properties;
 
 import com.esofthead.mycollab.core.DeploymentMode;
-import com.esofthead.mycollab.module.user.domain.BillingAccount;
-import com.esofthead.mycollab.module.user.service.BillingAccountService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 public class SiteConfiguration {
 	private static SiteConfiguration instance;
@@ -168,25 +165,7 @@ public class SiteConfiguration {
 		return instance.sharingOptions;
 	}
 
-	public static String getSiteUrl(int accountId) {
-		String siteUrl = "";
-		if (instance.deploymentMode == DeploymentMode.SITE) {
-			BillingAccountService billingAccountService = ApplicationContextUtil
-					.getSpringBean(BillingAccountService.class);
-			BillingAccount account = billingAccountService
-					.getAccountById(accountId);
-			if (account != null) {
-				siteUrl = String.format(ApplicationProperties
-						.getString(ApplicationProperties.APP_URL), account
-						.getSubdomain());
-			}
-		} else {
-			siteUrl = ApplicationProperties
-					.getString(ApplicationProperties.APP_URL);
-		}
-		return siteUrl;
-
-	}
+	
 
 	public static String getSiteUrl(String subdomain) {
 		String siteUrl = "";

@@ -5,7 +5,7 @@ import java.util.Properties;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 
-class ApplicationProperties {
+public class ApplicationProperties {
 	private static final String RESOURCE_PROPERTIES = "resources.properties";
 	private static final String DECRYPT_PASS = "esofthead321";
 

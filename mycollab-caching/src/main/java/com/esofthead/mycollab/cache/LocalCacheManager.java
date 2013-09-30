@@ -8,19 +8,22 @@ import org.infinispan.api.BasicCache;
 import org.infinispan.api.BasicCacheContainer;
 import org.infinispan.context.Flag;
 import org.infinispan.manager.DefaultCacheManager;
+import org.jgroups.conf.ClassConfigurator;
+import org.jgroups.protocols.JDBC_PING_Ext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
 			.getLogger(LocalCacheManager.class);
-	
+
 	private static String GLOBAL_CACHE = "global";
 
 	private static BasicCacheContainer instance;
 
 	static {
 		try {
+			ClassConfigurator.addProtocol((short) 2048, JDBC_PING_Ext.class);
 			InputStream configInputStream;
 			configInputStream = LocalCacheManager.class.getClassLoader()
 					.getResourceAsStream("infinispan-local.xml");
@@ -38,8 +41,6 @@ public class LocalCacheManager {
 			instance = new DefaultCacheManager();
 		}
 	}
-
-	
 
 	public static BasicCache<String, Object> getCache(String id) {
 		BasicCache<String, Object> cache = instance.getCache(id);

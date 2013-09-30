@@ -78,6 +78,7 @@
   <classpathentry kind="var" path="M2_REPO/net/bull/javamelody/javamelody-core/1.43.0/javamelody-core-1.43.0.jar" sourcepath="M2_REPO/net/bull/javamelody/javamelody-core/1.43.0/javamelody-core-1.43.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jrobin/jrobin/1.5.9/jrobin-1.5.9.jar" sourcepath="M2_REPO/org/jrobin/jrobin/1.5.9/jrobin-1.5.9-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.7.7/cal10n-api-0.7.7.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.7.7/cal10n-api-0.7.7-sources.jar"/>
+  <classpathentry kind="src" path="/mycollab-config"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-caching"/>
   <classpathentry kind="src" path="/mycollab-api"/>
