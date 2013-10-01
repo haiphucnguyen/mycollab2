@@ -7,23 +7,21 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
-import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
+import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingType;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Service
 public class ProjectTaskRelayEmailNotificationActionImpl extends
@@ -165,77 +163,84 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 	@Override
 	protected List<SimpleUser> getListNotififyUserWithFilter(
 			ProjectRelayEmailNotification notification) {
-		List<ProjectNotificationSetting> lstNotificationSetting = projectNotificationService
+		List<ProjectNotificationSetting> notificationSettings = projectNotificationService
 				.findNotifications(
 						((ProjectRelayEmailNotification) notification)
 								.getProjectId(), notification.getSaccountid());
 
-		List<SimpleUser> usersInProject = projectMemberService
-				.getActiveUsersInProject(
-						((ProjectRelayEmailNotification) notification)
-								.getProjectId(), notification.getSaccountid());
+		ProjectMemberService projectService = ApplicationContextUtil
+				.getSpringBean(ProjectMemberService.class);
 
-		for (SimpleUser user : usersInProject) {
-			for (ProjectNotificationSetting projectNotificationSetting : lstNotificationSetting) {
-				if (user.getUsername().equals(
-						projectNotificationSetting.getUsername())) {
-					if (projectNotificationSetting.getLevel().equals("Full")) {
-						// not remove...sending.
-					} else if (projectNotificationSetting.getLevel().equals(
-							"None")) {
-						usersInProject.remove(user);
-					} else if (projectNotificationSetting.getLevel().equals(
-							"Minimal")) {
-						// For Assignee
+		List<SimpleUser> activeUsers = projectService.getActiveUsersInProject(
+				notification.getProjectId(), notification.getSaccountid());
+
+		List<SimpleUser> inListUsers = notification.getNotifyUsers();
+
+		if (notificationSettings != null && notificationSettings.size() > 0) {
+			for (ProjectNotificationSetting notificationSetting : notificationSettings) {
+				if (ProjectNotificationSettingType.NONE
+						.equals(notificationSetting.getLevel())) {
+					// remove users in list if he is already in list
+					for (SimpleUser user : inListUsers) {
+						if (user.getUsername().equals(
+								notificationSetting.getUsername())) {
+							inListUsers.remove(user);
+							break;
+						}
+					}
+				} else if (ProjectNotificationSettingType.MINIMAL
+						.equals(notificationSetting.getLevel())) {
+					boolean isAlreadyInList = false;
+					for (SimpleUser user : inListUsers) {
+						if (user.getUsername().equals(
+								notificationSetting.getUsername())) {
+							isAlreadyInList = true;
+							break;
+						}
+					}
+
+					if (!isAlreadyInList) {
 						SimpleTask task = projectTaskService.findById(
 								notification.getTypeid(),
 								notification.getSaccountid());
-						if (task != null
-								&& !task.getAssignuser().equals(
-										user.getUsername())) {
-							usersInProject.remove(user);
-						}
-					} else {
-						// For Assingee and Follower Iteam ...
-
-						MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-						searchCriteria.setTypeId(new NumberSearchField(
-								notification.getTypeid()));
-						searchCriteria.setType(new StringSearchField(
-								notification.getType()));
-						searchCriteria.setSaccountid(new NumberSearchField(
-								notification.getSaccountid()));
-						searchCriteria.setUser(new StringSearchField(user
-								.getUsername()));
-						SearchRequest<MonitorSearchCriteria> searchRequest = new SearchRequest<MonitorSearchCriteria>(
-								new MonitorSearchCriteria(), 0,
-								Integer.MAX_VALUE);
-
-						@SuppressWarnings("unchecked")
-						List<MonitorItem> lstMonitor = monitorItemService
-								.findPagableListByCriteria(searchRequest);
-						boolean checkExist = false;
-						for (MonitorItem item : lstMonitor) {
-							if (item.getUser().equals(user.getUsername())) {
-								checkExist = true;
-								break;
+						if (task.getAssignuser() != null
+								&& task.getAssignuser().equals(
+										notificationSetting.getUsername())) {
+							for (SimpleUser user : activeUsers) {
+								if (user.getUsername().equals(
+										notificationSetting.getUsername())) {
+									inListUsers.add(user);
+									break;
+								}
 							}
 						}
-						if (!checkExist) {
-							SimpleTask task = projectTaskService.findById(
-									notification.getTypeid(),
-									notification.getSaccountid());
-							if (task != null
-									&& !task.getAssignuser().equals(
-											user.getUsername())) {
-								usersInProject.remove(user);
+					}
+
+				} else if (ProjectNotificationSettingType.FULL
+						.equals(notificationSetting.getLevel())) {
+					boolean isAlreadyInList = false;
+					for (SimpleUser user : inListUsers) {
+						if (user.getUsername().equals(
+								notificationSetting.getUsername())) {
+							isAlreadyInList = true;
+							break;
+						}
+					}
+
+					if (!isAlreadyInList) {
+						for (SimpleUser user : activeUsers) {
+							if (user.getUsername().equals(
+									notificationSetting.getUsername())) {
+								inListUsers.add(user);
+								break;
 							}
 						}
 					}
 				}
 			}
 		}
-		return usersInProject;
+
+		return inListUsers;
 	}
 
 }

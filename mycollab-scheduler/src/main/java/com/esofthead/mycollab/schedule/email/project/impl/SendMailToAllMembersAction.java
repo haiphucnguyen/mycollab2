@@ -9,8 +9,11 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
+import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingType;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
@@ -18,10 +21,13 @@ public abstract class SendMailToAllMembersAction implements
 		SendingRelayEmailNotificationAction {
 
 	@Autowired
-	protected ExtMailService extMailService;
+	private ExtMailService extMailService;
 
 	@Autowired
-	protected ProjectMemberService projectMemberService;
+	private ProjectMemberService projectMemberService;
+
+	@Autowired
+	private ProjectNotificationSettingService projectNotificationService;
 
 	protected List<SimpleUser> getNotifyUsers(
 			ProjectRelayEmailNotification notification) {
@@ -29,6 +35,25 @@ public abstract class SendMailToAllMembersAction implements
 				.getActiveUsersInProject(
 						((ProjectRelayEmailNotification) notification)
 								.getProjectId(), notification.getSaccountid());
+
+		List<ProjectNotificationSetting> notificationSettings = projectNotificationService
+				.findNotifications(notification.getProjectId(),
+						notification.getSaccountid());
+		if (notificationSettings != null && notificationSettings.size() > 0) {
+			for (ProjectNotificationSetting setting : notificationSettings) {
+				if (ProjectNotificationSettingType.NONE.equals(setting
+						.getLevel())
+						|| ProjectNotificationSettingType.MINIMAL
+								.equals(setting.getLevel())) {
+					for (SimpleUser user : usersInProject) {
+						if (user.getUsername().equals(setting.getUsername())) {
+							usersInProject.remove(user);
+							break;
+						}
+					}
+				}
+			}
+		}
 		return usersInProject;
 	}
 

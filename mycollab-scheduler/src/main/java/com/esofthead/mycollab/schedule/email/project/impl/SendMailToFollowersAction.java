@@ -38,16 +38,6 @@ public abstract class SendMailToFollowersAction
 	@Autowired
 	protected ProjectTaskService projectTaskService;
 
-	protected List<SimpleUser> getNotifyUsers(
-			ProjectRelayEmailNotification notification) {
-
-		List<SimpleUser> usersInProject = projectMemberService
-				.getActiveUsersInProject(
-						((ProjectRelayEmailNotification) notification)
-								.getProjectId(), notification.getSaccountid());
-		return usersInProject;
-	}
-
 	@Override
 	public void sendNotificationForCreateAction(
 			SimpleRelayEmailNotification notification) {

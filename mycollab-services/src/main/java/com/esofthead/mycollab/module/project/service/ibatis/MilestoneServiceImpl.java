@@ -40,8 +40,10 @@ public class MilestoneServiceImpl extends
 
 	@Autowired
 	protected MilestoneMapper milestoneMapper;
+	
 	@Autowired
 	protected MilestoneMapperExt milestoneMapperExt;
+	
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
 

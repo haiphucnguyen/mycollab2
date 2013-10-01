@@ -110,4 +110,9 @@ public class SimpleUser extends User {
 	public void setRegisterstatus(String registerstatus) {
 		this.registerstatus = registerstatus;
 	}
+
+	public boolean equals(Object arg0) {
+		return (arg0 instanceof SimpleUser)
+				&& (getUsername().equals(((SimpleUser) arg0).getUsername()));
+	}
 }
