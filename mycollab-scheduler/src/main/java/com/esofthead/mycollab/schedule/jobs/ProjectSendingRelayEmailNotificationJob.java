@@ -11,6 +11,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
@@ -30,6 +31,9 @@ public class ProjectSendingRelayEmailNotificationJob extends QuartzJobBean {
 				.getSpringBean(ProjectService.class);
 		List<ProjectRelayEmailNotification> relayEmaiNotifications = projectService
 				.findProjectRelayEmailNotifications();
+
+		RelayEmailNotificationService relayNotificationService = ApplicationContextUtil
+				.getSpringBean(RelayEmailNotificationService.class);
 		log.debug("Get " + relayEmaiNotifications.size()
 				+ " relay email notifications");
 		SendingRelayEmailNotificationAction emailNotificationAction = null;
@@ -59,7 +63,7 @@ public class ProjectSendingRelayEmailNotificationJob extends QuartzJobBean {
 
 							log.debug("Finish process notification {}",
 									BeanUtility.printBeanObj(notification));
-							projectService.removeWithSession(
+							relayNotificationService.removeWithSession(
 									notification.getId(), "",
 									notification.getSaccountid());
 
