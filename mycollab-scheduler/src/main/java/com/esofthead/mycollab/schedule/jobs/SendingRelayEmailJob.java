@@ -1,24 +1,26 @@
 package com.esofthead.mycollab.schedule.jobs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.MonitorTypeConstants;
-import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
-import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearchCriteria;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.module.mail.Mailer;
+import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.esofthead.mycollab.schedule.email.SendingRelayEmailsAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.thoughtworks.xstream.XStream;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -26,59 +28,46 @@ public class SendingRelayEmailJob extends QuartzJobBean {
 	private static Logger log = LoggerFactory
 			.getLogger(SendingRelayEmailJob.class);
 
+	@Autowired
+	private MailRelayService mailRelayService;
+
 	@Override
 	protected void executeInternal(JobExecutionContext context) {
-		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
-		RelayEmailNotificationService relayEmailNotificationService = (RelayEmailNotificationService) ApplicationContextUtil
-				.getSpringBean(RelayEmailNotificationService.class);
-		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailNotificationService
-				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
-						criteria, 0, Integer.MAX_VALUE));
-		log.debug("Get " + relayEmaiNotifications.size()
-				+ " relay email notifications");
-		SendingRelayEmailNotificationAction emailNotificationAction = null;
-
-		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
-			try {
-				if (notification.getEmailhandlerbean() != null) {
-					emailNotificationAction = (SendingRelayEmailNotificationAction) ApplicationContextUtil
-							.getSpringBean(Class.forName(notification
-									.getEmailhandlerbean()));
-
-					if (emailNotificationAction != null) {
-						try {
-							if (MonitorTypeConstants.CREATE_ACTION
-									.equals(notification.getAction())) {
-								emailNotificationAction
-										.sendNotificationForCreateAction(notification);
-							} else if (MonitorTypeConstants.UPDATE_ACTION
-									.equals(notification.getAction())) {
-								emailNotificationAction
-										.sendNotificationForUpdateAction(notification);
-							} else if (MonitorTypeConstants.ADD_COMMENT_ACTION
-									.equals(notification.getAction())) {
-								emailNotificationAction
-										.sendNotificationForCommentAction(notification);
-							}
-
-							log.debug("Finish process notification {}",
-									BeanUtility.printBeanObj(notification));
-							relayEmailNotificationService.removeWithSession(
-									notification.getId(), "",
-									notification.getSaccountid());
-
-						} catch (Exception e) {
-							log.error("Error when sending notification email",
-									e);
-						}
+		List<RelayEmailWithBLOBs> relayEmails = mailRelayService
+				.getRelayEmails();
+		mailRelayService.cleanEmails();
+		for (RelayEmailWithBLOBs relayEmail : relayEmails) {
+			if (relayEmail.getEmailhandlerbean() == null) {
+				String recipientVal = relayEmail.getRecipients();
+				XStream xstream = new XStream();
+				String[][] recipientArr = (String[][]) xstream
+						.fromXML(recipientVal);
+				try {
+					List<MailRecipientField> toMailList = new ArrayList<MailRecipientField>();
+					for (int i = 0; i < recipientArr[0].length; i++) {
+						toMailList.add(new MailRecipientField(
+								recipientArr[0][i], recipientArr[1][i]));
 					}
+
+					Mailer mailer = new Mailer(
+							SiteConfiguration.getEmailConfiguration());
+					mailer.sendHTMLMail(relayEmail.getFromemail(),
+							relayEmail.getFromname(), toMailList, null, null,
+							relayEmail.getSubject(),
+							relayEmail.getBodycontent(), null);
+				} catch (Exception e) {
+					log.error("Error when send relay email", e);
 				}
-
-			} catch (ClassNotFoundException ex) {
-				throw new MyCollabException("no class found toget spring bean "
-						+ ex.getMessage());
+			} else {
+				try {
+					SendingRelayEmailsAction emailNotificationAction = (SendingRelayEmailsAction) ApplicationContextUtil
+							.getSpringBean(Class.forName(relayEmail
+									.getEmailhandlerbean()));
+					emailNotificationAction.sendEmail(relayEmail);
+				} catch (ClassNotFoundException e) {
+					throw new MyCollabException(e);
+				}
 			}
-
 		}
 	}
 }

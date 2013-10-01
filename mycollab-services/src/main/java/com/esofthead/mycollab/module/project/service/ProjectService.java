@@ -27,6 +27,7 @@ import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
+import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 
@@ -55,4 +56,6 @@ public interface ProjectService extends
 	List<SimpleProject> getActiveProjectsInAccount(@CacheKey Integer sAccountId);
 
 	String getSubdomainOfProject(int projectId);
+	
+	List<ProjectRelayEmailNotification> findProjectRelayEmailNotifications();
 }

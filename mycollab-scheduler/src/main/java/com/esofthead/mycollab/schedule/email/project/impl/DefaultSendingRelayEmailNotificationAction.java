@@ -9,11 +9,10 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
-import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
-import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
+import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 public abstract class DefaultSendingRelayEmailNotificationAction implements
 		SendingRelayEmailNotificationAction {
@@ -21,9 +20,20 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 	@Autowired
 	protected ExtMailService extMailService;
 
+	@Autowired
+	protected ProjectMemberService projectMemberService;
+
 	protected List<SimpleUser> getNotifyUsers(
 			SimpleRelayEmailNotification notification) {
-		return notification.getNotifyUsers();
+		if (notification instanceof ProjectRelayEmailNotification) {
+			List<SimpleUser> usersInProject = projectMemberService
+					.getActiveUsersInProject(
+							((ProjectRelayEmailNotification) notification)
+									.getProjectId(), notification
+									.getSaccountid());
+			return usersInProject;
+		}
+		return new ArrayList<SimpleUser>();
 	}
 
 	@Override
@@ -35,22 +45,18 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
 
-					if (NofiticationSendingEmailChecking.isNeedSendingEmail(
-							user.getUsername(), notification.getExtratypeid(),
-							user.getAccountId())) {
-						templateGenerator.putVariable("userName",
-								user.getDisplayName());
+					templateGenerator.putVariable("userName",
+							user.getDisplayName());
 
-						MailRecipientField userMail = new MailRecipientField(
-								user.getEmail(), user.getUsername());
-						List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
-						lst.add(userMail);
+					MailRecipientField userMail = new MailRecipientField(
+							user.getEmail(), user.getUsername());
+					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+					lst.add(userMail);
 
-						extMailService.sendHTMLMail("noreply@esofthead.com",
-								"noreply@esofthead.com", lst, null, null,
-								templateGenerator.generateSubjectContent(),
-								templateGenerator.generateBodyContent(), null);
-					}
+					extMailService.sendHTMLMail("noreply@esofthead.com",
+							"noreply@esofthead.com", lst, null, null,
+							templateGenerator.generateSubjectContent(),
+							templateGenerator.generateBodyContent(), null);
 				}
 			}
 		}
@@ -64,22 +70,19 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
-					if (NofiticationSendingEmailChecking.isNeedSendingEmail(
-							user.getUsername(), notification.getExtratypeid(),
-							user.getAccountId())) {
-						templateGenerator.putVariable("userName",
-								user.getDisplayName());
 
-						MailRecipientField userMail = new MailRecipientField(
-								user.getEmail(), user.getUsername());
-						List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
-						lst.add(userMail);
+					templateGenerator.putVariable("userName",
+							user.getDisplayName());
 
-						extMailService.sendHTMLMail("noreply@esofthead.com",
-								"noreply@esofthead.com", lst, null, null,
-								templateGenerator.generateSubjectContent(),
-								templateGenerator.generateBodyContent(), null);
-					}
+					MailRecipientField userMail = new MailRecipientField(
+							user.getEmail(), user.getUsername());
+					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+					lst.add(userMail);
+
+					extMailService.sendHTMLMail("noreply@esofthead.com",
+							"noreply@esofthead.com", lst, null, null,
+							templateGenerator.generateSubjectContent(),
+							templateGenerator.generateBodyContent(), null);
 				}
 			}
 		}
@@ -95,22 +98,18 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
 
-					if (NofiticationSendingEmailChecking.isNeedSendingEmail(
-							user.getUsername(), notification.getExtratypeid(),
-							user.getAccountId())) {
-						templateGenerator.putVariable("userName",
-								user.getDisplayName());
+					templateGenerator.putVariable("userName",
+							user.getDisplayName());
 
-						MailRecipientField userMail = new MailRecipientField(
-								user.getEmail(), user.getUsername());
-						List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
-						lst.add(userMail);
+					MailRecipientField userMail = new MailRecipientField(
+							user.getEmail(), user.getUsername());
+					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
+					lst.add(userMail);
 
-						extMailService.sendHTMLMail("noreply@esofthead.com",
-								"noreply@esofthead.com", lst, null, null,
-								templateGenerator.generateSubjectContent(),
-								templateGenerator.generateBodyContent(), null);
-					}
+					extMailService.sendHTMLMail("noreply@esofthead.com",
+							"noreply@esofthead.com", lst, null, null,
+							templateGenerator.generateSubjectContent(),
+							templateGenerator.generateBodyContent(), null);
 				}
 			}
 		}
@@ -124,20 +123,4 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 
 	protected abstract TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification);
-
-	public static class NofiticationSendingEmailChecking {
-		public static boolean isNeedSendingEmail(String username,
-				Integer projectId, Integer sAccountId) {
-			ProjectNotificationSettingService projectNotificationService = ApplicationContextUtil
-					.getSpringBean(ProjectNotificationSettingService.class);
-
-			ProjectNotificationSetting noficationSetting = projectNotificationService
-					.findNotification(username, projectId, sAccountId);
-			if (noficationSetting != null
-					&& noficationSetting.getLevel().equals("None")) {
-				return false;
-			}
-			return true;
-		}
-	}
 }

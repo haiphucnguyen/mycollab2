@@ -51,6 +51,7 @@ import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
+import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
@@ -274,5 +275,10 @@ public class ProjectServiceImpl extends
 		return (List<SimpleProject>) projectMapperExt
 				.findPagableListByCriteria(criteria, new RowBounds(0,
 						Integer.MAX_VALUE));
+	}
+
+	@Override
+	public List<ProjectRelayEmailNotification> findProjectRelayEmailNotifications() {
+		return projectMapperExt.findProjectRelayEmailNotifications();
 	}
 }

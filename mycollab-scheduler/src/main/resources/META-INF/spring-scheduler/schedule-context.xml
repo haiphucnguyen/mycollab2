@@ -23,7 +23,7 @@
     <bean id="sendRelayNotificationEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
-            value="com.esofthead.mycollab.schedule.jobs.SendingRelayNotificationEmailJob" />
+            value="com.esofthead.mycollab.schedule.jobs.ProjectSendingRelayEmailNotificationJob" />
         <property name="durability" value="true" />
     </bean>
 

@@ -2,7 +2,14 @@
 <projectDescription>
   <name>mycollab-reporting</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
-  <projects/>
+  <projects>
+    <project>mycollab-core</project>
+    <project>mycollab-api</project>
+    <project>mycollab-jackrabbit</project>
+    <project>mycollab-services</project>
+    <project>mycollab-caching</project>
+    <project>mycollab-test</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
