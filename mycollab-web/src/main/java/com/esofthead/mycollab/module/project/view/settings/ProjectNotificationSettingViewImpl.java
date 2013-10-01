@@ -44,7 +44,7 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 		mainLayout.setSizeFull();
 
 		VerticalLayout body = new VerticalLayout();
-		body.setMargin(false, true, false, true);
+		body.setMargin(true, true, true, true);
 		body.setSpacing(true);
 		body.setSizeFull();
 
@@ -54,13 +54,13 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 		notificationLabel.addStyleName("h2");
 		body.addComponent(notificationLabel);
 
-		final List<String> options = Arrays
+		List<String> options = Arrays
 				.asList(new String[] {
 						"Default- By default you will receive notifications about items that you are involved in. To be involved with and item you need to have added a comment, been assigned the item, or when the item was created you were specified as a person to notify. Within the email notifications you can unsubscribe from any item.",
 						"None - You won't be notified of anything, this can be a great option if you just wanted to get the daily email with an overview.",
 						"Minimal - We won't do any magic behind the scences to subscribe you to any items, you will only be notified about things you are currently assigned.",
 						"Full - You will be notified every things about your project." });
-		final OptionGroup optionGroup = new OptionGroup("", options);
+		final OptionGroup optionGroup = new OptionGroup(null,options);
 
 		body.addComponent(optionGroup);
 		body.setComponentAlignment(optionGroup, Alignment.MIDDLE_LEFT);
