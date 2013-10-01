@@ -10,6 +10,7 @@ import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
+import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 
@@ -35,4 +36,6 @@ public interface ProjectMapperExt extends ISearchableDAO<ProjectSearchCriteria> 
 	List<FollowingTicket> getProjectFollowingTickets(
 			@Param("searchCriteria") MonitorSearchCriteria searchRequest,
 			RowBounds rowBounds);
+	
+	List<ProjectRelayEmailNotification> findProjectRelayEmailNotifications();
 }

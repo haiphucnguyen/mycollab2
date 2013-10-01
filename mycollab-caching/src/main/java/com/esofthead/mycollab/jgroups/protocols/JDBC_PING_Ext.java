@@ -1,4 +1,6 @@
-package org.jgroups.protocols;
+package com.esofthead.mycollab.jgroups.protocols;
+
+import org.jgroups.protocols.JDBC_PING;
 
 import com.esofthead.mycollab.configuration.DatabaseConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;

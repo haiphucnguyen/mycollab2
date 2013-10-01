@@ -9,9 +9,10 @@ import org.infinispan.api.BasicCacheContainer;
 import org.infinispan.context.Flag;
 import org.infinispan.manager.DefaultCacheManager;
 import org.jgroups.conf.ClassConfigurator;
-import org.jgroups.protocols.JDBC_PING_Ext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.jgroups.protocols.JDBC_PING_Ext;
 
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
