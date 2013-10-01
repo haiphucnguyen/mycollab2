@@ -56,8 +56,7 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 
 		final List<String> options = Arrays
 				.asList(new String[] {
-						"Default- By default you will receive notifications about items that you are involved in. "
-								+ "To be involved with and item you need to have added a comment, been assigned the item, or when the item was created you were specified as a person to notify. Within the email notifications you can unsubscribe from any item.",
+						"Default- By default you will receive notifications about items that you are involved in. To be involved with and item you need to have added a comment, been assigned the item, or when the item was created you were specified as a person to notify. Within the email notifications you can unsubscribe from any item.",
 						"None - You won't be notified of anything, this can be a great option if you just wanted to get the daily email with an overview.",
 						"Minimal - We won't do any magic behind the scences to subscribe you to any items, you will only be notified about things you are currently assigned.",
 						"Full - You will be notified every things about your project." });
@@ -66,6 +65,16 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 		body.addComponent(optionGroup);
 		body.setComponentAlignment(optionGroup, Alignment.MIDDLE_LEFT);
 
+		if (notification == null) {
+			optionGroup.select(options.get(0));
+		} else {
+			for (String str : options) {
+				if (str.startsWith(notification.getLevel())) {
+					optionGroup.select(str);
+					break;
+				}
+			}
+		}
 		if (notificationSetting == null) {
 			optionGroup.select(options.get(0));
 			notificationSetting = new ProjectNotificationSetting();

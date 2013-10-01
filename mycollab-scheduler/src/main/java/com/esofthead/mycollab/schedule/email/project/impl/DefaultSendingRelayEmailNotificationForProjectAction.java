@@ -6,10 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
+import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
@@ -21,18 +28,61 @@ public abstract class DefaultSendingRelayEmailNotificationForProjectAction
 	@Autowired
 	protected ProjectMemberService projectMemberService;
 
-	/**
-	 * @see Remember add extratypeID = projectID for action relay email for any
-	 *      Project Action
-	 * 
-	 */
+	@Autowired
+	protected ProjectNotificationSettingService projectNotificationService;
+
+	@Autowired
+	protected MonitorItemService monitorItemService;
+
 	protected List<SimpleUser> getNotifyUsers(
 			SimpleRelayEmailNotification notification) {
 
-		List<SimpleUser> usersInProject = projectMemberService
-				.getActiveUsersInProject(notification.getExtratypeid(),
-						notification.getSaccountid());
-		return usersInProject;
+		if (notification instanceof ProjectRelayEmailNotification) {
+			List<ProjectNotificationSetting> lstNotificationSetting = projectNotificationService
+					.findNotifications(
+							((ProjectRelayEmailNotification) notification)
+									.getProjectId(), notification
+									.getSaccountid());
+
+			List<SimpleUser> usersInProject = projectMemberService
+					.getActiveUsersInProject(
+							((ProjectRelayEmailNotification) notification)
+									.getProjectId(), notification
+									.getSaccountid());
+
+			for (SimpleUser user : usersInProject) {
+				for (ProjectNotificationSetting projectNotificationSetting : lstNotificationSetting) {
+					if (user.getUsername().equals(
+							projectNotificationSetting.getUsername())) {
+						if (projectNotificationSetting.getLevel()
+								.equals("None")) {
+							usersInProject.remove(user);
+						} else if (projectNotificationSetting.getLevel()
+								.equals("Minimal")) {
+							SearchRequest<MonitorSearchCriteria> searchRequest = new SearchRequest<MonitorSearchCriteria>(
+									new MonitorSearchCriteria(), 0,
+									Integer.MAX_VALUE);
+							@SuppressWarnings("unchecked")
+							List<MonitorItem> lstMonitor = monitorItemService
+									.findPagableListByCriteria(searchRequest);
+							boolean checkExist = false;
+							for (MonitorItem item : lstMonitor) {
+								if (item.getUser().equals(user.getUsername())) {
+									checkExist = true;
+									break;
+								}
+							}
+							if (!checkExist) {
+								usersInProject.remove(user);
+							}
+						}
+					}
+				}
+			}
+			return usersInProject;
+		} else {
+			return new ArrayList<SimpleUser>();
+		}
 	}
 
 	@Override

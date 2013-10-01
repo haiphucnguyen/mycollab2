@@ -18,7 +18,7 @@ import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 
 @Component
 public class BugRelayEmailNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationAction implements
+		DefaultSendingRelayEmailNotificationForProjectAction implements
 		BugRelayEmailNotificationAction {
 	@Autowired
 	private BugService bugService;

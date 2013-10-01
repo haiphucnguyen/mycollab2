@@ -20,7 +20,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotifi
 
 @Component
 public class ProjectRiskRelayEmailNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationForProjectAction implements
+		DefaultSendingRelayEmailNotificationAction implements
 		ProjectRiskRelayEmailNotificationAction {
 
 	@Autowired
