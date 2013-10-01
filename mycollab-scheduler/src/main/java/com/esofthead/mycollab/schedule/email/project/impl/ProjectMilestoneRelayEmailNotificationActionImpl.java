@@ -20,7 +20,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailN
 
 @Component
 public class ProjectMilestoneRelayEmailNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationAction implements
+		SendMailToAllMembersAction implements
 		ProjectMilestoneRelayEmailNotificationAction {
 	@Autowired
 	private MilestoneService milestoneService;

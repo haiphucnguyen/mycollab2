@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
-public abstract class DefaultSendingRelayEmailNotificationAction implements
+public abstract class SendMailToAllMembersAction implements
 		SendingRelayEmailNotificationAction {
 
 	@Autowired
@@ -24,22 +24,18 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 	protected ProjectMemberService projectMemberService;
 
 	protected List<SimpleUser> getNotifyUsers(
-			SimpleRelayEmailNotification notification) {
-		if (notification instanceof ProjectRelayEmailNotification) {
-			List<SimpleUser> usersInProject = projectMemberService
-					.getActiveUsersInProject(
-							((ProjectRelayEmailNotification) notification)
-									.getProjectId(), notification
-									.getSaccountid());
-			return usersInProject;
-		}
-		return new ArrayList<SimpleUser>();
+			ProjectRelayEmailNotification notification) {
+		List<SimpleUser> usersInProject = projectMemberService
+				.getActiveUsersInProject(
+						((ProjectRelayEmailNotification) notification)
+								.getProjectId(), notification.getSaccountid());
+		return usersInProject;
 	}
 
 	@Override
 	public void sendNotificationForCreateAction(
 			SimpleRelayEmailNotification notification) {
-		List<SimpleUser> notifiers = getNotifyUsers(notification);
+		List<SimpleUser> notifiers = getNotifyUsers((ProjectRelayEmailNotification) notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
 			if (templateGenerator != null) {
@@ -65,7 +61,7 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 	@Override
 	public void sendNotificationForUpdateAction(
 			SimpleRelayEmailNotification notification) {
-		List<SimpleUser> notifiers = getNotifyUsers(notification);
+		List<SimpleUser> notifiers = getNotifyUsers((ProjectRelayEmailNotification) notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
 			if (templateGenerator != null) {
@@ -92,7 +88,7 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 	@Override
 	public void sendNotificationForCommentAction(
 			SimpleRelayEmailNotification notification) {
-		List<SimpleUser> notifiers = getNotifyUsers(notification);
+		List<SimpleUser> notifiers = getNotifyUsers((ProjectRelayEmailNotification) notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForCommentAction(notification);
 			if (templateGenerator != null) {

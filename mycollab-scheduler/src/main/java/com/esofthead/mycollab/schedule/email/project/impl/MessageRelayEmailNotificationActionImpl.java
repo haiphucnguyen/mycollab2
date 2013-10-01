@@ -16,7 +16,7 @@ import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificati
 
 @Service
 public class MessageRelayEmailNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationAction implements
+		SendMailToAllMembersAction implements
 		MessageRelayEmailNotificationAction {
 
 	@Autowired

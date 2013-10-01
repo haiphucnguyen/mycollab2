@@ -27,7 +27,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotifi
 
 @Service
 public class ProjectTaskRelayEmailNotificationActionImpl extends
-		DefaultSendingRelayEmailNotificationForProjectAction implements
+		SendMailToFollowersAction implements
 		ProjectTaskRelayEmailNotificationAction {
 
 	@Autowired
