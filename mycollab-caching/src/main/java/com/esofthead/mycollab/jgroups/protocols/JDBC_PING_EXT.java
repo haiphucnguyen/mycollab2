@@ -25,6 +25,7 @@ public class JDBC_PING_EXT extends JDBC_PING {
 				+ "ping_data varbinary(5000) DEFAULT NULL, "
 				+ "PRIMARY KEY (own_addr, cluster_name) ) "
 				+ "ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+		this.id = 2048;
 		super.init();
 	}
 }

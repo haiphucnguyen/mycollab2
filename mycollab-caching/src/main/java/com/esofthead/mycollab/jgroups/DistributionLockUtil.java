@@ -8,7 +8,9 @@ import org.infinispan.remoting.transport.jgroups.JGroupsTransport;
 import org.jgroups.Channel;
 import org.jgroups.blocks.locking.LockService;
 import org.jgroups.fork.ForkChannel;
+import org.jgroups.protocols.CENTRAL_LOCK;
 import org.jgroups.protocols.FRAG2;
+import org.jgroups.stack.Protocol;
 import org.jgroups.stack.ProtocolStack;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
@@ -24,7 +26,7 @@ public class DistributionLockUtil {
 		Channel main_ch = ((JGroupsTransport) tp).getChannel();
 		try {
 			fork_ch = new ForkChannel(main_ch, "hijack-stack", "lead-hijacker",
-					true, ProtocolStack.ABOVE, FRAG2.class);
+					true, ProtocolStack.ABOVE, CENTRAL_LOCK.class);
 			return fork_ch;
 		} catch (Exception e) {
 			throw new MyCollabException(e);
@@ -33,6 +35,15 @@ public class DistributionLockUtil {
 
 	public static Lock getLock(String lockName) {
 		ForkChannel channel = getChannel();
+
+		ProtocolStack protocolStack = channel.getProtocolStack();
+		Protocol tmp = protocolStack.getDownProtocol();
+		while (tmp != null) {
+			Class<?> protClass = tmp.getClass();
+			System.out.println("Class: " + protClass);
+			tmp = tmp.getDownProtocol();
+		}
+
 		LockService lock_service = new LockService(channel);
 		Lock lock = lock_service.getLock(lockName);
 		return lock;

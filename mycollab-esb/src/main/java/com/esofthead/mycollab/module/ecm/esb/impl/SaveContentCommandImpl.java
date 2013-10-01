@@ -46,6 +46,8 @@ public class SaveContentCommandImpl implements SaveContentCommand {
 			log.error(
 					"Error while save content "
 							+ BeanUtility.printBeanObj(content), e);
+		} finally {
+			lock.unlock();
 		}
 	}
 }

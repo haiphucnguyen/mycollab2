@@ -12,9 +12,9 @@
         <jmxStatistics enabled="true" />
         <eviction maxEntries="10000" strategy="LRU" />
         <clustering mode="distribution">
-         <l1 enabled="false" />
-         <hash numOwners="2"/>
-         <sync/>
-      </clustering>
+            <l1 enabled="false" />
+            <hash numOwners="2" />
+            <sync />
+        </clustering>
     </default>
 </infinispan>
