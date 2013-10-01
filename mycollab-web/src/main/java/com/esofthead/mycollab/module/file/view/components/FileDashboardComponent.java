@@ -1,21 +1,15 @@
 package com.esofthead.mycollab.module.file.view.components;
 
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.easyuploads.SingleFileUploadField;
-
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.ContentException;
-import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -28,16 +22,13 @@ import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.ResourceHandlerComponent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -47,7 +38,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.Tree.CollapseEvent;
@@ -72,82 +62,9 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		this.setWidth("100%");
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
-		this.resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
-
-		final HorizontalLayout menuBar = new HorizontalLayout();
-		menuBar.setSpacing(true);
-		menuBar.addStyleName("control-buttons");
-
-		final Button addFolderBtn = new Button("Add Folder",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						FileDashboardComponent.this.getWindow().addWindow(
-								new AddNewFolderWindow());
-					}
-				});
-		addFolderBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		addFolderBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-
-		menuBar.addComponent(addFolderBtn);
-
-		final Button uploadBtn = new Button("Upload",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						FileDashboardComponent.this.getWindow().addWindow(
-								new UploadContentWindow());
-
-					}
-				});
-		uploadBtn.setIcon(MyCollabResource.newResource("icons/16/upload.png"));
-		uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		menuBar.addComponent(uploadBtn);
-
-		final Button deleteBtn = new Button("Delete",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						if (FileDashboardComponent.this.baseFolder != null
-								&& !FileDashboardComponent.this.rootPath
-										.equals(FileDashboardComponent.this.baseFolder
-												.getPath())) {
-							ConfirmDialogExt.show(
-									FileDashboardComponent.this.getWindow(),
-									LocalizationHelper.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
-											SiteConfiguration.getSiteName()),
-									"Are you sure to delete folder "
-											+ FileDashboardComponent.this.baseFolder
-													.getName() + " ?",
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void onClose(
-												final ConfirmDialog dialog) {
-											// TODO Auto-generated method stub
-										}
-									});
-						}
-					}
-				});
-		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
-		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		menuBar.addComponent(deleteBtn);
-
-		this.fileSearchPanel = new FileSearchPanel(menuBar);
+		this.resourceService = ApplicationContextUtil
+				.getSpringBean(ResourceService.class);
+		this.fileSearchPanel = new FileSearchPanel(null);
 
 		this.addComponent(this.fileSearchPanel);
 
@@ -197,98 +114,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								.setCurrentBaseFolder(selectedFolder);
 					}
 				});
-	}
-
-	/**
-	 * Window to ask user enter the new folder
-	 * 
-	 * @author haiphucnguyen
-	 * 
-	 */
-	private class AddNewFolderWindow extends Window {
-		private static final long serialVersionUID = 1L;
-
-		private final TextField folderName;
-
-		public AddNewFolderWindow() {
-			((VerticalLayout) this.getContent()).setWidth(
-					Sizeable.SIZE_UNDEFINED, 0);
-			this.setModal(true);
-			this.setCaption("New Folder");
-			this.center();
-
-			final HorizontalLayout layout = new HorizontalLayout();
-			layout.setSpacing(true);
-			layout.setSizeUndefined();
-			final Label captionLbl = new Label("Enter folder name: ");
-			layout.addComponent(captionLbl);
-			layout.setComponentAlignment(captionLbl, Alignment.MIDDLE_LEFT);
-
-			this.folderName = new TextField();
-			layout.addComponent(this.folderName);
-			layout.setComponentAlignment(this.folderName, Alignment.MIDDLE_LEFT);
-			layout.setExpandRatio(this.folderName, 1.0f);
-
-			this.addComponent(layout);
-			((VerticalLayout) this.getContent()).setComponentAlignment(layout,
-					Alignment.MIDDLE_CENTER);
-
-			final HorizontalLayout controlsLayout = new HorizontalLayout();
-			controlsLayout.setSpacing(true);
-			controlsLayout.setMargin(true, false, false, false);
-
-			final Button saveBtn = new Button(
-					LocalizationHelper
-							.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-
-							final String folderVal = (String) AddNewFolderWindow.this.folderName
-									.getValue();
-							if (folderVal != null
-									&& !folderVal.trim().equals("")) {
-								// TODO: check folder name with valid characters
-								final String baseFolderPath = (FileDashboardComponent.this.baseFolder == null) ? FileDashboardComponent.this.rootPath
-										: FileDashboardComponent.this.baseFolder
-												.getPath();
-								final Folder newFolder = FileDashboardComponent.this.resourceService
-										.createNewFolder(baseFolderPath,
-												folderVal,
-												AppContext.getUsername());
-								FileDashboardComponent.this.baseFolder
-										.addChild(newFolder);
-								AddNewFolderWindow.this.close();
-
-							}
-						}
-					});
-			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-			controlsLayout.addComponent(saveBtn);
-
-			final Button cancelBtn = new Button(
-					LocalizationHelper
-							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							AddNewFolderWindow.this.close();
-
-						}
-					});
-			cancelBtn.addStyleName(UIConstants.THEME_LINK);
-			controlsLayout.addComponent(cancelBtn);
-			controlsLayout.setComponentAlignment(cancelBtn,
-					Alignment.MIDDLE_RIGHT);
-
-			this.addComponent(controlsLayout);
-			((VerticalLayout) this.getContent()).setComponentAlignment(
-					controlsLayout, Alignment.MIDDLE_CENTER);
-		}
 	}
 
 	protected class RenameResourceWindow extends Window {
@@ -367,101 +192,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
 			this.addComponent(layout);
 		}
-	}
-
-	private class UploadContentWindow extends Window {
-		private static final long serialVersionUID = 1L;
-
-		private final GridFormLayoutHelper layoutHelper;
-		private final TextArea descField;
-		private final SingleFileUploadField uploadField;
-
-		public UploadContentWindow() {
-			super("Upload Content");
-			this.setWidth("500px");
-			((VerticalLayout) this.getContent()).setMargin(false, false, true,
-					false);
-			this.setModal(true);
-
-			this.layoutHelper = new GridFormLayoutHelper(1, 2, "100%", "167px",
-					Alignment.MIDDLE_LEFT);
-
-			this.uploadField = (SingleFileUploadField) this.layoutHelper
-					.addComponent(new SingleFileUploadField(), "File", 0, 0);
-			this.descField = (TextArea) this.layoutHelper.addComponent(
-					new TextArea(), "Description", 0, 1);
-
-			this.layoutHelper.getLayout().setWidth("100%");
-			this.layoutHelper.getLayout().setMargin(false);
-			this.layoutHelper.getLayout().addStyleName("colored-gridlayout");
-			this.addComponent(this.layoutHelper.getLayout());
-
-			final HorizontalLayout controlsLayout = new HorizontalLayout();
-			controlsLayout.setSpacing(true);
-			controlsLayout.setMargin(true, false, false, false);
-
-			final Button uploadBtn = new Button("Upload",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							final InputStream contentStream = UploadContentWindow.this.uploadField
-									.getContentAsStream();
-							if (contentStream != null) {
-								final Content content = new Content();
-								content.setDescription((String) UploadContentWindow.this.descField
-										.getValue());
-								content.setPath(FileDashboardComponent.this.baseFolder
-										.getPath()
-										+ "/"
-										+ UploadContentWindow.this.uploadField
-												.getFileName());
-								content.setSize(UploadContentWindow.this.uploadField
-										.getFileSize());
-								FileDashboardComponent.this.resourceService
-										.saveContent(content,
-												AppContext.getUsername(),
-												contentStream,
-												AppContext.getAccountId());
-								UploadContentWindow.this.close();
-								FileDashboardComponent.this
-										.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
-								UploadContentWindow.this.close();
-							} else {
-								AppContext
-										.getApplication()
-										.getMainWindow()
-										.showNotification(
-												"It seems you did not attach file yet!");
-							}
-
-						}
-					});
-			uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-			controlsLayout.addComponent(uploadBtn);
-
-			final Button cancelBtn = new Button(
-					LocalizationHelper
-							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							UploadContentWindow.this.close();
-						}
-					});
-			cancelBtn.addStyleName(UIConstants.THEME_LINK);
-			controlsLayout.addComponent(cancelBtn);
-			controlsLayout.setComponentAlignment(cancelBtn,
-					Alignment.MIDDLE_RIGHT);
-
-			this.addComponent(controlsLayout);
-			((VerticalLayout) this.getContent()).setComponentAlignment(
-					controlsLayout, Alignment.MIDDLE_CENTER);
-		}
-
 	}
 
 	class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
@@ -626,7 +356,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			this.externalDriveService = ApplicationContextUtil
 					.getSpringBean(ExternalDriveService.class);
 			this.isNeedLoadExternalDrive = isNeedLoadExternalDrive;
-			this.resourceMover = ApplicationContextUtil.getSpringBean(ResourceMover.class);
+			this.resourceMover = ApplicationContextUtil
+					.getSpringBean(ResourceMover.class);
 			constructBody();
 		}
 
@@ -642,7 +373,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 					.getSpringBean(ExternalResourceService.class);
 			this.externalDriveService = ApplicationContextUtil
 					.getSpringBean(ExternalDriveService.class);
-			this.resourceMover = ApplicationContextUtil.getSpringBean(ResourceMover.class);
+			this.resourceMover = ApplicationContextUtil
+					.getSpringBean(ResourceMover.class);
 			this.isNeedLoadExternalDrive = isNeedLoadExternalDrive;
 
 			constructBody();
