@@ -4160,6 +4160,11 @@ div.v-ratingstars-bar {
 	text-align: center;
 	width: 100%;
 	color: black;
+	height: 100%;
+}
+.progressbar-status .v-label {
+	display: table-cell;
+	vertical-align: middle;
 }
 /* Confirm Dialog */
 .custom-dialog div.v-panel-content-light {

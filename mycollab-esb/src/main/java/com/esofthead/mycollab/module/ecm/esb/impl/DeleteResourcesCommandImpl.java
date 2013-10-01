@@ -55,6 +55,8 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 				}
 			} catch (Exception e) {
 				log.error("Error while delete content " + path, e);
+			} finally {
+				lock.unlock();
 			}
 
 		}
