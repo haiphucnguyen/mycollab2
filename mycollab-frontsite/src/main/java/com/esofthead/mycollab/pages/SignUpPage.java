@@ -24,6 +24,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.brickred.socialauth.SocialAuthConfig;
 import org.brickred.socialauth.SocialAuthManager;
+import org.brickred.socialauth.util.Constants;
 import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
@@ -207,16 +208,17 @@ public class SignUpPage extends BasePage {
 
                     @Override
                     public String getObject() {
-                        if (currentService == ""
-                                || currentService == "googleplus") {
-                            if (currentService == "googleplus")
+                        if (currentService.equals("")
+                                || currentService.equals(Constants.GOOGLE_PLUS)) {
+                            if (currentService.equals(Constants.GOOGLE_PLUS))
                                 return "service-selected";
                             return "service-enabled";
                         }
                         return "service-disabled";
                     }
                 }));
-        if (currentService != "" && currentService != "googleplus")
+        if (!currentService.equals("")
+                && !currentService.equals(Constants.GOOGLE_PLUS))
             googleLink.setEnabled(false);
         this.add(googleLink);
 
@@ -236,16 +238,17 @@ public class SignUpPage extends BasePage {
 
                     @Override
                     public String getObject() {
-                        if (currentService == ""
-                                || currentService == "facebook") {
-                            if (currentService == "facebook")
+                        if (currentService.equals("")
+                                || currentService.equals(Constants.FACEBOOK)) {
+                            if (currentService.equals(Constants.FACEBOOK))
                                 return "service-selected";
                             return "service-enabled";
                         }
                         return "service-disabled";
                     }
                 }));
-        if (currentService != "" && currentService != "facebook")
+        if (!currentService.equals("")
+                && !currentService.equals(Constants.FACEBOOK))
             facebookLink.setEnabled(false);
         this.add(facebookLink);
 
@@ -264,16 +267,17 @@ public class SignUpPage extends BasePage {
 
                     @Override
                     public String getObject() {
-                        if (currentService == ""
-                                || currentService == "LinkedIn") {
-                            if (currentService == "LinkedIn")
+                        if (currentService.equals("")
+                                || currentService.equals(Constants.LINKEDIN)) {
+                            if (currentService.equals(Constants.LINKEDIN))
                                 return "service-selected";
                             return "service-enabled";
                         }
                         return "service-disabled";
                     }
                 }));
-        if (currentService != "" && currentService != "LinkedIn")
+        if (!currentService.equals("")
+                && !currentService.equals(Constants.LINKEDIN))
             linkedInLink.setEnabled(false);
         this.add(linkedInLink);
 
@@ -291,15 +295,17 @@ public class SignUpPage extends BasePage {
 
                     @Override
                     public String getObject() {
-                        if (currentService == "" || currentService == "yahoo") {
-                            if (currentService == "yahoo")
+                        if (currentService.equals("")
+                                || currentService.equals(Constants.YAHOO)) {
+                            if (currentService.equals(Constants.YAHOO))
                                 return "service-selected";
                             return "service-enabled";
                         }
                         return "service-disabled";
                     }
                 }));
-        if (currentService != "" && currentService != "yahoo")
+        if (!currentService.equals("")
+                && !currentService.equals(Constants.YAHOO))
             yahooLink.setEnabled(false);
         this.add(yahooLink);
 
