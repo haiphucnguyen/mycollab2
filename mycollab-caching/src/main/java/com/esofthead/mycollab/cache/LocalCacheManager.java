@@ -12,7 +12,7 @@ import org.jgroups.conf.ClassConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.jgroups.protocols.JDBC_PING_Ext;
+import com.esofthead.mycollab.jgroups.protocols.JDBC_PING_EXT;
 
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
@@ -24,7 +24,8 @@ public class LocalCacheManager {
 
 	static {
 		try {
-			ClassConfigurator.addProtocol((short) 2048, JDBC_PING_Ext.class);
+			ClassConfigurator.addProtocol((short) 2048, JDBC_PING_EXT.class);
+			
 			InputStream configInputStream;
 			configInputStream = LocalCacheManager.class.getClassLoader()
 					.getResourceAsStream("infinispan-local.xml");
