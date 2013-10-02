@@ -64,17 +64,7 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 
 		body.addComponent(optionGroup);
 		body.setComponentAlignment(optionGroup, Alignment.MIDDLE_LEFT);
-
-		if (notification == null) {
-			optionGroup.select(options.get(0));
-		} else {
-			for (String str : options) {
-				if (str.startsWith(notification.getLevel())) {
-					optionGroup.select(str);
-					break;
-				}
-			}
-		}
+		
 		if (notificationSetting == null) {
 			optionGroup.select(options.get(0));
 			notificationSetting = new ProjectNotificationSetting();

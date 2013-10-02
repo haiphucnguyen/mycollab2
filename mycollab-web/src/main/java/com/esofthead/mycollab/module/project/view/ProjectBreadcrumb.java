@@ -792,7 +792,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.select(1);
 		this.addLink(new Button("Notification Setting",
 				new GotoNotificationSetttingListener()));
-		AppContext.addFragment("project/notificationsetting",
+		AppContext.addFragment("project/setting/notification/"
+				+ UrlEncodeDecoder.encode(project.getId()),
 				"Notification Setting");
 	}
 

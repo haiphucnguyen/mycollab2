@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemUrlResolver;
 import com.esofthead.mycollab.module.project.view.risk.RiskUrlResolver;
 import com.esofthead.mycollab.module.project.view.settings.RoleUrlResolver;
+import com.esofthead.mycollab.module.project.view.settings.SettingUrlResolver;
 import com.esofthead.mycollab.module.project.view.settings.UserUrlResolver;
 import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver;
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver;
@@ -32,6 +33,7 @@ public class ProjectUrlResolver extends UrlResolver {
 		this.addSubResolver("standup", new StandupUrlResolver());
 		this.addSubResolver("user", new UserUrlResolver());
 		this.addSubResolver("role", new RoleUrlResolver());
+		this.addSubResolver("setting", new SettingUrlResolver());
 		this.addSubResolver("time", new TimeUrlResolver());
 		this.addSubResolver("file", new ProjectFileUrlResolver());
 		return this;

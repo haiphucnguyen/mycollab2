@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectSettingScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -49,6 +50,11 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 			view.gotoSubView("Users");
 			presenter = PresenterResolver
 					.getPresenter(ProjectUserPresenter.class);
+		} else if (ClassUtils.instanceOf(data,
+				ProjectSettingScreenData.ViewNotification.class)) {
+			view.gotoSubView("Notification Settings");
+			presenter = PresenterResolver
+					.getPresenter(ProjectNotificationSettingPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data: " + data);
 		}

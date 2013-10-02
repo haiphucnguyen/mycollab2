@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectSettingScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
@@ -141,7 +142,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ProjectMemberScreenData.Read.class,
 				ProjectRoleScreenData.Search.class,
 				ProjectRoleScreenData.Add.class,
-				ProjectRoleScreenData.Read.class)) {
+				ProjectRoleScreenData.Read.class,
+				ProjectSettingScreenData.ViewNotification.class)) {
 			presenter = PresenterResolver
 					.getPresenter(UserSettingPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
