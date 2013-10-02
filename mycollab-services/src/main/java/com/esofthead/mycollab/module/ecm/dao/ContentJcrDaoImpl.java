@@ -97,7 +97,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 							}
 							parentNode = childNode;
 						}
-						
+
 						Node addNode = parentNode.addNode(
 								pathStr[pathStr.length - 1],
 								"{http://www.esofthead.com/mycollab}content");
@@ -310,11 +310,6 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 							if (isNodeMyCollabContent(childNode)) {
 								Content content = convertNodeToContent(childNode);
 								resources.add(content);
-							} else {
-								String errorString = "Node %s has type not mycollab:content. It has type %s";
-								log.error(String.format(errorString, childNode
-										.getPath(), childNode
-										.getPrimaryNodeType().getName()));
 							}
 						}
 
