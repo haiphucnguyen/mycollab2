@@ -29,7 +29,7 @@ public class SaveContentCommandImpl implements SaveContentCommand {
 		log.debug("Save content {} by {}", BeanUtility.printBeanObj(content),
 				createdUser);
 
-		Lock lock = DistributionLockUtil.getLock("" + sAccountId);
+		Lock lock = DistributionLockUtil.getLock("ecm-" + sAccountId);
 		try {
 			if (lock.tryLock(1, TimeUnit.HOURS)) {
 				DriveInfo driveInfo = driveInfoService.getDriveInfo(sAccountId);

@@ -34,7 +34,7 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 		long size = rawContentService.getSize(path);
 		if (size > 0) {
 
-			Lock lock = DistributionLockUtil.getLock("" + sAccountId);
+			Lock lock = DistributionLockUtil.getLock("ecm-" + sAccountId);
 			try {
 				if (lock.tryLock(1, TimeUnit.HOURS)) {
 					DriveInfo driveInfo = driveInfoService
