@@ -3114,7 +3114,6 @@ div.v-lazyloadingwrapper-loading {
 
 /* Border Box 2 */
 .v-csslayout.border-box2 {
-	padding-bottom : -8px;
 	background-color: rgb(245, 245, 245);
 }
 
