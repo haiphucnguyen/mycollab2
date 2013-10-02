@@ -27,7 +27,7 @@ public class EcmRouteBuilder extends SpringRouteBuilder {
 				ExchangePattern.InOnly).to("seda:deleteResources.queue");
 		from("seda:deleteResources.queue").threads().bean(
 				ApplicationContextUtil.getSpringBean(DeleteResourcesCommand.class),
-				"removeResource(String, int, int)");
+				"removeResource(String, String, int)");
 
 	}
 
