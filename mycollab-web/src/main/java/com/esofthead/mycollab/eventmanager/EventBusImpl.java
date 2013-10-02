@@ -1,42 +1,21 @@
-package com.esofthead.mycollab.vaadin.events;
+package com.esofthead.mycollab.eventmanager;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.web.AppContext;
-
-@SuppressWarnings("serial")
-public class EventBus implements Serializable {
-
-	private static final String EVENT_BUS_VAL = "eventBusVal";
+class EventBusImpl extends EventBus {
 
 	private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
 	private final Logger log = LoggerFactory.getLogger(EventBus.class);
 
-	public static EventBus getInstance() {
-		EventBus eventBus = (EventBus) AppContext.getVariable(EVENT_BUS_VAL);
-		if (eventBus == null) {
-			eventBus = new EventBus();
-			AppContext.putVariable(EVENT_BUS_VAL, eventBus);
-		}
-		return eventBus;
-	}
+	EventBusImpl() {
 
-	public static EventBus getInstanceSession(String sessionId) {
-		BasicCache<String, Object> cache = LocalCacheManager
-				.getCache(sessionId);
-		EventBus eventBus = (EventBus) cache.get(EVENT_BUS_VAL);
-		return eventBus;
 	}
 
 	public void addListener(ApplicationEventListener<?> listener) {
@@ -65,9 +44,6 @@ public class EventBus implements Serializable {
 	}
 
 	public void fireEvent(ApplicationEvent event) {
-
-		log.debug("Fire event: {}-{}. Map size: {}", new Object[] { event,
-				AppContext.getInstance(), map.size() });
 		Class<? extends ApplicationEvent> eventType = event.getClass();
 
 		Set<ApplicationEventListener<?>> eventSet = map.get(eventType);
@@ -87,18 +63,17 @@ public class EventBus implements Serializable {
 
 	}
 
-	@Override
-	public String toString() {
-
-		StringBuilder strb = new StringBuilder(
-				"Registered Listener on EventBus: \r\n");
-
-		for (Entry<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> entry : map
-				.entrySet()) {
-			strb.append(entry.getKey()).append(": ").append(entry.getValue())
-					.append("\r\n");
-		}
-
-		return strb.toString();
-	}
+	/*
+	 * @Override public String toString() {
+	 * 
+	 * StringBuilder strb = new StringBuilder(
+	 * "Registered Listener on EventBus: \r\n");
+	 * 
+	 * for (Entry<Class<? extends ApplicationEvent>,
+	 * Set<ApplicationEventListener<?>>> entry : map .entrySet()) {
+	 * strb.append(entry.getKey()).append(": ").append(entry.getValue())
+	 * .append("\r\n"); }
+	 * 
+	 * return strb.toString(); }
+	 */
 }

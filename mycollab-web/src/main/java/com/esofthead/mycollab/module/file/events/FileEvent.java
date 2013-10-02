@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.file.events;
 
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
 public class FileEvent {
 	public static class GotoList extends ApplicationEvent {

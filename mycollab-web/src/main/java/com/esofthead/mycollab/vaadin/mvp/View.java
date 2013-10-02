@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
-import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.vaadin.ui.ComponentContainer;
 
 public interface View extends ComponentContainer {

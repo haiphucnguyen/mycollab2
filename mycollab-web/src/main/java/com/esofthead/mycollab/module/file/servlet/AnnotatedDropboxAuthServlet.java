@@ -24,10 +24,10 @@ import com.dropbox.core.DbxWebAuth;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 
 @Component("dropboxAuthServlet")
 public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {

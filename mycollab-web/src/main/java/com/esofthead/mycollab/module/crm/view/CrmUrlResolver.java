@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountUrlResolver;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityUrlResolver;
@@ -10,7 +11,6 @@ import com.esofthead.mycollab.module.crm.view.file.FileUrlResolver;
 import com.esofthead.mycollab.module.crm.view.lead.LeadUrlResolver;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 

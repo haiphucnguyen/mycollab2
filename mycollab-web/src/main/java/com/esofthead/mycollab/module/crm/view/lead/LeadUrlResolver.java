@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 
 public class LeadUrlResolver extends CrmUrlResolver {
 	public LeadUrlResolver() {

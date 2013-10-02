@@ -21,6 +21,11 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.events.SessionEvent;
+import com.esofthead.mycollab.events.SessionEvent.UserAvatarChangeEvent;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -30,7 +35,6 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -69,6 +73,24 @@ public class AppContext implements Serializable {
 				return AppContext.getAccountId();
 			}
 		});
+	}
+
+	public void onInit() {
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<SessionEvent.UserAvatarChangeEvent>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return SessionEvent.UserAvatarChangeEvent.class;
+							}
+
+							@Override
+							public void handle(UserAvatarChangeEvent event) {
+								session.setAvatarid((String) event.getData());
+							}
+						});
 	}
 
 	public static AppContext getInstance() {
@@ -133,7 +155,8 @@ public class AppContext implements Serializable {
 
 	public void initDomain(String domain) {
 		this.subdomain = domain;
-		BillingAccountService billingService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
+		BillingAccountService billingService = ApplicationContextUtil
+				.getSpringBean(BillingAccountService.class);
 		BillingAccount account = billingService.getAccountByDomain(domain);
 
 		if (account == null) {
@@ -277,6 +300,7 @@ public class AppContext implements Serializable {
 					getInstance().variables.getName());
 			return getInstance().variables.get(key);
 		}
+
 		return null;
 	}
 

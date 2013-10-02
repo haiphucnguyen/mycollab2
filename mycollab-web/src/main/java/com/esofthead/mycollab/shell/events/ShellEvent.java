@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.shell.events;
 
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
 @SuppressWarnings("serial")
 public class ShellEvent {

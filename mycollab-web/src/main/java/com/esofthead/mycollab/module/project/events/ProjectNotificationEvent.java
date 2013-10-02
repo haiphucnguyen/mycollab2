@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.events;
 
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
 public class ProjectNotificationEvent {
 	public static class GotoList extends ApplicationEvent {

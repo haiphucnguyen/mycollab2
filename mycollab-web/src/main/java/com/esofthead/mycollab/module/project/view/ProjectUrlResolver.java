@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver;
 import com.esofthead.mycollab.module.project.view.file.ProjectFileUrlResolver;
@@ -16,7 +17,6 @@ import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver;
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver;
 import com.esofthead.mycollab.module.project.view.time.TimeUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;

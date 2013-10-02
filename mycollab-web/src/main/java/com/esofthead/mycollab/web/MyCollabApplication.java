@@ -43,7 +43,7 @@ public class MyCollabApplication extends Application implements
 
 	private static ThreadLocal<MyCollabApplication> threadLocal = new ThreadLocal<MyCollabApplication>();
 
-	private AppContext sessionData;
+	private AppContext currentContext;
 
 	static {
 		try {
@@ -64,9 +64,10 @@ public class MyCollabApplication extends Application implements
 	public void init() {
 		isInitializeApp = true;
 		setTheme("mycollab");
-		sessionData = new AppContext(this);
+		currentContext = new AppContext(this);
+		currentContext.onInit();
 		try {
-			sessionData.initDomain(initialSubDomain);
+			currentContext.initDomain(initialSubDomain);
 		} catch (Exception e) {
 			this.setMainWindow(new NoSubDomainExistedWindow(initialSubDomain));
 			currentThrowable = e;
@@ -77,7 +78,7 @@ public class MyCollabApplication extends Application implements
 	}
 
 	public AppContext getSessionData() {
-		return sessionData;
+		return currentContext;
 	}
 
 	// Set the current application instance
@@ -101,7 +102,7 @@ public class MyCollabApplication extends Application implements
 
 		String pathInfo = request.getPathInfo();
 		if ("".equals(pathInfo) || ("/").equals(pathInfo)) {
-			if (sessionData != null) {
+			if (currentContext != null) {
 				String urlParam = request.getParameter("url");
 				if (urlParam != null && !urlParam.equals("")) {
 					if (urlParam.startsWith("/")) {
@@ -131,8 +132,8 @@ public class MyCollabApplication extends Application implements
 	@Override
 	public void onRequestEnd(HttpServletRequest request,
 			HttpServletResponse response) {
-		if (sessionData != null) {
-			sessionData.transactionEnd();
+		if (currentContext != null) {
+			currentContext.transactionEnd();
 		}
 
 		if (currentThrowable != null) {
@@ -186,7 +187,7 @@ public class MyCollabApplication extends Application implements
 		super.close();
 		log.debug("Application is closed. Clean all resources");
 		AppContext.clearSession();
-		sessionData = null;
+		currentContext = null;
 	}
 
 	@Override
