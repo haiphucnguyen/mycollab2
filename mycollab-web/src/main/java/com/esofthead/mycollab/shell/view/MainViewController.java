@@ -4,6 +4,9 @@
  */
 package com.esofthead.mycollab.shell.view;
 
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.view.CrmModulePresenter;
 import com.esofthead.mycollab.module.crm.view.CrmModuleScreenData;
 import com.esofthead.mycollab.module.file.view.FileModulePresenter;
@@ -13,9 +16,6 @@ import com.esofthead.mycollab.module.project.view.ProjectModuleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModulePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModuleScreenData;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
-import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 

@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;

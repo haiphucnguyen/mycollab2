@@ -4,13 +4,17 @@ import java.util.Date;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.events.SessionEvent;
+import com.esofthead.mycollab.events.SessionEvent.UserAvatarChangeEvent;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
@@ -205,10 +209,7 @@ public final class MainView extends AbstractView {
 				}
 			}
 		}
-
-		final Embedded userAvatar = UserAvatarControlFactory
-				.createUserAvatarEmbeddedComponent(
-						AppContext.getUserAvatarId(), 24);
+		UserAvatarComp userAvatar = new UserAvatarComp();
 		accountLayout.addComponent(userAvatar);
 		accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
 
@@ -278,5 +279,37 @@ public final class MainView extends AbstractView {
 		layout.addComponent(accountLayout, "accountMenu");
 
 		return layout;
+	}
+
+	private static class UserAvatarComp extends CssLayout {
+		public UserAvatarComp() {
+			addUserAvatar();
+			// add listener to listen the change avatar or user information to
+			// update top menu
+			EventBus.getInstance()
+					.addListener(
+							new ApplicationEventListener<SessionEvent.UserAvatarChangeEvent>() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public Class<? extends ApplicationEvent> getEventType() {
+									return SessionEvent.UserAvatarChangeEvent.class;
+								}
+
+								@Override
+								public void handle(UserAvatarChangeEvent event) {
+									UserAvatarComp.this.removeAllComponents();
+									addUserAvatar();
+								}
+							});
+
+		}
+
+		private void addUserAvatar() {
+			Embedded userAvatar = UserAvatarControlFactory
+					.createUserAvatarEmbeddedComponent(
+							AppContext.getUserAvatarId(), 24);
+			this.addComponent(userAvatar);
+		}
 	}
 }

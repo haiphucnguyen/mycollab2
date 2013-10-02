@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.project.events;
 
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 
 public class ProjectContentEvent {
 

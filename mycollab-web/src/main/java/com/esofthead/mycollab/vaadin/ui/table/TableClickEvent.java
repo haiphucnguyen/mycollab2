@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui.table;
 
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
 /**
  *

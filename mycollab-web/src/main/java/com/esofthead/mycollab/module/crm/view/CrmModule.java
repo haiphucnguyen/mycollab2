@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;

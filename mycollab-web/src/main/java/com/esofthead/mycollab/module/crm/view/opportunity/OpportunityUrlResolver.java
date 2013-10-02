@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 
 public class OpportunityUrlResolver extends CrmUrlResolver {
 	public OpportunityUrlResolver() {

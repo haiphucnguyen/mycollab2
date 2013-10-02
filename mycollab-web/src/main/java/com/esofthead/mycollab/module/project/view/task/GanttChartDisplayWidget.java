@@ -21,6 +21,7 @@ import ru.bazon.vaadin.ganttdiagram.model.GanttTaskGeneratedColumnDescription;
 import ru.bazon.vaadin.ganttdiagram.treetable.GanttTreeTable;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -30,7 +31,6 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;

@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 
 public class ContactUrlResolver extends CrmUrlResolver {
 	public ContactUrlResolver() {

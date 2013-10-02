@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.vaadin.events;
+package com.esofthead.mycollab.eventmanager;
 
 import java.util.EventObject;
 

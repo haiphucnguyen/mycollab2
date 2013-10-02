@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.events;
 
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
 public class FollowingTicketEvent {
 	public static class GotoMyFollowingItems extends ApplicationEvent {
