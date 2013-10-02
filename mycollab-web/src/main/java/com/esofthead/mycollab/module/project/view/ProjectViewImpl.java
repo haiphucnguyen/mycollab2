@@ -166,7 +166,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
 				"StandUp", "menu_standup.png"));
 		myProjectTab.addTab(constructProjectUsers(), new MenuButton(
-				"Users & Group", "menu_user.png"));
+				"Users & Settings", "menu_user.png"));
 
 		myProjectTab
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
@@ -210,8 +210,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 													searchCriteria));
 						} else if ("Dashboard".equals(caption)) {
 							dashboardPresenter.go(ProjectViewImpl.this, null);
-						} else if ("Users & Group".equals(caption)) {
-							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();        
+						} else if ("Users & Settings".equals(caption)) {
+							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 							criteria.setProjectId(new NumberSearchField(
 									CurrentProjectVariables.getProjectId()));
 							criteria.setStatus(new StringSearchField(
