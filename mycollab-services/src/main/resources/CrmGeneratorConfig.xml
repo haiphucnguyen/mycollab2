@@ -55,6 +55,9 @@
         <table domainObjectName="Call" schema="mycollab"
             tableName="m_crm_call" />
 
+        <table domainObjectName="CrmNotificationSetting" schema="mycollab"
+            tableName="m_crm_notifications" />
+
         <table domainObjectName="Case" schema="mycollab"
             tableName="m_crm_case" />
 
