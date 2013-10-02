@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.module.crm.events.CrmNotificationSettingEvent;
 import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -119,6 +120,13 @@ public class CrmToolbar extends CssLayout implements View {
 					CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new DocumentEvent.GotoDashboard(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CRMNOTIFICATION_HEADER).equals(
+					caption)) {
+				EventBus.getInstance()
+						.fireEvent(
+								new CrmNotificationSettingEvent.GotoSetting(
+										this, null));
 			}
 
 			addBtn.setPopupVisible(false);
@@ -220,6 +228,13 @@ public class CrmToolbar extends CssLayout implements View {
 				listener);
 		fileBtn.setStyleName("link");
 		addComponent(fileBtn);
+
+		final Button notificationBtn = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CRMNOTIFICATION_HEADER),
+				listener);
+		notificationBtn.setStyleName("link");
+		addComponent(notificationBtn);
 
 		addBtn = new PopupButton("Add");
 		final GridLayout addBtnLayout = new GridLayout(3, 2);

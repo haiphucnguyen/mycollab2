@@ -32,6 +32,8 @@ import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent.GotoHome;
+import com.esofthead.mycollab.module.crm.events.CrmNotificationSettingEvent;
+import com.esofthead.mycollab.module.crm.events.CrmNotificationSettingEvent.GotoSetting;
 import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -56,6 +58,7 @@ import com.esofthead.mycollab.module.crm.view.file.FileSearchResultPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
+import com.esofthead.mycollab.module.crm.view.notificationsetting.CrmNotifcationSettingPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadPresenter;
@@ -89,6 +92,7 @@ public class CrmController implements IController {
 		bindOpportunityEvents();
 		bindCasesEvents();
 		bindDocumentEvents();
+		bindSettingEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -619,6 +623,26 @@ public class CrmController implements IController {
 										(FileSearchCriteria) event.getData()));
 					}
 				});
+	}
+
+	private void bindSettingEvents() {
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<CrmNotificationSettingEvent.GotoSetting>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return CrmNotificationSettingEvent.GotoSetting.class;
+							}
+
+							@Override
+							public void handle(GotoSetting event) {
+								CrmNotifcationSettingPresenter presenter = PresenterResolver
+										.getPresenter(CrmNotifcationSettingPresenter.class);
+								presenter.go(container, null);
+							}
+						});
 	}
 
 	@SuppressWarnings("serial")

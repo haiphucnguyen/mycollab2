@@ -26,6 +26,7 @@ import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -40,11 +41,13 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.ACCOUNT, nameField = "accountname")
 @Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.ACCOUNT)
+@Watchable(type = CrmTypeConstants.ACCOUNT, userFieldName = "assignuser", emailHandlerBean = AccountRelayEmailNotificationAction.class)
 public class AccountServiceImpl extends
 		DefaultService<Integer, Account, AccountSearchCriteria> implements
 		AccountService {
@@ -110,5 +113,5 @@ public class AccountServiceImpl extends
 		LocalCacheManager.removeCacheItems(accountId.toString(),
 				accountPrefixKey);
 	}
-	
+
 }
