@@ -65,6 +65,7 @@ public abstract class StandupReportFormLayoutFactory implements
         layoutField.addComponent(this.whatProblemField);
 
         mainLayout.addComponent(layoutField);
+        mainLayout.setExpandRatio(layoutField, 2.0f);
 
         final VerticalLayout instructionLayout = new VerticalLayout();
         instructionLayout.setStyleName("instructionStandupBox");
@@ -92,6 +93,7 @@ public abstract class StandupReportFormLayoutFactory implements
         instruct1Lbl2.setWidth("85%");
 
         mainLayout.addComponent(instructionLayout);
+        mainLayout.setExpandRatio(instructionLayout, 1.0f);
         mainLayout.setComponentAlignment(instructionLayout,
                 Alignment.TOP_CENTER);
 
