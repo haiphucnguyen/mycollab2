@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction;
 
 @Component
-public class AccountRelayEmailNotificationActionImpl extends
+public class CaseRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction implements
-		AccountRelayEmailNotificationAction {
+		CaseRelayEmailNotificationAction {
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(

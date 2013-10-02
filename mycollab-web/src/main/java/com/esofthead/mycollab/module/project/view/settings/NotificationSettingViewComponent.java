@@ -112,8 +112,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 						@Override
 						public void buttonClick(ClickEvent event) {
 							try {
-								PropertyUtils.setProperty(bean, "level",
-										"Default");
+								PropertyUtils.setProperty(bean, "level", level);
 								PropertyUtils.setProperty(bean, "projectid",
 										CurrentProjectVariables.getProjectId());
 								PropertyUtils.setProperty(bean, "saccountid",
