@@ -18,6 +18,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.VerticalLayout;
@@ -38,17 +39,20 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 		this.setSizeFull();
 
 		this.notificationSetting = notification;
-
 		mainLayout = new CssLayout();
 		mainLayout.addStyleName(UIConstants.BORDER_BOX_2);
 		mainLayout.setSizeFull();
 
+		HorizontalLayout bodyWapper = new HorizontalLayout();
+		bodyWapper.setMargin(true);
+		bodyWapper.setSizeFull();
+
 		VerticalLayout body = new VerticalLayout();
-		body.setMargin(true, true, true, true);
 		body.setSpacing(true);
 		body.setSizeFull();
 
-		mainLayout.addComponent(body);
+		bodyWapper.addComponent(body);
+		mainLayout.addComponent(bodyWapper);
 
 		Label notificationLabel = new Label("Notification Levels");
 		notificationLabel.addStyleName("h2");
@@ -60,11 +64,11 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 						"None - You won't be notified of anything, this can be a great option if you just wanted to get the daily email with an overview.",
 						"Minimal - We won't do any magic behind the scences to subscribe you to any items, you will only be notified about things you are currently assigned.",
 						"Full - You will be notified every things about your project." });
-		final OptionGroup optionGroup = new OptionGroup(null,options);
+		final OptionGroup optionGroup = new OptionGroup(null, options);
 
 		body.addComponent(optionGroup);
 		body.setComponentAlignment(optionGroup, Alignment.MIDDLE_LEFT);
-		
+
 		if (notificationSetting == null) {
 			optionGroup.select(options.get(0));
 			notificationSetting = new ProjectNotificationSetting();
