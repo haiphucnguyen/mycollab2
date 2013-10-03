@@ -50,18 +50,40 @@
 									<td>$!simpleAccount.ownership</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
-									<td style="vertical-align: top;">$!date.format('short_date', $!simpleAccount.Duedate)</td>
-									<td style="text-align: right; vertical-align: top;">Milestone:&nbsp;</td>
-									<td><a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!simpleAccount.milestoneName</td>		
+									<td style="text-align: right;">Assignee:&nbsp;</td>
+									<td>$!simpleAccount.assignuser</td>
+									<td style="text-align: right;">Annual Revenue:&nbsp;</td>
+									<td>$!simpleAccount.annualrevenue</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
-									<td><a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!simpleAccount.loguserFullName</a></td>
-									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td>
-										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!simpleAccount.assignuserFullName</a>
-									</td>				
+									<td style="text-align: right;">Billing Address:&nbsp;</td>
+									<td>$!simpleAccount.billingaddress</td>
+									<td style="text-align: right;">Shipping Address:&nbsp;</td>
+									<td>$!simpleAccount.shippingaddress</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right;">Billing City:&nbsp;</td>
+									<td>$!simpleAccount.city</td>
+									<td style="text-align: right;">Shipping City:&nbsp;</td>
+									<td>$!simpleAccount.shippingcity</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right;">Billing State:&nbsp;</td>
+									<td>$!simpleAccount.state</td>
+									<td style="text-align: right;">Shipping Address:&nbsp;</td>
+									<td>$!simpleAccount.shippingstate</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right;">Billing Postal Code:&nbsp;</td>
+									<td>$!simpleAccount.postalcode</td>
+									<td style="text-align: right;">Shipping Postal Code:&nbsp;</td>
+									<td>$!simpleAccount.shippingpostalcode</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right;">Billing Country:&nbsp;</td>
+									<td>$!simpleAccount.billingcountry</td>
+									<td style="text-align: right;">Shipping Country:&nbsp;</td>
+									<td>$!simpleAccount.shippingcountry</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>

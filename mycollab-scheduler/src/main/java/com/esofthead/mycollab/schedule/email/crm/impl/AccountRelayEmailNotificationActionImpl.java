@@ -110,7 +110,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 				+ emailNotification.getChangeByUserFullName()
 				+ " has commented on "
 				+ StringUtils.subString(simpleAccount.getAccountname(), 100)
-				+ "\"", "templates/email/project/bugCommentNotifier.mt");
+				+ "\"", "templates/email/crm/accountAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
 		// templateGenerator.putVariable("userComment", linkGenerator
 		// .generateUserPreviewFullLink(emailNotification.getChangeby()));

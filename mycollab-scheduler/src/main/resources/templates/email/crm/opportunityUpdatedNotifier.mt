@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>New Campagin created</title>
+<title>Opportunity updated</title>
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
@@ -10,54 +10,56 @@
 			<td style="background: url('${defaultUrls.cdn_url}border_large_top_new.png') no-repeat 0 0 transparent; font-size: 11px; line-height: 11px;" height="11">&nbsp;</td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_center_orange.png') repeat-y 0 0 transparent; text-align: center; padding-bottom: 10px;"><div style="width: 440px; display: inline-block; vertical-align: middle; text-align: left;"><span style="font: bold 18px Tahoma, Geneva, sans-serif; color: white;">New Campaign</span></div><div style="width: 150px; display: inline-block; vertical-align: middle;"><img src="${defaultUrls.cdn_url}logo_new.png" alt="esofthead-logo" width="150" height="45" style="margin: 0px; padding: 0px;"></div>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_center_orange.png') repeat-y 0 0 transparent; text-align: center; padding-bottom: 10px;"><div style="width: 440px; display: inline-block; vertical-align: middle; text-align: left;"><span style="font: bold 18px Tahoma, Geneva, sans-serif; color: white;">Opportunity Updated</span></div><div style="width: 150px; display: inline-block; vertical-align: middle;"><img src="${defaultUrls.cdn_url}logo_new.png" alt="esofthead-logo" width="150" height="45" style="margin: 0px; padding: 0px;"></div>
 			</td>
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $!userName,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that a new campaign has been created. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that opportunity has been updated. Here're details about it:</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right;">Name:&nbsp;</td>
-									<td>$!simpleCampaign.campaignname</a></td>
-									<td style="text-align: right; min-width: 90px;">Status:&nbsp;</td>
-									<td>$!simpleCampaign.status</td>	
+									<td style="text-align: right;">Opportunity Name:&nbsp;</td>
+									<td>$!simpleOpportunity.opportunityname</td>
+									<td style="text-align: right; min-width: 90px;">Account Name:&nbsp;</td>
+									<td>$!simpleOpportunity.accountName</td>	
 								</tr>
 								<tr>
-									<td style="text-align: right;">StartDate:&nbsp;</td>
-									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.startdate)</td>
-									<td style="text-align: right; min-width: 90px;">Type:&nbsp;</td>
-									<td>$!simpleCampaign.type</td>		
+									<td style="text-align: right;">Currency::&nbsp;</td>
+									<td>#if($!simpleOpportunity.currency!=null) $!simpleOpportunity.currency #else nil #end</td>
+									<td style="text-align: right; min-width: 90px;">Expected Close Date:&nbsp;</td>
+									<td>$!simpleOpportunity.expectedcloseddate</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">EndDate:&nbsp;</td>
-									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.enddate)</td>
+									<td style="text-align: right;">Amount:&nbsp;</td>
+									<td>$!simpleOpportunity.amount</td>
+									<td style="text-align: right;">Type:&nbsp;</td>
+									<td>$!simpleOpportunity.type</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right;">Sales Stage:&nbsp;</td>
+									<td>$!simpleOpportunity.salesstage</td>
+									<td style="text-align: right;">Lead Source:&nbsp;</td>
+									<td>$!simpleOpportunity.leadsource</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right;">Probability (%):&nbsp;</td>
+									<td>$!simpleOpportunity.probability</td>
+									<td style="text-align: right;">Campaign:&nbsp;</td>
+									<td>$!simpleOpportunity.campaignName</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right;">Next Step:&nbsp;</td>
+									<td>$!simpleOpportunity.nextstep</td>
 									<td style="text-align: right;">Assignee:&nbsp;</td>
-									<td>$!simpleCampaign.assignuser</td>		
-								</tr>
-								<tr>
-									<td style="text-align: right;">Currency:&nbsp;</td>
-									<td> #if(simpleCampaign.currency!=null) $!simpleCampaign.currency.symbol #else nil #end </td>
-									<td style="text-align: right;">Budget:&nbsp;</td>
-									<td>$!simpleCampaign.budget</td>		
-								</tr>
-								<tr>
-									<td style="text-align: right;">Expected Cost:&nbsp;</td>
-									<td>$!simpleCampaign.expectedcost</td>
-									<td style="text-align: right;">Actual Cost:&nbsp;</td>
-									<td>$!simpleCampaign.actualcost</td>		
-								</tr>
-								<tr>
-									<td style="text-align: right;">Expected Revenue:&nbsp;</td>
-									<td>$!simpleCampaign.expectedrevenue</td>
+									<td>$!simpleOpportunity.assignuser</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.description</td>
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.description</td>
 								</tr>
 							</table>
 						</td>
