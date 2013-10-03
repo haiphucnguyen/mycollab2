@@ -26,6 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -46,6 +47,7 @@ public class ActivityStreamServiceTest extends ServiceTest {
 		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
 				new String[] { "aa", "bb" }));
+		searchCriteria.setSaccountid(new NumberSearchField(1));
 
 		List<SimpleActivityStream> activities = activityStreamService
 				.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
@@ -59,6 +61,7 @@ public class ActivityStreamServiceTest extends ServiceTest {
 		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
 				new String[] { "bb" }));
+		searchCriteria.setSaccountid(new NumberSearchField(1));
 
 		List<SimpleActivityStream> activities = activityStreamService
 				.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
