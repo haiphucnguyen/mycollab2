@@ -82,6 +82,8 @@ public class AccountServiceTest extends ServiceTest {
 	public void testSearchAnyPhoneField() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAnyPhone(new StringSearchField(SearchField.AND, "111"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, accountService.getTotalCount(criteria));
 	}
 
@@ -90,6 +92,8 @@ public class AccountServiceTest extends ServiceTest {
 	public void testSearchAnyMailField() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAnyMail(new StringSearchField(SearchField.AND, "abc"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, accountService.getTotalCount(criteria));
 	}
 
@@ -102,7 +106,7 @@ public class AccountServiceTest extends ServiceTest {
 				new String[] { "a", "b" }));
 		criteria.setTypes(new SetSearchField<String>(SearchField.AND,
 				new String[] { "a", "b" }));
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
+		criteria.setSaccountid(new NumberSearchField(1));
 		return criteria;
 	}
 
@@ -111,6 +115,8 @@ public class AccountServiceTest extends ServiceTest {
 	public void testRemoveAccounts() {
 		accountService.massRemoveWithSession(Arrays.asList(1, 2), "hai79", 1);
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 	}
 
@@ -127,9 +133,12 @@ public class AccountServiceTest extends ServiceTest {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setIndustries(new SetSearchField<String>(SearchField.AND,
 				new String[] { "a" }));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		accountService.removeByCriteria(criteria, 1);
 
 		criteria = new AccountSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(1));
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 	}
 
@@ -152,6 +161,8 @@ public class AccountServiceTest extends ServiceTest {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setWebsite(new StringSearchField(SearchField.AND,
 				"http://www.esofthead.com"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(3, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				3,
@@ -165,6 +176,8 @@ public class AccountServiceTest extends ServiceTest {
 	public void tesSearchAnyAddress() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAnyAddress(new StringSearchField(SearchField.AND, "123"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -178,6 +191,8 @@ public class AccountServiceTest extends ServiceTest {
 	public void tesSearchAnyCity() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAnyCity(new StringSearchField(SearchField.AND, "ha noi"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -191,6 +206,8 @@ public class AccountServiceTest extends ServiceTest {
 	public void testAssignUser() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAssignUser(new StringSearchField(SearchField.AND, "hai79"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
@@ -205,6 +222,8 @@ public class AccountServiceTest extends ServiceTest {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
 				"Nguyen Phuc Hai"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
@@ -222,9 +241,12 @@ public class AccountServiceTest extends ServiceTest {
 		account.setIndustry("aaa");
 		accountService.massUpdateWithSession(account, updateKeys, 1);
 
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		List<SimpleAccount> accountList = accountService
 				.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
-						new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
+						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(3, accountList.size());
 		for (SimpleAccount account1 : accountList) {
 			Assert.assertEquals("hai79", account1.getAssignuser());

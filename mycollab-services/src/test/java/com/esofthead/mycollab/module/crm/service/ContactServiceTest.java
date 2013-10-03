@@ -61,7 +61,7 @@ public class ContactServiceTest extends ServiceTest {
 				"Duong"));
 		criteria.setAccountName(new StringSearchField(SearchField.AND, "x"));
 		criteria.setContactName(new StringSearchField(SearchField.AND, "Hai"));
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
+		criteria.setSaccountid(new NumberSearchField(1));
 		return criteria;
 	}
 
@@ -71,6 +71,8 @@ public class ContactServiceTest extends ServiceTest {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setContactName(new StringSearchField(SearchField.AND,
 				"Nguyen Hai"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(1, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
@@ -85,6 +87,8 @@ public class ContactServiceTest extends ServiceTest {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND,
 				new String[] { "linh", "hai" }));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(3, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				3,
@@ -99,6 +103,8 @@ public class ContactServiceTest extends ServiceTest {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setLeadSources(new SetSearchField<String>(SearchField.AND,
 				new String[] { "Email", "Campaign" }));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -113,6 +119,8 @@ public class ContactServiceTest extends ServiceTest {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAnyPostalCode(new StringSearchField(SearchField.AND,
 				"70000"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -126,6 +134,8 @@ public class ContactServiceTest extends ServiceTest {
 	public void testSearchAnyCity() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAnyCity(new StringSearchField(SearchField.AND, "HCM"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -140,6 +150,8 @@ public class ContactServiceTest extends ServiceTest {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAnyPhone(new StringSearchField(SearchField.AND,
 				"(111)-(222)"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -154,6 +166,8 @@ public class ContactServiceTest extends ServiceTest {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setCountries(new SetSearchField<String>(SearchField.AND,
 				new String[] { "Viet nam", "America" }));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -167,6 +181,8 @@ public class ContactServiceTest extends ServiceTest {
 	public void testSearchAnyState() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAnyState(new StringSearchField(SearchField.AND, "abc"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -180,6 +196,8 @@ public class ContactServiceTest extends ServiceTest {
 	public void testSearchAnyAddress() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAnyAddress(new StringSearchField(SearchField.AND, "ade"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -193,6 +211,8 @@ public class ContactServiceTest extends ServiceTest {
 	public void testSearchAnyEmail() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAnyEmail(new StringSearchField(SearchField.AND, "abc@y.co"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -206,6 +226,8 @@ public class ContactServiceTest extends ServiceTest {
 	public void testSearchLastname() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setLastname(new StringSearchField(SearchField.AND, "Linh"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(1, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
@@ -219,6 +241,8 @@ public class ContactServiceTest extends ServiceTest {
 	public void testSearchFirstname() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setFirstname(new StringSearchField(SearchField.AND, "Nguyen"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(3, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
 				3,

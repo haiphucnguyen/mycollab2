@@ -162,7 +162,7 @@ public class BillingServiceImpl implements BillingService {
 		userAccount.setIsaccountowner(true);
 		userAccount.setIsadmin(true);
 		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
-		userAccount.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
+		userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 		userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
 		userAccount.setRoleid(null);
 		userAccount.setUsername(username);

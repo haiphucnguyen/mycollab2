@@ -70,6 +70,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchLeadName() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setLeadName(new StringSearchField(SearchField.AND, "Nguyen Hai"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(1, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 1,
@@ -83,6 +85,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchStatuses() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{"New", "Test status"}));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -96,6 +100,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchAssignUser() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setAssignUsers(new SetSearchField<String>(SetSearchField.AND, new String[]{"linh", "hai"}));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -109,6 +115,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchAnyState() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setAnyState(new StringSearchField(SearchField.AND, "HCM"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -122,6 +130,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchAnyCity() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setAnyCity(new StringSearchField(SearchField.AND, "HCM"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -135,6 +145,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchAnyPhone() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setAnyPhone(new StringSearchField(SearchField.AND, "1234"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -148,6 +160,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchSources() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setSources(new SetSearchField<String>(SearchField.AND, new String[]{"Cold Call", "Employee"}));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -161,6 +175,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchAnyCountry() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setAnyCountry(new StringSearchField(SearchField.AND, "viet nam"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -174,6 +190,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchAnyAddress() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setAnyAddress(new StringSearchField(SearchField.AND, "abcd"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -187,6 +205,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchAnyEmail() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setAnyEmail(new StringSearchField(SearchField.AND, "manhlinh@y.co"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
@@ -200,6 +220,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchLastname() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setLastname(new StringSearchField(SearchField.AND, "Nguyen"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(1, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 1,
@@ -213,6 +235,8 @@ public class LeadServiceTest extends ServiceTest{
     public void testSearchFirstname() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setFirstname(new StringSearchField(SearchField.AND, "Linh"));
+        criteria.setSaccountid(new NumberSearchField(1));
+        
         Assert.assertEquals(1, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 1,

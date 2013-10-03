@@ -39,6 +39,8 @@ public class ProjectServiceTest extends ServiceTest {
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
 		criteria.setAccountName(new StringSearchField(StringSearchField.AND,
 				"a"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		List projects = projectService
 				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
@@ -51,7 +53,8 @@ public class ProjectServiceTest extends ServiceTest {
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
 		criteria.setOwnerName(new StringSearchField(StringSearchField.AND,
 				"Nguyen"));
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, projectService.getTotalCount(criteria));
 	}
 
@@ -60,6 +63,8 @@ public class ProjectServiceTest extends ServiceTest {
 	public void testGetListProjectsByUsername() {
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
 		criteria.setUsername(new StringSearchField(SearchField.AND, "admin"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		List projects = projectService
 				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
