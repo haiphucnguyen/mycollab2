@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view;
+package com.esofthead.mycollab.schedule.email.crm;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;

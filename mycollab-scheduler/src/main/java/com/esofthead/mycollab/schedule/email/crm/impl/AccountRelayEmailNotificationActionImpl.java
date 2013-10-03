@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -18,8 +19,7 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
-
-//import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
+import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
 @Component
 public class AccountRelayEmailNotificationActionImpl extends
@@ -65,8 +65,8 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleAccount simpleAccount) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		// hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-		// CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
+				CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
 
 		return hyperLinks;
 	}
