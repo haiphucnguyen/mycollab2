@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>mycollab-api</name>
+  <name>mycollab-api-impl</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
     <project>mycollab-core</project>
+    <project>mycollab-api</project>
+    <project>mycollab-services</project>
+    <project>mycollab-config</project>
+    <project>mycollab-caching</project>
+    <project>mycollab-jackrabbit</project>
+    <project>mycollab-test</project>
   </projects>
   <buildSpec>
     <buildCommand>
