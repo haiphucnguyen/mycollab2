@@ -16,7 +16,7 @@
     <sql id="querySearchCriteria">
         <if test="searchCriteria.contactName != null">
             <![CDATA[
-                ${searchCriteria.contactName.operation} (concat (LTRIM(concat(IFNULL(m_crm_contact.firstname, ''), ' ')), ' ', m_crm_contact.lastname) like '%${searchCriteria.contactName.value}%' )
+                ${searchCriteria.contactName.operation} (concat(IFNULL(m_crm_contact.firstname, ''), ' ', m_crm_contact.lastname) like '%${searchCriteria.contactName.value}%')
             ]]>
         </if>
         <if test="searchCriteria.accountName != null">
@@ -139,7 +139,7 @@
         </if>
         <if test="searchCriteria.contactName != null">
             <![CDATA[
-                ${searchCriteria.contactName.operation} (concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) like '%${searchCriteria.contactName.value}%')
+                 ${searchCriteria.contactName.operation} (concat(IFNULL(m_crm_contact.firstname, ''), ' ', m_crm_contact.lastname) like '%${searchCriteria.contactName.value}%')
             ]]>
         </if>
 

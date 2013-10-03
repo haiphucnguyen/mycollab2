@@ -72,6 +72,8 @@ public class OpportunityServiceTest extends ServiceTest {
 		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 		criteria.setLeadSources(new SetSearchField<String>(SearchField.AND,
 				new String[] { "Cold Call", "Employee" }));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -86,6 +88,8 @@ public class OpportunityServiceTest extends ServiceTest {
 		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 		criteria.setSalesStages(new SetSearchField<String>(SearchField.AND,
 				new String[] { "1", "2" }));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -100,6 +104,8 @@ public class OpportunityServiceTest extends ServiceTest {
 		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND,
 				new String[] { "hai", "linh" }));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(2, opportunityService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -113,6 +119,8 @@ public class OpportunityServiceTest extends ServiceTest {
 	public void testSearchNextStep() {
 		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 		criteria.setNextStep(new StringSearchField(SearchField.AND, "ABC"));
+		criteria.setSaccountid(new NumberSearchField(1));
+
 		Assert.assertEquals(1, opportunityService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
