@@ -23,6 +23,7 @@
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-test</module>
         <module>../mycollab-services</module>
+        <module>../mycollab-api-impl</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>

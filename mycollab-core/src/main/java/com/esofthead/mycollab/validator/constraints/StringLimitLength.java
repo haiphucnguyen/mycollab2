@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.domain.validator;
+package com.esofthead.mycollab.validator.constraints;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -14,11 +14,11 @@ import javax.validation.Payload;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = ShortnameProjectCheckingValidator.class)
+@Constraint(validatedBy = StringLimitLengthValidator.class)
 @Documented
-public @interface ShortnameProjectChecking {
+public @interface StringLimitLength {
 
-	String message() default "{com.esofthead.mycollab.validator.constraints.ShortnameProjectCheckingValidator}";
+	String message() default "{com.esofthead.mycollab.validator.constraints.StringLimitLengthValidator}";
 
 	Class<?>[] groups() default {};
 

@@ -55,7 +55,7 @@ public class ProfileReadViewImpl extends AbstractView implements
         this.setStyleName("userInfoContainer");
         this.setMargin(true);
         this.userAvatar = new VerticalLayout();
-        this.userAvatar.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+        this.userAvatar.setWidth("100%");
         this.userAvatar.setSpacing(true);
         this.formItem = new PreviewForm();
         this.formItem.setWidth("100%");
@@ -65,10 +65,45 @@ public class ProfileReadViewImpl extends AbstractView implements
 
     private void displayUserAvatar() {
         this.userAvatar.removeAllComponents();
+        this.userAvatar.addStyleName("avatar-pass-wrapper");
+        this.userAvatar.setMargin(true);
         final Embedded cropField = UserAvatarControlFactory
                 .createUserAvatarEmbeddedComponent(
                         AppContext.getUserAvatarId(), 100);
-        this.userAvatar.addComponent(cropField);
+
+        final HorizontalLayout avatarAndPass = new HorizontalLayout();
+        avatarAndPass.setSpacing(true);
+        avatarAndPass.setWidth("100%");
+        avatarAndPass.addComponent(cropField);
+        final Button btnChangePassword = new Button(
+                LocalizationHelper
+                        .getMessage(UserI18nEnum.BUTTON_CHANGE_PASSWORD),
+                new Button.ClickListener() {
+
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        ProfileReadViewImpl.this
+                                .getWidget()
+                                .getWindow()
+                                .addWindow(
+                                        new PasswordChangeWindow(formItem.user));
+                    }
+                });
+        final VerticalLayout passLayout = new VerticalLayout();
+        passLayout.setMargin(true, false, false, false);
+        final Label userName = new Label(AppContext.getSession()
+                .getDisplayName());
+        userName.setStyleName("h1");
+        passLayout.addComponent(userName);
+        passLayout.addComponent(btnChangePassword);
+        btnChangePassword.setStyleName("link");
+        passLayout.setComponentAlignment(btnChangePassword,
+                Alignment.MIDDLE_LEFT);
+        avatarAndPass.addComponent(passLayout);
+        avatarAndPass.setComponentAlignment(passLayout, Alignment.TOP_LEFT);
+        avatarAndPass.setExpandRatio(passLayout, 1.0f);
+
+        this.userAvatar.addComponent(avatarAndPass);
 
         final UploadField avatarUploadField = new UploadField() {
             @Override
@@ -135,42 +170,7 @@ public class ProfileReadViewImpl extends AbstractView implements
                 accountAddLayout.setWidth("100%");
                 final VerticalLayout layout = new VerticalLayout();
 
-                final HorizontalLayout avatarAndPass = new HorizontalLayout();
-                avatarAndPass.setSpacing(true);
-                avatarAndPass.setMargin(true);
-                avatarAndPass.setWidth("100%");
-                avatarAndPass.addStyleName("avatar-pass-wrapper");
-                avatarAndPass.addComponent(ProfileReadViewImpl.this.userAvatar);
-                final Button btnChangePassword = new Button(
-                        LocalizationHelper
-                                .getMessage(UserI18nEnum.BUTTON_CHANGE_PASSWORD),
-                        new Button.ClickListener() {
-
-                            @Override
-                            public void buttonClick(final ClickEvent event) {
-                                ProfileReadViewImpl.this
-                                        .getWidget()
-                                        .getWindow()
-                                        .addWindow(
-                                                new PasswordChangeWindow(
-                                                        PreviewForm.this.user));
-                            }
-                        });
-                final VerticalLayout passLayout = new VerticalLayout();
-                passLayout.setMargin(true, false, false, false);
-                final Label userName = new Label(AppContext.getSession()
-                        .getDisplayName());
-                userName.setStyleName("h1");
-                passLayout.addComponent(userName);
-                passLayout.addComponent(btnChangePassword);
-                btnChangePassword.setStyleName("link");
-                passLayout.setComponentAlignment(btnChangePassword,
-                        Alignment.MIDDLE_LEFT);
-                avatarAndPass.addComponent(passLayout);
-                avatarAndPass.setComponentAlignment(passLayout,
-                        Alignment.TOP_LEFT);
-                avatarAndPass.setExpandRatio(passLayout, 1.0f);
-                layout.addComponent(avatarAndPass);
+                layout.addComponent(userAvatar);
 
                 final CssLayout basicInformationHeader = new CssLayout();
                 basicInformationHeader.setWidth("100%");
