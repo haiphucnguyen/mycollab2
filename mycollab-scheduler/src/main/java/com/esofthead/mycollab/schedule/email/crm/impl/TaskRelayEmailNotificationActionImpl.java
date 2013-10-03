@@ -7,16 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 
 @Component
@@ -63,8 +67,11 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleTask simpleTask) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		// hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-		// CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks.put(
+				"taskURL",
+				getSiteUrl(simpleTask.getSaccountid())
+						+ CrmLinkGenerator.generateCrmItemLink(
+								CrmTypeConstants.TASK, simpleTask.getId()));
 
 		return hyperLinks;
 	}
@@ -109,9 +116,14 @@ public class TaskRelayEmailNotificationActionImpl extends
 						+ StringUtils.subString(simpleTask.getSubject(), 100)
 						+ "\"", "templates/email/crm/crmTaskAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		// templateGenerator.putVariable("userComment", linkGenerator
-		// .generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", simpleTask);
+		templateGenerator.putVariable(
+				"userComment",
+				getSiteUrl(emailNotification.getSaccountid())
+						+ ProjectLinkUtils.URL_PREFIX_PARAM
+						+ "account/user/preview/"
+						+ UrlEncodeDecoder.encode(emailNotification
+								.getChangeby()));
+		templateGenerator.putVariable("simpleTask", simpleTask);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleTask));
 
@@ -137,15 +149,15 @@ public class TaskRelayEmailNotificationActionImpl extends
 		TaskFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("summary", "Bug Summary");
-			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("subject", "Subject");
 			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
-			fieldNameMap.put("priority", "Priority");
+			fieldNameMap.put("startdate", "Start Date");
+			fieldNameMap.put("relatedTo", "Related To");
 			fieldNameMap.put("duedate", "Due Date");
+			fieldNameMap.put("contactName", "Contact");
+			fieldNameMap.put("priority", "Priority");
+			fieldNameMap.put("assignuser", "Assignee");
+			fieldNameMap.put("description", "Description");
 		}
 
 		public boolean hasField(String fieldName) {

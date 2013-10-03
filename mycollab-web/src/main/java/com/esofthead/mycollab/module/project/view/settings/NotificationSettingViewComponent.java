@@ -77,6 +77,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 		try {
 			if ((String) PropertyUtils.getProperty(bean, "level") == null) {
 				optionGroup.select(options.get(0));
+				level = "Default";
 			} else {
 				for (String str : options) {
 

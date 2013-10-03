@@ -27,7 +27,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Website:&nbsp;</td>
-									<td>$!simpleAccount.website</td>
+									<td><a href="$!simpleAccount.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.website</a></td>
 									<td style="text-align: right; min-width: 90px;">Fax:&nbsp;</td>
 									<td>$!simpleAccount.fax</td>		
 								</tr>
@@ -41,7 +41,7 @@
 									<td style="text-align: right;">Industry:&nbsp;</td>
 									<td>$!simpleAccount.industry</td>
 									<td style="text-align: right;">Email:&nbsp;</td>
-									<td>$!simpleAccount.email</td>		
+									<td><a href="mailto:$!simpleAccount.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.email</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Type:&nbsp;</td>

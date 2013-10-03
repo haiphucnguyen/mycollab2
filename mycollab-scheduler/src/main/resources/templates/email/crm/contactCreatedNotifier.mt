@@ -16,7 +16,7 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $!userName,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that a new account has been created. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that a new contact <a href="$!hyperLinks.contactURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleContact.contactName</a>  has been created. Here're details about it:</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
@@ -35,7 +35,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Account:&nbsp;</td>
-									<td></td>
+									<td><a href="$!hyperLinks.accountURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleContact.accountName</a></td>
 									<td style="text-align: right;">Home Phone:&nbsp;</td>
 									<td>$!simpleContact.homephone</td>		
 								</tr>
@@ -53,7 +53,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Email:&nbsp;</td>
-									<td>$!simpleContact.email</td>
+									<td><a href="mailto:$!simpleContact.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleContact.email</a></td>
 									<td style="text-align: right;">Birthday:&nbsp;</td>
 									<td>$!simpleContact.birthday</td>		
 								</tr>

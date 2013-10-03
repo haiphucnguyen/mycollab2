@@ -7,16 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 
 @Component
@@ -65,8 +69,12 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	private Map<String, String> constructHyperLinks(
 			SimpleOpportunity simpleOpportunity) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		// hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-		// CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks.put(
+				"opportunityURL",
+				getSiteUrl(simpleOpportunity.getSaccountid())
+						+ CrmLinkGenerator.generateCrmItemLink(
+								CrmTypeConstants.OPPORTUNITY,
+								simpleOpportunity.getId()));
 
 		return hyperLinks;
 	}
@@ -115,9 +123,14 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 						+ "\"",
 				"templates/email/crm/opportunityAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		// templateGenerator.putVariable("userComment", linkGenerator
-		// .generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", simpleOpportunity);
+		templateGenerator.putVariable(
+				"userComment",
+				getSiteUrl(emailNotification.getSaccountid())
+						+ ProjectLinkUtils.URL_PREFIX_PARAM
+						+ "account/user/preview/"
+						+ UrlEncodeDecoder.encode(emailNotification
+								.getChangeby()));
+		templateGenerator.putVariable("simpleOpportunity", simpleOpportunity);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleOpportunity));
 
@@ -143,15 +156,20 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 		OpportunityFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("summary", "Bug Summary");
-			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("opportunityname", "Opportunity Name");
+			fieldNameMap.put("accountName", "Account Name");
 			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
-			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("duedate", "Due Date");
+			// fieldNameMap.put("currency.symbol", "Currency");
+			fieldNameMap.put("expectedcloseddate", "Expected Close Date");
+			fieldNameMap.put("amount", "Amount");
+			fieldNameMap.put("type", "Type");
+			fieldNameMap.put("salesstage", "Sales Stage");
+			fieldNameMap.put("leadsource", "Lead Source");
+			fieldNameMap.put("probability", "Probability");
+			fieldNameMap.put("campaignName", "Campaign");
+			fieldNameMap.put("nextstep", "Next Step");
+			fieldNameMap.put("assignuser", "Assignee");
+			fieldNameMap.put("description", "Description");
 		}
 
 		public boolean hasField(String fieldName) {

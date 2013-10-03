@@ -16,7 +16,7 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $!userName,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that lead has been updated. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that lead <a href="$!hyperLinks.leadURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.leadName</a> has been updated. Here're details about it:</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
@@ -25,7 +25,7 @@
 									<td style="text-align: right;">First Name:&nbsp;</td>
 									<td>$!simpleLead.firstname</td>
 									<td style="text-align: right; min-width: 90px;">Email:&nbsp;</td>
-									<td>$!simpleLead.email</td>		
+									<td><a href="mailto:$!simpleLead.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.email</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Last Name:&nbsp;</td>
@@ -55,7 +55,7 @@
 									<td style="text-align: right;">Lead Source:&nbsp;</td>
 									<td>$!simpleLead.leadsource</td>
 									<td style="text-align: right;">Web Site:&nbsp;</td>
-									<td>$!simpleLead.website</td>		
+									<td><a href="$!simpleLead.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.website</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Industry:&nbsp;</td>
@@ -103,6 +103,33 @@
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
 									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.description</td>
 								</tr>
+								<tr>
+                                	<td colspan="4">
+                                		<p>Changes (by $historyLog.postedUserFullName):</p>
+                                		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
+                                			<tr>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Fields</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Old Value</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">New Value</td>
+                                			</tr>
+                                			#foreach ($item in $historyLog.changeItems)
+                                				#if ($mapper.hasField($item.field))
+                                				<tr>
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                						$mapper.getFieldLabel($item.field)
+                                					</td>
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                						$item.oldvalue
+                                					</td>
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                						$item.newvalue
+                                					</td>
+                                				</tr>
+                                				#end
+                                			#end
+                                		</table>
+                                	</td>
+                                </tr>
 							</table>
 						</td>
 					</tr>

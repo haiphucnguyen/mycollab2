@@ -7,16 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.MeetingRelayEmailNotificationAction;
 
 @Component
@@ -61,10 +65,14 @@ public class MeetingRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	private Map<String, String> constructHyperLinks(SimpleMeeting simpleAccount) {
+	private Map<String, String> constructHyperLinks(SimpleMeeting simpleMeeting) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		// hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-		// CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks
+				.put("meetingURL",
+						getSiteUrl(simpleMeeting.getSaccountid())
+								+ CrmLinkGenerator.generateCrmItemLink(
+										CrmTypeConstants.MEETING,
+										simpleMeeting.getId()));
 
 		return hyperLinks;
 	}
@@ -99,7 +107,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		SimpleMeeting simpleAccount = meetingService.findById(
+		SimpleMeeting simpleMeeting = meetingService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 
@@ -107,14 +115,19 @@ public class MeetingRelayEmailNotificationActionImpl extends
 				"[Meeting]"
 						+ emailNotification.getChangeByUserFullName()
 						+ " has commented on "
-						+ StringUtils.subString(simpleAccount.getSubject(), 100)
+						+ StringUtils.subString(simpleMeeting.getSubject(), 100)
 						+ "\"", "templates/email/crm/meetingAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		// templateGenerator.putVariable("userComment", linkGenerator
-		// .generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", simpleAccount);
+		templateGenerator.putVariable(
+				"userComment",
+				getSiteUrl(emailNotification.getSaccountid())
+						+ ProjectLinkUtils.URL_PREFIX_PARAM
+						+ "account/user/preview/"
+						+ UrlEncodeDecoder.encode(emailNotification
+								.getChangeby()));
+		templateGenerator.putVariable("simpleMeeting", simpleMeeting);
 		templateGenerator.putVariable("hyperLinks",
-				constructHyperLinks(simpleAccount));
+				constructHyperLinks(simpleMeeting));
 
 		return templateGenerator;
 	}
@@ -138,15 +151,13 @@ public class MeetingRelayEmailNotificationActionImpl extends
 		MeetingFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("summary", "Bug Summary");
-			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("subject", "Subject");
 			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
-			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("duedate", "Due Date");
+			fieldNameMap.put("startdate", "Start Date & Time");
+			fieldNameMap.put("relatedTo", "Related to");
+			fieldNameMap.put("enddate", "End Date & Time");
+			fieldNameMap.put("location", "Location");
+			fieldNameMap.put("description", "Description");
 		}
 
 		public boolean hasField(String fieldName) {

@@ -7,16 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
 
 @Component
@@ -63,8 +67,11 @@ public class LeadRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleLead simpleLead) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		// hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-		// CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks.put(
+				"leadURL",
+				getSiteUrl(simpleLead.getSaccountid())
+						+ CrmLinkGenerator.generateCrmItemLink(
+								CrmTypeConstants.LEAD, simpleLead.getId()));
 
 		return hyperLinks;
 	}
@@ -99,21 +106,26 @@ public class LeadRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		SimpleLead simpleAccount = leadService.findById(
+		SimpleLead simpleLead = leadService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator("[Lead]"
 				+ emailNotification.getChangeByUserFullName()
 				+ " has commented on "
-				+ StringUtils.subString(simpleAccount.getAccountname(), 100)
-				+ "\"", "templates/email/crm/leadAddNoteNotifier.mt");
+				+ StringUtils.subString(simpleLead.getLeadName(), 100) + "\"",
+				"templates/email/crm/leadAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		// templateGenerator.putVariable("userComment", linkGenerator
-		// .generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", simpleAccount);
+		templateGenerator.putVariable(
+				"userComment",
+				getSiteUrl(emailNotification.getSaccountid())
+						+ ProjectLinkUtils.URL_PREFIX_PARAM
+						+ "account/user/preview/"
+						+ UrlEncodeDecoder.encode(emailNotification
+								.getChangeby()));
+		templateGenerator.putVariable("simpleLead", simpleLead);
 		templateGenerator.putVariable("hyperLinks",
-				constructHyperLinks(simpleAccount));
+				constructHyperLinks(simpleLead));
 
 		return templateGenerator;
 	}
@@ -137,15 +149,33 @@ public class LeadRelayEmailNotificationActionImpl extends
 		LeadFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("summary", "Bug Summary");
-			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("firstname", "First Name");
+			fieldNameMap.put("email", "Email");
+			fieldNameMap.put("lastname", "Last Name");
+			fieldNameMap.put("officephone", "Office Phone");
+			fieldNameMap.put("title", "Title");
+			fieldNameMap.put("mobile", "Mobile");
+			fieldNameMap.put("department", "Department");
+			fieldNameMap.put("otherphone", "Other Phone");
+			fieldNameMap.put("accountName", "Account Name");
+			fieldNameMap.put("fax", "Fax");
+			fieldNameMap.put("leadsource", "Lead Source");
+			fieldNameMap.put("website", "Web Site");
+			fieldNameMap.put("industry", "Industry");
 			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
-			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("duedate", "Due Date");
+			fieldNameMap.put("noemployees", "No of Employees");
+			fieldNameMap.put("primaddress", "Address");
+			fieldNameMap.put("otheraddress", "Other Address");
+			fieldNameMap.put("primcity", "City");
+			fieldNameMap.put("othercity", "Other City");
+			fieldNameMap.put("state", "State");
+			fieldNameMap.put("otherstate", "Other State");
+			fieldNameMap.put("primpostalcode", "Postal Code");
+			fieldNameMap.put("otherpostalcode", "Other Postal Code");
+			fieldNameMap.put("primcountry", "Country");
+			fieldNameMap.put("othercountry", "Other Country");
+			fieldNameMap.put("description", "Description");
+
 		}
 
 		public boolean hasField(String fieldName) {

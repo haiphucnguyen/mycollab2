@@ -7,17 +7,21 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
 @Component
 public class CaseRelayEmailNotificationActionImpl extends
@@ -63,8 +67,11 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleCase simpleCase) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		// hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-		// CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks.put(
+				"caseURL",
+				getSiteUrl(simpleCase.getSaccountid())
+						+ CrmLinkGenerator.generateCrmItemLink(
+								CrmTypeConstants.CASE, simpleCase.getId()));
 
 		return hyperLinks;
 	}
@@ -99,22 +106,26 @@ public class CaseRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		SimpleCase simpleAccount = caseService.findById(
+		SimpleCase simpleCase = caseService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[Case]"
-						+ emailNotification.getChangeByUserFullName()
-						+ " has commented on "
-						+ StringUtils.subString(simpleAccount.getSubject(), 100)
-						+ "\"", "templates/email/crm/caseAddNoteNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator("[Case]"
+				+ emailNotification.getChangeByUserFullName()
+				+ " has commented on "
+				+ StringUtils.subString(simpleCase.getSubject(), 100) + "\"",
+				"templates/email/crm/caseAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		// templateGenerator.putVariable("userComment", linkGenerator
-		// .generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", simpleAccount);
+		templateGenerator.putVariable(
+				"userComment",
+				getSiteUrl(emailNotification.getSaccountid())
+						+ ProjectLinkUtils.URL_PREFIX_PARAM
+						+ "account/user/preview/"
+						+ UrlEncodeDecoder.encode(emailNotification
+								.getChangeby()));
+		templateGenerator.putVariable("simpleCase", simpleCase);
 		templateGenerator.putVariable("hyperLinks",
-				constructHyperLinks(simpleAccount));
+				constructHyperLinks(simpleCase));
 
 		return templateGenerator;
 	}
@@ -138,15 +149,18 @@ public class CaseRelayEmailNotificationActionImpl extends
 		CaseFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("summary", "Bug Summary");
-			fieldNameMap.put("description", "Description");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
 			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("duedate", "Due Date");
+			fieldNameMap.put("type", "Type");
+			fieldNameMap.put("status", "Status");
+			fieldNameMap.put("reason", "Reason");
+			fieldNameMap.put("accountName", "Account Name");
+			fieldNameMap.put("subject", "Subject");
+			fieldNameMap.put("phonenumber", "Phone Number");
+			fieldNameMap.put("email", "Email");
+			fieldNameMap.put("origin", "Origin");
+			fieldNameMap.put("assignuser", "Assignee");
+			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("resolution", "Resolution");
 		}
 
 		public boolean hasField(String fieldName) {

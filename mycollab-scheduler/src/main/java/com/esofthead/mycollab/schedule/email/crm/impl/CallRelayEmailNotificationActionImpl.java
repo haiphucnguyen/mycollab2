@@ -7,17 +7,21 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
 @Component
 public class CallRelayEmailNotificationActionImpl extends
@@ -63,8 +67,11 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleCall simpleCall) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		// hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-		// CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks.put(
+				"callURL",
+				getSiteUrl(simpleCall.getSaccountid())
+						+ CrmLinkGenerator.generateCrmItemLink(
+								CrmTypeConstants.CALL, simpleCall.getId()));
 
 		return hyperLinks;
 	}
@@ -109,9 +116,14 @@ public class CallRelayEmailNotificationActionImpl extends
 				+ StringUtils.subString(simpleCall.getSubject(), 100) + "\"",
 				"templates/email/crm/callAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		// templateGenerator.putVariable("userComment", linkGenerator
-		// .generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", simpleCall);
+		templateGenerator.putVariable(
+				"userComment",
+				getSiteUrl(emailNotification.getSaccountid())
+						+ ProjectLinkUtils.URL_PREFIX_PARAM
+						+ "account/user/preview/"
+						+ UrlEncodeDecoder.encode(emailNotification
+								.getChangeby()));
+		templateGenerator.putVariable("simpleCall", simpleCall);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleCall));
 
@@ -137,15 +149,15 @@ public class CallRelayEmailNotificationActionImpl extends
 		CallFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("summary", "Bug Summary");
-			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("subject", "Subject");
 			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
-			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("duedate", "Due Date");
+			fieldNameMap.put("startdate", "Start Date & Time");
+			fieldNameMap.put("relatedTo", "Related to");
+			fieldNameMap.put("durationinseconds", "Duration");
+			fieldNameMap.put("purpose", "Purpose");
+			fieldNameMap.put("assignuser", "Assignee");
+			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("result", "Result");
 		}
 
 		public boolean hasField(String fieldName) {

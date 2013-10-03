@@ -6,21 +6,34 @@ import java.util.List;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.CommentType;
+import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.common.ui.components.CommentRowDisplayHandler;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.SimpleNote;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.MeetingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
@@ -107,6 +120,67 @@ public class NoteListItems extends Depot {
 									.getTime());
 							final int noteid = noteService.saveWithSession(
 									note, AppContext.getUsername());
+
+							// Save Relay Email -- having time must refact to
+							// Aop
+							// ------------------------------------------------------
+							RelayEmailNotification relayNotification = new RelayEmailNotification();
+							relayNotification.setChangeby(AppContext
+									.getUsername());
+							relayNotification
+									.setChangecomment((String) noteArea
+											.getValue());
+							relayNotification.setSaccountid(AppContext
+									.getAccountId());
+							relayNotification.setType(type);
+							relayNotification
+									.setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
+							relayNotification.setTypeid(typeid);
+							if (type.equals(CrmTypeConstants.ACCOUNT)) {
+								relayNotification
+										.setEmailhandlerbean(AccountRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CONTACT)) {
+								relayNotification
+										.setEmailhandlerbean(ContactRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CAMPAIGN)) {
+								relayNotification
+										.setEmailhandlerbean(CampaignRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.LEAD)) {
+								relayNotification
+										.setEmailhandlerbean(LeadRelayEmailNotificationAction.class
+												.getName());
+							} else if (type
+									.equals(CrmTypeConstants.OPPORTUNITY)) {
+								relayNotification
+										.setEmailhandlerbean(OpportunityRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CASE)) {
+								relayNotification
+										.setEmailhandlerbean(CaseRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.TASK)) {
+								relayNotification
+										.setEmailhandlerbean(TaskRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.MEETING)) {
+								relayNotification
+										.setEmailhandlerbean(MeetingRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CALL)) {
+								relayNotification
+										.setEmailhandlerbean(CallRelayEmailNotificationAction.class
+												.getName());
+							}
+							RelayEmailNotificationService relayEmailNotificationService = ApplicationContextUtil
+									.getSpringBean(RelayEmailNotificationService.class);
+							relayEmailNotificationService.saveWithSession(
+									relayNotification, AppContext.getUsername());
+							// End save relay Email
+							// --------------------------------------------------
+
 							String attachmentPath = AttachmentUtils
 									.getCrmNoteAttachmentPath(
 											AppContext.getAccountId(), noteid);

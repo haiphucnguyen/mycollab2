@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
@@ -65,9 +67,14 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleAccount simpleAccount) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put("accountURL", CrmLinkGenerator.generateCrmItemLink(
-				CrmTypeConstants.ACCOUNT, simpleAccount.getId()));
+		hyperLinks
+				.put("accountURL",
+						getSiteUrl(simpleAccount.getSaccountid())
+								+ CrmLinkGenerator.generateCrmItemLink(
+										CrmTypeConstants.ACCOUNT,
+										simpleAccount.getId()));
 
+		// TODO : assignee link , employees
 		return hyperLinks;
 	}
 
@@ -112,9 +119,15 @@ public class AccountRelayEmailNotificationActionImpl extends
 				+ StringUtils.subString(simpleAccount.getAccountname(), 100)
 				+ "\"", "templates/email/crm/accountAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		// templateGenerator.putVariable("userComment", linkGenerator
-		// .generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", simpleAccount);
+
+		templateGenerator.putVariable(
+				"userComment",
+				getSiteUrl(emailNotification.getSaccountid())
+						+ ProjectLinkUtils.URL_PREFIX_PARAM
+						+ "account/user/preview/"
+						+ UrlEncodeDecoder.encode(emailNotification
+								.getChangeby()));
+		templateGenerator.putVariable("simpleAccount", simpleAccount);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleAccount));
 
@@ -140,15 +153,28 @@ public class AccountRelayEmailNotificationActionImpl extends
 		AccountFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("summary", "Bug Summary");
+			fieldNameMap.put("accountname", "Account Name");
+			fieldNameMap.put("phoneoffice", "Office Phone");
+			fieldNameMap.put("website", "Website");
+			fieldNameMap.put("fax", "Fax");
+			// fieldNameMap.put("", "Employees");
+			fieldNameMap.put("alternatephone", "Other Phone");
+			fieldNameMap.put("industry", "Industry");
+			fieldNameMap.put("email", "Email");
+			fieldNameMap.put("type", "Type");
+			fieldNameMap.put("ownership", "Ownership");
+			fieldNameMap.put("assignuser", "Assignee");
+			fieldNameMap.put("annualrevenue", "Annual Revenue");
+			fieldNameMap.put("billingaddress", "Billing Address");
+			fieldNameMap.put("shippingaddress", "Shipping Address");
+			fieldNameMap.put("city", "Billing City");
+			fieldNameMap.put("shippingcity", "Shipping City");
+			fieldNameMap.put("state", "Billing State");
+			fieldNameMap.put("shippingstate", "Shipping Address");
+			fieldNameMap.put("postalcode", "Billing Postal Code");
+			fieldNameMap.put("billingcountry", "Billing Country");
+			fieldNameMap.put("shippingcountry", "Shipping Country");
 			fieldNameMap.put("description", "Description");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
-			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("duedate", "Due Date");
 		}
 
 		public boolean hasField(String fieldName) {

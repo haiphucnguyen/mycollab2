@@ -27,7 +27,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Website:&nbsp;</td>
-									<td>$!simpleAccount.website</td>
+									<td><a href="$!simpleAccount.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.website</a></td>
 									<td style="text-align: right; min-width: 90px;">Fax:&nbsp;</td>
 									<td>$!simpleAccount.fax</td>		
 								</tr>
@@ -41,7 +41,7 @@
 									<td style="text-align: right;">Industry:&nbsp;</td>
 									<td>$!simpleAccount.industry</td>
 									<td style="text-align: right;">Email:&nbsp;</td>
-									<td>$!simpleAccount.email</td>		
+									<td><a href="mailto:$!simpleAccount.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.email</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Type:&nbsp;</td>
@@ -89,6 +89,33 @@
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
 									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.description</td>
 								</tr>
+								<tr>
+                                	<td colspan="4">
+                                		<p>Changes (by $historyLog.postedUserFullName):</p>
+                                		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
+                                			<tr>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Fields</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Old Value</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">New Value</td>
+                                			</tr>
+                                			#foreach ($item in $historyLog.changeItems)
+                                				#if ($mapper.hasField($item.field))
+                                				<tr>
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                						$mapper.getFieldLabel($item.field)
+                                					</td>
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                						$item.oldvalue
+                                					</td>
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                						$item.newvalue
+                                					</td>
+                                				</tr>
+                                				#end
+                                			#end
+                                		</table>
+                                	</td>
+                                </tr>
 							</table>
 						</td>
 					</tr>
