@@ -23,7 +23,7 @@
                 <message>Short name must not be null</message>
             </constraint>
             <constraint
-                annotation="com.esofthead.mycollab.module.project.domain.validator.ShortnameProjectChecking">
+                annotation="com.esofthead.mycollab.validator.constraints.StringLimitLength">
                 <message>Project short name must contain 3 characters</message>
             </constraint>
         </field>
