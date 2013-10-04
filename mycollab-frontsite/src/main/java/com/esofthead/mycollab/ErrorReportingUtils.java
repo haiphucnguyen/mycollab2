@@ -15,9 +15,9 @@ public class ErrorReportingUtils {
 
 	public static void reportError(String errorMsg) {
 		try {
-			ErrorReportingResource errorResource = RemoteServiceProxy.build(
-					SiteConfiguration.getErrorReportingUrl(),
-					ErrorReportingResource.class);
+			ErrorReportingResource errorResource = RemoteServiceProxy
+					.build(SiteConfiguration.getApiUrl(),
+							ErrorReportingResource.class);
 
 			errorResource.sendErrorTrace(errorMsg);
 		} catch (Exception e) {

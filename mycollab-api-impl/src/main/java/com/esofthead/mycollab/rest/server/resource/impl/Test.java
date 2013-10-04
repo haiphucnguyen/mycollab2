@@ -15,7 +15,7 @@ public class Test {
 		UserResource userResource = RemoteServiceProxy.build(
 				"http://localhost:8080/api", UserResource.class);
 		Response response = userResource
-				.getSubdomainsOfUser("hainguyen@esofthead.com1");
+				.getSubdomainsOfUser("hainguyen@esofthead.com");
 //		System.out.println(response.readEntity(String.class) + "--"
 //				+ response.getMediaType() + "--" + response.getLocation());
 
