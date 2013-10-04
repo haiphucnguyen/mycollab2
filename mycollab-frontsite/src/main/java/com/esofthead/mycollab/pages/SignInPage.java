@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.pages;
 
+import javax.ws.rs.core.Response;
+
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -15,7 +17,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.https.RequireHttps;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,10 @@ import com.esofthead.mycollab.ErrorReportingUtils;
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.DeploymentMode;
-import com.esofthead.mycollab.rest.server.resource.UserHubResource;
+import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
+import com.esofthead.mycollab.rest.server.resource.UserResource;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @RequireHttps
 public class SignInPage extends BasePage {
@@ -56,28 +60,29 @@ public class SignInPage extends BasePage {
 			@Override
 			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				log.info("Signin page: " + SiteConfiguration.getSigninUrl());
-				final ClientResource clientResource = new ClientResource(
-						SiteConfiguration.getSigninUrl());
-				final UserHubResource userResource = clientResource
-						.wrap(UserHubResource.class);
+				UserResource userResource = RemoteServiceProxy.build(
+						SiteConfiguration.getSigninUrl(), UserResource.class);
 
 				try {
 					String emailString = email.getModelObject();
 
-					final String[] response = userResource
+					Response response = userResource
 							.getSubdomainsOfUser(emailString);
+					Gson gson = new GsonBuilder().create();
+					String[] subdomains = gson.fromJson(response.readEntity(String.class),
+							String[].class);
 
-					if (response == null || response.length == 0) {
+					if (subdomains.length == 0) {
 						ErrorReportingUtils
 								.reportError("Can not find subdomain of user "
 										+ emailString);
-					} else if (response.length == 1) {
+					} else if (subdomains.length == 1) {
 						String redirectUrl = "";
 						if (SiteConfiguration.getDeploymentMode() == DeploymentMode.LOCAL) {
 							redirectUrl = SiteConfiguration.getAppUrl();
 						} else {
 							redirectUrl = String.format(
-									SiteConfiguration.getAppUrl(), response[0]);
+									SiteConfiguration.getAppUrl(), subdomains[0]);
 						}
 
 						log.debug("Redirect user {} to subdomain {}",
@@ -88,7 +93,7 @@ public class SignInPage extends BasePage {
 					} else {
 
 						subdomainList.removeAll();
-						for (String subdomainString : response) {
+						for (String subdomainString : subdomains) {
 							log.debug("List subdomain {} to user {}",
 									subdomainString, emailString);
 							final AbstractItem newItem = new AbstractItem(
