@@ -81,6 +81,12 @@
             <groupId>org.brickred</groupId>
             <artifactId>socialauth</artifactId>
             <version>4.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
