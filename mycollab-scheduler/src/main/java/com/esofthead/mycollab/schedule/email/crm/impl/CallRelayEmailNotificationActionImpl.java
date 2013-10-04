@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
@@ -39,6 +36,7 @@ public class CallRelayEmailNotificationActionImpl extends
 	private final CallFieldNameMapper mapper;
 
 	public CallRelayEmailNotificationActionImpl() {
+		super(CrmTypeConstants.CALL);
 		mapper = new CallFieldNameMapper();
 	}
 
@@ -128,19 +126,6 @@ public class CallRelayEmailNotificationActionImpl extends
 				constructHyperLinks(simpleCall));
 
 		return templateGenerator;
-	}
-
-	@Override
-	protected List<SimpleUser> getListNotififyUserWithFilter(
-			SimpleRelayEmailNotification notification) {
-		List<CrmNotificationSetting> notificationSettings = notificationService
-				.findNotifications(notification.getChangeby(),
-						notification.getSaccountid());
-
-		List<SimpleUser> inListUsers = notification.getNotifyUsers();
-
-		// TODO: MORE CODE FILTER
-		return inListUsers;
 	}
 
 	public class CallFieldNameMapper {

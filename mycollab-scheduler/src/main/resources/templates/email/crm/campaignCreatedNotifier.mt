@@ -41,7 +41,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Currency:&nbsp;</td>
-									<td> #if(simpleCampaign.currency!=null) $!simpleCampaign.currency.symbol #else nil #end </td>
+									<td></td>
 									<td style="text-align: right;">Budget:&nbsp;</td>
 									<td>$!simpleCampaign.budget</td>		
 								</tr>

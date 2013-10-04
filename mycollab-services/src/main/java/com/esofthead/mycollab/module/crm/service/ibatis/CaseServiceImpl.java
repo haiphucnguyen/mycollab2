@@ -6,20 +6,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.CaseMapper;
 import com.esofthead.mycollab.module.crm.dao.CaseMapperExt;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Case", nameField = "subject")
 @Auditable(module = "Crm", type = "Case")
+@Watchable(type = CrmTypeConstants.CASE, userFieldName = "assignuser", emailHandlerBean = CaseRelayEmailNotificationAction.class)
 public class CaseServiceImpl extends
 		DefaultService<Integer, CaseWithBLOBs, CaseSearchCriteria> implements
 		CaseService {

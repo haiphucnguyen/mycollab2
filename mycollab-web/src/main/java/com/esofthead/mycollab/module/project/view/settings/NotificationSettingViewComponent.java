@@ -114,8 +114,11 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 						public void buttonClick(ClickEvent event) {
 							try {
 								PropertyUtils.setProperty(bean, "level", level);
+								Integer projectId = (CurrentProjectVariables
+										.getProjectId() > 0) ? CurrentProjectVariables
+										.getProjectId() : 1;
 								PropertyUtils.setProperty(bean, "projectid",
-										CurrentProjectVariables.getProjectId());
+										projectId);
 								PropertyUtils.setProperty(bean, "saccountid",
 										AppContext.getAccountId());
 								PropertyUtils.setProperty(bean, "username",

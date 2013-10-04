@@ -10,6 +10,9 @@ import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 public interface CrmNotificationSettingService extends
 		ICrudService<Integer, CrmNotificationSetting> {
 	@Cacheable
-	List<CrmNotificationSetting> findNotifications(String username,
+	CrmNotificationSetting findNotification(String username,
 			@CacheKey Integer sAccountId);
+
+	@Cacheable
+	List<CrmNotificationSetting> findNotifications(@CacheKey Integer sAccountId);
 }

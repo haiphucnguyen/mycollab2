@@ -24,17 +24,32 @@ public class CrmNotificationSettingServiceImpl extends
 
 	@Override
 	@Cacheable
-	public List<CrmNotificationSetting> findNotifications(String username,
+	public CrmNotificationSetting findNotification(String username,
 			@CacheKey Integer sAccountId) {
 		CrmNotificationSettingExample ex = new CrmNotificationSettingExample();
 		ex.createCriteria().andUsernameEqualTo(username)
 				.andSaccountidEqualTo(sAccountId);
-		return crmNotificationSettingMapper.selectByExample(ex);
+		List<CrmNotificationSetting> lst = crmNotificationSettingMapper
+				.selectByExample(ex);
+		if (lst != null && lst.size() > 0) {
+			return lst.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public ICrudGenericDAO<Integer, CrmNotificationSetting> getCrudMapper() {
 		return crmNotificationSettingMapper;
+	}
+
+	@Override
+	@Cacheable
+	public List<CrmNotificationSetting> findNotifications(
+			@CacheKey Integer sAccountId) {
+		CrmNotificationSettingExample ex = new CrmNotificationSettingExample();
+		ex.createCriteria().andSaccountidEqualTo(sAccountId);
+		return crmNotificationSettingMapper.selectByExample(ex);
 	}
 
 }

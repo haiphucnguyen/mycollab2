@@ -22,20 +22,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.LeadMapper;
 import com.esofthead.mycollab.module.crm.dao.LeadMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Lead", nameField = "lastname")
 @Auditable(module = "Crm", type = "Lead")
+@Watchable(type = CrmTypeConstants.LEAD, userFieldName = "assignuser", emailHandlerBean = LeadRelayEmailNotificationAction.class)
 public class LeadServiceImpl extends
 		DefaultService<Integer, Lead, LeadSearchCriteria> implements
 		LeadService {

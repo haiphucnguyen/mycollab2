@@ -25,10 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.OpportunityContactMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
@@ -41,11 +43,13 @@ import com.esofthead.mycollab.module.crm.domain.OpportunityLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Opportunity", nameField = "opportunityname")
 @Auditable(module = "Crm", type = "Opportunity")
+@Watchable(type = CrmTypeConstants.OPPORTUNITY, userFieldName = "assignuser", emailHandlerBean = OpportunityRelayEmailNotificationAction.class)
 public class OpportunityServiceImpl extends
 		DefaultService<Integer, Opportunity, OpportunitySearchCriteria>
 		implements OpportunityService {

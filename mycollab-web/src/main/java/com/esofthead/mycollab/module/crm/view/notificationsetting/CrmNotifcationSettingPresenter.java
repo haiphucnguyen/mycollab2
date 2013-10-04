@@ -25,7 +25,6 @@ public class CrmNotifcationSettingPresenter extends
 
 		super.onGo(container, data);
 		view.showNotificationSettings(null);
-		AppContext.addFragment("crm/notificationsetting",
-				"Customer: Notification settings");
+		AppContext.addFragment("crm/setting", "Customer: Settings");
 	}
 }

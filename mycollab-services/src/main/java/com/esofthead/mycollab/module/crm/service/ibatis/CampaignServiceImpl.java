@@ -24,9 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.CampaignAccountMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignContactMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignLeadMapper;
@@ -42,11 +44,13 @@ import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Campaign", nameField = "campaignname")
 @Auditable(module = "Crm", type = "Campaign")
+@Watchable(type = CrmTypeConstants.CAMPAIGN, userFieldName = "assignuser", emailHandlerBean = CampaignRelayEmailNotificationAction.class)
 public class CampaignServiceImpl extends
 		DefaultService<Integer, CampaignWithBLOBs, CampaignSearchCriteria>
 		implements CampaignService {

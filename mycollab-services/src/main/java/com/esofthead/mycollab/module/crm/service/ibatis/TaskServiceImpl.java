@@ -23,20 +23,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.dao.TaskMapperExt;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TaskService;
+import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Task", nameField = "subject")
 @Auditable(module = "Crm", type = "Task")
+@Watchable(type = CrmTypeConstants.TASK, userFieldName = "assignuser", emailHandlerBean = TaskRelayEmailNotificationAction.class)
 public class TaskServiceImpl extends
 		DefaultService<Integer, Task, TodoSearchCriteria> implements
 		TaskService {

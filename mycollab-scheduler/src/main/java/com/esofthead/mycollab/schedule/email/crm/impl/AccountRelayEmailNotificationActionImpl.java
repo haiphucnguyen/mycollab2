@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,13 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
+import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
@@ -32,13 +31,20 @@ public class AccountRelayEmailNotificationActionImpl extends
 	private AuditLogService auditLogService;
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private NoteService noteService;
 
 	@Autowired
 	private CrmNotificationSettingService notificationService;
 
 	private final AccountFieldNameMapper mapper;
 
+	private SimpleAccount simpleAccount;
+
 	public AccountRelayEmailNotificationActionImpl() {
+		super(CrmTypeConstants.ACCOUNT);
 		mapper = new AccountFieldNameMapper();
 	}
 
@@ -46,7 +52,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int recordAccountId = emailNotification.getTypeid();
-		SimpleAccount simpleAccount = accountService.findById(recordAccountId,
+		simpleAccount = accountService.findById(recordAccountId,
 				emailNotification.getSaccountid());
 		if (simpleAccount != null) {
 			String subject = StringUtils.subString(
@@ -81,8 +87,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		SimpleAccount simpleAccount = accountService.findById(
-				emailNotification.getTypeid(),
+		simpleAccount = accountService.findById(emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 
 		String subject = StringUtils.subString(simpleAccount.getAccountname(),
@@ -110,7 +115,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
 		int accountRecordId = emailNotification.getTypeid();
-		SimpleAccount simpleAccount = accountService.findById(accountRecordId,
+		simpleAccount = accountService.findById(accountRecordId,
 				emailNotification.getSaccountid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator("[Account]"
@@ -132,19 +137,6 @@ public class AccountRelayEmailNotificationActionImpl extends
 				constructHyperLinks(simpleAccount));
 
 		return templateGenerator;
-	}
-
-	@Override
-	protected List<SimpleUser> getListNotififyUserWithFilter(
-			SimpleRelayEmailNotification notification) {
-		List<CrmNotificationSetting> notificationSettings = notificationService
-				.findNotifications(notification.getChangeby(),
-						notification.getSaccountid());
-
-		List<SimpleUser> inListUsers = notification.getNotifyUsers();
-
-		// TODO: MORE CODE FILTER
-		return inListUsers;
 	}
 
 	public class AccountFieldNameMapper {

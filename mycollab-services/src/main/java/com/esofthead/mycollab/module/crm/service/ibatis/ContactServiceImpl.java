@@ -24,9 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.ContactCaseMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
@@ -39,11 +41,13 @@ import com.esofthead.mycollab.module.crm.domain.ContactOpportunityExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Contact", nameField = "lastname")
 @Auditable(module = "Crm", type = "Contact")
+@Watchable(type = CrmTypeConstants.CONTACT, userFieldName = "assignuser", emailHandlerBean = ContactRelayEmailNotificationAction.class)
 public class ContactServiceImpl extends
 		DefaultService<Integer, Contact, ContactSearchCriteria> implements
 		ContactService {

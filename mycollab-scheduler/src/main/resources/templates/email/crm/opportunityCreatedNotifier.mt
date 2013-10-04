@@ -29,7 +29,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Currency::&nbsp;</td>
-									<td>#if($!simpleOpportunity.currency!=null) $!simpleOpportunity.currency #else nil #end</td>
+									<td></td>
 									<td style="text-align: right; min-width: 90px;">Expected Close Date:&nbsp;</td>
 									<td>$!simpleOpportunity.expectedcloseddate</td>		
 								</tr>

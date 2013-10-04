@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
@@ -39,6 +36,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 	private final ContactFieldNameMapper mapper;
 
 	public ContactRelayEmailNotificationActionImpl() {
+		super(CrmTypeConstants.CONTACT);
 		mapper = new ContactFieldNameMapper();
 	}
 
@@ -73,12 +71,14 @@ public class ContactRelayEmailNotificationActionImpl extends
 								+ CrmLinkGenerator.generateCrmItemLink(
 										CrmTypeConstants.CONTACT,
 										simpleContact.getId()));
-		hyperLinks.put(
-				"accountURL",
-				getSiteUrl(simpleContact.getSaccountid())
-						+ CrmLinkGenerator.generateCrmItemLink(
-								CrmTypeConstants.ACCOUNT,
-								simpleContact.getAccountid()));
+		if (simpleContact.getAccountid() != null) {
+			hyperLinks.put(
+					"accountURL",
+					getSiteUrl(simpleContact.getSaccountid())
+							+ CrmLinkGenerator.generateCrmItemLink(
+									CrmTypeConstants.ACCOUNT,
+									simpleContact.getAccountid()));
+		}
 		// TODO: assignee
 		return hyperLinks;
 	}
@@ -136,19 +136,6 @@ public class ContactRelayEmailNotificationActionImpl extends
 				constructHyperLinks(simpleContact));
 
 		return templateGenerator;
-	}
-
-	@Override
-	protected List<SimpleUser> getListNotififyUserWithFilter(
-			SimpleRelayEmailNotification notification) {
-		List<CrmNotificationSetting> notificationSettings = notificationService
-				.findNotifications(notification.getChangeby(),
-						notification.getSaccountid());
-
-		List<SimpleUser> inListUsers = notification.getNotifyUsers();
-
-		// TODO: MORE CODE FILTER
-		return inListUsers;
 	}
 
 	public class ContactFieldNameMapper {
