@@ -54,19 +54,7 @@ public class SiteConfiguration {
 		return appInstance.siteUrl;
 	}
 
-	public static String getSigninUrl() {
-		return appInstance.apiUrl + "/signin";
-	}
-
 	public static DeploymentMode getDeploymentMode() {
 		return appInstance.deploymentMode;
-	}
-
-	public static String getSignupUrl() {
-		return appInstance.apiUrl + "/signup";
-	}
-
-	public static String getErrorReportingUrl() {
-		return appInstance.apiUrl + "/errorReport";
 	}
 }

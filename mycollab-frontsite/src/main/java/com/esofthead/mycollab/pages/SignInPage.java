@@ -59,9 +59,9 @@ public class SignInPage extends BasePage {
 
 			@Override
 			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				log.info("Signin page: " + SiteConfiguration.getSigninUrl());
+				log.info("Signin page: " + SiteConfiguration.getApiUrl());
 				UserResource userResource = RemoteServiceProxy.build(
-						SiteConfiguration.getSigninUrl(), UserResource.class);
+						SiteConfiguration.getApiUrl(), UserResource.class);
 
 				try {
 					String emailString = email.getModelObject();
@@ -75,7 +75,7 @@ public class SignInPage extends BasePage {
 					String[] subdomains = gson.fromJson(responseVal,
 							String[].class);
 
-					if (subdomains.length == 0) {
+					if (subdomains == null || subdomains.length == 0) {
 						ErrorReportingUtils
 								.reportError("Can not find subdomain of user "
 										+ emailString);

@@ -104,9 +104,8 @@ public class SignUpPage extends BasePage {
 
 			@Override
 			protected void onSubmit() {
-				AccountResource userResource = RemoteServiceProxy
-						.build(SiteConfiguration.getSigninUrl(),
-								AccountResource.class);
+				AccountResource userResource = RemoteServiceProxy.build(
+						SiteConfiguration.getApiUrl(), AccountResource.class);
 
 				try {
 
@@ -122,8 +121,7 @@ public class SignUpPage extends BasePage {
 					form.setPassword(password.getModelObject());
 					form.setTimezoneId(timezone.getModelObject());
 
-					log.debug("Submit form {}",
-							SiteConfiguration.getSignupUrl());
+					log.debug("Submit form {}", SiteConfiguration.getApiUrl());
 					final String response = userResource.signup(form);
 					log.debug("Response of site: {}", response);
 
