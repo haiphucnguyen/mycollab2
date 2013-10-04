@@ -58,7 +58,7 @@ body {
 	
 	color: #454545;
 	font-family: "Arial","Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	min-width: 1024px;
+	min-width: 1280px;
 	line-height: 1.5em;
 }
 h1 {
@@ -106,7 +106,9 @@ input, select, textarea {
 #banner{}
 
 /* CONTAINER STYLE */
-#container {}
+#container {
+	min-height: 600px;
+}
 	
 	#content {
 		
@@ -2284,6 +2286,7 @@ a.nivo-prevNav {
     font-family: 'verdana';
     margin: 0 auto;
     float: right;
+    -webkit-appearance: none;
 }
 
 .sig-mid-left input[type="submit"]:hover {
@@ -2429,6 +2432,7 @@ a.nivo-prevNav {
     text-decoration: none;
     width: 200px;
     font-family: 'verdana';
+    -webkit-appearance: none;
 }
 
 .signin-lblemail {
