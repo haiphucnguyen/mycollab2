@@ -69,7 +69,10 @@ public class SignInPage extends BasePage {
 					Response response = userResource
 							.getSubdomainsOfUser(emailString);
 					Gson gson = new GsonBuilder().create();
-					String[] subdomains = gson.fromJson(response.readEntity(String.class),
+					String responseVal = response.readEntity(String.class);
+					log.debug("Domains of user {} is {}", emailString,
+							responseVal);
+					String[] subdomains = gson.fromJson(responseVal,
 							String[].class);
 
 					if (subdomains.length == 0) {
@@ -82,7 +85,8 @@ public class SignInPage extends BasePage {
 							redirectUrl = SiteConfiguration.getAppUrl();
 						} else {
 							redirectUrl = String.format(
-									SiteConfiguration.getAppUrl(), subdomains[0]);
+									SiteConfiguration.getAppUrl(),
+									subdomains[0]);
 						}
 
 						log.debug("Redirect user {} to subdomain {}",
