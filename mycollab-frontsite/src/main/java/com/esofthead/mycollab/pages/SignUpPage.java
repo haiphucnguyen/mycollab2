@@ -25,8 +25,6 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.brickred.socialauth.SocialAuthConfig;
 import org.brickred.socialauth.SocialAuthManager;
 import org.brickred.socialauth.util.Constants;
-import org.restlet.data.Form;
-import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +33,9 @@ import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
-import com.esofthead.mycollab.rest.server.resource.UserHubResource;
+import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
+import com.esofthead.mycollab.rest.server.domain.SignupForm;
+import com.esofthead.mycollab.rest.server.resource.AccountResource;
 import com.esofthead.mycollab.uicomponents.OAuthServiceSignupPanel;
 
 public class SignUpPage extends BasePage {
@@ -104,25 +104,23 @@ public class SignUpPage extends BasePage {
 
 			@Override
 			protected void onSubmit() {
-				final ClientResource clientResource = new ClientResource(
-						SiteConfiguration.getSignupUrl());
-				final UserHubResource userResource = clientResource
-						.wrap(UserHubResource.class);
+				AccountResource userResource = RemoteServiceProxy
+						.build(SiteConfiguration.getSigninUrl(),
+								AccountResource.class);
 
 				try {
 
-					final Form form = new Form();
-					form.set("subdomain", subdomain.getModelObject());
-					form.set("planId", Integer.toString(planId));
+					final SignupForm form = new SignupForm();
+					form.setSubdomain(subdomain.getModelObject());
+					form.setPlanId(Integer.parseInt(planId + ""));
 					if (authEmail != null) {
-						form.set("username", authEmail);
-						form.set("email", authEmail);
+						form.setEmail(authEmail);
 					} else {
-						form.set("username", email.getModelObject());
-						form.set("email", email.getModelObject());
+						form.setEmail(email.getModelObject());
 					}
-					form.set("password", password.getModelObject());
-					form.set("timezoneId", timezone.getModelObject());
+
+					form.setPassword(password.getModelObject());
+					form.setTimezoneId(timezone.getModelObject());
 
 					log.debug("Submit form {}",
 							SiteConfiguration.getSignupUrl());

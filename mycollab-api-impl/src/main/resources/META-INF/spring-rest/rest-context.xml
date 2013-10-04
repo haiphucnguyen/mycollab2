@@ -4,37 +4,5 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <bean id="restletComponent" class="org.restlet.ext.spring.SpringComponent">
-        <property name="defaultTarget" ref="restApp" />
-    </bean>
-
-    <bean id="restApp" class="com.esofthead.mycollab.rest.server.RestApp">
-        <property name="inboundRoot" ref="restRouter" />
-    </bean>
-
-    <bean id="restRouter" class="org.restlet.ext.spring.SpringRouter">
-        <property name="attachments">
-            <map>
-                <entry key="/signup">
-                    <bean class="org.restlet.ext.spring.SpringFinder">
-                        <lookup-method name="create"
-                            bean="restUserResource" />
-                    </bean>
-                </entry>
-                <entry key="/signin">
-                    <bean class="org.restlet.ext.spring.SpringFinder">
-                        <lookup-method name="create"
-                            bean="restUserResource" />
-                    </bean>
-                </entry>
-                <entry key="/errorReport">
-                    <bean class="org.restlet.ext.spring.SpringFinder">
-                        <lookup-method name="create"
-                            bean="errorReportingResource" />
-                    </bean>
-                </entry>
-            </map>
-        </property>
-    </bean>
+    <import resource="classpath:META-INF/spring/core-context.xml" />
 </beans>

@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.rest.server.resource;
 
-import org.restlet.resource.Post;
+import javax.ws.rs.POST;
 
 public interface ErrorReportingResource {
-	@Post
+	@POST
 	void sendErrorTrace(String errorMsg);
 }
