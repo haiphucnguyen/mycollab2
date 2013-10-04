@@ -11,7 +11,7 @@
         <springVersion>3.2.4.RELEASE</springVersion>
         <aspectjVersion>1.7.3</aspectjVersion>
         <javaVersion>1.6</javaVersion>
-        <slf4jVersion>1.6.3</slf4jVersion>
+        <slf4jVersion>1.6.4</slf4jVersion>
         <log4jVersion>1.2.16</log4jVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
