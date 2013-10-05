@@ -74,7 +74,7 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
+		if (AppContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
 			RoleService roleService = ApplicationContextUtil
 					.getSpringBean(RoleService.class);
 			SimpleRole role = roleService.findById((Integer) data.getParams(),

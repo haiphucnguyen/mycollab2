@@ -117,7 +117,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.USER_USER));
+				.canAccess(RolePermissionCollections.ACCOUNT_USER));
 
 		this.tableActionControls = new PopupButtonControl(
 				PopupActionHandler.DELETE_ACTION, deleteBtn);

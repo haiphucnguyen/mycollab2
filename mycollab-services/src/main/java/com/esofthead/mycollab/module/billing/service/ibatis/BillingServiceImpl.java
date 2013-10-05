@@ -192,9 +192,15 @@ public class BillingServiceImpl implements BillingService {
 					AccessPermissionFlag.READ_ONLY);
 		}
 
-		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.READ_ONLY);
+		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
+			if (element.getKey().equals(
+					RolePermissionCollections.ACCOUNT_BILLING)) {
+				permissionMap.addPath(element.getKey(),
+						BooleanPermissionFlag.FALSE);
+			} else {
+				permissionMap.addPath(element.getKey(),
+						AccessPermissionFlag.READ_ONLY);
+			}
 		}
 
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
@@ -226,9 +232,15 @@ public class BillingServiceImpl implements BillingService {
 					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
 		}
 
-		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap
-					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
+			if (element.getKey().equals(
+					RolePermissionCollections.ACCOUNT_BILLING)) {
+				permissionMap.addPath(element.getKey(),
+						BooleanPermissionFlag.TRUE);
+			} else {
+				permissionMap.addPath(element.getKey(),
+						AccessPermissionFlag.ACCESS);
+			}
 		}
 
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
@@ -259,9 +271,15 @@ public class BillingServiceImpl implements BillingService {
 					AccessPermissionFlag.NO_ACCESS);
 		}
 
-		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.NO_ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
+			if (element.getKey().equals(
+					RolePermissionCollections.ACCOUNT_BILLING)) {
+				permissionMap.addPath(element.getKey(),
+						BooleanPermissionFlag.FALSE);
+			} else {
+				permissionMap.addPath(element.getKey(),
+						AccessPermissionFlag.NO_ACCESS);
+			}
 		}
 
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {

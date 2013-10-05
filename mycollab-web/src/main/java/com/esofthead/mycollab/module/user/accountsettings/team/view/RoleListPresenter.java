@@ -109,7 +109,7 @@ public class RoleListPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
+		if (AppContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
 			RoleContainer roleContainer = (RoleContainer) container;
 			roleContainer.removeAllComponents();
 			roleContainer.addComponent(view.getWidget());

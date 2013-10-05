@@ -157,7 +157,7 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Role>(PreviewForm.this))
-						.createButtonControls(RolePermissionCollections.USER_ROLE);
+						.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
 			}
 
 			@Override
@@ -183,8 +183,8 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
 				permissionsPanel.addComponent(constructPermissionSectionView(
-						"User Management", permissionMap,
-						RolePermissionCollections.USER_PERMISSION_ARR));
+						"Account Management", permissionMap,
+						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}
@@ -253,8 +253,8 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
 				permissionsPanel.addComponent(constructPermissionSectionView(
-						"User Management", permissionMap,
-						RolePermissionCollections.USER_PERMISSION_ARR));
+						"Account Management", permissionMap,
+						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}

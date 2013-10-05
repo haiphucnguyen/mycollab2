@@ -118,7 +118,7 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.USER_ROLE));
+				.canAccess(RolePermissionCollections.ACCOUNT_ROLE));
 
 		this.tableActionControls = new PopupButtonControl(
 				PopupActionHandler.DELETE_ACTION, deleteBtn);

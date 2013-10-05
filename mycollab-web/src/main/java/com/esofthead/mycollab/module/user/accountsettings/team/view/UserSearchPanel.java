@@ -68,7 +68,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		createBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.USER_USER));
+				.canWrite(RolePermissionCollections.ACCOUNT_USER));
 
 		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
 

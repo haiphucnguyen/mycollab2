@@ -153,8 +153,8 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 						perMap,
 						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 				permissionsPanel.addComponent(constructGridLayout(
-						"User Management", perMap,
-						RolePermissionCollections.USER_PERMISSION_ARR));
+						"Account Management", perMap,
+						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}

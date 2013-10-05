@@ -41,12 +41,10 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 			CustomLayout custom = CustomLayoutLoader.createLayout("loginForm");
 			custom.addStyleName("customLoginForm");
 			usernameField = new TextField("Email address");
-			usernameField.setValue("hainguyen@esofthead.com");
 
 			custom.addComponent(usernameField, "usernameField");
 
 			passwordField = new PasswordField("Password");
-			passwordField.setValue("123456");
 			StringLengthValidator passwordValidator = new StringLengthValidator(
 					"Password length must be greater than 6", 6,
 					Integer.MAX_VALUE, false);

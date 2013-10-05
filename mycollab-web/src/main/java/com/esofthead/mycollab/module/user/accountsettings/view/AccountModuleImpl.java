@@ -84,8 +84,8 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 		this.accountTab.addTab(this.constructAccountSettingsComponent(),
 				new MenuButton("Billing", "menu_account.png"));
 
-		if (AppContext.canRead(RolePermissionCollections.USER_USER)
-				|| AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
+		if (AppContext.canRead(RolePermissionCollections.ACCOUNT_USER)
+				|| AppContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
 			this.accountTab.addTab(this.constructUserPermissionComponent(),
 					new MenuButton("Users & Permissions", "menu_team.png"));
 		}
