@@ -3,7 +3,7 @@ package com.esofthead.mycollab.shell;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.web.AppContext;
 
-public class BillingPlanChecker {
+public class BillingPlanCheckerContext {
 	public static boolean isBugComponentEnable() {
 		SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
 		return (billingAccount == null) ? false : billingAccount

@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
-import com.esofthead.mycollab.shell.BillingPlanChecker;
+import com.esofthead.mycollab.shell.BillingPlanCheckerContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
@@ -34,7 +34,7 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 
 		Presenter presenter = null;
 
-		if (BillingPlanChecker.isBugComponentEnable()) {
+		if (BillingPlanCheckerContext.isBugComponentEnable()) {
 			if (ClassUtils.instanceOf(data, BugScreenData.Search.class,
 					BugScreenData.Add.class, BugScreenData.Edit.class,
 					BugScreenData.Read.class)) {
