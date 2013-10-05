@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.user;
+package com.esofthead.mycollab.security;
 
 /**
  * 
@@ -28,10 +28,6 @@ public class AccessPermissionFlag implements PermissionFlag {
 
 	public static boolean canAccess(int flag) {
 		return ((flag & ACCESS) == ACCESS);
-	}
-
-	public static void main(String[] args) {
-		System.out.println(canRead(2));
 	}
 
 	public static String toString(int flag) {

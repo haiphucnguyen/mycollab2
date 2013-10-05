@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.view.component;
 
-import com.esofthead.mycollab.module.user.AccessPermissionFlag;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
 /**

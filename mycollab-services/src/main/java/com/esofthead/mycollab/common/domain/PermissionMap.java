@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.core.utils.ValuedBean;
-import com.esofthead.mycollab.module.user.AccessPermissionFlag;
-import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
 
 /**
  * 

@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
-import com.esofthead.mycollab.module.user.PermissionDefItem;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.view.component.PermissionComboBoxFactory;
+import com.esofthead.mycollab.security.PermissionDefItem;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;

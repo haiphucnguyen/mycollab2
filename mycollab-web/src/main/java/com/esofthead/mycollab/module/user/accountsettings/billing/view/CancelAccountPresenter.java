@@ -1,11 +1,15 @@
 package com.esofthead.mycollab.module.user.accountsettings.billing.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.vaadin.ui.ComponentContainer;
 
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class CancelAccountPresenter extends
 		AbstractPresenter<CancelAccountView> {
 	private static final long serialVersionUID = 1L;

@@ -288,6 +288,10 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	public static PermissionMap getPermissionMap() {
+		return getInstance().session.getPermissionMaps();
+	}
+
 	public static void putVariable(String key, Object value) {
 		if (getInstance() != null) {
 			getInstance().variables.put(key, value);

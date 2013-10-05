@@ -59,7 +59,7 @@ import com.esofthead.mycollab.module.project.esb.DeleteProjectCommand;
 import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.user.AccessPermissionFlag;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
 
 @Service
 @Transactional

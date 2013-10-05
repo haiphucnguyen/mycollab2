@@ -6,13 +6,13 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.user.AccessPermissionFlag;
-import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
-import com.esofthead.mycollab.module.user.PermissionChecker;
-import com.esofthead.mycollab.module.user.PermissionDefItem;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.PermissionChecker;
+import com.esofthead.mycollab.security.PermissionDefItem;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
