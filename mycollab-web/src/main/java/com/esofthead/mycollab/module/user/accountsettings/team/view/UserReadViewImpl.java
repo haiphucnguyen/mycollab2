@@ -6,12 +6,12 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.accountsettings.view.UserFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -168,7 +168,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<User>(PreviewForm.this))
-						.createButtonControls(RolePermissionCollections.USER_USER);
+						.createButtonControls(RolePermissionCollections.ACCOUNT_USER);
 			}
 
 			@Override

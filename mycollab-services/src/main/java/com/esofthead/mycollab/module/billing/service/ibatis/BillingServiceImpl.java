@@ -23,11 +23,7 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand;
 import com.esofthead.mycollab.module.billing.esb.BillingEndpoints;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.module.user.AccessPermissionFlag;
-import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
-import com.esofthead.mycollab.module.user.PermissionDefItem;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;
@@ -47,6 +43,10 @@ import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
 import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.PermissionDefItem;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 
 @Service(value = "billingService")
 public class BillingServiceImpl implements BillingService {
@@ -192,9 +192,15 @@ public class BillingServiceImpl implements BillingService {
 					AccessPermissionFlag.READ_ONLY);
 		}
 
-		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.READ_ONLY);
+		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
+			if (element.getKey().equals(
+					RolePermissionCollections.ACCOUNT_BILLING)) {
+				permissionMap.addPath(element.getKey(),
+						BooleanPermissionFlag.FALSE);
+			} else {
+				permissionMap.addPath(element.getKey(),
+						AccessPermissionFlag.READ_ONLY);
+			}
 		}
 
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
@@ -226,9 +232,15 @@ public class BillingServiceImpl implements BillingService {
 					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
 		}
 
-		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap
-					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
+			if (element.getKey().equals(
+					RolePermissionCollections.ACCOUNT_BILLING)) {
+				permissionMap.addPath(element.getKey(),
+						BooleanPermissionFlag.TRUE);
+			} else {
+				permissionMap.addPath(element.getKey(),
+						AccessPermissionFlag.ACCESS);
+			}
 		}
 
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
@@ -259,9 +271,15 @@ public class BillingServiceImpl implements BillingService {
 					AccessPermissionFlag.NO_ACCESS);
 		}
 
-		for (final PermissionDefItem element : RolePermissionCollections.USER_PERMISSION_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.NO_ACCESS);
+		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
+			if (element.getKey().equals(
+					RolePermissionCollections.ACCOUNT_BILLING)) {
+				permissionMap.addPath(element.getKey(),
+						BooleanPermissionFlag.FALSE);
+			} else {
+				permissionMap.addPath(element.getKey(),
+						AccessPermissionFlag.NO_ACCESS);
+			}
 		}
 
 		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {

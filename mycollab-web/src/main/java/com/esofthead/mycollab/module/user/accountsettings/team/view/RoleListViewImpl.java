@@ -13,11 +13,11 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -118,7 +118,7 @@ public class RoleListViewImpl extends AbstractView implements RoleListView {
 		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.USER_ROLE));
+				.canAccess(RolePermissionCollections.ACCOUNT_ROLE));
 
 		this.tableActionControls = new PopupButtonControl(
 				PopupActionHandler.DELETE_ACTION, deleteBtn);

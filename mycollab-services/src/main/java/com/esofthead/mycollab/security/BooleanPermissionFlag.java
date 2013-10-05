@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.user;
+package com.esofthead.mycollab.security;
 
 import com.esofthead.mycollab.core.MyCollabException;
 

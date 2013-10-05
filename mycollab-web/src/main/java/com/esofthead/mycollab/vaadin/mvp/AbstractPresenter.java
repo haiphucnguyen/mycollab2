@@ -3,7 +3,11 @@ package com.esofthead.mycollab.vaadin.mvp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.security.PermissionChecker;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public abstract class AbstractPresenter<V extends View> implements Presenter<V> {
@@ -47,11 +51,44 @@ public abstract class AbstractPresenter<V extends View> implements Presenter<V> 
 			log.debug("Disable history track for " + this);
 		}
 
-		onGo(container, data);
+		if (checkPermissionAccessIfAny()) {
+			onGo(container, data);
+		} else {
+			MessageConstants.showMessagePermissionAlert();
+		}
+
 	}
 
 	protected abstract void onGo(ComponentContainer container,
 			ScreenData<?> data);
+
+	private boolean checkPermissionAccessIfAny() {
+		ViewPermission viewPermission = this.getClass().getAnnotation(
+				ViewPermission.class);
+		if (viewPermission != null) {
+			String permissionId = viewPermission.permissionId();
+			int impliedPermissionVal = viewPermission.impliedPermissionVal();
+
+			if (AppContext.isAdmin()) {
+				return true;
+			} else {
+				PermissionMap permissionMap = AppContext.getPermissionMap();
+				if (permissionMap == null) {
+					return false;
+				} else {
+					Integer value = permissionMap.get(permissionId);
+					if (value == null) {
+						return false;
+					} else {
+						return PermissionChecker.isImplied(value,
+								impliedPermissionVal);
+					}
+				}
+			}
+		} else {
+			return true;
+		}
+	}
 
 	@Override
 	public void handleChain(ComponentContainer container,

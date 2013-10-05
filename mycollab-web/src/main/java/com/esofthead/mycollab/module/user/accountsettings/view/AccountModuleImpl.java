@@ -1,12 +1,12 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -84,8 +84,8 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 		this.accountTab.addTab(this.constructAccountSettingsComponent(),
 				new MenuButton("Billing", "menu_account.png"));
 
-		if (AppContext.canRead(RolePermissionCollections.USER_USER)
-				|| AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
+		if (AppContext.canRead(RolePermissionCollections.ACCOUNT_USER)
+				|| AppContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
 			this.accountTab.addTab(this.constructUserPermissionComponent(),
 					new MenuButton("Users & Permissions", "menu_team.png"));
 		}

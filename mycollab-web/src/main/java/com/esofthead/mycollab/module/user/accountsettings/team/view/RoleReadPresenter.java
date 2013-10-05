@@ -7,12 +7,12 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -74,7 +74,7 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
+		if (AppContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
 			RoleService roleService = ApplicationContextUtil
 					.getSpringBean(RoleService.class);
 			SimpleRole role = roleService.findById((Integer) data.getParams(),

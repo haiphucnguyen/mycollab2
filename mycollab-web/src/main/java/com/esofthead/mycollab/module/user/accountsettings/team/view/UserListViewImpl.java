@@ -13,10 +13,10 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -117,7 +117,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		final Button deleteBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.USER_USER));
+				.canAccess(RolePermissionCollections.ACCOUNT_USER));
 
 		this.tableActionControls = new PopupButtonControl(
 				PopupActionHandler.DELETE_ACTION, deleteBtn);

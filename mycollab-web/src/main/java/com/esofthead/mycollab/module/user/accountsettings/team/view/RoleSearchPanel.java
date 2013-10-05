@@ -9,9 +9,9 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -65,7 +65,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		createBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.USER_ROLE));
+				.canWrite(RolePermissionCollections.ACCOUNT_ROLE));
 
 		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
 

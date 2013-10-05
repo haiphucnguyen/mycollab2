@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.user;
+package com.esofthead.mycollab.security;
 
 /**
  * 
@@ -21,8 +21,9 @@ public class RolePermissionCollections {
 	public static final String CRM_CALL = "Call";
 	public static final String CRM_DOCUMENT = "Document";
 
-	public static final String USER_USER = "User";
-	public static final String USER_ROLE = "Role";
+	public static final String ACCOUNT_USER = "User";
+	public static final String ACCOUNT_ROLE = "Role";
+	public static final String ACCOUNT_BILLING = "Billing";
 
 	public static final String CREATE_NEW_PROJECT = "CreateNewProject";
 
@@ -44,9 +45,13 @@ public class RolePermissionCollections {
 					AccessPermissionFlag.class),
 			new PermissionDefItem(CRM_CALL, "Call", AccessPermissionFlag.class) };
 
-	public static final PermissionDefItem[] USER_PERMISSION_ARR = {
-			new PermissionDefItem(USER_USER, "User", AccessPermissionFlag.class),
-			new PermissionDefItem(USER_ROLE, "Role", AccessPermissionFlag.class) };
+	public static final PermissionDefItem[] ACCOUNT_PERMISSION_ARR = {
+			new PermissionDefItem(ACCOUNT_USER, "User",
+					AccessPermissionFlag.class),
+			new PermissionDefItem(ACCOUNT_ROLE, "Role",
+					AccessPermissionFlag.class),
+			new PermissionDefItem(ACCOUNT_BILLING, "Billing Management",
+					BooleanPermissionFlag.class) };
 
 	public static final PermissionDefItem[] PROJECT_PERMISSION_ARR = { new PermissionDefItem(
 			CREATE_NEW_PROJECT, "Create New Project",

@@ -6,13 +6,13 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.user.AccessPermissionFlag;
-import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
-import com.esofthead.mycollab.module.user.PermissionChecker;
-import com.esofthead.mycollab.module.user.PermissionDefItem;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.PermissionChecker;
+import com.esofthead.mycollab.security.PermissionDefItem;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -157,7 +157,7 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Role>(PreviewForm.this))
-						.createButtonControls(RolePermissionCollections.USER_ROLE);
+						.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
 			}
 
 			@Override
@@ -183,8 +183,8 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
 				permissionsPanel.addComponent(constructPermissionSectionView(
-						"User Management", permissionMap,
-						RolePermissionCollections.USER_PERMISSION_ARR));
+						"Account Management", permissionMap,
+						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}
@@ -253,8 +253,8 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
 				permissionsPanel.addComponent(constructPermissionSectionView(
-						"User Management", permissionMap,
-						RolePermissionCollections.USER_PERMISSION_ARR));
+						"Account Management", permissionMap,
+						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}

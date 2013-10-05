@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.user.view.component;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.user.AccessPermissionFlag;
-import com.esofthead.mycollab.module.user.BooleanPermissionFlag;
-import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.PermissionFlag;
 import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
 public class PermissionComboBoxFactory {

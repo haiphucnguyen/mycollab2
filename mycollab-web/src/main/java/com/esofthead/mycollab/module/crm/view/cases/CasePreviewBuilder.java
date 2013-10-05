@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
-import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
