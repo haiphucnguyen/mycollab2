@@ -9,6 +9,8 @@ import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBre
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -16,6 +18,7 @@ import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -24,6 +27,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  * @author haiphucnguyen
  */
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_USER, impliedPermissionVal = AccessPermissionFlag.READ_WRITE)
 public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 	private static final long serialVersionUID = 1L;
 
@@ -61,7 +65,8 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 	}
 
 	public void save(SimpleUser item) {
-		UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+		UserService userService = ApplicationContextUtil
+				.getSpringBean(UserService.class);
 
 		item.setAccountId(AppContext.getAccountId());
 

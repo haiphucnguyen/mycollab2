@@ -33,6 +33,7 @@ import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
@@ -235,6 +236,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		});
 		createBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/add.png"));
 		createBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		createBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(createBtn);
 
 		Button uploadBtn = new Button("Upload", new ClickListener() {
@@ -250,6 +253,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		uploadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/upload.png"));
 		uploadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		uploadBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(uploadBtn);
 
 		Button downloadBtn = new Button("Download", new Button.ClickListener() {
@@ -274,6 +279,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		downloadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/download.png"));
 		downloadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		downloadBtn.setEnabled(AppContext
+				.canRead(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(downloadBtn);
 
 		Button moveToBtn = new Button("Move to", new Button.ClickListener() {
@@ -296,6 +303,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		moveToBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/move_up.png"));
 		moveToBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		moveToBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(moveToBtn);
 
 		deleteBtn = new Button(
@@ -321,6 +330,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				.newResource("icons/16/ecm/delete.png"));
 		deleteBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		deleteBtn.setImmediate(true);
+		deleteBtn.setEnabled(AppContext
+				.canAccess(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(deleteBtn);
 		controllGroupBtn.addComponent(navButton);
 
