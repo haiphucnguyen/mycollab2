@@ -28,6 +28,7 @@ import org.brickred.socialauth.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.ErrorReportingUtils;
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -186,7 +187,7 @@ public class SignUpPage extends BasePage {
 				session.removeAttribute("authManager");
 			}
 		} catch (Exception e) {
-
+			ErrorReportingUtils.reportError(e);
 		}
 
 		final String currentService = serviceId;
