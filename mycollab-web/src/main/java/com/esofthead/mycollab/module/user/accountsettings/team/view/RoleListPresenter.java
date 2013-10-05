@@ -16,12 +16,14 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
@@ -33,6 +35,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  * @author haiphucnguyen
  */
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class RoleListPresenter extends
 		ListSelectionPresenter<RoleListView, RoleSearchCriteria, SimpleRole> {
 	private static final long serialVersionUID = 1L;

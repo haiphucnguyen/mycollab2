@@ -10,12 +10,15 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -23,6 +26,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  * @author haiphucnguyen
  */
+@ViewPermission(permissionId = RolePermissionCollections.CREATE_NEW_PROJECT, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +42,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 		projectContainer.addComponent(view.getWidget());
 		Project project = (Project) data.getParams();
 		view.editItem(project);
-		
+
 		if (project.getId() == null) {
 			AppContext.addFragment("project/add", "New Project");
 		}
@@ -77,7 +81,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 
 					@Override
 					public void onSaveAndNew(final Project project) {
-						
+
 					}
 				});
 	}
