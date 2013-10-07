@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -87,7 +87,7 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 							.getProjectid(), AttachmentType.PROJECT_TASK_TYPE,
 							task.getId());
 				} else if (propertyId.equals("priority")) {
-					if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
+					if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
 						final Resource iconPriority = TaskPriorityComboBox
 								.getIconResourceByPriority(task.getPriority());
 						final Embedded iconEmbedded = new Embedded(null,

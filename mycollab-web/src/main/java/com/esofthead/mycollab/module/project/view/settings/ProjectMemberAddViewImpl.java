@@ -4,12 +4,17 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.tokenfield.TokenField;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.EmailValidator;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -35,6 +40,7 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -152,7 +158,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public UserComboBoxWithInviteBtnCustomField() {
-				TokenField inviteUserTokenField = new TokenField();
+				InviteUserTokenField inviteUserTokenField = new InviteUserTokenField();
 				inviteUserTokenField
 						.setFilteringMode(ComboBox.FILTERINGMODE_CONTAINS);
 
@@ -248,5 +254,60 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 	@Override
 	public HasEditFormHandlers<ProjectMember> getEditFormHandlers() {
 		return this.editForm;
+	}
+
+	private static class InviteUserTokenField extends TokenField {
+		private static final long serialVersionUID = 1L;
+		private static final EmailValidator emailValidate = new EmailValidator();
+		private List<String> inviteUserMails = new ArrayList<String>();
+
+		@Override
+		public void addToken(Object tokenId) {
+			String invitedEmail;
+
+			if (tokenId instanceof SimpleUser) {
+				invitedEmail = ((SimpleUser) tokenId).getEmail();
+			} else if (tokenId instanceof String) {
+				invitedEmail = (String) tokenId;
+			} else {
+				throw new MyCollabException("Do not support token field "
+						+ tokenId);
+			}
+
+			if (emailValidate.validate(invitedEmail)) {
+				if (!inviteUserMails.contains(invitedEmail)) {
+					inviteUserMails.add(invitedEmail);
+					super.addToken(tokenId);
+				}
+			} else {
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification(
+								LocalizationHelper
+										.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.WARNING_NOT_VALID_EMAIL),
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+			}
+
+		}
+
+		@Override
+		protected void onTokenDelete(Object tokenId) {
+			String invitedEmail;
+
+			if (tokenId instanceof SimpleUser) {
+				invitedEmail = ((SimpleUser) tokenId).getEmail();
+			} else if (tokenId instanceof String) {
+				invitedEmail = (String) tokenId;
+			} else {
+				throw new MyCollabException("Do not support token field "
+						+ tokenId);
+			}
+
+			inviteUserMails.remove(invitedEmail);
+			super.onTokenDelete(tokenId);
+		}
 	}
 }

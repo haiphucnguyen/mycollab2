@@ -7,7 +7,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
@@ -137,7 +137,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			RoleSearchPanel.this.searchCriteria = new RoleSearchCriteria();
-			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				RoleSearchPanel.this.searchCriteria
 						.setRoleName(new StringSearchField(SearchField.AND,
 								(String) this.nameField.getValue()));

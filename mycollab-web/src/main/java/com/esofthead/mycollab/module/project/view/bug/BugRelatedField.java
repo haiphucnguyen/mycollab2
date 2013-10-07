@@ -7,7 +7,7 @@ import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -271,7 +271,7 @@ public class BugRelatedField extends CustomField {
 							}
 						});
 
-				if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
+				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
 					Resource iconPriority = MyCollabResource
 							.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 

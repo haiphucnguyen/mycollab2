@@ -12,7 +12,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -78,7 +78,7 @@ public class TaskTableDisplay extends
 							}
 						});
 
-				if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
+				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
 					Resource iconPriority = TaskPriorityComboBox
 							.getIconResourceByPriority(task.getPriority());
 					Embedded icon = new Embedded(null, iconPriority);

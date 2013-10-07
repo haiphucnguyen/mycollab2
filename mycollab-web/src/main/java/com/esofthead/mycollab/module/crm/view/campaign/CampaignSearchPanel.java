@@ -14,7 +14,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -176,7 +176,7 @@ public class CampaignSearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
+			if (StringUtils.isNotNullOrEmpty(this.nameField.getValue()
 					.toString().trim())) {
 				CampaignSearchPanel.this.searchCriteria
 						.setCampaignName(new StringSearchField(SearchField.AND,
@@ -262,7 +262,7 @@ public class CampaignSearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				CampaignSearchPanel.this.searchCriteria
 						.setCampaignName(new StringSearchField(SearchField.AND,
 								((String) this.nameField.getValue()).trim()));

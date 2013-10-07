@@ -8,7 +8,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -143,7 +143,7 @@ public class MilestoneSearchPanel extends
 			searchCriteria = new MilestoneSearchCriteria();
 			searchCriteria.setProjectId(new NumberSearchField(
 					SearchField.AND, project.getId()));
-			if (StringUtil.isNotNullOrEmpty((String) nameField
+			if (StringUtils.isNotNullOrEmpty((String) nameField
 					.getValue())) {
 				searchCriteria.setMilestoneName(new StringSearchField(
 						SearchField.AND, (String) nameField.getValue()));
