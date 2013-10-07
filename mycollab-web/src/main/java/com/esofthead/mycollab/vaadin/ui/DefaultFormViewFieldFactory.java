@@ -195,7 +195,6 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			} else {
 				final Label link = new Label(StringUtils.formatExtraLink(url),
 						Label.CONTENT_XHTML);
-				link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 				setCompositionRoot(link);
 			}
 		}
