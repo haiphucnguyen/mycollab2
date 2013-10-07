@@ -42,7 +42,6 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final UserAddViewImpl.AdvanceEditForm advanceEditForm;
-	private final UserAddViewImpl.BasicEditForm basicEditForm;
 	private SimpleUser user;
 	private DateComboboxSelectionField cboDateBirthday;
 	private TimeZoneSelection cboTimezone;
@@ -50,8 +49,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	public UserAddViewImpl() {
 		super();
 		this.advanceEditForm = new UserAddViewImpl.AdvanceEditForm();
-		this.basicEditForm = new UserAddViewImpl.BasicEditForm();
-		this.addComponent(this.basicEditForm);
+		this.addComponent(this.advanceEditForm);
 	}
 
 	@Override
