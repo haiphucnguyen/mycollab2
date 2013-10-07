@@ -228,12 +228,14 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		}
 
 		String bugStatus = member.getNumOpenBugs() + " open bug";
-		if (member.getNumOpenBugs() > 2)
+		if (member.getNumOpenBugs() > 1) {
 			bugStatus += "s";
+		}
 
 		String taskStatus = member.getNumOpenTasks() + " open task";
-		if (member.getNumOpenTasks() > 2)
+		if (member.getNumOpenTasks() > 1) {
 			taskStatus += "s";
+		}
 
 		Label memberWorkStatus = new Label(bugStatus + " - " + taskStatus);
 		memberInfo.addComponent(memberWorkStatus);

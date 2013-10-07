@@ -124,7 +124,7 @@
         SELECT DISTINCT s_user.username, s_user.firstname, s_user.lastname, s_user.email, 
                 s_user.website, s_user.registeredTime, s_user_account.registerStatus,  s_user.avatarId
             FROM s_user, s_user_account
-            WHERE  ((SELECT COUNT(*) 
+            WHERE s_user.username=s_user_account.username AND ((SELECT COUNT(*) 
                         FROM m_prj_member 
                         WHERE m_prj_member.username = s_user.username 
                             AND m_prj_member.status='Active' 
@@ -141,7 +141,7 @@
         SELECT DISTINCT s_user.username, s_user.firstname, s_user.lastname, s_user.email, 
                 s_user.website, s_user.registeredTime, s_user_account.registerStatus
             FROM s_user, s_user_account
-         WHERE  ((SELECT COUNT(*) 
+         WHERE s_user.username=s_user_account.username AND ((SELECT COUNT(*) 
                 FROM m_prj_member 
                 WHERE m_prj_member.username = s_user.username 
                     AND m_prj_member.status='Active' 
