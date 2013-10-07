@@ -41,6 +41,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -252,8 +253,7 @@ public class NoteListItems extends Depot {
 
 			rowLayout.addComponent(messageHeader);
 
-			final Label messageContent = new Label(note.getNote(),
-					Label.CONTENT_XHTML);
+			final Label messageContent = new UrlDetectableLabel(note.getNote());
 			messageContent.setStyleName("message-body");
 			rowLayout.addComponent(messageContent);
 

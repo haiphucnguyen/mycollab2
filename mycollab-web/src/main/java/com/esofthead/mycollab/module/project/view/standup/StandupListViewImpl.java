@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -59,7 +60,8 @@ public class StandupListViewImpl extends AbstractView implements
 		this.getListReport();
 
 		this.reportInDay = new BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport>(
-				ApplicationContextUtil.getSpringBean(StandupReportService.class),
+				ApplicationContextUtil
+						.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
 		this.reportInDay.addStyleName("standupreport-list-content");
 		this.addComponent(this.reportInDay);
@@ -277,8 +279,8 @@ public class StandupListViewImpl extends AbstractView implements
 					"What I did in the last day/week");
 			whatYesterdayLbl.setStyleName("h2");
 			this.bodyContent.addComponent(whatYesterdayLbl);
-			final Label whatYesterdayField = new Label(report.getWhatlastday(),
-					Label.CONTENT_XHTML);
+			final Label whatYesterdayField = new UrlDetectableLabel(
+					report.getWhatlastday());
 			whatYesterdayField.setSizeUndefined();
 			whatYesterdayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
 			this.bodyContent.addComponent(whatYesterdayField);
@@ -286,8 +288,8 @@ public class StandupListViewImpl extends AbstractView implements
 			final Label whatTodayLbl = new Label("What I will do today/week");
 			whatTodayLbl.setStyleName("h2");
 			this.bodyContent.addComponent(whatTodayLbl);
-			final Label whatTodayField = new Label(report.getWhattoday(),
-					Label.CONTENT_XHTML);
+			final Label whatTodayField = new UrlDetectableLabel(
+					report.getWhattoday());
 			whatTodayField.setSizeUndefined();
 			whatTodayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
 			this.bodyContent.addComponent(whatTodayField);
@@ -296,8 +298,8 @@ public class StandupListViewImpl extends AbstractView implements
 					"Do you have roadblocks? If you have questions or you need help, please write your questions or needs here");
 			roadblockLbl.setStyleName("h2");
 			this.bodyContent.addComponent(roadblockLbl);
-			final Label whatProblemField = new Label(report.getWhatproblem(),
-					Label.CONTENT_XHTML);
+			final Label whatProblemField = new UrlDetectableLabel(
+					report.getWhatproblem());
 			whatProblemField.setSizeUndefined();
 			whatProblemField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
 			this.bodyContent.addComponent(whatProblemField);

@@ -32,6 +32,9 @@ public class StringUtils {
 	}
 
 	public static String formatExtraLink(String value) {
+		if (value == null || "".equals(value)) {
+			return "&nbsp;";
+		}
 		return value.replaceAll(
 				"(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
 				"<a href=\"$0\">$0</a>");

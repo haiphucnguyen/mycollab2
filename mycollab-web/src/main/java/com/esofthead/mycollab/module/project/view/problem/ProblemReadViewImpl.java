@@ -101,9 +101,9 @@ public class ProblemReadViewImpl extends AbstractView implements
 								ProblemReadViewImpl.this.problem
 										.getAssignedUserFullName());
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(
+						return new FormDetectAndDisplayUrlViewField(
 								ProblemReadViewImpl.this.problem
-										.getDescription(), Label.CONTENT_XHTML);
+										.getDescription());
 					}
 
 					return null;
@@ -216,11 +216,11 @@ public class ProblemReadViewImpl extends AbstractView implements
 										.formatDate(PrintView.this.problem
 												.getDatedue()));
 							} else if (propertyId.equals("description")) {
-								return new FormViewField(PrintView.this.problem
-										.getDescription(), Label.CONTENT_XHTML);
+								return new FormDetectAndDisplayUrlViewField(
+										PrintView.this.problem.getDescription());
 							} else if (propertyId.equals("resolution")) {
-								return new FormViewField(PrintView.this.problem
-										.getResolution(), Label.CONTENT_XHTML);
+								return new FormDetectAndDisplayUrlViewField(
+										PrintView.this.problem.getResolution());
 							}
 
 							return null;
