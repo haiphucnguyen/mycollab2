@@ -22,28 +22,28 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right;">Subject:&nbsp;</td>
-									<td>$!simpleTask.subject</td>
-									<td style="text-align: right; min-width: 90px;">Status:&nbsp;</td>
-									<td>$!simpleTask.status</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Subject:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.subject</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.status</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleTask.startdate)</td>
-									<td style="text-align: right;">Related To:&nbsp;</td>
-									<td>$!simpleTask.relatedTo</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Related To:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.relatedTo</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Due Date:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleTask.duedate)</td>
-									<td style="text-align: right;">Contact:&nbsp;</td>
-									<td>$!simpleTask.contactName</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Contact:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.contactName</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Priority:&nbsp;</td>
-									<td>$!simpleTask.priority</td>
-									<td style="text-align: right;">Assignee:&nbsp;</td>
-									<td>$!simpleTask.assignuser</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Priority:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.priority</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.assignuser</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>

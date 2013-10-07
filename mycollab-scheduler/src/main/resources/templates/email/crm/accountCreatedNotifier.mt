@@ -26,64 +26,64 @@
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.accountURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!simpleAccount.accountname</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right;">Website:&nbsp;</td>
-									<td><a href="$!simpleAccount.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.website</a></td>
-									<td style="text-align: right; min-width: 90px;">Fax:&nbsp;</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Website:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!simpleAccount.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.website</a></td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Fax:&nbsp;</td>
 									<td>$!simpleAccount.fax</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Employees:&nbsp;</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Employees:&nbsp;</td>
 									<td></td>
-									<td style="text-align: right;">Other Phone:&nbsp;</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Phone:&nbsp;</td>
 									<td>$!simpleAccount.alternatephone</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Industry:&nbsp;</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Industry:&nbsp;</td>
 									<td>$!simpleAccount.industry</td>
-									<td style="text-align: right;">Email:&nbsp;</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Email:&nbsp;</td>
 									<td><a href="mailto:$!simpleAccount.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.email</a></td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Type:&nbsp;</td>
-									<td>$!simpleAccount.type</td>
-									<td style="text-align: right;">Ownership:&nbsp;</td>
-									<td>$!simpleAccount.ownership</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Type:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.type</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Ownership:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.ownership</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Assignee:&nbsp;</td>
-									<td>$!simpleAccount.assignuser</td>
-									<td style="text-align: right;">Annual Revenue:&nbsp;</td>
-									<td>$!simpleAccount.annualrevenue</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.assignuser</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Annual Revenue:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.annualrevenue</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Billing Address:&nbsp;</td>
-									<td>$!simpleAccount.billingaddress</td>
-									<td style="text-align: right;">Shipping Address:&nbsp;</td>
-									<td>$!simpleAccount.shippingaddress</td>		
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Billing Address:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.billingaddress</td>
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Shipping Address:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.shippingaddress</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Billing City:&nbsp;</td>
-									<td>$!simpleAccount.city</td>
-									<td style="text-align: right;">Shipping City:&nbsp;</td>
-									<td>$!simpleAccount.shippingcity</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Billing City:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.city</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Shipping City:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.shippingcity</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Billing State:&nbsp;</td>
-									<td>$!simpleAccount.state</td>
-									<td style="text-align: right;">Shipping Address:&nbsp;</td>
-									<td>$!simpleAccount.shippingstate</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Billing State:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.state</td>
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Shipping State:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.shippingstate</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Billing Postal Code:&nbsp;</td>
-									<td>$!simpleAccount.postalcode</td>
-									<td style="text-align: right;">Shipping Postal Code:&nbsp;</td>
-									<td>$!simpleAccount.shippingpostalcode</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Billing Postal Code:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.postalcode</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Shipping Postal Code:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.shippingpostalcode</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Billing Country:&nbsp;</td>
-									<td>$!simpleAccount.billingcountry</td>
-									<td style="text-align: right;">Shipping Country:&nbsp;</td>
-									<td>$!simpleAccount.shippingcountry</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Billing Country:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.billingcountry</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Shipping Country:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleAccount.shippingcountry</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>

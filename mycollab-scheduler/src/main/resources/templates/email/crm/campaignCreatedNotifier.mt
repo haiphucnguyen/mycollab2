@@ -22,16 +22,16 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right;">Name:&nbsp;</td>
-									<td>$!simpleCampaign.campaignname</a></td>
-									<td style="text-align: right; min-width: 90px;">Status:&nbsp;</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Name:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.campaignname</a></td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
 									<td>$!simpleCampaign.status</td>	
 								</tr>
 								<tr>
 									<td style="text-align: right;">StartDate:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.startdate)</td>
-									<td style="text-align: right; min-width: 90px;">Type:&nbsp;</td>
-									<td>$!simpleCampaign.type</td>		
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Type:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.type</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">EndDate:&nbsp;</td>
@@ -42,8 +42,8 @@
 								<tr>
 									<td style="text-align: right;">Currency:&nbsp;</td>
 									<td></td>
-									<td style="text-align: right;">Budget:&nbsp;</td>
-									<td>$!simpleCampaign.budget</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Budget:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.budget</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Expected Cost:&nbsp;</td>

@@ -40,7 +40,8 @@ public class ProjectSendingRelayEmailNotificationJob extends QuartzJobBean {
 
 		for (ProjectRelayEmailNotification notification : relayEmaiNotifications) {
 			try {
-				if (notification.getEmailhandlerbean() != null) {
+				if (notification.getEmailhandlerbean() != null
+						&& notification.getType().startsWith("Project")) {
 					emailNotificationAction = (SendingRelayEmailNotificationAction) ApplicationContextUtil
 							.getSpringBean(Class.forName(notification
 									.getEmailhandlerbean()));

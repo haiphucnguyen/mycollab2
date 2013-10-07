@@ -17,6 +17,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
@@ -42,7 +43,8 @@ public class CrmSendingRelayEmailNotificationJob extends QuartzJobBean {
 
 		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
 			try {
-				if (notification.getEmailhandlerbean() != null) {
+				if (notification.getEmailhandlerbean() != null
+						&& isCrmType(notification.getType())) {
 					emailNotificationAction = (SendingRelayEmailNotificationAction) ApplicationContextUtil
 							.getSpringBean(Class.forName(notification
 									.getEmailhandlerbean()));
@@ -82,5 +84,20 @@ public class CrmSendingRelayEmailNotificationJob extends QuartzJobBean {
 			}
 
 		}
+	}
+
+	private boolean isCrmType(String type) {
+		if (type.equals(CrmTypeConstants.ACCOUNT)
+				|| type.equals(CrmTypeConstants.CONTACT)
+				|| type.equals(CrmTypeConstants.CAMPAIGN)
+				|| type.equals(CrmTypeConstants.LEAD)
+				|| type.equals(CrmTypeConstants.OPPORTUNITY)
+				|| type.equals(CrmTypeConstants.CASE)
+				|| type.equals(CrmTypeConstants.TASK)
+				|| type.equals(CrmTypeConstants.MEETING)
+				|| type.equals(CrmTypeConstants.CALL)) {
+			return true;
+		}
+		return false;
 	}
 }

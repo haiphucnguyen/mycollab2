@@ -22,34 +22,34 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right;">Priority:&nbsp;</td>
-									<td>$!simpleCase.priority</td>
-									<td style="text-align: right; min-width: 90px;">Type:&nbsp;</td>
-									<td>$!simpleCase.type</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Priority:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.priority</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Type:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.type</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Status:&nbsp;</td>
-									<td>$!simpleCase.status</td>
-									<td style="text-align: right; min-width: 90px;">Reason:&nbsp;</td>
-									<td>$!simpleCase.reason</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.status</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Reason:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.reason</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Account Name:&nbsp;</td>
-									<td>$!simpleCase.accountName</td>
-									<td style="text-align: right;">Subject:&nbsp;</td>
-									<td>$!simpleCase.subject</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Account Name:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.accountName</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Subject:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.subject</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Phone Number:&nbsp;</td>
 									<td>$!simpleCase.phonenumber</td>
-									<td style="text-align: right;">Email:&nbsp;</td>
-									<td>$!simpleCase.email</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Email:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.email</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Origin:&nbsp;</td>
-									<td>$!simpleCase.origin</td>
-									<td style="text-align: right;">Assignee:&nbsp;</td>
-									<td>$!simpleCase.assignuser</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Origin:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.origin</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCase.assignuser</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
