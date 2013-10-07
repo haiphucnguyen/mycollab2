@@ -25,37 +25,39 @@
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Opportunity Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.opportunityname</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Account Name:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.accountName</td>	
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.accountName</td>	
 								</tr>
 								<tr>
 									<td style="text-align: right;">Currency:&nbsp;</td>
 									<td></td>
 									<td style="text-align: right; min-width: 90px;">Expected Close Date:&nbsp;</td>
-									<td>$!simpleOpportunity.expectedcloseddate</td>		
+									<td width="180px">$!simpleOpportunity.expectedcloseddate</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Amount:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.amount</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Type:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.type</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.type</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Sales Stage:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.salesstage</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Lead Source:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.leadsource</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.leadsource</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Probability (%):&nbsp;</td>
 									<td>$!simpleOpportunity.probability</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Campaign:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.campaignName</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.campaignName</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Next Step:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.nextstep</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleOpportunity.assignuser</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
+										<a href="mailto:$!simpleOpportunity.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleOpportunity.assignUserFullName</a>
+									</td>	
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
@@ -76,10 +78,10 @@
                                 					<td valign="top" style="border-color: rgb(169, 169, 169);">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>

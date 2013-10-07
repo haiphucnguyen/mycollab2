@@ -58,10 +58,10 @@
                                 					<td valign="top" style="border-color: rgb(169, 169, 169);">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>

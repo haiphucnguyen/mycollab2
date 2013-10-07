@@ -25,31 +25,33 @@
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.campaignname</a></td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
-									<td>$!simpleCampaign.status</td>	
+									<td width="180px">$!simpleCampaign.status</td>	
 								</tr>
 								<tr>
 									<td style="text-align: right;">StartDate:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.startdate)</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Type:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.type</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.type</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">EndDate:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.enddate)</td>
-									<td style="text-align: right;">Assignee:&nbsp;</td>
-									<td>$!simpleCampaign.assignuser</td>		
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Assignee:&nbsp;</td>
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
+										<a href="mailto:$!simpleCampaign.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCampaign.assignUserFullName</a>
+									</td>	
 								</tr>
 								<tr>
 									<td style="text-align: right;">Currency:&nbsp;</td>
 									<td></td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Budget:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.budget</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.budget</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Expected Cost:&nbsp;</td>
 									<td>$!simpleCampaign.expectedcost</td>
 									<td style="text-align: right;">Actual Cost:&nbsp;</td>
-									<td>$!simpleCampaign.actualcost</td>		
+									<td width="180px">$!simpleCampaign.actualcost</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Expected Revenue:&nbsp;</td>

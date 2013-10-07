@@ -25,79 +25,81 @@
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">First Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.firstname</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Email:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="mailto:$!simpleLead.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.email</a></td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="mailto:$!simpleLead.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.email</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Last Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.lastname</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Office Phone:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.officephone</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.officephone</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Title:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.title</td>
 									<td style="text-align: right;">Mobile:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.mobile</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.mobile</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Department:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.department</td>
 									<td style="text-align: right;">Other Phone:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otherphone</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otherphone</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Account Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.accountName</td>
 									<td style="text-align: right;">Fax:&nbsp;</td>
-									<td>$!simpleLead.fax</td>		
+									<td width="180px">$!simpleLead.fax</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Lead Source:&nbsp;</td>
 									<td>$!simpleLead.leadsource</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Web Site:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!simpleLead.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.website</a></td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$!simpleLead.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.website</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Industry:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.industry</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.status</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.status</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">No of Employees:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.noemployees</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.assignuser</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
+										<a href="mailto:$!simpleLead.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleLead.assignUserFullName</a>
+									</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Address:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.primaddress</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Address:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otheraddress</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otheraddress</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">City:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.primcity</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other City:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.othercity</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.othercity</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">State:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.state</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other State:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otherstate</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otherstate</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Postal Code:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.primpostalcode</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Postal Code:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otherpostalcode</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.otherpostalcode</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Country:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.primcountry</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Country:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.othercountry</td>		
+									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleLead.othercountry</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
@@ -118,10 +120,10 @@
                                 					<td valign="top" style="border-color: rgb(169, 169, 169);">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>

@@ -79,7 +79,6 @@ public class AccountRelayEmailNotificationActionImpl extends
 								+ CrmLinkGenerator.generateCrmItemLink(
 										CrmTypeConstants.ACCOUNT,
 										simpleAccount.getId()));
-
 		// TODO : assignee link , employees
 		return hyperLinks;
 	}

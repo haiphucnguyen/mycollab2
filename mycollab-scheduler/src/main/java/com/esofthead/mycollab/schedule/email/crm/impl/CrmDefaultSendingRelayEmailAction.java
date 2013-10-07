@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
@@ -60,6 +61,20 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
 					String userName = user.getUsername();
+					if (userName == null || userName.length() == 0) {
+						User currentUser = userService.findUserByUserName(user
+								.getEmail());
+						if (currentUser != null) {
+							userName = ((currentUser.getFirstname() != null) ? currentUser
+									.getFirstname() + " "
+									: "")
+									+ ((currentUser.getMiddlename() != null) ? currentUser
+											.getMiddlename() + " "
+											: "") + currentUser.getLastname();
+							if (userName.trim().length() == 0)
+								userName = currentUser.getUsername();
+						}
+					}
 					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(
@@ -87,6 +102,20 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
 					String userName = user.getUsername();
+					if (userName == null) {
+						User currentUser = userService.findUserByUserName(user
+								.getEmail());
+						if (currentUser != null) {
+							userName = ((currentUser.getFirstname() != null) ? currentUser
+									.getFirstname() + " "
+									: "")
+									+ ((currentUser.getMiddlename() != null) ? currentUser
+											.getMiddlename() + " "
+											: "") + currentUser.getLastname();
+							if (userName.trim().length() == 0)
+								userName = currentUser.getUsername();
+						}
+					}
 					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(
@@ -113,6 +142,20 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 			if (templateGenerator != null) {
 				for (SimpleUser user : notifiers) {
 					String userName = user.getUsername();
+					if (userName == null) {
+						User currentUser = userService.findUserByUserName(user
+								.getEmail());
+						if (currentUser != null) {
+							userName = ((currentUser.getFirstname() != null) ? currentUser
+									.getFirstname() + " "
+									: "")
+									+ ((currentUser.getMiddlename() != null) ? currentUser
+											.getMiddlename() + " "
+											: "") + currentUser.getLastname();
+							if (userName.trim().length() == 0)
+								userName = currentUser.getUsername();
+						}
+					}
 					templateGenerator.putVariable("userName", userName);
 
 					MailRecipientField userMail = new MailRecipientField(
