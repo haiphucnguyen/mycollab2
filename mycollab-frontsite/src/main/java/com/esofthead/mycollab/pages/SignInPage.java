@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pages;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 
 import org.apache.wicket.MarkupContainer;
@@ -118,8 +119,16 @@ public class SignInPage extends BasePage {
 						target.add(listContainer);
 					}
 
+				} catch (BadRequestException e) {
+					Response response = e.getResponse();
+					String mycollabEx = response.readEntity(String.class);
+					if (mycollabEx != null) {
+						this.error(mycollabEx);
+					} else {
+						this.error(e.getMessage());
+					}
 				} catch (Exception e) {
-					ErrorReportingUtils.reportError(e);
+					this.error(e.getMessage());
 				}
 			}
 		});
