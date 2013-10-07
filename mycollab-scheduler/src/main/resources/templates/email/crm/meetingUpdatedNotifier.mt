@@ -48,20 +48,20 @@
                                 		<p>Changes (by $historyLog.postedUserFullName):</p>
                                 		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Fields</td>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Old Value</td>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">New Value</td>
+                                				<td style="font-weight: normal; border-color: rgb(169, 169, 169);">Fields</td>
+                                				<td style="font-weight: normal; border-color: rgb(169, 169, 169);">Old Value</td>
+                                				<td style="font-weight: normal; border-color: rgb(169, 169, 169);">New Value</td>
                                 			</tr>
                                 			#foreach ($item in $historyLog.changeItems)
                                 				#if ($mapper.hasField($item.field))
                                 				<tr>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>
