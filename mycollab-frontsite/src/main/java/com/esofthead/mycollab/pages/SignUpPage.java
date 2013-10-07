@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.pages;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.Response;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -32,6 +34,7 @@ import com.esofthead.mycollab.ErrorReportingUtils;
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
@@ -128,7 +131,15 @@ public class SignUpPage extends BasePage {
 
 					this.getRequestCycle().scheduleRequestHandlerAfterCurrent(
 							new RedirectRequestHandler(response));
-				} catch (final Exception e) {
+				} catch (BadRequestException e) {
+					Response response = e.getResponse();
+					String mycollabEx = response.readEntity(String.class);
+					if (mycollabEx != null) {
+						this.error(mycollabEx);
+					} else {
+						this.error(e.getMessage());
+					}
+				} catch (Exception e) {
 					this.error(e.getMessage());
 				}
 			}
