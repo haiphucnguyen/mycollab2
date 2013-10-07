@@ -10,7 +10,7 @@ import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -497,7 +497,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
                             BugReadViewImpl.this.bug.getDescription(),
                             Label.CONTENT_XHTML);
                 } else if (propertyId.equals("priority")) {
-                    if (StringUtil.isNotNullOrEmpty(BugReadViewImpl.this.bug
+                    if (StringUtils.isNotNullOrEmpty(BugReadViewImpl.this.bug
                             .getPriority())) {
                         final Resource iconPriority = BugPriorityComboBox
                                 .getIconResourceByPriority(BugReadViewImpl.this.bug
@@ -518,7 +518,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
                         return containerField;
                     }
                 } else if (propertyId.equals("severity")) {
-                    if (StringUtil.isNotNullOrEmpty(BugReadViewImpl.this.bug
+                    if (StringUtils.isNotNullOrEmpty(BugReadViewImpl.this.bug
                             .getSeverity())) {
                         final Resource iconPriority = BugSeverityComboBox
                                 .getIconResourceBySeverity(BugReadViewImpl.this.bug

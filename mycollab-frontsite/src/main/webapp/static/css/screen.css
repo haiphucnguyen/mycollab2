@@ -2378,6 +2378,7 @@ a.nivo-prevNav {
 	width: 700px;
 	margin: 0 auto;
 	padding-top: 40px;
+	font-family: "verdana", Arial, sans-serif;
 }
 
 .signin-main h1 {
@@ -2388,6 +2389,7 @@ a.nivo-prevNav {
 	margin-bottom: 20px;
 	border-bottom: solid 6px #E3E3E3;
 	padding-bottom: 15px;
+	font-family: "verdana", Arial, sans-serif;
 }
 
 .signin-subtitle {
@@ -2415,7 +2417,7 @@ a.nivo-prevNav {
 }
 
 .signin-box [type="submit"] {
-	background-color: #1680C5;
+	background-color: rgb(34, 139, 201);
     border-color: #0C5D91;
     border-radius: 4px 4px 4px 4px;
     border-style: solid;
@@ -2437,6 +2439,7 @@ a.nivo-prevNav {
 
 .signin-lblemail {
 	padding-right: 5px;
+	font-size: 14px;
 }
 
 .signin-btngo {
@@ -2454,6 +2457,11 @@ a.nivo-prevNav {
 .signin-radio label {
 	display: inline-block;
     font-size: 14px;
+}
+.signin-radio .helptext {
+	margin: 5px 0;
+	color: rgb(6, 81, 125);
+	font-size: 13px;
 }
 /* End Sign In style */
 
@@ -2524,3 +2532,10 @@ a.nivo-prevNav {
     font-family: 'Monda';
 }
 /* End Note */
+
+/*feedBackPanelError*/
+.feedbackPanelERROR {
+	color: red;
+	font-size: 14px;
+	font-family: "Monda", Arial, sans-serif;
+}

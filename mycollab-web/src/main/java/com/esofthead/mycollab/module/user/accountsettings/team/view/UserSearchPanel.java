@@ -9,7 +9,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -149,7 +149,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 									RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
 									RegisterStatusConstants.VERIFICATING }));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				UserSearchPanel.this.searchCriteria
 						.setDisplayName(new StringSearchField(SearchField.AND,
 								(String) this.nameField.getValue()));

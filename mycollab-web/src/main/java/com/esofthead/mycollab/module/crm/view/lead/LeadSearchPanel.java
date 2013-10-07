@@ -10,7 +10,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
@@ -171,7 +171,7 @@ public class LeadSearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
+			if (StringUtils.isNotNullOrEmpty(this.nameField.getValue()
 					.toString().trim())) {
 				LeadSearchPanel.this.searchCriteria
 						.setLeadName(new StringSearchField(SearchField.AND,
@@ -272,7 +272,7 @@ public class LeadSearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.firstnameField
+			if (StringUtils.isNotNullOrEmpty((String) this.firstnameField
 					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setFirstname(new StringSearchField(SearchField.AND,
@@ -280,14 +280,14 @@ public class LeadSearchPanel extends
 										.trim()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.lastnameField
+			if (StringUtils.isNotNullOrEmpty((String) this.lastnameField
 					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setLastname(new StringSearchField(SearchField.AND,
 								((String) this.lastnameField.getValue()).trim()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.accountnameField
+			if (StringUtils.isNotNullOrEmpty((String) this.accountnameField
 					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAccountName(new StringSearchField(SearchField.AND,
@@ -303,21 +303,21 @@ public class LeadSearchPanel extends
 								SearchField.AND, statuses));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyEmailField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyEmailField
 					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyEmail(new StringSearchField(SearchField.AND,
 								(String) this.anyEmailField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyAddressField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyAddressField
 					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyAddress(new StringSearchField(SearchField.AND,
 								(String) this.anyAddressField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.countryField
+			if (StringUtils.isNotNullOrEmpty((String) this.countryField
 					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyCountry(new StringSearchField(SearchField.AND,
@@ -332,20 +332,20 @@ public class LeadSearchPanel extends
 								sources));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyPhoneField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyPhoneField
 					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyPhone(new StringSearchField(SearchField.AND,
 								(String) this.anyPhoneField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.cityField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.cityField.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyCity(new StringSearchField(SearchField.AND,
 								(String) this.cityField.getValue()));
 			}
 
-			if (StringUtil
+			if (StringUtils
 					.isNotNullOrEmpty((String) this.stateField.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyState(new StringSearchField(SearchField.AND,

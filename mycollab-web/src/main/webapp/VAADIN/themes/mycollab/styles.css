@@ -2401,7 +2401,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .tokenfield .v-csslayout .v-button-link .v-button-wrap .v-button-caption
 	{
 	padding: 0px;
-	display: block;
+	display: inline-block;
 }
 
 .v-customcomponent-tokenfield.tokenfield .v-csslayout .v-button-link {
@@ -2409,6 +2409,12 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#394754;
 	border-radius: 8px;
+}
+.v-customcomponent-tokenfield.tokenfield .v-filterselect {
+	background: none no-repeat 0 0 transparent;
+}
+.usergroup-view .colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout>.v-csslayout-margin {
+	padding: 3px 2px 2px;
 }
 
 /* End Token Field */

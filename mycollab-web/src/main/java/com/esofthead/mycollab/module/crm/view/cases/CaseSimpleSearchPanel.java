@@ -6,7 +6,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -84,11 +84,11 @@ public class CaseSimpleSearchPanel extends
 						SearchField.AND, AppContext.getAccountId()));
 
 				String searchType = (String) group.getValue();
-				if (StringUtil.isNotNullOrEmpty(searchType)) {
+				if (StringUtils.isNotNullOrEmpty(searchType)) {
 
 					if (textValueField != null) {
 						String strSearch = (String) textValueField.getValue();
-						if (StringUtil.isNotNullOrEmpty(strSearch)) {
+						if (StringUtils.isNotNullOrEmpty(strSearch)) {
 
 							if (searchType.equals("Subject")) {
 								searchCriteria
@@ -109,7 +109,7 @@ public class CaseSimpleSearchPanel extends
 
 					if (userBox != null) {
 						String user = (String) userBox.getValue();
-						if (StringUtil.isNotNullOrEmpty(user)) {
+						if (StringUtils.isNotNullOrEmpty(user)) {
 							searchCriteria
 									.setAssignUsers(new SetSearchField<String>(
 											SearchField.AND,

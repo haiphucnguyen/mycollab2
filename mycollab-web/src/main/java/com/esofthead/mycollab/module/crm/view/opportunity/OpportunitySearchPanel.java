@@ -10,7 +10,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -178,7 +178,7 @@ public class OpportunitySearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
+			if (StringUtils.isNotNullOrEmpty(this.nameField.getValue()
 					.toString().trim())) {
 				OpportunitySearchPanel.this.searchCriteria
 						.setOpportunityName(new StringSearchField(
@@ -255,7 +255,7 @@ public class OpportunitySearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.opportunityNameField
+			if (StringUtils.isNotNullOrEmpty((String) this.opportunityNameField
 					.getValue())) {
 				OpportunitySearchPanel.this.searchCriteria
 						.setOpportunityName(new StringSearchField(
@@ -271,7 +271,7 @@ public class OpportunitySearchPanel extends
 								account.getId()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.nextStepField
+			if (StringUtils.isNotNullOrEmpty((String) this.nextStepField
 					.getValue())) {
 				OpportunitySearchPanel.this.searchCriteria
 						.setNextStep(new StringSearchField(SearchField.AND,

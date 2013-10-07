@@ -204,12 +204,12 @@
 }
 
 #signup-content ul.feedbackPanel {
-	padding-top: 10px;
 	list-style: disc inside none;
 	font-size: 12px;
 	line-height: 1.3em;
+	padding-bottom: 10px;
 }
 #signup-content ul.feedbackPanel li.feedbackPanelERROR {
 	color: red;
-	padding-left: 20px;
+	line-height: 1.4em;
 }

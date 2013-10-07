@@ -13,6 +13,7 @@ import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.list.AbstractItem;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.https.RequireHttps;
@@ -21,7 +22,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.ErrorReportingUtils;
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.core.DeploymentMode;
@@ -33,110 +33,126 @@ import com.google.gson.GsonBuilder;
 @RequireHttps
 public class SignInPage extends BasePage {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(SignInPage.class);
+    private static Logger log = LoggerFactory.getLogger(SignInPage.class);
 
-	public SignInPage(final PageParameters parameters) {
-		super(parameters);
+    public SignInPage(final PageParameters parameters) {
+        super(parameters);
 
-		final TextField<String> email = new TextField<String>("emailfield",
-				new Model<String>());
+        final TextField<String> email = new TextField<String>("emailfield",
+                new Model<String>());
 
-		StatelessForm<Void> form = new StatelessForm<Void>("signinform");
-		form.setOutputMarkupId(true);
+        StatelessForm<Void> form = new StatelessForm<Void>("signinform");
+        form.setOutputMarkupId(true);
 
-		final MarkupContainer listContainer = new WebMarkupContainer(
-				"listcontainer");
-		listContainer.setOutputMarkupId(true);
+        final MarkupContainer listContainer = new WebMarkupContainer(
+                "listcontainer");
+        listContainer.setOutputMarkupId(true);
 
-		final RepeatingView subdomainList = new RepeatingView("subdomainrepeat");
-		subdomainList.setOutputMarkupId(true);
-		listContainer.add(subdomainList);
+        final RepeatingView subdomainList = new RepeatingView("subdomainrepeat");
+        subdomainList.setOutputMarkupId(true);
+        listContainer.add(subdomainList);
 
-		form.add(new AjaxButton("ajax-button", form) {
+        final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+        feedbackPanel.setOutputMarkupId(true);
 
-			private static final long serialVersionUID = 1L;
+        final Label helpText = new Label("helptext", "");
+        helpText.setOutputMarkupId(true);
+        listContainer.add(helpText);
 
-			@Override
-			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				log.info("Signin page: " + SiteConfiguration.getApiUrl());
-				UserResource userResource = RemoteServiceProxy.build(
-						SiteConfiguration.getApiUrl(), UserResource.class);
+        form.add(new AjaxButton("ajax-button", form) {
 
-				try {
-					String emailString = email.getModelObject();
+            private static final long serialVersionUID = 1L;
 
-					Response response = userResource
-							.getSubdomainsOfUser(emailString);
-					Gson gson = new GsonBuilder().create();
-					String responseVal = response.readEntity(String.class);
-					log.debug("Domains of user {} is {}", emailString,
-							responseVal);
-					String[] subdomains = gson.fromJson(responseVal,
-							String[].class);
+            @Override
+            public void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                log.info("Signin page: " + SiteConfiguration.getApiUrl());
+                UserResource userResource = RemoteServiceProxy.build(
+                        SiteConfiguration.getApiUrl(), UserResource.class);
 
-					if (subdomains == null || subdomains.length == 0) {
-						ErrorReportingUtils
-								.reportError("Can not find subdomain of user "
-										+ emailString);
-					} else if (subdomains.length == 1) {
-						String redirectUrl = "";
-						if (SiteConfiguration.getDeploymentMode() == DeploymentMode.LOCAL) {
-							redirectUrl = SiteConfiguration.getAppUrl();
-						} else {
-							redirectUrl = String.format(
-									SiteConfiguration.getAppUrl(),
-									subdomains[0]);
-						}
+                try {
+                    listContainer.removeAll();
+                    subdomainList.removeAll();
+                    helpText.setDefaultModel(new Model<String>(""));
+                    String emailString = email.getModelObject();
 
-						log.debug("Redirect user {} to subdomain {}",
-								emailString, redirectUrl);
-						this.getRequestCycle()
-								.scheduleRequestHandlerAfterCurrent(
-										new RedirectRequestHandler(redirectUrl));
-					} else {
+                    Response response = userResource
+                            .getSubdomainsOfUser(emailString);
+                    Gson gson = new GsonBuilder().create();
+                    String responseVal = response.readEntity(String.class);
+                    log.debug("Domains of user {} is {}", emailString,
+                            responseVal);
+                    String[] subdomains = gson.fromJson(responseVal,
+                            String[].class);
 
-						subdomainList.removeAll();
-						for (String subdomainString : subdomains) {
-							log.debug("List subdomain {} to user {}",
-									subdomainString, emailString);
-							final AbstractItem newItem = new AbstractItem(
-									subdomainList.newChildId());
+                    if (subdomains == null || subdomains.length == 0) {
+                        // ErrorReportingUtils
+                        // .reportError("Can not find subdomain of user "
+                        // + emailString);
+                        target.add(feedbackPanel);
+                        this.error("Can not find subdomain of user "
+                                + emailString);
+                    } else if (subdomains.length == 1) {
+                        String redirectUrl = "";
+                        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.LOCAL) {
+                            redirectUrl = SiteConfiguration.getAppUrl();
+                        } else {
+                            redirectUrl = String.format(
+                                    SiteConfiguration.getAppUrl(),
+                                    subdomains[0]);
+                        }
 
-							Label subdomain = new Label("subdomain",
-									subdomainString + ".mycollab.com");
-							newItem.add(subdomain);
+                        log.debug("Redirect user {} to subdomain {}",
+                                emailString, redirectUrl);
+                        this.getRequestCycle()
+                                .scheduleRequestHandlerAfterCurrent(
+                                        new RedirectRequestHandler(redirectUrl));
+                    } else {
+                        for (String subdomainString : subdomains) {
+                            log.debug("List subdomain {} to user {}",
+                                    subdomainString, emailString);
+                            final AbstractItem newItem = new AbstractItem(
+                                    subdomainList.newChildId());
 
-							ExternalLink gotosubdomainBtn = new ExternalLink(
-									"gotosubdomain", "https://"
-											+ subdomainString + ".mycollab.com");
-							newItem.add(gotosubdomainBtn);
+                            Label subdomain = new Label("subdomain",
+                                    subdomainString + ".mycollab.com");
+                            newItem.add(subdomain);
 
-							subdomainList.add(newItem);
-						}
+                            ExternalLink gotosubdomainBtn = new ExternalLink(
+                                    "gotosubdomain", "https://"
+                                            + subdomainString + ".mycollab.com");
+                            newItem.add(gotosubdomainBtn);
 
-						target.add(listContainer);
-					}
+                            subdomainList.add(newItem);
+                        }
+                        helpText.setDefaultModel(new Model<String>(
+                                "<div class='helptext'>Here're subdomains that you're working on, please click <b>GO</b> button next to the subdomain to sign in to that subdomain.</div>"));
+                        helpText.setEscapeModelStrings(false);
+                    }
+                    listContainer.add(helpText);
+                    listContainer.add(subdomainList);
+                    target.add(listContainer);
 
-				} catch (BadRequestException e) {
-					Response response = e.getResponse();
-					String mycollabEx = response.readEntity(String.class);
-					if (mycollabEx != null) {
-						this.error(mycollabEx);
-					} else {
-						this.error(e.getMessage());
-					}
-				} catch (Exception e) {
-					this.error(e.getMessage());
-				}
-			}
-		});
+                } catch (BadRequestException e) {
+                    Response response = e.getResponse();
+                    String mycollabEx = response.readEntity(String.class);
+                    if (mycollabEx != null) {
+                        this.error(mycollabEx);
+                    } else {
+                        this.error(e.getMessage());
+                    }
+                } catch (Exception e) {
+                    this.error(e.getMessage());
+                }
+            }
+        });
 
-		add(form);
-		form.add(email);
-		form.add(listContainer);
+        add(form);
+        add(feedbackPanel);
+        form.add(email);
+        form.add(listContainer);
 
-		add(new Label("pagetitle", "Sign In"));
-	}
+        add(new Label("pagetitle", "Sign In"));
+    }
 }
