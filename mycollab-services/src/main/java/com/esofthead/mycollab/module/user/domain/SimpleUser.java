@@ -112,7 +112,16 @@ public class SimpleUser extends User {
 	}
 
 	public boolean equals(Object arg0) {
-		return (arg0 instanceof SimpleUser)
-				&& (getUsername().equals(((SimpleUser) arg0).getUsername()));
+		if (arg0 instanceof SimpleUser) {
+			if (getUsername() != null
+					&& ((SimpleUser) arg0).getUsername() != null) {
+				return getUsername().equals(((SimpleUser) arg0).getUsername());
+			} else {
+				if (((SimpleUser) arg0).getEmail() == null)
+					return false;
+				return getEmail().equals(((SimpleUser) arg0).getEmail());
+			}
+		}
+		return false;
 	}
 }
