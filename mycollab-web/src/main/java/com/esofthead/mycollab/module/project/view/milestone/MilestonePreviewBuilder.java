@@ -46,8 +46,8 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 	}
 
 	private void displayComments() {
-		this.associateCommentListComp.loadComments(
-				CommentType.PRJ_MILESTONE, this.milestone.getId());
+		this.associateCommentListComp.loadComments(CommentType.PRJ_MILESTONE,
+				this.milestone.getId());
 	}
 
 	protected void displayTaskGroups() {
@@ -96,9 +96,8 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 						MilestonePreviewBuilder.this.milestone
 								.getOwnerFullName());
 			} else if (propertyId.equals("description")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
-						MilestonePreviewBuilder.this.milestone.getDescription(),
-						Label.CONTENT_XHTML);
+				return new DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField(
+						MilestonePreviewBuilder.this.milestone.getDescription());
 			} else if (propertyId.equals("numOpenTasks")) {
 				final FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
 

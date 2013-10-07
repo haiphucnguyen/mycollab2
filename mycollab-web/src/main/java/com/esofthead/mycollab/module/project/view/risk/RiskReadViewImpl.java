@@ -72,8 +72,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 				protected Field onCreateField(final Item item,
 						final Object propertyId, final Component uiContext) {
 					if (propertyId.equals("description")) {
-						return new FormViewField(RiskReadViewImpl.this.risk
-								.getDescription(), Label.CONTENT_XHTML);
+						return new FormDetectAndDisplayUrlViewField(
+								RiskReadViewImpl.this.risk.getDescription());
 					} else if (propertyId.equals("level")) {
 						final RatingStars tinyRs = new RatingStars();
 						tinyRs.setValue(RiskReadViewImpl.this.risk.getLevel());
@@ -94,8 +94,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 								RiskReadViewImpl.this.risk
 										.getRaisedByUserFullName());
 					} else if (propertyId.equals("response")) {
-						return new FormViewField(RiskReadViewImpl.this.risk
-								.getResponse(), Label.CONTENT_XHTML);
+						return new FormDetectAndDisplayUrlViewField(
+								RiskReadViewImpl.this.risk.getResponse());
 					} else if (propertyId.equals("assigntouser")) {
 						return new ProjectUserFormLinkField(
 								RiskReadViewImpl.this.risk.getAssigntouser(),
@@ -189,8 +189,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 								final Component uiContext) {
 
 							if (propertyId.equals("description")) {
-								return new FormViewField(PrintView.this.risk
-										.getDescription(), Label.CONTENT_XHTML);
+								return new FormDetectAndDisplayUrlViewField(
+										PrintView.this.risk.getDescription());
 							} else if (propertyId.equals("level")) {
 								final RatingStars tinyRs = new RatingStars();
 								tinyRs.setValue(PrintView.this.risk.getLevel());
@@ -218,8 +218,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 										PrintView.this.risk
 												.getAssignedToUserFullName());
 							} else if (propertyId.equals("response")) {
-								return new FormViewField(PrintView.this.risk
-										.getResponse(), Label.CONTENT_XHTML);
+								return new FormDetectAndDisplayUrlViewField(
+										PrintView.this.risk.getResponse());
 							}
 
 							return null;

@@ -6,6 +6,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -172,6 +173,30 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 				final Label l = new Label("&nbsp;", Label.CONTENT_XHTML);
 				l.setWidth("100%");
 				setCompositionRoot(l);
+			}
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+
+	public static class FormDetectAndDisplayUrlViewField extends CustomField {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormDetectAndDisplayUrlViewField(String url) {
+			if (url == null || url.trim().equals("")) {
+				Label lbl = new Label("&nbsp;");
+				lbl.setContentMode(Label.CONTENT_XHTML);
+				lbl.setWidth("100%");
+				setCompositionRoot(lbl);
+			} else {
+				final Label link = new Label(StringUtils.formatExtraLink(url),
+						Label.CONTENT_XHTML);
+				link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+				setCompositionRoot(link);
 			}
 		}
 
