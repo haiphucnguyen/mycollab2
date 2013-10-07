@@ -121,7 +121,7 @@
     <select id="getUsersNotInProject" parameterType="java.lang.Integer"
         resultMap="com.esofthead.mycollab.module.user.dao.UserMapperExt.SimpleUserResult">
         <![CDATA[
-        SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.email, 
+        SELECT DISTINCT s_user.username, s_user.firstname, s_user.lastname, s_user.email, 
                 s_user.website, s_user.registeredTime, s_user_account.registerStatus,  s_user.avatarId
             FROM s_user, s_user_account
             WHERE  ((SELECT COUNT(*) 
@@ -138,7 +138,7 @@
     <select id="getActiveUsersInProject" parameterType="java.lang.Integer"
         resultMap="com.esofthead.mycollab.module.user.dao.UserMapperExt.SimpleUserResult">
         <![CDATA[
-        SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.email, 
+        SELECT DISTINCT s_user.username, s_user.firstname, s_user.lastname, s_user.email, 
                 s_user.website, s_user.registeredTime, s_user_account.registerStatus
             FROM s_user, s_user_account
          WHERE  ((SELECT COUNT(*) 

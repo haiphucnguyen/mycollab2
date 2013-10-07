@@ -13,7 +13,7 @@ import com.vaadin.ui.Button;
 public class UserLink extends Button {
 	private static final long serialVersionUID = 1L;
 
-	public UserLink(final String username, String userAvatarLink,
+	public UserLink(final String username, String userAvatarId,
 			final String displayName, boolean useWordWrap) {
 		super(displayName);
 
@@ -21,7 +21,7 @@ public class UserLink extends Button {
 
 		if (username != null && !username.equals("")) {
 			this.setIcon(UserAvatarControlFactory.createAvatarResource(
-					userAvatarLink, 16));
+					userAvatarId, 16));
 		}
 
 		if (useWordWrap) {
@@ -29,8 +29,8 @@ public class UserLink extends Button {
 		}
 	}
 
-	public UserLink(final String username, String userAvatarLink,
+	public UserLink(final String username, String userAvatarId,
 			final String displayName) {
-		this(username, userAvatarLink, displayName, true);
+		this(username, userAvatarId, displayName, true);
 	}
 }
