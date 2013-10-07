@@ -282,7 +282,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");
 			} else {
-
+				onSelectExtra(id, caption);
 			}
 
 		}

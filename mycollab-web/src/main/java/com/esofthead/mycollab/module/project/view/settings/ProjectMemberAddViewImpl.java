@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
+import org.vaadin.tokenfield.TokenField;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -35,6 +36,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -126,15 +128,8 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 				if (propertyId.equals("username")) {
 					if (ProjectMemberAddViewImpl.this.user.getUsername() == null) {
-						final ProjectMemberService prjMemberService = ApplicationContextUtil
-								.getSpringBean(ProjectMemberService.class);
-						final List<SimpleUser> users = prjMemberService
-								.getUsersNotInProject(
-										CurrentProjectVariables.getProjectId(),
-										AppContext.getAccountId());
 
-						final UserComboBoxWithInviteBtnCustomField userBoxCustomField = new UserComboBoxWithInviteBtnCustomField(
-								users);
+						final UserComboBoxWithInviteBtnCustomField userBoxCustomField = new UserComboBoxWithInviteBtnCustomField();
 						return userBoxCustomField;
 					} else {
 						if (ProjectMemberAddViewImpl.this.user instanceof SimpleProjectMember) {
@@ -164,56 +159,79 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 		private class UserComboBoxWithInviteBtnCustomField extends CustomField {
 			private static final long serialVersionUID = 1L;
-			private final ActiveUserComboBox userBox;
-			private final Button inviteOutSideUserBtn;
 
-			public UserComboBoxWithInviteBtnCustomField(List<SimpleUser> users) {
-				userBox = new ActiveUserComboBox(users);
-				userBox.setRequired(true);
-				userBox.setWidth("500px");
-				userBox.setImmediate(true);
+			// private final ActiveUserComboBox userBox;
+			// private final Button inviteOutSideUserBtn;
 
-				userBox.addListener(new ValueChangeListener() {
-					private static final long serialVersionUID = 1L;
+			public UserComboBoxWithInviteBtnCustomField() {
+				TokenField inviteUserTokenField = new TokenField();
+				inviteUserTokenField
+						.setFilteringMode(ComboBox.FILTERINGMODE_CONTAINS);
+				inviteUserTokenField.setNewTokensAllowed(true);
 
-					@Override
-					public void valueChange(
-							com.vaadin.data.Property.ValueChangeEvent event) {
-						if (user != null)
-							user.setUsername((String) UserComboBoxWithInviteBtnCustomField.this
-									.getValue());
-					}
-				});
-				inviteOutSideUserBtn = new Button("Invite outside member",
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+				final ProjectMemberService prjMemberService = ApplicationContextUtil
+						.getSpringBean(ProjectMemberService.class);
+				final List<SimpleUser> users = prjMemberService
+						.getUsersNotInProject(
+								CurrentProjectVariables.getProjectId(),
+								AppContext.getAccountId());
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								ProjectMemberAddViewImpl.this
-										.getWindow()
-										.addWindow(
-												new InviteOutsideMemberWindow());
-							}
-						});
-				inviteOutSideUserBtn
-						.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+				for (SimpleUser user : users) {
+					inviteUserTokenField.addToken(user.getUsername());
+					inviteUserTokenField.setTokenCaption(user.getUsername(),
+							user.getDisplayName());
+				}
 
-				HorizontalLayout layout = new HorizontalLayout();
-				layout.setSpacing(true);
+				this.setCompositionRoot(inviteUserTokenField);
 
-				layout.addComponent(userBox);
-				layout.setComponentAlignment(userBox, Alignment.MIDDLE_LEFT);
-				layout.addComponent(inviteOutSideUserBtn);
-				layout.setComponentAlignment(inviteOutSideUserBtn,
-						Alignment.MIDDLE_LEFT);
-
-				this.setCompositionRoot(layout);
+				// userBox = new ActiveUserComboBox(users);
+				// userBox.setRequired(true);
+				// userBox.setWidth("500px");
+				// userBox.setImmediate(true);
+				//
+				// userBox.addListener(new ValueChangeListener() {
+				// private static final long serialVersionUID = 1L;
+				//
+				// @Override
+				// public void valueChange(
+				// com.vaadin.data.Property.ValueChangeEvent event) {
+				// if (user != null)
+				// user.setUsername((String)
+				// UserComboBoxWithInviteBtnCustomField.this
+				// .getValue());
+				// }
+				// });
+				// inviteOutSideUserBtn = new Button("Invite outside member",
+				// new Button.ClickListener() {
+				// private static final long serialVersionUID = 1L;
+				//
+				// @Override
+				// public void buttonClick(ClickEvent event) {
+				// ProjectMemberAddViewImpl.this
+				// .getWindow()
+				// .addWindow(
+				// new InviteOutsideMemberWindow());
+				// }
+				// });
+				// inviteOutSideUserBtn
+				// .addStyleName(UIConstants.THEME_ROUND_BUTTON);
+				//
+				// HorizontalLayout layout = new HorizontalLayout();
+				// layout.setSpacing(true);
+				//
+				// layout.addComponent(userBox);
+				// layout.setComponentAlignment(userBox, Alignment.MIDDLE_LEFT);
+				// layout.addComponent(inviteOutSideUserBtn);
+				// layout.setComponentAlignment(inviteOutSideUserBtn,
+				// Alignment.MIDDLE_LEFT);
+				//
+				// this.setCompositionRoot(layout);
 			}
 
 			@Override
 			public Object getValue() {
-				return (String) userBox.getValue();
+				// return (String) userBox.getValue();
+				return "";
 			}
 
 			@Override
@@ -372,7 +390,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					Alignment.MIDDLE_CENTER);
 
 			Label noteLbl = new Label(
-					"Note: You can add many emails-address which be separated each others by semicolon (;)");
+					"Note: You can add many emails addresses which be separated each others by semicolon (;)");
 			mainLayout.addComponent(noteLbl);
 
 			this.addComponent(mainLayout);

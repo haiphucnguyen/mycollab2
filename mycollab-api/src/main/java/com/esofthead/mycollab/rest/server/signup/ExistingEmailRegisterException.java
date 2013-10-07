@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.rest.server.signup;
 
-import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 
-public class ExistingEmailRegisterException extends MyCollabException {
+public class ExistingEmailRegisterException extends UserInvalidInputException {
 
 	public ExistingEmailRegisterException(final String message) {
 		super(message);
