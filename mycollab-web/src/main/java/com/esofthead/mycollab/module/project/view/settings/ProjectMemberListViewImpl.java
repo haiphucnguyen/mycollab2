@@ -71,7 +71,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new ProjectMemberEvent.GotoAdd(this, null));
+								new ProjectMemberEvent.GotoInviteMembers(this,
+										null));
 					}
 				});
 		createBtn.setEnabled(CurrentProjectVariables

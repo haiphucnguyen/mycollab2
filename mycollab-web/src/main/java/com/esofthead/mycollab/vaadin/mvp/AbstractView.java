@@ -77,7 +77,5 @@ public abstract class AbstractView extends VerticalLayout implements View,
         } else {
             log.error("No listener is registered for event type " + eventType);
         }
-
-
     }
 }

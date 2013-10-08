@@ -6,7 +6,8 @@ import com.vaadin.ui.ComponentContainer;
 
 public interface View extends ComponentContainer {
 
-    ComponentContainer getWidget();
+	ComponentContainer getWidget();
 
-    void addViewListener(ApplicationEventListener<? extends ApplicationEvent> listener);
+	void addViewListener(
+			ApplicationEventListener<? extends ApplicationEvent> listener);
 }
