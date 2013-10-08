@@ -4,25 +4,25 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.project.events.ProjectMemberEvent.InviteProjectMembers;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
-import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -31,48 +31,42 @@ import com.vaadin.ui.ComponentContainer;
  * 
  * @author haiphucnguyen
  */
-public class ProjectMemberAddPresenter extends
-		AbstractPresenter<ProjectMemberAddView> {
+public class ProjectMemberInvitePresenter extends
+		AbstractPresenter<ProjectMemberInviteView> {
 	private static final long serialVersionUID = 1L;
 
-	public ProjectMemberAddPresenter() {
-		super(ProjectMemberAddView.class);
+	public ProjectMemberInvitePresenter() {
+		super(ProjectMemberInviteView.class);
 		bind();
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<ProjectMember>() {
-					@Override
-					public void onSave(final ProjectMember projectMember) {
-						saveProjectMember(projectMember);
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance()
-									.fireEvent(
-											new ProjectMemberEvent.GotoList(
-													this, null));
-						}
-					}
+		view.addViewListener(new ApplicationEventListener<ProjectMemberEvent.InviteProjectMembers>() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void onCancel() {
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance()
-									.fireEvent(
-											new ProjectMemberEvent.GotoList(
-													this, null));
-						}
-					}
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return ProjectMemberEvent.InviteProjectMembers.class;
+			}
 
-					@Override
-					public void onSaveAndNew(final ProjectMember projectMember) {
-						saveProjectMember(projectMember);
-						EventBus.getInstance().fireEvent(
-								new ProjectMemberEvent.GotoAdd(this, null));
-					}
-				});
+			@Override
+			public void handle(InviteProjectMembers event) {
+				ProjectMemberService projectMemberService = ApplicationContextUtil
+						.getSpringBean(ProjectMemberService.class);
+				List<String> inviteEmails = event.getInviteEmails();
+				if (inviteEmails != null && inviteEmails.size() > 0) {
+					projectMemberService.inviteProjectMember(
+							inviteEmails.toArray(new String[0]),
+							CurrentProjectVariables.getProjectId(),
+							event.getRoleId(), AppContext.getUsername(),
+							AppContext.getAccountId());
+
+					EventBus.getInstance().fireEvent(
+							new ProjectMemberEvent.GotoList(this, null));
+				}
+
+			}
+		});
 	}
 
 	@Override
@@ -83,16 +77,12 @@ public class ProjectMemberAddPresenter extends
 			userGroupContainer.removeAllComponents();
 			userGroupContainer.addComponent(view.getWidget());
 
-			ProjectMember member = (ProjectMember) data.getParams();
-			view.editItem(member);
+			view.display();
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
-			if (member.getId() == null) {
-				breadcrumb.gotoUserAdd();
-			} else {
-				breadcrumb.gotoUserEdit((SimpleProjectMember) member);
-			}
+
+			breadcrumb.gotoUserAdd();
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

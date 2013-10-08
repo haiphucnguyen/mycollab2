@@ -46,7 +46,8 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 		} else if (ClassUtils.instanceOf(data,
 				ProjectMemberScreenData.Read.class,
 				ProjectMemberScreenData.Search.class,
-				ProjectMemberScreenData.Add.class)) {
+				ProjectMemberScreenData.Add.class,
+				ProjectMemberScreenData.InviteProjectMembers.class)) {
 			view.gotoSubView("Users");
 			presenter = PresenterResolver
 					.getPresenter(ProjectUserPresenter.class);

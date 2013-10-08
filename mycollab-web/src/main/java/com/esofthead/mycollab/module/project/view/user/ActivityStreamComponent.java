@@ -29,7 +29,6 @@ import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -199,7 +198,8 @@ public class ActivityStreamComponent extends Depot {
 						}
 					}
 
-					final Label activityLink = new UrlDetectableLabel(content);
+					final Label activityLink = new Label(content,
+							Label.CONTENT_XHTML);
 					final CssLayout streamWrapper = new CssLayout();
 					streamWrapper.setWidth("100%");
 					streamWrapper.addStyleName("stream-wrapper");
