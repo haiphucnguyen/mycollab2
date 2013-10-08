@@ -120,9 +120,9 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 						fieldContainer.addComponentField(progressField);
 						return fieldContainer;
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(
+						return new FormDetectAndDisplayUrlViewField(
 								TaskGroupReadViewImpl.this.taskList
-										.getDescription(), Label.CONTENT_XHTML);
+										.getDescription());
 					} else if (propertyId.equals("numOpenTasks")) {
 						final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
 						final Label numTaskLbl = new Label("("
@@ -258,10 +258,9 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 								fieldContainer.addComponentField(progressField);
 								return fieldContainer;
 							} else if (propertyId.equals("description")) {
-								return new FormViewField(
+								return new FormDetectAndDisplayUrlViewField(
 										PrintView.this.taskList
-												.getDescription(),
-										Label.CONTENT_XHTML);
+												.getDescription());
 							} else if (propertyId.equals("numOpenTasks")) {
 								final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
 								final Label numTaskLbl = new Label("("

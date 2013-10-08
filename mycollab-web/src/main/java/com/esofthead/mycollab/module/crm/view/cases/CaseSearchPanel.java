@@ -10,7 +10,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -103,7 +103,7 @@ public class CaseSearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.subjectField
+			if (StringUtils.isNotNullOrEmpty((String) this.subjectField
 					.getValue())) {
 				CaseSearchPanel.this.searchCriteria
 						.setSubject(new StringSearchField(SearchField.AND,
@@ -111,7 +111,7 @@ public class CaseSearchPanel extends
 			}
 
 			final SimpleAccount account = this.accountField.getAccount();
-			if (StringUtil.isNotNullOrEmpty(account.getAccountname())) {
+			if (StringUtils.isNotNullOrEmpty(account.getAccountname())) {
 				CaseSearchPanel.this.searchCriteria
 						.setAccountName(new StringSearchField(SearchField.AND,
 								account.getAccountname()));
@@ -313,7 +313,7 @@ public class CaseSearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty(this.subjectField.getValue()
+			if (StringUtils.isNotNullOrEmpty(this.subjectField.getValue()
 					.toString().trim())) {
 				CaseSearchPanel.this.searchCriteria
 						.setSubject(new StringSearchField(SearchField.AND,

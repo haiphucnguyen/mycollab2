@@ -736,10 +736,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.select(1);
 		this.addLink(new Button("Users", new GotoUserListener()));
 		this.setLinkEnabled(true, 2);
-		this.addLink(new Button("Add"));
+		this.addLink(new Button("Invite Project Members"));
 		AppContext.addFragment(
 				"project/user/add/" + UrlEncodeDecoder.encode(project.getId()),
-				"New Project Member");
+				"Invite Project Member(s)");
 	}
 
 	public void gotoUserRead(SimpleProjectMember member) {

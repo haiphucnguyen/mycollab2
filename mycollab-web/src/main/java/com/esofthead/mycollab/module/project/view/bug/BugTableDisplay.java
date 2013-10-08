@@ -14,7 +14,7 @@ import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItem;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
@@ -321,7 +321,7 @@ public class BugTableDisplay extends
 							}
 						});
 
-				if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
+				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
 					Resource iconPriority = MyCollabResource
 							.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 
@@ -372,7 +372,7 @@ public class BugTableDisplay extends
 
 				Resource iconPriority = MyCollabResource
 						.newResource(BugSeverityConstants.MAJOR_IMG);
-				if (StringUtil.isNotNullOrEmpty(bug.getSeverity())) {
+				if (StringUtils.isNotNullOrEmpty(bug.getSeverity())) {
 
 					if (BugSeverityConstants.CRITICAL.equals(bug.getSeverity())) {
 						iconPriority = MyCollabResource

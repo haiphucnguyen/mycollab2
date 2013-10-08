@@ -10,7 +10,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -172,7 +172,7 @@ public class ContactSearchPanel extends
 			final ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 					AppContext.getAccountId()));
-			if (StringUtil.isNotNullOrEmpty(this.nameField.getValue()
+			if (StringUtils.isNotNullOrEmpty(this.nameField.getValue()
 					.toString().trim())) {
 				searchCriteria.setContactName(new StringSearchField(
 						SearchField.AND, this.nameField.getValue().toString()
@@ -284,21 +284,21 @@ public class ContactSearchPanel extends
 			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 					AppContext.getAccountId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.firstnameField
+			if (StringUtils.isNotNullOrEmpty((String) this.firstnameField
 					.getValue())) {
 				searchCriteria.setFirstname(new StringSearchField(
 						SearchField.AND, ((String) this.firstnameField
 								.getValue()).trim()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.lastnameField
+			if (StringUtils.isNotNullOrEmpty((String) this.lastnameField
 					.getValue())) {
 				searchCriteria.setLastname(new StringSearchField(
 						SearchField.AND, ((String) this.lastnameField
 								.getValue()).trim()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.accountnameField
+			if (StringUtils.isNotNullOrEmpty((String) this.accountnameField
 					.getValue())) {
 				searchCriteria.setAccountName(new StringSearchField(
 						SearchField.AND, ((String) this.accountnameField
@@ -312,21 +312,21 @@ public class ContactSearchPanel extends
 						SearchField.AND, assignUsers));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyEmailField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyEmailField
 					.getValue())) {
 				searchCriteria
 						.setAnyEmail(new StringSearchField(SearchField.AND,
 								(String) this.anyEmailField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyAddressField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyAddressField
 					.getValue())) {
 				searchCriteria.setAnyAddress(new StringSearchField(
 						SearchField.AND, (String) this.anyAddressField
 								.getValue()));
 			}
 
-			if (StringUtil
+			if (StringUtils
 					.isNotNullOrEmpty((String) this.stateField.getValue())) {
 				searchCriteria.setAnyState(new StringSearchField(
 						SearchField.AND, (String) this.stateField.getValue()));
@@ -339,19 +339,19 @@ public class ContactSearchPanel extends
 						SearchField.AND, countries));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyPhoneField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyPhoneField
 					.getValue())) {
 				searchCriteria
 						.setAnyPhone(new StringSearchField(SearchField.AND,
 								(String) this.anyPhoneField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.cityField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.cityField.getValue())) {
 				searchCriteria.setAnyCity(new StringSearchField(
 						SearchField.AND, (String) this.cityField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.postalCodeField
+			if (StringUtils.isNotNullOrEmpty((String) this.postalCodeField
 					.getValue())) {
 				searchCriteria.setAnyPostalCode(new StringSearchField(
 						SearchField.AND, (String) this.postalCodeField

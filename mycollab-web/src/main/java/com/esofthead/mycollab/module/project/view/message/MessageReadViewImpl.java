@@ -13,6 +13,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentType;
@@ -54,206 +55,207 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class MessageReadViewImpl extends AbstractView implements
-        MessageReadView {
-    private static final long serialVersionUID = 1L;
+		MessageReadView {
+	private static final long serialVersionUID = 1L;
 
-    private final PreviewForm previewForm;
-    private SimpleMessage message;
+	private final PreviewForm previewForm;
+	private SimpleMessage message;
 
-    public MessageReadViewImpl() {
-        super();
-        this.setMargin(false, true, true, true);
-        previewForm = new PreviewForm();
-        this.addComponent(previewForm);
-    }
+	public MessageReadViewImpl() {
+		super();
+		this.setMargin(false, true, true, true);
+		previewForm = new PreviewForm();
+		this.addComponent(previewForm);
+	}
 
-    @Override
-    public HasPreviewFormHandlers<SimpleMessage> getPreviewFormHandlers() {
-        return previewForm;
-    }
+	@Override
+	public HasPreviewFormHandlers<SimpleMessage> getPreviewFormHandlers() {
+		return previewForm;
+	}
 
-    @Override
-    public void previewItem(SimpleMessage item) {
-        this.message = item;
-        previewForm.setItemDataSource(new BeanItem<SimpleMessage>(item));
-    }
+	@Override
+	public void previewItem(SimpleMessage item) {
+		this.message = item;
+		previewForm.setItemDataSource(new BeanItem<SimpleMessage>(item));
+	}
 
-    @Override
-    public SimpleMessage getItem() {
-        return message;
-    }
+	@Override
+	public SimpleMessage getItem() {
+		return message;
+	}
 
-    private class PreviewForm extends AdvancedPreviewBeanForm<SimpleMessage> {
-        private static final long serialVersionUID = 1L;
+	private class PreviewForm extends AdvancedPreviewBeanForm<SimpleMessage> {
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                private static final long serialVersionUID = 1L;
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                protected Field onCreateField(Item item, Object propertyId,
-                        Component uiContext) {
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
 
-                    return null;
-                }
-            });
-            super.setItemDataSource(newDataSource);
-        }
+					return null;
+				}
+			});
+			super.setItemDataSource(newDataSource);
+		}
 
-        class FormLayoutFactory implements IFormLayoutFactory {
-            private static final long serialVersionUID = 1L;
+		class FormLayoutFactory implements IFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public Layout getLayout() {
-                VerticalLayout messageAddLayout = new VerticalLayout();
+			@Override
+			public Layout getLayout() {
+				VerticalLayout messageAddLayout = new VerticalLayout();
 
-                HorizontalLayout messageLayout = new HorizontalLayout();
-                messageLayout.setStyleName("message");
-                messageLayout.setWidth("100%");
-                messageLayout.addComponent(UserAvatarControlFactory
-                        .createUserAvatarButtonLink(
-                                message.getPostedUserAvatarId(),
-                                message.getFullPostedUserName()));
+				HorizontalLayout messageLayout = new HorizontalLayout();
+				messageLayout.setStyleName("message");
+				messageLayout.setWidth("100%");
+				messageLayout.addComponent(UserAvatarControlFactory
+						.createUserAvatarButtonLink(
+								message.getPostedUserAvatarId(),
+								message.getFullPostedUserName()));
 
-                CssLayout rowLayout = new CssLayout();
-                rowLayout.setStyleName("message-container");
-                rowLayout.setWidth("100%");
+				CssLayout rowLayout = new CssLayout();
+				rowLayout.setStyleName("message-container");
+				rowLayout.setWidth("100%");
 
-                Label title = new Label("<h2 style='color: #006699;'>"
-                        + message.getTitle() + "</h2>", Label.CONTENT_XHTML);
+				Label title = new Label("<h2 style='color: #006699;'>"
+						+ message.getTitle() + "</h2>", Label.CONTENT_XHTML);
 
-                HorizontalLayout messageHeader = new HorizontalLayout();
-                messageHeader.setStyleName("message-header");
-                VerticalLayout leftHeader = new VerticalLayout();
-                leftHeader.setSpacing(true);
+				HorizontalLayout messageHeader = new HorizontalLayout();
+				messageHeader.setStyleName("message-header");
+				VerticalLayout leftHeader = new VerticalLayout();
+				leftHeader.setSpacing(true);
 
-                Label username = new Label(message.getFullPostedUserName());
-                username.setStyleName("user-name");
-                leftHeader.addComponent(username);
+				Label username = new Label(message.getFullPostedUserName());
+				username.setStyleName("user-name");
+				leftHeader.addComponent(username);
 
-                title.addStyleName("message-title");
-                leftHeader.addComponent(title);
+				title.addStyleName("message-title");
+				leftHeader.addComponent(title);
 
-                final HorizontalLayout rightHeader = new HorizontalLayout();
-                rightHeader.setSpacing(true);
-                final VerticalLayout infoLayout = new VerticalLayout();
-                Label timePostLbl = new Label(
-                        DateTimeUtils.getStringDateFromNow(message
-                                .getPosteddate()));
-                timePostLbl.setSizeUndefined();
-                timePostLbl.setStyleName("time-post");
-                infoLayout.addComponent(timePostLbl);
-                infoLayout.setSizeUndefined();
+				final HorizontalLayout rightHeader = new HorizontalLayout();
+				rightHeader.setSpacing(true);
+				final VerticalLayout infoLayout = new VerticalLayout();
+				Label timePostLbl = new Label(
+						DateTimeUtils.getStringDateFromNow(message
+								.getPosteddate()));
+				timePostLbl.setSizeUndefined();
+				timePostLbl.setStyleName("time-post");
+				infoLayout.addComponent(timePostLbl);
+				infoLayout.setSizeUndefined();
 
-                Button deleteBtn = new Button("", new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+				Button deleteBtn = new Button("", new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        ConfirmDialogExt.show(
-                                MessageReadViewImpl.this.getWindow(),
-                                LocalizationHelper.getMessage(
-                                        GenericI18Enum.DELETE_DIALOG_TITLE,
-                                        SiteConfiguration.getSiteName()),
-                                LocalizationHelper
-                                        .getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-                                LocalizationHelper
-                                        .getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-                                LocalizationHelper
-                                        .getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-                                new ConfirmDialog.Listener() {
-                                    private static final long serialVersionUID = 1L;
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ConfirmDialogExt.show(
+								MessageReadViewImpl.this.getWindow(),
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										SiteConfiguration.getSiteName()),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-                                    @Override
-                                    public void onClose(
-                                            final ConfirmDialog dialog) {
-                                        if (dialog.isConfirmed()) {
-                                            final MessageService messageService = ApplicationContextUtil
-                                                    .getSpringBean(MessageService.class);
-                                            messageService.removeWithSession(
-                                                    message.getId(),
-                                                    AppContext.getUsername(),
-                                                    AppContext.getAccountId());
-                                            previewForm.fireCancelForm(message);
-                                        }
-                                    }
-                                });
-                    }
-                });
-                deleteBtn.setIcon(MyCollabResource
-                        .newResource("icons/12/project/icon_x.png"));
-                deleteBtn.addStyleName("link");
-                deleteBtn.setEnabled(CurrentProjectVariables
-                        .canAccess(ProjectRolePermissionCollections.MESSAGES));
+									@Override
+									public void onClose(
+											final ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											final MessageService messageService = ApplicationContextUtil
+													.getSpringBean(MessageService.class);
+											messageService.removeWithSession(
+													message.getId(),
+													AppContext.getUsername(),
+													AppContext.getAccountId());
+											previewForm.fireCancelForm(message);
+										}
+									}
+								});
+					}
+				});
+				deleteBtn.setIcon(MyCollabResource
+						.newResource("icons/12/project/icon_x.png"));
+				deleteBtn.addStyleName("link");
+				deleteBtn.setEnabled(CurrentProjectVariables
+						.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
-                rightHeader.addComponent(infoLayout);
-                rightHeader.addComponent(deleteBtn);
-                rightHeader.setExpandRatio(infoLayout, 1.0f);
+				rightHeader.addComponent(infoLayout);
+				rightHeader.addComponent(deleteBtn);
+				rightHeader.setExpandRatio(infoLayout, 1.0f);
 
-                messageHeader.addComponent(leftHeader);
-                messageHeader.setExpandRatio(leftHeader, 1.0f);
-                messageHeader.addComponent(rightHeader);
-                messageHeader.setWidth("100%");
+				messageHeader.addComponent(leftHeader);
+				messageHeader.setExpandRatio(leftHeader, 1.0f);
+				messageHeader.addComponent(rightHeader);
+				messageHeader.setWidth("100%");
 
-                rowLayout.addComponent(messageHeader);
+				rowLayout.addComponent(messageHeader);
 
-                Label messageContent = new Label(message.getMessage(),
-                        Label.CONTENT_XHTML);
-                messageContent.setStyleName("message-body");
-                rowLayout.addComponent(messageContent);
+				Label messageContent = new Label(
+						StringUtils.formatExtraLink(message.getMessage()),
+						Label.CONTENT_XHTML);
+				messageContent.setStyleName("message-body");
+				rowLayout.addComponent(messageContent);
 
-                HorizontalLayout attachmentField = new HorizontalLayout();
-                Embedded attachmentIcon = new Embedded();
-                attachmentIcon.setSource(MyCollabResource
-                        .newResource("icons/16/attachment.png"));
-                attachmentField.addComponent(attachmentIcon);
+				HorizontalLayout attachmentField = new HorizontalLayout();
+				Embedded attachmentIcon = new Embedded();
+				attachmentIcon.setSource(MyCollabResource
+						.newResource("icons/16/attachment.png"));
+				attachmentField.addComponent(attachmentIcon);
 
-                Label lbAttachment = new Label("Attachment: ");
-                attachmentField.addComponent(lbAttachment);
+				Label lbAttachment = new Label("Attachment: ");
+				attachmentField.addComponent(lbAttachment);
 
-                rowLayout.addComponent(attachmentField);
+				rowLayout.addComponent(attachmentField);
 
-                Component attachmentDisplayComp = ProjectAttachmentDisplayComponentFactory
-                        .getAttachmentDisplayComponent(message.getProjectid(),
-                                AttachmentType.PROJECT_MESSAGE, message.getId());
-                rowLayout.addComponent(attachmentDisplayComp);
+				Component attachmentDisplayComp = ProjectAttachmentDisplayComponentFactory
+						.getAttachmentDisplayComponent(message.getProjectid(),
+								AttachmentType.PROJECT_MESSAGE, message.getId());
+				rowLayout.addComponent(attachmentDisplayComp);
 
-                ResourceService attachmentService = ApplicationContextUtil
-                        .getSpringBean(ResourceService.class);
-                List<Content> attachments = attachmentService
-                        .getContents(AttachmentUtils
-                                .getProjectEntityAttachmentPath(
-                                        AppContext.getAccountId(),
-                                        message.getProjectid(),
-                                        AttachmentType.PROJECT_MESSAGE,
-                                        message.getId()));
-                if (attachments == null || attachments.isEmpty()) {
-                    attachmentField.setVisible(false);
-                }
+				ResourceService attachmentService = ApplicationContextUtil
+						.getSpringBean(ResourceService.class);
+				List<Content> attachments = attachmentService
+						.getContents(AttachmentUtils
+								.getProjectEntityAttachmentPath(
+										AppContext.getAccountId(),
+										message.getProjectid(),
+										AttachmentType.PROJECT_MESSAGE,
+										message.getId()));
+				if (attachments == null || attachments.isEmpty()) {
+					attachmentField.setVisible(false);
+				}
 
-                messageLayout.addComponent(rowLayout);
-                messageLayout.setExpandRatio(rowLayout, 1.0f);
+				messageLayout.addComponent(rowLayout);
+				messageLayout.setExpandRatio(rowLayout, 1.0f);
 
-                messageAddLayout.addComponent(messageLayout);
-                messageAddLayout.addComponent(createBottomPanel());
+				messageAddLayout.addComponent(messageLayout);
+				messageAddLayout.addComponent(createBottomPanel());
 
-                return messageAddLayout;
-            }
+				return messageAddLayout;
+			}
 
-            protected Layout createBottomPanel() {
-                VerticalLayout bottomPanel = new VerticalLayout();
-                bottomPanel.addComponent(new CommentListDepot(
-                        CommentType.PRJ_MESSAGE, message.getId(),
-                        CurrentProjectVariables.getProjectId(), true, true,
-                        MessageRelayEmailNotificationAction.class));
-                return bottomPanel;
-            }
+			protected Layout createBottomPanel() {
+				VerticalLayout bottomPanel = new VerticalLayout();
+				bottomPanel.addComponent(new CommentListDepot(
+						CommentType.PRJ_MESSAGE, message.getId(),
+						CurrentProjectVariables.getProjectId(), true, true,
+						MessageRelayEmailNotificationAction.class));
+				return bottomPanel;
+			}
 
-            @Override
-            public void attachField(Object propertyId, Field field) {
-            }
-        }
-    }
+			@Override
+			public void attachField(Object propertyId, Field field) {
+			}
+		}
+	}
 }

@@ -8,9 +8,11 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -59,8 +61,7 @@ public class CommentRowDisplayHandler implements
 
 		rowLayout.addComponent(messageHeader);
 
-		Label messageContent = new Label(comment.getComment(),
-				Label.CONTENT_XHTML);
+		Label messageContent = new UrlDetectableLabel(comment.getComment());
 		messageContent.setStyleName("message-body");
 		rowLayout.addComponent(messageContent);
 

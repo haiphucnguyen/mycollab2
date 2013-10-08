@@ -12,7 +12,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
@@ -383,7 +383,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 					.setProjectId(new NumberSearchField(SearchField.AND,
 							BugSearchPanel.this.project.getId()));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
 
 				if (((Boolean) this.summaryField.getValue()) == true) {
 					BugSearchPanel.this.searchCriteria

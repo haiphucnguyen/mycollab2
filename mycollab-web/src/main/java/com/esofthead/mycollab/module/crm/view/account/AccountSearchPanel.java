@@ -9,7 +9,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -128,40 +128,40 @@ public class AccountSearchPanel extends
 			searchCriteria.setAccountname(new StringSearchField(
 					SearchField.AND, (String) this.nameField.getValue()));
 
-			if (StringUtil.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				searchCriteria.setAccountname(new StringSearchField(
 						SearchField.AND, (String) this.nameField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.websiteField
+			if (StringUtils.isNotNullOrEmpty((String) this.websiteField
 					.getValue())) {
 				searchCriteria
 						.setWebsite(new StringSearchField(SearchField.AND,
 								(String) this.websiteField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyPhoneField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyPhoneField
 					.getValue())) {
 				searchCriteria
 						.setAnyPhone(new StringSearchField(SearchField.AND,
 								(String) this.anyPhoneField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyAddressField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyAddressField
 					.getValue())) {
 				searchCriteria.setAnyAddress(new StringSearchField(
 						SearchField.AND, (String) this.anyAddressField
 								.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.anyMailField
+			if (StringUtils.isNotNullOrEmpty((String) this.anyMailField
 					.getValue())) {
 				searchCriteria
 						.setAnyMail(new StringSearchField(SearchField.AND,
 								(String) this.anyMailField.getValue()));
 			}
 
-			if (StringUtil.isNotNullOrEmpty((String) this.cityField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.cityField.getValue())) {
 				searchCriteria.setAnyCity(new StringSearchField(
 						SearchField.AND, (String) this.cityField.getValue()));
 			}

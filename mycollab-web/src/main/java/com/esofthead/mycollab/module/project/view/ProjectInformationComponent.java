@@ -87,9 +87,9 @@ public class ProjectInformationComponent extends VerticalLayout {
 								ProjectInformationComponent.this.project
 										.getHomepage());
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(
+						return new FormDetectAndDisplayUrlViewField(
 								ProjectInformationComponent.this.project
-										.getDescription(), Label.CONTENT_XHTML);
+										.getDescription());
 					}
 					return null;
 				}
@@ -154,9 +154,9 @@ public class ProjectInformationComponent extends VerticalLayout {
 								ProjectInformationComponent.this.project
 										.getHomepage());
 					} else if (propertyId.equals("description")) {
-						return new FormViewField(
+						return new FormDetectAndDisplayUrlViewField(
 								ProjectInformationComponent.this.project
-										.getDescription(), Label.CONTENT_XHTML);
+										.getDescription());
 					} else if (propertyId.equals("currencyid")) {
 						if (ProjectInformationComponent.this.project
 								.getCurrency() != null) {
