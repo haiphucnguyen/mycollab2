@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -120,8 +121,9 @@ public class ProjectNotificationSettingViewImpl extends AbstractView implements
 						service.updateWithSession(notificationSetting,
 								AppContext.getUsername());
 					}
-					getWindow().showNotification(
-							"Update notification setting successfully.");
+
+					NotificationUtil
+							.showNotification("Update notification setting successfully.");
 				} catch (Exception e) {
 					throw new MyCollabException(e);
 				}

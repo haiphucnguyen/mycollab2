@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -86,15 +87,7 @@ public class OpportunityAddPresenter extends
 				opportunity = accountService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (opportunity == null) {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.showNotification(
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					NotificationUtil.showRecordNotExistNotification();
 					return;
 				}
 			}

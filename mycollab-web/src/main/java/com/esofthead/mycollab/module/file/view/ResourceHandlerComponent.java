@@ -41,6 +41,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.Hr;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -271,8 +272,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					AppContext.getApplication().getMainWindow()
 							.open(downloadResource, "_blank");
 				} else {
-					ResourceHandlerComponent.this.getWindow().showNotification(
-							"Please choose items to download.");
+					NotificationUtil
+							.showNotification("Please choose items to download.");
 				}
 			}
 		});
@@ -295,7 +296,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					ResourceHandlerComponent.this.getWindow().addWindow(
 							moveResourceWindow);
 				} else {
-					ResourceHandlerComponent.this.getParent().getWindow()
+					NotificationUtil
 							.showNotification("Please select items to move");
 				}
 			}
@@ -316,11 +317,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						if (selectedResourcesList.size() == 0) {
-							ResourceHandlerComponent.this
-									.getParent()
-									.getWindow()
-									.showNotification(
-											"Please select items to delete");
+							NotificationUtil
+									.showNotification("Please select items to delete");
 						} else {
 							deleteResourceAction();
 						}
@@ -414,9 +412,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 													.expandItem(ResourceHandlerComponent.this.baseFolder);
 										}
 
-										ResourceHandlerComponent.this
-												.getWindow().showNotification(
-														"Delete successfully.");
+										NotificationUtil
+												.showNotification("Delete successfully.");
 										ResourceHandlerComponent.this.selectedResourcesList = new ArrayList<Resource>();
 									}
 								}
@@ -931,28 +928,23 @@ public class ResourceHandlerComponent extends VerticalLayout {
 											.getExternalDrive(), oldPath,
 									newPath);
 					} else {
-						try {
-							RenameResourceWindow.this.service.rename(oldPath,
-									newPath, AppContext.getUsername());
-							if (menuTree != null) {
-								final List<Folder> childs = baseFolder
-										.getChilds();
-								for (final Folder folder : childs) {
-									if (folder.getName().equals(
-											RenameResourceWindow.this.resource
-													.getName())) {
-										menuTree.removeItem(folder);
-										folder.setPath(newPath);
-										menuTree.addItem(folder);
-										menuTree.setParent(folder, baseFolder);
-										menuTree.setItemCaption(folder,
-												newNameValue);
-									}
+
+						RenameResourceWindow.this.service.rename(oldPath,
+								newPath, AppContext.getUsername());
+						if (menuTree != null) {
+							final List<Folder> childs = baseFolder.getChilds();
+							for (final Folder folder : childs) {
+								if (folder.getName().equals(
+										RenameResourceWindow.this.resource
+												.getName())) {
+									menuTree.removeItem(folder);
+									folder.setPath(newPath);
+									menuTree.addItem(folder);
+									menuTree.setParent(folder, baseFolder);
+									menuTree.setItemCaption(folder,
+											newNameValue);
 								}
 							}
-						} catch (final ContentException e) {
-							RenameResourceWindow.this.getWindow()
-									.showNotification(e.getMessage());
 						}
 					}
 					itemResourceContainerLayout.constructBody(baseFolder);
@@ -1033,10 +1025,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 										.compile(illegalFileNamePattern);
 								Matcher matcher = pattern.matcher(folderVal);
 								if (matcher.find()) {
-									ResourceHandlerComponent.this
-											.getWindow()
-											.showNotification(
-													"Please enter valid folder name except any follow characters : <>:&/\\|?*&");
+									NotificationUtil
+											.showNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
 									return;
 								}
 
@@ -1159,10 +1149,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 											Matcher matcher = pattern
 													.matcher(file.getName());
 											if (matcher.find()) {
-												ResourceHandlerComponent.this
-														.getWindow()
-														.showNotification(
-																"Please upload valid file-name except any follow characters : <>:&/\\|?*&");
+												NotificationUtil
+														.showNotification("Please upload valid file-name except any follow characters : <>:&/\\|?*&");
 												return;
 											}
 										}
@@ -1193,15 +1181,11 @@ public class ResourceHandlerComponent extends VerticalLayout {
 								itemResourceContainerLayout
 										.constructBody(baseFolder);
 								MultiUploadContentWindow.this.close();
-								ResourceHandlerComponent.this.getWindow()
-										.showNotification(
-												"Upload successfully.");
+								NotificationUtil
+										.showNotification("Upload successfully.");
 							} else {
-								AppContext
-										.getApplication()
-										.getMainWindow()
-										.showNotification(
-												"It seems you did not attach file yet!");
+								NotificationUtil
+										.showNotification("It seems you did not attach file yet!");
 							}
 						}
 					});
@@ -1417,14 +1401,13 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		public void displayAfterMoveSuccess(Folder folder, boolean checking) {
 			fileBreadCrumb.gotoFolder(folder);
 			itemResourceContainerLayout.constructBody(folder);
-			if (!checking)
-				ResourceHandlerComponent.this.getWindow().showNotification(
-						"Move asset(s) successfully.");
-			else
-				ResourceHandlerComponent.this
-						.getWindow()
-						.showNotification(
-								"Move finish, some items can't move to destination. Please check duplicated file-name and try again.");
+			if (!checking) {
+				NotificationUtil
+						.showNotification("Move asset(s) successfully.");
+			} else {
+				NotificationUtil
+						.showNotification("Move finish, some items can't move to destination. Please check duplicated file-name and try again.");
+			}
 			ResourceHandlerComponent.this.selectedResourcesList = new ArrayList<Resource>();
 
 			if (menuTree != null) {

@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -121,13 +122,7 @@ public class MilestoneReadPresenter extends
 							EventBus.getInstance().fireEvent(
 									new MilestoneEvent.GotoRead(this, nextId));
 						} else {
-							view.getWindow()
-									.showNotification(
-											LocalizationHelper
-													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-											LocalizationHelper
-													.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
-											Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							NotificationUtil.showGotoLastRecordNotification();
 						}
 
 					}
@@ -149,13 +144,7 @@ public class MilestoneReadPresenter extends
 							EventBus.getInstance().fireEvent(
 									new MilestoneEvent.GotoRead(this, nextId));
 						} else {
-							view.getWindow()
-									.showNotification(
-											LocalizationHelper
-													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-											LocalizationHelper
-													.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
-											Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							NotificationUtil.showGotoFirstRecordNotification();
 						}
 					}
 				});
@@ -180,15 +169,7 @@ public class MilestoneReadPresenter extends
 							.getView(ProjectBreadcrumb.class);
 					breadcrumb.gotoMilestoneRead(milestone);
 				} else {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.showNotification(
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					NotificationUtil.showRecordNotExistNotification();
 					return;
 				}
 			} else {

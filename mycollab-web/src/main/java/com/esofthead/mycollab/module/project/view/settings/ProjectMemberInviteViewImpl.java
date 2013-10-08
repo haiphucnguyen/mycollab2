@@ -32,6 +32,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -267,9 +268,7 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 					super.addToken(tokenId);
 				}
 			} else {
-				AppContext
-						.getApplication()
-						.getMainWindow()
+				NotificationUtil
 						.showNotification(
 								LocalizationHelper
 										.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),

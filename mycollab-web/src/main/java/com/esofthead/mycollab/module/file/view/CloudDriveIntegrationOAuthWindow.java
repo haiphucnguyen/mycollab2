@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -164,8 +165,8 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 							String name = folderName.getValue().toString()
 									.trim();
 							if (name.equals("")) {
-								getWindow().showNotification(
-										"Please Enter Folder Name");
+								NotificationUtil
+										.showNotification("Please enter folter name");
 								return;
 							}
 							ExternalDrive externalDrive = new ExternalDrive();

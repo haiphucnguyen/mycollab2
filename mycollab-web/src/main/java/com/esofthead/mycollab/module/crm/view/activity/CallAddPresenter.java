@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -69,15 +70,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 				call = callService.findByPrimaryKey((Integer) data.getParams(),
 						AppContext.getAccountId());
 				if (call == null) {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.showNotification(
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					NotificationUtil.showRecordNotExistNotification();
 					return;
 				}
 			} else if (data.getParams() instanceof CallWithBLOBs) {
@@ -108,7 +101,8 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 	}
 
 	public void save(CallWithBLOBs item) {
-		CallService taskService = ApplicationContextUtil.getSpringBean(CallService.class);
+		CallService taskService = ApplicationContextUtil
+				.getSpringBean(CallService.class);
 
 		item.setSaccountid(AppContext.getAccountId());
 		if (item.getId() == null) {
