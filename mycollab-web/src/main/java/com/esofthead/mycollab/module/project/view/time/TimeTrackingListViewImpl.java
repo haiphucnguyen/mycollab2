@@ -1,7 +1,11 @@
 package com.esofthead.mycollab.module.project.view.time;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.vaadin.addons.lazyquerycontainer.BeanQueryFactory;
+import org.vaadin.addons.lazyquerycontainer.LazyQueryContainer;
 import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
@@ -22,6 +26,7 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -30,12 +35,15 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
+import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
@@ -69,6 +77,81 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					}
 				});
 		this.addComponent(this.itemTimeLoggingPanel);
+
+		// Add Entry Header ---------------
+		HorizontalLayout entryHeaderLayout = new HorizontalLayout();
+		entryHeaderLayout.setWidth("100%");
+		entryHeaderLayout.setSpacing(true);
+		entryHeaderLayout.setMargin(true);
+		entryHeaderLayout.addStyleName("timeAdd-popup");
+
+		Label datelbl = new Label("Date");
+		datelbl.setWidth("150px");
+		datelbl.addStyleName("h2");
+		entryHeaderLayout.addComponent(datelbl);
+
+		Label hoursLbl = new Label("Hours");
+		hoursLbl.setWidth("50px");
+		hoursLbl.addStyleName("h2");
+		entryHeaderLayout.addComponent(hoursLbl);
+
+		Label ticketLbl = new Label("Ticket");
+		ticketLbl.setWidth("100px");
+		ticketLbl.addStyleName("h2");
+		entryHeaderLayout.addComponent(ticketLbl);
+
+		Label descriptionLbl = new Label("Description");
+		descriptionLbl.setWidth("300px");
+		descriptionLbl.addStyleName("h2");
+		entryHeaderLayout.addComponent(descriptionLbl);
+		this.addComponent(entryHeaderLayout);
+		// Add Entry Body ------------------------
+		DateComboboxSelectionField dateField = new DateComboboxSelectionField();
+		dateField.setWidth("200px");
+		TextField hoursField = new TextField();
+		hoursField.setWidth("100px");
+
+		// TRy New Lazy Loading ----------------------
+		BeanQueryFactory<TimeTrackingLazyBeanQuery> queryFactory = new BeanQueryFactory<TimeTrackingLazyBeanQuery>(
+				TimeTrackingLazyBeanQuery.class);
+
+		Map<String, Object> queryConfiguration = new HashMap<String, Object>();
+		// queryConfiguration.put("taskService", new TaskService());
+		queryFactory.setQueryConfiguration(queryConfiguration);
+
+		LazyQueryContainer container = new LazyQueryContainer(queryFactory, 50,
+				5, true);
+		ComboBox ticketField = new ComboBox();
+		ticketField.setWidth("100px");
+		ticketField.setContainerDataSource(container);
+		ticketField
+				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+
+		// ------------------------------------------------------
+		TextField descriptionField = new TextField();
+		descriptionField.setWidth("300px");
+
+		Button newEntryBtn = new Button("Add Entry",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+					}
+				});
+		newEntryBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+
+		HorizontalLayout entryBodyLayout = new HorizontalLayout();
+		entryBodyLayout.setSpacing(true);
+		entryBodyLayout.setMargin(true);
+		entryBodyLayout.setWidth("100%");
+		entryBodyLayout.addStyleName("timeAdd-popup");
+		entryBodyLayout.addComponent(dateField);
+		entryBodyLayout.addComponent(hoursField);
+		entryBodyLayout.addComponent(ticketField);
+		entryBodyLayout.addComponent(descriptionField);
+		entryBodyLayout.addComponent(newEntryBtn);
+		this.addComponent(entryBodyLayout);
 
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
@@ -180,7 +263,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 						.getProject().getName() : "");
 		ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
 				title, exportType,
-				ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
+				ApplicationContextUtil
+						.getSpringBean(ItemTimeLoggingService.class),
 				TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
 		final Resource res = new StreamResource(exportStream,
 				exportStream.getDefaultExportFileName(),
@@ -216,5 +300,4 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.tableItem.setSearchCriteria(searchCriteria);
 		this.setTimeRange();
 	}
-
 }
