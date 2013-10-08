@@ -106,7 +106,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 				}
 			});
 
-			Button upgradeBtn = new Button("Upgrade",
+			Button upgradeBtn = new Button("Update",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

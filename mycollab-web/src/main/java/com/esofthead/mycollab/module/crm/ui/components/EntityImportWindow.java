@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactListView;
 import com.esofthead.mycollab.module.crm.view.contact.iexport.ContactVCardObjectEntityConverter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -124,11 +125,8 @@ public abstract class EntityImportWindow<E> extends Window {
 					try {
 						contentStream = uploadField.getContentAsStream();
 					} catch (Exception e) {
-						AppContext
-								.getApplication()
-								.getMainWindow()
-								.showNotification(
-										"It seems you did not attach file yet!");
+						NotificationUtil
+								.showNotification("It seems you did not attach file yet!");
 					}
 					if (contentStream != null) {
 						String filename = uploadField.getFileName();
@@ -169,10 +167,9 @@ public abstract class EntityImportWindow<E> extends Window {
 																				AppContext
 																						.getUsername());
 															}
-															EntityImportWindow.this
-																	.getParent()
-																	.showNotification(
-																			"Import successfully.");
+
+															NotificationUtil
+																	.showNotification("Import successfully.");
 															EntityImportWindow.this
 																	.close();
 															ContactSearchCriteria contactSearchCriteria = new ContactSearchCriteria();
@@ -240,8 +237,8 @@ public abstract class EntityImportWindow<E> extends Window {
 							uploadFieldVerticalLayout.addComponent(uploadField,
 									uploadFieldIndex);
 
-							getWindow().showNotification(
-									"Please choose supported files.");
+							NotificationUtil
+									.showNotification("Please choose supported files.");
 
 						}
 					}

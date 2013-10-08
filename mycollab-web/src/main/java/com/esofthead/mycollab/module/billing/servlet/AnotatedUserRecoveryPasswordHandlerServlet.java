@@ -53,38 +53,15 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 					String redirectURL = loginURL
 							+ "user/recoverypassword/action";
 
-					String html = generateUserRecoveryPasswordPage(
-							username, loginURL, redirectURL);
+					String html = generateUserRecoveryPasswordPage(username,
+							loginURL, redirectURL);
 					PrintWriter out = response.getWriter();
 					out.print(html);
+					return;
 				}
 			}
 		}
 		PageNotFoundGenerator.responsePage404(response);
-	}
-
-	private String generateUserNotActivePage(String loginURL) {
-		String template = "/templates/page/UserNotActivePage.mt";
-		TemplateContext context = new TemplateContext();
-		Reader reader;
-		try {
-			reader = new InputStreamReader(PageNotFoundGenerator.class
-					.getClassLoader().getResourceAsStream(template), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(PageNotFoundGenerator.class
-					.getClassLoader().getResourceAsStream(template));
-		}
-
-		context.put("loginURL", loginURL);
-
-		Map<String, String> defaultUrls = new HashMap<String, String>();
-
-		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-		context.put("defaultUrls", defaultUrls);
-
-		StringWriter writer = new StringWriter();
-		TemplateEngine.evaluate(context, writer, "log task", reader);
-		return writer.toString();
 	}
 
 	private String generateUserRecoveryPasswordPage(String username,

@@ -413,11 +413,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 								FileSearchResultComponent.this.basePath,
 								FileSearchResultComponent.this.searchString);
 
+					} finally {
 						RenameResourceWindow.this.close();
-
-					} catch (final ContentException e) {
-						RenameResourceWindow.this.getWindow().showNotification(
-								e.getMessage());
 					}
 				}
 			});

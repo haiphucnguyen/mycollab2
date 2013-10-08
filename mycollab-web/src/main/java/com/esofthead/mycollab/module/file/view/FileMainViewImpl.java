@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Hr;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -466,7 +467,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		} else {
 			String message = (res instanceof Folder) ? "Folder's location has moved, Please review activity-logs for more informations."
 					: "File's location has moved, Please review activity-logs for more informations.";
-			FileMainViewImpl.this.getWindow().showNotification(message);
+			NotificationUtil.showNotification(message);
 		}
 	}
 
@@ -633,8 +634,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									.setCurrentBaseFolder((Folder) FileMainViewImpl.this.resourceService
 											.getResource(rootPath));
 						} else {
-							FileMainViewImpl.this.getWindow().showNotification(
-									"Searching has no any results.");
+							NotificationUtil
+									.showNotification("Searching has no any results.");
 						}
 					}
 				});
@@ -943,10 +944,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							if (folderName != null && folderName.length() > 0) {
 								boolean checkingError = checkValidFolderName(folderName);
 								if (checkingError) {
-									FileMainViewImpl.this
-											.getWindow()
-											.showNotification(
-													"Please enter valid folder-name except any follow characters : <>:&/\\|?*&");
+									NotificationUtil
+											.showNotification("Please enter valid folder-name except any follow characters : <>:&/\\|?*&");
 									return;
 								}
 								ExternalFolder res = (ExternalFolder) externalResourceService

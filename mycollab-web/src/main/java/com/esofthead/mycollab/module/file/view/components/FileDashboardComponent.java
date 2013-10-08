@@ -167,11 +167,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						FileDashboardComponent.this
 								.displayResourcesInTable(FileDashboardComponent.this.baseFolder);
 
+					} finally {
 						RenameResourceWindow.this.close();
-
-					} catch (final ContentException e) {
-						RenameResourceWindow.this.getWindow().showNotification(
-								e.getMessage());
 					}
 				}
 			});
@@ -582,12 +579,10 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 									baseFolder, AppContext.getUsername(),
 									AppContext.getAccountId());
 
-							AbstractMoveWindow.this.close();
 							displayAfterMoveSuccess(
 									AbstractMoveWindow.this.baseFolder, false);
-						} catch (MyCollabException e) {
-							AbstractMoveWindow.this.getParent().getWindow()
-									.showNotification(e.getMessage());
+						} finally {
+							AbstractMoveWindow.this.close();
 						}
 					} else if (lstResEditting != null
 							&& lstResEditting.size() > 0) {

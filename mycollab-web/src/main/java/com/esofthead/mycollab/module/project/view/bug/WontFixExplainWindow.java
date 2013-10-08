@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -159,9 +160,7 @@ public class WontFixExplainWindow extends Window {
 									WontFixExplainWindow.this.callbackForm
 											.refreshBugItem();
 								} else {
-									AppContext
-											.getApplication()
-											.getMainWindow()
+									NotificationUtil
 											.showNotification(
 													"Error",
 													"You must enter a comment to explain for won't fix resolution",

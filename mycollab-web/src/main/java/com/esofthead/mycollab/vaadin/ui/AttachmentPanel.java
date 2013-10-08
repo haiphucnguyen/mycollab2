@@ -43,7 +43,8 @@ public class AttachmentPanel extends VerticalLayout implements
 	private ResourceService resourceService;
 
 	public AttachmentPanel() {
-		resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
+		resourceService = ApplicationContextUtil
+				.getSpringBean(ResourceService.class);
 		this.setSpacing(true);
 	}
 
@@ -204,8 +205,8 @@ public class AttachmentPanel extends VerticalLayout implements
 			fileStores = new HashMap<String, File>();
 		}
 		if (fileStores.containsKey(fileName)) {
-			getWindow().showNotification(
-					"File name " + fileName + " is already existed.");
+			NotificationUtil.showNotification("File name " + fileName
+					+ " is already existed.");
 		} else {
 			log.debug("Store file " + fileName + " in path "
 					+ file.getAbsolutePath() + " is exist: " + file.exists());
