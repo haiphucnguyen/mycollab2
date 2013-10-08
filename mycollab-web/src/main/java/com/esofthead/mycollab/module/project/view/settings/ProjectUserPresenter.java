@@ -35,7 +35,13 @@ public class ProjectUserPresenter extends
 
 		if (data instanceof ProjectMemberScreenData.Add) {
 			presenter = PresenterResolver
-					.getPresenter(ProjectMemberAddPresenter.class);
+					.getPresenter(ProjectMemberEditPresenter.class);
+		} else if (data instanceof ProjectMemberScreenData.InviteProjectMembers) {
+			presenter = PresenterResolver
+					.getPresenter(ProjectMemberInvitePresenter.class);
+		} else if (data instanceof ProjectMemberScreenData.InviteProjectMembers) {
+			presenter = PresenterResolver
+					.getPresenter(ProjectMemberInvitePresenter.class);
 		} else if (data instanceof ProjectMemberScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(ProjectMemberReadPresenter.class);

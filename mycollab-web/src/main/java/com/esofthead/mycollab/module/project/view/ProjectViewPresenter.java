@@ -140,6 +140,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		} else if (ClassUtils.instanceOf(pageAction,
 				ProjectMemberScreenData.Search.class,
 				ProjectMemberScreenData.Read.class,
+				ProjectMemberScreenData.Add.class,
+				ProjectMemberScreenData.InviteProjectMembers.class,
 				ProjectRoleScreenData.Search.class,
 				ProjectRoleScreenData.Add.class,
 				ProjectRoleScreenData.Read.class,

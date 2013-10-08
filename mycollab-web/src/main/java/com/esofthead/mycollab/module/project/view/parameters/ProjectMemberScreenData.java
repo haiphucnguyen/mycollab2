@@ -19,6 +19,13 @@ public class ProjectMemberScreenData {
 		}
 	}
 
+	public static class InviteProjectMembers extends ScreenData {
+
+		public InviteProjectMembers() {
+			super(null);
+		}
+	}
+
 	public static class Read extends ScreenData<Object> {
 
 		public Read(Object params) {

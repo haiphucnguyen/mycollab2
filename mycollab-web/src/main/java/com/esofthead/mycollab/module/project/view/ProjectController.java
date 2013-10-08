@@ -1169,24 +1169,25 @@ public class ProjectController implements IController {
 					}
 				});
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProjectMemberEvent.GotoAdd>() {
-					private static final long serialVersionUID = 1L;
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<ProjectMemberEvent.GotoInviteMembers>() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ProjectMemberEvent.GotoAdd.class;
-					}
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return ProjectMemberEvent.GotoInviteMembers.class;
+							}
 
-					@Override
-					public void handle(ProjectMemberEvent.GotoAdd event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ProjectMemberScreenData.Add data = new ProjectMemberScreenData.Add(
-								new ProjectMember());
-						projectView.gotoUsersAndGroup(data);
-					}
-				});
+							@Override
+							public void handle(
+									ProjectMemberEvent.GotoInviteMembers event) {
+								ProjectView projectView = ViewManager
+										.getView(ProjectView.class);
+								ProjectMemberScreenData.InviteProjectMembers data = new ProjectMemberScreenData.InviteProjectMembers();
+								projectView.gotoUsersAndGroup(data);
+							}
+						});
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectMemberEvent.GotoEdit>() {
