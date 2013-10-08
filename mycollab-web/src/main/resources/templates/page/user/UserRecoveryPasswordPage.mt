@@ -66,7 +66,10 @@ input[type="text"], input[type="password"]{
 			<td style="width: 600px; display: inline-block; vertical-align: top;">
 				<div id="welcomeBody" style="display:block">
 		<div style="display: block; padding: 40px 8px 8px 20px;">
-			Hello <span style="font-style:italic; font-size:14px;">$!username</span>. Please reset your password
+			<span style="font-style:italic; font-size:20px;">Choose your new password</span>
+		</div>
+		<div>
+			<hr style="width: 550px; border:0.5;">
 		</div>
 		<div style="display: block; padding: 8px 8px 8px 20px;">
 			<div>
@@ -74,17 +77,22 @@ input[type="text"], input[type="password"]{
 				<table border="0">
 				<tbody>
 				<tr>
-					<td><label for="password">Password:</label></td>
+					<td><label for="password">New password:</label></td>
+				</tr>
+				<tr>
 					<td><input id="password" maxlength="45" name="password" type="password" /></td>
-					
-					<td style="padding-left:10px;"><label for="password">Retype password:</label></td>
-					<td><input id="repassword" maxlength="45" name="rePassword" type="password" /></td>
+				</tr>
+				<tr style="padding-top:20px;">
+					<td><label for="password">Confirm new password:</label></td>
+				</tr>
+				<tr>
+					<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
 				</tr>
 				</tbody></table>
 				</form>
 			</div>
-			<div style="padding-top:10px;" align="center">
-				<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
+			<div style="padding-top:10px; padding-left:10px;">
+				<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Reset</button>
 			</div>
 		</div>
 	</div>
