@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.vaadin.addons.lazyquerycontainer.BeanQueryFactory;
 import org.vaadin.addons.lazyquerycontainer.LazyQueryContainer;
+import org.vaadin.addons.lazyquerycontainer.LazyQueryDefinition;
 import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
@@ -26,7 +27,7 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -35,7 +36,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -59,6 +59,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private final ItemTimeLoggingService itemTimeLoggingService;
 
 	private final Label lbTimeRange;
+	private EntryComponentLayout entryComponentLayout;
+	private boolean isNeedConstructLayout = true;
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(false, true, true, true);
@@ -78,93 +80,38 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				});
 		this.addComponent(this.itemTimeLoggingPanel);
 
-		// Add Entry Header ---------------
-		HorizontalLayout entryHeaderLayout = new HorizontalLayout();
-		entryHeaderLayout.setWidth("100%");
-		entryHeaderLayout.setSpacing(true);
-		entryHeaderLayout.setMargin(true);
-		entryHeaderLayout.addStyleName("timeAdd-popup");
-
-		Label datelbl = new Label("Date");
-		datelbl.setWidth("150px");
-		datelbl.addStyleName("h2");
-		entryHeaderLayout.addComponent(datelbl);
-
-		Label hoursLbl = new Label("Hours");
-		hoursLbl.setWidth("50px");
-		hoursLbl.addStyleName("h2");
-		entryHeaderLayout.addComponent(hoursLbl);
-
-		Label ticketLbl = new Label("Ticket");
-		ticketLbl.setWidth("100px");
-		ticketLbl.addStyleName("h2");
-		entryHeaderLayout.addComponent(ticketLbl);
-
-		Label descriptionLbl = new Label("Description");
-		descriptionLbl.setWidth("300px");
-		descriptionLbl.addStyleName("h2");
-		entryHeaderLayout.addComponent(descriptionLbl);
-		this.addComponent(entryHeaderLayout);
-		// Add Entry Body ------------------------
-		DateComboboxSelectionField dateField = new DateComboboxSelectionField();
-		dateField.setWidth("200px");
-		TextField hoursField = new TextField();
-		hoursField.setWidth("100px");
-
-		// TRy New Lazy Loading ----------------------
-		BeanQueryFactory<TimeTrackingLazyBeanQuery> queryFactory = new BeanQueryFactory<TimeTrackingLazyBeanQuery>(
-				TimeTrackingLazyBeanQuery.class);
-
-		Map<String, Object> queryConfiguration = new HashMap<String, Object>();
-		// queryConfiguration.put("taskService", new TaskService());
-		queryFactory.setQueryConfiguration(queryConfiguration);
-
-		LazyQueryContainer container = new LazyQueryContainer(queryFactory, 50,
-				5, true);
-		ComboBox ticketField = new ComboBox();
-		ticketField.setWidth("100px");
-		ticketField.setContainerDataSource(container);
-		ticketField
-				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
-
-		// ------------------------------------------------------
-		TextField descriptionField = new TextField();
-		descriptionField.setWidth("300px");
-
-		Button newEntryBtn = new Button("Add Entry",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-					}
-				});
-		newEntryBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-
-		HorizontalLayout entryBodyLayout = new HorizontalLayout();
-		entryBodyLayout.setSpacing(true);
-		entryBodyLayout.setMargin(true);
-		entryBodyLayout.setWidth("100%");
-		entryBodyLayout.addStyleName("timeAdd-popup");
-		entryBodyLayout.addComponent(dateField);
-		entryBodyLayout.addComponent(hoursField);
-		entryBodyLayout.addComponent(ticketField);
-		entryBodyLayout.addComponent(descriptionField);
-		entryBodyLayout.addComponent(newEntryBtn);
-		this.addComponent(entryBodyLayout);
-
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
 		final HorizontalLayout headerLayout = new HorizontalLayout();
 		headerLayout.setWidth("100%");
+		headerLayout.setSpacing(true);
 		headerWrapper.addComponent(headerLayout);
 		this.lbTimeRange = new Label("", Label.CONTENT_XHTML);
 		headerLayout.addComponent(this.lbTimeRange);
 		headerLayout.setComponentAlignment(this.lbTimeRange,
 				Alignment.MIDDLE_LEFT);
 		headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
+
+		Button addNewEntryBtn = new Button("Add entry",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						if (isNeedConstructLayout) {
+							isNeedConstructLayout = false;
+							entryComponentLayout = new EntryComponentLayout();
+							TimeTrackingListViewImpl.this
+									.addComponent(entryComponentLayout);
+						}
+					}
+				});
+		addNewEntryBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		headerLayout.addComponent(addNewEntryBtn);
+		headerLayout.setComponentAlignment(addNewEntryBtn,
+				Alignment.MIDDLE_RIGHT);
 
 		Button exportBtn = new Button("Export", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -299,5 +246,92 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.itemTimeLogginSearchCriteria = searchCriteria;
 		this.tableItem.setSearchCriteria(searchCriteria);
 		this.setTimeRange();
+	}
+
+	public class EntryComponentLayout extends AbstractView {
+		private static final long serialVersionUID = 1L;
+		private GridFormLayoutHelper gridLayout;
+
+		public EntryComponentLayout() {
+			super();
+
+			this.setWidth("100%");
+			this.setMargin(true);
+			this.setSpacing(true);
+			this.addStyleName("timeAdd-popup");
+			constructBody();
+		}
+
+		private void constructBody() {
+			Label headerLbl = new Label("Add new entry");
+			headerLbl.addStyleName("h2");
+
+			this.addComponent(headerLbl);
+			this.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
+
+			gridLayout = new GridFormLayoutHelper(2, 2);
+			gridLayout.getLayout().setMargin(true);
+			gridLayout.getLayout().setWidth("100%");
+			gridLayout.getLayout().setStyleName(UIConstants.COLORED_GRIDLAYOUT);
+
+			final BeanQueryFactory<TimeTrackingLazyBeanQuery> queryFactory = new BeanQueryFactory<TimeTrackingLazyBeanQuery>(
+					TimeTrackingLazyBeanQuery.class);
+
+			final Map<String, Object> queryConfiguration = new HashMap<String, Object>();
+			queryFactory.setQueryConfiguration(queryConfiguration);
+
+			LazyQueryDefinition definition = new LazyQueryDefinition(true, 10);
+			LazyQueryContainer container = new LazyQueryContainer(definition,
+					queryFactory);
+
+			final ComboBox ticketField = new ComboBox("", container);
+			ticketField.setNewItemsAllowed(false);
+			ticketField.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_PROPERTY);
+			ticketField.setItemCaptionPropertyId("summary");
+			ticketField.setImmediate(true);
+
+			gridLayout.addComponent(new TextField(), "Date", 0, 0, "300px");
+			gridLayout.addComponent(ticketField, "Ticket", 1, 0, "300px");
+			gridLayout.addComponent(new TextField(), "Hours", 0, 1, "300px");
+			gridLayout.addComponent(new TextField(), "Description", 1, 1,
+					"300px");
+
+			this.addComponent(gridLayout.getLayout());
+
+			HorizontalLayout controllGroupBtn = new HorizontalLayout();
+			controllGroupBtn.setSpacing(true);
+			controllGroupBtn.setMargin(true);
+
+			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
+					TimeTrackingListViewImpl.this
+							.removeComponent(entryComponentLayout);
+				}
+			});
+			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			controllGroupBtn.addComponent(cancelBtn);
+			controllGroupBtn.setComponentAlignment(cancelBtn,
+					Alignment.MIDDLE_LEFT);
+
+			Button saveBtn = new Button("Save", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			controllGroupBtn.addComponent(saveBtn);
+			controllGroupBtn.setComponentAlignment(saveBtn,
+					Alignment.MIDDLE_LEFT);
+
+			this.addComponent(controllGroupBtn);
+		}
 	}
 }
