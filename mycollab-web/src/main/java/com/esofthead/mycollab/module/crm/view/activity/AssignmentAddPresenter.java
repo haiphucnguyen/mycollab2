@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -70,15 +71,7 @@ public class AssignmentAddPresenter extends
 				task = taskService.findByPrimaryKey((Integer) data.getParams(),
 						AppContext.getAccountId());
 				if (task == null) {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.showNotification(
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					NotificationUtil.showRecordNotExistNotification();
 					return;
 				}
 			} else {
@@ -104,7 +97,8 @@ public class AssignmentAddPresenter extends
 	}
 
 	public void save(Task item) {
-		TaskService taskService = ApplicationContextUtil.getSpringBean(TaskService.class);
+		TaskService taskService = ApplicationContextUtil
+				.getSpringBean(TaskService.class);
 
 		item.setSaccountid(AppContext.getAccountId());
 		if (item.getId() == null) {

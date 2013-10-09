@@ -4,7 +4,8 @@
 <wicket:head>
 	<link rel="stylesheet" type="text/css"
 		href="static/css/signup.css?version=new" />
-	<script type="text/javascript" src="static/js/jquery.html5-placeholder-shim.js"></script>
+	<script type="text/javascript"
+		src="static/js/jquery.html5-placeholder-shim.js"></script>
 	<script type="text/javascript" src="static/js/signup.js"></script>
 </wicket:head>
 </head>
@@ -21,18 +22,30 @@
 				<div class="sig-mid-left">
 					<div class="mid-left-title">
 						<p>
-							You won't be billed unless you keep you account opent<br />
-							after your 30 - day free trial
+							You won't be billed unless you keep you account open<br /> after
+							your 30 - day free trial
 						</p>
 					</div>
 					<div wicket:id="feedback"></div>
 					<div class="sig-left-ctn">
 						<div class="sig-left-otherservices">
 							<ul>
-								<li><a wicket:id="signupFacebook"><img alt="" src="static/images/signup_facebook.png"><div class="service-title">Sign up with Facebook</div><div class="clear"></div></a></li>
-								<li><a wicket:id="signupGoogle"><img alt="" src="static/images/signup_google.png"><div class="service-title">Sign up with Google</div><div class="clear"></div></a></li>
-								<li><a wicket:id="signupYahoo"><img alt="" src="static/images/signup_yahoo.png"><div class="service-title">Sign up with Yahoo</div><div class="clear"></div></a></li>
-								<li><a wicket:id="signupLinkedIn"><img alt="" src="static/images/signup_linkedin.png"><div class="service-title">Sign up with LinkedIn</div><div class="clear"></div></a></li>
+								<li><a wicket:id="signupFacebook"><img alt=""
+										src="static/images/signup_facebook.png">
+									<div class="service-title">Sign up with Facebook</div>
+										<div class="clear"></div></a></li>
+								<li><a wicket:id="signupGoogle"><img alt=""
+										src="static/images/signup_google.png">
+									<div class="service-title">Sign up with Google</div>
+										<div class="clear"></div></a></li>
+								<li><a wicket:id="signupYahoo"><img alt=""
+										src="static/images/signup_yahoo.png">
+									<div class="service-title">Sign up with Yahoo</div>
+										<div class="clear"></div></a></li>
+								<li><a wicket:id="signupLinkedIn"><img alt=""
+										src="static/images/signup_linkedin.png">
+									<div class="service-title">Sign up with LinkedIn</div>
+										<div class="clear"></div></a></li>
 							</ul>
 							<div class="sig-lef-separator">
 								<div wicket:id="separator-text" class="separator-text">Or</div>
@@ -48,8 +61,7 @@
 								<div class="formfield">
 									<p>Subdomain</p>
 									<input id="subdomainfield" type="text"
-										wicket:id="subdomainfield" />
-									<span class="sig-subdomain">.mycollab.com</span>
+										wicket:id="subdomainfield" /> <span class="sig-subdomain">.mycollab.com</span>
 								</div>
 								<div class="formfield">
 									<p>Password</p>
@@ -79,41 +91,46 @@
 										</wicket:container>
 									</div>
 								</div>
-							
+
 								<div class="sig-left-chk">
-									<input type="checkbox" wicket:id="receiveupdatefield" name="receiveUpdate" id="receiveUpdate">
-									<label for="receiveUpdate">I want to receive Mycollab
-										updates. By Sign up, I agree to the term of <a href="#">Privacy</a>
+									<input type="checkbox" wicket:id="receiveupdatefield"
+										name="receiveUpdate" id="receiveUpdate"> <label
+										for="receiveUpdate">I want to receive MyCollab
+										updates. By sign up, I agree to the term of <a href="/privacy">Privacy</a>
 									</label>
 								</div>
-								
-								<div><a class="getback-to-normal" wicket:id="getback-to-normal">&lt;&lt;&nbsp;Normal Signup</a><input type="submit" value="Start My Trial" /><div class="clear"></div></div>
+
+								<div>
+									<a class="getback-to-normal" wicket:id="getback-to-normal">&lt;&lt;&nbsp;Normal
+										SignUp</a><input type="submit" value="Start My Trial" />
+									<div class="clear"></div>
+								</div>
 							</form>
 						</div>
 						<div class="clear"></div>
 					</div>
 					<!-- End left coll -->
 				</div>
-				
+
 				<!-- Right coll -->
 				<div class="sig-mid-right">
 					<h1>Got questions?</h1>
 					<div class="sig-right-block">
 						<h2>Where do I find more about all available plans?</h2>
 						<p>
-							You can find it here <a href="/pricing"
-								target="_blank">www.mycollab.com/pricing</a>
+							You can find it here <a href="/pricing" target="_blank">www.mycollab.com/pricing</a>
 						</p>
 					</div>
 					<div class="sig-right-block">
 						<h2>What do I need to run it?</h2>
 						<p>All you need is your web browser. We handle the rest</p>
 						<p>We officially support: Internet Explorer 8 and above (PC),
-							Firefox 1.5 and above (Mac, PC, or Linux), Safari 2 and above (Mac and PC),
-							Google Chrome, Opera.</p>
-						<p>	- Javascript must be on<br/>
-							- Cookies must be enable<br/>
-							- Minimum Monitor Resolution: 1024 x 768<br/></p>
+							Firefox 1.5 and above (Mac, PC, or Linux), Safari 2 and above
+							(Mac and PC), Google Chrome, Opera.</p>
+						<p>
+							- Javascript must be on<br /> - Cookies must be enable<br /> -
+							Minimum Monitor Resolution: 1024 x 768<br />
+						</p>
 					</div>
 				</div>
 				<!-- End right coll -->
@@ -127,8 +144,9 @@
 .mnu-pricing {
 	background-color: #77bae0 !important;
 }
-.mnu-pricing > a {
-    color: #fff !important;
+
+.mnu-pricing>a {
+	color: #fff !important;
 }
 </style>
 	</wicket:extend>

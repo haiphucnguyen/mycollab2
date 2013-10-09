@@ -37,6 +37,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
@@ -71,15 +72,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 								AppContext.getAccountId());
 
 				if (project == null) {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.showNotification(
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					NotificationUtil.showRecordNotExistNotification();
 				} else {
 					CurrentProjectVariables.setProject(project);
 					view.constructProjectHeaderPanel(project, null);

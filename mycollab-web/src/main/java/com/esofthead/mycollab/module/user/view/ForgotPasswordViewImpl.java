@@ -13,6 +13,7 @@ import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAc
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
@@ -61,8 +62,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					User user = userService.findUserByUserName(username);
 
 					if (user == null) {
-						ForgotPasswordViewImpl.this.getWindow()
-								.showNotification("User not exist!!");
+						NotificationUtil.showNotification("User not exist!!");
 						return;
 					} else {
 						String hideEmailStr = user.getEmail();
@@ -87,8 +87,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 								.getSpringBean(RelayEmailMapper.class);
 						relayEmailMapper.insert(relayEmail);
 
-						ForgotPasswordViewImpl.this.getWindow()
-								.showNotification(remindStr);
+						NotificationUtil.showNotification(remindStr);
 					}
 				}
 			});

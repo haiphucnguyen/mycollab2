@@ -12,6 +12,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Window;
 
@@ -59,18 +60,10 @@ public abstract class UrlResolver {
 		} catch (Exception e) {
 			log.error("Error while navigation", e);
 			defaultPageErrorHandler();
-			AppContext
-					.getApplication()
-					.getMainWindow()
-					.showNotification(
-							LocalizationHelper
-									.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-							Window.Notification.TYPE_HUMANIZED_MESSAGE);
+			NotificationUtil.showRecordNotExistNotification();
 		}
 	}
-	
+
 	abstract protected void defaultPageErrorHandler();
 
 	protected void handlePage(String... params) {

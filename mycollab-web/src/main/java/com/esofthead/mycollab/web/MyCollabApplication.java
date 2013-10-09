@@ -20,6 +20,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.maxmind.geoip2.DatabaseReader;
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
@@ -195,15 +196,14 @@ public class MyCollabApplication extends Application implements
 		Throwable e = event.getThrowable();
 		UserInvalidInputException invalidException = (UserInvalidInputException) getUserInvalidException(e);
 		if (invalidException != null) {
-			getMainWindow().showNotification(
-					LocalizationHelper.getMessage(
-							GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
-							invalidException.getMessage()),
+			NotificationUtil.showNotification(LocalizationHelper.getMessage(
+					GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
+					invalidException.getMessage()),
 					Notification.TYPE_WARNING_MESSAGE);
 			currentThrowable = (invalidException instanceof SubDomainNotExistException) ? e
 					: null;
 		} else {
-			getMainWindow()
+			NotificationUtil
 					.showNotification(
 							LocalizationHelper
 									.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),

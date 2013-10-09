@@ -179,7 +179,8 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 					saveSearchResultService.saveWithSession(searchResult,
 							AppContext.getUsername());
-					getWindow().showNotification("Query saved successfully.");
+					NotificationUtil
+							.showNotification("Query is saved successfully.");
 					saveSearchValue.setValue("");
 
 					BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox
@@ -230,7 +231,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 					saveSearchResultService.updateWithSession(searchResult,
 							AppContext.getUsername());
-					getWindow().showNotification("Updated successfully.");
+					NotificationUtil.showNotification("Updated successfully.");
 
 					beanData.removeItem(itemId);
 					beanData.addBean(searchResult);
@@ -269,8 +270,8 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 																.getUsername(),
 														AppContext
 																.getAccountId());
-										getWindow().showNotification(
-												"Delete successfully.");
+										NotificationUtil
+												.showNotification("Delete successfully.");
 
 										BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox
 												.getBeanIteam();

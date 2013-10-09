@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -35,7 +36,8 @@ public class ContactListPresenter
 
 	public ContactListPresenter() {
 		super(ContactListView.class);
-		contactService = ApplicationContextUtil.getSpringBean(ContactService.class);
+		contactService = ApplicationContextUtil
+				.getSpringBean(ContactService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -54,12 +56,9 @@ public class ContactListPresenter
 					protected void onSelectExtra(String id, String caption) {
 						if ("mail".equals(id)) {
 							if (isSelectAll) {
-								AppContext
-										.getApplication()
-										.getMainWindow()
-										.showNotification(
-												LocalizationHelper
-														.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
+								NotificationUtil.showNotification(LocalizationHelper
+										.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
+
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 								List<SimpleContact> tableData = view
