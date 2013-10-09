@@ -59,11 +59,12 @@ public class AppContext implements Serializable {
 
 	private String subdomain;
 	private Integer accountId = null;
+	private String sessionId;
 
 	public AppContext(Application application) {
 		WebApplicationContext context = (WebApplicationContext) application
 				.getContext();
-		String sessionId = context.getHttpSession().getId();
+		sessionId = context.getHttpSession().getId();
 		variables = LocalCacheManager.getCache(sessionId);
 
 		GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
@@ -300,8 +301,9 @@ public class AppContext implements Serializable {
 
 	public static Object getVariable(String key) {
 		if (getInstance() != null) {
-			log.debug("Get key {} from cache {}", key,
-					getInstance().variables.getName());
+			log.debug("Get key {} in session {} from cache {}",
+					new String[] { key, getInstance().sessionId,
+							getInstance().variables.getName() });
 			return getInstance().variables.get(key);
 		}
 

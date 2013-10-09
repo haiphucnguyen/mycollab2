@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Embedding a Vaadin Application in HTML Page</title>
+
+<!-- Define the application configuration -->
+<script type="text/javascript">
+	var vaadin = {
+		vaadinConfigurations : {
+			mycollab : {
+				appUri : '/',
+				pathInfo : '/',
+				themeUri : '/VAADIN/themes/mycollab',
+				versionInfo : {
+					vaadinVersion : "6.8.12",
+					applicationVersion : "NONVERSIONED"
+				}
+			}
+		}
+	};
+</script>
+
+<!-- Load the widget set, that is, the Client-Side Engine -->
+<script language='javascript'
+	src='/VAADIN/widgetsets/com.esofthead.mycollab.widgetset.MyCollabWidgetSet/com.esofthead.mycollab.widgetset.MyCollabWidgetSet.nocache.js'></script>
+
+<!-- Load the style sheet -->
+<link rel="stylesheet" type="text/css"
+	href="/VAADIN/themes/mycollab/styles.css" />
+</head>
+
+<!-- GWT requires an invisible history frame is needed for -->
+<!-- page/fragment history in the browser                  -->
+<iframe tabIndex="-1" id="__gwt_historyFrame"
+	style="position:absolute;width:0;height:0;border:0;overflow:hidden;"
+	src="javascript:false"></iframe>
+
+<!-- So here comes the div element in which the Vaadin -->
+<!-- application is embedded.                          -->
+<div id="mycollab"
+	class="v-app v-theme-mycollab v-app-MyCollabApplication"  style="height: 800px; width: 1428px;"></div>
+</div>
+</html>

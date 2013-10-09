@@ -30,7 +30,7 @@ public class NotificationUtil {
 						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
 						.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
-				Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				Window.Notification.TYPE_WARNING_MESSAGE);
 	}
 
 	public static void showGotoFirstRecordNotification() {
