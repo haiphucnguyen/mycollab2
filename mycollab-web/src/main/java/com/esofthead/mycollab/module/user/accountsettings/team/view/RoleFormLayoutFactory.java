@@ -31,7 +31,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final AddViewLayout userAddLayout = new AddViewLayout(this.title,
-				MyCollabResource.newResource("icons/48/user/group.png"));
+				MyCollabResource.newResource("icons/22/user/group.png"));
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {

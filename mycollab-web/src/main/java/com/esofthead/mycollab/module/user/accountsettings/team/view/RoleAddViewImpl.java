@@ -124,9 +124,6 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 				crmFormHelper.getLayout().setWidth("100%");
 				crmFormHelper.getLayout().addStyleName(
 						UIConstants.COLORED_GRIDLAYOUT);
-				final Depot crmHeader = new Depot(
-						"Customer Relationship Management",
-						crmFormHelper.getLayout());
 
 				for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
 					PermissionDefItem permissionDefItem = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
