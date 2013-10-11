@@ -76,6 +76,7 @@ public class SignInPage extends BasePage {
                     subdomainList.removeAll();
                     helpText.setDefaultModel(new Model<String>(""));
                     String emailString = email.getModelObject();
+                    target.add(feedbackPanel);
 
                     Response response = userResource
                             .getSubdomainsOfUser(emailString);
@@ -87,10 +88,6 @@ public class SignInPage extends BasePage {
                             String[].class);
 
                     if (subdomains == null || subdomains.length == 0) {
-                        // ErrorReportingUtils
-                        // .reportError("Can not find subdomain of user "
-                        // + emailString);
-                        target.add(feedbackPanel);
                         this.error("Can not find subdomain of user "
                                 + emailString);
                     } else if (subdomains.length == 1) {
