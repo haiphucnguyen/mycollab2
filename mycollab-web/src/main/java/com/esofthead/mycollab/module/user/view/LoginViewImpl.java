@@ -29,7 +29,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 		this.addComponent(new LoginForm());
 	}
 
-	private class LoginForm extends Form {
+	public class LoginForm extends Form {
 
 		private static final long serialVersionUID = 1L;
 		private final TextField usernameField;

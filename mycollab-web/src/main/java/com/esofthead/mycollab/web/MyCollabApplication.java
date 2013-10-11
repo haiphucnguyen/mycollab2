@@ -63,10 +63,10 @@ public class MyCollabApplication extends Application implements
 
 	@Override
 	public void init() {
+		setInstance(this);
 		isInitializeApp = true;
 		setTheme("mycollab");
 		currentContext = new AppContext(this);
-		currentContext.onInit();
 		try {
 			currentContext.initDomain(initialSubDomain);
 		} catch (Exception e) {
@@ -75,7 +75,6 @@ public class MyCollabApplication extends Application implements
 			return;
 		}
 		this.setMainWindow(new MainWindowContainer());
-		setInstance(this);
 	}
 
 	public AppContext getSessionData() {

@@ -7,9 +7,11 @@ import java.util.Set;
 import net.sf.extcos.ComponentQuery;
 import net.sf.extcos.ComponentScanner;
 
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -31,7 +33,11 @@ class ViewManagerImpl extends ViewManager {
 		});
 
 		log.info("Scan packages to search view. There are "
-				+ viewClasses.size() + " views are found");
+				+ viewClasses.size()
+				+ " views are found in loader "
+				+ WebAppContext.getCurrentWebAppContext().getClassLoader()
+						.getParent() + "---"
+				+ Thread.currentThread().getContextClassLoader());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -53,6 +59,7 @@ class ViewManagerImpl extends ViewManager {
 			} else {
 				for (Class<?> classInstance : viewClasses) {
 					if (viewClass.isAssignableFrom(classInstance)) {
+
 						value = (T) classInstance.newInstance();
 						viewMap.put(viewClass, value);
 						log.debug("Get implementation of view "
@@ -95,12 +102,13 @@ class ViewManagerImpl extends ViewManager {
 					}
 				}
 
-				throw new RuntimeException(
+				throw new MyCollabException(
 						"Can not find implementation of view class: "
 								+ viewClass.getName());
 			}
-		} catch (Exception e) {
-			throw new RuntimeException("Can not create view class: "
+		} catch (Throwable e) {
+			e.printStackTrace();
+			throw new MyCollabException("Can not create view class: "
 					+ viewClass.getName(), e);
 		}
 	}

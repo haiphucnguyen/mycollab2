@@ -74,9 +74,7 @@ public class AppContext implements Serializable {
 				return AppContext.getAccountId();
 			}
 		});
-	}
 
-	public void onInit() {
 		EventBus.getInstance()
 				.addListener(
 						new ApplicationEventListener<SessionEvent.UserAvatarChangeEvent>() {

@@ -13,7 +13,7 @@
     <properties>
         <vaadinVersion>6.8.12</vaadinVersion>
         <gwtversion>2.3.0</gwtversion>
-        <jettyVersion>8.1.11.v20130520</jettyVersion>
+        <jettyVersion>8.1.13.v20130916</jettyVersion>
     </properties>
 
     <dependencies>
@@ -231,7 +231,6 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1-b01</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -327,6 +326,49 @@
             <version>${springVersion}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jettyVersion}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.orbit</groupId>
+                    <artifactId>javax.servlet</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-annotations</artifactId>
+            <version>${jettyVersion}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.orbit</groupId>
+                    <artifactId>javax.transaction</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.orbit</groupId>
+                    <artifactId>javax.annotation</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.orbit</groupId>
+                    <artifactId>javax.mail.glassfish</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
+
         <!-- GWT dependency -->
         <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
             <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
@@ -410,29 +452,30 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
                 <executions>
                     <execution>
-                        <phase>compile</phase>
-                        <configuration>
-                            <target>
-                                <copy verbose="true" overwrite="true"
-                                    force="true"
-                                    file="${basedir}/src/main/resources/resources.properties-live"
-                                    tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" />
-                                <copy verbose="true" overwrite="true"
-                                    force="true"
-                                    file="${basedir}/src/main/resources/log4j.properties-live"
-                                    tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/log4j.properties" />
-                            </target>
-                        </configuration>
                         <goals>
-                            <goal>run</goal>
+                            <goal>java</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <classpathScope>runtime</classpathScope>
+                    <mainClass>com.esofthead.mycollab.jetty.ServerRunner</mainClass>
+                </configuration>
             </plugin>
+            <!-- <plugin> <artifactId>maven-antrun-plugin</artifactId> <version>1.7</version> 
+                <executions> <execution> <phase>compile</phase> <configuration> <target> 
+                <copy verbose="true" overwrite="true" force="true" file="${basedir}/src/main/resources/resources.properties-live" 
+                tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" 
+                /> <copy verbose="true" overwrite="true" force="true" file="${basedir}/src/main/resources/log4j.properties-live" 
+                tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/log4j.properties" 
+                /> </target> </configuration> <goals> <goal>run</goal> </goals> </execution> 
+                </executions> </plugin> -->
+
             <!-- <plugin> <groupId>com.github.wvengen</groupId> <artifactId>proguard-maven-plugin</artifactId> 
                 <executions> <execution> <phase>package</phase> <goals> <goal>proguard</goal> 
                 </goals> </execution> </executions> <configuration> <proguardVersion>4.9</proguardVersion> 

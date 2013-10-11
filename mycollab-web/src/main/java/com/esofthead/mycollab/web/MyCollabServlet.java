@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.artur.icepush.ICEPushServlet;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.Application;
 import com.vaadin.terminal.DownloadStream;
 import com.vaadin.terminal.gwt.server.AbstractApplicationServlet;
@@ -28,10 +27,10 @@ import com.vaadin.ui.Window;
 public class MyCollabServlet extends ICEPushServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String ATTRIBUTE_APPLICATION_ID = MyCollabServlet.class
+	public static final String ATTRIBUTE_APPLICATION_ID = MyCollabServlet.class
 			.getName() + ".applicationId";
 
-	private static final String ATTRIBUTE_FORCE_APPLICATION_ID = MyCollabServlet.class
+	public static final String ATTRIBUTE_FORCE_APPLICATION_ID = MyCollabServlet.class
 			.getName() + ".forceApplicationId";
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -98,8 +97,6 @@ public class MyCollabServlet extends ICEPushServlet {
 		// there's an application id in the uri then we let it pass through
 		// because it's probably a request for
 		// downloading an application resource.
-		logger.debug("Request type: " + getRequestType(request) + "---"
-				+ getApplicationIdFromRequestPath(request));
 
 		if (getRequestType(request) == RequestType.OTHER
 				&& getApplicationIdFromRequestPath(request) == null) {
@@ -109,7 +106,8 @@ public class MyCollabServlet extends ICEPushServlet {
 			String applicationId = generateNewApplicationId();
 
 			logger.debug("Suggesting application id: " + applicationId
-					+ " for request to " + request.getRequestURI());
+					+ " for request to " + request.getRequestURI() + "  "
+					+ MyCollabApplication.getInstance());
 
 			// If the 'restartApplication' parameter is present we force the
 			// client to start using this application id
@@ -122,8 +120,9 @@ public class MyCollabServlet extends ICEPushServlet {
 			return;
 		}
 
-		logger.debug("Serving request for " + request.getRequestURI());
-
+		logger.debug("Serving request for " + request.getRequestURI() + "--"
+				+ request.getSession().getId() + "---servlet instance - "
+				+ this);
 		super.service(request, response);
 	}
 
@@ -146,49 +145,27 @@ public class MyCollabServlet extends ICEPushServlet {
 			HttpServletRequest request) throws ServletException, IOException {
 		super.writeAjaxPageHtmlVaadinScripts(window, themeName, application,
 				page, appUrl, themeUri, appId, request);
-		try {
-			String applicationId = (String) request
-					.getAttribute(ATTRIBUTE_APPLICATION_ID);
-			boolean forceApplicationId = (Boolean) request
-					.getAttribute(ATTRIBUTE_FORCE_APPLICATION_ID);
 
-			page.write("<script type=\"text/javascript\">\n");
-			page.write("//<![CDATA[\n");
+		String applicationId = (String) request
+				.getAttribute(ATTRIBUTE_APPLICATION_ID);
+		boolean forceApplicationId = (Boolean) request
+				.getAttribute(ATTRIBUTE_FORCE_APPLICATION_ID);
 
-			if (forceApplicationId) {
-				page.write("  window.name = \"" + applicationId + "\";\n");
-			} else {
-				page.write("  if (!window.name) {\n");
-				page.write("    window.name = \"" + applicationId + "\";\n");
-				page.write("  }\n");
-			}
+		page.write("<script type=\"text/javascript\">\n");
+		page.write("//<![CDATA[\n");
 
-			page.write("  vaadin.vaadinConfigurations[\"" + appId
-					+ "\"][\"appUri\"] += \"/\" + window.name;\n");
-			page.write("//]]>\n</script>\n");
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.debug("Request type: " + getRequestType(request) + "---"
-					+ getApplicationIdFromRequestPath(request) + "----"
-					+ isUIDLRequest(request));
-			throw new MyCollabException(e);
-		}
-	}
-
-	private boolean isUIDLRequest(HttpServletRequest request) {
-		String pathInfo = getRequestPathInfo(request);
-
-		if (pathInfo == null) {
-			return false;
+		if (forceApplicationId) {
+			page.write("  window.name = \"" + applicationId + "\";\n");
+		} else {
+			page.write("  if (!window.name) {\n");
+			page.write("    window.name = \"" + applicationId + "\";\n");
+			page.write("  }\n");
 		}
 
-		String compare = AJAX_UIDL_URI;
+		page.write("  vaadin.vaadinConfigurations[\"" + appId
+				+ "\"][\"appUri\"] += \"/\" + window.name;\n");
+		page.write("//]]>\n</script>\n");
 
-		if (pathInfo.startsWith(compare + "/") || pathInfo.endsWith(compare)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
