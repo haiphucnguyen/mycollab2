@@ -120,9 +120,6 @@ public class MyCollabServlet extends ICEPushServlet {
 			return;
 		}
 
-		logger.debug("Serving request for " + request.getRequestURI() + "--"
-				+ request.getSession().getId() + "---servlet instance - "
-				+ this);
 		super.service(request, response);
 	}
 

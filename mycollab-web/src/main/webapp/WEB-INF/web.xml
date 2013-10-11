@@ -12,9 +12,6 @@
         <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
     </listener>
 
-    <!-- <listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
-        </listener> -->
-
     <listener>
         <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
     </listener>
@@ -113,6 +110,56 @@
         <servlet-name>velocity</servlet-name>
         <url-pattern>/templates/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>aliases</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>acceptRanges</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>dirAllowed</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>welcomeServlets</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>redirectWelcome</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxCacheSize</param-name>
+            <param-value>256000000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxCachedFileSize</param-name>
+            <param-value>200000000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxCachedFiles</param-name>
+            <param-value>2048</param-value>
+        </init-param>
+        <init-param>
+            <param-name>gzip</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>useFileMappedBuffer</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- <init-param> <param-name>resourceCache</param-name> <param-value>resourceCache</param-value> 
+            </init-param> -->
+        <!-- <init-param> <param-name>cacheControl</param-name> <param-value>max-age=3600,public</param-value> 
+            </init-param> -->
+        <load-on-startup>0</load-on-startup>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -225,7 +272,7 @@
         <servlet-name>acceptUserInvitationServlet</servlet-name>
         <url-pattern>/user/confirm_invite/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>AcceptMemberInvitationServlet</display-name>
         <servlet-name>acceptMemberInvitationServlet</servlet-name>
@@ -236,7 +283,7 @@
         <servlet-name>acceptMemberInvitationServlet</servlet-name>
         <url-pattern>/project/member/invitation/confirm_invite/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>DenyMemberInvitationFeedbackServlet</display-name>
         <servlet-name>denyMemberInvitationFeedbackServlet</servlet-name>
@@ -247,7 +294,7 @@
         <servlet-name>denyMemberInvitationFeedbackServlet</servlet-name>
         <url-pattern>/project/member/feedback/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>DenyMemberInvitationServlet</display-name>
         <servlet-name>denyMemberInvitationServlet</servlet-name>
@@ -258,7 +305,7 @@
         <servlet-name>denyMemberInvitationServlet</servlet-name>
         <url-pattern>/project/member/invitation/deny_invite/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>AcceptMemberInvitationCreateAccountServlet</display-name>
         <servlet-name>acceptMemberInvitationCreateAccountServlet</servlet-name>

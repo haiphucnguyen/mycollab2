@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 public class CaseListPresenter extends
 		CrmGenericListPresenter<CaseListView, CaseSearchCriteria, SimpleCase>
@@ -46,7 +47,9 @@ public class CaseListPresenter extends
 						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
 							if (isSelectAll) {
 								NotificationUtil.showNotification(LocalizationHelper
-										.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
+										.getMessage(
+												WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS,
+												Window.Notification.TYPE_WARNING_MESSAGE));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 								List<SimpleCase> tableData = view

@@ -55,6 +55,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -465,8 +466,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		if (parentFolder != null) {
 			gotoFileMainViewPage((Folder) parentFolder);
 		} else {
-			String message = (res instanceof Folder) ? "Folder's location has moved, Please review activity-logs for more informations."
-					: "File's location has moved, Please review activity-logs for more informations.";
+			String message = (res instanceof Folder) ? "Folder's location has been moved successfully"
+					: "File's location has been moved successfully";
 			NotificationUtil.showNotification(message);
 		}
 	}
@@ -945,7 +946,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								boolean checkingError = checkValidFolderName(folderName);
 								if (checkingError) {
 									NotificationUtil
-											.showNotification("Please enter valid folder-name except any follow characters : <>:&/\\|?*&");
+											.showNotification(
+													"Please enter valid folder name except any follow characters : <>:&/\\|?*&",
+													Window.Notification.TYPE_WARNING_MESSAGE);
 									return;
 								}
 								ExternalFolder res = (ExternalFolder) externalResourceService

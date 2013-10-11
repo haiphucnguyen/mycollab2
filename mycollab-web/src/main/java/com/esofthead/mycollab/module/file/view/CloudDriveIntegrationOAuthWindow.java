@@ -166,7 +166,9 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 									.trim();
 							if (name.equals("")) {
 								NotificationUtil
-										.showNotification("Please enter folter name");
+										.showNotification(
+												"Please enter folder name",
+												Window.Notification.TYPE_WARNING_MESSAGE);
 								return;
 							}
 							ExternalDrive externalDrive = new ExternalDrive();
