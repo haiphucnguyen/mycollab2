@@ -4787,6 +4787,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     font-weight: bold;
 }
 
+.v-button-caption-bool{
+	font-size: 13px;
+	font-weight: bold;
+}
+
 /* Activity Stream Image's alignment fix */
 .stream-wrapper .v-label img {
     display: inline-block;
