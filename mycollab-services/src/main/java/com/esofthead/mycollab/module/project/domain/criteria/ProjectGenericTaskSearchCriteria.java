@@ -24,6 +24,8 @@ public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
 
 	private SearchField isOpenned;
 
+	private StringSearchField name;
+
 	public NumberSearchField getProjectId() {
 		return projectId;
 	}
@@ -47,4 +49,13 @@ public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
 	public void setIsOpenned(SearchField isOpenned) {
 		this.isOpenned = isOpenned;
 	}
+
+	public StringSearchField getName() {
+		return name;
+	}
+
+	public void setName(StringSearchField name) {
+		this.name = name;
+	}
+
 }

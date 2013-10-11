@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTaskCount;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 
@@ -32,6 +33,10 @@ public interface ProjectGenericTaskMapper extends
 			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
 	List<ProjectGenericTaskCount> findPagableTaskCountListByCriteria(
+			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria,
+			RowBounds rowBounds);
+
+	List<ProjectGenericTask> findPagableBugAndTaskByCriteria(
 			@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria,
 			RowBounds rowBounds);
 }

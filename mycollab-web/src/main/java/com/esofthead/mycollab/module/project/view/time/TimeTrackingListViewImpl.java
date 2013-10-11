@@ -1,34 +1,40 @@
 package com.esofthead.mycollab.module.project.view.time;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
-import org.vaadin.addons.lazyquerycontainer.BeanQueryFactory;
-import org.vaadin.addons.lazyquerycontainer.LazyQueryContainer;
-import org.vaadin.addons.lazyquerycontainer.LazyQueryDefinition;
 import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
+import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -41,6 +47,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -109,6 +116,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					}
 				});
 		addNewEntryBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		addNewEntryBtn.addStyleName("v-button-caption-bool");
 		headerLayout.addComponent(addNewEntryBtn);
 		headerLayout.setComponentAlignment(addNewEntryBtn,
 				Alignment.MIDDLE_RIGHT);
@@ -256,51 +264,46 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			super();
 
 			this.setWidth("100%");
-			this.setMargin(true);
-			this.setSpacing(true);
 			this.addStyleName("timeAdd-popup");
 			constructBody();
 		}
 
 		private void constructBody() {
 			Label headerLbl = new Label("Add new entry");
-			headerLbl.addStyleName("h2");
+			headerLbl.setStyleName("popup-header");
+			headerLbl.setHeight("34px");
 
 			this.addComponent(headerLbl);
 			this.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
 
 			gridLayout = new GridFormLayoutHelper(2, 2);
-			gridLayout.getLayout().setMargin(true);
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setStyleName(UIConstants.COLORED_GRIDLAYOUT);
+			gridLayout.getLayout().setMargin(false);
 
-			final BeanQueryFactory<TimeTrackingLazyBeanQuery> queryFactory = new BeanQueryFactory<TimeTrackingLazyBeanQuery>(
-					TimeTrackingLazyBeanQuery.class);
+			final SubclassComboBox ticketComboBox = new SubclassComboBox();
+			ticketComboBox.setImmediate(true);
+			ticketComboBox.setNullSelectionAllowed(false);
 
-			final Map<String, Object> queryConfiguration = new HashMap<String, Object>();
-			queryFactory.setQueryConfiguration(queryConfiguration);
+			final TextField descriptionField = new TextField();
+			final TextField hourField = new TextField();
 
-			LazyQueryDefinition definition = new LazyQueryDefinition(true, 10);
-			LazyQueryContainer container = new LazyQueryContainer(definition,
-					queryFactory);
-
-			final ComboBox ticketField = new ComboBox("", container);
-			ticketField.setNewItemsAllowed(false);
-			ticketField.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_PROPERTY);
-			ticketField.setItemCaptionPropertyId("summary");
-			ticketField.setImmediate(true);
-
-			gridLayout.addComponent(new TextField(), "Date", 0, 0, "300px");
-			gridLayout.addComponent(ticketField, "Ticket", 1, 0, "300px");
-			gridLayout.addComponent(new TextField(), "Hours", 0, 1, "300px");
-			gridLayout.addComponent(new TextField(), "Description", 1, 1,
+			final DateField dateField = new DateField();
+			gridLayout.addComponent(dateField, "Date", 0, 0, "300px");
+			gridLayout.addComponent(ticketComboBox, "Ticket", 1, 0, "300px");
+			gridLayout.addComponent(hourField, "Hours", 0, 1, "300px");
+			gridLayout.addComponent(descriptionField, "Description", 1, 1,
 					"300px");
 
 			this.addComponent(gridLayout.getLayout());
 
+			HorizontalLayout bottomWapper = new HorizontalLayout();
+			bottomWapper.setWidth("100%");
 			HorizontalLayout controllGroupBtn = new HorizontalLayout();
 			controllGroupBtn.setSpacing(true);
 			controllGroupBtn.setMargin(true);
+			bottomWapper.addComponent(controllGroupBtn);
+			bottomWapper.setStyleName("popup-groupBtn");
 
 			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -313,8 +316,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				}
 			});
 			cancelBtn.addStyleName(UIConstants.THEME_LINK);
-			controllGroupBtn.addComponent(cancelBtn);
-			controllGroupBtn.setComponentAlignment(cancelBtn,
+			UiUtils.addComponent(controllGroupBtn, cancelBtn,
 					Alignment.MIDDLE_LEFT);
 
 			Button saveBtn = new Button("Save", new Button.ClickListener() {
@@ -322,16 +324,117 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					// TODO Auto-generated method stub
+					ProjectGenericTask projectGenericTask = (ProjectGenericTask) ticketComboBox
+							.getValue();
+					if (projectGenericTask == null) {
+						getWindow().showNotification("Please choose ticket");
+						return;
+					}
+					try {
+						Double hourValue = Double
+								.parseDouble((String) hourField.getValue());
+						ItemTimeLogging item = new ItemTimeLogging();
+						item.setNote((String) descriptionField.getValue());
+						if (projectGenericTask.getType().equals("Bug")) {
+							item.setType("Project-Bug");
+						} else if (projectGenericTask.getType().equals("Task")) {
+							item.setType("Project-Task");
+						}
+						item.setTypeid(projectGenericTask.getTypeId());
+						item.setProjectid(projectGenericTask.getProjectId());
+						item.setSaccountid(AppContext.getAccountId());
+						item.setCreatedtime((Date) dateField.getValue());
+						item.setLogvalue(hourValue);
+						item.setLoguser(AppContext.getUsername());
+						TimeTrackingListViewImpl.this.itemTimeLoggingService
+								.saveWithSession(item, AppContext.getUsername());
 
+						TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
+						TimeTrackingListViewImpl.this
+								.removeComponent(entryComponentLayout);
+						setSearchCriteria(itemTimeLogginSearchCriteria);
+					} catch (IllegalArgumentException e) {
+						getWindow().showNotification(
+								"Please input correct hours");
+					} catch (Exception e) {
+						throw new MyCollabException(e);
+					}
 				}
 			});
 			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-			controllGroupBtn.addComponent(saveBtn);
-			controllGroupBtn.setComponentAlignment(saveBtn,
+			UiUtils.addComponent(controllGroupBtn, saveBtn,
 					Alignment.MIDDLE_LEFT);
 
-			this.addComponent(controllGroupBtn);
+			this.addComponent(bottomWapper);
+		}
+
+		public class SubclassComboBox extends ComboBox {
+			private static final long serialVersionUID = 1L;
+
+			private String oldText;
+
+			public SubclassComboBox() {
+				super();
+				this.setImmediate(true);
+				this.setNullSelectionAllowed(false);
+				this.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_EXPLICIT);
+			}
+
+			@Override
+			public void changeVariables(Object source, Map variables) {
+				String filterString = (String) variables.get("filter");
+				if (filterString != null && filterString.trim().length() > 0) {
+					if (oldText == null)
+						oldText = filterString;
+					else {
+						if (oldText.equals(filterString))
+							return;
+						else
+							oldText = filterString;
+					}
+					items.removeAllItems();
+
+					ProjectGenericTaskService service = ApplicationContextUtil
+							.getSpringBean(ProjectGenericTaskService.class);
+					ProjectGenericTaskSearchCriteria criteria = new ProjectGenericTaskSearchCriteria();
+					criteria.setName(new StringSearchField(oldText));
+					SearchRequest<ProjectGenericTaskSearchCriteria> request = new SearchRequest<ProjectGenericTaskSearchCriteria>(
+							criteria, 0, Integer.MAX_VALUE);
+					List<ProjectGenericTask> lst = service
+							.findPagableBugAndTaskByCriteria(request);
+					for (ProjectGenericTask projectGenericTask : lst) {
+						items.addItem(projectGenericTask);
+						SubclassComboBox.this.setItemCaption(
+								projectGenericTask,
+								projectGenericTask.getName());
+						if (projectGenericTask.getType().equals("Bug")) {
+							this.setItemIcon(
+									projectGenericTask,
+									MyCollabResource
+											.newResource("icons/16/project/bug.png"));
+						} else if (projectGenericTask.getType().equals("Task")) {
+							this.setItemIcon(
+									projectGenericTask,
+									MyCollabResource
+											.newResource("icons/16/project/task.png"));
+						}
+					}
+				}
+				super.changeVariables(source, variables);
+			}
+
+			protected List<?> getOptionsWithFilter(boolean needNullSelectOption) {
+				@SuppressWarnings("unchecked")
+				List<Object> options = (List<Object>) super
+						.getOptionsWithFilter(needNullSelectOption);
+
+				if (getValue() != null && options != null && options.size() > 0) {
+					options.add(0, getValue());
+				}
+
+				return options;
+			}
+
 		}
 	}
 }
