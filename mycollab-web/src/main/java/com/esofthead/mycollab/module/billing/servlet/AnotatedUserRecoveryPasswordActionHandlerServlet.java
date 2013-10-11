@@ -19,7 +19,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
-@Component("userRecoveryPasswordActionHandlerServlet")
+@Component("updateUserPasswordServlet")
 public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 		HttpRequestHandler {
 

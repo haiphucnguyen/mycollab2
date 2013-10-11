@@ -15,11 +15,13 @@ import org.vaadin.easyuploads.SingleFileUploadField;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.CSVBeanFieldComboBox;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.iexporter.CSVImportEntityProcess;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
@@ -125,8 +127,10 @@ public abstract class EntityImportWindow<E> extends Window {
 					try {
 						contentStream = uploadField.getContentAsStream();
 					} catch (Exception e) {
-						NotificationUtil
-								.showNotification("It seems you did not attach file yet!");
+						NotificationUtil.showNotification(
+								LocalizationHelper
+										.getMessage(GenericI18Enum.NOT_ATTACH_FILE_WARNING),
+								Window.Notification.TYPE_WARNING_MESSAGE);
 					}
 					if (contentStream != null) {
 						String filename = uploadField.getFileName();
@@ -234,11 +238,14 @@ public abstract class EntityImportWindow<E> extends Window {
 									}
 								}
 							});
+
 							uploadFieldVerticalLayout.addComponent(uploadField,
 									uploadFieldIndex);
 
-							NotificationUtil
-									.showNotification("Please choose supported files.");
+							NotificationUtil.showNotification(LocalizationHelper
+									.getMessage(
+											GenericI18Enum.CHOOSE_SUPPORT_FILE_TYPES_WARNING,
+											Window.Notification.TYPE_WARNING_MESSAGE));
 
 						}
 					}

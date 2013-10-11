@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 
 /**
@@ -103,7 +104,7 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	@Override
 	public void massRemoveWithSession(List<K> primaryKeys, String username,
 			int accountId) {
-		throw new RuntimeException("Sub classes must override before call");
+		throw new MyCollabException("Sub classes must override before call");
 	}
 
 	@Override

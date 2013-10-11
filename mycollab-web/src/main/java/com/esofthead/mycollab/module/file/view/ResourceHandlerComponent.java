@@ -272,8 +272,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					AppContext.getApplication().getMainWindow()
 							.open(downloadResource, "_blank");
 				} else {
-					NotificationUtil
-							.showNotification("Please choose items to download.");
+					NotificationUtil.showNotification(
+							"Please choose at least one item to download.",
+							Window.Notification.TYPE_WARNING_MESSAGE);
 				}
 			}
 		});
@@ -296,8 +297,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					ResourceHandlerComponent.this.getWindow().addWindow(
 							moveResourceWindow);
 				} else {
-					NotificationUtil
-							.showNotification("Please select items to move");
+					NotificationUtil.showNotification(
+							"Please select item to move",
+							Window.Notification.TYPE_WARNING_MESSAGE);
 				}
 			}
 		});
@@ -318,7 +320,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					public void buttonClick(ClickEvent event) {
 						if (selectedResourcesList.size() == 0) {
 							NotificationUtil
-									.showNotification("Please select items to delete");
+									.showNotification(
+											"Please select at least one item to delete",
+											Window.Notification.TYPE_WARNING_MESSAGE);
 						} else {
 							deleteResourceAction();
 						}
@@ -413,7 +417,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 										}
 
 										NotificationUtil
-												.showNotification("Delete successfully.");
+												.showNotification("Delete content successfully.");
 										ResourceHandlerComponent.this.selectedResourcesList = new ArrayList<Resource>();
 									}
 								}
@@ -1026,7 +1030,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 								Matcher matcher = pattern.matcher(folderVal);
 								if (matcher.find()) {
 									NotificationUtil
-											.showNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
+											.showNotification(
+													"Please enter valid folder name except any follow characters : <>:&/\\|?*&",
+													Window.Notification.TYPE_WARNING_MESSAGE);
 									return;
 								}
 
@@ -1150,7 +1156,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 													.matcher(file.getName());
 											if (matcher.find()) {
 												NotificationUtil
-														.showNotification("Please upload valid file-name except any follow characters : <>:&/\\|?*&");
+														.showNotification(
+																"Please upload valid file-name except any follow characters : <>:&/\\|?*&",
+																Window.Notification.TYPE_WARNING_MESSAGE);
 												return;
 											}
 										}

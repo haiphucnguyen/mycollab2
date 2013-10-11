@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.web.AppContext;
 
 public class PresenterResolver {
@@ -22,6 +23,7 @@ public class PresenterResolver {
 			presenterMap = new HashMap<Class<?>, Object>();
 			AppContext.putVariable(PRESENTER_VAL, presenterMap);
 		}
+		
 		P value = (P) presenterMap.get(presenterClass);
 		if (value == null) {
 			try {
@@ -29,7 +31,7 @@ public class PresenterResolver {
 				presenterMap.put(presenterClass, value);
 				return value;
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				throw new MyCollabException(e);
 			}
 		} else {
 			return value;

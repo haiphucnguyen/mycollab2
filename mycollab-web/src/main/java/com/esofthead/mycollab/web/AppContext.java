@@ -35,9 +35,6 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
 
@@ -59,11 +56,12 @@ public class AppContext implements Serializable {
 
 	private String subdomain;
 	private Integer accountId = null;
+	private String sessionId;
 
 	public AppContext(Application application) {
 		WebApplicationContext context = (WebApplicationContext) application
 				.getContext();
-		String sessionId = context.getHttpSession().getId();
+		sessionId = context.getHttpSession().getId();
 		variables = LocalCacheManager.getCache(sessionId);
 
 		GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
@@ -73,9 +71,7 @@ public class AppContext implements Serializable {
 				return AppContext.getAccountId();
 			}
 		});
-	}
 
-	public void onInit() {
 		EventBus.getInstance()
 				.addListener(
 						new ApplicationEventListener<SessionEvent.UserAvatarChangeEvent>() {
@@ -300,8 +296,9 @@ public class AppContext implements Serializable {
 
 	public static Object getVariable(String key) {
 		if (getInstance() != null) {
-			log.debug("Get key {} from cache {}", key,
-					getInstance().variables.getName());
+			log.debug("Get key {} in session {} from cache {}",
+					new String[] { key, getInstance().sessionId,
+							getInstance().variables.getName() });
 			return getInstance().variables.get(key);
 		}
 
@@ -315,22 +312,15 @@ public class AppContext implements Serializable {
 	}
 
 	public static void clearSession() {
-		ViewManager.clearResources();
-		PresenterResolver.clearResources();
-		EventBus.getInstance().clear();
-		ControllerRegistry.clearRegistries();
-		clearAllVariables();
+//		ViewManager.clearResources();
+//		PresenterResolver.clearResources();
+//		EventBus.getInstance().clear();
+//		ControllerRegistry.clearRegistries();
 		if (getInstance() != null) {
+			getInstance().variables.clear();
 			getInstance().session = null;
 			getInstance().userPreference = null;
 		}
-	}
-
-	static void clearAllVariables() {
-		if (getInstance() != null) {
-			getInstance().variables.clear();
-		}
-
 	}
 
 	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(

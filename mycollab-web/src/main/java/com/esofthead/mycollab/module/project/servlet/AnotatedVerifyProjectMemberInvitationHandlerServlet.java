@@ -42,7 +42,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
-@Component("confirmInvitationMemberServletHandler")
+@Component("acceptMemberInvitationServlet")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		HttpRequestHandler {
 	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/project/OutsideMemberAcceptInvitationPage.mt";

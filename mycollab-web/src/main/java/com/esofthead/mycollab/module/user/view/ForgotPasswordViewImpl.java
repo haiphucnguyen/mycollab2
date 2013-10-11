@@ -23,6 +23,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -62,7 +63,9 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					User user = userService.findUserByUserName(username);
 
 					if (user == null) {
-						NotificationUtil.showNotification("User not exist!!");
+						NotificationUtil.showNotification(
+								"User is not existed",
+								Window.Notification.TYPE_ERROR_MESSAGE);
 						return;
 					} else {
 						String hideEmailStr = user.getEmail();

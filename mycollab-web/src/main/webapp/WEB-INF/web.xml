@@ -12,9 +12,6 @@
         <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
     </listener>
 
-    <!-- <listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
-        </listener> -->
-
     <listener>
         <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
     </listener>
@@ -40,7 +37,6 @@
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -115,6 +111,56 @@
         <url-pattern>/templates/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>aliases</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>acceptRanges</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>dirAllowed</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>welcomeServlets</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>redirectWelcome</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxCacheSize</param-name>
+            <param-value>256000000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxCachedFileSize</param-name>
+            <param-value>200000000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxCachedFiles</param-name>
+            <param-value>2048</param-value>
+        </init-param>
+        <init-param>
+            <param-name>gzip</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>useFileMappedBuffer</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- <init-param> <param-name>resourceCache</param-name> <param-value>resourceCache</param-value> 
+            </init-param> -->
+        <!-- <init-param> <param-name>cacheControl</param-name> <param-value>max-age=3600,public</param-value> 
+            </init-param> -->
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/assets/*</url-pattern>
@@ -136,6 +182,139 @@
     <servlet-mapping>
         <servlet-name>blazeds</servlet-name>
         <url-pattern>/messagebroker/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- REGISTER MYCOLLAB SERVLETS -->
+    <servlet>
+        <display-name>UserAvatarServlet</display-name>
+        <servlet-name>userAvatarFSServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>userAvatarFSServlet</servlet-name>
+        <url-pattern>/avatar/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>DroboxCallbackServlet</display-name>
+        <servlet-name>dropboxAuthServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dropboxAuthServlet</servlet-name>
+        <url-pattern>/drive/dropboxAuth</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>GoogleDriveCallbackServlet</display-name>
+        <servlet-name>ggDriveAuthServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ggDriveAuthServlet</servlet-name>
+        <url-pattern>/drive/ggDriveAuth</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>DenyUserInviteServlet</display-name>
+        <servlet-name>denyUserInviteServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>denyUserInviteServlet</servlet-name>
+        <url-pattern>/user/deny_invite/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>RecoverUserPasswordServlet</display-name>
+        <servlet-name>recoverUserPasswordServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>recoverUserPasswordServlet</servlet-name>
+        <url-pattern>/user/recoverypassword/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>UpdateUserPasswordServlet</display-name>
+        <servlet-name>updateUserPasswordServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>updateUserPasswordServlet</servlet-name>
+        <url-pattern>/user/recoverypassword/action/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>UpdateUserInfoServlet</display-name>
+        <servlet-name>updateUserInfoServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>updateUserInfoServlet</servlet-name>
+        <url-pattern>/user/confirm_invite/update_info/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>AcceptUserInvitationServlet</display-name>
+        <servlet-name>acceptUserInvitationServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>acceptUserInvitationServlet</servlet-name>
+        <url-pattern>/user/confirm_invite/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>AcceptMemberInvitationServlet</display-name>
+        <servlet-name>acceptMemberInvitationServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>acceptMemberInvitationServlet</servlet-name>
+        <url-pattern>/project/member/invitation/confirm_invite/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>DenyMemberInvitationFeedbackServlet</display-name>
+        <servlet-name>denyMemberInvitationFeedbackServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>denyMemberInvitationFeedbackServlet</servlet-name>
+        <url-pattern>/project/member/feedback/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>DenyMemberInvitationServlet</display-name>
+        <servlet-name>denyMemberInvitationServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>denyMemberInvitationServlet</servlet-name>
+        <url-pattern>/project/member/invitation/deny_invite/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>AcceptMemberInvitationCreateAccountServlet</display-name>
+        <servlet-name>acceptMemberInvitationCreateAccountServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>acceptMemberInvitationCreateAccountServlet</servlet-name>
+        <url-pattern>/project/outside/createAccount/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
