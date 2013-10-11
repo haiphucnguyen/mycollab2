@@ -7,7 +7,6 @@ import java.util.Set;
 import net.sf.extcos.ComponentQuery;
 import net.sf.extcos.ComponentScanner;
 
-import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,9 +19,10 @@ class ViewManagerImpl extends ViewManager {
 	public static final String VIEW_MANAGER_VAL = "viewMap";
 
 	private static Logger log = LoggerFactory.getLogger(ViewManagerImpl.class);
-	private Set<Class<?>> viewClasses;
 
-	public ViewManagerImpl() {
+	private static Set<Class<?>> viewClasses;
+
+	static {
 		ComponentScanner scanner = new ComponentScanner();
 		viewClasses = scanner.getClasses(new ComponentQuery() {
 			@Override
@@ -31,13 +31,6 @@ class ViewManagerImpl extends ViewManager {
 						allAnnotatedWith(ViewComponent.class));
 			}
 		});
-
-		log.info("Scan packages to search view. There are "
-				+ viewClasses.size()
-				+ " views are found in loader "
-				+ WebAppContext.getCurrentWebAppContext().getClassLoader()
-						.getParent() + "---"
-				+ Thread.currentThread().getContextClassLoader());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -107,7 +100,6 @@ class ViewManagerImpl extends ViewManager {
 								+ viewClass.getName());
 			}
 		} catch (Throwable e) {
-			e.printStackTrace();
 			throw new MyCollabException("Can not create view class: "
 					+ viewClass.getName(), e);
 		}

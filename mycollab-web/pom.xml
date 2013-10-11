@@ -452,14 +452,30 @@
                     <mainClass>com.esofthead.mycollab.jetty.ServerRunner</mainClass>
                 </configuration>
             </plugin>
-            <!-- <plugin> <artifactId>maven-antrun-plugin</artifactId> <version>1.7</version> 
-                <executions> <execution> <phase>compile</phase> <configuration> <target> 
-                <copy verbose="true" overwrite="true" force="true" file="${basedir}/src/main/resources/resources.properties-live" 
-                tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" 
-                /> <copy verbose="true" overwrite="true" force="true" file="${basedir}/src/main/resources/log4j.properties-live" 
-                tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/log4j.properties" 
-                /> </target> </configuration> <goals> <goal>run</goal> </goals> </execution> 
-                </executions> </plugin> -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <copy verbose="true" overwrite="true"
+                                    force="true"
+                                    file="${basedir}/src/main/resources/resources.properties-live"
+                                    tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" />
+                                <copy verbose="true" overwrite="true"
+                                    force="true"
+                                    file="${basedir}/src/main/resources/log4j.properties-live"
+                                    tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/log4j.properties" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <!-- <plugin> <groupId>com.github.wvengen</groupId> <artifactId>proguard-maven-plugin</artifactId> 
                 <executions> <execution> <phase>package</phase> <goals> <goal>proguard</goal> 

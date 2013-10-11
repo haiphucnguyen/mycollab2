@@ -35,9 +35,6 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
 
@@ -315,22 +312,15 @@ public class AppContext implements Serializable {
 	}
 
 	public static void clearSession() {
-		ViewManager.clearResources();
-		PresenterResolver.clearResources();
-		EventBus.getInstance().clear();
-		ControllerRegistry.clearRegistries();
-		clearAllVariables();
+//		ViewManager.clearResources();
+//		PresenterResolver.clearResources();
+//		EventBus.getInstance().clear();
+//		ControllerRegistry.clearRegistries();
 		if (getInstance() != null) {
+			getInstance().variables.clear();
 			getInstance().session = null;
 			getInstance().userPreference = null;
 		}
-	}
-
-	static void clearAllVariables() {
-		if (getInstance() != null) {
-			getInstance().variables.clear();
-		}
-
 	}
 
 	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(

@@ -41,12 +41,6 @@
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
-
-    <context-param>
-        <param-name>org.eclipse.jetty.servlet.SessionCookie</param-name>
-        <param-value>XSESSIONID</param-value>
-    </context-param>
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
@@ -154,7 +148,7 @@
         <servlet-name>userAvatarFSServlet</servlet-name>
         <url-pattern>/avatar/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>DroboxCallbackServlet</display-name>
         <servlet-name>dropboxAuthServlet</servlet-name>
@@ -165,7 +159,7 @@
         <servlet-name>dropboxAuthServlet</servlet-name>
         <url-pattern>/drive/dropboxAuth</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>GoogleDriveCallbackServlet</display-name>
         <servlet-name>ggDriveAuthServlet</servlet-name>
@@ -176,7 +170,7 @@
         <servlet-name>ggDriveAuthServlet</servlet-name>
         <url-pattern>/drive/ggDriveAuth</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>DenyUserInviteServlet</display-name>
         <servlet-name>denyUserInviteServlet</servlet-name>
@@ -187,7 +181,7 @@
         <servlet-name>denyUserInviteServlet</servlet-name>
         <url-pattern>/user/deny_invite/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>RecoverUserPasswordServlet</display-name>
         <servlet-name>recoverUserPasswordServlet</servlet-name>
@@ -198,7 +192,7 @@
         <servlet-name>recoverUserPasswordServlet</servlet-name>
         <url-pattern>/user/recoverypassword/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>UpdateUserPasswordServlet</display-name>
         <servlet-name>updateUserPasswordServlet</servlet-name>
@@ -209,7 +203,7 @@
         <servlet-name>updateUserPasswordServlet</servlet-name>
         <url-pattern>/user/recoverypassword/action/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>UpdateUserInfoServlet</display-name>
         <servlet-name>updateUserInfoServlet</servlet-name>
@@ -220,7 +214,7 @@
         <servlet-name>updateUserInfoServlet</servlet-name>
         <url-pattern>/user/confirm_invite/update_info/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>AcceptUserInvitationServlet</display-name>
         <servlet-name>acceptUserInvitationServlet</servlet-name>

@@ -23,6 +23,7 @@ public class PresenterResolver {
 			presenterMap = new HashMap<Class<?>, Object>();
 			AppContext.putVariable(PRESENTER_VAL, presenterMap);
 		}
+		
 		P value = (P) presenterMap.get(presenterClass);
 		if (value == null) {
 			try {
