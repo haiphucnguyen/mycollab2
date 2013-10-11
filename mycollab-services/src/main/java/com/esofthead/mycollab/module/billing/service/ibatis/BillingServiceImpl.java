@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.billing.service.ibatis;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -55,6 +56,9 @@ public class BillingServiceImpl implements BillingService {
 	private static Logger log = LoggerFactory
 			.getLogger(BillingServiceImpl.class);
 
+	private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api",
+			"esofthead");
+
 	@Autowired
 	private BillingPlanMapper billingPlanMapper;
 
@@ -86,6 +90,14 @@ public class BillingServiceImpl implements BillingService {
 		if (!StringUtils.isAsciiString(subdomain)) {
 			throw new UserInvalidInputException(
 					"Subdomain must be an ascii string");
+		}
+
+		// check subdomain belong to keyword list
+		if (ACCOUNT_BLACK_LIST.contains(subdomain)) {
+			throw new SubdomainExistedException(
+					LocalizationHelper.getMessage(
+							ExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+							subdomain));
 		}
 
 		// check whether username is already existed
