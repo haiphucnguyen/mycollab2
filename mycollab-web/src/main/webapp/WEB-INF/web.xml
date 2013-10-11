@@ -225,6 +225,50 @@
         <servlet-name>acceptUserInvitationServlet</servlet-name>
         <url-pattern>/user/confirm_invite/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <display-name>AcceptMemberInvitationServlet</display-name>
+        <servlet-name>acceptMemberInvitationServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>acceptMemberInvitationServlet</servlet-name>
+        <url-pattern>/project/member/invitation/confirm_invite/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>DenyMemberInvitationFeedbackServlet</display-name>
+        <servlet-name>denyMemberInvitationFeedbackServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>denyMemberInvitationFeedbackServlet</servlet-name>
+        <url-pattern>/project/member/feedback/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>DenyMemberInvitationServlet</display-name>
+        <servlet-name>denyMemberInvitationServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>denyMemberInvitationServlet</servlet-name>
+        <url-pattern>/project/member/invitation/deny_invite/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>AcceptMemberInvitationCreateAccountServlet</display-name>
+        <servlet-name>acceptMemberInvitationCreateAccountServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>acceptMemberInvitationCreateAccountServlet</servlet-name>
+        <url-pattern>/project/outside/createAccount/*</url-pattern>
+    </servlet-mapping>
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

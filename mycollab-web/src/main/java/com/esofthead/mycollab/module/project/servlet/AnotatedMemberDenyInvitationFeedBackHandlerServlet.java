@@ -12,7 +12,7 @@ import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 
-@Component("memberDenyInvitationFeedBackHandlerServlet")
+@Component("denyMemberInvitationFeedbackServlet")
 public class AnotatedMemberDenyInvitationFeedBackHandlerServlet implements
 		HttpRequestHandler {
 

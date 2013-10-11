@@ -30,7 +30,7 @@ import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
-@Component("denyInvitationMemberServletHandler")
+@Component("denyMemberInvitationServlet")
 public class AnotatedDenyProjectMemberInvitationServletHandler implements
 		HttpRequestHandler {
 

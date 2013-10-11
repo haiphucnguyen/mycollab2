@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 import com.esofthead.mycollab.web.AppContext;
 
-@Component("inviteOutsideMemberCreateAccountHandlerServlet")
+@Component("acceptMemberInvitationCreateAccountServlet")
 public class AnotatedInviteOutsideMemberCreateAccountHandlerServlet implements
 		HttpRequestHandler {
 
