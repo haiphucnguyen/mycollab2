@@ -20,8 +20,8 @@ public class ServerRunner {
 		// new FragmentConfiguration(), new EnvConfiguration() });
 		// webapp.setParentLoaderPriority(true);
 
-		server.setDumpAfterStart(true);
-		server.setDumpBeforeStop(true);
+//		server.setDumpAfterStart(true);
+//		server.setDumpBeforeStop(true);
 		server.setHandler(webapp);
 
 		server.start();

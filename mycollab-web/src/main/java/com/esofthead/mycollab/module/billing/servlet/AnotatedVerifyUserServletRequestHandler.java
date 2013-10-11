@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
-@Component("verifyUserServletHandler")
+@Component("acceptUserInvitationServlet")
 public class AnotatedVerifyUserServletRequestHandler implements
 		HttpRequestHandler {
 

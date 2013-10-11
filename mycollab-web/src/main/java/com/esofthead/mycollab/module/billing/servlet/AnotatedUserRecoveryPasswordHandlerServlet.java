@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
-@Component("userRecoveryPasswordHandlerServlet")
+@Component("recoverUserPasswordServlet")
 public class AnotatedUserRecoveryPasswordHandlerServlet implements
 		HttpRequestHandler {
 

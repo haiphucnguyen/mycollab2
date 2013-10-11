@@ -143,6 +143,95 @@
         <url-pattern>/messagebroker/*</url-pattern>
     </servlet-mapping>
 
+    <!-- REGISTER MYCOLLAB SERVLETS -->
+    <servlet>
+        <display-name>UserAvatarServlet</display-name>
+        <servlet-name>userAvatarFSServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>userAvatarFSServlet</servlet-name>
+        <url-pattern>/avatar/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>DroboxCallbackServlet</display-name>
+        <servlet-name>dropboxAuthServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dropboxAuthServlet</servlet-name>
+        <url-pattern>/drive/dropboxAuth</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>GoogleDriveCallbackServlet</display-name>
+        <servlet-name>ggDriveAuthServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ggDriveAuthServlet</servlet-name>
+        <url-pattern>/drive/ggDriveAuth</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>DenyUserInviteServlet</display-name>
+        <servlet-name>denyUserInviteServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>denyUserInviteServlet</servlet-name>
+        <url-pattern>/user/deny_invite/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>RecoverUserPasswordServlet</display-name>
+        <servlet-name>recoverUserPasswordServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>recoverUserPasswordServlet</servlet-name>
+        <url-pattern>/user/recoverypassword/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>UpdateUserPasswordServlet</display-name>
+        <servlet-name>updateUserPasswordServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>updateUserPasswordServlet</servlet-name>
+        <url-pattern>/user/recoverypassword/action/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>UpdateUserInfoServlet</display-name>
+        <servlet-name>updateUserInfoServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>updateUserInfoServlet</servlet-name>
+        <url-pattern>/user/confirm_invite/update_info/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <display-name>AcceptUserInvitationServlet</display-name>
+        <servlet-name>acceptUserInvitationServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>acceptUserInvitationServlet</servlet-name>
+        <url-pattern>/user/confirm_invite/*</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>

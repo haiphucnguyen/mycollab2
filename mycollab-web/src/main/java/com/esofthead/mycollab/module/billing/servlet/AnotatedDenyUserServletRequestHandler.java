@@ -33,7 +33,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
-@Component("denyUserServletHandler")
+@Component("denyUserInviteServlet")
 public class AnotatedDenyUserServletRequestHandler implements
 		HttpRequestHandler {
 

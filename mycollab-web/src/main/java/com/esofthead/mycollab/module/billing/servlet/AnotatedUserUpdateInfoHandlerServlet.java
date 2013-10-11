@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
-@Component("userUpdateInfoHandlerServlet")
+@Component("updateUserInfoServlet")
 public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler {
 	private static Logger log = LoggerFactory
 			.getLogger(AnotatedUserUpdateInfoHandlerServlet.class);
