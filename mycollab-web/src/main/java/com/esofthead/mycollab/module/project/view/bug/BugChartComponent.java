@@ -4,14 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -29,7 +23,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class BugChartComponent extends Depot {
 	private static final long serialVersionUID = 1L;
-	private final String[] reportDashboard = { "BugTrend", "BugsByPriority",
+	private final String[] reportDashboard = { "BugsByPriority",
 			"BugsByStatus", "BugByResolution" };
 	private int currentReportIndex = 0;
 
@@ -52,21 +46,7 @@ public class BugChartComponent extends Depot {
 		final CssLayout bodyContent = (CssLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
 
-		if ("BugTrend".equals(reportName)) {
-			BugTrendReportChartWidget bugTrendWidget = null;
-			bugTrendWidget = new BugTrendReportChartWidget();
-			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(bugTrendWidget);
-			bodyContent.addComponent(lazyComp);
-
-			final BugSearchCriteria trendSearchCriteria = new Cloner()
-					.deepClone(baseSearchCriteria);
-			final Date last30Days = DateTimeUtils.subtractOrAddDayDuration(
-					new GregorianCalendar().getTime(), -30);
-			trendSearchCriteria.setUpdatedDate(new DateTimeSearchField(
-					SearchField.AND, DateTimeSearchField.GREATERTHANEQUAL,
-					last30Days));
-			bugTrendWidget.setSearchCriteria(trendSearchCriteria);
-		} else if ("BugsByPriority".equals(reportName)) {
+		if ("BugsByPriority".equals(reportName)) {
 			PrioritySummaryChartWidget prioritySummaryChartWidget = null;
 			prioritySummaryChartWidget = new PrioritySummaryChartWidget();
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
