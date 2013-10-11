@@ -1,18 +1,37 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
+import java.util.Set;
+
+import net.sf.extcos.ComponentQuery;
+import net.sf.extcos.ComponentScanner;
+
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+
 public abstract class ViewManager {
 
-    private static ViewManager impl = new ViewManagerImpl();
+	private static ViewManager impl = new ViewManagerImpl();
 
-    protected abstract <T extends View> T getViewInstance(final Class<T> viewClass);
+	protected static Set<Class<?>> viewClasses;
 
-    protected abstract void resetResources();
+	static {
+		ComponentScanner scanner = new ComponentScanner();
+		viewClasses = scanner.getClasses(new ComponentQuery() {
+			@Override
+			protected void query() {
+				select().from("com.esofthead.mycollab.**.view.**").returning(
+						allAnnotatedWith(ViewComponent.class));
+			}
+		});
+	}
 
-    public static <T extends View> T getView(final Class<T> viewClass) {
-        return impl.getViewInstance(viewClass);
-    }
+	protected abstract <T extends View> T getViewInstance(
+			final Class<T> viewClass);
 
-    public static void clearResources() {
-        impl.resetResources();
-    }
+	public static void init() {
+
+	}
+
+	public static <T extends View> T getView(final Class<T> viewClass) {
+		return impl.getViewInstance(viewClass);
+	}
 }

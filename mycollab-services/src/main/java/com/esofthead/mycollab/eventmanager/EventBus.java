@@ -30,7 +30,5 @@ public abstract class EventBus {
 
 	abstract public void removeListener(ApplicationEventListener<?> listener);
 
-	abstract public void clear();
-
 	abstract public void fireEvent(ApplicationEvent event);
 }

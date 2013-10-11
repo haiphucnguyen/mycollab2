@@ -35,7 +35,7 @@ public class SendingRecoveryPasswordEmailActionImpl implements
 		String username = relayEmail.getRecipients();
 		if (username != null) {
 			User user = userService.findUserByUserName(username);
-			String subdomain = "";
+			String subdomain = "api";
 			String recoveryPasswordURL = SiteConfiguration
 					.getSiteUrl(subdomain)
 					+ "user/recoverypassword/"

@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 
 class ViewManagerImpl extends ViewManager {
@@ -19,19 +18,7 @@ class ViewManagerImpl extends ViewManager {
 	public static final String VIEW_MANAGER_VAL = "viewMap";
 
 	private static Logger log = LoggerFactory.getLogger(ViewManagerImpl.class);
-
-	private static Set<Class<?>> viewClasses;
-
-	static {
-		ComponentScanner scanner = new ComponentScanner();
-		viewClasses = scanner.getClasses(new ComponentQuery() {
-			@Override
-			protected void query() {
-				select().from("com.esofthead.mycollab.**.view.**").returning(
-						allAnnotatedWith(ViewComponent.class));
-			}
-		});
-	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -102,16 +89,6 @@ class ViewManagerImpl extends ViewManager {
 		} catch (Throwable e) {
 			throw new MyCollabException("Can not create view class: "
 					+ viewClass.getName(), e);
-		}
-	}
-
-	@Override
-	protected void resetResources() {
-		Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) AppContext
-				.getVariable(VIEW_MANAGER_VAL);
-		if (viewMap != null) {
-			viewMap.clear();
-			AppContext.removeVariable(VIEW_MANAGER_VAL);
 		}
 	}
 }

@@ -25,8 +25,4 @@ public class ControllerRegistry {
 		log.debug("Add controller {} to registry associates with context {}",
 				controler, AppContext.getInstance());
 	}
-
-	public static void clearRegistries() {
-		AppContext.removeVariable(CONTROLLER_REGISTRY);
-	}
 }

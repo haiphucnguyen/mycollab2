@@ -296,9 +296,6 @@ public class AppContext implements Serializable {
 
 	public static Object getVariable(String key) {
 		if (getInstance() != null) {
-			log.debug("Get key {} in session {} from cache {}",
-					new String[] { key, getInstance().sessionId,
-							getInstance().variables.getName() });
 			return getInstance().variables.get(key);
 		}
 
@@ -312,10 +309,10 @@ public class AppContext implements Serializable {
 	}
 
 	public static void clearSession() {
-//		ViewManager.clearResources();
-//		PresenterResolver.clearResources();
-//		EventBus.getInstance().clear();
-//		ControllerRegistry.clearRegistries();
+		// ViewManager.clearResources();
+		// PresenterResolver.clearResources();
+		// EventBus.getInstance().clear();
+		// ControllerRegistry.clearRegistries();
 		if (getInstance() != null) {
 			getInstance().variables.clear();
 			getInstance().session = null;

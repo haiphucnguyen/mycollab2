@@ -23,7 +23,7 @@ public class PresenterResolver {
 			presenterMap = new HashMap<Class<?>, Object>();
 			AppContext.putVariable(PRESENTER_VAL, presenterMap);
 		}
-		
+
 		P value = (P) presenterMap.get(presenterClass);
 		if (value == null) {
 			try {
@@ -35,17 +35,6 @@ public class PresenterResolver {
 			}
 		} else {
 			return value;
-		}
-	}
-
-	public static void clearResources() {
-		@SuppressWarnings("unchecked")
-		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
-				.getVariable(PRESENTER_VAL);
-		if (presenterMap != null) {
-			presenterMap.clear();
-			AppContext.removeVariable(PRESENTER_VAL);
-			log.debug("Remove presenter map");
 		}
 	}
 }
