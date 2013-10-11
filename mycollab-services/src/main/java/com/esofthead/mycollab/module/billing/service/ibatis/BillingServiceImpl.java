@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localtization.ExceptionI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
@@ -79,6 +81,12 @@ public class BillingServiceImpl implements BillingService {
 	public void registerAccount(final String subdomain,
 			final int billingPlanId, final String username,
 			final String password, final String email, final String timezoneId) {
+
+		// check subdomain is ascii string
+		if (!StringUtils.isAsciiString(subdomain)) {
+			throw new UserInvalidInputException(
+					"Subdomain must be an ascii string");
+		}
 
 		// check whether username is already existed
 		log.debug("Check whether username {} is existed", username);

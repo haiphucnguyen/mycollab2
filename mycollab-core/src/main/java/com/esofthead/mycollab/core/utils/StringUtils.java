@@ -31,17 +31,21 @@ public class StringUtils {
 		}
 	}
 
+	public static boolean isAsciiString(String text) {
+		return text.matches("\\A\\p{ASCII}*\\z");
+	}
+
 	public static String formatExtraLink(String value) {
 		if (value == null || "".equals(value)) {
 			return "&nbsp;";
 		}
-		return value.replaceAll(
-				"(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
-				"<a href=\"$0\">$0</a>");
+		return value
+				.replaceAll(
+						"(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
+						"<a href=\"$0\">$0</a>");
 	}
 
 	public static void main(String[] args) {
-		System.out
-				.println(formatExtraLink("Go here http://www.vnexpress.net<span style=\"color: rgb(68, 68, 68); font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 17px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(238, 238, 238); display: inline !important; float: none;\"></span>"));
+		System.out.println(isAsciiString("123"));
 	}
 }
