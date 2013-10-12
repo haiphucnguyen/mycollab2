@@ -17,7 +17,6 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.VolumeUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -437,9 +436,11 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		itemResourceContainerLayout.constructBody(folder);
 	}
 
-	public void constructBodyItemContainerSearchActionResult(List<Resource> lst) {
+	public void constructBodyItemContainerSearchActionResult(
+			List<Resource> lst, String criteria) {
 		this.selectedResourcesList.clear();
-		itemResourceContainerLayout.constructBodySearchActionResult(lst);
+		itemResourceContainerLayout.constructBodySearchActionResult(lst,
+				criteria);
 	}
 
 	public void addSearchHandlerToBreadCrumb(
@@ -526,7 +527,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			this.addComponent(mainLayout);
 		}
 
-		private void constructBodySearchActionResult(List<Resource> lstResource) {
+		private void constructBodySearchActionResult(
+				List<Resource> lstResource, String criteria) {
 			isSearchAction = true;
 			if (mainLayout != null) {
 				this.removeAllComponents();
@@ -539,6 +541,33 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			}
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
+
+			if (lstResource == null || lstResource.size() == 0) {
+				VerticalLayout bodyLayout = new VerticalLayout();
+				bodyLayout.setSpacing(true);
+				bodyLayout.setMargin(true);
+				bodyLayout.setWidth("100%");
+
+				HorizontalLayout messageLayout = new HorizontalLayout();
+				messageLayout.addComponent(new Label("Your search- "));
+				Label strSearchLabel = new Label(criteria);
+				strSearchLabel.addStyleName("h2");
+				messageLayout.addComponent(strSearchLabel);
+				messageLayout.addComponent(new Label(
+						" -did not match any documents."));
+				bodyLayout.addComponent(messageLayout);
+				bodyLayout.addComponent(new Label("Suggesstion:"));
+				bodyLayout.addComponent(new Label(
+						"-Make sure that all words are spelled correctly."));
+				bodyLayout.addComponent(new Label("-Try different keywords."));
+				bodyLayout
+						.addComponent(new Label("-Try more general keywords."));
+				bodyLayout.addComponent(new Label("-Try fewer keywords."));
+				mainLayout.addComponent(bodyLayout);
+				this.addComponent(new Hr());
+				this.addComponent(mainLayout);
+				return;
+			}
 
 			HorizontalLayout messageSearchLayout = new HorizontalLayout();
 			messageSearchLayout.setWidth("100%");
