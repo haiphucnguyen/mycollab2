@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
@@ -24,7 +23,6 @@ import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
 @RunWith(MyCollabClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class StandupReportServiceTest extends ServiceTest {
 	@Autowired
 	protected StandupReportService reportService;
@@ -54,9 +52,9 @@ public class StandupReportServiceTest extends ServiceTest {
 		List<GroupItem> reportsCount = reportService.getReportsCount(criteria);
 
 		Assert.assertEquals(2, reportsCount.size());
-		for (GroupItem item:reportsCount) {
+		for (GroupItem item : reportsCount) {
 			System.out.println(BeanUtility.printBeanObj(item));
 		}
-		
+
 	}
 }

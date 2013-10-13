@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
@@ -25,7 +24,6 @@ import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
 @RunWith(MyCollabClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class BugServiceTest extends ServiceTest {
 
 	@Autowired
@@ -60,7 +58,7 @@ public class BugServiceTest extends ServiceTest {
 	@DataSet
 	@Test
 	public void testGetExtBug() {
-		SimpleBug bug = bugService.findById(1,1);
+		SimpleBug bug = bugService.findById(1, 1);
 		Assert.assertEquals("Nguyen Hai", bug.getLoguserFullName());
 		Assert.assertEquals("Nguyen Hai", bug.getAssignuserFullName());
 		Assert.assertEquals(1, bug.getAffectedVersions().size());
