@@ -23,7 +23,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -39,7 +38,6 @@ import com.esofthead.mycollab.test.service.ServiceTest;
 import com.esofthead.mycollab.test.util.DateTimeUtilsForTest;
 
 @RunWith(MyCollabClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/service-context-test.xml" })
 public class CampaignServiceTest extends ServiceTest {
 
 	@Autowired
@@ -84,7 +82,7 @@ public class CampaignServiceTest extends ServiceTest {
 				DateTimeUtilsForTest.getDateByString("2012-12-21"), 7);
 		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
@@ -102,7 +100,7 @@ public class CampaignServiceTest extends ServiceTest {
 		Date endDate = DateTimeUtilsForTest.getDateByString("2012-12-21");
 		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(4, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				4,
@@ -151,7 +149,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHANEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(7, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				7,
@@ -168,7 +166,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHAN, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(6, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				6,
@@ -185,7 +183,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.NOTEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(9, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				9,
@@ -202,7 +200,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.EQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
@@ -219,7 +217,7 @@ public class CampaignServiceTest extends ServiceTest {
 		Date to = DateTimeUtilsForTest.getDateByString("2012-12-21");
 		criteria.setEndDateRange(new RangeDateSearchField(from, to));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(2, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -236,7 +234,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.LESSTHANEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(5, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				5,
@@ -253,7 +251,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.LESSTHAN, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(4, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				4,
@@ -270,7 +268,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHANEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(7, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				7,
@@ -287,7 +285,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHAN, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(6, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				6,
@@ -304,7 +302,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.NOTEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(9, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				9,
@@ -321,7 +319,7 @@ public class CampaignServiceTest extends ServiceTest {
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.EQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
@@ -338,7 +336,7 @@ public class CampaignServiceTest extends ServiceTest {
 		Date to = DateTimeUtilsForTest.getDateByString("2012-12-17");
 		criteria.setStartDateRange(new RangeDateSearchField(from, to));
 		criteria.setSaccountid(new NumberSearchField(1));
-		
+
 		Assert.assertEquals(3, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
 				3,
