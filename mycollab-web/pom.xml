@@ -471,18 +471,39 @@
                 </executions>
             </plugin>
 
-            <!-- <plugin> <groupId>com.github.wvengen</groupId> <artifactId>proguard-maven-plugin</artifactId> 
-                <executions> <execution> <phase>package</phase> <goals> <goal>proguard</goal> 
-                </goals> </execution> </executions> <configuration> <proguardVersion>4.9</proguardVersion> 
-                <proguardInclude>proguard.conf</proguardInclude> <inFilter>com/esofthead/**</inFilter> 
-                <libs> <lib>${java.home}/lib/rt.jar</lib> <lib>${java.home}/lib/jsse.jar</lib> 
-                </libs> <injar>classes</injar> <outjar>temp</outjar> <injarNotExistsSkip>true</injarNotExistsSkip> 
-                <maxMemory>1024m</maxMemory> </configuration> <dependencies> <dependency> 
-                <groupId>net.sf.proguard</groupId> <artifactId>proguard-base</artifactId> 
-                <version>4.9</version> <scope>runtime</scope> </dependency> </dependencies> 
-                </plugin> -->
-            <!-- Enabling and configuring regular resources filtering. See 
-                also section "resources" below -->
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>proguard</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <injar>${project.build.finalName}.jar</injar>
+                    <outjar>${project.build.finalName}.jar</outjar>
+                    <includeDependency>true</includeDependency>
+                    
+                    <proguardInclude>${basedir}/proguard.conf</proguardInclude>
+                    <libs>
+                        <lib>${java.bootstrap.classes}</lib>
+                        <lib>${java.cryptographic.extension.classes}</lib>
+                        <lib>${java.secure.socket.extension.classes}</lib>
+                    </libs>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.proguard</groupId>
+                        <artifactId>proguard-base</artifactId>
+                        <version>4.10</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+            </plugin>
 
         </plugins>
         <!-- Instructing the resources plugin to filter certain directories -->
