@@ -40,6 +40,9 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.data.util.filter.UnsupportedFilterException;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
@@ -372,12 +375,90 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			private String oldText;
+			private ProjectGenericTask projectGenericTask;
+			private List<ProjectGenericTask> listContainer;
+
+			public ProjectGenericTask getCurrentItem() {
+				return projectGenericTask;
+			}
 
 			public SubclassComboBox() {
 				super();
+				this.setFilteringMode(ComboBox.FILTERINGMODE_STARTSWITH);
+				this.setTextInputAllowed(true);
 				this.setImmediate(true);
-				this.setNullSelectionAllowed(false);
+				this.setNullSelectionAllowed(true);
 				this.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_EXPLICIT);
+			}
+
+			public class CustomLazyContainer extends IndexedContainer {
+				private static final long serialVersionUID = 1L;
+				private int prefixSize;
+				private String propertyId;
+				private String filterString;
+
+				public CustomLazyContainer(int prefixSize, String propertyId) {
+					this.prefixSize = prefixSize;
+					this.propertyId = propertyId;
+				}
+
+				@Override
+				public void addContainerFilter(Filter filter)
+						throws UnsupportedFilterException {
+					if (filter == null) {
+						removeAllItems();
+						filterString = null;
+						return;
+					}
+
+					removeAllItems();
+
+					if (filter instanceof SimpleStringFilter) {
+						String newFilterString = ((SimpleStringFilter) filter)
+								.getFilterString();
+						if (newFilterString == null)
+							return;
+						if (newFilterString.equals(filterString))
+							return;
+						filterString = newFilterString;
+
+						if (filterString.length() < prefixSize)
+							return;
+
+						doFilter();
+						super.addContainerFilter(filter);
+					}
+				}
+
+				private void doFilter() {
+					ProjectGenericTaskService service = ApplicationContextUtil
+							.getSpringBean(ProjectGenericTaskService.class);
+					ProjectGenericTaskSearchCriteria criteria = new ProjectGenericTaskSearchCriteria();
+					criteria.setName(new StringSearchField(oldText));
+					SearchRequest<ProjectGenericTaskSearchCriteria> request = new SearchRequest<ProjectGenericTaskSearchCriteria>(
+							criteria, 0, Integer.MAX_VALUE);
+					List<ProjectGenericTask> lst = service
+							.findPagableBugAndTaskByCriteria(request);
+					for (ProjectGenericTask projectGenericTask : lst) {
+						CustomLazyContainer.this.addItem(projectGenericTask);
+						SubclassComboBox.this.setItemCaption(
+								projectGenericTask,
+								projectGenericTask.getName());
+						if (projectGenericTask.getType().equals("Bug")) {
+							SubclassComboBox.this
+									.setItemIcon(
+											projectGenericTask,
+											MyCollabResource
+													.newResource("icons/16/project/bug.png"));
+						} else if (projectGenericTask.getType().equals("Task")) {
+							SubclassComboBox.this
+									.setItemIcon(
+											projectGenericTask,
+											MyCollabResource
+													.newResource("icons/16/project/task.png"));
+						}
+					}
+				}
 			}
 
 			@Override
@@ -394,31 +475,11 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					}
 					items.removeAllItems();
 
-					ProjectGenericTaskService service = ApplicationContextUtil
-							.getSpringBean(ProjectGenericTaskService.class);
-					ProjectGenericTaskSearchCriteria criteria = new ProjectGenericTaskSearchCriteria();
-					criteria.setName(new StringSearchField(oldText));
-					SearchRequest<ProjectGenericTaskSearchCriteria> request = new SearchRequest<ProjectGenericTaskSearchCriteria>(
-							criteria, 0, Integer.MAX_VALUE);
-					List<ProjectGenericTask> lst = service
-							.findPagableBugAndTaskByCriteria(request);
-					for (ProjectGenericTask projectGenericTask : lst) {
-						items.addItem(projectGenericTask);
-						SubclassComboBox.this.setItemCaption(
-								projectGenericTask,
-								projectGenericTask.getName());
-						if (projectGenericTask.getType().equals("Bug")) {
-							this.setItemIcon(
-									projectGenericTask,
-									MyCollabResource
-											.newResource("icons/16/project/bug.png"));
-						} else if (projectGenericTask.getType().equals("Task")) {
-							this.setItemIcon(
-									projectGenericTask,
-									MyCollabResource
-											.newResource("icons/16/project/task.png"));
-						}
-					}
+					SimpleStringFilter filter = new SimpleStringFilter("name",
+							filterString, true, true);
+					CustomLazyContainer container = new CustomLazyContainer(2,
+							"name");
+					SubclassComboBox.this.setContainerDataSource(container);
 				}
 				super.changeVariables(source, variables);
 			}
