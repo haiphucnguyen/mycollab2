@@ -7,11 +7,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -36,7 +34,6 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.Application;
-import com.vaadin.terminal.gwt.server.WebApplicationContext;
 
 public class AppContext implements Serializable {
 
@@ -46,8 +43,6 @@ public class AppContext implements Serializable {
 
 	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
-	private BasicCache<String, Object> variables;
-
 	private SimpleUser session;
 	private UserPreference userPreference;
 	private SimpleBillingAccount billingAccount;
@@ -56,13 +51,8 @@ public class AppContext implements Serializable {
 
 	private String subdomain;
 	private Integer accountId = null;
-	private String sessionId;
 
-	public AppContext(Application application) {
-		WebApplicationContext context = (WebApplicationContext) application
-				.getContext();
-		sessionId = context.getHttpSession().getId();
-		variables = LocalCacheManager.getCache(sessionId);
+	public AppContext(MyCollabApplication application) {
 
 		GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
 
@@ -142,7 +132,8 @@ public class AppContext implements Serializable {
 		billingAccount = billingAc;
 
 		TimeZone timezone = getTimezoneInContext();
-		variables.put(USER_TIMEZONE, timezone);
+		MyCollabApplication.getInstance().variables
+				.put(USER_TIMEZONE, timezone);
 	}
 
 	public static SimpleUser getSession() {
@@ -290,21 +281,17 @@ public class AppContext implements Serializable {
 
 	public static void putVariable(String key, Object value) {
 		if (getInstance() != null) {
-			getInstance().variables.put(key, value);
+			MyCollabApplication.getInstance().variables.put(key, value);
 		}
 	}
 
 	public static Object getVariable(String key) {
-		if (getInstance() != null) {
-			return getInstance().variables.get(key);
-		}
-
-		return null;
+		return MyCollabApplication.getInstance().variables.get(key);
 	}
 
 	public static void removeVariable(String key) {
 		if (getInstance() != null) {
-			getInstance().variables.remove(key);
+			MyCollabApplication.getInstance().variables.remove(key);
 		}
 	}
 
@@ -314,7 +301,7 @@ public class AppContext implements Serializable {
 		// EventBus.getInstance().clear();
 		// ControllerRegistry.clearRegistries();
 		if (getInstance() != null) {
-			getInstance().variables.clear();
+			MyCollabApplication.getInstance().variables.clear();
 			getInstance().session = null;
 			getInstance().userPreference = null;
 		}

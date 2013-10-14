@@ -9,9 +9,11 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
@@ -36,6 +38,7 @@ public class MyCollabApplication extends Application implements
 	private String initialSubDomain = "1";
 	private boolean isInitializeApp = false;
 	private Throwable currentThrowable;
+	BasicCache<String, Object> variables;
 
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
@@ -63,7 +66,9 @@ public class MyCollabApplication extends Application implements
 
 	@Override
 	public void init() {
+		log.debug("Init mycollab application {}", this.toString());
 		setInstance(this);
+		variables = LocalCacheManager.getCache(this.toString());
 		isInitializeApp = true;
 		setTheme("mycollab");
 		currentContext = new AppContext(this);
@@ -187,6 +192,7 @@ public class MyCollabApplication extends Application implements
 		super.close();
 		log.debug("Application is closed. Clean all resources");
 		AppContext.clearSession();
+		variables.clear();
 		currentContext = null;
 	}
 
