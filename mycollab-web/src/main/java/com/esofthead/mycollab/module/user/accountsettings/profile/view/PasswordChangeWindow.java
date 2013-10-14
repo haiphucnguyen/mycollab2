@@ -3,11 +3,14 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.InvalidPasswordException;
+import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
@@ -142,7 +145,17 @@ public class PasswordChangeWindow extends Window {
 			return;
 		}
 
-		this.user.setPassword((String) this.txtNewPassword.getValue());
+		try {
+			PasswordCheckerUtil.checkValidPassword((String) this.txtNewPassword
+					.getValue());
+		} catch (InvalidPasswordException e) {
+			this.showMessage(LocalizationHelper
+					.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE), e
+					.getMessage());
+		}
+
+		this.user.setPassword(PasswordEncryptHelper
+				.encryptSaltPassword((String) this.txtNewPassword.getValue()));
 
 		final UserService userService = ApplicationContextUtil
 				.getSpringBean(UserService.class);

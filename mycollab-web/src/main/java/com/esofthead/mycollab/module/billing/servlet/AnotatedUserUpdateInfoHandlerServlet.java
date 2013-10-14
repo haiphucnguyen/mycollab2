@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
 @Component("updateUserInfoServlet")
@@ -40,15 +41,11 @@ public class AnotatedUserUpdateInfoHandlerServlet implements HttpRequestHandler 
 
 		String password = request.getParameter("password");
 
-		if (password.length() < 8) {
-			errMsg = "Your password is too short";
+		try {
+			PasswordCheckerUtil.checkValidPassword(password);
+		} catch (InvalidPasswordException e) {
 			PrintWriter out = response.getWriter();
-			out.print(errMsg);
-			return;
-		} else if (!PasswordCheckerUtil.checkPasswordStrength(password)) {
-			errMsg = "Your password must contain at least one digit, character and symbol";
-			PrintWriter out = response.getWriter();
-			out.print(errMsg);
+			out.print(e.getMessage());
 			return;
 		}
 

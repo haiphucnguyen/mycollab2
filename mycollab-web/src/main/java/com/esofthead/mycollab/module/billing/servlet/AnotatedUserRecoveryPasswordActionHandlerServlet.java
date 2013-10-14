@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
 @Component("updateUserPasswordServlet")
@@ -32,17 +33,14 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 
 		String password = request.getParameter("password");
 
-		if (password.length() < 8) {
-			errMsg = "Your password is too short";
+		try {
+			PasswordCheckerUtil.checkValidPassword(password);
+		} catch (InvalidPasswordException e) {
 			PrintWriter out = response.getWriter();
-			out.print(errMsg);
-			return;
-		} else if (!PasswordCheckerUtil.checkPasswordStrength(password)) {
-			errMsg = "Your password must contain at least one digit, character and symbol";
-			PrintWriter out = response.getWriter();
-			out.print(errMsg);
+			out.print(e.getMessage());
 			return;
 		}
+		
 		SimpleUser simpleUser = new SimpleUser();
 		simpleUser.setPassword(PasswordEncryptHelper
 				.encryptSaltPassword(password));

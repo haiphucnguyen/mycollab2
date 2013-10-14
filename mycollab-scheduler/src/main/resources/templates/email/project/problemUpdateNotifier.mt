@@ -26,34 +26,36 @@
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.problemURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.issuename</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Raised by:&nbsp;</td>
-									<td><a href="${hyperLinks.raiseUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.raisedByUserFullName</a></td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Raised by:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">
+										<a href="${hyperLinks.raiseUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.raisedByUserFullName</a>
+									</td>
 									
-									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assigned to:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
 										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.assignedUserFullName</a>
 									</td>	
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
-									<td style="vertical-align: top;">$!date.format('short_date', $!problem.datedue)</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Due date:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!date.format('short_date', $!problem.datedue)</td>
 									
-									<td style="text-align: right; vertical-align: top;">Status:&nbsp;</td>
-									<td>$!problem.status</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.status</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Impact:&nbsp;</td>
-									<td>$!problem.impact</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Impact:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.impact</td>
 									
-									<td style="text-align: right; min-width: 90px;">Priority:&nbsp;</td>
-									<td>$!problem.priority</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Priority:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.priority</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Description:&nbsp;</td>
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
 									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.description</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Resolution:&nbsp;</td>
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Resolution:&nbsp;</td>
 									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.resolution</td>		
 								</tr>
                                 <tr>
@@ -68,13 +70,13 @@
                                 			#foreach ($item in $historyLog.changeItems)
                                 				#if ($mapper.hasField($item.field))
                                 				<tr>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>

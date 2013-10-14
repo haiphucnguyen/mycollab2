@@ -22,37 +22,39 @@
                         <td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
                             <table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
                                 <tr>
-                                    <td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Bug Summary:&nbsp;</td>
-                                    <td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$hyperLinks.bugUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$bug.summary</a></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-                                    <td colspan="3" style="word-wrap: break-word; word-break: break-all; white-space: normal;">$!bug.description</td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;">Status:&nbsp;</td>
-                                    <td>$bug.status</td>
-                                    <td style="text-align: right; min-width: 90px;">Priority:&nbsp;</td>
-                                    <td>$bug.priority</td>      
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;">Severity:&nbsp;</td>
-                                    <td>$bug.severity</td>
-                                    <td style="text-align: right;">Resolution:&nbsp;</td>
-                                    <td>$bug.resolution</td>        
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
-                                    <td style="vertical-align: top;">$!date.format('short_date', $bug.Duedate)</td>
-                                    <td style="text-align: right; vertical-align: top;">Milestone:&nbsp;</td>
-                                    <td style="vertical-align: top;"><a href="$hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.milestoneName</td>      
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
-                                    <td><a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$bug.loguserFullName</a></td>
-                                    <td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-                                    <td><a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.assignuserFullName</a></td>       
-                                </tr>
+									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Bug Summary:&nbsp;</td>
+									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.bugUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.summary</a></td>
+								</tr>
+								<tr>
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.description</td>
+								</tr>
+								<tr>
+									<td style="text-align: right;">Status:&nbsp;</td>
+									<td>$!bug.status</td>
+									<td style="text-align: right; min-width: 90px;">Priority:&nbsp;</td>
+									<td>$!bug.priority</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Severity:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.severity</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Resolution:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.resolution</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
+									<td style="vertical-align: top;">$!date.format('short_date', $!bug.Duedate)</td>
+									<td style="text-align: right; vertical-align: top;">Milestone:&nbsp;</td>
+									<td><a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.milestoneName</td>		
+								</tr>
+								<tr>
+									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
+									<td><a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.loguserFullName</a></td>
+									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
+									<td>
+										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.assignuserFullName</a>
+									</td>				
+								</tr>
                                 <tr>
                                     <td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>
                                     <td style=" vertical-align: top;">
@@ -95,13 +97,13 @@
                                 			#foreach ($item in $historyLog.changeItems)
                                 				#if ($mapper.hasField($item.field))
                                 				<tr>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>

@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -165,9 +164,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				if (BugStatusConstants.VERIFIED.equals(BugReadViewImpl.this.bug
 						.getStatus())) {
 					bugAddLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
-				} else if (BugReadViewImpl.this.bug.getDuedate() != null
-						&& (BugReadViewImpl.this.bug.getDuedate()
-								.before(new GregorianCalendar().getTime()))) {
+				} else if (BugReadViewImpl.this.bug.isOverdue()) {
 					bugAddLayout.addTitleStyleName(UIConstants.LINK_OVERDUE);
 				}
 

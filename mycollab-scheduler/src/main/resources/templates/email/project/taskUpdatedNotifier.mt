@@ -44,15 +44,16 @@
 									<td>$!task.priority</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Assign:&nbsp;</td>
-									<td style="vertical-align: top;"><a href="${!hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.assignUserFullName</a>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assign:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">
+										<a href="${!hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.assignUserFullName</a>
 									</td>
-									<td style="text-align: right; vertical-align: top;"> Task list:&nbsp;</td>
-									<td style="vertical-align: top;"><a href="${!hyperLinks.taskListUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskListName</a></td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;"> Task list:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="${!hyperLinks.taskListUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskListName</a></td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Notes:&nbsp;</td>
-									<td style=" vertical-align: top;" colspan="3">$!task.Notes</td>	
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Notes:&nbsp;</td>
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!task.Notes</td>	
 								</tr>
 								<tr>
                                 	<td colspan="4">
@@ -66,13 +67,13 @@
                                 			#foreach ($item in $!historyLog.changeItems)
                                 				#if ($mapper.hasField($item.field))
                                 				<tr>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;">
                                 						$!mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$!item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$!item.newvalue
                                 					</td>
                                 				</tr>

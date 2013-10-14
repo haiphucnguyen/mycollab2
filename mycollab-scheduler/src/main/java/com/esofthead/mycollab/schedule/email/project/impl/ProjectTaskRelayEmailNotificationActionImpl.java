@@ -182,8 +182,10 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 						.equals(notificationSetting.getLevel())) {
 					// remove users in list if he is already in list
 					for (SimpleUser user : inListUsers) {
-						if (user.getUsername().equals(
-								notificationSetting.getUsername())) {
+						if ((user.getUsername() != null && user.getUsername()
+								.equals(notificationSetting.getUsername()))
+								|| user.getEmail().equals(
+										notificationSetting.getUsername())) {
 							inListUsers.remove(user);
 							break;
 						}
@@ -192,8 +194,10 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 						.equals(notificationSetting.getLevel())) {
 					boolean isAlreadyInList = false;
 					for (SimpleUser user : inListUsers) {
-						if (user.getUsername().equals(
-								notificationSetting.getUsername())) {
+						if ((user.getUsername() != null && user.getUsername()
+								.equals(notificationSetting.getUsername()))
+								|| user.getEmail().equals(
+										notificationSetting.getUsername())) {
 							isAlreadyInList = true;
 							break;
 						}
@@ -207,8 +211,13 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 								&& task.getAssignuser().equals(
 										notificationSetting.getUsername())) {
 							for (SimpleUser user : activeUsers) {
-								if (user.getUsername().equals(
-										notificationSetting.getUsername())) {
+								if ((user.getUsername() != null && user
+										.getUsername().equals(
+												notificationSetting
+														.getUsername()))
+										|| user.getEmail().equals(
+												notificationSetting
+														.getUsername())) {
 									inListUsers.add(user);
 									break;
 								}
@@ -220,8 +229,10 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 						.equals(notificationSetting.getLevel())) {
 					boolean isAlreadyInList = false;
 					for (SimpleUser user : inListUsers) {
-						if (user.getUsername().equals(
-								notificationSetting.getUsername())) {
+						if ((user.getUsername() != null && user.getUsername()
+								.equals(notificationSetting.getUsername()))
+								|| user.getEmail().equals(
+										notificationSetting.getUsername())) {
 							isAlreadyInList = true;
 							break;
 						}
@@ -229,8 +240,11 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 					if (!isAlreadyInList) {
 						for (SimpleUser user : activeUsers) {
-							if (user.getUsername().equals(
-									notificationSetting.getUsername())) {
+							if ((user.getUsername() != null && user
+									.getUsername().equals(
+											notificationSetting.getUsername()))
+									|| user.getEmail().equals(
+											notificationSetting.getUsername())) {
 								inListUsers.add(user);
 								break;
 							}

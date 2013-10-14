@@ -90,21 +90,6 @@ public class BugChartComponent extends Depot {
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("200px");
 
-		final Button btnBugTrend = new Button("Bugs Trend",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						bugChartPopup.setPopupVisible(false);
-						bugChartPopup.setCaption("Bugs Trend");
-						currentReportIndex = 0;
-						displayReport();
-					}
-				});
-		btnBugTrend.setStyleName("link");
-		filterBtnLayout.addComponent(btnBugTrend);
-
 		final Button btnBugByPriority = new Button("Bugs By Priority",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;

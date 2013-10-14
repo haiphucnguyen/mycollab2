@@ -105,8 +105,7 @@ public class SimpleBug extends BugWithBLOBs {
 	}
 
 	public boolean isOverdue() {
-		if (BugStatusConstants.RESOLVED.equals(getStatus())
-				|| BugStatusConstants.VERIFIED.equals(getStatus())) {
+		if (BugStatusConstants.VERIFIED.equals(getStatus())) {
 			return false;
 		}
 
