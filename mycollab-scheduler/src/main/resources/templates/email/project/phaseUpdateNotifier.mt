@@ -26,18 +26,20 @@
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.milestoneURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.name</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Start date:&nbsp;</td>
-									<td style="vertical-align: top;">$!date.format('short_date', $!milestone.startdate)</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Start date:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!date.format('short_date', $!milestone.startdate)</td>
 									
-									<td style="text-align: right ; vertical-align: top;">Status:&nbsp;</td>
-									<td>$!milestone.status</td>	
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!milestone.status</td>	
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">End date:&nbsp;</td>
-									<td style="vertical-align: top;">$!date.format('short_date', $!milestone.enddate)</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">End date:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!date.format('short_date', $!milestone.enddate)</td>
 									
-									<td style="text-align: right; vertical-align: top;">Responsible User:&nbsp;</td>
-									<td><a href="${hyperLinks.ownerUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.ownerFullName</a></td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Responsible User:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
+										<a href="${hyperLinks.ownerUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.ownerFullName</a>
+									</td>
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
@@ -55,13 +57,13 @@
                                 			#foreach ($item in $historyLog.changeItems)
                                 				#if ($mapper.hasField($item.field))
                                 				<tr>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>
