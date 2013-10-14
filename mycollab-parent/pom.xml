@@ -27,6 +27,7 @@
         <module>../mycollab-esb</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>
+        <module>../mycollab-jetty-session</module>
         <module>../mycollab-web</module>
         <module>../mycollab-frontsite</module>
     </modules>
