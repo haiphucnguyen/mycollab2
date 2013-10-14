@@ -192,8 +192,9 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 						.equals(notificationSetting.getLevel())) {
 					boolean isAlreadyInList = false;
 					for (SimpleUser user : inListUsers) {
-						if (user.getUsername().equals(
-								notificationSetting.getUsername())) {
+						if (user.getUsername() != null
+								&& user.getUsername().equals(
+										notificationSetting.getUsername())) {
 							isAlreadyInList = true;
 							break;
 						}

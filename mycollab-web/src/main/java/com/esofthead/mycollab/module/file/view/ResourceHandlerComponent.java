@@ -871,6 +871,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			pathLabel.addStyleName("h3");
 			UiUtils.addComponent(layout, pathLabel, Alignment.MIDDLE_CENTER);
 
+			HorizontalLayout iconWapper = new HorizontalLayout();
+			iconWapper.setMargin(false, false, true, false);
+
 			Button toContainFolder = new Button();
 			toContainFolder.setIcon(MyCollabResource
 					.newResource("icons/48/ecm/folder_arrow_right.png"));
@@ -891,8 +894,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				}
 			});
 			toContainFolder.addStyleName("link");
-			UiUtils.addComponent(layout, toContainFolder,
-					Alignment.MIDDLE_CENTER);
+			iconWapper.addComponent(toContainFolder);
+			UiUtils.addComponent(layout, iconWapper, Alignment.MIDDLE_CENTER);
 
 			return layout;
 		}
