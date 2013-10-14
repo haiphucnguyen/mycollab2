@@ -4575,6 +4575,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	background: url("icons/grad-light-top.png") repeat-x 0 1px
 		rgb(218, 218, 218);
 }
+.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout.select-bg > .v-csslayout-margin {
+	padding: 0px;
+}
 
 /* Task Group Reorder */
 .taskgroup-reorder .v-verticallayout-margin {
@@ -4778,4 +4781,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .stream-wrapper .v-label img {
 	display: inline-block;
 	vertical-align: bottom;
+}
+.stream-wrapper .v-label {
+	line-height: 1.5em;
 }
