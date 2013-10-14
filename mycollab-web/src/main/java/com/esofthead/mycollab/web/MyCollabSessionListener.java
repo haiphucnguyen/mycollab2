@@ -20,7 +20,7 @@ public class MyCollabSessionListener implements HttpSessionListener {
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
 		String sessionId = se.getSession().getId();
-		LocalCacheManager.removeCache(sessionId);
+//		LocalCacheManager.removeCache(sessionId);
 		log.debug("Remove cache {}", sessionId);
 	}
 
