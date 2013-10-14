@@ -374,11 +374,12 @@
                 <configuration>
                     <warName>app</warName>
                     <!-- <archiveClasses>true</archiveClasses> -->
-                    <filters>
+                    <!--  <filters>
                         <filter>src/main/resources/log4j.properties-live</filter>
                         <filter>src/main/resources/resources.properties-live</filter>
                         <filter>src/main/resources/resources.properties.template</filter>
                     </filters>
+                    -->
                 </configuration>
             </plugin>
 
