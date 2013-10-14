@@ -366,27 +366,22 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
-                <version>2.3</version> <configuration> <encoding>UTF-8</encoding> </configuration> 
-                </plugin> -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
                     <warName>app</warName>
-                    <archiveClasses>false</archiveClasses>
+                    <!-- <archiveClasses>true</archiveClasses> -->
+                    <filters>
+                        <filter>src/main/resources/log4j.properties-live</filter>
+                        <filter>src/main/resources/resources.properties-live</filter>
+                        <filter>src/main/resources/resources.properties.template</filter>
+                    </filters>
                 </configuration>
             </plugin>
 
-
-
-            <!--CHECK LOCALIZATION -->
-            <!-- <plugin> <groupId>ch.qos.cal10n.plugins</groupId> <artifactId>maven-cal10n-plugin</artifactId> 
-                <executions> <execution> <id>checkLocale</id> <phase>compile</phase> <goals> 
-                <goal>verify</goal> </goals> <configuration> <enumTypes> <enumType>com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum</enumType> 
-                <enumType>com.esofthead.mycollab.common.localization.GenericI18Enum</enumType> 
-                </enumTypes> </configuration> </execution> </executions> </plugin> -->
             <!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
                 <version>1.0.2</version> <executions> <execution> <phase>prepare-package</phase> 
                 <configuration> </configuration> <goals> <goal>update-widgetset</goal> </goals> 
@@ -429,23 +424,6 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <classpathScope>runtime</classpathScope>
-                    <mainClass>com.esofthead.mycollab.jetty.ServerRunner</mainClass>
-                </configuration>
-            </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.7</version>
@@ -470,41 +448,55 @@
                     </execution>
                 </executions>
             </plugin>
-<!-- 
+            <!-- BEGIN OBFUSCATE -->
+            <!-- 
             <plugin>
-                <groupId>com.github.wvengen</groupId>
-                <artifactId>proguard-maven-plugin</artifactId>
+                <groupId>com.idfconnect.devtools</groupId>
+                <artifactId>idfc-proguard-maven-plugin</artifactId>
+                <version>1.0.1</version>
                 <executions>
                     <execution>
-                        <id>proguard</id>
-                        <phase>compile</phase>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>proguard</goal>
+                            <goal>obfuscate</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <outjar>${project.build.finalName}.jar</outjar>
-                    <includeDependency>true</includeDependency>
-                    <injar>${project.build.finalName}/WEB-INF/classes/</injar>
-                    <inFilter>com/esofthead/**</inFilter>
-                    <proguardInclude>${basedir}/proguard.conf</proguardInclude>
-                    <libs>
-                        <lib>${java.bootstrap.classes}</lib>
-                        <lib>${java.cryptographic.extension.classes}</lib>
-                        <lib>${java.secure.socket.extension.classes}</lib>
-                    </libs>
+                    <inputFile>${project.build.outputDirectory}</inputFile>
+                    <inputFileFilter>com.esofthead.mycollab.**.class</inputFileFilter>
+                    <inputArtifacts>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-core</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-config</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-caching</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-api</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-api-impl</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-reporting</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-services</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-esb</inputArtifact>
+                        <inputArtifact>com.esofthead.mycollab:mycollab-scheduler</inputArtifact>
+                    </inputArtifacts>
+                    <outputArtifacts>
+                        <outputArtifact>
+                            <file>${project.build.finalName}/WEB-INF/lib/${project.build.finalName}.jar</file>
+                            <type>jar</type>
+                        </outputArtifact>
+                    </outputArtifacts>
+                    <libraryJarPaths>
+                        <libraryJarPath>${java.home}/lib/jsse.jar</libraryJarPath>
+                        <libraryJarPath>${java.home}/lib/jce.jar</libraryJarPath>
+                    </libraryJarPaths>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>net.sf.proguard</groupId>
                         <artifactId>proguard-base</artifactId>
                         <version>4.10</version>
-                        <scope>runtime</scope>
                     </dependency>
                 </dependencies>
             </plugin>
--->
+            
+            -->
         </plugins>
 
         <pluginManagement>
