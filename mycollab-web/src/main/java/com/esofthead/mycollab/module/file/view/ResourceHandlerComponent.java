@@ -986,7 +986,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					itemResourceContainerLayout.constructBody(baseFolder);
 
 					if ((resource instanceof ExternalFolder || resource instanceof ExternalContent)
-							&& pagingResourceWapper.getCurrentPage() != 1)
+							&& (pagingResourceWapper != null && pagingResourceWapper
+									.getCurrentPage() != 1))
 						pagingResourceWapper.pageChange(pagingResourceWapper
 								.getCurrentPage());
 					RenameResourceWindow.this.close();
