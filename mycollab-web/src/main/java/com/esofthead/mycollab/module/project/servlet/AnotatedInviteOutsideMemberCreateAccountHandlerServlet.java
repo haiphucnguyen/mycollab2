@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -67,37 +69,42 @@ public class AnotatedInviteOutsideMemberCreateAccountHandlerServlet implements
 			return;
 		}
 
-		SimpleUser simpleUser = new SimpleUser();
-		simpleUser.setAccountId(sAccountId);
-		simpleUser.setFirstname(email);
-		simpleUser.setLastname(email);
-		simpleUser.setRegisteredtime(new Date());
-		simpleUser.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-		simpleUser.setPassword(PasswordEncryptHelper
-				.encryptSaltPassword(password));
-		simpleUser.setUsername(email);
-		simpleUser.setEmail(email);
-
-		UserAccount userAccount = new UserAccount();
-		userAccount.setUsername(email);
-		userAccount.setAccountid(sAccountId);
-		userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-		userAccount.setIsaccountowner(false);
-		userAccount.setRegisteredtime(new Date());
-		userAccount.setRoleid(roleId);
-		userAccount.setIsadmin(false);
-
-		ProjectMember member = new ProjectMember();
-		member.setProjectid(projectId);
-		member.setUsername(email);
-		member.setJoindate(new Date());
-		member.setSaccountid(sAccountId);
-		member.setIsadmin(false);
-		member.setStatus(RegisterStatusConstants.ACTIVE);
-
 		try {
+			SimpleUser simpleUser = new SimpleUser();
+			simpleUser.setAccountId(sAccountId);
+			simpleUser.setFirstname("");
+			simpleUser.setLastname("");
+			simpleUser.setRegisteredtime(new GregorianCalendar().getTime());
+			simpleUser.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+			simpleUser.setPassword(PasswordEncryptHelper
+					.encryptSaltPassword(password));
+			simpleUser.setUsername(email);
+			simpleUser.setEmail(email);
+			log.debug("Save user {}", BeanUtility.printBeanObj(simpleUser));
 			userMapper.insert(simpleUser);
+
+			UserAccount userAccount = new UserAccount();
+			userAccount.setUsername(email);
+			userAccount.setAccountid(sAccountId);
+			userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+			userAccount.setIsaccountowner(false);
+			userAccount.setRegisteredtime(new GregorianCalendar().getTime());
+			userAccount.setRoleid(roleId);
+			userAccount.setIsadmin(false);
+			log.debug("Start save user account {}",
+					BeanUtility.printBeanObj(userAccount));
 			userAccountMapper.insert(userAccount);
+
+			ProjectMember member = new ProjectMember();
+			member.setProjectid(projectId);
+			member.setUsername(email);
+			member.setJoindate(new Date());
+			member.setSaccountid(sAccountId);
+			member.setIsadmin(false);
+			member.setStatus(RegisterStatusConstants.ACTIVE);
+			log.debug("Start save project member {}",
+					BeanUtility.printBeanObj(member));
+
 			projectMemberService.saveWithSession(member,
 					AppContext.getUsername());
 		} catch (Exception e) {
