@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.module.file.view;
 
-import java.net.InetSocketAddress;
-import java.net.Socket;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -296,10 +297,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								menuTree.setParent(subFolder, expandFolder);
 							}
 						} else {
-							getWindow()
-									.showNotification(
-											"Oops, we can't connect to dropbox site. Please check your internet connection and try again later",
-											Window.Notification.TYPE_WARNING_MESSAGE);
+							if (!resourceHandlerLayout
+									.IsShowMessageWhenProblemConnect())
+								FileMainViewImpl.this
+										.getWindow()
+										.showNotification(
+												"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
+												Window.Notification.TYPE_WARNING_MESSAGE);
 						}
 					} else {
 						final List<Folder> subFolders = resourceService
@@ -369,6 +373,16 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			@Override
 			public void itemClick(final ItemClickEvent event) {
 				final Folder item = (Folder) event.getItemId();
+				if (item instanceof ExternalFolder
+						&& !isAbleToConnectToDrive("http://www.dropbox.com/")
+						&& !resourceHandlerLayout
+								.IsShowMessageWhenProblemConnect()) {
+					FileMainViewImpl.this
+							.getWindow()
+							.showNotification(
+									"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
+									Window.Notification.TYPE_WARNING_MESSAGE);
+				}
 				gotoFileMainViewPage(item);
 			}
 		});
@@ -1033,13 +1047,15 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 	}
 
-	private boolean isAbleToConnectToDrive(String site) {
-		Socket sock = new Socket();
-		InetSocketAddress addr = new InetSocketAddress(site, 80);
+	public static boolean isAbleToConnectToDrive(String site) {
+		URL url;
+		HttpURLConnection urlConn;
 		try {
-			sock.connect(addr, 3000);
+			url = new URL(site);
+			urlConn = (HttpURLConnection) url.openConnection();
+			urlConn.connect();
 			return true;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			return false;
 		}
 	}

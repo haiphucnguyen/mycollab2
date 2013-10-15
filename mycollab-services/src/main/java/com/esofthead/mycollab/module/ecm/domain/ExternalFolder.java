@@ -2,8 +2,10 @@ package com.esofthead.mycollab.module.ecm.domain;
 
 public class ExternalFolder extends Folder {
 	private String storageName;
-	
+
 	private ExternalDrive externalDrive;
+
+	private String siteURl;
 
 	public String getStorageName() {
 		return storageName;
@@ -19,5 +21,13 @@ public class ExternalFolder extends Folder {
 
 	public void setExternalDrive(ExternalDrive externalDrive) {
 		this.externalDrive = externalDrive;
+	}
+
+	public String getSiteURl() {
+		return siteURl;
+	}
+
+	public void setSiteURl(String siteURl) {
+		this.siteURl = siteURl;
 	}
 }
