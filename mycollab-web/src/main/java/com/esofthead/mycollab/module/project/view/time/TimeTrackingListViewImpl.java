@@ -40,9 +40,6 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.data.util.filter.UnsupportedFilterException;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
@@ -380,7 +377,6 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 			private String oldText;
 			private ProjectGenericTask projectGenericTask;
-			private List<ProjectGenericTask> listContainer;
 
 			public ProjectGenericTask getCurrentItem() {
 				return projectGenericTask;
@@ -395,46 +391,20 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				this.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_EXPLICIT);
 			}
 
-			public class CustomLazyContainer extends IndexedContainer {
-				private static final long serialVersionUID = 1L;
-				private int prefixSize;
-				private String propertyId;
-				private String filterString;
-
-				public CustomLazyContainer(int prefixSize, String propertyId) {
-					this.prefixSize = prefixSize;
-					this.propertyId = propertyId;
-				}
-
-				@Override
-				public void addContainerFilter(Filter filter)
-						throws UnsupportedFilterException {
-					if (filter == null) {
-						removeAllItems();
-						filterString = null;
-						return;
+			@Override
+			public void changeVariables(Object source, Map variables) {
+				String filterString = (String) variables.get("filter");
+				if (filterString != null && filterString.trim().length() > 0) {
+					if (oldText == null)
+						oldText = filterString;
+					else {
+						if (oldText.equals(filterString))
+							return;
+						else
+							oldText = filterString;
 					}
+					items.removeAllItems();
 
-					removeAllItems();
-
-					if (filter instanceof SimpleStringFilter) {
-						String newFilterString = ((SimpleStringFilter) filter)
-								.getFilterString();
-						if (newFilterString == null)
-							return;
-						if (newFilterString.equals(filterString))
-							return;
-						filterString = newFilterString;
-
-						if (filterString.length() < prefixSize)
-							return;
-
-						doFilter();
-						super.addContainerFilter(filter);
-					}
-				}
-
-				private void doFilter() {
 					ProjectGenericTaskService service = ApplicationContextUtil
 							.getSpringBean(ProjectGenericTaskService.class);
 					ProjectGenericTaskSearchCriteria criteria = new ProjectGenericTaskSearchCriteria();
@@ -444,7 +414,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					List<ProjectGenericTask> lst = service
 							.findPagableBugAndTaskByCriteria(request);
 					for (ProjectGenericTask projectGenericTask : lst) {
-						CustomLazyContainer.this.addItem(projectGenericTask);
+						items.addItem(projectGenericTask);
 						SubclassComboBox.this.setItemCaption(
 								projectGenericTask,
 								projectGenericTask.getName());
@@ -462,28 +432,6 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 													.newResource("icons/16/project/task.png"));
 						}
 					}
-				}
-			}
-
-			@Override
-			public void changeVariables(Object source, Map variables) {
-				String filterString = (String) variables.get("filter");
-				if (filterString != null && filterString.trim().length() > 0) {
-					if (oldText == null)
-						oldText = filterString;
-					else {
-						if (oldText.equals(filterString))
-							return;
-						else
-							oldText = filterString;
-					}
-					items.removeAllItems();
-
-					SimpleStringFilter filter = new SimpleStringFilter("name",
-							filterString, true, true);
-					CustomLazyContainer container = new CustomLazyContainer(2,
-							"name");
-					SubclassComboBox.this.setContainerDataSource(container);
 				}
 				super.changeVariables(source, variables);
 			}
