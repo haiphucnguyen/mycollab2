@@ -33,7 +33,7 @@ public class MyCollabServlet extends ICEPushServlet {
 	public static final String ATTRIBUTE_FORCE_APPLICATION_ID = MyCollabServlet.class
 			.getName() + ".forceApplicationId";
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	private String caption;
 
@@ -105,7 +105,7 @@ public class MyCollabServlet extends ICEPushServlet {
 			// to use
 			String applicationId = generateNewApplicationId();
 
-			logger.debug("Suggesting application id: " + applicationId
+			log.debug("Suggesting application id: " + applicationId
 					+ " for request to " + request.getRequestURI() + "  "
 					+ MyCollabApplication.getInstance());
 
@@ -140,28 +140,34 @@ public class MyCollabServlet extends ICEPushServlet {
 			String themeName, Application application, BufferedWriter page,
 			String appUrl, String themeUri, String appId,
 			HttpServletRequest request) throws ServletException, IOException {
-		super.writeAjaxPageHtmlVaadinScripts(window, themeName, application,
-				page, appUrl, themeUri, appId, request);
+		try {
+			super.writeAjaxPageHtmlVaadinScripts(window, themeName,
+					application, page, appUrl, themeUri, appId, request);
 
-		String applicationId = (String) request
-				.getAttribute(ATTRIBUTE_APPLICATION_ID);
-		boolean forceApplicationId = (Boolean) request
-				.getAttribute(ATTRIBUTE_FORCE_APPLICATION_ID);
+			String applicationId = (String) request
+					.getAttribute(ATTRIBUTE_APPLICATION_ID);
+			boolean forceApplicationId = (Boolean) request
+					.getAttribute(ATTRIBUTE_FORCE_APPLICATION_ID);
 
-		page.write("<script type=\"text/javascript\">\n");
-		page.write("//<![CDATA[\n");
+			page.write("<script type=\"text/javascript\">\n");
+			page.write("//<![CDATA[\n");
 
-		if (forceApplicationId) {
-			page.write("  window.name = \"" + applicationId + "\";\n");
-		} else {
-			page.write("  if (!window.name) {\n");
-			page.write("    window.name = \"" + applicationId + "\";\n");
-			page.write("  }\n");
+			if (forceApplicationId) {
+				page.write("  window.name = \"" + applicationId + "\";\n");
+			} else {
+				page.write("  if (!window.name) {\n");
+				page.write("    window.name = \"" + applicationId + "\";\n");
+				page.write("  }\n");
+			}
+
+			page.write("  vaadin.vaadinConfigurations[\"" + appId
+					+ "\"][\"appUri\"] += \"/\" + window.name;\n");
+			page.write("//]]>\n</script>\n");
+		} catch (Exception e) {
+			log.error(
+					"Error while serveing request " + request.getRequestURL(),
+					e);
 		}
-
-		page.write("  vaadin.vaadinConfigurations[\"" + appId
-				+ "\"][\"appUri\"] += \"/\" + window.name;\n");
-		page.write("//]]>\n</script>\n");
 
 	}
 

@@ -5,6 +5,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
@@ -29,6 +32,9 @@ public class ProjectActivityStreamPagedList
 		extends
 		AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory
+			.getLogger(ProjectActivityStreamPagedList.class);
 
 	private final ActivityStreamService activityStreamService;
 
@@ -104,12 +110,10 @@ public class ProjectActivityStreamPagedList
 									ProjectResources
 											.getResourceLink(activityStream
 													.getType()),
-									ProjectLinkBuilder
-											.generateProjectItemLink(
-													activityStream
-															.getExtratypeid(),
-													activityStream.getType(),
-													activityStream.getTypeid()),
+									ProjectLinkBuilder.generateProjectItemLink(
+											activityStream.getExtratypeid(),
+											activityStream.getType(),
+											activityStream.getTypeid()),
 									activityStream.getNamefield());
 				} else if (ActivityStreamConstants.ACTION_UPDATE
 						.equals(activityStream.getAction())) {
@@ -120,6 +124,12 @@ public class ProjectActivityStreamPagedList
 											activityStream
 													.getCreatedUserAvatarId(),
 											16),
+									ProjectLinkBuilder
+											.generateProjectMemberFullLink(
+													activityStream
+															.getExtratypeid(),
+													activityStream
+															.getCreateduser()),
 									activityStream.getCreatedUserFullName(),
 									LocalizationHelper
 											.getMessage(ProjectLocalizationTypeMap
@@ -128,13 +138,12 @@ public class ProjectActivityStreamPagedList
 									ProjectResources
 											.getResourceLink(activityStream
 													.getType()),
-									ProjectLinkBuilder
-											.generateProjectItemLink(
-													activityStream
-															.getExtratypeid(),
-													activityStream.getType(),
-													activityStream.getTypeid()),
+									ProjectLinkBuilder.generateProjectItemLink(
+											activityStream.getExtratypeid(),
+											activityStream.getType(),
+											activityStream.getTypeid()),
 									activityStream.getNamefield());
+					log.debug("CONTENT: " + content);
 					if (activityStream.getAssoAuditLog() != null) {
 						content += ProjectActivityStreamGenerator
 								.generatorDetailChangeOfActivity(activityStream);

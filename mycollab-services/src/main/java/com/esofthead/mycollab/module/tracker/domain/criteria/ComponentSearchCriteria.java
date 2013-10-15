@@ -11,6 +11,8 @@ public class ComponentSearchCriteria extends SearchCriteria {
     private StringSearchField componentName;
     
     private NumberSearchField id;
+    
+    private StringSearchField status;
 
     public NumberSearchField getProjectid() {
         return projectid;
@@ -35,4 +37,12 @@ public class ComponentSearchCriteria extends SearchCriteria {
     public void setId(NumberSearchField id) {
         this.id = id;
     }
+
+	public StringSearchField getStatus() {
+		return status;
+	}
+
+	public void setStatus(StringSearchField status) {
+		this.status = status;
+	}
 }

@@ -36,10 +36,10 @@
 									<td>$!bug.priority</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Severity:&nbsp;</td>
-									<td>$!bug.severity</td>
-									<td style="text-align: right;">Resolution:&nbsp;</td>
-									<td>$!bug.resolution</td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Severity:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.severity</td>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Resolution:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.resolution</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>

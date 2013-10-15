@@ -44,15 +44,16 @@
 									<td>$!task.priority</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Assign:&nbsp;</td>
-									<td style="vertical-align: top;"><a href="${!hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.assignUserFullName</a>
+									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assign:&nbsp;</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">
+										<a href="${!hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.assignUserFullName</a>
 									</td>
-									<td style="text-align: right; vertical-align: top;"> Task list:&nbsp;</td>
-									<td style="vertical-align: top;"><a href="${!hyperLinks.taskListUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskListName</a></td>		
+									<td style="text-align: right; min-width : 90px; vertical-align: top;"> Task list:&nbsp;</td>
+									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="${!hyperLinks.taskListUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskListName</a></td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; vertical-align: top;">Notes:&nbsp;</td>
-									<td style=" vertical-align: top;" colspan="3">$!task.Notes</td>	
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Notes:&nbsp;</td>
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!task.Notes</td>	
 								</tr>
 							</table>
 						</td>

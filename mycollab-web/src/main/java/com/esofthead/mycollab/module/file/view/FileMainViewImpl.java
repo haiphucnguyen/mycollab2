@@ -629,14 +629,18 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										nameField.getValue().toString().trim());
 						if (lstResource != null && lstResource.size() > 0) {
 							resourceHandlerLayout
-									.constructBodyItemContainerSearchActionResult(lstResource);
+									.constructBodyItemContainerSearchActionResult(
+											lstResource, nameField.getValue()
+													.toString().trim());
 							resourceHandlerLayout.initBreadCrumb();
 							resourceHandlerLayout
 									.setCurrentBaseFolder((Folder) FileMainViewImpl.this.resourceService
 											.getResource(rootPath));
 						} else {
-							NotificationUtil
-									.showNotification("Searching has no any results.");
+							resourceHandlerLayout
+									.constructBodyItemContainerSearchActionResult(
+											lstResource, nameField.getValue()
+													.toString().trim());
 						}
 					}
 				});

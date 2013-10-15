@@ -252,7 +252,8 @@ public class UserServiceDBImpl extends
 		List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 				criteria, 0, Integer.MAX_VALUE));
 		if (users == null || users.isEmpty()) {
-			throw new UserInvalidInputException("Invalid username or password");
+			throw new UserInvalidInputException("User " + username
+					+ " is not existed in this domain");
 		} else {
 			SimpleUser user = users.get(0);
 			if (user.getPassword() == null

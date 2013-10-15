@@ -39,7 +39,7 @@ public class SimpleUser extends User {
 		String result = getFirstname() + " " + getLastname();
 		if (result.trim().equals("")) {
 			String displayName = getUsername();
-			int index = displayName.indexOf("@");
+			int index = (displayName != null) ? displayName.indexOf("@") : 0;
 			if (index > 0) {
 				return displayName.substring(0, index);
 			}
