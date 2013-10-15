@@ -82,7 +82,7 @@ public class BugChartComponent extends Depot {
 
 	private void initUI() {
 
-		final PopupButton bugChartPopup = new PopupButton("Bug Trend");
+		final PopupButton bugChartPopup = new PopupButton("Bugs By Priority");
 		bugChartPopup.addStyleName("link");
 
 		final VerticalLayout filterBtnLayout = new VerticalLayout();
