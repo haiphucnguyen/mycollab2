@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.file.view;
 
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,10 +57,10 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
@@ -275,21 +277,29 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						}
 					}
 					if (expandFolder instanceof ExternalFolder) {
-						List<ExternalFolder> subFolders = externalResourceService
-								.getSubFolders(((ExternalFolder) expandFolder)
-										.getExternalDrive(), expandFolder
-										.getPath());
-						for (final Folder subFolder : subFolders) {
-							expandFolder.addChild(subFolder);
-							menuTree.addItem(subFolder);
+						if (isAbleToConnectToDrive("http://www.dropbox.com/")) {
+							List<ExternalFolder> subFolders = externalResourceService
+									.getSubFolders(
+											((ExternalFolder) expandFolder)
+													.getExternalDrive(),
+											expandFolder.getPath());
+							for (final Folder subFolder : subFolders) {
+								expandFolder.addChild(subFolder);
+								menuTree.addItem(subFolder);
 
-							menuTree.setItemIcon(
-									subFolder,
-									MyCollabResource
-											.newResource("icons/16/ecm/dropbox_subfolder.png"));
-							menuTree.setItemCaption(subFolder,
-									subFolder.getName());
-							menuTree.setParent(subFolder, expandFolder);
+								menuTree.setItemIcon(
+										subFolder,
+										MyCollabResource
+												.newResource("icons/16/ecm/dropbox_subfolder.png"));
+								menuTree.setItemCaption(subFolder,
+										subFolder.getName());
+								menuTree.setParent(subFolder, expandFolder);
+							}
+						} else {
+							getWindow()
+									.showNotification(
+											"Oops, we can't connect to dropbox site. Please check your internet connection and try again later",
+											Window.Notification.TYPE_WARNING_MESSAGE);
 						}
 					} else {
 						final List<Folder> subFolders = resourceService
@@ -1020,6 +1030,17 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				parentLayout.setExpandRatio(lbl, 1.0f);
 				externalDriveEditLayout.removeStyleName("driveEditting");
 			}
+		}
+	}
+
+	private boolean isAbleToConnectToDrive(String site) {
+		Socket sock = new Socket();
+		InetSocketAddress addr = new InetSocketAddress(site, 80);
+		try {
+			sock.connect(addr, 3000);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 }

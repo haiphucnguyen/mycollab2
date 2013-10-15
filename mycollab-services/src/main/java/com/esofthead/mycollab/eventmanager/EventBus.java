@@ -22,8 +22,8 @@ public abstract class EventBus {
 		return eventbusFactory.getInstance();
 	}
 
-	public static EventBus getInstanceSession(String sessionId) {
-		return eventbusFactory.getInstanceSession(sessionId);
+	public static EventBus getInstanceSession(String appId) {
+		return eventbusFactory.getInstanceSession(appId);
 	}
 
 	abstract public void addListener(ApplicationEventListener<?> listener);
