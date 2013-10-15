@@ -22,7 +22,7 @@ public class ProgressBar extends CustomLayoutExt {
         this.progressIndicator.setWidth("100%");
         if (displayPercentage) {
             if (total > 0) {
-                this.progressStatusLabel = new Label(String.format("%.2f",
+                this.progressStatusLabel = new Label(String.format("%.0f",
                         ((float) (total - remaining) / total) * 100) + "%");
             } else {
                 this.progressStatusLabel = new Label("100%");
