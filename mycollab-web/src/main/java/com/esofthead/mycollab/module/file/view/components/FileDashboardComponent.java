@@ -6,10 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -80,6 +78,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		resourceContainer.setExpandRatio(resourceHandlerComponent, 1.0f);
 
 		this.addComponent(resourceContainer);
+
 	}
 
 	abstract protected void doSearch(FileSearchCriteria searchCriteria);

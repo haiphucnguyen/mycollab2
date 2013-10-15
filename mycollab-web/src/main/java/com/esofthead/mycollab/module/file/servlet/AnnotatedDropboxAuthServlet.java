@@ -97,23 +97,23 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		}
 
 		String accessToken = authFinish.accessToken;
-		String sessionId = authFinish.urlState;
-		if (sessionId.startsWith("|")) {
-			sessionId = sessionId.substring(1);
+		String appId = authFinish.urlState;
+		if (appId.startsWith("|")) {
+			appId = appId.substring(1);
 		}
 
 		// Store accessToken ...
 		CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(
 				StorageNames.DROPBOX, accessToken);
 
-		EventBus eventBus = EventBus.getInstanceSession(sessionId);
+		EventBus eventBus = EventBus.getInstanceSession(appId);
 		if (eventBus != null) {
 			eventBus.fireEvent(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
 					AnnotatedDropboxAuthServlet.this, cloudDriveInfo));
 		} else {
 			log.error(
 					"Can not find eventbus for session id {}, this session is not initialized by user yet",
-					sessionId);
+					appId);
 		}
 
 		// response script close current window
