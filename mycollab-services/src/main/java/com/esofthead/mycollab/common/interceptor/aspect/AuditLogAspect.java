@@ -172,6 +172,7 @@ public class AuditLogAspect {
 								monitorItem.setType(monitorType);
 								monitorItem.setTypeid(monitorTypeId);
 								monitorItem.setUser(moreUser);
+								monitorItem.setSaccountid(sAccountId);
 								monitorItemService.saveWithSession(monitorItem,
 										moreUser);
 							}
