@@ -25,8 +25,7 @@ public class SimpleUser extends User {
 	public static final String INACTION_STATUS = "inactive";
 	public static final String PENDING_STATUS = "pending";
 	public static final int ADMIN_VAL = 1;
-
-	private Boolean isAdmin;
+	
 	private Integer roleid;
 	private String roleName;
 	private PermissionMap permissionMaps;
@@ -61,14 +60,6 @@ public class SimpleUser extends User {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
-	}
-
-	public Boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
 	}
 
 	public Integer getRoleid() {

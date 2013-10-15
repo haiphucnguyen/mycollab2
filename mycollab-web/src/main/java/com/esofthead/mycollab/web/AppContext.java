@@ -204,7 +204,7 @@ public class AppContext implements Serializable {
 	}
 
 	public static boolean isAdmin() {
-		Boolean isAdmin = getInstance().session.getIsAdmin();
+		Boolean isAdmin = getInstance().session.getIsAccountOwner();
 		if (isAdmin == null) {
 			return Boolean.FALSE;
 		} else {

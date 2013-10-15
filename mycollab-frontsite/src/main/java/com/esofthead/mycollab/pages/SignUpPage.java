@@ -72,7 +72,7 @@ public class SignUpPage extends BasePage {
         session = ((ServletWebRequest) RequestCycle.get().getRequest())
                 .getContainerRequest().getSession();
 
-        if (parameters.get("planId") != null) {
+        if (!parameters.get("planId").isNull()) {
             planId = parameters.get("planId").toInt();
         }
 

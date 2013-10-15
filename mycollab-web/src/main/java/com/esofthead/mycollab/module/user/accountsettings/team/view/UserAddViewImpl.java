@@ -231,14 +231,14 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 						.getValue();
 				Boolean resultVal = null;
 				if (roleId == -1) {
-					UserAddViewImpl.this.user.setIsAdmin(Boolean.TRUE);
+					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.TRUE);
 					UserAddViewImpl.this.user.setRoleid(null);
 					resultVal = Boolean.TRUE;
 				} else {
 					UserAddViewImpl.this.user
 							.setRoleid((Integer) AdminRoleSelectionField.this.roleBox
 									.getValue());
-					UserAddViewImpl.this.user.setIsAdmin(Boolean.FALSE);
+					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.FALSE);
 					resultVal = Boolean.FALSE;
 				}
 				return resultVal;
@@ -382,14 +382,12 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 						.getValue();
 				Boolean resultVal = null;
 				if (roleId == -1) {
-					UserAddViewImpl.this.user.setIsAdmin(Boolean.TRUE);
+					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.TRUE);
 					UserAddViewImpl.this.user.setRoleid(null);
 					resultVal = Boolean.TRUE;
 				} else {
-					UserAddViewImpl.this.user
-							.setRoleid((Integer) AdminRoleSelectionField.this.roleBox
-									.getValue());
-					UserAddViewImpl.this.user.setIsAdmin(Boolean.FALSE);
+					UserAddViewImpl.this.user.setRoleid(roleId);
+					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.FALSE);
 					resultVal = Boolean.FALSE;
 				}
 				return resultVal;

@@ -16,10 +16,14 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -27,6 +31,7 @@ import com.esofthead.mycollab.module.user.dao.RoleMapper;
 import com.esofthead.mycollab.module.user.dao.RoleMapperExt;
 import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.RoleExample;
 import com.esofthead.mycollab.module.user.domain.RolePermission;
 import com.esofthead.mycollab.module.user.domain.RolePermissionExample;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -82,5 +87,19 @@ public class RoleServiceDBImpl extends
 	@Override
 	public SimpleRole findById(int roleId, int sAccountId) {
 		return roleMapperExt.findById(roleId);
+	}
+
+	@Override
+	public Integer getSystemRoleId(String systemRoleName,
+			@CacheKey Integer sAccountId) {
+		RoleExample ex = new RoleExample();
+		ex.createCriteria().andRolenameEqualTo(systemRoleName)
+				.andIssystemroleEqualTo(Boolean.TRUE);
+		List<Role> roles = roleMapper.selectByExample(ex);
+		if (roles != null && roles.size() > 0) {
+			return roles.get(0).getId();
+		} else {
+			return null;
+		}
 	}
 }

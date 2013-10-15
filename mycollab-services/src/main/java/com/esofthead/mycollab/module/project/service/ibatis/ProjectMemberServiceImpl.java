@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,7 +16,9 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.esb.BeanProxyBuilder;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt;
@@ -27,7 +30,13 @@ import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberCommand;
 import com.esofthead.mycollab.module.project.esb.InviteOutsideProjectMemberCommand;
 import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
+import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
+import com.esofthead.mycollab.module.user.dao.UserMapper;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.UserAccount;
+import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
@@ -119,5 +128,60 @@ public class ProjectMemberServiceImpl extends
 						InviteOutsideProjectMemberCommand.class);
 		listener.inviteUsers(email, projectId, projectRoleId, inviteUser,
 				sAccountId);
+	}
+
+	@Override
+	public void acceptProjectInvitationByNewUser(String email, String password,
+			Integer projectId, Integer projectRoleId, Integer sAccountId) {
+
+		SimpleUser simpleUser = new SimpleUser();
+		simpleUser.setAccountId(sAccountId);
+		simpleUser.setFirstname("");
+		simpleUser.setLastname("");
+		simpleUser.setRegisteredtime(new GregorianCalendar().getTime());
+		simpleUser.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+		simpleUser.setPassword(PasswordEncryptHelper
+				.encryptSaltPassword(password));
+		simpleUser.setUsername(email);
+		simpleUser.setEmail(email);
+		log.debug("Save user {}", BeanUtility.printBeanObj(simpleUser));
+
+		UserMapper userMapper = ApplicationContextUtil
+				.getSpringBean(UserMapper.class);
+		userMapper.insert(simpleUser);
+
+		log.debug("Assign guest role for this user {}", email);
+		RoleService roleService = ApplicationContextUtil
+				.getSpringBean(RoleService.class);
+		Integer systemGuestRoleId = roleService.getSystemRoleId(
+				SimpleRole.GUEST, sAccountId);
+
+		UserAccount userAccount = new UserAccount();
+		userAccount.setUsername(email);
+		userAccount.setAccountid(sAccountId);
+		userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+		userAccount.setIsaccountowner(false);
+		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
+		userAccount.setRoleid(systemGuestRoleId);
+
+		log.debug("Start save user account {}",
+				BeanUtility.printBeanObj(userAccount));
+		UserAccountMapper userAccountMapper = ApplicationContextUtil
+				.getSpringBean(UserAccountMapper.class);
+		userAccountMapper.insert(userAccount);
+
+		ProjectMember member = new ProjectMember();
+		member.setProjectid(projectId);
+		member.setUsername(email);
+		member.setJoindate(new GregorianCalendar().getTime());
+		member.setSaccountid(sAccountId);
+		member.setIsadmin(false);
+		member.setStatus(RegisterStatusConstants.ACTIVE);
+		member.setProjectroleid(projectRoleId);
+		log.debug("Start save project member {}",
+				BeanUtility.printBeanObj(member));
+
+		saveWithSession(member, "");
+
 	}
 }

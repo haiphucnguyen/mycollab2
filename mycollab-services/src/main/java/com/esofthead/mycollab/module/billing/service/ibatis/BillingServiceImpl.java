@@ -175,35 +175,34 @@ public class BillingServiceImpl implements BillingService {
 		}
 		this.userMapper.insert(user);
 
+		// save default roles
+		log.debug("Save default roles for account of subdomain {}", subdomain);
+		saveEmployeeRole(accountid);
+		int adminRoleId = saveAdminRole(accountid);
+		saveGuestRole(accountid);
+
 		// save user account
 		log.debug("Register user {} to subdomain {}", username, subdomain);
 		UserAccount userAccount = new UserAccount();
 		userAccount.setAccountid(accountid);
 		userAccount.setIsaccountowner(true);
-		userAccount.setIsadmin(true);
 		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
 		userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 		userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
-		userAccount.setRoleid(null);
+		userAccount.setRoleid(adminRoleId);
 		userAccount.setUsername(username);
 
 		userAccountMapper.insert(userAccount);
-
-		// save default roles
-		log.debug("Save default roles for account of subdomain {}", subdomain);
-		saveEmployeeRole(accountid, username);
-		saveAdminRole(accountid, username);
-		saveGuestRole(accountid, username);
 	}
 
-	private void saveEmployeeRole(int accountid, String username) {
+	private int saveEmployeeRole(int accountid) {
 		// Register default role for account
 		final Role role = new Role();
 		role.setRolename(SimpleRole.EMPLOYEE);
 		role.setDescription("");
 		role.setSaccountid(accountid);
 		role.setIssystemrole(true);
-		final int roleId = this.roleService.saveWithSession(role, username);
+		final int roleId = this.roleService.saveWithSession(role, "");
 
 		// save default permission to role
 		final PermissionMap permissionMap = new PermissionMap();
@@ -234,16 +233,17 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		this.roleService.savePermission(roleId, permissionMap, accountid);
+		return roleId;
 	}
 
-	private void saveAdminRole(int accountid, String username) {
+	private int saveAdminRole(int accountid) {
 		// Register default role for account
 		final Role role = new Role();
 		role.setRolename(SimpleRole.ADMIN);
 		role.setDescription("");
 		role.setSaccountid(accountid);
 		role.setIssystemrole(true);
-		final int roleId = this.roleService.saveWithSession(role, username);
+		final int roleId = this.roleService.saveWithSession(role, "");
 
 		// save default permission to role
 		final PermissionMap permissionMap = new PermissionMap();
@@ -273,16 +273,17 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		this.roleService.savePermission(roleId, permissionMap, accountid);
+		return roleId;
 	}
 
-	private void saveGuestRole(int accountid, String username) {
+	private int saveGuestRole(int accountid) {
 		// Register default role for account
 		final Role role = new Role();
 		role.setRolename(SimpleRole.GUEST);
 		role.setDescription("");
 		role.setSaccountid(accountid);
 		role.setIssystemrole(true);
-		final int roleId = this.roleService.saveWithSession(role, username);
+		final int roleId = this.roleService.saveWithSession(role, "");
 
 		// save default permission to role
 		final PermissionMap permissionMap = new PermissionMap();
@@ -313,6 +314,7 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		this.roleService.savePermission(roleId, permissionMap, accountid);
+		return roleId;
 	}
 
 	@Override

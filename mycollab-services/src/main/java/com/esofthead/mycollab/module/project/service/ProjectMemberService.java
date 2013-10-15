@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.flex.remoting.RemotingDestination;
 
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
@@ -41,4 +42,8 @@ public interface ProjectMemberService extends
 
 	void inviteProjectMember(String[] email, int projectId, int projectRoleId,
 			String inviteUser, int sAccountId);
+
+	@CacheEvict
+	void acceptProjectInvitationByNewUser(String email, String password,
+			Integer projectId, Integer projectRoleId, Integer sAccountId);
 }

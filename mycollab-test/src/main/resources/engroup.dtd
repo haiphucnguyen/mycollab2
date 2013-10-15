@@ -1232,6 +1232,7 @@
     sAccountId CDATA #REQUIRED
     lastUpdatedTime CDATA #IMPLIED
     createdTime CDATA #IMPLIED
+    status CDATA #IMPLIED
 >
 
 <!ELEMENT m_tracker_metadata EMPTY>
@@ -1274,6 +1275,7 @@
     sAccountId CDATA #REQUIRED
     lastUpdatedTime CDATA #IMPLIED
     createdTime CDATA #IMPLIED
+    status CDATA #IMPLIED
 >
 
 <!ELEMENT s_account EMPTY>
@@ -1458,7 +1460,6 @@
     id CDATA #REQUIRED
     username CDATA #REQUIRED
     accountId CDATA #REQUIRED
-    isAdmin CDATA #REQUIRED
     isAccountOwner CDATA #REQUIRED
     roleId CDATA #IMPLIED
     registeredTime CDATA #REQUIRED
