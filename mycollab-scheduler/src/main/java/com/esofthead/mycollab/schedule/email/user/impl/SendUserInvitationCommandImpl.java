@@ -72,10 +72,11 @@ public class SendUserInvitationCommandImpl {
 					.getUsername() : "there";
 			templateGenerator.putVariable("userName", userName);
 			templateGenerator.putVariable("inviterName", inviterName);
-			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
-					Arrays.asList(new MailRecipientField(invitation
-							.getUsername(), invitation.getUsername())), null,
-					null, templateGenerator.generateSubjectContent(),
+			extMailService.sendHTMLMail("noreply@esofthead.com",
+					"noreply@esofthead.com", Arrays
+							.asList(new MailRecipientField(invitation
+									.getUsername(), invitation.getUsername())),
+					null, null, templateGenerator.generateSubjectContent(),
 					templateGenerator.generateBodyContent(), null);
 
 			// Send email and change register status of user to
