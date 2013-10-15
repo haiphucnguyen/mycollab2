@@ -28,6 +28,7 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -156,8 +157,15 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Role>(PreviewForm.this))
+				PreviewFormControlsGenerator<Role> buttonControls = new PreviewFormControlsGenerator<Role>(
+						PreviewForm.this);
+				HorizontalLayout layout = buttonControls
 						.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
+				if (role.getIssystemrole() != null
+						&& role.getIssystemrole() == Boolean.TRUE) {
+					buttonControls.setDeleteButtonVisible(false);
+				}
+				return layout;
 			}
 
 			@Override

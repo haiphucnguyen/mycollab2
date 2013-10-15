@@ -112,4 +112,8 @@ public class PreviewFormControlsGenerator<T> {
 		}
 		return layout;
 	}
+
+	public void setDeleteButtonVisible(boolean visible) {
+		deleteBtn.setVisible(visible);
+	}
 }
