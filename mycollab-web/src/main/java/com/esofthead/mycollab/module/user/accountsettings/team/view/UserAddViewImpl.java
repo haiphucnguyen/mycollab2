@@ -144,7 +144,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 					final Object propertyId,
 					final com.vaadin.ui.Component uiContext) {
 
-				if (propertyId.equals("isAccountOwner")) {
+				if (propertyId.equals("roleid")) {
 					AdminRoleSelectionField roleSelectionField = new AdminRoleSelectionField();
 					if (user.getRoleid() != null) {
 						roleSelectionField.setRoleId(user.getRoleid());
@@ -333,7 +333,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 					final Object propertyId,
 					final com.vaadin.ui.Component uiContext) {
 
-				if (propertyId.equals("isAdmin")) {
+				if (propertyId.equals("roleid")) {
 					AdminRoleSelectionField roleSelectionField = new AdminRoleSelectionField();
 					if (user.getRoleid() != null) {
 						roleSelectionField.setRoleId(user.getRoleid());
@@ -469,7 +469,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 				if (propertyId.equals("email")) {
 					this.basicInformationLayout.addComponent(field, "Email", 0,
 							0, "167px");
-				} else if (propertyId.equals("isAdmin")) {
+				} else if (propertyId.equals("roleid")) {
 					this.basicInformationLayout.addComponent(field, "Role", 1,
 							0);
 				}
