@@ -486,8 +486,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 			List<Resource> lstResource = new ArrayList<Resource>();
 			if (currentFolder instanceof ExternalFolder
-					&& FileMainViewImpl
-							.isAbleToConnectToDrive("http://www.dropbox.com/")) {
+					&& FileMainViewImpl.isAbleToConnectToDrive(FileMainViewImpl
+							.getSiteURL((ExternalFolder) currentFolder))) {
 				lstResource = externalResourceService.getResources(
 						((ExternalFolder) currentFolder).getExternalDrive(),
 						currentFolder.getPath());
@@ -498,8 +498,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			if (currentFolder.getPath().equals(rootPath)
 					&& ResourceHandlerComponent.this.isNeedLoadExternalDirve) {
 				// current support DROPBOX --- must modify here
-				if (FileMainViewImpl
-						.isAbleToConnectToDrive("http://www.dropbox.com/")) {
+				if (FileMainViewImpl.isAbleToConnectToDrive(FileMainViewImpl
+						.getSiteURL((ExternalFolder) currentFolder))) {
 					isShowMessageWhenProblemConnect = false;
 					List<ExternalDrive> lst = externalDriveService
 							.getExternalDrivesOfUser(AppContext.getUsername());

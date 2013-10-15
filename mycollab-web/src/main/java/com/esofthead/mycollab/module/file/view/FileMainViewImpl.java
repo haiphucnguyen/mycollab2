@@ -144,7 +144,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					switchViewBtn.setDescription("Event");
 					switchViewBtn.setIcon(MyCollabResource
 							.newResource("icons/16/ecm/event.png"));
-					gotoFileMainViewPage(baseFolder);
+					gotoFileMainViewPage(baseFolder, true);
 				}
 			}
 		});
@@ -278,7 +278,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						}
 					}
 					if (expandFolder instanceof ExternalFolder) {
-						if (isAbleToConnectToDrive("http://www.dropbox.com/")) {
+						if (isAbleToConnectToDrive(FileMainViewImpl
+								.getSiteURL((ExternalFolder) expandFolder))) {
 							List<ExternalFolder> subFolders = externalResourceService
 									.getSubFolders(
 											((ExternalFolder) expandFolder)
@@ -374,7 +375,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			public void itemClick(final ItemClickEvent event) {
 				final Folder item = (Folder) event.getItemId();
 				if (item instanceof ExternalFolder
-						&& !isAbleToConnectToDrive("http://www.dropbox.com/")
+						&& !isAbleToConnectToDrive(getSiteURL((ExternalFolder) item))
 						&& !resourceHandlerLayout
 								.IsShowMessageWhenProblemConnect()) {
 					FileMainViewImpl.this
@@ -382,8 +383,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 							.showNotification(
 									"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
 									Window.Notification.TYPE_WARNING_MESSAGE);
+					gotoFileMainViewPage(item, false);
+					return;
 				}
-				gotoFileMainViewPage(item);
+				gotoFileMainViewPage(item, true);
 			}
 		});
 
@@ -453,7 +456,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								gotoEnclosingFoder(res, criteria);
 								return;
 							}
-							gotoFileMainViewPage((Folder) res);
+							gotoFileMainViewPage((Folder) res, true);
 						}
 					});
 			// add File - handeler
@@ -488,7 +491,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				criteria.getBaseFolder().lastIndexOf("/"));
 		Resource parentFolder = resourceService.getResource(path);
 		if (parentFolder != null) {
-			gotoFileMainViewPage((Folder) parentFolder);
+			gotoFileMainViewPage((Folder) parentFolder, true);
 		} else {
 			String message = (res instanceof Folder) ? "Folder's location has been moved successfully"
 					: "File's location has been moved successfully";
@@ -496,7 +499,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 	}
 
-	private void gotoFileMainViewPage(Folder baseFolder) {
+	private void gotoFileMainViewPage(Folder baseFolder,
+			boolean isNeedGotoBreadCumb) {
 		this.baseFolder = baseFolder;
 
 		mainBodyResourceLayout.removeAllComponents();
@@ -510,9 +514,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		mainBodyResourceLayout.addComponent(filterWapper);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
-		resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
-		resourceHandlerLayout.constructBodyItemContainer(baseFolder);
-
+		if (isNeedGotoBreadCumb == true) {
+			resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
+			resourceHandlerLayout.constructBodyItemContainer(baseFolder);
+		}
 		switchViewBtn.setDescription("Event");
 		switchViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/event.png"));
@@ -1058,5 +1063,12 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		} catch (IOException e) {
 			return false;
 		}
+	}
+
+	public static String getSiteURL(ExternalFolder folder) {
+		if (folder.getStorageName().equals(StorageNames.DROPBOX)) {
+			return "http://www.dropbox.com/";
+		}
+		return "";
 	}
 }
