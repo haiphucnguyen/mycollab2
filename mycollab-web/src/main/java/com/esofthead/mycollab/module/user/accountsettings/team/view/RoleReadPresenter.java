@@ -4,7 +4,10 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
@@ -20,11 +23,11 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -50,20 +53,43 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 					}
 
 					@Override
-					public void onDelete(Role data) {
-						RoleService roleService = ApplicationContextUtil
-								.getSpringBean(RoleService.class);
-						roleService.removeWithSession(data.getId(),
-								AppContext.getUsername(),
-								AppContext.getAccountId());
-						EventBus.getInstance().fireEvent(
-								new RoleEvent.GotoList(this, null));
+					public void onDelete(final Role data) {
+						ConfirmDialogExt.show(
+								view.getWindow(),
+								LocalizationHelper.getMessage(
+										GenericI18Enum.DELETE_DIALOG_TITLE,
+										SiteConfiguration.getSiteName()),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											RoleService roleService = ApplicationContextUtil
+													.getSpringBean(RoleService.class);
+											roleService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername(),
+													AppContext.getAccountId());
+											EventBus.getInstance().fireEvent(
+													new RoleEvent.GotoList(
+															this, null));
+										}
+									}
+								});
 					}
 
 					@Override
 					public void onClone(Role data) {
 						Role cloneData = (Role) data.copy();
 						cloneData.setRolename(null);
+						cloneData.setIssystemrole(false);
 						EventBus.getInstance().fireEvent(
 								new RoleEvent.GotoAdd(this, cloneData));
 					}
