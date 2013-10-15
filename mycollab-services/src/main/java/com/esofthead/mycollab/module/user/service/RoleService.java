@@ -28,10 +28,15 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 /**
  * @author hpnguyen
  */
-public interface RoleService extends IDefaultService<Integer, Role, RoleSearchCriteria> {
+public interface RoleService extends
+		IDefaultService<Integer, Role, RoleSearchCriteria> {
 	@CacheEvict
-    void savePermission(int roleId, PermissionMap permissionMap, @CacheKey int sAccountId);
-    
-    @Cacheable
-    SimpleRole findById(int roleId, @CacheKey int sAccountId);
+	void savePermission(int roleId, PermissionMap permissionMap,
+			@CacheKey int sAccountId);
+
+	@Cacheable
+	SimpleRole findById(int roleId, @CacheKey int sAccountId);
+
+	@Cacheable
+	Integer getSystemRoleId(String systemRoleName, @CacheKey Integer sAccountId);
 }

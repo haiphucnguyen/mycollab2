@@ -8,11 +8,11 @@
         shortname="aaa" projectStatus="Open" />
 
 
-    <s_user registerStatus="Active" firstname="a1" lastname="b1"
-        username="user1" email="hainguyen@esofthead.com" />
+    <s_user firstname="a1" lastname="b1" username="user1"
+        email="hainguyen@esofthead.com" />
 
-    <s_user registerStatus="Active" firstname="a2" lastname="b2"
-        username="user2" email="linhduong@esofthead.com" />
+    <s_user firstname="a2" lastname="b2" username="user2"
+        email="linhduong@esofthead.com" />
 
     <m_prj_problem id="1" assigntouser="user1"
         description="aaa" issuename="a" projectid="1" raisedbyuser="user2"

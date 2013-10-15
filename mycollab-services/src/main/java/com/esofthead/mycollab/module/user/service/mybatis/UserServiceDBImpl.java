@@ -175,8 +175,7 @@ public class UserServiceDBImpl extends
 		userAccount
 				.setIsaccountowner((record.getIsAccountOwner() == null) ? Boolean.FALSE
 						: record.getIsAccountOwner());
-		userAccount.setIsadmin((record.getIsAdmin() == null) ? Boolean.FALSE
-				: record.getIsAdmin());
+
 		userAccount.setRoleid(record.getRoleid());
 		userAccount.setUsername(record.getUsername());
 		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
@@ -225,7 +224,6 @@ public class UserServiceDBImpl extends
 		userAccountEx.createCriteria().andUsernameEqualTo(record.getUsername());
 
 		UserAccount userAccount = new UserAccount();
-		userAccount.setIsadmin(record.getIsAdmin());
 		userAccount.setRoleid(record.getRoleid());
 		userAccount.setRegisterstatus(record.getRegisterstatus());
 		userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
@@ -266,8 +264,9 @@ public class UserServiceDBImpl extends
 
 			log.debug("User " + username + " login to system successfully!");
 
-			if (user.getIsAdmin() == null
-					|| (user.getIsAdmin() != null && !user.getIsAdmin())) {
+			if (user.getIsAccountOwner() == null
+					|| (user.getIsAccountOwner() != null && !user
+							.getIsAccountOwner())) {
 				if (user.getRoleid() != null) {
 					log.debug("User " + username
 							+ " is not admin. Getting his role");

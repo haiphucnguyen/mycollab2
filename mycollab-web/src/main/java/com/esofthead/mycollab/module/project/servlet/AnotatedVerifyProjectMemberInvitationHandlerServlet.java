@@ -192,7 +192,6 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 				userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 				userAccount.setIsaccountowner(false);
 				userAccount.setRegisteredtime(new Date());
-				userAccount.setIsadmin(false);
 
 				userAccountMapper.insert(userAccount);
 			}

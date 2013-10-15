@@ -76,9 +76,9 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 
 					if (propertyId.equals("email")) {
 						return new FormEmailLinkViewField(user.getEmail());
-					} else if (propertyId.equals("isAdmin")) {
-						if (user.getIsAdmin() != null
-								&& user.getIsAdmin() == Boolean.TRUE) {
+					} else if (propertyId.equals("roleid")) {
+						if (user.getIsAccountOwner() != null
+								&& user.getIsAccountOwner() == Boolean.TRUE) {
 							return new FormViewField("Account Owner");
 						} else {
 							FormLinkViewField roleLink = new FormLinkViewField(
@@ -199,8 +199,8 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 										.getEmail());
 							} else if (propertyId.equals("isAdmin")) {
 
-								if (user.getIsAdmin() != null
-										&& user.getIsAdmin() == Boolean.TRUE) {
+								if (user.getIsAccountOwner() != null
+										&& user.getIsAccountOwner() == Boolean.TRUE) {
 									return new FormViewField("Account Owner");
 								} else {
 									FormContainerViewField formContainer = new FormContainerViewField();
