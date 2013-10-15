@@ -487,7 +487,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			List<Resource> lstResource = new ArrayList<Resource>();
 			if (currentFolder instanceof ExternalFolder
 					&& FileMainViewImpl.isAbleToConnectToDrive(FileMainViewImpl
-							.getSiteURL((ExternalFolder) currentFolder))) {
+							.getSiteURL(((ExternalFolder) currentFolder)
+									.getStorageName()))) {
 				lstResource = externalResourceService.getResources(
 						((ExternalFolder) currentFolder).getExternalDrive(),
 						currentFolder.getPath());
@@ -497,31 +498,30 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			}
 			if (currentFolder.getPath().equals(rootPath)
 					&& ResourceHandlerComponent.this.isNeedLoadExternalDirve) {
-				// current support DROPBOX --- must modify here
-				if (FileMainViewImpl.isAbleToConnectToDrive(FileMainViewImpl
-						.getSiteURL((ExternalFolder) currentFolder))) {
-					isShowMessageWhenProblemConnect = false;
-					List<ExternalDrive> lst = externalDriveService
-							.getExternalDrivesOfUser(AppContext.getUsername());
-					if (lst != null && lst.size() > 0) {
-						for (ExternalDrive drive : lst) {
-							if (drive.getStoragename().equals(
-									StorageNames.DROPBOX)) {
-								Resource res = externalResourceService
-										.getCurrentResourceByPath(drive, "/");
-								res.setName(drive.getFoldername());
-								lstResource.add(0, res);
-							}
+				List<ExternalDrive> lst = externalDriveService
+						.getExternalDrivesOfUser(AppContext.getUsername());
+				boolean showMessage = false;
+				if (lst != null && lst.size() > 0) {
+					for (ExternalDrive drive : lst) {
+						if (drive.getStoragename().equals(StorageNames.DROPBOX)
+								&& FileMainViewImpl
+										.isAbleToConnectToDrive(FileMainViewImpl
+												.getSiteURL(StorageNames.DROPBOX))) {
+							Resource res = externalResourceService
+									.getCurrentResourceByPath(drive, "/");
+							res.setName(drive.getFoldername());
+							lstResource.add(0, res);
+						} else {
+							showMessage = true;
 						}
 					}
-				} else {
-					if (!isShowMessageWhenProblemConnect) {
-						isShowMessageWhenProblemConnect = true;
-						NotificationUtil
-								.showNotification(
-										"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
-										Window.Notification.TYPE_WARNING_MESSAGE);
-					}
+				}
+				if (showMessage && !isShowMessageWhenProblemConnect) {
+					isShowMessageWhenProblemConnect = true;
+					NotificationUtil
+							.showNotification(
+									"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
+									Window.Notification.TYPE_WARNING_MESSAGE);
 				}
 			}
 			this.addComponent(new Hr());
@@ -571,6 +571,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				bodyLayout.setWidth("100%");
 
 				HorizontalLayout messageLayout = new HorizontalLayout();
+				messageLayout.setSpacing(true);
 				messageLayout.addComponent(new Label("Your search- "));
 				Label strSearchLabel = new Label(criteria);
 				strSearchLabel.addStyleName("h2");

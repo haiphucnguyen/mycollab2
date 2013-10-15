@@ -74,7 +74,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private Folder baseFolder;
 	private Folder rootECMFolder;
 	private String rootPath;
-	private String rootFolderName;
 
 	private final ResourceHandlerComponent resourceHandlerLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
@@ -279,7 +278,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					}
 					if (expandFolder instanceof ExternalFolder) {
 						if (isAbleToConnectToDrive(FileMainViewImpl
-								.getSiteURL((ExternalFolder) expandFolder))) {
+								.getSiteURL(((ExternalFolder) expandFolder)
+										.getStorageName()))) {
 							List<ExternalFolder> subFolders = externalResourceService
 									.getSubFolders(
 											((ExternalFolder) expandFolder)
@@ -375,15 +375,19 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			public void itemClick(final ItemClickEvent event) {
 				final Folder item = (Folder) event.getItemId();
 				if (item instanceof ExternalFolder
-						&& !isAbleToConnectToDrive(getSiteURL((ExternalFolder) item))
-						&& !resourceHandlerLayout
-								.IsShowMessageWhenProblemConnect()) {
-					FileMainViewImpl.this
-							.getWindow()
-							.showNotification(
-									"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
-									Window.Notification.TYPE_WARNING_MESSAGE);
-					gotoFileMainViewPage(item, false);
+						&& !isAbleToConnectToDrive(getSiteURL(((ExternalFolder) item)
+								.getStorageName()))) {
+					if (!resourceHandlerLayout
+							.IsShowMessageWhenProblemConnect()) {
+						FileMainViewImpl.this
+								.getWindow()
+								.showNotification(
+										"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
+										Window.Notification.TYPE_WARNING_MESSAGE);
+						gotoFileMainViewPage(item, false);
+					} else {
+						gotoFileMainViewPage(item, false);
+					}
 					return;
 				}
 				gotoFileMainViewPage(item, true);
@@ -417,8 +421,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		FileMainViewImpl.this.baseFolder = new Folder();
 		FileMainViewImpl.this.baseFolder.setPath(rootPath);
 		FileMainViewImpl.this.rootECMFolder = baseFolder;
-		FileMainViewImpl.this.rootFolderName = rootPath.substring(rootPath
-				.lastIndexOf("/") + 1);
 
 		resourceHandlerLayout = new ResourceHandlerComponent(
 				FileMainViewImpl.this.baseFolder, rootPath, menuTree);
@@ -524,7 +526,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
-		this.rootFolderName = rootFolderName;
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = this.baseFolder;
@@ -1065,8 +1066,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 	}
 
-	public static String getSiteURL(ExternalFolder folder) {
-		if (folder.getStorageName().equals(StorageNames.DROPBOX)) {
+	public static String getSiteURL(String storageName) {
+		if (storageName.equals(StorageNames.DROPBOX)) {
 			return "http://www.dropbox.com/";
 		}
 		return "";
