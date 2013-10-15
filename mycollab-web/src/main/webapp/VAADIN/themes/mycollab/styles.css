@@ -4764,6 +4764,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     border-style: solid;
     border-color: rgb(169, 169, 169);
     background-color: rgb(245, 245, 245);
+    border-top: 1px solid rgb(169, 169, 169);
 }
 
 .timeAdd-popup .popup-header {
@@ -4782,7 +4783,6 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding-left : 11px;
-    border-bottom: 1px solid rgb(169, 169, 169);
 }
 
 .v-button-caption-bool{

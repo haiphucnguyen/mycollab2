@@ -70,7 +70,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 	private final Label lbTimeRange;
 	private EntryComponentLayout entryComponentLayout;
-	private boolean isNeedConstructLayout = true;
+	private HorizontalLayout addEntryLayoutWapper;
+	private boolean isNeedConstructLayout;
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(false, true, true, true);
@@ -104,6 +105,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_LEFT);
 		headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
 
+		addEntryLayoutWapper = new HorizontalLayout();
+		addEntryLayoutWapper.setWidth("100%");
+		isNeedConstructLayout = true;
 		Button addNewEntryBtn = new Button("Add entry",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -113,7 +117,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 						if (isNeedConstructLayout) {
 							isNeedConstructLayout = false;
 							entryComponentLayout = new EntryComponentLayout();
-							TimeTrackingListViewImpl.this
+							addEntryLayoutWapper
 									.addComponent(entryComponentLayout);
 						}
 					}
@@ -172,6 +176,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		headerLayout.setComponentAlignment(this.exportButtonControl,
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
+		this.addComponent(addEntryLayoutWapper);
 
 		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
 				new TableViewField("Summary", "summary",
@@ -292,6 +297,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			final TextField hourField = new TextField();
 
 			final DateField dateField = new DateField();
+			dateField.setResolution(DateField.RESOLUTION_DAY);
 			gridLayout.addComponent(dateField, "Date", 0, 0, "300px");
 			gridLayout.addComponent(ticketComboBox, "Ticket", 1, 0, "300px");
 			gridLayout.addComponent(hourField, "Hours", 0, 1, "300px");
@@ -314,8 +320,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-					TimeTrackingListViewImpl.this
-							.removeComponent(entryComponentLayout);
+					addEntryLayoutWapper.removeAllComponents();
 				}
 			});
 			cancelBtn.addStyleName(UIConstants.THEME_LINK);
@@ -353,8 +358,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 								.saveWithSession(item, AppContext.getUsername());
 
 						TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-						TimeTrackingListViewImpl.this
-								.removeComponent(entryComponentLayout);
+						addEntryLayoutWapper.removeAllComponents();
 						setSearchCriteria(itemTimeLogginSearchCriteria);
 					} catch (IllegalArgumentException e) {
 						getWindow().showNotification(
