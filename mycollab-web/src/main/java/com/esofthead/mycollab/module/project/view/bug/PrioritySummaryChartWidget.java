@@ -74,22 +74,4 @@ public class PrioritySummaryChartWidget extends CssLayout {
 
 		this.addComponent(chart);
 	}
-
-	// @Override
-	// protected ComponentContainer createLegendBox() {
-	// return PieChartDescriptionBox.createLegendBox(this, pieDataSet);
-	// }
-	//
-	// @Override
-	// protected void onClickedDescription(String key) {
-	// BugSearchCriteria searchCriteria = new BugSearchCriteria();
-	// searchCriteria.setPriorities(new SetSearchField<String>(
-	// SearchField.AND, new String[] { key }));
-	// searchCriteria.setProjectId(new NumberSearchField(
-	// CurrentProjectVariables.getProjectId()));
-	// BugSearchParameter param = new BugSearchParameter(key + " Bug List",
-	// searchCriteria);
-	// EventBus.getInstance().fireEvent(
-	// new BugEvent.GotoList(this, new BugScreenData.Search(param)));
-	// }
 }
