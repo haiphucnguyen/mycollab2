@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -49,7 +50,9 @@ public class TaskDisplayWidget extends
 				taskLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 			layout.addComponent(taskLink);
-			layout.addComponent(new Label(task.getTaskname()));
+			Label taskName = new Label(task.getTaskname());
+			layout.addComponent(taskName);
+			layout.setComponentAlignment(taskName, Alignment.MIDDLE_LEFT);
 			layout.setDescription("Task Information");
 			return layout;
 		}

@@ -26,8 +26,7 @@ import com.vaadin.ui.CssLayout;
  * 
  * @author haiphucnguyen
  */
-public class BugResolutionSummaryChartWidget extends
-		CssLayout {
+public class BugResolutionSummaryChartWidget extends CssLayout {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +34,7 @@ public class BugResolutionSummaryChartWidget extends
 		this.setSizeFull();
 
 	}
-	
+
 	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
 		BugService bugService = ApplicationContextUtil
 				.getSpringBean(BugService.class);
@@ -84,18 +83,5 @@ public class BugResolutionSummaryChartWidget extends
 
 		this.addComponent(chart);
 	}
-
-	// @Override
-	// protected void onClickedDescription(String key) {
-	// BugSearchCriteria searchCriteria = new BugSearchCriteria();
-	// searchCriteria.setResolutions(new SetSearchField<String>(
-	// SearchField.AND, new String[] { key }));
-	// searchCriteria.setProjectId(new NumberSearchField(
-	// CurrentProjectVariables.getProjectId()));
-	// BugSearchParameter param = new BugSearchParameter(key + " Bug List",
-	// searchCriteria);
-	// EventBus.getInstance().fireEvent(
-	// new BugEvent.GotoList(this, new BugScreenData.Search(param)));
-	// }
 
 }

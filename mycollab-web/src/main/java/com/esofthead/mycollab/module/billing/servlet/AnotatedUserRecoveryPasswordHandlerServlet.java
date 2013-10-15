@@ -19,6 +19,7 @@ import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -37,7 +38,7 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
-		String loginURL = request.getContextPath() + "/";
+
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
@@ -50,6 +51,9 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 							request.getContextPath() + "/");
 					return;
 				} else {
+					String loginURL = (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/signin?email=" + username)
+							: (request.getContextPath() + "/");
+
 					String redirectURL = loginURL
 							+ "user/recoverypassword/action";
 

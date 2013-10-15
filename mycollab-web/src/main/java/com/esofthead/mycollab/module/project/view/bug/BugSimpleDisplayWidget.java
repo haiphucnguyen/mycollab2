@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -46,7 +47,10 @@ public class BugSimpleDisplayWidget extends
 				bugLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 			layout.addComponent(bugLink);
-			layout.addComponent(new Label(bug.getSummary()));
+			
+			Label bugSummary = new Label(bug.getSummary());
+			layout.addComponent(bugSummary);
+			layout.setComponentAlignment(bugSummary, Alignment.MIDDLE_LEFT);
 			return layout;
 		}
 	}

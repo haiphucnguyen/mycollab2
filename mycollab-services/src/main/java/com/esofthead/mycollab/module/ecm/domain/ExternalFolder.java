@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.ecm.domain;
 
 public class ExternalFolder extends Folder {
 	private String storageName;
-	
+
 	private ExternalDrive externalDrive;
 
 	public String getStorageName() {

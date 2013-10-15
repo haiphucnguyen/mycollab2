@@ -85,6 +85,11 @@ public class ResourceHandlerComponent extends VerticalLayout {
 	private PagingResourceWapper pagingResourceWapper;
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 	private boolean isNeedLoadExternalDirve = false;
+	private boolean isShowMessageWhenProblemConnect = false;
+
+	public boolean IsShowMessageWhenProblemConnect() {
+		return isShowMessageWhenProblemConnect;
+	}
 
 	public void setCurrentBaseFolder(Folder baseFolder) {
 		this.baseFolder = baseFolder;
@@ -117,6 +122,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 	public ResourceHandlerComponent(final Folder baseFolder,
 			final String rootPath, Tree menuTree) {
+		isShowMessageWhenProblemConnect = false;
 		this.menuTree = menuTree;
 		this.baseFolder = baseFolder;
 		this.rootPath = rootPath;
@@ -478,8 +484,11 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(false);
 
-			List<Resource> lstResource;
-			if (currentFolder instanceof ExternalFolder) {
+			List<Resource> lstResource = new ArrayList<Resource>();
+			if (currentFolder instanceof ExternalFolder
+					&& FileMainViewImpl.isAbleToConnectToDrive(FileMainViewImpl
+							.getSiteURL(((ExternalFolder) currentFolder)
+									.getStorageName()))) {
 				lstResource = externalResourceService.getResources(
 						((ExternalFolder) currentFolder).getExternalDrive(),
 						currentFolder.getPath());
@@ -491,15 +500,28 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					&& ResourceHandlerComponent.this.isNeedLoadExternalDirve) {
 				List<ExternalDrive> lst = externalDriveService
 						.getExternalDrivesOfUser(AppContext.getUsername());
+				boolean showMessage = false;
 				if (lst != null && lst.size() > 0) {
 					for (ExternalDrive drive : lst) {
-						if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
+						if (drive.getStoragename().equals(StorageNames.DROPBOX)
+								&& FileMainViewImpl
+										.isAbleToConnectToDrive(FileMainViewImpl
+												.getSiteURL(StorageNames.DROPBOX))) {
 							Resource res = externalResourceService
 									.getCurrentResourceByPath(drive, "/");
 							res.setName(drive.getFoldername());
 							lstResource.add(0, res);
+						} else {
+							showMessage = true;
 						}
 					}
+				}
+				if (showMessage && !isShowMessageWhenProblemConnect) {
+					isShowMessageWhenProblemConnect = true;
+					NotificationUtil
+							.showNotification(
+									"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
+									Window.Notification.TYPE_WARNING_MESSAGE);
 				}
 			}
 			this.addComponent(new Hr());
@@ -549,6 +571,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				bodyLayout.setWidth("100%");
 
 				HorizontalLayout messageLayout = new HorizontalLayout();
+				messageLayout.setSpacing(true);
 				messageLayout.addComponent(new Label("Your search- "));
 				Label strSearchLabel = new Label(criteria);
 				strSearchLabel.addStyleName("h2");

@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.module.file.view;
 
-import java.net.InetSocketAddress;
-import java.net.Socket;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,7 +74,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 	private Folder baseFolder;
 	private Folder rootECMFolder;
 	private String rootPath;
-	private String rootFolderName;
 
 	private final ResourceHandlerComponent resourceHandlerLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
@@ -143,7 +143,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 					switchViewBtn.setDescription("Event");
 					switchViewBtn.setIcon(MyCollabResource
 							.newResource("icons/16/ecm/event.png"));
-					gotoFileMainViewPage(baseFolder);
+					gotoFileMainViewPage(baseFolder, true);
 				}
 			}
 		});
@@ -277,7 +277,9 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						}
 					}
 					if (expandFolder instanceof ExternalFolder) {
-						if (isAbleToConnectToDrive("http://www.dropbox.com/")) {
+						if (isAbleToConnectToDrive(FileMainViewImpl
+								.getSiteURL(((ExternalFolder) expandFolder)
+										.getStorageName()))) {
 							List<ExternalFolder> subFolders = externalResourceService
 									.getSubFolders(
 											((ExternalFolder) expandFolder)
@@ -296,10 +298,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								menuTree.setParent(subFolder, expandFolder);
 							}
 						} else {
-							getWindow()
-									.showNotification(
-											"Oops, we can't connect to dropbox site. Please check your internet connection and try again later",
-											Window.Notification.TYPE_WARNING_MESSAGE);
+							if (!resourceHandlerLayout
+									.IsShowMessageWhenProblemConnect())
+								FileMainViewImpl.this
+										.getWindow()
+										.showNotification(
+												"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
+												Window.Notification.TYPE_WARNING_MESSAGE);
 						}
 					} else {
 						final List<Folder> subFolders = resourceService
@@ -369,7 +374,23 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			@Override
 			public void itemClick(final ItemClickEvent event) {
 				final Folder item = (Folder) event.getItemId();
-				gotoFileMainViewPage(item);
+				if (item instanceof ExternalFolder
+						&& !isAbleToConnectToDrive(getSiteURL(((ExternalFolder) item)
+								.getStorageName()))) {
+					if (!resourceHandlerLayout
+							.IsShowMessageWhenProblemConnect()) {
+						FileMainViewImpl.this
+								.getWindow()
+								.showNotification(
+										"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
+										Window.Notification.TYPE_WARNING_MESSAGE);
+						gotoFileMainViewPage(item, false);
+					} else {
+						gotoFileMainViewPage(item, false);
+					}
+					return;
+				}
+				gotoFileMainViewPage(item, true);
 			}
 		});
 
@@ -400,8 +421,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		FileMainViewImpl.this.baseFolder = new Folder();
 		FileMainViewImpl.this.baseFolder.setPath(rootPath);
 		FileMainViewImpl.this.rootECMFolder = baseFolder;
-		FileMainViewImpl.this.rootFolderName = rootPath.substring(rootPath
-				.lastIndexOf("/") + 1);
 
 		resourceHandlerLayout = new ResourceHandlerComponent(
 				FileMainViewImpl.this.baseFolder, rootPath, menuTree);
@@ -439,7 +458,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								gotoEnclosingFoder(res, criteria);
 								return;
 							}
-							gotoFileMainViewPage((Folder) res);
+							gotoFileMainViewPage((Folder) res, true);
 						}
 					});
 			// add File - handeler
@@ -474,7 +493,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				criteria.getBaseFolder().lastIndexOf("/"));
 		Resource parentFolder = resourceService.getResource(path);
 		if (parentFolder != null) {
-			gotoFileMainViewPage((Folder) parentFolder);
+			gotoFileMainViewPage((Folder) parentFolder, true);
 		} else {
 			String message = (res instanceof Folder) ? "Folder's location has been moved successfully"
 					: "File's location has been moved successfully";
@@ -482,7 +501,8 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 	}
 
-	private void gotoFileMainViewPage(Folder baseFolder) {
+	private void gotoFileMainViewPage(Folder baseFolder,
+			boolean isNeedGotoBreadCumb) {
 		this.baseFolder = baseFolder;
 
 		mainBodyResourceLayout.removeAllComponents();
@@ -496,16 +516,16 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		mainBodyResourceLayout.addComponent(filterWapper);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
-		resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
-		resourceHandlerLayout.constructBodyItemContainer(baseFolder);
-
+		if (isNeedGotoBreadCumb == true) {
+			resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
+			resourceHandlerLayout.constructBodyItemContainer(baseFolder);
+		}
 		switchViewBtn.setDescription("Event");
 		switchViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/event.png"));
 	}
 
 	public void displayResources(String rootPath, String rootFolderName) {
-		this.rootFolderName = rootFolderName;
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = this.baseFolder;
@@ -1033,14 +1053,23 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		}
 	}
 
-	private boolean isAbleToConnectToDrive(String site) {
-		Socket sock = new Socket();
-		InetSocketAddress addr = new InetSocketAddress(site, 80);
+	public static boolean isAbleToConnectToDrive(String site) {
+		URL url;
+		HttpURLConnection urlConn;
 		try {
-			sock.connect(addr, 3000);
+			url = new URL(site);
+			urlConn = (HttpURLConnection) url.openConnection();
+			urlConn.connect();
 			return true;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			return false;
 		}
+	}
+
+	public static String getSiteURL(String storageName) {
+		if (storageName.equals(StorageNames.DROPBOX)) {
+			return "http://www.dropbox.com/";
+		}
+		return "";
 	}
 }
