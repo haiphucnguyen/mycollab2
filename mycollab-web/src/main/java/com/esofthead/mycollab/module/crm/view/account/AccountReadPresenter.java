@@ -48,7 +48,6 @@ import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 

@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -210,14 +211,19 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 					final TextArea textArea = new TextArea();
 					textArea.setNullRepresentation("");
 					return textArea;
-				} else if (propertyId.equals("isadmin")) {
-
 				} else if (propertyId.equals("rolename")) {
-					final TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Please enter a Role name");
-					return tf;
+					if (role.getIssystemrole() != null
+							&& role.getIssystemrole() == Boolean.TRUE) {
+						return new DefaultFormViewFieldFactory.FormViewField(
+								role.getRolename());
+					} else {
+						final TextField tf = new TextField();
+						tf.setNullRepresentation("");
+						tf.setRequired(true);
+						tf.setRequiredError("Please enter a Role name");
+						return tf;
+					}
+
 				}
 				return null;
 			}

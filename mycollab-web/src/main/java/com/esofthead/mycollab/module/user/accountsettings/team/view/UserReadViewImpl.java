@@ -197,8 +197,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 							if (propertyId.equals("email")) {
 								return new FormEmailLinkViewField(user
 										.getEmail());
-							} else if (propertyId.equals("isAdmin")) {
-
+							} else if (propertyId.equals("isAccountOwner")) {
 								if (user.getIsAccountOwner() != null
 										&& user.getIsAccountOwner() == Boolean.TRUE) {
 									return new FormViewField("Account Owner");
