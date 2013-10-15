@@ -18,6 +18,8 @@ public class VersionSearchCriteria extends SearchCriteria {
     private NumberSearchField id;
     
     private StringSearchField versionname;
+    
+    private StringSearchField status;
 
     public NumberSearchField getProjectId() {
         return projectId;
@@ -42,4 +44,12 @@ public class VersionSearchCriteria extends SearchCriteria {
     public void setVersionname(StringSearchField versionname) {
         this.versionname = versionname;
     }
+
+	public StringSearchField getStatus() {
+		return status;
+	}
+
+	public void setStatus(StringSearchField status) {
+		this.status = status;
+	}
 }
