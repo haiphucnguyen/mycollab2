@@ -12,12 +12,14 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
+import com.esofthead.mycollab.module.tracker.domain.BugStatusGroupItem;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -104,5 +106,11 @@ public class BugServiceImpl extends
 	@Override
 	public List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria) {
 		return bugMapperExt.getBugStatusTrendSummary(criteria);
+	}
+
+	@Override
+	public List<BugStatusGroupItem> getBugStatusGroupItemBaseComponent(
+			@CacheKey BugSearchCriteria criteria) {
+		return bugMapperExt.getBugStatusGroupItemBaseComponent(criteria);
 	}
 }

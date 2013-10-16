@@ -8,6 +8,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
+import com.esofthead.mycollab.module.tracker.domain.BugStatusGroupItem;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -21,6 +22,10 @@ public interface BugService extends
 
 	@Cacheable
 	List<GroupItem> getStatusSummary(@CacheKey BugSearchCriteria criteria);
+
+	@Cacheable
+	List<BugStatusGroupItem> getBugStatusGroupItemBaseComponent(
+			@CacheKey BugSearchCriteria criteria);
 
 	@Cacheable
 	List<GroupItem> getPrioritySummary(@CacheKey BugSearchCriteria criteria);

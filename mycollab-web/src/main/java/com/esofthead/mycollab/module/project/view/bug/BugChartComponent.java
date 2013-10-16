@@ -23,7 +23,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class BugChartComponent extends Depot {
 	private static final long serialVersionUID = 1L;
-	private final String[] reportDashboard = { "BugDistributionStack",
+	private final String[] reportDashboard = { 
 			"BugsByPriority", "BugsByStatus", "BugByResolution" };
 	private int currentReportIndex = 0;
 
@@ -89,28 +89,28 @@ public class BugChartComponent extends Depot {
 
 	private void initUI() {
 
-		final PopupButton bugChartPopup = new PopupButton("Bugs Distribution");
+		final PopupButton bugChartPopup = new PopupButton("Bugs By Priority");
 		bugChartPopup.addStyleName("link");
 
 		final VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("200px");
-
-		final Button btnBugDistribution = new Button("Bugs Distribution",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						bugChartPopup.setPopupVisible(false);
-						bugChartPopup.setCaption("Bugs Distribution");
-						currentReportIndex = 0;
-						displayReport();
-					}
-				});
-		btnBugDistribution.setStyleName("link");
-		filterBtnLayout.addComponent(btnBugDistribution);
+//
+//		final Button btnBugDistribution = new Button("Bugs Distribution",
+//				new Button.ClickListener() {
+//					private static final long serialVersionUID = 1L;
+//
+//					@Override
+//					public void buttonClick(final ClickEvent event) {
+//						bugChartPopup.setPopupVisible(false);
+//						bugChartPopup.setCaption("Bugs Distribution");
+//						currentReportIndex = 0;
+//						displayReport();
+//					}
+//				});
+//		btnBugDistribution.setStyleName("link");
+//		filterBtnLayout.addComponent(btnBugDistribution);
 
 		final Button btnBugByPriority = new Button("Bugs By Priority",
 				new Button.ClickListener() {
@@ -120,7 +120,7 @@ public class BugChartComponent extends Depot {
 					public void buttonClick(final ClickEvent event) {
 						bugChartPopup.setPopupVisible(false);
 						bugChartPopup.setCaption("Bugs By Priority");
-						currentReportIndex = 1;
+						currentReportIndex = 0;
 						displayReport();
 					}
 				});
@@ -135,7 +135,7 @@ public class BugChartComponent extends Depot {
 					public void buttonClick(final ClickEvent event) {
 						bugChartPopup.setPopupVisible(false);
 						bugChartPopup.setCaption("Bugs By Status");
-						currentReportIndex = 2;
+						currentReportIndex = 1;
 						displayReport();
 					}
 				});
@@ -150,7 +150,7 @@ public class BugChartComponent extends Depot {
 					public void buttonClick(final ClickEvent event) {
 						bugChartPopup.setPopupVisible(false);
 						bugChartPopup.setCaption("Bugs By Resolution");
-						currentReportIndex = 3;
+						currentReportIndex = 2;
 						displayReport();
 					}
 				});

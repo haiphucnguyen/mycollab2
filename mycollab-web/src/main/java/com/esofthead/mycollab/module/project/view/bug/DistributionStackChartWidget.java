@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.List;
+
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+import com.esofthead.mycollab.module.tracker.domain.BugStatusGroupItem;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -8,8 +12,10 @@ import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.Credits;
 import com.vaadin.addon.charts.model.ListSeries;
-import com.vaadin.addon.charts.model.PlotOptionsColumn;
+import com.vaadin.addon.charts.model.PlotOptionsSeries;
 import com.vaadin.addon.charts.model.Stacking;
+import com.vaadin.addon.charts.model.XAxis;
+import com.vaadin.addon.charts.model.YAxis;
 import com.vaadin.ui.CssLayout;
 
 public class DistributionStackChartWidget extends CssLayout {
@@ -22,43 +28,69 @@ public class DistributionStackChartWidget extends CssLayout {
 	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
 		BugService bugService = ApplicationContextUtil
 				.getSpringBean(BugService.class);
-
-		// The data
-		// Source: V. Maijala, H. Norberg, J. Kumpula, M. Nieminen
-		// Calf production and mortality in the Finnish
-		// reindeer herding area. 2002.
-		Chart chart = new Chart(ChartType.COLUMN);
+		List<BugStatusGroupItem> groupItems = bugService
+				.getBugStatusGroupItemBaseComponent(searchCriteria);
+		Chart chart = new Chart(ChartType.BAR);
 
 		Configuration conf = chart.getConfiguration();
 		conf.setTitle("Bug Distribution");
 		conf.setCredits(new Credits(""));
-		
-		PlotOptionsColumn options = new PlotOptionsColumn();
-		options.setStacking(Stacking.NORMAL);
 
-		String predators[] = { "Bear", "Wolf", "Wolverine", "Lynx" };
-		int kills[][] = { // Location:
-		{ 8, 0, 7, 0 }, // Muddusjarvi
-				{ 30, 1, 30, 2 }, // Ivalo
-				{ 37, 0, 22, 2 }, // Oraniemi
-				{ 13, 23, 4, 1 }, // Salla
-				{ 3, 10, 9, 0 }, // Alakitka
-		};
+		XAxis x = new XAxis();
 
-		// Create a data series for each numeric column in the table
-		for (int predator = 0; predator < 4; predator++) {
-			ListSeries series = new ListSeries();
-			series.setName(predators[predator]);
-
-			// The rows of the table
-			for (int location = 0; location < kills.length; location++) {
-				series.addData(kills[location][predator]);
-			}
-			series.setPlotOptions(options);
-			conf.addSeries(series);
+		String[] categories = new String[groupItems.size()];
+		for (int i = 0; i < categories.length; i++) {
+			categories[i] = groupItems.get(i).getGroupname();
 		}
+		x.setCategories(categories);
+		conf.addxAxis(x);
+
+		YAxis y = new YAxis();
+		y.setMin(0);
+		y.setTitle("");
+		conf.addyAxis(y);
+
+		PlotOptionsSeries options = new PlotOptionsSeries();
+		options.setStacking(Stacking.NORMAL);
+		conf.setPlotOptions(options);
+
+		ListSeries openSeries = new ListSeries("Open");
+		openSeries.setName(BugStatusConstants.OPEN);
+		for (BugStatusGroupItem item : groupItems) {
+			openSeries.addData(item.getNumOpen());
+		}
+		conf.addSeries(openSeries);
+
+		ListSeries inProgressSeries = new ListSeries("In Progress");
+		inProgressSeries.setName(BugStatusConstants.INPROGRESS);
+		for (BugStatusGroupItem item : groupItems) {
+			inProgressSeries.addData(item.getNumInProgress());
+		}
+		conf.addSeries(inProgressSeries);
+
+		ListSeries reOpenSeries = new ListSeries("ReOpenned");
+		reOpenSeries.setName(BugStatusConstants.REOPENNED);
+		for (BugStatusGroupItem item : groupItems) {
+			reOpenSeries.addData(item.getNumReOpenned());
+		}
+		conf.addSeries(reOpenSeries);
+
+		ListSeries reSolvedSeries = new ListSeries("Resolved");
+		reSolvedSeries.setName(BugStatusConstants.RESOLVED);
+		for (BugStatusGroupItem item : groupItems) {
+			reSolvedSeries.addData(item.getNumResolved());
+		}
+		conf.addSeries(reSolvedSeries);
+
+		ListSeries verifySeries = new ListSeries("Verified");
+		verifySeries.setName(BugStatusConstants.VERIFIED);
+		for (BugStatusGroupItem item : groupItems) {
+			verifySeries.addData(item.getNumVerified());
+		}
+		conf.addSeries(verifySeries);
 
 		chart.drawChart(conf);
+		chart.setHeight((groupItems.size() * 40 + 50) + "px");
 
 		this.addComponent(chart);
 	}
