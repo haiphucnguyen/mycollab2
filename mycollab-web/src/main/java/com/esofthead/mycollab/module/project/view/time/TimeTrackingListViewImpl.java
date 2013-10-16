@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Property;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
@@ -286,7 +287,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			gridLayout.getLayout().setStyleName(UIConstants.COLORED_GRIDLAYOUT);
 			gridLayout.getLayout().setMargin(false);
 
-			final SubclassComboBox ticketComboBox = new SubclassComboBox();
+			final AssignmentSelectionComboBox ticketComboBox = new AssignmentSelectionComboBox();
 			ticketComboBox.setImmediate(true);
 			ticketComboBox.setNullSelectionAllowed(false);
 
@@ -344,7 +345,11 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 							item.setType("Project-Bug");
 						} else if (projectGenericTask.getType().equals("Task")) {
 							item.setType("Project-Task");
+						} else {
+							throw new MyCollabException(
+									"Does not support any assignments except task and bug");
 						}
+
 						item.setTypeid(projectGenericTask.getTypeId());
 						item.setProjectid(projectGenericTask.getProjectId());
 						item.setSaccountid(AppContext.getAccountId());
@@ -372,7 +377,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			this.addComponent(bottomWapper);
 		}
 
-		public class SubclassComboBox extends ComboBox {
+		public class AssignmentSelectionComboBox extends ComboBox {
 			private static final long serialVersionUID = 1L;
 
 			private String oldText;
@@ -382,27 +387,36 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				return projectGenericTask;
 			}
 
-			public SubclassComboBox() {
+			public AssignmentSelectionComboBox() {
 				super();
 				this.setFilteringMode(ComboBox.FILTERINGMODE_STARTSWITH);
 				this.setTextInputAllowed(true);
 				this.setImmediate(true);
 				this.setNullSelectionAllowed(true);
 				this.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_EXPLICIT);
+				this.addListener(new Property.ValueChangeListener() {
+
+					@Override
+					public void valueChange(Property.ValueChangeEvent event) {
+						System.out
+								.println("Selected value: "
+										+ ((ProjectGenericTask) AssignmentSelectionComboBox.this
+												.getValue()).getName());
+					}
+				});
+
 			}
 
 			@Override
 			public void changeVariables(Object source, Map variables) {
 				String filterString = (String) variables.get("filter");
 				if (filterString != null && filterString.trim().length() > 0) {
-					if (oldText == null)
+					if (filterString.equals(oldText)) {
+						return;
+					} else {
 						oldText = filterString;
-					else {
-						if (oldText.equals(filterString))
-							return;
-						else
-							oldText = filterString;
 					}
+					
 					items.removeAllItems();
 
 					ProjectGenericTaskService service = ApplicationContextUtil
@@ -411,27 +425,29 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					criteria.setName(new StringSearchField(oldText));
 					SearchRequest<ProjectGenericTaskSearchCriteria> request = new SearchRequest<ProjectGenericTaskSearchCriteria>(
 							criteria, 0, Integer.MAX_VALUE);
-					List<ProjectGenericTask> lst = service
+					List<ProjectGenericTask> assignments = service
 							.findPagableBugAndTaskByCriteria(request);
-					for (ProjectGenericTask projectGenericTask : lst) {
+					for (ProjectGenericTask projectGenericTask : assignments) {
 						items.addItem(projectGenericTask);
-						SubclassComboBox.this.setItemCaption(
+						AssignmentSelectionComboBox.this.setItemCaption(
 								projectGenericTask,
 								projectGenericTask.getName());
 						if (projectGenericTask.getType().equals("Bug")) {
-							SubclassComboBox.this
+							AssignmentSelectionComboBox.this
 									.setItemIcon(
 											projectGenericTask,
 											MyCollabResource
 													.newResource("icons/16/project/bug.png"));
 						} else if (projectGenericTask.getType().equals("Task")) {
-							SubclassComboBox.this
+							AssignmentSelectionComboBox.this
 									.setItemIcon(
 											projectGenericTask,
 											MyCollabResource
 													.newResource("icons/16/project/task.png"));
 						}
 					}
+
+					this.select(assignments.get(0));
 				}
 				super.changeVariables(source, variables);
 			}

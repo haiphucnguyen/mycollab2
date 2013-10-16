@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui.data;
 
-public class ValueFactory {
+public class CountryValueFactory {
 	
 	public static String AFGHANISTAN = "Afghanistan";
 	public static String ALBANIA = "Albania";
