@@ -23,27 +23,27 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Subject:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.subject</td>
+									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleTask.subject</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.status</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleTask.status</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Start Date:&nbsp;</td>
+									<td style="text-align: right; vertical-align: top;">Start Date:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleTask.startdate)</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Related To:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.relatedTo</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleTask.relatedTo</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Due Date:&nbsp;</td>
+									<td style="text-align: right; vertical-align: top;">Due Date:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleTask.duedate)</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Contact:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.contactName</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleTask.contactName</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Priority:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleTask.priority</td>
+									<td style="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleTask.priority</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
+									<td style="width:180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="mailto:$!simpleTask.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleTask.assignUserFullName</a>
 									</td>
 								</tr>

@@ -37,21 +37,25 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Severity:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.severity</td>
+									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!bug.severity</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Resolution:&nbsp;</td>
-									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.resolution</td>		
+									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!bug.resolution</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!bug.Duedate)</td>
 									<td style="text-align: right; vertical-align: top;">Milestone:&nbsp;</td>
-									<td><a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.milestoneName</td>		
+									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
+										<a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.milestoneName</a>
+									</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
-									<td><a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.loguserFullName</a></td>
+									<td style="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
+										<a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.loguserFullName</a>
+									</td>
 									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td>
+									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.assignuserFullName</a>
 									</td>				
 								</tr>

@@ -23,21 +23,21 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Subject:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCall.subject</td>
+									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleCall.subject</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Status:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCall.status</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleCall.status</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Start Date & Time:&nbsp;</td>
-									<td>$!simpleCall.startdate</td>
+									<td style="text-align: right; vertical-align: top;">Start Date & Time:&nbsp;</td>
+									<td style="vertical-align: top;">$!simpleCall.startdate</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Related to:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCall.relatedTo</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleCall.relatedTo</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Duration:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCall.durationinseconds</td>
+									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleCall.durationinseconds</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Purpose:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCall.purpose</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleCall.purpose</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Assignee:&nbsp;</td>

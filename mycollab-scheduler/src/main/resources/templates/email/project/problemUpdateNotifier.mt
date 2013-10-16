@@ -27,28 +27,28 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Raised by:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">
+									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">
 										<a href="${hyperLinks.raiseUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.raisedByUserFullName</a>
 									</td>
 									
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
+									<td style="width: 180px;word-wrap: break-word; vertical-align: top;white-space: normal; word-break: break-all;">
 										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!problem.assignedUserFullName</a>
 									</td>	
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Due date:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!date.format('short_date', $!problem.datedue)</td>
+									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!date.format('short_date', $!problem.datedue)</td>
 									
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
-									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.status</td>		
+									<td style="width: 180px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!problem.status</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Impact:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.impact</td>
+									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!problem.impact</td>
 									
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Priority:&nbsp;</td>
-									<td style="width: 180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!problem.priority</td>		
+									<td style="width: 180px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!problem.priority</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>

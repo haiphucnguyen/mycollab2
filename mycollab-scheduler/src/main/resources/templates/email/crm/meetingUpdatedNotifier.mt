@@ -23,21 +23,21 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Subject:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleMeeting.subject</td>
+									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleMeeting.subject</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleMeeting.status</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleMeeting.status</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Start Date & Time:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleMeeting.startdate</td>
+									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleMeeting.startdate</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Related to:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleMeeting.relatedTo</td>		
+									<td style="width:180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">$!simpleMeeting.relatedTo</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">End Date & Time:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleMeeting.enddate</td>
+									<td style="text-align: right; vertical-align: top;">End Date & Time:&nbsp;</td>
+									<td style="word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">$!simpleMeeting.enddate</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Location:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleMeeting.location</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleMeeting.location</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>

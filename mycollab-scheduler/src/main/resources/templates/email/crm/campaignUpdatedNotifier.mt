@@ -23,35 +23,35 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Name:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.campaignname</a></td>
+									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleCampaign.campaignname</a></td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
-									<td width="180px">$!simpleCampaign.status</td>	
+									<td style="width: 180px; vertical-align: top;">$!simpleCampaign.status</td>	
 								</tr>
 								<tr>
-									<td style="text-align: right;">StartDate:&nbsp;</td>
+									<td style="text-align: right; vertical-align: top;">StartDate:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.startdate)</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Type:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.type</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleCampaign.type</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">EndDate:&nbsp;</td>
+									<td style="text-align: right; vertical-align: top;">EndDate:&nbsp;</td>
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.enddate)</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Assignee:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">
+									<td style="width:180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="mailto:$!simpleCampaign.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCampaign.assignUserFullName</a>
 									</td>	
 								</tr>
 								<tr>
-									<td style="text-align: right;">Currency:&nbsp;</td>
+									<td style="text-align: right; vertical-align: top;">Currency:&nbsp;</td>
 									<td></td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Budget:&nbsp;</td>
-									<td style="width:180px;word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleCampaign.budget</td>		
+									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleCampaign.budget</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Expected Cost:&nbsp;</td>
+									<td style="text-align: right; vertical-align: top;">Expected Cost:&nbsp;</td>
 									<td>$!simpleCampaign.expectedcost</td>
-									<td style="text-align: right;">Actual Cost:&nbsp;</td>
-									<td width="180px">$!simpleCampaign.actualcost</td>		
+									<td style="text-align: right; vertical-align: top;">Actual Cost:&nbsp;</td>
+									<td style="width:180px; vertical-align: top;">$!simpleCampaign.actualcost</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Expected Revenue:&nbsp;</td>
