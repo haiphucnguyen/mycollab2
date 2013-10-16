@@ -11,8 +11,10 @@
 #header {
     background-color: #1777AD;
     border-bottom: 6px solid #77BAE0;
-    height: 60px;
+    height: 70px;
     width: 100%;
+    text-align: left;
+    vertical-align: middle;
 }
 .header-mid {
     display: block;
@@ -44,6 +46,8 @@
     padding-top : 8px;
     border: 1px solid rgb(169, 169, 169);
     border-radius : 3px;
+    height: 300px;
+    width: 800px;
 }
 
 #mainContent{
@@ -54,10 +58,10 @@
     display: block; 
     padding: 10px 10px 8px 10px;
     border: 1px solid rgb(169, 169, 169);
+    height : 200px;
 }
 
 #bottom{
-    align:center;
     padding-left: 160px; 
     padding-right: 100px; 
     color : blue;
@@ -65,6 +69,7 @@
     background-color: rgb(239, 239, 239);
     padding-bottom: 100px;
     text-align: center;
+    height : 100%;
 }
 
 .v-button-bluebtn{
@@ -96,17 +101,18 @@
 			</div>
 		</div>
 		<div id="body" style="background-color: rgb(239, 239, 239); width: 100%;">
-			<div id="spacing" style="height:30px; background-color: rgb(239, 239, 239);"></div>
+			<div id="spacing" style="height:60px; background-color: rgb(239, 239, 239);"></div>
 			<div style="padding-left: 300px; padding-right: 250px; background-color: rgb(239, 239, 239); height: 100%;">
 				<div id="mainBody">
 					<div id="title">
-						<p><span>Choose your new password</span></p>
+						<p><span style="color: #196893; font: 22px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Choose your new password
+						</span></p>
 					</div>
 					<hr>
 					<div>
 						<table>
 						 	<tr>
-						 		<td style="width: 350px;vertical-align:top; padding-top:12px;">Please enter a new password!</td>
+						 		<td style="width: 350px; vertical-align:top; padding-left: 10px; padding-top:12px;font-size: 18px; color: #616161;">Please enter a new password!</td>
 						 		<td style="width: 400px; display: inline-block; vertical-align: top;">
 									<div id="mainContent">
 						  				 <div>
@@ -114,21 +120,24 @@
 											<table border="0">
 											<tbody>
 											<tr>
-												<td><label for="password">New password:</label></td>
+												<td><label for="password"><span style="font-size:14px;">New password:</span></label></td>
 											</tr>
 											<tr>
-												<td><input id="password" maxlength="45" name="password" type="password" /></td>
-											</tr>
-											<tr style="padding-top:20px;">
-												<td><label for="password">Confirm new password:</label></td>
+												<td><input id="password" maxlength="45" name="password" type="password" style="width:350px;"/></td>
 											</tr>
 											<tr>
-												<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
+   												<td style="height:10px;"></td>
+											</tr>
+											<tr>
+												<td><label for="password"><span style="font-size:14px;">Confirm new password:</span></label></td>
+											</tr>
+											<tr>
+												<td><input id="repassword" maxlength="45" name="password" type="password" style="width:350px;"/></td>
 											</tr>
 											</tbody></table>
 											</form>
 										</div>
-										<div style="padding-top:10px;">
+										<div style="padding-top:10px; padding-left:8px;">
 											<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Reset</button>
 										</div>
 									</div>
@@ -140,11 +149,11 @@
 			</div>
 			<div id="bottom">
 			    <p>
-					<span style="font-size:12px;">Terms of Service</span>
-					<span>|</span>
-					<span style="font-size:12px;">Privacy Policy</span>
-					<span>|</span>
-					<span style="font-size:12px;">Copyright 2013 MyCollab. All rights reserved.</span>
+			    	<a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Terms of Service</span></a> &nbsp&nbsp&nbsp
+					<span style="color: #000000">|</span>
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Privacy Policy</span></a>&nbsp&nbsp&nbsp
+					<span style="color: #000000">|</span>
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Copyright 2013 MyCollab. All rights reserved.</span></a>
 				</p>
 			</div>
 		</div>
@@ -156,6 +165,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
+		$('#bottom').css("padding-bottom","200px");
 	});
 	function updateInfoAction(){
 		if ($('#password').val() == ""){

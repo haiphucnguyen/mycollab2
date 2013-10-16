@@ -100,13 +100,13 @@
 			<div style="padding-left: 300px; padding-right: 250px; background-color: rgb(239, 239, 239); height: 100%;">
 				<div id="mainBody">
 					<div id="title">
-						<p><span>Choose Your New Password</span></p>
+						<p><span style="color: #196893; font: 22px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Choose Your New Password</span></p>
 					</div>
 					<hr>
 					<div>
 						<table>
 						 	<tr>
-						 		<td style="width: 350px;vertical-align:top; padding-top:12px;">Please enter a new password!</td>
+						 		<td style="width: 350px;vertical-align:top; padding-left: 10px; padding-top:12px;font-size: 18px; color: #616161;">Please enter a new password!</td>
 						 		<td style="width: 400px; display: inline-block; vertical-align: top;">
 									<div id="mainContent">
 						  				 Welcome <span style="font-style:italic; font-size:14px;">$email</span>.<br>

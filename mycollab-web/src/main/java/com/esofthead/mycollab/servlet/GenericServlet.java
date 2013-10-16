@@ -24,10 +24,8 @@ public abstract class GenericServlet implements HttpRequestHandler {
 				throw new ServletException(e);
 			}
 		}
-
 	}
 
 	abstract protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException;
-
 }

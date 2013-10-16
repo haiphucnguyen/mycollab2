@@ -11,8 +11,10 @@
 #header {
     background-color: #1777AD;
     border-bottom: 6px solid #77BAE0;
-    height: 60px;
+    height: 70px;
     width: 100%;
+    text-align: left;
+    vertical-align: middle;
 }
 .header-mid {
     display: block;
@@ -44,6 +46,8 @@
     padding-top : 8px;
     border: 1px solid rgb(169, 169, 169);
     border-radius : 3px;
+    height: 250px;
+    width: 800px;
 }
 
 #mainContent{
@@ -54,10 +58,10 @@
     display: block; 
     padding: 10px 10px 8px 10px;
     border: 1px solid rgb(169, 169, 169);
+    height : 150px;
 }
 
 #bottom{
-    align:center;
     padding-left: 160px; 
     padding-right: 100px; 
     color : blue;
@@ -65,6 +69,7 @@
     background-color: rgb(239, 239, 239);
     padding-bottom: 100px;
     text-align: center;
+    height : 100%;
 }
 
 .v-button-bluebtn{
@@ -97,31 +102,30 @@
 		</div>
 		<div id="body" style="background-color: rgb(239, 239, 239); width: 100%;">
 			<div id="spacing" style="height:30px; background-color: rgb(239, 239, 239);"></div>
-			<div style="padding-left: 300px; padding-right: 250px; background-color: rgb(239, 239, 239); height: 100%;">
+			<div style="padding-left: 300px; background-color: rgb(239, 239, 239); height: 100%;">
 				<div id="mainBody">
 					<div id="title">
-						<p><span>Welcome <span style="font-style:italic; font-size:14px;">$!username</span>.</span></p>
+						<p><span style="color: #196893; font: 22px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Welcome <span style="font-style:italic; font-size:14px;">$!username</span>.</span></p>
 					</div>
 					<hr>
 					<div>
 						<table>
 						 	<tr>
-						 		<td style="width: 350vertical-align:top; padding-top:12px;">Thank you for accepting the invitation! Please enter your password</td>
+						 		<td style="width: 350px; vertical-align:top; padding-left: 10px; padding-top:12px;font-size: 18px; color: #616161;">Thank you for accepting the invitation! Please enter your password</td>
 						 		<td style="width: 400px; display: inline-block; vertical-align: top;">
 									<div id="mainContent">
-						     			<table border="0">
-											<tbody>
-											<tr>
-												<td><label for="password">Password:</label></td>
-												<td><input id="password" maxlength="45" name="password" type="password" /></td>
-											</tr>
-											<tr>
-												<td>
-													<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
-												</td>
-											</tr>
-											</tbody>
+										<table border="0">
+										<tbody>
+										<tr>
+											<td><label for="password"><span style="font-size:14px;">Password:</span></label></td>
+											<td><input style="width:280px;" id="password" maxlength="45" name="password" type="password" /></td>
+										</tr>
+										<tr style="height: 10px;"></tr>
+										</tbody>
 										</table>
+										<div>
+											<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
+										</div>											 
 									</div>
 								</td>
 						 	</tr>
@@ -131,11 +135,11 @@
 			</div>
 			<div id="bottom">
 			    <p>
-					<span style="font-size:12px;">Terms of Service</span>
-					<span>|</span>
-					<span style="font-size:12px;">Privacy Policy</span>
-					<span>|</span>
-					<span style="font-size:12px;">Copyright 2013 MyCollab. All rights reserved.</span>
+			    	<a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Terms of Service</span></a> &nbsp&nbsp&nbsp
+					<span style="color: #000000">|</span>
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Privacy Policy</span></a>&nbsp&nbsp&nbsp
+					<span style="color: #000000">|</span>
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Copyright 2013 MyCollab. All rights reserved.</span></a>
 				</p>
 			</div>
 		</div>

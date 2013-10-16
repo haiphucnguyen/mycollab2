@@ -11,8 +11,10 @@
 #header {
     background-color: #1777AD;
     border-bottom: 6px solid #77BAE0;
-    height: 60px;
+    height: 70px;
     width: 100%;
+    text-align: left;
+    vertical-align: middle;
 }
 .header-mid {
     display: block;
@@ -32,18 +34,15 @@
     width: 840px;
 }
 #mainBody{
-   background-color: #FFFFFF;
-   -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding-left : 11px;
-    padding-right: 11px;
-    padding-bottom: 11px;
+    -moz-box-sizing: border-box;
+    background-color: #FFFFFF;
+    border: 1px solid #A9A9A9;
+    border-radius: 3px 3px 3px 3px;
     font-size: 12px;
+    height: 350px;
+    padding: 8px 11px 11px;
     text-align: left;
-    padding-top : 8px;
-    border: 1px solid rgb(169, 169, 169);
-    border-radius : 3px;
+    width: 800px;
 }
 
 #mainContent{
@@ -54,17 +53,17 @@
     display: block; 
     padding: 10px 10px 8px 10px;
     border: 1px solid rgb(169, 169, 169);
+    height : 200px;
 }
 
 #bottom{
-    align:center;
-    padding-left: 160px; 
     padding-right: 100px; 
     color : blue;
     font-style: bold;
     background-color: rgb(239, 239, 239);
     padding-bottom: 100px;
     text-align: center;
+    height : 100%;
 }
 
 .v-button-bluebtn{
@@ -97,17 +96,17 @@
 		</div>
 		<div id="body" style="background-color: rgb(239, 239, 239); width: 100%;">
 			<div id="spacing" style="height:30px; background-color: rgb(239, 239, 239);"></div>
-			<div style="padding-left: 300px; padding-right: 250px; background-color: rgb(239, 239, 239); height: 100%;">
+			<div style="padding-left: 250px; background-color: rgb(239, 239, 239); height: 100%;">
 				<div id="mainBody">
 					<div id="title">
-						<p><span>Please feed back to inviter</span></p>
+						<p><span style="color: #196893; font: 22px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Please feed back to inviter</span></p>
 					</div>
 					<hr>
 					<div>
-						<p><span>Oops! We are sorry because you do not want to join Mycollab. Could you please drop some lines to tell reason to the inviter?
+						<p><span style="vertical-align:top; padding-left: 10px; padding-top:12px;font-size: 18px; color: #616161;">Oops! We are sorry because you do not want to join Mycollab. Could you please drop some lines to tell reason to the inviter?
 						</span></p>
 						<div style="display: block; padding: 8px 8px 8px 8px;">
-                        <textarea id="message" rows="8" cols="95">
+                        <textarea id="message" rows="8" cols="92">
                         </textarea>
                     	</div>
 	                    <div style="display: block; padding: 8px 8px 8px 8px;">
@@ -124,11 +123,11 @@
 			</div>
 			<div id="bottom">
 			    <p>
-					<span style="font-size:12px;">Terms of Service</span>
-					<span>|</span>
-					<span style="font-size:12px;">Privacy Policy</span>
-					<span>|</span>
-					<span style="font-size:12px;">Copyright 2013 MyCollab. All rights reserved.</span>
+			    	<a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Terms of Service</span></a> &nbsp&nbsp&nbsp
+					<span style="color: #000000">|</span>
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Privacy Policy</span></a>&nbsp&nbsp&nbsp
+					<span style="color: #000000">|</span>
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Copyright 2013 MyCollab. All rights reserved.</span></a>
 				</p>
 			</div>
 		</div>
