@@ -5,36 +5,68 @@
 <link rel="icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <style media="screen" type="text/css">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 .container {
 }
 
-.footer-home {
+#header {
+    background-color: #1777AD;
+    border-bottom: 6px solid #77BAE0;
+    height: 60px;
     width: 100%;
-    height: 100px;
-    background: url('${defaultUrls.cdn_url}footer_home_bg.png') repeat-x scroll 0% 0% transparent;
-    clear: both;
-	position: relative;
-	z-index: 10;
+}
+.header-mid {
+    display: block;
+    margin: 0 auto;
+    width: 1100px;
+}
+.header-mid .a {
+    color: #000000;
+    text-decoration: none;
 }
 
-.footer-home .footer-copyright {
-    color: #606060;
+.body-style {
+    background-color: #F9F9F9;
+    float: right;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    width: 840px;
 }
-.footer-copyright {
-    color: #FFFFFF;
+#mainBody{
+   background-color: #FFFFFF;
+   -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left : 11px;
+    padding-right: 11px;
+    padding-bottom: 11px;
     font-size: 12px;
+    text-align: left;
+    padding-top : 8px;
+    border: 1px solid rgb(169, 169, 169);
+    border-radius : 3px;
 }
-.footer-home .footer-copyright h1 {
-    color: #FFFFFF;
-    font-family: 'Monda';
+
+#mainContent{
+     background-color: #F6F6F6;
+   -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block; 
+    padding: 10px 10px 8px 10px;
+    border: 1px solid rgb(169, 169, 169);
 }
-.footer-home .wrapper {
-    width: 1100px;
-    margin: 0px auto;
+
+#bottom{
+    align:center;
+    padding-left: 160px; 
+    padding-right: 100px; 
+    color : blue;
+    font-style: bold;
+    background-color: rgb(239, 239, 239);
+    padding-bottom: 100px;
+    text-align: center;
 }
+
 .v-button-bluebtn{
 	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
 		#2599c8;
@@ -48,64 +80,78 @@
 	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
 		#1377b3;
 	border: 1px solid #093768;
+	cursor: pointer;
 }
-input[type="text"], input[type="password"]{
-    width: 180px;
-}
+
 </style>
 <title>User recovery password page</title>
 </head>
-<body style="height:100%;">
-	<div style="height: 100%; padding-top:30px; padding-left: 150px;">
-	<table height="400" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
-		<tr>
-			<td style="height: 200px; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
-				<div>
-					<a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
-					<p><span style="font-style:italic; font-size:14px;">&copy;2010-2013 MyCollab, LLC. All rights reserved.</span></p>
-				</div>
-			</td>
-			<td style="width: 600px; display: inline-block; vertical-align: top;">
-				<div id="welcomeBody" style="display:block">
-		<div style="display: block; padding: 40px 8px 8px 20px;">
-			<span style="font-style:italic; font-size:20px;">Choose your new password</span>
-		</div>
-		<div>
-			<hr style="width: 550px; border:0.5;">
-		</div>
-		<div style="display: block; padding: 8px 8px 8px 20px;">
-			<div>
-				<form>
-				<table border="0">
-				<tbody>
-				<tr>
-					<td><label for="password">New password:</label></td>
-				</tr>
-				<tr>
-					<td><input id="password" maxlength="45" name="password" type="password" /></td>
-				</tr>
-				<tr style="padding-top:20px;">
-					<td><label for="password">Confirm new password:</label></td>
-				</tr>
-				<tr>
-					<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
-				</tr>
-				</tbody></table>
-				</form>
+<body>
+	<div id="container">
+		<div id="header">
+			<div class="header-mid">
+				<a href=".">
+					<img src="${defaultUrls.cdn_url}logo_mycollab.png" alt="Logo Mycollab">
+				</a>
 			</div>
-			<div style="padding-top:10px; padding-left:10px;">
-				<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Reset</button>
+		</div>
+		<div id="body" style="background-color: rgb(239, 239, 239); width: 100%;">
+			<div id="spacing" style="height:30px; background-color: rgb(239, 239, 239);"></div>
+			<div style="padding-left: 300px; padding-right: 250px; background-color: rgb(239, 239, 239); height: 100%;">
+				<div id="mainBody">
+					<div id="title">
+						<p><span>Choose your new password</span></p>
+					</div>
+					<hr>
+					<div>
+						<table>
+						 	<tr>
+						 		<td style="width: 350px;vertical-align:top; padding-top:12px;">Please enter a new password!</td>
+						 		<td style="width: 400px; display: inline-block; vertical-align: top;">
+									<div id="mainContent">
+						  				 <div>
+											<form>
+											<table border="0">
+											<tbody>
+											<tr>
+												<td><label for="password">New password:</label></td>
+											</tr>
+											<tr>
+												<td><input id="password" maxlength="45" name="password" type="password" /></td>
+											</tr>
+											<tr style="padding-top:20px;">
+												<td><label for="password">Confirm new password:</label></td>
+											</tr>
+											<tr>
+												<td><input id="repassword" maxlength="45" name="password" type="password" /></td>
+											</tr>
+											</tbody></table>
+											</form>
+										</div>
+										<div style="padding-top:10px;">
+											<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Reset</button>
+										</div>
+									</div>
+								</td>
+						 	</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="bottom">
+			    <p>
+					<span style="font-size:12px;">Terms of Service</span>
+					<span>|</span>
+					<span style="font-size:12px;">Privacy Policy</span>
+					<span>|</span>
+					<span style="font-size:12px;">Copyright 2013 MyCollab. All rights reserved.</span>
+				</p>
 			</div>
 		</div>
 	</div>
-			</td>
-		</tr>
-	</table>
-	<div class="container"></div>
 	<input type="hidden" id="username" value="$!username">
 	<input type="hidden" id="loginURL" value="$!loginURL">
 	<input type="hidden" id="redirectURL" value="$!redirectURL">
-	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>

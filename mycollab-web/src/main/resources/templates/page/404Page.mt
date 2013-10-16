@@ -5,7 +5,6 @@
 <link rel="icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <style media="screen" type="text/css">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 .container {
 }
 #content {
@@ -85,6 +84,7 @@
 	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
 		#1377b3;
 	border: 1px solid #093768;
+	cursor: pointer;
 }
 
 </style>

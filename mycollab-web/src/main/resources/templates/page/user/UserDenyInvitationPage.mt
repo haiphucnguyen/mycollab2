@@ -8,88 +8,136 @@
 .container {
 }
 
-.footer-home {
+#header {
+    background-color: #1777AD;
+    border-bottom: 6px solid #77BAE0;
+    height: 60px;
     width: 100%;
-    height: 100px;
-    background: url('${defaultUrls.cdn_url}footer_home_bg.png') repeat-x scroll 0% 0% transparent;
-    clear: both;
-    position: relative;
-    z-index: 10;
+}
+.header-mid {
+    display: block;
+    margin: 0 auto;
+    width: 1100px;
+}
+.header-mid .a {
+    color: #000000;
+    text-decoration: none;
 }
 
-.footer-home .footer-copyright {
-    color: #606060;
+.body-style {
+    background-color: #F9F9F9;
+    float: right;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    width: 840px;
 }
-.footer-copyright {
-    color: #FFFFFF;
+#mainBody{
+   background-color: #FFFFFF;
+   -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left : 11px;
+    padding-right: 11px;
+    padding-bottom: 11px;
     font-size: 12px;
+    text-align: left;
+    padding-top : 8px;
+    border: 1px solid rgb(169, 169, 169);
+    border-radius : 3px;
 }
-.footer-home .footer-copyright h1 {
-    color: #FFFFFF;
-    font-family: 'Monda';
+
+#mainContent{
+     background-color: #F6F6F6;
+   -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block; 
+    padding: 10px 10px 8px 10px;
+    border: 1px solid rgb(169, 169, 169);
 }
-.footer-home .wrapper {
-    width: 1100px;
-    margin: 0px auto;
+
+#bottom{
+    align:center;
+    padding-left: 160px; 
+    padding-right: 100px; 
+    color : blue;
+    font-style: bold;
+    background-color: rgb(239, 239, 239);
+    padding-bottom: 100px;
+    text-align: center;
 }
+
 .v-button-bluebtn{
-    background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
-        #2599c8;
-    border: 1px solid #093768;
-    color: #FFFFFF;
-    text-shadow: 1px 1px 0px #1570cd;
-    border-radius: 3px;
-    padding: 3px 13px;
+	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
+		#2599c8;
+	border: 1px solid #093768;
+	color: #FFFFFF;
+	text-shadow: 1px 1px 0px #1570cd;
+	border-radius: 3px;
+	padding: 3px 13px;
 }
 .v-button-bluebtn:hover {
-    background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
-        #1377b3;
-    border: 1px solid #093768;
+	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
+		#1377b3;
+	border: 1px solid #093768;
+	cursor: pointer;
 }
 
 </style>
 <title>Member deny invitation feedback page</title>
 </head>
-<body style="height:100%;">
-<div style="height: 100%; padding-top:100px; padding-left: 150px;">
-    <table height="100%" width="1000" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; padding-top: 50px;">
-        <tr>
-            <td style="height: 100%; width: 250px; display: inline-block; vertical-align: top; margin-top: 45px; border-right:1px dotted black;">
-                <div>
-                    <a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}logo_mycollab.png" height="42" width="225"></a>
-                    <p><span style="font-style:italic; font-size:14px;">&copy;2010-2013 MyCollab, LLC. All rights reserved.</span></p>
-                </div>
-            </td>
-            <td style="width: 600px; display: inline-block; vertical-align: top;">
-                <div>
-                    <div style="display: block; padding: 40px 8px 8px 20px;">
-                        <a href="javascript:void(0);"><img src="${defaultUrls.cdn_url}ticket_icon.png" height="25" width="25"></a>
-                        Oops! We are sorry because you do not want to join Mycollab. Could you please drop some lines to tell reason to the inviter?
-                    </div>
-                    <div style="display: block; padding: 8px 8px 8px 20px;">
-                        <textarea id="message" rows="8" cols="80">
+<body>
+	<div id="container">
+		<div id="header">
+			<div class="header-mid">
+				<a href=".">
+					<img src="${defaultUrls.cdn_url}logo_mycollab.png" alt="Logo Mycollab">
+				</a>
+			</div>
+		</div>
+		<div id="body" style="background-color: rgb(239, 239, 239); width: 100%;">
+			<div id="spacing" style="height:30px; background-color: rgb(239, 239, 239);"></div>
+			<div style="padding-left: 300px; padding-right: 250px; background-color: rgb(239, 239, 239); height: 100%;">
+				<div id="mainBody">
+					<div id="title">
+						<p><span>Please feed back to inviter</span></p>
+					</div>
+					<hr>
+					<div>
+						<p><span>Oops! We are sorry because you do not want to join Mycollab. Could you please drop some lines to tell reason to the inviter?
+						</span></p>
+						<div style="display: block; padding: 8px 8px 8px 8px;">
+                        <textarea id="message" rows="8" cols="95">
                         </textarea>
-                    </div>
-                    <div style="display: block; padding: 8px 8px 8px 20px;">
-                        <button class="v-button-bluebtn" type="button" onclick="return sendEmailFeedBack();">Send</button>
-                        <button class="v-button-bluebtn" type="button" onclick="return skip();">Skip</button>
-                    </div>
-                    <div id="requireMsg" style="display: none; padding: 12px 8px 8px 20px;">
-                        <p><span style="color:red; font-style:italic">
-                            (*) Reason
-                        </span></p>
-                    </div>
-                </div>  
-            </td>
-        </tr>
-    </table>
-    <div class="container"></div>
-    <input type="hidden" id="inviterEmail" value="$!inviterEmail">
+                    	</div>
+	                    <div style="display: block; padding: 8px 8px 8px 8px;">
+	                        <button class="v-button-bluebtn" type="button" onclick="return sendEmailFeedBack();">Send</button>
+	                        <button class="v-button-bluebtn" type="button" onclick="return skip();">Skip</button>
+	                    </div>
+	                    <div id="requireMsg" style="display: none; padding: 12px 8px 8px 20px;">
+	                        <p><span style="color:red; font-style:italic">
+	                            (*) Reason
+	                        </span></p>
+	                    </div>
+					</div>
+				</div>
+			</div>
+			<div id="bottom">
+			    <p>
+					<span style="font-size:12px;">Terms of Service</span>
+					<span>|</span>
+					<span style="font-size:12px;">Privacy Policy</span>
+					<span>|</span>
+					<span style="font-size:12px;">Copyright 2013 MyCollab. All rights reserved.</span>
+				</p>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="inviterEmail" value="$!inviterEmail">
     <input type="hidden" id="url" value="$!redirectURL">
     <input type="hidden" id="toEmail" value="$!toEmail">
     <input type="hidden" id="toName" value="$!toName">
     <input type="hidden" id="inviterName" value="$!inviterName">
-    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
