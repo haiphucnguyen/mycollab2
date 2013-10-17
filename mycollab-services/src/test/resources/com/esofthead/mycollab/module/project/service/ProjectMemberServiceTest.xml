@@ -11,7 +11,8 @@
 
     <s_user_account id="1" isAccountOwner="true"
         registerStatus="Active" username="user1" accountId="1"
-        registeredTime="2013-04-10 13:29:23" isAdmin="true" />
+        registeredTime="2013-04-10 13:29:23" />
+
     <s_roles rolename="Guest" sAccountId="1" id="1" />
 
     <m_prj_role projectid="1" rolename="test" sAccountId="1"

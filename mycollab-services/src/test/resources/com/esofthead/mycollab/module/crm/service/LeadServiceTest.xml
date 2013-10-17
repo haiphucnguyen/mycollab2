@@ -13,19 +13,18 @@
         paymentMethod="Credit Card" status="Active" />
 
     <s_user firstname="Duong" lastname="Linh" username="linh"
-        avatarId="avatar" email="linhduong@esofthead.com"
-        registerStatus="Active" />
+        avatarId="avatar" email="linhduong@esofthead.com" />
 
     <s_user firstname="Hai" lastname="Nguyen" username="hai"
-        avatarId="2" email="hainguyen@esofthead.com" registerStatus="Active" />
+        avatarId="2" email="hainguyen@esofthead.com" />
 
     <s_user_account id="1" isAccountOwner="true"
         registerStatus="Active" username="linh" accountId="1"
-        registeredTime="2013-04-10 13:29:23" isAdmin="true" />
+        registeredTime="2013-04-10 13:29:23" />
 
     <s_user_account id="2" isAccountOwner="true"
         registerStatus="Active" username="hai" accountId="1"
-        registeredTime="2013-04-10 13:29:23" isAdmin="true" />
+        registeredTime="2013-04-10 13:29:23" />
 
     <m_crm_campaign id="1" type="type" status="status"
         assignUser="linh" campaignName="ABC" sAccountId="1" />

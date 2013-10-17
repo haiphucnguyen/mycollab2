@@ -15,12 +15,10 @@
         createdTime="2013-04-10 13:29:23" billingPlanId="1" />
 
     <s_user username="hai" firstname="Nguyen" lastname="Hai"
-        email="hainguyen@esofthead.com" avatarId="avatar"
-        registerStatus="Active" />
+        email="hainguyen@esofthead.com" avatarId="avatar" />
 
     <s_user username="linh" firstname="Nguyen" lastname="Linh"
-        email="linhnguyen@esofthead.com" avatarId="avatar"
-        registerStatus="Active" />
+        email="linhnguyen@esofthead.com" avatarId="avatar" />
 
     <m_crm_account id="1" accountName="esofthead"
         sAccountId="1" />

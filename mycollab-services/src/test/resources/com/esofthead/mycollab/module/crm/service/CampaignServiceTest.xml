@@ -14,12 +14,11 @@
     <s_account id="1" status="Active" paymentMethod="Credit Card"
         createdTime="2013-04-10 13:29:23" billingPlanId="1" />
     <s_user username="hai79" password="abc" firstname="Nguyen"
-        lastname="Hai" email="hainguyen@esofthead.com" registerStatus="Active"
-        avatarId="1" />
+        lastname="Hai" email="hainguyen@esofthead.com" avatarId="1" />
 
     <s_user_account id="1" isAccountOwner="true"
         registerStatus="Active" username="hai79" accountId="1"
-        registeredTime="2013-04-10 13:29:23" isAdmin="true" />
+        registeredTime="2013-04-10 13:29:23" />
 
     <m_crm_campaign id="1" campaignName="AAA" status="a"
         type="b" assignUser="hai79" budget="12.1" expectedCost="2"
