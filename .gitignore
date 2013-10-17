@@ -2,21 +2,15 @@ mycollab-web/bin
 mycollab-web/build
 mycollab-web/target
 mycollab-web/.settings
-mycollab-web/.classpath
-mycollab-web/.project
 mycollab-web/.springBeans
 mycollab-web/src/main/resources/resources.properties:
 mycollab-core/bin
 mycollab-core/target
-mycollab-core/.classpath
-mycollab-core/.project
 mycollab-core/.settings
 mycollab-parent/.settings
 mycollab-parent/.classpath
 mycollab-parent/.project
 mycollab-frontsite/target
-mycollab-frontsite/.classpath
-mycollab-frontsite/.project
 mycollab-frontsite/.settings
 
 .metadata
@@ -156,10 +150,5 @@ extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/cust
 extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/customfield/demo/ConversionExample.nas
 extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/customfield/demo/itest/WrappingFieldTest.jad
 extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/customfield/demo/itest/WrappingFieldTest.nas
-mycollab-frontsite/.classpath.classpath
 mycollab-services/.settings/org.eclipse.jdt.core.prefs
-mycollab-services/.classpath
-mycollab-services/.project
-mycollab-test/.classpath
-mycollab-test/.project
 mycollab-test/.settings/org.eclipse.jdt.core.prefs
