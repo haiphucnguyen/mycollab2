@@ -18,12 +18,12 @@
     <s_roles rolename="Dev" sAccountId="1" id="1" />
 
     <s_user_account id="1" username="hainguyen"
-        accountId="1" isAccountOwner="1" isAdmin="1" roleId="1"
-        registeredTime="2013-08-08 00:00:00" registerStatus="Active" />
+        accountId="1" isAccountOwner="1" roleId="1" registeredTime="2013-08-08 00:00:00"
+        registerStatus="Active" />
 
     <s_user_account id="2" username="linhduong"
-        accountId="1" isAccountOwner="1" isAdmin="0" roleId="1"
-        registeredTime="2013-08-08 20:00:00" registerStatus="Active" />
+        accountId="1" isAccountOwner="1" roleId="1" registeredTime="2013-08-08 20:00:00"
+        registerStatus="Active" />
 
 
 

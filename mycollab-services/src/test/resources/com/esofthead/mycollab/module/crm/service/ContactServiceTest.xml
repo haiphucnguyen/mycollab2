@@ -13,20 +13,18 @@
         paymentMethod="Credit Card" status="Active" />
 
     <s_user username="linh" password="linh" firstname="Duong"
-        lastname="Linh" avatarId="avatar" email="linhduong@esofthead.com"
-        registerStatus="Active" />
+        lastname="Linh" avatarId="avatar" email="linhduong@esofthead.com" />
 
     <s_user username="hai" password="linh" firstname="Nguyen"
-        lastname="Hai" avatarId="avatar" email="linhduong@esofthead.com"
-        registerStatus="Active" />
+        lastname="Hai" avatarId="avatar" email="linhduong@esofthead.com" />
 
     <s_user_account id="1" isAccountOwner="true"
         registerStatus="Active" username="hai" accountId="1"
-        registeredTime="2013-04-10 13:29:23" isAdmin="true" />
+        registeredTime="2013-04-10 13:29:23" />
 
     <s_user_account id="2" isAccountOwner="true"
         registerStatus="Active" username="linh" accountId="1"
-        registeredTime="2013-04-10 13:29:23" isAdmin="true" />
+        registeredTime="2013-04-10 13:29:23" />
 
     <m_crm_account id="1" accountName="xyz" sAccountId="1" />
 
