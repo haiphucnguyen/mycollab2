@@ -20,13 +20,20 @@
         <property name="durability" value="true" />
     </bean>
 
+    <bean id="sendInviteUserEmailJob"
+        class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+            value="com.esofthead.mycollab.schedule.jobs.SendUserInvitationEmailJob" />
+        <property name="durability" value="true" />
+    </bean>
+
     <bean id="projectSendRelayNotificationEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
             value="com.esofthead.mycollab.schedule.jobs.ProjectSendingRelayEmailNotificationJob" />
         <property name="durability" value="true" />
     </bean>
-    
+
     <bean id="crmSendRelayNotificationEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
@@ -52,7 +59,7 @@
         <property name="jobDetail" ref="projectSendRelayNotificationEmailJob" />
         <property name="cronExpression" value="0 * * * * ?" />
     </bean>
-    
+
     <bean id="crmSendRelayNotificationEmailTrigger"
         class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
         <property name="jobDetail" ref="crmSendRelayNotificationEmailJob" />
@@ -62,6 +69,12 @@
     <bean id="sendErrorReportEmailTrigger"
         class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
         <property name="jobDetail" ref="sendErrorReportEmailJob" />
+        <property name="cronExpression" value="0 * * * * ?" />
+    </bean>
+
+    <bean id="sendInviteUserEmailTrigger"
+        class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
+        <property name="jobDetail" ref="sendInviteUserEmailJob" />
         <property name="cronExpression" value="0 * * * * ?" />
     </bean>
 
@@ -96,6 +109,7 @@
                 <ref bean="projectSendRelayNotificationEmailJob" />
                 <ref bean="crmSendRelayNotificationEmailJob" />
                 <ref bean="sendErrorReportEmailJob" />
+                <ref bean="sendInviteUserEmailJob" />
             </list>
         </property>
         <property name="triggers">
@@ -104,6 +118,7 @@
                 <ref bean="projectSendRelayNotificationEmailTrigger" />
                 <ref bean="crmSendRelayNotificationEmailTrigger" />
                 <ref bean="sendErrorReportEmailTrigger" />
+                <ref bean="sendInviteUserEmailTrigger" />
             </list>
         </property>
     </bean>

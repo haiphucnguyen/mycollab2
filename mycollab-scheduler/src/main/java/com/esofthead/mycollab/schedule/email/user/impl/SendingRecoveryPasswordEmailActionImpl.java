@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAction;
 
-@Service
+@Component
 public class SendingRecoveryPasswordEmailActionImpl implements
 		SendingRecoveryPasswordEmailAction {
 

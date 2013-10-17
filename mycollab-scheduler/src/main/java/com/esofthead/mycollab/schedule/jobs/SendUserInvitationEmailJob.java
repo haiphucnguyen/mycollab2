@@ -1,12 +1,16 @@
-package com.esofthead.mycollab.schedule.email.user.impl;
+package com.esofthead.mycollab.schedule.jobs;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
@@ -18,12 +22,12 @@ import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapperExt;
 import com.esofthead.mycollab.module.user.domain.SimpleUserAccountInvitation;
-import com.esofthead.mycollab.schedule.email.ScheduleConfig;
 
 @Component
-public class SendUserInvitationCommandImpl {
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+public class SendUserInvitationEmailJob extends QuartzJobBean {
 	private static Logger log = LoggerFactory
-			.getLogger(SendUserInvitationCommandImpl.class);
+			.getLogger(SendUserInvitationEmailJob.class);
 
 	@Autowired
 	private UserAccountInvitationMapper userAccountInvitationMapper;
@@ -34,9 +38,9 @@ public class SendUserInvitationCommandImpl {
 	@Autowired
 	private ExtMailService extMailService;
 
-	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
-	public void runNotification() {
-
+	@Override
+	protected void executeInternal(JobExecutionContext context)
+			throws JobExecutionException {
 		List<SimpleUserAccountInvitation> invitations = userAccountInvitationMapperExt
 				.findAccountInvitations(RegisterStatusConstants.VERIFICATING);
 
@@ -85,5 +89,6 @@ public class SendUserInvitationCommandImpl {
 					.setInvitationstatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL);
 			userAccountInvitationMapper.updateByPrimaryKeySelective(invitation);
 		}
+
 	}
 }
