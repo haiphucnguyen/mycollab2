@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
@@ -70,15 +72,18 @@ public class AnotatedUserRecoveryPasswordHandlerServlet implements
 
 	private String generateUserRecoveryPasswordPage(String username,
 			String loginURL, String redirectURL) {
-		String template = "/templates/page/user/UserRecoveryPasswordPage.mt";
+		String template = "templates/page/user/UserRecoveryPasswordPage.mt";
 		TemplateContext context = new TemplateContext();
 		Reader reader;
 		try {
-			reader = new InputStreamReader(PageNotFoundGenerator.class
-					.getClassLoader().getResourceAsStream(template), "UTF-8");
+			reader = new InputStreamReader(
+					AnotatedUserRecoveryPasswordHandlerServlet.class
+							.getClassLoader().getResourceAsStream(template),
+					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(PageNotFoundGenerator.class
-					.getClassLoader().getResourceAsStream(template));
+			reader = new InputStreamReader(
+					AnotatedUserRecoveryPasswordHandlerServlet.class
+							.getClassLoader().getResourceAsStream(template));
 		}
 
 		context.put("username", username);
