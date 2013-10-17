@@ -25,6 +25,7 @@ import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 
 public class ServiceGenerator implements SourceGenerator {
@@ -49,8 +50,12 @@ public class ServiceGenerator implements SourceGenerator {
 	}
 
 	private static boolean isInterfaceBeRemoteService(Class<?> cls) {
+		if (cls.getAnnotation(NotMobile.class) != null) {
+			return false;
+		}
+
 		if (IService.class.isAssignableFrom(cls)
-				&& (cls.getAnnotation(RemotingDestination.class) != null)) {
+				&& ((cls.getAnnotation(RemotingDestination.class) != null))) {
 			return true;
 		} else {
 			Class<?>[] interfaces = cls.getInterfaces();
@@ -77,6 +82,8 @@ public class ServiceGenerator implements SourceGenerator {
 
 		log.info("Scan packages to service classes. There are "
 				+ serviceClasses.size() + " classes are found");
+
+		List<String> waningMsg = new ArrayList<String>();
 
 		try {
 			for (Class<?> serviceClass : serviceClasses) {
@@ -124,7 +131,7 @@ public class ServiceGenerator implements SourceGenerator {
 					binding.put(
 							"methods",
 							retrieveAs3MethodsMapping(interfaceCls,
-									importClasses));
+									importClasses, waningMsg));
 
 					Writable template = engine.createTemplate(
 							As3GeneratorMojo.class.getClassLoader()
@@ -146,7 +153,12 @@ public class ServiceGenerator implements SourceGenerator {
 					log.debug("Service class " + serviceClass.getName()
 							+ " is not a candidate for remote service");
 				}
+			}
 
+			if (waningMsg.size() > 0) {
+				for (String msg : waningMsg) {
+					log.warn(msg);
+				}
 			}
 		} catch (Exception e) {
 			log.error("Exception while generating classes", e);
@@ -156,46 +168,63 @@ public class ServiceGenerator implements SourceGenerator {
 	}
 
 	private List<As3Method> retrieveAs3MethodsMapping(Class serviceClass,
-			Set<String> importClasses) {
+			Set<String> importClasses, List<String> warningMsg) {
 		List<As3Method> result = new ArrayList<As3Method>();
 		Method[] methods = serviceClass.getMethods();
 		for (Method method : methods) {
-			As3Method as3Method = new As3Method(method.getName());
-			Class<?>[] parameterTypes = method.getParameterTypes();
-			for (int i = 0; i < parameterTypes.length; i++) {
-				Class paramCls = parameterTypes[i];
-				String typeName;
+			if (method.getAnnotation(NotMobile.class) == null) {
+				As3Method as3Method = new As3Method(method.getName());
+				Class<?>[] parameterTypes = method.getParameterTypes();
+				for (int i = 0; i < parameterTypes.length; i++) {
+					Class paramCls = parameterTypes[i];
+					String typeName = "Object";
 
-				if (paramCls == Boolean.TYPE || paramCls == Boolean.class) {
-					typeName = "Boolean";
-				} else if (paramCls == Integer.TYPE
-						|| paramCls == Integer.class) {
-					typeName = "int";
-				} else if (paramCls == Long.TYPE || paramCls == Long.class) {
-					typeName = "int";
-				} else if (paramCls == Double.TYPE || paramCls == Double.class) {
-					typeName = "Number";
-				} else if (paramCls == String.class) {
-					typeName = "String";
-				} else if (paramCls == Date.class) {
-					typeName = "Date";
-				} else if (Collection.class.isAssignableFrom(paramCls)) {
-					importClasses.add("mx.collections.ArrayCollection");
-					typeName = "ArrayCollection";
-				} else if (Map.class.isAssignableFrom(paramCls)) {
-					typeName = "Object";
-				} else if (paramCls == Object.class
-						|| paramCls == Serializable.class) {
-					typeName = "Object";
-				} else {
-					importClasses.add(paramCls.getName());
-					typeName = paramCls.getSimpleName();
+					if (paramCls == Boolean.TYPE || paramCls == Boolean.class) {
+						typeName = "Boolean";
+					} else if (paramCls == Integer.TYPE
+							|| paramCls == Integer.class) {
+						typeName = "int";
+					} else if (paramCls == Long.TYPE || paramCls == Long.class) {
+						typeName = "int";
+					} else if (paramCls == Double.TYPE
+							|| paramCls == Double.class) {
+						typeName = "Number";
+					} else if (paramCls == String.class) {
+						typeName = "String";
+					} else if (paramCls == Date.class) {
+						typeName = "Date";
+					} else if (Collection.class.isAssignableFrom(paramCls)) {
+						importClasses.add("mx.collections.ArrayCollection");
+						typeName = "ArrayCollection";
+					} else if (Map.class.isAssignableFrom(paramCls)) {
+						typeName = "Object";
+					} else if (paramCls == Object.class
+							|| paramCls == Serializable.class) {
+						typeName = "Object";
+					} else {
+
+						if (!paramCls.getName().startsWith(
+								"com.esofthead.mycollab")) {
+							warningMsg
+									.add("Service class "
+											+ serviceClass.getName()
+											+ " has invalid method "
+											+ method.getName()
+											+ ". It should be marked with annotation AmfIgnore. IT has one param type is "
+											+ paramCls.getName());
+						} else {
+							importClasses.add(paramCls.getName());
+							typeName = paramCls.getSimpleName();
+						}
+
+					}
+
+					As3Field as3Field = new As3Field(typeName, "param" + i);
+					as3Method.addField(as3Field);
+					result.add(as3Method);
 				}
-				As3Field as3Field = new As3Field(typeName, "param" + i);
-				as3Method.addField(as3Field);
 			}
 
-			result.add(as3Method);
 		}
 		return result;
 	}
