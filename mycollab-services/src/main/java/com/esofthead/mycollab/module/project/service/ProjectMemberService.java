@@ -11,6 +11,7 @@ import org.springframework.flex.remoting.RemotingDestination;
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
+import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -40,6 +41,7 @@ public interface ProjectMemberService extends
 	List<SimpleUser> getActiveUsersInProject(int projectId,
 			@CacheKey Integer sAccountId);
 
+	@NotMobile
 	void inviteProjectMember(String[] email, int projectId, int projectRoleId,
 			String inviteUser, int sAccountId);
 

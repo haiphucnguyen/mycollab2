@@ -9,6 +9,7 @@ import org.springframework.flex.remoting.RemotingDestination;
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
+import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
@@ -25,5 +26,6 @@ public interface ProjectTaskListService extends
 	SimpleTaskList findById(int taskListId, @CacheKey int sAccountId);
 
 	@CacheEvict
+	@NotMobile
 	void updateTaskListIndex(TaskList[] taskLists, @CacheKey int sAccountId);
 }

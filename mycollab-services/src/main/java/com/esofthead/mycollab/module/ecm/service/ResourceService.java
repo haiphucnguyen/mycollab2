@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.ecm.service;
 import java.io.InputStream;
 import java.util.List;
 
+import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -20,6 +21,7 @@ public interface ResourceService extends IService {
 
 	List<Folder> getSubFolders(String path);
 
+	@NotMobile
 	void saveContent(Content content, String createdUser,
 			InputStream refStream, Integer sAccountId);
 
