@@ -31,13 +31,46 @@ public class ServiceGenerator implements SourceGenerator {
 
 	private static Logger log = LoggerFactory.getLogger(ServiceGenerator.class);
 
+	private static Class<?> getCandidateForRemoteService(Class<?> serviceClass) {
+		if (serviceClass.isInterface()) {
+			if (isInterfaceBeRemoteService(serviceClass)) {
+				return serviceClass;
+			}
+		} else {
+			Class<?>[] interfaces = serviceClass.getInterfaces();
+			for (Class<?> interfaceCls : interfaces) {
+				if (isInterfaceBeRemoteService(interfaceCls)) {
+					return interfaceCls;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private static boolean isInterfaceBeRemoteService(Class<?> cls) {
+		if (IService.class.isAssignableFrom(cls)
+				&& (cls.getAnnotation(RemotingDestination.class) != null)) {
+			return true;
+		} else {
+			Class<?>[] interfaces = cls.getInterfaces();
+			for (Class<?> interfaceCls : interfaces) {
+				if (isInterfaceBeRemoteService(interfaceCls)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	public void generate() {
 		ComponentScanner scanner = new ComponentScanner();
 		Set<Class<?>> serviceClasses = scanner.getClasses(new ComponentQuery() {
 			@Override
 			protected void query() {
-				select().from("com.esofthead.mycollab.**.service.*").returning(
+				select().from("com.esofthead.mycollab.**.service").returning(
 						allImplementing(IService.class));
 			}
 		});
@@ -48,72 +81,70 @@ public class ServiceGenerator implements SourceGenerator {
 		try {
 			for (Class<?> serviceClass : serviceClasses) {
 				Class<?>[] interfaces = serviceClass.getInterfaces();
-				for (Class interfaceCls : interfaces) {
-					if (IService.class.isAssignableFrom(interfaceCls)
-							&& (interfaceCls
-									.getAnnotation(RemotingDestination.class) != null)) {
-						GStringTemplateEngine engine = new GStringTemplateEngine();
+				Class interfaceCls = getCandidateForRemoteService(serviceClass);
+				if (interfaceCls != null) {
+					GStringTemplateEngine engine = new GStringTemplateEngine();
 
-						String serviceName = "";
+					String serviceName = "";
 
-						// Detect service name
-						Service serviceAnno = serviceClass
-								.getAnnotation(Service.class);
-						if (serviceAnno != null) {
-							if (serviceAnno.value() != null
-									&& !serviceAnno.value().equals("")) {
-								serviceName = serviceAnno.value();
-							} else {
-								serviceName = serviceClass.getSimpleName();
-								serviceName = (char) (serviceName.charAt(0) + 'a' - 'A')
-										+ serviceName.substring(1);
-							}
+					// Detect service name
+					Service serviceAnno = serviceClass
+							.getAnnotation(Service.class);
+					if (serviceAnno != null) {
+						if (serviceAnno.value() != null
+								&& !serviceAnno.value().equals("")) {
+							serviceName = serviceAnno.value();
 						} else {
 							serviceName = serviceClass.getSimpleName();
 							serviceName = (char) (serviceName.charAt(0) + 'a' - 'A')
 									+ serviceName.substring(1);
 						}
-
-						String packageName = ClassUtils
-								.getPackage(interfaceCls);
-						log.info("Package: " + serviceClass + "  "
-								+ ClassUtils.getPackage(interfaceCls));
-						Map binding = new HashMap();
-						binding.put("packageName", packageName);
-						binding.put("serviceName", serviceName);
-						binding.put("className", interfaceCls.getSimpleName());
-
-						Set<String> importClasses = new HashSet<String>();
-						importClasses
-								.add("com.esofthead.mycollab.core.GenericService");
-						importClasses.add("mx.rpc.events.FaultEvent");
-						importClasses.add("mx.rpc.events.ResultEvent");
-						importClasses
-								.add("com.esofthead.mycollab.core.AbstractResponder");
-						binding.put("importClasses", importClasses);
-
-						binding.put(
-								"methods",
-								retrieveAs3MethodsMapping(interfaceCls,
-										importClasses));
-
-						Writable template = engine.createTemplate(
-								As3GeneratorMojo.class.getClassLoader()
-										.getResource("serviceGenerator.tp"))
-								.make(binding);
-
-						String packagePath = packageName.replace(".", "/");
-						String filePath = "src" + "/" + packagePath + "/"
-								+ interfaceCls.getSimpleName() + ".as";
-						File folder = new File(System.getProperty("user.dir")
-								+ "/" + "src" + "/" + packagePath + "/");
-						folder.mkdirs();
-						FileWriter writer = new FileWriter(new File(folder,
-								interfaceCls.getSimpleName() + ".as"));
-						writer.write(template.toString());
-						writer.close();
-						log.info("Generated criteria class " + filePath);
+					} else {
+						serviceName = serviceClass.getSimpleName();
+						serviceName = (char) (serviceName.charAt(0) + 'a' - 'A')
+								+ serviceName.substring(1);
 					}
+
+					String packageName = ClassUtils.getPackage(interfaceCls);
+
+					Map binding = new HashMap();
+					binding.put("packageName", packageName);
+					binding.put("serviceName", serviceName);
+					binding.put("className", interfaceCls.getSimpleName());
+
+					Set<String> importClasses = new HashSet<String>();
+					importClasses
+							.add("com.esofthead.mycollab.core.GenericService");
+					importClasses.add("mx.rpc.events.FaultEvent");
+					importClasses.add("mx.rpc.events.ResultEvent");
+					importClasses
+							.add("com.esofthead.mycollab.core.AbstractResponder");
+					binding.put("importClasses", importClasses);
+
+					binding.put(
+							"methods",
+							retrieveAs3MethodsMapping(interfaceCls,
+									importClasses));
+
+					Writable template = engine.createTemplate(
+							As3GeneratorMojo.class.getClassLoader()
+									.getResource("serviceGenerator.tp")).make(
+							binding);
+
+					String packagePath = packageName.replace(".", "/");
+					String filePath = "src" + "/" + packagePath + "/"
+							+ interfaceCls.getSimpleName() + ".as";
+					File folder = new File(System.getProperty("user.dir") + "/"
+							+ "src" + "/" + packagePath + "/");
+					folder.mkdirs();
+					FileWriter writer = new FileWriter(new File(folder,
+							interfaceCls.getSimpleName() + ".as"));
+					writer.write(template.toString());
+					writer.close();
+					log.info("Generated service class " + filePath);
+				} else {
+					log.debug("Service class " + serviceClass.getName()
+							+ " is not a candidate for remote service");
 				}
 
 			}
