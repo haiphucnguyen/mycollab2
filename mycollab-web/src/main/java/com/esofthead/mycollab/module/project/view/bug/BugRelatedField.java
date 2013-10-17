@@ -60,7 +60,8 @@ public class BugRelatedField extends CustomField {
 	public BugRelatedField(final SimpleBug bean) {
 		this.bean = bean;
 
-		relatedBugService = ApplicationContextUtil.getSpringBean(RelatedBugService.class);
+		relatedBugService = ApplicationContextUtil
+				.getSpringBean(RelatedBugService.class);
 
 		VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");

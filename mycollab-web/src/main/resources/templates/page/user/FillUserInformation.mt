@@ -1,28 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html style="height: 100%;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <style media="screen" type="text/css">
-.container {
+@import "https://fonts.googleapis.com/css?family=Monda:400,700";
+@font-face {
+    font-family: "verdana";
+    font-style: normal;
+    font-weight: bold;
+    src: local("?"), url("../fonts/verdana.eot?#iefix") format("embedded-opentype"), url("../fonts/verdana.svg#verdana") format("svg"), url("../fonts/verdana.woff") format("woff"), url("../fonts/verdana.ttf") format("truetype");
 }
 
 #header {
     background-color: #1777AD;
-    border-bottom: 6px solid #77BAE0;
     height: 70px;
     width: 100%;
-    text-align: left;
-    vertical-align: middle;
 }
 .header-mid {
     display: block;
-    margin: 0 auto;
-    width: 1100px;
+    padding-left: 50px;
+    padding-top: 10px;
 }
 .header-mid .a {
-    color: #000000;
+    color: #FFFFFF;
     text-decoration: none;
 }
 
@@ -38,16 +40,16 @@
    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding-left : 11px;
-    padding-right: 11px;
+    padding-left : 15px;
+    padding-right: 15px;
     padding-bottom: 11px;
     font-size: 12px;
     text-align: left;
     padding-top : 8px;
     border: 1px solid rgb(169, 169, 169);
     border-radius : 3px;
-    height: 250px;
     width: 800px;
+    margin: 0 auto;
 }
 
 #mainContent{
@@ -57,8 +59,8 @@
     box-sizing: border-box;
     display: block; 
     padding: 10px 10px 8px 10px;
-    border: 1px solid rgb(169, 169, 169);
-    height : 150px;
+    border: 1px solid rgb(200, 200, 200);
+    height : 200px;
 }
 
 #bottom{
@@ -67,9 +69,7 @@
     color : blue;
     font-style: bold;
     background-color: rgb(239, 239, 239);
-    padding-bottom: 100px;
     text-align: center;
-    height : 100%;
 }
 
 .v-button-bluebtn{
@@ -79,7 +79,8 @@
 	color: #FFFFFF;
 	text-shadow: 1px 1px 0px #1570cd;
 	border-radius: 3px;
-	padding: 3px 13px;
+	padding: 6px 8px 6px 8px;
+	width: 82px;
 }
 .v-button-bluebtn:hover {
 	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
@@ -89,57 +90,68 @@
 }
 
 </style>
-<title>Member accept the invitation page</title>
+<title>User accept the invitation page</title>
 </head>
-<body>
-	<div id="container">
+<body style="height: 100%; margin: 0; padding: 0; width: 100%;">
+	<div id="container" style="height:100%;">
 		<div id="header">
 			<div class="header-mid">
 				<a href=".">
-					<img src="${defaultUrls.cdn_url}logo_mycollab.png" alt="Logo Mycollab">
+					<img src="${defaultUrls.cdn_url}logo_mycollab.png" alt="Logo MyCollab">
 				</a>
 			</div>
 		</div>
-		<div id="body" style="background-color: rgb(239, 239, 239); width: 100%;">
-			<div id="spacing" style="height:30px; background-color: rgb(239, 239, 239);"></div>
-			<div style="padding-left: 300px; background-color: rgb(239, 239, 239); height: 100%;">
-				<div id="mainBody">
-					<div id="title">
-						<p><span style="color: #196893; font: 22px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Welcome <span style="font-style:italic; font-size:14px;">$!username</span>.</span></p>
-					</div>
-					<hr>
-					<div>
-						<table>
-						 	<tr>
-						 		<td style="width: 350px; vertical-align:top; padding-left: 10px; padding-top:12px;font-size: 18px; color: #616161;">Thank you for accepting the invitation! Please enter your password</td>
-						 		<td style="width: 400px; display: inline-block; vertical-align: top;">
-									<div id="mainContent">
+		<div id="body" style="background-color: rgb(239, 239, 239); height: 100%;">
+			<div id="spacing" style="height:60px; background-color: rgb(239, 239, 239);"></div>
+			<div id="mainBody">
+				<div id="title">
+					<p><span style="color: #196893; font: 22px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Welcome <span style="font-style:italic; font-size:18px;">$!username</span></span></p>
+				</div>
+				<hr size="1">
+				<div>
+					<table>
+					 	<tr>
+					 		<td style="width: 350px; vertical-align:top; padding-top:12px;font-size: 18px; color: #616161;">Thank you for accepting the invitation!<br> Please enter your password</td>
+					 		<td style="width: 400px; display: inline-block; vertical-align: top;">
+								<div id="mainContent">
+					  				 <div>
+										<form>
 										<table border="0">
 										<tbody>
 										<tr>
-											<td><label for="password"><span style="font-size:14px;">Password:</span></label></td>
-											<td><input style="width:280px;" id="password" maxlength="45" name="password" type="password" /></td>
+											<td style="padding-top:8px;"><label for="password"><span style="font-size:14px;color:#616161;">New Password:</span></label></td>
 										</tr>
-										<tr style="height: 10px;"></tr>
-										</tbody>
-										</table>
-										<div>
-											<button class="v-button-bluebtn" type="button" onclick="return updateInfoAction();">Update & go</button>
-										</div>											 
+										<tr>
+											<td><input id="password" maxlength="45" name="password" type="password" style="width:365px;height:25px;border: 1px solid rgb(169, 169, 169); border-radius: 3px;"/></td>
+										</tr>
+										<tr>
+											<td style="height:10px;"></td>
+										</tr>
+										<tr>
+											<td><label for="password"><span style="font-size:14px;color:#616161;">Confirm New Password:</span></label></td>
+										</tr>
+										<tr>
+											<td><input id="repassword" maxlength="45" name="password" type="password" style="width:365px;height:25px;border: 1px solid rgb(169, 169, 169); border-radius: 3px;"/></td>
+										</tr>
+										</tbody></table>
+										</form>
 									</div>
-								</td>
-						 	</tr>
-						</table>
-					</div>
+									<div style="padding-top: 15px; padding-left:250px;">
+										<button style="width:120px;" class="v-button-bluebtn" type="button" onclick="return updateInfoAction();"><span style="font-family: 'verdana';font-size: 15px;">Update & Go</span></button>
+									</div>
+								</div>
+							</td>
+					 	</tr>
+					</table>
 				</div>
 			</div>
 			<div id="bottom">
 			    <p>
-			    	<a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Terms of Service</span></a> &nbsp&nbsp&nbsp
+			    	<a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span style="font: 11px 'Lucida Grande', sans-serif; color: #1777AD; font-weight:bold;">Terms of Service</span></a> &nbsp&nbsp&nbsp
 					<span style="color: #000000">|</span>
-					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Privacy Policy</span></a>&nbsp&nbsp&nbsp
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span style="font: 11px 'Lucida Grande', sans-serif; color: #1777AD; font-weight:bold;">Privacy Policy</span></a>&nbsp&nbsp&nbsp
 					<span style="color: #000000">|</span>
-					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration : none;"><span style="font-size:12px; color: #1777AD;">Copyright 2013 MyCollab. All rights reserved.</span></a>
+					&nbsp&nbsp&nbsp<a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration : none;"><span style="font: 11px 'Lucida Grande', sans-serif; color: #1777AD; font-weight:bold;">Copyright 2013 MyCollab. All rights reserved.</span></a>
 				</p>
 			</div>
 		</div>
@@ -154,8 +166,16 @@
 	});
 	function updateInfoAction(){
 		$('#requireMsg').html("").hide();
-		if ($('#password').val() == "" || $('#repassword').val() == ""){
+		if ($('#password').val() == ""){
 			alert("Please enter password");
+			return;
+		}
+		if($('#repassword').val()==""){
+			alert("Please retype password");
+			return;
+		}
+		if($('#password').val() != $('#repassword').val()){
+			alert("You enter password mismatch with retype password, please re-enter");
 			return;
 		}
 		var url = encodeURI($('#redirectURL').val());
