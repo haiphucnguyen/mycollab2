@@ -173,6 +173,8 @@ public class ServiceGenerator implements SourceGenerator {
 		Method[] methods = serviceClass.getMethods();
 		for (Method method : methods) {
 			if (method.getAnnotation(NotMobile.class) == null) {
+				log.debug(" ... Generate method " + method.getName()
+						+ " for service " + serviceClass.getName());
 				As3Method as3Method = new As3Method(method.getName());
 				Class<?>[] parameterTypes = method.getParameterTypes();
 				for (int i = 0; i < parameterTypes.length; i++) {
@@ -218,11 +220,11 @@ public class ServiceGenerator implements SourceGenerator {
 						}
 
 					}
-
 					As3Field as3Field = new As3Field(typeName, "param" + i);
 					as3Method.addField(as3Field);
-					result.add(as3Method);
 				}
+
+				result.add(as3Method);
 			}
 
 		}
