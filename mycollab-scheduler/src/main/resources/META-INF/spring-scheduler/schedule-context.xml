@@ -7,12 +7,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
                 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
-    <!-- <context:component-scan base-package="com.esofthead.mycollab.schedule.email" 
-        /> <context:component-scan base-package="com.esofthead.mycollab.**.service" 
-        /> <task:annotation-driven executor="myExecutor" scheduler="myScheduler" 
-        /> <task:executor id="myExecutor" pool-size="5" /> <task:scheduler id="myScheduler" 
-        pool-size="10"/> -->
-
     <bean id="sendRelayEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
