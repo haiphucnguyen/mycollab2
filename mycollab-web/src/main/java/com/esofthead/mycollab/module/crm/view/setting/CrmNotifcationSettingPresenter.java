@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.notificationsetting;
+package com.esofthead.mycollab.module.crm.view.setting;
 
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
