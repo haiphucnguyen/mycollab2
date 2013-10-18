@@ -84,7 +84,8 @@ public class AnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
 						return;
 					} else {
 						String loginURL = (SiteConfiguration
-								.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/signin?email=" + username)
+								.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/signin?email="
+								+ username + "/")
 								: (request.getContextPath() + "/");
 
 						String redirectURL = loginURL

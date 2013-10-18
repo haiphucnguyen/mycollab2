@@ -142,6 +142,7 @@ public class AnotatedVerifyUserServletRequestHandler extends GenericServlet {
 										user.getEmail(), redirectURL, loginURL);
 								PrintWriter out = response.getWriter();
 								out.print(html);
+								return;
 							} else {
 								log.debug("Forward user {} to page {}",
 										user.getUsername(),
