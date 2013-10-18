@@ -24,9 +24,8 @@ class EventBusFactoryImpl implements EventBusFactory {
 		return eventBus;
 	}
 
-	public EventBus getInstanceSession(String sessionId) {
-		BasicCache<String, Object> cache = LocalCacheManager
-				.getCache(sessionId);
+	public EventBus getInstanceSession(String appId) {
+		BasicCache<String, Object> cache = LocalCacheManager.getCache(appId);
 		EventBus eventBus = (EventBus) cache.get(EVENT_BUS_VAL);
 		return eventBus;
 	}

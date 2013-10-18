@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="/styles/fonts/verdana.svg#verdana">
-<link rel="stylesheet" type="text/css" href="/styles/fonts/verdana.svg#verdana">
+<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana">
+<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana">
 
 <style media="screen" type="text/css">
 @import "https://fonts.googleapis.com/css?family=Monda:400,700";

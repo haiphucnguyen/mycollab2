@@ -75,8 +75,8 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 
 		log.debug("Notify user avatar change");
 		EventBus.getInstance().fireEvent(
-				new SessionEvent.UserAvatarChangeEvent(
-						UserAvatarServiceImpl.this, newAvatarId));
+				new SessionEvent.UserProfileChangeEvent(
+						UserAvatarServiceImpl.this, "avatarid", newAvatarId));
 
 		return newAvatarId;
 	}

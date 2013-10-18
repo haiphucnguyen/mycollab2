@@ -23,7 +23,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.events.SessionEvent;
-import com.esofthead.mycollab.events.SessionEvent.UserAvatarChangeEvent;
+import com.esofthead.mycollab.events.SessionEvent.UserProfileChangeEvent;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -61,22 +61,6 @@ public class AppContext implements Serializable {
 				return AppContext.getAccountId();
 			}
 		});
-
-		EventBus.getInstance()
-				.addListener(
-						new ApplicationEventListener<SessionEvent.UserAvatarChangeEvent>() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public Class<? extends ApplicationEvent> getEventType() {
-								return SessionEvent.UserAvatarChangeEvent.class;
-							}
-
-							@Override
-							public void handle(UserAvatarChangeEvent event) {
-								session.setAvatarid((String) event.getData());
-							}
-						});
 	}
 
 	public static AppContext getInstance() {
@@ -154,6 +138,25 @@ public class AppContext implements Serializable {
 					BeanUtility.printBeanObj(account), domain);
 			accountId = account.getId();
 		}
+
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<SessionEvent.UserProfileChangeEvent>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return SessionEvent.UserProfileChangeEvent.class;
+							}
+
+							@Override
+							public void handle(UserProfileChangeEvent event) {
+								if ("avatarid".equals(event.getFieldChange())) {
+									session.setAvatarid((String) event
+											.getData());
+								}
+							}
+						});
 	}
 
 	public static Integer getAccountId() {
@@ -280,9 +283,7 @@ public class AppContext implements Serializable {
 	}
 
 	public static void putVariable(String key, Object value) {
-		if (getInstance() != null) {
-			MyCollabApplication.getInstance().variables.put(key, value);
-		}
+		MyCollabApplication.getInstance().variables.put(key, value);
 	}
 
 	public static Object getVariable(String key) {
@@ -296,10 +297,6 @@ public class AppContext implements Serializable {
 	}
 
 	public static void clearSession() {
-		// ViewManager.clearResources();
-		// PresenterResolver.clearResources();
-		// EventBus.getInstance().clear();
-		// ControllerRegistry.clearRegistries();
 		if (getInstance() != null) {
 			MyCollabApplication.getInstance().variables.clear();
 			getInstance().session = null;
