@@ -8,6 +8,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -259,7 +260,9 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout());
+					setFormLayoutFactory(new DynaFormLayout(
+							AccountDefaultDynaFormFactory.getForm(AppContext
+									.getAccountId())));
 					setFormFieldFactory(new AccountFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					accountAddLayout.setTitle(account.getAccountname());

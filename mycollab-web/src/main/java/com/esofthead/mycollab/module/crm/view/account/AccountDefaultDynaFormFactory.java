@@ -14,12 +14,11 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 
-public class AccountDefaultDynaForm {
-	public static final DynaForm form;
+public class AccountDefaultDynaFormFactory {
+	public static final DynaForm defaultForm;
 
 	static {
-
-		form = new DynaForm();
+		defaultForm = new DynaForm();
 
 		// Build block account information
 		DynaSection accountSection = new SectionBuilder()
@@ -123,7 +122,7 @@ public class AccountDefaultDynaForm {
 										.getMessage(AccountI18nEnum.FORM_ANNUAL_REVENUE))
 						.build());
 
-		form.addSection(accountSection);
+		defaultForm.addSection(accountSection);
 
 		// build block address
 		DynaSection addressSection = new SectionBuilder()
@@ -216,7 +215,7 @@ public class AccountDefaultDynaForm {
 										.getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY))
 						.build());
 
-		form.addSection(addressSection);
+		defaultForm.addSection(addressSection);
 
 		// build block description
 		DynaSection descSection = new SectionBuilder()
@@ -230,7 +229,11 @@ public class AccountDefaultDynaForm {
 						LocalizationHelper
 								.getMessage(GenericI18Enum.FORM_DESCRIPTION))
 				.build());
-		form.addSection(descSection);
+		defaultForm.addSection(descSection);
 
+	}
+	
+	public static DynaForm getForm(Integer sAccountId) {
+		return defaultForm;
 	}
 }
