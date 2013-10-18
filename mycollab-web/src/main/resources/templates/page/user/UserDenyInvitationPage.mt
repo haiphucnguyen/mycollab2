@@ -7,14 +7,13 @@
 <style media="screen" type="text/css">
 .container {
 }
-
 <style media="screen" type="text/css">
 @import "https://fonts.googleapis.com/css?family=Monda:400,700";
 @font-face {
     font-family: "verdana";
     font-style: normal;
     font-weight: bold;
-    src: local("?"), url("../fonts/verdana.eot?#iefix") format("embedded-opentype"), url("../fonts/verdana.svg#verdana") format("svg"), url("../fonts/verdana.woff") format("woff"), url("../fonts/verdana.ttf") format("truetype");
+    src: local("?"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.eot?#iefix") format("embedded-opentype"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana") format("svg"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.woff") format("woff"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.ttf") format("truetype");
 }
 
 #header {
