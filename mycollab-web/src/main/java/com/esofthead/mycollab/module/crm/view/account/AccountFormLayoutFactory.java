@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
@@ -18,7 +19,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 	private final String title;
 
-	private AccountInformationLayout informationLayout;
+	private IFormLayoutFactory informationLayout;
 
 	public AccountFormLayoutFactory(String title) {
 		this.title = title;
@@ -43,7 +44,10 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			accountAddLayout.addControlButtons(topPanel);
 		}
 
-		informationLayout = new AccountInformationLayout();
+		// informationLayout = new AccountInformationLayout();
+		// accountAddLayout.addBody(informationLayout.getLayout());
+
+		informationLayout = new DynaFormLayout(AccountDefaultDynaForm.form);
 		accountAddLayout.addBody(informationLayout.getLayout());
 
 		return accountAddLayout;

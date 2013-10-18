@@ -1,6 +1,7 @@
-package com.esofthead.mycollab.form.view.type;
+package com.esofthead.mycollab.form.view.builder.type;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DynaForm {
@@ -12,6 +13,10 @@ public class DynaForm {
 
 	public void addSection(DynaSection section) {
 		sections.add(section);
+		Collections.sort(sections);
 	}
 
+	public DynaSection getSection(int index) {
+		return sections.get(index);
+	}
 }
