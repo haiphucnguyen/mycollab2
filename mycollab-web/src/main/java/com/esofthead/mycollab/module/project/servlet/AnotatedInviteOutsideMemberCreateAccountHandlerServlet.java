@@ -38,7 +38,6 @@ public class AnotatedInviteOutsideMemberCreateAccountHandlerServlet extends
 		Integer sAccountId = Integer.parseInt(request
 				.getParameter("sAccountId"));
 		Integer roleId = Integer.parseInt(request.getParameter("roleId"));
-
 		try {
 			PasswordCheckerUtil.checkValidPassword(password);
 			projectMemberService.acceptProjectInvitationByNewUser(email,

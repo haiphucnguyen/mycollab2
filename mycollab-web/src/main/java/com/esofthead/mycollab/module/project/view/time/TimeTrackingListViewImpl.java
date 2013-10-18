@@ -41,6 +41,8 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Alignment;
@@ -282,7 +284,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			this.addComponent(headerLbl);
 			this.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
 
-			gridLayout = new GridFormLayoutHelper(2, 2);
+			gridLayout = new GridFormLayoutHelper(3, 1);
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setStyleName(UIConstants.COLORED_GRIDLAYOUT);
 			gridLayout.getLayout().setMargin(false);
@@ -296,11 +298,10 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 			final DateField dateField = new DateField();
 			dateField.setResolution(DateField.RESOLUTION_DAY);
-			gridLayout.addComponent(dateField, "Date", 0, 0, "300px");
-			gridLayout.addComponent(ticketComboBox, "Ticket", 1, 0, "300px");
-			gridLayout.addComponent(hourField, "Hours", 0, 1, "300px");
-			gridLayout.addComponent(descriptionField, "Description", 1, 1,
-					"300px");
+			gridLayout.addComponent(dateField, "Date", 0, 0, "230px");
+			gridLayout.addComponent(hourField, "Hours", 1, 0, "230px");
+			gridLayout.addComponent(ticketComboBox, "Ticket", 2, 0);
+			gridLayout.getLayout().setColumnExpandRatio(3, 1.0f);
 
 			this.addComponent(gridLayout.getLayout());
 
@@ -331,7 +332,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					ProjectGenericTask projectGenericTask = (ProjectGenericTask) ticketComboBox
-							.getValue();
+							.getCurrentItem();
 					if (projectGenericTask == null) {
 						getWindow().showNotification("Please choose ticket");
 						return;
@@ -395,16 +396,14 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				this.setNullSelectionAllowed(true);
 				this.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_EXPLICIT);
 				this.addListener(new Property.ValueChangeListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void valueChange(Property.ValueChangeEvent event) {
-						System.out
-								.println("Selected value: "
-										+ ((ProjectGenericTask) AssignmentSelectionComboBox.this
-												.getValue()).getName());
+						AssignmentSelectionComboBox.this.projectGenericTask = (ProjectGenericTask) AssignmentSelectionComboBox.this
+								.getValue();
 					}
 				});
-
 			}
 
 			@Override
@@ -416,7 +415,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					} else {
 						oldText = filterString;
 					}
-					
+
 					items.removeAllItems();
 
 					ProjectGenericTaskService service = ApplicationContextUtil
@@ -446,8 +445,6 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 													.newResource("icons/16/project/task.png"));
 						}
 					}
-
-					this.select(assignments.get(0));
 				}
 				super.changeVariables(source, variables);
 			}
@@ -463,7 +460,31 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 				return options;
 			}
+		}
 
+		public class NumbericTextField extends TextField {
+			private static final long serialVersionUID = 1L;
+			public static final String DoubleType = "Double";
+			public static final String IntType = "Int";
+
+			public NumbericTextField(final String type) {
+				this.addListener(new TextChangeListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void textChange(TextChangeEvent event) {
+						String inputText = event.getText();
+						try {
+							if (type.equals(DoubleType)) {
+								Integer.parseInt(inputText);
+							} else if (type.equals(IntType)) {
+								Double.parseDouble(inputText);
+							}
+						} catch (Exception e) {
+						}
+					}
+				});
+			}
 		}
 	}
 }

@@ -9,13 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.HttpRequestHandler;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
-import com.esofthead.mycollab.utils.InvalidPasswordException;
 
 public abstract class GenericServlet implements HttpRequestHandler {
 
@@ -26,19 +21,10 @@ public abstract class GenericServlet implements HttpRequestHandler {
 			onHandleRequest(request, response);
 		} catch (Exception e) {
 			if (e instanceof ResourceNotFoundException) {
-				PageNotFoundGenerator.responsePage404(response);
-			} else if (e instanceof InvalidPasswordException) {
+				throw new ResourceNotFoundException();
+			} else if (e instanceof UserInvalidInputException) {
 				PrintWriter out = response.getWriter();
 				out.println(e.getMessage());
-			} else if (e instanceof UserInvalidInputException) {
-				PageNotFoundGenerator.responsePage404(response);
-			} else if (e instanceof MyCollabException) {
-				String errMsg = (e.getMessage() != null && e.getMessage()
-						.length() > 0) ? e.getMessage()
-						: LocalizationHelper
-								.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
-				PrintWriter out = response.getWriter();
-				out.println(errMsg);
 			} else {
 				throw new ServletException(e);
 			}

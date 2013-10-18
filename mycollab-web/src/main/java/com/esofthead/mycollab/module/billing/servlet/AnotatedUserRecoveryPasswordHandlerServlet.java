@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.billing.servlet;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -9,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -70,7 +68,7 @@ public class AnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) {
 		String pathInfo = request.getPathInfo();
 		try {
 			if (pathInfo != null) {
@@ -98,13 +96,12 @@ public class AnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
 						out.print(html);
 						return;
 					}
-				} else {
-					throw new ResourceNotFoundException();
 				}
-			} else {
-				throw new ResourceNotFoundException();
 			}
+			throw new ResourceNotFoundException();
 		} catch (IndexOutOfBoundsException e) {
+			throw new ResourceNotFoundException();
+		} catch (ResourceNotFoundException e) {
 			throw new ResourceNotFoundException();
 		} catch (Exception e) {
 			log.error("Error with userService", e);

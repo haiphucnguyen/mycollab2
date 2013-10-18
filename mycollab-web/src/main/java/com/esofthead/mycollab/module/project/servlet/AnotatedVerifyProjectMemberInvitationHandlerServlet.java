@@ -229,6 +229,36 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 		}
 	}
 
+	public static class ServerErrPageGenerator {
+		public static void responsePage500(HttpServletResponse response)
+				throws IOException {
+			String pageNotFoundTemplate = "templates/page/500Page.mt";
+			TemplateContext context = new TemplateContext();
+
+			Reader reader;
+			try {
+				reader = new InputStreamReader(PageNotFoundGenerator.class
+						.getClassLoader().getResourceAsStream(
+								pageNotFoundTemplate), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				reader = new InputStreamReader(PageNotFoundGenerator.class
+						.getClassLoader().getResourceAsStream(
+								pageNotFoundTemplate));
+			}
+			Map<String, String> defaultUrls = new HashMap<String, String>();
+
+			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+			context.put("defaultUrls", defaultUrls);
+
+			StringWriter writer = new StringWriter();
+			TemplateEngine.evaluate(context, writer, "log task", reader);
+
+			String html = writer.toString();
+			PrintWriter out = response.getWriter();
+			out.println(html);
+		}
+	}
+
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -298,8 +328,10 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 				} else {
 					throw new ResourceNotFoundException();
 				}
-			} catch (Exception e) {
+			} catch (ResourceNotFoundException e) {
 				throw new ResourceNotFoundException();
+			} catch (Exception e) {
+				throw new MyCollabException(e);
 			}
 		}
 		throw new ResourceNotFoundException();

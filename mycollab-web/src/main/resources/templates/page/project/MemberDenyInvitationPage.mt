@@ -100,7 +100,7 @@
 		<div id="header">
 			<div class="header-mid">
 				<a href=".">
-					<img src="${defaultUrls.cdn_url}logo_mycollab.png" alt="Logo MyCollab">
+					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="Logo MyCollab">
 				</a>
 			</div>
 		</div>

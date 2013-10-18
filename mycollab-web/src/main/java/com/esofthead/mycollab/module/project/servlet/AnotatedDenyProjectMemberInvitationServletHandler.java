@@ -228,12 +228,12 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 					PrintWriter out = response.getWriter();
 					out.println(html);
 					return;
-				} else
-					throw new ResourceNotFoundException();
-			} else {
-				throw new ResourceNotFoundException();
+				}
 			}
+			throw new ResourceNotFoundException();
 		} catch (IndexOutOfBoundsException e) {
+			throw new ResourceNotFoundException();
+		} catch (ResourceNotFoundException e) {
 			throw new ResourceNotFoundException();
 		} catch (NumberFormatException e) {
 			throw new ResourceNotFoundException();

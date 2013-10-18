@@ -103,8 +103,8 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
-		if (pathInfo != null) {
-			try {
+		try {
+			if (pathInfo != null) {
 				if (pathInfo.startsWith("/")) {
 					pathInfo = pathInfo.substring(1);
 
@@ -168,16 +168,16 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 							return;
 						}
 					}
-				} else {
-					throw new ResourceNotFoundException();
 				}
-			} catch (NumberFormatException e) {
-				throw new ResourceNotFoundException();
-			} catch (Exception e) {
-				log.error("Error with userService", e);
-				throw new MyCollabException(e);
 			}
+			throw new ResourceNotFoundException();
+		} catch (NumberFormatException e) {
+			throw new ResourceNotFoundException();
+		} catch (ResourceNotFoundException e) {
+			throw new ResourceNotFoundException();
+		} catch (Exception e) {
+			log.error("Error with userService", e);
+			throw new MyCollabException(e);
 		}
-		throw new ResourceNotFoundException();
 	}
 }

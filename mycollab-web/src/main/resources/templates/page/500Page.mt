@@ -99,6 +99,7 @@
     float: left;
     padding-right: 10px;
     width: 320px;
+    border-right: 1px dotted #7C7C7C;
 }
 #exclamation_mark {
     color: #3474B0;
@@ -128,7 +129,6 @@
     width: 480px;
 }
 #error_excuse {
-    border-left: 1px dotted #7C7C7C;
     padding-left: 30px;
 }
 .footer-home {
@@ -187,27 +187,22 @@
 			<div id="spacing" style="height:60px; background-color: rgb(239, 239, 239);"></div>
 			<div id="mainBody">
 				<div id="title">
-					<p><span style="color: #196893; font: 22px 'Monda', sans-serif;">Page not found</span></p>
+					<p><span style="color: #196893; font: 22px 'Monda', sans-serif;">Error</span></p>
 				</div>
 				<hr size="1">
 				<div id="content" style="padding-top: 20px">
 					<div id="content_left">
 						<div id="exclamation_mark">&#33;</div>
 						<div id="error_display">
-							<div id="error_code">404</div>
-							<div id="error_brief">Page not found, sorry</div>
+							<div id="error_code">500</div>
+							<div id="error_brief">Sever error, sorry</div>
 						</div>
 					</div>
 					<div id="content_right">
 						<div id="error_excuse">
-							<p>The page you are looking for might have been removed, had its name changed or is temporarily unavailable. Please try the following:</p>
-							<ul>
-								<li>Make sure that the Web site address displayed in the address bar of your browser is spelled and formatted correctly.</li>
-								<li>If you reached this page by clicking a link, contact us to alert us that the link is incorrectly formatted.</li>
-								<li>Forget that this ever happened, and go browse the files :)</li>
-							</ul>
+							Oops! Sorry for this inconvenience. This error has been logged to database. We will fix it soon. 
 						</div>
-						<div id="back_to_home" style="padding-left:60px;padding-top:20px;">
+						<div id="back_to_home" style="padding-left:30px;padding-top:20px;">
 							<a class="v-button-bluebtn" style="text-decoration : none;" href="https://www.mycollab.com">Go back to home page</a>
 						</div>
 					</div>

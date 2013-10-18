@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.core;
 
-public class ResourceNotFoundException extends UserInvalidInputException {
+public class ResourceNotFoundException extends MyCollabException {
 	private static final long serialVersionUID = 1L;
 
 	public ResourceNotFoundException(String message) {
