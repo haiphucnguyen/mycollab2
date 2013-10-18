@@ -8,20 +8,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.HttpRequestHandler;
 
+import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.esofthead.mycollab.servlet.GenericServlet;
 
 @Component("denyMemberInvitationFeedbackServlet")
-public class AnotatedMemberDenyInvitationFeedBackHandlerServlet implements
-		HttpRequestHandler {
+public class AnotatedMemberDenyInvitationFeedBackHandlerServlet extends
+		GenericServlet {
 
 	@Autowired
 	private MailRelayService mailRelayService;
 
 	@Override
-	public void handleRequest(HttpServletRequest request,
-			HttpServletResponse respone) throws ServletException, IOException {
+	protected void onHandleRequest(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
 		if (pathInfo != null) {
 			String inviterEmail = request.getParameter("inviterEmail");
@@ -37,6 +38,8 @@ public class AnotatedMemberDenyInvitationFeedBackHandlerServlet implements
 			mailRelayService.saveRelayEmail(new String[] { inviterName },
 					new String[] { inviterEmail }, toName + "(" + toEmail + ")"
 							+ " has denied your invitation", message);
+		} else {
+			throw new ResourceNotFoundException();
 		}
 	}
 };

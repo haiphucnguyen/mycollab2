@@ -8,7 +8,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.events.SessionEvent;
-import com.esofthead.mycollab.events.SessionEvent.UserAvatarChangeEvent;
+import com.esofthead.mycollab.events.SessionEvent.UserProfileChangeEvent;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
@@ -288,18 +288,22 @@ public final class MainView extends AbstractView {
 			// update top menu
 			EventBus.getInstance()
 					.addListener(
-							new ApplicationEventListener<SessionEvent.UserAvatarChangeEvent>() {
+							new ApplicationEventListener<SessionEvent.UserProfileChangeEvent>() {
 								private static final long serialVersionUID = 1L;
 
 								@Override
 								public Class<? extends ApplicationEvent> getEventType() {
-									return SessionEvent.UserAvatarChangeEvent.class;
+									return SessionEvent.UserProfileChangeEvent.class;
 								}
 
 								@Override
-								public void handle(UserAvatarChangeEvent event) {
-									UserAvatarComp.this.removeAllComponents();
-									addUserAvatar();
+								public void handle(UserProfileChangeEvent event) {
+									if ("avatarid".equals(event
+											.getFieldChange())) {
+										UserAvatarComp.this
+												.removeAllComponents();
+										addUserAvatar();
+									}
 								}
 							});
 

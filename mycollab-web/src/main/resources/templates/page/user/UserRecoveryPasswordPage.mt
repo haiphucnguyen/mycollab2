@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="/styles/fonts/verdana.svg#verdana">
-<link rel="stylesheet" type="text/css" href="/styles/fonts/verdana.svg#verdana">
+<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana">
+<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana">
 
 <style media="screen" type="text/css">
 @import "https://fonts.googleapis.com/css?family=Monda:400,700";
@@ -13,7 +13,7 @@
     font-family: "verdana";
     font-style: normal;
     font-weight: bold;
-    src: local("?"), url("../fonts/verdana.eot?#iefix") format("embedded-opentype"), url("../fonts/verdana.svg#verdana") format("svg"), url("../fonts/verdana.woff") format("woff"), url("../fonts/verdana.ttf") format("truetype");
+    src: local("?"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.eot?#iefix") format("embedded-opentype"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana") format("svg"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.woff") format("woff"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.ttf") format("truetype");
 }
 
 #header {
@@ -99,8 +99,8 @@
 	<div id="container" style="height:100%;">
 		<div id="header">
 			<div class="header-mid">
-				<a href=".">
-					<img src="${defaultUrls.cdn_url}logo_mycollab.png" alt="Logo Mycollab">
+				<a href="https://www.mycollab.com">
+					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="Logo Mycollab">
 				</a>
 			</div>
 		</div>

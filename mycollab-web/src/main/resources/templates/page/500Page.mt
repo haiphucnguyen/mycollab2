@@ -43,12 +43,13 @@
     padding-left : 15px;
     padding-right: 15px;
     padding-bottom: 11px;
-    font-size: 12px;
+    font-size: 17px;
     text-align: left;
     padding-top : 8px;
     border: 1px solid rgb(169, 169, 169);
     border-radius : 3px;
-    width: 800px;
+    width: 1000px;
+    height: 400px;
     margin: 0 auto;
 }
 
@@ -88,9 +89,90 @@
 	border: 1px solid #093768;
 	cursor: pointer;
 }
+.container {
+}
+#content {
+    margin: 0 auto;
+    width: 860px;
+}
+#content_left {
+    float: left;
+    padding-right: 10px;
+    width: 320px;
+    border-right: 1px dotted #7C7C7C;
+}
+#exclamation_mark {
+    color: #3474B0;
+    float: left;
+    font-family: "Lucida Bright",Arial,sans-serif;
+    font-size: 180px;
+    font-weight: bold;
+    line-height: 165px;
+}
+#error_display {
+    float: left;
+}
+#error_code {
+    color: #3474B0;
+    font-family: "Lucida Bright",Arial,sans-serif;
+    font-size: 130px;
+    font-weight: bold;
+    line-height: 130px;
+}
+#error_brief {
+    color: #4A4A4A;
+    font-size: 22px;
+    text-align: center;
+}
+#content_right {
+    float: left;
+    width: 480px;
+}
+#error_excuse {
+    padding-left: 30px;
+}
+.footer-home {
+    width: 100%;
+    height: 100px;
+    background: url('${defaultUrls.cdn_url}footer_home_bg.png') repeat-x scroll 0% 0% transparent;
+    clear: both;
+	position: relative;
+	z-index: 10;
+}
+
+.footer-home .footer-copyright {
+    color: #606060;
+}
+.footer-copyright {
+    color: #FFFFFF;
+    font-size: 12px;
+}
+.footer-home .footer-copyright h1 {
+    color: #FFFFFF;
+    font-family: 'Monda';
+}
+.footer-home .wrapper {
+    width: 1100px;
+    margin: 0px auto;
+}
+.v-button-bluebtn{
+	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
+		#2599c8;
+	border: 1px solid #093768;
+	color: #FFFFFF;
+	text-shadow: 1px 1px 0px #1570cd;
+	border-radius: 3px;
+	padding: 3px 13px;
+}
+.v-button-bluebtn:hover {
+	background: url('${defaultUrls.cdn_url}grad-dark-bottom2.png') repeat-x left bottom
+		#1377b3;
+	border: 1px solid #093768;
+	cursor: pointer;
+}
 
 </style>
-<title>Project has not found</title>
+<title>Page not found</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
 	<div id="container" style="height:100%;">
@@ -105,12 +187,25 @@
 			<div id="spacing" style="height:60px; background-color: rgb(239, 239, 239);"></div>
 			<div id="mainBody">
 				<div id="title">
-					<p><span style="color: #196893; font: 22px 'Monda', sans-serif;">This project has been removed</span></p>
+					<p><span style="color: #196893; font: 22px 'Monda', sans-serif;">Error</span></p>
 				</div>
 				<hr size="1">
-				<div style="vertical-align:center;padding: 8px 0px 0px 0px;">
-					<span style="vertical-align:center; padding-top:20px;font: 16px 'verdana', sans-serif; color: #616161;">Sorry! This project has been removed. Please contact your project admin for more information.</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-					<button class="v-button-bluebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
+				<div id="content" style="padding-top: 20px">
+					<div id="content_left">
+						<div id="exclamation_mark">&#33;</div>
+						<div id="error_display">
+							<div id="error_code">500</div>
+							<div id="error_brief">Sever error, sorry</div>
+						</div>
+					</div>
+					<div id="content_right">
+						<div id="error_excuse">
+							Oops! Sorry for this inconvenience. This error has been logged to database. We will fix it soon. 
+						</div>
+						<div id="back_to_home" style="padding-left:30px;padding-top:20px;">
+							<a class="v-button-bluebtn" style="text-decoration : none;" href="https://www.mycollab.com">Go back to home page</a>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id="bottom">
@@ -125,10 +220,4 @@
 		</div>
 	</div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>
-	function login(){
-		window.location.assign("$!loginURL");
-	}
-</script>				
-</html>
+</html>	
