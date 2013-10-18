@@ -31,9 +31,6 @@
                 value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO" />
         </javaClientGenerator>
 
-        <table domainObjectName="CustomFieldFormat" schema="mycollab"
-            tableName="m_custom_field_format" />
-
         <table domainObjectName="FormSection" schema="mycollab"
             tableName="m_form_section" />
 

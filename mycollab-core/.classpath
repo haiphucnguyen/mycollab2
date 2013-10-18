@@ -32,6 +32,7 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring/2.12.0/camel-spring-2.12.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring/2.12.0/camel-spring-2.12.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.2.4.RELEASE/spring-beans-3.2.4.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-beans/3.2.4.RELEASE/spring-beans-3.2.4.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.2.4.RELEASE/spring-tx-3.2.4.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-tx/3.2.4.RELEASE/spring-tx-3.2.4.RELEASE-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar" sourcepath="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar" sourcepath="M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-io/commons-io/2.4/commons-io-2.4.jar" sourcepath="M2_REPO/commons-io/commons-io/2.4/commons-io-2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/thoughtworks/xstream/xstream/1.4.3/xstream-1.4.3.jar" sourcepath="M2_REPO/com/thoughtworks/xstream/xstream/1.4.3/xstream-1.4.3-sources.jar"/>
@@ -40,9 +41,9 @@
   <classpathentry kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar" sourcepath="M2_REPO/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.6/commons-pool-1.6.jar" sourcepath="M2_REPO/commons-pool/commons-pool/1.6/commons-pool-1.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar" sourcepath="M2_REPO/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1.jar" sourcepath="M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1.jar" sourcepath="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7.jar" sourcepath="M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar" sourcepath="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.4/commons-lang-2.4.jar" sourcepath="M2_REPO/commons-lang/commons-lang/2.4/commons-lang-2.4-sources.jar"/>

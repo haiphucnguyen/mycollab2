@@ -17,6 +17,7 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
+import com.esofthead.mycollab.form.domain.FormCustomFieldValueWithBLOBs;
 
 public class SimpleAccount extends Account {
 	private static final long serialVersionUID = 1L;
@@ -24,6 +25,8 @@ public class SimpleAccount extends Account {
 	private String assignUserAvatarId;
 
 	private String assignUserFullName;
+
+	private FormCustomFieldValueWithBLOBs customFields;
 
 	public String getAssignUserAvatarId() {
 		return assignUserAvatarId;
@@ -39,5 +42,13 @@ public class SimpleAccount extends Account {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
+	}
+
+	public FormCustomFieldValueWithBLOBs getCustomFields() {
+		return customFields;
+	}
+
+	public void setCustomFields(FormCustomFieldValueWithBLOBs customFields) {
+		this.customFields = customFields;
 	}
 }
