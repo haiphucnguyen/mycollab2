@@ -1,31 +1,36 @@
 package com.esofthead.mycollab.module.billing.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.servlet.GenericServlet;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
 @Component("updateUserPasswordServlet")
-public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
-		HttpRequestHandler {
+public class AnotatedUserRecoveryPasswordActionHandlerServlet extends
+		GenericServlet {
+	private static Logger log = LoggerFactory
+			.getLogger(AnotatedUserRecoveryPasswordActionHandlerServlet.class);
 
 	@Override
-	public void handleRequest(HttpServletRequest request,
+	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String errMsg = "";
 
@@ -36,11 +41,9 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 		try {
 			PasswordCheckerUtil.checkValidPassword(password);
 		} catch (InvalidPasswordException e) {
-			PrintWriter out = response.getWriter();
-			out.print(e.getMessage());
-			return;
+			throw new UserInvalidInputException(e.getMessage());
 		}
-		
+
 		SimpleUser simpleUser = new SimpleUser();
 		simpleUser.setPassword(PasswordEncryptHelper
 				.encryptSaltPassword(password));
@@ -52,12 +55,10 @@ public class AnotatedUserRecoveryPasswordActionHandlerServlet implements
 					.getSpringBean(UserService.class);
 			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {
+			log.error("Error with update userService", e);
 			errMsg = LocalizationHelper
 					.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
-			PrintWriter out = response.getWriter();
-			out.print(errMsg);
-			return;
+			throw new MyCollabException(errMsg);
 		}
 	}
-
 }
