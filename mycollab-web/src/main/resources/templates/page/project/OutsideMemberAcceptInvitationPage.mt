@@ -10,7 +10,7 @@
     font-family: "verdana";
     font-style: normal;
     font-weight: bold;
-    src: local("?"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.eot?#iefix") format("embedded-opentype"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana") format("svg"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.woff") format("woff"), url("http://s3.amazonaws.com/mycollab_assets/fonts/verdana.ttf") format("truetype");
+    src: local("?"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.eot?#iefix") format("embedded-opentype"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.svg#verdana") format("svg"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.woff") format("woff"), url("https://s3.amazonaws.com/mycollab_assets/fonts/verdana.ttf") format("truetype");
 }
 
 #header {
@@ -95,7 +95,7 @@
 	<div id="container" style="height:100%;">
 		<div id="header">
 			<div class="header-mid">
-				<a href=".">
+				<a href="https://www.mycollab.com">
 					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="Logo MyCollab">
 				</a>
 			</div>

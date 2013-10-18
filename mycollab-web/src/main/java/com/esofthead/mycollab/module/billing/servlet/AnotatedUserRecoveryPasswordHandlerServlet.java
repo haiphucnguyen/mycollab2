@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
@@ -82,9 +83,11 @@ public class AnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
 								response, request.getContextPath() + "/");
 						return;
 					} else {
-						String loginURL = request.getContextPath() + "/";
+						String loginURL = (SiteConfiguration
+								.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/signin?email=" + username)
+								: (request.getContextPath() + "/");
 
-						String redirectURL = loginURL
+						String redirectURL = request.getContextPath() + "/"
 								+ "user/recoverypassword/action";
 
 						String html = generateUserRecoveryPasswordPage(
