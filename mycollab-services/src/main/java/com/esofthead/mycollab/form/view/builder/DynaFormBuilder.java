@@ -2,16 +2,16 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 
-public class FormBuilder {
+public class DynaFormBuilder {
 
 	private DynaForm form;
 
-	public FormBuilder() {
+	public DynaFormBuilder() {
 		form = new DynaForm();
 	}
 
-	public FormBuilder sections(SectionBuilder... sections) {
-		for (SectionBuilder section : sections) {
+	public DynaFormBuilder sections(DynaSectionBuilder... sections) {
+		for (DynaSectionBuilder section : sections) {
 			form.addSection(section.build());
 		}
 		return this;

@@ -2,10 +2,10 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.PickListDynaField;
 
-public class PickListFieldBuilder<T> extends
-		AbstractFieldBuilder<PickListDynaField<T>> {
+public class PickListDynaFieldBuilder<T> extends
+		AbstractDynaFieldBuilder<PickListDynaField<T>> {
 
-	public PickListFieldBuilder() {
+	public PickListDynaFieldBuilder() {
 		field = new PickListDynaField<T>();
 	}
 

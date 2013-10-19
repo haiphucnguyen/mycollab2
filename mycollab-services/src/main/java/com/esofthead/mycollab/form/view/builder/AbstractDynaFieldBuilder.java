@@ -2,25 +2,25 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 
-public abstract class AbstractFieldBuilder<F extends AbstractDynaField> {
+public abstract class AbstractDynaFieldBuilder<F extends AbstractDynaField> {
 	protected F field;
 
-	public AbstractFieldBuilder<F> fieldIndex(int index) {
+	public AbstractDynaFieldBuilder<F> fieldIndex(int index) {
 		field.setFieldIndex(index);
 		return this;
 	}
 
-	public AbstractFieldBuilder<F> fieldName(String fieldName) {
+	public AbstractDynaFieldBuilder<F> fieldName(String fieldName) {
 		field.setFieldName(fieldName);
 		return this;
 	}
 
-	public AbstractFieldBuilder<F> displayName(String displayName) {
+	public AbstractDynaFieldBuilder<F> displayName(String displayName) {
 		field.setDisplayName(displayName);
 		return this;
 	}
 
-	public AbstractFieldBuilder<F> required(boolean isRequired) {
+	public AbstractDynaFieldBuilder<F> required(boolean isRequired) {
 		field.setRequired(isRequired);
 		return this;
 	}

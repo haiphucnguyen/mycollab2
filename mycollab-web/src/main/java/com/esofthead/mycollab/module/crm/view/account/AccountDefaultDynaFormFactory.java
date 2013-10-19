@@ -2,12 +2,12 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.form.view.builder.EmailFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.IntFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.PhoneFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.PickListFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.SectionBuilder;
-import com.esofthead.mycollab.form.view.builder.StringFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.EmailDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.IntDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.PhoneDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.PickListDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
+import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
@@ -21,24 +21,24 @@ public class AccountDefaultDynaFormFactory {
 		defaultForm = new DynaForm();
 
 		// Build block account information
-		DynaSection accountSection = new SectionBuilder()
+		DynaSection accountSection = new DynaSectionBuilder()
 				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
 				.header("Account Information").build();
-		accountSection.addField(new StringFieldBuilder()
+		accountSection.addField(new StringDynaFieldBuilder()
 				.fieldName("accountname")
 				.displayName(
 						LocalizationHelper
 								.getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME))
 				.fieldIndex(0).required(true).build());
 		accountSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldName("phoneoffice")
 						.displayName(
 								LocalizationHelper
 										.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD))
 						.fieldIndex(1).build());
 
-		accountSection.addField(new StringFieldBuilder()
+		accountSection.addField(new StringDynaFieldBuilder()
 				.fieldName("website")
 				.fieldIndex(2)
 				.displayName(
@@ -47,7 +47,7 @@ public class AccountDefaultDynaFormFactory {
 				.build());
 
 		accountSection
-				.addField(new PhoneFieldBuilder()
+				.addField(new PhoneDynaFieldBuilder()
 						.fieldName("fax")
 						.fieldIndex(3)
 						.displayName(
@@ -55,7 +55,7 @@ public class AccountDefaultDynaFormFactory {
 										.getMessage(AccountI18nEnum.FORM_FAX))
 						.build());
 
-		accountSection.addField(new IntFieldBuilder()
+		accountSection.addField(new IntDynaFieldBuilder()
 				.fieldName("numemployees")
 				.fieldIndex(4)
 				.displayName(
@@ -63,7 +63,7 @@ public class AccountDefaultDynaFormFactory {
 								.getMessage(AccountI18nEnum.FORM_EMPLOYEES))
 				.build());
 
-		accountSection.addField(new PhoneFieldBuilder()
+		accountSection.addField(new PhoneDynaFieldBuilder()
 				.fieldName("alternatephone")
 				.fieldIndex(5)
 				.displayName(
@@ -71,7 +71,7 @@ public class AccountDefaultDynaFormFactory {
 								.getMessage(AccountI18nEnum.FORM_OTHER_PHONE))
 				.build());
 
-		accountSection.addField(new PickListFieldBuilder<String>()
+		accountSection.addField(new PickListDynaFieldBuilder<String>()
 				.fieldName("industry")
 				.fieldIndex(6)
 				.displayName(
@@ -79,7 +79,7 @@ public class AccountDefaultDynaFormFactory {
 								.getMessage(AccountI18nEnum.FORM_INDUSTRY))
 				.build());
 
-		accountSection.addField(new EmailFieldBuilder()
+		accountSection.addField(new EmailDynaFieldBuilder()
 				.fieldName("email")
 				.fieldIndex(7)
 				.displayName(
@@ -88,7 +88,7 @@ public class AccountDefaultDynaFormFactory {
 				.build());
 
 		accountSection
-				.addField(new PickListFieldBuilder<String>()
+				.addField(new PickListDynaFieldBuilder<String>()
 						.fieldName("type")
 						.fieldIndex(8)
 						.displayName(
@@ -96,7 +96,7 @@ public class AccountDefaultDynaFormFactory {
 										.getMessage(AccountI18nEnum.FORM_TYPE))
 						.build());
 
-		accountSection.addField(new StringFieldBuilder()
+		accountSection.addField(new StringDynaFieldBuilder()
 				.fieldName("ownership")
 				.fieldIndex(9)
 				.displayName(
@@ -105,7 +105,7 @@ public class AccountDefaultDynaFormFactory {
 				.build());
 
 		accountSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldName("assignuser")
 						.fieldIndex(10)
 						.displayName(
@@ -114,7 +114,7 @@ public class AccountDefaultDynaFormFactory {
 						.build());
 
 		accountSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldName("annualrevenue")
 						.fieldIndex(11)
 						.displayName(
@@ -125,11 +125,11 @@ public class AccountDefaultDynaFormFactory {
 		defaultForm.addSection(accountSection);
 
 		// build block address
-		DynaSection addressSection = new SectionBuilder()
+		DynaSection addressSection = new DynaSectionBuilder()
 				.layoutType(LayoutType.TWO_COLUMN)
 				.header("Address Information").build();
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(0)
 						.fieldName("billingaddress")
 						.displayName(
@@ -137,14 +137,14 @@ public class AccountDefaultDynaFormFactory {
 										.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS))
 						.build());
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(1)
 						.fieldName("shippingaddress")
 						.displayName(
 								LocalizationHelper
 										.getMessage(AccountI18nEnum.FORM_SHIPPING_ADDRESS))
 						.build());
-		addressSection.addField(new StringFieldBuilder()
+		addressSection.addField(new StringDynaFieldBuilder()
 				.fieldIndex(2)
 				.fieldName("city")
 				.displayName(
@@ -153,7 +153,7 @@ public class AccountDefaultDynaFormFactory {
 				.build());
 
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(3)
 						.fieldName("shippingcity")
 						.displayName(
@@ -162,7 +162,7 @@ public class AccountDefaultDynaFormFactory {
 						.build());
 
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(4)
 						.fieldName("state")
 						.displayName(
@@ -171,7 +171,7 @@ public class AccountDefaultDynaFormFactory {
 						.build());
 
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(5)
 						.fieldName("shippingstate")
 						.displayName(
@@ -180,7 +180,7 @@ public class AccountDefaultDynaFormFactory {
 						.build());
 
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(6)
 						.fieldName("postalcode")
 						.displayName(
@@ -189,7 +189,7 @@ public class AccountDefaultDynaFormFactory {
 						.build());
 
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(7)
 						.fieldName("shippingpostalcode")
 						.displayName(
@@ -198,7 +198,7 @@ public class AccountDefaultDynaFormFactory {
 						.build());
 
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(8)
 						.fieldName("billingcountry")
 						.displayName(
@@ -207,7 +207,7 @@ public class AccountDefaultDynaFormFactory {
 						.build());
 
 		addressSection
-				.addField(new StringFieldBuilder()
+				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(9)
 						.fieldName("shippingcountry")
 						.displayName(
@@ -218,11 +218,11 @@ public class AccountDefaultDynaFormFactory {
 		defaultForm.addSection(addressSection);
 
 		// build block description
-		DynaSection descSection = new SectionBuilder()
+		DynaSection descSection = new DynaSectionBuilder()
 				.layoutType(LayoutType.ONE_COLUMN).header("Description")
 				.orderIndex(2).build();
 
-		descSection.addField(new StringFieldBuilder()
+		descSection.addField(new StringDynaFieldBuilder()
 				.fieldIndex(0)
 				.fieldName("description")
 				.displayName(

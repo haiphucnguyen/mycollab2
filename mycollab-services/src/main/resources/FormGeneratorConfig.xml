@@ -34,9 +34,6 @@
         <table domainObjectName="FormSection" schema="mycollab"
             tableName="m_form_section" />
 
-        <table domainObjectName="FormSectionLayout" schema="mycollab"
-            tableName="m_form_section_layout" />
-
         <table domainObjectName="FormSectionField" schema="mycollab"
             tableName="m_form_section_field" />
 

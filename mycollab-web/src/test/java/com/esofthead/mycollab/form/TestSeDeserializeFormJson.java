@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
-import com.esofthead.mycollab.form.view.builder.AbstractFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.SectionBuilder;
-import com.esofthead.mycollab.form.view.builder.StringFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.AbstractDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
+import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.StringDynaField;
 
@@ -14,9 +14,9 @@ public class TestSeDeserializeFormJson {
 
 	@Test
 	public void testFromJsonWithExcludeProps() {
-		SectionBuilder builder = new SectionBuilder().header("example");
+		DynaSectionBuilder builder = new DynaSectionBuilder().header("example");
 
-		AbstractFieldBuilder val1Builder = new StringFieldBuilder()
+		AbstractDynaFieldBuilder val1Builder = new StringDynaFieldBuilder()
 				.maxLength(22).fieldIndex(1).fieldName("field1")
 				.displayName("Field 1");
 
@@ -31,9 +31,9 @@ public class TestSeDeserializeFormJson {
 
 	@Test
 	public void testToJsonWithExcludeProps() {
-		SectionBuilder builder = new SectionBuilder().header("example");
+		DynaSectionBuilder builder = new DynaSectionBuilder().header("example");
 
-		AbstractFieldBuilder val1Builder = new StringFieldBuilder()
+		AbstractDynaFieldBuilder val1Builder = new StringDynaFieldBuilder()
 				.maxLength(22).fieldIndex(1).fieldName("field1")
 				.displayName("Field 1");
 

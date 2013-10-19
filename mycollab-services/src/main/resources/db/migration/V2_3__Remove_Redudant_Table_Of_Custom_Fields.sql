@@ -1,0 +1,1 @@
+DROP TABLE `m_form_section_layout`;
