@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration(locations = {
 		"classpath:META-INF/spring/common-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/form-context.xml",
 		"classpath:META-INF/spring-test/ecm-context-test.xml",
 		"classpath:META-INF/spring/migration-context.xml",
 		"classpath:META-INF/spring/project-context.xml",

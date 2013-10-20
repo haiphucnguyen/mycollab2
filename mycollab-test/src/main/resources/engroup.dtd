@@ -59,6 +59,9 @@
     m_ecm_activity_log*,
     m_ecm_driveinfo*,
     m_ecm_external_drive*,
+    m_form_custom_field_value*,
+    m_form_section*,
+    m_form_section_field*,
     m_monitor_item*,
     m_prj_member*,
     m_prj_message*,
@@ -935,6 +938,59 @@
     createdTime CDATA #REQUIRED
     lastUpdatedTime CDATA #REQUIRED
     folderName CDATA #REQUIRED
+>
+
+<!ELEMENT m_form_custom_field_value EMPTY>
+<!ATTLIST m_form_custom_field_value
+    id CDATA #REQUIRED
+    module CDATA #REQUIRED
+    typeid CDATA #REQUIRED
+    number1 CDATA #IMPLIED
+    number2 CDATA #IMPLIED
+    number3 CDATA #IMPLIED
+    number4 CDATA #IMPLIED
+    number5 CDATA #IMPLIED
+    int1 CDATA #IMPLIED
+    int2 CDATA #IMPLIED
+    int3 CDATA #IMPLIED
+    int4 CDATA #IMPLIED
+    int5 CDATA #IMPLIED
+    date1 CDATA #IMPLIED
+    date2 CDATA #IMPLIED
+    date3 CDATA #IMPLIED
+    date4 CDATA #IMPLIED
+    date5 CDATA #IMPLIED
+    string1 CDATA #IMPLIED
+    string2 CDATA #IMPLIED
+    string3 CDATA #IMPLIED
+    string4 CDATA #IMPLIED
+    string5 CDATA #IMPLIED
+    string6 CDATA #IMPLIED
+    string7 CDATA #IMPLIED
+    string8 CDATA #IMPLIED
+    string9 CDATA #IMPLIED
+    string10 CDATA #IMPLIED
+>
+
+<!ELEMENT m_form_section EMPTY>
+<!ATTLIST m_form_section
+    id CDATA #REQUIRED
+    name CDATA #REQUIRED
+    layoutIndex CDATA #REQUIRED
+    module CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
+>
+
+<!ELEMENT m_form_section_field EMPTY>
+<!ATTLIST m_form_section_field
+    id CDATA #REQUIRED
+    sectionId CDATA #REQUIRED
+    isMandatory CDATA #REQUIRED
+    fieldIndex CDATA #REQUIRED
+    displayName CDATA #REQUIRED
+    fieldFormat CDATA #REQUIRED
+    fieldname CDATA #REQUIRED
+    fieldType CDATA #REQUIRED
 >
 
 <!ELEMENT m_monitor_item EMPTY>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.form.dao.FormSectionMapperExt">
-    <resultMap id="SimpleBugResult"
+    <resultMap id="SimpleFormSectionResult"
         extends="com.esofthead.mycollab.form.dao.FormSectionMapper.BaseResultMap"
         type="com.esofthead.mycollab.form.domain.SimpleFormSection">
         <collection columnPrefix="field_"
@@ -10,9 +10,11 @@
             resultMap="com.esofthead.mycollab.form.dao.FormSectionMapper.BaseResultMap" />
     </resultMap>
 
-    <select id="findSections">
+    <select id="findSections" resultMap="SimpleFormSectionResult"
+        parameterType="map">
     <![CDATA[
-    SELECT m_form_section.id, m_form_section.name, m_form_section.layoutIndex, m_form_section.module, m_form_section.sAccountId,
+    SELECT m_form_section.id, m_form_section.name, m_form_section.layoutIndex, m_form_section.module, 
+        m_form_section.sAccountId, m_form_section.layoutType,
         m_form_section_field.id AS field_id, m_form_section_field.sectionId AS field_sectionId,
         m_form_section_field.isMandatory AS field_isMandatory, m_form_section_field.fieldIndex AS field_fieldIndex,
         m_form_section_field.displayName AS field_displayName, m_form_section_field.fieldFormat AS field_fieldFormat,
