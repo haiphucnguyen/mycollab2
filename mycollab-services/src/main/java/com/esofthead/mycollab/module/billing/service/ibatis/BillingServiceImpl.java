@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.AccountSettings;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingAccountExample;
+import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.BillingPlanExample;
 import com.esofthead.mycollab.module.user.domain.Role;
@@ -366,6 +367,11 @@ public class BillingServiceImpl implements BillingService {
 			return billingPlanMapper.selectByPrimaryKey(billingplanid);
 		}
 		return null;
+	}
+
+	@Override
+	public List<BillingAccountWithOwners> getTrialAccountsWithOwners() {
+		return billingAccountMapperExt.getTrialAccountsWithOwners();
 	}
 
 }

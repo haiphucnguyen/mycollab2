@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.quartz.JobExecutionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -23,8 +21,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class SendingErrorReportEmailJob extends QuartzJobBean {
-	private static Logger log = LoggerFactory
-			.getLogger(SendingErrorReportEmailJob.class);
 
 	@Override
 	protected void executeInternal(JobExecutionContext context) {

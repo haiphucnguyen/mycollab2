@@ -6,6 +6,7 @@ import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IService;
+import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 
 public interface BillingService extends IService {
@@ -15,7 +16,7 @@ public interface BillingService extends IService {
 
 	@CacheEvict
 	void cancelAccount(@CacheKey Integer accountid);
-	
+
 	@Cacheable
 	BillingPlan findBillingPlan(@CacheKey Integer sAccountId);
 
@@ -27,4 +28,6 @@ public interface BillingService extends IService {
 	List<BillingPlan> getAvailablePlans();
 
 	BillingPlan getFreeBillingPlan();
+
+	List<BillingAccountWithOwners> getTrialAccountsWithOwners();
 }
