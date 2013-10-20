@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 
 public interface BillingAccountMapperExt {
 	SimpleBillingAccount getBillingAccountById(int accountId);
 
 	List<String> getSubdomainsOfUser(@Param("username") String username);
+
+	List<BillingAccountWithOwners> getTrialAccountsWithOwners();
 }
