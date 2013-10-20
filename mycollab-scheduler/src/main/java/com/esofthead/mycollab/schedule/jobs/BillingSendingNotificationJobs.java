@@ -34,7 +34,13 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 
 		if (trialAccountsWithOwners != null
 				&& trialAccountsWithOwners.size() > 0) {
+			for (BillingAccountWithOwners account : trialAccountsWithOwners) {
+				log.debug("Check whether account exceed 25 days to remind user upgrade account");
 
+				log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
+
+				log.debug("Check whether account exceed 32 days to convert to basic plan");
+			}
 		}
 
 	}

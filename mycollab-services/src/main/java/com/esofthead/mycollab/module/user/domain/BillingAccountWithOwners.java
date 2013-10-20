@@ -4,13 +4,13 @@ import java.util.List;
 
 public class BillingAccountWithOwners extends SimpleBillingAccount {
 	private static final long serialVersionUID = 1L;
-	private List<User> owners;
+	private List<SimpleUser> owners;
 
-	public List<User> getOwners() {
+	public List<SimpleUser> getOwners() {
 		return owners;
 	}
 
-	public void setOwners(List<User> owners) {
+	public void setOwners(List<SimpleUser> owners) {
 		this.owners = owners;
 	}
 }
