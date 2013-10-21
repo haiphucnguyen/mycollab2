@@ -38,6 +38,7 @@ import com.esofthead.template.velocity.TemplateEngine;
 public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 
 	private static String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
+	private static String USER_HAS_DENIED_PAGE = "templates/page/user/UserDeniedPage.mt";
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnotatedDenyUserServletRequestHandler.class);
@@ -74,15 +75,16 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 		}
 	}
 
-	private String generateRefuseUserDenyActionPage(String loginURL) {
-		String pageNotFoundTemplate = "templates/page/project/RefuseUserDenyActionPage.mt";
+	private String generateRefuseUserDenyActionPage(String loginURL,
+			String pageNotFoundTemplate) {
 		TemplateContext context = new TemplateContext();
 
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					PageNotFoundGenerator.class.getClassLoader()
-							.getResourceAsStream(pageNotFoundTemplate), "UTF-8");
+					AnotatedDenyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(
+									pageNotFoundTemplate), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(PageNotFoundGenerator.class
 					.getClassLoader().getResourceAsStream(pageNotFoundTemplate));
@@ -142,12 +144,14 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 						if (checkUser.getRegisterstatus().equals(
 								RegisterStatusConstants.ACTIVE)) {
 							// You cant deny , Userhas active , go to login Page
-							String html = generateRefuseUserDenyActionPage(request
-									.getContextPath() + "/");
+							String html = generateRefuseUserDenyActionPage(
+									request.getContextPath() + "/",
+									"templates/page/project/RefuseUserDenyActionPage.mt");
 							PrintWriter out = response.getWriter();
 							out.println(html);
 							return;
-						} else {
+						} else if (checkUser.getRegisterstatus().equals(
+								RegisterStatusConstants.VERIFICATING)) {
 							UserSearchCriteria criteria = new UserSearchCriteria();
 							criteria.setUsername(new StringSearchField(username));
 							criteria.setSaccountid(new NumberSearchField(
@@ -158,11 +162,19 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 									.getSiteUrl(subdomain)
 									+ "project/member/feedback/";
 							String html = FeedBackPageGenerator
-									.generateDenyFeedbacktoInviter(
+									.generateDenyFeedbacktoInviter(0, 0,
 											inviterEmail, inviterName,
 											redirectURL, checkUser.getEmail(),
 											checkUser.getUsername(), "",
-											USER_DENY_FEEDBACK_TEMPLATE);
+											USER_DENY_FEEDBACK_TEMPLATE, 0);
+							PrintWriter out = response.getWriter();
+							out.println(html);
+							return;
+						} else if (checkUser.getRegisterstatus().equals(
+								RegisterStatusConstants.DELETE)) {
+							String html = generateRefuseUserDenyActionPage(
+									request.getContextPath() + "/",
+									USER_HAS_DENIED_PAGE);
 							PrintWriter out = response.getWriter();
 							out.println(html);
 							return;

@@ -87,9 +87,10 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 	}
 
 	public static class FeedBackPageGenerator {
-		public static String generateDenyFeedbacktoInviter(String inviterEmail,
-				String inviterName, String redirectURL, String memberEmail,
-				String memberName, String projectName, String templateURL) {
+		public static String generateDenyFeedbacktoInviter(Integer sAccountId,
+				Integer projectId, String inviterEmail, String inviterName,
+				String redirectURL, String memberEmail, String memberName,
+				String projectName, String templateURL, Integer projectRoleId) {
 			TemplateContext context = new TemplateContext();
 
 			Reader reader;
@@ -110,6 +111,9 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 			context.put("toName", memberName);
 			context.put("inviterName", inviterName);
 			context.put("projectName", projectName);
+			context.put("sAccountId", sAccountId);
+			context.put("projectId", projectId);
+			context.put("projectRoleId", projectRoleId);
 
 			Map<String, String> defaultUrls = new HashMap<String, String>();
 
@@ -194,7 +198,12 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 					pathVariables = pathVariables.substring(inviterName
 							.length() + 1);
 
-					String inviterEmail = pathVariables;
+					String inviterEmail = pathVariables.substring(0,
+							pathVariables.indexOf("/"));
+					pathVariables = pathVariables.substring(inviterName
+							.length() + 1);
+
+					Integer projectRoleId = Integer.parseInt(pathVariables);
 
 					String subdomain = projectService
 							.getSubdomainOfProject(projectId);
@@ -216,18 +225,21 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 						PrintWriter out = response.getWriter();
 						out.println(html);
 						return;
+					} else {
+						String redirectURL = SiteConfiguration
+								.getSiteUrl(subdomain)
+								+ "project/member/feedback/";
+
+						String html = FeedBackPageGenerator
+								.generateDenyFeedbacktoInviter(sAccountId,
+										projectId, inviterEmail, inviterName,
+										redirectURL, email, "You",
+										project.getName(),
+										DENY_FEEDBACK_TEMPLATE, projectRoleId);
+						PrintWriter out = response.getWriter();
+						out.println(html);
+						return;
 					}
-
-					String redirectURL = SiteConfiguration
-							.getSiteUrl(subdomain) + "project/member/feedback/";
-
-					String html = FeedBackPageGenerator
-							.generateDenyFeedbacktoInviter(inviterEmail,
-									inviterName, redirectURL, email, "You",
-									project.getName(), DENY_FEEDBACK_TEMPLATE);
-					PrintWriter out = response.getWriter();
-					out.println(html);
-					return;
 				}
 			}
 			throw new ResourceNotFoundException();

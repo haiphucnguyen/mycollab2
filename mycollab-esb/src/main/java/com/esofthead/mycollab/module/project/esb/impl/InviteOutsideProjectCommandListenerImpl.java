@@ -88,7 +88,8 @@ public class InviteOutsideProjectCommandListenerImpl implements
 							+ "project/member/invitation/deny_invite/"
 							+ UrlEncodeDecoder.encode(email + "/" + projectId
 									+ "/" + sAccountId + "/" + inviterUserName
-									+ "/" + user.getEmail()));
+									+ "/" + user.getEmail() + "/"
+									+ projectRoleId));
 
 			templateGenerator.putVariable("userName", name);
 
@@ -99,5 +100,4 @@ public class InviteOutsideProjectCommandListenerImpl implements
 		}
 
 	}
-
 }
