@@ -48,7 +48,9 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						CreateSectionWindow createSectionWindow = new CreateSectionWindow(
+								CrmCustomViewImpl.this);
+						getWindow().addWindow(createSectionWindow);
 
 					}
 				});

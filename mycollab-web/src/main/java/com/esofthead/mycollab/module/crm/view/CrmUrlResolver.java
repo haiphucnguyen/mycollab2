@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactUrlResolver;
 import com.esofthead.mycollab.module.crm.view.file.FileUrlResolver;
 import com.esofthead.mycollab.module.crm.view.lead.LeadUrlResolver;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityUrlResolver;
+import com.esofthead.mycollab.module.crm.view.setting.CrmSettingUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
@@ -25,6 +26,7 @@ public class CrmUrlResolver extends UrlResolver {
 		this.addSubResolver("cases", new CaseUrlResolver());
 		this.addSubResolver("activity", new ActivityUrlResolver());
 		this.addSubResolver("file", new FileUrlResolver());
+		this.addSubResolver("setting", new CrmSettingUrlResolver());
 		return this;
 	}
 

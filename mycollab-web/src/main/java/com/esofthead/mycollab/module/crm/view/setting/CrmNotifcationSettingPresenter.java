@@ -34,6 +34,8 @@ public class CrmNotifcationSettingPresenter extends
 		CrmNotificationSetting setting = service.findNotification(
 				AppContext.getUsername(), AppContext.getAccountId());
 		view.showNotificationSettings(setting);
-		AppContext.addFragment("crm/setting", "Customer: Settings");
+
+		AppContext.addFragment("crm/setting/notification",
+				"Notification Settings");
 	}
 }
