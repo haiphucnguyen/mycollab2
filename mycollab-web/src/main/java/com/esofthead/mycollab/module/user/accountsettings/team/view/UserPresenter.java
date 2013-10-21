@@ -5,6 +5,9 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -40,6 +43,9 @@ public class UserPresenter extends AbstractPresenter<UserContainer> {
 			UserSearchCriteria criteria = new UserSearchCriteria();
 			criteria.setSaccountid(new NumberSearchField(AppContext
 					.getAccountId()));
+			criteria.setRegisterStatuses(new SetSearchField<String>(
+					SearchField.AND,
+					new String[] { RegisterStatusConstants.ACTIVE }));
 			listPresenter.go(view.getWidget(),
 					new ScreenData.Search<UserSearchCriteria>(criteria));
 		} else if (data instanceof UserScreenData.Read) {

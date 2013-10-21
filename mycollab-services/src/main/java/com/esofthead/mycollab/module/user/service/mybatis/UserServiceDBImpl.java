@@ -317,9 +317,8 @@ public class UserServiceDBImpl extends
 		pendingUserAccounts(Arrays.asList(username), accountId);
 
 		// clean cache of related items
-		String userPrefixKey = String.format("%s-%d",
-				UserService.class.getName(), accountId);
-		LocalCacheManager.removeCacheItems(accountId.toString(), userPrefixKey);
+		LocalCacheManager.removeCacheItems(accountId.toString(),
+				UserService.class.getName());
 	}
 
 	private void internalPendingUserAccount(String username, Integer accountId) {
@@ -368,9 +367,8 @@ public class UserServiceDBImpl extends
 		}
 
 		// clean cache of related items
-		String userPrefixKey = String.format("%s-%d",
-				UserService.class.getName(), accountId);
-		LocalCacheManager.removeCacheItems(accountId.toString(), userPrefixKey);
+		LocalCacheManager.removeCacheItems(accountId.toString(),
+				UserService.class.getName());
 	}
 
 	@Override
@@ -398,7 +396,6 @@ public class UserServiceDBImpl extends
 		ex.createCriteria().andAccountidEqualTo(sAccountId)
 				.andUsernameEqualTo(username);
 		userAccountMapper.updateByExampleSelective(userAccount, ex);
-
 	}
 
 	@Override

@@ -45,16 +45,15 @@ public class UserRemovedCommandImpl implements UserRemovedCommand {
 								RegisterStatusConstants.ACTIVE,
 								RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
 								RegisterStatusConstants.VERIFICATING))
-				.andSaccountidEqualTo(accountid);
+				.andSaccountidEqualTo(accountid).andUsernameEqualTo(username);
 		ProjectMember projectMember = new ProjectMember();
 		projectMember.setStatus(RegisterStatusConstants.DELETE);
 		projectMemberMapper.updateByExampleSelective(projectMember, ex);
 
 		// Remove cache of project member
 		// clean cache of related items
-		String userPrefixKey = String.format("%s-%d",
-				ProjectMemberService.class.getName(), accountid);
-		LocalCacheManager.removeCacheItems(accountid.toString(), userPrefixKey);
+		LocalCacheManager.removeCacheItems(accountid.toString(),
+				ProjectMemberService.class.getName());
 	}
 
 }

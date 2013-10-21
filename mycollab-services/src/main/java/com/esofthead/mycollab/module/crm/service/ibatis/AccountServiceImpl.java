@@ -104,14 +104,11 @@ public class AccountServiceImpl extends
 
 	private void cleanAccountLeadCaches(Integer accountId) {
 		// Clean cache relate to account and lead
-		String leadPrefixKey = String.format("%s-%d",
-				LeadService.class.getName(), accountId);
-		LocalCacheManager.removeCacheItems(accountId.toString(), leadPrefixKey);
-
-		String accountPrefixKey = String.format("%s-%d",
-				AccountService.class.getName(), accountId);
 		LocalCacheManager.removeCacheItems(accountId.toString(),
-				accountPrefixKey);
+				LeadService.class.getName());
+
+		LocalCacheManager.removeCacheItems(accountId.toString(),
+				AccountService.class.getName());
 	}
 
 }
