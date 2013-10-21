@@ -45,6 +45,7 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.esb.BeanProxyBuilder;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
@@ -62,6 +63,8 @@ import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
+import com.esofthead.mycollab.module.user.esb.UserEndpoints;
+import com.esofthead.mycollab.module.user.esb.UserRemovedCommand;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -312,9 +315,13 @@ public class UserServiceDBImpl extends
 	@Override
 	public void pendingUserAccount(String username, Integer accountId) {
 		pendingUserAccounts(Arrays.asList(username), accountId);
+
+		// clean cache of related items
+		LocalCacheManager.removeCacheItems(accountId.toString(),
+				UserService.class.getName());
 	}
 
-	private void internalRemoveUserAccount(String username, Integer accountId) {
+	private void internalPendingUserAccount(String username, Integer accountId) {
 		// check if current user is the unique account owner, then reject
 		// deletion
 		UserAccountExample userAccountEx = new UserAccountExample();
@@ -346,18 +353,22 @@ public class UserServiceDBImpl extends
 		UserAccount userAccount = new UserAccount();
 		userAccount.setRegisterstatus(RegisterStatusConstants.DELETE);
 		userAccountMapper.updateByExampleSelective(userAccount, userAccountEx);
+
+		// notify users are "deleted"
+		UserRemovedCommand userRemovedCommand = new BeanProxyBuilder().build(
+				UserEndpoints.USER_REMOVE_ENDPOINT, UserRemovedCommand.class);
+		userRemovedCommand.userRemoved(username, accountId);
 	}
 
 	@Override
 	public void pendingUserAccounts(List<String> usernames, Integer accountId) {
 		for (String username : usernames) {
-			internalRemoveUserAccount(username, accountId);
+			internalPendingUserAccount(username, accountId);
 		}
 
 		// clean cache of related items
-		String userPrefixKey = String.format("%s-%d",
-				UserService.class.getName(), accountId);
-		LocalCacheManager.removeCacheItems(accountId.toString(), userPrefixKey);
+		LocalCacheManager.removeCacheItems(accountId.toString(),
+				UserService.class.getName());
 	}
 
 	@Override
@@ -385,7 +396,6 @@ public class UserServiceDBImpl extends
 		ex.createCriteria().andAccountidEqualTo(sAccountId)
 				.andUsernameEqualTo(username);
 		userAccountMapper.updateByExampleSelective(userAccount, ex);
-
 	}
 
 	@Override

@@ -107,10 +107,14 @@ public class ProjectMemberServiceImpl extends
 						primaryKey, projectMember.getProjectid(),
 						project.getSaccountid());
 			} catch (Exception e) {
-				log.error("Error while notify user delete", e);
+				log.error("Error while notify project member delete", e);
 			}
+
+			projectMember.setStatus(RegisterStatusConstants.DELETE);
+			projectMapper.updateByPrimaryKeySelective(projectMember);
 		}
-		return super.removeWithSession(primaryKey, username, accountId);
+
+		return 1;
 	}
 
 	@Override

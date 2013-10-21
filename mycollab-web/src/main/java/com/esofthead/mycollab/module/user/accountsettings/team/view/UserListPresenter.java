@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -76,15 +76,12 @@ public class UserListPresenter extends
 			}
 
 			if (keyList.size() > 0) {
-				userService.updateUserAccountsStatus(keyList,
-						AppContext.getAccountId(),
-						RegisterStatusConstants.DELETE);
+				userService.pendingUserAccounts(keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {
-			userService.removeByCriteria(searchCriteria,
-					AppContext.getAccountId());
-			doSearch(searchCriteria);
+			throw new MyCollabException("Do not support mass remove users");
 		}
 
 	}

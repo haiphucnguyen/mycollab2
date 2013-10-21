@@ -34,6 +34,32 @@
         <if test="searchCriteria.projectId != null">
             <![CDATA[${searchCriteria.projectId.operation} m_prj_member.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,javaType=INTEGER}]]>
         </if>
+
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} s_user_account.accountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+        </if>
+    </sql>
+
+    <sql id="queryTotalCountSearchCriteria">
+
+        <if test="searchCriteria.id != null">
+            <![CDATA[${searchCriteria.id.operation} m_prj_member.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+        </if>
+
+        <if test="searchCriteria.status != null">
+            <![CDATA[${searchCriteria.status.operation} m_prj_member.status = #{searchCriteria.status.value}]]>
+        </if>
+
+        <if test="searchCriteria.projectId != null">
+            <![CDATA[${searchCriteria.projectId.operation} m_prj_member.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,javaType=INTEGER}]]>
+        </if>
+
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation}
+                SELECT COUNT(*) FROM m_prj_project, s_user_account
+                WHERE m_prj_project.sAccountId=#{searchCriteria.saccountid.value,javaType=INTEGER}
+            ]]>
+        </if>
     </sql>
 
     <sql id="selectMember">
@@ -54,7 +80,7 @@
         ]]>
     </sql>
 
-    <select id="getTotalCount" parameterType="ProblemSearchCriteria"
+    <select id="getTotalCount" parameterType="ProjectMemberSearchCriteria"
         resultType="int">
         SELECT count(*) as totalCount FROM m_prj_member
 
@@ -63,7 +89,7 @@
                 1=1
 
                 <include
-                    refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.querySearchCriteria" />
+                    refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.queryTotalCountSearchCriteria" />
             </trim>
         </if>
     </select>
