@@ -10,6 +10,8 @@ public class AbstractDynaField implements Comparable<AbstractDynaField> {
 	private String displayName;
 
 	private boolean isRequired;
+	
+	private boolean isCustom;
 
 	@Exclude
 	private DynaSection ownSection;
@@ -52,6 +54,14 @@ public class AbstractDynaField implements Comparable<AbstractDynaField> {
 
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+	public boolean isCustom() {
+		return isCustom;
+	}
+
+	public void setCustom(boolean isCustom) {
+		this.isCustom = isCustom;
 	}
 
 	@Override

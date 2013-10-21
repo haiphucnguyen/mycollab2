@@ -25,6 +25,11 @@ public abstract class AbstractDynaFieldBuilder<F extends AbstractDynaField> {
 		return this;
 	}
 
+	public AbstractDynaFieldBuilder<F> customField(boolean isCustom) {
+		field.setCustom(isCustom);
+		return this;
+	}
+
 	public AbstractDynaField build() {
 		return field;
 	}

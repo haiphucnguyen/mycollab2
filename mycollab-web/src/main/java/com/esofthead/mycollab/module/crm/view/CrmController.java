@@ -35,8 +35,8 @@ import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent.GotoHome;
-import com.esofthead.mycollab.module.crm.events.CrmNotificationSettingEvent;
-import com.esofthead.mycollab.module.crm.events.CrmNotificationSettingEvent.GotoSetting;
+import com.esofthead.mycollab.module.crm.events.CrmSettingEvent;
+import com.esofthead.mycollab.module.crm.events.CrmSettingEvent.GotoNotificationSetting;
 import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -628,16 +628,16 @@ public class CrmController implements IController {
 	private void bindSettingEvents() {
 		EventBus.getInstance()
 				.addListener(
-						new ApplicationEventListener<CrmNotificationSettingEvent.GotoSetting>() {
+						new ApplicationEventListener<CrmSettingEvent.GotoNotificationSetting>() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
 							public Class<? extends ApplicationEvent> getEventType() {
-								return CrmNotificationSettingEvent.GotoSetting.class;
+								return CrmSettingEvent.GotoNotificationSetting.class;
 							}
 
 							@Override
-							public void handle(GotoSetting event) {
+							public void handle(GotoNotificationSetting event) {
 								CrmNotifcationSettingPresenter presenter = PresenterResolver
 										.getPresenter(CrmNotifcationSettingPresenter.class);
 								presenter.go(container, null);

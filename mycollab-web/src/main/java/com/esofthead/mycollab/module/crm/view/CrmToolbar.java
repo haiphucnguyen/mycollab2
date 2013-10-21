@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
-import com.esofthead.mycollab.module.crm.events.CrmNotificationSettingEvent;
+import com.esofthead.mycollab.module.crm.events.CrmSettingEvent;
 import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -125,7 +125,7 @@ public class CrmToolbar extends CssLayout implements View {
 					caption)) {
 				EventBus.getInstance()
 						.fireEvent(
-								new CrmNotificationSettingEvent.GotoSetting(
+								new CrmSettingEvent.GotoNotificationSetting(
 										this, null));
 			}
 
