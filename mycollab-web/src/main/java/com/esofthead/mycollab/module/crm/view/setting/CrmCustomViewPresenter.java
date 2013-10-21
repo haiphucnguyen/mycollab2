@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.setting;
 
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -18,6 +19,8 @@ public class CrmCustomViewPresenter extends CrmGenericPresenter<CrmCustomView> {
 		settingContainer.gotoSubView("Custom Layouts");
 
 		AppContext.addFragment("crm/setting/customlayout", "Custom Layouts");
+
+		view.display(CrmTypeConstants.ACCOUNT);
 	}
 
 }

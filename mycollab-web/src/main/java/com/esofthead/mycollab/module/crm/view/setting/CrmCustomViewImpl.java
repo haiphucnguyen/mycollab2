@@ -1,9 +1,13 @@
 package com.esofthead.mycollab.module.crm.view.setting;
 
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormFactory;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -15,6 +19,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 	private Label headerLbl;
 	private ModuleSelectionComboBox moduleComboBox;
+	private DynaForm form;;
 
 	public CrmCustomViewImpl() {
 		headerLbl = new Label();
@@ -59,9 +64,16 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 	}
 
 	@Override
-	public void display() {
-		// TODO Auto-generated method stub
+	public void display(String moduleName) {
+		moduleComboBox.select(moduleName);
 
+		if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
+			form = AccountDefaultDynaFormFactory.getForm(AppContext
+					.getAccountId());
+		} else {
+			throw new MyCollabException(
+					"Do not support custom layout of module " + moduleName);
+		}
 	}
 
 	private class ModuleSelectionComboBox extends ValueComboBox {
