@@ -465,6 +465,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		public class NumbericTextField extends TextField {
 			private static final long serialVersionUID = 1L;
 			private static final String regex = "^[0-9]*.?[0-9]*$";
+			private String oldText;
 
 			public NumbericTextField() {
 				this.addListener(new TextChangeListener() {
@@ -473,7 +474,21 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					@Override
 					public void textChange(TextChangeEvent event) {
 						String inputText = event.getText();
-
+						if (oldText != null
+								&& inputText.length() < oldText.length()) {
+							NumbericTextField.this.setValue(inputText);
+							return;
+						}
+						try {
+							Double.parseDouble(inputText);
+							NumbericTextField.this.setValue(inputText);
+							oldText = inputText;
+						} catch (Exception e) {
+							if (oldText == null)
+								NumbericTextField.this.setValue("");
+							else
+								NumbericTextField.this.setValue(oldText);
+						}
 					}
 				});
 			}
