@@ -3,7 +3,6 @@ package com.esofthead.mycollab.module.file.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.ecm.StorageNames;
@@ -239,22 +238,6 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 
 	public void setCurrentBreadCrumbFolder(Folder currentBreamCrumbFolder) {
 		this.currentBreadCrumbFolder = currentBreamCrumbFolder;
-	}
-
-	public static class FileLinkBuilder {
-		public static String URL_PREFIX_PARAM = "?url=";
-
-		public static String DEFAULT_PREFIX_PARAM = "#";
-
-		public static String rootLink = DEFAULT_PREFIX_PARAM + "file/";
-
-		public static String currentLink = rootLink;
-
-		public static void addLink(String linkName) {
-			currentLink += UrlEncodeDecoder.encode(linkName);
-			AppContext.addFragment(
-					rootLink + UrlEncodeDecoder.encode(linkName), "");
-		}
 	}
 
 	private static class BreadcrumbLabelStringGenerator implements

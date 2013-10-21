@@ -16,7 +16,7 @@ public class SimpleProjectMember extends ProjectMember {
 	private static final long serialVersionUID = 1L;
 
 	private String memberAvatarId;
-	
+
 	private String memberFullName;
 
 	private String roleName;
@@ -26,13 +26,13 @@ public class SimpleProjectMember extends ProjectMember {
 	private int numOpenTasks;
 
 	private int numOpenBugs;
-	
+
 	private String projectName;
-	
+
 	private String email;
-	
+
 	private int sAccountId;
-	
+
 	private Date lastAccessTime;
 
 	public String getMemberFullName() {
@@ -105,5 +105,16 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public void setLastAccessTime(Date lastAccessTime) {
 		this.lastAccessTime = lastAccessTime;
+	}
+
+	public String getDisplayName() {
+		if (memberFullName == null || memberFullName.trim().equals("")) {
+			String displayName = getUsername();
+			int index = (displayName != null) ? displayName.indexOf("@") : 0;
+			if (index > 0) {
+				return displayName.substring(0, index);
+			}
+		}
+		return memberFullName;
 	}
 }
