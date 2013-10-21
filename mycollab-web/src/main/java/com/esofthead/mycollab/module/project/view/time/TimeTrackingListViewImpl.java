@@ -294,7 +294,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			ticketComboBox.setNullSelectionAllowed(false);
 
 			final TextField descriptionField = new TextField();
-			final TextField hourField = new TextField();
+			final NumbericTextField hourField = new NumbericTextField();
 
 			final DateField dateField = new DateField();
 			dateField.setResolution(DateField.RESOLUTION_DAY);
@@ -464,24 +464,16 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 		public class NumbericTextField extends TextField {
 			private static final long serialVersionUID = 1L;
-			public static final String DoubleType = "Double";
-			public static final String IntType = "Int";
+			private static final String regex = "^[0-9]*.?[0-9]*$";
 
-			public NumbericTextField(final String type) {
+			public NumbericTextField() {
 				this.addListener(new TextChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void textChange(TextChangeEvent event) {
 						String inputText = event.getText();
-						try {
-							if (type.equals(DoubleType)) {
-								Integer.parseInt(inputText);
-							} else if (type.equals(IntType)) {
-								Double.parseDouble(inputText);
-							}
-						} catch (Exception e) {
-						}
+
 					}
 				});
 			}
