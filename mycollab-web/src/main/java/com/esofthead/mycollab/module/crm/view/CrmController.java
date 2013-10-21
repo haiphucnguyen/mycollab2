@@ -6,6 +6,8 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.data.CustomViewScreenData;
+import com.esofthead.mycollab.module.crm.data.NotificationSettingScreenData;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -68,7 +70,7 @@ import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.AssignmentScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.CallScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.MeetingScreenData;
-import com.esofthead.mycollab.module.crm.view.setting.CrmNotifcationSettingPresenter;
+import com.esofthead.mycollab.module.crm.view.setting.CrmSettingPresenter;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.IController;
@@ -638,9 +640,31 @@ public class CrmController implements IController {
 
 							@Override
 							public void handle(GotoNotificationSetting event) {
-								CrmNotifcationSettingPresenter presenter = PresenterResolver
-										.getPresenter(CrmNotifcationSettingPresenter.class);
-								presenter.go(container, null);
+								CrmSettingPresenter presenter = PresenterResolver
+										.getPresenter(CrmSettingPresenter.class);
+								presenter
+										.go(container,
+												new NotificationSettingScreenData.Read());
+							}
+						});
+
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<CrmSettingEvent.GotoCustomViewSetting>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return CrmSettingEvent.GotoCustomViewSetting.class;
+							}
+
+							@Override
+							public void handle(
+									CrmSettingEvent.GotoCustomViewSetting event) {
+								CrmSettingPresenter presenter = PresenterResolver
+										.getPresenter(CrmSettingPresenter.class);
+								presenter.go(container,
+										new CustomViewScreenData.Read());
 							}
 						});
 	}

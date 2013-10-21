@@ -22,11 +22,13 @@ public class CrmNotifcationSettingPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmSettingContainer settingContainer = (CrmSettingContainer) container;
+		settingContainer.gotoSubView("Notification");
+
 		CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 		crmToolbar.gotoItem(LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.TOOLBAR_CRMNOTIFICATION_HEADER));
 
-		super.onGo(container, data);
 		CrmNotificationSettingService service = ApplicationContextUtil
 				.getSpringBean(CrmNotificationSettingService.class);
 		CrmNotificationSetting setting = service.findNotification(
