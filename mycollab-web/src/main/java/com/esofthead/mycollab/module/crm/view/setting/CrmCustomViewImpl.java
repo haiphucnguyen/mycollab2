@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.setting;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormFactory;
@@ -19,7 +21,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 	private Label headerLbl;
 	private ModuleSelectionComboBox moduleComboBox;
-	private DynaForm form;;
+	private CustomLayoutDDComp layoutComp;
 
 	public CrmCustomViewImpl() {
 		headerLbl = new Label();
@@ -61,11 +63,46 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 				});
 		controlLayout.addComponent(createSectionBtn);
 		this.addComponent(controlLayout);
+
+		layoutComp = new CustomLayoutDDComp();
+		this.addComponent(layoutComp);
+
+		HorizontalLayout buttonsLayout = new HorizontalLayout();
+		Button saveBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+		buttonsLayout.addComponent(saveBtn);
+
+		Button cancelBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+		buttonsLayout.addComponent(cancelBtn);
+
+		this.addComponent(buttonsLayout);
 	}
 
 	@Override
 	public void display(String moduleName) {
+		headerLbl.setCaption(moduleName + ": Edit Page Layout");
 		moduleComboBox.select(moduleName);
+		DynaForm form;
 
 		if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
 			form = AccountDefaultDynaFormFactory.getForm(AppContext
@@ -74,6 +111,8 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 			throw new MyCollabException(
 					"Do not support custom layout of module " + moduleName);
 		}
+
+		layoutComp.displayLayoutCustom(form);
 	}
 
 	private class ModuleSelectionComboBox extends ValueComboBox {
