@@ -35,7 +35,8 @@ public class ProjectMembersWidget extends Depot {
 		super("Members", new VerticalLayout());
 
 		memberList = new BeanList<ProjectMemberService, ProjectMemberSearchCriteria, SimpleProjectMember>(
-				ApplicationContextUtil.getSpringBean(ProjectMemberService.class),
+				ApplicationContextUtil
+						.getSpringBean(ProjectMemberService.class),
 				MemberRowDisplayHandler.class);
 		this.addStyleName("activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);
@@ -64,8 +65,8 @@ public class ProjectMembersWidget extends Depot {
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 			header.addComponent(new ProjectUserLink(member.getUsername(),
-					member.getMemberAvatarId(), member.getMemberFullName(),
-					false, true));
+					member.getMemberAvatarId(), member.getDisplayName(), false,
+					true));
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();
