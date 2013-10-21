@@ -979,6 +979,7 @@
     layoutIndex CDATA #REQUIRED
     module CDATA #REQUIRED
     sAccountId CDATA #REQUIRED
+    layoutType CDATA #REQUIRED
 >
 
 <!ELEMENT m_form_section_field EMPTY>

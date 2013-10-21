@@ -11,6 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 public class CrmNotificationSettingViewImpl extends AbstractView implements
 		CrmNotificationSettingView {
 	private static final long serialVersionUID = 1L;
+	
 	private NotificationSettingViewComponent<CrmNotificationSetting, CrmNotificationSettingService> component;
 
 	@Override
