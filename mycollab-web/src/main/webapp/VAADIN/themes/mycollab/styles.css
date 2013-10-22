@@ -4809,4 +4809,30 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	display: inline-block;
 	vertical-align: bottom;
 }
+
+/* Custom Field Settings Section */
+.v-verticallayout-customFieldSection {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: rgb(247, 247, 247);
+	border: 1px solid rgb(157, 157, 157);
+}
+.v-verticallayout-customFieldSection .header-wrapper{
+	background-color: rgb(225, 225, 225);
+	color: rgb(112, 112, 112);
+	border-bottom: 1px solid rgb(157, 157, 157);
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.v-verticallayout-customFieldSection .header-wrapper > .v-csslayout-margin {
+	padding: 9px 15px;
+}
+.v-csslayout.customFieldComponent > .v-csslayout-margin {
+	padding: 8px 10px;
+	background: none no-repeat 0 0 rgb(231, 231, 231);
+	border: 1px solid rgb(177, 177, 177);
+	border-radius: 3px;
+	color: rgb(91, 91, 91);
 }

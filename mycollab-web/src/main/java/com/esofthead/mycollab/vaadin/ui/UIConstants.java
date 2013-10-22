@@ -18,6 +18,8 @@ public class UIConstants {
     public static final int TABLE_DATE_WIDTH = 110;
     public static final int TABLE_DATE_TIME_WIDTH = 140;
     public static final String COLORED_GRIDLAYOUT = "colored-gridlayout";
+    public static final String CUSTOM_FIELD_COMPONENT = "customFieldComponent";
+    public static final String CUSTOM_FIELD_SECTION = "customFieldSection";
     public static final String FORM_CONTAINER_VIEW = "form-container";
     public static final String TABLE_ACTION_CONTROLS = "table-actionctls";
     public static final String THEME_BLUE_LINK = "bluebtn";
