@@ -37,7 +37,6 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 		private final CheckBox rememberMe;
 
 		public LoginForm() {
-			// this.setCaption("Login Form");
 			CustomLayout custom = CustomLayoutLoader.createLayout("loginForm");
 			custom.addStyleName("customLoginForm");
 			usernameField = new TextField("Email address");
