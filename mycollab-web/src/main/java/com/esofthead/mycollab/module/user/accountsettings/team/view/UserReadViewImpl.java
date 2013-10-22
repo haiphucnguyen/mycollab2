@@ -162,7 +162,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(user.getDisplayName());
+				super(user.getDisplayName(), true);
 			}
 
 			@Override

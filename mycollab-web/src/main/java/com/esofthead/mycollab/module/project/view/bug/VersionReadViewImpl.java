@@ -139,6 +139,7 @@ public class VersionReadViewImpl extends AbstractView implements
 			private HorizontalLayout bottomLayout;
 			private VerticalLayout mainBottomLayout;
 			private ToggleButtonGroup viewGroup;
+			private Button quickActionStatusBtn;
 
 			public FormLayoutFactory() {
 				super(VersionReadViewImpl.this.version.getVersionname());
@@ -151,26 +152,37 @@ public class VersionReadViewImpl extends AbstractView implements
 				final HorizontalLayout topPanel = versionPreviewForm
 						.createButtonControls(ProjectRolePermissionCollections.VERSIONS);
 
-				final Button quickActionStatusBtn = new Button("",
+				quickActionStatusBtn = new Button("",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								if (version.getStatus().equals("close")) {
+								if (quickActionStatusBtn.getCaption().equals(
+										"ReOpen")) {
 									version.setStatus("open");
 									VersionService service = ApplicationContextUtil
 											.getSpringBean(VersionService.class);
 									service.updateWithSession(version,
 											AppContext.getUsername());
-								} else if (version.getStatus().equals("open")) {
+									FormLayoutFactory.this
+											.removeTitleStyleName(UIConstants.LINK_COMPLETED);
+									quickActionStatusBtn.setCaption("Close");
+									quickActionStatusBtn.setIcon(MyCollabResource
+											.newResource("icons/16/project/closeTask.png"));
+								} else {
 									version.setStatus("close");
 									VersionService service = ApplicationContextUtil
 											.getSpringBean(VersionService.class);
 									service.updateWithSession(version,
 											AppContext.getUsername());
-									// FormLayoutFactory.this
-									// .setTitleStyleName(UIConstants.LINK_COMPLETED);
+									FormLayoutFactory.this
+											.addTitleStyleName("headerName");
+									FormLayoutFactory.this
+											.addTitleStyleName(UIConstants.LINK_COMPLETED);
+									quickActionStatusBtn.setCaption("ReOpen");
+									quickActionStatusBtn.setIcon(MyCollabResource
+											.newResource("icons/16/project/reopenTask.png"));
 								}
 							}
 						});
@@ -183,6 +195,9 @@ public class VersionReadViewImpl extends AbstractView implements
 					versionPreviewForm
 							.addQuickActionButton(quickActionStatusBtn);
 				} else {
+					FormLayoutFactory.this.addTitleStyleName("headerName");
+					FormLayoutFactory.this
+							.addTitleStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption("ReOpen");
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/reopenTask.png"));

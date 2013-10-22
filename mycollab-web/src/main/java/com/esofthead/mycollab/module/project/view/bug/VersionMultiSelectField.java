@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
@@ -32,7 +33,7 @@ public class VersionMultiSelectField extends MultiSelectComp {
     @Override
     protected void initData() {
         VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
-
+		searchCriteria.setStatus(new StringSearchField("open"));
         SimpleProject project = (SimpleProject) AppContext
                 .getVariable("project");
         searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,

@@ -8,12 +8,10 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
@@ -151,6 +149,7 @@ public class ComponentReadViewImpl extends AbstractView implements
 			private HorizontalLayout bottomLayout;
 			private VerticalLayout mainBottomLayout;
 			private ToggleButtonGroup viewGroup;
+			private Button quickActionStatusBtn;
 
 			public FormLayoutFactory() {
 				super(ComponentReadViewImpl.this.component.getComponentname());
@@ -162,28 +161,38 @@ public class ComponentReadViewImpl extends AbstractView implements
 						PreviewForm.this);
 				final HorizontalLayout topPanel = componentPreviewForm
 						.createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
-				final Button quickActionStatusBtn = new Button("",
+				quickActionStatusBtn = new Button("",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								if (component.getStatus().equals("close")) {
+								if (quickActionStatusBtn.getCaption().equals(
+										"ReOpen")) {
 									component.setStatus("open");
 									ComponentService service = ApplicationContextUtil
 											.getSpringBean(ComponentService.class);
 									service.updateWithSession(component,
 											AppContext.getUsername());
-								} else if (component.getStatus().equals("open")) {
+									FormLayoutFactory.this
+											.removeTitleStyleName(UIConstants.LINK_COMPLETED);
+									quickActionStatusBtn.setCaption("Close");
+									quickActionStatusBtn.setIcon(MyCollabResource
+											.newResource("icons/16/project/closeTask.png"));
+								} else {
 									component.setStatus("close");
 									ComponentService service = ApplicationContextUtil
 											.getSpringBean(ComponentService.class);
 									service.updateWithSession(component,
 											AppContext.getUsername());
+									FormLayoutFactory.this
+											.addTitleStyleName("headerName");
+									FormLayoutFactory.this
+											.addTitleStyleName(UIConstants.LINK_COMPLETED);
+									quickActionStatusBtn.setCaption("ReOpen");
+									quickActionStatusBtn.setIcon(MyCollabResource
+											.newResource("icons/16/project/reopenTask.png"));
 								}
-								EventBus.getInstance().fireEvent(
-										new BugComponentEvent.GotoList(this,
-												null));
 							}
 						});
 				quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -195,6 +204,9 @@ public class ComponentReadViewImpl extends AbstractView implements
 					componentPreviewForm
 							.addQuickActionButton(quickActionStatusBtn);
 				} else {
+					FormLayoutFactory.this.addTitleStyleName("headerName");
+					FormLayoutFactory.this
+							.addTitleStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption("ReOpen");
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/reopenTask.png"));

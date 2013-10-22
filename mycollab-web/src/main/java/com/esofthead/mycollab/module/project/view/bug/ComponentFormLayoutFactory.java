@@ -23,6 +23,7 @@ public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
 
 	private final String title;
 	private ComponentInformationLayout informationLayout;
+	private AddViewLayout componentAddLayout;
 
 	public ComponentFormLayoutFactory(final String title) {
 		this.title = title;
@@ -30,9 +31,8 @@ public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout componentAddLayout = new AddViewLayout(this.title,
-				MyCollabResource
-				.newResource("icons/24/project/component.png"));
+		componentAddLayout = new AddViewLayout(this.title,
+				MyCollabResource.newResource("icons/24/project/component.png"));
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {
@@ -57,6 +57,14 @@ public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		return componentAddLayout;
+	}
+
+	protected void addTitleStyleName(String styleName) {
+		componentAddLayout.addTitleStyleName(styleName);
+	}
+
+	protected void removeTitleStyleName(String styleName) {
+		componentAddLayout.removeTitleStyleName(styleName);
 	}
 
 	@Override

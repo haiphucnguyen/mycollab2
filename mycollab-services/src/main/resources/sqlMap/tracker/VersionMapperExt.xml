@@ -21,7 +21,11 @@
             ${searchCriteria.versionname.operation} m_tracker_version.versionname like '%${searchCriteria.versionname.value}%'
             ]]>
         </if>
-
+		<if test="searchCriteria.status != null">
+          <![CDATA[
+            ${searchCriteria.status.operation} m_tracker_version.status like '%${searchCriteria.status.value}%'
+            ]]>
+        </if>
         <if test="searchCriteria.id != null">
             <![CDATA[${searchCriteria.id.operation} m_tracker_version.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
         </if>
@@ -32,7 +36,7 @@
         SELECT  m_tracker_version.id, m_tracker_version.projectid, m_tracker_version.description, 
                 m_tracker_version.duedate, m_tracker_version.versionname, m_tracker_version.createdUser, 
                 m_tracker_version.sAccountId, m_tracker_version.lastUpdatedTime, 
-                m_tracker_version.createdTime,
+                m_tracker_version.createdTime,m_tracker_version.status,
                  (SELECT COUNT(*) 
                         FROM m_tracker_bug, m_tracker_bug_related_item 
                         WHERE m_tracker_bug.id=m_tracker_bug_related_item.bugid 
