@@ -9,7 +9,6 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -51,23 +50,24 @@ class CustomLayoutDDComp extends DDVerticalLayout {
 			header.setStyleName("h2");
 			this.addComponent(header);
 
-			final DDGridLayout gridLayout;
+			final DDGridLayout destGridLayout;
 
 			if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-				gridLayout = new DDGridLayout(2, section.getFieldCount());
+				destGridLayout = new DDGridLayout(2, section.getFieldCount());
 			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-				gridLayout = new DDGridLayout(2, section.getFieldCount() / 2);
+				destGridLayout = new DDGridLayout(2,
+						section.getFieldCount() / 2);
 			} else {
 				throw new MyCollabException(
 						"Does not support form layout except 1 or 2 columns");
 			}
 
-			gridLayout.setWidth("100%");
-			gridLayout.setComponentHorizontalDropRatio(0);
-			gridLayout.setComponentVerticalDropRatio(0);
-			gridLayout.setDragMode(LayoutDragMode.CLONE);
+			destGridLayout.setWidth("100%");
+			destGridLayout.setComponentHorizontalDropRatio(0);
+			destGridLayout.setComponentVerticalDropRatio(0);
+			destGridLayout.setDragMode(LayoutDragMode.CLONE);
 
-			gridLayout.setDropHandler(new DropHandler() {
+			destGridLayout.setDropHandler(new DropHandler() {
 				private static final long serialVersionUID = 1L;
 
 				public AcceptCriterion getAcceptCriterion() {
@@ -85,36 +85,44 @@ class CustomLayoutDDComp extends DDVerticalLayout {
 					int destRow = details.getOverRow();
 
 					Component srcComp = transferable.getComponent();
+					Component parentSrcComp = srcComp.getParent();
 
-					int srcColumn = gridLayout.getComponentArea(srcComp)
-							.getColumn1();
-					int srcRow = gridLayout.getComponentArea(srcComp).getRow1();
+					if (parentSrcComp instanceof DDGridLayout) {
+						DDGridLayout srcGridLayout = (DDGridLayout) parentSrcComp;
+						int srcColumn = srcGridLayout.getComponentArea(srcComp)
+								.getColumn1();
+						int srcRow = srcGridLayout.getComponentArea(srcComp)
+								.getRow1();
 
-					Component destComp = gridLayout.getComponent(destColumn,
-							destRow);
-					if (destComp == null) {
-						gridLayout.removeComponent(srcComp);
-						gridLayout.addComponent(srcComp, destColumn, destRow);
-					} else {
-						// swap component source and dest component
-						gridLayout.removeComponent(srcComp);
-						gridLayout.removeComponent(destComp);
-						gridLayout.addComponent(srcComp, destColumn, destRow);
-						gridLayout.addComponent(destComp, srcColumn, srcRow);
+						Component destComp = destGridLayout.getComponent(
+								destColumn, destRow);
+						if (destComp == null) {
+							srcGridLayout.removeComponent(srcComp);
+							destGridLayout.addComponent(srcComp, destColumn,
+									destRow);
+						} else {
+							// swap component source and dest component
+							srcGridLayout.removeComponent(srcComp);
+							destGridLayout.removeComponent(destComp);
+							destGridLayout.addComponent(srcComp, destColumn,
+									destRow);
+							srcGridLayout.addComponent(destComp, srcColumn,
+									srcRow);
+						}
 					}
 				}
 			});
 
-			this.addComponent(gridLayout);
+			this.addComponent(destGridLayout);
 
 			int fieldCount = section.getFieldCount();
 			for (int j = 0; j < fieldCount; j++) {
 				AbstractDynaField field = section.getField(j);
 				Button fieldBtn = new Button(field.getDisplayName());
 				if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-					gridLayout.addComponent(fieldBtn, 0, j);
+					destGridLayout.addComponent(fieldBtn, 0, j);
 				} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-					gridLayout.addComponent(fieldBtn, j % 2, j / 2);
+					destGridLayout.addComponent(fieldBtn, j % 2, j / 2);
 				}
 			}
 		}
