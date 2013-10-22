@@ -17,6 +17,8 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -28,6 +30,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 	private final String title;
 	private TaskInformationLayout informationLayout;
+	private AddViewLayout taskAddLayout;
 
 	private final List<String> lstStyleTitle = new ArrayList<String>();
 
@@ -37,7 +40,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout taskAddLayout = new AddViewLayout(this.title,
+		taskAddLayout = new AddViewLayout(this.title,
 				MyCollabResource.newResource("icons/24/project/task.png"));
 
 		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
@@ -62,6 +65,14 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 
 	protected void addTitleStyle(final String styleName) {
 		this.lstStyleTitle.add(styleName);
+	}
+
+	protected void addTitleStyleName(String styleName) {
+		taskAddLayout.addTitleStyleName(styleName);
+	}
+
+	protected void removeTitleStyleName(String styleName) {
+		taskAddLayout.removeTitleStyleName(styleName);
 	}
 
 	@Override
@@ -131,5 +142,16 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 						2, "100%");
 			}
 		}
+
+		public void setPercent(String labelPercent) {
+			((HorizontalLayout) this.informationLayout.getComponent(0, 5))
+					.removeAllComponents();
+			((HorizontalLayout) this.informationLayout.getComponent(0, 5))
+					.addComponent(new Label(labelPercent));
+		}
+	}
+
+	public void setPercent(String labelPercent) {
+		this.informationLayout.setPercent(labelPercent);
 	}
 }

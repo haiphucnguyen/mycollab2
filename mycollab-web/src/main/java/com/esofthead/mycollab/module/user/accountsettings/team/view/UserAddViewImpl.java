@@ -69,12 +69,15 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	public void editItem(final SimpleUser item) {
 		this.user = item;
 		this.removeAllComponents();
-		this.addComponent(this.basicEditForm);
-
-		this.advanceEditForm.setItemDataSource(new BeanItem<SimpleUser>(
-				this.user));
-		this.basicEditForm
-				.setItemDataSource(new BeanItem<SimpleUser>(this.user));
+		if (user.getIsLoadEdit() != null && user.getIsLoadEdit() == false) {
+			this.addComponent(this.basicEditForm);
+			this.basicEditForm.setItemDataSource(new BeanItem<SimpleUser>(
+					this.user));
+		} else {
+			this.addComponent(this.advanceEditForm);
+			this.advanceEditForm.setItemDataSource(new BeanItem<SimpleUser>(
+					this.user));
+		}
 	}
 
 	@Override
