@@ -8,14 +8,18 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -24,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -153,9 +158,50 @@ public class ComponentReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new ProjectPreviewFormControlsGenerator<SimpleComponent>(
-						PreviewForm.this))
+				ProjectPreviewFormControlsGenerator<SimpleComponent> componentPreviewForm = new ProjectPreviewFormControlsGenerator<SimpleComponent>(
+						PreviewForm.this);
+				final HorizontalLayout topPanel = componentPreviewForm
 						.createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
+				final Button quickActionStatusBtn = new Button("",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								if (component.getStatus().equals("close")) {
+									component.setStatus("open");
+									ComponentService service = ApplicationContextUtil
+											.getSpringBean(ComponentService.class);
+									service.updateWithSession(component,
+											AppContext.getUsername());
+								} else if (component.getStatus().equals("open")) {
+									component.setStatus("close");
+									ComponentService service = ApplicationContextUtil
+											.getSpringBean(ComponentService.class);
+									service.updateWithSession(component,
+											AppContext.getUsername());
+								}
+								EventBus.getInstance().fireEvent(
+										new BugComponentEvent.GotoList(this,
+												null));
+							}
+						});
+				quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				if (component.getStatus() == null
+						|| component.getStatus().equals("open")) {
+					quickActionStatusBtn.setCaption("Close");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/closeTask.png"));
+					componentPreviewForm
+							.addQuickActionButton(quickActionStatusBtn);
+				} else {
+					quickActionStatusBtn.setCaption("ReOpen");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/reopenTask.png"));
+					componentPreviewForm
+							.addQuickActionButton(quickActionStatusBtn);
+				}
+				return topPanel;
 			}
 
 			@Override

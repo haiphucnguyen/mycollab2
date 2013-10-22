@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -89,6 +90,11 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 		userContainer.addComponent(view.getWidget());
 
 		SimpleUser user = (SimpleUser) data.getParams();
+		if (data instanceof UserScreenData.Add) {
+			user.setIsLoadEdit(false);
+		} else {
+			user.setIsLoadEdit(true);
+		}
 		view.editItem(user);
 
 		AccountSettingBreadcrumb breadcrumb = ViewManager

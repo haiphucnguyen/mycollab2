@@ -14,14 +14,12 @@ public class UserScreenData {
 	}
 
 	public static class Add extends ScreenData<SimpleUser> {
-
 		public Add(SimpleUser params) {
 			super(params);
 		}
 	}
 
 	public static class Edit extends ScreenData<User> {
-
 		public Edit(User params) {
 			super(params);
 		}

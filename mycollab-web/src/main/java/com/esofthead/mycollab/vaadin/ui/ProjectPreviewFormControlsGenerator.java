@@ -1,19 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
-import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
-import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
-import com.esofthead.mycollab.module.tracker.service.ComponentService;
-import com.esofthead.mycollab.module.tracker.service.VersionService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -35,6 +22,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private Button printBtn;
 	private Button assignBtn;
 	private boolean haveAssignButton;
+	private HorizontalLayout editButtons;
 
 	public ProjectPreviewFormControlsGenerator(
 			final AdvancedPreviewBeanForm<T> editForm) {
@@ -62,7 +50,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		layout.addComponent(backBtn);
 		layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
 
-		final HorizontalLayout editButtons = new HorizontalLayout();
+		editButtons = new HorizontalLayout();
 		editButtons.setSpacing(true);
 		editButtons.addStyleName("edit-btn");
 
@@ -86,82 +74,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			editButtons.setComponentAlignment(assignBtn,
 					Alignment.MIDDLE_CENTER);
 		}
-
-		quickStatusActionBtn = new Button("Close", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				@SuppressWarnings("unchecked")
-				final T item = ((BeanItem<T>) previewForm.getItemDataSource())
-						.getBean();
-				try {
-					if (item instanceof SimpleTask) {
-						Double percent = (Double) PropertyUtils.getProperty(
-								item, "percentagecomplete");
-						if (percent == 100d) {
-							PropertyUtils.setProperty(item,
-									"percentagecomplete", 0d);
-							ProjectTaskService service = ApplicationContextUtil
-									.getSpringBean(ProjectTaskService.class);
-							service.updateWithSession((SimpleTask) item,
-									AppContext.getUsername());
-						} else {
-							PropertyUtils.setProperty(item,
-									"percentagecomplete", 100d);
-							ProjectTaskService service = ApplicationContextUtil
-									.getSpringBean(ProjectTaskService.class);
-							service.updateWithSession((SimpleTask) item,
-									AppContext.getUsername());
-						}
-						EventBus.getInstance().fireEvent(
-								new TaskEvent.GotoEdit(this, null));
-					} else if (item instanceof SimpleVersion) {
-						if (((String) PropertyUtils.getProperty(item, "status"))
-								.equals("close")) {
-							PropertyUtils.setProperty(item, "status", "open");
-							VersionService service = ApplicationContextUtil
-									.getSpringBean(VersionService.class);
-							service.updateWithSession((SimpleVersion) item,
-									AppContext.getUsername());
-						} else if (((String) PropertyUtils.getProperty(item,
-								"status")).equals("open")) {
-							quickStatusActionBtn.setCaption("C");
-							PropertyUtils.setProperty(item, "status", "close");
-							VersionService service = ApplicationContextUtil
-									.getSpringBean(VersionService.class);
-							service.updateWithSession((SimpleVersion) item,
-									AppContext.getUsername());
-						}
-					} else if (item instanceof SimpleComponent) {
-						if (((String) PropertyUtils.getProperty(item, "status"))
-								.equals("close")) {
-							PropertyUtils.setProperty(item, "status", "open");
-							ComponentService service = ApplicationContextUtil
-									.getSpringBean(ComponentService.class);
-							service.updateWithSession((SimpleComponent) item,
-									AppContext.getUsername());
-						} else if (((String) PropertyUtils.getProperty(item,
-								"status")).equals("close")) {
-							PropertyUtils.setProperty(item, "status", "open");
-							ComponentService service = ApplicationContextUtil
-									.getSpringBean(ComponentService.class);
-							service.updateWithSession((SimpleComponent) item,
-									AppContext.getUsername());
-						}
-					}
-				} catch (Exception e) {
-					throw new MyCollabException(e);
-				}
-			}
-		});
-		quickStatusActionBtn.setIcon(MyCollabResource
-				.newResource("icons/16/edit.png"));
-		quickStatusActionBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		editButtons.addComponent(quickStatusActionBtn);
-		editButtons.setComponentAlignment(quickStatusActionBtn,
-				Alignment.MIDDLE_CENTER);
-
 		editBtn = new Button(GenericForm.EDIT_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -310,8 +222,10 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		return createButtonControls(permissionItem);
 	}
 
-	public void setCaptionQuickAction(String str) {
-		quickStatusActionBtn.setCaption(str);
+	public void addQuickActionButton(Button button) {
+		quickStatusActionBtn = button;
+		editButtons.addComponent(quickStatusActionBtn, 1);
+		editButtons.setComponentAlignment(quickStatusActionBtn,
+				Alignment.MIDDLE_CENTER);
 	}
-
 }
