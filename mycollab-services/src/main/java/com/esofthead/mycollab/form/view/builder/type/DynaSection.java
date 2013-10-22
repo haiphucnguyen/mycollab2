@@ -7,6 +7,7 @@ public class DynaSection implements Comparable<DynaSection> {
 
 	private String header;
 	private int orderIndex;
+	private boolean isDeletedSection = false;
 	private LayoutType layoutType;
 	private List<AbstractDynaField> fields = new ArrayList<AbstractDynaField>();
 
@@ -47,7 +48,13 @@ public class DynaSection implements Comparable<DynaSection> {
 		this.orderIndex = orderIndex;
 	}
 
+	public boolean isDeletedSection() {
+		return isDeletedSection;
+	}
 
+	public void setDeletedSection(boolean isDeletedSection) {
+		this.isDeletedSection = isDeletedSection;
+	}
 
 	public static enum LayoutType {
 		ONE_COLUMN, TWO_COLUMN
