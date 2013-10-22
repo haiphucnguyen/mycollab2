@@ -27,7 +27,7 @@
         </if>
         <if test="searchCriteria.status != null">
           <![CDATA[
-            ${searchCriteria.status.operation} m_tracker_component.status like '%${searchCriteria.status.value}%'
+            ${searchCriteria.status.operation} m_tracker_component.status = #{searchCriteria.status.value}
             ]]>
         </if>
 

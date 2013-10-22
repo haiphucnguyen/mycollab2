@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
@@ -33,12 +34,10 @@ public class ComponentMultiSelectField extends MultiSelectComp {
 	@Override
 	protected void initData() {
 		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
-		searchCriteria.setStatus(new StringSearchField("open"));
+		searchCriteria.setStatus(new StringSearchField("Open"));
 
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable("project");
 		searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
-				project.getId()));
+				CurrentProjectVariables.getProjectId()));
 
 		ComponentService componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
