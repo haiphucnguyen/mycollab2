@@ -116,7 +116,6 @@ public class SignUpPage extends BasePage {
 						SiteConfiguration.getApiUrl(), AccountResource.class);
 
 				try {
-
 					final SignupForm form = new SignupForm();
 					form.setSubdomain(subdomain.getModelObject());
 					form.setPlanId(Integer.parseInt(planId + ""));

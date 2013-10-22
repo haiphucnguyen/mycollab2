@@ -28,7 +28,7 @@ public class ExternalAuthCallbackServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		log.debug("google callback");
+		log.debug("oauth2 callback");
 
 		// get the auth provider manager from session
 		HttpSession session = request.getSession();
