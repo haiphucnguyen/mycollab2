@@ -126,7 +126,6 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 				projectMember.setUsername(username);
 				projectMember.setJoindate(new Date());
 				projectMember.setProjectroleid(projectRoleId);
-				projectMember.setSelected(false);
 				projectMember.setSaccountid(sAccountId);
 				projectMember.setIsadmin(false);
 				projectMember.setStatus(RegisterStatusConstants.ACTIVE);
