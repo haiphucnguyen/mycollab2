@@ -39,7 +39,7 @@ class ProjectMemberListSelect extends ListSelect {
 		}
 
 		this.setContainerDataSource(beanItem);
-		this.setItemCaptionPropertyId("memberFullName");
+		this.setItemCaptionPropertyId("displayName");
 		this.setRows(4);
 	}
 }
