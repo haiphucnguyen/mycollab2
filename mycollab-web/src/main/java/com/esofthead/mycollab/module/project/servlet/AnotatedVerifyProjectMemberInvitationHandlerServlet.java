@@ -125,6 +125,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 				projectMember.setProjectid(projectId);
 				projectMember.setUsername(username);
 				projectMember.setJoindate(new Date());
+				projectMember.setProjectroleid(projectRoleId);
+				projectMember.setSelected(false);
 				projectMember.setSaccountid(sAccountId);
 				projectMember.setIsadmin(false);
 				projectMember.setStatus(RegisterStatusConstants.ACTIVE);
@@ -133,6 +135,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 			} else if (member != null) {
 				member.setStatus(RegisterStatusConstants.ACTIVE);
 				member.setSaccountid(sAccountId);
+				member.setProjectroleid(projectRoleId);
 				projectMemberService.updateWithSession(member, " ");
 			}
 			MailLinkGenerator linkGenerator = new MailLinkGenerator(projectId);
@@ -143,7 +146,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 	}
 
 	private void handleOutSideMemberInvite(String email, Integer projectId,
-			Integer sAccountId, Integer roleId, String inviterName,
+			Integer sAccountId, Integer projectRoleId, String inviterName,
 			HttpServletResponse response, HttpServletRequest request) {
 		MailLinkGenerator linkGenerator = new MailLinkGenerator(projectId);
 		String projectLinkURL = linkGenerator.generateProjectFullLink();
@@ -152,8 +155,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 				+ "project/outside/createAccount/";
 
 		String html = generateOutsideMemberAcceptPage(sAccountId, email,
-				projectId, roleId, projectLinkURL, handelCreateAccountURL,
-				inviterName);
+				projectId, projectRoleId, projectLinkURL,
+				handelCreateAccountURL, inviterName);
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
