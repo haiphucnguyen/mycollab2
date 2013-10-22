@@ -361,11 +361,11 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 
 .v-button-link.v-button-wordWrap .v-button-wrap {
     width: 100%;
-    display: table-row;
+    display: inline-block;
 }
 
 .v-button-link.v-button-wordWrap .v-button-caption {
-    display: table-cell;
+    display: inline-block;
     white-space: normal;
     word-wrap: break-word;
     word-break: normal;
@@ -2765,7 +2765,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: rgb(169, 169, 169);
-    padding: 3px 5px;
+    padding: 3px 5px 0px;
 }
 
 .widget-row.odd>.v-csslayout-margin {
@@ -4802,11 +4802,4 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 .stream-wrapper .v-label {
 	line-height: 1.5em;
-}
-
-/* fix Image's alignment in v-label with html content */
-.v-label > img {
-	display: inline-block;
-	vertical-align: bottom;
-}
 }
