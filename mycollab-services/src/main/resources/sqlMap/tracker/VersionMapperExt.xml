@@ -23,7 +23,7 @@
         </if>
 		<if test="searchCriteria.status != null">
           <![CDATA[
-            ${searchCriteria.status.operation} m_tracker_version.status like '%${searchCriteria.status.value}%'
+            ${searchCriteria.status.operation} m_tracker_version.status = #{searchCriteria.status.value}
             ]]>
         </if>
         <if test="searchCriteria.id != null">
