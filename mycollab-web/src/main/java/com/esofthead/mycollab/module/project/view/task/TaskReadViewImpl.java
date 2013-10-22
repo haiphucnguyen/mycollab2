@@ -128,10 +128,17 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 			@Override
 			protected ComponentContainer createTopPanel() {
-				final HorizontalLayout topPanel = (new ProjectPreviewFormControlsGenerator<Task>(
-						PreviewForm.this)).createButtonControls(
-						ProjectRolePermissionCollections.TASKS, true);
+				ProjectPreviewFormControlsGenerator<Task> taskPreviewForm = new ProjectPreviewFormControlsGenerator<Task>(
+						PreviewForm.this);
+				final HorizontalLayout topPanel = taskPreviewForm
+						.createButtonControls(
+								ProjectRolePermissionCollections.TASKS, true);
 				topPanel.setMargin(true);
+				if (task.getPercentagecomplete() == 100d) {
+					taskPreviewForm.setCaptionQuickAction("ReOpen");
+				} else {
+					taskPreviewForm.setCaptionQuickAction("Close");
+				}
 				return topPanel;
 			}
 		}
