@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.setting;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
@@ -13,6 +16,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -24,8 +28,14 @@ import fi.jasoft.dragdroplayouts.events.HorizontalLocationIs;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 
-class CustomLayoutDDComp extends DDVerticalLayout {
+class CustomLayoutDDComp extends HorizontalLayout {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory
+			.getLogger(CustomLayoutDDComp.class);
+
+	private DDVerticalLayout activeFormLayout;
+	private DDVerticalLayout deleteFormLayout;
 
 	private DynaForm dynaForm;
 
@@ -34,12 +44,41 @@ class CustomLayoutDDComp extends DDVerticalLayout {
 		this.dynaForm = dynaForm;
 		this.setSpacing(true);
 
+		activeFormLayout = new DDVerticalLayout();
+		activeFormLayout.setSpacing(true);
+		activeFormLayout.setWidth("600px");
+
+		deleteFormLayout = new DDVerticalLayout();
+		deleteFormLayout.setWidth("300px");
+
+		this.addComponent(activeFormLayout);
+		this.addComponent(deleteFormLayout);
+
 		int sectionCount = dynaForm.getSectionCount();
 		for (int i = 0; i < sectionCount; i++) {
 			DynaSection section = dynaForm.getSection(i);
-			SectionLayoutComp sectionLayout = new SectionLayoutComp(section);
-			this.addComponent(sectionLayout);
+			if (!section.isDeletedSection()) {
+				SectionLayoutComp sectionLayout = new SectionLayoutComp(section);
+				activeFormLayout.addComponent(sectionLayout);
+			} else {
+
+			}
 		}
+
+		activeFormLayout.setDropHandler(new DropHandler() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public AcceptCriterion getAcceptCriterion() {
+				return new And(VerticalLocationIs.MIDDLE,
+						HorizontalLocationIs.CENTER);
+			}
+
+			@Override
+			public void drop(DragAndDropEvent event) {
+				log.debug("Target {}", event.getTargetDetails());
+			}
+		});
 	}
 
 	private static class SectionLayoutComp extends VerticalLayout {
