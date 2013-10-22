@@ -77,6 +77,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 		class FormLayoutFactory extends TaskFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
+			private Button quickActionStatusBtn;
 
 			public FormLayoutFactory() {
 				super(TaskReadViewImpl.this.task.getTaskname());
@@ -141,13 +142,14 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 								ProjectRolePermissionCollections.TASKS, true);
 				topPanel.setMargin(true);
 
-				final Button quickActionStatusBtn = new Button("",
+				quickActionStatusBtn = new Button("",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								if (task.getPercentagecomplete() == 100d) {
+								if (quickActionStatusBtn.getCaption().equals(
+										"ReOpen")) {
 									task.setPercentagecomplete(0d);
 									ProjectTaskService service = ApplicationContextUtil
 											.getSpringBean(ProjectTaskService.class);
@@ -156,6 +158,9 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 									FormLayoutFactory.this
 											.removeTitleStyleName(UIConstants.LINK_COMPLETED);
 									FormLayoutFactory.this.setPercent("0.0");
+									quickActionStatusBtn.setCaption("Close");
+									quickActionStatusBtn.setIcon(MyCollabResource
+											.newResource("icons/16/project/closeTask.png"));
 								} else {
 									task.setPercentagecomplete(100d);
 									ProjectTaskService service = ApplicationContextUtil
@@ -167,6 +172,9 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 									FormLayoutFactory.this
 											.addTitleStyleName(UIConstants.LINK_COMPLETED);
 									FormLayoutFactory.this.setPercent("100.0");
+									quickActionStatusBtn.setCaption("ReOpen");
+									quickActionStatusBtn.setIcon(MyCollabResource
+											.newResource("icons/16/project/reopenTask.png"));
 								}
 							}
 						});

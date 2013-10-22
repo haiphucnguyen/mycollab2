@@ -133,8 +133,10 @@ public class VersionListViewImpl extends AbstractView implements
 												bugVersion.getId()));
 							}
 						});
-
-						if (bugVersion.getDuedate() != null
+						if (bugVersion.getStatus() != null
+								&& bugVersion.getStatus().equals("close")) {
+							b.addStyleName(UIConstants.LINK_COMPLETED);
+						} else if (bugVersion.getDuedate() != null
 								&& (bugVersion.getDuedate()
 										.before(new GregorianCalendar()
 												.getTime()))) {
