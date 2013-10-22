@@ -6,15 +6,25 @@ public class ButtonLink extends Button {
 
     private static final long serialVersionUID = 1L;
 
-    public ButtonLink(String caption) {
+    public ButtonLink(String caption, Boolean wordWrap) {
         super(caption);
         this.setStyleName("link");
-        this.addStyleName("wordWrap");
+        if (wordWrap)
+            this.addStyleName("wordWrap");
+    }
+
+    public ButtonLink(String caption) {
+        this(caption, true);
+    }
+
+    public ButtonLink(String caption, ClickListener listener, Boolean wordWrap) {
+        super(caption, listener);
+        this.setStyleName("link");
+        if (wordWrap)
+            this.addStyleName("wordWrap");
     }
 
     public ButtonLink(String caption, ClickListener listener) {
-        super(caption, listener);
-        this.setStyleName("link");
-        this.addStyleName("wordWrap");
+        this(caption, listener, true);
     }
 }
