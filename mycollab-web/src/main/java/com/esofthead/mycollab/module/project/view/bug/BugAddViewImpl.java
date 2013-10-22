@@ -192,7 +192,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					final TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
-					tf.setRequiredError("Please enter a Summary");
+					tf.setRequiredError("Please enter summary");
 					return tf;
 				} else if (propertyId.equals("milestoneid")) {
 					final MilestoneComboBox milestoneBox = new MilestoneComboBox();

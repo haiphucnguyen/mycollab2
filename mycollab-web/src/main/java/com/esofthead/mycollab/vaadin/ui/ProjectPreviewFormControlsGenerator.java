@@ -13,6 +13,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private final AdvancedPreviewBeanForm<T> previewForm;
 	private Button backBtn;
 	private Button editBtn;
+	private Button quickStatusActionBtn;
 	private Button deleteBtn;
 	private Button cloneBtn;
 	private Button previousItem;
@@ -21,6 +22,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private Button printBtn;
 	private Button assignBtn;
 	private boolean haveAssignButton;
+	private HorizontalLayout editButtons;
 
 	public ProjectPreviewFormControlsGenerator(
 			final AdvancedPreviewBeanForm<T> editForm) {
@@ -48,7 +50,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		layout.addComponent(backBtn);
 		layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
 
-		final HorizontalLayout editButtons = new HorizontalLayout();
+		editButtons = new HorizontalLayout();
 		editButtons.setSpacing(true);
 		editButtons.addStyleName("edit-btn");
 
@@ -72,7 +74,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			editButtons.setComponentAlignment(assignBtn,
 					Alignment.MIDDLE_CENTER);
 		}
-
 		editBtn = new Button(GenericForm.EDIT_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -221,4 +222,10 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		return createButtonControls(permissionItem);
 	}
 
+	public void addQuickActionButton(Button button) {
+		quickStatusActionBtn = button;
+		editButtons.addComponent(quickStatusActionBtn, 1);
+		editButtons.setComponentAlignment(quickStatusActionBtn,
+				Alignment.MIDDLE_CENTER);
+	}
 }

@@ -41,7 +41,7 @@ public class ItemTimeLoggingSearchPanel extends
 	}
 
 	private void createAdvancedSearchLayout() {
-		final BugAdvancedSearchLayout layout = new BugAdvancedSearchLayout();
+		final TimeLoggingAdvancedSearchLayout layout = new TimeLoggingAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -66,14 +66,14 @@ public class ItemTimeLoggingSearchPanel extends
 	}
 
 	@SuppressWarnings({ "serial", "rawtypes" })
-	private class BugAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private DateRangeField dateRangeField;
 
 		private ProjectMemberListSelect userField;
 
 		@SuppressWarnings("unchecked")
-		public BugAdvancedSearchLayout() {
+		public TimeLoggingAdvancedSearchLayout() {
 			super(ItemTimeLoggingSearchPanel.this);
 		}
 
@@ -122,7 +122,7 @@ public class ItemTimeLoggingSearchPanel extends
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							BugAdvancedSearchLayout.this.callSearchAction();
+							TimeLoggingAdvancedSearchLayout.this.callSearchAction();
 						}
 					});
 
@@ -135,9 +135,9 @@ public class ItemTimeLoggingSearchPanel extends
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							BugAdvancedSearchLayout.this.userField
+							TimeLoggingAdvancedSearchLayout.this.userField
 									.setValue(null);
-							BugAdvancedSearchLayout.this.dateRangeField
+							TimeLoggingAdvancedSearchLayout.this.dateRangeField
 									.setDefaultValue();
 						}
 					});

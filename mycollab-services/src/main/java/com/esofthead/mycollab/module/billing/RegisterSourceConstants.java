@@ -9,5 +9,7 @@ public class RegisterSourceConstants {
 
 	public static final String LINKEDIN = "LinkedIn";
 
+	public static final String GITHUB = "GitHub";
+
 	public static final String GOOGLE_MARKET = "Google Market";
 }

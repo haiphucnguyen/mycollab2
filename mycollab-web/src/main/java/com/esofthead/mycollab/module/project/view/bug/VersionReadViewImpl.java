@@ -15,6 +15,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -23,6 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -143,9 +146,50 @@ public class VersionReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new ProjectPreviewFormControlsGenerator<Version>(
-						PreviewForm.this))
+				ProjectPreviewFormControlsGenerator<Version> versionPreviewForm = new ProjectPreviewFormControlsGenerator<Version>(
+						PreviewForm.this);
+				final HorizontalLayout topPanel = versionPreviewForm
 						.createButtonControls(ProjectRolePermissionCollections.VERSIONS);
+
+				final Button quickActionStatusBtn = new Button("",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								if (version.getStatus().equals("close")) {
+									version.setStatus("open");
+									VersionService service = ApplicationContextUtil
+											.getSpringBean(VersionService.class);
+									service.updateWithSession(version,
+											AppContext.getUsername());
+								} else if (version.getStatus().equals("open")) {
+									version.setStatus("close");
+									VersionService service = ApplicationContextUtil
+											.getSpringBean(VersionService.class);
+									service.updateWithSession(version,
+											AppContext.getUsername());
+									// FormLayoutFactory.this
+									// .setTitleStyleName(UIConstants.LINK_COMPLETED);
+								}
+							}
+						});
+				quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				if (version.getStatus() == null
+						|| version.getStatus().equals("open")) {
+					quickActionStatusBtn.setCaption("Close");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/closeTask.png"));
+					versionPreviewForm
+							.addQuickActionButton(quickActionStatusBtn);
+				} else {
+					quickActionStatusBtn.setCaption("ReOpen");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/reopenTask.png"));
+					versionPreviewForm
+							.addQuickActionButton(quickActionStatusBtn);
+				}
+				return topPanel;
 			}
 
 			@Override

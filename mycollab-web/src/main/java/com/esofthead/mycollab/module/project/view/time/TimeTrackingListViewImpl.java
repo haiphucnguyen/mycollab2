@@ -108,7 +108,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		addEntryLayoutWapper = new HorizontalLayout();
 		addEntryLayoutWapper.setWidth("100%");
 		isNeedConstructLayout = true;
-		Button addNewEntryBtn = new Button("Add entry",
+		Button addNewEntryBtn = new Button("Add Entry",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -123,6 +123,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					}
 				});
 		addNewEntryBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		addNewEntryBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/add_time.png"));
 		addNewEntryBtn.addStyleName("v-button-caption-bool");
 		headerLayout.addComponent(addNewEntryBtn);
 		headerLayout.setComponentAlignment(addNewEntryBtn,
@@ -277,7 +279,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		}
 
 		private void constructBody() {
-			Label headerLbl = new Label("Add new entry");
+			Label headerLbl = new Label("Add New Entry");
 			headerLbl.setStyleName("popup-header");
 			headerLbl.setHeight("34px");
 
@@ -334,7 +336,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					ProjectGenericTask projectGenericTask = (ProjectGenericTask) ticketComboBox
 							.getCurrentItem();
 					if (projectGenericTask == null) {
-						getWindow().showNotification("Please choose ticket");
+						getWindow()
+								.showNotification("Please choose assignment");
 						return;
 					}
 					try {
@@ -363,9 +366,6 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 						TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
 						addEntryLayoutWapper.removeAllComponents();
 						setSearchCriteria(itemTimeLogginSearchCriteria);
-					} catch (IllegalArgumentException e) {
-						getWindow().showNotification(
-								"Please input correct hours");
 					} catch (Exception e) {
 						throw new MyCollabException(e);
 					}
