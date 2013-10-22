@@ -13,7 +13,7 @@ public class DocumentManagementPage extends BasePage {
 
 	public DocumentManagementPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("pagetitle", "Tour"));
+		add(new Label("pagetitle", "Document Management"));
 
 		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
 				"whoisitforLink", WhoisitForPage.class);

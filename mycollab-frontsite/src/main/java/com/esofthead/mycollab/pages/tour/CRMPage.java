@@ -13,7 +13,7 @@ public class CRMPage extends BasePage {
 
 	public CRMPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("pagetitle", "Tour"));
+		add(new Label("pagetitle", "Customer Management"));
 
 		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
 				"whoisitforLink", WhoisitForPage.class);

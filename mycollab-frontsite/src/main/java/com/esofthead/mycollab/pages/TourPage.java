@@ -16,7 +16,7 @@ public class TourPage extends BasePage {
 
 	public TourPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("pagetitle", "Tour"));
+		add(new Label("pagetitle", "Highlights"));
 
 		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
 				"whoisitforLink", WhoisitForPage.class);

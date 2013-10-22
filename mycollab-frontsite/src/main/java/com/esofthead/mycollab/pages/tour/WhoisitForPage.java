@@ -13,7 +13,7 @@ public class WhoisitForPage extends BasePage {
 
 	public WhoisitForPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("pagetitle", "Tour"));
+		add(new Label("pagetitle", "Who is it for"));
 
 		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
 				"whoisitforLink", WhoisitForPage.class);

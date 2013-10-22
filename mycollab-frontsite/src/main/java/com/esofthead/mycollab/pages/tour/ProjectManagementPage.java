@@ -13,7 +13,7 @@ public class ProjectManagementPage extends BasePage {
 
 	public ProjectManagementPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("pagetitle", "Tour"));
+		add(new Label("pagetitle", "Project Management"));
 
 		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
 				"whoisitforLink", WhoisitForPage.class);
