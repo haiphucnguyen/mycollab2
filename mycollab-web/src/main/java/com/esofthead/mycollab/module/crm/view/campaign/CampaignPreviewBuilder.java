@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -161,7 +162,8 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new CampaignFormLayoutFactory.CampaignInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							CampaignDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new CampaignFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					campaignAddLayout.setTitle(campaign.getCampaignname());
