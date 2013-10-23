@@ -163,6 +163,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 
 			public FormLayoutFactory() {
 				super(user.getDisplayName(), true);
+				this.setAvatarLink(user.getAvatarid());
 			}
 
 			@Override
@@ -236,6 +237,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 
 			public FormLayoutFactory() {
 				super(user.getDisplayName());
+				this.setAvatarLink(user.getAvatarid());
 			}
 
 			@Override
