@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
@@ -78,10 +79,8 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 		public ReadView() {
 			meetingAddLayout = new ReadViewLayout(
-					MyCollabResource
-				.newResource(
-					"icons/22/crm/meeting.png"));
-			this.addComponent(meetingAddLayout);	
+					MyCollabResource.newResource("icons/22/crm/meeting.png"));
+			this.addComponent(meetingAddLayout);
 
 			initRelatedComponent();
 
@@ -90,11 +89,12 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 							RolePermissionCollections.CRM_MEETING);
 
 			meetingAddLayout.addControlButtons(optionalActionControls);
-			
+
 			previewForm = new AdvancedPreviewBeanForm<Meeting>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new MeetingFormLayoutFactory.MeetingInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							MeetingDefaultFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new MeetingFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					meetingAddLayout.setTitle(meeting.getSubject());
@@ -141,9 +141,9 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 							RolePermissionCollections.CRM_MEETING);
 			actionControls.addStyleName("control-buttons");
 			meetingInformation.addComponent(actionControls);
-			
-//			meetingInformation.setMargin(true);
-		
+
+			// meetingInformation.setMargin(true);
+
 			meetingInformation.addComponent(previewForm);
 			meetingInformation.addComponent(noteListItems);
 
