@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -117,7 +118,8 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<Opportunity>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new OpportunityFormLayoutFactory.OpportunityInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							OpportunityDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new OpportunityFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					opportunityAddLayout.setTitle(opportunity

@@ -1,0 +1,91 @@
+package com.esofthead.mycollab.module.crm.view.opportunity;
+
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.form.view.builder.CurrencyDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.DateDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
+import com.esofthead.mycollab.form.view.builder.NumberDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.PercentageDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.type.DynaForm;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
+
+public class OpportunityDefaultDynaFormLayoutFactory {
+	public static final DynaForm defaultForm;
+
+	static {
+		defaultForm = new DynaForm();
+
+		DynaSection infoSection = new DynaSectionBuilder()
+				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
+				.header("Opportunity Information").build();
+
+		infoSection.addField(new StringDynaFieldBuilder()
+				.fieldName("opportunityname").displayName("Name")
+				.mandatory(true).fieldIndex(0).build());
+
+		infoSection.addField(new StringDynaFieldBuilder()
+				.fieldName("accountid").displayName("Account Name")
+				.fieldIndex(1).build());
+
+		infoSection.addField(new CurrencyDynaFieldBuilder()
+				.fieldName("currencyid").displayName("Currency").fieldIndex(2)
+				.build());
+
+		infoSection.addField(new DateDynaFieldBuilder()
+				.fieldName("expectedcloseddate")
+				.displayName("Expected Close Date").fieldIndex(3).build());
+
+		infoSection.addField(new NumberDynaFieldBuilder().fieldName("amount")
+				.displayName("Amount").fieldIndex(4).build());
+
+		infoSection.addField(new StringDynaFieldBuilder()
+				.fieldName("opportunitytype").displayName("Type").fieldIndex(5)
+				.build());
+
+		infoSection.addField(new StringDynaFieldBuilder()
+				.fieldName("salesstage").displayName("Sales Stage")
+				.fieldIndex(6).build());
+
+		infoSection.addField(new StringDynaFieldBuilder().fieldName("source")
+				.displayName("Lead Source").fieldIndex(7).build());
+
+		infoSection.addField(new PercentageDynaFieldBuilder()
+				.fieldName("probability").displayName("Probability (%)")
+				.fieldIndex(8).build());
+
+		infoSection.addField(new StringDynaFieldBuilder()
+				.fieldName("campaignid").displayName("Campaign").fieldIndex(9)
+				.build());
+
+		infoSection.addField(new StringDynaFieldBuilder().fieldName("nextstep")
+				.displayName("Next Step").fieldIndex(10).build());
+
+		infoSection
+				.addField(new StringDynaFieldBuilder()
+						.fieldName("assignuser")
+						.displayName(
+								LocalizationHelper
+										.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))
+						.fieldIndex(11).build());
+
+		defaultForm.addSection(infoSection);
+
+		DynaSection descSection = new DynaSectionBuilder()
+				.layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
+				.header("Description").build();
+
+		descSection.addField(new TextDynaFieldBuilder()
+				.fieldName("description").displayName("Description")
+				.fieldIndex(0).build());
+
+		defaultForm.addSection(descSection);
+	}
+
+	public static DynaForm getForm() {
+		return defaultForm;
+	}
+}
