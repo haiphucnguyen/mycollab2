@@ -7,5 +7,4 @@ import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 public interface RelayEmailNotificationService
 		extends
 		IDefaultService<Integer, RelayEmailNotification, RelayEmailNotificationSearchCriteria> {
-
 }

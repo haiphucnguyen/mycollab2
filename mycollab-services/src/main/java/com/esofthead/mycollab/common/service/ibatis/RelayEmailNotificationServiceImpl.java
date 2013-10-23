@@ -32,5 +32,4 @@ public class RelayEmailNotificationServiceImpl
 	public ISearchableDAO<RelayEmailNotificationSearchCriteria> getSearchMapper() {
 		return relayEmailNotificationMapperExt;
 	}
-
 }
