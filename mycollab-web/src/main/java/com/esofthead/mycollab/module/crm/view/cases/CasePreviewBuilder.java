@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
@@ -141,7 +142,8 @@ public class CasePreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new CaseFormLayoutFactory.CaseInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							CasesDefaultFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new CaseFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					caseAddLayout.setTitle(cases.getSubject());
