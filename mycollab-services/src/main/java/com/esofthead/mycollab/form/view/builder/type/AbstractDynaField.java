@@ -3,20 +3,20 @@ package com.esofthead.mycollab.form.view.builder.type;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer.Exclude;
 
 public class AbstractDynaField implements Comparable<AbstractDynaField> {
-	private int fieldIndex;
+	protected int fieldIndex;
 
-	private String fieldName;
+	protected String fieldName;
 
-	private String displayName;
+	protected String displayName;
 
-	private boolean isMandatory;
+	protected boolean isMandatory = false;
 
-	private boolean isRequired;
+	protected boolean isRequired = false;
 
-	private boolean isCustom;
+	protected boolean isCustom = false;
 
 	@Exclude
-	private DynaSection ownSection;
+	protected DynaSection ownSection;
 
 	public String getFieldName() {
 		return fieldName;

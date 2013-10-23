@@ -234,7 +234,7 @@ public class AccountDefaultDynaFormFactory {
 
 	}
 
-	public static DynaForm getForm(Integer sAccountId) {
+	public static DynaForm getForm() {
 		return defaultForm;
 	}
 }

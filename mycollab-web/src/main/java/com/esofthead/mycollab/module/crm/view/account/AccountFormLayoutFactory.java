@@ -3,7 +3,6 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -38,7 +37,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		informationLayout = new DynaFormLayout(
-				AccountDefaultDynaFormFactory.getForm(AppContext.getAccountId()));
+				AccountDefaultDynaFormFactory.getForm());
 		accountAddLayout.addBody(informationLayout.getLayout());
 
 		return accountAddLayout;

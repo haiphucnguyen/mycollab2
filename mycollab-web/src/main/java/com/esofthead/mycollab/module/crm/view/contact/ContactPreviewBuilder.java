@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -450,7 +451,8 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 			this.previewForm = new AdvancedPreviewBeanForm<Contact>() {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							ContactDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new ContactFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					ReadView.this.contactAddLayout
