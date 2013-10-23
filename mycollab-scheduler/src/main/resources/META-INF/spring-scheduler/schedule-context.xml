@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
                 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
+    <!-- Schedule job -->
     <bean id="sendRelayEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
@@ -42,6 +43,14 @@
         <property name="durability" value="true" />
     </bean>
 
+    <bean id="sendAccountBillingEmailJob"
+        class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+            value="com.esofthead.mycollab.schedule.jobs.BillingSendingNotificationJobs" />
+        <property name="durability" value="true" />
+    </bean>
+
+    <!-- Trigger -->
     <bean id="sendingRelayEmailTrigger"
         class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
         <property name="jobDetail" ref="sendRelayEmailJob" />
@@ -69,6 +78,12 @@
     <bean id="sendInviteUserEmailTrigger"
         class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
         <property name="jobDetail" ref="sendInviteUserEmailJob" />
+        <property name="cronExpression" value="0 * * * * ?" />
+    </bean>
+
+    <bean id="sendAccountBillingEmailTrigger"
+        class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
+        <property name="jobDetail" ref="sendAccountBillingEmailJob" />
         <property name="cronExpression" value="0 * * * * ?" />
     </bean>
 
@@ -104,6 +119,7 @@
                 <ref bean="crmSendRelayNotificationEmailJob" />
                 <ref bean="sendErrorReportEmailJob" />
                 <ref bean="sendInviteUserEmailJob" />
+                <ref bean="sendAccountBillingEmailJob" />
             </list>
         </property>
         <property name="triggers">
@@ -113,6 +129,7 @@
                 <ref bean="crmSendRelayNotificationEmailTrigger" />
                 <ref bean="sendErrorReportEmailTrigger" />
                 <ref bean="sendInviteUserEmailTrigger" />
+                <ref bean="sendAccountBillingEmailTrigger" />
             </list>
         </property>
     </bean>
