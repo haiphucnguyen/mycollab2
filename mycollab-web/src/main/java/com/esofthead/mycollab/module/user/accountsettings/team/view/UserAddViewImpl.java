@@ -125,6 +125,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 										+ " " + UserAddViewImpl.this.user
 										.getLastname()), isLoadEdit);
 				this.isLoadEdit = isLoadEdit;
+				this.setAvatarLink(user.getAvatarid());
 			}
 
 			private Layout createButtonControls() {

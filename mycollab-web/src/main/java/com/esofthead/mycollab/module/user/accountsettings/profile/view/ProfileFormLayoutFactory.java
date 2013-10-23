@@ -8,7 +8,9 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -25,6 +27,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 	private final String title;
 	private UserInformationLayout userInformationLayout;
 	private static Boolean isLoadEdit;
+	private Resource userAvatarIcon;
 
 	public ProfileFormLayoutFactory(final String title, Boolean isLoadEdit) {
 		this.title = title;
@@ -35,10 +38,19 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 		ProfileFormLayoutFactory.isLoadEdit = isLoadEdit;
 	}
 
+	public void setAvatarLink(String avatarId) {
+		userAvatarIcon = UserAvatarControlFactory.createAvatarResource(
+				avatarId, 32);
+	}
+
 	@Override
 	public Layout getLayout() {
+		if (userAvatarIcon == null) {
+			userAvatarIcon = MyCollabResource
+					.newResource("icons/22/user/user.png");
+		}
 		final AddViewLayout userAddLayout = new AddViewLayout(this.title,
-				MyCollabResource.newResource("icons/22/user/user.png"));
+				userAvatarIcon);
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {

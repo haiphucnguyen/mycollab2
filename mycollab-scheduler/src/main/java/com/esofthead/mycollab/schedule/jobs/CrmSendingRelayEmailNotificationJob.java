@@ -16,6 +16,7 @@ import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearc
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
@@ -32,10 +33,17 @@ public class CrmSendingRelayEmailNotificationJob extends QuartzJobBean {
 		RelayEmailNotificationService relayEmailService = (RelayEmailNotificationService) ApplicationContextUtil
 				.getSpringBean(RelayEmailNotificationService.class);
 
+		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
+		criteria.setTypes(new SetSearchField<String>(new String[] {
+				CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
+				CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
+				CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
+				CrmTypeConstants.TASK, CrmTypeConstants.MEETING,
+				CrmTypeConstants.CALL }));
+
 		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailService
 				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
-						new RelayEmailNotificationSearchCriteria(), 0,
-						Integer.MAX_VALUE));
+						criteria, 0, Integer.MAX_VALUE));
 
 		log.debug("Get " + relayEmaiNotifications.size()
 				+ " relay email notifications");
@@ -43,8 +51,7 @@ public class CrmSendingRelayEmailNotificationJob extends QuartzJobBean {
 
 		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
 			try {
-				if (notification.getEmailhandlerbean() != null
-						&& isCrmType(notification.getType())) {
+				if (notification.getEmailhandlerbean() != null) {
 					emailNotificationAction = (SendingRelayEmailNotificationAction) ApplicationContextUtil
 							.getSpringBean(Class.forName(notification
 									.getEmailhandlerbean()));
@@ -82,22 +89,6 @@ public class CrmSendingRelayEmailNotificationJob extends QuartzJobBean {
 				throw new MyCollabException("no class found toget spring bean "
 						+ ex.getMessage());
 			}
-
 		}
-	}
-
-	private boolean isCrmType(String type) {
-		if (type.equals(CrmTypeConstants.ACCOUNT)
-				|| type.equals(CrmTypeConstants.CONTACT)
-				|| type.equals(CrmTypeConstants.CAMPAIGN)
-				|| type.equals(CrmTypeConstants.LEAD)
-				|| type.equals(CrmTypeConstants.OPPORTUNITY)
-				|| type.equals(CrmTypeConstants.CASE)
-				|| type.equals(CrmTypeConstants.TASK)
-				|| type.equals(CrmTypeConstants.MEETING)
-				|| type.equals(CrmTypeConstants.CALL)) {
-			return true;
-		}
-		return false;
 	}
 }

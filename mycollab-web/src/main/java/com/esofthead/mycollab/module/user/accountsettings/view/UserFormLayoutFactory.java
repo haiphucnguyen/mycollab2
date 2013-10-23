@@ -8,7 +8,9 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -24,15 +26,25 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 
 	private final String title;
 	private UserInformationLayout userInformationLayout;
+	private Resource userAvatarIcon;
 
 	public UserFormLayoutFactory(final String title) {
 		this.title = title;
 	}
 
+	public void setAvatarLink(String avatarId) {
+		userAvatarIcon = UserAvatarControlFactory.createAvatarResource(
+				avatarId, 48);
+	}
+
 	@Override
 	public Layout getLayout() {
+		if (userAvatarIcon == null) {
+			userAvatarIcon = MyCollabResource
+					.newResource("icons/48/user/user.png");
+		}
 		final AddViewLayout userAddLayout = new AddViewLayout(this.title,
-				MyCollabResource.newResource("icons/48/user/user.png"));
+				userAvatarIcon);
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {

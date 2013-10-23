@@ -160,7 +160,7 @@ public class VersionReadViewImpl extends AbstractView implements
 							public void buttonClick(ClickEvent event) {
 								if (quickActionStatusBtn.getCaption().equals(
 										"ReOpen")) {
-									version.setStatus("open");
+									version.setStatus("Open");
 									VersionService service = ApplicationContextUtil
 											.getSpringBean(VersionService.class);
 									service.updateWithSession(version,
@@ -171,7 +171,7 @@ public class VersionReadViewImpl extends AbstractView implements
 									quickActionStatusBtn.setIcon(MyCollabResource
 											.newResource("icons/16/project/closeTask.png"));
 								} else {
-									version.setStatus("close");
+									version.setStatus("Close");
 									VersionService service = ApplicationContextUtil
 											.getSpringBean(VersionService.class);
 									service.updateWithSession(version,
@@ -188,7 +188,7 @@ public class VersionReadViewImpl extends AbstractView implements
 						});
 				quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				if (version.getStatus() == null
-						|| version.getStatus().equals("open")) {
+						|| version.getStatus().equals("Open")) {
 					quickActionStatusBtn.setCaption("Close");
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/closeTask.png"));

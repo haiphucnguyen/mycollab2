@@ -137,7 +137,7 @@ public class ComponentListViewImpl extends AbstractView implements
 									}
 								});
 						if (bugComponent.getStatus() != null
-								&& bugComponent.getStatus().equals("close")) {
+								&& bugComponent.getStatus().equals("Close")) {
 							b.addStyleName(UIConstants.LINK_COMPLETED);
 						}
 						return b;
