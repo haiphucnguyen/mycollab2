@@ -9,8 +9,10 @@ public class AbstractDynaField implements Comparable<AbstractDynaField> {
 
 	private String displayName;
 
+	private boolean isMandatory;
+
 	private boolean isRequired;
-	
+
 	private boolean isCustom;
 
 	@Exclude
@@ -62,6 +64,14 @@ public class AbstractDynaField implements Comparable<AbstractDynaField> {
 
 	public void setCustom(boolean isCustom) {
 		this.isCustom = isCustom;
+	}
+
+	public boolean isMandatory() {
+		return isMandatory;
+	}
+
+	public void setMandatory(boolean isMandatory) {
+		this.isMandatory = isMandatory;
 	}
 
 	@Override

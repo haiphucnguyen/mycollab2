@@ -20,6 +20,11 @@ public abstract class AbstractDynaFieldBuilder<F extends AbstractDynaField> {
 		return this;
 	}
 
+	public AbstractDynaFieldBuilder<F> mandatory(boolean isMandatory) {
+		field.setMandatory(isMandatory);
+		return this;
+	}
+
 	public AbstractDynaFieldBuilder<F> required(boolean isRequired) {
 		field.setRequired(isRequired);
 		return this;

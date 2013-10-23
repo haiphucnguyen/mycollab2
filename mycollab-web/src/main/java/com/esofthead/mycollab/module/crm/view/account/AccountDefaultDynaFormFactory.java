@@ -29,7 +29,8 @@ public class AccountDefaultDynaFormFactory {
 				.displayName(
 						LocalizationHelper
 								.getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME))
-				.customField(false).fieldIndex(0).required(true).build());
+				.customField(false).fieldIndex(0).mandatory(true)
+				.required(true).build());
 		accountSection
 				.addField(new StringDynaFieldBuilder()
 						.fieldName("phoneoffice")
