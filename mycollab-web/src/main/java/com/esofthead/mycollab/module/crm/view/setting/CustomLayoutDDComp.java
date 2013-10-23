@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
 import com.vaadin.ui.Component;
@@ -23,6 +24,7 @@ import com.vaadin.ui.VerticalLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
+import fi.jasoft.dragdroplayouts.DDVerticalLayout.VerticalLayoutTargetDetails;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.HorizontalLocationIs;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
@@ -65,17 +67,34 @@ class CustomLayoutDDComp extends HorizontalLayout {
 			}
 		}
 
+		activeFormLayout.setComponentVerticalDropRatio(0.3f);
+		activeFormLayout.setDragMode(LayoutDragMode.CLONE);
 		activeFormLayout.setDropHandler(new DropHandler() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public AcceptCriterion getAcceptCriterion() {
-				return new And(VerticalLocationIs.MIDDLE,
-						HorizontalLocationIs.CENTER);
+				return AcceptAll.get();
 			}
 
 			@Override
 			public void drop(DragAndDropEvent event) {
+				VerticalLayoutTargetDetails details = (VerticalLayoutTargetDetails) event
+						.getTargetDetails();
+				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
+						.getTransferable();
+				Component srcComp = transferable.getComponent();
+				if (srcComp instanceof SectionLayoutComp) {
+					SectionLayoutComp overComp = (SectionLayoutComp) details
+							.getOverComponent();
+					int srcIndex = activeFormLayout.getComponentIndex(srcComp);
+					int destIndex = activeFormLayout
+							.getComponentIndex(overComp);
+
+					if (srcIndex != destIndex) {
+						activeFormLayout.replaceComponent(overComp, srcComp);
+					}
+				}
 				log.debug("Target {}", event.getTargetDetails());
 			}
 		});
