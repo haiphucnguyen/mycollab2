@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
@@ -94,7 +95,8 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new AssignmentFormLayoutFactory.AssignmentInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							AssignmentDefaultFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new TaskFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					assignmentAddLayout.setTitle(task.getSubject());
