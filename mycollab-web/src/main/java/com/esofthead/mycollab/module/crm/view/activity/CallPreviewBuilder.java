@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
@@ -125,7 +126,8 @@ public class CallPreviewBuilder extends VerticalLayout {
 			this.previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new CallFormLayoutFactory.CallInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							CallDefaultFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new CallFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					ReadView.this.callAddLayout.setTitle(ReadView.this.call
