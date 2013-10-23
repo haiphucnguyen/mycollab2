@@ -4828,12 +4828,21 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	box-sizing: border-box;
 }
 .v-verticallayout-customFieldSection .header-wrapper > .v-csslayout-margin {
-	padding: 9px 15px;
+	padding: 7px 5px 7px 15px;
 }
 .v-csslayout.customFieldComponent > .v-csslayout-margin {
-	padding: 8px 10px;
-	background: none no-repeat 0 0 rgb(231, 231, 231);
+	padding: 8px 10px 8px 25px;
+	background: url('icons/16/symbol.png') no-repeat 5px 8px rgb(231, 231, 231);
 	border: 1px solid rgb(177, 177, 177);
 	border-radius: 3px;
 	color: rgb(91, 91, 91);
+}
+.v-csslayout.customFieldComponent.emptyField > .v-csslayout-margin {
+	background: none no-repeat 0 0 transparent;
+	border: 1px dashed rgb(177, 177, 177);
+	border-radius: 8px;
+}
+.customFieldComponent .v-label img {
+	display: inline-block;
+	vertical-align: bottom;
 }

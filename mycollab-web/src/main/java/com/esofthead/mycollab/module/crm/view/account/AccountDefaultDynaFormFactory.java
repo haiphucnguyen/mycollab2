@@ -2,11 +2,11 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.EmailDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.IntDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.PhoneDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.PickListDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
@@ -15,226 +15,240 @@ import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 
 public class AccountDefaultDynaFormFactory {
-	public static final DynaForm defaultForm;
+    public static final DynaForm defaultForm;
 
-	static {
-		defaultForm = new DynaForm();
+    static {
+        defaultForm = new DynaForm();
 
-		// Build block account information
-		DynaSection accountSection = new DynaSectionBuilder()
-				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
-				.header("Account Information").build();
-		accountSection.addField(new StringDynaFieldBuilder()
-				.fieldName("accountname")
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME))
-				.customField(false).fieldIndex(0).mandatory(true)
-				.required(true).build());
-		accountSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldName("phoneoffice")
-						.displayName(
-								LocalizationHelper
-										.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD))
-						.customField(false).fieldIndex(1).build());
+        // Build block account information
+        DynaSection accountSection = new DynaSectionBuilder()
+                .layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
+                .header("Account Information").build();
+        accountSection.addField(new StringDynaFieldBuilder()
+                .fieldName("accountname")
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME))
+                .customField(false).fieldIndex(0).mandatory(true)
+                .required(true).build());
+        accountSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldName("phoneoffice")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD))
+                        .customField(false).fieldIndex(1).build());
 
-		accountSection.addField(new StringDynaFieldBuilder()
-				.fieldName("website")
-				.fieldIndex(2)
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_WEBSITE))
-				.customField(false).build());
+        accountSection.addField(new StringDynaFieldBuilder()
+                .fieldName("website")
+                .fieldIndex(2)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_WEBSITE))
+                .customField(false).build());
 
-		accountSection
-				.addField(new PhoneDynaFieldBuilder()
-						.fieldName("fax")
-						.fieldIndex(3)
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_FAX))
-						.customField(false).build());
+        accountSection
+                .addField(new PhoneDynaFieldBuilder()
+                        .fieldName("fax")
+                        .fieldIndex(3)
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_FAX))
+                        .customField(false).build());
 
-		accountSection.addField(new IntDynaFieldBuilder()
-				.fieldName("numemployees")
-				.fieldIndex(4)
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_EMPLOYEES))
-				.customField(false).build());
+        accountSection.addField(new IntDynaFieldBuilder()
+                .fieldName("numemployees")
+                .fieldIndex(4)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_EMPLOYEES))
+                .customField(false).build());
 
-		accountSection.addField(new PhoneDynaFieldBuilder()
-				.fieldName("alternatephone")
-				.fieldIndex(5)
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_OTHER_PHONE))
-				.customField(false).build());
+        accountSection.addField(new PhoneDynaFieldBuilder()
+                .fieldName("alternatephone")
+                .fieldIndex(5)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_OTHER_PHONE))
+                .customField(false).build());
 
-		accountSection.addField(new PickListDynaFieldBuilder<String>()
-				.fieldName("industry")
-				.fieldIndex(6)
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_INDUSTRY))
-				.customField(false).build());
+        accountSection.addField(new PickListDynaFieldBuilder<String>()
+                .fieldName("industry")
+                .fieldIndex(6)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_INDUSTRY))
+                .customField(false).build());
 
-		accountSection.addField(new EmailDynaFieldBuilder()
-				.fieldName("email")
-				.fieldIndex(7)
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_EMAIL))
-				.customField(false).build());
+        accountSection.addField(new EmailDynaFieldBuilder()
+                .fieldName("email")
+                .fieldIndex(7)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_EMAIL))
+                .customField(false).build());
 
-		accountSection.addField(new PickListDynaFieldBuilder<String>()
-				.fieldName("type")
-				.fieldIndex(8)
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_TYPE))
-				.customField(false).build());
+        accountSection.addField(new PickListDynaFieldBuilder<String>()
+                .fieldName("type")
+                .fieldIndex(8)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_TYPE))
+                .customField(false).build());
 
-		accountSection.addField(new StringDynaFieldBuilder()
-				.fieldName("ownership")
-				.fieldIndex(9)
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_OWNERSHIP))
-				.customField(false).build());
+        accountSection.addField(new StringDynaFieldBuilder()
+                .fieldName("ownership")
+                .fieldIndex(9)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_OWNERSHIP))
+                .customField(false).build());
 
-		accountSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldName("assignuser")
-						.fieldIndex(10)
-						.displayName(
-								LocalizationHelper
-										.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))
-						.customField(false).build());
+        accountSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldName("assignuser")
+                        .fieldIndex(10)
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))
+                        .customField(false).build());
 
-		accountSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldName("annualrevenue")
-						.fieldIndex(11)
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_ANNUAL_REVENUE))
-						.customField(false).build());
+        accountSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldName("annualrevenue")
+                        .fieldIndex(11)
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_ANNUAL_REVENUE))
+                        .customField(false).build());
 
-		defaultForm.addSection(accountSection);
+        defaultForm.addSection(accountSection);
 
-		// build block address
-		DynaSection addressSection = new DynaSectionBuilder()
-				.layoutType(LayoutType.TWO_COLUMN)
-				.header("Address Information").build();
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(0)
-						.fieldName("billingaddress")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS))
-						.customField(false).build());
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(1)
-						.fieldName("shippingaddress")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_ADDRESS))
-						.customField(false).build());
-		addressSection.addField(new StringDynaFieldBuilder()
-				.fieldIndex(2)
-				.fieldName("city")
-				.displayName(
-						LocalizationHelper
-								.getMessage(AccountI18nEnum.FORM_BILLING_CITY))
-				.customField(false).build());
+        // build block address
+        DynaSection addressSection = new DynaSectionBuilder()
+                .layoutType(LayoutType.TWO_COLUMN)
+                .header("Address Information").build();
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(0)
+                        .fieldName("billingaddress")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS))
+                        .customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(1)
+                        .fieldName("shippingaddress")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_SHIPPING_ADDRESS))
+                        .customField(false).build());
+        addressSection.addField(new StringDynaFieldBuilder()
+                .fieldIndex(2)
+                .fieldName("city")
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(AccountI18nEnum.FORM_BILLING_CITY))
+                .customField(false).build());
 
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(3)
-						.fieldName("shippingcity")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_CITY))
-						.customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(3)
+                        .fieldName("shippingcity")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_SHIPPING_CITY))
+                        .customField(false).build());
 
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(4)
-						.fieldName("state")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_BILLING_STATE))
-						.customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(4)
+                        .fieldName("state")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_BILLING_STATE))
+                        .customField(false).build());
 
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(5)
-						.fieldName("shippingstate")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_STATE))
-						.customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(5)
+                        .fieldName("shippingstate")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_SHIPPING_STATE))
+                        .customField(false).build());
 
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(6)
-						.fieldName("postalcode")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_BILLING_POSTAL_CODE))
-						.customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(6)
+                        .fieldName("postalcode")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_BILLING_POSTAL_CODE))
+                        .customField(false).build());
 
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(7)
-						.fieldName("shippingpostalcode")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE))
-						.customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(7)
+                        .fieldName("shippingpostalcode")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE))
+                        .customField(false).build());
 
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(8)
-						.fieldName("billingcountry")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_BILLING_COUNTRY))
-						.customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(8)
+                        .fieldName("billingcountry")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_BILLING_COUNTRY))
+                        .customField(false).build());
 
-		addressSection
-				.addField(new StringDynaFieldBuilder()
-						.fieldIndex(9)
-						.fieldName("shippingcountry")
-						.displayName(
-								LocalizationHelper
-										.getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY))
-						.customField(false).build());
+        addressSection
+                .addField(new StringDynaFieldBuilder()
+                        .fieldIndex(9)
+                        .fieldName("shippingcountry")
+                        .displayName(
+                                LocalizationHelper
+                                        .getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY))
+                        .customField(false).build());
 
-		defaultForm.addSection(addressSection);
+        defaultForm.addSection(addressSection);
 
-		// build block description
-		DynaSection descSection = new DynaSectionBuilder()
-				.layoutType(LayoutType.ONE_COLUMN).header("Description")
-				.orderIndex(2).build();
+        // build block description
+        DynaSection descSection = new DynaSectionBuilder()
+                .layoutType(LayoutType.ONE_COLUMN).header("Description")
+                .orderIndex(2).build();
 
-		descSection.addField(new StringDynaFieldBuilder()
-				.fieldIndex(0)
-				.fieldName("description")
-				.customField(false)
-				.displayName(
-						LocalizationHelper
-								.getMessage(GenericI18Enum.FORM_DESCRIPTION))
-				.build());
-		defaultForm.addSection(descSection);
+        descSection.addField(new StringDynaFieldBuilder()
+                .fieldIndex(0)
+                .fieldName("description")
+                .customField(false)
+                .displayName(
+                        LocalizationHelper
+                                .getMessage(GenericI18Enum.FORM_DESCRIPTION))
+                .build());
+        defaultForm.addSection(descSection);
 
-	}
+        DynaSection deleteSection = new DynaSectionBuilder()
+                .layoutType(LayoutType.ONE_COLUMN).orderIndex(3)
+                .header("Removed fields").deleteSection(true).build();
 
-	public static DynaForm getForm() {
-		return defaultForm;
-	}
+        deleteSection.addField(new StringDynaFieldBuilder()
+                .fieldName("example").displayName("Example").fieldIndex(0)
+                .build());
+
+        deleteSection.addField(new StringDynaFieldBuilder()
+                .fieldName("example111").displayName("Example111")
+                .fieldIndex(1).build());
+
+        defaultForm.addSection(deleteSection);
+
+    }
+
+    public static DynaForm getForm() {
+        return defaultForm;
+    }
 }
