@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -145,7 +146,8 @@ public class LeadPreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<Lead>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadReadInformationLayout());
+					this.setFormLayoutFactory(new DynaFormLayout(
+							LeadDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new LeadFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					leadAddLayout.setTitle(lead.getLeadName());
