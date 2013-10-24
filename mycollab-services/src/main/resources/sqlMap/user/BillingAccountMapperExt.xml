@@ -68,7 +68,7 @@
     
     <select id="getTrialAccountsWithOwners" resultMap="BillingAccountWithOwnersResult">
         <![CDATA[
-        SELECT s_account.id, s_account.createdTime, s_account.billingPlanId,
+        SELECT s_account.id, s_account.createdTime, s_account.billingPlanId,s_account.subdomain,
             s_account.accountName, s_account.status, s_account.paymentMethod, s_account.pricing,
             s_account.pricingEffectFrom, s_account.pricingEffectTo,
             s_billing_plan.id AS billingPlan_id, s_billing_plan.billingType AS
@@ -84,7 +84,7 @@
             LEFT OUTER JOIN s_billing_plan ON (s_billing_plan.id=s_account.billingPlanId)
             LEFT OUTER JOIN s_user_account ON (s_account.id=s_user_account.accountId AND isAccountOwner="1")
             LEFT OUTER JOIN s_user ON (s_user_account.username=s_user.username)
-        WHERE s_account.status="Trial"    
+        WHERE s_account.status="Trial" AND s_billing_plan.billingType <> 'Free'
         ]]>
     </select>
 </mapper>
