@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import org.vaadin.addon.customfield.FieldWrapper;
+
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
@@ -7,7 +9,9 @@ import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -24,7 +28,7 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 	protected Field onCreateField(Item item, Object propertyId,
 			com.vaadin.ui.Component uiContext) {
 		if (propertyId.equals("firstname")) {
-			return new PrefixListSelect();
+			return new LeadFirstNamePrefixField();
 		} else if (propertyId.equals("primcountry")
 				|| propertyId.equals("othercountry")) {
 			CountryComboBox otherCountryComboBox = new CountryComboBox();
@@ -54,6 +58,41 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 		}
 
 		return null;
+	}
+
+	class LeadFirstNamePrefixField extends FieldWrapper<Lead> {
+		private static final long serialVersionUID = 1L;
+
+		LeadFirstNamePrefixField() {
+			super(new TextField(), null, Lead.class);
+			this.setWidth("100%");
+
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			layout.setSpacing(true);
+
+			final PrefixListSelect prefixSelect = new PrefixListSelect();
+			prefixSelect.setValue(lead.getPrefixname());
+			layout.addComponent(prefixSelect);
+
+			prefixSelect.addListener(new Property.ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(Property.ValueChangeEvent event) {
+					lead.setPrefixname((String) prefixSelect.getValue());
+
+				}
+			});
+
+			TextField firstnameTxtField = (TextField) getWrappedField();
+			firstnameTxtField.setWidth("100%");
+			layout.addComponent(firstnameTxtField);
+			layout.setExpandRatio(firstnameTxtField, 1.0f);
+
+			this.setCompositionRoot(layout);
+		}
+
 	}
 
 	static class PrefixListSelect extends ValueComboBox {
