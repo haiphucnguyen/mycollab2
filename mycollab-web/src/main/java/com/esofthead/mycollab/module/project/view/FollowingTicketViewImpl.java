@@ -161,7 +161,8 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		ExportItemsStreamResource<FollowingTicket> exportResource = new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
 				"Following Tickets Report", new RpParameterBuilder(
 						ticketTable.getDisplayColumns()), exportType,
-				ApplicationContextUtil.getSpringBean(ProjectFollowingTicketService.class),
+				ApplicationContextUtil
+						.getSpringBean(ProjectFollowingTicketService.class),
 				searchCriteria, FollowingTicket.class);
 
 		StreamResource res = new StreamResource(exportResource,

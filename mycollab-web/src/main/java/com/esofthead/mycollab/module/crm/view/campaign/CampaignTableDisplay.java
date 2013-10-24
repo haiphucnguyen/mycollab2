@@ -149,7 +149,7 @@ public class CampaignTableDisplay
 
 			}
 		});
-		
+
 		this.addGeneratedColumn("expectedcost", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
@@ -159,8 +159,7 @@ public class CampaignTableDisplay
 				final SimpleCampaign campaign = CampaignTableDisplay.this
 						.getBeanByIndex(itemId);
 				if (campaign.getExpectedrevenue() != null) {
-					String expectedCostText = campaign.getExpectedcost()
-							+ "";
+					String expectedCostText = campaign.getExpectedcost() + "";
 					Currency currency = campaign.getCurrency();
 					if (currency != null) {
 						expectedCostText += " " + currency.getSymbol();

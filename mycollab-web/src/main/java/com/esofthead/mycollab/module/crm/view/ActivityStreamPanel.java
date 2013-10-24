@@ -131,14 +131,20 @@ public class ActivityStreamPanel extends Depot {
 							.equals(activityStream.getAction())) {
 						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
 					}
+					CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+							activityStream.getSaccountid());
 
 					StringBuffer content = new StringBuffer(
-							LocalizationHelper.getMessage(action,
+							LocalizationHelper.getMessage(
+									action,
 									UserAvatarControlFactory.getAvatarLink(
 											activityStream
 													.getCreatedUserAvatarId(),
-											16), activityStream
-											.getCreatedUserFullName(),
+											16),
+									linkGenerator
+											.generateUserPreviewFullLink(activityStream
+													.getCreateduser()),
+									activityStream.getCreatedUserFullName(),
 									LocalizationHelper
 											.getMessage(CrmLocalizationTypeMap
 													.getType(activityStream
