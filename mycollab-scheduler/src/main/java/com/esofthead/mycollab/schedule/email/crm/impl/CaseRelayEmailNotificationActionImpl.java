@@ -65,11 +65,17 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleCase simpleCase) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleCase.getSaccountid());
 		hyperLinks.put(
 				"caseURL",
-				getSiteUrl(simpleCase.getSaccountid())
+				linkGenerator.getSiteUrl()
 						+ CrmLinkGenerator.generateCrmItemLink(
 								CrmTypeConstants.CASE, simpleCase.getId()));
+		if (simpleCase.getAssignuser() != null) {
+			hyperLinks.put("assignUserURL", linkGenerator
+					.generateUserPreviewFullLink(simpleCase.getAssignuser()));
+		}
 
 		return hyperLinks;
 	}
@@ -94,6 +100,10 @@ public class CaseRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+					simpleCase.getSaccountid());
+			templateGenerator.putVariable("postedUserURL", linkGenerator
+					.generateUserPreviewFullLink(auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -114,13 +124,11 @@ public class CaseRelayEmailNotificationActionImpl extends
 				+ StringUtils.subString(simpleCase.getSubject(), 100) + "\"",
 				"templates/email/crm/caseAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable(
-				"userComment",
-				getSiteUrl(emailNotification.getSaccountid())
-						+ ProjectLinkUtils.URL_PREFIX_PARAM
-						+ "account/user/preview/"
-						+ UrlEncodeDecoder.encode(emailNotification
-								.getChangeby()));
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleCase.getSaccountid());
+		templateGenerator.putVariable("userComment", linkGenerator.getSiteUrl()
+				+ ProjectLinkUtils.URL_PREFIX_PARAM + "account/user/preview/"
+				+ UrlEncodeDecoder.encode(emailNotification.getChangeby()));
 		templateGenerator.putVariable("simpleCase", simpleCase);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleCase));

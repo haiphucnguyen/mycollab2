@@ -7,16 +7,17 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.schedule.email.GenericLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-public class MailLinkGenerator {
+public class ProjectMailLinkGenerator extends GenericLinkGenerator {
 	private static Logger log = LoggerFactory
-			.getLogger(MailLinkGenerator.class);
+			.getLogger(ProjectMailLinkGenerator.class);
 
 	private int projectId;
 	private String siteUrl;
 
-	public MailLinkGenerator(int projectId) {
+	public ProjectMailLinkGenerator(int projectId) {
 		this.projectId = projectId;
 
 		ProjectService projectService = ApplicationContextUtil
@@ -67,15 +68,6 @@ public class MailLinkGenerator {
 				+ ProjectLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateTaskGroupPreviewLink(projectId,
 						taskgroupId);
-	}
-
-	public String generateUserPreviewFullLink(String username) {
-		if (username == null || username.trim().equals("")) {
-			return "";
-		}
-
-		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
-				+ "account/user/preview/" + UrlEncodeDecoder.encode(username);
 	}
 
 	public String generateRiskPreviewFullLink(Integer riskId) {

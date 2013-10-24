@@ -28,11 +28,11 @@
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Raised by:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="${hyperLinks.raiseUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!risk.raisedByUserFullName</a>
+										<a href="$!hyperLinks.raiseUserUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!risk.raisedByUserFullName</a>
 									</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assigned to:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="${hyperLinks.assignUserURL}" style="color: rgb(216, 121, 55); text-decoration: none;">$!risk.assignedToUserFullName</a>
+										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!risk.assignedToUserFullName</a>
 									</td>				
 								</tr>
 								<tr>

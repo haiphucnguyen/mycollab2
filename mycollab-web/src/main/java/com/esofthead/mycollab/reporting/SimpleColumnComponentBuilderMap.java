@@ -49,7 +49,7 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -541,7 +541,7 @@ public class SimpleColumnComponentBuilderMap {
 			public String evaluate(ReportParameters reportParameters) {
 				Integer id = reportParameters.getFieldValue("id");
 				Integer projectId = reportParameters.getFieldValue("projectid");
-				MailLinkGenerator linkGenerator = new MailLinkGenerator(
+				ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 						projectId);
 
 				if (projectModule.equals(ProjectMoulde.BUG)) {

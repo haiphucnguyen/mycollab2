@@ -54,7 +54,7 @@
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="mailto:$!simpleAccount.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.assignUserFullName</a>
+										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.assignUserFullName</a>
 									</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Annual Revenue:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.annualrevenue</td>		
@@ -95,7 +95,7 @@
 								</tr>
 								<tr>
                                 	<td colspan="4">
-                                		<p>Changes (by $historyLog.postedUserFullName):</p>
+                                		<p>Changes (by <a href="$!postedUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$historyLog.postedUserFullName</a>):</p>
                                 		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
                                 				<td style="font-weight: normal; border-color: rgb(169, 169, 169);">Fields</td>

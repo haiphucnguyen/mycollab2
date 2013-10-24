@@ -65,12 +65,18 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleCall simpleCall) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleCall.getSaccountid());
 		hyperLinks.put(
 				"callURL",
-				getSiteUrl(simpleCall.getSaccountid())
+				linkGenerator.getSiteUrl()
 						+ CrmLinkGenerator.generateCrmItemLink(
 								CrmTypeConstants.CALL, simpleCall.getId()));
 
+		if (simpleCall.getAssignuser() != null) {
+			hyperLinks.put("assignUserURL", linkGenerator
+					.generateUserPreviewFullLink(simpleCall.getAssignuser()));
+		}
 		return hyperLinks;
 	}
 
@@ -94,6 +100,10 @@ public class CallRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+					simpleCall.getSaccountid());
+			templateGenerator.putVariable("postedUserURL", linkGenerator
+					.generateUserPreviewFullLink(auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -114,13 +124,12 @@ public class CallRelayEmailNotificationActionImpl extends
 				+ StringUtils.subString(simpleCall.getSubject(), 100) + "\"",
 				"templates/email/crm/callAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable(
-				"userComment",
-				getSiteUrl(emailNotification.getSaccountid())
-						+ ProjectLinkUtils.URL_PREFIX_PARAM
-						+ "account/user/preview/"
-						+ UrlEncodeDecoder.encode(emailNotification
-								.getChangeby()));
+
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleCall.getSaccountid());
+		templateGenerator.putVariable("userComment", linkGenerator.getSiteUrl()
+				+ ProjectLinkUtils.URL_PREFIX_PARAM + "account/user/preview/"
+				+ UrlEncodeDecoder.encode(emailNotification.getChangeby()));
 		templateGenerator.putVariable("simpleCall", simpleCall);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleCall));

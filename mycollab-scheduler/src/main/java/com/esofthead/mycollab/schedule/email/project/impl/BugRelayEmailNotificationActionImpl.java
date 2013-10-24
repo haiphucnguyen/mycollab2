@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component
@@ -63,7 +63,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleBug bug) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				bug.getProjectid());
 
 		hyperLinks.put("bugUrl",
@@ -112,7 +112,7 @@ public class BugRelayEmailNotificationActionImpl extends
 		int bugId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findById(bugId,
 				emailNotification.getSaccountid());
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				bug.getProjectid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(

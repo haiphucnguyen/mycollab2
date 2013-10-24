@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -17,7 +16,6 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
@@ -73,13 +71,21 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleAccount simpleAccount) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleAccount.getSaccountid());
+
 		hyperLinks
 				.put("accountURL",
-						getSiteUrl(simpleAccount.getSaccountid())
+						linkGenerator.getSiteUrl()
 								+ CrmLinkGenerator.generateCrmItemLink(
 										CrmTypeConstants.ACCOUNT,
 										simpleAccount.getId()));
-		// TODO : assignee link , employees
+		if (simpleAccount.getAssignuser() != null) {
+			hyperLinks
+					.put("assignUserURL", linkGenerator
+							.generateUserPreviewFullLink(simpleAccount
+									.getAssignuser()));
+		}
 		return hyperLinks;
 	}
 
@@ -103,6 +109,11 @@ public class AccountRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+
+			CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+					simpleAccount.getSaccountid());
+			templateGenerator.putVariable("postedUserURL", linkGenerator
+					.generateUserPreviewFullLink(auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -124,13 +135,10 @@ public class AccountRelayEmailNotificationActionImpl extends
 				+ "\"", "templates/email/crm/accountAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
 
-		templateGenerator.putVariable(
-				"userComment",
-				getSiteUrl(emailNotification.getSaccountid())
-						+ ProjectLinkUtils.URL_PREFIX_PARAM
-						+ "account/user/preview/"
-						+ UrlEncodeDecoder.encode(emailNotification
-								.getChangeby()));
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleAccount.getSaccountid());
+		templateGenerator.putVariable("userComment", linkGenerator
+				.generateUserPreviewFullLink(emailNotification.getChangeby()));
 		templateGenerator.putVariable("simpleAccount", simpleAccount);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleAccount));

@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.RiskService;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 
 @Component
@@ -60,7 +60,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	private Map<String, String> createHyperLinks(SimpleRisk risk,
 			SimpleRelayEmailNotification emailNotification) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				risk.getProjectid());
 		hyperLinks.put("riskURL",
 				linkGenerator.generateRiskPreviewFullLink(risk.getId()));
@@ -134,7 +134,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				createHyperLinks(risk, emailNotification));
 		templateGenerator.putVariable("comment", emailNotification);
 
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				risk.getProjectid());
 		templateGenerator.putVariable("userComment", linkGenerator
 				.generateUserPreviewFullLink(emailNotification.getChangeby()));

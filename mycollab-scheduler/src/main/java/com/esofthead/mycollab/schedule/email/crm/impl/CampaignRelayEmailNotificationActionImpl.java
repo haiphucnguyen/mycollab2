@@ -84,8 +84,11 @@ public class CampaignRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+					simpleCampaign.getSaccountid());
+			templateGenerator.putVariable("postedUserURL", linkGenerator
+					.generateUserPreviewFullLink(auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
-
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		return templateGenerator;
@@ -106,13 +109,11 @@ public class CampaignRelayEmailNotificationActionImpl extends
 								simpleCampaign.getCampaignname(), 100) + "\"",
 				"templates/email/crm/campaignAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable(
-				"userComment",
-				getSiteUrl(emailNotification.getSaccountid())
-						+ ProjectLinkUtils.URL_PREFIX_PARAM
-						+ "account/user/preview/"
-						+ UrlEncodeDecoder.encode(emailNotification
-								.getChangeby()));
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleCampaign.getSaccountid());
+		templateGenerator.putVariable("userComment", linkGenerator.getSiteUrl()
+				+ ProjectLinkUtils.URL_PREFIX_PARAM + "account/user/preview/"
+				+ UrlEncodeDecoder.encode(emailNotification.getChangeby()));
 		templateGenerator.putVariable("simpleCampaign", simpleCampaign);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleCampaign));
@@ -123,13 +124,19 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	private Map<String, String> constructHyperLinks(
 			SimpleCampaign simpleCampaign) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
+		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
+				simpleCampaign.getSaccountid());
 		hyperLinks.put(
 				"campaignURL",
-				getSiteUrl(simpleCampaign.getSaccountid())
+				linkGenerator.getSiteUrl()
 						+ CrmLinkGenerator.generateCrmItemLink(
 								CrmTypeConstants.CAMPAIGN,
 								simpleCampaign.getId()));
-
+		if (simpleCampaign.getAssignuser() != null) {
+			hyperLinks.put("assignUserURL",
+					linkGenerator.generateUserPreviewFullLink(simpleCampaign
+							.getAssignuser()));
+		}
 		return hyperLinks;
 	}
 

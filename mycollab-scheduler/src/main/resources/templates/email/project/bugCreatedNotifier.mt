@@ -52,11 +52,11 @@
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
 									<td style="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="${hyperLinks.loggedUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.loguserFullName</a>
+										<a href="$!hyperLinks.loggedUserUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.loguserFullName</a>
 									</td>
 									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="${hyperLinks.assignUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.assignuserFullName</a>
+										<a href="$!hyperLinks.assignUserUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.assignuserFullName</a>
 									</td>				
 								</tr>
 								<tr>

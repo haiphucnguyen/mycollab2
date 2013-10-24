@@ -1,9 +1,22 @@
 package com.esofthead.mycollab.schedule.email.crm;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.configuration.ApplicationProperties;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.user.domain.BillingAccount;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
+import com.esofthead.mycollab.schedule.email.GenericLinkGenerator;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-public class CrmLinkGenerator {
+public class CrmLinkGenerator extends GenericLinkGenerator {
+
+	private Integer sAccountId;
+
+	public CrmLinkGenerator(Integer sAccountId) {
+		this.sAccountId = sAccountId;
+	}
 
 	public static String generateAccountPreviewLink(Integer accountId) {
 		return "crm/account/preview/" + UrlEncodeDecoder.encode(accountId);
@@ -66,5 +79,25 @@ public class CrmLinkGenerator {
 			result = generateCallPreviewLink(typeid);
 		}
 		return "#" + result;
+	}
+
+	@Override
+	public String getSiteUrl() {
+		String siteUrl = "";
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+			BillingAccountService billingAccountService = ApplicationContextUtil
+					.getSpringBean(BillingAccountService.class);
+			BillingAccount account = billingAccountService
+					.getAccountById(sAccountId);
+			if (account != null) {
+				siteUrl = String.format(ApplicationProperties
+						.getString(ApplicationProperties.APP_URL), account
+						.getSubdomain());
+			}
+		} else {
+			siteUrl = ApplicationProperties
+					.getString(ApplicationProperties.APP_URL);
+		}
+		return siteUrl;
 	}
 }

@@ -42,7 +42,7 @@
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">
-										<a href="mailto:$!simpleCall.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCall.assignUserFullName</a>
+										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCall.assignUserFullName</a>
 									</td>
 								</tr>
 								<tr>

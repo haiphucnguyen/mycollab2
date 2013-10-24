@@ -50,7 +50,7 @@
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleCase.origin</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="mailto:$!simpleCase.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCase.assignUserFullName</a>
+										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCase.assignUserFullName</a>
 									</td>	
 								</tr>
 								<tr>

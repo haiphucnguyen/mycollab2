@@ -54,7 +54,7 @@
 								<tr>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="mailto:$!simpleAccount.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.assignUserFullName</a>
+										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.assignUserFullName</a>
 									</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Annual Revenue:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.annualrevenue</td>		

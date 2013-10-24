@@ -19,7 +19,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
@@ -58,7 +58,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> createHyperLinks(SimpleTask task) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				task.getProjectid());
 		hyperLinks.put("taskUrl",
 				linkGenerator.generateTaskPreviewFullLink(task.getId()));
@@ -112,7 +112,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		if (task == null) {
 			return null;
 		}
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				task.getProjectid());
 		String comment = StringUtils.subString(
 				emailNotification.getChangecomment(), 150);
