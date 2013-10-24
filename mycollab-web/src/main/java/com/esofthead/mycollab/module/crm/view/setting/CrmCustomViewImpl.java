@@ -10,143 +10,162 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Label headerLbl;
-	private ModuleSelectionComboBox moduleComboBox;
-	private CustomLayoutDDComp layoutComp;
+    private Label headerLbl;
+    private ModuleSelectionComboBox moduleComboBox;
+    private CustomLayoutDDComp layoutComp;
 
-	public CrmCustomViewImpl() {
-		this.setSpacing(true);
-		headerLbl = new Label();
-		this.addComponent(headerLbl);
+    public CrmCustomViewImpl() {
+        this.setSpacing(true);
+        this.setMargin(true);
 
-		Label descLbl = new Label(
-				"Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the section header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
-		this.addComponent(descLbl);
+        VerticalLayout headerBox = new VerticalLayout();
+        headerBox.setWidth("100%");
+        headerBox.setSpacing(true);
+        headerBox.addStyleName("CrmCustomViewHeader");
 
-		HorizontalLayout controlLayout = new HorizontalLayout();
-		controlLayout.setSpacing(true);
-		moduleComboBox = new ModuleSelectionComboBox();
+        headerLbl = new Label();
+        CssLayout headerTitle = new CssLayout();
+        headerTitle.addStyleName("headerTitle");
+        headerTitle.setWidth("100%");
+        headerTitle.addComponent(headerLbl);
+        headerBox.addComponent(headerTitle);
 
-		Label moduleLbl = new Label("Module");
-		controlLayout.addComponent(moduleLbl);
-		controlLayout.setComponentAlignment(moduleLbl, Alignment.MIDDLE_LEFT);
-		controlLayout.addComponent(moduleComboBox);
-		controlLayout.setComponentAlignment(moduleComboBox,
-				Alignment.MIDDLE_LEFT);
+        VerticalLayout headerContent = new VerticalLayout();
+        headerContent.setWidth("100%");
+        headerContent.setMargin(false, true, true, true);
+        Label descLbl = new Label(
+                "Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the section header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
+        descLbl.setStyleName("instructionLbl");
+        headerContent.addComponent(descLbl);
 
-		Button createCustomFieldBtn = new Button("New Custom Field",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        HorizontalLayout controlLayout = new HorizontalLayout();
+        controlLayout.setSpacing(true);
+        controlLayout.setMargin(true, false, false, false);
+        moduleComboBox = new ModuleSelectionComboBox();
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+        Label moduleLbl = new Label("Module: ");
+        controlLayout.addComponent(moduleLbl);
+        controlLayout.setComponentAlignment(moduleLbl, Alignment.MIDDLE_LEFT);
+        controlLayout.addComponent(moduleComboBox);
+        controlLayout.setComponentAlignment(moduleComboBox,
+                Alignment.MIDDLE_LEFT);
 
-					}
-				});
-		createCustomFieldBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		createCustomFieldBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		controlLayout.addComponent(createCustomFieldBtn);
-		controlLayout.setComponentAlignment(createCustomFieldBtn,
-				Alignment.MIDDLE_LEFT);
+        Button createCustomFieldBtn = new Button("New Custom Field",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		Button createSectionBtn = new Button("Create Section",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        // TODO Auto-generated method stub
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						CreateSectionWindow createSectionWindow = new CreateSectionWindow(
-								CrmCustomViewImpl.this);
-						getWindow().addWindow(createSectionWindow);
+                    }
+                });
+        createCustomFieldBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+        createCustomFieldBtn.setIcon(MyCollabResource
+                .newResource("icons/16/addRecord.png"));
+        controlLayout.addComponent(createCustomFieldBtn);
+        controlLayout.setComponentAlignment(createCustomFieldBtn,
+                Alignment.MIDDLE_LEFT);
 
-					}
-				});
-		createSectionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		createSectionBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		controlLayout.addComponent(createSectionBtn);
-		controlLayout.setComponentAlignment(createSectionBtn,
-				Alignment.MIDDLE_LEFT);
-		this.addComponent(controlLayout);
+        Button createSectionBtn = new Button("Create Section",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		layoutComp = new CustomLayoutDDComp();
-		this.addComponent(layoutComp);
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        CreateSectionWindow createSectionWindow = new CreateSectionWindow(
+                                CrmCustomViewImpl.this);
+                        getWindow().addWindow(createSectionWindow);
 
-		HorizontalLayout buttonsLayout = new HorizontalLayout();
-		buttonsLayout.setSpacing(true);
-		Button saveBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    }
+                });
+        createSectionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+        createSectionBtn.setIcon(MyCollabResource
+                .newResource("icons/16/addRecord.png"));
+        controlLayout.addComponent(createSectionBtn);
+        controlLayout.setComponentAlignment(createSectionBtn,
+                Alignment.MIDDLE_LEFT);
+        headerContent.addComponent(controlLayout);
+        headerBox.addComponent(headerContent);
+        this.addComponent(headerBox);
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+        layoutComp = new CustomLayoutDDComp();
+        this.addComponent(layoutComp);
 
-					}
-				});
-		saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		buttonsLayout.addComponent(saveBtn);
+        HorizontalLayout buttonsLayout = new HorizontalLayout();
+        buttonsLayout.setSpacing(true);
+        Button saveBtn = new Button(
+                LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		Button cancelBtn = new Button(
-				LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        // TODO Auto-generated method stub
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+                    }
+                });
+        saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+        buttonsLayout.addComponent(saveBtn);
 
-					}
-				});
-		cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		buttonsLayout.addComponent(cancelBtn);
+        Button cancelBtn = new Button(
+                LocalizationHelper
+                        .getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		this.addComponent(buttonsLayout);
-		this.setComponentAlignment(buttonsLayout, Alignment.MIDDLE_CENTER);
-	}
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        // TODO Auto-generated method stub
 
-	@Override
-	public void display(String moduleName) {
-		headerLbl.setCaption(moduleName + ": Edit Page Layout");
-		moduleComboBox.select(moduleName);
-		DynaForm form;
+                    }
+                });
+        cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+        buttonsLayout.addComponent(cancelBtn);
 
-		if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
-			form = AccountDefaultDynaFormFactory.getForm();
-		} else {
-			throw new MyCollabException(
-					"Do not support custom layout of module " + moduleName);
-		}
+        this.addComponent(buttonsLayout);
+        this.setComponentAlignment(buttonsLayout, Alignment.MIDDLE_CENTER);
+    }
 
-		layoutComp.displayLayoutCustom(form);
-	}
+    @Override
+    public void display(String moduleName) {
+        headerLbl.setCaption(moduleName + ": Edit Page Layout");
+        moduleComboBox.select(moduleName);
+        DynaForm form;
 
-	private class ModuleSelectionComboBox extends ValueComboBox {
-		private static final long serialVersionUID = 1L;
+        if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
+            form = AccountDefaultDynaFormFactory.getForm();
+        } else {
+            throw new MyCollabException(
+                    "Do not support custom layout of module " + moduleName);
+        }
 
-		public ModuleSelectionComboBox() {
-			super(false, CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
-					CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
-					CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
-					CrmTypeConstants.TASK, CrmTypeConstants.CALL,
-					CrmTypeConstants.MEETING);
-		}
-	}
+        layoutComp.displayLayoutCustom(form);
+    }
+
+    private class ModuleSelectionComboBox extends ValueComboBox {
+        private static final long serialVersionUID = 1L;
+
+        public ModuleSelectionComboBox() {
+            super(false, CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
+                    CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
+                    CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
+                    CrmTypeConstants.TASK, CrmTypeConstants.CALL,
+                    CrmTypeConstants.MEETING);
+        }
+    }
 
 }

@@ -216,8 +216,9 @@ class CustomLayoutDDComp extends HorizontalLayout {
                                 // do nothing
                             } else {
                                 // swap component source and dest component
+                                srcGridLayout.removeComponent(srcComp);
                                 if (((CustomFieldComponent) destComp)
-                                        .getFieldName().equals("")) {
+                                        .isEmptyField()) {
                                     destGridLayout.insertRow(destGridLayout
                                             .getRows() - 1);
                                 } else {
@@ -225,7 +226,7 @@ class CustomLayoutDDComp extends HorizontalLayout {
                                     srcGridLayout.addComponent(destComp,
                                             srcColumn, srcRow);
                                 }
-                                srcGridLayout.removeComponent(srcComp);
+
                                 destGridLayout.addComponent(srcComp,
                                         destColumn, destRow);
 
@@ -242,8 +243,7 @@ class CustomLayoutDDComp extends HorizontalLayout {
             int fieldCount = section.getFieldCount();
             for (int j = 0; j < fieldCount; j++) {
                 AbstractDynaField field = section.getField(j);
-                CustomFieldComponent fieldBtn = new CustomFieldComponent(
-                        field.getDisplayName());
+                CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
                 fieldBtn.setWidth("100%");
                 if (field.isMandatory())
                     fieldBtn.setMandatory(true);
@@ -284,8 +284,7 @@ class CustomLayoutDDComp extends HorizontalLayout {
             @Override
             public boolean isDraggable(Component component) {
                 if (component instanceof CustomFieldComponent) {
-                    if (((CustomFieldComponent) component).getFieldName()
-                            .equals(""))
+                    if (((CustomFieldComponent) component).isEmptyField())
                         return false;
                     return true;
                 }
