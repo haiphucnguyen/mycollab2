@@ -4,17 +4,9 @@ import java.io.InputStream;
 import java.util.Set;
 
 import org.infinispan.AdvancedCache;
-import org.infinispan.CacheImpl;
 import org.infinispan.api.BasicCache;
-import org.infinispan.api.BasicCacheContainer;
 import org.infinispan.context.Flag;
 import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.remoting.transport.Transport;
-import org.infinispan.remoting.transport.jgroups.JGroupsTransport;
-import org.jgroups.Channel;
-import org.jgroups.fork.ForkChannel;
-import org.jgroups.protocols.FRAG2;
-import org.jgroups.stack.ProtocolStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +16,7 @@ public class LocalCacheManager {
 
 	private static String GLOBAL_CACHE = "global";
 
-	private static BasicCacheContainer instance;
+	private static DefaultCacheManager instance;
 
 	static {
 		try {
@@ -64,6 +56,10 @@ public class LocalCacheManager {
 	public static void removeCache(String id) {
 		BasicCache<String, Object> cache = instance.getCache(id);
 		cache.clear();
+	}
+
+	public static DefaultCacheManager getCacheManager() {
+		return instance;
 	}
 
 	public static void removeCacheItems(String id, String prefixKey) {

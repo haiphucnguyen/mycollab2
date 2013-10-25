@@ -1,30 +1,41 @@
 package com.esofthead.mycollab.jetty;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.servlet.SessionTrackingMode;
-
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.infinispan.Cache;
+
+import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.jetty.clustering.InfinispanHttpSession;
+import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
 
 public class ServerRunner {
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(8080);
 		String webappDirLocation = "src/main/webapp/";
+		WebAppContext webAppContext = new WebAppContext();
+		webAppContext.setContextPath("/");
+		webAppContext.setWar(webappDirLocation);
+		webAppContext.setClassLoader(Thread.currentThread()
+				.getContextClassLoader());
+		webAppContext.setResourceBase(webappDirLocation);
 
-		WebAppContext webapp = new WebAppContext();
-		webapp.setContextPath("/");
-		webapp.setWar(webappDirLocation);
-		webapp.setClassLoader(Thread.currentThread().getContextClassLoader());
-		webapp.setResourceBase(webappDirLocation);
-		Set<SessionTrackingMode> modes = new HashSet<SessionTrackingMode>();
-		modes.add(SessionTrackingMode.COOKIE);
-		modes.add(SessionTrackingMode.URL);
+		// add section clustering mode
+		Cache<String, InfinispanHttpSession> cache = LocalCacheManager
+				.getCacheManager().getCache("mainClustering");
 
-		webapp.getSessionHandler().getSessionManager()
-				.setSessionTrackingModes(modes);
-		server.setHandler(webapp);
+		// create a InfinispanSessionManager instance
+		InfinispanSessionManager sm = new InfinispanSessionManager(cache);
+
+		// apply the session manager to the jetty server
+		SessionHandler sh = new SessionHandler();
+		sh.setSessionManager(sm);
+
+		webAppContext.setSessionHandler(sh);
+		// and start the cache
+		cache.start();
+
+		server.setHandler(webAppContext);
 
 		server.start();
 
