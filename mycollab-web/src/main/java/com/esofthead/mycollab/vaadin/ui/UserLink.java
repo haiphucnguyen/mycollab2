@@ -4,9 +4,9 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -25,7 +25,6 @@ public class UserLink extends Button {
 	private static final long serialVersionUID = 1L;
 
 	private Integer sAccountId;
-	private User user;
 
 	public UserLink(final String username, String userAvatarId,
 			final String displayName, boolean useWordWrap) {
@@ -47,10 +46,10 @@ public class UserLink extends Button {
 			public void buttonClick(ClickEvent event) {
 				UserService userService = ApplicationContextUtil
 						.getSpringBean(UserService.class);
-				UserLink.this.user = userService.findUserByUserNameInAccount(
-						username, AppContext.getAccountId());
+				User user = userService.findUserByUserNameInAccount(username,
+						AppContext.getAccountId());
 				UserLink.this.getParent().getWindow()
-						.addWindow(new UserQuickPreviewWindow());
+						.addWindow(new UserQuickPreviewWindow(user));
 			}
 		});
 	}
@@ -66,14 +65,13 @@ public class UserLink extends Button {
 
 	public class UserQuickPreviewWindow extends Window {
 		private static final long serialVersionUID = 1L;
+		private User user;
 
-		private CrmLinkGenerator linkGenerator;
-
-		public UserQuickPreviewWindow() {
+		public UserQuickPreviewWindow(User user) {
 			super("User preview");
 			this.center();
 			this.setWidth("500px");
-			this.linkGenerator = new CrmLinkGenerator(sAccountId);
+			this.user = user;
 			constructBody();
 		}
 
@@ -95,11 +93,12 @@ public class UserLink extends Button {
 			topLayout.addComponent(new Label("View full profile at: "));
 
 			Label userFullLinkLabel = new Label("<a href=\""
-					+ linkGenerator.generateUserPreviewFullLink(user
-							.getUsername())
+					+ CrmLinkGenerator.generatePreviewFullUserLink(
+							AppContext.getSiteUrl(), user.getUsername())
 					+ "\">"
-					+ linkGenerator.generateUserPreviewFullLink(user
-							.getUsername()) + userActionScript + "</a>");
+					+ CrmLinkGenerator.generatePreviewFullUserLink(
+							AppContext.getSiteUrl(), user.getUsername())
+					+ userActionScript + "</a>");
 			userFullLinkLabel.setContentMode(Label.CONTENT_XHTML);
 			topLayout.addComponent(userFullLinkLabel);
 			// -----------------------------------

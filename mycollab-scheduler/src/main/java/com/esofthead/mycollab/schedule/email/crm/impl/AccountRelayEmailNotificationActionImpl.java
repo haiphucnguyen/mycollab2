@@ -10,6 +10,7 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -18,7 +19,6 @@ import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
 @Component
 public class AccountRelayEmailNotificationActionImpl extends
@@ -71,20 +71,17 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleAccount simpleAccount) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-				simpleAccount.getSaccountid());
-
 		hyperLinks
 				.put("accountURL",
-						linkGenerator.getSiteUrl()
+						getSiteUrl(simpleAccount.getSaccountid())
 								+ CrmLinkGenerator.generateCrmItemLink(
 										CrmTypeConstants.ACCOUNT,
 										simpleAccount.getId()));
 		if (simpleAccount.getAssignuser() != null) {
-			hyperLinks
-					.put("assignUserURL", linkGenerator
-							.generateUserPreviewFullLink(simpleAccount
-									.getAssignuser()));
+			hyperLinks.put("assignUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleAccount.getSaccountid()),
+							simpleAccount.getAssignuser()));
 		}
 		return hyperLinks;
 	}
@@ -110,10 +107,10 @@ public class AccountRelayEmailNotificationActionImpl extends
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
 
-			CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-					simpleAccount.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", linkGenerator
-					.generateUserPreviewFullLink(auditLog.getPosteduser()));
+			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleAccount.getSaccountid()),
+							auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -135,10 +132,10 @@ public class AccountRelayEmailNotificationActionImpl extends
 				+ "\"", "templates/email/crm/accountAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
 
-		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-				simpleAccount.getSaccountid());
-		templateGenerator.putVariable("userComment", linkGenerator
-				.generateUserPreviewFullLink(emailNotification.getChangeby()));
+		templateGenerator.putVariable("userComment", CrmLinkGenerator
+				.generatePreviewFullUserLink(
+						getSiteUrl(simpleAccount.getSaccountid()),
+						emailNotification.getChangeby()));
 		templateGenerator.putVariable("simpleAccount", simpleAccount);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleAccount));

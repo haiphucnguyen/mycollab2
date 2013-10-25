@@ -15,14 +15,15 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmLocalizationTypeMap;
-import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -131,9 +132,6 @@ public class ActivityStreamPanel extends Depot {
 							.equals(activityStream.getAction())) {
 						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
 					}
-					CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-							activityStream.getSaccountid());
-
 					StringBuffer content = new StringBuffer(
 							LocalizationHelper.getMessage(
 									action,
@@ -141,9 +139,12 @@ public class ActivityStreamPanel extends Depot {
 											activityStream
 													.getCreatedUserAvatarId(),
 											16),
-									linkGenerator
-											.generateUserPreviewFullLink(activityStream
-													.getCreateduser()),
+									CrmLinkGenerator.generatePreviewFullUserLink(
+											SiteConfiguration
+													.getSiteUrl(AppContext
+															.getSession()
+															.getSubdomain()),
+											activityStream.getCreateduser()),
 									activityStream.getCreatedUserFullName(),
 									LocalizationHelper
 											.getMessage(CrmLocalizationTypeMap

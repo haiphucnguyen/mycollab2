@@ -10,12 +10,12 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.MeetingRelayEmailNotificationAction;
 
 @Component
@@ -63,11 +63,9 @@ public class MeetingRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleMeeting simpleMeeting) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-				simpleMeeting.getSaccountid());
 		hyperLinks
 				.put("meetingURL",
-						linkGenerator.getSiteUrl()
+						getSiteUrl(simpleMeeting.getSaccountid())
 								+ CrmLinkGenerator.generateCrmItemLink(
 										CrmTypeConstants.MEETING,
 										simpleMeeting.getId()));
@@ -94,10 +92,10 @@ public class MeetingRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-					simpleMeeting.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", linkGenerator
-					.generateUserPreviewFullLink(auditLog.getPosteduser()));
+			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleMeeting.getSaccountid()),
+							auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -119,10 +117,10 @@ public class MeetingRelayEmailNotificationActionImpl extends
 						+ StringUtils.subString(simpleMeeting.getSubject(), 100)
 						+ "\"", "templates/email/crm/meetingAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-				simpleMeeting.getSaccountid());
-		templateGenerator.putVariable("userComment", linkGenerator
-				.generateUserPreviewFullLink(emailNotification.getChangeby()));
+		templateGenerator.putVariable("userComment", CrmLinkGenerator
+				.generatePreviewFullUserLink(
+						getSiteUrl(simpleMeeting.getSaccountid()),
+						emailNotification.getChangeby()));
 		templateGenerator.putVariable("simpleMeeting", simpleMeeting);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleMeeting));

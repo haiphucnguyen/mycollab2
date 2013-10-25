@@ -10,12 +10,12 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 
 @Component
@@ -65,19 +65,17 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	private Map<String, String> constructHyperLinks(
 			SimpleOpportunity simpleOpportunity) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-				simpleOpportunity.getSaccountid());
 		hyperLinks.put(
 				"opportunityURL",
-				linkGenerator.getSiteUrl()
+				getSiteUrl(simpleOpportunity.getSaccountid())
 						+ CrmLinkGenerator.generateCrmItemLink(
 								CrmTypeConstants.OPPORTUNITY,
 								simpleOpportunity.getId()));
 		if (simpleOpportunity.getAssignuser() != null) {
-			hyperLinks
-					.put("assignUserURL", linkGenerator
-							.generateUserPreviewFullLink(simpleOpportunity
-									.getAssignuser()));
+			hyperLinks.put("assignUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleOpportunity.getSaccountid()),
+							simpleOpportunity.getAssignuser()));
 		}
 		return hyperLinks;
 	}
@@ -103,10 +101,10 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-					simpleOpportunity.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", linkGenerator
-					.generateUserPreviewFullLink(auditLog.getPosteduser()));
+			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleOpportunity.getSaccountid()),
+							auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -130,10 +128,10 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 						+ "\"",
 				"templates/email/crm/opportunityAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		CrmLinkGenerator linkGenerator = new CrmLinkGenerator(
-				simpleOpportunity.getSaccountid());
-		templateGenerator.putVariable("userComment", linkGenerator
-				.generateUserPreviewFullLink(emailNotification.getChangeby()));
+		templateGenerator.putVariable("userComment", CrmLinkGenerator
+				.generatePreviewFullUserLink(
+						getSiteUrl(simpleOpportunity.getSaccountid()),
+						emailNotification.getChangeby()));
 
 		templateGenerator.putVariable("simpleOpportunity", simpleOpportunity);
 		templateGenerator.putVariable("hyperLinks",

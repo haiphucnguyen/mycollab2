@@ -82,6 +82,7 @@ public class ProjectMailLinkGenerator extends GenericLinkGenerator {
 						problemId);
 	}
 
+	@Override
 	public String getSiteUrl() {
 		return siteUrl;
 	}
