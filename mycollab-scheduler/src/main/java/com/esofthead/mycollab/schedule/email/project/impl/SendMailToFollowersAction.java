@@ -18,8 +18,8 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
-public abstract class SendMailToFollowersAction
-		implements SendingRelayEmailNotificationAction {
+public abstract class SendMailToFollowersAction implements
+		SendingRelayEmailNotificationAction {
 	@Autowired
 	protected ExtMailService extMailService;
 
@@ -54,8 +54,8 @@ public abstract class SendMailToFollowersAction
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com", lst, null, null,
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -79,8 +79,8 @@ public abstract class SendMailToFollowersAction
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com", lst, null, null,
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -105,8 +105,8 @@ public abstract class SendMailToFollowersAction
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com", lst, null, null,
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}

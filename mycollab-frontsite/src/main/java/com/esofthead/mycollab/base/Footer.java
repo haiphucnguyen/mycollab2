@@ -21,9 +21,9 @@ public class Footer extends Panel {
 		add(tour);
 		BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>("pricinglink", PricingPage.class);
 		add(pricing);
-		ExternalLink support = new ExternalLink("supportlink", "mailto:sales@esofthead.com");
+		ExternalLink support = new ExternalLink("supportlink", "mailto:sales@mycollab.com");
 		add(support);
-		ExternalLink contact = new ExternalLink("contactlink", "mailto:sales@esofthead.com");
+		ExternalLink contact = new ExternalLink("contactlink", "mailto:sales@mycollab.com");
 		add(contact);
 		BookmarkablePageLink<Void> privacy = new BookmarkablePageLink<Void>("privacylink", PrivacyPage.class);
 		add(privacy);

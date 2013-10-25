@@ -21,8 +21,8 @@ public class MailRelayServiceImpl implements MailRelayService {
 	public void saveRelayEmail(String[] toNames, String[] toEmails,
 			String subject, String bodyContent) {
 		RelayEmailWithBLOBs relayEmail = new RelayEmailWithBLOBs();
-		relayEmail.setFromemail("noreply@esofthead.com");
-		relayEmail.setFromname("noreply@esofthead.com");
+		relayEmail.setFromemail("noreply@mycollab.com");
+		relayEmail.setFromname("noreply@mycollab.com");
 
 		XStream xmlSerializer = new XStream();
 		String recipientList = xmlSerializer.toXML(new String[][] { toEmails,

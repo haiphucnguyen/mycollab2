@@ -11,7 +11,7 @@ public class SiteConfiguration {
 		instance = new SiteConfiguration();
 
 		instance.sentErrorEmail = ApplicationProperties.getString(
-				ApplicationProperties.ERROR_SENDTO, "hainguyen@esofthead.com");
+				ApplicationProperties.ERROR_SENDTO, "hainguyen@mycollab.com");
 
 		instance.siteName = ApplicationProperties.getString(
 				ApplicationProperties.SITE_NAME, "MyCollab");
@@ -164,8 +164,6 @@ public class SiteConfiguration {
 	public static SharingOptions getSharingOptions() {
 		return instance.sharingOptions;
 	}
-
-	
 
 	public static String getSiteUrl(String subdomain) {
 		String siteUrl = "";

@@ -76,8 +76,8 @@ public class SendUserInvitationEmailJob extends QuartzJobBean {
 					.getUsername() : "there";
 			templateGenerator.putVariable("userName", userName);
 			templateGenerator.putVariable("inviterName", inviterName);
-			extMailService.sendHTMLMail("noreply@esofthead.com",
-					"noreply@esofthead.com", Arrays
+			extMailService.sendHTMLMail("noreply@mycollab.com",
+					"noreply@mycollab.com", Arrays
 							.asList(new MailRecipientField(invitation
 									.getUsername(), invitation.getUsername())),
 					null, null, templateGenerator.generateSubjectContent(),
