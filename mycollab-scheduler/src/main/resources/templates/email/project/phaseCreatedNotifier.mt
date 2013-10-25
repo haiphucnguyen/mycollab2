@@ -38,7 +38,7 @@
 									
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Responsible User:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="${hyperLinks.ownerUserUrl}" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.ownerFullName</a>
+										<a href="$!hyperLinks.ownerUserUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.ownerFullName</a>
 									</td>
 								</tr>
 								<tr>

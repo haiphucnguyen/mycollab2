@@ -46,7 +46,7 @@ import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 import com.esofthead.mycollab.reporting.Templates;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
@@ -108,7 +108,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 			StyleBuilder styleHyperLink = stl.style(Templates.bold12TitleStyle)
 					.setBorder(stl.penThin()).setUnderline(true);
 
-			MailLinkGenerator linkGenerator = new MailLinkGenerator(
+			ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 					taskList.getProjectid());
 			String phaseHyperLink = linkGenerator
 					.generateMilestonePreviewFullLink(taskList.getMilestoneid());

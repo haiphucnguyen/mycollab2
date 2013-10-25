@@ -3138,6 +3138,17 @@ div.v-lazyloadingwrapper-loading {
     padding: 0px;
 }
 
+.v-csslayout.border-box2-color {
+    background-color: rgb(212, 223, 239);
+    border-radius: 5px;
+    padding: 0px;
+    border: 1px solid rgb(169, 169, 169);
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0px;
+}
+
 .v-horizontallayout.border-box2-no-margin .v-horizontallayout-margin {
     padding: 0px 1px 1px 0px;
 }

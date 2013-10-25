@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 
 @Component
@@ -59,7 +59,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	private Map<String, String> createHyperLinks(SimpleProblem problem,
 			SimpleRelayEmailNotification emailNotification) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				problem.getProjectid());
 
 		hyperLinks.put("problemURL",
@@ -137,7 +137,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(problem, emailNotification));
 		templateGenerator.putVariable("comment", emailNotification);
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				problem.getProjectid());
 		templateGenerator.putVariable("userComment", linkGenerator
 				.generateUserPreviewFullLink(emailNotification.getChangeby()));

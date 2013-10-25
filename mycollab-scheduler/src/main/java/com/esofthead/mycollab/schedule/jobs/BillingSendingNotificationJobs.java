@@ -53,41 +53,38 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 
 		List<BillingAccountWithOwners> trialAccountsWithOwners = billingService
 				.getTrialAccountsWithOwners();
-		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_1ST);
+		Date dateRemind1st = cal.getTime();
+
+		cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_2ND);
+		Date dateRemind2nd = cal.getTime();
+
+		cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.add(Calendar.DATE, (-1) * DATE_NOTIFY_EXPIRE);
+		Date dateExpire = cal.getTime();
 
 		if (trialAccountsWithOwners != null
 				&& trialAccountsWithOwners.size() > 0) {
 			for (BillingAccountWithOwners account : trialAccountsWithOwners) {
 				log.debug("Check whether account exceed 25 days to remind user upgrade account");
-				cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_1ST);
-				Date dateRemid1st = cal.getTime();
 				if (df.format(account.getCreatedtime()).equals(
-						df.format(dateRemid1st))) {
+						df.format(dateRemind1st))) {
 					AccountBillingSendEmail notificationFactory = new AccountBillingSendEmail(
 							account, DATE_REMIND_FOR_FREEPLAN_1ST);
 					notificationFactory.sendingEmail();
-					cal.add(Calendar.DATE, DATE_REMIND_FOR_FREEPLAN_1ST);
-					continue;
-				}
-				log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
-				cal.add(Calendar.DATE, DATE_REMIND_FOR_FREEPLAN_1ST
-						- DATE_REMIND_FOR_FREEPLAN_2ND);
-				Date dateRemind2nd = cal.getTime();
-				if (df.format(account.getCreatedtime()).equals(
+				} else if (df.format(account.getCreatedtime()).equals(
 						df.format(dateRemind2nd))) {
+					log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
 					AccountBillingSendEmail notificationFactory = new AccountBillingSendEmail(
 							account, DATE_REMIND_FOR_FREEPLAN_2ND);
 					notificationFactory.sendingEmail();
-					cal.add(Calendar.DATE, DATE_REMIND_FOR_FREEPLAN_2ND);
-					continue;
-				}
-				log.debug("Check whether account exceed 32 days to convert to basic plan");
-				cal.add(Calendar.DATE, DATE_REMIND_FOR_FREEPLAN_2ND
-						- DATE_NOTIFY_EXPIRE);
-				Date dateExpire = cal.getTime();
-				if (df.format(account.getCreatedtime()).equals(
+				} else if (df.format(account.getCreatedtime()).equals(
 						df.format(dateExpire))) {
+					log.debug("Check whether account exceed 32 days to convert to basic plan");
 					BillingAccount billingAccount = billingAccountService
 							.findByPrimaryKey(account.getId(), account.getId());
 					BillingPlan freeBillingPlan = billingService
@@ -97,10 +94,7 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 					AccountBillingSendEmail notificationFactory = new AccountBillingSendEmail(
 							account, DATE_NOTIFY_EXPIRE);
 					notificationFactory.sendingEmail();
-					cal.add(Calendar.DATE, DATE_NOTIFY_EXPIRE);
-					continue;
 				}
-				cal.add(Calendar.DATE, DATE_NOTIFY_EXPIRE);
 			}
 		}
 	}

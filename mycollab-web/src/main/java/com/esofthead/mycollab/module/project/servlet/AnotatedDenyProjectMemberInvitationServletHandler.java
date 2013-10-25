@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.servlet.GenericServlet;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
@@ -218,7 +218,7 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 					ProjectMember projectMember = projectMemberService
 							.findMemberByUsername(email, projectId, sAccountId);
 					if (projectMember != null) {
-						MailLinkGenerator linkGenerator = new MailLinkGenerator(
+						ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 								projectId);
 						String html = generateRefuseMemberDenyActionPage(linkGenerator
 								.generateProjectFullLink());

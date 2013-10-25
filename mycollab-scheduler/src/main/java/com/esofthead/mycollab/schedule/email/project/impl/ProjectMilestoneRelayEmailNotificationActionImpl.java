@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 
 @Component
@@ -59,7 +59,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	private Map<String, String> createHyperLinks(SimpleMilestone milestone,
 			SimpleRelayEmailNotification emailNotification) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				milestone.getProjectid());
 		hyperLinks.put("milestoneURL", linkGenerator
 				.generateMilestonePreviewFullLink(milestone.getId()));
@@ -130,7 +130,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("milestone", milestone);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(milestone, emailNotification));
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				milestone.getProjectid());
 		templateGenerator.putVariable("comment", emailNotification);
 		templateGenerator.putVariable("userComment", linkGenerator

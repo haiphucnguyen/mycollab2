@@ -44,8 +44,8 @@ public class LeadTableDisplay extends
 
 	public LeadTableDisplay(String viewId, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(ApplicationContextUtil.getSpringBean(LeadService.class), SimpleLead.class,
-				viewId, requiredColumn, displayColumns);
+		super(ApplicationContextUtil.getSpringBean(LeadService.class),
+				SimpleLead.class, viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;

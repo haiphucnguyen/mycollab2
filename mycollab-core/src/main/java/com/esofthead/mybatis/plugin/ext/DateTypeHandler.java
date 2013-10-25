@@ -6,26 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 @MappedJdbcTypes(JdbcType.TIMESTAMP)
 public class DateTypeHandler extends BaseTypeHandler<Date> {
 
-	static {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+	private static DateTimeZone utcZone = DateTimeZone.UTC;
 
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i,
 			Date parameter, JdbcType jdbcType) throws SQLException {
-		ps.setTimestamp(i, new Timestamp((parameter).getTime()));
+		DateTime dt = new DateTime(parameter);
+		dt.withZone(utcZone);
+		ps.setTimestamp(i, new Timestamp(dt.getMillis()));
 	}
 
 	@Override
@@ -33,9 +32,18 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 			throws SQLException {
 		Timestamp sqlTimestamp = rs.getTimestamp(columnName);
 		if (sqlTimestamp != null) {
-			return new Date(sqlTimestamp.getTime());
+			return convertTimeToCorrectTimezone(sqlTimestamp.getTime());
 		}
 		return null;
+	}
+
+	private Date convertTimeToCorrectTimezone(long timeInMillis) {
+		DateTime dt = new DateTime();
+		dt = dt.withMillis(DateTimeZone.getDefault().getOffset(timeInMillis)
+				+ timeInMillis);
+		dt = dt.withZone(utcZone);
+		Date date = dt.toDate();
+		return date;
 	}
 
 	@Override
@@ -43,7 +51,7 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 			throws SQLException {
 		Timestamp sqlTimestamp = rs.getTimestamp(columnIndex);
 		if (sqlTimestamp != null) {
-			return new Date(sqlTimestamp.getTime());
+			return convertTimeToCorrectTimezone(sqlTimestamp.getTime());
 		}
 		return null;
 	}
@@ -58,19 +66,12 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 		return null;
 	}
 
-	private static void convertDate(Date date1) throws ParseException {
-		SimpleDateFormat sdfFormatter = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
-		String dateStr = sdfFormatter.format(date1);
-		System.out.println(dateStr);
-		SimpleDateFormat sdfParser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		sdfParser.setTimeZone(TimeZone.getTimeZone("UTC"));
-		Date utcDate = sdfParser.parse(dateStr);
-		System.out.println(sdfFormatter.format(utcDate));
-	}
-
 	public static void main(String[] args) throws ParseException {
-		Date d = new GregorianCalendar(2013, 3, 1, 17, 57, 34).getTime();
-		convertDate(d);
+		DateTime dt = new DateTime();
+		System.out.println(DateTimeZone.getDefault().getOffset(1382573312000L)
+				+ "---" + DateTimeZone.getDefault().getOffset(1382573312000L)
+				+ 1382573312000L);
+		dt = dt.withMillis(DateTimeZone.getDefault().getOffset(1382573312000L) + 1382573312000L);
+		System.out.println(dt);
 	}
 }

@@ -37,7 +37,7 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.servlet.GenericServlet;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.template.velocity.TemplateContext;
@@ -137,7 +137,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 				member.setProjectroleid(projectRoleId);
 				projectMemberService.updateWithSession(member, " ");
 			}
-			MailLinkGenerator linkGenerator = new MailLinkGenerator(projectId);
+			ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(projectId);
 			response.sendRedirect(linkGenerator.generateProjectFullLink());
 		} catch (Exception e) {
 			throw new MyCollabException(e);
@@ -147,7 +147,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 	private void handleOutSideMemberInvite(String email, Integer projectId,
 			Integer sAccountId, Integer projectRoleId, String inviterName,
 			HttpServletResponse response, HttpServletRequest request) {
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(projectId);
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(projectId);
 		String projectLinkURL = linkGenerator.generateProjectFullLink();
 
 		String handelCreateAccountURL = request.getContextPath() + "/"

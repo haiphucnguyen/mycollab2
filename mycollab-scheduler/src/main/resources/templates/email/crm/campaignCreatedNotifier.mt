@@ -38,7 +38,7 @@
 									<td style="vertical-align: top;">$!date.format('short_date', $!simpleCampaign.enddate)</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="mailto:$!simpleCampaign.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCampaign.assignUserFullName</a>
+										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleCampaign.assignUserFullName</a>
 									</td>	
 								</tr>
 								<tr>

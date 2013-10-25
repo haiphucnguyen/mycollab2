@@ -44,7 +44,7 @@
 									<td style="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleTask.priority</td>
 									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
-										<a href="mailto:$!simpleTask.assignuser" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleTask.assignUserFullName</a>
+										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleTask.assignUserFullName</a>
 									</td>
 								</tr>
 								<tr>

@@ -1,10 +1,9 @@
-package com.esofthead.mycollab.schedule.email.crm;
+package com.esofthead.mycollab.module.crm;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 
 public class CrmLinkGenerator {
-
 	public static String generateAccountPreviewLink(Integer accountId) {
 		return "crm/account/preview/" + UrlEncodeDecoder.encode(accountId);
 	}
@@ -66,5 +65,10 @@ public class CrmLinkGenerator {
 			result = generateCallPreviewLink(typeid);
 		}
 		return "#" + result;
+	}
+	public static String generatePreviewFullUserLink(String siteUrl,
+			String username) {
+		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
+				+ "account/user/preview/" + UrlEncodeDecoder.encode(username);
 	}
 }

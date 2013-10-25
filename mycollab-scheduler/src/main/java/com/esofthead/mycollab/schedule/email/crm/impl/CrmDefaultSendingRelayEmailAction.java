@@ -47,6 +47,9 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 
 	protected String crmType;
 
+	private Integer sAccountId;
+	private String siteUrl;
+
 	public CrmDefaultSendingRelayEmailAction(String crmType) {
 		this.crmType = crmType;
 	}
@@ -172,26 +175,6 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		}
 	}
 
-	public static String getSiteUrl(int accountId) {
-		String siteUrl = "";
-		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
-			BillingAccountService billingAccountService = ApplicationContextUtil
-					.getSpringBean(BillingAccountService.class);
-			BillingAccount account = billingAccountService
-					.getAccountById(accountId);
-			if (account != null) {
-				siteUrl = String.format(ApplicationProperties
-						.getString(ApplicationProperties.APP_URL), account
-						.getSubdomain());
-			}
-		} else {
-			siteUrl = ApplicationProperties
-					.getString(ApplicationProperties.APP_URL);
-		}
-		return siteUrl;
-
-	}
-
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification);
 
@@ -265,4 +248,27 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		return false;
 	}
 
+	public String getSiteUrl(Integer sAccountId) {
+		if (CrmDefaultSendingRelayEmailAction.this.sAccountId == null) {
+			CrmDefaultSendingRelayEmailAction.this.sAccountId = sAccountId;
+			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+				BillingAccountService billingAccountService = ApplicationContextUtil
+						.getSpringBean(BillingAccountService.class);
+				BillingAccount account = billingAccountService
+						.getAccountById(sAccountId);
+				if (account != null) {
+					siteUrl = String.format(ApplicationProperties
+							.getString(ApplicationProperties.APP_URL), account
+							.getSubdomain());
+				}
+			} else {
+				siteUrl = ApplicationProperties
+						.getString(ApplicationProperties.APP_URL);
+			}
+			return siteUrl;
+		} else if (CrmDefaultSendingRelayEmailAction.this.sAccountId == sAccountId) {
+			return siteUrl;
+		}
+		return "";
+	}
 }

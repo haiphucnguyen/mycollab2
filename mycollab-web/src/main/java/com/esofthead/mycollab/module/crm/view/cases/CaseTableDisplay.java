@@ -36,8 +36,8 @@ public class CaseTableDisplay extends
 
 	public CaseTableDisplay(String viewId, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(ApplicationContextUtil.getSpringBean(CaseService.class), SimpleCase.class,
-				viewId, requiredColumn, displayColumns);
+		super(ApplicationContextUtil.getSpringBean(CaseService.class),
+				SimpleCase.class, viewId, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;

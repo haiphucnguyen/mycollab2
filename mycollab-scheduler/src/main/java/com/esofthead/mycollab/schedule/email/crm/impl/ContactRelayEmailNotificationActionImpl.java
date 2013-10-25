@@ -6,19 +6,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 
 @Component
 public class ContactRelayEmailNotificationActionImpl extends
@@ -79,7 +77,13 @@ public class ContactRelayEmailNotificationActionImpl extends
 									CrmTypeConstants.ACCOUNT,
 									simpleContact.getAccountid()));
 		}
-		// TODO: assignee
+
+		if (simpleContact.getAssignuser() != null) {
+			hyperLinks.put("assignUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleContact.getSaccountid()),
+							simpleContact.getAssignuser()));
+		}
 		return hyperLinks;
 	}
 
@@ -104,6 +108,10 @@ public class ContactRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleContact.getSaccountid()),
+							auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -124,13 +132,10 @@ public class ContactRelayEmailNotificationActionImpl extends
 				+ StringUtils.subString(simpleContact.getContactName(), 100)
 				+ "\"", "templates/email/crm/contactAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable(
-				"userComment",
-				getSiteUrl(emailNotification.getSaccountid())
-						+ ProjectLinkUtils.URL_PREFIX_PARAM
-						+ "account/user/preview/"
-						+ UrlEncodeDecoder.encode(emailNotification
-								.getChangeby()));
+		templateGenerator.putVariable("userComment", CrmLinkGenerator
+				.generatePreviewFullUserLink(
+						getSiteUrl(simpleContact.getSaccountid()),
+						emailNotification.getChangeby()));
 		templateGenerator.putVariable("simpleContact", simpleContact);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleContact));

@@ -45,7 +45,7 @@
 								</tr>
 								<tr>
                                 	<td colspan="4">
-                                		<p>Changes (by $historyLog.postedUserFullName):</p>
+                                		<p>Changes (by <a href="$!postedUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$historyLog.postedUserFullName</a>):</p>
                                 		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
                                 				<td style="font-weight: normal; border-color: rgb(169, 169, 169);">Fields</td>

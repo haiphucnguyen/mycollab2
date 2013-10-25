@@ -178,7 +178,6 @@ public class TaskDisplayComponent extends CssLayout {
 						} else if ("closeTask".equals(event.getFieldName())
 								|| "reopenTask".equals(event.getFieldName())
 								|| "pendingTask".equals(event.getFieldName())
-								|| "reopenTask".equals(event.getFieldName())
 								|| "deleteTask".equals(event.getFieldName())) {
 							TaskDisplayComponent.this.removeAllComponents();
 							final ProjectTaskListService taskListService = ApplicationContextUtil

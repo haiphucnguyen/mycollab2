@@ -6,18 +6,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
-import com.esofthead.mycollab.schedule.email.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 
 @Component
@@ -70,6 +68,12 @@ public class TaskRelayEmailNotificationActionImpl extends
 				getSiteUrl(simpleTask.getSaccountid())
 						+ CrmLinkGenerator.generateCrmItemLink(
 								CrmTypeConstants.TASK, simpleTask.getId()));
+		if (simpleTask.getAssignuser() != null) {
+			hyperLinks.put("assignUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleTask.getSaccountid()),
+							simpleTask.getAssignuser()));
+		}
 
 		return hyperLinks;
 	}
@@ -94,6 +98,10 @@ public class TaskRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+					.generatePreviewFullUserLink(
+							getSiteUrl(simpleTask.getSaccountid()),
+							auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -114,13 +122,11 @@ public class TaskRelayEmailNotificationActionImpl extends
 						+ StringUtils.subString(simpleTask.getSubject(), 100)
 						+ "\"", "templates/email/crm/crmTaskAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable(
-				"userComment",
-				getSiteUrl(emailNotification.getSaccountid())
-						+ ProjectLinkUtils.URL_PREFIX_PARAM
-						+ "account/user/preview/"
-						+ UrlEncodeDecoder.encode(emailNotification
-								.getChangeby()));
+		templateGenerator.putVariable("userComment", CrmLinkGenerator
+				.generatePreviewFullUserLink(
+						getSiteUrl(simpleTask.getSaccountid()),
+						emailNotification.getChangeby()));
+
 		templateGenerator.putVariable("simpleTask", simpleTask);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleTask));

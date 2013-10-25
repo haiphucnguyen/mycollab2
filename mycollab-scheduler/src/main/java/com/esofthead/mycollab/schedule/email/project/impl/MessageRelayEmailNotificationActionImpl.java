@@ -11,7 +11,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.schedule.email.project.MailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 
 @Service
@@ -24,7 +24,7 @@ public class MessageRelayEmailNotificationActionImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleMessage message) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				message.getProjectid());
 		hyperLinks.put("messageUrl",
 				linkGenerator.generateMessagePreviewFullLink(message.getId()));
@@ -75,7 +75,7 @@ public class MessageRelayEmailNotificationActionImpl extends
 		int messageId = emailNotification.getTypeid();
 		SimpleMessage message = messageService.findMessageById(messageId,
 				emailNotification.getSaccountid());
-		MailLinkGenerator linkGenerator = new MailLinkGenerator(
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				message.getProjectid());
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$message.projectName]: $!message.fullPostedUserName has commented on \""
