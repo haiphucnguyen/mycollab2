@@ -9,9 +9,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import org.joda.time.DateTimeZone;
+
 public class DateTimeUtils {
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
+
+	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+			"MM/dd/yyyy HH:mm:ss Z");
 
 	public static Date convertDate(Date value) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -128,6 +133,19 @@ public class DateTimeUtils {
 
 		return simpleDateFormat.format(date);
 	}
-	
-	
+
+	public static String formatDateTime(Date date, TimeZone timezone) {
+		if (date == null) {
+			return "";
+		}
+
+		if (timezone != null) {
+			simpleDateTimeFormat.setTimeZone(timezone);
+		}
+
+		System.out.println("Time duration: " + date.getTime() + "---" + date
+				+ "---" + simpleDateTimeFormat.format(date));
+		return simpleDateTimeFormat.format(date);
+	}
+
 }
