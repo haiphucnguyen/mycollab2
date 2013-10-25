@@ -99,7 +99,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		FAQLayout.addComponent(header);
 
 		Label contentText = new Label(
-				"For specific questions related to billing, features, plans, upgrades, downgrades or cancellations, please send email to <a href=\"mailto:support@esofthead.com\">support@esofthead.com</a>",
+				"For specific questions related to billing, features, plans, upgrades, downgrades or cancellations, please send email to <a href=\"mailto:support@mycollab.com\">support@mycollab.com</a>",
 				Label.CONTENT_XHTML);
 		contentText.addStyleName("faq-content");
 		FAQLayout.addComponent(contentText);

@@ -31,7 +31,7 @@ public class MainNavigationMenu extends Panel {
 				"blog", BlogPage.class);
 		add(blog);
 		ExternalLink support = new ExternalLink("support",
-				"mailto:sales@esofthead.com");
+				"mailto:sales@mycollab.com");
 		add(support);
 		BookmarkablePageLink<Void> pricing = new BookmarkablePageLink<Void>(
 				"pricing_signup", PricingPage.class);

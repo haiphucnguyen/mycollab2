@@ -139,8 +139,8 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 					templateGenerator.putVariable("userName",
 							user.getUsername());
 					templateGenerator.putVariable("link", link);
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com",
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com",
 							Arrays.asList(new MailRecipientField(user
 									.getEmail(), user.getDisplayName())), null,
 							null, templateGenerator.generateSubjectContent(),
@@ -161,8 +161,8 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 							+ ".mycollab.com";
 					templateGenerator.putVariable("link", link);
 
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com",
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com",
 							Arrays.asList(new MailRecipientField(user
 									.getEmail(), user.getDisplayName())), null,
 							null, templateGenerator.generateSubjectContent(),

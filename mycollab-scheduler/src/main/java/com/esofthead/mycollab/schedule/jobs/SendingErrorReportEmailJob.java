@@ -37,7 +37,7 @@ public class SendingErrorReportEmailJob extends QuartzJobBean {
 				templateGenerator.putVariable("issueCol", listIssues);
 				Mailer mailer = new Mailer(
 						SiteConfiguration.getEmailConfiguration());
-				mailer.sendHTMLMail("mail@esofthead.com", "Error Agent", Arrays
+				mailer.sendHTMLMail("mail@mycollab.com", "Error Agent", Arrays
 						.asList(new MailRecipientField(SiteConfiguration
 								.getSendErrorEmail(), SiteConfiguration
 								.getSendErrorEmail())), null, null,

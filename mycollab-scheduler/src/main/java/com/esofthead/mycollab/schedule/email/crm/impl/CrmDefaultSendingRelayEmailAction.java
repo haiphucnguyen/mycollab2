@@ -85,8 +85,8 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com", lst, null, null,
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -126,8 +126,8 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com", lst, null, null,
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -166,8 +166,8 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
 					lst.add(userMail);
 
-					extMailService.sendHTMLMail("noreply@esofthead.com",
-							"noreply@esofthead.com", lst, null, null,
+					extMailService.sendHTMLMail("noreply@mycollab.com",
+							"noreply@mycollab.com", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
