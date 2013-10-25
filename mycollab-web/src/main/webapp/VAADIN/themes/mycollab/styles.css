@@ -361,11 +361,11 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 
 .v-button-link.v-button-wordWrap .v-button-wrap {
     width: 100%;
-    display: inline-block;
+    display: table-row;
 }
 
 .v-button-link.v-button-wordWrap .v-button-caption {
-    display: inline-block;
+    display: table-cell;
     white-space: normal;
     word-wrap: break-word;
     word-break: normal;
@@ -4803,7 +4803,6 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .stream-wrapper .v-label {
 	line-height: 1.5em;
 }
-<<<<<<< HEAD
 
 /* fix Image's alignment in v-label with html content */
 .v-label > img {
@@ -4879,4 +4878,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 .customFieldComponent .editFieldBtn:active:focus, .customFieldComponent:hover .editFieldBtn {
 	visibility: visible;
+}
+
+/* fix Image's alignment in button with word wrap style */
+.v-button-wordWrap .v-button-wrap img {
+	vertical-align: bottom;
 }
