@@ -4,9 +4,14 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -23,8 +28,6 @@ import com.vaadin.ui.Window;
  */
 public class UserLink extends Button {
 	private static final long serialVersionUID = 1L;
-
-	private Integer sAccountId;
 
 	public UserLink(final String username, String userAvatarId,
 			final String displayName, boolean useWordWrap) {
@@ -46,16 +49,12 @@ public class UserLink extends Button {
 			public void buttonClick(ClickEvent event) {
 				UserService userService = ApplicationContextUtil
 						.getSpringBean(UserService.class);
-				User user = userService.findUserByUserNameInAccount(username,
-						AppContext.getAccountId());
+				SimpleUser user = userService.findUserByUserNameInAccount(
+						username, AppContext.getAccountId());
 				UserLink.this.getParent().getWindow()
 						.addWindow(new UserQuickPreviewWindow(user));
 			}
 		});
-	}
-
-	public void setSAccountId(Integer sAccountId) {
-		this.sAccountId = sAccountId;
 	}
 
 	public UserLink(final String username, String userAvatarId,
@@ -65,9 +64,9 @@ public class UserLink extends Button {
 
 	public class UserQuickPreviewWindow extends Window {
 		private static final long serialVersionUID = 1L;
-		private User user;
+		private SimpleUser user;
 
-		public UserQuickPreviewWindow(User user) {
+		public UserQuickPreviewWindow(SimpleUser user) {
 			super("User preview");
 			this.center();
 			this.setWidth("500px");
@@ -81,26 +80,32 @@ public class UserLink extends Button {
 			HorizontalLayout topLayout = new HorizontalLayout();
 			layout.addComponent(topLayout);
 
-			StringBuffer userActionScript = new StringBuffer("");
-			userActionScript
-					.append("onClick=\" <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\">"
-							+ "$('#userLink').bind('click',fuction(){"
-							+ "$('.v-window').html('');"
-							+ "$('.v-shadow-window').html('');"
-							+ "})</script>\"");
 			// ---------define top layout
 			topLayout.setSpacing(true);
 			topLayout.addComponent(new Label("View full profile at: "));
 
-			Label userFullLinkLabel = new Label("<a href=\""
-					+ CrmLinkGenerator.generatePreviewFullUserLink(
-							AppContext.getSiteUrl(), user.getUsername())
-					+ "\">"
-					+ CrmLinkGenerator.generatePreviewFullUserLink(
-							AppContext.getSiteUrl(), user.getUsername())
-					+ userActionScript + "</a>");
-			userFullLinkLabel.setContentMode(Label.CONTENT_XHTML);
-			topLayout.addComponent(userFullLinkLabel);
+			String userFullLinkStr = CrmLinkGenerator
+					.generatePreviewFullUserLink(AppContext.getSiteUrl(),
+							user.getUsername());
+			userFullLinkStr = userFullLinkStr.substring(0, 50);
+			ButtonLink userFullLinkBtn = new ButtonLink(userFullLinkStr);
+			userFullLinkBtn.addListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					UserQuickPreviewWindow.this.close();
+					EventBus.getInstance().fireEvent(
+							new ShellEvent.GotoUserAccountModule(this,
+									new String[] {
+											"user",
+											"preview",
+											UrlEncodeDecoder.encode(user
+													.getUsername()) }));
+				}
+			});
+			userFullLinkBtn.setWidth("300px");
+			topLayout.addComponent(userFullLinkBtn);
 			// -----------------------------------
 			CssLayout mainBodyWapper = new CssLayout();
 			mainBodyWapper.addStyleName("border-box2-color");
@@ -121,23 +126,13 @@ public class UserLink extends Button {
 			mainUserInfoLayout.setSpacing(true);
 			mainUserInfoLayout.setMargin(true);
 
-			Label userNameLbl = new Label(getDisplayName());
+			Label userNameLbl = new Label(user.getDisplayName());
 			userNameLbl.addStyleName("h2");
 			mainUserInfoLayout.addComponent(userNameLbl);
 
-			HorizontalLayout userNameLayout = new HorizontalLayout();
-			Label userNameTitle = new Label("User name");
-			userNameTitle.setWidth("100px");
-			userNameLayout.addComponent(userNameTitle);
-			Label userNameLink = new Label("<a href=\"mailto:"
-					+ user.getUsername() + "\">" + user.getUsername() + "</a>");
-			userNameLink.setContentMode(Label.CONTENT_XHTML);
-			userNameLayout.addComponent(userNameLink);
-			mainUserInfoLayout.addComponent(userNameLayout);
-
 			HorizontalLayout emailLayout = new HorizontalLayout();
 			Label emailTitle = new Label("Email");
-			emailTitle.setWidth("100px");
+			emailTitle.setWidth("120px");
 			emailLayout.addComponent(emailTitle);
 
 			Label emailLink = new Label("<a href=\"mailto:" + user.getEmail()
@@ -147,43 +142,42 @@ public class UserLink extends Button {
 
 			HorizontalLayout timeZoneLayout = new HorizontalLayout();
 			Label timeLabel = new Label("Time");
-			timeLabel.setWidth("100px");
+			timeLabel.setWidth("120px");
 			timeZoneLayout.addComponent(timeLabel);
-			timeZoneLayout.addComponent(new Label(user.getTimezone()));
+			timeZoneLayout.addComponent(new Label(TimezoneMapper.getTimezone(
+					user.getTimezone()).getDisplayName()));
 			mainUserInfoLayout.addComponent(timeZoneLayout);
 
 			HorizontalLayout countryLayout = new HorizontalLayout();
 			Label countryTitle = new Label("Country");
-			countryTitle.setWidth("100px");
+			countryTitle.setWidth("120px");
 			countryLayout.addComponent(countryTitle);
 			countryLayout.addComponent(new Label(user.getCountry()));
 			mainUserInfoLayout.addComponent(countryLayout);
 
 			HorizontalLayout phoneLayout = new HorizontalLayout();
 			Label phoneLbl = new Label("Phone");
-			phoneLbl.setWidth("100px");
+			phoneLbl.setWidth("120px");
 			phoneLayout.addComponent(phoneLbl);
 			phoneLayout.addComponent(new Label(user.getWorkphone()));
 			mainUserInfoLayout.addComponent(phoneLayout);
+
+			HorizontalLayout lastAccessTimeLayout = new HorizontalLayout();
+			Label lastAccessTimeTitle = new Label("Last access time");
+			lastAccessTimeTitle.setWidth("120px");
+			lastAccessTimeLayout.addComponent(lastAccessTimeTitle);
+			Label lastAccessTimeLabel = new Label(
+					DateTimeUtils.getStringDateFromNow(user
+							.getLastaccessedtime()));
+			lastAccessTimeLayout.addComponent(lastAccessTimeLabel);
+			mainUserInfoLayout.addComponent(lastAccessTimeLayout);
+
 			// Construct userImageLayout ---------------------
 			Embedded embeedIcon = new Embedded("",
 					UserAvatarControlFactory.createAvatarResource(
 							user.getAvatarid(), 100));
 			userImageLayout.addComponent(embeedIcon);
 			this.addComponent(layout);
-		}
-
-		public String getDisplayName() {
-			String result = user.getFirstname() + " " + user.getLastname();
-			if (result.trim().equals("")) {
-				String displayName = user.getUsername();
-				int index = (displayName != null) ? displayName.indexOf("@")
-						: 0;
-				if (index > 0) {
-					return displayName.substring(0, index);
-				}
-			}
-			return result;
 		}
 	}
 }

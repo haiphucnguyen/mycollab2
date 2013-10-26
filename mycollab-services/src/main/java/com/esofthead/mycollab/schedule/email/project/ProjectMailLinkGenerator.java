@@ -82,6 +82,20 @@ public class ProjectMailLinkGenerator extends GenericLinkGenerator {
 						problemId);
 	}
 
+	public String generateBugComponentPreviewFullLink(Integer bugComponentId) {
+		return siteUrl
+				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ ProjectLinkUtils.generateBugComponentPreviewLink(projectId,
+						bugComponentId);
+	}
+
+	public String generateBugVersionPreviewFullLink(Integer bugVersionId) {
+		return siteUrl
+				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ ProjectLinkUtils.generateBugVersionPreviewLink(projectId,
+						bugVersionId);
+	}
+
 	@Override
 	public String getSiteUrl() {
 		return siteUrl;

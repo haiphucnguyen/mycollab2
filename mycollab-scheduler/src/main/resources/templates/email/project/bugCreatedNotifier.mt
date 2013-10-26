@@ -62,14 +62,16 @@
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>
 									<td style=" vertical-align: top;">
-										#if( $bug.components.size() > 1 )
+										#if( $lstBugComponent.size() > 1 )
 											<ul>
-											#foreach( $component in $bug.components )
-												<li>$!component.Componentname</li>
+											#foreach( $bugComponentMapper in $lstBugComponent )
+												<li>
+													<a href="$bugComponentMapper.link" style="color: rgb(216, 121, 55); text-decoration: none;">$!bugComponentMapper.displayname</a>
+												</li>
 											#end
 											</ul>
-										#elseif( $bug.components.size() > 0 )
-											$!bug.components.get(0).Componentname
+										#elseif( $lstBugComponent.size() > 0 )
+											<a href="$lstBugComponent.get(0).link" style="color: rgb(216, 121, 55); text-decoration: none;">$!lstBugComponent.get(0).displayname</a>
 										#else
 											N/A
 										#end
@@ -79,11 +81,13 @@
 										#if( $bug.affectedVersions.size() > 1 )
 											<ul>
 											#foreach( $affectedVersion in $bug.affectedVersions )
-												<li>$!component.Componentname</li>
+												<li>
+													<a href="" style="color: rgb(216, 121, 55); text-decoration: none;">$!component.versionname</a>
+												</li>
 											#end
 											</ul>
 										#elseif( $bug.affectedVersions.size() > 0 )
-											$!bug.affectedVersions.get(0).Versionname
+											<a href="${hyperLinks.bugVersionUrl}$foreach.count" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.affectedVersions.get(0).versionname</a>
 										#else
 											N/A
 										#end
