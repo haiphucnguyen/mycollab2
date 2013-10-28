@@ -16,6 +16,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
@@ -247,14 +248,22 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		blockTop.setWidth("100%");
 		blockContent.addComponent(blockTop);
 
+		String memerRoleLinkPrefix = "<a href=\""
+				+ AppContext.getSiteUrl()
+				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ ProjectLinkUtils.generateRolePreviewLink(
+						member.getProjectid(), member.getProjectRoleId())
+				+ "\"";
 		Label memberRole = new Label();
+		memberRole.setContentMode(Label.CONTENT_XHTML);
 		if (member.getIsadmin() != null && member.getIsadmin() == Boolean.TRUE) {
-			memberRole.setValue("Project Admin");
-			memberRole.addStyleName("is-admin");
+			memberRole.setValue(memerRoleLinkPrefix
+					+ "style=\"color: #B00000;\">" + "Project Admin" + "</a>");
 		} else {
-			memberRole.setValue(member.getRoleName());
+			memberRole.setValue(memerRoleLinkPrefix
+					+ "style=\"color:gray;font-size:12px;\">"
+					+ member.getRoleName() + "</a>");
 		}
-		memberRole.addStyleName("member-role");
 		memberRole.setSizeUndefined();
 		blockContent.addComponent(memberRole);
 		blockContent.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);

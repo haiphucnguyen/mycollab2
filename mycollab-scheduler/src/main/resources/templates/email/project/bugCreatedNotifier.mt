@@ -78,16 +78,16 @@
 									</td>
 									<td style="text-align: right; vertical-align: top;">Affected Versions:&nbsp;</td>
 									<td style=" vertical-align: top;">
-										#if( $bug.affectedVersions.size() > 1 )
+										#if(  $lstBugVersion.size() > 1 )
 											<ul>
-											#foreach( $affectedVersion in $bug.affectedVersions )
+											#foreach( $bugVersionMapper in $lstBugVersion )
 												<li>
-													<a href="" style="color: rgb(216, 121, 55); text-decoration: none;">$!component.versionname</a>
+													<a href="$bugVersionMapper.link" style="color: rgb(216, 121, 55); text-decoration: none;">$!bugVersionMapper.displayname</a>
 												</li>
 											#end
 											</ul>
-										#elseif( $bug.affectedVersions.size() > 0 )
-											<a href="${hyperLinks.bugVersionUrl}$foreach.count" style="color: rgb(216, 121, 55); text-decoration: none;">$!bug.affectedVersions.get(0).versionname</a>
+										#elseif( $lstBugVersion.size() > 0 )
+											<a href="$lstBugVersion.get(0).link" style="color: rgb(216, 121, 55); text-decoration: none;">$!lstBugVersion.get(0).displayname</a>
 										#else
 											N/A
 										#end

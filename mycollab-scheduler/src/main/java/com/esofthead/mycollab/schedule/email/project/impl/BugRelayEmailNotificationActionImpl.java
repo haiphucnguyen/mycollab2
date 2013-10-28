@@ -110,12 +110,11 @@ public class BugRelayEmailNotificationActionImpl extends
 			List<BugLinkMapper> lstBugVersion = new ArrayList<BugRelayEmailNotificationActionImpl.BugLinkMapper>();
 			for (int i = 0; i < bug.getAffectedVersions().size(); i++) {
 				Version bugVersion = bug.getAffectedVersions().get(i);
-				lstBugVersion
-						.add(new BugLinkMapper(linkGenerator
-								.generateBugComponentPreviewFullLink(bugVersion
-										.getId()), bugVersion.getVersionname()));
+				lstBugVersion.add(new BugLinkMapper(linkGenerator
+						.generateBugVersionPreviewFullLink(bugVersion.getId()),
+						bugVersion.getVersionname()));
 			}
-			templateGenerator.putVariable("lstBugComponent", lstBugVersion);
+			templateGenerator.putVariable("lstBugVersion", lstBugVersion);
 		}
 	}
 
