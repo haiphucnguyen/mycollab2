@@ -23,7 +23,6 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
-import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -232,7 +231,8 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		blockContent.addComponent(blockTop);
 
 		if (member.getRoleid() != null) {
-			String memerRoleLinkPrefix = "<a href=\"" + AppContext.getSiteUrl()
+			String memberRoleLinkPrefix = "<a href=\""
+					+ AppContext.getSiteUrl()
 					+ BillingLinkUtils.generateUserRoleLink(member.getRoleid())
 					+ "\"";
 			Label memberRole = new Label();
@@ -240,11 +240,11 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 			if (member.getRoleName().equals(SimpleRole.ADMIN)
 					|| (member.getIsAccountOwner() != null && member
 							.getIsAccountOwner())) {
-				memberRole.setValue(memerRoleLinkPrefix
+				memberRole.setValue(memberRoleLinkPrefix
 						+ "style=\"color: #B00000;\">" + "Administrator"
 						+ "</a>");
 			} else {
-				memberRole.setValue(memerRoleLinkPrefix
+				memberRole.setValue(memberRoleLinkPrefix
 						+ "style=\"color:gray;font-size:12px;\">"
 						+ member.getRoleName() + "</a>");
 			}
@@ -253,17 +253,11 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 			blockContent.setComponentAlignment(memberRole,
 					Alignment.MIDDLE_RIGHT);
 		} else if (member.getIsAccountOwner() != null
-				&& member.getIsAccountOwner()) {
-			Integer roleId = (ApplicationContextUtil
-					.getSpringBean(RoleService.class)).getSystemRoleId(
-					"Administrator", member.getAccountId());
-
-			String memerRoleLinkPrefix = "<a href=\"" + AppContext.getSiteUrl()
-					+ BillingLinkUtils.generateUserRoleLink(roleId) + "\"";
+				&& member.getIsAccountOwner() == Boolean.TRUE) {
 			Label memberRole = new Label();
 			memberRole.setContentMode(Label.CONTENT_XHTML);
-			memberRole.setValue(memerRoleLinkPrefix
-					+ "style=\"color: #B00000;\">" + "Administrator" + "</a>");
+			memberRole.setValue("<a style=\"color: #B00000;\">"
+					+ "Administrator" + "</a>");
 			memberRole.setSizeUndefined();
 			blockContent.addComponent(memberRole);
 			blockContent.setComponentAlignment(memberRole,
