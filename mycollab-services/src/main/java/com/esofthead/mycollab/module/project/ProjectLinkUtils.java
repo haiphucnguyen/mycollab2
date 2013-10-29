@@ -5,8 +5,6 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 public class ProjectLinkUtils {
 	public static String URL_PREFIX_PARAM = "#";
 
-	public static String DEFAULT_PREFIX_PARAM = "#";
-
 	public static String generateTaskGroupPreviewLink(Integer projectId,
 			Integer taskgroupId) {
 		return "project/task/taskgroup/preview/"

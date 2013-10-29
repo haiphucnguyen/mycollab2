@@ -49,7 +49,7 @@ public class ProjectMessageListComponent extends Depot {
 							.newResourceLink("icons/16/project/message.png"),
 					ProjectLinkBuilder.generateMessagePreviewFullLink(
 							message.getProjectid(), message.getId(),
-							ProjectLinkUtils.DEFAULT_PREFIX_PARAM), message
+							ProjectLinkUtils.URL_PREFIX_PARAM), message
 							.getTitle());
 			final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
 

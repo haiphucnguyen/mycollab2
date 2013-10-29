@@ -18,7 +18,7 @@ public class ProjectLinkBuilder {
 
 	public static String generateProjectMemberFullLink(int projectId,
 			String memberName) {
-		return AppContext.getSiteUrl() + ProjectLinkUtils.DEFAULT_PREFIX_PARAM
+		return AppContext.getSiteUrl() + ProjectLinkUtils.URL_PREFIX_PARAM
 				+ "project/user/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + memberName);
 	}
