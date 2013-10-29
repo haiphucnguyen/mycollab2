@@ -15,13 +15,15 @@ public class PreviewFormControlsGenerator<T> {
 	private Button editBtn;
 	private Button deleteBtn;
 	private Button cloneBtn;
+	private HorizontalLayout editButtons;
+	private HorizontalLayout layout;
 
 	public PreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
 		this.previewForm = editForm;
 	}
 
 	public HorizontalLayout createButtonControls(String permissionItem) {
-		HorizontalLayout layout = new HorizontalLayout();
+		layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setStyleName("addNewControl");
 		layout.setWidth("100%");
@@ -42,7 +44,7 @@ public class PreviewFormControlsGenerator<T> {
 		layout.addComponent(backBtn);
 		layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
 
-		HorizontalLayout editButtons = new HorizontalLayout();
+		editButtons = new HorizontalLayout();
 		editButtons.setSpacing(true);
 
 		editBtn = new Button(GenericForm.EDIT_ACTION,
@@ -110,6 +112,14 @@ public class PreviewFormControlsGenerator<T> {
 			cloneBtn.setEnabled(canWrite);
 			deleteBtn.setEnabled(canAccess);
 		}
+		return layout;
+	}
+
+	public void removeCloneButton() {
+		editButtons.removeComponent(cloneBtn);
+	}
+
+	public HorizontalLayout getLayout() {
 		return layout;
 	}
 

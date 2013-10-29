@@ -273,6 +273,17 @@
         <servlet-name>acceptUserInvitationServlet</servlet-name>
         <url-pattern>/user/confirm_invite/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <display-name>UserConfirmSignUpServlet</display-name>
+        <servlet-name>userconfirmsignupServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>userconfirmsignupServlet</servlet-name>
+        <url-pattern>/user/confirm_signup/*</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <display-name>AcceptMemberInvitationServlet</display-name>

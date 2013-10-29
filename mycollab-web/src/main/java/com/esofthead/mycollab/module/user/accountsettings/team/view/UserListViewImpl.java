@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
+import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -236,7 +237,9 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 					+ "\"";
 			Label memberRole = new Label();
 			memberRole.setContentMode(Label.CONTENT_XHTML);
-			if (member.getRoleName().equals(SimpleRole.ADMIN)) {
+			if (member.getRoleName().equals(SimpleRole.ADMIN)
+					|| (member.getIsAccountOwner() != null && member
+							.getIsAccountOwner())) {
 				memberRole.setValue(memerRoleLinkPrefix
 						+ "style=\"color: #B00000;\">" + "Administrator"
 						+ "</a>");
@@ -245,6 +248,22 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 						+ "style=\"color:gray;font-size:12px;\">"
 						+ member.getRoleName() + "</a>");
 			}
+			memberRole.setSizeUndefined();
+			blockContent.addComponent(memberRole);
+			blockContent.setComponentAlignment(memberRole,
+					Alignment.MIDDLE_RIGHT);
+		} else if (member.getIsAccountOwner() != null
+				&& member.getIsAccountOwner()) {
+			Integer roleId = (ApplicationContextUtil
+					.getSpringBean(RoleService.class)).getSystemRoleId(
+					"Administrator", member.getAccountId());
+
+			String memerRoleLinkPrefix = "<a href=\"" + AppContext.getSiteUrl()
+					+ BillingLinkUtils.generateUserRoleLink(roleId) + "\"";
+			Label memberRole = new Label();
+			memberRole.setContentMode(Label.CONTENT_XHTML);
+			memberRole.setValue(memerRoleLinkPrefix
+					+ "style=\"color: #B00000;\">" + "Administrator" + "</a>");
 			memberRole.setSizeUndefined();
 			blockContent.addComponent(memberRole);
 			blockContent.setComponentAlignment(memberRole,

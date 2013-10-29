@@ -35,6 +35,13 @@
             value="com.esofthead.mycollab.schedule.jobs.CrmSendingRelayEmailNotificationJob" />
         <property name="durability" value="true" />
     </bean>
+    
+<!--     <bean id="userSignUpNotificationEmailJob" -->
+<!--     	 class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> -->
+<!--     	<property name="jobClass" -->
+<!--     		value="com.esofthead.mycollab.schedule.jobs.UserSignUpEmailNotificationJob"></property> -->
+<!--     	<property name="durability" value="true" /> -->
+<!--     </bean> -->
 
     <bean id="sendErrorReportEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -68,6 +75,12 @@
         <property name="jobDetail" ref="crmSendRelayNotificationEmailJob" />
         <property name="cronExpression" value="0 * * * * ?" />
     </bean>
+    
+<!--     <bean id="userSignUpNotificationEmailTrigger" -->
+<!--     	class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean"> -->
+<!--     	<property name="jobDetail" ref="userSignUpNotificationEmailJob" /> -->
+<!--         <property name="cronExpression" value="0 * * * * ?" /> -->
+<!--     </bean> -->
 
     <bean id="sendErrorReportEmailTrigger"
         class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
@@ -120,6 +133,7 @@
                 <ref bean="sendErrorReportEmailJob" />
                 <ref bean="sendInviteUserEmailJob" />
                 <ref bean="sendAccountBillingEmailJob" />
+<!--                 <ref bean="userSignUpNotificationEmailJob"/> -->
             </list>
         </property>
         <property name="triggers">
@@ -130,6 +144,7 @@
                 <ref bean="sendErrorReportEmailTrigger" />
                 <ref bean="sendInviteUserEmailTrigger" />
                 <ref bean="sendAccountBillingEmailTrigger" />
+<!--                 <ref bean="userSignUpNotificationEmailTrigger"/> -->
             </list>
         </property>
     </bean>

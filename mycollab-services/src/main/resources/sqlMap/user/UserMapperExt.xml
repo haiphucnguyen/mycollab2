@@ -42,6 +42,15 @@
                 #{registerStatus}
             </foreach>
         </if>
+        <if test="searchCriteria.isVerifiedEmail != null">
+            ${searchCriteria.isVerifiedEmail.operation}
+            s_user.isVerifiedEmail IN
+            <foreach close=")"
+                collection="searchCriteria.isVerifiedEmail.values"
+                item="isVerifiedEmail" open="(" separator=",">
+                #{isVerifiedEmail}
+            </foreach>
+        </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
