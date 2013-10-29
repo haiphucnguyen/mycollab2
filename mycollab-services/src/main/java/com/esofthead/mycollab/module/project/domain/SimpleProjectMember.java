@@ -20,6 +20,7 @@ public class SimpleProjectMember extends ProjectMember {
 	private String memberFullName;
 
 	private String roleName;
+	private int projectRoleId;
 
 	private PermissionMap permissionMaps;
 
@@ -105,6 +106,14 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public void setLastAccessTime(Date lastAccessTime) {
 		this.lastAccessTime = lastAccessTime;
+	}
+
+	public int getProjectRoleId() {
+		return projectRoleId;
+	}
+
+	public void setProjectRoleId(int projectRoleId) {
+		this.projectRoleId = projectRoleId;
 	}
 
 	public String getDisplayName() {

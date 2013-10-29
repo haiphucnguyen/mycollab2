@@ -71,4 +71,9 @@ public class ProjectLinkUtils {
 		return "project/bug/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + bugId);
 	}
+
+	public static String generateRolePreviewLink(int projectId, int roleId) {
+		return "project/role/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + roleId);
+	}
 }

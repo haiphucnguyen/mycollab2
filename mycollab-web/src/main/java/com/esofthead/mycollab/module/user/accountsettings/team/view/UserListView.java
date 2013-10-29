@@ -4,13 +4,13 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.ListView;
+import com.esofthead.mycollab.vaadin.mvp.View;
 
 /**
  * 
  * @author haiphucnguyen
  */
-public interface UserListView extends ListView<UserSearchCriteria, SimpleUser> {
+public interface UserListView extends View {
+	void setSearchCriteria(UserSearchCriteria searchCriteria);
 }

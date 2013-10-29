@@ -5,35 +5,41 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.Arrays;
+import java.util.List;
 
-import org.vaadin.hene.splitbutton.PopupButtonControl;
+import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.billing.BillingLinkUtils;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
-import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -46,133 +52,212 @@ import com.vaadin.ui.VerticalLayout;
 public class UserListViewImpl extends AbstractView implements UserListView {
 
 	private static final long serialVersionUID = 1L;
-	private final UserSearchPanel searchPanel;
-	private SelectionOptionButton selectOptionButton;
-	private UserTableDisplay tableItem;
-	private final VerticalLayout listLayout;
-	private PopupButtonControl tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
 
-	public UserListViewImpl() {
+	@Override
+	public void setSearchCriteria(UserSearchCriteria searchCriteria) {
+		UserService userService = ApplicationContextUtil
+				.getSpringBean(UserService.class);
+		List<SimpleUser> userAccountList = userService
+				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
+						searchCriteria, 0, Integer.MAX_VALUE));
 
-		this.searchPanel = new UserSearchPanel();
-		this.addComponent(this.searchPanel);
-
-		this.listLayout = new VerticalLayout();
-		this.addComponent(this.listLayout);
-
-		this.generateDisplayTable();
-	}
-
-	private void generateDisplayTable() {
-		this.tableItem = new UserTableDisplay(new TableViewField("",
-				"selected", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
-				new TableViewField("User", "username",
-						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"User name", "email", UIConstants.TABLE_EMAIL_WIDTH),
-				new TableViewField("Last Accessed Time", "lastaccessedtime",
-						UIConstants.TABLE_DATE_TIME_WIDTH)));
-
-		this.tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+		this.removeAllComponents();
+		this.setSpacing(true);
+		Button createBtn = new Button("Invite user",
+				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
-
-					@Override
-					public void handle(final TableClickEvent event) {
-						final String username = (String) event.getData();
-						if (("username".equals(event.getFieldName()) || ("displayName"
-								.equals(event.getFieldName())))) {
-							EventBus.getInstance().fireEvent(
-									new UserEvent.GotoRead(
-											UserListViewImpl.this, username));
-						}
+					public void buttonClick(Button.ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new UserEvent.GotoAdd(this, null));
 					}
 				});
+		createBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.USERS));
+		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 
-		this.listLayout.addComponent(this.constructTableActionControls());
-		this.listLayout.addComponent(this.tableItem);
+		this.addComponent(createBtn);
+		this.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
+		CssLayout contentLayout = new CssLayout();
+		contentLayout.setWidth("100%");
+		for (SimpleUser userAccount : userAccountList) {
+			contentLayout.addComponent(generateMemberBlock(userAccount));
+		}
+		this.addComponent(contentLayout);
 	}
 
-	@Override
-	public HasSearchHandlers<UserSearchCriteria> getSearchHandlers() {
-		return this.searchPanel;
-	}
+	private Component generateMemberBlock(final SimpleUser member) {
+		CssLayout memberBlock = new CssLayout();
+		memberBlock.addStyleName("member-block");
 
-	private ComponentContainer constructTableActionControls() {
-		final CssLayout layoutWrapper = new CssLayout();
-		layoutWrapper.setWidth("100%");
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-		layoutWrapper.addComponent(layout);
+		VerticalLayout blockContent = new VerticalLayout();
+		HorizontalLayout blockTop = new HorizontalLayout();
+		blockTop.setSpacing(true);
+		Embedded memberAvatar = UserAvatarControlFactory
+				.createUserAvatarEmbeddedComponent(member.getAvatarid(), 100);
+		blockTop.addComponent(memberAvatar);
 
-		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-		layout.addComponent(this.selectOptionButton);
+		VerticalLayout memberInfo = new VerticalLayout();
 
-		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
-		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.ACCOUNT_USER));
+		HorizontalLayout layoutButtonDelete = new HorizontalLayout();
+		layoutButtonDelete.setVisible(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.USERS));
+		layoutButtonDelete.setWidth("100%");
 
-		this.tableActionControls = new PopupButtonControl(
-				PopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls
-				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+		Label emptylb = new Label("");
+		layoutButtonDelete.addComponent(emptylb);
+		layoutButtonDelete.setExpandRatio(emptylb, 1.0f);
+
+		Button btnDelete = new Button();
+		btnDelete.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ConfirmDialogExt.show(
+						AppContext.getApplication().getMainWindow(),
+						LocalizationHelper.getMessage(
+								GenericI18Enum.DELETE_DIALOG_TITLE,
+								SiteConfiguration.getSiteName()),
 						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls
-				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+								.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem(
-				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+						new ConfirmDialog.Listener() {
+							private static final long serialVersionUID = 1L;
 
-		layout.addComponent(this.tableActionControls);
-		layout.addComponent(this.selectedItemsNumberLabel);
-		layout.setComponentAlignment(this.selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-		return layoutWrapper;
-	}
+							@Override
+							public void onClose(ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									UserService userService = ApplicationContextUtil
+											.getSpringBean(UserService.class);
+									userService.pendingUserAccounts(Arrays
+											.asList(new String[] { member
+													.getUsername() }),
+											AppContext.getAccountId());
+									EventBus.getInstance()
+											.fireEvent(
+													new UserEvent.GotoList(
+															UserListViewImpl.this,
+															null));
+								}
+							}
+						});
+			}
+		});
+		btnDelete.setIcon(MyCollabResource
+				.newResource("icons/12/project/icon_x.png"));
+		btnDelete.setStyleName("link");
+		layoutButtonDelete.addComponent(btnDelete);
 
-	@Override
-	public void enableActionControls(final int numOfSelectedItems) {
-		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue("Selected: "
-				+ numOfSelectedItems);
-	}
+		memberInfo.addComponent(layoutButtonDelete);
 
-	@Override
-	public void disableActionControls() {
-		this.tableActionControls.setVisible(false);
-		this.selectOptionButton.setSelectedChecbox(false);
-		this.selectedItemsNumberLabel.setValue("");
-	}
+		ButtonLink userAccountLink = new ButtonLink(member.getDisplayName());
+		userAccountLink.addListener(new ClickListener() {
 
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return this.selectOptionButton;
-	}
+			private static final long serialVersionUID = 1L;
 
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return this.tableActionControls;
-	}
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new UserEvent.GotoRead(UserListViewImpl.this, member
+								.getUsername()));
+			}
+		});
+		userAccountLink.setWidth("100%");
+		userAccountLink.setHeight(SIZE_UNDEFINED, 0);
 
-	@Override
-	public HasSelectableItemHandlers<SimpleUser> getSelectableItemHandlers() {
-		return this.tableItem;
-	}
+		memberInfo.addComponent(userAccountLink);
 
-	@Override
-	public AbstractPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable() {
-		return this.tableItem;
+		Label memberEmailLabel = new Label("<a href='mailto:"
+				+ member.getUsername() + "'>" + member.getUsername() + "</a>",
+				Label.CONTENT_XHTML);
+		memberEmailLabel.addStyleName("member-email");
+		memberEmailLabel.setWidth("100%");
+		memberInfo.addComponent(memberEmailLabel);
+
+		if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(member
+				.getRegisterstatus())) {
+			final VerticalLayout waitingNotLayout = new VerticalLayout();
+			Label infoStatus = new Label("Waiting for accept invitation");
+			infoStatus.addStyleName("member-email");
+			waitingNotLayout.addComponent(infoStatus);
+
+			ButtonLink resendInvitationLink = new ButtonLink(
+					"Resend Invitation", new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							UserService userService = ApplicationContextUtil
+									.getSpringBean(UserService.class);
+							userService.updateUserAccountStatus(
+									member.getUsername(),
+									member.getAccountId(),
+									RegisterStatusConstants.VERIFICATING);
+							waitingNotLayout.removeAllComponents();
+							Label statusEmail = new Label(
+									"Sending invitation email");
+							statusEmail.addStyleName("member-email");
+							waitingNotLayout.addComponent(statusEmail);
+						}
+					});
+			resendInvitationLink.setStyleName("link");
+			resendInvitationLink.addStyleName("member-email");
+			waitingNotLayout.addComponent(resendInvitationLink);
+			memberInfo.addComponent(waitingNotLayout);
+		} else if (RegisterStatusConstants.ACTIVE.equals(member
+				.getRegisterstatus())) {
+			Label lastAccessTimeLbl = new Label("Logged in "
+					+ DateTimeUtils.getStringDateFromNow(member
+							.getLastaccessedtime()));
+			lastAccessTimeLbl.addStyleName("member-email");
+			memberInfo.addComponent(lastAccessTimeLbl);
+		} else if (RegisterStatusConstants.VERIFICATING.equals(member
+				.getRegisterstatus())) {
+			Label infoStatus = new Label("Sending invitation email");
+			infoStatus.addStyleName("member-email");
+			memberInfo.addComponent(infoStatus);
+		}
+
+		blockTop.addComponent(memberInfo);
+		blockTop.setExpandRatio(memberInfo, 1.0f);
+		blockTop.setWidth("100%");
+		blockContent.addComponent(blockTop);
+
+		if (member.getRoleid() != null) {
+			String memerRoleLinkPrefix = "<a href=\"" + AppContext.getSiteUrl()
+					+ BillingLinkUtils.generateUserRoleLink(member.getRoleid())
+					+ "\"";
+			Label memberRole = new Label();
+			memberRole.setContentMode(Label.CONTENT_XHTML);
+			if (member.getRoleName().equals(SimpleRole.ADMIN)) {
+				memberRole.setValue(memerRoleLinkPrefix
+						+ "style=\"color: #B00000;\">" + "Administrator"
+						+ "</a>");
+			} else {
+				memberRole.setValue(memerRoleLinkPrefix
+						+ "style=\"color:gray;font-size:12px;\">"
+						+ member.getRoleName() + "</a>");
+			}
+			memberRole.setSizeUndefined();
+			blockContent.addComponent(memberRole);
+			blockContent.setComponentAlignment(memberRole,
+					Alignment.MIDDLE_RIGHT);
+		} else {
+			Label lbl = new Label();
+			lbl.setHeight("10px");
+			blockContent.addComponent(lbl);
+		}
+		blockContent.setWidth("100%");
+
+		memberBlock.addComponent(blockContent);
+
+		return memberBlock;
 	}
 }

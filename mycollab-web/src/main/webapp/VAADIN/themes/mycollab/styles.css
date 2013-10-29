@@ -3429,7 +3429,7 @@ table.legendBox .legendBoxContent .v-csslayout-container>div {
     font-size: 12px;
 }
 
-.is-admin {
+.v-label.is-admin {
     color: #b00000;
 }
 

@@ -147,6 +147,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 		HorizontalLayout controlsPanel = new HorizontalLayout();
 		controlsPanel.setWidth("100%");
+		controlsPanel.setHeight("30px");
 		controlsPanel.setSpacing(true);
 		totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs");
 		controlsPanel.addComponent(totalHoursLoggingLabel);
@@ -258,7 +259,8 @@ public class TimeTrackingViewImpl extends AbstractView implements
 		ExportItemsStreamResource<SimpleItemTimeLogging> stream = new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 				"Time Tracking Report", new RpParameterBuilder(
 						tableItem.getDisplayColumns()), exportType,
-				ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
+				ApplicationContextUtil
+						.getSpringBean(ItemTimeLoggingService.class),
 				searchCriteria, SimpleItemTimeLogging.class);
 		StreamResource res = new StreamResource(stream,
 				stream.getDefaultExportFileName(),

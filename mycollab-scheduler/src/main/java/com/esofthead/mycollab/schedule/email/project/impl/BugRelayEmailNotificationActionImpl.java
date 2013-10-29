@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.schedule.email.project.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingTy
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
@@ -54,6 +56,7 @@ public class BugRelayEmailNotificationActionImpl extends
 			templateGenerator.putVariable("bug", bug);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(bug));
+			constructBugComponentVersionLink(bug, templateGenerator);
 			return templateGenerator;
 		} else {
 			return null;
@@ -71,13 +74,48 @@ public class BugRelayEmailNotificationActionImpl extends
 		hyperLinks.put("shortBugUrl",
 				StringUtils.subString(bug.getSummary(), 150));
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		hyperLinks.put("loggedUserUrl",
-				linkGenerator.generateUserPreviewFullLink(bug.getLogby()));
-		hyperLinks.put("assignUserUrl",
-				linkGenerator.generateUserPreviewFullLink(bug.getAssignuser()));
-		hyperLinks.put("milestoneUrl", linkGenerator
-				.generateMilestonePreviewFullLink(bug.getMilestoneid()));
+		if (bug.getLogby() != null) {
+			hyperLinks.put("loggedUserUrl",
+					linkGenerator.generateUserPreviewFullLink(bug.getLogby()));
+		}
+		if (bug.getAssignuser() != null) {
+			hyperLinks.put("assignUserUrl", linkGenerator
+					.generateUserPreviewFullLink(bug.getAssignuser()));
+		}
+
+		if (bug.getMilestoneid() != null) {
+			hyperLinks.put("milestoneUrl", linkGenerator
+					.generateMilestonePreviewFullLink(bug.getMilestoneid()));
+		}
 		return hyperLinks;
+	}
+
+	private void constructBugComponentVersionLink(SimpleBug bug,
+			TemplateGenerator templateGenerator) {
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
+				bug.getProjectid());
+		if (bug.getComponents() != null) {
+			List<BugLinkMapper> lstBugComponent = new ArrayList<BugRelayEmailNotificationActionImpl.BugLinkMapper>();
+			for (int i = 0; i < bug.getComponents().size(); i++) {
+				com.esofthead.mycollab.module.tracker.domain.Component bugComponent = bug
+						.getComponents().get(i);
+				lstBugComponent.add(new BugLinkMapper(linkGenerator
+						.generateBugComponentPreviewFullLink(bugComponent
+								.getId()), bugComponent.getComponentname()));
+			}
+			templateGenerator.putVariable("lstBugComponent", lstBugComponent);
+		}
+
+		if (bug.getComponents() != null) {
+			List<BugLinkMapper> lstBugVersion = new ArrayList<BugRelayEmailNotificationActionImpl.BugLinkMapper>();
+			for (int i = 0; i < bug.getAffectedVersions().size(); i++) {
+				Version bugVersion = bug.getAffectedVersions().get(i);
+				lstBugVersion.add(new BugLinkMapper(linkGenerator
+						.generateBugVersionPreviewFullLink(bugVersion.getId()),
+						bugVersion.getVersionname()));
+			}
+			templateGenerator.putVariable("lstBugVersion", lstBugVersion);
+		}
 	}
 
 	@Override
@@ -95,6 +133,7 @@ public class BugRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 
+		constructBugComponentVersionLink(bug, templateGenerator);
 		if (emailNotification.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
@@ -153,6 +192,32 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		public String getFieldLabel(String fieldName) {
 			return fieldNameMap.get(fieldName);
+		}
+	}
+
+	public class BugLinkMapper {
+		private String link;
+		private String displayname;
+
+		public BugLinkMapper(String link, String displayname) {
+			this.link = link;
+			this.displayname = displayname;
+		}
+
+		public String getLink() {
+			return link;
+		}
+
+		public void setLink(String link) {
+			this.link = link;
+		}
+
+		public String getDisplayname() {
+			return displayname;
+		}
+
+		public void setDisplayname(String displayname) {
+			this.displayname = displayname;
 		}
 	}
 

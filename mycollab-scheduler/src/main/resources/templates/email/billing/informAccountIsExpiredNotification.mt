@@ -52,39 +52,49 @@
 <title>Your trial has ended</title>
 </head>
 <body>
-		<div id="mainBody">
-			<div id="header">
-				<div class="header-mid">
-					<a href="https://www.mycollab.com">
-						<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="Logo Mycollab">
-					</a>
-				</div>	
+	<table width="640" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_black_top.png') no-repeat 0 0 transparent; font-size: 11px; line-height: 11px;" height="11"></td>
+		</tr>
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_black_center.png') repeat-y 0 0 transparent; text-align: left; padding-bottom: 10px;">
+				<div style="width: 150px; display: inline-block; padding-left: 20px;">
+					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="MyCollab-logo" width="150" height="45" style="margin: 0px; padding: 0px;">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
+				<div id="mainContent">
+			<div id="contentTitle">
+				<p><span style="color: #196893; font: 22px 'Monda', sans-serif;"> Oh no, your trial has ended!</span></p>
+				<hr size="1">
 			</div>
-			<div id="mainContent">
-				<div id="contentTitle">
-					<p><span style="color: #196893; font: 22px 'Monda', sans-serif;"> Oh no, your trial has ended!</span></p>
+			<div id="contentBody">
+				<p><span style="font-weight:bold"> Hi $!userName</span>,</p>
+				<span style="font: 14px">
+				Your free trial of MyCollab has just ended. If you wish to continue using MyCollab to manage projects and tasks, you may enter a payment method in your account under Billing Info. <br><br>
+				
+				To access your account, visit  <a href="$!link" style="text-decoration : none;"><span style="font-weight: bold; color:#709AC5">$!link </span></a> <br><br>
+				
+				If you decide not to upgrade to a paid plan, you may still use MyCollab free for personal stuff. You don't need to do anything if you want to use it personally. We'll simply convert your account for you. If you wish to cancel your account entirely, please login and go to your Account section.<br></br>
+				
+				<span style="font-weight: bold;">Thank you!</span>
+				</span>
+				<div style="padding-top:10px;">
 					<hr size="1">
 				</div>
-				<div id="contentBody">
-					<p><span style="font-weight:bold"> Hi $!userName</span>,</p>
-					<span style="font: 14px">
-					Your free trial of MyCollab has just ended. If you wish to continue using MyCollab to manage projects and tasks, you may enter a payment method in your account under Billing Info. <br><br>
-					
-					To access your account, visit  <a href="$!link" style="text-decoration : none;"><span style="font-weight: bold; color:#709AC5">$!link </span></a> <br><br>
-					
-					If you decide not to upgrade to a paid plan, you may still use MyCollab free for personal stuff. You don't need to do anything if you want to use it personally. We'll simply convert your account for you. If you wish to cancel your account entirely, please login and go to your Account section.<br></br>
-					
-					<span style="font-weight: bold;">Thank you!</span>
-					</span>
-					<div style="padding-top:10px;">
-						<hr size="1">
-					</div>
-				</div>
-				<div id="contentFooter" style="padding-top:10px;">
-					<span>Question?</span>
-					<a href="mailto:support@mycollab.com"><span style="font-weight: bold; color:#709AC5">Get help</span></a>
-				</div>
 			</div>
-	</div>
+			<div id="contentFooter" style="padding-top:10px;">
+				<span>Question?</span>
+				<a href="mailto:support@mycollab.com"><span style="font-weight: bold; color:#709AC5">Get help</span></a>
+			</div>
+		</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom_new.png') no-repeat 0 0 transparent; line-height: 7px; font-size: 7px;" height="7">&nbsp;</td>
+		</tr>
+	</table>
 </body>
 </html>	
