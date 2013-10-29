@@ -52,15 +52,20 @@
 <title>Your trial is about to end</title>
 </head>
 <body>
-	<div id="mainBody">
-		<div id="header">
-			<div class="header-mid">
-				<a href="https://www.mycollab.com">
-					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="Logo Mycollab">
-				</a>
-			</div>	
-		</div>
-		<div id="mainContent">
+	<table width="640" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_black_top.png') no-repeat 0 0/ 640px transparent; font-size: 11px; line-height: 11px;" height="6"></td>
+		</tr>
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_black_center.png') repeat-y 0 0/ 640px transparent; text-align: left; padding-bottom: 10px;">
+				<div style="width: 150px; display: inline-block; padding-left: 20px;">
+					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="MyCollab-logo" width="250" height="50" style="margin: 0px; padding: 0px;">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
+				<div id="mainContent">
 			<div id="contentTitle">
 				<p><span style="color: #196893; font: 22px 'Monda', sans-serif;"> Your trial is about to end. Please enter a payment method.</span></p>
 				<hr size="1">
@@ -87,6 +92,11 @@
 				<a href="mailto:support@mycollab.com" style="text-decoration : none;"><span style="font-weight: bold; color:#709AC5">support@mycollab.com </span></a>
 			</div>
 		</div>
-	</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom_new.png') no-repeat 0 0 transparent; line-height: 7px; font-size: 7px;" height="7">&nbsp;</td>
+		</tr>
+	</table>
 </body>
 </html>	

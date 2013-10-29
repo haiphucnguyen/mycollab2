@@ -54,17 +54,17 @@
 <body>
 	<table width="640" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_black_top.png') no-repeat 0 0 transparent; font-size: 11px; line-height: 11px;" height="11"></td>
+			<td style="background: url('${defaultUrls.cdn_url}border_black_top.png') no-repeat 0 0/ 640px transparent; font-size: 11px; line-height: 11px;" height="6"></td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_black_center.png') repeat-y 0 0 transparent; text-align: left; padding-bottom: 10px;">
+			<td style="background: url('${defaultUrls.cdn_url}border_black_center.png') repeat-y 0 0/ 640px transparent; text-align: left; padding-bottom: 10px;">
 				<div style="width: 150px; display: inline-block; padding-left: 20px;">
-					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="MyCollab-logo" width="150" height="45" style="margin: 0px; padding: 0px;">
+					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="MyCollab-logo" width="250" height="50" style="margin: 0px; padding: 0px;">
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
+			<td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div id="mainContent">
 			<div id="contentTitle">
 				<p><span style="color: #196893; font: 22px 'Monda', sans-serif;"> Oh no, your trial has ended!</span></p>
