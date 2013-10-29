@@ -151,7 +151,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 	@Override
 	public void display(String moduleName) {
-		headerLbl.setCaption(moduleName + ": Edit Page Layout");
+		headerLbl.setCaption(moduleName + ": Edit Page Layout (Beta)");
 		moduleComboBox.select(moduleName);
 		DynaForm form;
 
