@@ -52,12 +52,12 @@
 <title>Your trial has ended</title>
 </head>
 <body>
-	<table width="640" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
+	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_black_top.png') no-repeat 0 0/ 640px transparent; font-size: 11px; line-height: 11px;" height="6"></td>
+			<td style="background: url('${defaultUrls.cdn_url}border_black_top.png') no-repeat 0 0/ 650px transparent; font-size: 11px; line-height: 11px;" height="6"></td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_black_center.png') repeat-y 0 0/ 640px transparent; text-align: left; padding-bottom: 10px;">
+			<td style="background: url('${defaultUrls.cdn_url}border_black_center.png') repeat-y 0 0/ 650px transparent; text-align: left; padding-bottom: 10px;">
 				<div style="width: 150px; display: inline-block; padding-left: 20px;">
 					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="MyCollab-logo" width="250" height="50" style="margin: 0px; padding: 0px;">
 				</div>

@@ -68,39 +68,41 @@
 <title>Your trial is about to end</title>
 </head>
 <body>
-	<table width="640" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
+	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
 		<tr>
-			<td style="background: url('border_black_top.png') no-repeat 0 0/ 640px transparent; font-size: 11px; line-height: 11px;" height="6"></td>
+			<td style="background: url('${defaultUrls.cdn_url}border_black_top.png') no-repeat 0 0/ 650px transparent; font-size: 11px; line-height: 11px;" height="6"></td>
 		</tr>
 		<tr>
-			<td style="background: url('border_black_center.png') repeat-y 0 0/ 640px transparent; text-align: left; padding-bottom: 10px;">
+			<td style="background: url('${defaultUrls.cdn_url}border_black_center.png') repeat-y 0 0/ 650px transparent; text-align: left; padding-bottom: 10px;">
 				<div style="width: 150px; display: inline-block; padding-left: 20px;">
-					<img src=" logo_mycollab_2.png" alt="MyCollab-logo" width="250" height="50" style="margin: 0px; padding: 0px;">
+					<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="MyCollab-logo" width="250" height="50" style="margin: 0px; padding: 0px;">
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td style="background: url('border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
+			<td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div id="mainContent">
 					<div id="contentTitle">
 						<span>Thank you for choosing MyCollab!<span> <br>
 						<span>You are just one click away from completing your account registration: <span> <br><br>
 						<div style="text-align: center;">
-							<button style="width:200px;" onclick="return sendEmailFeedBack();" type="button" class="v-button-bluebtn"><span style="font-family: 'verdana';font-size: 18px; ">Confirm your e-mail</span></button>
+							<button style="width:200px;" onclick="return confirmEmail();" type="button" class="v-button-bluebtn"><span style="font-family: 'verdana';font-size: 18px; ">Confirm your e-mail</span></button>
 						</div> 
 						<br>
-						<span>By clicking this link, you agree to the Terms of Service and the Privacy Policy <span> <br>
+						<span>By clicking this link, you agree to the 
+						<a style="text-decoration : none;" href="https://www.mycollab.com/terms"><span style="font-size:14px; color: #4B80C6; text-decoration: none;">Terms of Service</span></a> and the 
+						<a style="text-decoration : none;" href="https://www.mycollab.com/privacy"><span style="font-size:14px; color: #4B80C6;">Privacy Policy</span></a> <span> <br>
 					</div>
 					<div id="contentBody" style="padding-top: 15px;">
 						<span style="font: 14px">
 						If clicking on the link does not work, just copy and paste the following address into your browser:
 						</span> &nbsp
-						<a href=""/> https://www.mycollab.com</a> <br> <br>
-						If you are still having problems, simply forward this e-mail support@mycollab.com, and we will be happy to help you. <br><br>
+						<a style="text-decoration : none;" href="https://www.mycollab.com"/> https://www.mycollab.com</a> <br> <br>
+						If you are still having problems, simply forward this e-mail <a href="mailto:support@mycollab.com" style="text-decoration : none;"><span style="color:#5587BA">support@mycollab.com</span></a>, and we will be happy to help you. <br><br>
 						
 						<span style="font-weight: bold;">Have a productive day!</span>
 						</span>
-						<div style="padding-top:10px;">
+						<div style="padding-top:20px;">
 							<hr size="1">
 						</div>
 					</div>
@@ -114,7 +116,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="background: url('border_large_bottom_new.png') no-repeat 0 0 transparent; line-height: 7px; font-size: 7px;" height="7">&nbsp;</td>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom_new.png') no-repeat 0 0 transparent; line-height: 7px; font-size: 7px;" height="7">&nbsp;</td>
 		</tr>
 	</table>
 	<div style="margin: 0px auto; width: 520px; padding-top:10px;">
@@ -123,5 +125,7 @@
 		follow this link: $!link
 		</span>
 	</div>
-</body>
+	<input type="hidden" id="linkCancelSignUp" value="$!linkCancelSignUp"/>
+	<input type="hidden" id="linkConfirm" value="$!linkConfirm"/>
+</body> 
 </html>	

@@ -168,8 +168,12 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<User>(PreviewForm.this))
+				PreviewFormControlsGenerator<User> previewForm = new PreviewFormControlsGenerator<User>(
+						PreviewForm.this);
+				previewForm
 						.createButtonControls(RolePermissionCollections.ACCOUNT_USER);
+				previewForm.removeCloneButton();
+				return previewForm.getLayout();
 			}
 
 			@Override

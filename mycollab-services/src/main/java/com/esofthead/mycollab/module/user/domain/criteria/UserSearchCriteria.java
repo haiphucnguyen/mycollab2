@@ -26,6 +26,7 @@ public class UserSearchCriteria extends SearchCriteria {
 	private StringSearchField username;
 	private SetSearchField<String> registerStatuses;
 	private StringSearchField subdomain;
+	private SetSearchField<Boolean> isVerifiedEmail;
 
 	public StringSearchField getDisplayName() {
 		return displayName;
@@ -58,4 +59,13 @@ public class UserSearchCriteria extends SearchCriteria {
 	public void setSubdomain(StringSearchField subdomain) {
 		this.subdomain = subdomain;
 	}
+
+	public SetSearchField<Boolean> getIsVerifiedEmail() {
+		return isVerifiedEmail;
+	}
+
+	public void setIsVerifiedEmail(SetSearchField<Boolean> isVerifiedEmail) {
+		this.isVerifiedEmail = isVerifiedEmail;
+	}
+
 }

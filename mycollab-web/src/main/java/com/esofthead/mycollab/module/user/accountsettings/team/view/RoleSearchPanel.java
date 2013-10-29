@@ -113,7 +113,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 					RoleBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName("v-button-bluebtn-no-radius-left");
 			searchComp.addComponent(searchBtn);
 			basicSearchBody.addComponent(searchComp);
 
@@ -137,7 +137,8 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			RoleSearchPanel.this.searchCriteria = new RoleSearchCriteria();
-			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				RoleSearchPanel.this.searchCriteria
 						.setRoleName(new StringSearchField(SearchField.AND,
 								(String) this.nameField.getValue()));
