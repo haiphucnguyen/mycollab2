@@ -27,11 +27,12 @@ public class AccountResourceImpl implements AccountResource {
 		String password = entity.getPassword();
 		String email = entity.getEmail();
 		String timezoneId = entity.getTimezoneId();
+		boolean isEmailVerified = entity.isEmailVerified();
 
 		log.debug("Register account with subdomain {}, username {}", subdomain,
 				email);
 		this.billingService.registerAccount(subdomain, planId, email, password,
-				email, timezoneId);
+				email, timezoneId, isEmailVerified);
 
 		String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
 		log.debug("Return site url {} to sign up user {}", siteUrl, email);

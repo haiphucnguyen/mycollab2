@@ -12,7 +12,8 @@ import com.esofthead.mycollab.module.user.domain.BillingPlan;
 public interface BillingService extends IService {
 
 	void registerAccount(String subdomain, int billingPlanId, String username,
-			String password, String email, String timezoneId);
+			String password, String email, String timezoneId,
+			boolean isEmailVerified);
 
 	@CacheEvict
 	void cancelAccount(@CacheKey Integer accountid);

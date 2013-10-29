@@ -66,6 +66,8 @@ public class SignUpPage extends BasePage {
 
 	private String authEmail = null;
 
+	private boolean isVerifiedEmail = false;
+
 	public SignUpPage(final PageParameters parameters) {
 		super(parameters);
 
@@ -80,12 +82,14 @@ public class SignUpPage extends BasePage {
 				"emailfield", new Model<String>(authEmail));
 		email.setLabel(new ResourceModel("label.email"));
 		email.add(EmailAddressValidator.getInstance());
+		isVerifiedEmail = false;
 		if (session.getAttribute("authEmail") != null) {
 			authEmail = session.getAttribute("authEmail").toString();
 			session.removeAttribute("authEmail");
 			email.add(AttributeAppender.append("readonly", new Model<String>(
 					"true")));
 			email.setDefaultModel(new Model<String>(authEmail));
+			isVerifiedEmail = true;
 		}
 
 		final CheckBox receiveupdate = new CheckBox("receiveupdatefield",
@@ -117,6 +121,7 @@ public class SignUpPage extends BasePage {
 
 				try {
 					final SignupForm form = new SignupForm();
+
 					form.setSubdomain(subdomain.getModelObject());
 					form.setPlanId(Integer.parseInt(planId + ""));
 					if (authEmail != null) {
@@ -127,6 +132,7 @@ public class SignUpPage extends BasePage {
 
 					form.setPassword(password.getModelObject());
 					form.setTimezoneId(timezone.getModelObject());
+					form.setEmailVerified(isVerifiedEmail);
 
 					log.debug("Submit form {}", SiteConfiguration.getApiUrl());
 					final String response = userResource.signup(form);

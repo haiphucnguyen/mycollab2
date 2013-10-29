@@ -18,6 +18,9 @@ public class SignupForm {
 
 	@FormParam("timezoneId")
 	private String timezoneId;
+	
+	@FormParam("isEmailVerified")
+	private boolean isEmailVerified;
 
 	public String getSubdomain() {
 		return subdomain;
@@ -57,5 +60,13 @@ public class SignupForm {
 
 	public void setTimezoneId(String timezoneId) {
 		this.timezoneId = timezoneId;
+	}
+
+	public boolean isEmailVerified() {
+		return isEmailVerified;
+	}
+
+	public void setEmailVerified(boolean isEmailVerified) {
+		this.isEmailVerified = isEmailVerified;
 	}
 }

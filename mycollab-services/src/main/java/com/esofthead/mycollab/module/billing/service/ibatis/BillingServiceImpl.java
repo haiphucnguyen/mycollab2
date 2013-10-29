@@ -85,7 +85,8 @@ public class BillingServiceImpl implements BillingService {
 	@Transactional
 	public void registerAccount(final String subdomain,
 			final int billingPlanId, final String username,
-			final String password, final String email, final String timezoneId) {
+			final String password, final String email, final String timezoneId,
+			boolean isEmailVerified) {
 
 		// check subdomain is ascii string
 		if (!StringUtils.isAsciiString(subdomain)) {
@@ -166,6 +167,7 @@ public class BillingServiceImpl implements BillingService {
 		user.setTimezone(timezoneId);
 		user.setUsername(username);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
+		user.setIsverifiedemail(isEmailVerified);
 
 		if (user.getFirstname() == null) {
 			user.setFirstname("");
