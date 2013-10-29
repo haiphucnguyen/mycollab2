@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
@@ -63,6 +64,8 @@ class CustomLayoutDDComp extends HorizontalLayout {
 		this.addComponent(deleteFormLayout);
 		this.setExpandRatio(deleteFormLayout, 1.0f);
 
+		boolean hasDeletedSection = false;
+
 		int sectionCount = dynaForm.getSectionCount();
 		for (int i = 0; i < sectionCount; i++) {
 			DynaSection section = dynaForm.getSection(i);
@@ -72,7 +75,17 @@ class CustomLayoutDDComp extends HorizontalLayout {
 			} else {
 				SectionLayoutComp sectionLayout = new SectionLayoutComp(section);
 				deleteFormLayout.addComponent(sectionLayout);
+				hasDeletedSection = true;
 			}
+		}
+
+		if (!hasDeletedSection) {
+			DynaSection deleteSection = new DynaSectionBuilder()
+					.layoutType(LayoutType.ONE_COLUMN).header("Removed fields")
+					.deleteSection(true).build();
+			SectionLayoutComp sectionLayout = new SectionLayoutComp(
+					deleteSection);
+			deleteFormLayout.addComponent(sectionLayout);
 		}
 
 		activeFormLayout.setComponentVerticalDropRatio(0.3f);

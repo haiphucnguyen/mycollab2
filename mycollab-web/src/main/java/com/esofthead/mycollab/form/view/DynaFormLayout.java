@@ -46,6 +46,11 @@ public class DynaFormLayout implements IFormLayoutFactory {
 			layout.addComponent(header);
 
 			GridFormLayoutHelper gridLayout;
+
+			if (section.isDeletedSection() || section.getFieldCount() == 0) {
+				continue;
+			}
+
 			if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
 				gridLayout = new GridFormLayoutHelper(2,
 						section.getFieldCount(), "100%", "167px",
