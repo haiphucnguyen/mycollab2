@@ -70,6 +70,9 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 				.getSpringBean(UserService.class);
 
 		item.setAccountId(AppContext.getAccountId());
+		if (item.getIsverifiedemail() == null) {
+			item.setIsverifiedemail(false);
+		}
 
 		item.setDateofbirth(view.getBirthday());
 		item.setTimezone(view.getTimezone().getId());

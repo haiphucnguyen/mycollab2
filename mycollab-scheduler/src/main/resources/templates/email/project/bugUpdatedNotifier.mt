@@ -60,35 +60,39 @@
 									</td>				
 								</tr>
                                 <tr>
-                                    <td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>
-                                    <td style=" vertical-align: top;">
-                                        #if( $bug.components.size() > 1 )
-                                            <ul>
-                                            #foreach( $component in $bug.components )
-                                                <li>$component.Componentname</li>
-                                            #end
-                                            </ul>
-                                        #elseif( $bug.components.size() > 0 )
-                                            $bug.components.get(0).Componentname
-                                        #else
-                                            N/A
-                                        #end
-                                    </td>
-                                    <td style="text-align: right; vertical-align: top;">Affected Versions:&nbsp;</td>
-                                    <td style=" vertical-align: top;">
-                                        #if( $bug.affectedVersions.size() > 1 )
-                                            <ul>
-                                            #foreach( $affectedVersion in $bug.affectedVersions )
-                                                <li>$component.Componentname</li>
-                                            #end
-                                            </ul>
-                                        #elseif( $bug.affectedVersions.size() > 0 )
-                                            $bug.affectedVersions.get(0).Versionname
-                                        #else
-                                            N/A
-                                        #end
-                                    </td>  
-                                </tr>
+									<td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>
+									<td style=" vertical-align: top;">
+										#if( $lstBugComponent.size() > 1 )
+											<ul>
+											#foreach( $bugComponentMapper in $lstBugComponent )
+												<li>
+													<a href="$bugComponentMapper.link" style="color: rgb(216, 121, 55); text-decoration: none;">$!bugComponentMapper.displayname</a>
+												</li>
+											#end
+											</ul>
+										#elseif( $lstBugComponent.size() > 0 )
+											<a href="$lstBugComponent.get(0).link" style="color: rgb(216, 121, 55); text-decoration: none;">$!lstBugComponent.get(0).displayname</a>
+										#else
+											N/A
+										#end
+									</td>
+									<td style="text-align: right; vertical-align: top;">Affected Versions:&nbsp;</td>
+									<td style=" vertical-align: top;">
+										#if(  $lstBugVersion.size() > 1 )
+											<ul>
+											#foreach( $bugVersionMapper in $lstBugVersion )
+												<li>
+													<a href="$bugVersionMapper.link" style="color: rgb(216, 121, 55); text-decoration: none;">$!bugVersionMapper.displayname</a>
+												</li>
+											#end
+											</ul>
+										#elseif( $lstBugVersion.size() > 0 )
+											<a href="$lstBugVersion.get(0).link" style="color: rgb(216, 121, 55); text-decoration: none;">$!lstBugVersion.get(0).displayname</a>
+										#else
+											N/A
+										#end
+									</td>	
+								</tr>
                                 <tr>
                                 	<td colspan="4">
                                 		<p>Changes (by $historyLog.postedUserFullName):</p>

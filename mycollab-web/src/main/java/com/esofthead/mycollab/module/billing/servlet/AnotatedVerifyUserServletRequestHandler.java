@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
+import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccountInvitationExample;
@@ -43,6 +44,9 @@ public class AnotatedVerifyUserServletRequestHandler extends GenericServlet {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserAccountMapper userAccountMapper;
 
 	@Autowired
 	private UserAccountInvitationMapper userAccountInvitationMapper;
@@ -148,6 +152,9 @@ public class AnotatedVerifyUserServletRequestHandler extends GenericServlet {
 										user.getUsername(),
 										request.getContextPath());
 								// redirect to account site
+								userService.updateUserAccountStatus(username,
+										accountId,
+										RegisterStatusConstants.ACTIVE);
 								request.getRequestDispatcher(
 										request.getContextPath() + "/")
 										.forward(request, response);
