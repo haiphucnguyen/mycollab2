@@ -4911,3 +4911,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-button-wordWrap .v-button-wrap img {
 	vertical-align: bottom;
 }
+
+/* Floating delete section */
+.deleteSection {
+	position: fixed;
+}
