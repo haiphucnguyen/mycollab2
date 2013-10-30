@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -149,6 +150,8 @@ public class ResolvedInputWindow extends Window {
 											.toString());
 									comment.setTypeid(ResolvedInputWindow.this.bug
 											.getId());
+									comment.setExtratypeid(CurrentProjectVariables
+											.getProjectId());
 
 									final CommentService commentService = ApplicationContextUtil
 											.getSpringBean(CommentService.class);

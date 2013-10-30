@@ -12,6 +12,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -135,6 +136,8 @@ public class AssignTaskWindow extends Window {
 									comment.setType(CommentType.PRJ_TASK
 											.toString());
 									comment.setTypeid(task.getId());
+									comment.setExtratypeid(CurrentProjectVariables
+											.getProjectId());
 
 									CommentService commentService = ApplicationContextUtil
 											.getSpringBean(CommentService.class);
