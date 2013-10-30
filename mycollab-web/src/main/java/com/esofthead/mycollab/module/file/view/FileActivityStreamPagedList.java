@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.ecm.domain.SimpleContentActivityLog;
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -115,20 +116,13 @@ public class FileActivityStreamPagedList
 
 					streamInfoLayout.addComponent(button);
 				}
-				String userName = (activityStream.getUserFullName() != null) ? activityStream
-						.getUserFullName() : activityStream.getCreateduser();
-				Button userNameBtn = new Button(userName,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								notifySelectHandler(new FileSearchCriteria(),
-										"", "");
-							}
-						});
-				userNameBtn.addStyleName("link");
-				streamInfoLayout.addComponent(userNameBtn);
+				String userLinkStr = "<a href=\""
+						+ UserLinkUtils.generatePreviewFullUserLink(
+								AppContext.getSiteUrl(),
+								activityStream.getCreateduser()) + "\">"
+						+ activityStream.getUserFullName() + "</a>";
+				Label userLbl = new Label(userLinkStr, Label.CONTENT_XHTML);
+				streamInfoLayout.addComponent(userLbl);
 
 				if (contentActivityAction instanceof Move) {
 					final String oldPath = ((Move) contentActivityAction)
