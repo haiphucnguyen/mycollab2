@@ -172,7 +172,6 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 						PreviewForm.this);
 				previewForm
 						.createButtonControls(RolePermissionCollections.ACCOUNT_USER);
-				previewForm.removeCloneButton();
 				return previewForm.getLayout();
 			}
 

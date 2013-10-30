@@ -23,6 +23,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private Button assignBtn;
 	private boolean haveAssignButton;
 	private HorizontalLayout editButtons;
+	private HorizontalLayout layout;
 
 	public ProjectPreviewFormControlsGenerator(
 			final AdvancedPreviewBeanForm<T> editForm) {
@@ -30,7 +31,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	}
 
 	public HorizontalLayout createButtonControls(final String permissionItem) {
-		final HorizontalLayout layout = new HorizontalLayout();
+		layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setWidth("100%");
 
@@ -213,6 +214,11 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			printBtn.setEnabled(canRead);
 			historyBtn.setEnabled(canRead);
 		}
+		return layout;
+	}
+
+	public HorizontalLayout getLayoutWithRemoveCloneBtn() {
+		editButtons.removeComponent(cloneBtn);
 		return layout;
 	}
 

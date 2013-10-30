@@ -204,9 +204,15 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 					ReadView.this.basicInformationLayout.removeAllComponents();
 					ReadView.this.standupReportViewLayout
 							.addComponent(new UserStandupReportDepot());
-					final HorizontalLayout controlButtons = (new ProjectPreviewFormControlsGenerator<ProjectMember>(
-							ReadView.this.previewForm))
+
+					ProjectPreviewFormControlsGenerator<ProjectMember> previewForm = new ProjectPreviewFormControlsGenerator<ProjectMember>(
+							ReadView.this.previewForm);
+					previewForm
 							.createButtonControls(ProjectRolePermissionCollections.USERS);
+
+					final HorizontalLayout controlButtons = previewForm
+							.getLayoutWithRemoveCloneBtn();
+
 					controlButtons.addStyleName("control-buttons");
 					controlButtons.setMargin(true);
 					ReadView.this.basicInformationLayout
