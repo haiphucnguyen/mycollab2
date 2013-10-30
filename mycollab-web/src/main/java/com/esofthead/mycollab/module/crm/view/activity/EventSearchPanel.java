@@ -68,6 +68,8 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		controlsBtn.setCaption("Create Task");
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void splitButtonClick(
 							final SplitButton.SplitButtonClickEvent event) {
@@ -80,8 +82,10 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		btnControlsLayout.setWidth("150px");
 		controlsBtn.addComponent(btnControlsLayout);
 
-		final Button createMeetingBtn = new Button("Create Meeting",
+		final Button createMeetingBtn = new Button("Create Event",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final Button.ClickEvent event) {
 						controlsBtn.setPopupVisible(false);
@@ -95,6 +99,8 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 				.canWrite(RolePermissionCollections.CRM_MEETING));
 		final Button createCallBtn = new Button("Create Call",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final Button.ClickEvent event) {
 						controlsBtn.setPopupVisible(false);
@@ -130,8 +136,6 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
-			// basicSearchBody.setSpacing(true);
-			// basicSearchBody.addComponent(new Label("Subject"));
 
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);

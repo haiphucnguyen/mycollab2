@@ -94,7 +94,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskRead(this,
 											simpleEvent.getId()));
-						} else if ("Meeting".equals(simpleEvent.getEventType())) {
+						} else if ("Event".equals(simpleEvent.getEventType())) {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.MeetingRead(this,
 											simpleEvent.getId()));
