@@ -33,9 +33,4 @@ public class NoteServiceImpl extends
 	public ISearchableDAO<NoteSearchCriteria> getSearchMapper() {
 		return noteMapperExt;
 	}
-
-	@Override
-	public int remove(Integer primaryKey) {
-		return super.remove(primaryKey);
-	}
 }

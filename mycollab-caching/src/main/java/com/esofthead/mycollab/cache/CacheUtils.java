@@ -51,4 +51,10 @@ public class CacheUtils {
 	public static void cleanCache(Integer accountId, String prefixKey) {
 		LocalCacheManager.removeCacheItems(accountId.toString(), prefixKey);
 	}
+
+	public static void cleanCaches(Integer accountId, Class... classes) {
+		for (Class prefKey : classes) {
+			cleanCache(accountId, prefKey.getName());
+		}
+	}
 }
