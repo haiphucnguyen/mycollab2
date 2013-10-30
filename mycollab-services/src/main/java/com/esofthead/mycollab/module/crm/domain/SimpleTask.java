@@ -18,32 +18,42 @@ package com.esofthead.mycollab.module.crm.domain;
 
 public class SimpleTask extends Task {
 
-    private static final long serialVersionUID = 1L;
-    private String contactName;
-    private String relatedTo;
-    private String assignUserFullName;
+	private static final long serialVersionUID = 1L;
+	private String contactName;
+	private String relatedTo;
+	private String assignUserFullName;
+	private String assignUserAvatarId;
 
-    public String getContactName() {
-        return contactName;
-    }
+	public String getContactName() {
+		return contactName;
+	}
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
 
-    public String getRelatedTo() {
-        return relatedTo;
-    }
+	public String getRelatedTo() {
+		return relatedTo;
+	}
 
-    public void setRelatedTo(String relatedTo) {
-        this.relatedTo = relatedTo;
-    }
+	public void setRelatedTo(String relatedTo) {
+		this.relatedTo = relatedTo;
+	}
 
-    public String getAssignUserFullName() {
-        return assignUserFullName;
-    }
+	public String getAssignUserFullName() {
+		return assignUserFullName;
+	}
 
-    public void setAssignUserFullName(String assignUserFullName) {
-        this.assignUserFullName = assignUserFullName;
-    }
+	public void setAssignUserFullName(String assignUserFullName) {
+		this.assignUserFullName = assignUserFullName;
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
+	}
+
 }

@@ -68,7 +68,7 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 				.getSpringBean(VersionService.class);
 		item.setSaccountid(AppContext.getAccountId());
 		item.setProjectid(CurrentProjectVariables.getProjectId());
-
+		item.setStatus("Open");
 		if (item.getId() == null) {
 			versionService.saveWithSession(item, AppContext.getUsername());
 		} else {

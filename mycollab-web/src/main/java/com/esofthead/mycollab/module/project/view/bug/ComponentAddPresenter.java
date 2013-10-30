@@ -71,6 +71,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 		SimpleProject project = CurrentProjectVariables.getProject();
 		item.setSaccountid(AppContext.getAccountId());
 		item.setProjectid(project.getId());
+		item.setStatus("Open");
 
 		if (item.getId() == null) {
 			item.setCreateduser(AppContext.getUsername());

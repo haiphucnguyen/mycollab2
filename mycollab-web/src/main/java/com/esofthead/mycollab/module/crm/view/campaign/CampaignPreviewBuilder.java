@@ -24,7 +24,6 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -118,12 +117,12 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 		protected Field onCreateField(Item item, Object propertyId,
 				Component uiContext) {
 			if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(campaign.getAssignUserFullName(),
-						new Button.ClickListener() {
-							@Override
-							public void buttonClick(ClickEvent event) {
-							}
-						});
+				return new UserLinkViewField(
+						CampaignPreviewBuilder.this.campaign.getAssignuser(),
+						CampaignPreviewBuilder.this.campaign
+								.getAssignUserAvatarId(),
+						CampaignPreviewBuilder.this.campaign
+								.getAssignUserFullName());
 			} else if (propertyId.equals("startdate")) {
 				return new FormViewField(AppContext.formatDate(campaign
 						.getStartdate()));

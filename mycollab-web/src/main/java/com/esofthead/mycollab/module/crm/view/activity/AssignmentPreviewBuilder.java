@@ -16,8 +16,6 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -54,14 +52,12 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 		protected Field onCreateField(Item item, Object propertyId,
 				Component uiContext) {
 			if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(task.getAssignUserFullName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-							}
-						});
+				return new UserLinkViewField(
+						AssignmentPreviewBuilder.this.task.getAssignuser(),
+						AssignmentPreviewBuilder.this.task
+								.getAssignUserAvatarId(),
+						AssignmentPreviewBuilder.this.task
+								.getAssignUserFullName());
 			} else if (propertyId.equals("startdate")) {
 				return new FormViewField(AppContext.formatDateTime(task
 						.getStartdate()));

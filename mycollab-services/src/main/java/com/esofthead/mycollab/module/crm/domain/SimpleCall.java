@@ -5,6 +5,7 @@ public class SimpleCall extends CallWithBLOBs {
 	private static final long serialVersionUID = 1L;
 	private String relatedTo;
 	private String assignUserFullName;
+	private String assignUserAvatarId;
 
 	public String getRelatedTo() {
 		return relatedTo;
@@ -20,5 +21,13 @@ public class SimpleCall extends CallWithBLOBs {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
 	}
 }

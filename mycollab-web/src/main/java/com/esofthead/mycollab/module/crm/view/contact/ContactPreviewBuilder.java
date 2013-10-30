@@ -140,15 +140,12 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				return new FormEmailLinkViewField(
 						ContactPreviewBuilder.this.contact.getEmail());
 			} else if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(
+				return new UserLinkViewField(
+						ContactPreviewBuilder.this.contact.getAssignuser(),
 						ContactPreviewBuilder.this.contact
-								.getAssignUserFullName(),
-						new Button.ClickListener() {
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								// TODO Auto-generated method stub
-							}
-						});
+								.getAssignUserAvatarId(),
+						ContactPreviewBuilder.this.contact
+								.getAssignUserFullName());
 			} else if (propertyId.equals("iscallable")) {
 				if (ContactPreviewBuilder.this.contact.getIscallable() == null
 						|| Boolean.FALSE == ContactPreviewBuilder.this.contact

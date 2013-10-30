@@ -114,13 +114,10 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
 				return field;
 			} else if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(lead.getAssignUserFullName(),
-						new Button.ClickListener() {
-							@Override
-							public void buttonClick(ClickEvent event) {
-								// TODO Auto-generated method stub
-							}
-						});
+				return new UserLinkViewField(
+						LeadPreviewBuilder.this.lead.getAssignuser(),
+						LeadPreviewBuilder.this.lead.getAssignUserAvatarId(),
+						LeadPreviewBuilder.this.lead.getAssignUserFullName());
 			}
 
 			return super.onCreateField(item, propertyId, uiContext);

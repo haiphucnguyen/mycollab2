@@ -17,8 +17,6 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -65,15 +63,10 @@ public class CallPreviewBuilder extends VerticalLayout {
 		protected Field onCreateField(final Item item, final Object propertyId,
 				final Component uiContext) {
 			if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(
-						CallPreviewBuilder.this.call.getAssignUserFullName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(final ClickEvent event) {
-							}
-						});
+				return new UserLinkViewField(
+						CallPreviewBuilder.this.call.getAssignuser(),
+						CallPreviewBuilder.this.call.getAssignUserAvatarId(),
+						CallPreviewBuilder.this.call.getAssignUserFullName());
 			} else if (propertyId.equals("type")) {
 				return new RelatedReadItemField(CallPreviewBuilder.this.call);
 			} else if (propertyId.equals("status")) {

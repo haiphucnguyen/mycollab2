@@ -303,16 +303,13 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 							}
 						});
 			} else if (propertyId.equals("assignuser")) {
-				field = new FormLinkViewField(
-						opportunity.getAssignUserFullName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-
-							}
-						});
+				field = new UserLinkViewField(
+						OpportunityPreviewBuilder.this.opportunity
+								.getAssignuser(),
+						OpportunityPreviewBuilder.this.opportunity
+								.getAssignUserAvatarId(),
+						OpportunityPreviewBuilder.this.opportunity
+								.getAssignUserFullName());
 			} else if (propertyId.equals("expectedcloseddate")) {
 				field = new FormViewField(AppContext.formatDate(opportunity
 						.getExpectedcloseddate()));

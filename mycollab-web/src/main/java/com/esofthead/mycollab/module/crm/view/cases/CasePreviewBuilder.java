@@ -110,15 +110,10 @@ public class CasePreviewBuilder extends VerticalLayout {
 			} else if (propertyId.equals("email")) {
 				return new FormEmailLinkViewField(cases.getEmail());
 			} else if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(cases.getAssignUserFullName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								// TODO Auto-generated method stub
-							}
-						});
+				return new UserLinkViewField(
+						CasePreviewBuilder.this.cases.getAssignuser(),
+						CasePreviewBuilder.this.cases.getAssignUserAvatarId(),
+						CasePreviewBuilder.this.cases.getAssignUserFullName());
 			}
 
 			return null;
