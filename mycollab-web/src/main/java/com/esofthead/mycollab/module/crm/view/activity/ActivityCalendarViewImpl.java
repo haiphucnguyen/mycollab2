@@ -56,7 +56,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		callBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
 
-		ButtonLink meetingBtn = new ButtonLink("Create Meeting", listener);
+		ButtonLink meetingBtn = new ButtonLink("Create Event", listener);
 		actionBtnLayout.addComponent(meetingBtn);
 		meetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
