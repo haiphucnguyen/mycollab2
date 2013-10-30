@@ -22,15 +22,15 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">First Name:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">First Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleContact.firstname</a></td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Office Phone:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Office Phone:&nbsp;</td>
 									<td width= "180px; vertical-align: top;">$!simpleContact.officephone</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Last Name:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Last Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleContact.lastname</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Mobile:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Mobile:&nbsp;</td>
 									<td width="180px; vertical-align: top;">$!simpleContact.mobile</td>		
 								</tr>
 								<tr>
@@ -48,7 +48,7 @@
 									<td width="180px; vertical-align: top;">$!simpleContact.otherphone</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Department:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Department:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleContact.department</td>
 									<td style="text-align: right;">Fax:&nbsp;</td>
 									<td width="180px; vertical-align: top;">$!simpleContact.fax</td>		
@@ -70,7 +70,7 @@
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Assistant Phone:&nbsp;</td>
 									<td>$!simpleContact.assistantphone</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleContact.assignUserFullName</a>
 									</td>		
@@ -80,33 +80,33 @@
 									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!simpleContact.leadsource</td>
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Address:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Address:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleContact.primaddress</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Address:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Other Address:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleContact.otheraddress</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">City:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">City:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleContact.primcity</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other City:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Other City:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleContact.othercity</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">State:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">State:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleContact.primstate</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other State:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Other State:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleContact.otherstate</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Postal Code:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Postal Code:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleContact.primpostalcode</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Postal Code:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Other Postal Code:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleContact.otherpostalcode</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Country:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Country:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleContact.primcountry</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Country:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Other Country:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleContact.othercountry</td>		
 								</tr>
 								<tr>

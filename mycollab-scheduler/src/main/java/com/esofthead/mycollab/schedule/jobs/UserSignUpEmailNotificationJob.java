@@ -24,8 +24,8 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.GenericLinkGenerator;
 
-@Component
-@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+//@Component
+//@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class UserSignUpEmailNotificationJob extends QuartzJobBean {
 	private static Logger log = LoggerFactory
 			.getLogger(UserSignUpEmailNotificationJob.class);

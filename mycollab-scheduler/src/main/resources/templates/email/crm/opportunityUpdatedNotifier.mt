@@ -22,9 +22,9 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Opportunity Name:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Opportunity Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleOpportunity.opportunityname</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Account Name:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Account Name:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleOpportunity.accountName</td>	
 								</tr>
 								<tr>
@@ -34,27 +34,27 @@
 									<td width="180px">$!simpleOpportunity.expectedcloseddate</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Amount:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Amount:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleOpportunity.amount</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Type:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Type:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleOpportunity.type</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Sales Stage:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Sales Stage:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleOpportunity.salesstage</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Lead Source:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Lead Source:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleOpportunity.leadsource</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Probability (%):&nbsp;</td>
 									<td>$!simpleOpportunity.probability</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Campaign:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Campaign:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">$!simpleOpportunity.campaignName</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Next Step:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Next Step:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleOpportunity.nextstep</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">
 										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleOpportunity.assignUserFullName</a>
 									</td>	

@@ -256,7 +256,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 				+ "\"";
 		Label memberRole = new Label();
 		memberRole.setContentMode(Label.CONTENT_XHTML);
-		if (member.getIsadmin() != null && member.getIsadmin() == Boolean.TRUE) {
+		if ((member.getIsadmin() != null && member.getIsadmin() == Boolean.TRUE)
+				|| member.getProjectroleid() == null) {
 			memberRole.setValue(memerRoleLinkPrefix
 					+ "style=\"color: #B00000;\">" + "Project Admin" + "</a>");
 		} else {

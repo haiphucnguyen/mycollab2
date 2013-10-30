@@ -26,37 +26,37 @@
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.accountURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!simpleAccount.accountname</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Website:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Website:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;"><a href="$!simpleAccount.website" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.website</a></td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Fax:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Fax:&nbsp;</td>
 									<td style="width: 180px; word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleAccount.fax</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Employees:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Employees:&nbsp;</td>
 									<td ></td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Other Phone:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Other Phone:&nbsp;</td>
 									<td width="180px">$!simpleAccount.alternatephone</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Industry:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Industry:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleAccount.industry</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Email:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Email:&nbsp;</td>
 									<td style="width:180px; word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">
 										<a href="mailto:$!simpleAccount.email" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.email</a>
 									</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Type:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Type:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleAccount.type</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Ownership:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Ownership:&nbsp;</td>
 									<td style="width: 180px; word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.ownership</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assignee:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Assignee:&nbsp;</td>
 									<td style="word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: underline;">$!simpleAccount.assignUserFullName</a>
 									</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Annual Revenue:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Annual Revenue:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.annualrevenue</td>		
 								</tr>
 								<tr>
@@ -66,27 +66,27 @@
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.shippingaddress</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Billing City:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Billing City:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleAccount.city</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Shipping City:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Shipping City:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.shippingcity</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Billing State:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Billing State:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleAccount.state</td>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Shipping State:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.shippingstate</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Billing Postal Code:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Billing Postal Code:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleAccount.postalcode</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Shipping Postal Code:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Shipping Postal Code:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.shippingpostalcode</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; max-width : 90px; vertical-align: top;">Billing Country:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">$!simpleAccount.billingcountry</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Shipping Country:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Shipping Country:&nbsp;</td>
 									<td style="width: 180px ;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleAccount.shippingcountry</td>		
 								</tr>
 								<tr>

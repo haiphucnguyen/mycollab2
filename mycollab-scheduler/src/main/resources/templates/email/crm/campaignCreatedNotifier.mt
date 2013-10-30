@@ -22,9 +22,9 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Name:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Name:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;">$!simpleCampaign.campaignname</a></td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Status:&nbsp;</td>
 									<td style="width: 180px; vertical-align: top;">$!simpleCampaign.status</td>	
 								</tr>
 								<tr>
@@ -44,7 +44,7 @@
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Currency:&nbsp;</td>
 									<td></td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Budget:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Budget:&nbsp;</td>
 									<td style="width:180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!simpleCampaign.budget</td>		
 								</tr>
 								<tr>

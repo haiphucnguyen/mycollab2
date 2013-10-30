@@ -113,7 +113,6 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 					RoleBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			searchBtn.setStyleName("v-button-bluebtn-no-radius-left");
 			searchComp.addComponent(searchBtn);
 			basicSearchBody.addComponent(searchComp);
 

@@ -26,17 +26,17 @@
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.milestoneURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.name</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Start date:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Start date:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: vertical-align: top;normal; word-break: break-all;">$!date.format('short_date', $!milestone.startdate)</td>
 									
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Status:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Status:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top;white-space: normal; word-break: break-all;">$!milestone.status</td>	
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">End date:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">End date:&nbsp;</td>
 									<td style="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!date.format('short_date', $!milestone.enddate)</td>
 									
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Responsible User:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Responsible User:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="$!hyperLinks.ownerUserUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!milestone.ownerFullName</a>
 									</td>

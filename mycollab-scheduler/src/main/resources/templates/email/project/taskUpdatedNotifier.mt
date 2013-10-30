@@ -44,11 +44,11 @@
 									<td>$!task.priority</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assign:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Assign:&nbsp;</td>
 									<td style="word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;">
 										<a href="$!hyperLinks.assignUserUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.assignUserFullName</a>
 									</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;"> Task list:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;"> Task list:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;"><a href="$!hyperLinks.taskListUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!task.taskListName</a></td>		
 								</tr>
 								<tr>

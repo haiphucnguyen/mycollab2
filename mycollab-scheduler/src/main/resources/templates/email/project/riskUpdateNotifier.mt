@@ -26,19 +26,19 @@
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$!hyperLinks.riskURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!risk.riskname</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Raised by:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Raised by:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="$!hyperLinks.raiseUserUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!risk.raisedByUserFullName</a>
 									</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Assigned to:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Assigned to:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="$!hyperLinks.assignUserURL" style="color: rgb(216, 121, 55); text-decoration: none;">$!risk.assignedToUserFullName</a>
 									</td>				
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width : 90px;vertical-align: top;">Consequence:&nbsp;</td>
+									<td style="text-align: right; width : 100px;vertical-align: top;">Consequence:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!risk.consequence</td>
-									<td style="text-align: right; min-width : 90px; vertical-align: top;">Probability:&nbsp;</td>
+									<td style="text-align: right; width : 100px; vertical-align: top;">Probability:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word;vertical-align: top; white-space: normal; word-break: break-all;">
 										$!risk.probalitity
 									</td>				
