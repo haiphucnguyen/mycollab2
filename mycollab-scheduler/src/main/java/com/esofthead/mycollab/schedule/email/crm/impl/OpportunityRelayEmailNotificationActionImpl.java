@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 
 @Component
@@ -72,7 +73,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 								CrmTypeConstants.OPPORTUNITY,
 								simpleOpportunity.getId()));
 		if (simpleOpportunity.getAssignuser() != null) {
-			hyperLinks.put("assignUserURL", CrmLinkGenerator
+			hyperLinks.put("assignUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleOpportunity.getSaccountid()),
 							simpleOpportunity.getAssignuser()));
@@ -101,7 +102,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+			templateGenerator.putVariable("postedUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleOpportunity.getSaccountid()),
 							auditLog.getPosteduser()));
@@ -128,7 +129,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 						+ "\"",
 				"templates/email/crm/opportunityAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", CrmLinkGenerator
+		templateGenerator.putVariable("userComment", UserLinkUtils
 				.generatePreviewFullUserLink(
 						getSiteUrl(simpleOpportunity.getSaccountid()),
 						emailNotification.getChangeby()));

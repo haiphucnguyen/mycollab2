@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 
 @Component
@@ -79,7 +80,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 		}
 
 		if (simpleContact.getAssignuser() != null) {
-			hyperLinks.put("assignUserURL", CrmLinkGenerator
+			hyperLinks.put("assignUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleContact.getSaccountid()),
 							simpleContact.getAssignuser()));
@@ -108,7 +109,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+			templateGenerator.putVariable("postedUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleContact.getSaccountid()),
 							auditLog.getPosteduser()));
@@ -132,7 +133,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 				+ StringUtils.subString(simpleContact.getContactName(), 100)
 				+ "\"", "templates/email/crm/contactAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", CrmLinkGenerator
+		templateGenerator.putVariable("userComment", UserLinkUtils
 				.generatePreviewFullUserLink(
 						getSiteUrl(simpleContact.getSaccountid()),
 						emailNotification.getChangeby()));

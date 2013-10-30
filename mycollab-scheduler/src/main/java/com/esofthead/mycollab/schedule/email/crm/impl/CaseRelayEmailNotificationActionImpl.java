@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction;
 
 @Component
@@ -69,7 +70,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 						+ CrmLinkGenerator.generateCrmItemLink(
 								CrmTypeConstants.CASE, simpleCase.getId()));
 		if (simpleCase.getAssignuser() != null) {
-			hyperLinks.put("assignUserURL", CrmLinkGenerator
+			hyperLinks.put("assignUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleCase.getSaccountid()),
 							simpleCase.getAssignuser()));
@@ -99,7 +100,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
 
-			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+			templateGenerator.putVariable("postedUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleCase.getAccountid()),
 							auditLog.getPosteduser()));
@@ -123,7 +124,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 				+ StringUtils.subString(simpleCase.getSubject(), 100) + "\"",
 				"templates/email/crm/caseAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", CrmLinkGenerator
+		templateGenerator.putVariable("userComment", UserLinkUtils
 				.generatePreviewFullUserLink(
 						getSiteUrl(simpleCase.getSaccountid()),
 						emailNotification.getChangeby()));

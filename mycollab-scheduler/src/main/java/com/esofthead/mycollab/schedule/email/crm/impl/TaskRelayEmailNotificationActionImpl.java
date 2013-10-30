@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 
 @Component
@@ -69,7 +70,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 						+ CrmLinkGenerator.generateCrmItemLink(
 								CrmTypeConstants.TASK, simpleTask.getId()));
 		if (simpleTask.getAssignuser() != null) {
-			hyperLinks.put("assignUserURL", CrmLinkGenerator
+			hyperLinks.put("assignUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleTask.getSaccountid()),
 							simpleTask.getAssignuser()));
@@ -98,7 +99,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+			templateGenerator.putVariable("postedUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleTask.getSaccountid()),
 							auditLog.getPosteduser()));
@@ -122,7 +123,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 						+ StringUtils.subString(simpleTask.getSubject(), 100)
 						+ "\"", "templates/email/crm/crmTaskAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", CrmLinkGenerator
+		templateGenerator.putVariable("userComment", UserLinkUtils
 				.generatePreviewFullUserLink(
 						getSiteUrl(simpleTask.getSaccountid()),
 						emailNotification.getChangeby()));

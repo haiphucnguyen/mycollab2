@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.schedule.email.crm.MeetingRelayEmailNotificationAction;
 
 @Component
@@ -92,7 +93,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+			templateGenerator.putVariable("postedUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleMeeting.getSaccountid()),
 							auditLog.getPosteduser()));
@@ -117,7 +118,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 						+ StringUtils.subString(simpleMeeting.getSubject(), 100)
 						+ "\"", "templates/email/crm/meetingAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", CrmLinkGenerator
+		templateGenerator.putVariable("userComment", UserLinkUtils
 				.generatePreviewFullUserLink(
 						getSiteUrl(simpleMeeting.getSaccountid()),
 						emailNotification.getChangeby()));

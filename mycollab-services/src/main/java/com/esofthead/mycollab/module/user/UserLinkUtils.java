@@ -8,4 +8,11 @@ public class UserLinkUtils {
 		return GenericLinkUtils.URL_PREFIX_PARAM + "account/role/preview/"
 				+ UrlEncodeDecoder.encode(userRoleId);
 	}
+
+	public static String generatePreviewFullUserLink(String siteUrl,
+			String username) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ "account/user/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { username });
+	}
 }

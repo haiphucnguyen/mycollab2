@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmLocalizationTypeMap;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -133,13 +134,12 @@ public class ActivityStreamPanel extends Depot {
 						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
 					}
 					StringBuffer content = new StringBuffer(
-							LocalizationHelper.getMessage(
-									action,
+							LocalizationHelper.getMessage(action,
 									UserAvatarControlFactory.getAvatarLink(
 											activityStream
 													.getCreatedUserAvatarId(),
 											16),
-									CrmLinkGenerator.generatePreviewFullUserLink(
+									UserLinkUtils.generatePreviewFullUserLink(
 											SiteConfiguration
 													.getSiteUrl(AppContext
 															.getSession()

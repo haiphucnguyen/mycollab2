@@ -8,7 +8,7 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -84,9 +84,8 @@ public class UserLink extends Button {
 			topLayout.setSpacing(true);
 			topLayout.addComponent(new Label("View full profile at: "));
 
-			String userFullLinkStr = CrmLinkGenerator
-					.generatePreviewFullUserLink(AppContext.getSiteUrl(),
-							user.getUsername());
+			String userFullLinkStr = UserLinkUtils.generatePreviewFullUserLink(
+					AppContext.getSiteUrl(), user.getUsername());
 			userFullLinkStr = userFullLinkStr.substring(0, 50);
 			ButtonLink userFullLinkBtn = new ButtonLink(userFullLinkStr);
 			userFullLinkBtn.addListener(new Button.ClickListener() {

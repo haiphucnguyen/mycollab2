@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
 
 @Component
@@ -82,7 +83,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", CrmLinkGenerator
+			templateGenerator.putVariable("postedUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleCampaign.getSaccountid()),
 							auditLog.getPosteduser()));
@@ -107,7 +108,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 								simpleCampaign.getCampaignname(), 100) + "\"",
 				"templates/email/crm/campaignAddNoteNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", CrmLinkGenerator
+		templateGenerator.putVariable("userComment", UserLinkUtils
 				.generatePreviewFullUserLink(
 						getSiteUrl(simpleCampaign.getSaccountid()),
 						emailNotification.getChangeby()));
@@ -128,7 +129,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 								CrmTypeConstants.CAMPAIGN,
 								simpleCampaign.getId()));
 		if (simpleCampaign.getAssignuser() != null) {
-			hyperLinks.put("assignUserURL", CrmLinkGenerator
+			hyperLinks.put("assignUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleCampaign.getSaccountid()),
 							simpleCampaign.getAssignuser()));
