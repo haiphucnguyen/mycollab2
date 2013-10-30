@@ -15,10 +15,10 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.billing.BillingLinkUtils;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -233,7 +233,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		if (member.getRoleid() != null) {
 			String memberRoleLinkPrefix = "<a href=\""
 					+ AppContext.getSiteUrl()
-					+ BillingLinkUtils.generateUserRoleLink(member.getRoleid())
+					+ UserLinkUtils.generateUserRoleLink(member.getRoleid())
 					+ "\"";
 			Label memberRole = new Label();
 			memberRole.setContentMode(Label.CONTENT_XHTML);

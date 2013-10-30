@@ -17,6 +17,8 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -33,6 +36,9 @@ import com.esofthead.mycollab.module.crm.dao.TaskMapperExt;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.module.crm.service.EventService;
+import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 
@@ -64,6 +70,58 @@ public class TaskServiceImpl extends
 	@Override
 	public SimpleTask findById(int taskId, int sAccountId) {
 		return taskMapperExt.findById(taskId);
+	}
+
+	@Override
+	public int remove(Integer primaryKey) {
+		// TODO Auto-generated method stub
+		return super.remove(primaryKey);
+	}
+
+	@Override
+	@CacheEvict(serviceMap = { EventService.class })
+	public int saveWithSession(Task record, String username) {
+		return super.saveWithSession(record, username);
+	}
+
+	@Override
+	public int updateWithSession(Task record, String username) {
+		// TODO Auto-generated method stub
+		return super.updateWithSession(record, username);
+	}
+
+	@Override
+	public int removeWithSession(Integer primaryKey, String username,
+			int accountId) {
+		// TODO Auto-generated method stub
+		return super.removeWithSession(primaryKey, username, accountId);
+	}
+
+	@Override
+	public void removeByCriteria(TodoSearchCriteria criteria, int accountId) {
+		// TODO Auto-generated method stub
+		super.removeByCriteria(criteria, accountId);
+	}
+
+	@Override
+	public void massRemoveWithSession(List<Integer> primaryKeys,
+			String username, int accountId) {
+		// TODO Auto-generated method stub
+		super.massRemoveWithSession(primaryKeys, username, accountId);
+	}
+
+	@Override
+	public void massUpdateWithSession(Task record, List<Integer> primaryKeys,
+			int accountId) {
+		// TODO Auto-generated method stub
+		super.massUpdateWithSession(record, primaryKeys, accountId);
+	}
+
+	@Override
+	public void updateBySearchCriteria(Task record,
+			TodoSearchCriteria searchCriteria) {
+		// TODO Auto-generated method stub
+		super.updateBySearchCriteria(record, searchCriteria);
 	}
 
 }
