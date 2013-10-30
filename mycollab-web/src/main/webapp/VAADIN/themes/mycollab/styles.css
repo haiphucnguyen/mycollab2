@@ -1171,8 +1171,8 @@ input.v-textfield-errorField {
     border-width: 0px 0px 1px 0px;
 }
 
-.addViewLayout .addViewBottomControls .depotComp .v-table-header-wrap,.addViewLayout .addViewBottomControls .depotComp .v-table-body
-    {
+.addViewLayout .addViewBottomControls .depotComp .taskdisplay-component .v-table-header-wrap,.addViewLayout .addViewBottomControls .depotComp .taskdisplay-component .v-table-body
+{
     border-width: 1px 0px 1px 0px;
 }
 
@@ -2082,6 +2082,7 @@ input.v-textfield-errorField {
     display: inline-block;
     vertical-align: top;
     margin: 0px 3px;
+    line-height: 16px;
 }
 
 .stream-content img {
