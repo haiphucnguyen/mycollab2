@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -18,7 +19,7 @@ public class ProjectLinkBuilder {
 
 	public static String generateProjectMemberFullLink(int projectId,
 			String memberName) {
-		return AppContext.getSiteUrl() + ProjectLinkUtils.URL_PREFIX_PARAM
+		return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
 				+ "project/user/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + memberName);
 	}
@@ -28,7 +29,7 @@ public class ProjectLinkBuilder {
 		if (projectId == null || bugId == null) {
 			return "";
 		}
-		return AppContext.getSiteUrl() + ProjectLinkUtils.URL_PREFIX_PARAM
+		return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateBugPreviewLink(projectId, bugId);
 	}
 
@@ -48,7 +49,7 @@ public class ProjectLinkBuilder {
 		if (projectId == null || riskId == null) {
 			return "";
 		}
-		return AppContext.getSiteUrl() + ProjectLinkUtils.URL_PREFIX_PARAM
+		return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
 				+ "project/risk/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + riskId);
 	}
@@ -58,7 +59,7 @@ public class ProjectLinkBuilder {
 		if (projectId == null || taskId == null) {
 			return "";
 		}
-		return AppContext.getSiteUrl() + ProjectLinkUtils.URL_PREFIX_PARAM
+		return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateTaskPreviewLink(projectId, taskId);
 	}
 
@@ -68,7 +69,7 @@ public class ProjectLinkBuilder {
 			return "";
 		}
 		return AppContext.getSiteUrl()
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateTaskGroupPreviewLink(projectId,
 						taskgroupId);
 	}
@@ -79,7 +80,7 @@ public class ProjectLinkBuilder {
 			return "";
 		}
 		return AppContext.getSiteUrl()
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateMilestonePreviewLink(projectId,
 						milestoneId);
 	}

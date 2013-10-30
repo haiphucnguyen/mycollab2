@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -159,7 +160,7 @@ public class ActivityStreamComponent extends Depot {
 												.newResourceLink("icons/16/project/project.png"),
 										ProjectLinkBuilder.generateProjectFullLink(
 												activityStream.getProjectId(),
-												ProjectLinkUtils.URL_PREFIX_PARAM),
+												GenericLinkUtils.URL_PREFIX_PARAM),
 										activityStream.getProjectName());
 					} else if (ActivityStreamConstants.ACTION_UPDATE
 							.equals(activityStream.getAction())) {
@@ -190,7 +191,7 @@ public class ActivityStreamComponent extends Depot {
 												.newResourceLink("icons/16/project/project.png"),
 										ProjectLinkBuilder.generateProjectFullLink(
 												activityStream.getProjectId(),
-												ProjectLinkUtils.URL_PREFIX_PARAM),
+												GenericLinkUtils.URL_PREFIX_PARAM),
 										activityStream.getProjectName());
 						if (activityStream.getAssoAuditLog() != null) {
 							content += ProjectActivityStreamGenerator

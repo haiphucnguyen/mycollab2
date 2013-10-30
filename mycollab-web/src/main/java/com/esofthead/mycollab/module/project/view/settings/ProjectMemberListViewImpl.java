@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -250,7 +251,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 		String memerRoleLinkPrefix = "<a href=\""
 				+ AppContext.getSiteUrl()
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateRolePreviewLink(
 						member.getProjectid(), member.getProjectRoleId())
 				+ "\"";

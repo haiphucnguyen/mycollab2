@@ -3,14 +3,14 @@ package com.esofthead.mycollab.schedule.email.project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.schedule.email.GenericLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-public class ProjectMailLinkGenerator extends GenericLinkGenerator {
+public class ProjectMailLinkGenerator extends GenericLinkUtils {
 	private static Logger log = LoggerFactory
 			.getLogger(ProjectMailLinkGenerator.class);
 
@@ -32,19 +32,19 @@ public class ProjectMailLinkGenerator extends GenericLinkGenerator {
 	}
 
 	public String generateProjectFullLink() {
-		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ "project/dashboard/" + UrlEncodeDecoder.encode(projectId);
 	}
 
 	public String generateMessagePreviewFullLink(Integer messageId) {
 		return siteUrl
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateMessagePreviewLink(projectId,
 						messageId);
 	}
 
 	public String generateBugPreviewFullLink(Integer bugId) {
-		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateBugPreviewLink(projectId, bugId);
 	}
 
@@ -53,45 +53,45 @@ public class ProjectMailLinkGenerator extends GenericLinkGenerator {
 			return "";
 		}
 		return siteUrl
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateMilestonePreviewLink(projectId,
 						milestoneId);
 	}
 
 	public String generateTaskPreviewFullLink(Integer taskId) {
-		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateTaskPreviewLink(projectId, taskId);
 	}
 
 	public String generateTaskGroupPreviewFullLink(Integer taskgroupId) {
 		return siteUrl
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateTaskGroupPreviewLink(projectId,
 						taskgroupId);
 	}
 
 	public String generateRiskPreviewFullLink(Integer riskId) {
-		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateRiskPreview(projectId, riskId);
 	}
 
 	public String generateProblemPreviewFullLink(Integer problemId) {
 		return siteUrl
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateProblemPreviewLink(projectId,
 						problemId);
 	}
 
 	public String generateBugComponentPreviewFullLink(Integer bugComponentId) {
 		return siteUrl
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateBugComponentPreviewLink(projectId,
 						bugComponentId);
 	}
 
 	public String generateBugVersionPreviewFullLink(Integer bugVersionId) {
 		return siteUrl
-				+ ProjectLinkUtils.URL_PREFIX_PARAM
+				+ GenericLinkUtils.URL_PREFIX_PARAM
 				+ ProjectLinkUtils.generateBugVersionPreviewLink(projectId,
 						bugVersionId);
 	}

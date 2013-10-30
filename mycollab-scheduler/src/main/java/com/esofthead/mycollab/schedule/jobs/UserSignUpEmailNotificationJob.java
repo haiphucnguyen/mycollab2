@@ -8,11 +8,9 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -22,7 +20,6 @@ import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.schedule.email.GenericLinkGenerator;
 
 //@Component
 //@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -55,12 +52,12 @@ public class UserSignUpEmailNotificationJob extends QuartzJobBean {
 						userSignUpEmailNotificationTemplate);
 				templateGenerator.putVariable("user", user);
 
-				String linkComfirm = GenericLinkGenerator
+				String linkComfirm = GenericLinkUtils
 						.generateSiteUrlByAccountId(user.getAccountId())
 						+ "user/confirm_signup/";
 				templateGenerator.putVariable("linkConfirm", linkComfirm);
 
-				String linkCancelSignup = GenericLinkGenerator
+				String linkCancelSignup = GenericLinkUtils
 						.generateSiteUrlByAccountId(user.getAccountId())
 						+ "user/cancel_signup/"
 						+ UrlEncodeDecoder.encode(user.getUsername() + "/"

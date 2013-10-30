@@ -1,45 +1,51 @@
 package com.esofthead.mycollab.module.crm;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
+import com.esofthead.mycollab.common.GenericLinkUtils;
 
 public class CrmLinkGenerator {
 	public static String generateAccountPreviewLink(Integer accountId) {
-		return "crm/account/preview/" + UrlEncodeDecoder.encode(accountId);
+		return "crm/account/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { accountId });
 	}
 
 	public static String generateCampaignPreviewLink(Integer campaignId) {
-		return "crm/campaign/preview/" + UrlEncodeDecoder.encode(campaignId);
+		return "crm/campaign/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { campaignId });
 	}
 
 	public static String generateCasePreviewLink(Integer caseId) {
-		return "crm/cases/preview/" + UrlEncodeDecoder.encode(caseId);
+		return "crm/cases/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { caseId });
 	}
 
 	public static String generateContactPreviewLink(Integer contactId) {
-		return "crm/contact/preview/" + UrlEncodeDecoder.encode(contactId);
+		return "crm/contact/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { contactId });
 	}
 
 	public static String generateLeadPreviewLink(Integer leadId) {
-		return "crm/lead/preview/" + UrlEncodeDecoder.encode(leadId);
+		return "crm/lead/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { leadId });
 	}
 
 	public static String generateOpportunityPreviewLink(Integer opportunityId) {
 		return "crm/opportunity/preview/"
-				+ UrlEncodeDecoder.encode(opportunityId);
+				+ GenericLinkUtils.encodeParam(new Object[] { opportunityId });
 	}
 
 	public static String generateTaskPreviewLink(Integer taskId) {
-		return "crm/activity/task/preview/" + UrlEncodeDecoder.encode(taskId);
+		return "crm/activity/task/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { taskId });
 	}
 
 	public static String generateMeetingPreviewLink(Integer meetingId) {
 		return "crm/activity/meeting/preview/"
-				+ UrlEncodeDecoder.encode(meetingId);
+				+ GenericLinkUtils.encodeParam(new Object[] { meetingId });
 	}
 
 	public static String generateCallPreviewLink(Integer callId) {
-		return "crm/activity/call/preview/" + UrlEncodeDecoder.encode(callId);
+		return "crm/activity/call/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { callId });
 	}
 
 	public static String generateCrmItemLink(String type, int typeid) {
@@ -66,9 +72,11 @@ public class CrmLinkGenerator {
 		}
 		return "#" + result;
 	}
+
 	public static String generatePreviewFullUserLink(String siteUrl,
 			String username) {
-		return siteUrl + ProjectLinkUtils.URL_PREFIX_PARAM
-				+ "account/user/preview/" + UrlEncodeDecoder.encode(username);
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ "account/user/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { username });
 	}
 }

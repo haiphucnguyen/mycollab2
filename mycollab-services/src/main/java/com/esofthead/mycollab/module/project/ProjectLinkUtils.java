@@ -1,37 +1,41 @@
 package com.esofthead.mycollab.module.project;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.GenericLinkUtils;
 
 public class ProjectLinkUtils {
-	public static String URL_PREFIX_PARAM = "#";
 
 	public static String generateTaskGroupPreviewLink(Integer projectId,
 			Integer taskgroupId) {
 		return "project/task/taskgroup/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + taskgroupId);
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						taskgroupId });
 	}
 
 	public static String generateTaskPreviewLink(Integer projectId,
 			Integer taskId) {
 		return "project/task/task/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + taskId);
+				+ GenericLinkUtils
+						.encodeParam(new Object[] { projectId, taskId });
 	}
 
 	public static String generateMilestonePreviewLink(int projectId,
 			int milestoneId) {
 		return "project/milestone/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + milestoneId);
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						milestoneId });
 	}
 
 	public static String generateProblemPreviewLink(Integer projectId,
 			Integer problemId) {
 		return "project/problem/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + problemId);
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						problemId });
 	}
 
 	public static String generateRiskPreview(Integer projectId, Integer riskId) {
 		return "project/risk/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + riskId);
+				+ GenericLinkUtils
+						.encodeParam(new Object[] { projectId, riskId });
 	}
 
 	public static String generateMessagePreviewLink(Integer projectId,
@@ -40,7 +44,8 @@ public class ProjectLinkUtils {
 			return "";
 		}
 		return "project/message/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + messageId);
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						messageId });
 	}
 
 	public static String generateBugComponentPreviewLink(Integer projectId,
@@ -49,7 +54,8 @@ public class ProjectLinkUtils {
 			return "";
 		}
 		return "project/bug/component/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + componentId);
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						componentId });
 	}
 
 	public static String generateBugVersionPreviewLink(Integer projectId,
@@ -58,20 +64,24 @@ public class ProjectLinkUtils {
 			return "";
 		}
 		return "project/bug/version/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + versionId);
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						versionId });
 	}
 
 	public static String generateProjectLink(int projectId) {
-		return "project/dashboard/" + UrlEncodeDecoder.encode(projectId);
+		return "project/dashboard/"
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId });
 	}
 
 	public static String generateBugPreviewLink(int projectId, int bugId) {
 		return "project/bug/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + bugId);
+				+ GenericLinkUtils
+						.encodeParam(new Object[] { projectId, bugId });
 	}
 
 	public static String generateRolePreviewLink(int projectId, int roleId) {
 		return "project/role/preview/"
-				+ UrlEncodeDecoder.encode(projectId + "/" + roleId);
+				+ GenericLinkUtils
+						.encodeParam(new Object[] { projectId, roleId });
 	}
 }

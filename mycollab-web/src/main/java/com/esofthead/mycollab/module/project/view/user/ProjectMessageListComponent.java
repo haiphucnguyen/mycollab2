@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
@@ -49,7 +49,7 @@ public class ProjectMessageListComponent extends Depot {
 							.newResourceLink("icons/16/project/message.png"),
 					ProjectLinkBuilder.generateMessagePreviewFullLink(
 							message.getProjectid(), message.getId(),
-							ProjectLinkUtils.URL_PREFIX_PARAM), message
+							GenericLinkUtils.URL_PREFIX_PARAM), message
 							.getTitle());
 			final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
 
