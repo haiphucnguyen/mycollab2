@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.setting;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
@@ -11,9 +8,6 @@ import com.vaadin.ui.HorizontalLayout;
 
 class CustomLayoutDDComp extends HorizontalLayout {
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory
-			.getLogger(CustomLayoutDDComp.class);
 
 	private ActiveSectionLayout activeFormLayout;
 	private DeleteSectionLayout deleteFormLayout;
@@ -49,7 +43,7 @@ class CustomLayoutDDComp extends HorizontalLayout {
 						section);
 				activeFormLayout.addComponent(sectionLayout);
 			} else {
-				ActiveSectionLayoutComp sectionLayout = new ActiveSectionLayoutComp(
+				DeleteSectionLayoutComp sectionLayout = new DeleteSectionLayoutComp(
 						section);
 				deleteFormLayout.addComponent(sectionLayout);
 				hasDeletedSection = true;
@@ -60,7 +54,7 @@ class CustomLayoutDDComp extends HorizontalLayout {
 			DynaSection deleteSection = new DynaSectionBuilder()
 					.layoutType(LayoutType.ONE_COLUMN).header("Removed fields")
 					.deleteSection(true).build();
-			ActiveSectionLayoutComp sectionLayout = new ActiveSectionLayoutComp(
+			DeleteSectionLayoutComp sectionLayout = new DeleteSectionLayoutComp(
 					deleteSection);
 			deleteFormLayout.addComponent(sectionLayout);
 		}

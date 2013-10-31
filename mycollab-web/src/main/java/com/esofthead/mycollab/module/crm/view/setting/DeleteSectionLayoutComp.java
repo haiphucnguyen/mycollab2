@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.setting;
 
-import com.vaadin.ui.VerticalLayout;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 
-class DeleteSectionLayoutComp extends VerticalLayout {
+class DeleteSectionLayoutComp extends GenericSectionLayoutComp {
 	private static final long serialVersionUID = 1L;
+
+	public DeleteSectionLayoutComp(DynaSection section) {
+		super(section);
+	}
 
 }

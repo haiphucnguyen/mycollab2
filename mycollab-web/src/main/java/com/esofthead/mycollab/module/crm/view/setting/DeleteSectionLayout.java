@@ -11,33 +11,34 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
 public class DeleteSectionLayout extends DDVerticalLayout {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public DeleteSectionLayout() {
-        this.setComponentVerticalDropRatio(0.3f);
-        this.setDragMode(LayoutDragMode.CLONE);
-        this.addStyleName("deleteSection");
-        this.setDropHandler(new DropHandler() {
-            private static final long serialVersionUID = 1L;
+	public DeleteSectionLayout() {
+		this.setComponentVerticalDropRatio(0.3f);
+		this.setDragMode(LayoutDragMode.CLONE);
+		this.addStyleName("deleteSection");
 
-            @Override
-            public AcceptCriterion getAcceptCriterion() {
-                return AcceptAll.get();
-            }
+		this.setDropHandler(new DropHandler() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public void drop(DragAndDropEvent event) {
-                VerticalLayoutTargetDetails details = (VerticalLayoutTargetDetails) event
-                        .getTargetDetails();
-                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
-                        .getTransferable();
-                Component srcComp = transferable.getComponent();
-                if (srcComp instanceof ActiveSectionLayoutComp) {
-                    ActiveSectionLayout parentSection = (ActiveSectionLayout) srcComp
-                            .getParent();
-                    parentSection.removeComponent(parentSection);
-                }
-            }
-        });
-    }
+			@Override
+			public AcceptCriterion getAcceptCriterion() {
+				return AcceptAll.get();
+			}
+
+			@Override
+			public void drop(DragAndDropEvent event) {
+				VerticalLayoutTargetDetails details = (VerticalLayoutTargetDetails) event
+						.getTargetDetails();
+				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
+						.getTransferable();
+				Component srcComp = transferable.getComponent();
+				if (srcComp instanceof ActiveSectionLayoutComp) {
+					ActiveSectionLayout parentSection = (ActiveSectionLayout) srcComp
+							.getParent();
+					parentSection.removeComponent(srcComp);
+				}
+			}
+		});
+	}
 }
