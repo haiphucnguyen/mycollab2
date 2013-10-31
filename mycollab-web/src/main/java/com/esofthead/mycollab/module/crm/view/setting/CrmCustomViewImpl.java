@@ -125,7 +125,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						DynaForm rebuildForm = layoutComp.rebuildForm();
 
 					}
 				});

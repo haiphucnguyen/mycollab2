@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -19,7 +23,6 @@ public class GenericSectionComp extends VerticalLayout {
 	public GenericSectionComp(DynaSection section) {
 		this.section = section;
 		this.addStyleName(UIConstants.CUSTOM_FIELD_SECTION);
-
 	}
 
 	public DynaSection getSection() {
@@ -37,6 +40,22 @@ public class GenericSectionComp extends VerticalLayout {
 		if (remainItem == 0) {
 			dragLayout.removeRow(srcRow);
 		}
+	}
+
+	protected List<AbstractDynaField> getFields() {
+		List<AbstractDynaField> fields = new ArrayList<AbstractDynaField>();
+		for (int col = 0; col < dragLayout.getColumns(); col++) {
+			for (int row = 0; row < dragLayout.getRows(); row++) {
+				CustomFieldComponent component = (CustomFieldComponent) dragLayout
+						.getComponent(col, row);
+
+				if (component != null && !component.isEmptyField()) {
+					AbstractDynaField field = component.getField();
+					fields.add(field);
+				}
+			}
+		}
+		return fields;
 	}
 
 	protected class CustomFieldDragFilter implements DragFilter {

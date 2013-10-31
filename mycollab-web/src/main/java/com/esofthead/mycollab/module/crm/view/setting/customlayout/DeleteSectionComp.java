@@ -1,12 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
-import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -46,14 +46,7 @@ class DeleteSectionComp extends GenericSectionComp {
 		headerWrapper.addComponent(headerTitleLbl);
 		this.addComponent(headerWrapper);
 
-		if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-			dragLayout = new DDGridLayout(1, section.getFieldCount() + 1);
-		} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-			dragLayout = new DDGridLayout(2, (section.getFieldCount() + 3) / 2);
-		} else {
-			throw new MyCollabException(
-					"Does not support form layout except 1 or 2 columns");
-		}
+		dragLayout = new DDGridLayout(1, section.getFieldCount() + 1);
 
 		dragLayout.setWidth("100%");
 		dragLayout.setMargin(true);
@@ -145,36 +138,29 @@ class DeleteSectionComp extends GenericSectionComp {
 			AbstractDynaField field = section.getField(j);
 			CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
 			fieldBtn.setWidth("100%");
-			if (field.isMandatory())
-				fieldBtn.setMandatory(true);
-			if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-				log.debug("Add field " + field.getDisplayName()
-						+ " in (colum, row) " + 0 + ", " + j);
-				dragLayout.addComponent(fieldBtn, 0, j);
-			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-				log.debug("Add field " + field.getDisplayName()
-						+ " in (colum, row) " + (j % 2) + ", " + (j / 2));
-				dragLayout.addComponent(fieldBtn, j % 2, j / 2);
-			}
+			log.debug("Add field " + field.getDisplayName()
+					+ " in (colum, row) " + 0 + ", " + j);
+			dragLayout.addComponent(fieldBtn, 0, j);
 		}
 
 		CustomFieldComponent emptyField = new CustomFieldComponent(null);
 		emptyField.setWidth("100%");
 
-		if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-			log.debug("Add empty field in (column, row) " + 0 + ", "
-					+ (dragLayout.getRows() - 1));
-			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
-		} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-			log.debug("Add empty field in (column, row) " + 0 + ", "
-					+ (dragLayout.getRows() - 1));
-			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1, 1,
-					dragLayout.getRows() - 1);
-		}
+		log.debug("Add empty field in (column, row) " + 0 + ", "
+				+ (dragLayout.getRows() - 1));
+		dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
 	}
 
 	public void addDeleteActiveSectionComp(ActiveSectionComp activeSectionComp) {
+		List<AbstractDynaField> deleteFields = activeSectionComp.getFields();
 
+		for (int i = 0; i < deleteFields.size(); i++) {
+			AbstractDynaField field = deleteFields.get(i);
+			CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
+			fieldBtn.setWidth("100%");
+			dragLayout.insertRow(dragLayout.getRows() - 1);
+			dragLayout.addComponent(fieldBtn, 0, dragLayout.getRows() - 2);
+		}
 	}
 
 }
