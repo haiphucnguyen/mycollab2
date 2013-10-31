@@ -162,6 +162,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.CAMPAIGN,
 							CampaignDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new CampaignFormFieldFactory());
 					super.setItemDataSource(newDataSource);

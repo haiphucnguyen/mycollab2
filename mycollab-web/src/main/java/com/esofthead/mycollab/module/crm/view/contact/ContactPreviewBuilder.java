@@ -449,6 +449,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.CONTACT,
 							ContactDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new ContactFormFieldFactory());
 					super.setItemDataSource(newDataSource);

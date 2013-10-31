@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -31,7 +32,7 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 		if (topPanel != null) {
 			meetingLayout.addControlButtons(topPanel);
 		}
-		informationLayout = new DynaFormLayout(
+		informationLayout = new DynaFormLayout(CrmTypeConstants.MEETING,
 				MeetingDefaultFormLayoutFactory.getForm());
 		meetingLayout.addBody(informationLayout.getLayout());
 

@@ -120,7 +120,8 @@ public class CallPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
-							CallDefaultFormLayoutFactory.getForm()));
+							CrmTypeConstants.CALL, CallDefaultFormLayoutFactory
+									.getForm()));
 					this.setFormFieldFactory(new CallFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					ReadView.this.callAddLayout.setTitle(ReadView.this.call

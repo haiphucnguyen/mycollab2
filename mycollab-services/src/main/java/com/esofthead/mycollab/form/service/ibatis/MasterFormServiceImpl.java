@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.form.dao.FormSectionFieldMapper;
@@ -27,6 +28,8 @@ public class MasterFormServiceImpl implements MasterFormService {
 
 	private static Logger log = LoggerFactory
 			.getLogger(MasterFormServiceImpl.class);
+
+	private static final String TYPE_PACKAGE = "com.esofthead.mycollab.form.view.builder.type.";
 
 	@Autowired
 	private FormSectionMapper formSectionMapper;
@@ -50,11 +53,9 @@ public class MasterFormServiceImpl implements MasterFormService {
 
 			for (SimpleFormSection section : sections) {
 				DynaSection dySection = new DynaSection();
-				if (section.getLayouttype() == 0) {
-					dySection.setLayoutType(LayoutType.ONE_COLUMN);
-				} else {
-					dySection.setLayoutType(LayoutType.TWO_COLUMN);
-				}
+
+				dySection
+						.setLayoutType(LayoutType.from(section.getLayouttype()));
 
 				dySection.setHeader(section.getName());
 				dySection.setOrderIndex(section.getLayoutindex());
@@ -62,10 +63,26 @@ public class MasterFormServiceImpl implements MasterFormService {
 				List<FormSectionField> fields = section.getFields();
 				if (fields != null && fields.size() > 0) {
 					for (FormSectionField field : fields) {
-						String fieldtype = field.getFieldtype();
+						String fieldtype = TYPE_PACKAGE + field.getFieldtype();
+						Class clsType;
+						try {
+							clsType = Class.forName(fieldtype);
+						} catch (ClassNotFoundException e) {
+							throw new MyCollabException(e);
+						}
+						AbstractDynaField dynaField = (AbstractDynaField) JsonDeSerializer
+								.fromJson(field.getFieldformat(), clsType);
+						dynaField.setDisplayName(field.getDisplayname());
+						dynaField.setFieldIndex(field.getFieldindex());
+						dynaField.setFieldName(field.getFieldname());
+//						dynaField.setMandatory(field.getIsmandatory());
+//						dynaField.setRequired(field.getIsrequired());
 
+						dySection.addField(dynaField);
 					}
 				}
+
+				form.addSection(dySection);
 			}
 
 			return form;

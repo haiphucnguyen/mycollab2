@@ -144,6 +144,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.LEAD,
 							LeadDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new LeadFormFieldFactory());
 					super.setItemDataSource(newDataSource);
