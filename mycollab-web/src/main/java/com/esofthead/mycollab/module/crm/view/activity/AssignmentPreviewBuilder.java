@@ -92,6 +92,7 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.TASK,
 							AssignmentDefaultFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new TaskFormFieldFactory());
 					super.setItemDataSource(newDataSource);

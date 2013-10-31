@@ -127,7 +127,7 @@ public class AccountDefaultDynaFormFactory {
 		// build block address
 		DynaSection addressSection = new DynaSectionBuilder()
 				.layoutType(LayoutType.TWO_COLUMN)
-				.header("Address Information").build();
+				.header("Address Information").orderIndex(1).build();
 		addressSection
 				.addField(new StringDynaFieldBuilder()
 						.fieldIndex(0)

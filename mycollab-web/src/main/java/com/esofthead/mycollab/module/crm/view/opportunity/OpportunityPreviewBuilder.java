@@ -119,6 +119,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.OPPORTUNITY,
 							OpportunityDefaultDynaFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new OpportunityFormFieldFactory());
 					super.setItemDataSource(newDataSource);

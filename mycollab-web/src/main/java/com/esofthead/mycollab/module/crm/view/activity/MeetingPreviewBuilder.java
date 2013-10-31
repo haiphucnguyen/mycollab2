@@ -94,6 +94,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.MEETING,
 							MeetingDefaultFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new MeetingFormFieldFactory());
 					super.setItemDataSource(newDataSource);

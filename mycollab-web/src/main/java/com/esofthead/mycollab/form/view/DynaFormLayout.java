@@ -7,12 +7,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -31,8 +34,17 @@ public class DynaFormLayout implements IFormLayoutFactory {
 	private Map<String, AbstractDynaField> fieldMappings = new HashMap<String, AbstractDynaField>();
 	private Map<DynaSection, GridFormLayoutHelper> sectionMappings = new HashMap<DynaSection, GridFormLayoutHelper>();
 
-	public DynaFormLayout(DynaForm dynaForm) {
-		this.dynaForm = dynaForm;
+	public DynaFormLayout(String moduleName, DynaForm defaultForm) {
+		MasterFormService formService = ApplicationContextUtil
+				.getSpringBean(MasterFormService.class);
+		DynaForm form = formService.findCustomForm(AppContext.getAccountId(),
+				moduleName);
+
+		if (form != null) {
+			this.dynaForm = form;
+		} else {
+			this.dynaForm = defaultForm;
+		}
 	}
 
 	@Override

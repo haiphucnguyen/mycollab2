@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -29,6 +30,7 @@ public abstract class OpportunityFormLayoutFactory implements
 		}
 
 		opportunityInformation = new DynaFormLayout(
+				CrmTypeConstants.OPPORTUNITY,
 				OpportunityDefaultDynaFormLayoutFactory.getForm());
 		opportunityAddLayout.addBody(opportunityInformation.getLayout());
 

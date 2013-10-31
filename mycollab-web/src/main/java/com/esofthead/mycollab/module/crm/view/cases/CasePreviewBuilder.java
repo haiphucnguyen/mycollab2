@@ -138,6 +138,7 @@ public class CasePreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.CASE,
 							CasesDefaultFormLayoutFactory.getForm()));
 					this.setFormFieldFactory(new CaseFormFieldFactory());
 					super.setItemDataSource(newDataSource);

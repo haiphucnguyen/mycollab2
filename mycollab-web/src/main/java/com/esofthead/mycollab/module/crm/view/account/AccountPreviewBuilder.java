@@ -261,6 +261,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
 					setFormLayoutFactory(new DynaFormLayout(
+							CrmTypeConstants.ACCOUNT,
 							AccountDefaultDynaFormFactory.getForm()));
 					setFormFieldFactory(new AccountFormFieldFactory());
 					super.setItemDataSource(newDataSource);
