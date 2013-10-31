@@ -102,9 +102,9 @@
 
     <sql id="selectSimpleEventFromTask">
         <![CDATA[
-        SELECT id, subject, 'Task' as eventType, startdate,
-            duedate as endDate, typeid, description, createdTime, createdUser, sAccountId,
-            status, assignUser, type, 'Error' as typeName, lastUpdatedTime,
+        SELECT m_crm_task.id, m_crm_task.subject, 'Task' as eventType, m_crm_task.startdate,
+            m_crm_task.duedate as endDate, m_crm_task.typeid, m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId,
+            m_crm_task.status, m_crm_task.assignUser, m_crm_task.type, 'Error' as typeName, m_crm_task.lastUpdatedTime,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
         FROM m_crm_task
             LEFT OUTER JOIN s_user ON m_crm_task.assignUser = s_user.username
@@ -113,8 +113,8 @@
 
     <sql id="selectSimpleEventFromCall">
         <![CDATA[
-        SELECT id, subject, 'Call' as eventType, startdate, startdate as endDate, typeid, description, createdTime,
-            createdUser, sAccountId, status, assignUser, type, 'Error' as typeName, lastUpdatedTime,
+        SELECT m_crm_call.id, m_crm_call.subject, 'Call' as eventType, m_crm_call.startdate, m_crm_call.startdate as endDate, m_crm_call.typeid, m_crm_call.description, m_crm_call.createdTime,
+            m_crm_call.createdUser, m_crm_call.sAccountId, m_crm_call.status, m_crm_call.assignUser, m_crm_call.type, 'Error' as typeName, m_crm_call.lastUpdatedTime,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
         FROM m_crm_call
             LEFT OUTER JOIN s_user ON m_crm_call.assignUser = s_user.username
@@ -123,10 +123,10 @@
 
     <sql id="selectSimpleEventFromMeeting">
         <![CDATA[
-            SELECT id, subject, 'Meeting' as eventType, startdate,
-                endDate, typeid, description, createdTime, createdUser,
-                sAccountId, status, createdUser as assignUser, type, 'Error' as  typeName,
-                lastUpdatedTime, concat(s_user.firstname, LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
+            SELECT m_crm_meeting.id, m_crm_meeting.subject, 'Meeting' as eventType, m_crm_meeting.startdate,
+                m_crm_meeting.endDate, m_crm_meeting.typeid, m_crm_meeting.description, m_crm_meeting.createdTime, m_crm_meeting.createdUser,
+                m_crm_meeting.sAccountId, m_crm_meeting.status, m_crm_meeting.createdUser as assignUser, m_crm_meeting.type, 'Error' as  typeName,
+                m_crm_meeting.lastUpdatedTime, concat(s_user.firstname, LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
             FROM m_crm_meeting
                 LEFT OUTER JOIN s_user ON m_crm_meeting.createdUser = s_user.username
         ]]>

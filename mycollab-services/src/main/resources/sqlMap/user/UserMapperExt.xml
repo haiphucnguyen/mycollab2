@@ -46,8 +46,8 @@
             ${searchCriteria.isVerifiedEmail.operation}
             s_user.isVerifiedEmail IN
             <foreach close=")"
-                collection="searchCriteria.isVerifiedEmail.values"
-                item="isVerifiedEmail" open="(" separator=",">
+                collection="searchCriteria.isVerifiedEmail.values" item="isVerifiedEmail"
+                open="(" separator=",">
                 #{isVerifiedEmail}
             </foreach>
         </if>
@@ -99,7 +99,7 @@
             s_user.timezone, s_user.language, 
             s_user.country, s_user.workPhone, s_user.homePhone, 
             s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact,
-            s_user.password, s_user.avatarId, s_user.isVerifiedEmail, s_account.subdomain AS subdomain,
+            s_user.password, s_user.avatarId, s_user.status, s_account.subdomain AS subdomain,
             s_roles.rolename AS roleName,  s_user_account.isAccountOwner, s_user_account.roleid, s_user_account.accountId AS accountId, 
             s_user_account.registerStatus
         FROM s_user 

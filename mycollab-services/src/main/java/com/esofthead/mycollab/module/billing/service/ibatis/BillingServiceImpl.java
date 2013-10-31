@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
 import com.esofthead.mycollab.module.billing.RegisterSourceConstants;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand;
 import com.esofthead.mycollab.module.billing.esb.BillingEndpoints;
 import com.esofthead.mycollab.module.billing.service.BillingService;
@@ -167,7 +168,12 @@ public class BillingServiceImpl implements BillingService {
 		user.setTimezone(timezoneId);
 		user.setUsername(username);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
-		user.setIsverifiedemail(isEmailVerified);
+
+		if (isEmailVerified) {
+			user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
+		} else {
+			user.setStatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
+		}
 
 		if (user.getFirstname() == null) {
 			user.setFirstname("");
