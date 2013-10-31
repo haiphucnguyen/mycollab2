@@ -1,7 +1,8 @@
-package com.esofthead.mycollab.module.crm.view.setting;
+package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.crm.view.setting.CrmCustomView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
