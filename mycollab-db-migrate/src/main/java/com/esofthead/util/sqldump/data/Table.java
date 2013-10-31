@@ -14,11 +14,11 @@ import com.esofthead.util.sqldump.data.parser.RowDataParser;
 
 public class Table implements ISqlEntity {
 
-	private static final int MAX_ITEM_PER_QUERY = 1000;
-
 	private static Logger log = LoggerFactory.getLogger(Table.class);
 
-	Schema owner;
+	private static final int MAX_ITEM_PER_QUERY = 1000;
+
+	private Schema owner;
 	private String tableName;
 	private final List<Column> columns = new LinkedList<Column>();
 	private final List<PrimaryKeyColumn> primaryKeys = new LinkedList<PrimaryKeyColumn>();
@@ -136,7 +136,6 @@ public class Table implements ISqlEntity {
 					+ lsObject.size());
 
 			for (int j = 0; j < lsObject.size(); j++) {
-				@SuppressWarnings("unchecked")
 				RowData values = (RowData) lsObject.get(j);
 				writer.append(dumpRow(insertCommand, values));
 			}
@@ -162,7 +161,7 @@ public class Table implements ISqlEntity {
 	}
 
 	private final String getInsertCommand() {
-		final String insertTemplate = "INSERT INTO %s(%s) VALUES"; // %s;\r\n";
+		final String insertTemplate = "INSERT INTO %s(%s) VALUES";
 
 		StringBuilder scriptColumns = new StringBuilder();
 		StringBuilder scriptValues = new StringBuilder();

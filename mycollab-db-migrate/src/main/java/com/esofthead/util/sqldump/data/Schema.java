@@ -9,7 +9,7 @@ import java.util.Queue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.db.sqldump.DbConfiguration;
+import com.esofthead.db.sqldump.conf.DbConfiguration;
 import com.esofthead.util.sqldump.DataAdapter;
 import com.esofthead.util.sqldump.INFORMATION_SCHEMA;
 import com.esofthead.util.sqldump.data.parser.ForeignKeyConstraintParser;

@@ -12,7 +12,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.db.sqldump.DbConfiguration;
+import com.esofthead.db.sqldump.conf.DbConfiguration;
 import com.esofthead.util.sqldump.data.ISqlEntity;
 
 public class DataAdapter {
@@ -23,7 +23,6 @@ public class DataAdapter {
 	private BasicDataSource datasource;
 
 	public DataAdapter(DbConfiguration configuration) {
-		log.debug("CREATE DATA ADAPTER");
 		datasource = new BasicDataSource();
 		datasource.setUsername(configuration.getUserName());
 		datasource.setPassword(configuration.getPassword());
@@ -35,9 +34,6 @@ public class DataAdapter {
 	public final List<Object> getData(String methodName,
 			Class<?>[] parameterTypes, Object[] arguments, ISqlParser parser)
 			throws Exception {
-		log.debug("Datasource connections: " + datasource.getNumActive()
-				+ "===" + datasource.getMaxActive() + "==="
-				+ datasource.getNumIdle());
 		Connection con = datasource.getConnection();
 
 		DatabaseMetaData metaData = con.getMetaData();
@@ -63,9 +59,6 @@ public class DataAdapter {
 	public final List<ISqlEntity> getData(String query, ISqlParser parser)
 			throws Exception {
 		log.debug("Get data from query: " + query);
-		log.debug("Datasource connections: " + datasource.getNumActive()
-				+ "===" + datasource.getMaxActive() + "==="
-				+ datasource.getNumIdle());
 		Connection con = datasource.getConnection();
 		List<ISqlEntity> lsResult = new LinkedList<ISqlEntity>();
 
@@ -87,9 +80,6 @@ public class DataAdapter {
 
 	public final Object getSingleResult(String query, ISqlParser parser)
 			throws Exception {
-		log.debug("Datasource connections: " + datasource.getNumActive()
-				+ "===" + datasource.getMaxActive() + "==="
-				+ datasource.getNumIdle());
 		Connection con = datasource.getConnection();
 
 		Statement stmt = (Statement) con.createStatement();
@@ -107,7 +97,6 @@ public class DataAdapter {
 
 		stmt.close();
 		con.close();
-		log.debug("Connection is closed when get number: " + con.isClosed());
 		return result;
 	}
 
