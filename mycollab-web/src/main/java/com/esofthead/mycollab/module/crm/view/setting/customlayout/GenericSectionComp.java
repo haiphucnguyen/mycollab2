@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.setting;
+package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +29,15 @@ import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 
-public class GenericSectionLayoutComp extends VerticalLayout {
+public class GenericSectionComp extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
-			.getLogger(GenericSectionLayoutComp.class);
+			.getLogger(GenericSectionComp.class);
 
 	protected DynaSection section;
 
-	public GenericSectionLayoutComp(DynaSection section) {
+	public GenericSectionComp(DynaSection section) {
 		this.section = section;
 		this.addStyleName(UIConstants.CUSTOM_FIELD_SECTION);
 

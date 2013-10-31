@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.setting;
+package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -10,10 +10,10 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
-public class DeleteSectionLayout extends DDVerticalLayout {
+public class DeleteFormSectionArea extends DDVerticalLayout {
 	private static final long serialVersionUID = 1L;
 
-	public DeleteSectionLayout() {
+	public DeleteFormSectionArea() {
 		this.setComponentVerticalDropRatio(0.3f);
 		this.setDragMode(LayoutDragMode.CLONE);
 		this.addStyleName("deleteSection");
@@ -33,8 +33,8 @@ public class DeleteSectionLayout extends DDVerticalLayout {
 				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
 						.getTransferable();
 				Component srcComp = transferable.getComponent();
-				if (srcComp instanceof ActiveSectionLayoutComp) {
-					ActiveSectionLayout parentSection = (ActiveSectionLayout) srcComp
+				if (srcComp instanceof ActiveSectionComp) {
+					ActiveFormSectionArea parentSection = (ActiveFormSectionArea) srcComp
 							.getParent();
 					parentSection.removeComponent(srcComp);
 				}
