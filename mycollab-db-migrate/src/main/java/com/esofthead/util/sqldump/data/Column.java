@@ -182,8 +182,8 @@ public class Column implements ISqlEntity {
 			break;
 		}
 
-		String colDef;// = columnDef == null ? "" : "DEFAULT '" + columnDef +
-						// "'";
+		String colDef;
+
 		if (columnDef != null && !isAutoIncrement) {
 			if (columnDef.toUpperCase().equals("CURRENT_TIMESTAMP"))
 				colDef = "DEFAULT " + columnDef;
@@ -227,7 +227,6 @@ public class Column implements ISqlEntity {
 		String result = data.replace("\\", "\\\\");
 		result = result.replace("\0", "\\0");
 		result = result.replace("'", "''");
-//		result = result.replace("\"", "\"\"");
 		result = result.replace("\b", "\\b");
 		result = result.replace("\n", "\\n");
 		result = result.replace("\r", "\\r");
@@ -273,8 +272,8 @@ public class Column implements ISqlEntity {
 				break;
 			}
 
-			String colDef;// = columnDef == null ? "" : "DEFAULT '" + columnDef
-							// + "'";
+			String colDef;
+
 			if (columnDef != null && !isAutoIncrement) {
 				if (isQuote)
 					colDef = "DEFAULT '" + columnDef + "'";
@@ -322,8 +321,8 @@ public class Column implements ISqlEntity {
 				break;
 			}
 
-			String colDef;// = columnDef == null ? "" : "DEFAULT '" + columnDef
-							// + "'";
+			String colDef;
+
 			if (columnDef != null && !isAutoIncrement) {
 				if (isQuote)
 					colDef = "DEFAULT '" + columnDef + "'";
