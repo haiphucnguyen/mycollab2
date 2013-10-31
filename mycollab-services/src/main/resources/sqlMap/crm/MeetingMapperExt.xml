@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt">
 
-    
+
 
     <resultMap id="SimpleMeetingResult"
         extends="com.esofthead.mycollab.module.crm.dao.MeetingMapper.ResultMapWithBLOBs"
@@ -35,8 +35,7 @@
         ]]>
     </sql>
 
-    <select id="findById" parameterType="int"
-        resultMap="SimpleMeetingResult">
+    <select id="findById" parameterType="int" resultMap="SimpleMeetingResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.selectSimpleMeeting" />
 
@@ -61,12 +60,19 @@
         <if test="searchCriteria.isClosed != null">
             <![CDATA[${searchCriteria.isClosed.operation} m_crm_meeting.isClosed = ${searchCriteria.isClosed.value}]]>
         </if>
+        <if test='searchCriteria.startDate != null'>
+            <![CDATA[${searchCriteria.startDate.operation} m_crm_meeting.startDate ${searchCriteria.startDate.comparision} #{searchCriteria.startDate.value,javaType=DATE} ]]>
+        </if>
+        <if test='searchCriteria.endDate != null'>
+            <![CDATA[${searchCriteria.endDate.operation} m_crm_meeting.endDate ${searchCriteria.endDate.comparision} #{searchCriteria.endDate.value,javaType=DATE}]]>
+        </if>
     </sql>
 
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_crm_meeting.lastUpdatedTime DESC
         ]]>

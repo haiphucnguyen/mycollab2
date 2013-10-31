@@ -2,9 +2,11 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityEventProvider.CrmEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -54,7 +56,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		callBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
 
-		ButtonLink meetingBtn = new ButtonLink("Create Meeting", listener);
+		ButtonLink meetingBtn = new ButtonLink("Create Event", listener);
 		actionBtnLayout.addComponent(meetingBtn);
 		meetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
@@ -75,24 +77,10 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			@Override
 			public void eventClick(EventClick event) {
 				CrmEvent calendarEvent = (CrmEvent) event.getCalendarEvent();
-				SimpleEvent source = calendarEvent.getSource();
-				if (CrmTypeConstants.TASK.equals(source.getEventType())) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.TaskRead(
-									ActivityCalendarViewImpl.this, source
-											.getId()));
-				} else if (CrmTypeConstants.MEETING.equals(source
-						.getEventType())) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.MeetingRead(
-									ActivityCalendarViewImpl.this, source
-											.getId()));
-				} else if (CrmTypeConstants.CALL.equals(source.getEventType())) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.CallRead(
-									ActivityCalendarViewImpl.this, source
-											.getId()));
-				}
+				SimpleMeeting source = calendarEvent.getSource();
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.MeetingRead(
+								ActivityCalendarViewImpl.this, source.getId()));
 			}
 		});
 
@@ -125,7 +113,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			} else if (caption.equals("Create Call")) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.CallAdd(this, null));
-			} else if (caption.equals("Create Meeting")) {
+			} else if (caption.equals("Create Event")) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.MeetingAdd(this, null));
 			}

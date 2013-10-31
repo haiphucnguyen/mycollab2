@@ -11,12 +11,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.EventService;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.addon.calendar.event.BasicEvent;
 import com.vaadin.addon.calendar.event.CalendarEvent;
@@ -31,10 +32,11 @@ public class ActivityEventProvider implements CalendarEventProvider {
 
 	private static Logger log = LoggerFactory
 			.getLogger(ActivityEventProvider.class);
-	private EventService eventService;
+	private MeetingService meetingService;
 
 	public ActivityEventProvider() {
-		eventService = ApplicationContextUtil.getSpringBean(EventService.class);
+		meetingService = ApplicationContextUtil
+				.getSpringBean(MeetingService.class);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -42,29 +44,34 @@ public class ActivityEventProvider implements CalendarEventProvider {
 	public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
 		List<CalendarEvent> events = new ArrayList<CalendarEvent>();
 
-		EventSearchCriteria searchCriteria = new EventSearchCriteria();
-		searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND,
+		MeetingSearchCriteria searchCriteria = new MeetingSearchCriteria();
+		searchCriteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateTimeSearchField.GREATERTHANEQUAL, startDate));
-		searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND,
+		searchCriteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateTimeSearchField.LESSTHANEQUAL, endDate));
 
 		log.debug("Get events from: " + startDate + " to " + endDate);
-		List<SimpleEvent> crmEvents = (List<SimpleEvent>) eventService
-				.findPagableListByCriteria(new SearchRequest<EventSearchCriteria>(
+		List<SimpleMeeting> crmEvents = (List<SimpleMeeting>) meetingService
+				.findPagableListByCriteria(new SearchRequest<MeetingSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
 		log.debug("There are " + crmEvents.size() + " events from " + startDate
 				+ " to " + endDate);
 
 		if (crmEvents != null && crmEvents.size() > 0) {
-			for (SimpleEvent crmEvent : crmEvents) {
-				CrmEvent event = new CrmEvent();
-				event.setCaption(crmEvent.getSubject());
-				event.setDescription(crmEvent.getDescription());
-				event.setStart(crmEvent.getStartDate());
-				event.setEnd(crmEvent.getEndDate());
-				event.setSource(crmEvent);
+			for (SimpleMeeting crmEvent : crmEvents) {
+				if (crmEvent.getStartdate() == null
+						|| crmEvent.getEnddate() == null) {
+					continue;
+				} else {
+					CrmEvent event = new CrmEvent();
+					event.setCaption(crmEvent.getSubject());
+					event.setDescription(crmEvent.getDescription());
+					event.setStart(crmEvent.getStartdate());
+					event.setEnd(crmEvent.getEnddate());
+					event.setSource(crmEvent);
 
-				events.add(event);
+					events.add(event);
+				}
 			}
 		}
 
@@ -73,13 +80,13 @@ public class ActivityEventProvider implements CalendarEventProvider {
 
 	public static class CrmEvent extends BasicEvent {
 		private static final long serialVersionUID = 1L;
-		private SimpleEvent source;
+		private SimpleMeeting source;
 
-		public SimpleEvent getSource() {
+		public SimpleMeeting getSource() {
 			return source;
 		}
 
-		public void setSource(SimpleEvent source) {
+		public void setSource(SimpleMeeting source) {
 			this.source = source;
 		}
 	}
