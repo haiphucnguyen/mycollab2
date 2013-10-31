@@ -14,7 +14,7 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 
 	private DynaForm dynaForm;
 
-	void displayLayoutCustom(DynaForm dynaForm) {
+	public void displayLayoutCustom(DynaForm dynaForm) {
 		this.removeAllComponents();
 		this.dynaForm = dynaForm;
 		this.setSpacing(true);
