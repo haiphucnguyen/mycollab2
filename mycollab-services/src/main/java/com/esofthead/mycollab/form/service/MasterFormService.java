@@ -11,5 +11,6 @@ public interface MasterFormService extends IService {
 	DynaForm findCustomForm(@CacheKey Integer sAccountId, String moduleName);
 
 	@CacheEvict
-	void saveCustomForm(@CacheKey Integer sAccountId, String moduleName);
+	void saveCustomForm(@CacheKey Integer sAccountId, String moduleName,
+			DynaForm form);
 }

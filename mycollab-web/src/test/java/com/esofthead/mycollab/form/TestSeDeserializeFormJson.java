@@ -25,7 +25,7 @@ public class TestSeDeserializeFormJson {
 		AbstractDynaField field = val1Builder.build();
 		Assert.assertNotNull(field.getOwnSection());
 
-		String expectedVal = "{\"maxLength\":22,\"fieldIndex\":1,\"fieldName\":\"field1\",\"displayName\":\"Field 1\",\"isRequired\":false}";
+		String expectedVal = "{\"maxLength\":22}";
 		Assert.assertEquals(expectedVal, JsonDeSerializer.toJson(field));
 	}
 
@@ -44,7 +44,7 @@ public class TestSeDeserializeFormJson {
 
 		StringDynaField stringField = JsonDeSerializer.fromJson(jsonTxt,
 				StringDynaField.class);
-		Assert.assertEquals("Field 1", stringField.getDisplayName());
+		Assert.assertEquals(22, stringField.getMaxLength());
 		Assert.assertNull(stringField.getOwnSection());
 	}
 }

@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.setting;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormFactory;
@@ -16,10 +17,12 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadDefaultDynaFormLayoutFact
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.CustomLayoutDDComp;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Alignment;
@@ -37,6 +40,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 	private Label headerLbl;
 	private ModuleSelectionComboBox moduleComboBox;
 	private CustomLayoutDDComp layoutComp;
+	private String moduleName;
 
 	public CrmCustomViewImpl() {
 		this.setSpacing(true);
@@ -127,6 +131,10 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 					public void buttonClick(ClickEvent event) {
 						DynaForm rebuildForm = layoutComp.rebuildForm();
 
+						MasterFormService formService = ApplicationContextUtil
+								.getSpringBean(MasterFormService.class);
+						formService.saveCustomForm(AppContext.getAccountId(),
+								moduleName, rebuildForm);
 					}
 				});
 		saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -153,6 +161,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 	@Override
 	public void display(String moduleName) {
+		this.moduleName = moduleName;
 		headerLbl.setCaption(moduleName + ": Edit Page Layout (Beta)");
 		moduleComboBox.select(moduleName);
 		DynaForm form;
@@ -198,9 +207,9 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 				@Override
 				public void valueChange(Property.ValueChangeEvent event) {
-					String moduleName = (String) ModuleSelectionComboBox.this
+					String module = (String) ModuleSelectionComboBox.this
 							.getValue();
-					display(moduleName);
+					display(module);
 
 				}
 			});

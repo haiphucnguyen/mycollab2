@@ -3,6 +3,8 @@ package com.esofthead.mycollab.form.view.builder.type;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esofthead.mycollab.core.MyCollabException;
+
 public class DynaSection implements Comparable<DynaSection> {
 
 	private String header;
@@ -57,7 +59,26 @@ public class DynaSection implements Comparable<DynaSection> {
 	}
 
 	public static enum LayoutType {
-		ONE_COLUMN, TWO_COLUMN
+		ONE_COLUMN, TWO_COLUMN;
+
+		public static LayoutType from(Integer value) {
+			if (value == 1) {
+				return ONE_COLUMN;
+			} else if (value == 2) {
+				return TWO_COLUMN;
+			} else {
+				throw new MyCollabException(
+						"Do not convert layout type from value " + value);
+			}
+		}
+
+		public static Integer to(LayoutType type) {
+			if (LayoutType.ONE_COLUMN == type) {
+				return 1;
+			} else {
+				return 2;
+			}
+		}
 	}
 
 	@Override
