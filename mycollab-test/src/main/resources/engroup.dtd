@@ -980,6 +980,7 @@
     module CDATA #REQUIRED
     sAccountId CDATA #REQUIRED
     layoutType CDATA #REQUIRED
+    isDeleteSection CDATA #REQUIRED
 >
 
 <!ELEMENT m_form_section_field EMPTY>
@@ -1510,6 +1511,7 @@
     twitterAccount CDATA #IMPLIED
     skypeContact CDATA #IMPLIED
     avatarId CDATA #IMPLIED
+    status CDATA #IMPLIED
 >
 
 <!ELEMENT s_user_account EMPTY>

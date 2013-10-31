@@ -9,10 +9,12 @@
         registeredTime="2013-04-10 13:29:23" />
 
     <m_form_section layoutIndex="0" name="Account Info"
-        sAccountId="1" module="Account" id="1" layoutType="1" />
+        sAccountId="1" module="Account" id="1" layoutType="1"
+        isDeleteSection="false" />
 
     <m_form_section layoutIndex="1" name="Address Info"
-        sAccountId="1" module="Account" id="2" layoutType="1" />
+        sAccountId="1" module="Account" id="2" layoutType="1"
+        isDeleteSection="false" />
 
     <m_form_section_field fieldType="String"
         displayName="Name" isMandatory="true" fieldname="string1"
