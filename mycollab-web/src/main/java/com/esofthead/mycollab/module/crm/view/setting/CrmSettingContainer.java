@@ -18,109 +18,109 @@ import com.vaadin.ui.HorizontalLayout;
 
 @ViewComponent
 public class CrmSettingContainer extends CssLayout implements View {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final HorizontalLayout root;
-    private final DetachedTabs settingTab;
-    private final CssLayout mySpaceArea = new CssLayout();
+	private final HorizontalLayout root;
+	private final DetachedTabs settingTab;
+	private final CssLayout mySpaceArea = new CssLayout();
 
-    private CrmCustomViewPresenter customViewPresenter;
-    private CrmNotifcationSettingPresenter notificationPresenter;
+	private CrmCustomViewPresenter customViewPresenter;
+	private CrmNotifcationSettingPresenter notificationPresenter;
 
-    public CrmSettingContainer() {
-        this.setWidth("100%");
+	public CrmSettingContainer() {
+		this.setWidth("100%");
 
-        final CssLayout contentWrapper = new CssLayout();
-        contentWrapper.setStyleName("projectDashboardView");
-        contentWrapper.addStyleName("main-content-wrapper");
-        contentWrapper.setWidth("100%");
-        this.addComponent(contentWrapper);
+		final CssLayout contentWrapper = new CssLayout();
+		contentWrapper.setStyleName("projectDashboardView");
+		contentWrapper.addStyleName("main-content-wrapper");
+		contentWrapper.setWidth("100%");
+		this.addComponent(contentWrapper);
 
-        root = new HorizontalLayout();
-        root.setStyleName("menuContent");
+		root = new HorizontalLayout();
+		root.setStyleName("menuContent");
 
-        settingTab = new DetachedTabs.Vertical(mySpaceArea);
-        settingTab.setSizeFull();
-        settingTab.setHeight(null);
+		settingTab = new DetachedTabs.Vertical(mySpaceArea);
+		settingTab.setSizeFull();
+		settingTab.setHeight(null);
 
-        CssLayout menu = new CssLayout();
-        menu.setWidth("170px");
-        menu.setStyleName("sidebar-menu");
-        menu.addComponent(settingTab);
+		CssLayout menu = new CssLayout();
+		menu.setWidth("170px");
+		menu.setStyleName("sidebar-menu");
+		menu.addComponent(settingTab);
 
-        root.addComponent(menu);
-        mySpaceArea.setStyleName("projectTabContent");
-        mySpaceArea.setWidth("100%");
-        mySpaceArea.setHeight(null);
-        root.addComponent(mySpaceArea);
-        root.setExpandRatio(mySpaceArea, 1.0f);
-        root.setWidth("100%");
-        buildComponents();
-        contentWrapper.addComponent(root);
-    }
+		root.addComponent(menu);
+		mySpaceArea.setStyleName("projectTabContent");
+		mySpaceArea.setWidth("100%");
+		mySpaceArea.setHeight(null);
+		root.addComponent(mySpaceArea);
+		root.setExpandRatio(mySpaceArea, 1.0f);
+		root.setWidth("100%");
+		buildComponents();
+		contentWrapper.addComponent(root);
+	}
 
-    private static class MenuButton extends Button {
-        private static final long serialVersionUID = 1L;
+	private static class MenuButton extends Button {
+		private static final long serialVersionUID = 1L;
 
-        public MenuButton(String caption, String iconResource) {
-            super(caption);
-            this.setIcon(MyCollabResource.newResource("icons/22/crm/"
-                    + iconResource));
-            this.setStyleName("link");
-        }
-    }
+		public MenuButton(String caption, String iconResource) {
+			super(caption);
+			this.setIcon(MyCollabResource.newResource("icons/22/crm/"
+					+ iconResource));
+			this.setStyleName("link");
+		}
+	}
 
-    private void buildComponents() {
-        settingTab.addTab(constructNotificationSettingView(), new MenuButton(
-                "Notifications", "notification.png"));
-        settingTab.addTab(constructCustomView(), new MenuButton(
-                "Custom Layouts", "layout.png"));
+	private void buildComponents() {
+		settingTab.addTab(constructNotificationSettingView(), new MenuButton(
+				"Notifications", "notification.png"));
+		settingTab.addTab(constructCustomView(), new MenuButton(
+				"Custom Layouts", "layout.png"));
 
-        settingTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
-            @Override
-            public void tabChanged(TabChangedEvent event) {
-                Button btn = event.getSource();
-                String caption = btn.getCaption();
-                mySpaceArea.setStyleName("projectTabContent");
+		settingTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+			@Override
+			public void tabChanged(TabChangedEvent event) {
+				Button btn = event.getSource();
+				String caption = btn.getCaption();
+				mySpaceArea.setStyleName("projectTabContent");
 
-                if ("Notification".equals(caption)) {
-                    notificationPresenter.go(CrmSettingContainer.this,
-                            new NotificationSettingScreenData.Read());
-                } else if ("Custom Layouts".equals(caption)) {
-                    customViewPresenter.go(CrmSettingContainer.this,
-                            new CustomViewScreenData.Read());
-                }
-            }
-        });
-    }
+				if ("Notifications".equals(caption)) {
+					notificationPresenter.go(CrmSettingContainer.this,
+							new NotificationSettingScreenData.Read());
+				} else if ("Custom Layouts".equals(caption)) {
+					customViewPresenter.go(CrmSettingContainer.this,
+							new CustomViewScreenData.Read());
+				}
+			}
+		});
+	}
 
-    private Component constructNotificationSettingView() {
-        notificationPresenter = PresenterResolver
-                .getPresenter(CrmNotifcationSettingPresenter.class);
-        return notificationPresenter.getView();
-    }
+	private Component constructNotificationSettingView() {
+		notificationPresenter = PresenterResolver
+				.getPresenter(CrmNotifcationSettingPresenter.class);
+		return notificationPresenter.getView();
+	}
 
-    private Component constructCustomView() {
-        customViewPresenter = PresenterResolver
-                .getPresenter(CrmCustomViewPresenter.class);
-        return customViewPresenter.getView();
-    }
+	private Component constructCustomView() {
+		customViewPresenter = PresenterResolver
+				.getPresenter(CrmCustomViewPresenter.class);
+		return customViewPresenter.getView();
+	}
 
-    @Override
-    public ComponentContainer getWidget() {
-        return this;
-    }
+	@Override
+	public ComponentContainer getWidget() {
+		return this;
+	}
 
-    @Override
-    public void addViewListener(
-            ApplicationEventListener<? extends ApplicationEvent> listener) {
-        // TODO Auto-generated method stub
+	@Override
+	public void addViewListener(
+			ApplicationEventListener<? extends ApplicationEvent> listener) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    public Component gotoSubView(String name) {
-        View component = (View) settingTab.selectTab(name);
-        return component;
-    }
+	public Component gotoSubView(String name) {
+		View component = (View) settingTab.selectTab(name);
+		return component;
+	}
 
 }

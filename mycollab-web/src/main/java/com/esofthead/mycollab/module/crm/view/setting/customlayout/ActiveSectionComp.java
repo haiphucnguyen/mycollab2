@@ -8,12 +8,15 @@ import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -39,30 +42,47 @@ class ActiveSectionComp extends GenericSectionComp {
 		Label headerTitleLbl = new Label(section.getHeader());
 		headerTitleLbl.setStyleName("h2");
 
-		headerWrapper.addComponent(headerTitleLbl);
+		HorizontalLayout header = new HorizontalLayout();
+		header.setWidth("100%");
+
+		header.addComponent(headerTitleLbl);
+		header.setExpandRatio(headerTitleLbl, 1.0f);
+
+		Button editTitleBtn = new Button();
+		editTitleBtn.setDescription("Edit Section's Title");
+		editTitleBtn.setIcon(MyCollabResource
+				.newResource("icons/16/edit.png"));
+		editTitleBtn.setStyleName("link");
+		header.addComponent(editTitleBtn);
+
+		Button deleteSectionBtn = new Button();
+		deleteSectionBtn.setDescription("Remove this Section");
+		deleteSectionBtn.setIcon(MyCollabResource
+				.newResource("icons/16/delete.png"));
+		deleteSectionBtn.setStyleName("link");
+		header.addComponent(deleteSectionBtn);
+
+		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
-		final DDGridLayout destGridLayout;
-
 		if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-			destGridLayout = new DDGridLayout(1, section.getFieldCount() + 1);
+			dragLayout = new DDGridLayout(1, section.getFieldCount() + 1);
 		} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-			destGridLayout = new DDGridLayout(2,
-					(section.getFieldCount() + 3) / 2);
+			dragLayout = new DDGridLayout(2, (section.getFieldCount() + 3) / 2);
 		} else {
 			throw new MyCollabException(
 					"Does not support form layout except 1 or 2 columns");
 		}
 
-		destGridLayout.setWidth("100%");
-		destGridLayout.setMargin(true);
-		destGridLayout.setSpacing(true);
-		destGridLayout.setComponentHorizontalDropRatio(0);
-		destGridLayout.setComponentVerticalDropRatio(0);
-		destGridLayout.setDragMode(LayoutDragMode.CLONE);
-		destGridLayout.setDragFilter(new CustomFieldDragFilter());
+		dragLayout.setWidth("100%");
+		dragLayout.setMargin(true);
+		dragLayout.setSpacing(true);
+		dragLayout.setComponentHorizontalDropRatio(0);
+		dragLayout.setComponentVerticalDropRatio(0);
+		dragLayout.setDragMode(LayoutDragMode.CLONE);
+		dragLayout.setDragFilter(new CustomFieldDragFilter());
 
-		destGridLayout.setDropHandler(new DropHandler() {
+		dragLayout.setDropHandler(new DropHandler() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -91,17 +111,16 @@ class ActiveSectionComp extends GenericSectionComp {
 					int srcRow = srcGridLayout.getComponentArea(srcComp)
 							.getRow1();
 
-					Component destComp = destGridLayout.getComponent(
-							destColumn, destRow);
+					Component destComp = dragLayout.getComponent(destColumn,
+							destRow);
 
 					if (destComp == null) {
 						srcGridLayout.removeComponent(srcComp);
-						destGridLayout.addComponent(srcComp, destColumn,
-								destRow);
+						dragLayout.addComponent(srcComp, destColumn, destRow);
 
-						removeEmptyRow(srcGridLayout, srcRow);
+						removeEmptyRow(srcRow);
 					} else {
-						if (srcGridLayout == destGridLayout
+						if (srcGridLayout == dragLayout
 								&& srcColumn == destColumn && srcRow == destRow) {
 							// do nothing
 						} else {
@@ -109,18 +128,17 @@ class ActiveSectionComp extends GenericSectionComp {
 							srcGridLayout.removeComponent(srcComp);
 							if (((CustomFieldComponent) destComp)
 									.isEmptyField()) {
-								destGridLayout.insertRow(destGridLayout
-										.getRows() - 1);
+								dragLayout.insertRow(dragLayout.getRows() - 1);
 							} else {
-								destGridLayout.removeComponent(destComp);
+								dragLayout.removeComponent(destComp);
 								srcGridLayout.addComponent(destComp, srcColumn,
 										srcRow);
 							}
 
-							destGridLayout.addComponent(srcComp, destColumn,
+							dragLayout.addComponent(srcComp, destColumn,
 									destRow);
 
-							removeEmptyRow(srcGridLayout, srcRow);
+							removeEmptyRow(srcRow);
 						}
 
 					}
@@ -128,7 +146,7 @@ class ActiveSectionComp extends GenericSectionComp {
 			}
 		});
 
-		this.addComponent(destGridLayout);
+		this.addComponent(dragLayout);
 
 		int fieldCount = section.getFieldCount();
 		for (int j = 0; j < fieldCount; j++) {
@@ -140,11 +158,11 @@ class ActiveSectionComp extends GenericSectionComp {
 			if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
 				log.debug("Add field " + field.getDisplayName()
 						+ " in (colum, row) " + 0 + ", " + j);
-				destGridLayout.addComponent(fieldBtn, 0, j);
+				dragLayout.addComponent(fieldBtn, 0, j);
 			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
 				log.debug("Add field " + field.getDisplayName()
 						+ " in (colum, row) " + (j % 2) + ", " + (j / 2));
-				destGridLayout.addComponent(fieldBtn, j % 2, j / 2);
+				dragLayout.addComponent(fieldBtn, j % 2, j / 2);
 			}
 		}
 
@@ -153,15 +171,13 @@ class ActiveSectionComp extends GenericSectionComp {
 
 		if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
 			log.debug("Add empty field in (column, row) " + 0 + ", "
-					+ (destGridLayout.getRows() - 1));
-			destGridLayout.addComponent(emptyField, 0,
-					destGridLayout.getRows() - 1);
+					+ (dragLayout.getRows() - 1));
+			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
 		} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
 			log.debug("Add empty field in (column, row) " + 0 + ", "
-					+ (destGridLayout.getRows() - 1));
-			destGridLayout.addComponent(emptyField, 0,
-					destGridLayout.getRows() - 1, 1,
-					destGridLayout.getRows() - 1);
+					+ (dragLayout.getRows() - 1));
+			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1, 1,
+					dragLayout.getRows() - 1);
 		}
 	}
 
