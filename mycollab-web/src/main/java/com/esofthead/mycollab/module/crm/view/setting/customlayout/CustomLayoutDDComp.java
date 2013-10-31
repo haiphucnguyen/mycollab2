@@ -1,7 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.setting;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
@@ -12,11 +9,8 @@ import com.vaadin.ui.HorizontalLayout;
 class CustomLayoutDDComp extends HorizontalLayout {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
-			.getLogger(CustomLayoutDDComp.class);
-
-	private ActiveSectionLayout activeFormLayout;
-	private DeleteSectionLayout deleteFormLayout;
+	private ActiveFormSectionArea activeFormLayout;
+	private DeleteFormSectionArea deleteFormLayout;
 
 	private DynaForm dynaForm;
 
@@ -26,11 +20,11 @@ class CustomLayoutDDComp extends HorizontalLayout {
 		this.setSpacing(true);
 		this.setWidth("100%");
 
-		activeFormLayout = new ActiveSectionLayout();
+		activeFormLayout = new ActiveFormSectionArea();
 		activeFormLayout.setSpacing(true);
 		activeFormLayout.setWidth("100%");
 
-		deleteFormLayout = new DeleteSectionLayout();
+		deleteFormLayout = new DeleteFormSectionArea();
 		deleteFormLayout.setWidth("100%");
 
 		this.addComponent(activeFormLayout);
@@ -45,11 +39,11 @@ class CustomLayoutDDComp extends HorizontalLayout {
 		for (int i = 0; i < sectionCount; i++) {
 			DynaSection section = dynaForm.getSection(i);
 			if (!section.isDeletedSection()) {
-				ActiveSectionLayoutComp sectionLayout = new ActiveSectionLayoutComp(
+				ActiveSectionComp sectionLayout = new ActiveSectionComp(
 						section);
 				activeFormLayout.addComponent(sectionLayout);
 			} else {
-				ActiveSectionLayoutComp sectionLayout = new ActiveSectionLayoutComp(
+				DeleteSectionComp sectionLayout = new DeleteSectionComp(
 						section);
 				deleteFormLayout.addComponent(sectionLayout);
 				hasDeletedSection = true;
@@ -60,7 +54,7 @@ class CustomLayoutDDComp extends HorizontalLayout {
 			DynaSection deleteSection = new DynaSectionBuilder()
 					.layoutType(LayoutType.ONE_COLUMN).header("Removed fields")
 					.deleteSection(true).build();
-			ActiveSectionLayoutComp sectionLayout = new ActiveSectionLayoutComp(
+			DeleteSectionComp sectionLayout = new DeleteSectionComp(
 					deleteSection);
 			deleteFormLayout.addComponent(sectionLayout);
 		}

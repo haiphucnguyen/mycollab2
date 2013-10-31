@@ -42,13 +42,13 @@
                 #{registerStatus}
             </foreach>
         </if>
-        <if test="searchCriteria.isVerifiedEmail != null">
-            ${searchCriteria.isVerifiedEmail.operation}
-            s_user.isVerifiedEmail IN
+        <if test="searchCriteria.status != null">
+            ${searchCriteria.status.operation}
+            s_user.status IN
             <foreach close=")"
-                collection="searchCriteria.isVerifiedEmail.values" item="isVerifiedEmail"
+                collection="searchCriteria.status.values" item="userstatus"
                 open="(" separator=",">
-                #{isVerifiedEmail}
+                #{userstatus}
             </foreach>
         </if>
     </sql>

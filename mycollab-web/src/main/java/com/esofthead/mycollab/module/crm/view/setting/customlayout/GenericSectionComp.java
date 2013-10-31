@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.setting;
+package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +29,15 @@ import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 
-class ActiveSectionLayoutComp extends VerticalLayout {
+public class GenericSectionComp extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
-			.getLogger(ActiveSectionLayoutComp.class);
+			.getLogger(GenericSectionComp.class);
 
-	private DynaSection section;
+	protected DynaSection section;
 
-	public ActiveSectionLayoutComp(DynaSection section) {
+	public GenericSectionComp(DynaSection section) {
 		this.section = section;
 		this.addStyleName(UIConstants.CUSTOM_FIELD_SECTION);
 
@@ -198,7 +198,11 @@ class ActiveSectionLayoutComp extends VerticalLayout {
 		}
 	}
 
-	public void removeEmptyRow(DDGridLayout srcGridLayout, int srcRow) {
+	public DynaSection getSection() {
+		return section;
+	}
+
+	private void removeEmptyRow(DDGridLayout srcGridLayout, int srcRow) {
 		// Check if there is any remaining item in this row
 		// if not, remove row
 		int remainItem = 0;

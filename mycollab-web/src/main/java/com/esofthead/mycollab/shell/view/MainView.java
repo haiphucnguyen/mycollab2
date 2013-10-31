@@ -184,7 +184,8 @@ public final class MainView extends AbstractView {
 			Date createdtime = billingAccount.getCreatedtime();
 			long timeDeviation = System.currentTimeMillis()
 					- createdtime.getTime();
-			double daysLeft = Math.floor(timeDeviation / (1000 * 60 * 60 * 24));
+			int daysLeft = (int) Math.floor(timeDeviation
+					/ (1000 * 60 * 60 * 24));
 			if (daysLeft > 30) {
 				BillingService billingService = ApplicationContextUtil
 						.getSpringBean(BillingService.class);

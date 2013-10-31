@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.setting;
+package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +13,13 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
-class ActiveSectionLayout extends DDVerticalLayout {
+class ActiveFormSectionArea extends DDVerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
-			.getLogger(ActiveSectionLayout.class);
+			.getLogger(ActiveFormSectionArea.class);
 
-	public ActiveSectionLayout() {
+	public ActiveFormSectionArea() {
 		this.setComponentVerticalDropRatio(0.3f);
 		this.setDragMode(LayoutDragMode.CLONE);
 		this.setDropHandler(new DropHandler() {
@@ -37,16 +37,16 @@ class ActiveSectionLayout extends DDVerticalLayout {
 				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
 						.getTransferable();
 				Component srcComp = transferable.getComponent();
-				if (srcComp instanceof ActiveSectionLayoutComp) {
-					ActiveSectionLayoutComp overComp = (ActiveSectionLayoutComp) details
+				if (srcComp instanceof ActiveSectionComp) {
+					ActiveSectionComp overComp = (ActiveSectionComp) details
 							.getOverComponent();
-					int srcIndex = ActiveSectionLayout.this
+					int srcIndex = ActiveFormSectionArea.this
 							.getComponentIndex(srcComp);
-					int destIndex = ActiveSectionLayout.this
+					int destIndex = ActiveFormSectionArea.this
 							.getComponentIndex(overComp);
 
 					if (srcIndex != destIndex) {
-						ActiveSectionLayout.this.replaceComponent(overComp,
+						ActiveFormSectionArea.this.replaceComponent(overComp,
 								srcComp);
 					}
 				}

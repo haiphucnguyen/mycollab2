@@ -14,6 +14,8 @@ import com.esofthead.mycollab.module.crm.view.cases.CasesDefaultFormLayoutFactor
 import com.esofthead.mycollab.module.crm.view.contact.ContactDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.lead.LeadDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityDefaultDynaFormLayoutFactory;
+import com.esofthead.mycollab.module.crm.view.setting.customlayout.CreateSectionWindow;
+import com.esofthead.mycollab.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.setting;
+package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
 import com.vaadin.ui.Window;
 

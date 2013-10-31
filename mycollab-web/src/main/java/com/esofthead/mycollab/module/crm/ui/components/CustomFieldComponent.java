@@ -19,104 +19,104 @@ import com.vaadin.ui.themes.Reindeer;
 
 public class CustomFieldComponent extends CssLayout {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private AbstractDynaField _field;
-    private Label fieldNameLbl;
-    private String _fieldName;
-    private Panel fieldEditPanel;
-    private PopupButton editFieldBtn;
+	private AbstractDynaField field;
+	private Label fieldNameLbl;
+	private String fieldName;
+	private Panel fieldEditPanel;
+	private PopupButton editFieldBtn;
 
-    public CustomFieldComponent(AbstractDynaField field) {
-        this.setStyleName(UIConstants.CUSTOM_FIELD_COMPONENT);
-        _field = field;
-        if (field == null) {
-            _fieldName = "&nbsp;";
-            this.addStyleName("emptyField");
-        } else {
-            _fieldName = field.getDisplayName();
-        }
-        fieldNameLbl = new Label(_fieldName);
-        if (isEmptyField()) {
-            fieldNameLbl.setContentMode(Label.CONTENT_XHTML);
-            this.addComponent(fieldNameLbl);
-        } else {
+	public CustomFieldComponent(AbstractDynaField field) {
+		this.setStyleName(UIConstants.CUSTOM_FIELD_COMPONENT);
+		this.field = field;
+		if (field == null) {
+			fieldName = "&nbsp;";
+			this.addStyleName("emptyField");
+		} else {
+			fieldName = field.getDisplayName();
+		}
+		fieldNameLbl = new Label(fieldName);
+		if (isEmptyField()) {
+			fieldNameLbl.setContentMode(Label.CONTENT_XHTML);
+			this.addComponent(fieldNameLbl);
+		} else {
 
-            HorizontalLayout fieldWrapper = new HorizontalLayout();
-            fieldWrapper.setWidth("100%");
-            fieldWrapper.addComponent(fieldNameLbl);
-            fieldWrapper.setExpandRatio(fieldNameLbl, 1.0f);
+			HorizontalLayout fieldWrapper = new HorizontalLayout();
+			fieldWrapper.setWidth("100%");
+			fieldWrapper.addComponent(fieldNameLbl);
+			fieldWrapper.setExpandRatio(fieldNameLbl, 1.0f);
 
-            editFieldBtn = new PopupButton();
-            editFieldBtn.setStyleName(UIConstants.POPUP_WITHOUT_INDICATOR);
-            editFieldBtn.addStyleName("editFieldBtn");
-            editFieldBtn.addStyleName("link");
-            editFieldBtn.setIcon(MyCollabResource
-                    .newResource("icons/16/edit.png"));
+			editFieldBtn = new PopupButton();
+			editFieldBtn.setStyleName(UIConstants.POPUP_WITHOUT_INDICATOR);
+			editFieldBtn.addStyleName("editFieldBtn");
+			editFieldBtn.addStyleName("link");
+			editFieldBtn.setIcon(MyCollabResource
+					.newResource("icons/16/edit.png"));
 
-            fieldEditPanel = new Panel();
-            VerticalLayout panelLayout = new VerticalLayout();
-            panelLayout.setSpacing(true);
-            panelLayout.setMargin(true);
-            panelLayout.setWidth("100%");
-            fieldEditPanel.setContent(panelLayout);
-            fieldEditPanel.setStyleName(Reindeer.PANEL_LIGHT);
-            fieldEditPanel.setWidth("300px");
+			fieldEditPanel = new Panel();
+			VerticalLayout panelLayout = new VerticalLayout();
+			panelLayout.setSpacing(true);
+			panelLayout.setMargin(true);
+			panelLayout.setWidth("100%");
+			fieldEditPanel.setContent(panelLayout);
+			fieldEditPanel.setStyleName(Reindeer.PANEL_LIGHT);
+			fieldEditPanel.setWidth("300px");
 
-            createDefaultEditOption();
+			createDefaultEditOption();
 
-            editFieldBtn.addComponent(fieldEditPanel);
-            fieldWrapper.addComponent(editFieldBtn);
-            this.addComponent(fieldWrapper);
-        }
-    }
+			editFieldBtn.addComponent(fieldEditPanel);
+			fieldWrapper.addComponent(editFieldBtn);
+			this.addComponent(fieldWrapper);
+		}
+	}
 
-    protected void createDefaultEditOption() {
-        final CheckBox isMandatory = new CheckBox("Is Mandatory Field",
-                _field.isMandatory());
-        fieldEditPanel.addComponent(isMandatory);
+	protected void createDefaultEditOption() {
+		final CheckBox isMandatory = new CheckBox("Is Mandatory Field",
+				field.isMandatory());
+		fieldEditPanel.addComponent(isMandatory);
 
-        Button saveBtn = new Button("Save", new Button.ClickListener() {
+		Button saveBtn = new Button("Save", new Button.ClickListener() {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public void buttonClick(ClickEvent arg0) {
-                editFieldBtn.setPopupVisible(false);
-                CustomFieldComponent.this.setMandatory((Boolean) isMandatory
-                        .getValue());
-                CustomFieldComponent.this.requestRepaint();
-            }
-        });
-        saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        fieldEditPanel.addComponent(saveBtn);
-        ((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(
-                saveBtn, Alignment.MIDDLE_CENTER);
-    }
+			@Override
+			public void buttonClick(ClickEvent arg0) {
+				editFieldBtn.setPopupVisible(false);
+				CustomFieldComponent.this.setMandatory((Boolean) isMandatory
+						.getValue());
+				CustomFieldComponent.this.requestRepaint();
+			}
+		});
+		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		fieldEditPanel.addComponent(saveBtn);
+		((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(
+				saveBtn, Alignment.MIDDLE_CENTER);
+	}
 
-    protected void addFieldEditOption(Component comp) {
-        fieldEditPanel.addComponent(comp);
-    }
+	protected void addFieldEditOption(Component comp) {
+		fieldEditPanel.addComponent(comp);
+	}
 
-    public String getFieldName() {
-        return _fieldName;
-    }
+	public String getFieldName() {
+		return fieldName;
+	}
 
-    public boolean isEmptyField() {
-        return (_field == null);
-    }
+	public boolean isEmptyField() {
+		return (field == null);
+	}
 
-    public void setMandatory(boolean isMandatory) {
+	public void setMandatory(boolean isMandatory) {
 
-        if (isMandatory) {
-            fieldNameLbl.setContentMode(Label.CONTENT_XHTML);
-            fieldNameLbl.setValue("<img src='"
-                    + MyCollabResource.newResourceLink("icons/16/lock.png")
-                    + "'>&nbsp;" + _fieldName);
+		if (isMandatory) {
+			fieldNameLbl.setContentMode(Label.CONTENT_XHTML);
+			fieldNameLbl.setValue("<img src='"
+					+ MyCollabResource.newResourceLink("icons/16/lock.png")
+					+ "'>&nbsp;" + fieldName);
 
-        } else if (fieldNameLbl.getContentMode() == Label.CONTENT_XHTML) {
-            fieldNameLbl.setContentMode(Label.CONTENT_DEFAULT);
-            fieldNameLbl.setValue(_fieldName);
-        }
-    }
+		} else if (fieldNameLbl.getContentMode() == Label.CONTENT_XHTML) {
+			fieldNameLbl.setContentMode(Label.CONTENT_DEFAULT);
+			fieldNameLbl.setValue(fieldName);
+		}
+	}
 }

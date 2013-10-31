@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -73,6 +74,9 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 
 		item.setDateofbirth(view.getBirthday());
 		item.setTimezone(view.getTimezone().getId());
+		if (item.getStatus() == null) {
+			item.setStatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
+		}
 
 		if (item.getUsername() == null) {
 			userService.saveUserAccount(item, AppContext.getAccountId(),
