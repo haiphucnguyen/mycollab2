@@ -106,6 +106,10 @@ public class CustomFieldComponent extends CssLayout {
 		return (field == null);
 	}
 
+	public AbstractDynaField getField() {
+		return field;
+	}
+
 	public void setMandatory(boolean isMandatory) {
 
 		if (isMandatory) {

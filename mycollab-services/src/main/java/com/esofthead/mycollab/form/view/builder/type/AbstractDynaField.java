@@ -3,16 +3,22 @@ package com.esofthead.mycollab.form.view.builder.type;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer.Exclude;
 
 public class AbstractDynaField implements Comparable<AbstractDynaField> {
+	@Exclude
 	protected int fieldIndex;
 
+	@Exclude
 	protected String fieldName;
 
+	@Exclude
 	protected String displayName;
 
+	@Exclude
 	protected boolean isMandatory = false;
 
+	@Exclude
 	protected boolean isRequired = false;
 
+	@Exclude
 	protected boolean isCustom = false;
 
 	@Exclude
