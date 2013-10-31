@@ -108,7 +108,11 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 							"Project Admin");
 				}
 			} else if (propertyId.equals("username")) {
-				return new FormViewField(
+				return new UserLinkViewField(
+						ProjectMemberPreviewBuilder.this.projectMember
+								.getUsername(),
+						ProjectMemberPreviewBuilder.this.projectMember
+								.getMemberAvatarId(),
 						ProjectMemberPreviewBuilder.this.projectMember
 								.getMemberFullName());
 			}

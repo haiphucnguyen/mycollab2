@@ -26,7 +26,6 @@ import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClickHandler;
-import com.vaadin.event.Action;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
