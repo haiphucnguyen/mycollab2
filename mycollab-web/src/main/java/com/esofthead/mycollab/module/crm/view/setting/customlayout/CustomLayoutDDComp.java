@@ -6,7 +6,7 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.vaadin.ui.HorizontalLayout;
 
-class CustomLayoutDDComp extends HorizontalLayout {
+public class CustomLayoutDDComp extends HorizontalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private ActiveFormSectionArea activeFormLayout;
@@ -39,12 +39,10 @@ class CustomLayoutDDComp extends HorizontalLayout {
 		for (int i = 0; i < sectionCount; i++) {
 			DynaSection section = dynaForm.getSection(i);
 			if (!section.isDeletedSection()) {
-				ActiveSectionComp sectionLayout = new ActiveSectionComp(
-						section);
+				ActiveSectionComp sectionLayout = new ActiveSectionComp(section);
 				activeFormLayout.addComponent(sectionLayout);
 			} else {
-				DeleteSectionComp sectionLayout = new DeleteSectionComp(
-						section);
+				DeleteSectionComp sectionLayout = new DeleteSectionComp(section);
 				deleteFormLayout.addComponent(sectionLayout);
 				hasDeletedSection = true;
 			}
