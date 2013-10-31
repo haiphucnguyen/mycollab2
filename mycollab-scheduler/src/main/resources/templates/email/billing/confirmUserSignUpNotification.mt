@@ -86,7 +86,7 @@
 						<span>Thank you for choosing MyCollab!<span> <br>
 						<span>You are just one click away from completing your account registration: <span> <br><br>
 						<div style="text-align: center;">
-							<button style="width:200px;" onclick="return confirmEmail();" type="button" class="v-button-bluebtn"><span style="font-family: 'verdana';font-size: 18px; ">Confirm your e-mail</span></button>
+							<a style="text-decoration:none;" href="$!linkConfirm" class="v-button-bluebtn"/><span style="font-family: 'verdana';font-size: 17px; ">Confirm your e-mail</span></a>
 						</div> 
 						<br>
 						<span>By clicking this link, you agree to the 
@@ -109,7 +109,7 @@
 					<div id="contentFooter" style="padding-top:10px;">
 						Best regards, <br>
 						<span style="font-weight: bold;">MyCollab's Customer Support Team </span><br>
-						1-111-111-1111 <br>
+						(+84) 862-924-513 <br>
 						<a href="mailto:support@mycollab.com" style="text-decoration : none;"><span style="font-weight: bold; color:#709AC5">support@mycollab.com </span></a>
 					</div>
 				</div>
@@ -119,13 +119,6 @@
 			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom_new.png') no-repeat 0 0 transparent; line-height: 7px; font-size: 7px;" height="7">&nbsp;</td>
 		</tr>
 	</table>
-	<div style="margin: 0px auto; width: 520px; padding-top:10px;">
-		<span style="font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">
-		If you created this account by mistake and want to cancel it,<br>
-		follow this link: $!link
-		</span>
-	</div>
-	<input type="hidden" id="linkCancelSignUp" value="$!linkCancelSignUp"/>
 	<input type="hidden" id="linkConfirm" value="$!linkConfirm"/>
 </body> 
 </html>	
