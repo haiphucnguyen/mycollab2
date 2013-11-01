@@ -14,64 +14,64 @@ import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 
 public class GenericSectionComp extends VerticalLayout {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected DynaSection section;
+    protected DynaSection section;
 
-	protected DDGridLayout dragLayout;
+    protected DDGridLayout dragLayout;
 
-	public GenericSectionComp(DynaSection section) {
-		this.section = section;
-		this.addStyleName(UIConstants.CUSTOM_FIELD_SECTION);
-	}
+    public GenericSectionComp(DynaSection section) {
+        this.section = section;
+        this.addStyleName(UIConstants.CUSTOM_FIELD_SECTION);
+    }
 
-	public DynaSection getSection() {
-		return section;
-	}
+    public DynaSection getSection() {
+        return section;
+    }
 
-	protected void removeEmptyRow(int srcRow) {
-		// Check if there is any remaining item in this row
-		// if not, remove row
-		int remainItem = 0;
-		for (int i = dragLayout.getColumns(); i >= 0; i--) {
-			if (dragLayout.getComponent(i, srcRow) != null)
-				remainItem++;
-		}
-		if (remainItem == 0) {
-			dragLayout.removeRow(srcRow);
-		}
-	}
+    protected void removeEmptyRow(DDGridLayout srcGridLayout, int srcRow) {
+        // Check if there is any remaining item in the source gridLayout
+        // if not, remove row
+        int remainItem = 0;
+        for (int i = srcGridLayout.getColumns(); i >= 0; i--) {
+            if (srcGridLayout.getComponent(i, srcRow) != null)
+                remainItem++;
+        }
+        if (remainItem == 0) {
+            srcGridLayout.removeRow(srcRow);
+        }
+    }
 
-	protected List<AbstractDynaField> getFields() {
-		List<AbstractDynaField> fields = new ArrayList<AbstractDynaField>();
-		for (int col = 0; col < dragLayout.getColumns(); col++) {
-			for (int row = 0; row < dragLayout.getRows(); row++) {
-				CustomFieldComponent component = (CustomFieldComponent) dragLayout
-						.getComponent(col, row);
+    protected List<AbstractDynaField> getFields() {
+        List<AbstractDynaField> fields = new ArrayList<AbstractDynaField>();
+        for (int col = 0; col < dragLayout.getColumns(); col++) {
+            for (int row = 0; row < dragLayout.getRows(); row++) {
+                CustomFieldComponent component = (CustomFieldComponent) dragLayout
+                        .getComponent(col, row);
 
-				if (component != null && !component.isEmptyField()) {
-					AbstractDynaField field = component.getField();
-					fields.add(field);
-				}
-			}
-		}
-		return fields;
-	}
+                if (component != null && !component.isEmptyField()) {
+                    AbstractDynaField field = component.getField();
+                    fields.add(field);
+                }
+            }
+        }
+        return fields;
+    }
 
-	protected class CustomFieldDragFilter implements DragFilter {
+    protected class CustomFieldDragFilter implements DragFilter {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public boolean isDraggable(Component component) {
-			if (component instanceof CustomFieldComponent) {
-				if (((CustomFieldComponent) component).isEmptyField())
-					return false;
-				return true;
-			}
+        @Override
+        public boolean isDraggable(Component component) {
+            if (component instanceof CustomFieldComponent) {
+                if (((CustomFieldComponent) component).isEmptyField())
+                    return false;
+                return true;
+            }
 
-			return false;
-		}
+            return false;
+        }
 
-	}
+    }
 }

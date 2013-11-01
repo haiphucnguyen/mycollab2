@@ -11,34 +11,34 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
 public class DeleteFormSectionArea extends DDVerticalLayout {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public DeleteFormSectionArea() {
-		this.setComponentVerticalDropRatio(0.3f);
-		this.setDragMode(LayoutDragMode.CLONE);
-		this.addStyleName("deleteSection");
+    public DeleteFormSectionArea() {
+        this.setComponentVerticalDropRatio(0.3f);
+        this.setDragMode(LayoutDragMode.CLONE);
 
-		this.setDropHandler(new DropHandler() {
-			private static final long serialVersionUID = 1L;
+        this.setDropHandler(new DropHandler() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public AcceptCriterion getAcceptCriterion() {
-				return AcceptAll.get();
-			}
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                return AcceptAll.get();
+            }
 
-			@Override
-			public void drop(DragAndDropEvent event) {
-				VerticalLayoutTargetDetails details = (VerticalLayoutTargetDetails) event
-						.getTargetDetails();
-				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
-						.getTransferable();
-				Component srcComp = transferable.getComponent();
-				if (srcComp instanceof ActiveSectionComp) {
-					ActiveFormSectionArea parentSection = (ActiveFormSectionArea) srcComp
-							.getParent();
-					parentSection.removeComponent(srcComp);
-				}
-			}
-		});
-	}
+            @Override
+            public void drop(DragAndDropEvent event) {
+                VerticalLayoutTargetDetails details = (VerticalLayoutTargetDetails) event
+                        .getTargetDetails();
+                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
+                        .getTransferable();
+                Component srcComp = transferable.getComponent();
+                if (srcComp instanceof ActiveSectionComp) {
+                    ActiveFormSectionArea parentSection = (ActiveFormSectionArea) srcComp
+                            .getParent();
+                    parentSection.removeComponent(srcComp);
+                    parentSection.requestRepaintAll();
+                }
+            }
+        });
+    }
 }

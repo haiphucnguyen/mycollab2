@@ -25,142 +25,145 @@ import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 
 class DeleteSectionComp extends GenericSectionComp {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
-			.getLogger(DeleteSectionComp.class);
+    private static Logger log = LoggerFactory
+            .getLogger(DeleteSectionComp.class);
 
-	public DeleteSectionComp(DynaSection section) {
-		super(section);
+    public DeleteSectionComp(DynaSection section) {
+        super(section);
 
-		CssLayout headerWrapper = new CssLayout();
-		headerWrapper.addStyleName("header-wrapper");
-		headerWrapper.setWidth("100%");
+        this.addStyleName("deleteSection");
 
-		Label headerTitleLbl = new Label(section.getHeader());
-		headerTitleLbl.setStyleName("h2");
+        CssLayout headerWrapper = new CssLayout();
+        headerWrapper.addStyleName("header-wrapper");
+        headerWrapper.setWidth("100%");
 
-		HorizontalLayout header = new HorizontalLayout();
-		header.setWidth("100%");
+        Label headerTitleLbl = new Label(section.getHeader());
+        headerTitleLbl.setStyleName("h2");
 
-		headerWrapper.addComponent(headerTitleLbl);
-		this.addComponent(headerWrapper);
+        HorizontalLayout header = new HorizontalLayout();
+        header.setWidth("100%");
 
-		dragLayout = new DDGridLayout(1, section.getFieldCount() + 1);
+        headerWrapper.addComponent(headerTitleLbl);
+        this.addComponent(headerWrapper);
 
-		dragLayout.setWidth("100%");
-		dragLayout.setMargin(true);
-		dragLayout.setSpacing(true);
-		dragLayout.setComponentHorizontalDropRatio(0);
-		dragLayout.setComponentVerticalDropRatio(0);
-		dragLayout.setDragMode(LayoutDragMode.CLONE);
-		dragLayout.setDragFilter(new CustomFieldDragFilter());
+        dragLayout = new DDGridLayout(1, section.getFieldCount() + 1);
 
-		dragLayout.setDropHandler(new DropHandler() {
-			private static final long serialVersionUID = 1L;
+        dragLayout.setWidth("100%");
+        dragLayout.setMargin(true);
+        dragLayout.setSpacing(true);
+        dragLayout.setComponentHorizontalDropRatio(0);
+        dragLayout.setComponentVerticalDropRatio(0);
+        dragLayout.setDragMode(LayoutDragMode.CLONE);
+        dragLayout.setDragFilter(new CustomFieldDragFilter());
 
-			@Override
-			public AcceptCriterion getAcceptCriterion() {
-				return new And(VerticalLocationIs.MIDDLE,
-						HorizontalLocationIs.CENTER);
-			}
+        dragLayout.setDropHandler(new DropHandler() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void drop(DragAndDropEvent event) {
-				GridLayoutTargetDetails details = (GridLayoutTargetDetails) event
-						.getTargetDetails();
-				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
-						.getTransferable();
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                return new And(VerticalLocationIs.MIDDLE,
+                        HorizontalLocationIs.CENTER);
+            }
 
-				int destColumn = details.getOverColumn();
-				int destRow = details.getOverRow();
+            @Override
+            public void drop(DragAndDropEvent event) {
+                GridLayoutTargetDetails details = (GridLayoutTargetDetails) event
+                        .getTargetDetails();
+                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
+                        .getTransferable();
 
-				Component srcComp = transferable.getComponent();
-				Component parentSrcComp = srcComp.getParent();
+                int destColumn = details.getOverColumn();
+                int destRow = details.getOverRow();
 
-				if (srcComp instanceof CustomFieldComponent) {
-					if (parentSrcComp instanceof DDGridLayout) {
-						DDGridLayout srcGridLayout = (DDGridLayout) parentSrcComp;
-						int srcColumn = srcGridLayout.getComponentArea(srcComp)
-								.getColumn1();
-						int srcRow = srcGridLayout.getComponentArea(srcComp)
-								.getRow1();
+                Component srcComp = transferable.getComponent();
+                Component parentSrcComp = srcComp.getParent();
 
-						Component destComp = dragLayout.getComponent(
-								destColumn, destRow);
+                if (srcComp instanceof CustomFieldComponent) {
+                    if (parentSrcComp instanceof DDGridLayout) {
+                        DDGridLayout srcGridLayout = (DDGridLayout) parentSrcComp;
+                        int srcColumn = srcGridLayout.getComponentArea(srcComp)
+                                .getColumn1();
+                        int srcRow = srcGridLayout.getComponentArea(srcComp)
+                                .getRow1();
 
-						if (destComp == null) {
-							srcGridLayout.removeComponent(srcComp);
-							dragLayout.addComponent(srcComp, destColumn,
-									destRow);
+                        Component destComp = dragLayout.getComponent(
+                                destColumn, destRow);
 
-							removeEmptyRow(srcRow);
-						} else {
-							if (srcGridLayout == dragLayout
-									&& srcColumn == destColumn
-									&& srcRow == destRow) {
-								// do nothing
-							} else {
-								// swap component source and dest component
-								srcGridLayout.removeComponent(srcComp);
-								if (((CustomFieldComponent) destComp)
-										.isEmptyField()) {
-									dragLayout.insertRow(dragLayout.getRows() - 1);
-								} else {
-									dragLayout.removeComponent(destComp);
-									srcGridLayout.addComponent(destComp,
-											srcColumn, srcRow);
-								}
+                        if (destComp == null) {
+                            srcGridLayout.removeComponent(srcComp);
+                            dragLayout.addComponent(srcComp, destColumn,
+                                    destRow);
 
-								dragLayout.addComponent(srcComp, destColumn,
-										destRow);
+                            removeEmptyRow(srcGridLayout, srcRow);
+                        } else {
+                            if (srcGridLayout == dragLayout
+                                    && srcColumn == destColumn
+                                    && srcRow == destRow) {
+                                // do nothing
+                            } else {
+                                // swap component source and dest component
+                                srcGridLayout.removeComponent(srcComp);
+                                if (((CustomFieldComponent) destComp)
+                                        .isEmptyField()) {
+                                    dragLayout.insertRow(dragLayout.getRows() - 1);
+                                } else {
+                                    dragLayout.removeComponent(destComp);
+                                    srcGridLayout.addComponent(destComp,
+                                            srcColumn, srcRow);
+                                }
 
-								removeEmptyRow(srcRow);
-							}
+                                dragLayout.addComponent(srcComp, destColumn,
+                                        destRow);
 
-						}
-					}
-				} else if (srcComp instanceof ActiveSectionComp) {
-					ActiveFormSectionArea parentSection = (ActiveFormSectionArea) srcComp
-							.getParent();
-					parentSection.removeComponent(srcComp);
+                                removeEmptyRow(srcGridLayout, srcRow);
+                            }
 
-					addDeleteActiveSectionComp((ActiveSectionComp) srcComp);
-				}
+                        }
+                    }
+                } else if (srcComp instanceof ActiveSectionComp) {
+                    ActiveFormSectionArea parentSection = (ActiveFormSectionArea) srcComp
+                            .getParent();
+                    parentSection.removeComponent(srcComp);
+                    parentSection.requestRepaintAll();
 
-			}
-		});
+                    addDeleteActiveSectionComp((ActiveSectionComp) srcComp);
+                }
 
-		this.addComponent(dragLayout);
+            }
+        });
 
-		int fieldCount = section.getFieldCount();
-		for (int j = 0; j < fieldCount; j++) {
-			AbstractDynaField field = section.getField(j);
-			CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
-			fieldBtn.setWidth("100%");
-			log.debug("Add field " + field.getDisplayName()
-					+ " in (colum, row) " + 0 + ", " + j);
-			dragLayout.addComponent(fieldBtn, 0, j);
-		}
+        this.addComponent(dragLayout);
 
-		CustomFieldComponent emptyField = new CustomFieldComponent(null);
-		emptyField.setWidth("100%");
+        int fieldCount = section.getFieldCount();
+        for (int j = 0; j < fieldCount; j++) {
+            AbstractDynaField field = section.getField(j);
+            CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
+            fieldBtn.setWidth("100%");
+            log.debug("Add field " + field.getDisplayName()
+                    + " in (colum, row) " + 0 + ", " + j);
+            dragLayout.addComponent(fieldBtn, 0, j);
+        }
 
-		log.debug("Add empty field in (column, row) " + 0 + ", "
-				+ (dragLayout.getRows() - 1));
-		dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
-	}
+        CustomFieldComponent emptyField = new CustomFieldComponent(null);
+        emptyField.setWidth("100%");
 
-	public void addDeleteActiveSectionComp(ActiveSectionComp activeSectionComp) {
-		List<AbstractDynaField> deleteFields = activeSectionComp.getFields();
+        log.debug("Add empty field in (column, row) " + 0 + ", "
+                + (dragLayout.getRows() - 1));
+        dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
+    }
 
-		for (int i = 0; i < deleteFields.size(); i++) {
-			AbstractDynaField field = deleteFields.get(i);
-			CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
-			fieldBtn.setWidth("100%");
-			dragLayout.insertRow(dragLayout.getRows() - 1);
-			dragLayout.addComponent(fieldBtn, 0, dragLayout.getRows() - 2);
-		}
-	}
+    public void addDeleteActiveSectionComp(ActiveSectionComp activeSectionComp) {
+        List<AbstractDynaField> deleteFields = activeSectionComp.getFields();
+
+        for (int i = 0; i < deleteFields.size(); i++) {
+            AbstractDynaField field = deleteFields.get(i);
+            CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
+            fieldBtn.setWidth("100%");
+            dragLayout.insertRow(dragLayout.getRows() - 1);
+            dragLayout.addComponent(fieldBtn, 0, dragLayout.getRows() - 2);
+        }
+    }
 
 }
