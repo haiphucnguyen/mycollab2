@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.common.localtization;
+package com.esofthead.mycollab.common.localization;
 
 import ch.qos.cal10n.BaseName;
 import ch.qos.cal10n.Locale;
