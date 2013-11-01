@@ -22,9 +22,8 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i,
 			Date parameter, JdbcType jdbcType) throws SQLException {
-		DateTime dt = new DateTime(parameter);
-		dt.withZone(utcZone);
-		ps.setTimestamp(i, new Timestamp(dt.getMillis()));
+		Date date = convertTimeFromSystemTimezoneToUTC(parameter.getTime());
+		ps.setTimestamp(i, new Timestamp(date.getTime()));
 	}
 
 	@Override
@@ -32,12 +31,27 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 			throws SQLException {
 		Timestamp sqlTimestamp = rs.getTimestamp(columnName);
 		if (sqlTimestamp != null) {
-			return convertTimeToCorrectTimezone(sqlTimestamp.getTime());
+			return convertTimeFromUTCToSystemTimezone(sqlTimestamp.getTime());
 		}
 		return null;
 	}
 
-	private Date convertTimeToCorrectTimezone(long timeInMillis) {
+	private Date convertTimeFromSystemTimezoneToUTC(long timeInMillis) {
+		DateTime dt = new DateTime();
+		dt = dt.withMillis(-DateTimeZone.getDefault().getOffset(timeInMillis)
+				+ timeInMillis);
+		dt = dt.withZone(utcZone);
+		Date date = dt.toDate();
+		return date;
+	}
+
+	/**
+	 * Convert from UTC time to default time zone of system
+	 * 
+	 * @param timeInMillis
+	 * @return
+	 */
+	private Date convertTimeFromUTCToSystemTimezone(long timeInMillis) {
 		DateTime dt = new DateTime();
 		dt = dt.withMillis(DateTimeZone.getDefault().getOffset(timeInMillis)
 				+ timeInMillis);
@@ -51,7 +65,7 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 			throws SQLException {
 		Timestamp sqlTimestamp = rs.getTimestamp(columnIndex);
 		if (sqlTimestamp != null) {
-			return convertTimeToCorrectTimezone(sqlTimestamp.getTime());
+			return convertTimeFromUTCToSystemTimezone(sqlTimestamp.getTime());
 		}
 		return null;
 	}
