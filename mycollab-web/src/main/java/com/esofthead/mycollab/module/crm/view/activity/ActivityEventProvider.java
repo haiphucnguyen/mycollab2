@@ -69,7 +69,25 @@ public class ActivityEventProvider implements CalendarEventProvider {
 					event.setStart(crmEvent.getStartdate());
 					event.setEnd(crmEvent.getEnddate());
 					event.setSource(crmEvent);
+					if (crmEvent.getStatus() != null) {
+						if ("Held".equals(crmEvent.getStatus())) {
+							event.setStyleName("eventcomplete");
+						} else if ("Planned".equals(crmEvent.getStatus())) {
+							event.setStyleName("eventfuture");
+						} else if ("Not Held".equals(crmEvent.getStatus())) {
+							if (crmEvent.getEnddate() != null) {
+								if (crmEvent.getEnddate().compareTo(new Date()) == 0) {
+									event.setStyleName("eventoverdue");
+								} else if (crmEvent.getEnddate().compareTo(
+										new Date()) > 0) {
+									event.setStyleName("eventfuture");
+								} else {
+									event.setStyleName("eventoverdue");
+								}
+							}
+						}
 
+					}
 					events.add(event);
 				}
 			}

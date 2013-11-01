@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
-public class DataSourceFactoryBean extends AbstractFactoryBean {
+public class DataSourceFactoryBean extends AbstractFactoryBean<DataSource> {
 
 	private static Logger log = LoggerFactory
 			.getLogger(DataSourceFactoryBean.class);
@@ -43,7 +43,7 @@ public class DataSourceFactoryBean extends AbstractFactoryBean {
 	}
 
 	@Override
-	protected Object createInstance() throws Exception {
+	protected DataSource createInstance() throws Exception {
 		InputStream stream = DataSourceFactoryBean.class.getClassLoader()
 				.getResourceAsStream("resources-test.properties");
 		if (stream == null) {
@@ -77,12 +77,11 @@ public class DataSourceFactoryBean extends AbstractFactoryBean {
 			dataSource.close();
 			log.debug("Close connection");
 		}
-		
-		
+
 	}
 
 	@Override
-	public Class getObjectType() {
+	public Class<DataSource> getObjectType() {
 		return DataSource.class;
 	}
 

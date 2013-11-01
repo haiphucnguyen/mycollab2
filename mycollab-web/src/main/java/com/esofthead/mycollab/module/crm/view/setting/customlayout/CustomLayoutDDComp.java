@@ -60,8 +60,6 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 	}
 
 	public DynaForm rebuildForm() {
-		// DynaForm form = new DynaForm();
-		// return form;
 		return dynaForm;
 	}
 }
