@@ -453,7 +453,7 @@
             </plugin>
 
             <!-- BEGIN OBFUSCATE -->
-            <!-- 
+<!-- 
             <plugin>
                 <groupId>com.idfconnect.devtools</groupId>
                 <artifactId>idfc-proguard-maven-plugin</artifactId>
@@ -487,6 +487,7 @@
                         </outputArtifact>
                     </outputArtifacts>
                     <libraryJarPaths>
+                        <libraryJarPath>${java.home}/lib/rt.jar</libraryJarPath>
                         <libraryJarPath>${java.home}/lib/jsse.jar</libraryJarPath>
                         <libraryJarPath>${java.home}/lib/jce.jar</libraryJarPath>
                     </libraryJarPaths>
@@ -499,7 +500,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            -->
+-->
         </plugins>
 
         <pluginManagement>
