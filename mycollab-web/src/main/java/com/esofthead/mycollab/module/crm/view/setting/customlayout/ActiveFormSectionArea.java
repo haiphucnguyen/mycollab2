@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -53,6 +57,16 @@ class ActiveFormSectionArea extends DDVerticalLayout {
 				log.debug("Target {}", event.getTargetDetails());
 			}
 		});
+	}
+
+	public List<DynaSection> rebuildSections() {
+		List<DynaSection> sections = new ArrayList<DynaSection>();
+
+		int componentCount = this.getComponentCount();
+		for (int i = 0; i < componentCount; i++) {
+
+		}
+		return sections;
 	}
 
 }
