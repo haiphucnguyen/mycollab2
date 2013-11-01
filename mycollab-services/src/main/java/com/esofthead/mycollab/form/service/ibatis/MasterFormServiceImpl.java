@@ -75,9 +75,9 @@ public class MasterFormServiceImpl implements MasterFormService {
 						dynaField.setDisplayName(field.getDisplayname());
 						dynaField.setFieldIndex(field.getFieldindex());
 						dynaField.setFieldName(field.getFieldname());
-//						dynaField.setMandatory(field.getIsmandatory());
-//						dynaField.setRequired(field.getIsrequired());
-
+						dynaField.setMandatory(field.getIsmandatory());
+						dynaField.setRequired(field.getIsrequired());
+						dynaField.setCustom(field.getIscustom());
 						dySection.addField(dynaField);
 					}
 				}
