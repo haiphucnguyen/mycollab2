@@ -136,6 +136,7 @@ public class MasterFormServiceImpl implements MasterFormService {
 				dbField.setFieldtype(field.getClass().getSimpleName());
 				dbField.setIsmandatory(field.isMandatory());
 				dbField.setIsrequired(field.isRequired());
+				dbField.setIscustom(field.isCustom());
 
 				log.debug(
 						"Save field {} with name {}",
