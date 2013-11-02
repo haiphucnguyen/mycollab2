@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.addon.calendar.event.BasicEvent;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.event.CalendarEventProvider;
@@ -65,29 +66,67 @@ public class ActivityEventProvider implements CalendarEventProvider {
 				} else {
 					CrmEvent event = new CrmEvent();
 					event.setCaption(crmEvent.getSubject());
-					event.setDescription(crmEvent.getDescription());
+
+					StringBuffer statusStr = new StringBuffer("");
 					event.setStart(crmEvent.getStartdate());
 					event.setEnd(crmEvent.getEnddate());
 					event.setSource(crmEvent);
 					if (crmEvent.getStatus() != null) {
 						if ("Held".equals(crmEvent.getStatus())) {
 							event.setStyleName("eventcomplete");
+							statusStr
+									.append("<span style=\"background-color: #96D794;\">");
 						} else if ("Planned".equals(crmEvent.getStatus())) {
 							event.setStyleName("eventfuture");
+							statusStr
+									.append("<span style=\"background-color: #99C4DD;\">");
 						} else if ("Not Held".equals(crmEvent.getStatus())) {
 							if (crmEvent.getEnddate() != null) {
 								if (crmEvent.getEnddate().compareTo(new Date()) == 0) {
 									event.setStyleName("eventoverdue");
+									statusStr
+											.append("<span style=\"background-color: #EF8585;\">");
 								} else if (crmEvent.getEnddate().compareTo(
 										new Date()) > 0) {
 									event.setStyleName("eventfuture");
+									statusStr
+											.append("<span style=\"background-color: #99C4DD;\">");
 								} else {
 									event.setStyleName("eventoverdue");
+									statusStr
+											.append("<span style=\"background-color: #EF8585;\">");
 								}
 							}
 						}
 
 					}
+					statusStr.append(crmEvent.getStatus());
+					statusStr.append("</span>");
+					String desTooltip = "<h3>Title</h3>"
+							+ "<table style=\"padding-left:10px; width:350px; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;\""
+							+ "<tr>"
+							+ "<td style=\"font-weight:bold; width:70px;\">Start Date:</td>"
+							+ "<td>"
+							+ AppContext
+									.formatDateTime(crmEvent.getStartdate())
+							+ "</td>"
+							+ "</tr>"
+							+ "<td style=\"font-weight:bold; width:70px;\">End Date: </td>"
+							+ "<td>"
+							+ AppContext.formatDateTime(crmEvent.getEnddate())
+							+ "</td>"
+							+ "<tr>"
+							+ "<tr>"
+							+ "<td style=\"font-weight:bold; width:70px;\">Status:</td>"
+							+ "<td>"
+							+ statusStr.toString()
+							+ "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td style=\"text-align: right; vertical-align: top; font-weight:bold; width:70px;\">Description:</td>"
+							+ "<td style=\"word-wrap: break-word; white-space: normal; word-break: break-all;\">tesataedatesataedatesataedatesataedatesataedatesataedatesataedatesataedatesataeda</td>"
+							+ "</tr>" + "</table>";
+					event.setDescription(desTooltip);
 					events.add(event);
 				}
 			}
