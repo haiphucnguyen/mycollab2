@@ -59,6 +59,7 @@ public class MasterFormServiceImpl implements MasterFormService {
 
 				dySection.setHeader(section.getName());
 				dySection.setOrderIndex(section.getLayoutindex());
+				dySection.setDeletedSection(section.getIsdeletesection());
 
 				List<FormSectionField> fields = section.getFields();
 				if (fields != null && fields.size() > 0) {

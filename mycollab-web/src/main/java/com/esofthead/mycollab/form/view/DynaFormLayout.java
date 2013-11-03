@@ -53,6 +53,9 @@ public class DynaFormLayout implements IFormLayoutFactory {
 		int sectionCount = dynaForm.getSectionCount();
 		for (int i = 0; i < sectionCount; i++) {
 			DynaSection section = dynaForm.getSection(i);
+			if (section.isDeletedSection()) {
+				continue;
+			}
 			Label header = new Label(section.getHeader());
 			header.setStyleName("h2");
 			layout.addComponent(header);
@@ -83,7 +86,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 
 			sectionMappings.put(section, gridLayout);
 
-			log.debug("Fill fields of section to map field");
+			log.debug("Fill fields of originSection to map field");
 
 			int fieldCount = section.getFieldCount();
 			for (int j = 0; j < fieldCount; j++) {

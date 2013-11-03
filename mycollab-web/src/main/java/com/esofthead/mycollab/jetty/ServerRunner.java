@@ -20,7 +20,7 @@ public class ServerRunner {
 				.getContextClassLoader());
 		webAppContext.setResourceBase(webappDirLocation);
 
-		// add section clustering mode
+		// add originSection clustering mode
 		Cache<String, InfinispanHttpSession> cache = LocalCacheManager
 				.getCacheManager().getCache("mainClustering");
 

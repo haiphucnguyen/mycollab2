@@ -18,55 +18,61 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
 class ActiveFormSectionArea extends DDVerticalLayout {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static Logger log = LoggerFactory
-            .getLogger(ActiveFormSectionArea.class);
+	private static Logger log = LoggerFactory
+			.getLogger(ActiveFormSectionArea.class);
 
-    public ActiveFormSectionArea() {
-        this.setComponentVerticalDropRatio(0.3f);
-        this.setDragMode(LayoutDragMode.CLONE);
-        this.setDropHandler(new DropHandler() {
-            private static final long serialVersionUID = 1L;
+	public ActiveFormSectionArea() {
+		this.setComponentVerticalDropRatio(0.3f);
+		this.setDragMode(LayoutDragMode.CLONE);
+		this.setDropHandler(new DropHandler() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public AcceptCriterion getAcceptCriterion() {
-                return AcceptAll.get();
-            }
+			@Override
+			public AcceptCriterion getAcceptCriterion() {
+				return AcceptAll.get();
+			}
 
-            @Override
-            public void drop(DragAndDropEvent event) {
-                VerticalLayoutTargetDetails details = (VerticalLayoutTargetDetails) event
-                        .getTargetDetails();
-                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
-                        .getTransferable();
-                Component srcComp = transferable.getComponent();
-                if (srcComp instanceof ActiveSectionComp) {
+			@Override
+			public void drop(DragAndDropEvent event) {
+				VerticalLayoutTargetDetails details = (VerticalLayoutTargetDetails) event
+						.getTargetDetails();
+				LayoutBoundTransferable transferable = (LayoutBoundTransferable) event
+						.getTransferable();
+				Component srcComp = transferable.getComponent();
+				if (srcComp instanceof ActiveSectionComp) {
 
-                    ActiveSectionComp overComp = (ActiveSectionComp) details
-                            .getOverComponent();
-                    int srcIndex = ActiveFormSectionArea.this
-                            .getComponentIndex(srcComp);
-                    int destIndex = ActiveFormSectionArea.this
-                            .getComponentIndex(overComp);
+					ActiveSectionComp overComp = (ActiveSectionComp) details
+							.getOverComponent();
+					int srcIndex = ActiveFormSectionArea.this
+							.getComponentIndex(srcComp);
+					int destIndex = ActiveFormSectionArea.this
+							.getComponentIndex(overComp);
 
-                    if (srcIndex != destIndex) {
-                        ActiveFormSectionArea.this.replaceComponent(srcComp,
-                                overComp);
-                        ActiveFormSectionArea.this.requestRepaintAll();
-                    }
-                }
-                log.debug("Target {}", event.getTargetDetails());
-            }
-        });
-    }
+					if (srcIndex != destIndex) {
+						ActiveFormSectionArea.this.replaceComponent(srcComp,
+								overComp);
+						ActiveFormSectionArea.this.requestRepaintAll();
+					}
+				}
+				log.debug("Target {}", event.getTargetDetails());
+			}
+		});
+	}
 
 	public List<DynaSection> rebuildSections() {
 		List<DynaSection> sections = new ArrayList<DynaSection>();
 
 		int componentCount = this.getComponentCount();
 		for (int i = 0; i < componentCount; i++) {
-
+			Component component = this.getComponent(i);
+			if (component instanceof ActiveSectionComp) {
+				ActiveSectionComp sectionComp = (ActiveSectionComp) component;
+				DynaSection section = sectionComp.rebuildSection();
+				section.setOrderIndex(sections.size());
+				sections.add(section);
+			}
 		}
 		return sections;
 	}

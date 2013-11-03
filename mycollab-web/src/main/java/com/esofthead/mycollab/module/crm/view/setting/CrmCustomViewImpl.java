@@ -62,7 +62,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 		headerContent.setWidth("100%");
 		headerContent.setMargin(false, true, true, true);
 		Label descLbl = new Label(
-				"Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the section header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
+				"Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
 		descLbl.setStyleName("instructionLbl");
 		headerContent.addComponent(descLbl);
 
