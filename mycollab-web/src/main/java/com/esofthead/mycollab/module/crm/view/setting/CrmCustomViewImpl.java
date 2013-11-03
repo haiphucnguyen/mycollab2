@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormFactory;
 import com.esofthead.mycollab.module.crm.view.activity.AssignmentDefaultFormLayoutFactory;
@@ -148,7 +149,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						display(CrmCustomViewImpl.this.moduleName);
 
 					}
 				});
@@ -201,6 +202,12 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 		return form;
 	}
+	
+	@Override
+	public void addActiveSection(DynaSection section) {
+		layoutComp.addActiveSection(section);
+		
+	}
 
 	private class ModuleSelectionComboBox extends ValueComboBox {
 		private static final long serialVersionUID = 1L;
@@ -225,5 +232,4 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 			});
 		}
 	}
-
 }
