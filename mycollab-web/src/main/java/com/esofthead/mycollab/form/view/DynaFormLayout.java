@@ -72,7 +72,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 						Alignment.MIDDLE_LEFT);
 			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
 				gridLayout = new GridFormLayoutHelper(2,
-						(section.getFieldCount() + 1) / 2, "100%", "167px",
+						(section.getFieldCount() + 3) / 2, "100%", "167px",
 						Alignment.MIDDLE_LEFT);
 			} else {
 				throw new MyCollabException(
@@ -105,10 +105,21 @@ public class DynaFormLayout implements IFormLayoutFactory {
 			GridFormLayoutHelper gridLayout = sectionMappings.get(section);
 
 			if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
+				log.debug(
+						"Put field {} of section {} to grid layout at column, row {}, {}",
+						new Object[] { dynaField.getDisplayName(),
+								section.getHeader(), 0,
+								dynaField.getFieldIndex() });
 				gridLayout.addComponent(field, dynaField.getDisplayName(), 0,
 						dynaField.getFieldIndex(), 2, "100%",
 						Alignment.TOP_LEFT);
 			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
+				log.debug(
+						"Put field {} of section {} to grid layout at column, row {}, {}",
+						new Object[] { dynaField.getDisplayName(),
+								section.getHeader(),
+								dynaField.getFieldIndex() % 2,
+								dynaField.getFieldIndex() / 2 });
 				gridLayout.addComponent(field, dynaField.getDisplayName(),
 						dynaField.getFieldIndex() % 2,
 						dynaField.getFieldIndex() / 2);
