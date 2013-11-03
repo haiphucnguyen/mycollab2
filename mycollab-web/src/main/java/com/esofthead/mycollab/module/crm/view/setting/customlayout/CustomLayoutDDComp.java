@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
+import java.util.List;
+
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
@@ -9,8 +11,8 @@ import com.vaadin.ui.HorizontalLayout;
 public class CustomLayoutDDComp extends HorizontalLayout {
 	private static final long serialVersionUID = 1L;
 
-	private ActiveFormSectionArea activeFormLayout;
-	private DeleteFormSectionArea deleteFormLayout;
+	private ActiveFormSectionArea activeFormArea;
+	private DeleteFormSectionArea deleteFormArea;
 
 	private DynaForm dynaForm;
 
@@ -21,18 +23,18 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 		this.setSpacing(true);
 		this.setWidth("100%");
 
-		activeFormLayout = new ActiveFormSectionArea();
-		activeFormLayout.setSpacing(true);
-		activeFormLayout.setWidth("100%");
+		activeFormArea = new ActiveFormSectionArea();
+		activeFormArea.setSpacing(true);
+		activeFormArea.setWidth("100%");
 
-		deleteFormLayout = new DeleteFormSectionArea();
-		deleteFormLayout.setWidth("100%");
+		deleteFormArea = new DeleteFormSectionArea();
+		deleteFormArea.setWidth("100%");
 
-		this.addComponent(activeFormLayout);
-		this.setExpandRatio(activeFormLayout, 1.0f);
+		this.addComponent(activeFormArea);
+		this.setExpandRatio(activeFormArea, 1.0f);
 
-		this.addComponent(deleteFormLayout);
-		this.setExpandRatio(deleteFormLayout, 1.0f);
+		this.addComponent(deleteFormArea);
+		this.setExpandRatio(deleteFormArea, 1.0f);
 
 		boolean hasDeletedSection = false;
 
@@ -41,10 +43,10 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 			DynaSection section = dynaForm.getSection(i);
 			if (!section.isDeletedSection()) {
 				ActiveSectionComp sectionLayout = new ActiveSectionComp(section);
-				activeFormLayout.addComponent(sectionLayout);
+				activeFormArea.addComponent(sectionLayout);
 			} else {
 				DeleteSectionComp sectionLayout = new DeleteSectionComp(section);
-				deleteFormLayout.addComponent(sectionLayout);
+				deleteFormArea.addComponent(sectionLayout);
 				hasDeletedSection = true;
 			}
 		}
@@ -55,11 +57,16 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 					.deleteSection(true).build();
 			DeleteSectionComp sectionLayout = new DeleteSectionComp(
 					deleteSection);
-			deleteFormLayout.addComponent(sectionLayout);
+			deleteFormArea.addComponent(sectionLayout);
 		}
 	}
 
 	public DynaForm rebuildForm() {
-		return dynaForm;
+		DynaForm form = new DynaForm();
+		List<DynaSection> sections = activeFormArea.rebuildSections();
+		form.addSections(sections);
+
+		form.addSection(deleteFormArea.rebuildSection());
+		return form;
 	}
 }

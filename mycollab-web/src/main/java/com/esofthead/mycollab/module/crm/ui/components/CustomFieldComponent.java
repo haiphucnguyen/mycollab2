@@ -111,7 +111,6 @@ public class CustomFieldComponent extends CssLayout {
 	}
 
 	public void setMandatory(boolean isMandatory) {
-
 		if (isMandatory) {
 			fieldNameLbl.setContentMode(Label.CONTENT_XHTML);
 			fieldNameLbl.setValue("<img src='"
