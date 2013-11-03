@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormFactory;
 import com.esofthead.mycollab.module.crm.view.activity.AssignmentDefaultFormLayoutFactory;
@@ -148,7 +149,7 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						display(CrmCustomViewImpl.this.moduleName);
 
 					}
 				});
@@ -164,32 +165,48 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 		this.moduleName = moduleName;
 		headerLbl.setCaption(moduleName + ": Edit Page Layout (Beta)");
 		moduleComboBox.select(moduleName);
-		DynaForm form;
 
-		if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
-			form = AccountDefaultDynaFormFactory.getForm();
-		} else if (CrmTypeConstants.CONTACT.equals(moduleName)) {
-			form = ContactDefaultDynaFormLayoutFactory.getForm();
-		} else if (CrmTypeConstants.CAMPAIGN.equals(moduleName)) {
-			form = CampaignDefaultDynaFormLayoutFactory.getForm();
-		} else if (CrmTypeConstants.LEAD.equals(moduleName)) {
-			form = LeadDefaultDynaFormLayoutFactory.getForm();
-		} else if (CrmTypeConstants.OPPORTUNITY.equals(moduleName)) {
-			form = OpportunityDefaultDynaFormLayoutFactory.getForm();
-		} else if (CrmTypeConstants.CASE.equals(moduleName)) {
-			form = CasesDefaultFormLayoutFactory.getForm();
-		} else if (CrmTypeConstants.CALL.equals(moduleName)) {
-			form = CallDefaultFormLayoutFactory.getForm();
-		} else if (CrmTypeConstants.MEETING.equals(moduleName)) {
-			form = MeetingDefaultFormLayoutFactory.getForm();
-		} else if (CrmTypeConstants.TASK.equals(moduleName)) {
-			form = AssignmentDefaultFormLayoutFactory.getForm();
-		} else {
-			throw new MyCollabException(
-					"Do not support custom layout of module " + moduleName);
+		layoutComp.displayLayoutCustom(getDynaForm(moduleName));
+	}
+
+	private static DynaForm getDynaForm(String moduleName) {
+		MasterFormService formService = ApplicationContextUtil
+				.getSpringBean(MasterFormService.class);
+		DynaForm form = formService.findCustomForm(AppContext.getAccountId(),
+				moduleName);
+
+		if (form == null) {
+			if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
+				form = AccountDefaultDynaFormFactory.getForm();
+			} else if (CrmTypeConstants.CONTACT.equals(moduleName)) {
+				form = ContactDefaultDynaFormLayoutFactory.getForm();
+			} else if (CrmTypeConstants.CAMPAIGN.equals(moduleName)) {
+				form = CampaignDefaultDynaFormLayoutFactory.getForm();
+			} else if (CrmTypeConstants.LEAD.equals(moduleName)) {
+				form = LeadDefaultDynaFormLayoutFactory.getForm();
+			} else if (CrmTypeConstants.OPPORTUNITY.equals(moduleName)) {
+				form = OpportunityDefaultDynaFormLayoutFactory.getForm();
+			} else if (CrmTypeConstants.CASE.equals(moduleName)) {
+				form = CasesDefaultFormLayoutFactory.getForm();
+			} else if (CrmTypeConstants.CALL.equals(moduleName)) {
+				form = CallDefaultFormLayoutFactory.getForm();
+			} else if (CrmTypeConstants.MEETING.equals(moduleName)) {
+				form = MeetingDefaultFormLayoutFactory.getForm();
+			} else if (CrmTypeConstants.TASK.equals(moduleName)) {
+				form = AssignmentDefaultFormLayoutFactory.getForm();
+			} else {
+				throw new MyCollabException(
+						"Do not support custom layout of module " + moduleName);
+			}
 		}
 
-		layoutComp.displayLayoutCustom(form);
+		return form;
+	}
+	
+	@Override
+	public void addActiveSection(DynaSection section) {
+		layoutComp.addActiveSection(section);
+		
 	}
 
 	private class ModuleSelectionComboBox extends ValueComboBox {
@@ -215,5 +232,4 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 			});
 		}
 	}
-
 }

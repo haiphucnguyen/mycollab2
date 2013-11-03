@@ -14,12 +14,9 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 	private ActiveFormSectionArea activeFormArea;
 	private DeleteFormSectionArea deleteFormArea;
 
-	private DynaForm dynaForm;
-
 	public void displayLayoutCustom(DynaForm dynaForm) {
 		this.removeAllComponents();
 
-		this.dynaForm = dynaForm;
 		this.setSpacing(true);
 		this.setWidth("100%");
 
@@ -59,6 +56,11 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 					deleteSection);
 			deleteFormArea.addComponent(sectionLayout);
 		}
+	}
+
+	public void addActiveSection(DynaSection section) {
+		ActiveSectionComp sectionLayout = new ActiveSectionComp(section);
+		activeFormArea.addComponent(sectionLayout);
 	}
 
 	public DynaForm rebuildForm() {
