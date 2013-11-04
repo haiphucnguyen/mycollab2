@@ -203,6 +203,11 @@
             <artifactId>pstring</artifactId>
             <version>0.0.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>ckeditor-wrapper-for-vaadin</artifactId>
+            <version>1.8.2-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>com.vaadin.addon</groupId>
@@ -453,54 +458,22 @@
             </plugin>
 
             <!-- BEGIN OBFUSCATE -->
-<!-- 
-            <plugin>
-                <groupId>com.idfconnect.devtools</groupId>
-                <artifactId>idfc-proguard-maven-plugin</artifactId>
-                <version>1.0.1</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>obfuscate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <inputFile>${project.build.outputDirectory}</inputFile>
-                    <inputFileFilter>com.esofthead.mycollab.**.class</inputFileFilter>
-                    <inputArtifacts>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-core</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-config</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-caching</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-api</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-api-impl</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-reporting</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-services</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-esb</inputArtifact>
-                        <inputArtifact>com.esofthead.mycollab:mycollab-scheduler</inputArtifact>
-                    </inputArtifacts>
-                    <outputArtifacts>
-                        <outputArtifact>
-                            <file>${project.build.finalName}/WEB-INF/lib/${project.build.finalName}.jar</file>
-                            <type>jar</type>
-                        </outputArtifact>
-                    </outputArtifacts>
-                    <libraryJarPaths>
-                        <libraryJarPath>${java.home}/lib/rt.jar</libraryJarPath>
-                        <libraryJarPath>${java.home}/lib/jsse.jar</libraryJarPath>
-                        <libraryJarPath>${java.home}/lib/jce.jar</libraryJarPath>
-                    </libraryJarPaths>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sf.proguard</groupId>
-                        <artifactId>proguard-base</artifactId>
-                        <version>4.10</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
--->
+            <!-- <plugin> <groupId>com.idfconnect.devtools</groupId> <artifactId>idfc-proguard-maven-plugin</artifactId> 
+                <version>1.0.1</version> <executions> <execution> <phase>prepare-package</phase> 
+                <goals> <goal>obfuscate</goal> </goals> </execution> </executions> <configuration> 
+                <inputFile>${project.build.outputDirectory}</inputFile> <inputFileFilter>com.esofthead.mycollab.**.class</inputFileFilter> 
+                <inputArtifacts> <inputArtifact>com.esofthead.mycollab:mycollab-core</inputArtifact> 
+                <inputArtifact>com.esofthead.mycollab:mycollab-config</inputArtifact> <inputArtifact>com.esofthead.mycollab:mycollab-caching</inputArtifact> 
+                <inputArtifact>com.esofthead.mycollab:mycollab-api</inputArtifact> <inputArtifact>com.esofthead.mycollab:mycollab-api-impl</inputArtifact> 
+                <inputArtifact>com.esofthead.mycollab:mycollab-reporting</inputArtifact> 
+                <inputArtifact>com.esofthead.mycollab:mycollab-services</inputArtifact> <inputArtifact>com.esofthead.mycollab:mycollab-esb</inputArtifact> 
+                <inputArtifact>com.esofthead.mycollab:mycollab-scheduler</inputArtifact> 
+                </inputArtifacts> <outputArtifacts> <outputArtifact> <file>${project.build.finalName}/WEB-INF/lib/${project.build.finalName}.jar</file> 
+                <type>jar</type> </outputArtifact> </outputArtifacts> <libraryJarPaths> <libraryJarPath>${java.home}/lib/rt.jar</libraryJarPath> 
+                <libraryJarPath>${java.home}/lib/jsse.jar</libraryJarPath> <libraryJarPath>${java.home}/lib/jce.jar</libraryJarPath> 
+                </libraryJarPaths> </configuration> <dependencies> <dependency> <groupId>net.sf.proguard</groupId> 
+                <artifactId>proguard-base</artifactId> <version>4.10</version> </dependency> 
+                </dependencies> </plugin> -->
         </plugins>
 
         <pluginManagement>

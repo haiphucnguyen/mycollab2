@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.view.cases.CasesDefaultFormLayoutFactor
 import com.esofthead.mycollab.module.crm.view.contact.ContactDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.lead.LeadDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityDefaultDynaFormLayoutFactory;
+import com.esofthead.mycollab.module.crm.view.setting.customlayout.CreateCustomFieldWindow;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -85,7 +86,9 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(
+								CrmCustomViewImpl.this);
+						getWindow().addWindow(createCustomFieldWindow);
 
 					}
 				});
@@ -202,11 +205,11 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
 		return form;
 	}
-	
+
 	@Override
 	public void addActiveSection(DynaSection section) {
 		layoutComp.addActiveSection(section);
-		
+
 	}
 
 	private class ModuleSelectionComboBox extends ValueComboBox {

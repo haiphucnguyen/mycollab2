@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.vaadin.addons</groupId>
+    <artifactId>ckeditor</artifactId>
+    <version>1.8.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <properties>
+        <vaadin.addon.name>ButtonGroup</vaadin.addon.name>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <vaadinVersion>6.8.13</vaadinVersion>
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
+        <gwtversion>2.3.0</gwtversion>
+    </properties>
+
+    <description>CustomField add-on provides a similarly named Vaadin Field implementation and FieldWrapper component that can be used in similar purposes.</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin</artifactId>
+            <version>${vaadinVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwtversion}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwtversion}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId> 
+                <executions> <execution> <phase>package</phase> <goals> <goal>jar</goal> 
+                </goals> </execution> </executions> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+                <artifactId>maven-javadoc-plugin</artifactId> <executions> <execution> <phase>package</phase> 
+                <goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
+
+
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <index>true</index>
+                            <manifest>
+                                <!-- Implementation-Title and Implementation-Version 
+                                    come from the POM by default -->
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                            <manifestEntries>
+                                <!-- Package format version - do not change -->
+                                <Vaadin-Package-Version>1</Vaadin-Package-Version>
+                                <Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
+                                <Vaadin-Addon>${project.build.finalName}.jar</Vaadin-Addon>
+                                <Vaadin-Widgetsets>org.vaadin.peter.buttongroup.ButtongroupWidgetset</Vaadin-Widgetsets>
+                                <Class-Path></Class-Path>
+                                <!-- Add-on specific fields to update -->
+
+                                <!-- Implementation-Title and Implementation-Version 
+                                    come from the POM by default -->
+                                <Implementation-Title>${vaadin.addon.name}</Implementation-Title>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+    <distributionManagement>
+        <!-- Publish versioned releases here -->
+        <repository>
+            <id>releaseNexus</id>
+            <name>My releases</name>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
+        </repository>
+
+        <!-- Publish snapshots here -->
+        <snapshotRepository>
+            <id>snapshotNexus</id>
+            <name>My snapshots</name>
+            <url>http://build.mycollab.com:8080/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
