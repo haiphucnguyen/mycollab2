@@ -205,7 +205,7 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>ckeditor-wrapper-for-vaadin</artifactId>
+            <artifactId>ckeditor</artifactId>
             <version>1.8.2-SNAPSHOT</version>
         </dependency>
 
