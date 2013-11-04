@@ -1,13 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -28,13 +27,9 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.addon.calendar.event.BasicEvent;
 import com.vaadin.addon.calendar.event.CalendarEvent;
-import com.vaadin.addon.calendar.event.CalendarEventProvider;
 import com.vaadin.addon.calendar.ui.Calendar;
-import com.vaadin.addon.calendar.ui.CalendarComponentEvents;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.DateClickEvent;
-import com.vaadin.addon.calendar.ui.CalendarComponentEvents.DateClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventMoveHandler;
@@ -43,6 +38,10 @@ import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventResizeHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.MoveEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectHandler;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClick;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClickHandler;
+import com.vaadin.addon.calendar.ui.handler.BasicDateClickHandler;
+import com.vaadin.addon.calendar.ui.handler.BasicWeekClickHandler;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -65,9 +64,8 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 	private static final long serialVersionUID = 1L;
 	private final PopupButton calendarActionBtn;
-	private MonthViewCalendar monthViewcalendar;
-	private WeekViewCalendar weekViewCalendar;
-	private ButtonLink switchViewCalendarBtn;
+	private MonthViewCalendar calendarComponent;
+	private ButtonGroup groupViewBtn;
 
 	public ActivityCalendarViewImpl() {
 		super();
@@ -109,47 +107,51 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				Alignment.MIDDLE_LEFT);
 		this.addComponent(actionPanel);
 
-		switchViewCalendarBtn = new ButtonLink("Monthly View",
-				new ClickListener() {
+		groupViewBtn = new ButtonGroup();
+		Button monthViewBtn = new Button("Monthly View",
+				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						if (switchViewCalendarBtn.getCaption().equals(
-								"Weekly View")) {
-							switchViewCalendarBtn.setCaption("Monthly View");
-							ActivityCalendarViewImpl.this
-									.removeComponent(monthViewcalendar);
-							if (weekViewCalendar == null) {
-								weekViewCalendar = new WeekViewCalendar();
-							}
-							ActivityCalendarViewImpl.this.addComponent(
-									weekViewCalendar, 1);
-							ActivityCalendarViewImpl.this
-									.setComponentAlignment(weekViewCalendar,
-											Alignment.MIDDLE_CENTER);
-						} else {
-							switchViewCalendarBtn.setCaption("Weekly View");
-							ActivityCalendarViewImpl.this
-									.removeComponent(weekViewCalendar);
-							if (monthViewcalendar == null) {
-								monthViewcalendar = new MonthViewCalendar();
-							}
-							ActivityCalendarViewImpl.this.addComponent(
-									monthViewcalendar, 1);
-							ActivityCalendarViewImpl.this
-									.setComponentAlignment(monthViewcalendar,
-											Alignment.MIDDLE_CENTER);
-						}
+						calendarComponent.switchToMonthView();
 					}
 				});
-		actionPanel.addComponent(switchViewCalendarBtn);
-		actionPanel.setComponentAlignment(switchViewCalendarBtn,
-				Alignment.MIDDLE_LEFT);
+		groupViewBtn.addButton(monthViewBtn);
+		Button weekViewBtn = new Button("Weekly View",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-		weekViewCalendar = new WeekViewCalendar();
-		this.addComponent(weekViewCalendar);
-		this.setComponentAlignment(weekViewCalendar, Alignment.MIDDLE_CENTER);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						WeekClickHandler handler = (WeekClickHandler) calendarComponent
+								.getHandler(WeekClick.EVENT_ID);
+						handler.weekClick(new WeekClick(calendarComponent,
+								calendarComponent.getCalendar().get(
+										GregorianCalendar.WEEK_OF_YEAR),
+								calendarComponent.getCalendar().get(
+										GregorianCalendar.YEAR)));
+					}
+				});
+		groupViewBtn.addButton(weekViewBtn);
+		Button dailyViewBtn = new Button("Daily View",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+		groupViewBtn.addButton(dailyViewBtn);
+
+		actionPanel.addComponent(groupViewBtn);
+		actionPanel.setComponentAlignment(groupViewBtn, Alignment.MIDDLE_RIGHT);
+
+		calendarComponent = new MonthViewCalendar();
+		this.addComponent(calendarComponent);
+		this.setComponentAlignment(calendarComponent, Alignment.MIDDLE_CENTER);
 
 		HorizontalLayout spacing = new HorizontalLayout();
 		spacing.setHeight("30px");
@@ -217,6 +219,8 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 			this.meeting = new Meeting();
 			this.meeting.setSaccountid(AppContext.getAccountId());
+			this.meeting.setStartdate(startDate);
+			this.meeting.setEnddate(endDate);
 			editForm = new EditForm();
 			editForm.setItemDataSource(new BeanItem<Meeting>(meeting));
 			this.addComponent(editForm);
@@ -358,32 +362,58 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		}
 	}
 
-	public class WeekViewCalendar extends Calendar {
+	public enum Mode {
+		MONTH, WEEK, DAY;
+	}
+
+	public class MonthViewCalendar extends Calendar {
 		private static final long serialVersionUID = 1L;
 
-		public WeekViewCalendar() {
+		GregorianCalendar calendar = new GregorianCalendar();
+
+		private Date currentMonthsFirstDate = null;
+
+		private Mode viewMode = Mode.MONTH;
+		private Label label = new Label("");
+
+		public MonthViewCalendar() {
 			super(new ActivityEventProvider());
-			this.setHandler(new CalendarComponentEvents.EventClickHandler() {
+			this.setTimeFormat(TimeFormat.Format24H);
+			this.setSizeFull();
+			this.setImmediate(true);
+
+			Date today = new Date();
+			calendar.setTime(today);
+			calendar.get(GregorianCalendar.MONTH);
+
+			DateFormatSymbols s = new DateFormatSymbols();
+			String month = s.getShortMonths()[calendar
+					.get(GregorianCalendar.MONTH)];
+			label.setValue(month + " " + calendar.get(GregorianCalendar.YEAR));
+			int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
+			calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
+			currentMonthsFirstDate = calendar.getTime();
+			this.setStartDate(currentMonthsFirstDate);
+			calendar.add(GregorianCalendar.MONTH, 1);
+			calendar.add(GregorianCalendar.DATE, -1);
+			this.setEndDate(calendar.getTime());
+
+			this.setHandler(new BasicDateClickHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void dateClick(DateClickEvent event) {
+					super.dateClick(event);
+				}
+			});
+			this.setHandler(new EventClickHandler() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void eventClick(EventClick event) {
 					CrmEvent calendarEvent = (CrmEvent) event
 							.getCalendarEvent();
-					SimpleMeeting source = calendarEvent.getSource();
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.MeetingRead(
-									ActivityCalendarViewImpl.this, source
-											.getId()));
-				}
-			});
-
-			this.setHandler(new DateClickHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void dateClick(DateClickEvent event) {
-					// do nothing
+					handleClickEvent(calendarEvent);
 				}
 			});
 
@@ -435,59 +465,14 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 									+ "\" has been updated!");
 				}
 			});
-		}
-	}
 
-	public class MonthViewCalendar extends Calendar {
-		private static final long serialVersionUID = 1L;
-
-		GregorianCalendar calendar = new GregorianCalendar();
-
-		private Date currentMonthsFirstDate = null;
-
-		private Label label = new Label("");
-
-		public MonthViewCalendar() {
-			super(new ActivityEventProvider());
-			this.setStyleName("calendartest");
-			this.setTimeFormat(TimeFormat.Format24H);
-
-			Date today = new Date();
-			calendar.setTime(today);
-			calendar.get(GregorianCalendar.MONTH);
-
-			DateFormatSymbols s = new DateFormatSymbols();
-			String month = s.getShortMonths()[calendar
-					.get(GregorianCalendar.MONTH)];
-			label.setValue(month + " " + calendar.get(GregorianCalendar.YEAR));
-			int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
-			calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
-			currentMonthsFirstDate = calendar.getTime();
-			this.setStartDate(currentMonthsFirstDate);
-			calendar.add(GregorianCalendar.MONTH, 1);
-			calendar.add(GregorianCalendar.DATE, -1);
-			this.setEndDate(calendar.getTime());
-
-			this.setHandler(new DateClickHandler() {
+			this.setHandler(new BasicWeekClickHandler() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void dateClick(DateClickEvent event) {
-					// do nothing
-				}
-			});
-			this.setHandler(new EventClickHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void eventClick(EventClick event) {
-					CrmEvent calendarEvent = (CrmEvent) event
-							.getCalendarEvent();
-					SimpleMeeting source = calendarEvent.getSource();
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.MeetingRead(
-									ActivityCalendarViewImpl.this, source
-											.getId()));
+				public void weekClick(WeekClick event) {
+					super.weekClick(event);
+					switchToWeekView();
 				}
 			});
 
@@ -512,163 +497,59 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				}
 			});
 		}
-	}
 
-	public class CalendarMonthEventProvider implements CalendarEventProvider {
-
-		private static final long serialVersionUID = -5436777475398410597L;
-
-		GregorianCalendar calendar = new GregorianCalendar();
-
-		public CalendarMonthEventProvider() {
+		private void handleClickEvent(CalendarEvent event) {
+			if (event == null) {
+				return;
+			}
+			SimpleMeeting source = ((CrmEvent) event).getSource();
+			EventBus.getInstance().fireEvent(
+					new ActivityEvent.MeetingRead(
+							ActivityCalendarViewImpl.this, source.getId()));
 		}
 
-		public List<CalendarEvent> getEvents(Date fromStartDate, Date toEndDate) {
-			return getEventsOverlappingForMonthlyTest(fromStartDate, toEndDate);
+		public GregorianCalendar getCalendar() {
+			return calendar;
 		}
 
-		private List<CalendarEvent> getEventsOverlappingForMonthlyTest(
-				Date fromStartDate, Date toEndDate) {
-			calendar.setTime(fromStartDate);
-			calendar.add(GregorianCalendar.DATE, 5);
+		private void switchToWeekView() {
+			viewMode = Mode.WEEK;
+		}
 
-			List<CalendarEvent> e = new ArrayList<CalendarEvent>();
+		private void switchToMonthView() {
+			viewMode = Mode.MONTH;
+			calendar.setTime(currentMonthsFirstDate);
+			this.setStartDate(currentMonthsFirstDate);
 
-			CalendarTestEvent event = getNewEvent("Phase1", fromStartDate,
-					calendar.getTime());
-			event.setDescription("asdgasdgj asdfg adfga fsdgafdsgasdga asdgadfsg");
-			event.setStyleName("color1");
-			e.add(event);
-
-			calendar.add(GregorianCalendar.DATE, 3);
-			Date d = calendar.getTime();
-			calendar.add(GregorianCalendar.DATE, 3);
-			Date d2 = calendar.getTime();
-			event = getNewEvent("Phase2", d, d2);
-			event.setStyleName("color2");
-			e.add(event);
-
-			calendar.add(GregorianCalendar.DATE, 1);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.DATE, 10);
-			d2 = calendar.getTime();
-			event = getNewEvent("Phase3", d, d2);
-			event.setStyleName("color3");
-			e.add(event);
+			calendar.add(GregorianCalendar.MONTH, 1);
 			calendar.add(GregorianCalendar.DATE, -1);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.DATE, 3);
-			d2 = calendar.getTime();
-			event = getNewEvent("Phase4", d, d2);
-			event.setStyleName("color4");
-			e.add(event);
-
-			calendar.add(GregorianCalendar.DATE, -1);
-			calendar.add(GregorianCalendar.HOUR, -6);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 1", d, d2);
-			e.add(event);
-
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 2", d, d2);
-			event.setStyleName("color4");
-			e.add(event);
-
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 3", d, d2);
-			e.add(event);
-
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 4", d, d2);
-			e.add(event);
-
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 5", d, d2);
-			e.add(event);
-
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 6", d, d2);
-			e.add(event);
-
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.MINUTE, 30);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 7", d, d2);
-			e.add(event);
-
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 8", d, d2);
-
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 9", d, d2);
-			e.add(event);
-
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d = calendar.getTime();
-			calendar.add(GregorianCalendar.HOUR, 1);
-			d2 = calendar.getTime();
-			event = getNewEvent("Session 10", d, d2);
-			e.add(event);
-			e.add(event);
-			return e;
+			resetCalendarTime(true);
 		}
 
-		private CalendarTestEvent getNewEvent(String caption, Date start,
-				Date end) {
-			CalendarTestEvent event = new CalendarTestEvent();
-			event.setCaption(caption);
-			event.setStart(start);
-			event.setEnd(end);
-
-			return event;
+		private void resetCalendarTime(boolean resetEndTime) {
+			resetTime(resetEndTime);
+			if (resetEndTime) {
+				this.setEndDate(calendar.getTime());
+			} else {
+				this.setStartDate(calendar.getTime());
+			}
 		}
 
-		public class CalendarTestEvent extends BasicEvent {
-
-			private static final long serialVersionUID = 2820133201983036866L;
-			private String where;
-			private Object data;
-
-			public String getWhere() {
-				return where;
-			}
-
-			public void setWhere(String where) {
-				this.where = where;
-				fireEventChange();
-			}
-
-			public Object getData() {
-				return data;
-			}
-
-			public void setData(Object data) {
-				this.data = data;
-				fireEventChange();
+		private void resetTime(boolean max) {
+			if (max) {
+				calendar.set(GregorianCalendar.HOUR_OF_DAY,
+						calendar.getMaximum(GregorianCalendar.HOUR_OF_DAY));
+				calendar.set(GregorianCalendar.MINUTE,
+						calendar.getMaximum(GregorianCalendar.MINUTE));
+				calendar.set(GregorianCalendar.SECOND,
+						calendar.getMaximum(GregorianCalendar.SECOND));
+				calendar.set(GregorianCalendar.MILLISECOND,
+						calendar.getMaximum(GregorianCalendar.MILLISECOND));
+			} else {
+				calendar.set(GregorianCalendar.HOUR_OF_DAY, 0);
+				calendar.set(GregorianCalendar.MINUTE, 0);
+				calendar.set(GregorianCalendar.SECOND, 0);
+				calendar.set(GregorianCalendar.MILLISECOND, 0);
 			}
 		}
 	}

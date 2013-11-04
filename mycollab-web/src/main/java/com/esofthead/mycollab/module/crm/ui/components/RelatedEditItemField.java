@@ -70,32 +70,62 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 				if ("Account".equals(type)) {
 					AccountSelectionWindow accountWindow = new AccountSelectionWindow(
 							RelatedEditItemField.this);
-					getWindow().addWindow(accountWindow);
+					try {
+						getWindow().getParent().addWindow(accountWindow);
+					} catch (Exception e) {
+						RelatedEditItemField.this.getParent().getWindow()
+								.addWindow(accountWindow);
+					}
 					accountWindow.show();
 				} else if ("Campaign".equals(type)) {
 					CampaignSelectionWindow campaignWindow = new CampaignSelectionWindow(
 							RelatedEditItemField.this);
-					getWindow().addWindow(campaignWindow);
+					try {
+						getWindow().getParent().addWindow(campaignWindow);
+					} catch (Exception e) {
+						RelatedEditItemField.this.getParent().getWindow()
+								.addWindow(campaignWindow);
+					}
 					campaignWindow.show();
 				} else if ("Contact".equals(type)) {
 					ContactSelectionWindow contactWindow = new ContactSelectionWindow(
 							RelatedEditItemField.this);
-					getWindow().addWindow(contactWindow);
+					try {
+						getWindow().getParent().addWindow(contactWindow);
+					} catch (Exception e) {
+						RelatedEditItemField.this.getParent().getWindow()
+								.addWindow(contactWindow);
+					}
 					contactWindow.show();
 				} else if ("Lead".equals(type)) {
 					LeadSelectionWindow leadWindow = new LeadSelectionWindow(
 							RelatedEditItemField.this);
-					getWindow().addWindow(leadWindow);
+					try {
+						getWindow().getParent().addWindow(leadWindow);
+					} catch (Exception e) {
+						RelatedEditItemField.this.getParent().getWindow()
+								.addWindow(leadWindow);
+					}
 					leadWindow.show();
 				} else if ("Opportunity".equals(type)) {
 					OpportunitySelectionWindow opportunityWindow = new OpportunitySelectionWindow(
 							RelatedEditItemField.this);
-					getWindow().addWindow(opportunityWindow);
+					try {
+						getWindow().getParent().addWindow(opportunityWindow);
+					} catch (Exception e) {
+						RelatedEditItemField.this.getParent().getWindow()
+								.addWindow(opportunityWindow);
+					}
 					opportunityWindow.show();
 				} else if ("Case".equals(type)) {
 					CaseSelectionWindow caseWindow = new CaseSelectionWindow(
 							RelatedEditItemField.this);
-					getWindow().addWindow(caseWindow);
+					try {
+						getWindow().getParent().addWindow(caseWindow);
+					} catch (Exception e) {
+						RelatedEditItemField.this.getParent().getWindow()
+								.addWindow(caseWindow);
+					}
 					caseWindow.show();
 				} else {
 					relatedItemComboBox.focus();

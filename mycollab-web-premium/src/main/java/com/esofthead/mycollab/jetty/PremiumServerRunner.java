@@ -9,7 +9,7 @@ import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.jetty.clustering.InfinispanHttpSession;
 import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
 
-public class ServerRunner {
+public class PremiumServerRunner {
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(8080);
 		String webappDirLocation = "src/main/webapp/";

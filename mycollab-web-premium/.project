@@ -17,6 +17,7 @@
     <project>mycollab-test</project>
     <project>mycollab-web</project>
     <project>ckeditor</project>
+    <project>mycollab-jetty-session-premium</project>
   </projects>
   <buildSpec>
     <buildCommand>

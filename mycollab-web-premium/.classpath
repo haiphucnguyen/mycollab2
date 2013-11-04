@@ -231,6 +231,5 @@
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-security/8.1.13.v20130916/jetty-security-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-security/8.1.13.v20130916/jetty-security-8.1.13.v20130916-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-webapp/8.1.13.v20130916/jetty-webapp-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-webapp/8.1.13.v20130916/jetty-webapp-8.1.13.v20130916-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-xml/8.1.13.v20130916/jetty-xml-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-xml/8.1.13.v20130916/jetty-xml-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.3.0/gwt-user-2.3.0.jar" sourcepath="M2_REPO/com/google/gwt/gwt-user/2.3.0/gwt-user-2.3.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-dev/2.3.0/gwt-dev-2.3.0.jar" sourcepath="M2_REPO/com/google/gwt/gwt-dev/2.3.0/gwt-dev-2.3.0-sources.jar"/>
+  <classpathentry kind="src" path="/mycollab-jetty-session-premium"/>
 </classpath>

@@ -4861,6 +4861,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-weight: bold;
 	color: rgb(69, 69, 69);
 	background-color: rgb(225, 225, 225);
+	border-bottom: 1px solid rgb(157, 157, 157);
 }
 
 .CrmCustomViewHeader .instructionLbl {
@@ -4868,12 +4869,18 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-style: italic;
 }
 
-.CrmCustomViewHeader .headerTitle>.v-csslayout-margin {
-	padding: 8px 15px;
-	border-bottom: 1px solid rgb(157, 157, 157);
+.CrmCustomViewHeader .headerTitle .v-horizontallayout-margin {
+	padding: 4px 10px 4px 15px;
+}
+.CrmCustomViewHeader .headerTitle .control-buttons .v-horizontallayout-margin
+{
+	padding: 0px;
 }
 
 /* Custom Field Settings Section */
+.crmContainer .projectDashboardView.main-content-wrapper > .v-csslayout-margin {
+	padding: 0px;
+}
 .v-verticallayout-customFieldSection {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -4896,6 +4903,16 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 7px 5px 7px 15px;
 }
 
+.v-verticallayout-customFieldSection .content-wrapper {
+	max-height: 450px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.deleteSection .customFieldComponent {
+	opacity: 0.6;
+}
+
 .v-csslayout.customFieldComponent>.v-csslayout-margin {
 	padding: 8px 5px 8px 25px;
 	background: url('icons/16/symbol.png') no-repeat 5px 8px
@@ -4903,6 +4920,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border: 1px solid rgb(177, 177, 177);
 	border-radius: 3px;
 	color: rgb(91, 91, 91);
+}
+
+.customFieldComponent .isRequiredField {
+	color: rgb(255, 60, 31);
 }
 
 .v-csslayout.customFieldComponent.emptyField>.v-csslayout-margin {
@@ -4916,7 +4937,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	vertical-align: bottom;
 }
 
-.customFieldComponent .editFieldBtn {
+.customFieldComponent .editFieldBtn, .deleteSection .customFieldComponent .editFieldBtn:active:focus, .deleteSection .customFieldComponent:hover .editFieldBtn {
 	visibility: hidden;
 }
 
