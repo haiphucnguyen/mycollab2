@@ -40,10 +40,10 @@
         </fileSet>
 
         <fileSet>
-            <directory>src/main/resources</directory>
-            <outputDirectory>conf</outputDirectory>
+            <directory>src/main/webapp</directory>
+            <outputDirectory>webapp</outputDirectory>
             <includes>
-                <include>*</include>
+                <include>**/*</include>
             </includes>
         </fileSet>
     </fileSets>
