@@ -11,7 +11,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -46,9 +45,9 @@ public class ActivityEventProvider implements CalendarEventProvider {
 		List<CalendarEvent> events = new ArrayList<CalendarEvent>();
 
 		MeetingSearchCriteria searchCriteria = new MeetingSearchCriteria();
-		searchCriteria.setStartDate(new DateSearchField(SearchField.AND,
+		searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND,
 				DateTimeSearchField.GREATERTHANEQUAL, startDate));
-		searchCriteria.setEndDate(new DateSearchField(SearchField.AND,
+		searchCriteria.setEndDate(new DateTimeSearchField(SearchField.AND,
 				DateTimeSearchField.LESSTHANEQUAL, endDate));
 
 		log.debug("Get events from: " + startDate + " to " + endDate);
@@ -100,32 +99,22 @@ public class ActivityEventProvider implements CalendarEventProvider {
 						}
 
 					}
-					statusStr.append(crmEvent.getStatus());
+					if (crmEvent.getStatus() != null) {
+						statusStr.append(crmEvent.getStatus());
+					} else {
+						statusStr.append("");
+					}
 					statusStr.append("</span>");
-					String desTooltip = "<h3>Title</h3>"
-							+ "<table style=\"padding-left:10px; width:350px; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;\""
-							+ "<tr>"
-							+ "<td style=\"font-weight:bold; width:70px;\">Start Date:</td>"
-							+ "<td>"
-							+ AppContext
-									.formatDateTime(crmEvent.getStartdate())
-							+ "</td>"
-							+ "</tr>"
-							+ "<td style=\"font-weight:bold; width:70px;\">End Date: </td>"
-							+ "<td>"
-							+ AppContext.formatDateTime(crmEvent.getEnddate())
-							+ "</td>"
-							+ "<tr>"
-							+ "<tr>"
-							+ "<td style=\"font-weight:bold; width:70px;\">Status:</td>"
-							+ "<td>"
-							+ statusStr.toString()
-							+ "</td>"
-							+ "</tr>"
-							+ "<tr>"
-							+ "<td style=\"text-align: right; vertical-align: top; font-weight:bold; width:70px;\">Description:</td>"
-							+ "<td style=\"word-wrap: break-word; white-space: normal; word-break: break-all;\">tesataedatesataedatesataedatesataedatesataedatesataedatesataedatesataedatesataeda</td>"
-							+ "</tr>" + "</table>";
+					String crmEventDes = (crmEvent.getDescription() != null) ? crmEvent
+							.getDescription() : "";
+					String desTooltip = String
+							.format("<h3>%s</h3><table style=\"padding-left:10px; width:350px; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;\"<tr><td style=\"font-weight:bold; width:70px;\">Start Date:</td><td>%s</td></tr><td style=\"font-weight:bold; width:70px;\">End Date: </td><td>%s</td><tr><tr><td style=\"font-weight:bold; width:70px;\">Status:</td><td>%s</td></tr><tr><td style=\"text-align: right; vertical-align: top; font-weight:bold; width:70px;\">Description:</td><td style=\"word-wrap: break-word; white-space: normal; word-break: break-all;\">%s</td></tr></table>",
+									crmEvent.getSubject(), AppContext
+											.formatDateTime(crmEvent
+													.getStartdate()),
+									AppContext.formatDateTime(crmEvent
+											.getEnddate()), statusStr
+											.toString(), crmEventDes);
 					event.setDescription(desTooltip);
 					events.add(event);
 				}
