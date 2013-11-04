@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.standup;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -22,7 +23,7 @@ public class StandupAdvertisementViewImpl extends AbstractView implements
 			url = new URL(AppContext.getSiteUrl()
 					+ "assets/ads/standup/standupAds.html");
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			throw new MyCollabException(e);
 		}
 		Embedded browser = new Embedded("", new ExternalResource(url));
 		browser.setWidth("100%");

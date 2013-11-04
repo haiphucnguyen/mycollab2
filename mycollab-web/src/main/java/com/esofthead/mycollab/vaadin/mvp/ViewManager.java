@@ -2,8 +2,7 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import java.util.Set;
 
-import net.sf.extcos.ComponentQuery;
-import net.sf.extcos.ComponentScanner;
+import org.reflections.Reflections;
 
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
@@ -14,14 +13,8 @@ public abstract class ViewManager {
 	protected static Set<Class<?>> viewClasses;
 
 	static {
-		ComponentScanner scanner = new ComponentScanner();
-		viewClasses = scanner.getClasses(new ComponentQuery() {
-			@Override
-			protected void query() {
-				select().from("com.esofthead.mycollab.**.view.**").returning(
-						allAnnotatedWith(ViewComponent.class));
-			}
-		});
+		Reflections reflections = new Reflections("com.esofthead.mycollab");
+		viewClasses = reflections.getTypesAnnotatedWith(ViewComponent.class);
 	}
 
 	protected abstract <T extends View> T getViewInstance(

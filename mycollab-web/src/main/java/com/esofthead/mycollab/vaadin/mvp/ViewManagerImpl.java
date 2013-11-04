@@ -2,10 +2,6 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import net.sf.extcos.ComponentQuery;
-import net.sf.extcos.ComponentScanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +14,6 @@ class ViewManagerImpl extends ViewManager {
 	public static final String VIEW_MANAGER_VAL = "viewMap";
 
 	private static Logger log = LoggerFactory.getLogger(ViewManagerImpl.class);
-	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -46,39 +41,6 @@ class ViewManagerImpl extends ViewManager {
 								+ viewClass.getName() + " is "
 								+ value.getClass().getName());
 						return value;
-					}
-				}
-
-				// find the possible reason can not detect the view class
-				ComponentScanner scanner = new ComponentScanner();
-				Set<Class<?>> candidateClasses;
-				if (viewClass.isInterface()) {
-					candidateClasses = scanner.getClasses(new ComponentQuery() {
-						@Override
-						protected void query() {
-							select().from("com.esofthead.mycollab.**.view.**")
-									.returning(allImplementing(viewClass));
-						}
-					});
-				} else {
-					candidateClasses = scanner.getClasses(new ComponentQuery() {
-						@Override
-						protected void query() {
-							select().from("com.esofthead.mycollab.**.view.**")
-									.returning(allExtending(viewClass));
-						}
-					});
-				}
-
-				if (candidateClasses == null || candidateClasses.isEmpty()) {
-					log.error("Can not find any implementation of view class "
-							+ viewClass.getName());
-				} else {
-					log.error("There are "
-							+ candidateClasses.size()
-							+ " implementation of view class, but they are not initiated. Probably they do not have @ViewComponent annotation in class declaration. They are: ");
-					for (Class<?> classItem : candidateClasses) {
-						log.error("  Class: " + classItem.getName());
 					}
 				}
 

@@ -74,7 +74,7 @@
 	<classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/1.8/commons-digester-1.8.jar" sourcepath="M2_REPO/commons-digester/commons-digester/1.8/commons-digester-1.8-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-chain/commons-chain/1.1/commons-chain-1.1.jar" sourcepath="M2_REPO/commons-chain/commons-chain/1.1/commons-chain-1.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar" sourcepath="M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.1/dom4j-1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" sourcepath="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar" sourcepath="M2_REPO/oro/oro/2.0.8/oro-2.0.8-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0.jar" sourcepath="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/bull/javamelody/javamelody-core/1.43.0/javamelody-core-1.43.0.jar" sourcepath="M2_REPO/net/bull/javamelody/javamelody-core/1.43.0/javamelody-core-1.43.0-sources.jar"/>
@@ -190,8 +190,8 @@
 	<classpathentry kind="var" path="M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0.jar" sourcepath="M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/icepush/icepush-gwt/2.0.0-alpha3/icepush-gwt-2.0.0-alpha3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/1.2.1/confirmdialog-1.2.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/net/sf/extcos/extcos/0.4b/extcos-0.4b.jar" sourcepath="M2_REPO/net/sf/extcos/extcos/0.4b/extcos-0.4b-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-all/4.0/asm-all-4.0.jar" sourcepath="M2_REPO/org/ow2/asm/asm-all/4.0/asm-all-4.0-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar" sourcepath="M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA.jar" sourcepath="M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jfree/jfreechart/1.0.14/jfreechart-1.0.14.jar" sourcepath="M2_REPO/org/jfree/jfreechart/1.0.14/jfreechart-1.0.14-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jfree/jcommon/1.0.17/jcommon-1.0.17.jar" sourcepath="M2_REPO/org/jfree/jcommon/1.0.17/jcommon-1.0.17-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar"/>
