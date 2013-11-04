@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.view.cases.CasesDefaultFormLayoutFactor
 import com.esofthead.mycollab.module.crm.view.contact.ContactDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.lead.LeadDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityDefaultDynaFormLayoutFactory;
+import com.esofthead.mycollab.module.crm.view.setting.customlayout.CreateCustomFieldWindow;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -35,6 +36,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
+
     private static final long serialVersionUID = 1L;
 
     private Label headerLbl;
@@ -86,7 +88,9 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        // TODO Auto-generated method stub
+                        CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(
+                                CrmCustomViewImpl.this);
+                        getWindow().addWindow(createCustomFieldWindow);
 
                     }
                 });
@@ -124,7 +128,6 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 
         HorizontalLayout buttonsLayout = new HorizontalLayout();
         buttonsLayout.setSpacing(true);
-        buttonsLayout.setMargin(true, false, false, true);
         Button saveBtn = new Button(
                 LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
                 new Button.ClickListener() {
