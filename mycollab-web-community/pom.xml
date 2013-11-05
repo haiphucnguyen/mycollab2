@@ -162,6 +162,7 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
+                            <finalName>starter</finalName>
                             <!-- Configuration of the archiver -->
                             <archive>
                                 <!-- Manifest specific configuration -->
