@@ -2,6 +2,8 @@ package com.esofthead.mycollab.core.arguments;
 
 import java.util.Date;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+
 public class DateTimeSearchField extends SearchField {
 
 	public static String LESSTHAN = "<";
@@ -24,7 +26,8 @@ public class DateTimeSearchField extends SearchField {
 
 	public DateTimeSearchField(String oper, String comparision, Date value) {
 		this.operation = oper;
-		this.value = value;
+		this.value = DateTimeUtils.convertTimeFromSystemTimezoneToUTC(value
+				.getTime());
 		this.comparision = comparision;
 	}
 

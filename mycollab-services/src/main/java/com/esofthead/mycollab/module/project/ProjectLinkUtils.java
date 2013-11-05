@@ -84,4 +84,8 @@ public class ProjectLinkUtils {
 				+ GenericLinkUtils
 						.encodeParam(new Object[] { projectId, roleId });
 	}
+
+	public static String generateStandUpPreviewLink() {
+		return "project/standup/list/Mg";
+	}
 }

@@ -14,15 +14,16 @@ import org.apache.ibatis.type.MappedJdbcTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+
 @MappedJdbcTypes(JdbcType.TIMESTAMP)
 public class DateTypeHandler extends BaseTypeHandler<Date> {
-
-	private static DateTimeZone utcZone = DateTimeZone.UTC;
 
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i,
 			Date parameter, JdbcType jdbcType) throws SQLException {
-		Date date = convertTimeFromSystemTimezoneToUTC(parameter.getTime());
+		Date date = DateTimeUtils.convertTimeFromSystemTimezoneToUTC(parameter
+				.getTime());
 		ps.setTimestamp(i, new Timestamp(date.getTime()));
 	}
 
@@ -31,33 +32,10 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 			throws SQLException {
 		Timestamp sqlTimestamp = rs.getTimestamp(columnName);
 		if (sqlTimestamp != null) {
-			return convertTimeFromUTCToSystemTimezone(sqlTimestamp.getTime());
+			return DateTimeUtils
+					.convertTimeFromUTCToSystemTimezone(sqlTimestamp.getTime());
 		}
 		return null;
-	}
-
-	private Date convertTimeFromSystemTimezoneToUTC(long timeInMillis) {
-		DateTime dt = new DateTime();
-		dt = dt.withMillis(-DateTimeZone.getDefault().getOffset(timeInMillis)
-				+ timeInMillis);
-		dt = dt.withZone(utcZone);
-		Date date = dt.toDate();
-		return date;
-	}
-
-	/**
-	 * Convert from UTC time to default time zone of system
-	 * 
-	 * @param timeInMillis
-	 * @return
-	 */
-	private Date convertTimeFromUTCToSystemTimezone(long timeInMillis) {
-		DateTime dt = new DateTime();
-		dt = dt.withMillis(DateTimeZone.getDefault().getOffset(timeInMillis)
-				+ timeInMillis);
-		dt = dt.withZone(utcZone);
-		Date date = dt.toDate();
-		return date;
 	}
 
 	@Override
@@ -65,7 +43,8 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 			throws SQLException {
 		Timestamp sqlTimestamp = rs.getTimestamp(columnIndex);
 		if (sqlTimestamp != null) {
-			return convertTimeFromUTCToSystemTimezone(sqlTimestamp.getTime());
+			return DateTimeUtils
+					.convertTimeFromUTCToSystemTimezone(sqlTimestamp.getTime());
 		}
 		return null;
 	}
