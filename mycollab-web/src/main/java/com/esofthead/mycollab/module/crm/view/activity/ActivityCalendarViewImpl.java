@@ -166,24 +166,43 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 		HorizontalLayout noteInfoLayout = new HorizontalLayout();
 		noteInfoLayout.setSpacing(true);
-		noteInfoLayout.addComponent(new Label("Note:"));
+
+		HorizontalLayout noteWapper = new HorizontalLayout();
+		noteWapper.setHeight("30px");
+		Label noteLbl = new Label("Note:");
+		noteWapper.addComponent(noteLbl);
+		noteWapper.setComponentAlignment(noteLbl, Alignment.MIDDLE_CENTER);
+		noteInfoLayout.addComponent(noteWapper);
+
+		HorizontalLayout completeWapper = new HorizontalLayout();
+		completeWapper.setWidth("100px");
+		completeWapper.setHeight("30px");
+		completeWapper.addStyleName("eventLblcompleted");
 		Label completeLabel = new Label("Completed");
-		completeLabel.setWidth("100px");
-		completeLabel.setHeight("20px");
-		completeLabel.addStyleName("eventLblcompleted");
-		noteInfoLayout.addComponent(completeLabel);
+		completeWapper.addComponent(completeLabel);
+		completeWapper.setComponentAlignment(completeLabel,
+				Alignment.MIDDLE_CENTER);
+		noteInfoLayout.addComponent(completeWapper);
 
+		HorizontalLayout overdueWapper = new HorizontalLayout();
+		overdueWapper.setWidth("100px");
+		overdueWapper.setHeight("30px");
+		overdueWapper.addStyleName("eventLbloverdue");
 		Label overdueLabel = new Label("Overdue");
-		overdueLabel.setWidth("100px");
-		overdueLabel.setHeight("20px");
-		overdueLabel.addStyleName("eventLbloverdue");
-		noteInfoLayout.addComponent(overdueLabel);
+		overdueWapper.addComponent(overdueLabel);
+		overdueWapper.setComponentAlignment(overdueLabel,
+				Alignment.MIDDLE_CENTER);
+		noteInfoLayout.addComponent(overdueWapper);
 
+		HorizontalLayout futureWapper = new HorizontalLayout();
+		futureWapper.setWidth("100px");
+		futureWapper.setHeight("30px");
+		futureWapper.addStyleName("eventLblfuture");
 		Label futureLabel = new Label("Future");
-		futureLabel.setWidth("100px");
-		futureLabel.setHeight("20px");
-		futureLabel.addStyleName("eventLblfuture");
-		noteInfoLayout.addComponent(futureLabel);
+		futureWapper.addComponent(futureLabel);
+		futureWapper
+				.setComponentAlignment(futureLabel, Alignment.MIDDLE_CENTER);
+		noteInfoLayout.addComponent(futureWapper);
 
 		this.addComponent(noteInfoLayout);
 		this.setComponentAlignment(noteInfoLayout, Alignment.MIDDLE_CENTER);
@@ -222,7 +241,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			this.startDate = startDate;
 			this.endDate = endDate;
 			this.center();
-			this.setWidth("950px");
+			this.setWidth("1000px");
 
 			this.meeting = new Meeting();
 			this.meeting.setSaccountid(AppContext.getAccountId());
@@ -453,7 +472,17 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				public void eventMove(MoveEvent event) {
 					CrmEvent crmEvent = (CrmEvent) event.getCalendarEvent();
 					SimpleMeeting simpleMeeting = crmEvent.getSource();
-					simpleMeeting.setStartdate(event.getNewStart());
+
+					Date newStartDate = event.getNewStart();
+					long rangeOfStartEnd = crmEvent.getEnd().getTime()
+							- crmEvent.getStart().getTime();
+					long newEndDateTime = crmEvent.getEnd().getTime()
+							+ rangeOfStartEnd;
+					Date newEndDate = crmEvent.getEnd();
+					newEndDate.setTime(newEndDateTime);
+
+					simpleMeeting.setStartdate(newStartDate);
+					simpleMeeting.setEnddate(newEndDate);
 
 					MeetingService service = ApplicationContextUtil
 							.getSpringBean(MeetingService.class);

@@ -8,9 +8,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
+import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
@@ -142,6 +149,22 @@ public class BugRelayEmailNotificationActionImpl extends
 
 			templateGenerator.putVariable("mapper", mapper);
 		}
+
+		CommentService commentService = ApplicationContextUtil
+				.getSpringBean(CommentService.class);
+		CommentSearchCriteria criteria = new CommentSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(bug.getSaccountid()));
+		criteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_BUG));
+		criteria.setTypeid(new NumberSearchField(bug.getId()));
+
+		int totalCount = commentService.getTotalCount(criteria);
+		int numpage = (int) totalCount / 5;
+
+		List<SimpleComment> lstComment = commentService
+				.findPagableListByCriteria(new SearchRequest<CommentSearchCriteria>(
+						criteria, numpage - 1, 5));
+		templateGenerator.putVariable("lstComment", lstComment);
+
 		return templateGenerator;
 	}
 

@@ -4984,17 +4984,17 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	opacity: 0.8;
 }
 
-.v-label-eventLblcompleted{
+.v-horizontallayout-eventLblcompleted{
 	background-color: #96D794;
 	text-align: center;
 }
 
-.v-label-eventLbloverdue{
+.v-horizontallayout-eventLbloverdue{
 	background-color: #EF8585;
 	text-align: center;
 }
 
-.v-label-eventLblfuture{
+.v-horizontallayout-eventLblfuture{
 	background-color: #99C4DD;
 	text-align: center;
 }
