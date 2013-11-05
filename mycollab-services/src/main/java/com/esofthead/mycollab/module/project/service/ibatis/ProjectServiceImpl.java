@@ -110,6 +110,7 @@ public class ProjectServiceImpl extends
 		// add client role to project
 		ProjectRole clientRole = createProjectRole(projectid,
 				record.getSaccountid(), "Client", "Default role for client");
+		
 		int clientRoleId = projectRoleService.saveWithSession(clientRole,
 				username);
 

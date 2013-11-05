@@ -5008,3 +5008,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     display: block;
     margin-left: -2px;
 }
+
+/* .v-buttongroup .v-button.v-button-right */
+.v-button-selected-style{
+	background: none repeat scroll 0 0 #A1A1A1;
+	border-color : #ABABAB;
+}

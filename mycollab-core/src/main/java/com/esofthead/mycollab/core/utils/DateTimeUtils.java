@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.core.utils;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,9 +8,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import com.esofthead.mycollab.core.MyCollabException;
+
 public class DateTimeUtils {
+	private static DateTimeZone utcZone = DateTimeZone.UTC;
+
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
 
@@ -142,10 +146,31 @@ public class DateTimeUtils {
 		if (timezone != null) {
 			simpleDateTimeFormat.setTimeZone(timezone);
 		}
-
-		System.out.println("Time duration: " + date.getTime() + "---" + date
-				+ "---" + simpleDateTimeFormat.format(date));
 		return simpleDateTimeFormat.format(date);
+	}
+
+	public static Date convertTimeFromSystemTimezoneToUTC(long timeInMillis) {
+		DateTime dt = new DateTime();
+		dt = dt.withMillis(-DateTimeZone.getDefault().getOffset(timeInMillis)
+				+ timeInMillis);
+		dt = dt.withZone(utcZone);
+		Date date = dt.toDate();
+		return date;
+	}
+
+	/**
+	 * Convert from UTC time to default time zone of system
+	 * 
+	 * @param timeInMillis
+	 * @return
+	 */
+	public static Date convertTimeFromUTCToSystemTimezone(long timeInMillis) {
+		DateTime dt = new DateTime();
+		dt = dt.withMillis(DateTimeZone.getDefault().getOffset(timeInMillis)
+				+ timeInMillis);
+		dt = dt.withZone(utcZone);
+		Date date = dt.toDate();
+		return date;
 	}
 
 }

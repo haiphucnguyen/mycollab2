@@ -51,8 +51,13 @@ public class UserLink extends Button {
 						.getSpringBean(UserService.class);
 				SimpleUser user = userService.findUserByUserNameInAccount(
 						username, AppContext.getAccountId());
-				UserLink.this.getParent().getWindow()
-						.addWindow(new UserQuickPreviewWindow(user));
+				try {
+					getWindow().getParent().addWindow(
+							new UserQuickPreviewWindow(user));
+				} catch (Exception e) {
+					UserLink.this.getParent().getWindow()
+							.addWindow(new UserQuickPreviewWindow(user));
+				}
 			}
 		});
 	}

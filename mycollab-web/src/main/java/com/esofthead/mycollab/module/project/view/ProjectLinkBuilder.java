@@ -116,7 +116,7 @@ public class ProjectLinkBuilder {
 			result = ProjectLinkUtils.generateBugVersionPreviewLink(projectId,
 					typeid);
 		} else if (ProjectContants.STANDUP.equals(type)) {
-
+			result = ProjectLinkUtils.generateStandUpPreviewLink();
 		}
 
 		return "#" + result;

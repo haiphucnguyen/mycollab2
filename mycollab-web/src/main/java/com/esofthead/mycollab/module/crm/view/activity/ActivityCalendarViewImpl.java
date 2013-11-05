@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.text.DateFormatSymbols;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -30,6 +30,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.DateClickEvent;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.DateClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventMoveHandler;
@@ -66,6 +67,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 	private final PopupButton calendarActionBtn;
 	private MonthViewCalendar calendarComponent;
 	private ButtonGroup groupViewBtn;
+	private Button monthViewBtn;
 
 	public ActivityCalendarViewImpl() {
 		super();
@@ -108,15 +110,16 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		this.addComponent(actionPanel);
 
 		groupViewBtn = new ButtonGroup();
-		Button monthViewBtn = new Button("Monthly View",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		monthViewBtn = new Button("Monthly View", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						calendarComponent.switchToMonthView();
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarComponent.switchToMonthView();
+				monthViewBtn.addStyleName("selected-style");
+			}
+		});
+
 		groupViewBtn.addButton(monthViewBtn);
 		Button weekViewBtn = new Button("Weekly View",
 				new Button.ClickListener() {
@@ -124,12 +127,14 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
+						java.util.Calendar cal = java.util.Calendar
+								.getInstance();
+						int week = cal.get(java.util.Calendar.WEEK_OF_YEAR);
+
 						WeekClickHandler handler = (WeekClickHandler) calendarComponent
 								.getHandler(WeekClick.EVENT_ID);
 						handler.weekClick(new WeekClick(calendarComponent,
-								calendarComponent.getCalendar().get(
-										GregorianCalendar.WEEK_OF_YEAR),
-								calendarComponent.getCalendar().get(
+								week, calendarComponent.getCalendar().get(
 										GregorianCalendar.YEAR)));
 					}
 				});
@@ -140,8 +145,10 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-
+						DateClickHandler handler = (DateClickHandler) calendarComponent
+								.getHandler(DateClickEvent.EVENT_ID);
+						handler.dateClick(new DateClickEvent(calendarComponent,
+								java.util.Calendar.getInstance().getTime()));
 					}
 				});
 		groupViewBtn.addButton(dailyViewBtn);
@@ -374,24 +381,16 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		private Date currentMonthsFirstDate = null;
 
 		private Mode viewMode = Mode.MONTH;
-		private Label label = new Label("");
 
 		public MonthViewCalendar() {
 			super(new ActivityEventProvider());
-			this.setTimeFormat(TimeFormat.Format24H);
+			this.setTimeFormat(TimeFormat.Format12H);
 			this.setSizeFull();
 			this.setImmediate(true);
+			this.setLocale(Locale.US);
 
 			Date today = new Date();
 			calendar.setTime(today);
-			calendar.get(GregorianCalendar.MONTH);
-
-			DateFormatSymbols s = new DateFormatSymbols();
-			String month = s.getShortMonths()[calendar
-					.get(GregorianCalendar.MONTH)];
-			label.setValue(month + " " + calendar.get(GregorianCalendar.YEAR));
-			int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
-			calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
 			currentMonthsFirstDate = calendar.getTime();
 			this.setStartDate(currentMonthsFirstDate);
 			calendar.add(GregorianCalendar.MONTH, 1);
