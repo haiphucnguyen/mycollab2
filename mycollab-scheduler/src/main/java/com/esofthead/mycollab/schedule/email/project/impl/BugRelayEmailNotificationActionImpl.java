@@ -16,6 +16,7 @@ import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -156,13 +157,12 @@ public class BugRelayEmailNotificationActionImpl extends
 		criteria.setSaccountid(new NumberSearchField(bug.getSaccountid()));
 		criteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_BUG));
 		criteria.setTypeid(new NumberSearchField(bug.getId()));
-
-		int totalCount = commentService.getTotalCount(criteria);
-		int numpage = (int) totalCount / 5;
+		criteria.setOrderByField("createdtime");
+		criteria.setSortDirection(SearchCriteria.DESC);
 
 		List<SimpleComment> lstComment = commentService
 				.findPagableListByCriteria(new SearchRequest<CommentSearchCriteria>(
-						criteria, numpage - 1, 5));
+						criteria, 0, 5));
 		templateGenerator.putVariable("lstComment", lstComment);
 
 		return templateGenerator;

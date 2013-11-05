@@ -503,27 +503,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					switchToWeekView();
 				}
 			});
-
-			this.setHandler(new EventMoveHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void eventMove(MoveEvent event) {
-					CrmEvent crmEvent = (CrmEvent) event.getCalendarEvent();
-					SimpleMeeting simpleMeeting = crmEvent.getSource();
-					simpleMeeting.setStartdate(event.getNewStart());
-
-					MeetingService service = ApplicationContextUtil
-							.getSpringBean(MeetingService.class);
-					service.updateWithSession(simpleMeeting,
-							AppContext.getUsername());
-					ActivityCalendarViewImpl.this.getWindow().showNotification(
-							"Event: \"" + simpleMeeting.getSubject()
-									+ "\" has been updated!");
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoCalendar(this, null));
-				}
-			});
 		}
 
 		private void handleClickEvent(CalendarEvent event) {
