@@ -3,13 +3,16 @@ package com.esofthead.mycollab.module.user;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+
 public class PasswordEncryptHelper {
 	private static StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 	private static BasicTextEncryptor basicTextEncryptor;
 
 	static {
 		basicTextEncryptor = new BasicTextEncryptor();
-		basicTextEncryptor.setPassword("esofthead321");
+		basicTextEncryptor
+				.setPassword(SiteConfiguration.getEnDecryptPassword());
 	}
 
 	public static String encryptSaltPassword(String password) {

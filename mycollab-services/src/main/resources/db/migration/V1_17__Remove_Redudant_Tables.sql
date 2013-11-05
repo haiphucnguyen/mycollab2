@@ -1,1 +1,0 @@
-ALTER TABLE `s_report_bug_issue` CHANGE COLUMN `ipaddress` `ipaddress` VARCHAR(40) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL DEFAULT NULL  ;

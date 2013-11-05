@@ -1,1 +1,0 @@
-ALTER TABLE `m_ecm_activity_log` DROP COLUMN `type` , DROP COLUMN `path` , ADD COLUMN `actionDesc` TEXT NOT NULL;

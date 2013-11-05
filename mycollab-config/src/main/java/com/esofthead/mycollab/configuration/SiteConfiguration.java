@@ -51,6 +51,9 @@ public class SiteConfiguration {
 					.build(ApplicationProperties.getAppProperties());
 		}
 
+		instance.endecryptPassword = ApplicationProperties.getString(
+				ApplicationProperties.BI_ENDECRYPT_PASSWORD, "esofthead321");
+
 		// load email
 		String host = ApplicationProperties
 				.getString(ApplicationProperties.MAIL_SMTPHOST);
@@ -66,18 +69,19 @@ public class SiteConfiguration {
 				password, port, isTls);
 
 		// load relay email
-		host = ApplicationProperties
-				.getString(ApplicationProperties.RELAYMAIL_SMTPHOST);
-		port = Integer.parseInt(ApplicationProperties.getString(
-				ApplicationProperties.RELAYMAIL_PORT, "0"));
-		user = ApplicationProperties
-				.getString(ApplicationProperties.RELAYMAIL_USERNAME);
-		password = ApplicationProperties
-				.getString(ApplicationProperties.RELAYMAIL_PASSWORD);
-		isTls = Boolean.parseBoolean(ApplicationProperties.getString(
-				ApplicationProperties.RELAYMAIL_IS_TLS, "false"));
-		instance.relayEmailConfiguration = new EmailConfiguration(host, user,
-				password, port, isTls);
+		String relayHost = ApplicationProperties.getString(
+				ApplicationProperties.RELAYMAIL_SMTPHOST, host);
+		int relayPort = Integer.parseInt(ApplicationProperties.getString(
+				ApplicationProperties.RELAYMAIL_PORT, port + ""));
+		String relayUser = ApplicationProperties.getString(
+				ApplicationProperties.RELAYMAIL_USERNAME, user);
+		String relayPassword = ApplicationProperties.getString(
+				ApplicationProperties.RELAYMAIL_PASSWORD, password);
+		boolean relayIsTls = Boolean.parseBoolean(ApplicationProperties
+				.getString(ApplicationProperties.RELAYMAIL_IS_TLS,
+						Boolean.toString(isTls)));
+		instance.relayEmailConfiguration = new EmailConfiguration(relayHost,
+				relayUser, relayPassword, relayPort, relayIsTls);
 
 		// load database configuration
 		String driverClass = ApplicationProperties
@@ -114,6 +118,7 @@ public class SiteConfiguration {
 	private DatabaseConfiguration databaseConfiguration;
 	private String cdnUrl;
 	private Properties cacheProperties;
+	private String endecryptPassword;
 	private String dropboxCallbackUrl;
 	private String ggDriveCallbackUrl;
 
@@ -183,5 +188,9 @@ public class SiteConfiguration {
 
 	public static String getGGDriveCallbackUrl() {
 		return instance.ggDriveCallbackUrl;
+	}
+
+	public static String getEnDecryptPassword() {
+		return instance.endecryptPassword;
 	}
 }

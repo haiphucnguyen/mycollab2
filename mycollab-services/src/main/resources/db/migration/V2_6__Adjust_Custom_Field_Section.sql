@@ -1,1 +1,0 @@
-ALTER TABLE `m_form_section` ADD COLUMN `isDeleteSection` BIT(1) NOT NULL;

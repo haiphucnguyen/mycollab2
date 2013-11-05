@@ -1,1 +1,0 @@
-ALTER TABLE `m_comment` ADD COLUMN `extraTypeId` INT(11) NULL;

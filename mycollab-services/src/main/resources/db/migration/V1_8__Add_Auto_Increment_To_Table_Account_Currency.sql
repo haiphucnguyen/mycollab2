@@ -1,1 +1,0 @@
-ALTER TABLE `s_account_currency` CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT  ;

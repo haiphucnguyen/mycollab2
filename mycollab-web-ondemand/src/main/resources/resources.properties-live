@@ -4,6 +4,11 @@
 site.name=MyCollab
 running.mode=site
 
+#================================
+#
+#================================
+endecryptPassword=mycollab123
+
 #===============================
 # DATABASE CONFIGURATION
 #===============================

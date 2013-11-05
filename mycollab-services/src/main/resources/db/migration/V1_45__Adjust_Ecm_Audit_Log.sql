@@ -1,1 +1,0 @@
-ALTER TABLE `m_ecm_activity_log` ADD COLUMN `baseFolderPath` TEXT NULL ;

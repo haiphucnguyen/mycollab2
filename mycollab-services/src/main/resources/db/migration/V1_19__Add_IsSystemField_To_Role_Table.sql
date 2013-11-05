@@ -1,1 +1,0 @@
-ALTER TABLE `s_roles` ADD COLUMN `isSystemRole` BIT(1) NULL ;

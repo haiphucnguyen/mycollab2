@@ -1,1 +1,0 @@
-ALTER TABLE `m_ecm_driveinfo` ADD COLUMN `imageVolume` DOUBLE NULL;

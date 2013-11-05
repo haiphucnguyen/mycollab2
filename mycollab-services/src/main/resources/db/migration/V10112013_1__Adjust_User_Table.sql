@@ -1,2 +1,0 @@
-ALTER TABLE `s_user` 
-CHANGE COLUMN `isVerifiedEmail` `status` VARCHAR(45) NULL DEFAULT NULL ;

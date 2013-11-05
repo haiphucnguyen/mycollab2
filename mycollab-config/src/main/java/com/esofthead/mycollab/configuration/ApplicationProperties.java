@@ -47,6 +47,8 @@ public class ApplicationProperties {
 	public static final String DROPBOX_AUTH_LINK = "";
 	public static final String GOOGLE_DRIVE_LINK = "";
 
+	public static final String BI_ENDECRYPT_PASSWORD = "endecryptPassword";
+
 	static {
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 		encryptor.setPassword(DECRYPT_PASS);
