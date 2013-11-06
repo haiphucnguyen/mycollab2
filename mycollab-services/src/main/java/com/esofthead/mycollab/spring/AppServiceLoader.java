@@ -12,7 +12,7 @@ public class AppServiceLoader {
 	public static PropertySourcesPlaceholderConfigurer properties() {
 		PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
 		Resource[] resources = new Resource[] { new ClassPathResource(
-				"mycollab.properties") };
+				"resources.properties") };
 		pspc.setLocations(resources);
 		pspc.setIgnoreUnresolvablePlaceholders(true);
 		return pspc;
