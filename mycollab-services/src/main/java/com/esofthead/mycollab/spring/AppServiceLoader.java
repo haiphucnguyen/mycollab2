@@ -11,8 +11,8 @@ public class AppServiceLoader {
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer properties() {
 		PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
-		Resource[] resources = new ClassPathResource[] { new ClassPathResource(
-				"resources.properties") };
+		Resource[] resources = new Resource[] { new ClassPathResource(
+				"mycollab.properties") };
 		pspc.setLocations(resources);
 		pspc.setIgnoreUnresolvablePlaceholders(true);
 		return pspc;
