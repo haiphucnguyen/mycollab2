@@ -44,6 +44,7 @@
     m_crm_customer*,
     m_crm_lead*,
     m_crm_meeting*,
+    m_crm_meeting_invitees*,
     m_crm_note*,
     m_crm_notifications*,
     m_crm_opportunities_contacts*,
@@ -680,6 +681,18 @@
     contactType CDATA #IMPLIED
     contactTypeId CDATA #IMPLIED
     isClosed CDATA #IMPLIED
+    isNotified CDATA #IMPLIED
+    isNotifiedPrior CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_meeting_invitees EMPTY>
+<!ATTLIST m_crm_meeting_invitees
+    id CDATA #REQUIRED
+    meetingId CDATA #REQUIRED
+    username CDATA #REQUIRED
+    isModerator CDATA #REQUIRED
+    status CDATA #REQUIRED
+    source CDATA #REQUIRED
 >
 
 <!ELEMENT m_crm_note EMPTY>
@@ -993,6 +1006,8 @@
     fieldFormat CDATA #REQUIRED
     fieldname CDATA #REQUIRED
     fieldType CDATA #REQUIRED
+    isRequired CDATA #REQUIRED
+    isCustom CDATA #REQUIRED
 >
 
 <!ELEMENT m_monitor_item EMPTY>

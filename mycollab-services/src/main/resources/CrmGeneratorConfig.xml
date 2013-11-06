@@ -82,6 +82,9 @@
         <table domainObjectName="Meeting" schema="mycollab"
             tableName="m_crm_meeting" />
 
+        <table domainObjectName="MeetingInvitee" schema="mycollab"
+            tableName="m_crm_meeting_invitees" />
+
         <table domainObjectName="Opportunity" schema="mycollab"
             tableName="m_crm_opportunity" />
 

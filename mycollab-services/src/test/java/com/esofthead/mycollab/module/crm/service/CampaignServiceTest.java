@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.module.crm.service;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import junit.framework.Assert;
 
@@ -35,10 +37,12 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
-import com.esofthead.mycollab.test.util.DateTimeUtilsForTest;
 
 @RunWith(MyCollabClassRunner.class)
 public class CampaignServiceTest extends ServiceTest {
+	static {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	}
 
 	@Autowired
 	protected CampaignService campaignService;
@@ -77,9 +81,8 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateRangeNext7Days() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-20");
-		Date endDate = DateTimeUtilsForTest.subtractOrAddDayDuration(
-				DateTimeUtilsForTest.getDateByString("2012-12-21"), 7);
+		Date startDate = new GregorianCalendar(2012, 11, 20).getTime();
+		Date endDate = new GregorianCalendar(2012, 11, 28).getTime();
 		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
 		criteria.setSaccountid(new NumberSearchField(1));
 
@@ -95,9 +98,8 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateRangeLast7Days() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.subtractOrAddDayDuration(
-				DateTimeUtilsForTest.getDateByString("2012-12-21"), -7);
-		Date endDate = DateTimeUtilsForTest.getDateByString("2012-12-21");
+		Date startDate = new GregorianCalendar(2012, 11, 14).getTime();
+		Date endDate = new GregorianCalendar(2012, 11, 21).getTime();
 		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
 		criteria.setSaccountid(new NumberSearchField(1));
 
@@ -113,9 +115,9 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchEndDateLessThanEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-21");
+		Date endDate = new GregorianCalendar(2012, 11, 21).getTime();
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
-				DateSearchField.LESSTHANEQUAL, startDate));
+				DateSearchField.LESSTHANEQUAL, endDate));
 		criteria.setSaccountid(new NumberSearchField(1));
 		Assert.assertEquals(5, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
@@ -129,7 +131,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchEndDateLessThan() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-21");
+		Date startDate = new GregorianCalendar(2012, 11, 21).getTime();
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.LESSTHAN, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -145,7 +147,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchEndDateGreaterThanEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-20");
+		Date startDate = new GregorianCalendar(2012, 11, 20).getTime();
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHANEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -162,7 +164,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchEndDateGreaterThan() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-20");
+		Date startDate = new GregorianCalendar(2012, 11, 20).getTime();
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHAN, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -179,7 +181,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchEndDateNotEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-20");
+		Date startDate = new GregorianCalendar(2012, 11, 20).getTime();
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.NOTEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -196,7 +198,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchEndDateEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-20");
+		Date startDate = new GregorianCalendar(2012, 11, 20).getTime();
 		criteria.setEndDate(new DateSearchField(SearchField.AND,
 				DateSearchField.EQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -213,8 +215,8 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchEndDateBetween() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date from = DateTimeUtilsForTest.getDateByString("2012-12-20");
-		Date to = DateTimeUtilsForTest.getDateByString("2012-12-21");
+		Date from = new GregorianCalendar(2012, 11, 20).getTime();
+		Date to = new GregorianCalendar(2012, 11, 21).getTime();
 		criteria.setEndDateRange(new RangeDateSearchField(from, to));
 		criteria.setSaccountid(new NumberSearchField(1));
 
@@ -230,7 +232,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateLessThanEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-16");
+		Date startDate = new GregorianCalendar(2012, 11, 16).getTime();
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.LESSTHANEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -247,7 +249,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateLessThan() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-16");
+		Date startDate = new GregorianCalendar(2012, 11, 16).getTime();
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.LESSTHAN, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -264,7 +266,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateGreaterThanEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-15");
+		Date startDate = new GregorianCalendar(2012, 11, 15).getTime();
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHANEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -281,7 +283,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateGreaterThan() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-15");
+		Date startDate = new GregorianCalendar(2012, 11, 15).getTime();
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.GREATERTHAN, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -298,7 +300,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateNotEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-15");
+		Date startDate = new GregorianCalendar(2012, 11, 15).getTime();
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.NOTEQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -315,7 +317,7 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateEqual() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtilsForTest.getDateByString("2012-12-15");
+		Date startDate = new GregorianCalendar(2012, 11, 15).getTime();
 		criteria.setStartDate(new DateSearchField(SearchField.AND,
 				DateSearchField.EQUAL, startDate));
 		criteria.setSaccountid(new NumberSearchField(1));
@@ -332,8 +334,8 @@ public class CampaignServiceTest extends ServiceTest {
 	@DataSet
 	public void testSearchStartDateBetween() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date from = DateTimeUtilsForTest.getDateByString("2012-12-15");
-		Date to = DateTimeUtilsForTest.getDateByString("2012-12-17");
+		Date from = new GregorianCalendar(2012, 11, 15).getTime();
+		Date to = new GregorianCalendar(2012, 11, 17).getTime();
 		criteria.setStartDateRange(new RangeDateSearchField(from, to));
 		criteria.setSaccountid(new NumberSearchField(1));
 
