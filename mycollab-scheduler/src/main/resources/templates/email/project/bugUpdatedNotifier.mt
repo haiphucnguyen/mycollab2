@@ -16,7 +16,7 @@
         <tr>
             <td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $!userName,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">Just wanna let you know that the bug <a href="$hyperLinks.bugUrl" style="color: rgb(216, 121, 55);">$bug.summary</a> in project <a href="$hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$bug.projectname</a> has been updated. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221); line-height: 20px;">Just wanna let you know that the bug <a href="$hyperLinks.bugUrl" style="color: rgb(216, 121, 55);">$bug.summary</a> in project <a href="$hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$bug.projectname</a> has been updated. Here're details about it:</div>
                 <table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
                 	<tr>
                         <td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
@@ -98,20 +98,20 @@
                                 		<p>Changes (by $historyLog.postedUserFullName):</p>
                                 		<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Fields</td>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">Old Value</td>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169);">New Value</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:200px;">Fields</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:220px;">Old Value</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:230px;">New Value</td>
                                 			</tr>
                                 			#foreach ($item in $historyLog.changeItems)
                                 				#if ($mapper.hasField($item.field))
                                 				<tr>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px; width:200px;">
                                 						$mapper.getFieldLabel($item.field)
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 220px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.oldvalue
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 200px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 230px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$item.newvalue
                                 					</td>
                                 				</tr>
@@ -126,24 +126,21 @@
                                     		<p>Lasted comment:</p>
                                 			<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:100px;">User</td>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:150px;">Time</td>
-                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:400px;">Comment</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:200px;">User & Time</td>
+                                				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:450px;">Comment</td>
                                 			</tr>
                                 			#foreach ($comment in $lstComment)
                                 				<tr>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px; width: 100px">
-                                						$comment.ownerFullName
-                                					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 150px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px; width: 200px;">
+                                						$comment.ownerFullName <br>
                                 						$comment.createdtime
                                 					</td>
-                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 400px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
+                                					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 450px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
                                 						$comment.comment
                                 					</td>
                                 				</tr>
                                 			#end
-                                		</table>
+                                			</table>
                                 		</td>
                                 	</tr>
                                 #end

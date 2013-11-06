@@ -471,26 +471,37 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				@Override
 				public void eventMove(MoveEvent event) {
 					CrmEvent crmEvent = (CrmEvent) event.getCalendarEvent();
-					SimpleMeeting simpleMeeting = crmEvent.getSource();
+					if (crmEvent.getStart().compareTo(event.getNewStart()) != 0) {
+						SimpleMeeting simpleMeeting = crmEvent.getSource();
 
-					Date newStartDate = event.getNewStart();
-					long rangeOfStartEnd = crmEvent.getEnd().getTime()
-							- crmEvent.getStart().getTime();
-					long newEndDateTime = crmEvent.getEnd().getTime()
-							+ rangeOfStartEnd;
-					Date newEndDate = crmEvent.getEnd();
-					newEndDate.setTime(newEndDateTime);
+						Date newStartDate = event.getNewStart();
+						long rangeOfStartEnd = crmEvent.getEnd().getTime()
+								- crmEvent.getStart().getTime();
+						long newEndDateTime;
+						if (crmEvent.getStart().compareTo(newStartDate) > 0) {
+							newEndDateTime = newStartDate.getTime()
+									+ rangeOfStartEnd;
+						} else {
+							newEndDateTime = newStartDate.getTime()
+									- rangeOfStartEnd;
+						}
+						java.util.Calendar calendar = java.util.Calendar
+								.getInstance();
+						calendar.setTimeInMillis(newEndDateTime);
 
-					simpleMeeting.setStartdate(newStartDate);
-					simpleMeeting.setEnddate(newEndDate);
+						simpleMeeting.setStartdate(newStartDate);
+						simpleMeeting.setEnddate(calendar.getTime());
 
-					MeetingService service = ApplicationContextUtil
-							.getSpringBean(MeetingService.class);
-					service.updateWithSession(simpleMeeting,
-							AppContext.getUsername());
-					ActivityCalendarViewImpl.this.getWindow().showNotification(
-							"Event: \"" + simpleMeeting.getSubject()
-									+ "\" has been updated!");
+						MeetingService service = ApplicationContextUtil
+								.getSpringBean(MeetingService.class);
+						service.updateWithSession(simpleMeeting,
+								AppContext.getUsername());
+						ActivityCalendarViewImpl.this.getWindow()
+								.showNotification(
+										"Event: \""
+												+ simpleMeeting.getSubject()
+												+ "\" has been updated!");
+					}
 				}
 			});
 

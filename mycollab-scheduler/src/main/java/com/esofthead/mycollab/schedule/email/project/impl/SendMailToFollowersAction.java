@@ -6,8 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
+import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
@@ -17,6 +24,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 public abstract class SendMailToFollowersAction implements
 		SendingRelayEmailNotificationAction {
@@ -112,6 +120,23 @@ public abstract class SendMailToFollowersAction implements
 				}
 			}
 		}
+	}
+
+	public List<SimpleComment> getListComment(Integer sAccountId, String type,
+			Integer typeId) {
+		CommentService commentService = ApplicationContextUtil
+				.getSpringBean(CommentService.class);
+		CommentSearchCriteria criteria = new CommentSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(sAccountId));
+		criteria.setType(new StringSearchField(type));
+		criteria.setTypeid(new NumberSearchField(typeId));
+		criteria.setOrderByField("createdtime");
+		criteria.setSortDirection(SearchCriteria.DESC);
+
+		List<SimpleComment> lstComment = commentService
+				.findPagableListByCriteria(new SearchRequest<CommentSearchCriteria>(
+						criteria, 0, 5));
+		return lstComment;
 	}
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
