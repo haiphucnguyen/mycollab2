@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -110,7 +111,10 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}
-
+		templateGenerator.putVariable(
+				"lstComment",
+				getListComment(problem.getSaccountid(),
+						MonitorTypeConstants.PRJ_PROBLEM, problem.getId()));
 		return templateGenerator;
 	}
 
