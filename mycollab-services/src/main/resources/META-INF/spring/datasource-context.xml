@@ -9,7 +9,7 @@
 
     <import resource="core-context.xml" />
 
-    <context:property-placeholder location="classpath:resources.properties" />
+    <!--  <context:property-placeholder location="classpath:resources.properties" />-->
 
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
