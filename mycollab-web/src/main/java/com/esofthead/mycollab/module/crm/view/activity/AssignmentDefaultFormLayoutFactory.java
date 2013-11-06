@@ -4,8 +4,8 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.form.view.builder.DateDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
-import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
@@ -20,30 +20,30 @@ public class AssignmentDefaultFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN).header("Task Information")
 				.build();
 
-		taskSection.addField(new StringDynaFieldBuilder().fieldName("subject")
+		taskSection.addField(new TextDynaFieldBuilder().fieldName("subject")
 				.displayName("Subject").fieldIndex(0).mandatory(true).build());
 
-		taskSection.addField(new StringDynaFieldBuilder().fieldName("status")
+		taskSection.addField(new TextDynaFieldBuilder().fieldName("status")
 				.displayName("Status").fieldIndex(1).build());
 
 		taskSection.addField(new DateDynaFieldBuilder().fieldName("startdate")
 				.displayName("Start Date").fieldIndex(2).build());
 
-		taskSection.addField(new StringDynaFieldBuilder().fieldName("type")
+		taskSection.addField(new TextDynaFieldBuilder().fieldName("type")
 				.displayName("Related To").fieldIndex(3).build());
 
 		taskSection.addField(new DateDynaFieldBuilder().fieldName("duedate")
 				.displayName("Due Date").fieldIndex(4).build());
 
-		taskSection.addField(new StringDynaFieldBuilder()
+		taskSection.addField(new TextDynaFieldBuilder()
 				.fieldName("contactid").displayName("Contact").fieldIndex(5)
 				.build());
 
-		taskSection.addField(new StringDynaFieldBuilder().fieldName("priority")
+		taskSection.addField(new TextDynaFieldBuilder().fieldName("priority")
 				.displayName("Priority").fieldIndex(6).build());
 
 		taskSection
-				.addField(new StringDynaFieldBuilder()
+				.addField(new TextDynaFieldBuilder()
 						.fieldName("assignuser")
 						.displayName(
 								LocalizationHelper
@@ -56,7 +56,7 @@ public class AssignmentDefaultFormLayoutFactory {
 				.layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
 				.header("Description").build();
 
-		descSection.addField(new TextDynaFieldBuilder()
+		descSection.addField(new TextAreaDynaFieldBuilder()
 				.fieldName("description").displayName("Description")
 				.fieldIndex(0).build());
 

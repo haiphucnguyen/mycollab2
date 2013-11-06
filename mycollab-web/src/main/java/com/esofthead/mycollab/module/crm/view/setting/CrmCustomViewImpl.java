@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.setting;
 
+import java.util.List;
+
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -212,6 +214,11 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 	@Override
 	public void addActiveSection(DynaSection section) {
 		layoutComp.addActiveSection(section);
+	}
+
+	@Override
+	public List<DynaSection> getActiveSections() {
+		return layoutComp.getActiveSections();
 	}
 
 	private class ModuleSelectionComboBox extends ValueComboBox {

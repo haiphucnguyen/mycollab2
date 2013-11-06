@@ -7,8 +7,8 @@ import com.esofthead.mycollab.form.view.builder.DateDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.NumberDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.PercentageDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
@@ -23,11 +23,11 @@ public class OpportunityDefaultDynaFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
 				.header("Opportunity Information").build();
 
-		infoSection.addField(new StringDynaFieldBuilder()
+		infoSection.addField(new TextDynaFieldBuilder()
 				.fieldName("opportunityname").displayName("Name")
 				.mandatory(true).fieldIndex(0).build());
 
-		infoSection.addField(new StringDynaFieldBuilder()
+		infoSection.addField(new TextDynaFieldBuilder()
 				.fieldName("accountid").displayName("Account Name")
 				.fieldIndex(1).build());
 
@@ -42,30 +42,30 @@ public class OpportunityDefaultDynaFormLayoutFactory {
 		infoSection.addField(new NumberDynaFieldBuilder().fieldName("amount")
 				.displayName("Amount").fieldIndex(4).build());
 
-		infoSection.addField(new StringDynaFieldBuilder()
+		infoSection.addField(new TextDynaFieldBuilder()
 				.fieldName("opportunitytype").displayName("Type").fieldIndex(5)
 				.build());
 
-		infoSection.addField(new StringDynaFieldBuilder()
+		infoSection.addField(new TextDynaFieldBuilder()
 				.fieldName("salesstage").displayName("Sales Stage")
 				.fieldIndex(6).build());
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("source")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("source")
 				.displayName("Lead Source").fieldIndex(7).build());
 
 		infoSection.addField(new PercentageDynaFieldBuilder()
 				.fieldName("probability").displayName("Probability (%)")
 				.fieldIndex(8).build());
 
-		infoSection.addField(new StringDynaFieldBuilder()
+		infoSection.addField(new TextDynaFieldBuilder()
 				.fieldName("campaignid").displayName("Campaign").fieldIndex(9)
 				.build());
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("nextstep")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("nextstep")
 				.displayName("Next Step").fieldIndex(10).build());
 
 		infoSection
-				.addField(new StringDynaFieldBuilder()
+				.addField(new TextDynaFieldBuilder()
 						.fieldName("assignuser")
 						.displayName(
 								LocalizationHelper
@@ -78,7 +78,7 @@ public class OpportunityDefaultDynaFormLayoutFactory {
 				.layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
 				.header("Description").build();
 
-		descSection.addField(new TextDynaFieldBuilder()
+		descSection.addField(new TextAreaDynaFieldBuilder()
 				.fieldName("description").displayName("Description")
 				.fieldIndex(0).build());
 

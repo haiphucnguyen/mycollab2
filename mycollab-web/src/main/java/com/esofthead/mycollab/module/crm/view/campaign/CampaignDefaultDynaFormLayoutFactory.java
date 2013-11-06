@@ -6,8 +6,8 @@ import com.esofthead.mycollab.form.view.builder.CurrencyDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DateDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.NumberDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
@@ -22,11 +22,11 @@ public class CampaignDefaultDynaFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
 				.header("Campaign Information").build();
 
-		campaignSection.addField(new StringDynaFieldBuilder()
+		campaignSection.addField(new TextDynaFieldBuilder()
 				.fieldName("campaignname").displayName("Name").mandatory(true)
 				.fieldIndex(0).build());
 
-		campaignSection.addField(new StringDynaFieldBuilder()
+		campaignSection.addField(new TextDynaFieldBuilder()
 				.fieldName("status").displayName("Status").fieldIndex(1)
 				.build());
 
@@ -34,7 +34,7 @@ public class CampaignDefaultDynaFormLayoutFactory {
 				.fieldName("startdate").displayName("Start Date").fieldIndex(2)
 				.build());
 
-		campaignSection.addField(new StringDynaFieldBuilder().fieldName("type")
+		campaignSection.addField(new TextDynaFieldBuilder().fieldName("type")
 				.displayName("Type").fieldIndex(3).build());
 
 		campaignSection.addField(new DateDynaFieldBuilder()
@@ -42,7 +42,7 @@ public class CampaignDefaultDynaFormLayoutFactory {
 				.build());
 
 		campaignSection
-				.addField(new StringDynaFieldBuilder()
+				.addField(new TextDynaFieldBuilder()
 						.fieldName("assignuser")
 						.displayName(
 								LocalizationHelper
@@ -80,7 +80,7 @@ public class CampaignDefaultDynaFormLayoutFactory {
 				.layoutType(LayoutType.ONE_COLUMN).orderIndex(2)
 				.header("Description").build();
 
-		descSection.addField(new TextDynaFieldBuilder()
+		descSection.addField(new TextAreaDynaFieldBuilder()
 				.fieldName("description").displayName("Description")
 				.fieldIndex(0).build());
 

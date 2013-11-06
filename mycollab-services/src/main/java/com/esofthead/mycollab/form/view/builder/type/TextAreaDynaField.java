@@ -1,5 +1,5 @@
 package com.esofthead.mycollab.form.view.builder.type;
 
-public class EmailDynaField extends TextDynaField {
+public class TextAreaDynaField extends AbstractDynaField {
 
 }

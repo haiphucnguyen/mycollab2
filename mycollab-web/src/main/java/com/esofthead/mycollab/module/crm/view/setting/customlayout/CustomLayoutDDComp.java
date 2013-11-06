@@ -63,6 +63,10 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 		activeFormArea.addComponent(sectionLayout);
 	}
 
+	public List<DynaSection> getActiveSections() {
+		return activeFormArea.rebuildSections();
+	}
+
 	public DynaForm rebuildForm() {
 		DynaForm form = new DynaForm();
 		List<DynaSection> sections = activeFormArea.rebuildSections();

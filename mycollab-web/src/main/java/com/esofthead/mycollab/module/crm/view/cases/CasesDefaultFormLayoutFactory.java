@@ -5,8 +5,8 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.EmailDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.PhoneDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.StringDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
@@ -21,23 +21,23 @@ public class CasesDefaultFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
 				.header("Case Information").build();
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("priority")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("priority")
 				.displayName("Priority").fieldIndex(0).build());
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("type")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("type")
 				.displayName("Type").fieldIndex(1).build());
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("status")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("status")
 				.displayName("Status").fieldIndex(2).build());
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("reason")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("reason")
 				.displayName("Reason").fieldIndex(3).build());
 
-		infoSection.addField(new StringDynaFieldBuilder()
+		infoSection.addField(new TextDynaFieldBuilder()
 				.fieldName("accountid").displayName("Account Name")
 				.fieldIndex(4).mandatory(true).build());
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("subject")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("subject")
 				.displayName("Subject").fieldIndex(5).mandatory(true).build());
 
 		infoSection.addField(new PhoneDynaFieldBuilder()
@@ -47,11 +47,11 @@ public class CasesDefaultFormLayoutFactory {
 		infoSection.addField(new EmailDynaFieldBuilder().fieldName("email")
 				.displayName("Email").fieldIndex(7).build());
 
-		infoSection.addField(new StringDynaFieldBuilder().fieldName("origin")
+		infoSection.addField(new TextDynaFieldBuilder().fieldName("origin")
 				.displayName("Origin").fieldIndex(8).build());
 
 		infoSection
-				.addField(new StringDynaFieldBuilder()
+				.addField(new TextDynaFieldBuilder()
 						.fieldName("assignuser")
 						.displayName(
 								LocalizationHelper
@@ -64,10 +64,10 @@ public class CasesDefaultFormLayoutFactory {
 				.layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
 				.header("Description").build();
 
-		descSection.addField(new TextDynaFieldBuilder()
+		descSection.addField(new TextAreaDynaFieldBuilder()
 				.fieldName("description").displayName("Description")
 				.fieldIndex(0).build());
-		descSection.addField(new TextDynaFieldBuilder().fieldName("resolution")
+		descSection.addField(new TextAreaDynaFieldBuilder().fieldName("resolution")
 				.displayName("Resolution").fieldIndex(1).build());
 
 		defaultForm.addSection(descSection);

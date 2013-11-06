@@ -1,18 +1,27 @@
 package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
+import java.util.List;
+
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
+import com.esofthead.mycollab.form.view.builder.type.TextDynaField;
 import com.esofthead.mycollab.module.crm.view.setting.CrmCustomView;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -82,8 +91,13 @@ public class CreateCustomFieldWindow extends Window {
 							.newResource("icons/16/customform/auto_number.png"),
 					AUTO_NUMBER } };
 
+	private CssLayout fieldLayoutWrapper;
+	private DetailFieldInfoPanel fieldPanel;
+	private CrmCustomView viewParent;
+
 	public CreateCustomFieldWindow(final CrmCustomView crmCustomView) {
 		super("Custom Field");
+		this.viewParent = crmCustomView;
 		center();
 		this.setWidth("600px");
 
@@ -94,7 +108,6 @@ public class CreateCustomFieldWindow extends Window {
 
 		HorizontalLayout body = new HorizontalLayout();
 		body.setSizeFull();
-		body.setSpacing(true);
 		body.addComponent(constructLeftBodyPanel());
 		body.addComponent(constructRightBodyPanel());
 		content.addComponent(body);
@@ -137,6 +150,7 @@ public class CreateCustomFieldWindow extends Window {
 
 	private VerticalLayout constructLeftBodyPanel() {
 		VerticalLayout panel = new VerticalLayout();
+		panel.setWidth("170px");
 		Label title = new Label("Select Field Type:");
 		panel.addComponent(title);
 
@@ -150,14 +164,14 @@ public class CreateCustomFieldWindow extends Window {
 		fieldSelectionTable.setVisibleColumns(new String[] { "icon", "type" });
 
 		for (int i = 0; i < fieldsTable.length; i++) {
-			Object[] rowItems = fieldsTable[i];
-			Button typeLink = new Button((String) rowItems[1],
+			final Object[] rowItems = fieldsTable[i];
+			final Button typeLink = new Button((String) rowItems[1],
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							// TODO Auto-generated method stub
+							contructFieldPanel((String) rowItems[1]);
 
 						}
 					});
@@ -167,15 +181,91 @@ public class CreateCustomFieldWindow extends Window {
 					rowItems[1]);
 		}
 
-		panel.setWidth("170px");
 		panel.addComponent(fieldSelectionTable);
 		return panel;
 	}
 
 	private VerticalLayout constructRightBodyPanel() {
 		VerticalLayout panel = new VerticalLayout();
+		panel.setSizeFull();
 		Label title = new Label("Provide Field Detail:");
 		panel.addComponent(title);
+
+		fieldLayoutWrapper = new CssLayout();
+		fieldLayoutWrapper.setSizeFull();
+		panel.addComponent(fieldLayoutWrapper);
 		return panel;
+	}
+
+	private void contructFieldPanel(String type) {
+		fieldLayoutWrapper.removeAllComponents();
+
+		if (TEXT_FIELD.equals(type)) {
+			fieldPanel = new TextDetailFieldInfoPanel(
+					viewParent.getActiveSections());
+		}
+
+		fieldLayoutWrapper.addComponent(fieldPanel);
+	}
+
+	private static abstract class DetailFieldInfoPanel<F extends AbstractDynaField>
+			extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
+
+		private List<DynaSection> activeSections;
+		protected F field;
+
+		public DetailFieldInfoPanel(List<DynaSection> activeSections) {
+			this.activeSections = activeSections;
+		}
+
+		abstract void updateCustomField();
+	}
+
+	private static class TextDetailFieldInfoPanel extends
+			DetailFieldInfoPanel<TextDynaField> {
+		private static final long serialVersionUID = 1L;
+
+		private TextField labelField = new TextField();
+		private TextField lengthField = new TextField();
+		private SectionSelectList sectionList;
+
+		public TextDetailFieldInfoPanel(List<DynaSection> activeSections) {
+			super(activeSections);
+
+			GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3);
+			layoutHelper.addComponent(labelField, "Label", 0, 0);
+			sectionList = new SectionSelectList(activeSections);
+			layoutHelper.addComponent(sectionList, "Section", 0, 1);
+			layoutHelper.addComponent(lengthField, "Length", 0, 2);
+			this.addComponent(layoutHelper.getLayout());
+		}
+
+		@Override
+		void updateCustomField() {
+			String displayName = (String) labelField.getValue();
+			DynaSection ownSection = (DynaSection) sectionList.getValue();
+			TextDynaField customField = new TextDynaField();
+			customField.setCustom(true);
+
+		}
+	}
+
+	private static class SectionSelectList extends ComboBox {
+		private static final long serialVersionUID = 1L;
+
+		public SectionSelectList(List<DynaSection> sections) {
+			super();
+			this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+
+			for (DynaSection section : sections) {
+				this.addItem(section);
+				this.setItemCaption(section, section.getHeader());
+			}
+
+			if (sections.size() > 0) {
+				this.select(sections.get(0));
+			}
+		}
 	}
 }
