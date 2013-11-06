@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -23,7 +24,16 @@ public class JsonDeSerializer {
 	}
 
 	public static <T> T fromJson(String value, Class<T> type) {
-		return gson.fromJson(value, type);
+		T ins = gson.fromJson(value, type);
+		if (ins == null) {
+			try {
+				return type.newInstance();
+			} catch (Exception e) {
+				throw new MyCollabException(e);
+			}
+		}
+
+		return ins;
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.domain;
 
+import java.util.List;
+
 public class SimpleMeeting extends Meeting {
 	private static final long serialVersionUID = 1L;
 
@@ -8,6 +10,8 @@ public class SimpleMeeting extends Meeting {
 	private String contactTypeName;
 
 	private String createdUserFullName;
+
+	private List<MeetingInvitee> meetingInvitees;
 
 	public String getRelatedTo() {
 		return relatedTo;
@@ -31,5 +35,13 @@ public class SimpleMeeting extends Meeting {
 
 	public void setCreatedUserFullName(String createdUserFullName) {
 		this.createdUserFullName = createdUserFullName;
+	}
+
+	public List<MeetingInvitee> getMeetingInvitees() {
+		return meetingInvitees;
+	}
+
+	public void setMeetingInvitees(List<MeetingInvitee> meetingInvitees) {
+		this.meetingInvitees = meetingInvitees;
 	}
 }

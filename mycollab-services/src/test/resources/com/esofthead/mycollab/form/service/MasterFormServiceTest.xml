@@ -16,15 +16,18 @@
         sAccountId="1" module="Account" id="2" layoutType="1"
         isDeleteSection="false" />
 
-    <m_form_section_field fieldType="String"
+    <m_form_section_field fieldType="StringDynaField"
         displayName="Name" isMandatory="true" fieldname="string1"
-        fieldIndex="0" sectionId="1" fieldFormat="" id="1" />
+        fieldIndex="0" sectionId="1" fieldFormat="" id="1" isCustom="false"
+        isRequired="false" />
 
-    <m_form_section_field fieldType="int"
+    <m_form_section_field fieldType="IntDynaField"
         displayName="numEmp" isMandatory="false" fieldname="int1"
-        fieldIndex="1" sectionId="1" fieldFormat="" id="2" />
+        fieldIndex="1" sectionId="1" fieldFormat="" id="2" isCustom="false"
+        isRequired="false" />
 
-    <m_form_section_field fieldType="String"
+    <m_form_section_field fieldType="StringDynaField"
         displayName="desc" isMandatory="true" fieldname="string2"
-        fieldIndex="0" sectionId="2" fieldFormat="" id="3" />
+        fieldIndex="0" sectionId="2" fieldFormat="" id="3" isCustom="false"
+        isRequired="false" />
 </dataset>
