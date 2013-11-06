@@ -112,7 +112,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 				.getSpringBean(CommentService.class);
 		CommentSearchCriteria criteria = new CommentSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(task.getSaccountid()));
-		criteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_BUG));
+		criteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_TASK));
 		criteria.setTypeid(new NumberSearchField(task.getId()));
 		criteria.setOrderByField("createdtime");
 		criteria.setSortDirection(SearchCriteria.DESC);
