@@ -501,6 +501,8 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 										"Event: \""
 												+ simpleMeeting.getSubject()
 												+ "\" has been updated!");
+						EventBus.getInstance().fireEvent(
+								new ActivityEvent.GotoCalendar(this, null));
 					}
 				}
 			});
