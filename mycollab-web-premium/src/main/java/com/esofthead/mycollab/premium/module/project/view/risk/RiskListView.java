@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.risk;
+package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;

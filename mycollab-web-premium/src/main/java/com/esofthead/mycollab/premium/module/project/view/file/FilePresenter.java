@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.premium.module.project.view.file;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.project.file.IFileContainer;
-import com.esofthead.mycollab.module.project.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectView;
+import com.esofthead.mycollab.module.project.view.file.IFileContainer;
+import com.esofthead.mycollab.module.project.view.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;

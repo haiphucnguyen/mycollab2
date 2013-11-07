@@ -17,7 +17,7 @@ public abstract class GenericServerRunner {
 	private Server server;
 
 	public GenericServerRunner() {
-		server = new Server(9090);
+		server = new Server(8080);
 		log.debug("Detect root folder webapp");
 		String webappDirLocation = detectBasedir();
 		server.setHandler(buildContext(webappDirLocation));

@@ -1,24 +1,25 @@
-package com.esofthead.mycollab.community.module.project.view.file;
+package com.esofthead.mycollab.community.module.project.view.risk;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
-import com.esofthead.mycollab.module.project.view.file.IFileContainer;
-import com.esofthead.mycollab.module.project.view.file.IFilePresenter;
+import com.esofthead.mycollab.module.project.view.risk.IRiskContainer;
+import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class FilePresenter extends AbstractPresenter<IFileContainer> implements
-		IFilePresenter {
+public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements
+		IRiskPresenter {
 	private static final long serialVersionUID = 1L;
 
-	public FilePresenter() {
-		super(IFileContainer.class);
+	public RiskPresenter() {
+		super(IRiskContainer.class);
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Files");
+		projectViewContainer.gotoSubView("Risks");
+
 	}
 
 }

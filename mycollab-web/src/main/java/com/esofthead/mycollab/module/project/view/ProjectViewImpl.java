@@ -29,10 +29,10 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
-import com.esofthead.mycollab.module.project.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.TrackerPresenter;
+import com.esofthead.mycollab.module.project.view.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
@@ -44,7 +44,7 @@ import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
-import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
@@ -89,7 +89,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private TrackerPresenter trackerPresenter;
 	private IFilePresenter filePresenter;
 	private ProblemPresenter problemPresenter;
-	private RiskPresenter riskPresenter;
+	private IRiskPresenter riskPresenter;
 	private TimeTrackingPresenter timePresenter;
 	private UserSettingPresenter userPresenter;
 	private StandupPresenter standupPresenter;
@@ -301,7 +301,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectRiskComponent() {
-		riskPresenter = PresenterResolver.getPresenter(RiskPresenter.class);
+		riskPresenter = PresenterResolver.getPresenter(IRiskPresenter.class);
 		return riskPresenter.getView();
 	}
 

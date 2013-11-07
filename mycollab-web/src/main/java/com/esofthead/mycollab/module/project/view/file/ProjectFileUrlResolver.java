@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.file;
+package com.esofthead.mycollab.module.project.view.file;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.eventmanager.EventBus;

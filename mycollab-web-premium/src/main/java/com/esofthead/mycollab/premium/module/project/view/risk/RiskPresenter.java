@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.risk;
+package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,19 +6,22 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.module.project.view.risk.IRiskContainer;
+import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class RiskPresenter extends AbstractPresenter<RiskContainer> {
+public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements
+		IRiskPresenter {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory.getLogger(RiskPresenter.class);
 
 	public RiskPresenter() {
-		super(RiskContainer.class);
+		super(IRiskContainer.class);
 	}
 
 	@Override

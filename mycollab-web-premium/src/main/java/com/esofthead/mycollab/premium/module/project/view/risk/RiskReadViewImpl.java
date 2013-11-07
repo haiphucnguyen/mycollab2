@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.risk;
+package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import org.vaadin.teemu.ratingstars.RatingStars;
 
