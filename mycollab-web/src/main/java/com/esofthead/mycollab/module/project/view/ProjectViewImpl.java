@@ -43,7 +43,7 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
-import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
+import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
@@ -88,7 +88,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private TaskPresenter taskPresenter;
 	private TrackerPresenter trackerPresenter;
 	private IFilePresenter filePresenter;
-	private ProblemPresenter problemPresenter;
+	private IProblemPresenter problemPresenter;
 	private IRiskPresenter riskPresenter;
 	private TimeTrackingPresenter timePresenter;
 	private UserSettingPresenter userPresenter;
@@ -307,7 +307,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private Component constructProjectProblemComponent() {
 		problemPresenter = PresenterResolver
-				.getPresenter(ProblemPresenter.class);
+				.getPresenter(IProblemPresenter.class);
 		return problemPresenter.getView();
 	}
 

@@ -69,7 +69,7 @@ import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
-import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
+import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -465,8 +465,8 @@ public class ProjectController implements IController {
 								.getView(ProjectView.class);
 						ProblemScreenData.Add data = new ProblemScreenData.Add(
 								new Problem());
-						ProblemPresenter presenter = PresenterResolver
-								.getPresenter(ProblemPresenter.class);
+						IProblemPresenter presenter = PresenterResolver
+								.getPresenter(IProblemPresenter.class);
 						presenter.go(projectView, data);
 					}
 				});
@@ -484,8 +484,8 @@ public class ProjectController implements IController {
 								.getView(ProjectView.class);
 						ProblemScreenData.Read data = new ProblemScreenData.Read(
 								(Integer) event.getData());
-						ProblemPresenter presenter = PresenterResolver
-								.getPresenter(ProblemPresenter.class);
+						IProblemPresenter presenter = PresenterResolver
+								.getPresenter(IProblemPresenter.class);
 						presenter.go(projectView, data);
 					}
 				});
@@ -509,8 +509,8 @@ public class ProjectController implements IController {
 										.getProjectId()));
 						ProblemScreenData.Search data = new ProblemScreenData.Search(
 								criteria);
-						ProblemPresenter presenter = PresenterResolver
-								.getPresenter(ProblemPresenter.class);
+						IProblemPresenter presenter = PresenterResolver
+								.getPresenter(IProblemPresenter.class);
 						presenter.go(projectView, data);
 					}
 				});
@@ -528,8 +528,8 @@ public class ProjectController implements IController {
 								.getView(ProjectView.class);
 						ProblemScreenData.Edit data = new ProblemScreenData.Edit(
 								(Problem) event.getData());
-						ProblemPresenter presenter = PresenterResolver
-								.getPresenter(ProblemPresenter.class);
+						IProblemPresenter presenter = PresenterResolver
+								.getPresenter(IProblemPresenter.class);
 						presenter.go(projectView, data);
 					}
 				});

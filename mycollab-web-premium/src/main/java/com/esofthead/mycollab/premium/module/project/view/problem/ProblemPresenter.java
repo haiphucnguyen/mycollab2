@@ -1,20 +1,23 @@
-package com.esofthead.mycollab.module.project.view.problem;
+package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
+import com.esofthead.mycollab.module.project.view.problem.IProblemContainer;
+import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProblemPresenter extends AbstractPresenter<ProblemContainer> {
+public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
+		implements IProblemPresenter {
 
 	private static final long serialVersionUID = 1L;
 
 	public ProblemPresenter() {
-		super(ProblemContainer.class);
+		super(IProblemContainer.class);
 	}
 
 	@Override

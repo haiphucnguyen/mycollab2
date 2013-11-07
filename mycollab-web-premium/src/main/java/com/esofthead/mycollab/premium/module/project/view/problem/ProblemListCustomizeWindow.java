@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.problem;
+package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import java.util.Arrays;
 import java.util.Collection;
