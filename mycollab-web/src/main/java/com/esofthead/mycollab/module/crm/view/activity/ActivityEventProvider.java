@@ -67,33 +67,24 @@ public class ActivityEventProvider implements CalendarEventProvider {
 					event.setCaption(crmEvent.getSubject());
 
 					StringBuffer statusStr = new StringBuffer("");
+					statusStr.append("<span>");
 					event.setStart(crmEvent.getStartdate());
 					event.setEnd(crmEvent.getEnddate());
 					event.setSource(crmEvent);
 					if (crmEvent.getStatus() != null) {
 						if ("Held".equals(crmEvent.getStatus())) {
 							event.setStyleName("eventcomplete");
-							statusStr
-									.append("<span style=\"background-color: #96D794;\">");
 						} else if ("Planned".equals(crmEvent.getStatus())) {
 							event.setStyleName("eventfuture");
-							statusStr
-									.append("<span style=\"background-color: #99C4DD;\">");
 						} else if ("Not Held".equals(crmEvent.getStatus())) {
 							if (crmEvent.getEnddate() != null) {
 								if (crmEvent.getEnddate().compareTo(new Date()) == 0) {
 									event.setStyleName("eventoverdue");
-									statusStr
-											.append("<span style=\"background-color: #EF8585;\">");
 								} else if (crmEvent.getEnddate().compareTo(
 										new Date()) > 0) {
 									event.setStyleName("eventfuture");
-									statusStr
-											.append("<span style=\"background-color: #99C4DD;\">");
 								} else {
 									event.setStyleName("eventoverdue");
-									statusStr
-											.append("<span style=\"background-color: #EF8585;\">");
 								}
 							}
 						}

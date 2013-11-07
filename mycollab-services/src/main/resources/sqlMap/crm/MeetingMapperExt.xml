@@ -4,20 +4,19 @@
 
 
 
-    <resultMap id="SimpleMeetingResult"
-        extends="com.esofthead.mycollab.module.crm.dao.MeetingMapper.ResultMapWithBLOBs"
-        type="com.esofthead.mycollab.module.crm.domain.SimpleMeeting">
+	<resultMap id="SimpleMeetingResult"
+		extends="com.esofthead.mycollab.module.crm.dao.MeetingMapper.ResultMapWithBLOBs"
+		type="com.esofthead.mycollab.module.crm.domain.SimpleMeeting">
 
-        <result column="relatedTo" jdbcType="VARCHAR" property="relatedTo" />
+		<result column="relatedTo" jdbcType="VARCHAR" property="relatedTo" />
 
-        <result column="createdUserFullName" jdbcType="VARCHAR"
-            property="createdUserFullName" />
+		<result column="createdUserFullName" jdbcType="VARCHAR"
+			property="createdUserFullName" />
 
-        <result column="contactTypeName" jdbcType="VARCHAR"
-            property="contactTypeName" />
-    </resultMap>
+		<result column="contactTypeName" jdbcType="VARCHAR" property="contactTypeName" />
+	</resultMap>
 
-    <sql id="selectSimpleMeeting">
+	<sql id="selectSimpleMeeting">
         <![CDATA[
         SELECT m_crm_meeting.id, m_crm_meeting.subject,
             m_crm_meeting.status, m_crm_meeting.type, m_crm_meeting.typeid,
@@ -34,96 +33,109 @@
         FROM m_crm_meeting
         LEFT OUTER JOIN s_user ON (m_crm_meeting.createdUser = s_user.username)
         ]]>
-    </sql>
+	</sql>
 
-    <select id="findById" parameterType="int" resultMap="SimpleMeetingResult">
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.selectSimpleMeeting" />
+	<select id="findById" parameterType="int" resultMap="SimpleMeetingResult">
+		<include
+			refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.selectSimpleMeeting" />
 
-        WHERE m_crm_meeting.id=#{meetingId,javaType=INTEGER}
-    </select>
+		WHERE m_crm_meeting.id=#{meetingId,javaType=INTEGER}
+	</select>
 
-    <sql id="querySearchCriteria">
-        <if test="searchCriteria.id != null">
+	<sql id="queryEventByStartEndDate">
+    	<![CDATA[
+    		AND (
+					(	
+						m_crm_meeting.startDate >= #{searchCriteria.startDate.value,javaType=DATE}
+						AND m_crm_meeting.endDate <= #{searchCriteria.endDate.value,javaType=DATE}
+					)OR(
+						m_crm_meeting.endDate > #{searchCriteria.startDate.value,javaType=DATE}
+					)OR(
+						m_crm_meeting.startDate > #{searchCriteria.endDate.value,javaType=DATE}
+					)OR(
+						m_crm_meeting.startDate < #{searchCriteria.startDate.value,javaType=DATE}
+						AND m_crm_meeting.endDate > #{searchCriteria.endDate.value,javaType=DATE}
+					)
+				)
+    	]]>
+	</sql>
+
+	<sql id="querySearchCriteria">
+		<if test="searchCriteria.id != null">
             <![CDATA[${searchCriteria.id.operation} m_crm_meeting.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
-        </if>
-        <if test="searchCriteria.saccountid != null">
+		</if>
+		<if test="searchCriteria.saccountid != null">
             <![CDATA[${searchCriteria.saccountid.operation} m_crm_meeting.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
-        </if>
-        <if test="searchCriteria.assignUsers != null">
-            ${searchCriteria.assignUsers.operation}
-            m_crm_meeting.createdUser IN
-            <foreach close=")" collection="searchCriteria.assignUsers.values"
-                item="user" open="(" separator=",">
-                #{user}
-            </foreach>
-        </if>
-        <if test="searchCriteria.isClosed != null">
+		</if>
+		<if test="searchCriteria.assignUsers != null">
+			${searchCriteria.assignUsers.operation}
+			m_crm_meeting.createdUser IN
+			<foreach close=")" collection="searchCriteria.assignUsers.values"
+				item="user" open="(" separator=",">
+				#{user}
+			</foreach>
+		</if>
+		<if test="searchCriteria.isClosed != null">
             <![CDATA[${searchCriteria.isClosed.operation} m_crm_meeting.isClosed = ${searchCriteria.isClosed.value}]]>
-        </if>
-        <if test='searchCriteria.startDate != null'>
-            <![CDATA[${searchCriteria.startDate.operation} m_crm_meeting.startDate ${searchCriteria.startDate.comparision} #{searchCriteria.startDate.value,javaType=DATE} ]]>
-        </if>
-        <if test='searchCriteria.endDate != null'>
-            <![CDATA[${searchCriteria.endDate.operation} m_crm_meeting.endDate ${searchCriteria.endDate.comparision} #{searchCriteria.endDate.value,javaType=DATE}]]>
-        </if>
-    </sql>
+		</if>
+		<include refid="queryEventByStartEndDate" />
+	</sql>
 
-    <sql id="orderStatement">
-        ORDER BY
-        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection},
-        </if>
+	<sql id="orderStatement">
+		ORDER BY
+		<if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+			${searchCriteria.sortDirection},
+		</if>
         <![CDATA[
             m_crm_meeting.lastUpdatedTime DESC
         ]]>
-    </sql>
+	</sql>
 
-    <select id="findPagableListByCriteria" parameterType="MeetingSearchCriteria"
-        resultMap="SimpleMeetingResult">
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.selectSimpleMeeting" />
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
-            </trim>
-            <include refid="orderStatement" />
-        </if>
-    </select>
+	<select id="findPagableListByCriteria" parameterType="MeetingSearchCriteria"
+		resultMap="SimpleMeetingResult">
+		<include
+			refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.selectSimpleMeeting" />
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
+			</trim>
+			<include refid="orderStatement" />
+		</if>
+	</select>
 
-    <select id="getTotalCount" parameterType="MeetingSearchCriteria"
-        resultType="java.lang.Integer">
-        SELECT count(*) as totalCount FROM m_crm_meeting
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
-    </select>
+	<select id="getTotalCount" parameterType="MeetingSearchCriteria"
+		resultType="java.lang.Integer">
+		SELECT count(*) as totalCount FROM m_crm_meeting
+		<if test="searchCriteria != null">
+			<trim prefix="WHERE" prefixOverrides="AND | OR ">
+				1=1
+				<include
+					refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
+			</trim>
+		</if>
+	</select>
 
-    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
-        SELECT MIN(id) FROM m_crm_meeting
+	<select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+		SELECT MIN(id) FROM m_crm_meeting
 
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
-        </trim>
-    </select>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1
+			<include
+				refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
 
-    <select id="getPreviousItemKey" parameterType="map"
-        resultType="java.lang.Integer">
-        SELECT MAX(id) FROM m_crm_meeting
+	<select id="getPreviousItemKey" parameterType="map"
+		resultType="java.lang.Integer">
+		SELECT MAX(id) FROM m_crm_meeting
 
-        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
-        </trim>
-    </select>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1
+			<include
+				refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
 
 </mapper>
