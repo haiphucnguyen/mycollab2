@@ -1,13 +1,17 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
+import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
@@ -231,15 +235,15 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 	public class EventQuickCreateWindow extends Window {
 		private static final long serialVersionUID = 1L;
-		private Date startDate;
-		private Date endDate;
 		private EditForm editForm;
 		private Meeting meeting;
+		private EventDatePicker startDatePicker;
+		private EventDatePicker endDatePicker;
 
 		public EventQuickCreateWindow(Date startDate, Date endDate) {
 			super("Quick Create Event");
-			this.startDate = startDate;
-			this.endDate = endDate;
+			this.startDatePicker = new EventDatePicker(startDate, meeting, true);
+			this.endDatePicker = new EventDatePicker(endDate, meeting, false);
 			this.center();
 			this.setWidth("1000px");
 
@@ -289,6 +293,9 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 								public void buttonClick(ClickEvent event) {
 									MeetingService meetingService = ApplicationContextUtil
 											.getSpringBean(MeetingService.class);
+									meeting.setStartdate(startDatePicker
+											.getValue());
+									meeting.setEnddate(endDatePicker.getValue());
 									meetingService.saveWithSession(meeting,
 											AppContext.getUsername());
 									EventQuickCreateWindow.this.close();
@@ -352,9 +359,9 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					} else if (propertyId.equals("status")) {
 						return new MeetingStatusComboBox();
 					} else if (propertyId.equals("startdate")) {
-						return new PopupDateField("", startDate);
+						return startDatePicker;
 					} else if (propertyId.equals("enddate")) {
-						return new PopupDateField("", endDate);
+						return endDatePicker;
 					} else if (propertyId.equals("description")) {
 						TextArea descArea = new TextArea();
 						descArea.setNullRepresentation("");
@@ -384,6 +391,176 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					setCaption(null);
 					this.loadData(new String[] { "Planned", "Held", "Not Held" });
 				}
+			}
+		}
+	}
+
+	public static class EventDatePicker extends CustomField {
+		private static final long serialVersionUID = 1L;
+
+		private PopupDateField popupDateField;
+		private HourPickerComboBox hourPickerComboBox;
+		private MinusPickerComboBox minusPickerComboBox;
+		private ValueComboBox timeFormatComboBox;
+		public static final long ONE_MINUTE_IN_MILLIS = 60000;
+
+		public EventDatePicker(final Meeting meeting, final boolean isStartDate) {
+			this(null, meeting, isStartDate);
+		}
+
+		public EventDatePicker(Date date, final Meeting meeting,
+				final boolean isStartDate) {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setMargin(true);
+			layout.setSpacing(true);
+			long min = 0, hrs = 0;
+			String timeFormat = "AM";
+			if (date != null) {
+				java.util.Calendar cal = java.util.Calendar.getInstance();
+				cal.setTime(date);
+				min = cal.get(java.util.Calendar.MINUTE);
+				hrs = cal.get(java.util.Calendar.HOUR);
+				timeFormat = (cal.get(java.util.Calendar.AM_PM) == 0) ? "AM"
+						: "PM";
+			}
+			popupDateField = new PopupDateField(null, date);
+			popupDateField.setResolution(PopupDateField.RESOLUTION_DAY);
+			popupDateField.setWidth("130px");
+			popupDateField.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent event) {
+					if (isStartDate) {
+						meeting.setStartdate(EventDatePicker.this.getValue());
+					} else {
+						meeting.setEnddate(EventDatePicker.this.getValue());
+					}
+				}
+			});
+			layout.addComponent(popupDateField);
+
+			hourPickerComboBox = new HourPickerComboBox();
+			hourPickerComboBox.setValue((hrs < 10) ? "0" + hrs : "" + hrs);
+			hourPickerComboBox.setWidth("50px");
+			hourPickerComboBox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent event) {
+					if (isStartDate) {
+						meeting.setStartdate(EventDatePicker.this.getValue());
+					} else {
+						meeting.setEnddate(EventDatePicker.this.getValue());
+					}
+				}
+			});
+			layout.addComponent(hourPickerComboBox);
+			minusPickerComboBox = new MinusPickerComboBox();
+			minusPickerComboBox.setWidth("50px");
+			minusPickerComboBox.setValue((min < 10) ? "0" + min : "" + min);
+			minusPickerComboBox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent event) {
+					if (isStartDate) {
+						meeting.setStartdate(EventDatePicker.this.getValue());
+					} else {
+						meeting.setEnddate(EventDatePicker.this.getValue());
+					}
+				}
+			});
+			layout.addComponent(minusPickerComboBox);
+
+			timeFormatComboBox = new ValueComboBox();
+			timeFormatComboBox.setWidth("50px");
+			timeFormatComboBox.setCaption(null);
+			timeFormatComboBox.loadData(new String[] { "AM", "PM" });
+			timeFormatComboBox.setNullSelectionAllowed(false);
+			timeFormatComboBox.setImmediate(true);
+			timeFormatComboBox.setValue(timeFormat);
+			timeFormatComboBox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent event) {
+					if (isStartDate) {
+						meeting.setStartdate(EventDatePicker.this.getValue());
+					} else {
+						meeting.setEnddate(EventDatePicker.this.getValue());
+					}
+				}
+			});
+			layout.addComponent(timeFormatComboBox);
+			this.setCompositionRoot(layout);
+		}
+
+		private long calculateMiniSecond(Integer hour, Integer minus,
+				String timeFormat) {
+			long allMinus = 0;
+			if (timeFormat.equals("AM")) {
+				allMinus = (((hour == 12) ? 0 : hour) * 60 + minus)
+						* ONE_MINUTE_IN_MILLIS;
+			} else if (timeFormat.equals("PM")) {
+				allMinus = (((hour == 12) ? 12 : hour + 12) * 60 + minus)
+						* ONE_MINUTE_IN_MILLIS;
+			}
+			return allMinus;
+		}
+
+		@Override
+		public Class<Date> getType() {
+			return Date.class;
+		}
+
+		@Override
+		public Date getValue() {
+			if (popupDateField.getValue() == null) {
+				return null;
+			}
+			Date baseDate = DateTimeUtils.convertDate((Date) popupDateField
+					.getValue());
+			Integer hour = Integer.parseInt((String) hourPickerComboBox
+					.getValue());
+			Integer minus = Integer.parseInt((String) minusPickerComboBox
+					.getValue());
+			String timeFormat = (String) timeFormatComboBox.getValue();
+			long milliseconds = calculateMiniSecond(hour, minus, timeFormat);
+			java.util.Calendar cal = java.util.Calendar.getInstance();
+			cal.setTimeInMillis(baseDate.getTime() + milliseconds);
+			return cal.getTime();
+		}
+
+		private class HourPickerComboBox extends ValueComboBox {
+			private static final long serialVersionUID = 1L;
+			private final String[] HOURDATA = new String[] { "12", "01", "02",
+					"03", "04", "05", "06", "07", "08", "09", "10", "11" };
+
+			public HourPickerComboBox() {
+				super();
+				setCaption(null);
+				this.loadData(HOURDATA);
+			}
+		}
+
+		private class MinusPickerComboBox extends ValueComboBox {
+			private static final long serialVersionUID = 1L;
+			private String[] MINUSDATA = new String[] {};
+
+			public MinusPickerComboBox() {
+				super();
+				setCaption(null);
+				List<String> lst = new ArrayList<String>();
+				for (int i = 0; i <= 60; i++) {
+					String str = (i < 10) ? "0" + i : "" + i;
+					lst.add(str);
+				}
+				this.loadData(lst.toArray(MINUSDATA));
 			}
 		}
 	}
