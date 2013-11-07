@@ -9,7 +9,8 @@
 
     <import resource="core-context.xml" />
 
-    <!--  <context:property-placeholder location="classpath:resources.properties" />-->
+    <!-- <context:property-placeholder location="classpath:resources.properties" 
+        /> -->
 
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
@@ -19,7 +20,7 @@
     </bean>
 
     <bean id="mainDataSource" class="com.jolbox.bonecp.BoneCPDataSource"
-        destroy-method="close">
+        destroy-method="close" depends-on="myCollabProperties">
         <property name="driverClass" value="${db.driverClassName}" />
         <property name="jdbcUrl" value="${db.url}" />
         <property name="username" value="${db.username}" />
@@ -37,8 +38,7 @@
 
     <tx:annotation-driven transaction-manager="txManager" />
 
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-        depends-on="dbMigration">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="typeAliasesPackage" value="com.esofthead.mycollab" />
         <property name="typeAliasesSuperType"

@@ -10,11 +10,13 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.fasterxml.jackson.core.TreeNode;
 
 @Configuration
 public class AppServiceLoader {
-	@Bean
+	@Bean(name = "myCollabProperties")
 	public static PropertySourcesPlaceholderConfigurer properties() {
+		TreeNode a;
 		PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
 
 		Resource[] resources;

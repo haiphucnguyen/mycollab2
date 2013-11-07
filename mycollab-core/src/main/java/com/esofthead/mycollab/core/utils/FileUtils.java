@@ -32,26 +32,23 @@ public class FileUtils {
 
 	public static File detectFileByName(File homeDir, String filename) {
 		File[] listFiles = homeDir.listFiles();
-		try {
-			for (File file : listFiles) {
-				if (file.isFile()) {
-					if (file.getName().equals(filename)) {
-						log.debug(
-								"Detect file name {} at path {}",
-								new Object[] { filename, file.getAbsolutePath() });
-						return file;
-					}
-				} else {
-					log.debug("Search folder {}", file.getAbsolutePath());
-					File resultFile = detectFileByName(file, filename);
-					if (resultFile != null) {
-						return resultFile;
-					}
+
+		for (File file : listFiles) {
+			if (file.isFile()) {
+				if (file.getName().equals(filename)) {
+					log.debug("Detect file name {} at path {}", new Object[] {
+							filename, file.getAbsolutePath() });
+					return file;
+				}
+			} else {
+				log.debug("Search folder {}", file.getAbsolutePath());
+				File resultFile = detectFileByName(file, filename);
+				if (resultFile != null) {
+					return resultFile;
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+
 		return null;
 	}
 }

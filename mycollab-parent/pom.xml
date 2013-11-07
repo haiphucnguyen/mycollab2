@@ -31,6 +31,7 @@
         <module>../mycollab-config</module>
         <module>../mycollab-api</module>
         <module>../mycollab-caching</module>
+        <module>../mycollab-caching-premium</module>
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-test</module>
         <module>../mycollab-services</module>
@@ -38,7 +39,7 @@
         <module>../mycollab-esb</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>
-        <module>../mycollab-jetty-session</module>
+        <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-web</module>
         <module>../mycollab-frontsite</module>
     </modules>
@@ -235,7 +236,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
-            <version>1.3.25</version>
+            <version>1.6.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>

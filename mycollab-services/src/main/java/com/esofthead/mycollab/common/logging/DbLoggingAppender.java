@@ -62,7 +62,8 @@ public class DbLoggingAppender extends AppenderSkeleton {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
+			System.out.println(record.getErrortrace());
 		}
 	}
 }

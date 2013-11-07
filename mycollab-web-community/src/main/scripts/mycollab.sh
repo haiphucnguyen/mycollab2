@@ -156,7 +156,7 @@ if [ "$1" = "start" ] ; then
   shift
   touch "$MYCOLLAB_OUT"
   eval \"$_RUNJAVA\" $MYCOLLAB_OPTS \
-      -jar starter.jar "$@" start 
+      -jar runner.jar "$@" start 
  ####>> "$MYCOLLAB_OUT" 2>&1 "&"
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
