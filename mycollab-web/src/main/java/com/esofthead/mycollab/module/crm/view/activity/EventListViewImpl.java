@@ -49,6 +49,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 
 	public EventListViewImpl() {
 
+		this.setMargin(true);
 		this.eventSearchPanel = new EventSearchPanel();
 		this.addComponent(this.eventSearchPanel);
 
