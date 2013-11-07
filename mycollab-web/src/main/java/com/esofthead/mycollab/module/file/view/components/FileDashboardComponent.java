@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceMover;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.module.file.view.ResourceHandlerComponent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;

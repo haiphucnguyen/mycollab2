@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.file.view;
+package com.esofthead.mycollab.module.file.view.components;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -31,7 +34,6 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
-import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -68,6 +70,9 @@ import com.vaadin.ui.Window;
 
 public class ResourceHandlerComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory
+			.getLogger(ResourceHandlerComponent.class);
+
 	private HorizontalLayout controllGroupBtn;
 	private Button deleteBtn;
 	private Button selectAllBtn;
@@ -85,11 +90,6 @@ public class ResourceHandlerComponent extends VerticalLayout {
 	private PagingResourceWapper pagingResourceWapper;
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 	private boolean isNeedLoadExternalDirve = false;
-	private boolean isShowMessageWhenProblemConnect = false;
-
-	public boolean IsShowMessageWhenProblemConnect() {
-		return isShowMessageWhenProblemConnect;
-	}
 
 	public void setCurrentBaseFolder(Folder baseFolder) {
 		this.baseFolder = baseFolder;
@@ -122,7 +122,6 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 	public ResourceHandlerComponent(final Folder baseFolder,
 			final String rootPath, Tree menuTree) {
-		isShowMessageWhenProblemConnect = false;
 		this.menuTree = menuTree;
 		this.baseFolder = baseFolder;
 		this.rootPath = rootPath;
@@ -485,10 +484,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			mainLayout.setSpacing(false);
 
 			List<Resource> lstResource = new ArrayList<Resource>();
-			if (currentFolder instanceof ExternalFolder
-					&& FileMainViewImpl.isAbleToConnectToDrive(FileMainViewImpl
-							.getSiteURL(((ExternalFolder) currentFolder)
-									.getStorageName()))) {
+			if (currentFolder instanceof ExternalFolder) {
 				lstResource = externalResourceService.getResources(
 						((ExternalFolder) currentFolder).getExternalDrive(),
 						currentFolder.getPath());
@@ -503,25 +499,19 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				boolean showMessage = false;
 				if (lst != null && lst.size() > 0) {
 					for (ExternalDrive drive : lst) {
-						if (drive.getStoragename().equals(StorageNames.DROPBOX)
-								&& FileMainViewImpl
-										.isAbleToConnectToDrive(FileMainViewImpl
-												.getSiteURL(StorageNames.DROPBOX))) {
-							Resource res = externalResourceService
-									.getCurrentResourceByPath(drive, "/");
-							res.setName(drive.getFoldername());
-							lstResource.add(0, res);
+						if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
+							try {
+								Resource res = externalResourceService
+										.getCurrentResourceByPath(drive, "/");
+								res.setName(drive.getFoldername());
+								lstResource.add(0, res);
+							} catch (Exception e) {
+								Log.error(e);
+							}
 						} else {
 							showMessage = true;
 						}
 					}
-				}
-				if (showMessage && !isShowMessageWhenProblemConnect) {
-					isShowMessageWhenProblemConnect = true;
-					NotificationUtil
-							.showNotification(
-									"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
-									Window.Notification.TYPE_WARNING_MESSAGE);
 				}
 			}
 			this.addComponent(new Hr());

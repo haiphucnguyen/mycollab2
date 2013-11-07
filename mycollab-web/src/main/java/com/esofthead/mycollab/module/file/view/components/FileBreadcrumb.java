@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.file.view;
+package com.esofthead.mycollab.module.file.view.components;
 
 import java.util.ArrayList;
 import java.util.List;

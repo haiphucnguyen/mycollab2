@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.file.view;
+package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;

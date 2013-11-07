@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.file.view;
+package com.esofthead.mycollab.premium.module.file.view;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

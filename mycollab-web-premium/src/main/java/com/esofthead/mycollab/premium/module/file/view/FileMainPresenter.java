@@ -1,5 +1,6 @@
-package com.esofthead.mycollab.module.file.view;
+package com.esofthead.mycollab.premium.module.file.view;
 
+import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;

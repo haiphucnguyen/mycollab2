@@ -9,8 +9,8 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.view.CrmModulePresenter;
 import com.esofthead.mycollab.module.crm.view.CrmModuleScreenData;
-import com.esofthead.mycollab.module.file.view.FileModulePresenter;
 import com.esofthead.mycollab.module.file.view.FileModuleScreenData;
+import com.esofthead.mycollab.module.file.view.IFileModulePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectModulePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectModuleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModulePresenter;
@@ -104,8 +104,8 @@ public class MainViewController implements IController {
 
 					@Override
 					public void handle(ShellEvent.GotoFileModule event) {
-						FileModulePresenter fileModulePresenter = PresenterResolver
-								.getPresenter(FileModulePresenter.class);
+						IFileModulePresenter fileModulePresenter = PresenterResolver
+								.getPresenter(IFileModulePresenter.class);
 						FileModuleScreenData.GotoModule screenData = new FileModuleScreenData.GotoModule(
 								(String[]) event.getData());
 						fileModulePresenter.go(container, screenData);

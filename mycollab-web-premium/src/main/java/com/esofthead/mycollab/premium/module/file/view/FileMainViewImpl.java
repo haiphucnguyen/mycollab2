@@ -1,8 +1,5 @@
-package com.esofthead.mycollab.module.file.view;
+package com.esofthead.mycollab.premium.module.file.view;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +25,9 @@ import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.module.file.view.components.ResourceHandlerComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -277,34 +276,21 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 						}
 					}
 					if (expandFolder instanceof ExternalFolder) {
-						if (isAbleToConnectToDrive(FileMainViewImpl
-								.getSiteURL(((ExternalFolder) expandFolder)
-										.getStorageName()))) {
-							List<ExternalFolder> subFolders = externalResourceService
-									.getSubFolders(
-											((ExternalFolder) expandFolder)
-													.getExternalDrive(),
-											expandFolder.getPath());
-							for (final Folder subFolder : subFolders) {
-								expandFolder.addChild(subFolder);
-								menuTree.addItem(subFolder);
+						List<ExternalFolder> subFolders = externalResourceService
+								.getSubFolders(((ExternalFolder) expandFolder)
+										.getExternalDrive(), expandFolder
+										.getPath());
+						for (final Folder subFolder : subFolders) {
+							expandFolder.addChild(subFolder);
+							menuTree.addItem(subFolder);
 
-								menuTree.setItemIcon(
-										subFolder,
-										MyCollabResource
-												.newResource("icons/16/ecm/dropbox_subfolder.png"));
-								menuTree.setItemCaption(subFolder,
-										subFolder.getName());
-								menuTree.setParent(subFolder, expandFolder);
-							}
-						} else {
-							if (!resourceHandlerLayout
-									.IsShowMessageWhenProblemConnect())
-								FileMainViewImpl.this
-										.getWindow()
-										.showNotification(
-												"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
-												Window.Notification.TYPE_WARNING_MESSAGE);
+							menuTree.setItemIcon(
+									subFolder,
+									MyCollabResource
+											.newResource("icons/16/ecm/dropbox_subfolder.png"));
+							menuTree.setItemCaption(subFolder,
+									subFolder.getName());
+							menuTree.setParent(subFolder, expandFolder);
 						}
 					} else {
 						final List<Folder> subFolders = resourceService
@@ -374,23 +360,11 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			@Override
 			public void itemClick(final ItemClickEvent event) {
 				final Folder item = (Folder) event.getItemId();
-				if (item instanceof ExternalFolder
-						&& !isAbleToConnectToDrive(getSiteURL(((ExternalFolder) item)
-								.getStorageName()))) {
-					if (!resourceHandlerLayout
-							.IsShowMessageWhenProblemConnect()) {
-						FileMainViewImpl.this
-								.getWindow()
-								.showNotification(
-										"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server",
-										Window.Notification.TYPE_WARNING_MESSAGE);
-						gotoFileMainViewPage(item, false);
-					} else {
-						gotoFileMainViewPage(item, false);
-					}
-					return;
+				if (item instanceof ExternalFolder) {
+					gotoFileMainViewPage(item, false);
+				} else {
+					gotoFileMainViewPage(item, true);
 				}
-				gotoFileMainViewPage(item, true);
 			}
 		});
 
@@ -1051,25 +1025,5 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				externalDriveEditLayout.removeStyleName("driveEditting");
 			}
 		}
-	}
-
-	public static boolean isAbleToConnectToDrive(String site) {
-		URL url;
-		HttpURLConnection urlConn;
-		try {
-			url = new URL(site);
-			urlConn = (HttpURLConnection) url.openConnection();
-			urlConn.connect();
-			return true;
-		} catch (IOException e) {
-			return false;
-		}
-	}
-
-	public static String getSiteURL(String storageName) {
-		if (storageName.equals(StorageNames.DROPBOX)) {
-			return "http://www.dropbox.com/";
-		}
-		return "";
 	}
 }
