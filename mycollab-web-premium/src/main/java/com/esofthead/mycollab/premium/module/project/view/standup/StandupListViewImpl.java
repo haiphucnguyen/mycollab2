@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.standup;
+package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import java.util.Date;
 import java.util.List;

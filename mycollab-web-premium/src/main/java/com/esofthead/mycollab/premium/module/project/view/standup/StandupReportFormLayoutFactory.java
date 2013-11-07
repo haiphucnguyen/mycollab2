@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.standup;
+package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;

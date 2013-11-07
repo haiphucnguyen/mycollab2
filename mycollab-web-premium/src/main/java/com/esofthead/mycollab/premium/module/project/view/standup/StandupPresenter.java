@@ -1,8 +1,10 @@
-package com.esofthead.mycollab.module.project.view.standup;
+package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
+import com.esofthead.mycollab.module.project.view.standup.IStandupContainer;
+import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter;
 import com.esofthead.mycollab.shell.BillingPlanCheckerContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -10,11 +12,12 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class StandupPresenter extends AbstractPresenter<StandupContainer> {
+public class StandupPresenter extends AbstractPresenter<IStandupContainer>
+		implements IStandupPresenter {
 	private static final long serialVersionUID = 1L;
 
 	public StandupPresenter() {
-		super(StandupContainer.class);
+		super(IStandupContainer.class);
 	}
 
 	@Override

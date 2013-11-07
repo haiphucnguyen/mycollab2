@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.standup;
+package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;

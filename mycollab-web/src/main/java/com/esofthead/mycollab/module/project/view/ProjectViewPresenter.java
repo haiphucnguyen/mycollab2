@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
-import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
+import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
@@ -127,7 +127,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 			presenter = PresenterResolver.getPresenter(TrackerPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
 				StandupScreenData.Search.class, StandupScreenData.Add.class)) {
-			presenter = PresenterResolver.getPresenter(StandupPresenter.class);
+			presenter = PresenterResolver.getPresenter(IStandupPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
 				ProjectMemberScreenData.Search.class,
 				ProjectMemberScreenData.Read.class,

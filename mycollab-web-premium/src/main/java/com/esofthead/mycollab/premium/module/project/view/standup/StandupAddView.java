@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.standup;
+package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
