@@ -638,6 +638,8 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					ActivityCalendarViewImpl.this.getWindow().showNotification(
 							"Event: \"" + simpleMeeting.getSubject()
 									+ "\" has been updated!");
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.GotoCalendar(this, null));
 				}
 			});
 
