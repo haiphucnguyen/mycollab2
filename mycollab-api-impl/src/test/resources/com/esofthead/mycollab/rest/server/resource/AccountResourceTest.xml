@@ -12,5 +12,5 @@
 
     <s_user_account id="1" isAccountOwner="true"
         registerStatus="Active" username="hainguyen" accountId="1"
-        registeredTime="2011-11-05 00:00:00" isAdmin="true" />
+        registeredTime="2011-11-05 00:00:00" />
 </dataset>
