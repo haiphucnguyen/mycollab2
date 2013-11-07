@@ -10,67 +10,93 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 
 @ViewComponent
 public class ActivityRootView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
+	private final HorizontalLayout root;
 	private final DetachedTabs activityTabs;
 	private final CssLayout mySpaceArea = new CssLayout();
 
 	private ActivityCalendarPresenter calendarPresenter;
-
 	private EventPresenter eventPresenter;
 
 	public ActivityRootView() {
 		super();
-
 		this.setSizeFull();
 
-		mySpaceArea.setWidth("100%");
-		activityTabs = new DetachedTabs.Horizontal(mySpaceArea);
-		activityTabs.setWidth("100%");
-		activityTabs.setHeight(null);
-		activityTabs.setStyleName("activityTabs");
+		this.setWidth("100%");
 
-		activityTabs.addTab(constructCalendarView(), LocalizationHelper
-				.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE));
-		activityTabs.addTab(constructActivityListView(), LocalizationHelper
-				.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
+		final CssLayout contentWrapper = new CssLayout();
+		contentWrapper.setStyleName("projectDashboardView");
+		contentWrapper.addStyleName("main-content-wrapper");
+		contentWrapper.setWidth("100%");
+		this.addComponent(contentWrapper);
+
+		root = new HorizontalLayout();
+		root.setStyleName("menuContent");
+
+		activityTabs = new DetachedTabs.Vertical(mySpaceArea);
+		activityTabs.setSizeFull();
+		activityTabs.setHeight(null);
+
+		CssLayout menu = new CssLayout();
+		menu.setWidth("170px");
+		menu.setStyleName("sidebar-menu");
+		menu.addComponent(activityTabs);
+
+		root.addComponent(menu);
+		mySpaceArea.setStyleName("projectTabContent");
+		mySpaceArea.setWidth("100%");
+		mySpaceArea.setHeight(null);
+		mySpaceArea.setMargin(true);
+		root.addComponent(mySpaceArea);
+		root.setExpandRatio(mySpaceArea, 1.0f);
+		root.setWidth("100%");
+		buildComponents();
+		contentWrapper.addComponent(root);
+	}
+
+	private void buildComponents() {
+		activityTabs.addTab(constructCalendarView(), new MenuButton("Calendar",
+				"notification.png"));
+		activityTabs.addTab(constructActivityListView(), new MenuButton(
+				"Activities List", "layout.png"));
 
 		activityTabs
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
-
 					@Override
 					public void tabChanged(TabChangedEvent event) {
 						Button btn = event.getSource();
 						String caption = btn.getCaption();
+						mySpaceArea.setStyleName("projectTabContent");
 
-						if (caption.equals(LocalizationHelper
-								.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE))) {
-							gotoCalendar();
-						} else if (caption.equals(LocalizationHelper
-								.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE))) {
-							gotoActivityList();
+						if ("Calendar".equals(caption)) {
+							calendarPresenter.go(ActivityRootView.this,
+									new ActivityScreenData.GotoCalendar());
+						} else if ("Activities List".equals(caption)) {
+							eventPresenter.go(ActivityRootView.this,
+									new ActivityScreenData.GotoActivityList(
+											null));
 						}
 					}
 				});
-
-		this.addComponent(activityTabs);
-		this.addComponent(mySpaceArea);
-		this.setExpandRatio(mySpaceArea, 1.0f);
 	}
 
 	private ComponentContainer constructCalendarView() {
 		calendarPresenter = PresenterResolver
 				.getPresenter(ActivityCalendarPresenter.class);
-		return calendarPresenter.getView();
+		ActivityCalendarView activityCalendarView = calendarPresenter.getView();
+		return activityCalendarView;
 	}
 
 	private ComponentContainer constructActivityListView() {
@@ -86,6 +112,17 @@ public class ActivityRootView extends AbstractView {
 
 		if (calendarComp != null) {
 			calendarPresenter.go(this, null);
+		}
+	}
+
+	private static class MenuButton extends Button {
+		private static final long serialVersionUID = 1L;
+
+		public MenuButton(String caption, String iconResource) {
+			super(caption);
+			this.setIcon(MyCollabResource.newResource("icons/22/crm/"
+					+ iconResource));
+			this.setStyleName("link");
 		}
 	}
 

@@ -1,10 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 import org.vaadin.addon.customfield.CustomField;
@@ -77,10 +75,12 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		super();
 
 		this.setStyleName("activityCalendar");
+		this.setMargin(true);
 
 		MenuActionListener listener = new MenuActionListener();
 
 		calendarActionBtn = new PopupButton("Create");
+		calendarActionBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 		VerticalLayout actionBtnLayout = new VerticalLayout();
 		actionBtnLayout.setMargin(true);
@@ -107,10 +107,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		HorizontalLayout actionPanel = new HorizontalLayout();
 		actionPanel.setWidth("100%");
 		actionPanel.setSpacing(true);
-		actionPanel.setStyleName("actionPanel");
-		actionPanel.addComponent(calendarActionBtn);
-		actionPanel.setComponentAlignment(calendarActionBtn,
-				Alignment.MIDDLE_LEFT);
+		actionPanel.setMargin(true);
 		this.addComponent(actionPanel);
 
 		groupViewBtn = new ButtonGroup();
@@ -158,7 +155,11 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		groupViewBtn.addButton(dailyViewBtn);
 
 		actionPanel.addComponent(groupViewBtn);
-		actionPanel.setComponentAlignment(groupViewBtn, Alignment.MIDDLE_RIGHT);
+		actionPanel.setComponentAlignment(groupViewBtn, Alignment.MIDDLE_LEFT);
+
+		actionPanel.addComponent(calendarActionBtn);
+		actionPanel.setComponentAlignment(calendarActionBtn,
+				Alignment.MIDDLE_RIGHT);
 
 		calendarComponent = new MonthViewCalendar();
 		this.addComponent(calendarComponent);
@@ -550,17 +551,12 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 		private class MinusPickerComboBox extends ValueComboBox {
 			private static final long serialVersionUID = 1L;
-			private String[] MINUSDATA = new String[] {};
+			private String[] MINUSDATA = new String[] { "00", "15", "30", "45" };
 
 			public MinusPickerComboBox() {
 				super();
 				setCaption(null);
-				List<String> lst = new ArrayList<String>();
-				for (int i = 0; i <= 60; i++) {
-					String str = (i < 10) ? "0" + i : "" + i;
-					lst.add(str);
-				}
-				this.loadData(lst.toArray(MINUSDATA));
+				this.loadData(MINUSDATA);
 			}
 		}
 	}
@@ -617,9 +613,12 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 				@Override
 				public void rangeSelect(RangeSelectEvent event) {
-					ActivityCalendarViewImpl.this.getWindow().addWindow(
-							new EventQuickCreateWindow(event.getStart(), event
-									.getEnd()));
+					if (AppContext
+							.canWrite(RolePermissionCollections.CRM_MEETING)) {
+						ActivityCalendarViewImpl.this.getWindow().addWindow(
+								new EventQuickCreateWindow(event.getStart(),
+										event.getEnd()));
+					}
 				}
 			});
 
@@ -639,6 +638,8 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					ActivityCalendarViewImpl.this.getWindow().showNotification(
 							"Event: \"" + simpleMeeting.getSubject()
 									+ "\" has been updated!");
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.GotoCalendar(this, null));
 				}
 			});
 
