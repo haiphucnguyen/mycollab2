@@ -6,11 +6,11 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
-public class TimeTrackingPresenter extends AbstractPresenter<TimeTrackingView> {
+public class TimeTrackingSummaryPresenter extends AbstractPresenter<TimeTrackingSummaryView> {
 	private static final long serialVersionUID = 1L;
 
-	public TimeTrackingPresenter() {
-		super(TimeTrackingView.class);
+	public TimeTrackingSummaryPresenter() {
+		super(TimeTrackingSummaryView.class);
 	}
 
 	@Override

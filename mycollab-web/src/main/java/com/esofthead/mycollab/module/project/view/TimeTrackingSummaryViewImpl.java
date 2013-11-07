@@ -48,8 +48,8 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class TimeTrackingViewImpl extends AbstractView implements
-		TimeTrackingView {
+public class TimeTrackingSummaryViewImpl extends AbstractView implements
+		TimeTrackingSummaryView {
 	private static final long serialVersionUID = 1L;
 
 	private PopupDateField fromDateField;
@@ -62,7 +62,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 
 	private ItemTimeLoggingSearchCriteria searchCriteria;
 
-	public TimeTrackingViewImpl() {
+	public TimeTrackingSummaryViewImpl() {
 		this.setSpacing(true);
 		this.setWidth("100%");
 
@@ -101,7 +101,7 @@ public class TimeTrackingViewImpl extends AbstractView implements
 			public void buttonClick(final ClickEvent event) {
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.GotoProjectModule(
-								TimeTrackingViewImpl.this, null));
+								TimeTrackingSummaryViewImpl.this, null));
 
 			}
 		});
@@ -264,8 +264,8 @@ public class TimeTrackingViewImpl extends AbstractView implements
 				searchCriteria, SimpleItemTimeLogging.class);
 		StreamResource res = new StreamResource(stream,
 				stream.getDefaultExportFileName(),
-				TimeTrackingViewImpl.this.getApplication());
-		TimeTrackingViewImpl.this.getWindow().open(res, "_blank");
+				TimeTrackingSummaryViewImpl.this.getApplication());
+		TimeTrackingSummaryViewImpl.this.getWindow().open(res, "_blank");
 		exportButtonControl.setPopupVisible(false);
 	}
 

@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
-import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
+import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -142,7 +142,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		} else if (ClassUtils.instanceOf(pageAction,
 				TimeTrackingScreenData.Search.class)) {
 			presenter = PresenterResolver
-					.getPresenter(TimeTrackingPresenter.class);
+					.getPresenter(ITimeTrackingPresenter.class);
 		} else if (ClassUtils
 				.instanceOf(pageAction, FileScreenData.GotoDashboard.class,
 						FileScreenData.Search.class)) {

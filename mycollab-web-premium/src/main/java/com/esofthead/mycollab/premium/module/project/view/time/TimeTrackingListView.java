@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.time;
+package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.View;

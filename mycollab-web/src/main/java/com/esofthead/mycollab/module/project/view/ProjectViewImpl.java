@@ -48,7 +48,7 @@ import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
-import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
+import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -90,7 +90,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private IFilePresenter filePresenter;
 	private IProblemPresenter problemPresenter;
 	private IRiskPresenter riskPresenter;
-	private TimeTrackingPresenter timePresenter;
+	private ITimeTrackingPresenter timePresenter;
 	private UserSettingPresenter userPresenter;
 	private StandupPresenter standupPresenter;
 	private final ProjectBreadcrumb breadCrumb;
@@ -313,7 +313,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private Component constructTimeTrackingComponent() {
 		timePresenter = PresenterResolver
-				.getPresenter(TimeTrackingPresenter.class);
+				.getPresenter(ITimeTrackingPresenter.class);
 		return timePresenter.getView();
 	}
 

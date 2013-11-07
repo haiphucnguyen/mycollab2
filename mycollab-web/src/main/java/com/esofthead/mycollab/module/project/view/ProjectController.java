@@ -186,8 +186,8 @@ public class ProjectController implements IController {
 							@Override
 							public void handle(
 									TimeTrackingEvent.GotoTimeTrackingView event) {
-								TimeTrackingPresenter presenter = PresenterResolver
-										.getPresenter(TimeTrackingPresenter.class);
+								TimeTrackingSummaryPresenter presenter = PresenterResolver
+										.getPresenter(TimeTrackingSummaryPresenter.class);
 								presenter.go(container, null);
 							}
 						});

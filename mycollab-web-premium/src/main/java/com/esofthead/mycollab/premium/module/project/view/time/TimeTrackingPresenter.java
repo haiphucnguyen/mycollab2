@@ -1,19 +1,22 @@
-package com.esofthead.mycollab.module.project.view.time;
+package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
+import com.esofthead.mycollab.module.project.view.time.ITimeTrackingContainer;
+import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
 public class TimeTrackingPresenter extends
-		AbstractPresenter<TimeTrackingContainer> {
+		AbstractPresenter<ITimeTrackingContainer> implements
+		ITimeTrackingPresenter {
 	private static final long serialVersionUID = 1L;
 
 	public TimeTrackingPresenter() {
-		super(TimeTrackingContainer.class);
+		super(ITimeTrackingContainer.class);
 	}
 
 	@Override
