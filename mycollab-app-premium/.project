@@ -3,19 +3,19 @@
   <name>mycollab-app-premium</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
-    <project>mycollab-core</project>
-    <project>mycollab-config</project>
-    <project>mycollab-caching</project>
     <project>mycollab-caching-premium</project>
+    <project>mycollab-core</project>
     <project>mycollab-api</project>
     <project>mycollab-services</project>
+    <project>mycollab-config</project>
+    <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-web-premium</project>
+    <project>mycollab-web</project>
     <project>mycollab-api-impl</project>
     <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
-    <project>mycollab-test</project>
-    <project>mycollab-web</project>
     <project>ckeditor</project>
     <project>mycollab-jetty-session-premium</project>
   </projects>

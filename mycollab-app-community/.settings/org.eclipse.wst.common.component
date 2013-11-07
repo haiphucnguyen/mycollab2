@@ -4,6 +4,9 @@
     <property name="context-root" value="mycollab-app-community"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/target/classes"/>
+    <dependent-module archiveName="mycollab-web-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web-community/mycollab-web-community">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-core.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-core/mycollab-core">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -209,12 +212,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="sslext-1.2-0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="javamelody-core-1.43.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/bull/javamelody/javamelody-core/1.43.0/javamelody-core-1.43.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jrobin-1.5.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jrobin/jrobin/1.5.9/jrobin-1.5.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cal10n-api-0.8.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar">

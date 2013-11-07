@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.file;
+package com.esofthead.mycollab.premium.module.project.view.file;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;

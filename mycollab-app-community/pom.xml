@@ -10,77 +10,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <packaging>war</packaging>
-    <properties>
-        <vaadinVersion>6.8.13</vaadinVersion>
-        <gwtversion>2.3.0</gwtversion>
-        <jettyVersion>8.1.13.v20130916</jettyVersion>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-config</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-caching</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api-impl</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-reporting</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-services</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-esb</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-scheduler</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-web</artifactId>
+            <artifactId>mycollab-web-community</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -93,21 +27,6 @@
                 <version>2.3</version>
             </plugin>
 
-            <!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
-                <version>1.0.2</version> <executions> <execution> <phase>prepare-package</phase> 
-                <configuration> </configuration> <goals> <goal>update-widgetset</goal> </goals> 
-                </execution> </executions> <dependencies> <dependency> <groupId>com.google.gwt</groupId> 
-                <artifactId>gwt-user</artifactId> <version>${gwtversion}</version> <scope>compile</scope> 
-                </dependency> <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> 
-                <version>${gwtversion}</version> <scope>compile</scope> </dependency> </dependencies> 
-                </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
-                <version>${gwtversion}</version> <executions> <execution> <phase>prepare-package</phase> 
-                <configuration> <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> </configuration> 
-                <goals> <goal>compile</goal> </goals> </execution> </executions> <dependencies> 
-                <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
-                <version>${gwtversion}</version> <scope>compile</scope> </dependency> <dependency> 
-                <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
-                <scope>compile</scope> </dependency> </dependencies> </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>

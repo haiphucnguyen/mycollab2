@@ -50,8 +50,8 @@ import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
+import com.esofthead.mycollab.module.project.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
-import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
@@ -1007,8 +1007,8 @@ public class ProjectController implements IController {
 
 							@Override
 							public void handle(GotoDashboard event) {
-								FilePresenter presenter = PresenterResolver
-										.getPresenter(FilePresenter.class);
+								IFilePresenter presenter = PresenterResolver
+										.getPresenter(IFilePresenter.class);
 								ProjectView projectView = ViewManager
 										.getView(ProjectView.class);
 								presenter.go(projectView,
@@ -1028,8 +1028,8 @@ public class ProjectController implements IController {
 
 					@Override
 					public void handle(Search event) {
-						FilePresenter presenter = PresenterResolver
-								.getPresenter(FilePresenter.class);
+						IFilePresenter presenter = PresenterResolver
+								.getPresenter(IFilePresenter.class);
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 						presenter.go(projectView, new FileScreenData.Search(

@@ -29,10 +29,10 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.TrackerPresenter;
-import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
@@ -87,7 +87,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private MilestonePresenter milestonesPresenter;
 	private TaskPresenter taskPresenter;
 	private TrackerPresenter trackerPresenter;
-	private FilePresenter filePresenter;
+	private IFilePresenter filePresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 	private TimeTrackingPresenter timePresenter;
@@ -335,7 +335,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectFileComponent() {
-		filePresenter = PresenterResolver.getPresenter(FilePresenter.class);
+		filePresenter = PresenterResolver.getPresenter(IFilePresenter.class);
 		return filePresenter.getView();
 	}
 

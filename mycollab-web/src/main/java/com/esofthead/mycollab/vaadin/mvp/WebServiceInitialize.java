@@ -7,7 +7,7 @@ public class WebServiceInitialize implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		ViewManager.init();
-
+		PresenterResolver.init();
 	}
 
 }

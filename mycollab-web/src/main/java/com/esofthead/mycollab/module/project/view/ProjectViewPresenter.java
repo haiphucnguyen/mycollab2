@@ -1,13 +1,11 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.TrackerPresenter;
-import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
@@ -35,6 +33,7 @@ import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -42,7 +41,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 
@@ -95,7 +93,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 			PageActionChain pageActionChain) {
 		ScreenData pageAction = pageActionChain.peek();
 
-		AbstractPresenter<?> presenter = null;
+		Presenter<?> presenter = null;
 
 		if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.Read.class,
 				MilestoneScreenData.Search.class,
@@ -148,7 +146,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		} else if (ClassUtils
 				.instanceOf(pageAction, FileScreenData.GotoDashboard.class,
 						FileScreenData.Search.class)) {
-			presenter = PresenterResolver.getPresenter(FilePresenter.class);
+			presenter = PresenterResolver.getPresenter(IFilePresenter.class);
 		} else {
 			throw new UnsupportedOperationException(
 					"Not support page action chain " + pageAction);

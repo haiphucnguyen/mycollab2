@@ -1,6 +1,8 @@
-package com.esofthead.mycollab.module.project.view.file;
+package com.esofthead.mycollab.premium.module.project.view.file;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.file.IFileContainer;
+import com.esofthead.mycollab.module.project.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -8,11 +10,12 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class FilePresenter extends AbstractPresenter<FileContainer> {
+public class FilePresenter extends AbstractPresenter<IFileContainer> implements
+		IFilePresenter {
 	private static final long serialVersionUID = 1L;
 
 	public FilePresenter() {
-		super(FileContainer.class);
+		super(IFileContainer.class);
 	}
 
 	@Override

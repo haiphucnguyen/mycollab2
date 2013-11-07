@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.bug;
+package com.esofthead.mycollab.module.project.ui.components;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 

@@ -13,6 +13,9 @@
         <javaVersion>1.6</javaVersion>
         <slf4jVersion>1.6.4</slf4jVersion>
         <log4jVersion>1.2.16</log4jVersion>
+        <vaadinVersion>6.8.13</vaadinVersion>
+        <gwtversion>2.3.0</gwtversion>
+        <jettyVersion>8.1.13.v20130916</jettyVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- START DECLARE PROPERTIES FOR PROGAURD -->
@@ -55,7 +58,6 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
@@ -292,16 +294,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>1.43.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jrobin</groupId>
-            <artifactId>jrobin</artifactId>
-            <version>1.5.9</version>
-        </dependency>
-        <dependency>
             <groupId>ch.qos.cal10n</groupId>
             <artifactId>cal10n-api</artifactId>
             <version>0.8.1</version>
@@ -340,25 +332,10 @@
                     <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
             </plugin>
-            <!-- 
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/src.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
+            <!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> 
+                <version>2.4</version> <configuration> <descriptors> <descriptor>src/main/assembly/src.xml</descriptor> 
+                </descriptors> </configuration> <executions> <execution> <phase>package</phase> 
+                <goals> <goal>single</goal> </goals> </execution> </executions> </plugin> -->
         </plugins>
     </build>
     <distributionManagement>
