@@ -32,6 +32,9 @@ public class SiteConfiguration {
 		instance.siteName = ApplicationProperties.getString(
 				ApplicationProperties.SITE_NAME, "MyCollab");
 
+		instance.serverPort = Integer.parseInt(ApplicationProperties.getString(
+				ApplicationProperties.SERVER_PORT, "8080"));
+
 		// load Deployment Mode
 		String runningMode = ApplicationProperties.getString(
 				ApplicationProperties.RUNNING_MODE, null);
@@ -129,6 +132,7 @@ public class SiteConfiguration {
 	private StorageConfiguration storageConfiguration;
 	private String sentErrorEmail;
 	private String siteName;
+	private int serverPort;
 	private EmailConfiguration emailConfiguration;
 	private EmailConfiguration relayEmailConfiguration;
 	private DatabaseConfiguration databaseConfiguration;
@@ -208,5 +212,9 @@ public class SiteConfiguration {
 
 	public static String getEnDecryptPassword() {
 		return instance.endecryptPassword;
+	}
+
+	public static int getServerPort() {
+		return instance.serverPort;
 	}
 }

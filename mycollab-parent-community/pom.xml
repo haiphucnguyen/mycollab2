@@ -26,6 +26,7 @@
         <module>../mycollab-scheduler</module>
         <module>../mycollab-web</module>
         <module>../mycollab-web-community</module>
+        <module>../mycollab-app-community</module>
     </modules>
     <build>
         <plugins>
@@ -51,7 +52,7 @@
                         <goals>
                             <goal>format</goal>
                         </goals>
-                        <phase>validate</phase>
+                        <phase>compile</phase>
                     </execution>
                 </executions>
             </plugin>

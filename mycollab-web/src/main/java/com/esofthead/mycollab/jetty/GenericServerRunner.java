@@ -23,6 +23,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 
@@ -33,7 +34,7 @@ public abstract class GenericServerRunner {
 	private Server server;
 
 	public GenericServerRunner() {
-		server = new Server(8080);
+		server = new Server(SiteConfiguration.getServerPort());
 		log.debug("Detect root folder webapp");
 		String webappDirLocation = detectBasedir();
 		server.setHandler(buildContext(webappDirLocation));

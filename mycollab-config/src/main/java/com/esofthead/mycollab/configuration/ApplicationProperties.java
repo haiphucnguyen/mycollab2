@@ -16,13 +16,18 @@
  */
 package com.esofthead.mycollab.configuration;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Properties;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.FileUtils;
+
 public class ApplicationProperties {
-	private static final String RESOURCE_PROPERTIES = "resources.properties";
+	private static final String RESOURCE_PROPERTIES = "mycollab.properties";
 	private static final String DECRYPT_PASS = "esofthead321";
 
 	private static Properties properties;
@@ -58,6 +63,7 @@ public class ApplicationProperties {
 	public static final String STORAGE_SYSTEM = "storageSystem";
 
 	public static final String SITE_NAME = "site.name";
+	public static final String SERVER_PORT = "server.port";
 	public static final String RUNNING_MODE = "running.mode";
 
 	public static final String DROPBOX_AUTH_LINK = "";
@@ -71,10 +77,17 @@ public class ApplicationProperties {
 
 		properties = new EncryptableProperties(encryptor);
 		try {
-			properties.load(Thread.currentThread().getContextClassLoader()
-					.getResourceAsStream(RESOURCE_PROPERTIES));
+			File myCollabFile = FileUtils.detectFileByName(
+					new File(System.getProperty("user.dir")),
+					RESOURCE_PROPERTIES);
+			if (myCollabFile != null) {
+				properties.load(new FileInputStream(myCollabFile));
+			} else {
+				properties.load(Thread.currentThread().getContextClassLoader()
+						.getResourceAsStream(RESOURCE_PROPERTIES));
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new MyCollabException(e);
 		}
 	}
 

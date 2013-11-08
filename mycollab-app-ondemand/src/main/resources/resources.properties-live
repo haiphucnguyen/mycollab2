@@ -5,7 +5,7 @@ site.name=MyCollab
 running.mode=site
 
 #================================
-#
+# SITE CONFIGURATION
 #================================
 endecryptPassword=mycollab123
 

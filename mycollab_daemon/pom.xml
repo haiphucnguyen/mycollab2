@@ -4,7 +4,7 @@
 	<groupId>com.esofthead</groupId>
 	<artifactId>mycollab-daemon</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>2.0-SNAPSHOT</version>
 	<name>mycollab-daemon</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>

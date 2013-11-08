@@ -17,6 +17,7 @@
         <module>../mycollab-test</module>
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
+        <module>../mycollab-web-premium</module>
         <module>../mycollab-app-premium</module>
         <module>../mycollab-app-ondemand</module>
     </modules>
