@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.web;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.URL;
 import java.util.Enumeration;
@@ -39,7 +39,9 @@ import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.maxmind.db.Reader.FileMode;
 import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.DatabaseReader.Builder;
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
@@ -67,9 +69,9 @@ public class MyCollabApplication extends Application implements
 
 	static {
 		try {
-			URL url = MyCollabApplication.class.getClassLoader().getResource(
-					"GeoLite2-City.mmdb");
-			reader = new DatabaseReader(new File(url.toURI()));
+			InputStream geoStream = MyCollabApplication.class.getClassLoader()
+					.getResourceAsStream("GeoLite2-City.mmdb");
+			reader = new Builder(geoStream).fileMode(FileMode.MEMORY).build();
 		} catch (Exception e) {
 			log.error("Can not read geo database file", e);
 		}

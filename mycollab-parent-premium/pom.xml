@@ -13,6 +13,7 @@
         <version>2.0-SNAPSHOT</version>
     </parent>
     <modules>
+        <module>../mycollab-frontsite</module>
         <module>../mycollab-flex-generator</module>
         <module>../mycollab-test</module>
         <module>../mycollab-jetty-session-premium</module>

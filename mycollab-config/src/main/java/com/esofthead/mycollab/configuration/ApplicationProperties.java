@@ -51,7 +51,6 @@ public class ApplicationProperties {
 	public static final String MAIL_USERNAME = "mail.username";
 	public static final String MAIL_PASSWORD = "mail.password";
 	public static final String MAIL_IS_TLS = "mail.isTLS";
-	public static final String MAIL_SENDTO = "mail.sendTo";
 
 	public static final String RELAYMAIL_SMTPHOST = "relaymail.smtphost";
 	public static final String RELAYMAIL_PORT = "relaymail.port";
