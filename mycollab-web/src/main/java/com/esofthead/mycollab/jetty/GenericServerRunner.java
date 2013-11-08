@@ -17,8 +17,15 @@
 package com.esofthead.mycollab.jetty;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.SocketException;
+import java.net.URL;
 
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ShutdownHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +44,29 @@ public abstract class GenericServerRunner {
 		server = new Server(SiteConfiguration.getServerPort());
 		log.debug("Detect root folder webapp");
 		String webappDirLocation = detectBasedir();
-		server.setHandler(buildContext(webappDirLocation));
+
+		WebAppContext appContext = buildContext(webappDirLocation);
+		HandlerList handlers = new HandlerList();
+		handlers.setHandlers(new Handler[] { appContext,
+				new ShutdownHandler(server, "esoftheadsecretkey") });
+		server.setHandler(handlers);
+	}
+
+	public static void attemptShutdown(int port, String shutdownCookie) {
+		try {
+			URL url = new URL("http://localhost:" + port + "/shutdown?token="
+					+ shutdownCookie);
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
+			connection.setRequestMethod("POST");
+			connection.getResponseCode();
+			log.info("Shutting down " + url + ": "
+					+ connection.getResponseMessage());
+		} catch (SocketException e) {
+			log.debug("Not running");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public abstract WebAppContext buildContext(String baseDir);
