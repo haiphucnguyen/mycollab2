@@ -120,10 +120,10 @@
   <classpathentry kind="var" path="M2_REPO/com/jolbox/bonecp/0.8.0.RELEASE/bonecp-0.8.0.RELEASE.jar" sourcepath="M2_REPO/com/jolbox/bonecp/0.8.0.RELEASE/bonecp-0.8.0.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/14.0.1/guava-14.0.1.jar" sourcepath="M2_REPO/com/google/guava/guava/14.0.1/guava-14.0.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/jolbox/bonecp-spring/0.8.0.RELEASE/bonecp-spring-0.8.0.RELEASE.jar" sourcepath="M2_REPO/com/jolbox/bonecp-spring/0.8.0.RELEASE/bonecp-spring-0.8.0.RELEASE-sources.jar"/>
-  <classpathentry kind="src" path="/mycollab-web-premium"/>
-  <classpathentry kind="src" path="/mycollab-web"/>
-  <classpathentry kind="src" path="/mycollab-api-impl"/>
-  <classpathentry kind="src" path="/mycollab-reporting"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-web-premium/1.0-SNAPSHOT/mycollab-web-premium-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/mycollab/mycollab-web-premium/1.0-SNAPSHOT/mycollab-web-premium-1.0-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-web/1.0-SNAPSHOT/mycollab-web-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/mycollab/mycollab-web/1.0-SNAPSHOT/mycollab-web-1.0-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-api-impl/1.0-SNAPSHOT/mycollab-api-impl-1.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-reporting/1.0-SNAPSHOT/mycollab-reporting-1.0-SNAPSHOT.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.1.5/dynamicreports-core-3.1.5.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.1.5/dynamicreports-core-3.1.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/5.2.0/jasperreports-5.2.0.jar" sourcepath="M2_REPO/net/sf/jasperreports/jasperreports/5.2.0/jasperreports-5.2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lowagie/itext/2.1.5/itext-2.1.5.jar" sourcepath="M2_REPO/com/lowagie/itext/2.1.5/itext-2.1.5-sources.jar"/>
@@ -136,8 +136,8 @@
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.1.5/dynamicreports-adhoc-3.1.5.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.1.5/dynamicreports-adhoc-3.1.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.5/dynamicreports-googlecharts-3.1.5.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.5/dynamicreports-googlecharts-3.1.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/schemacrawler/schemacrawler/10.5/schemacrawler-10.5.jar" sourcepath="M2_REPO/net/sourceforge/schemacrawler/schemacrawler/10.5/schemacrawler-10.5-sources.jar"/>
-  <classpathentry kind="src" path="/mycollab-esb"/>
-  <classpathentry kind="src" path="/mycollab-scheduler"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-esb/1.0-SNAPSHOT/mycollab-esb-1.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-scheduler/1.0-SNAPSHOT/mycollab-scheduler-1.0-SNAPSHOT.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar" sourcepath="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin/6.8.13/vaadin-6.8.13.jar" sourcepath="M2_REPO/com/vaadin/vaadin/6.8.13/vaadin-6.8.13-sources.jar"/>

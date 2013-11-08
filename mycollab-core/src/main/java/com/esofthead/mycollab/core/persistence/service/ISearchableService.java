@@ -18,8 +18,6 @@ package com.esofthead.mycollab.core.persistence.service;
 
 import java.util.List;
 
-import net.bull.javamelody.MonitoredWithSpring;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.cache.CacheEvict;
@@ -32,11 +30,9 @@ import com.esofthead.mycollab.core.cache.Cacheable;
  * @param <S>
  */
 public interface ISearchableService<S extends SearchCriteria> extends IService {
-	@MonitoredWithSpring
 	@Cacheable
 	int getTotalCount(@CacheKey S criteria);
 
-	@MonitoredWithSpring
 	@Cacheable
 	List findPagableListByCriteria(@CacheKey SearchRequest<S> searchRequest);
 

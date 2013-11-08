@@ -2,21 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>mycollab-config</name>
+    <name>mycollab-parent-premium</name>
     <groupId>com.esofthead.mycollab</groupId>
-    <artifactId>mycollab-config</artifactId>
+    <artifactId>parent-premium</artifactId>
     <version>2.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent-community</artifactId>
+        <artifactId>parent</artifactId>
         <version>2.0-SNAPSHOT</version>
     </parent>
-    <packaging>jar</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-core</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>../mycollab-flex-generator</module>
+        <module>../mycollab-test</module>
+        <module>../mycollab-jetty-session-premium</module>
+        <module>../mycollab-caching-premium</module>
+        <module>../mycollab-app-premium</module>
+        <module>../mycollab-app-ondemand</module>
+    </modules>
 </project>

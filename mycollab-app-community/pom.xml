@@ -6,7 +6,7 @@
     <artifactId>mycollab-app-community</artifactId>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>parent-community</artifactId>
         <version>2.0-SNAPSHOT</version>
     </parent>
     <packaging>war</packaging>
@@ -20,7 +20,6 @@
     </dependencies>
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
