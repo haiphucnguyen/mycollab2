@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.text.DateFormatSymbols;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -86,6 +87,9 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 	private MonthViewCalendar calendarComponent;
 	private ButtonGroup groupViewBtn;
 	private Button monthViewBtn;
+	private Button nextBtn;
+	private Button previousBtn;
+	private Label currentDateLabel;
 
 	public ActivityCalendarViewImpl() {
 		super();
@@ -97,6 +101,101 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 		calendarActionBtn = new PopupButton("Create");
 		calendarActionBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+
+		HorizontalLayout actionPanel = new HorizontalLayout();
+		actionPanel.setWidth("100%");
+		actionPanel.setSpacing(true);
+		actionPanel.setMargin(true);
+		this.addComponent(actionPanel);
+
+		groupViewBtn = new ButtonGroup();
+		monthViewBtn = new Button("Monthly View", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarComponent.switchToMonthView();
+				monthViewBtn.addStyleName("selected-style");
+				nextBtn.setCaption("Next Month");
+				previousBtn.setCaption("Previous Month");
+				initLabelCaption();
+			}
+		});
+
+		groupViewBtn.addButton(monthViewBtn);
+		Button weekViewBtn = new Button("Weekly View",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						java.util.Calendar cal = java.util.Calendar
+								.getInstance();
+						int week = cal.get(java.util.Calendar.WEEK_OF_YEAR);
+
+						WeekClickHandler handler = (WeekClickHandler) calendarComponent
+								.getHandler(WeekClick.EVENT_ID);
+						handler.weekClick(new WeekClick(calendarComponent,
+								week, cal.get(GregorianCalendar.YEAR)));
+						nextBtn.setCaption("Next Week");
+						previousBtn.setCaption("Previous Week");
+						initLabelCaption();
+					}
+				});
+		groupViewBtn.addButton(weekViewBtn);
+		Button dailyViewBtn = new Button("Daily View",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						DateClickHandler handler = (DateClickHandler) calendarComponent
+								.getHandler(DateClickEvent.EVENT_ID);
+						handler.dateClick(new DateClickEvent(calendarComponent,
+								java.util.Calendar.getInstance().getTime()));
+						nextBtn.setCaption("Next Day");
+						previousBtn.setCaption("Previous Day");
+						initLabelCaption();
+					}
+				});
+		groupViewBtn.addButton(dailyViewBtn);
+
+		actionPanel.addComponent(groupViewBtn);
+		actionPanel.setComponentAlignment(groupViewBtn, Alignment.MIDDLE_LEFT);
+
+		previousBtn = new Button("Previous Month", new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarComponent.handlePreviousButtonClick();
+			}
+		});
+		previousBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		actionPanel.addComponent(previousBtn);
+		actionPanel.setComponentAlignment(previousBtn, Alignment.MIDDLE_LEFT);
+
+		currentDateLabel = new Label("");
+		actionPanel.addComponent(currentDateLabel);
+		actionPanel.setComponentAlignment(currentDateLabel,
+				Alignment.MIDDLE_CENTER);
+		initLabelCaption();
+
+		nextBtn = new Button("Next Month", new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarComponent.handleNextButtonClick();
+			}
+		});
+		nextBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		actionPanel.addComponent(nextBtn);
+		actionPanel.setComponentAlignment(nextBtn, Alignment.MIDDLE_RIGHT);
+
+		actionPanel.addComponent(calendarActionBtn);
+		actionPanel.setComponentAlignment(calendarActionBtn,
+				Alignment.MIDDLE_RIGHT);
 
 		VerticalLayout actionBtnLayout = new VerticalLayout();
 		actionBtnLayout.setMargin(true);
@@ -119,63 +218,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				.canWrite(RolePermissionCollections.CRM_MEETING));
 
 		calendarActionBtn.addComponent(actionBtnLayout);
-
-		HorizontalLayout actionPanel = new HorizontalLayout();
-		actionPanel.setWidth("100%");
-		actionPanel.setSpacing(true);
-		actionPanel.setMargin(true);
-		this.addComponent(actionPanel);
-
-		groupViewBtn = new ButtonGroup();
-		monthViewBtn = new Button("Monthly View", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				calendarComponent.switchToMonthView();
-				monthViewBtn.addStyleName("selected-style");
-			}
-		});
-
-		groupViewBtn.addButton(monthViewBtn);
-		Button weekViewBtn = new Button("Weekly View",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						java.util.Calendar cal = java.util.Calendar
-								.getInstance();
-						int week = cal.get(java.util.Calendar.WEEK_OF_YEAR);
-
-						WeekClickHandler handler = (WeekClickHandler) calendarComponent
-								.getHandler(WeekClick.EVENT_ID);
-						handler.weekClick(new WeekClick(calendarComponent,
-								week, calendarComponent.getCalendar().get(
-										GregorianCalendar.YEAR)));
-					}
-				});
-		groupViewBtn.addButton(weekViewBtn);
-		Button dailyViewBtn = new Button("Daily View",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						DateClickHandler handler = (DateClickHandler) calendarComponent
-								.getHandler(DateClickEvent.EVENT_ID);
-						handler.dateClick(new DateClickEvent(calendarComponent,
-								java.util.Calendar.getInstance().getTime()));
-					}
-				});
-		groupViewBtn.addButton(dailyViewBtn);
-
-		actionPanel.addComponent(groupViewBtn);
-		actionPanel.setComponentAlignment(groupViewBtn, Alignment.MIDDLE_LEFT);
-
-		actionPanel.addComponent(calendarActionBtn);
-		actionPanel.setComponentAlignment(calendarActionBtn,
-				Alignment.MIDDLE_RIGHT);
 
 		calendarComponent = new MonthViewCalendar();
 		this.addComponent(calendarComponent);
@@ -227,6 +269,24 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 		this.addComponent(noteInfoLayout);
 		this.setComponentAlignment(noteInfoLayout, Alignment.MIDDLE_CENTER);
+	}
+
+	public void updateLabelCaption() {
+		DateFormatSymbols s = new DateFormatSymbols();
+		String month = s.getShortMonths()[calendarComponent.getCalendar().get(
+				GregorianCalendar.MONTH)];
+		currentDateLabel.setValue(month + " "
+				+ calendarComponent.getCalendar().get(GregorianCalendar.YEAR));
+	}
+
+	private void initLabelCaption() {
+		GregorianCalendar calendar = new GregorianCalendar();
+		Date datenow = new Date();
+		calendar.setTime(datenow);
+		DateFormatSymbols s = new DateFormatSymbols();
+		String month = s.getShortMonths()[calendar.get(GregorianCalendar.MONTH)];
+		currentDateLabel.setValue(month + " "
+				+ calendar.get(GregorianCalendar.YEAR));
 	}
 
 	private class MenuActionListener implements Button.ClickListener {
@@ -587,7 +647,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		GregorianCalendar calendar = new GregorianCalendar();
 
 		private Date currentMonthsFirstDate = null;
-
 		private Mode viewMode = Mode.MONTH;
 
 		public MonthViewCalendar() {
@@ -611,6 +670,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				@Override
 				public void dateClick(DateClickEvent event) {
 					super.dateClick(event);
+					viewMode = Mode.DAY;
 				}
 			});
 			this.setHandler(new EventClickHandler() {
@@ -722,6 +782,70 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 							ActivityCalendarViewImpl.this, source.getId()));
 		}
 
+		public void handleNextButtonClick() {
+			switch (viewMode) {
+			case MONTH:
+				rollMonth(1);
+				break;
+			case WEEK:
+				rollWeek(1);
+				break;
+			case DAY:
+				rollDate(1);
+				break;
+			}
+		}
+
+		private void handlePreviousButtonClick() {
+			switch (viewMode) {
+			case MONTH:
+				rollMonth(-1);
+				break;
+			case WEEK:
+				rollWeek(-1);
+				break;
+			case DAY:
+				rollDate(-1);
+				break;
+			}
+		}
+
+		private void rollMonth(int direction) {
+			calendar.setTime(currentMonthsFirstDate);
+			calendar.add(GregorianCalendar.MONTH, direction);
+			resetTime(false);
+			currentMonthsFirstDate = calendar.getTime();
+			calendarComponent.setStartDate(currentMonthsFirstDate);
+
+			updateLabelCaption();
+
+			calendar.add(GregorianCalendar.MONTH, 1);
+			calendar.add(GregorianCalendar.DATE, -1);
+			resetCalendarTime(true);
+		}
+
+		private void rollWeek(int direction) {
+			calendar.add(GregorianCalendar.WEEK_OF_YEAR, direction);
+			calendar.set(GregorianCalendar.DAY_OF_WEEK,
+					calendar.getFirstDayOfWeek());
+			resetCalendarTime(false);
+			resetTime(true);
+			calendar.add(GregorianCalendar.DATE, 6);
+			calendarComponent.setEndDate(calendar.getTime());
+			updateLabelCaption();
+		}
+
+		private void rollDate(int direction) {
+			calendar.add(GregorianCalendar.DATE, direction);
+			resetCalendarTime(false);
+			resetCalendarTime(true);
+			updateLabelCaption();
+		}
+
+		public Date getCurrentMonthsFirstDate() {
+			return currentMonthsFirstDate;
+		}
+
 		public GregorianCalendar getCalendar() {
 			return calendar;
 		}
@@ -732,8 +856,11 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 		private void switchToMonthView() {
 			viewMode = Mode.MONTH;
-			calendar.setTime(currentMonthsFirstDate);
-			this.setStartDate(currentMonthsFirstDate);
+			calendar = new GregorianCalendar();
+			Date datenow = new Date();
+			calendar.setTime(datenow);
+			currentMonthsFirstDate = calendar.getTime();
+			calendarComponent.setStartDate(currentMonthsFirstDate);
 
 			calendar.add(GregorianCalendar.MONTH, 1);
 			calendar.add(GregorianCalendar.DATE, -1);
