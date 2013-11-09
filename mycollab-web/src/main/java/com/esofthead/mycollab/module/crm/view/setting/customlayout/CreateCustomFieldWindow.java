@@ -135,6 +135,7 @@ public class CreateCustomFieldWindow extends Window {
 					public void buttonClick(ClickEvent event) {
 						DynaSection section = fieldPanel.updateCustomField();
 						viewParent.refreshSectionLayout(section);
+						CreateCustomFieldWindow.this.close();
 					}
 				});
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
