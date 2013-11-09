@@ -16,28 +16,24 @@
  */
 package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
-import java.util.List;
-
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
-import com.esofthead.mycollab.form.view.builder.type.DynaSection;
-import com.esofthead.mycollab.form.view.builder.type.TextDynaField;
 import com.esofthead.mycollab.module.crm.view.setting.CrmCustomView;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.module.crm.view.setting.customlayout.fieldinfo.DetailFieldInfoPanel;
+import com.esofthead.mycollab.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
+import com.esofthead.mycollab.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -136,7 +132,7 @@ public class CreateCustomFieldWindow extends Window {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-
+						fieldPanel.updateCustomField();
 					}
 				});
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -219,69 +215,14 @@ public class CreateCustomFieldWindow extends Window {
 		if (TEXT_FIELD.equals(type)) {
 			fieldPanel = new TextDetailFieldInfoPanel(
 					viewParent.getActiveSections());
+		} else if (INTEGER_FIELD.equals(type)) {
+			fieldPanel = new IntegerDetailFieldInfoPanel(
+					viewParent.getActiveSections());
+		} else {
+			throw new MyCollabException("Do not support customize field type "
+					+ type);
 		}
 
 		fieldLayoutWrapper.addComponent(fieldPanel);
-	}
-
-	private static abstract class DetailFieldInfoPanel<F extends AbstractDynaField>
-			extends VerticalLayout {
-		private static final long serialVersionUID = 1L;
-
-		private List<DynaSection> activeSections;
-		protected F field;
-
-		public DetailFieldInfoPanel(List<DynaSection> activeSections) {
-			this.activeSections = activeSections;
-		}
-
-		abstract void updateCustomField();
-	}
-
-	private static class TextDetailFieldInfoPanel extends
-			DetailFieldInfoPanel<TextDynaField> {
-		private static final long serialVersionUID = 1L;
-
-		private TextField labelField = new TextField();
-		private TextField lengthField = new TextField();
-		private SectionSelectList sectionList;
-
-		public TextDetailFieldInfoPanel(List<DynaSection> activeSections) {
-			super(activeSections);
-
-			GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3);
-			layoutHelper.addComponent(labelField, "Label", 0, 0);
-			sectionList = new SectionSelectList(activeSections);
-			layoutHelper.addComponent(sectionList, "Section", 0, 1);
-			layoutHelper.addComponent(lengthField, "Length", 0, 2);
-			this.addComponent(layoutHelper.getLayout());
-		}
-
-		@Override
-		void updateCustomField() {
-			String displayName = (String) labelField.getValue();
-			DynaSection ownSection = (DynaSection) sectionList.getValue();
-			TextDynaField customField = new TextDynaField();
-			customField.setCustom(true);
-
-		}
-	}
-
-	private static class SectionSelectList extends ComboBox {
-		private static final long serialVersionUID = 1L;
-
-		public SectionSelectList(List<DynaSection> sections) {
-			super();
-			this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
-
-			for (DynaSection section : sections) {
-				this.addItem(section);
-				this.setItemCaption(section, section.getHeader());
-			}
-
-			if (sections.size() > 0) {
-				this.select(sections.get(0));
-			}
-		}
 	}
 }
