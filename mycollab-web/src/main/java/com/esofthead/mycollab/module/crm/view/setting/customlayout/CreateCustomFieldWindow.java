@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.view.setting.CrmCustomView;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.fieldinfo.DetailFieldInfoPanel;
 import com.esofthead.mycollab.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
@@ -132,7 +133,8 @@ public class CreateCustomFieldWindow extends Window {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						fieldPanel.updateCustomField();
+						DynaSection section = fieldPanel.updateCustomField();
+						viewParent.refreshSectionLayout(section);
 					}
 				});
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -211,12 +213,14 @@ public class CreateCustomFieldWindow extends Window {
 
 	private void contructFieldPanel(String type) {
 		fieldLayoutWrapper.removeAllComponents();
+		String candidateFieldName = null;
 
 		if (TEXT_FIELD.equals(type)) {
-			fieldPanel = new TextDetailFieldInfoPanel(
+			candidateFieldName = viewParent.getCandidateTextFieldName();
+			fieldPanel = new TextDetailFieldInfoPanel(candidateFieldName,
 					viewParent.getActiveSections());
 		} else if (INTEGER_FIELD.equals(type)) {
-			fieldPanel = new IntegerDetailFieldInfoPanel(
+			fieldPanel = new IntegerDetailFieldInfoPanel(candidateFieldName,
 					viewParent.getActiveSections());
 		} else {
 			throw new MyCollabException("Do not support customize field type "

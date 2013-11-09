@@ -15,8 +15,9 @@ public class TextDetailFieldInfoPanel extends
 	private TextField lengthField = new TextField();
 	private SectionSelectList sectionList;
 
-	public TextDetailFieldInfoPanel(List<DynaSection> activeSections) {
-		super(activeSections);
+	public TextDetailFieldInfoPanel(String candidateFieldName,
+			List<DynaSection> activeSections) {
+		super(candidateFieldName, activeSections);
 
 		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3);
 		layoutHelper.addComponent(labelField, "Label", 0, 0);
@@ -27,10 +28,24 @@ public class TextDetailFieldInfoPanel extends
 	}
 
 	@Override
-	public void updateCustomField() {
+	public DynaSection updateCustomField() {
 		String displayName = (String) labelField.getValue();
 		DynaSection ownSection = (DynaSection) sectionList.getValue();
+
 		TextDynaField customField = new TextDynaField();
 		customField.setCustom(true);
+		customField.setDisplayName(displayName);
+		customField.setMandatory(false);
+		customField.setRequired(false);
+		customField.setFieldName(candidateFieldName);
+		if (ownSection.getFieldCount() > 0) {
+			customField.setFieldIndex(ownSection.getField(
+					ownSection.getFieldCount() - 1).getFieldIndex() + 1);
+		} else {
+			customField.setFieldIndex(0);
+		}
+
+		ownSection.addField(customField);
+		return ownSection;
 	}
 }

@@ -260,4 +260,15 @@ public class CrmCustomViewImpl extends AbstractView implements CrmCustomView {
 			});
 		}
 	}
+
+	@Override
+	public String getCandidateTextFieldName() {
+		return layoutComp.getCandidateTextFieldName();
+	}
+
+	@Override
+	public void refreshSectionLayout(DynaSection section) {
+		layoutComp.refreshSectionLayout(section);
+
+	}
 }

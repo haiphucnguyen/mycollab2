@@ -11,11 +11,14 @@ public abstract class DetailFieldInfoPanel<F extends AbstractDynaField> extends
 	private static final long serialVersionUID = 1L;
 
 	protected List<DynaSection> activeSections;
+	protected String candidateFieldName;
 	protected F field;
 
-	public DetailFieldInfoPanel(List<DynaSection> activeSections) {
+	public DetailFieldInfoPanel(String candidateFieldName,
+			List<DynaSection> activeSections) {
 		this.activeSections = activeSections;
+		this.candidateFieldName = candidateFieldName;
 	}
 
-	public abstract void updateCustomField();
+	public abstract DynaSection updateCustomField();
 }

@@ -6,16 +6,18 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.IntDynaField;
 
 public class IntegerDetailFieldInfoPanel extends
-DetailFieldInfoPanel<IntDynaField>{
+		DetailFieldInfoPanel<IntDynaField> {
 	private static final long serialVersionUID = 1L;
 
-	public IntegerDetailFieldInfoPanel(List<DynaSection> activeSections) {
-		super(activeSections);
+	public IntegerDetailFieldInfoPanel(String candidateFieldName,
+			List<DynaSection> activeSections) {
+		super(candidateFieldName, activeSections);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void updateCustomField() {
+	public DynaSection updateCustomField() {
+		return null;
 	}
 
 }

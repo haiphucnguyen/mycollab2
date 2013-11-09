@@ -24,7 +24,10 @@ public class AbstractDynaField implements Comparable<AbstractDynaField> {
 	public static final String TEXT_FIELD_3 = "text3";
 	public static final String TEXT_FIELD_4 = "text4";
 	public static final String TEXT_FIELD_5 = "text5";
-	
+
+	public static final String[] TEXT_FIELD_ARR = { TEXT_FIELD_1, TEXT_FIELD_2,
+			TEXT_FIELD_3, TEXT_FIELD_4, TEXT_FIELD_5 };
+
 	public static final String TEXTAREA_FIELD_1 = "textarea1";
 	public static final String TEXTAREA_FIELD_2 = "textarea2";
 	public static final String TEXTAREA_FIELD_3 = "textarea3";

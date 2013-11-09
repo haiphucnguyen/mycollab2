@@ -9,14 +9,14 @@ public class CheckboxDetailFieldInfoPanel extends
 		DetailFieldInfoPanel<BooleanDynaField> {
 	private static final long serialVersionUID = 1L;
 
-	public CheckboxDetailFieldInfoPanel(List<DynaSection> activeSections) {
-		super(activeSections);
+	public CheckboxDetailFieldInfoPanel(String candidateFieldName,
+			List<DynaSection> activeSections) {
+		super(candidateFieldName, activeSections);
 	}
 
 	@Override
-	public void updateCustomField() {
-		// TODO Auto-generated method stub
-
+	public DynaSection updateCustomField() {
+		return null;
 	}
 
 }

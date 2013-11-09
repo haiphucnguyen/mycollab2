@@ -51,11 +51,16 @@ class ActiveSectionComp extends GenericSectionComp {
 	public ActiveSectionComp(DynaSection section) {
 		super(section);
 
+		constructLayout();
+	}
+
+	public void constructLayout() {
+		this.removeAllComponents();
 		CssLayout headerWrapper = new CssLayout();
 		headerWrapper.addStyleName("header-wrapper");
 		headerWrapper.setWidth("100%");
 
-		Label headerTitleLbl = new Label(section.getHeader());
+		Label headerTitleLbl = new Label(originSection.getHeader());
 		headerTitleLbl.setStyleName("h2");
 
 		HorizontalLayout header = new HorizontalLayout();
@@ -80,10 +85,11 @@ class ActiveSectionComp extends GenericSectionComp {
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
 
-		if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-			dragLayout = new DDGridLayout(1, section.getFieldCount() + 1);
-		} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-			dragLayout = new DDGridLayout(2, (section.getFieldCount() + 3) / 2);
+		if (originSection.getLayoutType() == LayoutType.ONE_COLUMN) {
+			dragLayout = new DDGridLayout(1, originSection.getFieldCount() + 1);
+		} else if (originSection.getLayoutType() == LayoutType.TWO_COLUMN) {
+			dragLayout = new DDGridLayout(2,
+					(originSection.getFieldCount() + 3) / 2);
 		} else {
 			throw new MyCollabException(
 					"Does not support form layout except 1 or 2 columns");
@@ -163,18 +169,18 @@ class ActiveSectionComp extends GenericSectionComp {
 
 		this.addComponent(dragLayout);
 
-		int fieldCount = section.getFieldCount();
+		int fieldCount = originSection.getFieldCount();
 		for (int j = 0; j < fieldCount; j++) {
-			AbstractDynaField field = section.getField(j);
+			AbstractDynaField field = originSection.getField(j);
 			CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
 			fieldBtn.setWidth("100%");
 			if (field.isMandatory())
 				fieldBtn.setMandatory(true);
-			if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
+			if (originSection.getLayoutType() == LayoutType.ONE_COLUMN) {
 				log.debug("Add field " + field.getDisplayName()
 						+ " in (colum, row) " + 0 + ", " + j);
 				dragLayout.addComponent(fieldBtn, 0, j);
-			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
+			} else if (originSection.getLayoutType() == LayoutType.TWO_COLUMN) {
 				log.debug("Add field " + field.getDisplayName()
 						+ " in (colum, row) " + (j % 2) + ", " + (j / 2));
 				dragLayout.addComponent(fieldBtn, j % 2, j / 2);
@@ -184,11 +190,11 @@ class ActiveSectionComp extends GenericSectionComp {
 		CustomFieldComponent emptyField = new CustomFieldComponent(null);
 		emptyField.setWidth("100%");
 
-		if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
+		if (originSection.getLayoutType() == LayoutType.ONE_COLUMN) {
 			log.debug("Add empty field in (column, row) " + 0 + ", "
 					+ (dragLayout.getRows() - 1));
 			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
-		} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
+		} else if (originSection.getLayoutType() == LayoutType.TWO_COLUMN) {
 			log.debug("Add empty field in (column, row) " + 0 + ", "
 					+ (dragLayout.getRows() - 1));
 			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1, 1,
@@ -215,7 +221,8 @@ class ActiveSectionComp extends GenericSectionComp {
 				}
 			}
 		}
-		return section;
-	}
 
+		originSection = section;
+		return originSection;
+	}
 }

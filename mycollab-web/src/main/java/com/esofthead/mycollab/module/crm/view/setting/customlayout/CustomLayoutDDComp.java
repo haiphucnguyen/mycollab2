@@ -16,12 +16,15 @@
  */
 package com.esofthead.mycollab.module.crm.view.setting.customlayout;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
+import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
+import com.esofthead.mycollab.form.view.builder.type.IntDynaField;
 import com.vaadin.ui.HorizontalLayout;
 
 public class CustomLayoutDDComp extends HorizontalLayout {
@@ -90,5 +93,39 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 
 		form.addSection(deleteFormArea.rebuildSection());
 		return form;
+	}
+
+	public String getCandidateTextFieldName() {
+		return getCandidateAvailableSlotField(IntDynaField.class,
+				AbstractDynaField.TEXT_FIELD_ARR);
+	}
+
+	private String getCandidateAvailableSlotField(Class fieldCls,
+			String[] fieldNames) {
+		List<String> fieldNamesList = Arrays.asList(fieldNames);
+		DynaForm form = rebuildForm();
+		int sectionCount = form.getSectionCount();
+		for (int i = 0; i < sectionCount; i++) {
+			DynaSection section = form.getSection(i);
+			int fieldCount = section.getFieldCount();
+			for (int j = 0; j < fieldCount; j++) {
+				AbstractDynaField field = section.getField(j);
+				if (field.getClass() == fieldCls) {
+					fieldNamesList.remove(field.getFieldName());
+					if (fieldNamesList.size() == 0) {
+						return null;
+					}
+				}
+			}
+		}
+
+		if (fieldNamesList.size() > 0) {
+			return fieldNamesList.get(0);
+		}
+		return null;
+	}
+
+	public void refreshSectionLayout(DynaSection section) {
+		activeFormArea.refreshSectionLayout(section);
 	}
 }

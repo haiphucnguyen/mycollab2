@@ -54,6 +54,10 @@ public class GenericSectionComp extends VerticalLayout {
 		}
 	}
 
+	public DynaSection getOriginSection() {
+		return originSection;
+	}
+
 	protected List<AbstractDynaField> getFields() {
 		List<AbstractDynaField> fields = new ArrayList<AbstractDynaField>();
 		for (int col = 0; col < dragLayout.getColumns(); col++) {

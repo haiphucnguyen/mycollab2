@@ -27,4 +27,8 @@ public interface CrmCustomView extends View {
 	void addActiveSection(DynaSection section);
 
 	List<DynaSection> getActiveSections();
+
+	String getCandidateTextFieldName();
+
+	void refreshSectionLayout(DynaSection section);
 }
