@@ -28,6 +28,7 @@ public class DynaSection implements Comparable<DynaSection> {
 	private boolean isDeletedSection = false;
 	private LayoutType layoutType;
 	private List<AbstractDynaField> fields = new ArrayList<AbstractDynaField>();
+	private DynaForm parentForm;
 
 	public String getHeader() {
 		return header;
@@ -95,6 +96,14 @@ public class DynaSection implements Comparable<DynaSection> {
 				return 2;
 			}
 		}
+	}
+
+	public DynaForm getParentForm() {
+		return parentForm;
+	}
+
+	public void setParentForm(DynaForm parentForm) {
+		this.parentForm = parentForm;
 	}
 
 	@Override

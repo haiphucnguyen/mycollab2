@@ -19,6 +19,18 @@ package com.esofthead.mycollab.form.view.builder.type;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer.Exclude;
 
 public class AbstractDynaField implements Comparable<AbstractDynaField> {
+	public static final String TEXT_FIELD_1 = "text1";
+	public static final String TEXT_FIELD_2 = "text2";
+	public static final String TEXT_FIELD_3 = "text3";
+	public static final String TEXT_FIELD_4 = "text4";
+	public static final String TEXT_FIELD_5 = "text5";
+	
+	public static final String TEXTAREA_FIELD_1 = "textarea1";
+	public static final String TEXTAREA_FIELD_2 = "textarea2";
+	public static final String TEXTAREA_FIELD_3 = "textarea3";
+	public static final String TEXTAREA_FIELD_4 = "textarea4";
+	public static final String TEXTAREA_FIELD_5 = "textarea5";
+
 	@Exclude
 	protected int fieldIndex;
 

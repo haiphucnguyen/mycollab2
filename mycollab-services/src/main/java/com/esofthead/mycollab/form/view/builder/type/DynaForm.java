@@ -30,11 +30,16 @@ public class DynaForm {
 
 	public void addSection(DynaSection section) {
 		sections.add(section);
+		section.setParentForm(this);
 		Collections.sort(sections);
 	}
 
 	public void addSections(Collection<DynaSection> sectionCol) {
-		sections.addAll(sectionCol);
+		for (DynaSection section : sectionCol) {
+			sections.add(section);
+			section.setParentForm(this);
+		}
+
 		Collections.sort(sections);
 	}
 
