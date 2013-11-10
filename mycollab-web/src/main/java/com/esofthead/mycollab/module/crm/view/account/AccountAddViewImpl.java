@@ -16,22 +16,44 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
-import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.BeanItemCustomExt;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
 public class AccountAddViewImpl extends AbstractView implements AccountAddView {
+	private static final long serialVersionUID = 1L;
+	private final EditForm editForm;
 
-	private class EditForm extends AdvancedEditBeanForm<Account> {
+	private SimpleAccount account;
+
+	public AccountAddViewImpl() {
+		super();
+		this.editForm = new EditForm();
+		this.addComponent(this.editForm);
+	}
+
+	@Override
+	public void editItem(final SimpleAccount account) {
+		this.account = account;
+		this.editForm.setItemDataSource(new BeanItemCustomExt<SimpleAccount>(
+				account));
+	}
+
+	@Override
+	public HasEditFormHandlers<SimpleAccount> getEditFormHandlers() {
+		return this.editForm;
+	}
+
+	private class EditForm extends AdvancedEditBeanForm<SimpleAccount> {
 
 		class FormLayoutFactory extends AccountFormLayoutFactory {
 
@@ -51,7 +73,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 			private Layout createButtonControls() {
 				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<Account>(
+				final Layout controlButtons = (new EditFormControlsGenerator<SimpleAccount>(
 						EditForm.this)).createButtonControls();
 				controlButtons.setSizeUndefined();
 				controlPanel.addComponent(controlButtons);
@@ -76,27 +98,5 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 					AccountAddViewImpl.this.account));
 			super.setItemDataSource(newDataSource);
 		}
-	}
-
-	private static final long serialVersionUID = 1L;
-	private final EditForm editForm;
-
-	private Account account;
-
-	public AccountAddViewImpl() {
-		super();
-		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
-	}
-
-	@Override
-	public void editItem(final Account account) {
-		this.account = account;
-		this.editForm.setItemDataSource(new BeanItem<Account>(account));
-	}
-
-	@Override
-	public HasEditFormHandlers<Account> getEditFormHandlers() {
-		return this.editForm;
 	}
 }

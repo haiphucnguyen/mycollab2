@@ -25,7 +25,7 @@ public class SimpleAccount extends Account {
 
 	private String assignUserFullName;
 
-	private FormCustomFieldValueWithBLOBs customfield;
+	private FormCustomFieldValueWithBLOBs customfield = new FormCustomFieldValueWithBLOBs();
 
 	public String getAssignUserAvatarId() {
 		return assignUserAvatarId;
@@ -50,6 +50,5 @@ public class SimpleAccount extends Account {
 	public void setCustomfield(FormCustomFieldValueWithBLOBs customfield) {
 		this.customfield = customfield;
 	}
-	
-	
+
 }

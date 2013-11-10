@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -56,9 +57,9 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 
 	private void bind() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Account>() {
+				new EditFormHandler<SimpleAccount>() {
 					@Override
-					public void onSave(final Account account) {
+					public void onSave(final SimpleAccount account) {
 						saveAccount(account);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
@@ -77,7 +78,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final Account account) {
+					public void onSaveAndNew(final SimpleAccount account) {
 						saveAccount(account);
 						EventBus.getInstance().fireEvent(
 								new AccountEvent.GotoAdd(this, null));
@@ -92,14 +93,14 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER));
 
-			Account account = null;
-			if (data.getParams() instanceof Account) {
-				account = (Account) data.getParams();
+			SimpleAccount account = null;
+			if (data.getParams() instanceof SimpleAccount) {
+				account = (SimpleAccount) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				AccountService accountService = ApplicationContextUtil
 						.getSpringBean(AccountService.class);
-				account = accountService.findByPrimaryKey(
-						(Integer) data.getParams(), AppContext.getAccountId());
+				account = accountService.findById((Integer) data.getParams(),
+						AppContext.getAccountId());
 				if (account == null) {
 					NotificationUtil.showRecordNotExistNotification();
 					return;
