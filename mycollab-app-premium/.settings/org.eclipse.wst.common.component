@@ -178,10 +178,10 @@
     <dependent-module archiveName="jackson-core-2.3.0-rc1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.0-rc1/jackson-core-2.3.0-rc1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-databind-2.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.1.1/jackson-databind-2.1.1.jar">
+    <dependent-module archiveName="jackson-databind-2.3.0-rc1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.3.0-rc1/jackson-databind-2.3.0-rc1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-annotations-2.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.1.1/jackson-annotations-2.1.1.jar">
+    <dependent-module archiveName="jackson-annotations-2.3.0-rc1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="slf4j-log4j12-1.6.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-log4j12/1.6.4/slf4j-log4j12-1.6.4.jar">
@@ -553,7 +553,7 @@
     <dependent-module archiveName="google-oauth-client-1.13.1-beta.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/oauth-client/google-oauth-client/1.13.1-beta/google-oauth-client-1.13.1-beta.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="google-http-client-1.15.0-rc.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/http-client/google-http-client/1.15.0-rc/google-http-client-1.15.0-rc.jar">
+    <dependent-module archiveName="google-http-client-1.17.0-rc.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/http-client/google-http-client/1.17.0-rc/google-http-client-1.17.0-rc.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jsr305-1.3.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar">
@@ -562,22 +562,16 @@
     <dependent-module archiveName="guava-jdk5-13.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/guava/guava-jdk5/13.0/guava-jdk5-13.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="xpp3-1.1.4c.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="poi-3.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.9/poi-3.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="xebia-servlet-extras-1.0.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/fr/xebia/web/xebia-servlet-extras/1.0.8/xebia-servlet-extras-1.0.8.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="geoip2-0.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/maxmind/geoip2/geoip2/0.4.0/geoip2-0.4.0.jar">
+    <dependent-module archiveName="geoip2-0.7.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/maxmind/geoip2/geoip2/0.7.0/geoip2-0.7.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="maxminddb-0.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/maxmind/maxminddb/maxminddb/0.2.0/maxminddb-0.2.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="google-http-client-jackson2-1.15.0-rc.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/http-client/google-http-client-jackson2/1.15.0-rc/google-http-client-jackson2-1.15.0-rc.jar">
+    <dependent-module archiveName="maxmind-db-0.3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/maxmind/db/maxmind-db/0.3.1/maxmind-db-0.3.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="ez-vcard-0.8.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2.jar">
