@@ -14,7 +14,7 @@
     </parent>
     <modules>
         <module>../mycollab-services-premium</module>
-        <module>../mycollab-flex-generator</module>
+        <!-- <module>../mycollab-flex-generator</module> -->
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-web-premium</module>

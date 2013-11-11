@@ -20,6 +20,7 @@
         <module>../mycollab-test</module>
         <module>../mycollab-caching</module>
         <module>../mycollab-jackrabbit</module>
+        <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
         <module>../mycollab-services-community</module>
         <module>../mycollab-api-impl</module>
