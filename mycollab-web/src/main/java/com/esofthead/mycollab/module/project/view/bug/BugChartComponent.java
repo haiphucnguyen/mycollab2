@@ -25,6 +25,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.rits.cloning.Cloner;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -39,8 +40,8 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class BugChartComponent extends Depot {
 	private static final long serialVersionUID = 1L;
-	private final String[] reportDashboard = { 
-			"BugsByPriority", "BugsByStatus", "BugByResolution" };
+	private final String[] reportDashboard = { "BugsByPriority",
+			"BugsByStatus", "BugByResolution" };
 	private int currentReportIndex = 0;
 
 	private final BugSearchCriteria baseSearchCriteria;
@@ -62,18 +63,9 @@ public class BugChartComponent extends Depot {
 		final CssLayout bodyContent = (CssLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
 
-		if ("BugDistributionStack".equals(reportName)) {
-			DistributionStackChartWidget bugDistributionChartWidget = new DistributionStackChartWidget();
-			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
-					bugDistributionChartWidget);
-			bodyContent.addComponent(lazyComp);
-
-			final BugSearchCriteria prioritySearchCriteria = new Cloner()
-					.deepClone(baseSearchCriteria);
-			bugDistributionChartWidget
-					.setSearchCriteria(prioritySearchCriteria);
-		} else if ("BugsByPriority".equals(reportName)) {
-			PrioritySummaryChartWidget prioritySummaryChartWidget = new PrioritySummaryChartWidget();
+		if ("BugsByPriority".equals(reportName)) {
+			IPrioritySummaryChartWidget prioritySummaryChartWidget = ViewManager
+					.getView(IPrioritySummaryChartWidget.class);
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					prioritySummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
@@ -83,7 +75,8 @@ public class BugChartComponent extends Depot {
 			prioritySummaryChartWidget
 					.setSearchCriteria(prioritySearchCriteria);
 		} else if ("BugsByStatus".equals(reportName)) {
-			StatusSummaryChartWidget statusSummaryChartWidget = new StatusSummaryChartWidget();
+			IStatusSummaryChartWidget statusSummaryChartWidget = ViewManager
+					.getView(IStatusSummaryChartWidget.class);
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					statusSummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
@@ -92,7 +85,8 @@ public class BugChartComponent extends Depot {
 					.deepClone(baseSearchCriteria);
 			statusSummaryChartWidget.setSearchCriteria(statusSearchCriteria);
 		} else if ("BugByResolution".equals(reportName)) {
-			BugResolutionSummaryChartWidget resolutionSummaryWdiget = new BugResolutionSummaryChartWidget();
+			IBugResolutionSummaryChartWidget resolutionSummaryWdiget = ViewManager
+					.getView(IBugResolutionSummaryChartWidget.class);
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					resolutionSummaryWdiget);
 			bodyContent.addComponent(lazyComp);
@@ -112,21 +106,6 @@ public class BugChartComponent extends Depot {
 		filterBtnLayout.setMargin(true);
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("200px");
-//
-//		final Button btnBugDistribution = new Button("Bugs Distribution",
-//				new Button.ClickListener() {
-//					private static final long serialVersionUID = 1L;
-//
-//					@Override
-//					public void buttonClick(final ClickEvent event) {
-//						bugChartPopup.setPopupVisible(false);
-//						bugChartPopup.setCaption("Bugs Distribution");
-//						currentReportIndex = 0;
-//						displayReport();
-//					}
-//				});
-//		btnBugDistribution.setStyleName("link");
-//		filterBtnLayout.addComponent(btnBugDistribution);
 
 		final Button btnBugByPriority = new Button("Bugs By Priority",
 				new Button.ClickListener() {

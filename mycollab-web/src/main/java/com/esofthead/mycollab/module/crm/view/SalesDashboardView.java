@@ -24,8 +24,9 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityLeadSourceDashboard;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySalesStageDashboard;
+import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityLeadSourceDashboard;
+import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunitySalesStageDashboard;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -59,7 +60,8 @@ public class SalesDashboardView extends Depot {
 		bodyContent.removeAllComponents();
 
 		if ("OpportunitySalesStage".equals(reportName)) {
-			final OpportunitySalesStageDashboard salesStageDashboard = new OpportunitySalesStageDashboard();
+			final IOpportunitySalesStageDashboard salesStageDashboard = ViewManager
+					.getView(IOpportunitySalesStageDashboard.class);
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					salesStageDashboard);
 			bodyContent.addComponent(lazyComp);
@@ -69,7 +71,8 @@ public class SalesDashboardView extends Depot {
 					.getAccountId()));
 			salesStageDashboard.setSearchCriteria(criteria);
 		} else if ("OpportunityLeadSource".equals(reportName)) {
-			final OpportunityLeadSourceDashboard leadSourceDashboard = new OpportunityLeadSourceDashboard();
+			final IOpportunityLeadSourceDashboard leadSourceDashboard = ViewManager
+					.getView(IOpportunityLeadSourceDashboard.class);
 			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					leadSourceDashboard);
 			bodyContent.addComponent(lazyComp);
