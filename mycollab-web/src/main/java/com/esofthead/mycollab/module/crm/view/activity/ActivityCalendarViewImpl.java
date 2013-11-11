@@ -90,8 +90,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 	private MonthViewCalendar calendarComponent;
 	private ButtonGroup groupViewBtn;
 	private Button monthViewBtn;
-	private Button nextBtn;
-	private Button previousBtn;
 	private PopupButton dateChooser;
 	private final StandupStyleCalendarExp datePicker = new StandupStyleCalendarExp();
 
@@ -120,8 +118,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			public void buttonClick(ClickEvent event) {
 				calendarComponent.switchToMonthView(new Date(), true);
 				monthViewBtn.addStyleName("selected-style");
-				nextBtn.setCaption("Next Month");
-				previousBtn.setCaption("Previous Month");
 				initLabelCaption();
 			}
 		});
@@ -151,38 +147,20 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		actionPanel.addComponent(groupViewBtn);
 		actionPanel.setComponentAlignment(groupViewBtn, Alignment.MIDDLE_LEFT);
 
-		previousBtn = new Button("Previous Month", new ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				calendarComponent.handlePreviousButtonClick();
-			}
-		});
-		previousBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		actionPanel.addComponent(previousBtn);
-		actionPanel.setComponentAlignment(previousBtn, Alignment.MIDDLE_LEFT);
-
-		this.dateChooser = new PopupButton("Choose date to view reports");
+		HorizontalLayout horizontalWapper = new HorizontalLayout();
+		horizontalWapper.addStyleName("eventdatepicker");
+		this.dateChooser = new PopupButton("");
+		this.dateChooser.setWidth("80px");
 		this.dateChooser.addComponent(datePicker);
 		dateChooser.setStyleName(UIConstants.THEME_LINK);
-		actionPanel.addComponent(this.dateChooser);
-		actionPanel.setComponentAlignment(this.dateChooser,
+		horizontalWapper.addComponent(dateChooser);
+		horizontalWapper.setComponentAlignment(dateChooser,
+				Alignment.MIDDLE_CENTER);
+		actionPanel.addComponent(horizontalWapper);
+		actionPanel.setComponentAlignment(horizontalWapper,
 				Alignment.MIDDLE_CENTER);
 		initLabelCaption();
 		addCalendarEvent();
-
-		nextBtn = new Button("Next Month", new ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				calendarComponent.handleNextButtonClick();
-			}
-		});
-		nextBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		actionPanel.addComponent(nextBtn);
-		actionPanel.setComponentAlignment(nextBtn, Alignment.MIDDLE_RIGHT);
 
 		actionPanel.addComponent(calendarActionBtn);
 		actionPanel.setComponentAlignment(calendarActionBtn,
@@ -862,65 +840,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 							ActivityCalendarViewImpl.this, source.getId()));
 		}
 
-		public void handleNextButtonClick() {
-			switch (viewMode) {
-			case MONTH:
-				rollMonth(1);
-				break;
-			case WEEK:
-				rollWeek(1);
-				break;
-			case DAY:
-				rollDate(1);
-				break;
-			}
-		}
-
-		private void handlePreviousButtonClick() {
-			switch (viewMode) {
-			case MONTH:
-				rollMonth(-1);
-				break;
-			case WEEK:
-				rollWeek(-1);
-				break;
-			case DAY:
-				rollDate(-1);
-				break;
-			}
-		}
-
-		private void rollMonth(int direction) {
-			calendar.setTime(currentMonthsFirstDate);
-			calendar.add(GregorianCalendar.MONTH, direction);
-			resetTime(false);
-			currentMonthsFirstDate = calendar.getTime();
-			calendarComponent.setStartDate(currentMonthsFirstDate);
-
-			updateLabelCaption();
-			calendar.add(GregorianCalendar.MONTH, 1);
-			calendar.add(GregorianCalendar.DATE, -1);
-			resetCalendarTime(true);
-		}
-
-		private void rollWeek(int direction) {
-			calendar.add(GregorianCalendar.WEEK_OF_YEAR, direction);
-			calendar.set(GregorianCalendar.DAY_OF_WEEK,
-					calendar.getFirstDayOfWeek());
-			resetCalendarTime(false);
-			resetTime(true);
-			calendar.add(GregorianCalendar.DATE, 6);
-			calendarComponent.setEndDate(calendar.getTime());
-			updateLabelCaption();
-		}
-
-		private void rollDate(int direction) {
-			calendar.add(GregorianCalendar.DATE, direction);
-			resetCalendarTime(false);
-			resetCalendarTime(true);
-			updateLabelCaption();
-		}
-
 		public Date getCurrentMonthsFirstDate() {
 			return currentMonthsFirstDate;
 		}
@@ -940,8 +859,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					.getHandler(WeekClick.EVENT_ID);
 			handler.weekClick(new WeekClick(calendarComponent, week, cal
 					.get(GregorianCalendar.YEAR)));
-			nextBtn.setCaption("Next Week");
-			previousBtn.setCaption("Previous Week");
 			initLabelCaption();
 		}
 
@@ -951,8 +868,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			DateClickHandler handler = (DateClickHandler) calendarComponent
 					.getHandler(DateClickEvent.EVENT_ID);
 			handler.dateClick(new DateClickEvent(calendarComponent, date));
-			nextBtn.setCaption("Next Day");
-			previousBtn.setCaption("Previous Day");
 			initLabelCaption();
 		}
 

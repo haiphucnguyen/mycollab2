@@ -5056,3 +5056,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	background: none repeat scroll 0 0 #A1A1A1;
 	border-color : #ABABAB;
 }
+
+.v-horizontallayout-eventdatepicker{
+    border: 1px solid #093768;
+    border-radius: 3px;
+    color: #FFFFFF;
+    padding: 3px 13px;
+    text-shadow: 1px 1px 0 #000000;
+}
