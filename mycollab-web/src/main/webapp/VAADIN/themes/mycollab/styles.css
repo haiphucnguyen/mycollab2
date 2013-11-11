@@ -69,6 +69,7 @@ a {
 
 div.v-button-link {
 	margin: 0px;
+	text-align: center;
 }
 
 .v-button-link .v-button-caption {
@@ -1841,44 +1842,79 @@ input.v-textfield-errorField {
 .v-calendar-header-month .v-calendar-header-day{
 	background: none no-repeat left top #C9E4F3;
 	border-bottom: 1px solid #A1A1A1;
-    border-left: 1px solid #A1A1A1;
     border-top: 1px solid #A1A1A1;
     height:30px;
     vertical-align: middle;
+    line-height: 30px;
 }
 
 .v-calendar-header-month td:nth-of-type(7) .v-calendar-header-day{
 	background: none no-repeat left top #C9E4F3;
-    border: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-}
-
-.v-calendar-header-week .v-calendar-header-day {
-	background: none no-repeat left top #C9E4F3;
-	border-bottom: 1px solid #A1A1A1;
-    border-left: 1px solid #A1A1A1;
+    border-right: 1px solid #A1A1A1;
+    border-bottom: 1px solid #A1A1A1;
     border-top: 1px solid #A1A1A1;
     height:30px;
     vertical-align: middle;
+    line-height: 30px;
+}
+
+.v-calendar-header-month td:nth-of-type(1) .v-calendar-header-day{
+	background: none no-repeat left top #C9E4F3;
+    border-left: 1px solid #A1A1A1;
+    border-bottom: 1px solid #A1A1A1;
+    border-top: 1px solid #A1A1A1;
+    height:30px;
+    vertical-align: middle;
+    line-height: 30px;
+}
+
+.v-calendar-header-week td .v-calendar-header-day {
+	background: none no-repeat left top #C9E4F3;
+	border-bottom: 1px solid #A1A1A1;
+    border-top: 1px solid #A1A1A1;
+    height:30px;
+    vertical-align: middle;
+    line-height: 30px;
 }
 
 .v-calendar-header-week .v-calendar-datecell{
 	min-height: 10px;
 }
 
-.v-calendar-header-week td:nth-of-type(8) .v-calendar-header-day{
+.v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day .v-calendar-header-day-today .v-calendar-header-day-Vsized{
 	background: none no-repeat left top #C9E4F3;
-    border: 1px solid #A1A1A1;
+	border-right: 1px solid #A1A1A1;
     height:30px;
     vertical-align: middle;
+    line-height: 30px;
+}
+
+.v-calendar-header-week td:nth-of-type(8) .v-calendar-header-day{
+	background: none no-repeat left top #C9E4F3;
+    border-right: 1px solid #A1A1A1;
+    border-bottom: 1px solid #A1A1A1;
+    border-top: 1px solid #A1A1A1;
+    height:30px;
+    vertical-align: middle;
+    line-height: 30px;
+}
+
+.v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day{
+	background: none no-repeat left top #C9E4F3;
+    border-left: 1px solid #A1A1A1;
+    border-bottom: 1px solid #A1A1A1;
+    border-top: 1px solid #A1A1A1;
+    height:30px;
+    vertical-align: middle;
+    line-height: 30px;
 }
 
 .v-calendar-header-day .v-calendar-header-day-today .v-calendar-header-day-Vsized{
 	background: none no-repeat left top #C9E4F3;
-    border-right: 1px solid #A1A1A1;
+    border: 1px solid #A1A1A1;
     height:30px;
     vertical-align: middle;
+    line-height: 30px;
 }
 
 .v-calendar-header-week {
