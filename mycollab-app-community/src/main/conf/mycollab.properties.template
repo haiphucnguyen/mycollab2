@@ -25,9 +25,3 @@ storageSystem=file
 
 cdn.url=http://localhost:8080/assets/images/email/
 app.url=http://localhost:8080/
-
-#==================================
-# CLOUD DRIVE INTEGRATION
-#==================================
-dropbox.callbackUrl=http://localhost:8080/drive/dropboxAuth
-ggDrive.callbackUrl=http://localhost:8080/drive/googleAuthServlet
