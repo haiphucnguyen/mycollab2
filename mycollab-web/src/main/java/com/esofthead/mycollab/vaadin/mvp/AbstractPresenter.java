@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public abstract class AbstractPresenter<V extends View> implements Presenter<V> {
+public abstract class AbstractPresenter<V extends View> implements IPresenter<V> {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory

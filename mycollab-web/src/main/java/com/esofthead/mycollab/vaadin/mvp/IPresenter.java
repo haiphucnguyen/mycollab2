@@ -14,10 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user.accountsettings.billing.view;
+package com.esofthead.mycollab.vaadin.mvp;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import java.io.Serializable;
 
-public interface BillingSummaryView extends View {
-	void loadCurrentPlan();
+import com.vaadin.ui.ComponentContainer;
+
+public interface IPresenter<V extends View> extends Serializable {
+
+	void handleChain(ComponentContainer container,
+			PageActionChain pageActionChain);
+
+	void go(ComponentContainer container, ScreenData<?> data);
+
+	void go(ComponentContainer container, ScreenData<?> data,
+			boolean isHistoryTrack);
+
+	V getView();
 }

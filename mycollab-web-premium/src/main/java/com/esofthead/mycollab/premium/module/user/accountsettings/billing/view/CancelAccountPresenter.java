@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user.accountsettings.billing.view;
+package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -26,24 +27,23 @@ import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.vaadin.ui.ComponentContainer;
 
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
-public class BillingSummaryPresenter extends
-		AbstractPresenter<BillingSummaryView> {
+public class CancelAccountPresenter extends
+		AbstractPresenter<CancelAccountView> {
 	private static final long serialVersionUID = 1L;
 
-	public BillingSummaryPresenter() {
-		super(BillingSummaryView.class);
+	public CancelAccountPresenter() {
+		super(CancelAccountView.class);
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		BillingContainer accountContainer = (BillingContainer) container;
+		IBillingContainer accountContainer = (IBillingContainer) container;
 		accountContainer.removeAllComponents();
 		accountContainer.addComponent(view.getWidget());
 
-		view.loadCurrentPlan();
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getView(AccountSettingBreadcrumb.class);
-		breadcrumb.gotoBillingPage();
-
+		breadcrumb.gotoCancelAccountPage();
 	}
+
 }

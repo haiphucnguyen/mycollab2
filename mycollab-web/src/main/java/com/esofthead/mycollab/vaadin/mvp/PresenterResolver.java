@@ -34,12 +34,12 @@ public class PresenterResolver {
 	private static Logger log = LoggerFactory
 			.getLogger(PresenterResolver.class);
 
-	protected static Set<Class<? extends Presenter>> presenterClasses;
+	protected static Set<Class<? extends IPresenter>> presenterClasses;
 
 	static {
 		log.debug("Scan presenter implementation");
 		Reflections reflections = new Reflections("com.esofthead.mycollab");
-		presenterClasses = reflections.getSubTypesOf(Presenter.class);
+		presenterClasses = reflections.getSubTypesOf(IPresenter.class);
 	}
 
 	public static void init() {
@@ -47,7 +47,7 @@ public class PresenterResolver {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <P extends Presenter> P getPresenter(Class<P> presenterClass) {
+	public static <P extends IPresenter> P getPresenter(Class<P> presenterClass) {
 		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
 				.getVariable(PRESENTER_VAL);
 		if (presenterMap == null) {

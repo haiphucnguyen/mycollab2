@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.risk;
 
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 
-public interface IRiskPresenter extends Presenter<IRiskContainer> {
+public interface IRiskPresenter extends IPresenter<IRiskContainer> {
 
 }

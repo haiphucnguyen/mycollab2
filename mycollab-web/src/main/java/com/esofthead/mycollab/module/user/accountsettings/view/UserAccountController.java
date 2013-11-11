@@ -23,7 +23,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
@@ -70,8 +70,8 @@ public class UserAccountController implements IController {
 							@Override
 							public void handle(
 									AccountBillingEvent.CancelAccount event) {
-								BillingPresenter presenter = PresenterResolver
-										.getPresenter(BillingPresenter.class);
+								IBillingPresenter presenter = PresenterResolver
+										.getPresenter(IBillingPresenter.class);
 								presenter.go(container,
 										new BillingScreenData.CancelAccount());
 							}
@@ -90,8 +90,8 @@ public class UserAccountController implements IController {
 							@Override
 							public void handle(
 									AccountBillingEvent.GotoSummary event) {
-								BillingPresenter presenter = PresenterResolver
-										.getPresenter(BillingPresenter.class);
+								IBillingPresenter presenter = PresenterResolver
+										.getPresenter(IBillingPresenter.class);
 								presenter.go(container,
 										new BillingScreenData.BillingSummary());
 							}

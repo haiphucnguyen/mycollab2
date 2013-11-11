@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.time;
 
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 
 public interface ITimeTrackingPresenter extends
-		Presenter<ITimeTrackingContainer> {
+		IPresenter<ITimeTrackingContainer> {
 
 }

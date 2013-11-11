@@ -25,7 +25,7 @@ import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.shell.BillingPlanCheckerContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -48,7 +48,7 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Bugs");
 
-		Presenter presenter = null;
+		IPresenter presenter = null;
 
 		if (BillingPlanCheckerContext.isBugComponentEnable()) {
 			if (ClassUtils.instanceOf(data, BugScreenData.Search.class,

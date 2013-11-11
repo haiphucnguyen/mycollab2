@@ -14,13 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user.accountsettings.billing.view;
+package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.View;
 
-@ViewComponent
-public class BillingContainer extends AbstractView {
-	private static final long serialVersionUID = 1L;
-
+public interface BillingSummaryView extends View {
+	void loadCurrentPlan();
 }

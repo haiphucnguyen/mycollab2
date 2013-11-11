@@ -49,7 +49,7 @@ import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -109,7 +109,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 			PageActionChain pageActionChain) {
 		ScreenData pageAction = pageActionChain.peek();
 
-		Presenter<?> presenter = null;
+		IPresenter<?> presenter = null;
 
 		if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.Read.class,
 				MilestoneScreenData.Search.class,

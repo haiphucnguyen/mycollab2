@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.file;
 
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 
-public interface IFilePresenter extends Presenter<IFileContainer> {
+public interface IFilePresenter extends IPresenter<IFileContainer> {
 
 }

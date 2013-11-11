@@ -20,17 +20,17 @@ import com.vaadin.ui.ComponentContainer;
 
 public class ViewState {
 	private ComponentContainer container;
-	private Presenter presenter;
+	private IPresenter presenter;
 	private ScreenData<?> params;
 
-	public ViewState(ComponentContainer container, Presenter presenter,
+	public ViewState(ComponentContainer container, IPresenter presenter,
 			ScreenData<?> data) {
 		this.container = container;
 		this.presenter = presenter;
 		this.params = data;
 	}
 
-	public Presenter getPresenter() {
+	public IPresenter getPresenter() {
 		return presenter;
 	}
 
@@ -46,7 +46,7 @@ public class ViewState {
 	public String toString() {
 		StringBuffer result = new StringBuffer();
 		result.append("View State:").append("\n");
-		result.append("   Presenter: " + presenter).append("\n");
+		result.append("   IPresenter: " + presenter).append("\n");
 		result.append("   Params: " + ((params != null) ? params : "null"));
 		return result.toString();
 	}

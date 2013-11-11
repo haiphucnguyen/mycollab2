@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.problem;
 
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 
-public interface IProblemPresenter extends Presenter<IProblemContainer> {
+public interface IProblemPresenter extends IPresenter<IProblemContainer> {
 
 }

@@ -17,18 +17,16 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.user.accountsettings.billing.view.BillingPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
-import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
@@ -47,7 +45,7 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 
 	private ProfilePresenter profilePresenter;
 	private UserPermissionManagementPresenter userPermissionPresenter;
-	private BillingPresenter billingPresenter;
+	private IBillingPresenter billingPresenter;
 
 	private final AccountSettingBreadcrumb breadcrumb;
 
@@ -124,7 +122,7 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 
 	private ComponentContainer constructAccountSettingsComponent() {
 		this.billingPresenter = PresenterResolver
-				.getPresenter(BillingPresenter.class);
+				.getPresenter(IBillingPresenter.class);
 		return this.billingPresenter.getView();
 	}
 

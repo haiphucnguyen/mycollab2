@@ -24,7 +24,7 @@ public class NullViewState extends ViewState {
 		super(null, new EmptyPresenter(), null);
 	}
 
-	private static class EmptyPresenter implements Presenter {
+	private static class EmptyPresenter implements IPresenter {
 
 		private static final long serialVersionUID = 1L;
 

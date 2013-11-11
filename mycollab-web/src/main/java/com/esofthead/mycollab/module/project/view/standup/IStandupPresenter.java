@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.standup;
 
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 
-public interface IStandupPresenter extends Presenter<IStandupContainer> {
+public interface IStandupPresenter extends IPresenter<IStandupContainer> {
 
 }
