@@ -3,6 +3,7 @@
   <name>mycollab-app-community</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
+    <project>mycollab-services-community</project>
     <project>mycollab-web-community</project>
     <project>mycollab-web</project>
     <project>mycollab-core</project>

@@ -13,12 +13,10 @@
         <version>2.0-SNAPSHOT</version>
     </parent>
     <modules>
-        <module>../mycollab-frontsite</module>
         <module>../mycollab-flex-generator</module>
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-web-premium</module>
         <module>../mycollab-app-premium</module>
-        <module>../mycollab-app-ondemand</module>
     </modules>
 </project>

@@ -28,15 +28,15 @@ public class OpportunityLeadSourceDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> implements
 		IOpportunityLeadSourceDashboard {
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<GroupItem> groupItems;
-	
+
 	public OpportunityLeadSourceDashboard() {
 		this(400, 265);
 	}
 
 	public OpportunityLeadSourceDashboard(final int width, final int height) {
-		super("Deals By Sources", width, height); // 530, 350
+		super("Deals By Sources", width, height);
 	}
 
 	@Override
@@ -57,16 +57,17 @@ public class OpportunityLeadSourceDashboard extends
 		final OpportunityService opportunityService = ApplicationContextUtil
 				.getSpringBean(OpportunityService.class);
 
-		groupItems = opportunityService
-				.getLeadSourcesSummary(searchCriteria);
+		groupItems = opportunityService.getLeadSourcesSummary(searchCriteria);
 
 		final String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
 		for (final String source : leadSources) {
 			boolean isFound = false;
 			for (final GroupItem item : groupItems) {
 				if (source.equals(item.getGroupid())) {
-					if(item.getValue() != 0) dataset.setValue(source, item.getValue());
-					else dataset.setValue(source, item.getCountNum());
+					if (item.getValue() != 0)
+						dataset.setValue(source, item.getValue());
+					else
+						dataset.setValue(source, item.getCountNum());
 					isFound = true;
 					break;
 				}

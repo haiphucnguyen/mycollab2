@@ -4,6 +4,9 @@
     <property name="context-root" value="mycollab-app-premium"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/target/classes"/>
+    <dependent-module archiveName="mycollab-services-premium.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-premium/mycollab-services-premium">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-caching-premium.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-caching-premium/mycollab-caching-premium">
       <dependency-type>uses</dependency-type>
     </dependent-module>

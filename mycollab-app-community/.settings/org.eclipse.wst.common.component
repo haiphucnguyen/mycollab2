@@ -4,6 +4,9 @@
     <property name="context-root" value="mycollab-app-community"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/target/classes"/>
+    <dependent-module archiveName="mycollab-services-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-community/mycollab-services-community">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-web-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web-community/mycollab-web-community">
       <dependency-type>uses</dependency-type>
     </dependent-module>
