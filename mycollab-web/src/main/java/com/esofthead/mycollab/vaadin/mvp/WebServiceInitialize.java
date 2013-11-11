@@ -24,6 +24,7 @@ public class WebServiceInitialize implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 		ViewManager.init();
 		PresenterResolver.init();
+		BeanItemCustomExt.init();
 	}
 
 }

@@ -31,7 +31,9 @@ public class BeanItemCustomExt<T> extends BeanItem<T> {
 				}
 			}
 		}
+	}
 
+	public static void init() {
 	}
 
 	public BeanItemCustomExt(T bean) {
