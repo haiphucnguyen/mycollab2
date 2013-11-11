@@ -49,6 +49,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.ui.Calendar;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.BackwardEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.DateClickEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.DateClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
@@ -56,12 +57,15 @@ import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventMoveHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventResize;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventResizeHandler;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.ForwardEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.MoveEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClickHandler;
+import com.vaadin.addon.calendar.ui.handler.BasicBackwardHandler;
 import com.vaadin.addon.calendar.ui.handler.BasicDateClickHandler;
+import com.vaadin.addon.calendar.ui.handler.BasicForwardHandler;
 import com.vaadin.addon.calendar.ui.handler.BasicWeekClickHandler;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -150,7 +154,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		HorizontalLayout horizontalWapper = new HorizontalLayout();
 		horizontalWapper.addStyleName("eventdatepicker");
 		this.dateChooser = new PopupButton("");
-		this.dateChooser.setWidth("80px");
+		this.dateChooser.setWidth("110px");
 		this.dateChooser.addComponent(datePicker);
 		dateChooser.setStyleName(UIConstants.THEME_LINK);
 		horizontalWapper.addComponent(dateChooser);
@@ -169,20 +173,24 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		VerticalLayout actionBtnLayout = new VerticalLayout();
 		actionBtnLayout.setMargin(true);
 		actionBtnLayout.setSpacing(true);
-		actionBtnLayout.setWidth("200px");
+		actionBtnLayout.setWidth("150px");
 
 		ButtonLink todoBtn = new ButtonLink("Create Todo", listener);
 		actionBtnLayout.addComponent(todoBtn);
+		todoBtn.setIcon(MyCollabResource.newResource("icons/16/crm/task.png"));
 		todoBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_TASK));
 
 		Button callBtn = new ButtonLink("Create Call", listener);
 		actionBtnLayout.addComponent(callBtn);
+		callBtn.setIcon(MyCollabResource.newResource("icons/16/crm/call.png"));
 		callBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
 
 		ButtonLink meetingBtn = new ButtonLink("Create Event", listener);
 		actionBtnLayout.addComponent(meetingBtn);
+		meetingBtn.setIcon(MyCollabResource
+				.newResource("icons/16/crm/meeting.png"));
 		meetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
 
@@ -190,6 +198,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 		calendarComponent = new MonthViewCalendar();
 		this.addComponent(calendarComponent);
+		this.setExpandRatio(calendarComponent, 1);
 		this.setComponentAlignment(calendarComponent, Alignment.MIDDLE_CENTER);
 
 		HorizontalLayout spacing = new HorizontalLayout();
@@ -240,12 +249,38 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		this.setComponentAlignment(noteInfoLayout, Alignment.MIDDLE_CENTER);
 	}
 
-	public void updateLabelCaption() {
-		DateFormatSymbols s = new DateFormatSymbols();
-		String month = s.getShortMonths()[calendarComponent.getCalendar().get(
-				GregorianCalendar.MONTH)];
-		dateChooser.setCaption(month + " "
-				+ calendarComponent.getCalendar().get(GregorianCalendar.YEAR));
+	public void updateLabelCaption(Date date) {
+		switch (calendarComponent.viewMode) {
+		case MONTH:
+			GregorianCalendar calendar = new GregorianCalendar();
+			calendar.setTime(date);
+			DateFormatSymbols s = new DateFormatSymbols();
+			String month = s.getMonths()[calendar.get(GregorianCalendar.MONTH)];
+			dateChooser.setCaption(month + " "
+					+ calendar.get(GregorianCalendar.YEAR));
+			this.dateChooser.setWidth("110px");
+			break;
+		case WEEK:
+			java.util.Calendar cal = java.util.Calendar.getInstance();
+			cal.setTime(date);
+			int week = cal.get(java.util.Calendar.WEEK_OF_YEAR);
+			WeekClickHandler handler = (WeekClickHandler) calendarComponent
+					.getHandler(WeekClick.EVENT_ID);
+			handler.weekClick(new WeekClick(calendarComponent, week, cal
+					.get(GregorianCalendar.YEAR)));
+
+			cal.set(java.util.Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+			String firstDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
+			cal.add(java.util.Calendar.DATE, 6);
+			String endDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
+			dateChooser.setCaption(firstDateOfWeek + " - " + endDateOfWeek);
+			this.dateChooser.setWidth("150px");
+			break;
+		case DAY:
+			dateChooser.setCaption(AppContext.formatDate(date));
+			this.dateChooser.setWidth("80px");
+			break;
+		}
 	}
 
 	private void addCalendarEvent() {
@@ -261,8 +296,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 								.switchCalendarByDatePicker(selectedDate);
 						datePicker.setLabelTime(AppContext
 								.formatDate(selectedDate));
-						dateChooser.setCaption(AppContext
-								.formatDate(selectedDate));
+						updateLabelCaption(selectedDate);
 						dateChooser.setPopupVisible(false);
 					}
 				});
@@ -325,7 +359,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		Date datenow = new Date();
 		calendar.setTime(datenow);
 		DateFormatSymbols s = new DateFormatSymbols();
-		String month = s.getShortMonths()[calendar.get(GregorianCalendar.MONTH)];
+		String month = s.getMonths()[calendar.get(GregorianCalendar.MONTH)];
 		dateChooser.setCaption(month + " "
 				+ calendar.get(GregorianCalendar.YEAR));
 	}
@@ -728,6 +762,67 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 				}
 			});
 
+			this.setHandler(new BasicForwardHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void forward(ForwardEvent event) {
+					super.forward(event);
+					switch (viewMode) {
+					case WEEK:
+						calendar.add(java.util.Calendar.DATE, 7);
+						calendar.set(java.util.Calendar.DAY_OF_WEEK,
+								calendar.getFirstDayOfWeek());
+						String firstDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						calendar.add(java.util.Calendar.DATE, 6);
+						String endDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						dateChooser.setCaption(firstDateOfWeek + " - "
+								+ endDateOfWeek);
+						break;
+					case DAY:
+						calendar.add(java.util.Calendar.DATE, 1);
+						dateChooser.setCaption(DateTimeUtils
+								.formatDate(calendar.getTime()));
+						break;
+					case MONTH:
+						break;
+					}
+				}
+
+			});
+
+			this.setHandler(new BasicBackwardHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void backward(BackwardEvent event) {
+					super.backward(event);
+					switch (viewMode) {
+					case WEEK:
+						calendar.add(java.util.Calendar.DATE, -7);
+						calendar.set(java.util.Calendar.DAY_OF_WEEK,
+								calendar.getFirstDayOfWeek());
+						String firstDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						calendar.add(java.util.Calendar.DATE, 6);
+						String endDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						dateChooser.setCaption(firstDateOfWeek + " - "
+								+ endDateOfWeek);
+						break;
+					case DAY:
+						calendar.add(java.util.Calendar.DATE, -1);
+						dateChooser.setCaption(DateTimeUtils
+								.formatDate(calendar.getTime()));
+						break;
+					case MONTH:
+						break;
+					}
+				}
+			});
+
 			this.setHandler(new RangeSelectHandler() {
 				private static final long serialVersionUID = 1L;
 
@@ -849,29 +944,36 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		}
 
 		private void switchToWeekView(Date date) {
+			dateChooser.setWidth("150px");
 			viewMode = Mode.WEEK;
 			calendar.setTime(date);
 			java.util.Calendar cal = java.util.Calendar.getInstance();
 			cal.setTime(date);
 			int week = cal.get(java.util.Calendar.WEEK_OF_YEAR);
-
 			WeekClickHandler handler = (WeekClickHandler) calendarComponent
 					.getHandler(WeekClick.EVENT_ID);
 			handler.weekClick(new WeekClick(calendarComponent, week, cal
 					.get(GregorianCalendar.YEAR)));
-			initLabelCaption();
+
+			cal.set(java.util.Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+			String firstDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
+			cal.add(java.util.Calendar.DATE, 6);
+			String endDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
+			dateChooser.setCaption(firstDateOfWeek + " - " + endDateOfWeek);
 		}
 
 		private void switchToDateView(Date date) {
+			dateChooser.setWidth("80px");
 			viewMode = Mode.DAY;
 			calendar.setTime(date);
 			DateClickHandler handler = (DateClickHandler) calendarComponent
 					.getHandler(DateClickEvent.EVENT_ID);
 			handler.dateClick(new DateClickEvent(calendarComponent, date));
-			initLabelCaption();
+			dateChooser.setCaption(AppContext.formatDate(date));
 		}
 
 		private void switchToMonthView(Date date, boolean isViewCurrentMonth) {
+			dateChooser.setWidth("110px");
 			viewMode = Mode.MONTH;
 			calendar = new GregorianCalendar();
 			calendar.setTime(date);
@@ -892,6 +994,16 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			} else {
 				this.setStartDate(calendar.getTime());
 			}
+		}
+
+		private void rollWeek(int direction) {
+			calendar.add(GregorianCalendar.WEEK_OF_YEAR, direction);
+			calendar.set(GregorianCalendar.DAY_OF_WEEK,
+					calendar.getFirstDayOfWeek());
+			resetCalendarTime(false);
+			resetTime(true);
+			calendar.add(GregorianCalendar.DATE, 6);
+			calendarComponent.setEndDate(calendar.getTime());
 		}
 
 		private void resetTime(boolean max) {

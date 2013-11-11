@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,6 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
 
 public class AuditLogShowHandler {
 
@@ -176,7 +176,9 @@ public class AuditLogShowHandler {
 				String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
 				Date formatDate = DateTimeUtils.getDateByStringWithFormat(
 						value, formatW3C);
-				return AppContext.formatDate(formatDate);
+				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+						"MM/dd/yyyy HH:mm:ss");
+				return simpleDateTimeFormat.format(formatDate);
 			} else {
 				return "&lt;Empty&gt;";
 			}

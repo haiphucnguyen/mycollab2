@@ -249,8 +249,10 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("subject", "Subject");
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("type", "Type");
-			this.generateFieldDisplayHandler("startdate", "Start Date");
-			this.generateFieldDisplayHandler("enddate", "End Date");
+			this.generateFieldDisplayHandler("startdate", "Start Date",
+					new DateHistoryFieldFormat());
+			this.generateFieldDisplayHandler("enddate", "End Date",
+					new DateHistoryFieldFormat());
 			this.generateFieldDisplayHandler("location", "Location");
 		}
 	}
