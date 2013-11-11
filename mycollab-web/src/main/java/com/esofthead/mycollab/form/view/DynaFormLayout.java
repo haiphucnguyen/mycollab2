@@ -61,6 +61,32 @@ public class DynaFormLayout implements IFormLayoutFactory {
 		} else {
 			this.dynaForm = defaultForm;
 		}
+
+		log.debug("Fill fields of originSection to map field");
+
+		int sectionCount = dynaForm.getSectionCount();
+		for (int i = 0; i < sectionCount; i++) {
+			DynaSection section = dynaForm.getSection(i);
+			if (section.isDeletedSection()) {
+				continue;
+			}
+			int fieldCount = section.getFieldCount();
+			for (int j = 0; j < fieldCount; j++) {
+				AbstractDynaField dynaField = section.getField(j);
+				if (dynaField.isCustom()) {
+					fieldMappings.put(
+							"customfield." + dynaField.getFieldName(),
+							dynaField);
+				} else {
+					fieldMappings.put(dynaField.getFieldName(), dynaField);
+				}
+
+			}
+		}
+	}
+
+	public boolean isVisibleProperty(Object propertyId) {
+		return fieldMappings.containsKey(propertyId);
 	}
 
 	@Override
@@ -101,14 +127,6 @@ public class DynaFormLayout implements IFormLayoutFactory {
 			layout.addComponent(gridLayout.getLayout());
 
 			sectionMappings.put(section, gridLayout);
-
-			log.debug("Fill fields of originSection to map field");
-
-			int fieldCount = section.getFieldCount();
-			for (int j = 0; j < fieldCount; j++) {
-				AbstractDynaField dynaField = section.getField(j);
-				fieldMappings.put(dynaField.getFieldName(), dynaField);
-			}
 		}
 		return layout;
 	}
@@ -117,6 +135,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 	public void attachField(Object propertyId, Field field) {
 		AbstractDynaField dynaField = fieldMappings.get(propertyId);
 		if (dynaField != null) {
+			log.debug("Attach prop {}", propertyId);
 			DynaSection section = dynaField.getOwnSection();
 			GridFormLayoutHelper gridLayout = sectionMappings.get(section);
 
@@ -143,5 +162,4 @@ public class DynaFormLayout implements IFormLayoutFactory {
 
 		}
 	}
-
 }

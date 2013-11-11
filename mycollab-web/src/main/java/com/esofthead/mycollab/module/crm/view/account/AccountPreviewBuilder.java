@@ -35,8 +35,10 @@ import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.mvp.BeanItemCustomExt;
+import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanCustomForm;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
@@ -247,7 +249,11 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 			initRelatedComponent();
 
-			previewForm = new AdvancedPreviewBeanForm<Account>() {
+			DynaFormLayout formLayout = new DynaFormLayout(
+					CrmTypeConstants.ACCOUNT,
+					AccountDefaultDynaFormFactory.getForm());
+
+			previewForm = new AdvancedPreviewBeanCustomForm<Account>(formLayout) {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -277,10 +283,6 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					setFormLayoutFactory(new DynaFormLayout(
-							CrmTypeConstants.ACCOUNT,
-							AccountDefaultDynaFormFactory.getForm()));
-					setFormFieldFactory(new AccountFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					accountAddLayout.setTitle(account.getAccountname());
 				}
@@ -291,6 +293,24 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 							ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
 							account.getId());
 					getWindow().addWindow(historyLog);
+				}
+
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("email")) {
+						return new DefaultFormViewFieldFactory.FormEmailLinkViewField(
+								account.getEmail());
+					} else if (propertyId.equals("assignuser")) {
+						return new UserLinkViewField(account.getAssignuser(),
+								account.getAssignUserAvatarId(),
+								account.getAssignUserFullName());
+					} else if (propertyId.equals("website")) {
+						return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
+								account.getWebsite());
+					}
+
+					return null;
 				}
 			};
 

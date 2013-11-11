@@ -11,7 +11,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.domain.FormCustomFieldValueWithBLOBs;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.MethodProperty;
+import com.vaadin.data.util.NestedMethodProperty;
 
 public class BeanItemCustomExt<T> extends BeanItem<T> {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,8 @@ public class BeanItemCustomExt<T> extends BeanItem<T> {
 
 		try {
 			for (String customFieldName : customFieldNames) {
-				this.addItemProperty(customFieldName, new MethodProperty<T>(
+				String propName = "customfield." + customFieldName;
+				this.addItemProperty(propName, new NestedMethodProperty(
 						PropertyUtils.getProperty(bean, "customfield"),
 						customFieldName));
 			}

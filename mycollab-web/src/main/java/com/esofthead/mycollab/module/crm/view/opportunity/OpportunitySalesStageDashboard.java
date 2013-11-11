@@ -104,18 +104,14 @@ public class OpportunitySalesStageDashboard extends CssLayout {
 
 		chart.addChartSelectionListener(new ChartSelectionListener() {
 			public void onSelection(ChartSelectionEvent e) {
-				System.out.println(e.getComponent() + " " + e.getValueStart()
-						+ " " + e.getValueEnd() + " " + e.getSelectionEnd());
 			}
 		});
 		chart.addLegendItemClickListener(new LegendItemClickListener() {
 			public void onClick(LegendItemClickEvent e) {
-				System.out.println(e.getSource() + " " + e.getSeries());
 			}
 		});
 		chart.addChartClickListener(new ChartClickListener() {
 			public void onClick(ChartClickEvent e) {
-				System.out.println(e.getxAxisValue() + " " + e.getyAxisValue());
 			}
 		});
 

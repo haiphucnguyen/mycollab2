@@ -19,6 +19,8 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.Date;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
@@ -38,6 +40,37 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
 
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
+	private static Logger log = LoggerFactory
+			.getLogger(DefaultFormViewFieldFactory.class);
+	
+	private static final long serialVersionUID = 1L;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Field createField(final Item item, final Object propertyId,
+			final com.vaadin.ui.Component uiContext) {
+
+		Field field = onCreateField(item, propertyId, uiContext);
+		if (field == null) {
+			final Object bean = ((BeanItem<Object>) item).getBean();
+
+			try {
+				final String propertyValue = BeanUtils.getProperty(bean,
+						(String) propertyId);
+				field = new FormViewField(propertyValue);
+			} catch (final Exception e) {
+				log.error("Error while get field value", e);
+				field = new FormViewField("Error");
+			}
+		}
+
+		return field;
+	}
+
+	protected Field onCreateField(final Item item, final Object propertyId,
+			final com.vaadin.ui.Component uiContext) {
+		return null;
+	}
 
 	public static interface AttachmentUploadField extends Field {
 
@@ -310,33 +343,5 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		public Class<?> getType() {
 			return Object.class;
 		}
-	}
-
-	private static final long serialVersionUID = 1L;
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Field createField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
-
-		Field field = onCreateField(item, propertyId, uiContext);
-		if (field == null) {
-			final Object bean = ((BeanItem<Object>) item).getBean();
-
-			try {
-				final String propertyValue = BeanUtils.getProperty(bean,
-						(String) propertyId);
-				field = new FormViewField(propertyValue);
-			} catch (final Exception e) {
-				field = new FormViewField("Error");
-			}
-		}
-
-		return field;
-	}
-
-	protected Field onCreateField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
-		return null;
 	}
 }
