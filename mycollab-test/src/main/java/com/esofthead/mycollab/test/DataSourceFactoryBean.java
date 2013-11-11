@@ -44,10 +44,10 @@ public class DataSourceFactoryBean extends AbstractFactoryBean<DataSource> {
 	@Override
 	protected DataSource createInstance() throws Exception {
 		InputStream stream = DataSourceFactoryBean.class.getClassLoader()
-				.getResourceAsStream("resources-test.properties");
+				.getResourceAsStream("mycollab-test.properties");
 		if (stream == null) {
 			stream = DataSourceFactoryBean.class.getClassLoader()
-					.getResourceAsStream("default-resources-test.properties");
+					.getResourceAsStream("default-mycollab-test.properties");
 		}
 
 		Properties props = new Properties();
