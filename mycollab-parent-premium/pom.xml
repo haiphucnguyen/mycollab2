@@ -13,6 +13,7 @@
         <version>2.0-SNAPSHOT</version>
     </parent>
     <modules>
+        <module>../mycollab-services-premium</module>
         <module>../mycollab-flex-generator</module>
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
