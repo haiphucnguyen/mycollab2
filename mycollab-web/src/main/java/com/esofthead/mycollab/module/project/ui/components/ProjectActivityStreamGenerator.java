@@ -184,7 +184,8 @@ public class ProjectActivityStreamGenerator {
 
 	private static class VersionAuditLogShowHandler extends AuditLogShowHandler {
 		public VersionAuditLogShowHandler() {
-			this.generateFieldDisplayHandler("duedate", "Due Date");
+			this.generateFieldDisplayHandler("duedate", "Due Date",
+					AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("versionname", "Name");
 			this.generateFieldDisplayHandler("description", "Description");
 		}

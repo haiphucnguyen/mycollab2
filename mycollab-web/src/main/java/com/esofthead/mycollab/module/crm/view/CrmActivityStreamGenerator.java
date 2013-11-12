@@ -234,9 +234,9 @@ public class CrmActivityStreamGenerator {
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("type", "Type");
 			this.generateFieldDisplayHandler("startdate", "Start Date",
-					new DateHistoryFieldFormat());
+					AuditLogShowHandler.DATETIME_FIELD);
 			this.generateFieldDisplayHandler("enddate", "End Date",
-					new DateHistoryFieldFormat());
+					AuditLogShowHandler.DATETIME_FIELD);
 			this.generateFieldDisplayHandler("location", "Location");
 		}
 	}
@@ -244,8 +244,10 @@ public class CrmActivityStreamGenerator {
 	private static class TaskAuditLogShowHandler extends AuditLogShowHandler {
 		public TaskAuditLogShowHandler() {
 			this.generateFieldDisplayHandler("subject", "Subject");
-			this.generateFieldDisplayHandler("startdate", "Start Date");
-			this.generateFieldDisplayHandler("duedate", "Due Date");
+			this.generateFieldDisplayHandler("startdate", "Start Date",
+					AuditLogShowHandler.DATE_FIELD);
+			this.generateFieldDisplayHandler("duedate", "Due Date",
+					AuditLogShowHandler.DATE_FIELD);
 			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
 					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
@@ -257,7 +259,8 @@ public class CrmActivityStreamGenerator {
 	private static class CallAuditLogShowHandler extends AuditLogShowHandler {
 		public CallAuditLogShowHandler() {
 			this.generateFieldDisplayHandler("subject", "Subject");
-			this.generateFieldDisplayHandler("startdate", "Start Date");
+			this.generateFieldDisplayHandler("startdate", "Start Date",
+					AuditLogShowHandler.DATETIME_FIELD);
 			this.generateFieldDisplayHandler("assignuser", LocalizationHelper
 					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			this.generateFieldDisplayHandler("status", "Status");

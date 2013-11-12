@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.vaadin.addon.customfield.CustomField;
+
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -18,6 +23,8 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -62,8 +69,41 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 				Component uiContext) {
 			if (propertyId.equals("type")) {
 				return new RelatedReadItemField(meeting);
+			} else if (propertyId.equals("startdate")) {
+				if (meeting.getStartdate() == null)
+					return null;
+				return new DateFieldWithUserTimeZone(meeting.getStartdate(),
+						"DATETIME_FIELD");
+			} else if (propertyId.equals("enddate")) {
+				if (meeting.getEnddate() == null)
+					return null;
+				return new DateFieldWithUserTimeZone(meeting.getEnddate(),
+						"DATETIME_FIELD");
 			}
 			return null;
+		}
+	}
+
+	public static class DateFieldWithUserTimeZone extends CustomField {
+		private static String DATE_FORMAT = "MM/dd/yyyy";
+		private static String DATETIME_FORMAT = "MM/dd/yyyy HH:mm:ss";
+		private SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+				DATE_FORMAT);
+
+		public DateFieldWithUserTimeZone(final Date date, String dateformat) {
+			if (dateformat.equals("DATETIME_FIELD")) {
+				simpleDateTimeFormat = new SimpleDateFormat(DATETIME_FORMAT);
+			}
+			Label label = new Label();
+			label.setValue(simpleDateTimeFormat.format(date));
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.addComponent(label);
+			this.setCompositionRoot(layout);
+		}
+
+		@Override
+		public Class<String> getType() {
+			return String.class;
 		}
 	}
 
@@ -83,12 +123,6 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 			this.addComponent(meetingAddLayout);
 
 			initRelatedComponent();
-
-			final Layout optionalActionControls = PreviewFormControlsGenerator2
-					.createFormOptionalControls(previewForm,
-							RolePermissionCollections.CRM_MEETING);
-
-			meetingAddLayout.addControlButtons(optionalActionControls);
 
 			previewForm = new AdvancedPreviewBeanForm<Meeting>() {
 				@Override
@@ -134,6 +168,12 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 					getWindow().addWindow(historyLog);
 				}
 			};
+
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_MEETING);
+
+			meetingAddLayout.addControlButtons(optionalActionControls);
 
 			meetingInformation = new VerticalLayout();
 			meetingInformation.addStyleName("main-info");
