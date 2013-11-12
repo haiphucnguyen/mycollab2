@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.user.domain;
 
-import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.security.PermissionMap;
 
 public class SimpleUser extends User {
 

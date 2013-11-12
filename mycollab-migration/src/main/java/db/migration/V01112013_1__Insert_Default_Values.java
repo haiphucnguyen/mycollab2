@@ -28,6 +28,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.security.PermissionMap;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
 public class V01112013_1__Insert_Default_Values implements SpringJdbcMigration {
@@ -139,7 +140,32 @@ public class V01112013_1__Insert_Default_Values implements SpringJdbcMigration {
 				.executeAndReturnKey(guestRoleParameters);
 
 		log.debug("Associate permission with admin role");
-		
+		SimpleJdbcInsert rolePermissionJdbcInsert = new SimpleJdbcInsert(
+				jdbcTemplate).withTableName("s_role_permission")
+				.usingColumns("roleid", "roleVal")
+				.usingGeneratedKeyColumns("id");
 
+		SqlParameterSource adminRolePermissionParameters = new MapSqlParameterSource()
+				.addValue("roleid", adminRoleId).addValue(
+						"roleVal",
+						PermissionMap.buildAdminPermissionCollection()
+								.toXmlString());
+		rolePermissionJdbcInsert.execute(adminRolePermissionParameters);
+
+		log.debug("Associate permission with employee role");
+		SqlParameterSource employeeRolePermissionParameters = new MapSqlParameterSource()
+				.addValue("roleid", employeeRoleId).addValue(
+						"roleVal",
+						PermissionMap.buildEmployeePermissionCollection()
+								.toXmlString());
+		rolePermissionJdbcInsert.execute(employeeRolePermissionParameters);
+
+		log.debug("Associate permission with guest role");
+		SqlParameterSource guestRolePermissionParameters = new MapSqlParameterSource()
+				.addValue("roleid", guestRoleId).addValue(
+						"roleVal",
+						PermissionMap.buildGuestPermissionCollection()
+								.toXmlString());
+		rolePermissionJdbcInsert.execute(guestRolePermissionParameters);
 	}
 }

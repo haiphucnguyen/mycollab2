@@ -20,8 +20,8 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
+import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 

@@ -33,7 +33,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
@@ -66,6 +65,7 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.esb.UserEndpoints;
 import com.esofthead.mycollab.module.user.esb.UserRemovedCommand;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.security.PermissionMap;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 

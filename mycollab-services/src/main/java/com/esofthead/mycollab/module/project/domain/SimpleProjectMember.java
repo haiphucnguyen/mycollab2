@@ -22,7 +22,7 @@ package com.esofthead.mycollab.module.project.domain;
 
 import java.util.Date;
 
-import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.security.PermissionMap;
 
 /**
  * 

@@ -19,9 +19,9 @@ package com.esofthead.mycollab.vaadin.mvp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.security.PermissionChecker;
+import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;

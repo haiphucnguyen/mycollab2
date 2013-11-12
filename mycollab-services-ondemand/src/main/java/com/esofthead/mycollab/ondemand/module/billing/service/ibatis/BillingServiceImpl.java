@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -67,6 +66,7 @@ import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.security.PermissionDefItem;
+import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 
 @Service(value = "billingService")
@@ -229,35 +229,8 @@ public class BillingServiceImpl implements BillingService {
 		role.setIssystemrole(true);
 		final int roleId = this.roleService.saveWithSession(role, "");
 
-		// save default permission to role
-		final PermissionMap permissionMap = new PermissionMap();
-		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.READ_ONLY);
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
-			if (element.getKey().equals(
-					RolePermissionCollections.ACCOUNT_BILLING)) {
-				permissionMap.addPath(element.getKey(),
-						BooleanPermissionFlag.FALSE);
-			} else {
-				permissionMap.addPath(element.getKey(),
-						AccessPermissionFlag.READ_ONLY);
-			}
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
-			permissionMap
-					.addPath(element.getKey(), BooleanPermissionFlag.FALSE);
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.READ_WRITE);
-		}
-
-		this.roleService.savePermission(roleId, permissionMap, accountid);
+		this.roleService.savePermission(roleId,
+				PermissionMap.buildEmployeePermissionCollection(), accountid);
 		return roleId;
 	}
 
@@ -270,34 +243,8 @@ public class BillingServiceImpl implements BillingService {
 		role.setIssystemrole(true);
 		final int roleId = this.roleService.saveWithSession(role, "");
 
-		// save default permission to role
-		final PermissionMap permissionMap = new PermissionMap();
-		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-			permissionMap
-					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
-			if (element.getKey().equals(
-					RolePermissionCollections.ACCOUNT_BILLING)) {
-				permissionMap.addPath(element.getKey(),
-						BooleanPermissionFlag.TRUE);
-			} else {
-				permissionMap.addPath(element.getKey(),
-						AccessPermissionFlag.ACCESS);
-			}
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
-			permissionMap.addPath(element.getKey(), BooleanPermissionFlag.TRUE);
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
-			permissionMap
-					.addPath(element.getKey(), AccessPermissionFlag.ACCESS);
-		}
-
-		this.roleService.savePermission(roleId, permissionMap, accountid);
+		this.roleService.savePermission(roleId,
+				PermissionMap.buildAdminPermissionCollection(), accountid);
 		return roleId;
 	}
 
@@ -310,35 +257,8 @@ public class BillingServiceImpl implements BillingService {
 		role.setIssystemrole(true);
 		final int roleId = this.roleService.saveWithSession(role, "");
 
-		// save default permission to role
-		final PermissionMap permissionMap = new PermissionMap();
-		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.NO_ACCESS);
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
-			if (element.getKey().equals(
-					RolePermissionCollections.ACCOUNT_BILLING)) {
-				permissionMap.addPath(element.getKey(),
-						BooleanPermissionFlag.FALSE);
-			} else {
-				permissionMap.addPath(element.getKey(),
-						AccessPermissionFlag.NO_ACCESS);
-			}
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.PROJECT_PERMISSION_ARR) {
-			permissionMap
-					.addPath(element.getKey(), BooleanPermissionFlag.FALSE);
-		}
-
-		for (final PermissionDefItem element : RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
-			permissionMap.addPath(element.getKey(),
-					AccessPermissionFlag.NO_ACCESS);
-		}
-
-		this.roleService.savePermission(roleId, permissionMap, accountid);
+		this.roleService.savePermission(roleId,
+				PermissionMap.buildGuestPermissionCollection(), accountid);
 		return roleId;
 	}
 

@@ -23,7 +23,7 @@ package com.esofthead.mycollab.module.user.domain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.security.PermissionMap;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
