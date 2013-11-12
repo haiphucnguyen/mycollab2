@@ -35,12 +35,12 @@
             value="com.esofthead.mycollab.schedule.jobs.CrmSendingRelayEmailNotificationJob" />
         <property name="durability" value="true" />
     </bean>
-    
+
     <bean id="userSignUpNotificationEmailJob"
-    	 class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-    	<property name="jobClass"
-    		value="com.esofthead.mycollab.schedule.jobs.UserSignUpEmailNotificationJob"></property>
-    	<property name="durability" value="true" />
+        class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+            value="com.esofthead.mycollab.schedule.jobs.UserSignUpEmailNotificationJob"></property>
+        <property name="durability" value="true" />
     </bean>
 
     <bean id="sendErrorReportEmailJob"
@@ -75,10 +75,10 @@
         <property name="jobDetail" ref="crmSendRelayNotificationEmailJob" />
         <property name="cronExpression" value="0 * * * * ?" />
     </bean>
-    
+
     <bean id="userSignUpNotificationEmailTrigger"
-    	class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
-    	<property name="jobDetail" ref="userSignUpNotificationEmailJob" />
+        class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
+        <property name="jobDetail" ref="userSignUpNotificationEmailJob" />
         <property name="cronExpression" value="0 5 * * * ?" />
     </bean>
 
@@ -101,7 +101,8 @@
     </bean>
 
     <bean id="quartzScheduler"
-        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+        depends-on="dbMigration">
 
         <property name="configLocation" value="classpath:quartz.properties" />
         <property name="dataSource" ref="dataSource" />
@@ -133,7 +134,7 @@
                 <ref bean="sendErrorReportEmailJob" />
                 <ref bean="sendInviteUserEmailJob" />
                 <ref bean="sendAccountBillingEmailJob" />
-                <ref bean="userSignUpNotificationEmailJob"/>
+                <ref bean="userSignUpNotificationEmailJob" />
             </list>
         </property>
         <property name="triggers">
@@ -144,7 +145,7 @@
                 <ref bean="sendErrorReportEmailTrigger" />
                 <ref bean="sendInviteUserEmailTrigger" />
                 <ref bean="sendAccountBillingEmailTrigger" />
-                <ref bean="userSignUpNotificationEmailTrigger"/>
+                <ref bean="userSignUpNotificationEmailTrigger" />
             </list>
         </property>
     </bean>
