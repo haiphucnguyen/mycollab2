@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.cache.CacheKey;
-import com.esofthead.mycollab.esb.BeanProxyBuilder;
-import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand;
-import com.esofthead.mycollab.module.billing.esb.BillingEndpoints;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
@@ -65,13 +62,14 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	public List<String> getSubdomainsOfUser(final String username) {
-		log.debug("Get subdomain of user {}", username);
-		return this.billingAccountMapperExt.getSubdomainsOfUser(username);
+		throw new MyCollabException(
+				"This feature is not supported except onsite mode");
 	}
 
 	@Override
 	public List<BillingPlan> getAvailablePlans() {
-		return billingPlanMapper.selectByExample(new BillingPlanExample());
+		throw new MyCollabException(
+				"This feature is not supported except onsite mode");
 	}
 
 	@Override
@@ -82,11 +80,8 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	public void cancelAccount(Integer accountid) {
-		AccountDeletedCommand accountDeletedCommand = new BeanProxyBuilder()
-				.build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
-						AccountDeletedCommand.class);
-		billingAccountMapper.deleteByPrimaryKey(accountid);
-		accountDeletedCommand.accountDeleted(accountid);
+		throw new MyCollabException(
+				"This feature is not supported except onsite mode");
 	}
 
 	@Override
@@ -114,7 +109,7 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	public List<BillingAccountWithOwners> getTrialAccountsWithOwners() {
-		return billingAccountMapperExt.getTrialAccountsWithOwners();
+		return null;
 	}
 
 }
