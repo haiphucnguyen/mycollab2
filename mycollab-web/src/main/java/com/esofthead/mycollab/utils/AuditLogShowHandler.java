@@ -49,7 +49,8 @@ public class AuditLogShowHandler {
 		defaultFieldHandlers
 				.put(DEFAULT_FIELD, new DefaultHistoryFieldFormat());
 		defaultFieldHandlers.put(DATE_FIELD, new DateHistoryFieldFormat());
-		defaultFieldHandlers.put(DATE_FIELD, new DateTimeHistoryFieldFormat());
+		defaultFieldHandlers.put(DATETIME_FIELD,
+				new DateTimeHistoryFieldFormat());
 		defaultFieldHandlers.put(CURRENCY_FIELD,
 				new CurrencyHistoryFieldFormat());
 	}
@@ -186,8 +187,9 @@ public class AuditLogShowHandler {
 
 		}
 	}
-	
-	public static class DateTimeHistoryFieldFormat implements HistoryFieldFormat {
+
+	public static class DateTimeHistoryFieldFormat implements
+			HistoryFieldFormat {
 
 		@Override
 		public String formatField(String value) {

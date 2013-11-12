@@ -186,12 +186,39 @@
                 <message>Subject must not be null</message>
             </constraint>
         </field>
+        <field name="startdate">
+        	<constraint annotation="javax.validation.constraints.NotNull">
+        		<message>StartDate must not be null</message>
+        	</constraint>
+        </field>
+        <field name="duedate">
+        	<constraint annotation="javax.validation.constraints.NotNull">
+        		<message>DueDate must not be null</message>
+        	</constraint>
+        </field>
     </bean>
     <bean class="Meeting" ignore-annotations="false">
+    	<class>
+            <constraint annotation="com.esofthead.mycollab.validator.constraints.DateComparision">
+                <message>Start date must be less than end date</message>
+                <element name="firstDateField">startdate</element>
+                <element name="lastDateField">enddate</element>
+            </constraint>    
+        </class>
         <field name="subject">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Subject must not be null</message>
             </constraint>
+        </field>
+        <field name="startdate">
+        	<constraint annotation="javax.validation.constraints.NotNull">
+        		<message>StartDate must not be null</message>
+        	</constraint>
+        </field>
+        <field name="enddate">
+        	<constraint annotation="javax.validation.constraints.NotNull">
+        		<message>EndDate must not be null</message>
+        	</constraint>
         </field>
     </bean>
     <bean class="Call" ignore-annotations="false">
