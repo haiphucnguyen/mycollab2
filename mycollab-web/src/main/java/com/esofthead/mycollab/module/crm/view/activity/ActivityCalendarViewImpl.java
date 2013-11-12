@@ -106,7 +106,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		MenuActionListener listener = new MenuActionListener();
 
 		calendarActionBtn = new PopupButton("Create");
-		calendarActionBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		calendarActionBtn.setStyleName("v-button-bluebtn-calendar");
 
 		HorizontalLayout actionPanel = new HorizontalLayout();
 		actionPanel.setWidth("100%");

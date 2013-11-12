@@ -315,6 +315,20 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	padding: 3px 13px;
 }
 
+.v-button-bluebtn-calendar{
+	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
+		#2599c8;
+	border: 1px solid #093768;
+	color: #FFFFFF;
+	text-shadow: 1px 1px 0px #1570cd;
+	border-radius: 3px;
+	padding: 3px 13px;
+}
+
+.v-button-bluebtn-calendar .v-button-wrap{
+	background-image: none;
+	padding: 0px;
+}
 .v-button-bluebtn-no-radius-left:hover {
 	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
 		#1377b3;
@@ -2739,8 +2753,13 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	{
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		rgb(208, 115, 20);
-	padding: 4px 13px 0px;
+	padding: 3px 13px 0px;
 	border-color: rgb(169, 169, 169);
+}
+
+.v-button .v-button-v-button-bluebtn-calendar .v-button-bluebtn-calendar .v-popupbutton .v-button-wrap .v-popup-indicator{
+	background: url("icons/sprites-white.png") no-repeat scroll -5px -10px
+		transparent;
 }
 
 .v-buttongroup .v-button.graybtn.v-button-left,.v-buttongroup .v-button.graybtn.v-button-middle,.v-buttongroup .v-button.graybtn.v-button-right

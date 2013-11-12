@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -197,9 +198,18 @@ public class AuditLogShowHandler {
 				String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
 				Date formatDate = DateTimeUtils.getDateByStringWithFormat(
 						value, formatW3C);
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(formatDate);
+				int timeFormat = calendar.get(Calendar.AM_PM);
+				if (timeFormat == 1) {
+					calendar.add(Calendar.HOUR_OF_DAY, -12);
+				}
 				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
-						"MM/dd/yyyy HH:mm:ss");
-				return simpleDateTimeFormat.format(formatDate);
+						"MM/dd/yyyy HH:mm");
+				String dateStr = simpleDateTimeFormat
+						.format(calendar.getTime())
+						+ ((timeFormat == 0) ? " AM" : " PM");
+				return dateStr;
 			} else {
 				return "&lt;Empty&gt;";
 			}

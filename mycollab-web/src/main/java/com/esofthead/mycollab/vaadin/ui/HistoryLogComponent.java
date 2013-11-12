@@ -21,6 +21,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -272,8 +273,17 @@ public class HistoryLogComponent extends VerticalLayout {
 				Date formatDate = DateTimeUtils.getDateByStringWithFormat(
 						value, formatW3C);
 				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
-						"MM/dd/yyyy HH:mm:ss");
-				return new Label(simpleDateTimeFormat.format(formatDate));
+						"MM/dd/yyyy HH:mm");
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(formatDate);
+				int timeFormat = calendar.get(Calendar.AM_PM);
+				if (timeFormat == 1) {
+					calendar.add(Calendar.HOUR_OF_DAY, -12);
+				}
+				String dateStr = simpleDateTimeFormat
+						.format(calendar.getTime())
+						+ ((timeFormat == 0) ? " AM" : " PM");
+				return new Label(dateStr);
 			} else {
 				return new Label();
 			}
