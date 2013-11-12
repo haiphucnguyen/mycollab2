@@ -49,6 +49,7 @@ public class AuditLogShowHandler {
 		defaultFieldHandlers
 				.put(DEFAULT_FIELD, new DefaultHistoryFieldFormat());
 		defaultFieldHandlers.put(DATE_FIELD, new DateHistoryFieldFormat());
+		defaultFieldHandlers.put(DATE_FIELD, new DateTimeHistoryFieldFormat());
 		defaultFieldHandlers.put(CURRENCY_FIELD,
 				new CurrencyHistoryFieldFormat());
 	}
@@ -169,6 +170,24 @@ public class AuditLogShowHandler {
 	}
 
 	public static class DateHistoryFieldFormat implements HistoryFieldFormat {
+
+		@Override
+		public String formatField(String value) {
+			if (value != null && !value.trim().equals("")) {
+				String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
+				Date formatDate = DateTimeUtils.getDateByStringWithFormat(
+						value, formatW3C);
+				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+						"MM/dd/yyyy");
+				return simpleDateTimeFormat.format(formatDate);
+			} else {
+				return "&lt;Empty&gt;";
+			}
+
+		}
+	}
+	
+	public static class DateTimeHistoryFieldFormat implements HistoryFieldFormat {
 
 		@Override
 		public String formatField(String value) {

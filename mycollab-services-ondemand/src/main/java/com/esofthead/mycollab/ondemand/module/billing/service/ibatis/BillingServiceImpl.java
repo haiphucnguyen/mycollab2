@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
+import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.cache.CacheKey;
@@ -43,7 +44,6 @@ import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand;
 import com.esofthead.mycollab.module.billing.esb.BillingEndpoints;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;

@@ -74,5 +74,6 @@
   <classpathentry kind="var" path="M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar" sourcepath="M2_REPO/oro/oro/2.0.8/oro-2.0.8-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0.jar" sourcepath="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
+  <classpathentry kind="src" path="/mycollab-config"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1.jar" sourcepath="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1-sources.jar"/>
 </classpath>

@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user;
+package com.esofthead.mycollab.configuration;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 
 public class PasswordEncryptHelper {
 	private static StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();

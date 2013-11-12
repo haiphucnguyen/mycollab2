@@ -1,16 +1,145 @@
+/**
+ * This file is part of mycollab-migration.
+ *
+ * mycollab-migration is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-migration is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-migration.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package db.migration;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.esofthead.mycollab.db.migration.InsertQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+
+import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
 public class V01112013_1__Insert_Default_Values implements SpringJdbcMigration {
+	private static Logger log = LoggerFactory
+			.getLogger(V01112013_1__Insert_Default_Values.class);
+
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
-		InsertQuery query = new InsertQuery("persons").columns("id", "name", "age")
-                .values(1, "foo", 30)
-                .values(2, "bar", 23)
-                .values(3, "hello", 54)
-                .values(4, "world", 19);
+		log.info("Set up initial values");
+
+		log.debug("Insert default billing plan");
+		SimpleJdbcInsert billingJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+				.withTableName("s_billing_plan")
+				.usingColumns("billingType", "numUsers", "volume",
+						"numProjects", "pricing", "hasBugEnable",
+						"hasStandupMeetingEnable", "hasTimeTracking")
+				.usingGeneratedKeyColumns("id");
+
+		Map<String, Object> billingParameters = new HashMap<String, Object>();
+		billingParameters.put("billingType", "Community");
+		billingParameters.put("numUsers", 99999999);
+		billingParameters.put("volume", 999999999999L);
+		billingParameters.put("numProjects", 999999);
+		billingParameters.put("pricing", 0);
+		billingParameters.put("hasBugEnable", Boolean.TRUE);
+		billingParameters.put("hasStandupMeetingEnable", Boolean.TRUE);
+		billingParameters.put("hasTimeTracking", Boolean.TRUE);
+
+		Number billingPlanId = billingJdbcInsert
+				.executeAndReturnKey(billingParameters);
+
+		log.debug("Insert default account");
+		SimpleJdbcInsert accountJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+				.withTableName("s_account")
+				.usingColumns("status", "billingPlanId", "paymentMethod",
+						"subdomain").usingGeneratedKeyColumns("id");
+		Map<String, Object> accountParameters = new HashMap<String, Object>();
+		accountParameters.put("status", "Active");
+		accountParameters.put("billingPlanId", billingPlanId);
+		accountParameters.put("paymentMethod", "None");
+		accountParameters.put("subdomain", "");
+		Number accountId = accountJdbcInsert
+				.executeAndReturnKey(accountParameters);
+
+		log.debug("Insert default users");
+		SimpleJdbcInsert userJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+				.withTableName("s_user").usingColumns("username", "firstname",
+						"lastname", "email", "status", "registeredTime",
+						"password");
+
+		Map<String, Object> userParameters = new HashMap<String, Object>();
+		userParameters.put("username", "admin@mycollab.com");
+		userParameters.put("firstname", "");
+		userParameters.put("lastname", "");
+		userParameters.put("email", "admin@mycollab.com");
+		userParameters.put("status", "Active");
+		userParameters.put("registeredTime", new Date());
+		userParameters.put("password",
+				PasswordEncryptHelper.encryptSaltPassword("admin123"));
+		userJdbcInsert.execute(userParameters);
+
+		log.debug("Create associate between user and billing plan");
+		SimpleJdbcInsert userAccountJdbcInsert = new SimpleJdbcInsert(
+				jdbcTemplate)
+				.withTableName("s_user_account")
+				.usingColumns("username", "accountId", "isAccountOwner",
+						"registeredTime", "registerStatus")
+				.usingGeneratedKeyColumns("id");
+		Map<String, Object> userAccountParameters = new HashMap<String, Object>();
+		userAccountParameters.put("username", "admin@mycollab.com");
+		userAccountParameters.put("accountId", accountId);
+		userAccountParameters.put("isAccountOwner", Boolean.TRUE);
+		userAccountParameters.put("registeredTime", new Date());
+		userAccountParameters.put("registerStatus", "Active");
+
+		Number userAccountId = userAccountJdbcInsert
+				.executeAndReturnKey(userAccountParameters);
+
+		log.debug("Insert default roles");
+		SimpleJdbcInsert roleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+				.withTableName("s_roles")
+				.usingColumns("rolename", "description", "sAccountId",
+						"isSystemRole").usingGeneratedKeyColumns("id");
+
+		log.debug("Create default admin role");
+		SqlParameterSource adminRoleParameters = new MapSqlParameterSource()
+				.addValue("rolename", "Administrator")
+				.addValue("description", "Admin Role")
+				.addValue("sAccountId", accountId)
+				.addValue("isSystemRole", Boolean.TRUE);
+		Number adminRoleId = roleJdbcInsert
+				.executeAndReturnKey(adminRoleParameters);
+
+		log.debug("Create default employee role");
+		SqlParameterSource employeeRoleParameters = new MapSqlParameterSource()
+				.addValue("rolename", "Employee")
+				.addValue("description", "Employee Role")
+				.addValue("sAccountId", accountId)
+				.addValue("isSystemRole", Boolean.TRUE);
+		Number employeeRoleId = roleJdbcInsert
+				.executeAndReturnKey(employeeRoleParameters);
+
+		log.debug("Create default guest role");
+		SqlParameterSource guestRoleParameters = new MapSqlParameterSource()
+				.addValue("rolename", "Guest")
+				.addValue("description", "Guest Role")
+				.addValue("sAccountId", accountId)
+				.addValue("isSystemRole", Boolean.TRUE);
+		Number guestRoleId = roleJdbcInsert
+				.executeAndReturnKey(guestRoleParameters);
+
+		log.debug("Associate permission with admin role");
+		
+
 	}
 }
