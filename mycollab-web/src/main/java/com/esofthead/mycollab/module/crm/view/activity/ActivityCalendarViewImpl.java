@@ -157,6 +157,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		this.dateChooser.setWidth("110px");
 		this.dateChooser.addComponent(datePicker);
 		dateChooser.setStyleName(UIConstants.THEME_LINK);
+		dateChooser.addStyleName("buttonlinkcenter");
 		horizontalWapper.addComponent(dateChooser);
 		horizontalWapper.setComponentAlignment(dateChooser,
 				Alignment.MIDDLE_CENTER);

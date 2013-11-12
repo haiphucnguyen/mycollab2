@@ -20,6 +20,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +68,8 @@ public class HistoryLogComponent extends VerticalLayout {
 		defaultFieldHandlers
 				.put(DEFAULT_FIELD, new DefaultHistoryFieldFormat());
 		defaultFieldHandlers.put(DATE_FIELD, new DateHistoryFieldFormat());
+		defaultFieldHandlers.put(DATETIME_FIELD,
+				new DateTimeHistoryFieldFormat());
 		defaultFieldHandlers.put(CURRENCY_FIELD,
 				new CurrencyHistoryFieldFormat());
 	}
@@ -256,6 +259,24 @@ public class HistoryLogComponent extends VerticalLayout {
 			Date formatDate = DateTimeUtils.getDateByStringWithFormat(value,
 					formatW3C);
 			return new Label(AppContext.formatDate(formatDate));
+		}
+	}
+
+	public static class DateTimeHistoryFieldFormat implements
+			HistoryFieldFormat {
+
+		@Override
+		public Component formatField(String value) {
+			if (value != null && !value.trim().equals("")) {
+				String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
+				Date formatDate = DateTimeUtils.getDateByStringWithFormat(
+						value, formatW3C);
+				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+						"MM/dd/yyyy HH:mm:ss");
+				return new Label(simpleDateTimeFormat.format(formatDate));
+			} else {
+				return new Label();
+			}
 		}
 	}
 
