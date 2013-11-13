@@ -36,7 +36,7 @@ public class PremiumServerRunner extends GenericServerRunner {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new PremiumServerRunner().start();
+		new PremiumServerRunner().run(args);
 	}
 
 }

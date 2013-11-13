@@ -17,15 +17,14 @@
 package com.esofthead.mycollab.jetty;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.SocketException;
-import java.net.URL;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ShutdownMonitor;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ShutdownHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,26 +46,8 @@ public abstract class GenericServerRunner {
 
 		WebAppContext appContext = buildContext(webappDirLocation);
 		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { appContext,
-				new ShutdownHandler(server, "esoftheadsecretkey") });
+		handlers.setHandlers(new Handler[] { appContext });
 		server.setHandler(handlers);
-	}
-
-	public static void attemptShutdown(int port, String shutdownCookie) {
-		try {
-			URL url = new URL("http://localhost:" + port + "/shutdown?token="
-					+ shutdownCookie);
-			HttpURLConnection connection = (HttpURLConnection) url
-					.openConnection();
-			connection.setRequestMethod("POST");
-			connection.getResponseCode();
-			log.info("Shutting down " + url + ": "
-					+ connection.getResponseMessage());
-		} catch (SocketException e) {
-			log.debug("Not running");
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public abstract WebAppContext buildContext(String baseDir);
@@ -88,5 +69,78 @@ public abstract class GenericServerRunner {
 		} else {
 			return searchFile.getAbsolutePath();
 		}
+	}
+
+	public void run(String[] args) throws Exception {
+		int stopPort = 0;
+		String stopKey = null;
+		boolean isStop = false;
+
+		for (int i = 0; i < args.length; i++) {
+			if ("--stop-port".equals(args[i])) {
+				stopPort = Integer.parseInt(args[++i]);
+			} else if ("--stop-key".equals(args[i])) {
+				stopKey = args[++i];
+			} else if ("--stop".equals(args[i])) {
+				isStop = true;
+			}
+		}
+
+		switch ((stopPort > 0 ? 1 : 0) + (stopKey != null ? 2 : 0)) {
+		case 1:
+			usage("Must specify --stop-key when --stop-port is specified");
+			break;
+
+		case 2:
+			usage("Must specify --stop-port when --stop-key is specified");
+			break;
+
+		case 3:
+			if (isStop) {
+				Socket s = new Socket(InetAddress.getByName("localhost"),
+						stopPort);
+				try {
+					OutputStream out = s.getOutputStream();
+					out.write((stopKey + "\r\nstop\r\n").getBytes());
+					out.flush();
+				} finally {
+					s.close();
+				}
+				return;
+			} else {
+				ShutdownMonitor monitor = ShutdownMonitor.getInstance();
+				monitor.setPort(stopPort);
+				monitor.setKey(stopKey);
+				monitor.setExitVm(true);
+				break;
+			}
+
+		}
+
+		server.setStopAtShutdown(true);
+		server.setSendServerVersion(true);
+
+		execute();
+	}
+
+	public void execute() throws Exception {
+
+		server.start();
+		server.join();
+	}
+
+	public void usage(String error) {
+		if (error != null)
+			System.err.println("ERROR: " + error);
+		System.err
+				.println("Usage: java -jar runner.jar [--help|--version] [ server opts]");
+		System.err.println("Server Options:");
+		System.err
+				.println(" --version                          - display version and exit");
+		System.err
+				.println(" --stop-port n                      - port to listen for stop command");
+		System.err
+				.println(" --stop-key n                       - security string for stop command (required if --stop-port is present)");
+		System.exit(1);
 	}
 }

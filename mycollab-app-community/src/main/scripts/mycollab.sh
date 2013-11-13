@@ -155,7 +155,7 @@ if [ "$1" = "start" ] ; then
 
   shift
   touch "$MYCOLLAB_OUT"
-  eval \"$_RUNJAVA\" -DSTOP.PORT=8079 -DSTOP.KEY=esoftheadsecretkey $MYCOLLAB_OPTS \
+  eval \"$_RUNJAVA\" --stop-port 8079 --stop-key esoftheadsecretkey $MYCOLLAB_OPTS \
       -jar runner.jar & 
  ####>> "$MYCOLLAB_OUT" 2>&1 "&"
 
@@ -199,7 +199,7 @@ elif [ "$1" = "stop" ] ; then
     fi
   fi
 
-  eval \"$_RUNJAVA\" -DSTOP.PORT=8079 -DSTOP.KEY=esoftheadsecretkey -jar runner.jar --stop 
+  eval \"$_RUNJAVA\" --stop-port 8079 --stop-key esoftheadsecretkey -jar runner.jar --stop 
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
     if [ -f "$MYCOLLAB_PID" ]; then

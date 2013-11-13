@@ -31,6 +31,6 @@ public class CommunityServerRunner extends GenericServerRunner {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new CommunityServerRunner().start();
+		new CommunityServerRunner().run(args);
 	}
 }
