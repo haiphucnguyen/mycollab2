@@ -41,7 +41,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -117,13 +116,9 @@ public class AssignmentAddViewImpl extends AbstractView implements
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("startdate")) {
-					PopupDateField dateField = new PopupDateField();
-					dateField.setDateFormat(AppContext.getDateTimeFormat());
-					return dateField;
+					return new DateTimePicker<Task>("startdate", task);
 				} else if (propertyId.equals("duedate")) {
-					PopupDateField dateField = new PopupDateField();
-					dateField.setDateFormat(AppContext.getDateTimeFormat());
-					return dateField;
+					return new DateTimePicker<Task>("duedate", task);
 				} else if (propertyId.equals("status")) {
 					return new TaskStatusComboBox();
 				} else if (propertyId.equals("priority")) {

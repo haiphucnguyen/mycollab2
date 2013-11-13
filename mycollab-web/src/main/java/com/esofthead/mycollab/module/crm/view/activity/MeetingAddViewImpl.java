@@ -23,7 +23,6 @@ import org.vaadin.addon.customfield.CustomField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
-import com.esofthead.mycollab.module.crm.view.activity.ActivityCalendarViewImpl.EventDatePicker;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -47,8 +46,6 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
 	private Meeting meeting;
-	private EventDatePicker startDatePicker;
-	private EventDatePicker endDatePicker;
 
 	public MeetingAddViewImpl() {
 		super();
@@ -122,11 +119,9 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 				} else if (propertyId.equals("status")) {
 					return new MeetingStatusComboBox();
 				} else if (propertyId.equals("startdate")) {
-					return new EventDatePicker(meeting.getStartdate(), meeting,
-							true);
+					return new DateTimePicker<Meeting>("startdate", meeting);
 				} else if (propertyId.equals("enddate")) {
-					return new EventDatePicker(meeting.getEnddate(), meeting,
-							false);
+					return new DateTimePicker<Meeting>("enddate", meeting);
 				} else if (propertyId.equals("description")) {
 					TextArea descArea = new TextArea();
 					descArea.setNullRepresentation("");

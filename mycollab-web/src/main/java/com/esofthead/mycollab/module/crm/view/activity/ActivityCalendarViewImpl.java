@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
@@ -79,7 +78,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -106,7 +104,8 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		MenuActionListener listener = new MenuActionListener();
 
 		calendarActionBtn = new PopupButton("Create");
-		calendarActionBtn.setStyleName("v-button-bluebtn-calendar");
+		calendarActionBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		calendarActionBtn.addStyleName("esofthead");
 
 		HorizontalLayout actionPanel = new HorizontalLayout();
 		actionPanel.setWidth("100%");
@@ -390,8 +389,8 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 		private EditForm editForm;
 		private Meeting meeting;
-		private EventDatePicker startDatePicker;
-		private EventDatePicker endDatePicker;
+		private DateTimePicker<Meeting> startDatePicker;
+		private DateTimePicker<Meeting> endDatePicker;
 
 		public EventQuickCreateWindow(Date startDate, Date endDate) {
 			super("Quick Create Event");
@@ -402,8 +401,9 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			this.meeting.setSaccountid(AppContext.getAccountId());
 			this.meeting.setStartdate(startDate);
 			this.meeting.setEnddate(endDate);
-			this.startDatePicker = new EventDatePicker(startDate, meeting, true);
-			this.endDatePicker = new EventDatePicker(endDate, meeting, false);
+			this.startDatePicker = new DateTimePicker<Meeting>("startdate",
+					meeting);
+			this.endDatePicker = new DateTimePicker<Meeting>("enddate", meeting);
 			editForm = new EditForm();
 			editForm.setItemDataSource(new BeanItem<Meeting>(meeting));
 			this.addComponent(editForm);
@@ -544,171 +544,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					setCaption(null);
 					this.loadData(new String[] { "Planned", "Held", "Not Held" });
 				}
-			}
-		}
-	}
-
-	public static class EventDatePicker extends CustomField {
-		private static final long serialVersionUID = 1L;
-
-		private PopupDateField popupDateField;
-		private HourPickerComboBox hourPickerComboBox;
-		private MinusPickerComboBox minusPickerComboBox;
-		private ValueComboBox timeFormatComboBox;
-		public static final long ONE_MINUTE_IN_MILLIS = 60000;
-
-		public EventDatePicker(final Meeting meeting, final boolean isStartDate) {
-			this(null, meeting, isStartDate);
-		}
-
-		public EventDatePicker(Date date, final Meeting meeting,
-				final boolean isStartDate) {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setMargin(true);
-			layout.setSpacing(true);
-			long min = 0, hrs = 0;
-			String timeFormat = "AM";
-			if (date != null) {
-				java.util.Calendar cal = java.util.Calendar.getInstance();
-				cal.setTime(date);
-				min = cal.get(java.util.Calendar.MINUTE);
-				hrs = cal.get(java.util.Calendar.HOUR);
-				timeFormat = (cal.get(java.util.Calendar.AM_PM) == 0) ? "AM"
-						: "PM";
-			}
-			popupDateField = new PopupDateField(null, date);
-			popupDateField.setResolution(PopupDateField.RESOLUTION_DAY);
-			popupDateField.setWidth("130px");
-			popupDateField.addListener(new ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					if (isStartDate) {
-						meeting.setStartdate(EventDatePicker.this.getValue());
-					} else {
-						meeting.setEnddate(EventDatePicker.this.getValue());
-					}
-				}
-			});
-			layout.addComponent(popupDateField);
-
-			hourPickerComboBox = new HourPickerComboBox();
-			hourPickerComboBox.setValue((hrs < 10) ? "0" + hrs : "" + hrs);
-			hourPickerComboBox.setWidth("50px");
-			hourPickerComboBox.addListener(new ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					if (isStartDate) {
-						meeting.setStartdate(EventDatePicker.this.getValue());
-					} else {
-						meeting.setEnddate(EventDatePicker.this.getValue());
-					}
-				}
-			});
-			layout.addComponent(hourPickerComboBox);
-			minusPickerComboBox = new MinusPickerComboBox();
-			minusPickerComboBox.setWidth("50px");
-			minusPickerComboBox.setValue((min < 10) ? "0" + min : "" + min);
-			minusPickerComboBox.addListener(new ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					if (isStartDate) {
-						meeting.setStartdate(EventDatePicker.this.getValue());
-					} else {
-						meeting.setEnddate(EventDatePicker.this.getValue());
-					}
-				}
-			});
-			layout.addComponent(minusPickerComboBox);
-
-			timeFormatComboBox = new ValueComboBox();
-			timeFormatComboBox.setWidth("50px");
-			timeFormatComboBox.setCaption(null);
-			timeFormatComboBox.loadData(new String[] { "AM", "PM" });
-			timeFormatComboBox.setNullSelectionAllowed(false);
-			timeFormatComboBox.setImmediate(true);
-			timeFormatComboBox.setValue(timeFormat);
-			timeFormatComboBox.addListener(new ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					if (isStartDate) {
-						meeting.setStartdate(EventDatePicker.this.getValue());
-					} else {
-						meeting.setEnddate(EventDatePicker.this.getValue());
-					}
-				}
-			});
-			layout.addComponent(timeFormatComboBox);
-			this.setCompositionRoot(layout);
-		}
-
-		private long calculateMiniSecond(Integer hour, Integer minus,
-				String timeFormat) {
-			long allMinus = 0;
-			if (timeFormat.equals("AM")) {
-				allMinus = (((hour == 12) ? 0 : hour) * 60 + minus)
-						* ONE_MINUTE_IN_MILLIS;
-			} else if (timeFormat.equals("PM")) {
-				allMinus = (((hour == 12) ? 12 : hour + 12) * 60 + minus)
-						* ONE_MINUTE_IN_MILLIS;
-			}
-			return allMinus;
-		}
-
-		@Override
-		public Class<Date> getType() {
-			return Date.class;
-		}
-
-		@Override
-		public Date getValue() {
-			if (popupDateField.getValue() == null) {
-				return null;
-			}
-			Date baseDate = DateTimeUtils.convertDate((Date) popupDateField
-					.getValue());
-			Integer hour = Integer.parseInt((String) hourPickerComboBox
-					.getValue());
-			Integer minus = Integer.parseInt((String) minusPickerComboBox
-					.getValue());
-			String timeFormat = (String) timeFormatComboBox.getValue();
-			long milliseconds = calculateMiniSecond(hour, minus, timeFormat);
-			java.util.Calendar cal = java.util.Calendar.getInstance();
-			cal.setTimeInMillis(baseDate.getTime() + milliseconds);
-			return cal.getTime();
-		}
-
-		private class HourPickerComboBox extends ValueComboBox {
-			private static final long serialVersionUID = 1L;
-			private final String[] HOURDATA = new String[] { "12", "01", "02",
-					"03", "04", "05", "06", "07", "08", "09", "10", "11" };
-
-			public HourPickerComboBox() {
-				super();
-				setCaption(null);
-				this.loadData(HOURDATA);
-			}
-		}
-
-		private class MinusPickerComboBox extends ValueComboBox {
-			private static final long serialVersionUID = 1L;
-			private String[] MINUSDATA = new String[] { "00", "15", "30", "45" };
-
-			public MinusPickerComboBox() {
-				super();
-				setCaption(null);
-				this.loadData(MINUSDATA);
 			}
 		}
 	}
@@ -995,16 +830,6 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 			} else {
 				this.setStartDate(calendar.getTime());
 			}
-		}
-
-		private void rollWeek(int direction) {
-			calendar.add(GregorianCalendar.WEEK_OF_YEAR, direction);
-			calendar.set(GregorianCalendar.DAY_OF_WEEK,
-					calendar.getFirstDayOfWeek());
-			resetCalendarTime(false);
-			resetTime(true);
-			calendar.add(GregorianCalendar.DATE, 6);
-			calendarComponent.setEndDate(calendar.getTime());
 		}
 
 		private void resetTime(boolean max) {

@@ -23,12 +23,12 @@ import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
+import com.esofthead.mycollab.module.crm.view.activity.MeetingPreviewBuilder.DateFieldWithUserTimeZone;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -112,9 +112,10 @@ public class CallPreviewBuilder extends VerticalLayout {
 					return new FormViewField("");
 				}
 			} else if (propertyId.equals("startdate")) {
-				return new FormViewField(
-						AppContext.formatDateTime(CallPreviewBuilder.this.call
-								.getStartdate()));
+				if (call.getStartdate() == null)
+					return new FormViewField("");
+				return new DateFieldWithUserTimeZone(call.getStartdate(),
+						"DATETIME_FIELD");
 			}
 
 			return null;

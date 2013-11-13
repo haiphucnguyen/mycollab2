@@ -315,20 +315,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	padding: 3px 13px;
 }
 
-.v-button-bluebtn-calendar{
-	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
-		#2599c8;
-	border: 1px solid #093768;
-	color: #FFFFFF;
-	text-shadow: 1px 1px 0px #1570cd;
-	border-radius: 3px;
-	padding: 3px 13px;
-}
-
-.v-button-bluebtn-calendar .v-button-wrap{
-	background-image: none;
-	padding: 0px;
-}
 .v-button-bluebtn-no-radius-left:hover {
 	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
 		#1377b3;

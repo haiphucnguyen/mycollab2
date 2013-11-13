@@ -22,12 +22,12 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
+import com.esofthead.mycollab.module.crm.view.activity.MeetingPreviewBuilder.DateFieldWithUserTimeZone;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -75,11 +75,11 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 						AssignmentPreviewBuilder.this.task
 								.getAssignUserFullName());
 			} else if (propertyId.equals("startdate")) {
-				return new FormViewField(AppContext.formatDateTime(task
-						.getStartdate()));
+				return new DateFieldWithUserTimeZone(task.getStartdate(),
+						"DATETIME_FIELD");
 			} else if (propertyId.equals("duedate")) {
-				return new FormViewField(AppContext.formatDateTime(task
-						.getDuedate()));
+				return new DateFieldWithUserTimeZone(task.getDuedate(),
+						"DATETIME_FIELD");
 			} else if (propertyId.equals("contactid")) {
 				return new FormViewField(task.getContactName());
 			} else if (propertyId.equals("type")) {
