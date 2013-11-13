@@ -26,10 +26,14 @@ import java.util.TimeZone;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
 public class DateTimeUtils {
+	private static Logger log = LoggerFactory.getLogger(DateTimeUtils.class);
+
 	private static DateTimeZone utcZone = DateTimeZone.UTC;
 
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
@@ -49,14 +53,14 @@ public class DateTimeUtils {
 		return date;
 	}
 
-	public static Date getDateByStringWithFormat(String strDate, String format) {
+	public static Date convertDateByString(String strDate, String format) {
 		if (strDate != null && !strDate.equals("") && format != null
 				&& !format.equals("")) {
 			SimpleDateFormat formatter = new SimpleDateFormat(format);
 			try {
 				return formatter.parse(strDate);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				log.error("Error while parse date", e);
 			}
 		}
 		return new Date();

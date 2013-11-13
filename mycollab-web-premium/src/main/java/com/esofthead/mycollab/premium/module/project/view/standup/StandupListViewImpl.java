@@ -164,7 +164,7 @@ public class StandupListViewImpl extends AbstractView implements
 				.getReportsCount(criteria);
 
 		for (final GroupItem groupItem : reportsCount) {
-			final Date date = DateTimeUtils.getDateByStringWithFormat(
+			final Date date = DateTimeUtils.convertDateByString(
 					groupItem.getGroupname(), AppContext.getDateFormat());
 			this.standupCalendar.addSelectedDate(date);
 		}

@@ -181,7 +181,7 @@ public class HistoryLogComponent extends VerticalLayout {
 					String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
 					Label lbDate = new Label("changed "
 							+ DateTimeUtils.getStringDateFromNow(DateTimeUtils
-									.getDateByStringWithFormat(strDate,
+									.convertDateByString(strDate,
 											formatW3C)));
 					header.addComponent(lbDate);
 					header.setComponentAlignment(lbDate, Alignment.MIDDLE_LEFT);
@@ -257,7 +257,7 @@ public class HistoryLogComponent extends VerticalLayout {
 		@Override
 		public Component formatField(String value) {
 			String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
-			Date formatDate = DateTimeUtils.getDateByStringWithFormat(value,
+			Date formatDate = DateTimeUtils.convertDateByString(value,
 					formatW3C);
 			return new Label(AppContext.formatDate(formatDate));
 		}
@@ -270,7 +270,7 @@ public class HistoryLogComponent extends VerticalLayout {
 		public Component formatField(String value) {
 			if (value != null && !value.trim().equals("")) {
 				String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
-				Date formatDate = DateTimeUtils.getDateByStringWithFormat(
+				Date formatDate = DateTimeUtils.convertDateByString(
 						value, formatW3C);
 				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
 						"MM/dd/yyyy HH:mm");
