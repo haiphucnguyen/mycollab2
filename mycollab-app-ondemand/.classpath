@@ -81,8 +81,8 @@
   <classpathentry kind="var" path="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0.jar" sourcepath="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-migration"/>
-  <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1.jar" sourcepath="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-config"/>
+  <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1.jar" sourcepath="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-caching"/>
   <classpathentry kind="var" path="M2_REPO/org/infinispan/infinispan-core/5.3.0.Final/infinispan-core-5.3.0.Final.jar" sourcepath="M2_REPO/org/infinispan/infinispan-core/5.3.0.Final/infinispan-core-5.3.0.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jgroups/jgroups/3.4.0.Final/jgroups-3.4.0.Final.jar" sourcepath="M2_REPO/org/jgroups/jgroups/3.4.0.Final/jgroups-3.4.0.Final-sources.jar"/>
