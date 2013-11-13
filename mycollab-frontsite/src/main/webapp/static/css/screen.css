@@ -855,10 +855,77 @@ h1, h2, h3, h4, h5, h6 {
 	clear: both;	
 }
 
-#pricing-content {
+#pricing-content-wrapper {
 	width: 1100px;
-	margin: 0 auto;
+	margin: 0px auto 20px;
+	padding: 35px;
+	border: 1px solid rgb(171, 171, 171);
+}
+
+#pricing-content {
+	width: 100%;
+	margin: 0px auto 20px;
 	text-align: center;
+}
+#pricing-content .blue-text {
+	color: rgb(57, 148, 195);
+}
+#pricing-content .package-block {
+	width: 200px;
+	border: 1px solid rgb(220, 220, 220);
+	display: inline-block;
+	margin: 0px 7px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+#pricing-content .package-block.best-choice {
+	border: 4px solid rgb(243, 153, 57);
+}
+#pricing-content .package-block .block-header {
+	padding: 10px 0px;
+}
+
+#pricing-content .package-block .block-header h2 {
+	font-family: 'Monda';
+	color: #515151;
+	font-size: 24px;
+	font-weight: normal;
+}
+#pricing-content .package-block.best-choice h2 {
+	color: rgb(243, 153, 57);
+}
+#pricing-content .package-block .block-content .info-row {
+	border-top: 1px solid rgb(197, 197, 197);
+	background-color: rgb(240, 240, 240);
+	font-size: 13px;
+	padding: 6px 0px;
+}
+
+#pricing-content .package-block .block-content .info-row .blue-text {
+	font-weight: bold;
+}
+
+#pricing-content .package-block .block-content .info-row img {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#pricing-content .package-block .block-footer {
+	background-color: rgb(128, 128, 128);
+}
+
+#pricing-content .package-block.best-choice .block-footer {
+	background-color: rgb(243, 153, 57);
+}
+
+#pricing-content .package-block .block-footer .prig-price, #pricing-content .package-block .block-footer .prig-month {
+	color: white;
+}
+
+#pricing-content .package-block .block-footer .pricing-button a {
+	background-color: rgb(244,244,244);
+	color: rgb(103, 103, 103);
 }
 
 .col-style1 {
@@ -916,12 +983,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .prig-description {
 	height: 35px;
-	padding: 10px 3px 0px;
+	padding: 5px 3px 0px;
 	font-size: 11px;
 	line-height: 130%;
-	color: #585858;
-	margin-bottom: 20px;
-	font-family: 'verdana';
+	color: #b6b6b6;
+	font-family: 'Monda';
 }
 
 .pricing-button {
@@ -940,13 +1006,8 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 13px;
 	font-family: 'verdana';
 	font-weight: bold;
-}
-
-.col-style2 .pricing-button a {
 	background-color: #979797;
 	border-radius: 5px;
-	border: solid 1px #838383;
-	font-family: 'verdana';
 }
 
 .col-style3 .pricing-button a {
@@ -1014,19 +1075,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .prig-bottom {
-	width: 1100px;
 	margin: 0 auto 20px;
-	border: solid 1px #ABABAB;
 }
 
 .prig-bottom-cnt {
-	border-top: solid 15px #228BC9;	
-	padding-left: 30px;
+	border-top: 1px dashed rgb(160, 160, 160);	
+	padding-left: 10px;
 	padding-top: 20px;
 }
 
 .prig-bottom-cnt h2 {
-	background: url("../images/pricing_question.png") no-repeat left center transparent;
+	background: url("../images/pyramid_icon.png") no-repeat left center transparent;
 }
 
 .prig-block-1 {
@@ -1674,7 +1733,7 @@ a.nivo-prevNav {
 .pri-bott-coll {
 	float: left;
     padding-left: 0px;
-    width: 500px;
+    width: 520px;
 }
 
 .pri-coll-1 {
@@ -1682,13 +1741,12 @@ a.nivo-prevNav {
 }
 
 .pri-bott-block h2 {
-	color: #242424;
-    font-size: 13px;
-    font-weight: bold;
+	color: rgb(57, 148, 195);
+    font-size: 16px;
     height: 32px;
-    padding-left: 25px;
-    padding-top: 10px;
+    padding-left: 30px;
     font-family: 'Monda';
+    line-height: 32px;
 }
 
 .pri-bott-block p {
