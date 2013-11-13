@@ -209,6 +209,7 @@ public class TaskGroupAddWindow extends Window {
 						TaskGroupAddWindow.this.taskList,
 						AppContext.getUsername());
 				TaskGroupAddWindow.this.notifyToReloadTaskList();
+				TaskGroupAddWindow.this.close();
 			}
 
 			@Override
