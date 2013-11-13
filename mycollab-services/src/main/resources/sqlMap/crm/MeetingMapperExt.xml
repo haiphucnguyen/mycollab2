@@ -78,7 +78,9 @@
 		<if test="searchCriteria.isClosed != null">
             <![CDATA[${searchCriteria.isClosed.operation} m_crm_meeting.isClosed = ${searchCriteria.isClosed.value}]]>
 		</if>
-		<include refid="queryEventByStartEndDate" />
+		<if test="searchCriteria.startDate != null and searchCriteria.endDate != null">
+			<include refid="queryEventByStartEndDate" />
+		</if>
 	</sql>
 
 	<sql id="orderStatement">
