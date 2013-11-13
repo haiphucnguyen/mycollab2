@@ -66,6 +66,38 @@ public class DateTimeUtils {
 		return new Date();
 	}
 
+	public static Date convertDateByFormatW3C(String strDate) {
+		String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
+		if (strDate != null && !strDate.equals("")) {
+			SimpleDateFormat formatter = new SimpleDateFormat(formatW3C);
+			try {
+				return formatter.parse(strDate);
+			} catch (ParseException e) {
+				log.error("Error while parse date", e);
+			}
+		}
+		return null;
+	}
+
+	public static String converToStringWithUserTimeZone(Date date,
+			String userTimeZone) {
+		return DateTimeUtils.formatDate(date,
+				TimezoneMapper.getTimezone(userTimeZone).getTimezone());
+	}
+
+	public static Date converToDateWithUserTimeZone(Date date,
+			String userTimeZone) {
+		simpleDateFormat.setTimeZone(TimezoneMapper.getTimezone(userTimeZone)
+				.getTimezone());
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		try {
+			return df.parse(simpleDateFormat.format(date));
+		} catch (ParseException e) {
+			log.error("ConverToDateWithUserTimeZone Error while parse date", e);
+		}
+		return null;
+	}
+
 	public static String getStringDateFromNow(Date dateTime) {
 		if (dateTime == null) {
 			return "";

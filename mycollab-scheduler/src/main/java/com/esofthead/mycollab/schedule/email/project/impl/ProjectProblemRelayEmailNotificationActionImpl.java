@@ -32,6 +32,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 
@@ -57,7 +59,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int problemId = emailNotification.getTypeid();
 		SimpleProblem problem = problemService.findById(problemId, 0);
 
@@ -65,7 +67,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: Problem \""
 						+ problem.getIssuename() + "\" has been created",
 				"templates/email/project/problemCreatedNotifier.mt");
-
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(problem,
+				user.getTimezone(), new String[] { "dateraised", "datedue",
+						"actualstartdate", "actualenddate" });
 		templateGenerator.putVariable("problem", problem);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(problem, emailNotification));
@@ -103,7 +107,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int problemId = emailNotification.getTypeid();
 		SimpleProblem problem = problemService.findById(problemId, 0);
 		if (problem == null) {
@@ -116,6 +120,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: Problem \"" + subject
 						+ "...\" edited",
 				"templates/email/project/problemUpdateNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(problem,
+				user.getTimezone(), new String[] { "dateraised", "datedue",
+						"actualstartdate", "actualenddate" });
 
 		templateGenerator.putVariable("problem", problem);
 		templateGenerator.putVariable("hyperLinks",
@@ -124,6 +131,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "dateraised", "datedue", "actualstartdate",
+							"actualenddate" });
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}

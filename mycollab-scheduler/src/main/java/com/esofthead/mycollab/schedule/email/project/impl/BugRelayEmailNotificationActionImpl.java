@@ -38,6 +38,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -58,7 +59,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int bugId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findById(bugId,
 				emailNotification.getSaccountid());
@@ -70,6 +71,8 @@ public class BugRelayEmailNotificationActionImpl extends
 							+ "\" has been created",
 					"templates/email/project/bugCreatedNotifier.mt");
 
+			ScheduleUserTimeZoneUtils.formatDateTimeZone(bug,
+					user.getTimezone(), new String[] { "duedate" });
 			templateGenerator.putVariable("bug", bug);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(bug));
@@ -137,7 +140,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	@Override
 	public TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleBug bug = bugService.findById(emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 
@@ -147,6 +150,8 @@ public class BugRelayEmailNotificationActionImpl extends
 				"[$bug.projectname]: Bug \"" + subject
 						+ "...\" has been updated",
 				"templates/email/project/bugUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(bug, user.getTimezone(),
+				new String[] { "duedate" });
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 
@@ -155,8 +160,10 @@ public class BugRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("historyLog", auditLog);
 
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "duedate" });
+			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 

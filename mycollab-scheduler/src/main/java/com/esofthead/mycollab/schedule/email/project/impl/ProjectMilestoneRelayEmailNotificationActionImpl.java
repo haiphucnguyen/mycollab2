@@ -31,6 +31,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 
@@ -55,7 +57,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int milestoneId = emailNotification.getTypeid();
 		SimpleMilestone milestone = milestoneService.findById(milestoneId,
 				emailNotification.getSaccountid());
@@ -65,6 +67,8 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 						+ "\" has been created",
 				"templates/email/project/phaseCreatedNotifier.mt");
 
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(milestone,
+				user.getTimezone(), new String[] { "startdate", "enddate" });
 		templateGenerator.putVariable("milestone", milestone);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(milestone, emailNotification));
@@ -94,7 +98,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int milestoneId = emailNotification.getTypeid();
 		SimpleMilestone milestone = milestoneService.findById(milestoneId,
 				emailNotification.getSaccountid());
@@ -108,6 +112,8 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 						+ "...\" edited",
 				"templates/email/project/phaseUpdateNotifier.mt");
 
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(milestone,
+				user.getTimezone(), new String[] { "startdate", "enddate" });
 		templateGenerator.putVariable("milestone", milestone);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(milestone, emailNotification));
@@ -116,8 +122,9 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "duedate", "enddate" });
 			templateGenerator.putVariable("historyLog", auditLog);
-
 			templateGenerator.putVariable("mapper", mapper);
 		}
 
