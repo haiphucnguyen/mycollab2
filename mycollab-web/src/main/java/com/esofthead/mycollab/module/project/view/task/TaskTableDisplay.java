@@ -93,6 +93,7 @@ public class TaskTableDisplay extends
 										TaskTableDisplay.this, task, "taskname"));
 							}
 						});
+				b.setDescription("<h2>Hello this is a test<h2>");
 
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
 					Resource iconPriority = TaskPriorityComboBox

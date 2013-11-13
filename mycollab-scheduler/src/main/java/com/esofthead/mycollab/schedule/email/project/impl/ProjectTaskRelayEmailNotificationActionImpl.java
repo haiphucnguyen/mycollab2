@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -58,12 +59,15 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int taskId = emailNotification.getTypeid();
 		SimpleTask task = projectTaskService.findById(taskId,
 				emailNotification.getSaccountid());
 
 		String subject = StringUtils.subString(task.getTaskname(), 150);
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(task, user.getTimezone(),
+				new String[] { "startdate", "enddate", "deadline",
+						"actualstartdate", "actualenddate" });
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$task.projectName]: Task \"" + subject + "...\" created",
@@ -92,7 +96,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	public TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int taskId = emailNotification.getTypeid();
 		SimpleTask task = projectTaskService.findById(taskId,
 				emailNotification.getSaccountid());
@@ -100,6 +104,9 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 			return null;
 		}
 
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(task, user.getTimezone(),
+				new String[] { "startdate", "enddate", "deadline",
+						"actualstartdate", "actualenddate" });
 		String subject = StringUtils.subString(task.getTaskname(), 150);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -112,8 +119,12 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("historyLog", auditLog);
 
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "startdate", "enddate", "deadline",
+							"actualstartdate", "actualenddate" });
+
+			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		templateGenerator.putVariable(

@@ -36,7 +36,7 @@ public class OnDemandServerRunner extends GenericServerRunner {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new OnDemandServerRunner().start();
+		new OnDemandServerRunner().run(args);
 	}
 
 }

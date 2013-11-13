@@ -27,8 +27,10 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 
 @Service
 public class MessageRelayEmailNotificationActionImpl extends
@@ -55,7 +57,7 @@ public class MessageRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int messageId = emailNotification.getTypeid();
 		SimpleMessage message = messageService.findMessageById(messageId,
 				emailNotification.getSaccountid());
@@ -63,6 +65,8 @@ public class MessageRelayEmailNotificationActionImpl extends
 				"[$message.projectName]: $message.fullPostedUserName sent a message \""
 						+ message.getTitle() + "\"",
 				"templates/email/project/messageCreatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(message,
+				user.getTimezone(), new String[] { "posteddate" });
 		templateGenerator.putVariable("message", message);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
@@ -71,7 +75,7 @@ public class MessageRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int messageId = emailNotification.getTypeid();
 		SimpleMessage message = messageService.findMessageById(messageId,
 				emailNotification.getSaccountid());
@@ -79,6 +83,8 @@ public class MessageRelayEmailNotificationActionImpl extends
 				"[$message.projectName]: $message.fullPostedUserName posted a new message \""
 						+ message.getTitle() + "\"",
 				"templates/email/project/messageUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(message,
+				user.getTimezone(), new String[] { "posteddate" });
 		templateGenerator.putVariable("message", message);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));

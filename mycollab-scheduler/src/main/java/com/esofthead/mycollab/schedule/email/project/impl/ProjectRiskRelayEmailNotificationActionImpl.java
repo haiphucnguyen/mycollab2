@@ -32,6 +32,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.RiskService;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 
@@ -57,7 +59,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int riskId = emailNotification.getTypeid();
 		SimpleRisk risk = riskService.findById(riskId,
 				emailNotification.getSaccountid());
@@ -66,7 +68,8 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: Risk \"" + risk.getRiskname()
 						+ "\" has been created",
 				"templates/email/project/riskCreatedNotifier.mt");
-
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(risk, user.getTimezone(),
+				new String[] { "dateraised", "duedate" });
 		templateGenerator.putVariable("risk", risk);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(risk, emailNotification));
@@ -98,7 +101,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int riskId = emailNotification.getTypeid();
 		SimpleRisk risk = riskService.findById(riskId,
 				emailNotification.getSaccountid());
@@ -112,6 +115,8 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: Risk \"" + subject + "...\" edited",
 				"templates/email/project/riskUpdateNotifier.mt");
 
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(risk, user.getTimezone(),
+				new String[] { "dateraised", "duedate" });
 		templateGenerator.putVariable("risk", risk);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(risk, emailNotification));
@@ -119,8 +124,9 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "dateraised", "duedate" });
 			templateGenerator.putVariable("historyLog", auditLog);
-
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		templateGenerator.putVariable(

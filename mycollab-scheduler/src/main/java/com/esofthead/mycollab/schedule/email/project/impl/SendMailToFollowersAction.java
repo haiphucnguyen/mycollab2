@@ -67,9 +67,10 @@ public abstract class SendMailToFollowersAction implements
 			SimpleRelayEmailNotification notification) {
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter((ProjectRelayEmailNotification) notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
-			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
-			if (templateGenerator != null) {
-				for (SimpleUser user : notifiers) {
+			for (SimpleUser user : notifiers) {
+				TemplateGenerator templateGenerator = templateGeneratorForCreateAction(
+						notification, user);
+				if (templateGenerator != null) {
 					String userName = user.getDisplayName();
 					templateGenerator.putVariable("userName", userName);
 
@@ -92,9 +93,10 @@ public abstract class SendMailToFollowersAction implements
 			SimpleRelayEmailNotification notification) {
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter((ProjectRelayEmailNotification) notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
-			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
-			if (templateGenerator != null) {
-				for (SimpleUser user : notifiers) {
+			for (SimpleUser user : notifiers) {
+				TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(
+						notification, user);
+				if (templateGenerator != null) {
 					String userName = user.getDisplayName();
 					templateGenerator.putVariable("userName", userName);
 
@@ -156,10 +158,10 @@ public abstract class SendMailToFollowersAction implements
 	}
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification);
+			SimpleRelayEmailNotification emailNotification, SimpleUser user);
 
 	protected abstract TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification);
+			SimpleRelayEmailNotification emailNotification, SimpleUser user);
 
 	protected abstract TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification);

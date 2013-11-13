@@ -176,9 +176,7 @@ public class AuditLogShowHandler {
 		@Override
 		public String formatField(String value) {
 			if (value != null && !value.trim().equals("")) {
-				String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
-				Date formatDate = DateTimeUtils.convertDateByString(
-						value, formatW3C);
+				Date formatDate = DateTimeUtils.convertDateByFormatW3C(value);
 				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
 						"MM/dd/yyyy");
 				return simpleDateTimeFormat.format(formatDate);
@@ -195,9 +193,7 @@ public class AuditLogShowHandler {
 		@Override
 		public String formatField(String value) {
 			if (value != null && !value.trim().equals("")) {
-				String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
-				Date formatDate = DateTimeUtils.convertDateByString(
-						value, formatW3C);
+				Date formatDate = DateTimeUtils.convertDateByFormatW3C(value);
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTime(formatDate);
 				int timeFormat = calendar.get(Calendar.AM_PM);

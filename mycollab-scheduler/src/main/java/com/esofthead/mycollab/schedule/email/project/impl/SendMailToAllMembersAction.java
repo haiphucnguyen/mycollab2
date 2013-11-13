@@ -86,9 +86,10 @@ public abstract class SendMailToAllMembersAction implements
 			SimpleRelayEmailNotification notification) {
 		List<SimpleUser> notifiers = getNotifyUsers((ProjectRelayEmailNotification) notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
-			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
-			if (templateGenerator != null) {
-				for (SimpleUser user : notifiers) {
+			for (SimpleUser user : notifiers) {
+				TemplateGenerator templateGenerator = templateGeneratorForCreateAction(
+						notification, user);
+				if (templateGenerator != null) {
 
 					templateGenerator.putVariable("userName",
 							user.getDisplayName());
@@ -112,9 +113,10 @@ public abstract class SendMailToAllMembersAction implements
 			SimpleRelayEmailNotification notification) {
 		List<SimpleUser> notifiers = getNotifyUsers((ProjectRelayEmailNotification) notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
-			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
-			if (templateGenerator != null) {
-				for (SimpleUser user : notifiers) {
+			for (SimpleUser user : notifiers) {
+				TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(
+						notification, user);
+				if (templateGenerator != null) {
 
 					templateGenerator.putVariable("userName",
 							user.getDisplayName());
@@ -178,10 +180,10 @@ public abstract class SendMailToAllMembersAction implements
 	}
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification);
+			SimpleRelayEmailNotification emailNotification, SimpleUser user);
 
 	protected abstract TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification);
+			SimpleRelayEmailNotification emailNotification, SimpleUser user);
 
 	protected abstract TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification);
