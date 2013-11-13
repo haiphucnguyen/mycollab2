@@ -8,6 +8,10 @@
     <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>../mycollab-parent</module>
+        <module>../mycollab-parent-community</module>
+        <module>../mycollab-parent-premium</module>
+        <module>../mycollab-parent-ondemand</module>
         <module>../mycollab-core</module>
         <module>../mycollab-config</module>
         <module>../mycollab-test</module>
