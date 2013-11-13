@@ -37,6 +37,7 @@ public abstract class GenericServerRunner {
 			.getLogger(GenericServerRunner.class);
 
 	private Server server;
+	private int port = 0;
 
 	public GenericServerRunner() {
 
@@ -75,6 +76,8 @@ public abstract class GenericServerRunner {
 				stopKey = args[++i];
 			} else if ("--stop".equals(args[i])) {
 				isStop = true;
+			} else if ("--port".equals(args[i])) {
+				port = Integer.parseInt(args[++i]);
 			}
 		}
 
@@ -104,16 +107,19 @@ public abstract class GenericServerRunner {
 				monitor.setPort(stopPort);
 				monitor.setKey(stopKey);
 				monitor.setExitVm(true);
-				execute();
+				
 				break;
 			}
 
 		}
+		
+		execute();
 
 	}
 
 	public void execute() throws Exception {
-		server = new Server(SiteConfiguration.getServerPort());
+		server = new Server((port > 0) ? port
+				: SiteConfiguration.getServerPort());
 		log.debug("Detect root folder webapp");
 		String webappDirLocation = detectBasedir();
 
@@ -126,9 +132,9 @@ public abstract class GenericServerRunner {
 		server.setSendServerVersion(true);
 
 		server.start();
-		
+
 		ShutdownMonitor.getInstance().start();
-		
+
 		server.join();
 	}
 
