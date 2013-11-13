@@ -30,11 +30,6 @@
             ${java.home}/lib/jsse.jar
         </java.secure.socket.extension.classes>
     </properties>
-    <modules>
-        <module>../mycollab-parent-community</module>
-        <module>../mycollab-parent-premium</module>
-        <module>../mycollab-parent-ondemand</module>
-    </modules>
     <dependencies>
         <dependency>
             <groupId>commons-beanutils</groupId>
