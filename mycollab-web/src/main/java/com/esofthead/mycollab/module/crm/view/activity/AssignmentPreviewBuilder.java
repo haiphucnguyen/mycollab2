@@ -22,7 +22,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
-import com.esofthead.mycollab.module.crm.view.activity.MeetingPreviewBuilder.DateFieldWithUserTimeZone;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -75,9 +74,13 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 						AssignmentPreviewBuilder.this.task
 								.getAssignUserFullName());
 			} else if (propertyId.equals("startdate")) {
+				if (task.getStartdate() == null)
+					return null;
 				return new DateFieldWithUserTimeZone(task.getStartdate(),
 						"DATETIME_FIELD");
 			} else if (propertyId.equals("duedate")) {
+				if (task.getDuedate() == null)
+					return null;
 				return new DateFieldWithUserTimeZone(task.getDuedate(),
 						"DATETIME_FIELD");
 			} else if (propertyId.equals("contactid")) {

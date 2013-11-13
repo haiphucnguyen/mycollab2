@@ -101,37 +101,6 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 		}
 	}
 
-	public static class DateFieldWithUserTimeZone extends CustomField {
-		private static String DATE_FORMAT = "MM/dd/yyyy";
-		private static String DATETIME_FORMAT = "MM/dd/yyyy HH:mm";
-		private SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
-				DATE_FORMAT);
-		private Calendar calendar = Calendar.getInstance();
-
-		public DateFieldWithUserTimeZone(final Date date, String dateformat) {
-			if (dateformat.equals("DATETIME_FIELD")) {
-				simpleDateTimeFormat = new SimpleDateFormat(DATETIME_FORMAT);
-			}
-			calendar.setTime(date);
-			int timeFormat = calendar.get(Calendar.AM_PM);
-			if (timeFormat == 1) {
-				calendar.add(Calendar.HOUR_OF_DAY, -12);
-			}
-			String timeStr = simpleDateTimeFormat.format(calendar.getTime())
-					+ " " + ((timeFormat == 0) ? "AM" : "PM");
-			Label label = new Label();
-			label.setValue(timeStr);
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.addComponent(label);
-			this.setCompositionRoot(layout);
-		}
-
-		@Override
-		public Class<String> getType() {
-			return String.class;
-		}
-	}
-
 	/**
 	 * 
 	 * @author haiphucnguyen

@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -42,7 +44,7 @@ import com.vaadin.ui.VerticalLayout;
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	private static Logger log = LoggerFactory
 			.getLogger(DefaultFormViewFieldFactory.class);
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unchecked")
@@ -147,6 +149,44 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		@Override
 		public Class<?> getType() {
 			return Object.class;
+		}
+	}
+
+	public static class DateFieldWithUserTimeZone extends CustomField {
+		private static final long serialVersionUID = 1L;
+		private static String DATE_FORMAT = "MM/dd/yyyy";
+		private static String DATETIME_FORMAT = "MM/dd/yyyy HH:mm";
+		private SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+				DATE_FORMAT);
+		private Calendar calendar = Calendar.getInstance();
+
+		public DateFieldWithUserTimeZone(final Date date, String dateformat) {
+			if (date == null) {
+				this.setCompositionRoot(new Label());
+			} else {
+				if (dateformat.equals("DATETIME_FIELD")) {
+					simpleDateTimeFormat = new SimpleDateFormat(DATETIME_FORMAT);
+				}
+				calendar.setTime(date);
+				int timeFormat = calendar.get(Calendar.AM_PM);
+				if (timeFormat == 1) {
+					calendar.add(Calendar.HOUR_OF_DAY, -12);
+				}
+				String timeStr = simpleDateTimeFormat
+						.format(calendar.getTime())
+						+ " "
+						+ ((timeFormat == 0) ? "AM" : "PM");
+				Label label = new Label();
+				label.setValue(timeStr);
+				HorizontalLayout layout = new HorizontalLayout();
+				layout.addComponent(label);
+				this.setCompositionRoot(layout);
+			}
+		}
+
+		@Override
+		public Class<String> getType() {
+			return String.class;
 		}
 	}
 
