@@ -16,14 +16,12 @@
     <modules>
         <module>../mycollab-core</module>
         <module>../mycollab-config</module>
-        <module>../mycollab-api</module>
         <module>../mycollab-test</module>
         <module>../mycollab-caching</module>
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
         <module>../mycollab-services-community</module>
-        <module>../mycollab-api-impl</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>
@@ -33,32 +31,13 @@
     </modules>
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <inherited>true</inherited>
-                <version>2.3</version>
-                <configuration>
-                    <header>https://raw.github.com/mycila/license-maven-plugin/master/src/main/resources/com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
-                    <properties>
-                        <owner>MyCollab</owner>
-                        <year>${project.inceptionYear}</year>
-                        <email>support@mycollab.com</email>
-                    </properties>
-                    <includes>
-                        <include>src/main/java/**/*.java</include>
-                        <include>src/test/java/**/*.java</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
-            </plugin>
+            <!-- <plugin> <groupId>com.mycila</groupId> <artifactId>license-maven-plugin</artifactId> 
+                <inherited>true</inherited> <version>2.3</version> <configuration> <header>https://raw.github.com/mycila/license-maven-plugin/master/src/main/resources/com/mycila/maven/plugin/license/templates/GPL-3.txt</header> 
+                <properties> <owner>MyCollab</owner> <year>${project.inceptionYear}</year> 
+                <email>support@mycollab.com</email> </properties> <includes> <include>src/main/java/**/*.java</include> 
+                <include>src/test/java/**/*.java</include> </includes> </configuration> <executions> 
+                <execution> <goals> <goal>format</goal> </goals> <phase>compile</phase> </execution> 
+                </executions> </plugin> -->
         </plugins>
     </build>
 </project>
