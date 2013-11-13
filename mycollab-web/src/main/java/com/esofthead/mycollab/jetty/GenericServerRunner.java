@@ -23,7 +23,6 @@ import java.net.Socket;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ShutdownMonitor;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
@@ -40,14 +39,7 @@ public abstract class GenericServerRunner {
 	private Server server;
 
 	public GenericServerRunner() {
-		server = new Server(SiteConfiguration.getServerPort());
-		log.debug("Detect root folder webapp");
-		String webappDirLocation = detectBasedir();
 
-		WebAppContext appContext = buildContext(webappDirLocation);
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { appContext });
-		server.setHandler(handlers);
 	}
 
 	public abstract WebAppContext buildContext(String baseDir);
@@ -112,20 +104,31 @@ public abstract class GenericServerRunner {
 				monitor.setPort(stopPort);
 				monitor.setKey(stopKey);
 				monitor.setExitVm(true);
+				execute();
 				break;
 			}
 
 		}
 
-		server.setStopAtShutdown(true);
-		server.setSendServerVersion(true);
-
-		execute();
 	}
 
 	public void execute() throws Exception {
+		server = new Server(SiteConfiguration.getServerPort());
+		log.debug("Detect root folder webapp");
+		String webappDirLocation = detectBasedir();
+
+		WebAppContext appContext = buildContext(webappDirLocation);
+		HandlerList handlers = new HandlerList();
+		handlers.setHandlers(new Handler[] { appContext });
+		server.setHandler(handlers);
+
+		server.setStopAtShutdown(true);
+		server.setSendServerVersion(true);
 
 		server.start();
+		
+		ShutdownMonitor.getInstance().start();
+		
 		server.join();
 	}
 
