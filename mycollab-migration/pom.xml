@@ -30,5 +30,10 @@
             <artifactId>flyway-core</artifactId>
             <version>2.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.3</version>
+        </dependency>
     </dependencies>
 </project>
