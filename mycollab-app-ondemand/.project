@@ -6,6 +6,7 @@
     <project>mycollab-services-ondemand</project>
     <project>mycollab-services</project>
     <project>mycollab-core</project>
+    <project>mycollab-dao</project>
     <project>mycollab-migration</project>
     <project>mycollab-config</project>
     <project>mycollab-caching</project>

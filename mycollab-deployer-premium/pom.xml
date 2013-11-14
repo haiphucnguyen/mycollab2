@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>mycollab-deployer-premium</name>
+    <groupId>com.esofthead.mycollab</groupId>
+    <artifactId>mycollab-deployer-premium</artifactId>
+    <version>2.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>../mycollab-parent</module>
+        <module>../mycollab-parent-premium</module>
+        <module>../mycollab-core</module>
+        <module>../mycollab-dao</module>
+        <module>../mycollab-config</module>
+        <module>../mycollab-test</module>
+        <module>../mycollab-caching</module>
+        <module>../mycollab-jackrabbit</module>
+        <module>../mycollab-migration</module>
+        <module>../mycollab-services</module>
+        <module>../mycollab-esb</module>
+        <module>../mycollab-jetty-session-premium</module>
+        <module>../mycollab-caching-premium</module>
+        <module>../mycollab-reporting</module>
+        <module>../mycollab-scheduler</module>
+        <module>../mycollab-web</module>
+        <module>../mycollab-services-premium</module>
+        <module>../mycollab-frontsite</module>
+        <module>../mycollab-web-premium</module>
+        <module>../mycollab-app-premium</module>
+    </modules>
+</project>

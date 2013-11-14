@@ -5,6 +5,7 @@
   <projects>
     <project>mycollab-core</project>
     <project>mycollab-caching</project>
+    <project>mycollab-dao</project>
     <project>mycollab-config</project>
   </projects>
   <buildSpec>
