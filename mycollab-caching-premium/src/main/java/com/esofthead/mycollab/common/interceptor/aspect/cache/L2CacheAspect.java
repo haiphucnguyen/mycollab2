@@ -79,7 +79,7 @@ public class L2CacheAspect {
 									} else {
 										log.error(
 												"Cache key must be one of types [Integer, GroupableSearchCriteria, SearchRequest], now it has type {}",
-												arg.getClass().getName());
+												arg);
 										return pjp.proceed();
 									}
 								} catch (Exception e) {

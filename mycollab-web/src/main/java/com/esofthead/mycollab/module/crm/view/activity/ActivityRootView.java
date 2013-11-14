@@ -100,9 +100,12 @@ public class ActivityRootView extends AbstractView {
 							calendarPresenter.go(ActivityRootView.this,
 									new ActivityScreenData.GotoCalendar());
 						} else if ("Activities List".equals(caption)) {
+							EventSearchCriteria criteria = new EventSearchCriteria();
+							criteria.setSaccountid(new NumberSearchField(
+									AppContext.getAccountId()));
 							eventPresenter.go(ActivityRootView.this,
 									new ActivityScreenData.GotoActivityList(
-											null));
+											criteria));
 						}
 					}
 				});
