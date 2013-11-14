@@ -84,9 +84,9 @@ public class ActivityRootView extends AbstractView {
 
 	private void buildComponents() {
 		activityTabs.addTab(constructCalendarView(), new MenuButton("Calendar",
-				"notification.png"));
+				"calendar.png"));
 		activityTabs.addTab(constructActivityListView(), new MenuButton(
-				"Activities List", "layout.png"));
+				"Activities List", "activitylist.png"));
 
 		activityTabs
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
