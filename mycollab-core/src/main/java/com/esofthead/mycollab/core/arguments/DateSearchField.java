@@ -16,8 +16,9 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import java.util.Date;
+
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
 public class DateSearchField extends DateTimeSearchField {
 

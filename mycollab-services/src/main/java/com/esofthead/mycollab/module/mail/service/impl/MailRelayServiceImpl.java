@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.common.dao.RelayEmailMapper;
 import com.esofthead.mycollab.common.domain.RelayEmailExample;
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
-import com.thoughtworks.xstream.XStream;
 
 @Service
 public class MailRelayServiceImpl implements MailRelayService {
@@ -40,9 +40,8 @@ public class MailRelayServiceImpl implements MailRelayService {
 		relayEmail.setFromemail("noreply@mycollab.com");
 		relayEmail.setFromname("noreply@mycollab.com");
 
-		XStream xmlSerializer = new XStream();
-		String recipientList = xmlSerializer.toXML(new String[][] { toEmails,
-				toNames });
+		String recipientList = JsonDeSerializer.toJson(new String[][] {
+				toEmails, toNames });
 		relayEmail.setRecipients(recipientList);
 		relayEmail.setSubject(subject);
 		relayEmail.setBodycontent(bodyContent);

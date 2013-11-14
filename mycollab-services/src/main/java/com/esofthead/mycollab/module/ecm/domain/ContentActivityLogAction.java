@@ -16,8 +16,7 @@
  */
 package com.esofthead.mycollab.module.ecm.domain;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 
 public class ContentActivityLogAction {
 
@@ -26,18 +25,12 @@ public class ContentActivityLogAction {
 	public static final String CONTENT_TYPE = "content";
 
 	public String toString() {
-		XStream xstream = new XStream(new StaxDriver());
-		return xstream.toXML(this);
+		return JsonDeSerializer.toJson(this);
 	}
 
 	public static ContentActivityLogAction fromString(String actionDesc) {
-		XStream xstream = new XStream(new StaxDriver());
-		Object obj = xstream.fromXML(actionDesc);
-		if (obj instanceof ContentActivityLogAction) {
-			return (ContentActivityLogAction) obj;
-		} else {
-			return null;
-		}
+		return JsonDeSerializer.fromJson(actionDesc,
+				ContentActivityLogAction.class);
 	}
 
 	public static class Move extends ContentActivityLogAction {

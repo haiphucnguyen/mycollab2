@@ -20,6 +20,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.Type;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.google.gson.ExclusionStrategy;
@@ -44,6 +45,19 @@ public class JsonDeSerializer {
 		if (ins == null) {
 			try {
 				return type.newInstance();
+			} catch (Exception e) {
+				throw new MyCollabException(e);
+			}
+		}
+
+		return ins;
+	}
+
+	public static <T> T fromJson(String value, Type type) {
+		T ins = gson.fromJson(value, type);
+		if (ins == null) {
+			try {
+				return null;
 			} catch (Exception e) {
 				throw new MyCollabException(e);
 			}

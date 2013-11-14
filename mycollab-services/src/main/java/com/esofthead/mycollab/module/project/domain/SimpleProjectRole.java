@@ -20,8 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.security.PermissionMap;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 public class SimpleProjectRole extends ProjectRole {
 	private static final long serialVersionUID = 1L;
@@ -47,9 +45,7 @@ public class SimpleProjectRole extends ProjectRole {
 				permissionMap = new PermissionMap();
 			} else {
 				try {
-					XStream xstream = new XStream(new StaxDriver());
-					permissionMap = (PermissionMap) xstream
-							.fromXML(permissionVal);
+					permissionMap = PermissionMap.fromJsonString(permissionVal);
 				} catch (Exception e) {
 					log.error("Error while get permission", e);
 				}

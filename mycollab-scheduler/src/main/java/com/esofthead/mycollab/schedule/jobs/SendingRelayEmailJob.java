@@ -32,11 +32,11 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailsAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.thoughtworks.xstream.XStream;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -55,9 +55,9 @@ public class SendingRelayEmailJob extends QuartzJobBean {
 		for (RelayEmailWithBLOBs relayEmail : relayEmails) {
 			if (relayEmail.getEmailhandlerbean() == null) {
 				String recipientVal = relayEmail.getRecipients();
-				XStream xstream = new XStream();
-				String[][] recipientArr = (String[][]) xstream
-						.fromXML(recipientVal);
+				String[][] recipientArr = (String[][]) JsonDeSerializer
+						.fromJson(recipientVal, String[][].class);
+				
 				try {
 					List<MailRecipientField> toMailList = new ArrayList<MailRecipientField>();
 					for (int i = 0; i < recipientArr[0].length; i++) {

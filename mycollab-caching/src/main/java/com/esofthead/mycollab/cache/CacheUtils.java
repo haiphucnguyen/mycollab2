@@ -16,31 +16,15 @@
  */
 package com.esofthead.mycollab.cache;
 
-import java.io.Writer;
-
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
-import com.thoughtworks.xstream.io.json.JsonWriter;
-import com.thoughtworks.xstream.io.json.JsonWriter.Format;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 
 public class CacheUtils {
-	private static final XStream jsonXStream = new XStream(
-			new JsonHierarchicalStreamDriver() {
-				public HierarchicalStreamWriter createWriter(Writer writer) {
-
-					return new JsonWriter(writer, JsonWriter.DROP_ROOT_MODE,
-							new Format(new char[0], new char[0],
-									Format.SPACE_AFTER_LABEL
-											| Format.COMPACT_EMPTY_ELEMENT));
-				}
-			});
 
 	public static String constructParamsKey(Object[] args) {
-		return jsonXStream.toXML(args);
+		return JsonDeSerializer.toJson(args);
 	}
 
 	public static String getCachePrefix(Class serviceClass, Integer accountId) {

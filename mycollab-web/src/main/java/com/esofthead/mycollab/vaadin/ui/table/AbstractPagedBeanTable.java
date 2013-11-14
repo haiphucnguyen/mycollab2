@@ -31,6 +31,7 @@ import com.esofthead.mycollab.common.domain.NullCustomViewStore;
 import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -39,8 +40,7 @@ import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -110,9 +110,11 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 					.getViewLayoutDef(AppContext.getAccountId(),
 							AppContext.getUsername(), viewId);
 			if (!(viewLayoutDef instanceof NullCustomViewStore)) {
-				XStream xstream = new XStream(new StaxDriver());
-				List<TableViewField> selectedColumns = (List<TableViewField>) xstream
-						.fromXML(viewLayoutDef.getViewinfo());
+
+				List<TableViewField> selectedColumns = JsonDeSerializer
+						.fromJson(viewLayoutDef.getViewinfo(),
+								new TypeToken<List<TableViewField>>() {
+								}.getType());
 				this.displayColumns = selectedColumns;
 			} else {
 				this.displayColumns = displayColumns;

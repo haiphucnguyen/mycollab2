@@ -63,7 +63,7 @@ public class RoleServiceDBImpl extends
 	@Override
 	public void savePermission(int roleId, PermissionMap permissionMap,
 			int accountid) {
-		String perVal = permissionMap.toXmlString();
+		String perVal = permissionMap.toJsonString();
 
 		RolePermissionExample ex = new RolePermissionExample();
 		ex.createCriteria().andRoleidEqualTo(roleId);

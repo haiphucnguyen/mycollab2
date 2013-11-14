@@ -26,12 +26,11 @@ import org.tepi.listbuilder.ListBuilder;
 import com.esofthead.mycollab.common.domain.CustomViewStore;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CustomViewStoreService;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Alignment;
@@ -135,8 +134,8 @@ public abstract class CustomizedTableWindow extends Window {
 						viewDef.setSaccountid(AppContext.getAccountId());
 						viewDef.setCreateduser(AppContext.getUsername());
 						viewDef.setViewid(viewId);
-						XStream xstream = new XStream(new StaxDriver());
-						viewDef.setViewinfo(xstream.toXML(selectedColumns));
+						viewDef.setViewinfo(JsonDeSerializer
+								.toJson(selectedColumns));
 						customViewStoreService
 								.saveOrUpdateViewLayoutDef(viewDef);
 					}

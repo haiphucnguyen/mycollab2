@@ -149,7 +149,7 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 				.addValue("roleid", adminRoleId).addValue(
 						"roleVal",
 						PermissionMap.buildAdminPermissionCollection()
-								.toXmlString());
+								.toJsonString());
 		rolePermissionJdbcInsert.execute(adminRolePermissionParameters);
 
 		log.debug("Associate permission with employee role");
@@ -157,7 +157,7 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 				.addValue("roleid", employeeRoleId).addValue(
 						"roleVal",
 						PermissionMap.buildEmployeePermissionCollection()
-								.toXmlString());
+								.toJsonString());
 		rolePermissionJdbcInsert.execute(employeeRolePermissionParameters);
 
 		log.debug("Associate permission with guest role");
@@ -165,7 +165,7 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 				.addValue("roleid", guestRoleId).addValue(
 						"roleVal",
 						PermissionMap.buildGuestPermissionCollection()
-								.toXmlString());
+								.toJsonString());
 		rolePermissionJdbcInsert.execute(guestRolePermissionParameters);
 	}
 }

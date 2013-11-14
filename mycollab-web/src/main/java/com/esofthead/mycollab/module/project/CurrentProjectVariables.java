@@ -32,8 +32,6 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 public class CurrentProjectVariables {
 	private static Logger log = LoggerFactory
@@ -68,9 +66,8 @@ public class CurrentProjectVariables {
 						.selectByExampleWithBLOBs(ex);
 				if (!rolePermissions.isEmpty()) {
 					ProjectRolePermission rolePer = rolePermissions.get(0);
-					XStream xstream = new XStream(new StaxDriver());
-					PermissionMap permissionMap = (PermissionMap) xstream
-							.fromXML(rolePer.getRoleval());
+					PermissionMap permissionMap = PermissionMap
+							.fromJsonString(rolePer.getRoleval());
 					prjMember.setPermissionMaps(permissionMap);
 				}
 			}

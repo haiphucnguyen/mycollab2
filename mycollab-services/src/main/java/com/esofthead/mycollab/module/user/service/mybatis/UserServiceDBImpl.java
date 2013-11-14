@@ -66,8 +66,6 @@ import com.esofthead.mycollab.module.user.esb.UserEndpoints;
 import com.esofthead.mycollab.module.user.esb.UserRemovedCommand;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 @Service
 @Transactional
@@ -279,9 +277,8 @@ public class UserServiceDBImpl extends
 							.selectByExampleWithBLOBs(ex);
 					if (roles != null && roles.size() > 0) {
 						RolePermission rolePer = (RolePermission) roles.get(0);
-						XStream xstream = new XStream(new StaxDriver());
-						PermissionMap permissionMap = (PermissionMap) xstream
-								.fromXML(rolePer.getRoleval());
+						PermissionMap permissionMap = PermissionMap
+								.fromJsonString(rolePer.getRoleval());
 						user.setPermissionMaps(permissionMap);
 						log.debug("Find role match to user " + username);
 					} else {

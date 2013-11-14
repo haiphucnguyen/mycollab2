@@ -16,11 +16,12 @@
  */
 package com.esofthead.mycollab.core.persistence;
 
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 public interface ISearchableDAO<S extends SearchCriteria> {
 

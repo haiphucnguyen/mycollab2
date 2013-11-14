@@ -18,8 +18,6 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
@@ -32,12 +30,13 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
-import com.thoughtworks.xstream.XStream;
+import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -53,9 +52,6 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		extends SearchLayout<S> {
-
-	private static Logger log = LoggerFactory
-			.getLogger(DefaultAdvancedSearchLayout.class);
 
 	private SaveSearchResultService saveSearchResultService;
 
@@ -187,8 +183,8 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 					SaveSearchResultWithBLOBs searchResult = new SaveSearchResultWithBLOBs();
 					searchResult.setSaveuser(AppContext.getUsername());
 					searchResult.setSaccountid(AppContext.getAccountId());
-					XStream stream = new XStream();
-					searchResult.setQuerytext(stream.toXML(searchCriteria));
+					searchResult.setQuerytext(JsonDeSerializer
+							.toJson(searchCriteria));
 					searchResult.setType(type);
 					searchResult.setQueryname((String) saveSearchValue
 							.getValue());
@@ -239,8 +235,8 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 					SaveSearchResultWithBLOBs searchResult = new SaveSearchResultWithBLOBs();
 					searchResult.setSaveuser(AppContext.getUsername());
 					searchResult.setSaccountid(AppContext.getAccountId());
-					XStream stream = new XStream();
-					searchResult.setQuerytext(stream.toXML(searchCriteria));
+					searchResult.setQuerytext(JsonDeSerializer
+							.toJson(searchCriteria));
 					searchResult.setType(type);
 					searchResult.setId(itemId);
 					searchResult.setQueryname(captionStr);
@@ -374,8 +370,9 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 						saveSearchValue.setValue("");
 						String queryText = data.getQuerytext();
-						XStream xstream = new XStream();
-						S value = (S) xstream.fromXML(queryText);
+						S value = (S) JsonDeSerializer.fromJson(queryText,
+								new TypeToken<S>() {
+								}.getType());
 						loadSaveSearchToField(value);
 						saveSearchControls.replaceComponent(addnewBtn,
 								tableActionControls);

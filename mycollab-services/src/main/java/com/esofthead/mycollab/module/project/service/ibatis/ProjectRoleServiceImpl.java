@@ -24,6 +24,7 @@ import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.ProjectRoleMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt;
@@ -35,8 +36,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 @Service
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.PROJECT_ROLE)
@@ -66,8 +65,7 @@ public class ProjectRoleServiceImpl extends
 	@Override
 	public void savePermission(int projectId, int roleId,
 			PermissionMap permissionMap, Integer sAccountId) {
-		XStream xstream = new XStream(new StaxDriver());
-		String perVal = xstream.toXML(permissionMap);
+		String perVal = JsonDeSerializer.toJson(permissionMap);
 
 		ProjectRolePermissionExample ex = new ProjectRolePermissionExample();
 		ex.createCriteria().andRoleidEqualTo(roleId);

@@ -40,12 +40,12 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
-import com.esofthead.mycollab.common.dao.AuditLogMapper;
 import com.esofthead.mycollab.common.domain.ActivityStream;
 import com.esofthead.mycollab.common.domain.AuditLog;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.common.service.ibatis.AuditLogServiceImpl.AuditLogUtil;
@@ -65,7 +65,7 @@ public class AuditLogAspect {
 			.getCache();
 
 	@Autowired
-	protected AuditLogMapper auditLogMapper;
+	protected AuditLogService auditLogService;
 
 	@Autowired
 	private ActivityStreamService activityStreamService;
@@ -160,8 +160,9 @@ public class AuditLogAspect {
 					if (activityStreamId != null) {
 						auditLog.setActivitylogid(activityStreamId);
 					}
-					int auditLogId = auditLogMapper
-							.insertAndReturnKey(auditLog);
+
+					int auditLogId = auditLogService.saveWithSession(auditLog,
+							"");
 
 					caches.remove(key);
 

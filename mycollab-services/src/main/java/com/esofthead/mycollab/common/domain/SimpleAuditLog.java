@@ -16,24 +16,14 @@
  */
 package com.esofthead.mycollab.common.domain;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
+import com.google.gson.reflect.TypeToken;
 
 public class SimpleAuditLog extends AuditLog {
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory.getLogger(SimpleAuditLog.class);
 
 	private List<AuditChangeItem> changeItems;
 
@@ -71,29 +61,9 @@ public class SimpleAuditLog extends AuditLog {
 	}
 
 	private List<AuditChangeItem> parseChangeItems() {
-		List<AuditChangeItem> items = new ArrayList<AuditChangeItem>();
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
-				.newInstance();
-		builderFactory.setIgnoringComments(true);
-		builderFactory.setIgnoringElementContentWhitespace(true);
-		try {
-			DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
-			Document document = docBuilder.parse(new InputSource(
-					new StringReader(this.getChangeset())));
-			NodeList changeElements = document
-					.getElementsByTagName("changelog");
-
-			for (int i = 0; i < changeElements.getLength(); i++) {
-				Element element = (Element) changeElements.item(i);
-				AuditChangeItem changeItem = new AuditChangeItem();
-				changeItem.setField(element.getAttribute("field"));
-				changeItem.setNewvalue(element.getAttribute("newvalue"));
-				changeItem.setOldvalue(element.getAttribute("oldvalue"));
-				items.add(changeItem);
-			}
-		} catch (Exception e) {
-			log.error("Error while parse change log item", e);
-		}
+		List<AuditChangeItem> items = JsonDeSerializer.fromJson(
+				this.getChangeset(), new TypeToken<List<AuditChangeItem>>() {
+				}.getType());
 
 		return items;
 	}

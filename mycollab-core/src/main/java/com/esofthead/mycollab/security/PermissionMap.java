@@ -19,9 +19,8 @@ package com.esofthead.mycollab.security;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.core.utils.ValuedBean;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 /**
  * 
@@ -94,9 +93,12 @@ public class PermissionMap extends ValuedBean {
 		return perMap.get(key);
 	}
 
-	public String toXmlString() {
-		XStream xstream = new XStream(new StaxDriver());
-		return xstream.toXML(this);
+	public String toJsonString() {
+		return JsonDeSerializer.toJson(this);
+	}
+
+	public static PermissionMap fromJsonString(String json) {
+		return JsonDeSerializer.fromJson(json, PermissionMap.class);
 	}
 
 	public static PermissionMap buildAdminPermissionCollection() {
