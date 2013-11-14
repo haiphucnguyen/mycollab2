@@ -87,6 +87,10 @@ public class DateTimeUtils {
 
 	public static Date converToDateWithUserTimeZone(Date date,
 			String userTimeZone) {
+		if (date == null) {
+			return null;
+		}
+
 		simpleDateFormat.setTimeZone(TimezoneMapper.getTimezone(userTimeZone)
 				.getTimezone());
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -94,8 +98,8 @@ public class DateTimeUtils {
 			return df.parse(simpleDateFormat.format(date));
 		} catch (ParseException e) {
 			log.error("ConverToDateWithUserTimeZone Error while parse date", e);
+			return null;
 		}
-		return null;
 	}
 
 	public static String getStringDateFromNow(Date dateTime) {
