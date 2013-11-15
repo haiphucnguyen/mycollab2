@@ -92,4 +92,11 @@ public class V10112013_8__Remove_XStream_Serialize implements
 							jsonValue, roleId);
 		}
 	}
+
+	public static void main(String[] args) {
+		String str = "<?xml version=\"1.0\"?><com.esofthead.mycollab.security.PermissionMap><selected>false</selected><perMap><entry><string>User</string><int>1</int></entry><entry><string>Campaign</string><int>1</int></entry><entry><string>Call</string><int>1</int></entry><entry><string>Task</string><int>1</int></entry><entry><string>Opportunity</string><int>1</int></entry><entry><string>Contact</string><int>1</int></entry><entry><string>Meeting</string><int>1</int></entry><entry><string>Case</string><int>1</int></entry><entry><string>Account</string><int>1</int></entry><entry><string>Role</string><int>1</int></entry><entry><string>Lead</string><int>1</int></entry></perMap></com.esofthead.mycollab.security.PermissionMap>";
+		XStream xstream = new XStream(new StaxDriver());
+		PermissionMap permissionMap = (PermissionMap) xstream.fromXML(str);
+		System.out.println(permissionMap);
+	}
 }

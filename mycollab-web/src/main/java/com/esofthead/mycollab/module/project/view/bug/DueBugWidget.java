@@ -86,6 +86,7 @@ public class DueBugWidget extends BugDisplayWidget {
 						}
 					});
 			defectLink.setWidth("100%");
+			defectLink.setDescription(BugToolTipGenerator.generateToolTip(bug));
 
 			if (bug.isOverdue()) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);

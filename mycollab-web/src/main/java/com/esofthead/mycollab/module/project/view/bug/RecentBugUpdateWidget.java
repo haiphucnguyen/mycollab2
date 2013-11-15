@@ -87,6 +87,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 						}
 					});
 			defectLink.setWidth("100%");
+			defectLink.setDescription(BugToolTipGenerator.generateToolTip(bug));
 
 			if (bug.isCompleted()) {
 				defectLink.addStyleName(UIConstants.LINK_COMPLETED);

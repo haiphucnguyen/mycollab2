@@ -200,6 +200,11 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		layout.addComponent(milestoneLink);
 
+		HorizontalLayout spacing = new HorizontalLayout();
+		spacing.setHeight("8px");
+		spacing.setWidth("100%");
+		layout.addComponent(spacing);
+
 		final GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1,
 				5, "100%", "60px");
 		layoutHelper.addComponent(
