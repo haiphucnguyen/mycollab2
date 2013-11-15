@@ -37,10 +37,6 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.adobe.blazeds</groupId>
             <artifactId>blazeds-core</artifactId>
             <version>4.0.0.14931</version>

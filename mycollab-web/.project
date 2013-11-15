@@ -7,14 +7,13 @@
     <project>mycollab-config</project>
     <project>mycollab-caching</project>
     <project>mycollab-dao</project>
-    <project>mycollab-api</project>
-    <project>mycollab-api-impl</project>
+    <project>mycollab-reporting</project>
     <project>mycollab-services</project>
     <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
-    <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
+    <project>mycollab-api</project>
     <project>mycollab-test</project>
     <project>ckeditor</project>
   </projects>

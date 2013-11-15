@@ -32,18 +32,6 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api-impl</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-reporting</artifactId>
             <version>2.0-SNAPSHOT</version>
         </dependency>
@@ -267,7 +255,7 @@
             <artifactId>cloning</artifactId>
             <version>1.9.0</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
