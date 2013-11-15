@@ -17,7 +17,8 @@
 /*Domain class of table m_ecm_activity_log*/
 package com.esofthead.mycollab.module.ecm.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
+
 import java.util.Date;
 
 class ContentActivityLog extends ValuedBean {

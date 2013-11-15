@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.crm.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class SimpleEvent extends ValuedBean implements Serializable {
 	private static final long serialVersionUID = 1L;

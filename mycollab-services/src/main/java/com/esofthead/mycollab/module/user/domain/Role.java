@@ -17,7 +17,7 @@
 /*Domain class of table s_roles*/
 package com.esofthead.mycollab.module.user.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class Role extends ValuedBean {
     /**

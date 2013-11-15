@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.core.utils;
+package com.esofthead.mycollab.core.arguments;
 
 import java.io.Serializable;
 

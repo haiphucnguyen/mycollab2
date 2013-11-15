@@ -17,7 +17,8 @@
 /*Domain class of table m_crm_contacts_cases*/
 package com.esofthead.mycollab.module.crm.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
+
 import java.util.Date;
 
 public class ContactCase extends ValuedBean {

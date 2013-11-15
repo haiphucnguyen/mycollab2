@@ -17,7 +17,8 @@
 /*Domain class of table m_prj_milestone*/
 package com.esofthead.mycollab.module.project.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
+
 import java.util.Date;
 
 public class Milestone extends ValuedBean {

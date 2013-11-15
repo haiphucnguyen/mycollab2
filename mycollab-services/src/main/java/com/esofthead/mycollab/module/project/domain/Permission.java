@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class Permission extends ValuedBean {
     /**

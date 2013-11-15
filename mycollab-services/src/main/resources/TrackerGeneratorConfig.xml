@@ -22,7 +22,7 @@
 
             <property
                 name="rootClass"
-                value="com.esofthead.mycollab.core.utils.ValuedBean" />
+                value="com.esofthead.mycollab.core.arguments.ValuedBean" />
         </javaModelGenerator>
 
         <sqlMapGenerator

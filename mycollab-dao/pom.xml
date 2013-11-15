@@ -72,6 +72,22 @@
                     <groupId>commons-httpclient</groupId>
                     <artifactId>commons-httpclient</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.blazeds</groupId>
+                    <artifactId>blazeds-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.blazeds</groupId>
+                    <artifactId>blazeds-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.blazeds</groupId>
+                    <artifactId>blazeds-proxy</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.adobe.blazeds</groupId>
+                    <artifactId>blazeds-remoting</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>

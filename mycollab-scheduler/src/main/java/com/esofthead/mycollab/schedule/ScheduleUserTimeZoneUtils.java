@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.core.utils.ValuedBean;
 
 public class ScheduleUserTimeZoneUtils {
 	private static Logger log = LoggerFactory

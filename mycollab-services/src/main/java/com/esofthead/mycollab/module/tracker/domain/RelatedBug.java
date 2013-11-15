@@ -17,7 +17,7 @@
 /*Domain class of table m_tracker_related_bug*/
 package com.esofthead.mycollab.module.tracker.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class RelatedBug extends ValuedBean {
     /**

@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.domain;
 
 import java.util.Date;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class TimeTrackingItem extends ValuedBean {
     /**

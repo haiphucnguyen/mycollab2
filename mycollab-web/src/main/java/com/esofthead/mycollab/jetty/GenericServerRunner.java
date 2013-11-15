@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.FileUtils;
 
 public abstract class GenericServerRunner {
 	private static Logger log = LoggerFactory
@@ -55,12 +54,17 @@ public abstract class GenericServerRunner {
 	}
 
 	private String detectBasedir() {
-		File searchFile = FileUtils.detectFolderByName(
-				new File(System.getProperty("user.dir")), "webapp");
-		if (searchFile == null) {
+		File webappFolder = new File(System.getProperty("user.dir"), "webapp");
+
+		if (!webappFolder.exists()) {
+			webappFolder = new File(System.getProperty("user.dir"),
+					"src/main/webapp");
+		}
+
+		if (!webappFolder.exists()) {
 			throw new MyCollabException("Can not detect webapp base folder");
 		} else {
-			return searchFile.getAbsolutePath();
+			return webappFolder.getAbsolutePath();
 		}
 	}
 
@@ -107,12 +111,12 @@ public abstract class GenericServerRunner {
 				monitor.setPort(stopPort);
 				monitor.setKey(stopKey);
 				monitor.setExitVm(true);
-				
+
 				break;
 			}
 
 		}
-		
+
 		execute();
 
 	}

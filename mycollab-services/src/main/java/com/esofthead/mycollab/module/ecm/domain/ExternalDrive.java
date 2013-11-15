@@ -17,7 +17,8 @@
 /*Domain class of table m_ecm_external_drive*/
 package com.esofthead.mycollab.module.ecm.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
+
 import java.util.Date;
 
 public class ExternalDrive extends ValuedBean {

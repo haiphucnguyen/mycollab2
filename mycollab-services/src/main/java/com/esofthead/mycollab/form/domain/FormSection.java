@@ -17,7 +17,7 @@
 /*Domain class of table m_form_section*/
 package com.esofthead.mycollab.form.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class FormSection extends ValuedBean {
     /**

@@ -17,7 +17,7 @@
 /*Domain class of table s_relay_email_notification*/
 package com.esofthead.mycollab.common.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class RelayEmailNotification extends ValuedBean {
     /**

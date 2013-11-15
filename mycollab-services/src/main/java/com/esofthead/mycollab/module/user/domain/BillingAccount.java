@@ -17,7 +17,8 @@
 /*Domain class of table s_account*/
 package com.esofthead.mycollab.module.user.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
+
 import java.util.Date;
 
 public class BillingAccount extends ValuedBean {

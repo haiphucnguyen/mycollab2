@@ -17,7 +17,8 @@
 /*Domain class of table m_monitor_item*/
 package com.esofthead.mycollab.common.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
+
 import java.util.Date;
 
 public class MonitorItem extends ValuedBean {

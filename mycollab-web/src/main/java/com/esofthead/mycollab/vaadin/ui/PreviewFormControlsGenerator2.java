@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.BeanItem;
