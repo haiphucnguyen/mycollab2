@@ -17,7 +17,7 @@
 /*Domain class of table s_account_settings*/
 package com.esofthead.mycollab.module.user.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class AccountSettings extends ValuedBean {
     /**

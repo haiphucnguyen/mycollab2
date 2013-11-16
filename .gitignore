@@ -7,9 +7,6 @@ mycollab-web/src/main/resources/resources.properties:
 mycollab-core/bin
 mycollab-core/target
 mycollab-core/.settings
-mycollab-parent/.settings
-mycollab-parent/.classpath
-mycollab-parent/.project
 mycollab-frontsite/target
 mycollab-frontsite/.settings
 
@@ -152,3 +149,6 @@ extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/cust
 extras/vaadin/addons/customfield-addon/target/test-classes/org/vaadin/addon/customfield/demo/itest/WrappingFieldTest.nas
 mycollab-services/.settings/org.eclipse.jdt.core.prefs
 mycollab-test/.settings/org.eclipse.jdt.core.prefs
+mycollab-extra-lib/.classpath
+mycollab-extra-lib/.project
+mycollab-extra-lib/.settings/org.eclipse.jdt.core.prefs

@@ -17,7 +17,7 @@
 /*Domain class of table s_relay_mail*/
 package com.esofthead.mycollab.common.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 class RelayEmail extends ValuedBean {
     /**

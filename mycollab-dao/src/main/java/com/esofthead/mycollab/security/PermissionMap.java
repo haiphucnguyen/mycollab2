@@ -19,8 +19,8 @@ package com.esofthead.mycollab.security;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
-import com.esofthead.mycollab.core.utils.ValuedBean;
 
 /**
  * 

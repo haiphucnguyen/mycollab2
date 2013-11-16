@@ -17,7 +17,7 @@
 /*Domain class of table m_ecm_driveinfo*/
 package com.esofthead.mycollab.module.ecm.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class DriveInfo extends ValuedBean {
     /**

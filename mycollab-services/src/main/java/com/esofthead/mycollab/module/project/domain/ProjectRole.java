@@ -17,7 +17,7 @@
 /*Domain class of table m_prj_role*/
 package com.esofthead.mycollab.module.project.domain;
 
-import com.esofthead.mycollab.core.utils.ValuedBean;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class ProjectRole extends ValuedBean {
     /**

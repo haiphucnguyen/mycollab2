@@ -25,8 +25,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import com.esofthead.mycollab.core.utils.FileUtils;
-
 @Configuration
 public class AppServiceLoader {
 	@Bean(name = "myCollabProperties")
@@ -34,10 +32,15 @@ public class AppServiceLoader {
 		PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
 
 		Resource[] resources;
-		File myCollabResourceFile = FileUtils
-				.detectFileByName(new File(System.getProperty("user.dir")),
-						"mycollab.properties");
-		if (myCollabResourceFile != null) {
+		File myCollabResourceFile = new File(System.getProperty("user.dir"),
+				"conf/mycollab.properties");
+
+		if (!myCollabResourceFile.exists()) {
+			myCollabResourceFile = new File(System.getProperty("user.dir"),
+					"src/main/conf/mycollab.properties");
+		}
+
+		if (myCollabResourceFile.exists()) {
 			resources = new Resource[] { new FileSystemResource(
 					myCollabResourceFile) };
 		} else {

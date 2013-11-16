@@ -24,7 +24,6 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.FileUtils;
 
 public class ApplicationProperties {
 	private static final String RESOURCE_PROPERTIES = "mycollab.properties";
@@ -76,11 +75,16 @@ public class ApplicationProperties {
 
 		properties = new EncryptableProperties(encryptor);
 		try {
-			File myCollabFile = FileUtils.detectFileByName(
-					new File(System.getProperty("user.dir")),
-					RESOURCE_PROPERTIES);
-			if (myCollabFile != null) {
-				properties.load(new FileInputStream(myCollabFile));
+			File myCollabResourceFile = new File(
+					System.getProperty("user.dir"), "conf/mycollab.properties");
+
+			if (!myCollabResourceFile.exists()) {
+				myCollabResourceFile = new File(System.getProperty("user.dir"),
+						"src/main/conf/mycollab.properties");
+			}
+
+			if (myCollabResourceFile.exists()) {
+				properties.load(new FileInputStream(myCollabResourceFile));
 			} else {
 				properties.load(Thread.currentThread().getContextClassLoader()
 						.getResourceAsStream(RESOURCE_PROPERTIES));
