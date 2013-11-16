@@ -9,10 +9,6 @@
     </listener>
 
     <listener>
-        <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
-    </listener>
-
-    <listener>
         <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
     </listener>
 
