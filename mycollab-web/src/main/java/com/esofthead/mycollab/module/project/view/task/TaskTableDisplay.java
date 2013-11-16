@@ -37,15 +37,23 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -93,7 +101,7 @@ public class TaskTableDisplay extends
 										TaskTableDisplay.this, task, "taskname"));
 							}
 						});
-				b.setDescription("<h2>Hello this is a test<h2>");
+				b.setDescription(generateToolTip(task));
 
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
 					Resource iconPriority = TaskPriorityComboBox
@@ -386,5 +394,128 @@ public class TaskTableDisplay extends
 		this.setColumnWidth("percentagecomplete",
 				UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setWidth("100%");
+	}
+
+	private String generateToolTip(SimpleTask task) {
+		try {
+			Div div = new Div();
+			H3 taksName = new H3();
+			taksName.appendText(task.getTaskname());
+			div.appendChild(taksName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Start Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(task
+							.getStartdate())));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Actual Start Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(task
+							.getActualstartdate())));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("End Date:"))
+					.appendChild(
+							new Td().appendText(AppContext.formatDate(task
+									.getEnddate())));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Actual End Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(task
+							.getActualenddate())));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Deadline:")).appendChild(
+					new Td().appendText(AppContext.formatDate(task
+							.getDeadline())));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Priority:")).appendChild(
+					new Td().appendText(task.getPriority()));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	task.getAssignuser()))
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					task.getAssignUserAvatarId(),
+																					16)))
+													.appendText(
+															task.getAssignUserFullName())));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("TaskGroup:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(task.getTaskListName() != null) ? task
+													.getTaskListName() : ""));
+
+			Tr trRow5 = new Tr();
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Complete(%):"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											task.getPercentagecomplete()
+													.toString()));
+			Tr trRow6 = new Tr();
+
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(task.getNotes());
+			trRow6_value.setAttribute("colspan", "3");
+
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Notes:")).appendChild(trRow6_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow5);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 }

@@ -85,7 +85,7 @@
                                  #if($lstComment && $lstComment.size() > 0)
                                 	<tr>
                                     	<td colspan="4">
-                                    		<p>Lasted comment:</p>
+                                    		<p>Recent Comments:</p>
                                 			<table border="1" style="width:100%; border-collapse: collapse; border-color: rgb(169, 169, 169);">
                                 			<tr>
                                 				<td style="font-weight: bold; border-color: rgb(169, 169, 169); width:200px;">User & Time</td>

@@ -336,6 +336,7 @@ public class BugTableDisplay extends
 										BugTableDisplay.this, bug, "summary"));
 							}
 						});
+				b.setDescription(BugToolTipGenerator.generateToolTip(bug));
 
 				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
 					Resource iconPriority = MyCollabResource
