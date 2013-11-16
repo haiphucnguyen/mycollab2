@@ -48,7 +48,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 	private VerticalLayout layout;
 
 	private Map<String, AbstractDynaField> fieldMappings = new HashMap<String, AbstractDynaField>();
-	private Map<DynaSection, GridFormLayoutHelper> sectionMappings = new HashMap<DynaSection, GridFormLayoutHelper>();
+	private Map<DynaSection, GridFormLayoutHelper> sectionMappings;
 
 	public DynaFormLayout(String moduleName, DynaForm defaultForm) {
 		MasterFormService formService = ApplicationContextUtil
@@ -93,6 +93,8 @@ public class DynaFormLayout implements IFormLayoutFactory {
 	public Layout getLayout() {
 		layout = new VerticalLayout();
 		int sectionCount = dynaForm.getSectionCount();
+		sectionMappings = new HashMap<DynaSection, GridFormLayoutHelper>();
+
 		for (int i = 0; i < sectionCount; i++) {
 			DynaSection section = dynaForm.getSection(i);
 			if (section.isDeletedSection()) {
