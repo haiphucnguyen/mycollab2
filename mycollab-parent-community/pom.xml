@@ -149,12 +149,7 @@
         <repository>
             <id>mycollab</id>
             <name>MyCollab Repository</name>
-            <url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
-        </repository>
-        <repository>
-            <id>mycollab</id>
-            <name>MyCollab Repository</name>
-            <url>http://build.mycollab.com:8080/nexus/content/repositories/snapshots</url>
+            <url>http://build.mycollab.com:8080/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
