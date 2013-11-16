@@ -10,12 +10,11 @@
     <project>mycollab-migration</project>
     <project>mycollab-config</project>
     <project>mycollab-caching</project>
-    <project>mycollab-api</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-caching-premium</project>
+    <project>mycollab-api</project>
     <project>mycollab-web-premium</project>
     <project>mycollab-web</project>
-    <project>mycollab-api-impl</project>
     <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>

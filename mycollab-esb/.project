@@ -9,7 +9,6 @@
     <project>mycollab-dao</project>
     <project>mycollab-migration</project>
     <project>mycollab-caching</project>
-    <project>mycollab-api</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-test</project>
   </projects>
