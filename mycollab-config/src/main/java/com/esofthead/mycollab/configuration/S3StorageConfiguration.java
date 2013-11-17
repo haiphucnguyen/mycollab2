@@ -23,6 +23,12 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 
+/**
+ * Amazon S3 Configuration
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class S3StorageConfiguration implements StorageConfiguration {
 
 	public static final String AWS_KEY = "s3.key";

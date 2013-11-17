@@ -105,6 +105,4 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.common.dao.ReportBugIssueMapper" />
     </bean>
-
-    <bean id="messageDispatcher" class="com.esofthead.mycollab.core.MessageDispatcherImpl" />
 </beans>

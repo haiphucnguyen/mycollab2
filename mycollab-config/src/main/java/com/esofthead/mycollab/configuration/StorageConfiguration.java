@@ -16,6 +16,19 @@
  */
 package com.esofthead.mycollab.configuration;
 
+/**
+ * File configuration for storage file in MyCollab. We support two kinds of file
+ * system:
+ * <ul>
+ * <li>S3 mode: Files are stored in Amazon S3. This is used for MyCollab cloud
+ * service.</li>
+ * <li>File system: Files are stored in OS file storage. This is used for
+ * installation mode of MyCollab</li>
+ * </ul>
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public interface StorageConfiguration {
 	public static final String FILE_STORAGE_SYSTEM = "file";
 

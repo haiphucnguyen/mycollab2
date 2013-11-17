@@ -25,6 +25,13 @@ import org.jasypt.properties.EncryptableProperties;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * This file contains all constants define in system properties file
+ * mycollab.properties read at system started.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class ApplicationProperties {
 	private static final String RESOURCE_PROPERTIES = "mycollab.properties";
 	private static final String DECRYPT_PASS = "esofthead321";

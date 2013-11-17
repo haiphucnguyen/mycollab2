@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.configuration;
 
+/**
+ * Email configuration of MyCollab
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class EmailConfiguration {
 	private String host;
 	private String user;

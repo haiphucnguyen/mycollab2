@@ -18,6 +18,12 @@ package com.esofthead.mycollab.configuration;
 
 import java.io.File;
 
+/**
+ * Configuration of file system storage mode
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class FileStorageConfiguration implements StorageConfiguration {
 
 	public static File baseContentFolder;

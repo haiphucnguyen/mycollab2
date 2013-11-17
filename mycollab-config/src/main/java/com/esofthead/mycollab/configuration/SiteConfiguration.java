@@ -20,6 +20,12 @@ import java.util.Properties;
 
 import com.esofthead.mycollab.core.DeploymentMode;
 
+/**
+ * Utility class read mycollab system properties when system starts
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class SiteConfiguration {
 	private static SiteConfiguration instance;
 

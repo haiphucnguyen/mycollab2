@@ -15,25 +15,30 @@
  * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.esofthead.mycollab.core;
+
 /**
- * @author hai
+ * Generic exception of MyCollab. All exceptions occurs in MyCollab should be
+ * wrapped into this exception type.
+ * 
+ * @author haiphucnguyen
+ * 
  */
 public class MyCollabException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * @param message
-     */
-    public MyCollabException(final String message) {
-        super(message);
-    }
+	/**
+	 * @param message
+	 */
+	public MyCollabException(final String message) {
+		super(message);
+	}
 
-    public MyCollabException(final Throwable e) {
-        super(e);
-    }
+	public MyCollabException(final Throwable e) {
+		super(e);
+	}
 
-    public MyCollabException(String message, Throwable e) {
-        super(message, e);
-    }
+	public MyCollabException(String message, Throwable e) {
+		super(message, e);
+	}
 }

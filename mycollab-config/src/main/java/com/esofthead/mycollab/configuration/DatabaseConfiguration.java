@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.configuration;
 
+/**
+ * Bean contains database configuration
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class DatabaseConfiguration {
 
 	private String driverClass;

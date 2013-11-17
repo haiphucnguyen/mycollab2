@@ -19,7 +19,11 @@ package com.esofthead.mycollab.configuration;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;
 
-
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class PasswordEncryptHelper {
 	private static StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 	private static BasicTextEncryptor basicTextEncryptor;
@@ -50,15 +54,5 @@ public class PasswordEncryptHelper {
 		} else {
 			return plainPassword.equals(encryptPassword);
 		}
-	}
-
-	public static void main(String[] args) {
-		System.out
-				.println(PasswordEncryptHelper
-						.checkPassword(
-								"123456",
-								"6Cb2D0XBfkuQBaNuwrvdpeEfb9+F1wtcQoIB4njIhaC70wz7COQ6zbXm8loVayML",
-								true));
-		System.out.println(decryptText("OksKWiyWRjGOtkVg4feU9Q=="));
 	}
 }
