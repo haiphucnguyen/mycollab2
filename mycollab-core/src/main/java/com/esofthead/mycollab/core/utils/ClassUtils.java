@@ -24,6 +24,12 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * Utility class for processing class meta data.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class ClassUtils {
 	public static boolean instanceOf(Object o, Class<?>... classes) {
 		for (Class<?> cls : classes) {

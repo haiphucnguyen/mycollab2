@@ -28,6 +28,12 @@ import org.slf4j.LoggerFactory;
 
 import com.mortennobel.imagescaling.ResampleOp;
 
+/**
+ * Utility class to process image
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class ImageUtil {
 	private static Logger log = LoggerFactory.getLogger(ImageUtil.class);
 

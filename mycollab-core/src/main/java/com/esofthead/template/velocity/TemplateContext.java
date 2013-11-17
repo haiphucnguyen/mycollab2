@@ -18,6 +18,12 @@ package com.esofthead.template.velocity;
 
 import org.apache.velocity.VelocityContext;
 
+/**
+ * Template wrapper of velocity context
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class TemplateContext {
 	private final VelocityContext velocityContext;
 

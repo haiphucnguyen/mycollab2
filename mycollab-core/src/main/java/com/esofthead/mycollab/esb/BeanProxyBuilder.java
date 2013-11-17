@@ -22,6 +22,13 @@ import org.apache.camel.builder.ProxyBuilder;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * Utility class to bind a spring service bean with endpoints in integration
+ * pattern.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class BeanProxyBuilder {
 
 	public <S> S build(String endpoint, Class<S> buildCls) {

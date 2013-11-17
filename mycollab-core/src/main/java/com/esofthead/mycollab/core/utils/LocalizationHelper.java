@@ -21,6 +21,12 @@ import java.util.Locale;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 
+/**
+ * Wrapper class to get localization string.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class LocalizationHelper {
 	// LOCALIZATION
 	private static IMessageConveyor mc = new MessageConveyor(Locale.US);

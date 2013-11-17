@@ -31,6 +31,12 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * Utility class to process date instance
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class DateTimeUtils {
 	private static Logger log = LoggerFactory.getLogger(DateTimeUtils.class);
 

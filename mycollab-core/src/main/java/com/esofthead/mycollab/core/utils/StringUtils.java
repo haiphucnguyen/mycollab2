@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.core.utils;
 
+/**
+ * Utility class to process string
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class StringUtils {
 	public static String subString(String input, int length) {
 		return trimString(input, length, false);

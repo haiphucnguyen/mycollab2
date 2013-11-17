@@ -21,6 +21,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+/**
+ * Static spring application context to retrieve spring bean without in servlet
+ * context
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 @Component("appContextUtil")
 public class ApplicationContextUtil implements ApplicationContextAware {
 

@@ -20,6 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class TimezoneMapper {
 	public static Map<String, TimezoneExt> timeMap;
 
