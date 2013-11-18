@@ -41,6 +41,11 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	private static Logger log = LoggerFactory
 			.getLogger(DefaultFormViewFieldFactory.class);

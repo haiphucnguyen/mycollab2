@@ -18,8 +18,21 @@ package com.esofthead.mycollab.vaadin.events;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface PagableHandler extends Serializable{
+	/**
+	 * 
+	 * @param newPageNumber
+	 */
 	void move(int newPageNumber);
 	
+	/**
+	 * 
+	 * @param numOfItems
+	 */
 	void displayItemChange(int numOfItems);
 }

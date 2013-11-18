@@ -24,23 +24,30 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public abstract class MassUpdateWindow<V> extends Window {
+/**
+ * Mass update
+ * 
+ * @author haiphucnguyen
+ * 
+ * @param <B>
+ */
+public abstract class MassUpdateWindow<B> extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private MassUpdateCommand<V> massUpdatePresenter;
+	private MassUpdateCommand<B> massUpdateCommand;
 
 	private VerticalLayout layout;
 	private Button updateBtn, closeBtn;
 
 	public MassUpdateWindow(String title,
-			MassUpdateCommand<V> massUpdatePresenter) {
+			MassUpdateCommand<B> massUpdatePresenter) {
 		super(title);
 		center();
 
-		this.massUpdatePresenter = massUpdatePresenter;
+		this.massUpdateCommand = massUpdatePresenter;
 	}
 
-	abstract protected V getItem();
+	abstract protected B getItem();
 
 	public VerticalLayout getLayout() {
 		layout = new VerticalLayout();
@@ -55,7 +62,7 @@ public abstract class MassUpdateWindow<V> extends Window {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				massUpdatePresenter.massUpdate(getItem());
+				massUpdateCommand.massUpdate(getItem());
 				MassUpdateWindow.this.close();
 			}
 		});

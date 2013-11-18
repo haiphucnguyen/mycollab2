@@ -31,7 +31,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
@@ -125,7 +125,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 					.getView(ProjectBreadcrumb.class);
 			breadcrumb.gotoBugList();
 		} else {
-			MessageConstants.showMessagePermissionAlert();
+			MessageBox.showMessagePermissionAlert();
 		}
 	}
 

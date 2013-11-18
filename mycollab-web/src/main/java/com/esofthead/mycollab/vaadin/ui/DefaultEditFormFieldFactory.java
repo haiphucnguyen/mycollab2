@@ -23,6 +23,11 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DefaultEditFormFieldFactory extends DefaultFieldFactory {
 
     private static final long serialVersionUID = 1L;

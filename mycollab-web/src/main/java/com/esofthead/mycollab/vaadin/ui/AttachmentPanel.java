@@ -49,6 +49,11 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class AttachmentPanel extends VerticalLayout implements
 		AttachmentUploadComponent {
 

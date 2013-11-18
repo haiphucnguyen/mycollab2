@@ -21,6 +21,14 @@ import java.util.List;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <SearchService>
+ * @param <S>
+ * @param <T>
+ */
 public class DefaultPagedBeanTable<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
 		extends AbstractPagedBeanTable<S, T> {
 

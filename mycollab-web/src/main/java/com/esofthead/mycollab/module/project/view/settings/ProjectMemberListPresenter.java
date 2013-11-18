@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -70,7 +70,7 @@ public class ProjectMemberListPresenter extends
 					.getView(ProjectBreadcrumb.class);
 			breadCrumb.gotoUserList();
 		} else {
-			MessageConstants.showMessagePermissionAlert();
+			MessageBox.showMessagePermissionAlert();
 		}
 	}
 }

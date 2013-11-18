@@ -16,10 +16,24 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface SelectionOptionHandler {
+	/**
+	 * 
+	 */
 	void onSelectCurrentPage();
 	
+	/**
+	 * 
+	 */
 	void onSelectAll();
 
+	/**
+	 * 
+	 */
 	void onDeSelect();
 }

@@ -43,7 +43,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -140,7 +139,7 @@ public class RoleListPresenter extends
 					.getView(AccountSettingBreadcrumb.class);
 			breadcrumb.gotoRoleList();
 		} else {
-			MessageConstants.showMessagePermissionAlert();
+			MessageBox.showMessagePermissionAlert();
 		}
 	}
 

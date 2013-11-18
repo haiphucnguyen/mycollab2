@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -72,7 +72,7 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 								searchCriteria));
 			}
 		} else {
-			MessageConstants.showMessagePermissionAlert();
+			MessageBox.showMessagePermissionAlert();
 		}
 	}
 

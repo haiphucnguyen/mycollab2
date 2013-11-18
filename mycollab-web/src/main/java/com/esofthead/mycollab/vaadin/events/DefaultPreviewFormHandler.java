@@ -24,7 +24,7 @@ package com.esofthead.mycollab.vaadin.events;
  *
  * @author haiphucnguyen
  */
-public class DefaultPreviewFormHandler<T> implements PreviewFormHandlers<T> {
+public class DefaultPreviewFormHandler<T> implements PreviewFormHandler<T> {
 
     @Override
     public void gotoNext(T data) {

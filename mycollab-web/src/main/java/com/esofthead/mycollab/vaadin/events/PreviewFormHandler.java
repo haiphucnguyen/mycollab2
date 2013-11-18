@@ -16,12 +16,52 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
-public interface ExportOptionHandler {
-	public static int CSV_OUTPUT = 1;
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <T>
+ */
+public interface PreviewFormHandler<T> {
 
-	public static int PDF_OUTPUT = 2;
+	/**
+	 * 
+	 * @param data
+	 */
+    void gotoNext(T data);
 
-	public static int EXCEL_OUTPUT = 3;
-	
-	void doExport();
+    /**
+     * 
+     * @param data
+     */
+    void gotoPrevious(T data);
+    
+    /**
+     * 
+     * @param data
+     */
+    void onAssign(T data);
+
+    /**
+     * 
+     * @param data
+     */
+    void onEdit(T data);
+
+    /**
+     * 
+     * @param data
+     */
+    void onDelete(T data);
+
+    /**
+     * 
+     * @param data
+     */
+    void onClone(T data);
+
+    /**
+     * 
+     */
+    void onCancel();
 }

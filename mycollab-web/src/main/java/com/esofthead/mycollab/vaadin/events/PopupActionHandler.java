@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface PopupActionHandler {
 	public static final String MAIL_ACTION = "mail";
 
@@ -29,5 +34,10 @@ public interface PopupActionHandler {
 
 	public static final String MASS_UPDATE_ACTION = "massUpdate";
 
+	/**
+	 * 
+	 * @param id
+	 * @param caption
+	 */
 	void onSelect(String id, String caption);
 }

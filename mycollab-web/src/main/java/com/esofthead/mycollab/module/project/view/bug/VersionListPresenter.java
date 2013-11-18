@@ -38,7 +38,7 @@ import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -95,7 +95,7 @@ public class VersionListPresenter
 					.getView(ProjectBreadcrumb.class);
 			breadcrumb.gotoVersionList();
 		} else {
-			MessageConstants.showMessagePermissionAlert();
+			MessageBox.showMessagePermissionAlert();
 		}
 	}
 

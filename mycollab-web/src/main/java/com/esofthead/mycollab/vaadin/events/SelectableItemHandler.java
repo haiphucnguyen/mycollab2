@@ -16,6 +16,16 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <T>
+ */
 public interface SelectableItemHandler<T> {
+	/**
+	 * 
+	 * @param item
+	 */
 	void onSelect(T item);
 }

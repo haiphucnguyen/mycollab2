@@ -21,18 +21,18 @@ import java.util.Set;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.events.PreviewFormHandler;
 
 public class AdvancedPreviewBeanForm<T> extends GenericForm implements
         HasPreviewFormHandlers<T> {
 
     private static final long serialVersionUID = 1L;
-    private Set<PreviewFormHandlers<T>> handlers;
+    private Set<PreviewFormHandler<T>> handlers;
 
     @Override
-    public void addFormHandler(PreviewFormHandlers<T> handler) {
+    public void addFormHandler(PreviewFormHandler<T> handler) {
         if (handlers == null) {
-            handlers = new HashSet<PreviewFormHandlers<T>>();
+            handlers = new HashSet<PreviewFormHandler<T>>();
         }
 
         handlers.add(handler);
@@ -40,7 +40,7 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
     
     protected void fireAssignForm(T bean) {
         if (handlers != null) {
-            for (PreviewFormHandlers<T> handler : handlers) {
+            for (PreviewFormHandler<T> handler : handlers) {
                 handler.onAssign(bean);
             }
         }
@@ -48,7 +48,7 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
 
     protected void fireEditForm(T bean) {
         if (handlers != null) {
-            for (PreviewFormHandlers<T> handler : handlers) {
+            for (PreviewFormHandler<T> handler : handlers) {
                 handler.onEdit(bean);
             }
         }
@@ -64,7 +64,7 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
 
     protected void fireCancelForm(T bean) {
         if (handlers != null) {
-            for (PreviewFormHandlers<T> handler : handlers) {
+            for (PreviewFormHandler<T> handler : handlers) {
                 handler.onCancel();
             }
         }
@@ -72,7 +72,7 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
 
     protected void fireDeleteForm(T bean) {
         if (handlers != null) {
-            for (PreviewFormHandlers<T> handler : handlers) {
+            for (PreviewFormHandler<T> handler : handlers) {
                 handler.onDelete(bean);
             }
         }
@@ -80,7 +80,7 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
 
     protected void fireCloneForm(T bean) {
         if (handlers != null) {
-            for (PreviewFormHandlers<T> handler : handlers) {
+            for (PreviewFormHandler<T> handler : handlers) {
                 handler.onClone(bean);
             }
         }
@@ -88,7 +88,7 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
 
     protected void fireGotoNextItem(T bean) {
         if (handlers != null) {
-            for (PreviewFormHandlers<T> handler : handlers) {
+            for (PreviewFormHandler<T> handler : handlers) {
                 handler.gotoNext(bean);
             }
         }
@@ -96,7 +96,7 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
 
     protected void fireGotoPrevious(T bean) {
         if (handlers != null) {
-            for (PreviewFormHandlers<T> handler : handlers) {
+            for (PreviewFormHandler<T> handler : handlers) {
                 handler.gotoPrevious(bean);
             }
         }

@@ -16,7 +16,20 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+/**
+ * 
+ * Interface denote to have at least one instance of class
+ * <code>PreviewFormHandler</code> in its concrete class
+ * 
+ * @author haiphucnguyen
+ * 
+ * @param <T>
+ */
 public interface HasPreviewFormHandlers<T> {
 
-    void addFormHandler(PreviewFormHandlers<T> handler);
+	/**
+	 * 
+	 * @param handler
+	 */
+	void addFormHandler(PreviewFormHandler<T> handler);
 }

@@ -16,10 +16,27 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <T>
+ */
 public interface EditFormHandler<T> {
+	/**
+	 * 
+	 * @param bean
+	 */
 	void onSave(T bean);
 
+	/**
+	 * 
+	 * @param bean
+	 */
 	void onSaveAndNew(T bean);
 
+	/**
+	 * 
+	 */
 	void onCancel();
 }

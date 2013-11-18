@@ -27,6 +27,11 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DefaultCustomFormViewFieldFactory extends DefaultFieldFactory {
 	private static Logger log = LoggerFactory
 			.getLogger(DefaultFormViewFieldFactory.class);

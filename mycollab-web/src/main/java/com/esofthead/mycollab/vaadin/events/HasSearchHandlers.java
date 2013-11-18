@@ -18,6 +18,16 @@ package com.esofthead.mycollab.vaadin.events;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <S>
+ */
 public interface HasSearchHandlers<S extends SearchCriteria> {
+	/**
+	 * 
+	 * @param handler
+	 */
 	void addSearchHandler(SearchHandler<S> handler);
 }

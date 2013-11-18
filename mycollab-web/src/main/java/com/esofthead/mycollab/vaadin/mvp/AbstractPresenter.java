@@ -19,14 +19,20 @@ package com.esofthead.mycollab.vaadin.mvp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.security.PermissionChecker;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.esofthead.mycollab.vaadin.ui.MessageConstants;
+import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public abstract class AbstractPresenter<V extends View> implements IPresenter<V> {
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ * @param <V>
+ */
+public abstract class AbstractPresenter<V extends View> implements
+		IPresenter<V> {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
@@ -70,7 +76,7 @@ public abstract class AbstractPresenter<V extends View> implements IPresenter<V>
 		if (checkPermissionAccessIfAny()) {
 			onGo(container, data);
 		} else {
-			MessageConstants.showMessagePermissionAlert();
+			MessageBox.showMessagePermissionAlert();
 		}
 
 	}
@@ -109,8 +115,7 @@ public abstract class AbstractPresenter<V extends View> implements IPresenter<V>
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		log.debug("Handle chain: " + BeanUtility.printBeanObj(pageActionChain)
-				+ "---" + this);
+
 		ScreenData pageAction = pageActionChain.pop();
 		go(container, pageAction);
 

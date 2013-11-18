@@ -18,6 +18,9 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
@@ -643,4 +646,15 @@ public class MessageBox extends Window {
     public Button getButton() {
         return this.defaultButton;
     }
+
+	public static void showMessagePermissionAlert() {
+		MessageBox mb = new MessageBox(AppContext.getApplication()
+				.getMainWindow(),
+				LocalizationHelper
+						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+				Icon.WARN,
+				"Sorry! You do not have permission to do this task.",
+				new ButtonConfig(ButtonType.OK, "OK"));
+		mb.show();
+	}
 }

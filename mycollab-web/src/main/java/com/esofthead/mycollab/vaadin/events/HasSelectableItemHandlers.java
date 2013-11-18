@@ -16,10 +16,28 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <T>
+ */
 public interface HasSelectableItemHandlers<T> {
+	/**
+	 * 
+	 * @param handler
+	 */
 	void addSelectableItemHandler(SelectableItemHandler<T> handler);
 	
+	/**
+	 * 
+	 * @return
+	 */
 	int currentViewCount();
 	
+	/**
+	 * 
+	 * @return
+	 */
 	int totalItemsCount();
 }

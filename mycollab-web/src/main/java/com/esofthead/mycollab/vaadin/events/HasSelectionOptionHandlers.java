@@ -16,6 +16,16 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface HasSelectionOptionHandlers {
+	
+	/**
+	 * 
+	 * @param handler
+	 */
 	void addSelectionOptionHandler(SelectionOptionHandler handler);
 }

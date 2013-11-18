@@ -28,6 +28,11 @@ import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class UserAvatarControlFactory {
 	public static Embedded createUserAvatarEmbeddedComponent(String avatarId,
 			int size) {

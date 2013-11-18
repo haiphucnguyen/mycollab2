@@ -18,6 +18,15 @@ package com.esofthead.mycollab.vaadin.events;
 
 import java.io.Serializable;
 
-public interface HasPagableHandlers extends Serializable{
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
+public interface HasPagableHandlers extends Serializable {
+	/**
+	 * 
+	 * @param handler
+	 */
 	void addPagableHandler(PagableHandler handler);
 }
