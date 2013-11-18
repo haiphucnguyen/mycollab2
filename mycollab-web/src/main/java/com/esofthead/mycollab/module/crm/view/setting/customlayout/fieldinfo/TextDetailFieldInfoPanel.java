@@ -21,6 +21,7 @@ import java.util.List;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.TextDynaField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.TextField;
 
 public class TextDetailFieldInfoPanel extends
@@ -35,7 +36,10 @@ public class TextDetailFieldInfoPanel extends
 			List<DynaSection> activeSections) {
 		super(candidateFieldName, activeSections);
 
-		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3);
+		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3, "100%", "120px", Alignment.MIDDLE_LEFT );
+        layoutHelper.getLayout().setSpacing(true);
+        layoutHelper.getLayout().setMargin(false);
+        layoutHelper.getLayout().setWidth("100%");
 		layoutHelper.addComponent(labelField, "Label", 0, 0);
 		sectionList = new SectionSelectList(activeSections);
 		layoutHelper.addComponent(sectionList, "Section", 0, 1);

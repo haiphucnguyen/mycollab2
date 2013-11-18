@@ -2442,6 +2442,13 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	font-size: 10px;
 	cursor: pointer;
 }
+.v-table-table {
+    width: 100%;
+}
+/*
+.v-table-cell-content {
+    padding-right: 0px;
+}*/
 
 .v-table-row {
 	background: none repeat scroll 0% 0% rgb(212, 223, 239);
@@ -5118,4 +5125,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     color: #FFFFFF;
     padding: 3px 13px;
     text-shadow: 1px 1px 0 #000000;
+}
+
+/* Create Custome Field Window */
+.createCustomFieldWindow .panel-header {
+    font-weight: bold;
 }
