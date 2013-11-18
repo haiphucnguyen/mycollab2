@@ -38,6 +38,11 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DynaFormLayout implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 

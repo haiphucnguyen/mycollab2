@@ -48,7 +48,13 @@ public class DateTimeUtils {
 	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
 			"MM/dd/yyyy HH:mm:ss Z");
 
-	public static Date convertDate(Date value) {
+	/**
+	 * Trim hour-minute-second of date instance value to zero.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static Date trimHMSOfDate(Date value) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		try {
@@ -72,6 +78,11 @@ public class DateTimeUtils {
 		return new Date();
 	}
 
+	/**
+	 * 
+	 * @param strDate
+	 * @return
+	 */
 	public static Date convertDateByFormatW3C(String strDate) {
 		String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
 		if (strDate != null && !strDate.equals("")) {

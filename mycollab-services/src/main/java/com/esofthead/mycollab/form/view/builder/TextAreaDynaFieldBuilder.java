@@ -18,6 +18,11 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.TextAreaDynaField;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class TextAreaDynaFieldBuilder extends
 		AbstractDynaFieldBuilder<TextAreaDynaField> {
 	public TextAreaDynaFieldBuilder() {

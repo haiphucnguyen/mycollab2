@@ -19,6 +19,11 @@ package com.esofthead.mycollab.validator.constraints;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class StringLimitLengthValidator implements
 		ConstraintValidator<StringLimitLength, String> {
 

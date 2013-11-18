@@ -163,7 +163,7 @@ public class DateTimePicker<B> extends CustomField {
 		if (popupDateField.getValue() == null) {
 			return null;
 		}
-		Date baseDate = DateTimeUtils.convertDate((Date) popupDateField
+		Date baseDate = DateTimeUtils.trimHMSOfDate((Date) popupDateField
 				.getValue());
 		Integer hour = Integer.parseInt((String) hourPickerComboBox.getValue());
 		Integer minus = Integer.parseInt((String) minusPickerComboBox

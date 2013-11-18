@@ -43,16 +43,16 @@ public class RangeDateSearchField extends RangeDateTimeSearchField {
 	}
 
 	public RangeDateSearchField(Date from, Date to) {
-		super(DateTimeUtils.convertDate(DateTimeUtils
+		super(DateTimeUtils.trimHMSOfDate(DateTimeUtils
 				.convertTimeFromSystemTimezoneToUTC(from.getTime())),
-				DateTimeUtils.convertDate(DateTimeUtils
+				DateTimeUtils.trimHMSOfDate(DateTimeUtils
 						.convertTimeFromSystemTimezoneToUTC(to.getTime())));
 	}
 
 	public RangeDateSearchField(String oper, Date from, Date to) {
-		super(oper, DateTimeUtils.convertDate(DateTimeUtils
+		super(oper, DateTimeUtils.trimHMSOfDate(DateTimeUtils
 				.convertTimeFromSystemTimezoneToUTC(from.getTime())),
-				DateTimeUtils.convertDate(DateTimeUtils
+				DateTimeUtils.trimHMSOfDate(DateTimeUtils
 						.convertTimeFromSystemTimezoneToUTC(to.getTime())));
 	}
 }

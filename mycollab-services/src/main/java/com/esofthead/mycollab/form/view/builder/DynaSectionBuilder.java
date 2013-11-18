@@ -19,6 +19,11 @@ package com.esofthead.mycollab.form.view.builder;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DynaSectionBuilder {
 
     private DynaSection section;

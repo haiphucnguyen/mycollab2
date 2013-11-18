@@ -27,6 +27,13 @@ public class StringUtils {
 		return trimString(input, length, false);
 	}
 
+	/**
+	 * 
+	 * @param input
+	 * @param length
+	 * @param withEllipsis
+	 * @return
+	 */
 	public static String trimString(String input, int length,
 			boolean withEllipsis) {
 		if (input == null) {
@@ -41,10 +48,20 @@ public class StringUtils {
 			return input.substring(0, length);
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static boolean isNotNullOrEmpty(String str) {
 		return (str != null) && (!str.trim().equals(""));
 	}
 
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public static String preStringFormat(String value) {
 		if (value == null || "".equals(value)) {
 			return "&nbsp;";
@@ -53,10 +70,21 @@ public class StringUtils {
 		}
 	}
 
+	/**
+	 * Check whether <code>text</code> is an Ascii string
+	 * 
+	 * @param text
+	 * @return
+	 */
 	public static boolean isAsciiString(String text) {
 		return text.matches("\\A\\p{ASCII}*\\z");
 	}
 
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public static String formatExtraLink(String value) {
 		if (value == null || "".equals(value)) {
 			return "&nbsp;";
@@ -65,9 +93,5 @@ public class StringUtils {
 				.replaceAll(
 						"(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
 						"<a href=\"$0\">$0</a>");
-	}
-
-	public static void main(String[] args) {
-		System.out.println(isAsciiString("123"));
 	}
 }

@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.form.view.builder.type;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class TextDynaField extends AbstractDynaField {
 	private int maxLength = Integer.MAX_VALUE;
 

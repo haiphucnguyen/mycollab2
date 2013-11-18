@@ -60,6 +60,8 @@ public class MyCollabServlet extends ICEPushServlet {
 			String themeUri, HttpServletRequest request) throws IOException {
 		super.writeAjaxPageHtmlHeader(page, title, themeUri, request);
 		page.append("<meta name=\"robots\" content=\"nofollow\" />");
+		page.append("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>");
+		page.append("<script type=\"text/javascript\" src=\"https://s3.amazonaws.com/mycollab_assets/assets/js/stickytooltip.js\"></script>");
 	}
 
 	// Implementations of Window and Application that are used only to provide

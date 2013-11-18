@@ -43,12 +43,12 @@ public class DateSearchField extends DateTimeSearchField {
 	}
 
 	public DateSearchField(String oper, Date value) {
-		super(oper, DateTimeUtils.convertDate(DateTimeUtils
+		super(oper, DateTimeUtils.trimHMSOfDate(DateTimeUtils
 				.convertTimeFromSystemTimezoneToUTC(value.getTime())));
 	}
 
 	public DateSearchField(String oper, String comparision, Date value) {
-		super(oper, comparision, DateTimeUtils.convertDate(DateTimeUtils
+		super(oper, comparision, DateTimeUtils.trimHMSOfDate(DateTimeUtils
 				.convertTimeFromSystemTimezoneToUTC(value.getTime())));
 	}
 }

@@ -27,6 +27,11 @@ import org.apache.velocity.tools.ToolManager;
 import org.apache.velocity.tools.config.EasyFactoryConfiguration;
 import org.apache.velocity.tools.generic.DateTool;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class TemplateEngine {
 	
 	private static ToolManager toolManager;

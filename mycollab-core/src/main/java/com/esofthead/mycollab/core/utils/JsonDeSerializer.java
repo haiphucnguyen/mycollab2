@@ -43,10 +43,24 @@ public class JsonDeSerializer {
 				new MyExclusionStrategy()).create();
 	}
 
+	/**
+	 * Convert object <code>o</code> to json format
+	 * 
+	 * @param o
+	 * @return
+	 */
 	public static String toJson(Object o) {
 		return gson.toJson(o);
 	}
 
+	/**
+	 * Convert json value <code>value</code> to java object has class type
+	 * <code>type</code>
+	 * 
+	 * @param value
+	 * @param type
+	 * @return
+	 */
 	public static <T> T fromJson(String value, Class<T> type) {
 		T ins = gson.fromJson(value, type);
 		if (ins == null) {
@@ -60,6 +74,23 @@ public class JsonDeSerializer {
 		return ins;
 	}
 
+	/**
+	 * Convert json value <code>value</code> to java object has class type
+	 * <code>type</code>
+	 * 
+	 * @param value
+	 * @param type
+	 *            The specific genericized type of src. You can obtain this type
+	 *            by using the {@link com.google.gson.reflect.TypeToken} class.
+	 *            For example, to get the type for {@code Collection<Foo>}, you
+	 *            should use:
+	 * 
+	 *            <pre>
+	 * Type typeOfT = new TypeToken&lt;Collection&lt;Foo&gt;&gt;() {
+	 * }.getType();
+	 * </pre>
+	 * @return
+	 */
 	public static <T> T fromJson(String value, Type type) {
 		T ins = gson.fromJson(value, type);
 		if (ins == null) {
@@ -73,6 +104,12 @@ public class JsonDeSerializer {
 		return ins;
 	}
 
+	/**
+	 * Annotation to exclude class parameter in serialization process
+	 * 
+	 * @author haiphucnguyen
+	 * 
+	 */
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ ElementType.FIELD })
 	public static @interface Exclude {

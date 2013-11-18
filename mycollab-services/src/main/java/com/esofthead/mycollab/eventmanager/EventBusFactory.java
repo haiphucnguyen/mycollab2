@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.eventmanager;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public interface EventBusFactory {
 	EventBus getInstance();
 

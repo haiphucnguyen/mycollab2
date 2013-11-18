@@ -19,6 +19,11 @@ package com.esofthead.mycollab.core.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class EmailValidator {
 
 	private Pattern pattern;

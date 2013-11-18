@@ -37,6 +37,12 @@ import com.mortennobel.imagescaling.ResampleOp;
 public class ImageUtil {
 	private static Logger log = LoggerFactory.getLogger(ImageUtil.class);
 
+	/**
+	 * 
+	 * @param buffImage
+	 * @param percenScale
+	 * @return
+	 */
 	public static BufferedImage scaleImage(BufferedImage buffImage,
 			float percenScale) {
 		float width = buffImage.getWidth() * percenScale;
@@ -47,6 +53,13 @@ public class ImageUtil {
 		return rescaledImage;
 	}
 
+	/**
+	 * 
+	 * @param buffImage
+	 * @param scaleWidth
+	 * @param scaleHeight
+	 * @return
+	 */
 	public static BufferedImage scaleImage(BufferedImage buffImage,
 			int scaleWidth, int scaleHeight) {
 		int imgHeight = buffImage.getHeight();
@@ -70,6 +83,11 @@ public class ImageUtil {
 		return rescaledImage;
 	}
 
+	/**
+	 * 
+	 * @param pngData
+	 * @return
+	 */
 	public static byte[] convertJpgToPngFormat(byte[] pngData) {
 		try {
 			BufferedImage image = ImageIO
@@ -83,6 +101,11 @@ public class ImageUtil {
 		}
 	}
 
+	/**
+	 * 
+	 * @param image
+	 * @return
+	 */
 	public static byte[] convertImageToByteArray(BufferedImage image) {
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -21,6 +21,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * <b>NOTE: </b> This class presented in premium or on demand distribution which
+ * support mobile integration.<br/>
+ * 
+ * Annotation denote a method, or parameter is not presented in mobile generated
+ * classes.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 @Target(value = { ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NotMobile {

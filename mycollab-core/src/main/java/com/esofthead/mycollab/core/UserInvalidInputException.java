@@ -21,6 +21,9 @@
 package com.esofthead.mycollab.core;
 
 /**
+ * This exception when user do some invalid action such as typing wrong
+ * password, invalid input. Note that MyCollab catch this type exception to
+ * recognize user mistake
  * 
  * @author haiphucnguyen
  */

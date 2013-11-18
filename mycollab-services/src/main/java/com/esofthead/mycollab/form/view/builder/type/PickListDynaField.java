@@ -18,6 +18,12 @@ package com.esofthead.mycollab.form.view.builder.type;
 
 import java.util.List;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ * @param <T>
+ */
 public class PickListDynaField<T> extends AbstractDynaField {
 
 	private List<T> options;
