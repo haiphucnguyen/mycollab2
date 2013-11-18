@@ -20,9 +20,10 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;
 
 /**
+ * Utility class to make encrypt and decrypt text
  * 
  * @author haiphucnguyen
- *
+ * 
  */
 public class PasswordEncryptHelper {
 	private static StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
@@ -34,6 +35,12 @@ public class PasswordEncryptHelper {
 				.setPassword(SiteConfiguration.getEnDecryptPassword());
 	}
 
+	/**
+	 * Encrypt password
+	 * 
+	 * @param password
+	 * @return
+	 */
 	public static String encryptSaltPassword(String password) {
 		return passwordEncryptor.encryptPassword(password);
 	}
@@ -46,13 +53,24 @@ public class PasswordEncryptHelper {
 		return basicTextEncryptor.decrypt(text);
 	}
 
-	public static boolean checkPassword(String plainPassword,
-			String encryptPassword, boolean isPasswordEncrypt) {
+	/**
+	 * Check password <code>inputPassword</code> match with
+	 * <code>expectedPassword</code> in case <code>inputPassword</code> encrypt
+	 * or not
+	 * 
+	 * @param inputPassword
+	 * @param expectedPassword
+	 * @param isPasswordEncrypt
+	 *            flag to denote <code>inputPassword</code> is encrypted or not
+	 * @return
+	 */
+	public static boolean checkPassword(String inputPassword,
+			String expectedPassword, boolean isPasswordEncrypt) {
 		if (!isPasswordEncrypt) {
-			return passwordEncryptor.checkPassword(plainPassword,
-					encryptPassword);
+			return passwordEncryptor.checkPassword(inputPassword,
+					expectedPassword);
 		} else {
-			return plainPassword.equals(encryptPassword);
+			return inputPassword.equals(expectedPassword);
 		}
 	}
 }

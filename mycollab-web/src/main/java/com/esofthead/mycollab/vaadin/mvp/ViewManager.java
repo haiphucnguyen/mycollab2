@@ -22,6 +22,11 @@ import org.reflections.Reflections;
 
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public abstract class ViewManager {
 
 	private static ViewManager impl = new ViewManagerImpl();

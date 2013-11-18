@@ -19,7 +19,6 @@ package com.esofthead.mycollab.community.ui.chart;
 import org.jfree.chart.JFreeChart;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.vaadin.ui.ColorConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;

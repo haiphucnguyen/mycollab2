@@ -25,6 +25,11 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 class ViewManagerImpl extends ViewManager {
 
 	public static final String VIEW_MANAGER_VAL = "viewMap";

@@ -20,6 +20,11 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.vaadin.ui.Button;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class CommonUIFactory {
 	public static Button createButtonTooltip(String caption, String description) {
 		Button btn = new Button(caption);
