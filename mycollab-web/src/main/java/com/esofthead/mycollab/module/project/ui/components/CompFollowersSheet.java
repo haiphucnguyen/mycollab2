@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -51,7 +51,7 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		VerticalLayout {
 
-	protected PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem> tableItem;
+	protected DefaultPagedBeanTable<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
 	protected V bean;
 	protected Button btnSave;
@@ -179,7 +179,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 		this.addComponent(layoutAdd);
 
-		tableItem = new PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem>(
+		tableItem = new DefaultPagedBeanTable<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem>(
 				ApplicationContextUtil.getSpringBean(MonitorItemService.class),
 				SimpleMonitorItem.class, Arrays.asList(new TableViewField(
 						"Name", "user", UIConstants.TABLE_EX_LABEL_WIDTH),

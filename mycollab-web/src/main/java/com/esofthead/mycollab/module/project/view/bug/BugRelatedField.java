@@ -41,7 +41,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -66,7 +66,7 @@ public class BugRelatedField extends CustomField {
 	private Embedded clearBtn;
 	private Button btnRelate;
 	private BugRelationComboBox comboRelation;
-	private PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug> tableItem;
+	private DefaultPagedBeanTable<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug> tableItem;
 	private RelatedBugService relatedBugService;
 	private RichTextArea txtComment;
 
@@ -245,7 +245,7 @@ public class BugRelatedField extends CustomField {
 		layoutComment.setComponentAlignment(txtComment, Alignment.MIDDLE_LEFT);
 		mainLayout.addComponent(layoutComment);
 
-		tableItem = new PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug>(
+		tableItem = new DefaultPagedBeanTable<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug>(
 				ApplicationContextUtil.getSpringBean(RelatedBugService.class),
 				SimpleRelatedBug.class, Arrays.asList(
 						new TableViewField("Bug Name", "bugName",

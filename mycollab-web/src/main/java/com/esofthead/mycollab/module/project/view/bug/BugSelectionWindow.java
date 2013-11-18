@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -39,7 +39,7 @@ public class BugSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private BugSearchCriteria searchCriteria;
-	private PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug> tableItem;
+	private DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> tableItem;
 	private BugRelatedField fieldSelection;
 
 	public BugSelectionWindow(BugRelatedField fieldSelection) {

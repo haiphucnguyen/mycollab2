@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.ui.Button;
@@ -40,7 +40,7 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class RoleTableDisplay extends
-		PagedBeanTable2<RoleService, RoleSearchCriteria, SimpleRole> {
+		DefaultPagedBeanTable<RoleService, RoleSearchCriteria, SimpleRole> {
 	private static final long serialVersionUID = 1L;
 
 	public RoleTableDisplay(TableViewField requiredColumn,

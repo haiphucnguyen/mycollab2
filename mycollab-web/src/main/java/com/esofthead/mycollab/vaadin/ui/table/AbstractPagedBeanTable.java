@@ -58,6 +58,13 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <S>
+ * @param <T>
+ */
 public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		extends VerticalLayout implements IPagedBeanTable<S, T> {
 	private static final long serialVersionUID = 1L;

@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -46,7 +46,7 @@ import com.vaadin.ui.Table;
 @SuppressWarnings("serial")
 public class CampaignTableDisplay
 		extends
-		PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
+		DefaultPagedBeanTable<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
 
 	public CampaignTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);

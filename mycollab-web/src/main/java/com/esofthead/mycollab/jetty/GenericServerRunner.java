@@ -31,6 +31,11 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public abstract class GenericServerRunner {
 	private static Logger log = LoggerFactory
 			.getLogger(GenericServerRunner.class);

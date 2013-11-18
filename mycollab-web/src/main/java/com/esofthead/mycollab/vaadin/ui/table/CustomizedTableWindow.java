@@ -40,6 +40,11 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public abstract class CustomizedTableWindow extends Window {
 	private static final long serialVersionUID = 1L;
 

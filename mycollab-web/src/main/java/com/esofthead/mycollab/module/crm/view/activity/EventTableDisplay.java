@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -43,7 +43,7 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class EventTableDisplay extends
-		PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent> {
+		DefaultPagedBeanTable<EventService, EventSearchCriteria, SimpleEvent> {
 	private static final long serialVersionUID = 1L;
 
 	public EventTableDisplay(List<TableViewField> displayColumns) {

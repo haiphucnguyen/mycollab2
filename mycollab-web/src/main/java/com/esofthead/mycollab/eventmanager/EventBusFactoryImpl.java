@@ -23,6 +23,11 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 class EventBusFactoryImpl implements EventBusFactory {
 	private static Logger log = LoggerFactory
 			.getLogger(EventBusFactoryImpl.class);

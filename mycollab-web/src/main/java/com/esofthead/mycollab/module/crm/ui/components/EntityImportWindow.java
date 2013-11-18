@@ -32,7 +32,6 @@ import org.vaadin.easyuploads.SingleFileUploadField;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.common.ui.components.CSVBeanFieldComboBox;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
