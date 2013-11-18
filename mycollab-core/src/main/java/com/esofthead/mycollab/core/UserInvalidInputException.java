@@ -21,7 +21,7 @@
 package com.esofthead.mycollab.core;
 
 /**
- * 
+ * This exception is 
  * @author haiphucnguyen
  */
 public class UserInvalidInputException extends MyCollabException {
