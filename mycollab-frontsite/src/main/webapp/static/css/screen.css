@@ -981,15 +981,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #pricing-content .package-block .block-content .info-row .right-col {
-	width: 40%;
-	text-align: right;
-	display: inline-block;
+	width: 60%;
+	text-align: left;
+	display: block;
+	float: left;
 }
 
 #pricing-content .package-block .block-content .info-row .left-col {
-	width: 60%;
-	text-align: left;
-	display: inline-block;
+	width: 40%;
+	text-align: right;
+	display: block;
+	float: left;
 }
 
 
@@ -1109,12 +1111,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 .mainfeature-table {
 	margin-top: 10px;
+	border: 1px solid rgb(118, 186, 223);
 }
 .mainfeature-table tr.table-header {
 	background-color: rgb(118, 186, 223);
 	color: rgb(255, 255, 255);
 	text-align: center;
 	font-size: 18px;
+}
+.mainfeature-table tr.table-header .pricing-button {
+	height: auto;
+}
+.mainfeature-table tr.table-header .pricing-button a {
+	color: rgb(103, 103, 103);
+	background-color: rgb(254, 254, 254);
+	margin: 0px auto;
 }
 .mainfeature-table tr.table-row td {
 	color: rgb(97, 97, 97);
@@ -2687,7 +2698,7 @@ a.nivo-prevNav {
 
 #iframe-blog {
 	width: 1100px;
-	height: 4000px;
+/* 	height: 4000px; */
 	margin-bottom: 20px;
 
 }
