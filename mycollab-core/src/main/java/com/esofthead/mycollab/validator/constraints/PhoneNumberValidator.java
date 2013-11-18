@@ -19,6 +19,11 @@ package com.esofthead.mycollab.validator.constraints;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class PhoneNumberValidator implements
         ConstraintValidator<PhoneNumber, String> {
 

@@ -21,6 +21,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class DynaForm {
 	private List<DynaSection> sections = new ArrayList<DynaSection>();
 

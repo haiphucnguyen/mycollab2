@@ -22,6 +22,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * <b>NOTE: </b> Implement of cache just be presented in premium or ondemand
+ * delivery.<br/>
+ * This annotation denotes a method has data clean of cache with the key compose
+ * by its arguments.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = { ElementType.METHOD })

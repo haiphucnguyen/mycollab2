@@ -22,6 +22,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * <b>NOTE: </b> Implement of cache just be presented in premium or ondemand
+ * delivery.<br/>
+ * This annotation denotes a method is cached its value base on the key compose
+ * by its arguments. Mycollab cache user data base on user account value base on
+ * user account
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
 @Inherited

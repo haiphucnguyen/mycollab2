@@ -78,18 +78,4 @@ class EventBusImpl extends EventBus {
 		}
 
 	}
-
-	/*
-	 * @Override public String toString() {
-	 * 
-	 * StringBuilder strb = new StringBuilder(
-	 * "Registered Listener on EventBus: \r\n");
-	 * 
-	 * for (Entry<Class<? extends ApplicationEvent>,
-	 * Set<ApplicationEventListener<?>>> entry : map .entrySet()) {
-	 * strb.append(entry.getKey()).append(": ").append(entry.getValue())
-	 * .append("\r\n"); }
-	 * 
-	 * return strb.toString(); }
-	 */
 }

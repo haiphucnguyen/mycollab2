@@ -18,6 +18,11 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.PercentageDynaField;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class PercentageDynaFieldBuilder extends
 		AbstractDynaFieldBuilder<PercentageDynaField> {
 

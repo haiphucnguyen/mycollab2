@@ -18,6 +18,11 @@ package com.esofthead.mycollab.form.view.builder.type;
 
 import com.esofthead.mycollab.core.utils.JsonDeSerializer.Exclude;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class AbstractDynaField implements Comparable<AbstractDynaField> {
 	public static final String TEXT_FIELD_1 = "text1";
 	public static final String TEXT_FIELD_2 = "text2";

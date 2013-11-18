@@ -21,6 +21,11 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class DynaSection implements Comparable<DynaSection> {
 
 	private String header;

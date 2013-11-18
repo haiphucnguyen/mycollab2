@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.form.view.builder.type;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class IntDynaField extends AbstractDynaField {
 	private int maxValue = Integer.MAX_VALUE;
 

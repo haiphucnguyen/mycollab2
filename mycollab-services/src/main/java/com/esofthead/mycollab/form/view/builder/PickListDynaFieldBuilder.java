@@ -18,6 +18,12 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.PickListDynaField;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ * @param <T>
+ */
 public class PickListDynaFieldBuilder<T> extends
 		AbstractDynaFieldBuilder<PickListDynaField<T>> {
 

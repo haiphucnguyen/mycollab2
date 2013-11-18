@@ -18,6 +18,11 @@ package com.esofthead.mycollab.eventmanager;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public abstract class EventBus {
 
 	private static String eventbusFactoryImplClsName = "com.esofthead.mycollab.eventmanager.EventBusFactoryImpl";
@@ -34,17 +39,38 @@ public abstract class EventBus {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static EventBus getInstance() {
 		return eventbusFactory.getInstance();
 	}
 
+	/**
+	 * 
+	 * @param appId
+	 * @return
+	 */
 	public static EventBus getInstanceSession(String appId) {
 		return eventbusFactory.getInstanceSession(appId);
 	}
 
+	/**
+	 * 
+	 * @param listener
+	 */
 	abstract public void addListener(ApplicationEventListener<?> listener);
 
+	/**
+	 * 
+	 * @param listener
+	 */
 	abstract public void removeListener(ApplicationEventListener<?> listener);
 
+	/**
+	 * 
+	 * @param event
+	 */
 	abstract public void fireEvent(ApplicationEvent event);
 }

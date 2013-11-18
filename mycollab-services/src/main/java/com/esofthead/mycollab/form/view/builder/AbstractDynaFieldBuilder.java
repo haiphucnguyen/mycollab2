@@ -18,6 +18,12 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ * @param <F>
+ */
 public abstract class AbstractDynaFieldBuilder<F extends AbstractDynaField> {
 	protected F field;
 

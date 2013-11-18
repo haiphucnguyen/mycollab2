@@ -18,6 +18,11 @@ package com.esofthead.mycollab.form.view.builder;
 
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DynaFormBuilder {
 
 	private DynaForm form;
