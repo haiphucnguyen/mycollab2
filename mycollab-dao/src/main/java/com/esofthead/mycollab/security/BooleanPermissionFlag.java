@@ -21,7 +21,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 /**
  * 
  * @author haiphucnguyen
- *
+ * 
  */
 public class BooleanPermissionFlag implements PermissionFlag {
 	public static final int TRUE = 128;
@@ -44,9 +44,5 @@ public class BooleanPermissionFlag implements PermissionFlag {
 		} else {
 			throw new MyCollabException("Flag could be true or false");
 		}
-	}
-
-	public static void main(String[] args) {
-		System.out.println(128 >> 7);
 	}
 }

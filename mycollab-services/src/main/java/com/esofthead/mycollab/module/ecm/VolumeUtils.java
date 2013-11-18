@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.module.ecm;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class VolumeUtils {
 	public static long KB_SIZE = 1024;
 
@@ -35,9 +40,5 @@ public class VolumeUtils {
 		} else {
 			return Math.floor(volume / GB_SIZE) + " Gb";
 		}
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(getVolumeDisplay(10737418240L));
 	}
 }

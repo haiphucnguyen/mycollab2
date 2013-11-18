@@ -27,8 +27,6 @@ public class JSonDeSerializerTest {
 		String[][] twoArr = { { "Nguyen", "Hai" }, { "eSoftHead", "MyCollab" } };
 		String json = JsonDeSerializer.toJson(twoArr);
 
-		System.out.println("Json: " + json);
-
 		String[][] newVal = JsonDeSerializer.fromJson(json, String[][].class);
 		Assert.assertEquals(2, newVal.length);
 		Assert.assertEquals("Nguyen", newVal[0][0]);
@@ -42,8 +40,6 @@ public class JSonDeSerializerTest {
 		map.addPath("b", 2);
 
 		String json = JsonDeSerializer.toJson(map);
-		System.out.println("Json: " + json + "--"
-				+ json.replaceAll("\"", "\\\\\""));
 
 		PermissionMap permissionMap = JsonDeSerializer.fromJson(json,
 				PermissionMap.class);

@@ -25,7 +25,6 @@ import org.jgroups.Channel;
 import org.jgroups.blocks.locking.LockService;
 import org.jgroups.fork.ForkChannel;
 import org.jgroups.protocols.CENTRAL_LOCK;
-import org.jgroups.protocols.FRAG2;
 import org.jgroups.stack.Protocol;
 import org.jgroups.stack.ProtocolStack;
 
@@ -55,8 +54,6 @@ public class DistributionLockUtil {
 		ProtocolStack protocolStack = channel.getProtocolStack();
 		Protocol tmp = protocolStack.getDownProtocol();
 		while (tmp != null) {
-			Class<?> protClass = tmp.getClass();
-			System.out.println("Class: " + protClass);
 			tmp = tmp.getDownProtocol();
 		}
 
