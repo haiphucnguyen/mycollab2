@@ -53,10 +53,7 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 
 	public abstract ICrudGenericDAO<K, T> getCrudMapper();
 
-	public int remove(K primaryKey) {
-		return getCrudMapper().deleteByPrimaryKey(primaryKey);
-	}
-
+	@Override
 	public T findByPrimaryKey(K primaryKey, int accountId) {
 		return (T) getCrudMapper().selectByPrimaryKey(primaryKey);
 	}

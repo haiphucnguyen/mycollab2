@@ -1,5 +1,6 @@
 site.name=localhost
 running.mode=development
+server.address=localhost
 server.port=8080
 
 db.driverClassName=com.mysql.jdbc.Driver
@@ -23,5 +24,5 @@ error.sendTo=hainguyen@esofthead.com
 
 storageSystem=file
 
-cdn.url=http://localhost:8080/assets/images/email/
-app.url=http://localhost:8080/
+cdn.url=http://%s:%d/assets/images/email/
+app.url=http://%s:%d/

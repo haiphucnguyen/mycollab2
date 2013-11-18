@@ -36,6 +36,13 @@ import org.apache.ibatis.annotations.Param;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <R>
+ * @param <S>
+ */
 public interface IMassUpdateDAO<R, S extends SearchCriteria> {
 	void updateBySearchCriteria(@Param("record") R record,
 			@Param("searchCriteria") S searchCriteria);

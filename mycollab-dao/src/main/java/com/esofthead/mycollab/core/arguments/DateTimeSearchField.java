@@ -36,6 +36,11 @@ import java.util.Date;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DateTimeSearchField extends SearchField {
 
 	public static String LESSTHAN = "<";

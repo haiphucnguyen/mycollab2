@@ -18,6 +18,11 @@ package com.esofthead.mycollab.module.crm;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class CrmLinkGenerator {
 	public static String generateAccountPreviewLink(Integer accountId) {
 		return "crm/account/preview/"

@@ -25,6 +25,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 @Configuration
 public class AppServiceLoader {
 	@Bean(name = "myCollabProperties")

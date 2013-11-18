@@ -18,6 +18,11 @@ package com.esofthead.mycollab.security;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class PermissionChecker {
 	public static boolean isBooleanPermission(int flag) {
 		return (flag >> 7) == 1;

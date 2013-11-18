@@ -32,6 +32,12 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <S>
+ */
 public class SearchRequest<S extends SearchCriteria> {
     public static int DEFAULT_NUMBER_SEARCH_ITEMS = 25;
 

@@ -18,6 +18,15 @@ package com.esofthead.mycollab.schedule.email;
 
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface SendingRelayEmailsAction {
+	/**
+	 * 
+	 * @param relayEmail
+	 */
 	void sendEmail(RelayEmailWithBLOBs relayEmail);
 }

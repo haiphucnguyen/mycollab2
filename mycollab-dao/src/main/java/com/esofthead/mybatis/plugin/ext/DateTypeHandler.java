@@ -37,17 +37,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 @MappedJdbcTypes(JdbcType.TIMESTAMP)
 public class DateTypeHandler extends BaseTypeHandler<Date> {
 
@@ -89,14 +91,5 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 			return new Date(sqlTimestamp.getTime());
 		}
 		return null;
-	}
-
-	public static void main(String[] args) throws ParseException {
-		DateTime dt = new DateTime();
-		System.out.println(DateTimeZone.getDefault().getOffset(1382573312000L)
-				+ "---" + DateTimeZone.getDefault().getOffset(1382573312000L)
-				+ 1382573312000L);
-		dt = dt.withMillis(DateTimeZone.getDefault().getOffset(1382573312000L) + 1382573312000L);
-		System.out.println(dt);
 	}
 }

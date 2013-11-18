@@ -18,6 +18,11 @@ package com.esofthead.mycollab.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class SessionEvent {
 	public static class UserProfileChangeEvent extends ApplicationEvent {
 		private static final long serialVersionUID = 1L;

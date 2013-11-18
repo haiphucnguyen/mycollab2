@@ -18,6 +18,11 @@ package com.esofthead.mycollab.security;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class BooleanPermissionFlag implements PermissionFlag {
 	public static final int TRUE = 128;
 

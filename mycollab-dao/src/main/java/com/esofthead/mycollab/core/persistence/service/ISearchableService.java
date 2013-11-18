@@ -41,23 +41,49 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 
 /**
- * Engroup serivice supports pagable/search data.
  * 
+ * @author haiphucnguyen
+ *
  * @param <S>
  */
 public interface ISearchableService<S extends SearchCriteria> extends IService {
+	/**
+	 * 
+	 * @param criteria
+	 * @return
+	 */
 	@Cacheable
 	int getTotalCount(@CacheKey S criteria);
 
+	/**
+	 * 
+	 * @param searchRequest
+	 * @return
+	 */
 	@Cacheable
 	List findPagableListByCriteria(@CacheKey SearchRequest<S> searchRequest);
 
+	/**
+	 * 
+	 * @param criteria
+	 * @param sAccountId
+	 */
 	@CacheEvict
 	void removeByCriteria(S criteria, @CacheKey int sAccountId);
 
+	/**
+	 * 
+	 * @param criteria
+	 * @return
+	 */
 	@Cacheable
 	Integer getNextItemKey(@CacheKey S criteria);
 
+	/**
+	 * 
+	 * @param criteria
+	 * @return
+	 */
 	@Cacheable
 	Integer getPreviousItemKey(@CacheKey S criteria);
 }

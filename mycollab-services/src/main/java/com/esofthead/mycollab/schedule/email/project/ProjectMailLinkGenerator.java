@@ -26,6 +26,11 @@ import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class ProjectMailLinkGenerator extends GenericLinkUtils {
 	private static Logger log = LoggerFactory
 			.getLogger(ProjectMailLinkGenerator.class);

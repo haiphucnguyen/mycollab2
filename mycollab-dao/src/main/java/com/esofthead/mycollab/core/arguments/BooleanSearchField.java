@@ -32,6 +32,11 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class BooleanSearchField extends SearchField {
 
 	public static String IS = "is";

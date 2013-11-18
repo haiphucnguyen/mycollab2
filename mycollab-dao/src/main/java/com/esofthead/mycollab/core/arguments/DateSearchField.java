@@ -36,6 +36,11 @@ import java.util.Date;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class DateSearchField extends DateTimeSearchField {
 
 	public DateSearchField() {

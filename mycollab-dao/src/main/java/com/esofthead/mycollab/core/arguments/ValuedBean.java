@@ -20,6 +20,11 @@ import java.io.Serializable;
 
 import org.springframework.flex.core.io.AmfIgnoreField;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class ValuedBean implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = 1L;
