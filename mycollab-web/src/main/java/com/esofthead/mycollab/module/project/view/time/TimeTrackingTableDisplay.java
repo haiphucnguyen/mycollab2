@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -41,7 +41,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 
 public class TimeTrackingTableDisplay
 		extends
-		PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> {
+		DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> {
 	private static final long serialVersionUID = 1L;
 
 	public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {

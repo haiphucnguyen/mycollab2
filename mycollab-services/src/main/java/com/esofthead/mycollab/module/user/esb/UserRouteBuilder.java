@@ -22,6 +22,11 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 @Component
 public class UserRouteBuilder extends SpringRouteBuilder {
 

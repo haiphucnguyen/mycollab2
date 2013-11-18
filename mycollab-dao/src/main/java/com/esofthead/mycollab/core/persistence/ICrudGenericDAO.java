@@ -90,7 +90,10 @@ public interface ICrudGenericDAO<K extends Serializable, T> {
      */
     int insertAndReturnKey(T value);
     
-    
+    /**
+     * 
+     * @param keys
+     */
     void removeKeysWithSession(List keys);
     
     

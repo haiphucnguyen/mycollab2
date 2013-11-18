@@ -28,7 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -50,7 +50,7 @@ public class ProblemListViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 	private final ProblemSearchPanel problemSearchPanel;
 	private SelectionOptionButton selectOptionButton;
-	private PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
+	private DefaultPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
 	private final VerticalLayout problemListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
@@ -68,7 +68,7 @@ public class ProblemListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem>(
+		this.tableItem = new DefaultPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem>(
 				ApplicationContextUtil.getSpringBean(ProblemService.class),
 				SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
 				ProblemTableFieldDef.selected, Arrays.asList(

@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.security;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface PermissionFlag {
 
 }

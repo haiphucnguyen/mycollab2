@@ -32,6 +32,11 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public abstract class SearchCriteria {
 	public static String ASC = "ASC";
 

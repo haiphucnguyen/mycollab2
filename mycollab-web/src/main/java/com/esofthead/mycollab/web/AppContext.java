@@ -51,6 +51,11 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.Application;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.terminal.ExternalResource;
@@ -46,7 +46,7 @@ import com.vaadin.ui.Table;
  */
 @SuppressWarnings("serial")
 public class LeadTableDisplay extends
-		PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> {
+		DefaultPagedBeanTable<LeadService, LeadSearchCriteria, SimpleLead> {
 
 	public LeadTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);

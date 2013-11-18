@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common.ui.components;
+package com.esofthead.mycollab.module.crm.ui.components;
 
 import java.util.List;
 

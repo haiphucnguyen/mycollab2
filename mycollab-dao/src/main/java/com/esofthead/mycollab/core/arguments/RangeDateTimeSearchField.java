@@ -34,6 +34,11 @@ package com.esofthead.mycollab.core.arguments;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class RangeDateTimeSearchField extends SearchField {
 	protected Date from;
 

@@ -38,9 +38,22 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <K>
+ * @param <T>
+ * @param <S>
+ */
 public interface IDefaultService<K extends Serializable, T, S extends SearchCriteria>
 		extends ICrudService<K, T>, ISearchableService<S> {
 
+	/**
+	 * 
+	 * @param record
+	 * @param searchCriteria
+	 */
 	@CacheEvict
 	void updateBySearchCriteria(T record, @CacheKey S searchCriteria);
 }

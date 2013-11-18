@@ -33,7 +33,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -49,7 +49,7 @@ import com.vaadin.ui.Table;
 @SuppressWarnings("serial")
 public class OpportunityTableDisplay
 		extends
-		PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
+		DefaultPagedBeanTable<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
 
 	public OpportunityTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);

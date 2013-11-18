@@ -22,6 +22,11 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public abstract class MyCollabResource {
 
 	private static MyCollabResource impl;

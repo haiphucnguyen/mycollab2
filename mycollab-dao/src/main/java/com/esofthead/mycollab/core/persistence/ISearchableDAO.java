@@ -39,16 +39,47 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <S>
+ */
 public interface ISearchableDAO<S extends SearchCriteria> {
 
+	/**
+	 * 
+	 * @param criteria
+	 * @return
+	 */
 	int getTotalCount(@Param("searchCriteria") S criteria);
 
+	/**
+	 * 
+	 * @param criteria
+	 * @param rowBounds
+	 * @return
+	 */
 	List findPagableListByCriteria(@Param("searchCriteria") S criteria,
 			RowBounds rowBounds);
 
+	/**
+	 * 
+	 * @param criteria
+	 * @return
+	 */
 	Integer getNextItemKey(@Param("searchCriteria") S criteria);
 
+	/**
+	 * 
+	 * @param criteria
+	 * @return
+	 */
 	Integer getPreviousItemKey(@Param("searchCriteria") S criteria);
 
+	/**
+	 * 
+	 * @param criteria
+	 */
 	void removeByCriteria(@Param("searchCriteria") S criteria);
 }

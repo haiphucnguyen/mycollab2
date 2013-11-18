@@ -18,13 +18,30 @@ package com.esofthead.mycollab.schedule.email;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface SendingRelayEmailNotificationAction {
+	/**
+	 * 
+	 * @param notification
+	 */
 	void sendNotificationForCreateAction(
 			SimpleRelayEmailNotification notification);
 
+	/**
+	 * 
+	 * @param notification
+	 */
 	void sendNotificationForUpdateAction(
 			SimpleRelayEmailNotification notification);
 
+	/**
+	 * 
+	 * @param notification
+	 */
 	void sendNotificationForCommentAction(
 			SimpleRelayEmailNotification notification);
 }

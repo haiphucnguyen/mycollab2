@@ -46,7 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -69,7 +69,7 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 
 	private final ProjectRoleSearchPanel searchPanel;
 	private SelectionOptionButton selectOptionButton;
-	private PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
+	private DefaultPagedBeanTable<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
 	private final VerticalLayout listLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
@@ -86,7 +86,7 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new PagedBeanTable2<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole>(
+		this.tableItem = new DefaultPagedBeanTable<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole>(
 				ApplicationContextUtil.getSpringBean(ProjectRoleService.class),
 				SimpleProjectRole.class, new TableViewField("", "selected",
 						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(

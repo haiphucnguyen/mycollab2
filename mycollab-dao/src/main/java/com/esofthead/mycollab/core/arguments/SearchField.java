@@ -34,6 +34,11 @@ package com.esofthead.mycollab.core.arguments;
 
 import com.esofthead.mycollab.core.utils.BeanUtility;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class SearchField {
 
 	public static final String OR = "OR";

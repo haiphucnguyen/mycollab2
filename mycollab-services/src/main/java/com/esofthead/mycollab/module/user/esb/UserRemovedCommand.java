@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.module.user.esb;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface UserRemovedCommand {
 	void userRemoved(String username, Integer accountid);
 }

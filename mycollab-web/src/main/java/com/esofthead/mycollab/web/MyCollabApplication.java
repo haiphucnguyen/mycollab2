@@ -19,7 +19,6 @@ package com.esofthead.mycollab.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
-import java.net.URL;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +46,11 @@ import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class MyCollabApplication extends Application implements
 		HttpServletRequestListener {
 

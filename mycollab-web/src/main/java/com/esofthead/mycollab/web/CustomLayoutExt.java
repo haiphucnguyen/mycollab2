@@ -18,6 +18,11 @@ package com.esofthead.mycollab.web;
 
 import com.vaadin.ui.CustomLayout;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class CustomLayoutExt extends CustomLayout {
 	private static final long serialVersionUID = 1L;
 

@@ -33,6 +33,7 @@ import com.vaadin.terminal.gwt.server.ApplicationServlet;
  * Modified version of the {@link org.vaadin.artur.icepush.ICEPushServlet}.
  */
 public class MyCollabIcePushServlet extends ApplicationServlet {
+	private static final long serialVersionUID = 1L;
 
 	private MainServlet ICEPushServlet;
 

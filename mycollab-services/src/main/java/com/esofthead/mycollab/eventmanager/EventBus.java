@@ -73,4 +73,9 @@ public abstract class EventBus {
 	 * @param event
 	 */
 	abstract public void fireEvent(ApplicationEvent event);
+
+	/**
+	 * 
+	 */
+	abstract public void clear();
 }

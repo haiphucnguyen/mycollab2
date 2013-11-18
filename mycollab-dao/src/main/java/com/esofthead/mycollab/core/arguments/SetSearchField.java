@@ -35,6 +35,12 @@ package com.esofthead.mycollab.core.arguments;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <T>
+ */
 public class SetSearchField<T> extends SearchField {
 	public T[] values;
 

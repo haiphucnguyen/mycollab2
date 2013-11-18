@@ -39,25 +39,69 @@ import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <K>
+ * @param <T>
+ */
 public interface ICrudService<K extends Serializable, T> extends IService {
 
+	/**
+	 * 
+	 * @param record
+	 * @param username
+	 * @return
+	 */
 	@CacheEvict
 	int saveWithSession(@CacheKey T record, String username);
 
+	/**
+	 * 
+	 * @param record
+	 * @param username
+	 * @return
+	 */
 	@CacheEvict
 	int updateWithSession(@CacheKey T record, String username);
 
+	/**
+	 * 
+	 * @param record
+	 * @param primaryKeys
+	 * @param accountId
+	 */
 	@CacheEvict
 	void massUpdateWithSession(T record, List<K> primaryKeys,
 			@CacheKey int accountId);
 
+	/**
+	 * 
+	 * @param primaryKey
+	 * @param sAccountId
+	 * @return
+	 */
 	@Cacheable
 	T findByPrimaryKey(K primaryKey, @CacheKey int sAccountId);
 
+	/**
+	 * 
+	 * @param primaryKey
+	 * @param username
+	 * @param sAccountId
+	 * @return
+	 */
 	@CacheEvict
 	int removeWithSession(K primaryKey, String username,
 			@CacheKey int sAccountId);
 
+	/**
+	 * 
+	 * @param primaryKeys
+	 * @param username
+	 * @param sAccountId
+	 */
 	@CacheEvict
 	void massRemoveWithSession(List<K> primaryKeys, String username,
 			@CacheKey int sAccountId);

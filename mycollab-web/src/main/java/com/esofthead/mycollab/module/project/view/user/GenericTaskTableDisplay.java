@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
@@ -47,7 +47,7 @@ import com.vaadin.ui.Table;
 
 public class GenericTaskTableDisplay
 		extends
-		PagedBeanTable2<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> {
+		DefaultPagedBeanTable<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> {
 	private static final long serialVersionUID = 1L;
 
 	public GenericTaskTableDisplay(List<TableViewField> displayColumns) {

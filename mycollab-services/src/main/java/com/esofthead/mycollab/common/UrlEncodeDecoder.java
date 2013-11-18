@@ -37,6 +37,11 @@ import com.esofthead.mycollab.core.MyCollabException;
 public class UrlEncodeDecoder {
 	private static Logger log = LoggerFactory.getLogger(UrlEncodeDecoder.class);
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static String encode(String str) {
 		try {
 			return URLEncoder.encode(
@@ -48,6 +53,11 @@ public class UrlEncodeDecoder {
 		}
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static String decode(String str) {
 		try {
 			String decodeStr = URLDecoder.decode(str, "UTF8");
@@ -60,6 +70,11 @@ public class UrlEncodeDecoder {
 		}
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static String encode(Number str) {
 		return encode(str.toString());
 	}

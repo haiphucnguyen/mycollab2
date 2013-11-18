@@ -25,6 +25,11 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 class EventBusImpl extends EventBus {
 
 	private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
@@ -34,6 +39,7 @@ class EventBusImpl extends EventBus {
 
 	}
 
+	@Override
 	public void addListener(ApplicationEventListener<?> listener) {
 
 		Set<ApplicationEventListener<?>> listenerSet = map.get(listener
@@ -49,16 +55,19 @@ class EventBusImpl extends EventBus {
 
 	}
 
+	@Override
 	public void removeListener(ApplicationEventListener<?> listener) {
 		Set<ApplicationEventListener<?>> listenerSet = map.get(listener
 				.getEventType());
 		listenerSet.remove(listener);
 	}
 
+	@Override
 	public void clear() {
 		map.clear();
 	}
 
+	@Override
 	public void fireEvent(ApplicationEvent event) {
 		Class<? extends ApplicationEvent> eventType = event.getClass();
 

@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.module.user.esb;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class UserEndpoints {
 	public static final String USER_REMOVE_ENDPOINT = "direct:userDelete";
 }

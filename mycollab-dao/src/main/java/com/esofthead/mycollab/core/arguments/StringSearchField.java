@@ -32,27 +32,32 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+/**
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class StringSearchField extends SearchField {
-    private String value;
+	private String value;
 
-    public StringSearchField() {
-        this("");
-    }
+	public StringSearchField() {
+		this("");
+	}
 
-    public StringSearchField(String value) {
-        this(SearchField.AND, value);
-    }
+	public StringSearchField(String value) {
+		this(SearchField.AND, value);
+	}
 
-    public StringSearchField(String oper, String value) {
-        this.operation = oper;
-        this.value = value;
-    }
+	public StringSearchField(String oper, String value) {
+		this.operation = oper;
+		this.value = value;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

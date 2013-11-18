@@ -23,9 +23,19 @@ import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public abstract class GenericLinkUtils {
 	public static String URL_PREFIX_PARAM = "#";
 
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
 	public static String encodeParam(Object... params) {
 		StringBuffer paramStr = new StringBuffer("");
 		for (int i = 0; i < params.length; i++) {
@@ -37,11 +47,21 @@ public abstract class GenericLinkUtils {
 		return UrlEncodeDecoder.encode(paramStr.toString());
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public String generateUserPreviewFullLink(String username) {
 		return getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
 				+ "account/user/preview/" + UrlEncodeDecoder.encode(username);
 	}
 
+	/**
+	 * 
+	 * @param sAccountId
+	 * @return
+	 */
 	public static String generateSiteUrlByAccountId(Integer sAccountId) {
 		String siteUrl = "";
 		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {

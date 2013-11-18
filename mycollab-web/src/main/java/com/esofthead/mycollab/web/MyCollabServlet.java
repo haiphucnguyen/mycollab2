@@ -40,6 +40,11 @@ import com.vaadin.terminal.gwt.server.AbstractApplicationServlet;
 import com.vaadin.terminal.gwt.server.CommunicationManager;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class MyCollabServlet extends ICEPushServlet {
 	private static final long serialVersionUID = 1L;
 

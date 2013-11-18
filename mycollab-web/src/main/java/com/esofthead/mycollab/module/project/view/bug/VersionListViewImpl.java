@@ -47,7 +47,7 @@ import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -71,7 +71,7 @@ public class VersionListViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 	private final VersionSearchPanel componentSearchPanel;
 	private SelectionOptionButton selectOptionButton;
-	private PagedBeanTable2<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
+	private DefaultPagedBeanTable<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
 	private final VerticalLayout componentListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
@@ -89,7 +89,7 @@ public class VersionListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new PagedBeanTable2<VersionService, VersionSearchCriteria, SimpleVersion>(
+		this.tableItem = new DefaultPagedBeanTable<VersionService, VersionSearchCriteria, SimpleVersion>(
 				ApplicationContextUtil.getSpringBean(VersionService.class),
 				SimpleVersion.class, new TableViewField("", "selected",
 						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(

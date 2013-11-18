@@ -29,6 +29,22 @@ import com.esofthead.mycollab.core.DeploymentMode;
 public class SiteConfiguration {
 	private static SiteConfiguration instance;
 
+	private DeploymentMode deploymentMode;
+	private SharingOptions sharingOptions;
+	private StorageConfiguration storageConfiguration;
+	private String sentErrorEmail;
+	private String siteName;
+	private String serverAddress;
+	private int serverPort;
+	private EmailConfiguration emailConfiguration;
+	private EmailConfiguration relayEmailConfiguration;
+	private DatabaseConfiguration databaseConfiguration;
+	private String cdnUrl;
+	private Properties cacheProperties;
+	private String endecryptPassword;
+	private String dropboxCallbackUrl;
+	private String ggDriveCallbackUrl;
+
 	static {
 		instance = new SiteConfiguration();
 
@@ -37,6 +53,9 @@ public class SiteConfiguration {
 
 		instance.siteName = ApplicationProperties.getString(
 				ApplicationProperties.SITE_NAME, "MyCollab");
+
+		instance.serverAddress = ApplicationProperties.getString(
+				ApplicationProperties.SERVER_ADDRESS, "localhost");
 
 		instance.serverPort = Integer.parseInt(ApplicationProperties.getString(
 				ApplicationProperties.SERVER_PORT, "8080"));
@@ -50,8 +69,9 @@ public class SiteConfiguration {
 			instance.deploymentMode = DeploymentMode.LOCAL;
 		}
 
-		instance.cdnUrl = ApplicationProperties
-				.getString(ApplicationProperties.CDN_URL);
+		instance.cdnUrl = String.format(
+				ApplicationProperties.getString(ApplicationProperties.CDN_URL),
+				instance.serverAddress, instance.serverPort);
 
 		// load sharing options
 		SharingOptions shareOptions = new SharingOptions();
@@ -133,21 +153,6 @@ public class SiteConfiguration {
 				.getString("ggDrive.callbackUrl");
 	}
 
-	private DeploymentMode deploymentMode;
-	private SharingOptions sharingOptions;
-	private StorageConfiguration storageConfiguration;
-	private String sentErrorEmail;
-	private String siteName;
-	private int serverPort;
-	private EmailConfiguration emailConfiguration;
-	private EmailConfiguration relayEmailConfiguration;
-	private DatabaseConfiguration databaseConfiguration;
-	private String cdnUrl;
-	private Properties cacheProperties;
-	private String endecryptPassword;
-	private String dropboxCallbackUrl;
-	private String ggDriveCallbackUrl;
-
 	public static Properties getCacheProperties() {
 		return instance.cacheProperties;
 	}
@@ -202,8 +207,9 @@ public class SiteConfiguration {
 			siteUrl = String.format(ApplicationProperties
 					.getString(ApplicationProperties.APP_URL), subdomain);
 		} else {
-			siteUrl = ApplicationProperties
-					.getString(ApplicationProperties.APP_URL);
+			siteUrl = String.format(ApplicationProperties
+					.getString(ApplicationProperties.APP_URL),
+					instance.serverAddress, instance.serverPort);
 		}
 		return siteUrl;
 	}

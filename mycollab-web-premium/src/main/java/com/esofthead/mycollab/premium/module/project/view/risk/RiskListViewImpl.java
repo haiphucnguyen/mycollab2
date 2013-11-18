@@ -28,7 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
@@ -49,7 +49,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	private static final long serialVersionUID = 1L;
 	private final RiskSearchPanel riskSearchPanel;
 	private SelectionOptionButton selectOptionButton;
-	private PagedBeanTable2<RiskService, RiskSearchCriteria, SimpleRisk> tableItem;
+	private DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk> tableItem;
 	private final VerticalLayout riskListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
@@ -67,7 +67,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new PagedBeanTable2<RiskService, RiskSearchCriteria, SimpleRisk>(
+		this.tableItem = new DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk>(
 				ApplicationContextUtil.getSpringBean(RiskService.class), SimpleRisk.class,
 				RiskListView.VIEW_DEF_ID, RiskTableFieldDef.selected,
 				Arrays.asList(RiskTableFieldDef.name,

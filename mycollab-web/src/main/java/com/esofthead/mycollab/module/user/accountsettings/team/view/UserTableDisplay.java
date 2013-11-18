@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.ui.Button;
@@ -48,7 +48,7 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class UserTableDisplay extends
-		PagedBeanTable2<UserService, UserSearchCriteria, SimpleUser> {
+		DefaultPagedBeanTable<UserService, UserSearchCriteria, SimpleUser> {
 	private static final long serialVersionUID = 1L;
 
 	public UserTableDisplay(TableViewField requiredColumn,

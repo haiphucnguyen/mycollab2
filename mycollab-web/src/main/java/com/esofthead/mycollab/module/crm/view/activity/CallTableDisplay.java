@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
@@ -44,7 +44,7 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class CallTableDisplay extends
-		PagedBeanTable2<CallService, CallSearchCriteria, SimpleCall> {
+		DefaultPagedBeanTable<CallService, CallSearchCriteria, SimpleCall> {
 	private static final long serialVersionUID = 1L;
 
 	public CallTableDisplay(List<TableViewField> displayColumns) {

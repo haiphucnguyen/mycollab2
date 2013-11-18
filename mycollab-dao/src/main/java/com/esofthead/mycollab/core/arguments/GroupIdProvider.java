@@ -32,6 +32,11 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public abstract class GroupIdProvider {
 	private static GroupIdProvider instance;
 

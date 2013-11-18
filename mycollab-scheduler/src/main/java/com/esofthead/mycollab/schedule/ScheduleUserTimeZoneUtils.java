@@ -27,10 +27,28 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
+/**
+ * Utility date in schedule email. It main objective is convert system date
+ * value to the right time value associate with user timezone
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class ScheduleUserTimeZoneUtils {
 	private static Logger log = LoggerFactory
 			.getLogger(ScheduleUserTimeZoneUtils.class);
 
+	/**
+	 * Format all date value of bean <code>bean</code>, and field array
+	 * <code>fieldNames</code> with time zone <code>userTimeZone</code>
+	 * 
+	 * @param bean
+	 *            java bean need to be converted
+	 * @param userTimeZone
+	 * @param fieldNames
+	 *            field name has value is date instance
+	 * @return
+	 */
 	public static <B extends ValuedBean> B formatDateTimeZone(final B bean,
 			String userTimeZone, String... fieldNames) {
 		for (String fieldName : fieldNames) {

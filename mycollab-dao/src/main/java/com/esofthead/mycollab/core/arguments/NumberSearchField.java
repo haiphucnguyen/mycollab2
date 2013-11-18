@@ -32,6 +32,11 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class NumberSearchField extends SearchField {
 
 	public static final String EQUAL = "=";

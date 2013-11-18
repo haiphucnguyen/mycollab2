@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UrlLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.ui.Button;
@@ -43,7 +43,7 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class AccountTableDisplay extends
-		PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> {
+		DefaultPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> {
 	private static final long serialVersionUID = 1L;
 
 	public AccountTableDisplay(List<TableViewField> displayColumns) {

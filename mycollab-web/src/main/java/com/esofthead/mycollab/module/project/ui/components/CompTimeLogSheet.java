@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -50,7 +50,7 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		HorizontalLayout {
 
-	protected PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
+	protected DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
 	protected ItemTimeLoggingService itemTimeLoggingService;
 	protected V bean;
 	protected Button btnAdd;
@@ -171,7 +171,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			addLayout
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
 
-			CompTimeLogSheet.this.tableItem = new PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+			CompTimeLogSheet.this.tableItem = new DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 					ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
 					SimpleItemTimeLogging.class, Arrays.asList(
 							new TableViewField("User", "logUserFullName",

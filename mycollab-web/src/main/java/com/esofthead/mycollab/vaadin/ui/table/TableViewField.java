@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.vaadin.ui.table;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class TableViewField {
 
 	private String desc;
