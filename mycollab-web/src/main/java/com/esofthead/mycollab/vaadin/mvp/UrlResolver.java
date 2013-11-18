@@ -24,14 +24,15 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public abstract class UrlResolver {
 	private static Logger log = LoggerFactory.getLogger(UrlResolver.class);
 
@@ -44,10 +45,19 @@ public abstract class UrlResolver {
 		subResolvers.put(key, subResolver);
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public UrlResolver getSubResolver(String key) {
 		return subResolvers.get(key);
 	}
 
+	/**
+	 * 
+	 * @param params
+	 */
 	public void handle(String... params) {
 		try {
 			if (params != null && params.length > 0) {
@@ -80,8 +90,15 @@ public abstract class UrlResolver {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	abstract protected void defaultPageErrorHandler();
 
+	/**
+	 * 
+	 * @param params
+	 */
 	protected void handlePage(String... params) {
 		log.debug("Handle page: " + this + " with params: "
 				+ BeanUtility.printBeanObj(params));

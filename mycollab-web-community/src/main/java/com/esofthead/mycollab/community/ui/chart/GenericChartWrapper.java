@@ -20,7 +20,6 @@ import org.jfree.chart.JFreeChart;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.ColorConstants;
-import com.esofthead.mycollab.vaadin.ui.JFreeChartWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
