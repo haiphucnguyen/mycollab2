@@ -63,11 +63,7 @@ import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
 import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
-import com.esofthead.mycollab.security.AccessPermissionFlag;
-import com.esofthead.mycollab.security.BooleanPermissionFlag;
-import com.esofthead.mycollab.security.PermissionDefItem;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.esofthead.mycollab.security.RolePermissionCollections;
 
 @Service(value = "billingService")
 public class BillingServiceImpl implements BillingService {
@@ -75,7 +71,7 @@ public class BillingServiceImpl implements BillingService {
 			.getLogger(BillingServiceImpl.class);
 
 	private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api",
-			"esofthead");
+			"esofthead", "blog", "forum", "wiki", "support");
 
 	@Autowired
 	private BillingPlanMapper billingPlanMapper;
@@ -196,7 +192,15 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		if (user.getLastname() == null) {
-			user.setLastname("");
+			if (user.getFirstname().equals("")) {
+				int index = email.lastIndexOf("@");
+				if (index > 0) {
+					user.setLastname(email.substring(0, index));
+				}
+				user.setLastname(email);
+			} else {
+				user.setLastname("");
+			}
 		}
 		this.userMapper.insert(user);
 
