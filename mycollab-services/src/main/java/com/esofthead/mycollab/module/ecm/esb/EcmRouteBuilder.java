@@ -24,6 +24,11 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 @Component
 public class EcmRouteBuilder extends SpringRouteBuilder {
 	private static Logger log = LoggerFactory.getLogger(EcmRouteBuilder.class);

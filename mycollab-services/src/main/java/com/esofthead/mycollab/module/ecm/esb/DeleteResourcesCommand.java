@@ -16,6 +16,17 @@
  */
 package com.esofthead.mycollab.module.ecm.esb;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface DeleteResourcesCommand {
+	/**
+	 * 
+	 * @param path
+	 * @param userDelete
+	 * @param sAccountId
+	 */
 	void removeResource(String path, String userDelete, Integer sAccountId);
 }
