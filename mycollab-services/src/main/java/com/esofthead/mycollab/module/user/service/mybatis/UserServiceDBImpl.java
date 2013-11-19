@@ -145,6 +145,21 @@ public class UserServiceDBImpl extends
 			record.setUsername(record.getEmail());
 		}
 
+		if (record.getLastname() == null
+				|| record.getLastname().trim().equals("")) {
+			if (record.getFirstname() == null
+					|| record.getFirstname().trim().equals("")) {
+				String userEmail = record.getEmail();
+				int index = userEmail.lastIndexOf("@");
+				if (index > 0) {
+					record.setLastname(userEmail.substring(0, index));
+				}
+				record.setLastname(userEmail);
+			} else {
+				record.setLastname("");
+			}
+		}
+
 		// Check if user has already account in system, if not we will create
 		// new user
 

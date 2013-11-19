@@ -81,7 +81,7 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 		Map<String, Object> userParameters = new HashMap<String, Object>();
 		userParameters.put("username", "admin@mycollab.com");
 		userParameters.put("firstname", "");
-		userParameters.put("lastname", "");
+		userParameters.put("lastname", "admin");
 		userParameters.put("email", "admin@mycollab.com");
 		userParameters.put("status", "Active");
 		userParameters.put("registeredTime", new Date());
