@@ -24,8 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
-import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.ServerErrPageGenerator;
 
 public class AppExceptionHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -55,11 +53,11 @@ public class AppExceptionHandler extends HttpServlet {
 		}
 		if (ResourceNotFoundException.class.getName().equals(
 				errorTypeClass.getName())) {
-			PageNotFoundGenerator.responsePage404(response);
+			PageCommonResponseUtils.responsePage404(response);
 		} else if (status_code == 404) {
-			PageNotFoundGenerator.responsePage404(response);
+			PageCommonResponseUtils.responsePage404(response);
 		} else {
-			ServerErrPageGenerator.responsePage500(response);
+			PageCommonResponseUtils.responsePage500(response);
 		}
 	}
 

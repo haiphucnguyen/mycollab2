@@ -153,7 +153,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 				member.setProjectroleid(projectRoleId);
 				projectMemberService.updateWithSession(member, " ");
 			}
-			ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(projectId);
+			ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
+					projectId);
 			response.sendRedirect(linkGenerator.generateProjectFullLink());
 		} catch (Exception e) {
 			throw new MyCollabException(e);
@@ -163,7 +164,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 	private void handleOutSideMemberInvite(String email, Integer projectId,
 			Integer sAccountId, Integer projectRoleId, String inviterName,
 			HttpServletResponse response, HttpServletRequest request) {
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(projectId);
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
+				projectId);
 		String projectLinkURL = linkGenerator.generateProjectFullLink();
 
 		String handelCreateAccountURL = request.getContextPath() + "/"
@@ -215,66 +217,6 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 		StringWriter writer = new StringWriter();
 		TemplateEngine.evaluate(context, writer, "log task", reader);
 		return writer.toString();
-	}
-
-	public static class PageNotFoundGenerator {
-		public static void responsePage404(HttpServletResponse response)
-				throws IOException {
-			String pageNotFoundTemplate = "templates/page/404Page.mt";
-			TemplateContext context = new TemplateContext();
-
-			Reader reader;
-			try {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
-						.getClassLoader().getResourceAsStream(
-								pageNotFoundTemplate), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
-						.getClassLoader().getResourceAsStream(
-								pageNotFoundTemplate));
-			}
-			Map<String, String> defaultUrls = new HashMap<String, String>();
-
-			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-			context.put("defaultUrls", defaultUrls);
-
-			StringWriter writer = new StringWriter();
-			TemplateEngine.evaluate(context, writer, "log task", reader);
-
-			String html = writer.toString();
-			PrintWriter out = response.getWriter();
-			out.println(html);
-		}
-	}
-
-	public static class ServerErrPageGenerator {
-		public static void responsePage500(HttpServletResponse response)
-				throws IOException {
-			String pageNotFoundTemplate = "templates/page/500Page.mt";
-			TemplateContext context = new TemplateContext();
-
-			Reader reader;
-			try {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
-						.getClassLoader().getResourceAsStream(
-								pageNotFoundTemplate), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
-						.getClassLoader().getResourceAsStream(
-								pageNotFoundTemplate));
-			}
-			Map<String, String> defaultUrls = new HashMap<String, String>();
-
-			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-			context.put("defaultUrls", defaultUrls);
-
-			StringWriter writer = new StringWriter();
-			TemplateEngine.evaluate(context, writer, "log task", reader);
-
-			String html = writer.toString();
-			PrintWriter out = response.getWriter();
-			out.println(html);
-		}
 	}
 
 	@Override

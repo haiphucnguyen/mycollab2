@@ -41,7 +41,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.servlet.AnotatedDenyProjectMemberInvitationServletHandler.FeedBackPageGenerator;
-import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -68,11 +67,11 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 
 			Reader reader;
 			try {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
+				reader = new InputStreamReader(PageUserNotExistGenerator.class
 						.getClassLoader().getResourceAsStream(
 								pageNotFoundTemplate), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
+				reader = new InputStreamReader(PageUserNotExistGenerator.class
 						.getClassLoader().getResourceAsStream(
 								pageNotFoundTemplate));
 			}
@@ -102,8 +101,10 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 							.getClassLoader().getResourceAsStream(
 									pageNotFoundTemplate), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(PageNotFoundGenerator.class
-					.getClassLoader().getResourceAsStream(pageNotFoundTemplate));
+			reader = new InputStreamReader(
+					AnotatedDenyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(
+									pageNotFoundTemplate));
 		}
 		context.put("loginURL", loginURL);
 		Map<String, String> defaultUrls = new HashMap<String, String>();

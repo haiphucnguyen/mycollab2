@@ -41,7 +41,6 @@ import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
-import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -74,11 +73,14 @@ public class AnotatedVerifyUserServletRequestHandler extends GenericServlet {
 		TemplateContext context = new TemplateContext();
 		Reader reader;
 		try {
-			reader = new InputStreamReader(PageNotFoundGenerator.class
-					.getClassLoader().getResourceAsStream(template), "UTF-8");
+			reader = new InputStreamReader(
+					AnotatedVerifyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(template),
+					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(PageNotFoundGenerator.class
-					.getClassLoader().getResourceAsStream(template));
+			reader = new InputStreamReader(
+					AnotatedVerifyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(template));
 		}
 
 		context.put("username", username);

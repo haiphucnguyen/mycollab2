@@ -44,7 +44,6 @@ import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.servlet.AnotatedVerifyProjectMemberInvitationHandlerServlet.PageNotFoundGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.servlet.GenericServlet;
 import com.esofthead.template.velocity.TemplateContext;
@@ -159,11 +158,11 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 
 			Reader reader;
 			try {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
+				reader = new InputStreamReader(ProjectRemovedGenerator.class
 						.getClassLoader().getResourceAsStream(
 								pageNotFoundTemplate), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				reader = new InputStreamReader(PageNotFoundGenerator.class
+				reader = new InputStreamReader(ProjectRemovedGenerator.class
 						.getClassLoader().getResourceAsStream(
 								pageNotFoundTemplate));
 			}
