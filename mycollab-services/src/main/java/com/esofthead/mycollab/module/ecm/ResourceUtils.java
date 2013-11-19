@@ -28,36 +28,71 @@ import com.esofthead.mycollab.module.ecm.service.DropboxResourceService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * Utility class of processing MyCollab resources.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class ResourceUtils {
+
+	public static long KB_SIZE = 1024;
+
+	public static long MB_SIZE = 1024 * 1024;
+
+	public static long GB_SIZE = 1024 * 1024 * 1024;
+
+	/**
+	 * 
+	 * @param storageName
+	 * @return
+	 */
 	public static ExternalResourceService getExternalResourceService(
 			String storageName) {
 		if (StorageNames.DROPBOX.equals(storageName)) {
-			return ApplicationContextUtil.getSpringBean(DropboxResourceService.class);
+			return ApplicationContextUtil
+					.getSpringBean(DropboxResourceService.class);
 		} else {
 			throw new MyCollabException(
 					"Current support only dropbox resource service");
 		}
 	}
 
+	/**
+	 * 
+	 * @param resourceType
+	 * @return
+	 */
 	public static ExternalResourceService getExternalResourceService(
 			ResourceType resourceType) {
 		if (ResourceType.Dropbox == resourceType) {
-			return ApplicationContextUtil.getSpringBean(DropboxResourceService.class);
+			return ApplicationContextUtil
+					.getSpringBean(DropboxResourceService.class);
 		} else {
 			throw new MyCollabException(
 					"Current support only dropbox resource service");
 		}
 	}
 
-	public static ExternalDrive getExternalDrive(Resource res) {
-		if (res instanceof ExternalFolder) {
-			return ((ExternalFolder) res).getExternalDrive();
-		} else if (res instanceof ExternalContent) {
-			return ((ExternalContent) res).getExternalDrive();
+	/**
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	public static ExternalDrive getExternalDrive(Resource resource) {
+		if (resource instanceof ExternalFolder) {
+			return ((ExternalFolder) resource).getExternalDrive();
+		} else if (resource instanceof ExternalContent) {
+			return ((ExternalContent) resource).getExternalDrive();
 		}
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param resource
+	 * @return
+	 */
 	public static ResourceType getType(Resource resource) {
 		if (!(resource instanceof ExternalContent)
 				&& !(resource instanceof ExternalFolder)) {
@@ -69,13 +104,28 @@ public class ResourceUtils {
 				if (StorageNames.DROPBOX.equals(storageName)) {
 					return ResourceType.Dropbox;
 				} else {
-					throw new Exception();
+					throw new Exception(
+							"Current support only dropbox resource service");
 				}
 			} catch (Exception e) {
 				throw new MyCollabException(
 						"Can not define sotrage name of bean "
 								+ BeanUtility.printBeanObj(resource));
 			}
+		}
+	}
+
+	public static String getVolumeDisplay(Long volume) {
+		if (volume == null) {
+			return "0 Kb";
+		} else if (volume < KB_SIZE) {
+			return volume + " Bytes";
+		} else if (volume < MB_SIZE) {
+			return Math.floor(volume / KB_SIZE) + " Kb";
+		} else if (volume < GB_SIZE) {
+			return Math.floor(volume / MB_SIZE) + " Mb";
+		} else {
+			return Math.floor(volume / GB_SIZE) + " Gb";
 		}
 	}
 }

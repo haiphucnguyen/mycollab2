@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.ecm;
 
 import javax.jcr.Node;
 
+/**
+ * Utility class relate to jackrabbit node processing.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class NodesUtil {
 	public static String getString(Node node, String property) {
 		return getString(node, property, "");

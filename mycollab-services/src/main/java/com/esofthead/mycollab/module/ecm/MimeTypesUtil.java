@@ -22,6 +22,12 @@ import java.io.InputStream;
 import org.apache.tika.Tika;
 import org.apache.tika.mime.MediaType;
 
+/**
+ * Utility class mainly used to detect mimetype of file upload to MyCollab
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class MimeTypesUtil {
 	public static String BINARY_MIME_TYPE = "application/octet-stream";
 
@@ -37,6 +43,13 @@ public class MimeTypesUtil {
 
 	private static Tika tika = new Tika();
 
+	/**
+	 * Detect mimetype of <code>inStream</code>
+	 * 
+	 * @param inStream
+	 * @return mimetype of <code>inStream</code>. Return BINARY mimetype if it
+	 *         can not detect
+	 */
 	public static String detectMimeType(InputStream inStream) {
 		try {
 			return tika.detect(inStream);
@@ -45,12 +58,13 @@ public class MimeTypesUtil {
 		}
 	}
 
+	/**
+	 * Detect mimetype of content <code>contentName</code>
+	 * 
+	 * @param contentName
+	 * @return
+	 */
 	public static String detectMimeType(String contentName) {
 		return tika.detect(contentName);
-	}
-
-	public static String detectMyCollabContentType(String mimeType) {
-		MediaType type = MediaType.parse(mimeType);
-		return type.getType();
 	}
 }

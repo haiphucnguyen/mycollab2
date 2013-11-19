@@ -18,6 +18,11 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface IController extends Serializable {
 
 }

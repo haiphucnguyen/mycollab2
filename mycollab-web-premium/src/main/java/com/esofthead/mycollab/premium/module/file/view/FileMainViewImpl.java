@@ -13,8 +13,8 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.module.ecm.VolumeUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
@@ -218,10 +218,10 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				.getBillingPlan();
 		DriveInfoService driveInfoService = ApplicationContextUtil
 				.getSpringBean(DriveInfoService.class);
-		String usedStorageTxt = VolumeUtils.getVolumeDisplay(driveInfoService
+		String usedStorageTxt = ResourceUtils.getVolumeDisplay(driveInfoService
 				.getUsedStorageVolume(AppContext.getAccountId()))
 				+ " of "
-				+ VolumeUtils.getVolumeDisplay(currentBillingPlan.getVolume());
+				+ ResourceUtils.getVolumeDisplay(currentBillingPlan.getVolume());
 		usedVolumeInfo
 				.setValue("<div id='left-side'>&nbsp;</div><div id='info-content'>"
 						+ usedStorageTxt

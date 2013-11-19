@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.file.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esofthead.mycollab.module.ecm.VolumeUtils;
+import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
@@ -71,7 +71,7 @@ public class FileDownloadWindow extends Window {
 		final Label author = new Label(this.content.getCreatedBy());
 		info.addComponent(author, "Created by", 0, 1);
 
-		final Label size = new Label(VolumeUtils.getVolumeDisplay(this.content
+		final Label size = new Label(ResourceUtils.getVolumeDisplay(this.content
 				.getSize()));
 		info.addComponent(size, "Size", 0, 2);
 

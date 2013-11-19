@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.ecm;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
+/**
+ * Generic exception relate to MyCollab storage processing.
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class ContentException extends MyCollabException {
 	private static final long serialVersionUID = 1L;
 

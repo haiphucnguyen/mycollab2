@@ -26,7 +26,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.ContentException;
-import com.esofthead.mycollab.module.ecm.VolumeUtils;
+import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -356,7 +356,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 						final Object itemId, final Object columnId) {
 					final Resource resource = ResourceTableDisplay.this
 							.getResource(itemId);
-					return new Label(VolumeUtils.getVolumeDisplay(resource
+					return new Label(ResourceUtils.getVolumeDisplay(resource
 							.getSize()));
 				}
 			});

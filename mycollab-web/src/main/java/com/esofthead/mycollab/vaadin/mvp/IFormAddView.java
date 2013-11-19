@@ -16,6 +16,16 @@
  */
 package com.esofthead.mycollab.vaadin.mvp;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <T>
+ */
 public interface IFormAddView<T> extends View {
+	/**
+	 * 
+	 * @param item
+	 */
 	void editItem(T item);
 }

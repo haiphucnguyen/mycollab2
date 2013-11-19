@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.module.ecm.VolumeUtils;
+import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
@@ -157,7 +157,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 					Label.CONTENT_XHTML);
 			singlePlan.addComponent(billingUser);
 
-			String planVolume = VolumeUtils.getVolumeDisplay(plan.getVolume());
+			String planVolume = ResourceUtils.getVolumeDisplay(plan.getVolume());
 
 			Label billingStorage = new Label("<span class='billing-storage'>"
 					+ planVolume + "</span>&nbsp;Storage", Label.CONTENT_XHTML);
@@ -265,11 +265,11 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext
 				.getAccountId());
 
-		String usedStorageTxt = VolumeUtils.getVolumeDisplay(usedStorageVolume);
+		String usedStorageTxt = ResourceUtils.getVolumeDisplay(usedStorageVolume);
 
 		planInfo = String.format(planInfo, numOfActiveProjects,
 				currentBillingPlan.getNumprojects(), usedStorageTxt,
-				VolumeUtils.getVolumeDisplay(currentBillingPlan.getVolume()),
+				ResourceUtils.getVolumeDisplay(currentBillingPlan.getVolume()),
 				numOfActiveUsers, currentBillingPlan.getNumusers());
 
 		Label currentUsage = new Label(planInfo, Label.CONTENT_XHTML);

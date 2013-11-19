@@ -22,6 +22,12 @@ import org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager;
 import com.esofthead.mycollab.configuration.DatabaseConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 
+/**
+ * Customize db persistence of jackrabbit
+ * 
+ * @author haiphucnguyen
+ * 
+ */
 public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
 
 	/**

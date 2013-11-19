@@ -22,6 +22,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public class HistoryViewManager {
 	private static Logger log = LoggerFactory
 			.getLogger(HistoryViewManager.class);
