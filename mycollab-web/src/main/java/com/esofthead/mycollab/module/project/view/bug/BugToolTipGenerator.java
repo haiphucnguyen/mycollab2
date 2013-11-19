@@ -32,7 +32,9 @@ public class BugToolTipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getDescription() != null) ? bug
+							(bug.getDescription() != null) ? (bug
+									.getDescription().length() > 200) ? bug
+									.getDescription().substring(0, 200) : bug
 									.getDescription() : "");
 			trRow1_value.setAttribute("colspan", "3");
 			trRow1.appendChild(
@@ -46,7 +48,9 @@ public class BugToolTipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getEnvironment() != null) ? bug
+							(bug.getEnvironment() != null) ? (bug
+									.getEnvironment().length() > 200) ? bug
+									.getEnvironment().substring(0, 200) : bug
 									.getEnvironment() : "");
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(

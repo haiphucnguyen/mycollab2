@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -26,11 +27,18 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -134,6 +142,7 @@ public class ProblemListViewImpl extends AbstractView implements
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
+				b.setDescription(generateToolTip(problem));
 				return b;
 
 			}
@@ -316,4 +325,158 @@ public class ProblemListViewImpl extends AbstractView implements
 	public AbstractPagedBeanTable<ProblemSearchCriteria, SimpleProblem> getPagedBeanTable() {
 		return this.tableItem;
 	}
+
+	private String generateToolTip(SimpleProblem problem) {
+		try {
+			Div div = new Div();
+			H3 problemName = new H3();
+			problemName.appendText(problem.getIssuename());
+			div.appendChild(problemName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+
+			Tr trRow5 = new Tr();
+			Td trRow5_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(problem.getDescription() != null) ? (problem
+									.getDescription().length() > 200) ? problem
+									.getDescription().substring(0, 200)
+									: problem.getDescription() : "");
+			trRow5_value.setAttribute("colspan", "3");
+
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow5_value);
+
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Raised by:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(problem.getRaisedbyuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	problem.getRaisedbyuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					problem.getRaisedByUserAvatarId(),
+																					16)))
+													.appendText(
+															(problem.getRaisedByUserFullName() != null) ? problem
+																	.getRaisedByUserFullName()
+																	: "")));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Impact:")).appendChild(
+					new Td().appendText((problem.getImpact() != null) ? problem
+							.getImpact() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(problem.getRaisedbyuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	problem.getRaisedbyuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					problem.getRaisedByUserAvatarId(),
+																					16)))
+													.appendText(
+															(problem.getRaisedByUserFullName() != null) ? problem
+																	.getRaisedByUserFullName()
+																	: "")));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().appendText((problem.getPriority() != null) ? problem
+									.getPriority() : ""));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Date due:")).appendChild(
+					new Td().appendText(AppContext.formatDate(problem
+							.getDatedue())));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Rating:")).appendChild(
+					new Td().appendText((problem.getLevel() != null) ? ""
+							+ problem.getLevel() : ""));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Status:")).appendChild(
+					new Td().appendText((problem.getStatus() != null) ? problem
+							.getStatus() : ""));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Related to:")).appendChild(
+					new Td().appendText(""));
+
+			Tr trRow6 = new Tr();
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(problem.getResolution() != null) ? (problem
+									.getResolution().length() > 200) ? problem
+									.getResolution().substring(0, 200)
+									: problem.getResolution() : "");
+			trRow6_value.setAttribute("colspan", "3");
+
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Resolution:")).appendChild(
+					trRow6_value);
+
+			table.appendChild(trRow5);
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
 }

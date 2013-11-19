@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -26,11 +27,18 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -68,10 +76,10 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
 	private void generateDisplayTable() {
 		this.tableItem = new DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk>(
-				ApplicationContextUtil.getSpringBean(RiskService.class), SimpleRisk.class,
-				RiskListView.VIEW_DEF_ID, RiskTableFieldDef.selected,
-				Arrays.asList(RiskTableFieldDef.name,
-						RiskTableFieldDef.assignUser,
+				ApplicationContextUtil.getSpringBean(RiskService.class),
+				SimpleRisk.class, RiskListView.VIEW_DEF_ID,
+				RiskTableFieldDef.selected, Arrays.asList(
+						RiskTableFieldDef.name, RiskTableFieldDef.assignUser,
 						RiskTableFieldDef.datedue, RiskTableFieldDef.rating));
 
 		this.tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
@@ -131,6 +139,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
+				b.setDescription(generateToolTip(risk));
 				return b;
 
 			}
@@ -310,5 +319,157 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	@Override
 	public AbstractPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
 		return this.tableItem;
+	}
+
+	private String generateToolTip(SimpleRisk risk) {
+		try {
+			Div div = new Div();
+			H3 riskName = new H3();
+			riskName.appendText(risk.getRiskname());
+			div.appendChild(riskName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+
+			Tr trRow5 = new Tr();
+			Td trRow5_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(risk.getDescription() != null) ? (risk
+									.getDescription().length() > 200) ? risk
+									.getDescription().substring(0, 200) : risk
+									.getDescription() : "");
+			trRow5_value.setAttribute("colspan", "3");
+
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow5_value);
+
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Raised by:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(risk.getRaisedbyuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	risk.getRaisedbyuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					risk.getRaisedByUserAvatarId(),
+																					16)))
+													.appendText(
+															(risk.getRaisedByUserFullName() != null) ? risk
+																	.getRaisedByUserFullName()
+																	: "")));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Consequence:")).appendChild(
+					new Td().appendText((risk.getConsequence() != null) ? risk
+							.getConsequence() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(risk.getRaisedbyuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	risk.getRaisedbyuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					risk.getRaisedByUserAvatarId(),
+																					16)))
+													.appendText(
+															(risk.getRaisedByUserFullName() != null) ? risk
+																	.getRaisedByUserFullName()
+																	: "")));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Probability:")).appendChild(
+					new Td().appendText((risk.getProbalitity() != null) ? risk
+							.getProbalitity() : ""));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Date due:"))
+					.appendChild(
+							new Td().appendText(AppContext.formatDate(risk
+									.getDatedue())));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Rating:")).appendChild(
+					new Td().appendText((risk.getLevel() != null) ? ""
+							+ risk.getLevel() : ""));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Status:")).appendChild(
+					new Td().appendText((risk.getStatus() != null) ? risk
+							.getStatus() : ""));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Related to:")).appendChild(
+					new Td().appendText(""));
+
+			Tr trRow6 = new Tr();
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(risk.getResponse() != null) ? (risk.getResponse()
+									.length() > 200) ? risk.getResponse()
+									.substring(0, 200) : risk.getResponse()
+									: "");
+			trRow6_value.setAttribute("colspan", "3");
+
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Response:")).appendChild(trRow6_value);
+
+			table.appendChild(trRow5);
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 }

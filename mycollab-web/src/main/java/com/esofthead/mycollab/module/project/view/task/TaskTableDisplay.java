@@ -498,7 +498,10 @@ public class TaskTableDisplay extends
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-					.appendText(task.getNotes());
+					.appendText(
+							(task.getNotes() != null) ? (task.getNotes()
+									.length() > 200) ? task.getNotes()
+									.substring(0, 200) : task.getNotes() : "");
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(

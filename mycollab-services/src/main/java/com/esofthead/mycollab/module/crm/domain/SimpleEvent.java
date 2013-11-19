@@ -23,13 +23,13 @@ import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 public class SimpleEvent extends ValuedBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
 
 	private String status;
 
 	private String eventType;
-	
+
 	private String subject;
 
 	private String type;
@@ -45,12 +45,26 @@ public class SimpleEvent extends ValuedBean implements Serializable {
 	private String assignUser;
 
 	private String assignUserFullName;
-	
+
 	private Date createdTime;
-	
+
 	private Date lastUpdatedTime;
-	
+
 	private String description;
+
+	// --- get for CrmTask
+	private String relatedTo;
+	private String priority;
+	private String contactFullName;
+	private Integer contactId;
+
+	// --- get for Call
+	private Integer callDuration;
+	private String callPurpose;
+	private String callResult;
+	// --- get for Meeting
+	private String meetingLocation;
+	private String assignUserAvatarId;
 
 	public Integer getId() {
 		return id;
@@ -163,6 +177,85 @@ public class SimpleEvent extends ValuedBean implements Serializable {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
-	
+
+	public String getRelatedTo() {
+		return relatedTo;
+	}
+
+	public void setRelatedTo(String relatedTo) {
+		this.relatedTo = relatedTo;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public String getContact() {
+		return contactFullName;
+	}
+
+	public void setContact(String contact) {
+		this.contactFullName = contact;
+	}
+
+	public String getCallPurpose() {
+		return callPurpose;
+	}
+
+	public void setCallPurpose(String callPurpose) {
+		this.callPurpose = callPurpose;
+	}
+
+	public String getCallResult() {
+		return callResult;
+	}
+
+	public void setCallResult(String callResult) {
+		this.callResult = callResult;
+	}
+
+	public String getMeetingLocation() {
+		return meetingLocation;
+	}
+
+	public void setMeetingLocation(String meetingLocation) {
+		this.meetingLocation = meetingLocation;
+	}
+
+	public String getContactFullName() {
+		return contactFullName;
+	}
+
+	public void setContactFullName(String contactFullName) {
+		this.contactFullName = contactFullName;
+	}
+
+	public Integer getContactId() {
+		return contactId;
+	}
+
+	public void setContactId(Integer contactId) {
+		this.contactId = contactId;
+	}
+
+	public Integer getCallDuration() {
+		return callDuration;
+	}
+
+	public void setCallDuration(Integer callDuration) {
+		this.callDuration = callDuration;
+	}
+
+	public String getAssignUserAvatarId() {
+		return assignUserAvatarId;
+	}
+
+	public void setAssignUserAvatarId(String assignUserAvatarId) {
+		this.assignUserAvatarId = assignUserAvatarId;
+	}
+
 }

@@ -27,13 +27,21 @@ import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -109,6 +117,7 @@ public class CampaignTableDisplay
 										"campaignname"));
 							}
 						});
+				b.setDescription(generateTooltip(campaign));
 				b.setStyleName("link");
 
 				if ("Complete".equals(campaign.getStatus())) {
@@ -220,5 +229,142 @@ public class CampaignTableDisplay
 		});
 
 		this.setWidth("100%");
+	}
+
+	private String generateTooltip(SimpleCampaign campagin) {
+		try {
+			Div div = new Div();
+			H3 campaginName = new H3();
+			campaginName.appendText(campagin.getCampaignname());
+			div.appendChild(campaginName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Start Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(campagin
+							.getStartdate())));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Status:"))
+					.appendChild(
+							new Td().appendText((campagin.getStatus() != null) ? campagin
+									.getStatus() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("End Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(campagin
+							.getEnddate())));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Type:")).appendChild(
+					new Td().appendText((campagin.getType() != null) ? campagin
+							.getType() : ""));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Currency:"))
+					.appendChild(
+							new Td().appendText((campagin.getCurrency() != null) ? campagin
+									.getCurrency().getSymbol() : ""));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(campagin.getAssignuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	campagin.getAssignuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					campagin.getAssignUserAvatarId(),
+																					16)))
+													.appendText(
+															(campagin
+																	.getAssignUserFullName() != null) ? campagin
+																	.getAssignUserFullName()
+																	: "")));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Expected Cost:"))
+					.appendChild(
+							new Td().appendText((campagin.getExpectedcost() != null) ? campagin
+									.getExpectedcost().toString() : ""));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Budget:"))
+					.appendChild(
+							new Td().appendText((campagin.getBudget() != null) ? campagin
+									.getBudget().toString() : ""));
+
+			Tr trRow5 = new Tr();
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Expected Revenue:"))
+					.appendChild(
+							new Td().appendText((campagin.getExpectedrevenue() != null) ? campagin
+									.getExpectedrevenue().toString() : ""));
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Actual Cost:"))
+					.appendChild(
+							new Td().appendText((campagin.getActualcost() != null) ? campagin
+									.getActualcost().toString() : ""));
+			Tr trRow6 = new Tr();
+
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(campagin.getDescription() != null) ? (campagin
+									.getDescription().length() > 200) ? campagin
+									.getDescription().substring(0, 200)
+									: campagin.getDescription()
+									: "");
+			trRow6_value.setAttribute("colspan", "3");
+
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow6_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow5);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 }

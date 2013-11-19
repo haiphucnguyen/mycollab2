@@ -25,14 +25,23 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UrlLink;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.AppContext;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -131,6 +140,7 @@ public class AccountTableDisplay extends
 										"accountname"));
 							}
 						});
+				b.setDescription(generateAccountToolTip(account));
 				return b;
 			}
 		});
@@ -169,5 +179,111 @@ public class AccountTableDisplay extends
 		});
 
 		this.setWidth("100%");
+	}
+
+	private String generateAccountToolTip(SimpleAccount account) {
+		try {
+			Div div = new Div();
+			H3 accountName = new H3();
+			accountName.appendText(account.getAccountname());
+			div.appendChild(accountName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Website:"))
+					.appendChild(
+							new Td().appendText((account.getWebsite() != null) ? account
+									.getWebsite() : ""));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Office Phone:"))
+					.appendChild(
+							new Td().appendText((account.getPhoneoffice() != null) ? account
+									.getPhoneoffice() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Employees:"))
+					.appendChild(
+							new Td().appendText((account.getNumemployees() != null) ? account
+									.getNumemployees().toString() : ""));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Email:")).appendChild(
+					new Td().appendText((account.getEmail() != null) ? account
+							.getEmail() : ""));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(account.getAssignuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	account.getAssignuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					account.getAssignUserAvatarId(),
+																					16)))
+													.appendText(
+															(account.getAssignUserFullName() != null) ? account
+																	.getAssignUserFullName()
+																	: "")));
+
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Annual Revenue:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(account.getAnnualrevenue() != null) ? account
+													.getAnnualrevenue() : ""));
+
+			Tr trRow4 = new Tr();
+			Td trRow4_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(account.getDescription() != null) ? (account
+									.getDescription().length() > 200) ? account
+									.getDescription().substring(0, 200)
+									: account.getDescription() : "");
+			trRow4_value.setAttribute("colspan", "3");
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow4_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 }

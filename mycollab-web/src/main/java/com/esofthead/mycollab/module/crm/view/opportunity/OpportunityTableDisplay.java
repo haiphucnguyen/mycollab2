@@ -29,14 +29,22 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -124,6 +132,7 @@ public class OpportunityTableDisplay
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
+				b.setDescription(generateTooltip(opportunity));
 
 				return b;
 			}
@@ -225,5 +234,158 @@ public class OpportunityTableDisplay
 				});
 
 		this.setWidth("100%");
+	}
+
+	private String generateTooltip(SimpleOpportunity opportunity) {
+		try {
+			Div div = new Div();
+			H3 opportunityName = new H3();
+			opportunityName.appendText(opportunity.getOpportunityname());
+			div.appendChild(opportunityName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Currency:"))
+					.appendChild(
+							new Td().setStyle(
+									"vertical-align: top; text-align: left;")
+									.appendText(
+											(opportunity.getCurrency() != null) ? opportunity
+													.getCurrency().getSymbol()
+													: ""));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Account Name:"))
+					.appendChild(
+							new Td().appendText((opportunity.getAccountName() != null) ? opportunity
+									.getAccountName() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Amount:"))
+					.appendChild(
+							new Td().appendText((opportunity.getAmount() != null) ? opportunity
+									.getAmount().toString() : ""));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 140px; vertical-align: top; text-align: right;")
+							.appendText("Expected Close Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(opportunity
+							.getExpectedcloseddate())));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Sales Stage:"))
+					.appendChild(
+							new Td().setStyle(
+									"vertical-align: top; text-align: left;")
+									.appendText(
+											(opportunity.getSalesstage() != null) ? opportunity
+													.getSalesstage() : ""));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Lead Source:"))
+					.appendChild(
+							new Td().appendText((opportunity.getSource() != null) ? opportunity
+									.getSource() : ""));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Probability (%):"))
+					.appendChild(
+							new Td().setStyle(
+									"vertical-align: top; text-align: left;")
+									.appendText(
+											(opportunity.getProbability() != null) ? opportunity
+													.getProbability()
+													.toString() : ""));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Campaign:"))
+					.appendChild(
+							new Td().appendText((opportunity.getCampaignName() != null) ? opportunity
+									.getCampaignName() : ""));
+
+			Tr trRow5 = new Tr();
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Next Step:"))
+					.appendChild(
+							new Td().appendText((opportunity.getNextstep() != null) ? opportunity
+									.getNextstep() : ""));
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Actual Cost:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(opportunity
+															.getAssignuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	opportunity
+																			.getAssignuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					opportunity
+																							.getAssignUserAvatarId(),
+																					16)))
+													.appendText(
+															(opportunity
+																	.getAssignUserFullName() != null) ? opportunity
+																	.getAssignUserFullName()
+																	: "")));
+			Tr trRow6 = new Tr();
+
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(opportunity.getDescription() != null) ? (opportunity
+									.getDescription().length() > 200) ? opportunity
+									.getDescription().substring(0, 200)
+									: opportunity.getDescription()
+									: "");
+			trRow6_value.setAttribute("colspan", "3");
+
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow6_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow5);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 }

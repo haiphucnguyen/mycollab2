@@ -26,13 +26,21 @@ import java.util.List;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -52,8 +60,8 @@ public class EventTableDisplay extends
 
 	public EventTableDisplay(TableViewField requireColumn,
 			List<TableViewField> displayColumns) {
-		super(ApplicationContextUtil.getSpringBean(EventService.class), SimpleEvent.class,
-				requireColumn, displayColumns);
+		super(ApplicationContextUtil.getSpringBean(EventService.class),
+				SimpleEvent.class, requireColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -140,9 +148,281 @@ public class EventTableDisplay extends
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
+				b.setDescription(generateToolTip(simpleEvent));
 				return b;
 
 			}
 		});
+	}
+
+	private String generateToolTip(SimpleEvent event) {
+		try {
+			if (event.getEventType().equals("Event")) {
+				return generateToolTipMeeting(event);
+			} else if (event.getEventType().equals("Call")) {
+				return generateToolTipCall(event);
+			} else if (event.getEventType().equals("Task")) {
+				return generateToolTipTask(event);
+			}
+			return null;
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	private String generateToolTipMeeting(SimpleEvent meeting) {
+		try {
+			Div div = new Div();
+			H3 eventName = new H3();
+			eventName.appendText(meeting.getSubject());
+			div.appendChild(eventName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Start Date & Time:")).appendChild(
+					new Td().appendText(AppContext.formatDateTime(meeting
+							.getStartDate())));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:110px; vertical-align: top; text-align: left;")
+									.appendText(
+											(meeting.getStatus() != null) ? meeting
+													.getStatus() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("End Date & Time:")).appendChild(
+					new Td().appendText(AppContext.formatDateTime(meeting
+							.getEndDate())));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Location:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:110px; vertical-align: top; text-align: left;")
+									.appendText(
+											(meeting.getMeetingLocation() != null) ? meeting
+													.getMeetingLocation() : ""));
+			Tr trRow3 = new Tr();
+			Td trRow3_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(meeting.getDescription() != null) ? (meeting
+									.getDescription().length() > 200) ? meeting
+									.getDescription().substring(0, 200)
+									: meeting.getDescription() : "");
+			trRow3_value.setAttribute("colspan", "3");
+
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow3_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	private String generateToolTipCall(SimpleEvent call) {
+		try {
+			Div div = new Div();
+			H3 callName = new H3();
+			callName.appendText(call.getSubject());
+			div.appendChild(callName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 120px; vertical-align: top; text-align: right;")
+							.appendText("Start Date & Time:")).appendChild(
+					new Td().appendText(AppContext.formatDateTime(call
+							.getStartDate())));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Status:")).appendChild(
+					new Td().appendText((call.getStatus() != null) ? call
+							.getStatus() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Duration:")).appendChild(
+					new Td().appendText((call.getCallDuration() != null) ? call
+							.getCallDuration().toString() : ""));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Purpose:")).appendChild(
+					new Td().appendText((call.getCallPurpose() != null) ? call
+							.getCallPurpose() : ""));
+			Tr trRow3 = new Tr();
+			Td trRow3_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(call.getDescription() != null) ? (call
+									.getDescription().length() > 200) ? call
+									.getDescription().substring(0, 200) : call
+									.getDescription() : "");
+			trRow3_value.setAttribute("colspan", "3");
+
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow3_value);
+
+			Tr trRow4 = new Tr();
+			Td trRow4_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(call.getCallResult() != null) ? (call
+									.getCallResult().length() > 200) ? call
+									.getCallResult().substring(0, 200) : call
+									.getCallResult() : "");
+			trRow4_value.setAttribute("colspan", "3");
+
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Result:")).appendChild(trRow4_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow4);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	private String generateToolTipTask(SimpleEvent task) {
+		try {
+			Div div = new Div();
+			H3 eventName = new H3();
+			eventName.appendText(task.getSubject());
+			div.appendChild(eventName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Start Date:")).appendChild(
+					new Td().appendText(AppContext.formatDateTime(task
+							.getStartDate())));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:110px; vertical-align: top; text-align: left;")
+									.appendText(
+											(task.getStatus() != null) ? task
+													.getStatus() : ""));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Due Date:")).appendChild(
+					new Td().appendText(AppContext.formatDateTime(task
+							.getEndDate())));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Contact:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:110px; vertical-align: top; text-align: left;")
+									.appendText(
+											(task.getContactFullName() != null) ? task
+													.getContactFullName() : ""));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Priority:")).appendChild(
+					new Td().appendText((task.getPriority() != null) ? task
+							.getPriority() : ""));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(task.getAssignUser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	task.getAssignUser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					task.getAssignUserAvatarId(),
+																					16)))
+													.appendText(
+															(task.getAssignUserFullName() != null) ? task
+																	.getAssignUserFullName()
+																	: "")));
+
+			Tr trRow4 = new Tr();
+			Td trRow4_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							(task.getDescription() != null) ? (task
+									.getDescription().length() > 200) ? task
+									.getDescription().substring(0, 200) : task
+									.getDescription() : "");
+			trRow4_value.setAttribute("colspan", "3");
+
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow4_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 }
