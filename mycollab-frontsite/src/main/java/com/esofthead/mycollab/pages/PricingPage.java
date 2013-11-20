@@ -10,22 +10,21 @@ public class PricingPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
-	public PricingPage(PageParameters parameters) {
+	public PricingPage(final PageParameters parameters) {
 		super(parameters);
 
-		add(new Label("pagetitle", "Pricing & Sign Up"));
+		this.add(new Label("pagetitle", "Pricing & Sign Up"));
 
-		add(new BookmarkablePageLink<Void>("free-link", SignUpPage.class,
+		this.add(new BookmarkablePageLink<Void>("free-link", SignUpPage.class,
 				new PageParameters().add("planId", "5")));
-		add(new BookmarkablePageLink<Void>("micro-link", SignUpPage.class,
+		this.add(new BookmarkablePageLink<Void>("micro-link", SignUpPage.class,
 				new PageParameters().add("planId", "2")));
-		add(new BookmarkablePageLink<Void>("compact-link", SignUpPage.class,
-				new PageParameters().add("planId", "1")));
-		add(new BookmarkablePageLink<Void>("corporate-link", SignUpPage.class,
-				new PageParameters().add("planId", "3")));
-		add(new BookmarkablePageLink<Void>("enterprise-link", SignUpPage.class,
-				new PageParameters().add("planId", "4")));
+		this.add(new BookmarkablePageLink<Void>("compact-link",
+				SignUpPage.class, new PageParameters().add("planId", "1")));
+		this.add(new BookmarkablePageLink<Void>("corporate-link",
+				SignUpPage.class, new PageParameters().add("planId", "3")));
+		this.add(new BookmarkablePageLink<Void>("enterprise-link",
+				SignUpPage.class, new PageParameters().add("planId", "4")));
 
 	}
-
 }
