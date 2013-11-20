@@ -21,7 +21,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,6 +102,15 @@ public class ProjectActivityStreamPagedList
 				}
 				String content = "";
 
+				String dateTimeTypeIdStr = AppContext
+						.formatDateTime(itemCreatedDate).replace("/", "")
+						.trim().replace(" ", "").replace(":", "")
+						+ activityStream.getTypeid();
+				String idDivSeverData = "serverdata" + dateTimeTypeIdStr + "";
+				String idToopTipDiv = "tooltip" + dateTimeTypeIdStr + "";
+				String idStickyToolTipDiv = "mystickyTooltip"
+						+ dateTimeTypeIdStr;
+
 				if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 						.getAction())) {
 					content = LocalizationHelper
@@ -129,10 +137,21 @@ public class ProjectActivityStreamPagedList
 									ProjectLinkBuilder.generateProjectItemLink(
 											activityStream.getExtratypeid(),
 											activityStream.getType(),
-											activityStream.getTypeid()),
-									activityStream.getNamefield());
+											activityStream.getTypeid()), "'"
+											+ dateTimeTypeIdStr + "'", "'"
+											+ activityStream.getType() + "'",
+									"'" + activityStream.getTypeid() + "'", "'"
+											+ AppContext.getSiteUrl()
+											+ "tooltip/'",
+									"'" + activityStream.getSaccountid() + "'",
+									idToopTipDiv,
+									activityStream.getNamefield(),
+									idStickyToolTipDiv, idToopTipDiv,
+									idDivSeverData);
 				} else if (ActivityStreamConstants.ACTION_UPDATE
 						.equals(activityStream.getAction())) {
+					// tooltip id is = tooltip + dateTime + typeId
+					// serverData id is = serverdata + dateTime + typeId
 					content = LocalizationHelper
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
@@ -157,15 +176,23 @@ public class ProjectActivityStreamPagedList
 									ProjectLinkBuilder.generateProjectItemLink(
 											activityStream.getExtratypeid(),
 											activityStream.getType(),
-											activityStream.getTypeid()),
-									activityStream.getNamefield());
+											activityStream.getTypeid()), "'"
+											+ dateTimeTypeIdStr + "'", "'"
+											+ activityStream.getType() + "'",
+									"'" + activityStream.getTypeid() + "'", "'"
+											+ AppContext.getSiteUrl()
+											+ "tooltip/'",
+									"'" + activityStream.getSaccountid() + "'",
+									idToopTipDiv,
+									activityStream.getNamefield(),
+									idStickyToolTipDiv, idToopTipDiv,
+									idDivSeverData);
 					log.debug("CONTENT: " + content);
 					if (activityStream.getAssoAuditLog() != null) {
 						content += ProjectActivityStreamGenerator
 								.generatorDetailChangeOfActivity(activityStream);
 					}
 				}
-
 				final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
 				final CssLayout streamWrapper = new CssLayout();
 				streamWrapper.setWidth("100%");
