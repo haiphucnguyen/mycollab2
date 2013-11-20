@@ -73,6 +73,7 @@ goto end
 
 :doStart
 shift
+set ACTION=--stop-port 8079 --stop-key esoftheadsecretkey
 if not "%OS%" == "Windows_NT" goto noTitle
 if "%TITLE%" == "" set TITLE=Tomcat
 set _EXECJAVA=start "%TITLE%" %_RUNJAVA%
@@ -85,7 +86,7 @@ goto execCmd
 
 :doStop
 shift
-set ACTION=stop
+set ACTION=--stop-port 8079 --stop-key esoftheadsecretkey --stop
 goto execCmd
 
 

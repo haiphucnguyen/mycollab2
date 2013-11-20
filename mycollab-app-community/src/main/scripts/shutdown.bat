@@ -1,42 +1,25 @@
 @echo off
-rem Licensed to the Apache Software Foundation (ASF) under one or more
-rem contributor license agreements.  See the NOTICE file distributed with
-rem this work for additional information regarding copyright ownership.
-rem The ASF licenses this file to You under the Apache License, Version 2.0
-rem (the "License"); you may not use this file except in compliance with
-rem the License.  You may obtain a copy of the License at
-rem
-rem     http://www.apache.org/licenses/LICENSE-2.0
-rem
-rem Unless required by applicable law or agreed to in writing, software
-rem distributed under the License is distributed on an "AS IS" BASIS,
-rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-rem See the License for the specific language governing permissions and
-rem limitations under the License.
-
+rem -----------------------------------------------------------------------------
+rem Shutdown Script for the MYCOLLAB Server
+rem -----------------------------------------------------------------------------
 if "%OS%" == "Windows_NT" setlocal
-rem ---------------------------------------------------------------------------
-rem Stop script for the CATALINA Server
-rem
-rem $Id: shutdown.bat 895392 2010-01-03 14:02:31Z kkolinko $
-rem ---------------------------------------------------------------------------
 
-rem Guess CATALINA_HOME if not defined
+rem Guess MYCOLLAB_HOME if not defined
 set "CURRENT_DIR=%cd%"
-if not "%CATALINA_HOME%" == "" goto gotHome
-set "CATALINA_HOME=%CURRENT_DIR%"
-if exist "%CATALINA_HOME%\bin\catalina.bat" goto okHome
+if not "%MYCOLLAB_HOME%" == "" goto gotHome
+set "MYCOLLAB_HOME=%CURRENT_DIR%"
+if exist "%MYCOLLAB_HOME%\mycollab.bat" goto okHome
 cd ..
-set "CATALINA_HOME=%cd%"
+set "MYCOLLAB_HOME=%cd%"
 cd "%CURRENT_DIR%"
 :gotHome
-if exist "%CATALINA_HOME%\bin\catalina.bat" goto okHome
-echo The CATALINA_HOME environment variable is not defined correctly
+if exist "%MYCOLLAB_HOME%\mycollab.bat" goto okHome
+echo The MYCOLLAB_HOME environment variable is not defined correctly
 echo This environment variable is needed to run this program
 goto end
 :okHome
 
-set "EXECUTABLE=%CATALINA_HOME%\bin\catalina.bat"
+set "EXECUTABLE=%MYCOLLAB_HOME%\mycollab.bat"
 
 rem Check that target executable exists
 if exist "%EXECUTABLE%" goto okExec
