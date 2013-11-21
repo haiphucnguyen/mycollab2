@@ -22,6 +22,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
+import org.jsoup.Jsoup;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
@@ -31,6 +32,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -457,11 +459,12 @@ public class TaskTableDisplay extends
 									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													UserLinkUtils
+													(task.getAssignuser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
 																	AppContext
 																			.getSiteUrl(),
-																	task.getAssignuser()))
+																	task.getAssignuser())
+															: "")
 													.appendChild(
 															new Img(
 																	"",
@@ -470,7 +473,11 @@ public class TaskTableDisplay extends
 																					task.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															task.getAssignUserFullName())));
+															(task.getAssignUserFullName() != null) ? Jsoup
+																	.parse(task
+																			.getAssignUserFullName())
+																	.html()
+																	: "")));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -478,9 +485,20 @@ public class TaskTableDisplay extends
 					.appendChild(
 							new Td().setStyle(
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											(task.getTaskListName() != null) ? task
-													.getTaskListName() : ""));
+									.appendChild(
+											new A().setHref(
+													AppContext.getSiteUrl()
+															+ "#"
+															+ ProjectLinkUtils
+																	.generateTaskGroupPreviewLink(
+																			task.getProjectid(),
+																			task.getTasklistid()))
+													.appendText(
+															(task.getTaskListName() != null) ? Jsoup
+																	.parse(task
+																			.getTaskListName())
+																	.html()
+																	: "")));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -499,9 +517,12 @@ public class TaskTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(task.getNotes() != null) ? (task.getNotes()
-									.length() > 200) ? task.getNotes()
-									.substring(0, 200) : task.getNotes() : "");
+							(task.getNotes() != null) ? (Jsoup
+									.parse(task.getNotes()).html().length() > 200) ? Jsoup
+									.parse(task.getNotes()).html()
+									.substring(0, 200)
+									: Jsoup.parse(task.getNotes()).html()
+									: "");
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(

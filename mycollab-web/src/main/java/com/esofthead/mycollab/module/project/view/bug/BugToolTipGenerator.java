@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,10 +33,12 @@ public class BugToolTipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getDescription() != null) ? (bug
-									.getDescription().length() > 200) ? bug
-									.getDescription().substring(0, 200) : bug
-									.getDescription() : "");
+							(bug.getDescription() != null) ? (Jsoup
+									.parse(bug.getDescription()).html()
+									.length() > 200) ? Jsoup
+									.parse(bug.getDescription()).html()
+									.substring(0, 200) : Jsoup.parse(
+									bug.getDescription()).html() : "");
 			trRow1_value.setAttribute("colspan", "3");
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -48,10 +51,12 @@ public class BugToolTipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getEnvironment() != null) ? (bug
-									.getEnvironment().length() > 200) ? bug
-									.getEnvironment().substring(0, 200) : bug
-									.getEnvironment() : "");
+							(bug.getEnvironment() != null) ? (Jsoup
+									.parse(bug.getEnvironment()).html()
+									.length() > 200) ? Jsoup
+									.parse(bug.getEnvironment()).html()
+									.substring(0, 200) : Jsoup.parse(
+									bug.getEnvironment()).html() : "");
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
 					new Td().setStyle(
@@ -78,14 +83,14 @@ public class BugToolTipGenerator {
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Severity:")).appendChild(
-					new Td().appendText((bug.getSeverity() != null) ? bug
-							.getSeverity() : ""));
+					new Td().appendText((bug.getSeverity() != null) ? Jsoup
+							.parse(bug.getSeverity()).html() : ""));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Resolution:")).appendChild(
-					new Td().appendText((bug.getResolution() != null) ? bug
-							.getResolution() : ""));
+					new Td().appendText((bug.getResolution() != null) ? Jsoup
+							.parse(bug.getResolution()).html() : ""));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -114,13 +119,14 @@ public class BugToolTipGenerator {
 									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													UserLinkUtils
+													(bug.getLogby() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
 																	AppContext
 																			.getSiteUrl(),
 																	(bug.getLogby() != null) ? bug
 																			.getLogby()
-																			: ""))
+																			: "")
+															: "")
 													.appendChild(
 															new Img(
 																	"",
@@ -141,13 +147,14 @@ public class BugToolTipGenerator {
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													UserLinkUtils
+													(bug.getAssignuser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
 																	AppContext
 																			.getSiteUrl(),
 																	(bug.getAssignuser() != null) ? bug
 																			.getAssignuser()
-																			: ""))
+																			: "")
+															: "")
 													.appendChild(
 															new Img(
 																	"",
@@ -156,8 +163,10 @@ public class BugToolTipGenerator {
 																					bug.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(bug.getAssignuserFullName() != null) ? bug
-																	.getAssignuserFullName()
+															(bug.getAssignuserFullName() != null) ? Jsoup
+																	.parse(bug
+																			.getAssignuserFullName())
+																	.html()
 																	: "")));
 
 			Tr trRow7 = new Tr();
@@ -165,8 +174,8 @@ public class BugToolTipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getMilestoneName() != null) ? bug
-									.getMilestoneName() : "");
+							(bug.getMilestoneName() != null) ? Jsoup.parse(
+									bug.getMilestoneName()).html() : "");
 			trRow7_value.setAttribute("colspan", "3");
 			trRow7.appendChild(
 					new Td().setStyle(
