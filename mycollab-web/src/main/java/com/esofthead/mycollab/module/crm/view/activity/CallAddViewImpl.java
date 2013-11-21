@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Collection;
-
 import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -66,11 +64,10 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
+			super.setItemDataSource(newDataSource);
 		}
 
 		private class FormLayoutFactory extends CallFormLayoutFactory {

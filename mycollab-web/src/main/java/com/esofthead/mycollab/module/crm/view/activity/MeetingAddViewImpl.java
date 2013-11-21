@@ -64,11 +64,10 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
+			super.setItemDataSource(newDataSource);
 		}
 
 		private class FormLayoutFactory extends MeetingFormLayoutFactory {

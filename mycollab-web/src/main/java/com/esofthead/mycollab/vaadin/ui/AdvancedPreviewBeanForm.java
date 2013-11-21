@@ -24,81 +24,83 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandler;
 
 public class AdvancedPreviewBeanForm<T> extends GenericForm implements
-        HasPreviewFormHandlers<T> {
+		HasPreviewFormHandlers<T> {
 
-    private static final long serialVersionUID = 1L;
-    private Set<PreviewFormHandler<T>> handlers;
+	private static final long serialVersionUID = 1L;
+	private Set<PreviewFormHandler<T>> handlers;
 
-    @Override
-    public void addFormHandler(PreviewFormHandler<T> handler) {
-        if (handlers == null) {
-            handlers = new HashSet<PreviewFormHandler<T>>();
-        }
+	@Override
+	public void addFormHandler(PreviewFormHandler<T> handler) {
+		if (handlers == null) {
+			handlers = new HashSet<PreviewFormHandler<T>>();
+		}
 
-        handlers.add(handler);
-    }
-    
-    protected void fireAssignForm(T bean) {
-        if (handlers != null) {
-            for (PreviewFormHandler<T> handler : handlers) {
-                handler.onAssign(bean);
-            }
-        }
-    }
+		handlers.add(handler);
+	}
 
-    protected void fireEditForm(T bean) {
-        if (handlers != null) {
-            for (PreviewFormHandler<T> handler : handlers) {
-                handler.onEdit(bean);
-            }
-        }
-    }
-    
-    protected void doPrint() {
-        throw new MyCollabException("This method must be override by sub classes");
-    }
+	protected void fireAssignForm(T bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<T> handler : handlers) {
+				handler.onAssign(bean);
+			}
+		}
+	}
 
-    protected void showHistory() {
-        throw new MyCollabException("This method must be override by sub classes");
-    }
+	protected void fireEditForm(T bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<T> handler : handlers) {
+				handler.onEdit(bean);
+			}
+		}
+	}
 
-    protected void fireCancelForm(T bean) {
-        if (handlers != null) {
-            for (PreviewFormHandler<T> handler : handlers) {
-                handler.onCancel();
-            }
-        }
-    }
+	protected void doPrint() {
+		throw new MyCollabException(
+				"This method must be override by sub classes");
+	}
 
-    protected void fireDeleteForm(T bean) {
-        if (handlers != null) {
-            for (PreviewFormHandler<T> handler : handlers) {
-                handler.onDelete(bean);
-            }
-        }
-    }
+	protected void showHistory() {
+		throw new MyCollabException(
+				"This method must be override by sub classes");
+	}
 
-    protected void fireCloneForm(T bean) {
-        if (handlers != null) {
-            for (PreviewFormHandler<T> handler : handlers) {
-                handler.onClone(bean);
-            }
-        }
-    }
+	protected void fireCancelForm(T bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<T> handler : handlers) {
+				handler.onCancel();
+			}
+		}
+	}
 
-    protected void fireGotoNextItem(T bean) {
-        if (handlers != null) {
-            for (PreviewFormHandler<T> handler : handlers) {
-                handler.gotoNext(bean);
-            }
-        }
-    }
+	protected void fireDeleteForm(T bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<T> handler : handlers) {
+				handler.onDelete(bean);
+			}
+		}
+	}
 
-    protected void fireGotoPrevious(T bean) {
-        if (handlers != null) {
-            for (PreviewFormHandler<T> handler : handlers) {
-                handler.gotoPrevious(bean);
-            }
-        }
-    }
+	protected void fireCloneForm(T bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<T> handler : handlers) {
+				handler.onClone(bean);
+			}
+		}
+	}
+
+	protected void fireGotoNextItem(T bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<T> handler : handlers) {
+				handler.gotoNext(bean);
+			}
+		}
+	}
+
+	protected void fireGotoPrevious(T bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<T> handler : handlers) {
+				handler.gotoPrevious(bean);
+			}
+		}
+	}
 }
