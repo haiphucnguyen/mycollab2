@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -69,11 +67,10 @@ public class AssignmentAddViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
+			super.setItemDataSource(newDataSource);
 		}
 
 		private class FormLayoutFactory extends AssignmentFormLayoutFactory {

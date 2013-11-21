@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.Collection;
+
 import com.vaadin.data.Item;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
@@ -44,6 +46,12 @@ public class GenericForm extends Form {
 	public void setItemDataSource(final Item newDataSource) {
 		this.setLayout(factory.getLayout());
 		super.setItemDataSource(newDataSource);
+	}
+
+	@Override
+	public void setItemDataSource(Item newDataSource, Collection<?> propertyIds) {
+		this.setLayout(factory.getLayout());
+		super.setItemDataSource(newDataSource, propertyIds);
 	}
 
 	@Override
