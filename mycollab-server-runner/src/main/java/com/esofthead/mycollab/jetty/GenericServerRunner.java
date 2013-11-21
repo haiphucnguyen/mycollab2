@@ -16,11 +16,16 @@
  */
 package com.esofthead.mycollab.jetty;
 
-import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 import java.util.Properties;
 
 import org.eclipse.jetty.server.Handler;
@@ -150,31 +155,149 @@ public abstract class GenericServerRunner {
 		if (file == null) {
 			log.debug("Can not detect mycollab.properties file. It seems mycollab is in first use.");
 
+			System.out
+					.println("=====================================================");
+			System.out
+					.println("                    MYCOLLAB SETUP                   ");
+			System.out
+					.println("=====================================================");
+
 			TextDevice device = TextDevice.defaultTextDevice();
 			Properties props = new Properties();
 			System.out.println("Enter site name:");
 			String sitename = device.readLine();
-			props.put("site.name", sitename);
+			props.setProperty("site.name", sitename);
 
 			System.out.println("Enter server address:");
 			String serverAddress = device.readLine();
-			props.put("server.address", serverAddress);
+			props.setProperty("server.address", serverAddress);
 
 			System.out
 					.println("Enter server port (then you can access server with address)");
 
 			int serverPort = 0;
-			
-			
+
 			while (true) {
 				String serverPortVal = device.readLine();
 
 				try {
 					serverPort = Integer.parseInt(serverPortVal);
+					break;
 				} catch (Exception e) {
-
+					System.out.println("Port must be the number from 1-65000");
 				}
 			}
+
+			props.setProperty("server.port", serverPort + "");
+
+			System.out
+					.println("=====================================================");
+			System.out
+					.println("                  DATABASE SETUP                     ");
+			System.out
+					.println("=====================================================");
+
+			while (true) {
+				System.out
+						.println("Enter database name (Database must be created before):");
+
+				String dbName = device.readLine();
+				props.setProperty("db.driverClassName", "com.mysql.jdbc.Driver");
+				props.setProperty("db.url", String.format(
+						"jdbc:mysql://localhost/%s?useUnicode=true", dbName));
+
+				System.out.println("Enter database user name:");
+				String dbUserName = device.readLine();
+				props.setProperty("db.username", dbUserName);
+
+				System.out.println("Enter database user password:");
+				String dbPassword = new String(device.readPassword());
+				props.setProperty("db.password", dbPassword);
+
+				log.debug("Checking database connection ...");
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection connection = DriverManager.getConnection(
+							props.getProperty("db.url"),
+							props.getProperty("db.username"),
+							props.getProperty("db.password"));
+					DatabaseMetaData metaData = connection.getMetaData();
+					break;
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.err.println("Can not set up database.");
+				}
+			}
+
+			System.out
+					.println("=====================================================");
+			System.out
+					.println("                     EMAIL SETUP                     ");
+			System.out
+					.println("=====================================================");
+
+			System.out.println("Outgoing server address:");
+			String stmpHost = device.readLine();
+			props.setProperty("mail.smtphost", stmpHost);
+
+			System.out.println("Mail server port:");
+			int mailServerPort = 0;
+
+			while (true) {
+				String serverPortVal = device.readLine();
+
+				try {
+					mailServerPort = Integer.parseInt(serverPortVal);
+					break;
+				} catch (Exception e) {
+					System.out.println("Port must be the number from 1-65000");
+				}
+			}
+			props.setProperty("mail.port", mailServerPort + "");
+
+			System.out.println("Mail user name:");
+			String mailUser = device.readLine();
+			props.setProperty("mail.username", mailUser);
+
+			System.out.println("Mail password:");
+			String mailPassword = device.readLine();
+			props.setProperty("mail.password", mailPassword);
+
+			System.out.println("Enable TLS (y/n):");
+			String tlsEnable = device.readLine();
+			if (tlsEnable.equals("y")) {
+				props.setProperty("mail.isTLS", "true");
+			} else {
+				props.setProperty("mail.isTLS", "false");
+			}
+
+			props.setProperty("error.sendTo", "hainguyen@esofthead.com");
+			props.setProperty("cdn.url", "http://%s:%d/assets/images/email/");
+			props.setProperty("app.url", "http://%s:%d/");
+
+			log.debug("Write to properties file");
+
+			File confFolder = new File(System.getProperty("user.dir"), "conf");
+
+			if (!confFolder.exists()) {
+				confFolder = new File(System.getProperty("user.dir"),
+						"src/main/conf");
+			}
+
+			if (!confFolder.exists()) {
+				throw new MyCollabException("Can not detect webapp base folder");
+			} else {
+				try {
+					props.store(new FileOutputStream(new File(confFolder,
+							"mycollab.properties")), "");
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.err
+							.println("Can not write setting to config file. You should call mycollab support support@mycollab.com to solve this issue.");
+					System.exit(1);
+				}
+			}
+
 		}
 	}
 
