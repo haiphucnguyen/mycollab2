@@ -110,6 +110,7 @@ public class ProjectActivityStreamPagedList
 				String idToopTipDiv = "tooltip" + dateTimeTypeIdStr + "";
 				String idStickyToolTipDiv = "mystickyTooltip"
 						+ dateTimeTypeIdStr;
+				String idtagA = "tagA" + dateTimeTypeIdStr;
 
 				if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 						.getAction())) {
@@ -144,7 +145,7 @@ public class ProjectActivityStreamPagedList
 											+ AppContext.getSiteUrl()
 											+ "tooltip/'",
 									"'" + activityStream.getSaccountid() + "'",
-									idToopTipDiv,
+									"'" + AppContext.getSiteUrl() + "'",
 									activityStream.getNamefield(),
 									idStickyToolTipDiv, idToopTipDiv,
 									idDivSeverData);
@@ -172,7 +173,7 @@ public class ProjectActivityStreamPagedList
 															.getType())),
 									ProjectResources
 											.getResourceLink(activityStream
-													.getType()),
+													.getType()), idtagA,
 									ProjectLinkBuilder.generateProjectItemLink(
 											activityStream.getExtratypeid(),
 											activityStream.getType(),
@@ -183,7 +184,7 @@ public class ProjectActivityStreamPagedList
 											+ AppContext.getSiteUrl()
 											+ "tooltip/'",
 									"'" + activityStream.getSaccountid() + "'",
-									idToopTipDiv,
+									"'" + AppContext.getSiteUrl() + "'",
 									activityStream.getNamefield(),
 									idStickyToolTipDiv, idToopTipDiv,
 									idDivSeverData);

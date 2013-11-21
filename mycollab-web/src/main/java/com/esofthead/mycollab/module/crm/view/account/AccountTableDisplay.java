@@ -188,7 +188,8 @@ public class AccountTableDisplay
 		try {
 			Div div = new Div();
 			H3 accountName = new H3();
-			accountName.appendText(account.getAccountname());
+			accountName
+					.appendText(Jsoup.parse(account.getAccountname()).html());
 			div.appendChild(accountName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -198,16 +199,20 @@ public class AccountTableDisplay
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Website:")).appendChild(
-					new Td().appendText((account.getWebsite() != null) ? Jsoup
-							.parse(account.getWebsite()).html() : ""));
+					new Td().setStyle("vertical-align:top; text-align: left;")
+							.appendText(
+									(account.getWebsite() != null) ? Jsoup
+											.parse(account.getWebsite()).html()
+											: ""));
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:"))
-					.appendChild(
-							new Td().appendText((account.getPhoneoffice() != null) ? Jsoup
-									.parse(account.getPhoneoffice()).html()
-									: ""));
+							"width: 150px; vertical-align: top; text-align: right;")
+							.appendText("Office Phone:")).appendChild(
+					new Td().setStyle("width:200px; vertical-align: top;")
+							.appendText(
+									(account.getPhoneoffice() != null) ? Jsoup
+											.parse(account.getPhoneoffice())
+											.html() : ""));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -219,12 +224,10 @@ public class AccountTableDisplay
 									.getNumemployees().toString() : ""));
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Email:"))
-					.appendChild(
-							new Td().appendText((account.getEmail() != null) ? "mailto:"
-									+ account.getEmail()
-									: ""));
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Email:")).appendChild(
+					new Td().appendText((account.getEmail() != null) ? account
+							.getEmail() : ""));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -258,11 +261,11 @@ public class AccountTableDisplay
 
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
+							"width: 150px; vertical-align: top; text-align: right;")
 							.appendText("Annual Revenue:"))
 					.appendChild(
 							new Td().setStyle(
-									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									"width: 180px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
 											(account.getAnnualrevenue() != null) ? Jsoup
 													.parse(account

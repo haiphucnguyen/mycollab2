@@ -26,7 +26,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 		Integer typeid = Integer.parseInt(request.getParameter("typeId"));
 		Integer sAccountId = Integer.parseInt(request
 				.getParameter("sAccountId"));
-		String siteURL = "http://localhost:8080/";
+		String siteURL = request.getParameter("siteURL");
 
 		String html = "";
 		if ("Bug".equals(type)) {

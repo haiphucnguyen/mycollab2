@@ -3,7 +3,22 @@
 * Author: Dynamic Drive at http://www.dynamicdrive.com/
 * Visit http://www.dynamicdrive.com/ for full source code
 */
-
+var mousePosition = {
+	currentMousePos :{ x: -1, y: -1 },
+	getMousePosition:function(){
+		jQuery(function($) {
+		    $(document).mousemove(function(event) {
+		    	mousePosition.currentMousePos.x = event.pageX;
+		    	mousePosition.currentMousePos.y = event.pageY;
+		    });
+		    $(document).click(function(e){
+		    	$('.stickytooltip').hide();
+		    });
+		});
+	}
+}
+// bind event mouse move for body document
+mousePosition.getMousePosition();
 
 var stickytooltip={
 	tooltipoffsets: [20, -30], //additional x and y offset from mouse cursor for tooltips
@@ -15,7 +30,7 @@ var stickytooltip={
 
 	//***** NO NEED TO EDIT BEYOND HERE
 
-	isdocked: true,
+	isdocked: false,
 
 	positiontooltip:function($, $tooltip, e){
 		var x=e.pageX+this.tooltipoffsets[0], y=e.pageY+this.tooltipoffsets[1]
@@ -31,7 +46,7 @@ var stickytooltip={
 	},
 
 	hidebox:function($, $tooltip){
-		if (this.isdocked){
+		if (!this.isdocked){
 			$tooltip.stop(false, true).hide()
 			$tooltip.css({borderColor:'black'}).find('.stickystatus:eq(0)').css({background:this.stickybordercolors[0]}).html(this.stickynotice1)
 		}
@@ -39,73 +54,98 @@ var stickytooltip={
 
 	docktooltip:function($, $tooltip, e){
 		this.isdocked=true
-		$tooltip.css({borderColor:'darkred'}).find('.stickystatus:eq(0)').css({background:this.stickybordercolors[1]}).html(this.stickynotice2)
+		$tooltip.css({borderColor:'black'}).find('.stickystatus:eq(0)').css({background:this.stickybordercolors[0]}).html(this.stickynotice1)
+	},
+	
+	showboxForFirstTime:function($, $tooltip, o){
+		$tooltip.fadeIn(this.fadeinspeed)
+		this.positiontooltipForFirstTime($, $tooltip, o)
+	},
+	
+	positiontooltipForFirstTime:function($, $tooltip, o){
+		var x=o.x+this.tooltipoffsets[0], y=o.y+this.tooltipoffsets[1]
+		var tipw=$tooltip.outerWidth(), tiph=$tooltip.outerHeight(), 
+		x=(x+tipw>$(document).scrollLeft()+$(window).width())? x-tipw-(stickytooltip.tooltipoffsets[0]*2) : x
+		y=(y+tiph>$(document).scrollTop()+$(window).height())? $(document).scrollTop()+$(window).height()-tiph-10 : y
+		$tooltip.css({left:x, top:y})
 	},
 
-
 	init:function(targetselector, tipid){
-			var $targets=$(targetselector)
-			var $tooltip=$('#'+tipid).appendTo(document.body)
-			if ($targets.length==0)
-				return
-			var $alltips=$tooltip.find('div.atip')
-			if (!stickytooltip.rightclickstick)
-				stickytooltip.stickynotice1[1]=''
-			stickytooltip.hidebox($, $tooltip)
-			$targets.bind('mouseenter', function(e){
-				$alltips.hide().filter('#'+$(this).attr('data-tooltip')).show()
-				stickytooltip.showbox($, $tooltip, e)
-			})
-			$targets.bind('mouseleave', function(e){
+		$('.stickytooltip').hide();
+		var $targets=$(targetselector)
+		var $tooltip=$('#'+tipid).appendTo(document.body)
+		if ($targets.length==0)
+			return
+		var $alltips=$tooltip.find('div.atip')
+		if (!stickytooltip.rightclickstick)
+			stickytooltip.stickynotice1[1]=''
+		// show box
+		$tooltip.show();
+		stickytooltip.showboxForFirstTime($, $tooltip, mousePosition.currentMousePos)		
+		
+		$targets.bind('mouseenter', function(e){
+			$('.stickytooltip').hide();
+			stickytooltip.showbox($, $tooltip, e)
+			stickytooltip.docktooltip($, $tooltip, e);
+		})
+		$targets.bind('mouseleave', function(e){
+			if(stickytooltip.isdocked == false){
+				stickytooltip.isdocked = false;
 				stickytooltip.hidebox($, $tooltip)
-			})
-			$targets.bind('mousemove', function(e){
-				if (!stickytooltip.isdocked){
-					stickytooltip.positiontooltip($, $tooltip, e)
-				}
-			})
-			$tooltip.bind("mouseenter", function(){
-				stickytooltip.docktooltip($, $tooltip, null)
-			})
-			$tooltip.bind("click", function(e){
-				e.stopPropagation()
-			})
-			$(this).bind("click", function(e){
-				if (e.button==0){
-					stickytooltip.isdocked=true
-					stickytooltip.hidebox($, $tooltip)
-				}
-			})
-			$(this).bind("contextmenu", function(e){
-				if (stickytooltip.rightclickstick && $(e.target).parents().andSelf().filter(targetselector).length==1){ //if oncontextmenu over a target element
-					stickytooltip.docktooltip($, $tooltip, e)
-					return false
-				}
-			})
-			$(this).bind('keypress', function(e){
-				var keyunicode=e.charCode || e.keyCode
-				if (keyunicode==115){ //if "s" key was pressed
-					stickytooltip.docktooltip($, $tooltip, e)
-				}
-			})
-			stickytooltip.docktooltip($, $tooltip, null)
+			}
+		})
+		$targets.bind('mousemove', function(e){
+//			if (!stickytooltip.isdocked){
+//				stickytooltip.positiontooltip($, $tooltip, e)
+//			}
+		})
+		$tooltip.bind('mouseenter', function(){
+			//stickytooltip.hidebox($, $tooltip)
+			console.log('a');
+		})
+		
+		$tooltip.bind('mouseleave',function(){
+			stickytooltip.hidebox($, $tooltip)
+		})
+		
+		$tooltip.bind('click', function(e){
+			e.stopPropagation()
+		})
+		
+		$(this).bind("click", function(e){
+			if (e.button==0){
+				stickytooltip.isdocked=false
+				stickytooltip.hidebox($, $tooltip)
+			}
+		})
+		$(this).bind("contextmenu", function(e){
+			if (stickytooltip.rightclickstick && $(e.target).parents().andSelf().filter(targetselector).length==1){ //if oncontextmenu over a target element
+				stickytooltip.docktooltip($, $tooltip, e)
+				return false
+			}
+		})
+		$(this).bind('keypress', function(e){
+			var keyunicode=e.charCode || e.keyCode
+			if (keyunicode==115){ //if "s" key was pressed
+				stickytooltip.docktooltip($, $tooltip, e)
+			}
+		})
 	}
 }
 
-//stickytooltip.init("targetElementSelector", "tooltipcontainer")
-stickytooltip.init("*[data-tooltip]", "mystickytooltip")
-
-function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId){
+function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL){
 	var idDIVserverdata = "serverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "mystickyTooltip"+dateTimeTypeIdStr;
+	var idTagA = "tagA"+ dateTimeTypeIdStr;
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : { type: type, typeId: typeId , sAccountId : sAccountId},
+		      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL},
 		      success: function(data){
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
+		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
 		      	 	}else{
 		      	 		$("#"+idDIVserverdata).html("Sorry this item has removed!");
