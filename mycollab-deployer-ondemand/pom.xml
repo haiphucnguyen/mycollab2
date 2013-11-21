@@ -12,6 +12,7 @@
         <module>../mycollab-parent-community</module>
         <module>../mycollab-parent-premium</module>
         <module>../mycollab-parent-ondemand</module>
+        <module>../mycollab-server-runner</module>
         <module>../mycollab-core</module>
         <module>../mycollab-dao</module>
         <module>../mycollab-config</module>
