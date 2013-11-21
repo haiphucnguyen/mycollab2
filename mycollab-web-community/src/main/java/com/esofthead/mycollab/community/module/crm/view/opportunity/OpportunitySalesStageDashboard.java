@@ -46,7 +46,7 @@ public class OpportunitySalesStageDashboard extends
 	private static final long serialVersionUID = 1L;
 
 	public OpportunitySalesStageDashboard() {
-		this(400, 265);
+		this(378, 265);
 	}
 
 	public OpportunitySalesStageDashboard(final int width, final int height) {

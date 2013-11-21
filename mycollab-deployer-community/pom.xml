@@ -17,6 +17,7 @@
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
+        <module>../mycollab-server-runner</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>

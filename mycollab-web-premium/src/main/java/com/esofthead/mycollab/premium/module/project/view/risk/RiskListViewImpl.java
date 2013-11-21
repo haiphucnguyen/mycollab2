@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
+import org.jsoup.Jsoup;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
@@ -336,10 +337,12 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(risk.getDescription() != null) ? (risk
-									.getDescription().length() > 200) ? risk
-									.getDescription().substring(0, 200) : risk
-									.getDescription() : "");
+							(risk.getDescription() != null) ? (Jsoup
+									.parse(risk.getDescription()).html()
+									.length() > 200) ? Jsoup
+									.parse(risk.getDescription()).html()
+									.substring(0, 200) : Jsoup.parse(
+									risk.getDescription()).html() : "");
 			trRow5_value.setAttribute("colspan", "3");
 
 			trRow5.appendChild(
@@ -372,15 +375,17 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 																					risk.getRaisedByUserAvatarId(),
 																					16)))
 													.appendText(
-															(risk.getRaisedByUserFullName() != null) ? risk
-																	.getRaisedByUserFullName()
+															(risk.getRaisedByUserFullName() != null) ? Jsoup
+																	.parse(risk
+																			.getRaisedByUserFullName())
+																	.html()
 																	: "")));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Consequence:")).appendChild(
-					new Td().appendText((risk.getConsequence() != null) ? risk
-							.getConsequence() : ""));
+					new Td().appendText((risk.getConsequence() != null) ? Jsoup
+							.parse(risk.getConsequence()).html() : ""));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -406,15 +411,17 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 																					risk.getRaisedByUserAvatarId(),
 																					16)))
 													.appendText(
-															(risk.getRaisedByUserFullName() != null) ? risk
-																	.getRaisedByUserFullName()
+															(risk.getRaisedByUserFullName() != null) ? Jsoup
+																	.parse(risk
+																			.getRaisedByUserFullName())
+																	.html()
 																	: "")));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Probability:")).appendChild(
-					new Td().appendText((risk.getProbalitity() != null) ? risk
-							.getProbalitity() : ""));
+					new Td().appendText((risk.getProbalitity() != null) ? Jsoup
+							.parse(risk.getProbalitity()).html() : ""));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -449,9 +456,11 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(risk.getResponse() != null) ? (risk.getResponse()
-									.length() > 200) ? risk.getResponse()
-									.substring(0, 200) : risk.getResponse()
+							(risk.getResponse() != null) ? (Jsoup
+									.parse(risk.getResponse()).html().length() > 200) ? Jsoup
+									.parse(risk.getResponse()).html()
+									.substring(0, 200)
+									: Jsoup.parse(risk.getResponse()).html()
 									: "");
 			trRow6_value.setAttribute("colspan", "3");
 

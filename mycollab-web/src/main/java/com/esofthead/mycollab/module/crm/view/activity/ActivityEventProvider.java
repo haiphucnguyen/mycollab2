@@ -105,6 +105,8 @@ public class ActivityEventProvider implements CalendarEventProvider {
 							}
 						}
 
+					} else {
+						event.setStyleName("eventfuture");
 					}
 					if (crmEvent.getStatus() != null) {
 						statusStr.append(crmEvent.getStatus());

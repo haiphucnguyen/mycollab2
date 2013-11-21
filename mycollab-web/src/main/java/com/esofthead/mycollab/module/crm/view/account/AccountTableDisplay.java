@@ -22,6 +22,8 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -51,7 +53,8 @@ import com.vaadin.ui.Table;
  * 
  * @author haiphucnguyen
  */
-public class AccountTableDisplay extends
+public class AccountTableDisplay
+		extends
 		DefaultPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> {
 	private static final long serialVersionUID = 1L;
 
@@ -194,17 +197,17 @@ public class AccountTableDisplay extends
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Website:"))
-					.appendChild(
-							new Td().appendText((account.getWebsite() != null) ? account
-									.getWebsite() : ""));
+							.appendText("Website:")).appendChild(
+					new Td().appendText((account.getWebsite() != null) ? Jsoup
+							.parse(account.getWebsite()).html() : ""));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Office Phone:"))
 					.appendChild(
-							new Td().appendText((account.getPhoneoffice() != null) ? account
-									.getPhoneoffice() : ""));
+							new Td().appendText((account.getPhoneoffice() != null) ? Jsoup
+									.parse(account.getPhoneoffice()).html()
+									: ""));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -217,9 +220,11 @@ public class AccountTableDisplay extends
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendText((account.getEmail() != null) ? account
-							.getEmail() : ""));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().appendText((account.getEmail() != null) ? "mailto:"
+									+ account.getEmail()
+									: ""));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -245,8 +250,10 @@ public class AccountTableDisplay extends
 																					account.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(account.getAssignUserFullName() != null) ? account
-																	.getAssignUserFullName()
+															(account.getAssignUserFullName() != null) ? Jsoup
+																	.parse(account
+																			.getAssignUserFullName())
+																	.html()
 																	: "")));
 
 			trRow3.appendChild(
@@ -257,18 +264,23 @@ public class AccountTableDisplay extends
 							new Td().setStyle(
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											(account.getAnnualrevenue() != null) ? account
-													.getAnnualrevenue() : ""));
+											(account.getAnnualrevenue() != null) ? Jsoup
+													.parse(account
+															.getAnnualrevenue())
+													.html()
+													: ""));
 
 			Tr trRow4 = new Tr();
 			Td trRow4_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(account.getDescription() != null) ? (account
-									.getDescription().length() > 200) ? account
-									.getDescription().substring(0, 200)
-									: account.getDescription() : "");
+							(account.getDescription() != null) ? (Jsoup
+									.parse(account.getDescription()).html()
+									.length() > 200) ? Jsoup
+									.parse(account.getDescription()).html()
+									.substring(0, 200) : Jsoup.parse(
+									account.getDescription()).html() : "");
 			trRow4_value.setAttribute("colspan", "3");
 			trRow4.appendChild(
 					new Td().setStyle(
