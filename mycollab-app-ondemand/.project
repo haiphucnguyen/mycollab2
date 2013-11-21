@@ -3,6 +3,7 @@
   <name>mycollab-app-ondemand</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
+    <project>mycollab-server-runner</project>
     <project>mycollab-services-ondemand</project>
     <project>mycollab-services</project>
     <project>mycollab-core</project>
@@ -10,17 +11,17 @@
     <project>mycollab-migration</project>
     <project>mycollab-config</project>
     <project>mycollab-caching</project>
-    <project>mycollab-api</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-caching-premium</project>
+    <project>mycollab-api</project>
     <project>mycollab-web-premium</project>
     <project>mycollab-web</project>
-    <project>mycollab-api-impl</project>
     <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
     <project>ckeditor</project>
     <project>mycollab-jetty-session-premium</project>
+    <project>mycollab-api-impl</project>
   </projects>
   <buildSpec>
     <buildCommand>

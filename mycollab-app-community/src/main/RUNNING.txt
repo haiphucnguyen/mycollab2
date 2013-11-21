@@ -89,12 +89,9 @@ following features:
  *  allows forceful termination of MyCollab process when it does not react to
     the standard shutdown command.
 
+(4) Start Up MyCollab
 
-(4) Configure MyCollab variables
-
-(5) Start Up MyCollab
-
-(5.1) MyCollab can be started by executing one of the following commands:
+(4.1) MyCollab can be started by executing one of the following commands:
 
   On Windows:
 
@@ -112,20 +109,20 @@ following features:
 
       $MYCOLLAB_HOME/bin/mycollab.sh start
 
-(5.2) After startup, the default web applications included with MyCollab will be
+(4.2) After startup, the default web applications included with MyCollab will be
       available by visiting:
 
       http://localhost:8080/
 
-(5.3) Further information about configuring and running MyCollab can be found in
+(4.3) Further information about configuring and running MyCollab can be found in
       the documentation included here, as well as on the MyCollab web site:
 
       http://MyCollab.apache.org/
 
 
-(6) Shut Down MyCollab
+(5) Shut Down MyCollab
 
-(6.1) MyCollab can be shut down by executing one of the following commands:
+(5.1) MyCollab can be shut down by executing one of the following commands:
 
   On Windows:
 

@@ -16,10 +16,12 @@
  */
 package com.esofthead.mycollab.jetty;
 
+import java.io.Console;
 import java.io.File;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Properties;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.jetty.console.TextDevice;
 
 /**
  * 
@@ -58,7 +61,7 @@ public abstract class GenericServerRunner {
 		server.stop();
 	}
 
-	private String detectBasedir() {
+	private String detectWebApp() {
 		File webappFolder = new File(System.getProperty("user.dir"), "webapp");
 
 		if (!webappFolder.exists()) {
@@ -126,11 +129,61 @@ public abstract class GenericServerRunner {
 
 	}
 
+	private File detectConfigFile(String filename) {
+		File confFile = new File(System.getProperty("user.dir"), "conf/"
+				+ filename);
+
+		if (!confFile.exists()) {
+			confFile = new File(System.getProperty("user.dir"),
+					"src/main/conf/" + filename);
+		}
+
+		if (!confFile.exists()) {
+			return null;
+		} else {
+			return confFile;
+		}
+	}
+
+	protected void preStartServer() {
+		File file = detectConfigFile("mycollab.properties");
+		if (file == null) {
+			log.debug("Can not detect mycollab.properties file. It seems mycollab is in first use.");
+
+			TextDevice device = TextDevice.defaultTextDevice();
+			Properties props = new Properties();
+			System.out.println("Enter site name:");
+			String sitename = device.readLine();
+			props.put("site.name", sitename);
+
+			System.out.println("Enter server address:");
+			String serverAddress = device.readLine();
+			props.put("server.address", serverAddress);
+
+			System.out
+					.println("Enter server port (then you can access server with address)");
+
+			int serverPort = 0;
+			
+			
+			while (true) {
+				String serverPortVal = device.readLine();
+
+				try {
+					serverPort = Integer.parseInt(serverPortVal);
+				} catch (Exception e) {
+
+				}
+			}
+		}
+	}
+
 	public void execute() throws Exception {
+		preStartServer();
 		server = new Server((port > 0) ? port
 				: SiteConfiguration.getServerPort());
 		log.debug("Detect root folder webapp");
-		String webappDirLocation = detectBasedir();
+		String webappDirLocation = detectWebApp();
 
 		WebAppContext appContext = buildContext(webappDirLocation);
 		HandlerList handlers = new HandlerList();
