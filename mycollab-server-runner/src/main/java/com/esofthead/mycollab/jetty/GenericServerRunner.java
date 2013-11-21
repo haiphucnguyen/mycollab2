@@ -17,16 +17,14 @@
 package com.esofthead.mycollab.jetty;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
-import java.util.Properties;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -38,6 +36,8 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.jetty.console.TextDevice;
+import com.esofthead.template.velocity.TemplateContext;
+import com.esofthead.template.velocity.TemplateEngine;
 
 /**
  * 
@@ -154,6 +154,7 @@ public abstract class GenericServerRunner {
 		File file = detectConfigFile("mycollab.properties");
 		if (file == null) {
 			log.debug("Can not detect mycollab.properties file. It seems mycollab is in first use.");
+			TemplateContext templateContext = new TemplateContext();
 
 			System.out
 					.println("=====================================================");
@@ -163,14 +164,13 @@ public abstract class GenericServerRunner {
 					.println("=====================================================");
 
 			TextDevice device = TextDevice.defaultTextDevice();
-			Properties props = new Properties();
 			System.out.println("Enter site name:");
 			String sitename = device.readLine();
-			props.setProperty("site.name", sitename);
+			templateContext.put("sitename", sitename);
 
 			System.out.println("Enter server address:");
 			String serverAddress = device.readLine();
-			props.setProperty("server.address", serverAddress);
+			templateContext.put("serveraddress", serverAddress);
 
 			System.out
 					.println("Enter server port (then you can access server with address)");
@@ -188,7 +188,7 @@ public abstract class GenericServerRunner {
 				}
 			}
 
-			props.setProperty("server.port", serverPort + "");
+			templateContext.put("serverport", serverPort + "");
 
 			System.out
 					.println("=====================================================");
@@ -202,25 +202,25 @@ public abstract class GenericServerRunner {
 						.println("Enter database name (Database must be created before):");
 
 				String dbName = device.readLine();
-				props.setProperty("db.driverClassName", "com.mysql.jdbc.Driver");
-				props.setProperty("db.url", String.format(
-						"jdbc:mysql://localhost/%s?useUnicode=true", dbName));
+				templateContext.put("db.driverClassName",
+						"com.mysql.jdbc.Driver");
+				String dbUrl = String.format(
+						"jdbc:mysql://localhost/%s?useUnicode=true", dbName);
+				templateContext.put("dbUrl", dbUrl);
 
 				System.out.println("Enter database user name:");
 				String dbUserName = device.readLine();
-				props.setProperty("db.username", dbUserName);
+				templateContext.put("dbUser", dbUserName);
 
 				System.out.println("Enter database user password:");
 				String dbPassword = new String(device.readPassword());
-				props.setProperty("db.password", dbPassword);
+				templateContext.put("dbPassword", dbPassword);
 
 				log.debug("Checking database connection ...");
 				try {
 					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(
-							props.getProperty("db.url"),
-							props.getProperty("db.username"),
-							props.getProperty("db.password"));
+					Connection connection = DriverManager.getConnection(dbUrl,
+							dbUserName, dbPassword);
 					DatabaseMetaData metaData = connection.getMetaData();
 					break;
 				} catch (Exception e) {
@@ -238,7 +238,7 @@ public abstract class GenericServerRunner {
 
 			System.out.println("Outgoing server address:");
 			String stmpHost = device.readLine();
-			props.setProperty("mail.smtphost", stmpHost);
+			templateContext.put("smtpAddress", stmpHost);
 
 			System.out.println("Mail server port:");
 			int mailServerPort = 0;
@@ -253,27 +253,27 @@ public abstract class GenericServerRunner {
 					System.out.println("Port must be the number from 1-65000");
 				}
 			}
-			props.setProperty("mail.port", mailServerPort + "");
+			templateContext.put("smtpPort", mailServerPort + "");
 
 			System.out.println("Mail user name:");
 			String mailUser = device.readLine();
-			props.setProperty("mail.username", mailUser);
+			templateContext.put("smtpUserName", mailUser);
 
 			System.out.println("Mail password:");
 			String mailPassword = device.readLine();
-			props.setProperty("mail.password", mailPassword);
+			templateContext.put("smtpPassword", mailPassword);
 
 			System.out.println("Enable TLS (y/n):");
 			String tlsEnable = device.readLine();
 			if (tlsEnable.equals("y")) {
-				props.setProperty("mail.isTLS", "true");
+				templateContext.put("smtpTLSEnable", "true");
 			} else {
-				props.setProperty("mail.isTLS", "false");
+				templateContext.put("smtpTLSEnable", "false");
 			}
 
-			props.setProperty("error.sendTo", "hainguyen@esofthead.com");
-			props.setProperty("cdn.url", "http://%s:%d/assets/images/email/");
-			props.setProperty("app.url", "http://%s:%d/");
+			templateContext.put("error.sendTo", "hainguyen@esofthead.com");
+			templateContext.put("cdn.url", "http://%s:%d/assets/images/email/");
+			templateContext.put("app.url", "http://%s:%d/");
 
 			log.debug("Write to properties file");
 
@@ -288,8 +288,15 @@ public abstract class GenericServerRunner {
 				throw new MyCollabException("Can not detect webapp base folder");
 			} else {
 				try {
-					props.store(new FileOutputStream(new File(confFolder,
-							"mycollab.properties")), "");
+					File templateFile = new File(confFolder,
+							"mycollab.properties.template");
+					FileReader templateReader = new FileReader(templateFile);
+
+					FileWriter writer = new FileWriter(new File(confFolder,
+							"mycollab.properties"));
+
+					TemplateEngine.evaluate(templateContext, writer,
+							"log task", templateReader);
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.err
