@@ -9,18 +9,19 @@ rem Guess MYCOLLAB_HOME if not defined
 set "CURRENT_DIR=%cd%"
 if not "%MYCOLLAB_HOME%" == "" goto gotHome
 set "MYCOLLAB_HOME=%CURRENT_DIR%"
-if exist "%MYCOLLAB_HOME%\bin\mycollab.bat" goto okHome
+echo MyCollab Home %MYCOLLAB_HOME%
+if exist "%MYCOLLAB_HOME%\mycollab.bat" goto okHome
 cd ..
 set "MYCOLLAB_HOME=%cd%"
 cd "%CURRENT_DIR%"
 :gotHome
-if exist "%MYCOLLAB_HOME%\bin\catalina.bat" goto okHome
+if exist "%MYCOLLAB_HOME%\mycollab.bat" goto okHome
 echo The MYCOLLAB_HOME environment variable is not defined correctly
 echo This environment variable is needed to run this program
 goto end
 :okHome
 
-set "EXECUTABLE=%MYCOLLAB_HOME%\bin\mycollab.bat"
+set "EXECUTABLE=%MYCOLLAB_HOME%\mycollab.bat"
 
 rem Check that target executable exists
 if exist "%EXECUTABLE%" goto okExec

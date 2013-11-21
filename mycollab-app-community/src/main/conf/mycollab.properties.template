@@ -1,28 +1,20 @@
-site.name=localhost
+site.name=${sitename}
 running.mode=development
-server.address=localhost
-server.port=8080
+server.address=${serveraddress}
+server.port=${serverport}
 
 db.driverClassName=com.mysql.jdbc.Driver
-db.url=jdbc:mysql://localhost/mycollab_live?useUnicode=true
-db.username=root
-db.password=esofthead321
+db.url=${dbUrl}
+db.username=${dbUser}
+db.password=${dbPassword}
 
-mail.smtphost=smtp.gmail.com
-mail.port=587
-mail.username=mail@esofthead.com
-mail.password=esofthead321
-mail.isTLS=true
-
-relaymail.smtphost=smtp.gmail.com
-relaymail.port=587
-relaymail.username=mail@esofthead.com
-relaymail.password=esofthead321
-relaymail.isTLS=true
+mail.smtphost=${smtpAddress}
+mail.port=${smtpPort}
+mail.username=${smtpUserName}
+mail.password=${smtpPassword}
+mail.isTLS=${smtpTLSEnable}
 
 error.sendTo=hainguyen@esofthead.com
-
-storageSystem=file
 
 cdn.url=http://%s:%d/assets/images/email/
 app.url=http://%s:%d/

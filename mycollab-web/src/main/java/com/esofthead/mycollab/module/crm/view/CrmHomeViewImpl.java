@@ -90,7 +90,7 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
 		streamsLayout.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 
 		salesDashboard = new SalesDashboardView();
-		salesDashboard.setWidth("400px");
+		salesDashboard.setWidth("390px");
 		LazyLoadWrapper salesDashboardLazycomp = new LazyLoadWrapper(
 				salesDashboard);
 		streamsLayout.addComponent(salesDashboardLazycomp);

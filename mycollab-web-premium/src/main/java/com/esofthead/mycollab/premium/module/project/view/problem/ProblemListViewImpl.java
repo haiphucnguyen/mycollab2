@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
+import org.jsoup.Jsoup;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
@@ -341,10 +342,12 @@ public class ProblemListViewImpl extends AbstractView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(problem.getDescription() != null) ? (problem
-									.getDescription().length() > 200) ? problem
-									.getDescription().substring(0, 200)
-									: problem.getDescription() : "");
+							(problem.getDescription() != null) ? (Jsoup
+									.parse(problem.getDescription()).html()
+									.length() > 200) ? Jsoup
+									.parse(problem.getDescription()).html()
+									.substring(0, 200) : Jsoup.parse(
+									problem.getDescription()).html() : "");
 			trRow5_value.setAttribute("colspan", "3");
 
 			trRow5.appendChild(
@@ -377,15 +380,17 @@ public class ProblemListViewImpl extends AbstractView implements
 																					problem.getRaisedByUserAvatarId(),
 																					16)))
 													.appendText(
-															(problem.getRaisedByUserFullName() != null) ? problem
-																	.getRaisedByUserFullName()
+															(problem.getRaisedByUserFullName() != null) ? Jsoup
+																	.parse(problem
+																			.getRaisedByUserFullName())
+																	.html()
 																	: "")));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Impact:")).appendChild(
-					new Td().appendText((problem.getImpact() != null) ? problem
-							.getImpact() : ""));
+					new Td().appendText((problem.getImpact() != null) ? Jsoup
+							.parse(problem.getImpact()).html() : ""));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -411,8 +416,10 @@ public class ProblemListViewImpl extends AbstractView implements
 																					problem.getRaisedByUserAvatarId(),
 																					16)))
 													.appendText(
-															(problem.getRaisedByUserFullName() != null) ? problem
-																	.getRaisedByUserFullName()
+															(problem.getRaisedByUserFullName() != null) ? Jsoup
+																	.parse(problem
+																			.getRaisedByUserFullName())
+																	.html()
 																	: "")));
 			trRow2.appendChild(
 					new Td().setStyle(
@@ -454,10 +461,12 @@ public class ProblemListViewImpl extends AbstractView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(problem.getResolution() != null) ? (problem
-									.getResolution().length() > 200) ? problem
-									.getResolution().substring(0, 200)
-									: problem.getResolution() : "");
+							(problem.getResolution() != null) ? (Jsoup
+									.parse(problem.getResolution()).html()
+									.length() > 200) ? Jsoup
+									.parse(problem.getResolution()).html()
+									.substring(0, 200) : Jsoup.parse(
+									problem.getResolution()).html() : "");
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
