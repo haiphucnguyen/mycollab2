@@ -37,6 +37,10 @@
                     <groupId>org.springframework.flex</groupId>
                     <artifactId>spring-flex-core</artifactId>
                 </exclusion>
+				<exclusion>
+					<groupId>com.jhlabs</groupId>
+					<artifactId>filters</artifactId>
+				</exclusion>
             </exclusions>
         </dependency>
 
@@ -52,6 +56,11 @@
             <artifactId>wicket-core</artifactId>
             <version>${wicket.version}</version>
         </dependency>
+        <dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
 
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
@@ -102,6 +111,14 @@
             <version>${jettyVersion}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- JCAPTCHA DEPENDENCY -->
+        <dependency>
+			<groupId>com.octo.captcha</groupId>
+			<artifactId>jcaptcha</artifactId>
+			<version>1.0</version>
+			
+		</dependency>
     </dependencies>
     <build>
         <resources>
