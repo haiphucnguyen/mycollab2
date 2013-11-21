@@ -10,14 +10,13 @@
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
   <classpathentry kind="src" path="/mycollab-core"/>
   <classpathentry kind="var" path="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5.jar" sourcepath="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235.jar" sourcepath="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7.jar" sourcepath="M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar" sourcepath="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2/commons-collections-3.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.4/commons-lang-2.4.jar" sourcepath="M2_REPO/commons-lang/commons-lang/2.4/commons-lang-2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar" sourcepath="M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/1.8/commons-digester-1.8.jar" sourcepath="M2_REPO/commons-digester/commons-digester/1.8/commons-digester-1.8-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-chain/commons-chain/1.1/commons-chain-1.1.jar" sourcepath="M2_REPO/commons-chain/commons-chain/1.1/commons-chain-1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar" sourcepath="M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1-sources.jar"/>
@@ -68,6 +67,7 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-core/6.12.0/wicket-core-6.12.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-util/6.12.0/wicket-util-6.12.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-request/6.12.0/wicket-request-6.12.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket-extensions/6.12.0/wicket-extensions-6.12.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/fr/xebia/web/xebia-servlet-extras/1.0.8/xebia-servlet-extras-1.0.8.jar" sourcepath="M2_REPO/fr/xebia/web/xebia-servlet-extras/1.0.8/xebia-servlet-extras-1.0.8-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.10/junit-4.10.jar" sourcepath="M2_REPO/junit/junit/4.10/junit-4.10-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar" sourcepath="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1-sources.jar"/>
@@ -86,4 +86,7 @@
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/orbit/javax.mail.glassfish/1.4.1.v201005082020/javax.mail.glassfish-1.4.1.v201005082020.jar" sourcepath="M2_REPO/org/eclipse/jetty/orbit/javax.mail.glassfish/1.4.1.v201005082020/javax.mail.glassfish-1.4.1.v201005082020-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/orbit/javax.activation/1.1.0.v201105071233/javax.activation-1.1.0.v201105071233.jar" sourcepath="M2_REPO/org/eclipse/jetty/orbit/javax.activation/1.1.0.v201105071233/javax.activation-1.1.0.v201105071233-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/orbit/javax.annotation/1.1.0.v201108011116/javax.annotation-1.1.0.v201108011116.jar" sourcepath="M2_REPO/org/eclipse/jetty/orbit/javax.annotation/1.1.0.v201108011116/javax.annotation-1.1.0.v201108011116-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/octo/captcha/jcaptcha/1.0/jcaptcha-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/octo/captcha/jcaptcha-api/1.0/jcaptcha-api-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/jhlabs/imaging/01012005/imaging-01012005.jar"/>
 </classpath>

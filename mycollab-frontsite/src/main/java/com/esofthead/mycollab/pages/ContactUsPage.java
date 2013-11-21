@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.rmi.server.UID;
 
+import javax.imageio.ImageIO;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 
@@ -33,8 +34,6 @@ import com.esofthead.mycollab.rest.server.domain.ContactForm;
 import com.esofthead.mycollab.rest.server.resource.ContactResource;
 import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
 import com.octo.captcha.service.image.ImageCaptchaService;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 public class ContactUsPage extends BasePage {
 
@@ -55,16 +54,14 @@ public class ContactUsPage extends BasePage {
 
 			@Override
 			protected byte[] getImageData(final Attributes arg0) {
-				final ByteArrayOutputStream os = new ByteArrayOutputStream();
 				challengeId = new UID().toString();
 				final BufferedImage challenge = ContactUsPage.captchaService
 						.getImageChallengeForID(challengeId, Session.get()
 								.getLocale());
-				final JPEGImageEncoder encoder = JPEGCodec
-						.createJPEGEncoder(os);
 				try {
-					encoder.encode(challenge);
-					return os.toByteArray();
+					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+					ImageIO.write(challenge, "png", outStream);
+					return outStream.toByteArray();
 				} catch (final Exception e) {
 					throw new RuntimeException(e);
 				}
