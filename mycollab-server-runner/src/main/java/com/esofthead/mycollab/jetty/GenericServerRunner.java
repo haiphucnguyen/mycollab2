@@ -17,9 +17,10 @@
 package com.esofthead.mycollab.jetty;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.sql.Connection;
@@ -292,11 +293,16 @@ public abstract class GenericServerRunner {
 							"mycollab.properties.template");
 					FileReader templateReader = new FileReader(templateFile);
 
-					FileWriter writer = new FileWriter(new File(confFolder,
-							"mycollab.properties"));
+					StringWriter writer = new StringWriter();
 
 					TemplateEngine.evaluate(templateContext, writer,
 							"log task", templateReader);
+
+					FileOutputStream outStream = new FileOutputStream(new File(
+							confFolder, "mycollab.properties"));
+					outStream.write(writer.toString().getBytes());
+					outStream.flush();
+					outStream.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.err
