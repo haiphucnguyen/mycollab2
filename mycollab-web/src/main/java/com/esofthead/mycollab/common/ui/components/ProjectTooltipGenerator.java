@@ -1,15 +1,18 @@
 package com.esofthead.mycollab.common.ui.components;
 
-import java.text.SimpleDateFormat;
-
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
@@ -23,8 +26,6 @@ import com.hp.gagawa.java.elements.Tr;
 public class ProjectTooltipGenerator {
 	private static Logger log = LoggerFactory
 			.getLogger(ProjectTooltipGenerator.class);
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"MM/dd/yyyy");
 
 	public static String generateToolTipTask(SimpleTask task, String siteURL) {
 		try {
@@ -41,33 +42,36 @@ public class ProjectTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Start Date:"))
-					.appendChild(
-							new Td().appendText((task.getStartdate() != null) ? simpleDateFormat
-									.format(task.getStartdate()) : ""));
+							.appendText("Start Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									task.getStartdate(), AppContext
+											.getSession().getTimezone())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Actual Start Date:"))
-					.appendChild(
-							new Td().appendText((task.getActualstartdate() != null) ? simpleDateFormat
-									.format(task.getActualstartdate()) : ""));
+							.appendText("Actual Start Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(task
+									.getActualstartdate(), AppContext
+									.getSession().getTimezone())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("End Date:"))
-					.appendChild(
-							new Td().appendText((task.getEnddate() != null) ? simpleDateFormat
-									.format(task.getEnddate()) : ""));
+							.appendText("End Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(task.getEnddate(),
+									AppContext.getSession().getTimezone())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Actual End Date:"))
-					.appendChild(
-							new Td().appendText((task.getActualenddate() != null) ? simpleDateFormat
-									.format(task.getActualenddate()) : ""));
+							.appendText("Actual End Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(task
+									.getActualenddate(), AppContext
+									.getSession().getTimezone())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -332,5 +336,433 @@ public class ProjectTooltipGenerator {
 					e);
 			return null;
 		}
+	}
+
+	public static String generateToolTipRisk(SimpleRisk risk, String siteURL) {
+		try {
+			Div div = new Div();
+			H3 riskName = new H3();
+			riskName.appendText(risk.getRiskname());
+			div.appendChild(riskName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+
+			Tr trRow5 = new Tr();
+			Td trRow5_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(risk
+									.getDescription()));
+			trRow5_value.setAttribute("colspan", "3");
+
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow5_value);
+
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Raised by:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(risk.getRaisedbyuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	risk.getRaisedbyuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					risk.getRaisedByUserAvatarId(),
+																					16)))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(risk
+																			.getRaisedByUserFullName()))));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Consequence:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getConsequence())));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(risk.getAssigntouser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	risk.getAssigntouser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					risk.getAssignToUserAvatarId(),
+																					16)))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(risk
+																			.getAssignedToUserFullName()))));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Probability:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getProbalitity())));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Date due:"))
+					.appendChild(
+							new Td().appendText(AppContext.formatDate(risk
+									.getDatedue())));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Rating:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getLevel())));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Status:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getStatus())));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Related to:")).appendChild(
+					new Td().appendText(""));
+
+			Tr trRow6 = new Tr();
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(risk.getResponse()));
+			trRow6_value.setAttribute("colspan", "3");
+
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Response:")).appendChild(trRow6_value);
+
+			table.appendChild(trRow5);
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static String generateToolTipProblem(SimpleProblem problem,
+			String siteURL) {
+		try {
+			Div div = new Div();
+			H3 problemName = new H3();
+			problemName.appendText(problem.getIssuename());
+			div.appendChild(problemName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+
+			Tr trRow5 = new Tr();
+			Td trRow5_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(problem
+									.getDescription()));
+			trRow5_value.setAttribute("colspan", "3");
+
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow5_value);
+
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Raised by:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(problem.getRaisedbyuser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	problem.getRaisedbyuser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					problem.getRaisedByUserAvatarId(),
+																					16)))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(problem
+																			.getRaisedByUserFullName()))));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Impact:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getImpact())));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(problem.getAssigntouser() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	problem.getAssigntouser())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					problem.getAssignUserAvatarId(),
+																					16)))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(problem
+																			.getAssignedUserFullName()))));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Priority:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getPriority())));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Date due:")).appendChild(
+					new Td().appendText(AppContext.formatDate(problem
+							.getDatedue())));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Rating:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getLevel())));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Status:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getStatus())));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Related to:")).appendChild(
+					new Td().appendText(""));
+
+			Tr trRow6 = new Tr();
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(problem
+									.getResolution()));
+			trRow6_value.setAttribute("colspan", "3");
+
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Resolution:")).appendChild(
+					trRow6_value);
+
+			table.appendChild(trRow5);
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static String generateToolTipVersion(SimpleVersion version,
+			String siteURL) {
+		try {
+			Div div = new Div();
+			H3 versionName = new H3();
+			versionName
+					.appendText(Jsoup.parse(version.getVersionname()).html());
+			div.appendChild(versionName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :300px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Version Name:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(version
+							.getVersionname())));
+
+			Tr trRow2 = new Tr();
+
+			Td trRow2_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(version
+									.getDescription()));
+			trRow2_value.setAttribute("colspan", "3");
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow2_value);
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Due Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(version
+							.getDuedate())));
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			log.error("Error while generate tooltip for Version", e);
+			return null;
+		}
+	}
+
+	public static String generateToolTipComponent(SimpleComponent component,
+			String siteURL) {
+		try {
+			Div div = new Div();
+			H3 componentName = new H3();
+			componentName.appendText(Jsoup.parse(component.getComponentname())
+					.html());
+			div.appendChild(componentName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :300px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Component Name:"))
+					.appendChild(
+							new Td().appendText(StringUtils
+									.getStringFieldValue(component
+											.getComponentname())));
+
+			Tr trRow2 = new Tr();
+			Td trRow2_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(component
+									.getDescription()));
+			trRow2_value.setAttribute("colspan", "3");
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow2_value);
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Lead:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(component.getUserlead() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	component
+																			.getUserlead())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					component
+																							.getUserLeadAvatarId(),
+																					16)))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(component
+																			.getUserLeadFullName()))));
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			log.error("Error while generate tooltip for Component", e);
+			return null;
+		}
+	}
+
+	public static String generateToolTipStandUp(SimpleStandupReport standup,
+			String siteURL) {
+		return null;
 	}
 }

@@ -23,10 +23,14 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
+import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -49,6 +53,11 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.AppContext;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -67,6 +76,9 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class VersionListViewImpl extends AbstractView implements
 		VersionListView {
+
+	private static Logger log = LoggerFactory
+			.getLogger(VersionListViewImpl.class);
 
 	private static final long serialVersionUID = 1L;
 	private final VersionSearchPanel componentSearchPanel;
@@ -158,6 +170,7 @@ public class VersionListViewImpl extends AbstractView implements
 												.getTime()))) {
 							b.addStyleName(UIConstants.LINK_OVERDUE);
 						}
+						b.setDescription(generateToolTip(bugVersion));
 						return b;
 
 					}
@@ -247,4 +260,54 @@ public class VersionListViewImpl extends AbstractView implements
 		return this.tableItem;
 	}
 
+	private String generateToolTip(Version version) {
+		try {
+			Div div = new Div();
+			H3 versionName = new H3();
+			versionName
+					.appendText(Jsoup.parse(version.getVersionname()).html());
+			div.appendChild(versionName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :400px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Version Name:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(version
+							.getVersionname())));
+
+			Tr trRow2 = new Tr();
+
+			Td trRow2_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(version
+									.getDescription()));
+			trRow2_value.setAttribute("colspan", "3");
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow2_value);
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Due Date:")).appendChild(
+					new Td().appendText(AppContext.formatDate(version
+							.getDuedate())));
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			log.error("Error while generate tooltip for Version", e);
+			return "";
+		}
+	}
 }

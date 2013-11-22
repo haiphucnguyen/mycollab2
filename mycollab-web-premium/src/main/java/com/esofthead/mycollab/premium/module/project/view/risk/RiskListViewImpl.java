@@ -397,23 +397,23 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													(risk.getRaisedbyuser() != null) ? UserLinkUtils
+													(risk.getAssigntouser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
 																	AppContext
 																			.getSiteUrl(),
-																	risk.getRaisedbyuser())
+																	risk.getAssigntouser())
 															: "")
 													.appendChild(
 															new Img(
 																	"",
 																	UserAvatarControlFactory
 																			.getAvatarLink(
-																					risk.getRaisedByUserAvatarId(),
+																					risk.getAssignToUserAvatarId(),
 																					16)))
 													.appendText(
 															(risk.getRaisedByUserFullName() != null) ? Jsoup
 																	.parse(risk
-																			.getRaisedByUserFullName())
+																			.getAssignedToUserFullName())
 																	.html()
 																	: "")));
 			trRow2.appendChild(

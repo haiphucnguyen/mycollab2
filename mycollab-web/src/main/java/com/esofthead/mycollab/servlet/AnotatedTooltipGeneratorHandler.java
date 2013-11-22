@@ -13,10 +13,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.ui.components.ProjectTooltipGenerator;
+import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.service.RiskService;
+import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component("tooltipGeneratorServlet")
@@ -39,24 +49,45 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 				BugService service = ApplicationContextUtil
 						.getSpringBean(BugService.class);
 				SimpleBug bug = service.findById(typeid, sAccountId);
-				html = (bug != null) ? ProjectTooltipGenerator
-						.generateToolTipBug(bug, siteURL) : "";
+				html = ProjectTooltipGenerator.generateToolTipBug(bug, siteURL);
 			} else if ("Task".equals(type)) {
 				ProjectTaskService service = ApplicationContextUtil
 						.getSpringBean(ProjectTaskService.class);
 				SimpleTask task = service.findById(typeid, sAccountId);
-				html = (task != null) ? ProjectTooltipGenerator
-						.generateToolTipTask(task, siteURL) : "";
+				html = ProjectTooltipGenerator.generateToolTipTask(task,
+						siteURL);
 			} else if ("Risk".equals(type)) {
-				html = null;
+				RiskService service = ApplicationContextUtil
+						.getSpringBean(RiskService.class);
+				SimpleRisk risk = service.findById(typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipRisk(risk,
+						siteURL);
 			} else if ("Problem".equals(type)) {
-				html = null;
+				ProblemService service = ApplicationContextUtil
+						.getSpringBean(ProblemService.class);
+				SimpleProblem problem = service.findById(typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipProblem(problem,
+						siteURL);
 			} else if ("Version".equals(type)) {
-				html = null;
+				VersionService service = ApplicationContextUtil
+						.getSpringBean(VersionService.class);
+				SimpleVersion version = service.findById(typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipVersion(version,
+						siteURL);
 			} else if ("Component".equals(type)) {
-				html = null;
+				ComponentService service = ApplicationContextUtil
+						.getSpringBean(ComponentService.class);
+				SimpleComponent component = service
+						.findById(typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipComponent(
+						component, siteURL);
 			} else if ("StandUp".equals(type)) {
-				html = null;
+				StandupReportService service = ApplicationContextUtil
+						.getSpringBean(StandupReportService.class);
+				SimpleStandupReport standup = service.findStandupReportById(
+						typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipStandUp(standup,
+						siteURL);
 			}
 			PrintWriter out = response.getWriter();
 			out.println(html);

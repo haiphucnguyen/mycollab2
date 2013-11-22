@@ -22,10 +22,14 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.Arrays;
 
+import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -34,6 +38,8 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.servlet.AnotatedTooltipGeneratorHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -44,10 +50,18 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.AppContext;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -65,6 +79,8 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class ComponentListViewImpl extends AbstractView implements
 		ComponentListView {
+	private static Logger log = LoggerFactory
+			.getLogger(ComponentListViewImpl.class);
 
 	private static final long serialVersionUID = 1L;
 	private final ComponentSearchPanel componentSearchPanel;
@@ -156,6 +172,7 @@ public class ComponentListViewImpl extends AbstractView implements
 								&& bugComponent.getStatus().equals("Close")) {
 							b.addStyleName(UIConstants.LINK_COMPLETED);
 						}
+						b.setDescription(generateToolTip(bugComponent));
 						return b;
 
 					}
@@ -262,4 +279,77 @@ public class ComponentListViewImpl extends AbstractView implements
 		return this.tableItem;
 	}
 
+	private String generateToolTip(SimpleComponent component) {
+		try {
+			Div div = new Div();
+			H3 componentName = new H3();
+			componentName.appendText(Jsoup.parse(component.getComponentname())
+					.html());
+			div.appendChild(componentName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :350px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Component Name:"))
+					.appendChild(
+							new Td().appendText(StringUtils
+									.getStringFieldValue(component
+											.getComponentname())));
+
+			Tr trRow2 = new Tr();
+			Td trRow2_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringFieldValue(component
+									.getDescription()));
+			trRow2_value.setAttribute("colspan", "3");
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow2_value);
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Lead:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(component.getUserlead() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	AppContext
+																			.getSiteUrl(),
+																	component
+																			.getUserlead())
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					component
+																							.getUserLeadAvatarId(),
+																					16)))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(component
+																			.getUserLeadFullName()))));
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			log.error("Error while generate tooltip for Component", e);
+			return "";
+		}
+	}
 }
