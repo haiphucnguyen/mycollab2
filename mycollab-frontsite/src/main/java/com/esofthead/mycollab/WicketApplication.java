@@ -29,6 +29,8 @@ import com.esofthead.mycollab.pages.tour.CRMPage;
 import com.esofthead.mycollab.pages.tour.DocumentManagementPage;
 import com.esofthead.mycollab.pages.tour.ProjectManagementPage;
 import com.esofthead.mycollab.pages.tour.WhoisitForPage;
+import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 /**
  * Application object for your web application. If you want to run this
@@ -38,6 +40,8 @@ import com.esofthead.mycollab.pages.tour.WhoisitForPage;
  */
 public class WicketApplication extends WebApplication {
 	private final Logger log = LoggerFactory.getLogger(WicketApplication.class);
+
+	public static final ImageCaptchaService captchaService = new DefaultManageableImageCaptchaService();
 
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()

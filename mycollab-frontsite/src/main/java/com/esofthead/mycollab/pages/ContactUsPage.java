@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.SiteConfiguration;
+import com.esofthead.mycollab.WicketApplication;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
@@ -41,32 +42,10 @@ public class ContactUsPage extends BasePage {
 
 	private static Logger log = LoggerFactory.getLogger(ContactUsPage.class);
 
-	private static final ImageCaptchaService captchaService = new DefaultManageableImageCaptchaService();
-
 	private String challengeId = null;
 
 	public ContactUsPage(final PageParameters parameters) {
 		super(parameters);
-
-		final DynamicImageResource res = new DynamicImageResource() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected byte[] getImageData(final Attributes arg0) {
-				challengeId = new UID().toString();
-				final BufferedImage challenge = ContactUsPage.captchaService
-						.getImageChallengeForID(challengeId, Session.get()
-								.getLocale());
-				try {
-					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					ImageIO.write(challenge, "png", outStream);
-					return outStream.toByteArray();
-				} catch (final Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
-		};
 
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setOutputMarkupId(true);
@@ -112,9 +91,6 @@ public class ContactUsPage extends BasePage {
 				"captchafield", new Model<String>())
 				.add(new CaptchaValidator());
 		captcha.setLabel(new ResourceModel("label.captcha"));
-
-		final Image captchaImage = new Image("captchaImage", res);
-		captchaImage.setOutputMarkupId(true);
 
 		final StatelessForm<Void> form = new StatelessForm<Void>("contact-form") {
 
@@ -165,6 +141,28 @@ public class ContactUsPage extends BasePage {
 		form.add(industry);
 		form.add(subject);
 		form.add(message);
+		final DynamicImageResource res = new DynamicImageResource() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected byte[] getImageData(final Attributes arg0) {
+				challengeId = new UID().toString();
+				final BufferedImage challenge = WicketApplication.captchaService
+						.getImageChallengeForID(challengeId, Session.get()
+								.getLocale());
+				try {
+					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+					ImageIO.write(challenge, "png", outStream);
+					return outStream.toByteArray();
+				} catch (final Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		};
+
+		final Image captchaImage = new Image("captchaImage", res);
+		captchaImage.setOutputMarkupId(true);
 		form.add(captchaImage);
 		form.add(captcha);
 
@@ -178,7 +176,7 @@ public class ContactUsPage extends BasePage {
 
 		@Override
 		public void validate(final IValidatable<String> validatable) {
-			if (!ContactUsPage.captchaService.validateResponseForID(
+			if (!WicketApplication.captchaService.validateResponseForID(
 					challengeId, validatable.getValue())) {
 				error("Wrong captcha");
 			}
