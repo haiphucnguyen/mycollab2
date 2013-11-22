@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.core.utils;
 
+import org.jsoup.Jsoup;
+
 /**
  * Utility class to process string
  * 
@@ -93,5 +95,17 @@ public class StringUtils {
 				.replaceAll(
 						"(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
 						"<a href=\"$0\">$0</a>");
+	}
+
+	public static String getStringFieldValue(Object o) {
+		if (o == null) {
+			return "";
+		} else {
+			String str = Jsoup.parse(o.toString()).html();
+			if (str.length() > 200) {
+				str = str.substring(0, 200);
+			}
+			return str;
+		}
 	}
 }

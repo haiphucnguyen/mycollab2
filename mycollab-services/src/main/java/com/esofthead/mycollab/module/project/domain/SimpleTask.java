@@ -26,8 +26,10 @@ public class SimpleTask extends Task {
 	private String taskListName;
 	private String assignUserAvatarId;
 	private String assignUserFullName;
+	private String assignUserTimeZone;
 	private String logByAvatarId;
 	private String logByFullName;
+	private String logByUserTimeZone;
 	private int numComments;
 	private String comment;
 
@@ -107,4 +109,21 @@ public class SimpleTask extends Task {
 	public String getComment() {
 		return comment;
 	}
+
+	public String getAssignUserTimeZone() {
+		return assignUserTimeZone;
+	}
+
+	public void setAssignUserTimeZone(String assignUserTimeZone) {
+		this.assignUserTimeZone = assignUserTimeZone;
+	}
+
+	public String getLogByUserTimeZone() {
+		return logByUserTimeZone;
+	}
+
+	public void setLogByUserTimeZone(String logByUserTimeZone) {
+		this.logByUserTimeZone = logByUserTimeZone;
+	}
+
 }
