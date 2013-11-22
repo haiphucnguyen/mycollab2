@@ -40,6 +40,8 @@ public class ExtMailServiceImpl extends AbstractMailService implements
 		EmailConfiguration emailConfiguration = SiteConfiguration
 				.getRelayEmailConfiguration();
 
+		// check whether email is configured properly
+
 		return new Mailer(emailConfiguration);
 
 	}

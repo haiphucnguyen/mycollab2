@@ -30,7 +30,7 @@ import com.esofthead.mycollab.configuration.EmailConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
-public class Mailer {
+public class Mailer implements IMailer {
 	private static Logger log = LoggerFactory.getLogger(Mailer.class);
 	protected String host;
 	protected String username = null;
@@ -110,6 +110,7 @@ public class Mailer {
 		}
 	}
 
+	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
 			List<MailRecipientField> toEmail, List<MailRecipientField> ccEmail,
 			List<MailRecipientField> bccEmail, String subject, String html) {
@@ -126,6 +127,7 @@ public class Mailer {
 		}
 	}
 
+	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
 			List<MailRecipientField> toEmail, List<MailRecipientField> ccEmail,
 			List<MailRecipientField> bccEmail, String subject, String html,
@@ -153,6 +155,7 @@ public class Mailer {
 		}
 	}
 
+	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
 			List<SimpleUser> users, String subject, String html,
 			List<EmailAttachementSource> attachment) {

@@ -20,13 +20,18 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
-import com.esofthead.mycollab.module.mail.Mailer;
+import com.esofthead.mycollab.module.mail.IMailer;
 import com.esofthead.mycollab.module.mail.service.IGenericMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public abstract class AbstractMailService implements IGenericMailService {
 
-	protected abstract Mailer getMailer();
+	protected abstract IMailer getMailer();
 
 	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
