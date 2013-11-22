@@ -159,15 +159,14 @@ function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL){
 		      url: url,
 		      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL},
 		      success: function(data){
-		      	 if(data!=null){
-		      	 	if(data.length > 0){
+		      	 if(data.trim()!= "null"){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
-		      	 	}else{
-		      	 		$("#"+idDIVserverdata).html("Sorry this item has removed!");
-		      	 	}
-					stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		      	 }else{
+		      		// $("#"+idDIVserverdata).html("This item has removed!");
 		      	 }
+		      	
 		      }
 		});
 	}else{

@@ -2,6 +2,8 @@ package com.esofthead.mycollab.common.ui.components;
 
 import java.text.SimpleDateFormat;
 
+import org.jsoup.Jsoup;
+
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
@@ -19,9 +21,11 @@ public class ProjectTooltipGenerator {
 
 	public static String generateToolTipTask(SimpleTask task, String siteURL) {
 		try {
+			if (task == null)
+				return null;
 			Div div = new Div();
 			H3 taksName = new H3();
-			taksName.appendText(task.getTaskname());
+			taksName.appendText(Jsoup.parse(task.getTaskname()).html());
 			div.appendChild(taksName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -70,8 +74,8 @@ public class ProjectTooltipGenerator {
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Priority:")).appendChild(
-					new Td().appendText((task.getPriority() != null) ? task
-							.getPriority() : ""));
+					new Td().appendText((task.getPriority() != null) ? Jsoup
+							.parse(task.getPriority()).html() : ""));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
@@ -96,8 +100,10 @@ public class ProjectTooltipGenerator {
 																					task.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(task.getAssignUserFullName() != null) ? task
-																	.getAssignUserFullName()
+															(task.getAssignUserFullName() != null) ? Jsoup
+																	.parse(task
+																			.getAssignUserFullName())
+																	.html()
 																	: "")));
 			trRow4.appendChild(
 					new Td().setStyle(
@@ -107,8 +113,10 @@ public class ProjectTooltipGenerator {
 							new Td().setStyle(
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											(task.getTaskListName() != null) ? task
-													.getTaskListName() : ""));
+											(task.getTaskListName() != null) ? Jsoup
+													.parse(task
+															.getTaskListName())
+													.html() : ""));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -119,17 +127,21 @@ public class ProjectTooltipGenerator {
 							new Td().setStyle(
 									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											task.getPercentagecomplete()
-													.toString()));
+											(task.getPercentagecomplete() != null) ? task
+													.getPercentagecomplete()
+													.toString() : ""));
 			Tr trRow6 = new Tr();
 
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(task.getNotes() != null) ? (task.getNotes()
-									.length() > 200) ? task.getNotes()
-									.substring(0, 200) : task.getNotes() : "");
+							(task.getNotes() != null) ? (Jsoup
+									.parse(task.getNotes()).html().length() > 200) ? Jsoup
+									.parse(task.getNotes()).html()
+									.substring(0, 200)
+									: Jsoup.parse(task.getNotes()).html()
+									: "");
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -152,9 +164,11 @@ public class ProjectTooltipGenerator {
 
 	public static String generateToolTipBug(SimpleBug bug, String siteURL) {
 		try {
+			if (bug == null)
+				return null;
 			Div div = new Div();
 			H3 bugSummary = new H3();
-			bugSummary.appendText(bug.getSummary());
+			bugSummary.appendText(Jsoup.parse(bug.getSummary()).html());
 			div.appendChild(bugSummary);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -164,10 +178,12 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getDescription() != null) ? (bug
-									.getDescription().length() > 200) ? bug
-									.getDescription().substring(0, 200) : bug
-									.getDescription() : "");
+							(bug.getDescription() != null) ? (Jsoup
+									.parse(bug.getDescription()).html()
+									.length() > 200) ? Jsoup
+									.parse(bug.getDescription()).html()
+									.substring(0, 200) : Jsoup.parse(
+									bug.getDescription()).html() : "");
 			trRow1_value.setAttribute("colspan", "3");
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -180,10 +196,12 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getEnvironment() != null) ? (bug
-									.getEnvironment().length() > 200) ? bug
-									.getEnvironment().substring(0, 200) : bug
-									.getEnvironment() : "");
+							(bug.getEnvironment() != null) ? (Jsoup
+									.parse(bug.getEnvironment()).html()
+									.length() > 200) ? Jsoup
+									.parse(bug.getEnvironment()).html()
+									.substring(0, 200) : Jsoup.parse(
+									bug.getEnvironment()).html() : "");
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
 					new Td().setStyle(
@@ -196,42 +214,44 @@ public class ProjectTooltipGenerator {
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Status:")).appendChild(
-					new Td().appendText((bug.getStatus() != null) ? bug
-							.getStatus() : ""));
+					new Td().appendText((bug.getStatus() != null) ? Jsoup
+							.parse(bug.getStatus()).html() : ""));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Priority:")).appendChild(
-					new Td().appendText((bug.getPriority() != null) ? bug
-							.getPriority() : ""));
+					new Td().appendText((bug.getPriority() != null) ? Jsoup
+							.parse(bug.getPriority()).html() : ""));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Severity:")).appendChild(
-					new Td().appendText((bug.getSeverity() != null) ? bug
-							.getSeverity() : ""));
+					new Td().appendText((bug.getSeverity() != null) ? Jsoup
+							.parse(bug.getSeverity()).html() : ""));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Resolution:")).appendChild(
-					new Td().appendText((bug.getResolution() != null) ? bug
-							.getResolution() : ""));
+					new Td().appendText((bug.getResolution() != null) ? Jsoup
+							.parse(bug.getResolution()).html() : ""));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Due Date:")).appendChild(
-					new Td().appendText(simpleDateFormat.format(bug
-							.getDuedate())));
+							.appendText("Due Date:"))
+					.appendChild(
+							new Td().appendText((bug.getDuedate() != null) ? simpleDateFormat
+									.format(bug.getDuedate()) : ""));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Created Time:")).appendChild(
-					new Td().appendText(simpleDateFormat.format(bug
-							.getCreatedtime())));
+							.appendText("Created Time:"))
+					.appendChild(
+							new Td().appendText((bug.getCreatedtime() != null) ? simpleDateFormat
+									.format(bug.getCreatedtime()) : ""));
 
 			// Assignee
 
@@ -245,12 +265,13 @@ public class ProjectTooltipGenerator {
 									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													UserLinkUtils
+													(bug.getLogby() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
 																	siteURL,
 																	(bug.getLogby() != null) ? bug
 																			.getLogby()
-																			: ""))
+																			: "")
+															: "")
 													.appendChild(
 															new Img(
 																	"",
@@ -259,8 +280,10 @@ public class ProjectTooltipGenerator {
 																					bug.getLoguserAvatarId(),
 																					16)))
 													.appendText(
-															(bug.getLoguserFullName() != null) ? bug
-																	.getLoguserFullName()
+															(bug.getLoguserFullName() != null) ? Jsoup
+																	.parse(bug
+																			.getLoguserFullName())
+																	.html()
 																	: "")));
 			trRow6.appendChild(
 					new Td().setStyle(
@@ -271,12 +294,13 @@ public class ProjectTooltipGenerator {
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													UserLinkUtils
+													(bug.getAssignuser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
 																	siteURL,
 																	(bug.getAssignuser() != null) ? bug
 																			.getAssignuser()
-																			: ""))
+																			: "")
+															: "")
 													.appendChild(
 															new Img(
 																	"",
@@ -285,8 +309,10 @@ public class ProjectTooltipGenerator {
 																					bug.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(bug.getAssignuserFullName() != null) ? bug
-																	.getAssignuserFullName()
+															(bug.getAssignuserFullName() != null) ? Jsoup
+																	.parse(bug
+																			.getAssignuserFullName())
+																	.html()
 																	: "")));
 
 			Tr trRow7 = new Tr();
@@ -294,8 +320,8 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(bug.getMilestoneName() != null) ? bug
-									.getMilestoneName() : "");
+							(bug.getMilestoneName() != null) ? Jsoup.parse(
+									bug.getMilestoneName()).html() : "");
 			trRow7_value.setAttribute("colspan", "3");
 			trRow7.appendChild(
 					new Td().setStyle(

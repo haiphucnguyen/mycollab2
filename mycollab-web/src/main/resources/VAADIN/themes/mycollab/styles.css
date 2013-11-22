@@ -148,6 +148,12 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 	padding: 0px;
 }
 
+.v-label.h2_community {
+	font-size: 15px;
+	padding-top: 10px;
+	text-align: center;
+}
+
 input.v-textfield,textarea.v-textarea,.v-filterselect {
 	background: #fff url('icons/input-bg.png') repeat-x;
 }

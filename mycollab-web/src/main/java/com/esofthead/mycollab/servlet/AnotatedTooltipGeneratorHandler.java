@@ -42,15 +42,15 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			html = (task != null) ? ProjectTooltipGenerator
 					.generateToolTipTask(task, siteURL) : "";
 		} else if ("Risk".equals(type)) {
-
+			html = null;
 		} else if ("Problem".equals(type)) {
-
+			html = null;
 		} else if ("Version".equals(type)) {
-
+			html = null;
 		} else if ("Component".equals(type)) {
-
-		} else if ("Standup".equals(type)) {
-
+			html = null;
+		} else if ("StandUp".equals(type)) {
+			html = null;
 		}
 		PrintWriter out = response.getWriter();
 		out.println(html);
