@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.pages.BlogPage;
+import com.esofthead.mycollab.pages.ContactUsPage;
 import com.esofthead.mycollab.pages.Error404Page;
 import com.esofthead.mycollab.pages.Error500Page;
 import com.esofthead.mycollab.pages.HomePage;
@@ -36,7 +37,7 @@ import com.esofthead.mycollab.pages.tour.WhoisitForPage;
  * @see com.esofthead.mycollab.Start#main(String[])
  */
 public class WicketApplication extends WebApplication {
-	private Logger log = LoggerFactory.getLogger(WicketApplication.class);
+	private final Logger log = LoggerFactory.getLogger(WicketApplication.class);
 
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
@@ -54,7 +55,7 @@ public class WicketApplication extends WebApplication {
 		super.init();
 
 		// add your configuration here
-		getDebugSettings().setAjaxDebugModeEnabled(false);
+		this.getDebugSettings().setAjaxDebugModeEnabled(false);
 		this.getMarkupSettings().setStripWicketTags(true);
 
 		this.mountPage("/tour/whoisit", WhoisitForPage.class);
@@ -66,6 +67,7 @@ public class WicketApplication extends WebApplication {
 		this.mountPage("/pricing", PricingPage.class);
 		this.mountPage("/privacy", PrivacyPage.class);
 		this.mountPage("/signup", SignUpPage.class);
+		this.mountPage("/contact-us", ContactUsPage.class);
 		this.mountPage("/blog", BlogPage.class);
 		this.mountPage("/terms", TermOfServicePage.class);
 		this.mountPage("/signin/#{param1}", SignInPage.class);
@@ -77,7 +79,7 @@ public class WicketApplication extends WebApplication {
 			@Override
 			public IRequestHandler onException(final RequestCycle cycle,
 					final Exception e) {
-				log.error("Error while process", e);
+				WicketApplication.this.log.error("Error while process", e);
 				return new RenderPageRequestHandler(new PageProvider(
 						new Error500Page(e)));
 			}
@@ -85,9 +87,10 @@ public class WicketApplication extends WebApplication {
 	}
 
 	@Override
-	public WebRequest newWebRequest(HttpServletRequest servletRequest,
-			String filterPath) {
-		WebRequest webRequest = super.newWebRequest(servletRequest, filterPath);
+	public WebRequest newWebRequest(final HttpServletRequest servletRequest,
+			final String filterPath) {
+		final WebRequest webRequest = super.newWebRequest(servletRequest,
+				filterPath);
 		return new ServletWebRequest(servletRequest, filterPath, webRequest
 				.getUrl().canonical());
 	}
