@@ -21,14 +21,22 @@ var mousePosition = {
 mousePosition.getMousePosition();
 
 var stickytooltip={
-	tooltipoffsets: [20, -30], //additional x and y offset from mouse cursor for tooltips
-	fadeinspeed: 200, //duration of fade effect in milliseconds
-	rightclickstick: true, //sticky tooltip when user right clicks over the triggering element (apart from pressing "s" key) ?
-	stickybordercolors: ["black", "darkred"], //border color of tooltip depending on sticky state
-	stickynotice1: ["Press \"s\"", "or right click", "to sticky box"], //customize tooltip status message
-	stickynotice2: "Click outside this box to hide it", //customize tooltip status message
+	tooltipoffsets: [20, -30], // additional x and y offset from mouse cursor
+								// for tooltips
+	fadeinspeed: 200, // duration of fade effect in milliseconds
+	rightclickstick: true, // sticky tooltip when user right clicks over the
+							// triggering element (apart from pressing "s" key)
+							// ?
+	stickybordercolors: ["black", "darkred"], // border color of tooltip
+												// depending on sticky state
+	stickynotice1: ["Press \"s\"", "or right click", "to sticky box"], // customize
+																		// tooltip
+																		// status
+																		// message
+	stickynotice2: "Click outside this box to hide it", // customize tooltip
+														// status message
 
-	//***** NO NEED TO EDIT BEYOND HERE
+	// ***** NO NEED TO EDIT BEYOND HERE
 
 	isdocked: false,
 
@@ -95,12 +103,12 @@ var stickytooltip={
 			}
 		})
 		$targets.bind('mousemove', function(e){
-//			if (!stickytooltip.isdocked){
-//				stickytooltip.positiontooltip($, $tooltip, e)
-//			}
+// if (!stickytooltip.isdocked){
+// stickytooltip.positiontooltip($, $tooltip, e)
+// }
 		})
 		$tooltip.bind('mouseenter', function(){
-			//stickytooltip.hidebox($, $tooltip)
+			// stickytooltip.hidebox($, $tooltip)
 			console.log('a');
 		})
 		
@@ -119,14 +127,19 @@ var stickytooltip={
 			}
 		})
 		$(this).bind("contextmenu", function(e){
-			if (stickytooltip.rightclickstick && $(e.target).parents().andSelf().filter(targetselector).length==1){ //if oncontextmenu over a target element
+			if (stickytooltip.rightclickstick && $(e.target).parents().andSelf().filter(targetselector).length==1){ // if
+																													// oncontextmenu
+																													// over
+																													// a
+																													// target
+																													// element
 				stickytooltip.docktooltip($, $tooltip, e)
 				return false
 			}
 		})
 		$(this).bind('keypress', function(e){
 			var keyunicode=e.charCode || e.keyCode
-			if (keyunicode==115){ //if "s" key was pressed
+			if (keyunicode==115){ // if "s" key was pressed
 				stickytooltip.docktooltip($, $tooltip, e)
 			}
 		})
@@ -137,6 +150,9 @@ function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL){
 	var idDIVserverdata = "serverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "mystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "tagA"+ dateTimeTypeIdStr;
+	$('.stickytooltip').bind('mouseleave',function(e){
+    	$('.stickytooltip').hide();
+	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
 		      type: 'POST',
