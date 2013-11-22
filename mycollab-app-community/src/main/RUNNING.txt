@@ -22,7 +22,7 @@ Running With JRE 6 Or Later
 
 (2.1) Download a binary distribution of MyCollab from:
 
-      http://MyCollab.apache.org/
+      http://www.mycollab.com
 
 (2.2) Unpack the binary distribution so that it resides in its own
       directory (conventionally named "mycollab-[version]").
@@ -117,7 +117,7 @@ following features:
 (4.3) Further information about configuring and running MyCollab can be found in
       the documentation included here, as well as on the MyCollab web site:
 
-      http://MyCollab.apache.org/
+      http://www.mycollab.com/
 
 
 (5) Shut Down MyCollab

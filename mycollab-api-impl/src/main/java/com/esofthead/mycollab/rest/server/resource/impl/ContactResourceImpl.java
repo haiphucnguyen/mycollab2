@@ -31,15 +31,15 @@ public class ContactResourceImpl implements ContactResource {
 
 	@Override
 	public String submit(@Form final ContactForm entity) {
-		ContactResourceImpl.log.debug("Start handling form request");
-		ContactResourceImpl.log.debug("Name: " + entity.getName());
-		ContactResourceImpl.log.debug("Email: " + entity.getEmail());
-		ContactResourceImpl.log.debug("Company: " + entity.getCompany());
-		ContactResourceImpl.log.debug("Role: " + entity.getRole());
-		ContactResourceImpl.log.debug("Industry: " + entity.getIndustry());
-		ContactResourceImpl.log.debug("Budget: " + entity.getBudget());
-		ContactResourceImpl.log.debug("Subject: " + entity.getSubject());
-		ContactResourceImpl.log.debug("Message: " + entity.getMessage());
+		log.debug("Start handling form request");
+		log.debug("Name: " + entity.getName());
+		log.debug("Email: " + entity.getEmail());
+		log.debug("Company: " + entity.getCompany());
+		log.debug("Role: " + entity.getRole());
+		log.debug("Industry: " + entity.getIndustry());
+		log.debug("Budget: " + entity.getBudget());
+		log.debug("Subject: " + entity.getSubject());
+		log.debug("Message: " + entity.getMessage());
 
 		return "OK";
 	}
