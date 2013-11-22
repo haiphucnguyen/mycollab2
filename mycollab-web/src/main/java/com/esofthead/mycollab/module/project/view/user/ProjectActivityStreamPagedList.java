@@ -33,7 +33,6 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
-import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityStreamGenerator;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -101,93 +100,49 @@ public class ProjectActivityStreamPagedList
 					currentDate = itemCreatedDate;
 				}
 				String content = "";
-
-				String dateTimeTypeIdStr = AppContext
-						.formatDateTime(itemCreatedDate).replace("/", "")
-						.trim().replace(" ", "").replace(":", "")
-						+ activityStream.getTypeid();
-				String idDivSeverData = "serverdata" + dateTimeTypeIdStr + "";
-				String idToopTipDiv = "tooltip" + dateTimeTypeIdStr + "";
-				String idStickyToolTipDiv = "mystickyTooltip"
-						+ dateTimeTypeIdStr;
-				String idtagA = "tagA" + dateTimeTypeIdStr;
-
 				if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 						.getAction())) {
+					String arg0 = UserAvatarControlFactory.getAvatarLink(
+							activityStream.getCreatedUserAvatarId(), 16);
+					String arg1 = ProjectLinkBuilder
+							.generateProjectMemberFullLink(
+									activityStream.getExtratypeid(),
+									activityStream.getCreateduser());
+					String arg2 = activityStream.getCreatedUserFullName();
+					String arg3 = ProjectResources
+							.getResourceLink(activityStream.getType());
+					String arg4 = ProjectLinkBuilder.generateProjectItemLink(
+							activityStream.getExtratypeid(),
+							activityStream.getType(),
+							activityStream.getTypeid());
+					String arg5 = activityStream.getNamefield();
 					content = LocalizationHelper
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
-									UserAvatarControlFactory.getAvatarLink(
-											activityStream
-													.getCreatedUserAvatarId(),
-											16),
-									ProjectLinkBuilder
-											.generateProjectMemberFullLink(
-													activityStream
-															.getExtratypeid(),
-													activityStream
-															.getCreateduser()),
-									activityStream.getCreatedUserFullName(),
-									LocalizationHelper
-											.getMessage(ProjectLocalizationTypeMap
-													.getType(activityStream
-															.getType())),
-									ProjectResources
-											.getResourceLink(activityStream
-													.getType()),
-									ProjectLinkBuilder.generateProjectItemLink(
-											activityStream.getExtratypeid(),
-											activityStream.getType(),
-											activityStream.getTypeid()), "'"
-											+ dateTimeTypeIdStr + "'", "'"
-											+ activityStream.getType() + "'",
-									"'" + activityStream.getTypeid() + "'", "'"
-											+ AppContext.getSiteUrl()
-											+ "tooltip/'",
-									"'" + activityStream.getSaccountid() + "'",
-									"'" + AppContext.getSiteUrl() + "'",
-									activityStream.getNamefield(),
-									idStickyToolTipDiv, idToopTipDiv,
-									idDivSeverData);
+									arg0, arg1, arg2, arg3, arg4, arg5);
 				} else if (ActivityStreamConstants.ACTION_UPDATE
 						.equals(activityStream.getAction())) {
 					// tooltip id is = tooltip + dateTime + typeId
 					// serverData id is = serverdata + dateTime + typeId
+
+					String arg0 = UserAvatarControlFactory.getAvatarLink(
+							activityStream.getCreatedUserAvatarId(), 16);
+					String arg1 = ProjectLinkBuilder
+							.generateProjectMemberFullLink(
+									activityStream.getExtratypeid(),
+									activityStream.getCreateduser());
+					String arg2 = activityStream.getCreatedUserFullName();
+					String arg3 = ProjectResources
+							.getResourceLink(activityStream.getType());
+					String arg4 = ProjectLinkBuilder.generateProjectItemLink(
+							activityStream.getExtratypeid(),
+							activityStream.getType(),
+							activityStream.getTypeid());
+					String arg5 = activityStream.getNamefield();
 					content = LocalizationHelper
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
-									UserAvatarControlFactory.getAvatarLink(
-											activityStream
-													.getCreatedUserAvatarId(),
-											16),
-									ProjectLinkBuilder
-											.generateProjectMemberFullLink(
-													activityStream
-															.getExtratypeid(),
-													activityStream
-															.getCreateduser()),
-									activityStream.getCreatedUserFullName(),
-									LocalizationHelper
-											.getMessage(ProjectLocalizationTypeMap
-													.getType(activityStream
-															.getType())),
-									ProjectResources
-											.getResourceLink(activityStream
-													.getType()), idtagA,
-									ProjectLinkBuilder.generateProjectItemLink(
-											activityStream.getExtratypeid(),
-											activityStream.getType(),
-											activityStream.getTypeid()), "'"
-											+ dateTimeTypeIdStr + "'", "'"
-											+ activityStream.getType() + "'",
-									"'" + activityStream.getTypeid() + "'", "'"
-											+ AppContext.getSiteUrl()
-											+ "tooltip/'",
-									"'" + activityStream.getSaccountid() + "'",
-									"'" + AppContext.getSiteUrl() + "'",
-									activityStream.getNamefield(),
-									idStickyToolTipDiv, idToopTipDiv,
-									idDivSeverData);
+									arg0, arg1, arg2, arg3, arg4, arg5);
 					log.debug("CONTENT: " + content);
 					if (activityStream.getAssoAuditLog() != null) {
 						content += ProjectActivityStreamGenerator
