@@ -23,7 +23,11 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.common.domain.Currency;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -55,6 +59,8 @@ import com.vaadin.ui.Table;
 public class CampaignTableDisplay
 		extends
 		DefaultPagedBeanTable<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
+	private static Logger log = LoggerFactory
+			.getLogger(CampaignTableDisplay.class);
 
 	public CampaignTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
@@ -250,10 +256,9 @@ public class CampaignTableDisplay
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Status:"))
-					.appendChild(
-							new Td().appendText((campagin.getStatus() != null) ? campagin
-									.getStatus() : ""));
+							.appendText("Status:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(campagin.getStatus())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -266,17 +271,17 @@ public class CampaignTableDisplay
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Type:")).appendChild(
-					new Td().appendText((campagin.getType() != null) ? campagin
-							.getType() : ""));
+					new Td().appendText(StringUtils
+							.getStringFieldValue(campagin.getType())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Currency:"))
-					.appendChild(
-							new Td().appendText((campagin.getCurrency() != null) ? campagin
-									.getCurrency().getSymbol() : ""));
+							.appendText("Currency:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(campagin.getCurrency()
+									.getSymbol())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -300,26 +305,23 @@ public class CampaignTableDisplay
 																					campagin.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(campagin
-																	.getAssignUserFullName() != null) ? campagin
-																	.getAssignUserFullName()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(campagin
+																			.getAssignUserFullName()))));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Expected Cost:"))
-					.appendChild(
-							new Td().appendText((campagin.getExpectedcost() != null) ? campagin
-									.getExpectedcost().toString() : ""));
+							.appendText("Expected Cost:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(campagin.getExpectedcost())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Budget:"))
-					.appendChild(
-							new Td().appendText((campagin.getBudget() != null) ? campagin
-									.getBudget().toString() : ""));
+							.appendText("Budget:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(campagin.getBudget())));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -327,26 +329,23 @@ public class CampaignTableDisplay
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Expected Revenue:"))
 					.appendChild(
-							new Td().appendText((campagin.getExpectedrevenue() != null) ? campagin
-									.getExpectedrevenue().toString() : ""));
+							new Td().appendText(StringUtils
+									.getStringFieldValue(campagin
+											.getExpectedrevenue())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Actual Cost:"))
-					.appendChild(
-							new Td().appendText((campagin.getActualcost() != null) ? campagin
-									.getActualcost().toString() : ""));
+							.appendText("Actual Cost:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(campagin.getActualcost())));
 			Tr trRow6 = new Tr();
 
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(campagin.getDescription() != null) ? (campagin
-									.getDescription().length() > 200) ? campagin
-									.getDescription().substring(0, 200)
-									: campagin.getDescription()
-									: "");
+							StringUtils.getStringFieldValue(campagin
+									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -364,6 +363,7 @@ public class CampaignTableDisplay
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate Camapgin tooltip", e);
 			return "";
 		}
 	}

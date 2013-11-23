@@ -4,11 +4,14 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -62,6 +65,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	private final VerticalLayout riskListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private static Logger log = LoggerFactory.getLogger(RiskListViewImpl.class);
 
 	public RiskListViewImpl() {
 		this.setMargin(false, true, true, true);
@@ -326,7 +330,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 		try {
 			Div div = new Div();
 			H3 riskName = new H3();
-			riskName.appendText(risk.getRiskname());
+			riskName.appendText(Jsoup.parse(risk.getRiskname()).html());
 			div.appendChild(riskName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -337,12 +341,8 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(risk.getDescription() != null) ? (Jsoup
-									.parse(risk.getDescription()).html()
-									.length() > 200) ? Jsoup
-									.parse(risk.getDescription()).html()
-									.substring(0, 200) : Jsoup.parse(
-									risk.getDescription()).html() : "");
+							StringUtils.getStringFieldValue(risk
+									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
 			trRow5.appendChild(
@@ -375,17 +375,15 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 																					risk.getRaisedByUserAvatarId(),
 																					16)))
 													.appendText(
-															(risk.getRaisedByUserFullName() != null) ? Jsoup
-																	.parse(risk
-																			.getRaisedByUserFullName())
-																	.html()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(risk
+																			.getRaisedByUserFullName()))));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Consequence:")).appendChild(
-					new Td().appendText((risk.getConsequence() != null) ? Jsoup
-							.parse(risk.getConsequence()).html() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getConsequence())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -411,17 +409,15 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 																					risk.getAssignToUserAvatarId(),
 																					16)))
 													.appendText(
-															(risk.getRaisedByUserFullName() != null) ? Jsoup
-																	.parse(risk
-																			.getAssignedToUserFullName())
-																	.html()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(risk
+																			.getAssignedToUserFullName()))));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Probability:")).appendChild(
-					new Td().appendText((risk.getProbalitity() != null) ? Jsoup
-							.parse(risk.getProbalitity()).html() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getProbalitity())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -435,16 +431,16 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Rating:")).appendChild(
-					new Td().appendText((risk.getLevel() != null) ? ""
-							+ risk.getLevel() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getLevel())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Status:")).appendChild(
-					new Td().appendText((risk.getStatus() != null) ? risk
-							.getStatus() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(risk
+							.getStatus())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -456,12 +452,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(risk.getResponse() != null) ? (Jsoup
-									.parse(risk.getResponse()).html().length() > 200) ? Jsoup
-									.parse(risk.getResponse()).html()
-									.substring(0, 200)
-									: Jsoup.parse(risk.getResponse()).html()
-									: "");
+							StringUtils.getStringFieldValue(risk.getResponse()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -478,6 +469,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate tooltip for Risk", e);
 			return "";
 		}
 	}

@@ -31,7 +31,7 @@ import com.vaadin.ui.Embedded;
 /**
  * 
  * @author haiphucnguyen
- *
+ * 
  */
 public class UserAvatarControlFactory {
 	public static Embedded createUserAvatarEmbeddedComponent(String avatarId,

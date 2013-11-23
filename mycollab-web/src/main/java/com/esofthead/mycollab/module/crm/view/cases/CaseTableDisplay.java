@@ -18,6 +18,11 @@ package com.esofthead.mycollab.module.crm.view.cases;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
@@ -47,6 +52,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 @SuppressWarnings("serial")
 public class CaseTableDisplay extends
 		DefaultPagedBeanTable<CaseService, CaseSearchCriteria, SimpleCase> {
+	private static Logger log = LoggerFactory.getLogger(CaseTableDisplay.class);
 
 	public CaseTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
@@ -178,7 +184,7 @@ public class CaseTableDisplay extends
 		try {
 			Div div = new Div();
 			H3 caseName = new H3();
-			caseName.appendText(cases.getSubject());
+			caseName.appendText(Jsoup.parse(cases.getSubject()).html());
 			div.appendChild(caseName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -188,52 +194,50 @@ public class CaseTableDisplay extends
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Priority:")).appendChild(
-					new Td().appendText(((cases.getPriority() != null) ? cases
-							.getPriority() : "")));
+					new Td().appendText(StringUtils.getStringFieldValue(cases
+							.getPriority())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Type:")).appendChild(
-					new Td().appendText((cases.getType() != null) ? cases
-							.getType() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(cases
+							.getType())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Status:")).appendChild(
-					new Td().appendText((cases.getStatus() != null) ? cases
-							.getStatus() : ""));
+					new Td().appendText((StringUtils.getStringFieldValue(cases
+							.getStatus()))));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Reason:")).appendChild(
-					new Td().appendText((cases.getReason() != null) ? cases
-							.getReason() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(cases
+							.getReason())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Account Name:"))
-					.appendChild(
-							new Td().appendText((cases.getAccountName() != null) ? cases
-									.getAccountName() : ""));
+							.appendText("Account Name:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(cases
+							.getAccountName())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText((cases.getEmail() != null) ? cases
-							.getEmail() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(cases
+							.getEmail())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Phone Number:"))
-					.appendChild(
-							new Td().appendText((cases.getPhonenumber() != null) ? cases
-									.getPhonenumber() : ""));
+							.appendText("Phone Number:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(cases
+							.getPhonenumber())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -257,19 +261,17 @@ public class CaseTableDisplay extends
 																					cases.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(cases.getAssignUserFullName() != null) ? cases
-																	.getAssignUserFullName()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(cases
+																			.getAssignUserFullName()))));
 
 			Tr trRow5 = new Tr();
 			Td trRow5_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(cases.getDescription() != null) ? (cases
-									.getDescription().length() > 200) ? cases
-									.getDescription().substring(0, 200) : cases
-									.getDescription() : "");
+							StringUtils.getStringFieldValue(cases
+									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
 			trRow5.appendChild(
@@ -283,10 +285,8 @@ public class CaseTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(cases.getResolution() != null) ? (cases
-									.getResolution().length() > 200) ? cases
-									.getResolution().substring(0, 200) : cases
-									.getResolution() : "");
+							StringUtils.getStringFieldValue(cases
+									.getResolution()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -304,6 +304,7 @@ public class CaseTableDisplay extends
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate Case tooltip", e);
 			return "";
 		}
 	}

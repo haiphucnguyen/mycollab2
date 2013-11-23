@@ -22,6 +22,11 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
@@ -56,6 +61,7 @@ import com.vaadin.ui.Table;
 @SuppressWarnings("serial")
 public class LeadTableDisplay extends
 		DefaultPagedBeanTable<LeadService, LeadSearchCriteria, SimpleLead> {
+	private static Logger log = LoggerFactory.getLogger(LeadTableDisplay.class);
 
 	public LeadTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
@@ -182,7 +188,7 @@ public class LeadTableDisplay extends
 		try {
 			Div div = new Div();
 			H3 leadName = new H3();
-			leadName.appendText(lead.getLeadName());
+			leadName.appendText(Jsoup.parse(lead.getLeadName()).html());
 			div.appendChild(leadName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -192,78 +198,77 @@ public class LeadTableDisplay extends
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("First Name:")).appendChild(
-					new Td().appendText((lead.getFirstname() != null) ? lead
-							.getFirstname() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getFirstname())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText((lead.getEmail() != null) ? lead
-							.getEmail() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getEmail())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Last Name:")).appendChild(
-					new Td().appendText((lead.getLastname() != null) ? lead
-							.getLastname() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getLastname())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Office Phone:")).appendChild(
-					new Td().appendText((lead.getOfficephone() != null) ? lead
-							.getOfficephone() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getOfficephone())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Title:")).appendChild(
-					new Td().appendText((lead.getTitle() != null) ? lead
-							.getTitle() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getTitle())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Mobile:")).appendChild(
-					new Td().appendText((lead.getMobile() != null) ? lead
-							.getMobile() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getMobile())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Department:")).appendChild(
-					new Td().appendText((lead.getDepartment() != null) ? lead
-							.getDepartment() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getDepartment())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Fax:")).appendChild(
-					new Td().appendText((lead.getFax() != null) ? lead.getFax()
-							: ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getFax())));
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Account Name:")).appendChild(
-					new Td().appendText((lead.getAccountname() != null) ? lead
-							.getAccountname() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getAccountname())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Website:")).appendChild(
-					new Td().appendText((lead.getWebsite() != null) ? lead
-							.getWebsite() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getWebsite())));
 
 			Tr trRow6 = new Tr();
 			trRow6.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Lead Source:"))
-					.appendChild(
-							new Td().appendText((lead.getLeadsourcedesc() != null) ? lead
-									.getLeadsourcedesc() : ""));
+							.appendText("Lead Source:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getLeadsourcedesc())));
 			trRow6.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -287,48 +292,44 @@ public class LeadTableDisplay extends
 																					lead.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(lead.getAssignUserFullName() != null) ? lead
-																	.getAssignUserFullName()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(lead
+																			.getAssignUserFullName()))));
 			Tr trRow7 = new Tr();
 			trRow7.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Address:")).appendChild(
-					new Td().appendText((lead.getPrimaddress() != null) ? lead
-							.getPrimaddress() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getPrimaddress())));
 			trRow7.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Other Address:")).appendChild(
-					new Td().appendText((lead.getOtheraddress() != null) ? lead
-							.getOtheraddress() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getOtheraddress())));
 
 			Tr trRow8 = new Tr();
 			trRow8.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Postal Code:"))
-					.appendChild(
-							new Td().appendText((lead.getPrimpostalcode() != null) ? lead
-									.getPrimpostalcode() : ""));
+							.appendText("Postal Code:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getPrimpostalcode())));
 			trRow8.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Other Postal Code:"))
-					.appendChild(
-							new Td().appendText((lead.getOtherpostalcode() != null) ? lead
-									.getOtherpostalcode() : ""));
+							.appendText("Other Postal Code:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(lead
+							.getOtherpostalcode())));
 			Tr trRow9 = new Tr();
 
 			Td trRow9_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(lead.getDescription() != null) ? (lead
-									.getDescription().length() > 200) ? lead
-									.getDescription().substring(0, 200) : lead
-									.getDescription() : "");
+							StringUtils.getStringFieldValue(lead
+									.getDescription()));
 			trRow9_value.setAttribute("colspan", "3");
 
 			trRow9.appendChild(
@@ -348,6 +349,7 @@ public class LeadTableDisplay extends
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate Lead tooltip", e);
 			return "";
 		}
 	}

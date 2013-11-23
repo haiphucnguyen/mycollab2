@@ -23,6 +23,8 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.GregorianCalendar;
 
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
@@ -73,6 +75,7 @@ import com.vaadin.ui.VerticalLayout;
 public class TaskTableDisplay extends
 		BeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
 	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory.getLogger(TaskTableDisplay.class);
 
 	public TaskTableDisplay(String[] visibleColumns, String[] columnHeaders) {
 		super(ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
@@ -402,7 +405,7 @@ public class TaskTableDisplay extends
 		try {
 			Div div = new Div();
 			H3 taksName = new H3();
-			taksName.appendText(task.getTaskname());
+			taksName.appendText(Jsoup.parse(task.getTaskname()).html());
 			div.appendChild(taksName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -447,7 +450,8 @@ public class TaskTableDisplay extends
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Priority:")).appendChild(
-					new Td().appendText(task.getPriority()));
+					new Td().appendText(StringUtils.getStringFieldValue(task
+							.getPriority())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
@@ -473,11 +477,9 @@ public class TaskTableDisplay extends
 																					task.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(task.getAssignUserFullName() != null) ? Jsoup
-																	.parse(task
-																			.getAssignUserFullName())
-																	.html()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(task
+																			.getAssignUserFullName()))));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -494,11 +496,9 @@ public class TaskTableDisplay extends
 																			task.getProjectid(),
 																			task.getTasklistid()))
 													.appendText(
-															(task.getTaskListName() != null) ? Jsoup
-																	.parse(task
-																			.getTaskListName())
-																	.html()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(task
+																			.getTaskListName()))));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -509,20 +509,15 @@ public class TaskTableDisplay extends
 							new Td().setStyle(
 									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											task.getPercentagecomplete()
-													.toString()));
+											StringUtils.getStringFieldValue(task
+													.getPercentagecomplete())));
 			Tr trRow6 = new Tr();
 
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(task.getNotes() != null) ? (Jsoup
-									.parse(task.getNotes()).html().length() > 200) ? Jsoup
-									.parse(task.getNotes()).html()
-									.substring(0, 200)
-									: Jsoup.parse(task.getNotes()).html()
-									: "");
+							StringUtils.getStringFieldValue(task.getNotes()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -539,6 +534,7 @@ public class TaskTableDisplay extends
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate tooltip for Version", e);
 			return "";
 		}
 	}

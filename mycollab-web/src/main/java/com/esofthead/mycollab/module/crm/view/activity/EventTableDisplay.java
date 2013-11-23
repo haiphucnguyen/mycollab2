@@ -23,6 +23,11 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
@@ -53,6 +58,8 @@ import com.vaadin.ui.Table;
 public class EventTableDisplay extends
 		DefaultPagedBeanTable<EventService, EventSearchCriteria, SimpleEvent> {
 	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory
+			.getLogger(EventTableDisplay.class);
 
 	public EventTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
@@ -320,11 +327,11 @@ public class EventTableDisplay extends
 		}
 	}
 
-	private String generateToolTipTask(SimpleEvent task) {
+	private String generateToolTipTask(SimpleEvent event) {
 		try {
 			Div div = new Div();
 			H3 eventName = new H3();
-			eventName.appendText(task.getSubject());
+			eventName.appendText(Jsoup.parse(event.getSubject()).html());
 			div.appendChild(eventName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -334,7 +341,7 @@ public class EventTableDisplay extends
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Start Date:")).appendChild(
-					new Td().appendText(AppContext.formatDateTime(task
+					new Td().appendText(AppContext.formatDateTime(event
 							.getStartDate())));
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -344,15 +351,16 @@ public class EventTableDisplay extends
 							new Td().setStyle(
 									"width:110px; vertical-align: top; text-align: left;")
 									.appendText(
-											(task.getStatus() != null) ? task
-													.getStatus() : ""));
+											StringUtils
+													.getStringFieldValue(event
+															.getStatus())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Due Date:")).appendChild(
-					new Td().appendText(AppContext.formatDateTime(task
+					new Td().appendText(AppContext.formatDateTime(event
 							.getEndDate())));
 			trRow2.appendChild(
 					new Td().setStyle(
@@ -362,16 +370,16 @@ public class EventTableDisplay extends
 							new Td().setStyle(
 									"width:110px; vertical-align: top; text-align: left;")
 									.appendText(
-											(task.getContactFullName() != null) ? task
-													.getContactFullName() : ""));
+											StringUtils.getStringFieldValue(event
+													.getContactFullName())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Priority:")).appendChild(
-					new Td().appendText((task.getPriority() != null) ? task
-							.getPriority() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(event
+							.getPriority())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
@@ -381,33 +389,31 @@ public class EventTableDisplay extends
 									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													(task.getAssignUser() != null) ? UserLinkUtils
+													(event.getAssignUser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
 																	AppContext
 																			.getSiteUrl(),
-																	task.getAssignUser())
+																	event.getAssignUser())
 															: "")
 													.appendChild(
 															new Img(
 																	"",
 																	UserAvatarControlFactory
 																			.getAvatarLink(
-																					task.getAssignUserAvatarId(),
+																					event.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(task.getAssignUserFullName() != null) ? task
-																	.getAssignUserFullName()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(event
+																			.getAssignUserFullName()))));
 
 			Tr trRow4 = new Tr();
 			Td trRow4_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(task.getDescription() != null) ? (task
-									.getDescription().length() > 200) ? task
-									.getDescription().substring(0, 200) : task
-									.getDescription() : "");
+							StringUtils.getStringFieldValue(event
+									.getDescription()));
 			trRow4_value.setAttribute("colspan", "3");
 
 			trRow4.appendChild(
@@ -422,6 +428,7 @@ public class EventTableDisplay extends
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate Event tooltip", e);
 			return "";
 		}
 	}

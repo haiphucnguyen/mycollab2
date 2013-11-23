@@ -23,7 +23,10 @@ package com.esofthead.mycollab.module.crm.view.account;
 import java.util.List;
 
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -57,6 +60,8 @@ public class AccountTableDisplay
 		extends
 		DefaultPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> {
 	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory
+			.getLogger(AccountTableDisplay.class);
 
 	public AccountTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
@@ -201,18 +206,16 @@ public class AccountTableDisplay
 							.appendText("Website:")).appendChild(
 					new Td().setStyle("vertical-align:top; text-align: left;")
 							.appendText(
-									(account.getWebsite() != null) ? Jsoup
-											.parse(account.getWebsite()).html()
-											: ""));
+									StringUtils.getStringFieldValue(account
+											.getWebsite())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 150px; vertical-align: top; text-align: right;")
 							.appendText("Office Phone:")).appendChild(
 					new Td().setStyle("width:200px; vertical-align: top;")
 							.appendText(
-									(account.getPhoneoffice() != null) ? Jsoup
-											.parse(account.getPhoneoffice())
-											.html() : ""));
+									StringUtils.getStringFieldValue(account
+											.getPhoneoffice())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -226,8 +229,8 @@ public class AccountTableDisplay
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText((account.getEmail() != null) ? account
-							.getEmail() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(account
+							.getEmail())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -253,11 +256,9 @@ public class AccountTableDisplay
 																					account.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(account.getAssignUserFullName() != null) ? Jsoup
-																	.parse(account
-																			.getAssignUserFullName())
-																	.html()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(account
+																			.getAssignUserFullName()))));
 
 			trRow3.appendChild(
 					new Td().setStyle(
@@ -267,23 +268,17 @@ public class AccountTableDisplay
 							new Td().setStyle(
 									"width: 180px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											(account.getAnnualrevenue() != null) ? Jsoup
-													.parse(account
-															.getAnnualrevenue())
-													.html()
-													: ""));
+											StringUtils
+													.getStringFieldValue(account
+															.getAnnualrevenue())));
 
 			Tr trRow4 = new Tr();
 			Td trRow4_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(account.getDescription() != null) ? (Jsoup
-									.parse(account.getDescription()).html()
-									.length() > 200) ? Jsoup
-									.parse(account.getDescription()).html()
-									.substring(0, 200) : Jsoup.parse(
-									account.getDescription()).html() : "");
+							StringUtils.getStringFieldValue(account
+									.getDescription()));
 			trRow4_value.setAttribute("colspan", "3");
 			trRow4.appendChild(
 					new Td().setStyle(
@@ -298,6 +293,7 @@ public class AccountTableDisplay
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate Account tooltip", e);
 			return "";
 		}
 	}

@@ -23,6 +23,11 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
@@ -58,6 +63,8 @@ import com.vaadin.ui.Table;
 public class OpportunityTableDisplay
 		extends
 		DefaultPagedBeanTable<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
+	private static Logger log = LoggerFactory
+			.getLogger(OpportunityTableDisplay.class);
 
 	public OpportunityTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
@@ -240,7 +247,8 @@ public class OpportunityTableDisplay
 		try {
 			Div div = new Div();
 			H3 opportunityName = new H3();
-			opportunityName.appendText(opportunity.getOpportunityname());
+			opportunityName.appendText(Jsoup.parse(
+					opportunity.getOpportunityname()).html());
 			div.appendChild(opportunityName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -249,30 +257,27 @@ public class OpportunityTableDisplay
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Currency:"))
-					.appendChild(
-							new Td().setStyle(
-									"vertical-align: top; text-align: left;")
-									.appendText(
-											(opportunity.getCurrency() != null) ? opportunity
-													.getCurrency().getSymbol()
-													: ""));
+							.appendText("Currency:")).appendChild(
+					new Td().setStyle("vertical-align: top; text-align: left;")
+							.appendText(
+									StringUtils.getStringFieldValue(opportunity
+											.getCurrency().getSymbol())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Account Name:"))
 					.appendChild(
-							new Td().appendText((opportunity.getAccountName() != null) ? opportunity
-									.getAccountName() : ""));
+							new Td().appendText(StringUtils
+									.getStringFieldValue(opportunity
+											.getAccountName())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Amount:"))
-					.appendChild(
-							new Td().appendText((opportunity.getAmount() != null) ? opportunity
-									.getAmount().toString() : ""));
+							.appendText("Amount:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(opportunity.getAmount())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 140px; vertical-align: top; text-align: right;")
@@ -284,49 +289,43 @@ public class OpportunityTableDisplay
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Sales Stage:"))
-					.appendChild(
-							new Td().setStyle(
-									"vertical-align: top; text-align: left;")
-									.appendText(
-											(opportunity.getSalesstage() != null) ? opportunity
-													.getSalesstage() : ""));
+							.appendText("Sales Stage:")).appendChild(
+					new Td().setStyle("vertical-align: top; text-align: left;")
+							.appendText(
+									StringUtils.getStringFieldValue(opportunity
+											.getSalesstage())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Lead Source:"))
-					.appendChild(
-							new Td().appendText((opportunity.getSource() != null) ? opportunity
-									.getSource() : ""));
+							.appendText("Lead Source:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(opportunity.getSource())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Probability (%):"))
-					.appendChild(
-							new Td().setStyle(
-									"vertical-align: top; text-align: left;")
-									.appendText(
-											(opportunity.getProbability() != null) ? opportunity
-													.getProbability()
-													.toString() : ""));
+							.appendText("Probability (%):")).appendChild(
+					new Td().setStyle("vertical-align: top; text-align: left;")
+							.appendText(
+									StringUtils.getStringFieldValue(opportunity
+											.getProbability())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Campaign:"))
 					.appendChild(
-							new Td().appendText((opportunity.getCampaignName() != null) ? opportunity
-									.getCampaignName() : ""));
+							new Td().appendText(StringUtils
+									.getStringFieldValue(opportunity
+											.getCampaignName())));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Next Step:"))
-					.appendChild(
-							new Td().appendText((opportunity.getNextstep() != null) ? opportunity
-									.getNextstep() : ""));
+							.appendText("Next Step:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(opportunity.getNextstep())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -353,21 +352,17 @@ public class OpportunityTableDisplay
 																							.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(opportunity
-																	.getAssignUserFullName() != null) ? opportunity
-																	.getAssignUserFullName()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(opportunity
+																			.getAssignUserFullName()))));
 			Tr trRow6 = new Tr();
 
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(opportunity.getDescription() != null) ? (opportunity
-									.getDescription().length() > 200) ? opportunity
-									.getDescription().substring(0, 200)
-									: opportunity.getDescription()
-									: "");
+							StringUtils.getStringFieldValue(opportunity
+									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -385,6 +380,7 @@ public class OpportunityTableDisplay
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate Opportunity tooltip", e);
 			return "";
 		}
 	}

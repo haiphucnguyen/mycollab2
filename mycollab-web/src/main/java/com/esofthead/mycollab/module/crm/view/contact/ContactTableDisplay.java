@@ -18,6 +18,11 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
@@ -45,8 +50,11 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 
 @SuppressWarnings("serial")
-public class ContactTableDisplay extends
+public class ContactTableDisplay
+		extends
 		DefaultPagedBeanTable<ContactService, ContactSearchCriteria, SimpleContact> {
+	private static Logger log = LoggerFactory
+			.getLogger(ContactTableDisplay.class);
 
 	public ContactTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
@@ -196,7 +204,8 @@ public class ContactTableDisplay extends
 		try {
 			Div div = new Div();
 			H3 contactName = new H3();
-			contactName.appendText(contact.getContactName());
+			contactName
+					.appendText(Jsoup.parse(contact.getContactName()).html());
 			div.appendChild(contactName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -205,39 +214,36 @@ public class ContactTableDisplay extends
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("First Name:"))
-					.appendChild(
-							new Td().appendText((contact.getFirstname() != null) ? contact
-									.getFirstname() : ""));
+							.appendText("First Name:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(contact
+							.getFirstname())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:"))
-					.appendChild(
-							new Td().appendText((contact.getOfficephone() != null) ? contact
-									.getOfficephone() : ""));
+							.appendText("Office Phone:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(contact
+							.getOfficephone())));
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Last Name:"))
-					.appendChild(
-							new Td().appendText((contact.getLastname() != null) ? contact
-									.getLastname() : ""));
+							.appendText("Last Name:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(contact
+							.getLastname())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Mobile:")).appendChild(
-					new Td().appendText((contact.getMobile() != null) ? contact
-							.getMobile() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(contact
+							.getMobile())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText((contact.getEmail() != null) ? contact
-							.getEmail() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(contact
+							.getEmail())));
 
 			trRow3.appendChild(
 					new Td().setStyle(
@@ -255,8 +261,9 @@ public class ContactTableDisplay extends
 							new Td().setStyle(
 									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											(contact.getDepartment() != null) ? contact
-													.getDepartment() : ""));
+											StringUtils
+													.getStringFieldValue(contact
+															.getDepartment())));
 
 			trRow4.appendChild(
 					new Td().setStyle(
@@ -281,9 +288,9 @@ public class ContactTableDisplay extends
 																					contact.getAssignUserAvatarId(),
 																					16)))
 													.appendText(
-															(contact.getAssignUserFullName() != null) ? contact
-																	.getAssignUserFullName()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(contact
+																			.getAssignUserFullName()))));
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
@@ -293,8 +300,9 @@ public class ContactTableDisplay extends
 							new Td().setStyle(
 									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											(contact.getPrimaddress() != null) ? contact
-													.getPrimaddress() : ""));
+											StringUtils
+													.getStringFieldValue(contact
+															.getPrimaddress())));
 
 			trRow5.appendChild(
 					new Td().setStyle(
@@ -304,17 +312,16 @@ public class ContactTableDisplay extends
 							new Td().setStyle(
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											(contact.getOtheraddress() != null) ? contact
-													.getOtheraddress() : ""));
+											StringUtils
+													.getStringFieldValue(contact
+															.getOtheraddress())));
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(contact.getDescription() != null) ? (contact
-									.getDescription().length() > 200) ? contact
-									.getDescription().substring(0, 200)
-									: contact.getDescription() : "");
+							StringUtils.getStringFieldValue(contact
+									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -332,6 +339,7 @@ public class ContactTableDisplay extends
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate Contact tooltip", e);
 			return "";
 		}
 	}

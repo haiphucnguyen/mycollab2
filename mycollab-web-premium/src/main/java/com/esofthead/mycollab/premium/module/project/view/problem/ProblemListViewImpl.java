@@ -3,12 +3,14 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
-import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -63,6 +65,8 @@ public class ProblemListViewImpl extends AbstractView implements
 	private final VerticalLayout problemListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private static Logger log = LoggerFactory
+			.getLogger(ProblemListViewImpl.class);
 
 	public ProblemListViewImpl() {
 		this.setMargin(false, true, true, true);
@@ -342,12 +346,8 @@ public class ProblemListViewImpl extends AbstractView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(problem.getDescription() != null) ? (Jsoup
-									.parse(problem.getDescription()).html()
-									.length() > 200) ? Jsoup
-									.parse(problem.getDescription()).html()
-									.substring(0, 200) : Jsoup.parse(
-									problem.getDescription()).html() : "");
+							StringUtils.getStringFieldValue(problem
+									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
 			trRow5.appendChild(
@@ -380,17 +380,15 @@ public class ProblemListViewImpl extends AbstractView implements
 																					problem.getRaisedByUserAvatarId(),
 																					16)))
 													.appendText(
-															(problem.getRaisedByUserFullName() != null) ? Jsoup
-																	.parse(problem
-																			.getRaisedByUserFullName())
-																	.html()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(problem
+																			.getRaisedByUserFullName()))));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Impact:")).appendChild(
-					new Td().appendText((problem.getImpact() != null) ? Jsoup
-							.parse(problem.getImpact()).html() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getImpact())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -416,18 +414,15 @@ public class ProblemListViewImpl extends AbstractView implements
 																					problem.getRaisedByUserAvatarId(),
 																					16)))
 													.appendText(
-															(problem.getRaisedByUserFullName() != null) ? Jsoup
-																	.parse(problem
-																			.getRaisedByUserFullName())
-																	.html()
-																	: "")));
+															StringUtils
+																	.getStringFieldValue(problem
+																			.getRaisedByUserFullName()))));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Priority:"))
-					.appendChild(
-							new Td().appendText((problem.getPriority() != null) ? problem
-									.getPriority() : ""));
+							.appendText("Priority:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getPriority())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -440,16 +435,16 @@ public class ProblemListViewImpl extends AbstractView implements
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Rating:")).appendChild(
-					new Td().appendText((problem.getLevel() != null) ? ""
-							+ problem.getLevel() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getLevel())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Status:")).appendChild(
-					new Td().appendText((problem.getStatus() != null) ? problem
-							.getStatus() : ""));
+					new Td().appendText(StringUtils.getStringFieldValue(problem
+							.getStatus())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -461,12 +456,8 @@ public class ProblemListViewImpl extends AbstractView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(problem.getResolution() != null) ? (Jsoup
-									.parse(problem.getResolution()).html()
-									.length() > 200) ? Jsoup
-									.parse(problem.getResolution()).html()
-									.substring(0, 200) : Jsoup.parse(
-									problem.getResolution()).html() : "");
+							StringUtils.getStringFieldValue(problem
+									.getResolution()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -484,8 +475,8 @@ public class ProblemListViewImpl extends AbstractView implements
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error("Error while generate tooltip for Problem", e);
 			return "";
 		}
 	}
-
 }
