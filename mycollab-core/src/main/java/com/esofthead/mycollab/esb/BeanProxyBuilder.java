@@ -26,8 +26,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * Utility class to bind a spring service bean with endpoints in integration
  * pattern.
  * 
- * @author haiphucnguyen
- * 
  */
 public class BeanProxyBuilder {
 

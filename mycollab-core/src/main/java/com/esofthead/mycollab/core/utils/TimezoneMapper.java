@@ -21,8 +21,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 /**
- * 
- * @author haiphucnguyen
+ * Class keep all timezones of system
  * 
  */
 public class TimezoneMapper {

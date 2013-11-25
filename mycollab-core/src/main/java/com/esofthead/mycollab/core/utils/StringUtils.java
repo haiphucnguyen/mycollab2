@@ -21,8 +21,6 @@ import org.jsoup.Jsoup;
 /**
  * Utility class to process string
  * 
- * @author haiphucnguyen
- * 
  */
 public class StringUtils {
 	public static String subString(String input, int length) {

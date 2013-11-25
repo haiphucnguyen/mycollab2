@@ -28,12 +28,11 @@ import org.apache.velocity.tools.config.EasyFactoryConfiguration;
 import org.apache.velocity.tools.generic.DateTool;
 
 /**
+ * Wrap velocity engine
  * 
- * @author haiphucnguyen
- *
  */
 public class TemplateEngine {
-	
+
 	private static ToolManager toolManager;
 
 	private static VelocityEngine voEngine;
@@ -52,7 +51,6 @@ public class TemplateEngine {
 	public static ToolContext createContext() {
 		return toolManager.createContext();
 	}
-	
 
 	public static void evaluate(TemplateContext context, Writer writer,
 			String message, Reader reader) {

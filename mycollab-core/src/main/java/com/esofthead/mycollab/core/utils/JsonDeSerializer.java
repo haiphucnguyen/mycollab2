@@ -32,8 +32,6 @@ import com.google.gson.GsonBuilder;
  * Utility to serialize and deserialize java object to json data format and vice
  * versa.
  * 
- * @author haiphucnguyen
- * 
  */
 public class JsonDeSerializer {
 	private static final Gson gson;
