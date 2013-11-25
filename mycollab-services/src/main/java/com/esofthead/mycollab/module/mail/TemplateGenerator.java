@@ -29,11 +29,22 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
+/**
+ * Generate subject and body content of email base on velocity template engine.
+ */
 public class TemplateGenerator {
 	private final String subjectTemplate;
 	private final String contentTemplatePathFile;
 	private final TemplateContext templateContext;
 
+	/**
+	 * Initiate Template Generator instance
+	 * 
+	 * @param subjectTemplate
+	 *            subject template base on velocity format
+	 * @param contentTemplatePathFile
+	 *            path of velocity template file seek in MyCollab classpath
+	 */
 	public TemplateGenerator(String subjectTemplate,
 			String contentTemplatePathFile) {
 
@@ -58,6 +69,11 @@ public class TemplateGenerator {
 		templateContext.put(key, value);
 	}
 
+	/**
+	 * Generate subject content base template
+	 * 
+	 * @return email subject
+	 */
 	public String generateSubjectContent() {
 		StringWriter writer = new StringWriter();
 		Reader reader = new StringReader(subjectTemplate);
@@ -65,6 +81,11 @@ public class TemplateGenerator {
 		return writer.toString();
 	}
 
+	/**
+	 * Generate body content base template
+	 * 
+	 * @return email body
+	 */
 	public String generateBodyContent() {
 		StringWriter writer = new StringWriter();
 		Reader reader;

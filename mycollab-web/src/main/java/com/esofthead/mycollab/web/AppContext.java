@@ -52,25 +52,53 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.Application;
 
 /**
+ * The core class that keep user session data while user login to MyCollab
+ * successfully. We use thread local pattern to keep App context instance of
+ * every user, so in current thread you can use static methods of AppContext to
+ * get current user without fearing it impacts to other user sessions logging in
+ * MyCollab system.
  * 
- * @author haiphucnguyen
- *
  */
 public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static int UPDATE_TIME_DURATION = 300000;
+
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 
 	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
+	/**
+	 * Current user log in to MyCollab
+	 */
 	private SimpleUser session;
+
+	/**
+	 * Preference information of current user log in to MyCollab
+	 */
 	private UserPreference userPreference;
+
+	/**
+	 * Billing information of account of current user
+	 */
 	private SimpleBillingAccount billingAccount;
 
+	/**
+	 * Last time current user access MyCollab
+	 */
 	private long lastAccessTime = 0;
 
+	/**
+	 * Subdomain associates with account of current user. This value is valid
+	 * only for on-demand edition
+	 */
 	private String subdomain;
+
+	/**
+	 * id of account of current user. This value is valid only for on-demand
+	 * edition. Though other editions also use this id in all of queries but if
+	 * you have two different account ids in system may cause abnormal issues
+	 */
 	private Integer accountId = null;
 
 	public AppContext(MyCollabApplication application) {
@@ -84,6 +112,10 @@ public class AppContext implements Serializable {
 		});
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static AppContext getInstance() {
 		try {
 			return MyCollabApplication.getInstance().getSessionData();
@@ -130,6 +162,16 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * Keep user session in server sessions
+	 * 
+	 * @param userSession
+	 *            current user
+	 * @param userPref
+	 *            current user preference
+	 * @param billingAc
+	 *            account information of current user
+	 */
 	public void setSession(SimpleUser userSession, UserPreference userPref,
 			SimpleBillingAccount billingAc) {
 		session = userSession;
@@ -141,10 +183,19 @@ public class AppContext implements Serializable {
 				.put(USER_TIMEZONE, timezone);
 	}
 
+	/**
+	 * Get current user in session
+	 * 
+	 * @return current user in session
+	 */
 	public static SimpleUser getSession() {
 		return getInstance().session;
 	}
 
+	/**
+	 * 
+	 * @param domain
+	 */
 	public void initDomain(String domain) {
 		this.subdomain = domain;
 		BillingAccountService billingService = ApplicationContextUtil
@@ -180,6 +231,11 @@ public class AppContext implements Serializable {
 						});
 	}
 
+	/**
+	 * Get account id of current user
+	 * 
+	 * @return account id of current user. Return 0 if can not get
+	 */
 	public static Integer getAccountId() {
 		try {
 			return getInstance().accountId;
@@ -188,6 +244,11 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * Get subdomain of current user
+	 * 
+	 * @return subdomain of current user
+	 */
 	public static String getSubDomain() {
 		return getInstance().subdomain;
 	}
@@ -203,6 +264,11 @@ public class AppContext implements Serializable {
 		return getInstance().siteUrl;
 	}
 
+	/**
+	 * Get username of current user
+	 * 
+	 * @return username of current user
+	 */
 	public static String getUsername() {
 		try {
 			return getInstance().session.getUsername();
@@ -211,22 +277,43 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * Get avatar id of current user
+	 * 
+	 * @return avatar id of current user
+	 */
 	public static String getUserAvatarId() {
 		return getInstance().session.getAvatarid();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static UserPreference getUserPreference() {
 		return getInstance().userPreference;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static SimpleBillingAccount getBillingAccount() {
 		return getInstance().billingAccount;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static Application getApplication() {
 		return MyCollabApplication.getInstance();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static boolean isAdmin() {
 		Boolean isAdmin = getInstance().session.getIsAccountOwner();
 		if (isAdmin == null) {
@@ -236,6 +323,11 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public static boolean canBeYes(String permissionItem) {
 		if (isAdmin()) {
 			return true;
@@ -249,6 +341,11 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public static boolean canBeFalse(String permissionItem) {
 		if (isAdmin()) {
 			return true;
@@ -262,6 +359,11 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public static boolean canRead(String permissionItem) {
 		if (isAdmin()) {
 			return true;
@@ -275,6 +377,11 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public static boolean canWrite(String permissionItem) {
 		if (isAdmin()) {
 			return true;
@@ -287,6 +394,11 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public static boolean canAccess(String permissionItem) {
 		if (isAdmin()) {
 			return true;
@@ -299,24 +411,45 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static PermissionMap getPermissionMap() {
 		return getInstance().session.getPermissionMaps();
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	public static void putVariable(String key, Object value) {
 		MyCollabApplication.getInstance().variables.put(key, value);
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public static Object getVariable(String key) {
 		return MyCollabApplication.getInstance().variables.get(key);
 	}
 
+	/**
+	 * 
+	 * @param key
+	 */
 	public static void removeVariable(String key) {
 		if (getInstance() != null) {
 			MyCollabApplication.getInstance().variables.remove(key);
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public static void clearSession() {
 		if (getInstance() != null) {
 			MyCollabApplication.getInstance().variables.clear();
@@ -324,9 +457,7 @@ public class AppContext implements Serializable {
 			getInstance().userPreference = null;
 		}
 	}
-
-	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
-			"MM/dd/yyyy hh:mm a");
+	
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
 	private static SimpleDateFormat df = new SimpleDateFormat(
@@ -348,23 +479,32 @@ public class AppContext implements Serializable {
 		return timezone;
 	}
 
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static String formatDateTime(Date date) {
-		if (date == null) {
-			return "";
-		}
-
-		TimeZone timezone = (TimeZone) getVariable(USER_TIMEZONE);
-		if (timezone != null) {
-			simpleDateTimeFormat.setTimeZone(timezone);
-		}
-		return simpleDateTimeFormat.format(date);
+		return DateTimeUtils.formatDateTime(date,
+				(TimeZone) getVariable(USER_TIMEZONE));
 	}
 
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static String formatDate(Date date) {
 		return DateTimeUtils.formatDate(date,
 				(TimeZone) getVariable(USER_TIMEZONE));
 	}
 
+	/**
+	 * 
+	 * @param date
+	 * @param textIfDateIsNull
+	 * @return
+	 */
 	public static String formatDate(Date date, String textIfDateIsNull) {
 		if (date == null) {
 			return textIfDateIsNull;
@@ -373,6 +513,11 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param dateVal
+	 * @return
+	 */
 	public static Date convertDate(String dateVal) {
 		try {
 			return simpleDateFormat.parse(dateVal);
@@ -389,6 +534,11 @@ public class AppContext implements Serializable {
 		return "MM/dd/yyyy hh:mm a";
 	}
 
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static String formatDateToHumanRead(Date date) {
 		if (date == null) {
 			return "";
@@ -397,6 +547,11 @@ public class AppContext implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @param fragement
+	 * @param windowTitle
+	 */
 	public static void addFragment(String fragement, String windowTitle) {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();

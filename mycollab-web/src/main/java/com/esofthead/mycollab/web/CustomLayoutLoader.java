@@ -19,6 +19,10 @@ package com.esofthead.mycollab.web;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.ui.CustomLayout;
 
+/**
+ * Load custom layout by classpath
+ * 
+ */
 public class CustomLayoutLoader {
 	public static CustomLayout createLayout(String layoutId) {
 		try {

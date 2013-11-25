@@ -19,9 +19,8 @@ package com.esofthead.mycollab.web;
 import com.vaadin.ui.CustomLayout;
 
 /**
+ * Dynamic load custom layout per classpath, not absolutely path
  * 
- * @author haiphucnguyen
- *
  */
 public class CustomLayoutExt extends CustomLayout {
 	private static final long serialVersionUID = 1L;

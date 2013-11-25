@@ -36,12 +36,13 @@ import com.esofthead.mycollab.module.file.service.RawContentService;
 public class AmazonRawContentServiceImpl implements RawContentService {
 
 	private S3StorageConfiguration storageConfiguration;
-	
+
 	public AmazonRawContentServiceImpl() {
 		storageConfiguration = (S3StorageConfiguration) SiteConfiguration
 				.getStorageConfiguration();
 	}
 
+	@Override
 	public void saveContent(String objectPath, InputStream stream) {
 
 		AmazonS3 s3client = storageConfiguration.newS3Client();
@@ -59,6 +60,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		}
 	}
 
+	@Override
 	public InputStream getContentStream(String objectPath) {
 		AmazonS3 s3client = storageConfiguration.newS3Client();
 
@@ -72,6 +74,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 		}
 	}
 
+	@Override
 	public void removePath(String object) {
 		AmazonS3 s3client = storageConfiguration.newS3Client();
 

@@ -34,6 +34,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.artur.icepush.ICEPushServlet;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.vaadin.Application;
 import com.vaadin.terminal.DownloadStream;
 import com.vaadin.terminal.gwt.server.AbstractApplicationServlet;
@@ -66,8 +68,13 @@ public class MyCollabServlet extends ICEPushServlet {
 		super.writeAjaxPageHtmlHeader(page, title, themeUri, request);
 		page.append("<meta name=\"robots\" content=\"nofollow\" />");
 		page.append("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>");
-		page.append("<script type=\"text/javascript\" src=\"https://s3.amazonaws.com/mycollab_assets/assets/js/stickytooltip.js\"></script>");
-		//page.append("<script type=\"text/javascript\" src=\"/VAADIN/themes/mycollab/stickytooltip.js\"></script>");
+
+		DeploymentMode deploymentMode = SiteConfiguration.getDeploymentMode();
+		if (deploymentMode == DeploymentMode.SITE) {
+			page.append("<script type=\"text/javascript\" src=\"https://s3.amazonaws.com/mycollab_assets/assets/js/stickytooltip.js\"></script>");
+		} else {
+			page.append("<script type=\"text/javascript\" src=\"assets/js/stickytooltip.js\"></script>");
+		}
 	}
 
 	// Implementations of Window and Application that are used only to provide
