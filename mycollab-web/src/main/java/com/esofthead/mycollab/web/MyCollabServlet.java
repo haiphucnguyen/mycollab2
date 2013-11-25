@@ -73,7 +73,7 @@ public class MyCollabServlet extends ICEPushServlet {
 		if (deploymentMode == DeploymentMode.SITE) {
 			page.append("<script type=\"text/javascript\" src=\"https://s3.amazonaws.com/mycollab_assets/assets/js/stickytooltip.js\"></script>");
 		} else {
-			page.append("<script type=\"text/javascript\" src=\"assets/js/stickytooltip.js\"></script>");
+			page.append("<script type=\"text/javascript\" src=\"/assets/js/stickytooltip.js\"></script>");
 		}
 	}
 

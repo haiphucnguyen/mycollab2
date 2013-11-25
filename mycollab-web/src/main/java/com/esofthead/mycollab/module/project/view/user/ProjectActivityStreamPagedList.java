@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.user;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
@@ -101,15 +102,12 @@ public class ProjectActivityStreamPagedList
 				}
 				String content = "";
 
-				String dateTimeTypeIdStr = AppContext
-						.formatDateTime(itemCreatedDate).replace("/", "")
-						.trim().replace(" ", "").replace(":", "")
-						+ activityStream.getTypeid();
-				String idDivSeverData = "serverdata" + dateTimeTypeIdStr + "";
-				String idToopTipDiv = "tooltip" + dateTimeTypeIdStr + "";
+				String randomStrId = UUID.randomUUID().toString();
+				String idDivSeverData = "serverdata" + randomStrId + "";
+				String idToopTipDiv = "tooltip" + randomStrId + "";
 				String idStickyToolTipDiv = "mystickyTooltip"
-						+ dateTimeTypeIdStr;
-				String idtagA = "tagA" + dateTimeTypeIdStr;
+						+ randomStrId;
+				String idtagA = "tagA" + randomStrId;
 
 				if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 						.getAction())) {
@@ -128,7 +126,7 @@ public class ProjectActivityStreamPagedList
 							activityStream.getExtratypeid(),
 							activityStream.getType(),
 							activityStream.getTypeid());
-					String arg6 = "'" + dateTimeTypeIdStr + "'";
+					String arg6 = "'" + randomStrId + "'";
 					String arg7 = "'" + activityStream.getType() + "'";
 					String arg8 = "'" + activityStream.getTypeid() + "'";
 					String arg9 = "'" + AppContext.getSiteUrl() + "tooltip/'";
@@ -165,7 +163,7 @@ public class ProjectActivityStreamPagedList
 							activityStream.getExtratypeid(),
 							activityStream.getType(),
 							activityStream.getTypeid());
-					String arg6 = "'" + dateTimeTypeIdStr + "'";
+					String arg6 = "'" + randomStrId + "'";
 					String arg7 = "'" + activityStream.getType() + "'";
 					String arg8 = "'" + activityStream.getTypeid() + "'";
 					String arg9 = "'" + AppContext.getSiteUrl() + "tooltip/'";

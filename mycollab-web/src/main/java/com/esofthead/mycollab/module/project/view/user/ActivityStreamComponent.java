@@ -23,6 +23,7 @@ package com.esofthead.mycollab.module.project.view.user;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -146,17 +147,14 @@ public class ActivityStreamComponent extends Depot {
 
 					String content = "";
 
-					String dateTimeTypeIdStr = AppContext
-							.formatDateTime(itemCreatedDate).replace("/", "")
-							.trim().replace(" ", "").replace(":", "")
-							+ activityStream.getTypeid();
+					String randomStrId = UUID.randomUUID().toString();
 					String idDivSeverData = "projectOverViewserverdata"
-							+ dateTimeTypeIdStr + "";
+							+ randomStrId + "";
 					String idToopTipDiv = "projectOverViewtooltip"
-							+ dateTimeTypeIdStr + "";
+							+ randomStrId + "";
 					String idStickyToolTipDiv = "projectOverViewmystickyTooltip"
-							+ dateTimeTypeIdStr;
-					String idtagA = "projectOverViewtagA" + dateTimeTypeIdStr;
+							+ randomStrId;
+					String idtagA = "projectOverViewtagA" + randomStrId;
 
 					String arg0 = UserAvatarControlFactory.getAvatarLink(
 							activityStream.getCreatedUserAvatarId(), 16);
@@ -176,7 +174,7 @@ public class ActivityStreamComponent extends Depot {
 							activityStream.getExtratypeid(),
 							activityStream.getType(),
 							activityStream.getTypeid());
-					String arg7 = "'" + dateTimeTypeIdStr + "'";
+					String arg7 = "'" + randomStrId + "'";
 					String arg8 = "'" + activityStream.getType() + "'";
 					String arg9 = "'" + activityStream.getTypeid() + "'";
 					String arg10 = "'" + AppContext.getSiteUrl() + "tooltip/'";
