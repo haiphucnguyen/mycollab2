@@ -23,6 +23,7 @@ package com.esofthead.mycollab.module.crm.view;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -149,29 +150,43 @@ public class ActivityStreamPanel extends Depot {
 							.equals(activityStream.getAction())) {
 						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
 					}
+					String randomStrId = UUID.randomUUID().toString();
+					String idDivSeverData = "crmActivityserverdata" + randomStrId + "";
+					String idToopTipDiv = "crmActivitytooltip" + randomStrId + "";
+					String idStickyToolTipDiv = "crmActivitymystickyTooltip" + randomStrId;
+					String idtagA = "crmActivitytagA" + randomStrId;
+					String arg0 = UserAvatarControlFactory.getAvatarLink(
+							activityStream.getCreatedUserAvatarId(), 16);
+					String arg1 = UserLinkUtils.generatePreviewFullUserLink(
+							SiteConfiguration.getSiteUrl(AppContext
+									.getSession().getSubdomain()),
+							activityStream.getCreateduser());
+					String arg2 = activityStream.getCreatedUserFullName();
+					String arg3 = LocalizationHelper
+							.getMessage(CrmLocalizationTypeMap
+									.getType(activityStream.getType()));
+					String arg4 = CrmResources.getResourceLink(activityStream
+							.getType());
+					String arg5 = idtagA;
+					String arg6 = CrmLinkGenerator.generateCrmItemLink(
+							activityStream.getType(),
+							activityStream.getTypeid());
+					String arg7 = "'" + randomStrId + "'";
+					String arg8 = "'" + activityStream.getType() + "'";
+					String arg9 = "'" + activityStream.getTypeid() + "'";
+					String arg10 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+					String arg11 = "'" + activityStream.getSaccountid() + "'";
+					String arg12 = "'" + AppContext.getSiteUrl() + "'";
+					String arg13 = AppContext.getSession().getTimezone();
+					String arg14 = activityStream.getNamefield();
+					String arg15 = idStickyToolTipDiv;
+					String arg16 = idToopTipDiv;
+					String arg17 = idDivSeverData;
 					StringBuffer content = new StringBuffer(
-							LocalizationHelper.getMessage(action,
-									UserAvatarControlFactory.getAvatarLink(
-											activityStream
-													.getCreatedUserAvatarId(),
-											16),
-									UserLinkUtils.generatePreviewFullUserLink(
-											SiteConfiguration
-													.getSiteUrl(AppContext
-															.getSession()
-															.getSubdomain()),
-											activityStream.getCreateduser()),
-									activityStream.getCreatedUserFullName(),
-									LocalizationHelper
-											.getMessage(CrmLocalizationTypeMap
-													.getType(activityStream
-															.getType())),
-									CrmResources.getResourceLink(activityStream
-											.getType()),
-									CrmLinkGenerator.generateCrmItemLink(
-											activityStream.getType(),
-											activityStream.getTypeid()),
-									activityStream.getNamefield()));
+							LocalizationHelper.getMessage(action, arg0, arg1,
+									arg2, arg3, arg4, arg5, arg6, arg7, arg8,
+									arg9, arg10, arg11, arg12, arg13, arg14,
+									arg15, arg16, arg17));
 					if (activityStream.getAssoAuditLog() != null) {
 						content.append(CrmActivityStreamGenerator
 								.generatorDetailChangeOfActivity(activityStream));

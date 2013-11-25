@@ -201,3 +201,32 @@ function projectOverViewOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId,
 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
+
+function crmActivityOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL, timeZone){
+	var idDIVserverdata = "crmActivityserverdata" + dateTimeTypeIdStr;
+	var idStickyToolTipDiv = "crmActivitymystickyTooltip"+dateTimeTypeIdStr;
+	var idTagA = "crmActivitytagA"+ dateTimeTypeIdStr;
+	$('.stickytooltip').bind('mouseleave',function(e){
+    	$('.stickytooltip').hide();
+	});
+	if(type=="Task") type="CRMTask";
+	if($("#"+idDIVserverdata).html()== ""){
+		$.ajax({
+		      type: 'POST',
+		      url: url,
+		      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone},
+		      success: function(data){
+		      	 if(data.trim()!= "null"){
+		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
+		      	 		$("#"+idDIVserverdata).html(data);
+		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		      	 }else{
+		      		// $("#"+idDIVserverdata).html("This item has removed!");
+		      	 }
+		      	
+		      }
+		});
+	}else{
+		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+	}
+}
