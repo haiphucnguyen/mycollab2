@@ -34,7 +34,9 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
@@ -63,7 +65,13 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			String timeZone = request.getParameter("timeZone");
 
 			String html = "";
-			if ("Bug".equals(type)) {
+			if ("TaskList".equals(type)) {
+				ProjectTaskListService service = ApplicationContextUtil
+						.getSpringBean(ProjectTaskListService.class);
+				SimpleTaskList taskList = service.findById(typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipTaskList(
+						taskList, siteURL, timeZone);
+			} else if ("Bug".equals(type)) {
 				BugService service = ApplicationContextUtil
 						.getSpringBean(BugService.class);
 				SimpleBug bug = service.findById(typeid, sAccountId);
