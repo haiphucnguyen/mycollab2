@@ -113,8 +113,6 @@ public class MyCollabServlet extends ICEPushServlet {
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
-		// this.caption = servletConfig.getInitParameter("caption");
-		// this.theme = servletConfig.getInitParameter("theme");
 		this.caption = "MyCollab - Online Office Cloud Tools";
 		this.theme = "mycollab";
 	}

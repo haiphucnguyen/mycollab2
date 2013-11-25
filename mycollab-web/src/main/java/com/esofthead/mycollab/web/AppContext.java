@@ -193,8 +193,10 @@ public class AppContext implements Serializable {
 	}
 
 	/**
+	 * Start application by query account base on <code>domain</code>
 	 * 
 	 * @param domain
+	 *            associate with current user logged in.
 	 */
 	public void initDomain(String domain) {
 		this.subdomain = domain;
@@ -255,6 +257,10 @@ public class AppContext implements Serializable {
 
 	private String siteUrl = null;
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static String getSiteUrl() {
 		if (getInstance().siteUrl == null) {
 			getInstance().siteUrl = SiteConfiguration
@@ -287,30 +293,34 @@ public class AppContext implements Serializable {
 	}
 
 	/**
+	 * Get preference info of current user
 	 * 
-	 * @return
+	 * @return preference info of current user
 	 */
 	public static UserPreference getUserPreference() {
 		return getInstance().userPreference;
 	}
 
 	/**
+	 * Get billing account of current logged in user
 	 * 
-	 * @return
+	 * @return billing account of current logged in user
 	 */
 	public static SimpleBillingAccount getBillingAccount() {
 		return getInstance().billingAccount;
 	}
 
 	/**
+	 * Get current application instance
 	 * 
-	 * @return
+	 * @return current application instance
 	 */
 	public static Application getApplication() {
 		return MyCollabApplication.getInstance();
 	}
 
 	/**
+	 * Check whether current user is admin or system
 	 * 
 	 * @return
 	 */
@@ -457,7 +467,7 @@ public class AppContext implements Serializable {
 			getInstance().userPreference = null;
 		}
 	}
-	
+
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
 	private static SimpleDateFormat df = new SimpleDateFormat(
