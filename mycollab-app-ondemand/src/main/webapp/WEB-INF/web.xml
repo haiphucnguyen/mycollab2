@@ -328,6 +328,17 @@
     </servlet-mapping>
 
     <servlet>
+        <display-name>TooltipGeneratorServlet</display-name>
+        <servlet-name>tooltipGeneratorServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>tooltipGeneratorServlet</servlet-name>
+        <url-pattern>/tooltip/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <display-name>AppExceptionHandlerServlet</display-name>
         <servlet-name>appExceptionHandlerServlet</servlet-name>
         <servlet-class>com.esofthead.mycollab.servlet.AppExceptionHandler</servlet-class>
