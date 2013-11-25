@@ -33,6 +33,8 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 
 @Component
@@ -57,7 +59,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleOpportunity simpleOpportunity = opportunityService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -69,6 +71,8 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 					"Opportunity: \"" + subject + "\" has been created",
 					"templates/email/crm/opportunityCreatedNotifier.mt");
 
+			ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleOpportunity,
+					user.getTimezone(), new String[] { "expectedcloseddate" });
 			templateGenerator.putVariable("simpleOpportunity",
 					simpleOpportunity);
 			templateGenerator.putVariable("hyperLinks",
@@ -99,7 +103,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleOpportunity simpleOpportunity = opportunityService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -110,6 +114,8 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"Opportunity: \"" + subject + "...\" has been updated",
 				"templates/email/crm/opportunityUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleOpportunity,
+				user.getTimezone(), new String[] { "expectedcloseddate" });
 		templateGenerator.putVariable("simpleOpportunity", simpleOpportunity);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleOpportunity));
@@ -122,6 +128,8 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleOpportunity.getSaccountid()),
 							auditLog.getPosteduser()));
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "expectedcloseddate" });
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -131,7 +139,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int accountRecordId = emailNotification.getTypeid();
 		SimpleOpportunity simpleOpportunity = opportunityService.findById(
 				accountRecordId, emailNotification.getSaccountid());

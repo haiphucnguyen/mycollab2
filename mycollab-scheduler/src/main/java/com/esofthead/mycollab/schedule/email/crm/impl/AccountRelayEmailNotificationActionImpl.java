@@ -34,7 +34,9 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 
 @Component
@@ -65,7 +67,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int recordAccountId = emailNotification.getTypeid();
 		simpleAccount = accountService.findById(recordAccountId,
 				emailNotification.getSaccountid());
@@ -76,6 +78,14 @@ public class AccountRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"Account: \"" + subject + "\" has been created",
 					"templates/email/crm/accountCreatedNotifier.mt");
+
+			ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleAccount,
+					user.getTimezone(), new String[] { "startdate", "enddate",
+							"deadline", "actualstartdate", "actualenddate" });
+
+			ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleAccount,
+					user.getTimezone(), new String[] { "startdate", "enddate",
+							"deadline", "actualstartdate", "actualenddate" });
 
 			templateGenerator.putVariable("simpleAccount", simpleAccount);
 			templateGenerator.putVariable("hyperLinks",
@@ -105,7 +115,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		simpleAccount = accountService.findById(emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 
@@ -137,7 +147,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int accountRecordId = emailNotification.getTypeid();
 		simpleAccount = accountService.findById(accountRecordId,
 				emailNotification.getSaccountid());

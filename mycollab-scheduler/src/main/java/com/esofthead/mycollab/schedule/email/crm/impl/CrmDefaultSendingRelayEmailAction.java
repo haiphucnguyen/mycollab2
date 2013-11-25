@@ -76,9 +76,10 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter(
 				notification, MonitorTypeConstants.CREATE_ACTION);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
-			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
-			if (templateGenerator != null) {
-				for (SimpleUser user : notifiers) {
+			for (SimpleUser user : notifiers) {
+				TemplateGenerator templateGenerator = templateGeneratorForCreateAction(
+						notification, user);
+				if (templateGenerator != null) {
 					String userName = user.getUsername();
 					if (userName == null || userName.length() == 0) {
 						User currentUser = userService.findUserByUserName(user
@@ -117,9 +118,10 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter(
 				notification, MonitorTypeConstants.UPDATE_ACTION);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
-			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
-			if (templateGenerator != null) {
-				for (SimpleUser user : notifiers) {
+			for (SimpleUser user : notifiers) {
+				TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(
+						notification, user);
+				if (templateGenerator != null) {
 					String userName = user.getUsername();
 					if (userName == null) {
 						User currentUser = userService.findUserByUserName(user
@@ -157,9 +159,10 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter(
 				notification, MonitorTypeConstants.ADD_COMMENT_ACTION);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
-			TemplateGenerator templateGenerator = templateGeneratorForCommentAction(notification);
-			if (templateGenerator != null) {
-				for (SimpleUser user : notifiers) {
+			for (SimpleUser user : notifiers) {
+				TemplateGenerator templateGenerator = templateGeneratorForCommentAction(
+						notification, user);
+				if (templateGenerator != null) {
 					String userName = user.getUsername();
 					if (userName == null) {
 						User currentUser = userService.findUserByUserName(user
@@ -192,13 +195,13 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 	}
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification);
+			SimpleRelayEmailNotification emailNotification, SimpleUser user);
 
 	protected abstract TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification);
+			SimpleRelayEmailNotification emailNotification, SimpleUser user);
 
 	protected abstract TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification);
+			SimpleRelayEmailNotification emailNotification, SimpleUser user);
 
 	protected List<SimpleUser> getListNotififyUserWithFilter(
 			SimpleRelayEmailNotification notification, String type) {

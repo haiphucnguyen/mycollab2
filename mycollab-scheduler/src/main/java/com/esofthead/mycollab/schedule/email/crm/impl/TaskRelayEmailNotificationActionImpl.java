@@ -33,6 +33,8 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 
 @Component
@@ -57,7 +59,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleTask simpleTask = taskService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -69,6 +71,9 @@ public class TaskRelayEmailNotificationActionImpl extends
 					"CRM-Task: \"" + subject + "\" has been created",
 					"templates/email/crm/crmTaskCreatedNotifier.mt");
 
+			ScheduleUserTimeZoneUtils
+					.formatDateTimeZone(simpleTask, user.getTimezone(),
+							new String[] { "startdate", "duedate" });
 			templateGenerator.putVariable("simpleTask", simpleTask);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(simpleTask));
@@ -97,7 +102,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleTask simpleTask = taskService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -107,6 +112,8 @@ public class TaskRelayEmailNotificationActionImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"CRM-Task: \"" + subject + "...\" has been updated",
 				"templates/email/crm/crmTaskUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleTask,
+				user.getTimezone(), new String[] { "startdate", "duedate" });
 		templateGenerator.putVariable("simpleTask", simpleTask);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleTask));
@@ -119,6 +126,8 @@ public class TaskRelayEmailNotificationActionImpl extends
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleTask.getSaccountid()),
 							auditLog.getPosteduser()));
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "startdate", "duedate" });
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -128,7 +137,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleTask simpleTask = taskService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());

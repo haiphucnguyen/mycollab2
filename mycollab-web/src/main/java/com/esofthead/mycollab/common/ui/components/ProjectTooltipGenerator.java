@@ -338,6 +338,8 @@ public class ProjectTooltipGenerator {
 	public static String generateToolTipRisk(SimpleRisk risk, String siteURL,
 			String timeZone) {
 		try {
+			if (risk == null)
+				return null;
 			Div div = new Div();
 			H3 riskName = new H3();
 			riskName.appendText(risk.getRiskname());
@@ -487,6 +489,8 @@ public class ProjectTooltipGenerator {
 	public static String generateToolTipProblem(SimpleProblem problem,
 			String siteURL, String timeZone) {
 		try {
+			if (problem == null)
+				return null;
 			Div div = new Div();
 			H3 problemName = new H3();
 			problemName.appendText(problem.getIssuename());
@@ -638,6 +642,8 @@ public class ProjectTooltipGenerator {
 	public static String generateToolTipVersion(SimpleVersion version,
 			String siteURL, String timeZone) {
 		try {
+			if (version == null)
+				return null;
 			Div div = new Div();
 			H3 versionName = new H3();
 			versionName
@@ -691,6 +697,8 @@ public class ProjectTooltipGenerator {
 	public static String generateToolTipComponent(SimpleComponent component,
 			String siteURL, String timeZone) {
 		try {
+			if (component == null)
+				return null;
 			Div div = new Div();
 			H3 componentName = new H3();
 			componentName.appendText(Jsoup.parse(component.getComponentname())

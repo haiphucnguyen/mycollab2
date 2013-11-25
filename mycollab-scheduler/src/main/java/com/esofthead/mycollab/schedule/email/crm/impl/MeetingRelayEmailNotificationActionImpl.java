@@ -33,6 +33,8 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.MeetingRelayEmailNotificationAction;
 
 @Component
@@ -57,7 +59,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleMeeting simpleMeeting = meetingService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -69,6 +71,9 @@ public class MeetingRelayEmailNotificationActionImpl extends
 					"Meeting: \"" + subject + "\" has been created",
 					"templates/email/crm/meetingCreatedNotifier.mt");
 
+			ScheduleUserTimeZoneUtils
+					.formatDateTimeZone(simpleMeeting, user.getTimezone(),
+							new String[] { "startdate", "enddate" });
 			templateGenerator.putVariable("simpleMeeting", simpleMeeting);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(simpleMeeting));
@@ -91,7 +96,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleMeeting simpleMeeting = meetingService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -101,6 +106,8 @@ public class MeetingRelayEmailNotificationActionImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"Meeting: \"" + subject + "...\" has been updated",
 				"templates/email/crm/meetingUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleMeeting,
+				user.getTimezone(), new String[] { "startdate", "enddate" });
 		templateGenerator.putVariable("simpleMeeting", simpleMeeting);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleMeeting));
@@ -113,6 +120,8 @@ public class MeetingRelayEmailNotificationActionImpl extends
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleMeeting.getSaccountid()),
 							auditLog.getPosteduser()));
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "startdate", "enddate" });
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -122,7 +131,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleMeeting simpleMeeting = meetingService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());

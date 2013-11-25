@@ -33,6 +33,8 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
 
 @Component
@@ -57,7 +59,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleCampaign simpleCampaign = campaignService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -69,6 +71,9 @@ public class CampaignRelayEmailNotificationActionImpl extends
 					"Campaign: \"" + subject + "\" has been created",
 					"templates/email/crm/campaignCreatedNotifier.mt");
 
+			ScheduleUserTimeZoneUtils
+					.formatDateTimeZone(simpleCampaign, user.getTimezone(),
+							new String[] { "startdate", "enddate" });
 			templateGenerator.putVariable("simpleCampaign", simpleCampaign);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(simpleCampaign));
@@ -80,7 +85,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleCampaign simpleCampaign = campaignService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -91,6 +96,8 @@ public class CampaignRelayEmailNotificationActionImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"Campaign: \"" + subject + "...\" has been updated",
 				"templates/email/crm/campaignUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleCampaign,
+				user.getTimezone(), new String[] { "startdate", "enddate" });
 		templateGenerator.putVariable("simpleCampaign", simpleCampaign);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleCampaign));
@@ -103,6 +110,8 @@ public class CampaignRelayEmailNotificationActionImpl extends
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleCampaign.getSaccountid()),
 							auditLog.getPosteduser()));
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "startdate", "enddate" });
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}
@@ -111,7 +120,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int accountRecordId = emailNotification.getTypeid();
 		SimpleCampaign simpleCampaign = campaignService.findById(
 				accountRecordId, emailNotification.getSaccountid());
