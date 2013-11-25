@@ -20,8 +20,6 @@ package com.esofthead.mycollab.core;
  * Generic exception of MyCollab. All exceptions occurs in MyCollab should be
  * wrapped into this exception type.
  * 
- * @author haiphucnguyen
- * 
  */
 public class MyCollabException extends RuntimeException {
 

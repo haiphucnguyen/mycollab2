@@ -17,9 +17,8 @@
 package com.esofthead.mycollab.security;
 
 /**
+ * Signal interface of Permission flag
  * 
- * @author haiphucnguyen
- *
  */
 public interface PermissionFlag {
 

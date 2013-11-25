@@ -19,8 +19,6 @@ package com.esofthead.mycollab.core;
 /**
  * MyCollab has two mode: on cloud and local mode.
  * 
- * @author haiphucnguyen
- * 
  */
 public enum DeploymentMode {
 	SITE, LOCAL

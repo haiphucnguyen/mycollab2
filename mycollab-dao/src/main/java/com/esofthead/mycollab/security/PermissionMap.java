@@ -23,18 +23,28 @@ import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 
 /**
- * 
- * @author haiphucnguyen
+ * Map contains all permissions in MyCollab, it is used to all permissions if
+ * logged in user.
  */
 public class PermissionMap extends ValuedBean {
 	private static final long serialVersionUID = 1L;
 
 	private Map<String, Integer> perMap = new HashMap<String, Integer>();
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @param value
+	 */
 	public void addPath(String permissionItem, Integer value) {
 		perMap.put(permissionItem, value);
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public Integer getPermissionFlag(String permissionItem) {
 		Object value = perMap.get(permissionItem);
 		if (value == null) {
@@ -44,6 +54,20 @@ public class PermissionMap extends ValuedBean {
 		return (Integer) value;
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
+	public Integer get(String permissionItem) {
+		return perMap.get(permissionItem);
+	}
+
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public boolean canBeYes(String permissionItem) {
 		Object value = perMap.get(permissionItem);
 		if (value == null) {
@@ -53,6 +77,11 @@ public class PermissionMap extends ValuedBean {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public boolean canBeFalse(String permissionItem) {
 		Object value = perMap.get(permissionItem);
 		if (value == null) {
@@ -62,6 +91,11 @@ public class PermissionMap extends ValuedBean {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public boolean canRead(String permissionItem) {
 		Object value = perMap.get(permissionItem);
 		if (value == null) {
@@ -71,6 +105,11 @@ public class PermissionMap extends ValuedBean {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public boolean canWrite(String permissionItem) {
 		Object value = perMap.get(permissionItem);
 		if (value == null) {
@@ -80,6 +119,11 @@ public class PermissionMap extends ValuedBean {
 		}
 	}
 
+	/**
+	 * 
+	 * @param permissionItem
+	 * @return
+	 */
 	public boolean canAccess(String permissionItem) {
 		Object value = perMap.get(permissionItem);
 		if (value == null) {
@@ -89,18 +133,27 @@ public class PermissionMap extends ValuedBean {
 		}
 	}
 
-	public Integer get(String key) {
-		return perMap.get(key);
-	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String toJsonString() {
 		return JsonDeSerializer.toJson(this);
 	}
 
+	/**
+	 * 
+	 * @param json
+	 * @return
+	 */
 	public static PermissionMap fromJsonString(String json) {
 		return JsonDeSerializer.fromJson(json, PermissionMap.class);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static PermissionMap buildAdminPermissionCollection() {
 		PermissionMap permissionMap = new PermissionMap();
 		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
@@ -130,6 +183,10 @@ public class PermissionMap extends ValuedBean {
 		return permissionMap;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static PermissionMap buildEmployeePermissionCollection() {
 		final PermissionMap permissionMap = new PermissionMap();
 		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
@@ -160,6 +217,10 @@ public class PermissionMap extends ValuedBean {
 		return permissionMap;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static PermissionMap buildGuestPermissionCollection() {
 		final PermissionMap permissionMap = new PermissionMap();
 		for (final PermissionDefItem element : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
