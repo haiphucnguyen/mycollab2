@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -95,7 +94,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			out.println(html);
 			return;
 		} catch (Exception e) {
-			Log.error(
+			log.error(
 					"Error while get html tooltip form AnotatedTooltipGeneratorHandler",
 					e);
 			String html = null;
