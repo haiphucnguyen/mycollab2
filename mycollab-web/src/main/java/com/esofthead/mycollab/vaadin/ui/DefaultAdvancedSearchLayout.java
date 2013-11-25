@@ -33,7 +33,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.google.gson.reflect.TypeToken;
@@ -254,7 +254,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				}
 			}
 		});
-		tableActionControls.addPopupActionHandler(new PopupActionHandler() {
+		tableActionControls.addPopupActionHandler(new TablePopupActionHandler() {
 			@Override
 			public void onSelect(String id, String caption) {
 				if ("delete".equals(id)) {

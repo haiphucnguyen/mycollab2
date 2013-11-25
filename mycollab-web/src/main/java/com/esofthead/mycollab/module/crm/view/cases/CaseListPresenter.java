@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -60,7 +60,7 @@ public class CaseListPresenter extends
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
 							if (isSelectAll) {
 								NotificationUtil.showNotification(LocalizationHelper
 										.getMessage(
@@ -80,7 +80,7 @@ public class CaseListPresenter extends
 										.addWindow(new MailFormWindow(lstMail));
 							}
 
-						} else if (PopupActionHandler.MASS_UPDATE_ACTION
+						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
 								.equals(id)) {
 							MassUpdateCaseWindow massUpdateWindow = new MassUpdateCaseWindow(
 									LocalizationHelper

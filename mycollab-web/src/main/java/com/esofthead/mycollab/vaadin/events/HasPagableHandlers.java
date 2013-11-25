@@ -19,14 +19,15 @@ package com.esofthead.mycollab.vaadin.events;
 import java.io.Serializable;
 
 /**
- * 
- * @author haiphucnguyen
+ * Collection contains handlers of do paging in list or table
  * 
  */
 public interface HasPagableHandlers extends Serializable {
 	/**
+	 * Add page handler
 	 * 
 	 * @param handler
+	 *            page handler
 	 */
 	void addPagableHandler(PagableHandler handler);
 }

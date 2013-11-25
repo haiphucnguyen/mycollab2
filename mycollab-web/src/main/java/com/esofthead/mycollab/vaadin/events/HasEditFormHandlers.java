@@ -19,15 +19,16 @@ package com.esofthead.mycollab.vaadin.events;
 import java.io.Serializable;
 
 /**
+ * Collection contains all handlers when edit form
  * 
- * @author haiphucnguyen
- *
  * @param <T>
  */
 public interface HasEditFormHandlers<T> extends Serializable {
 	/**
+	 * Add edit form handler
 	 * 
 	 * @param handler
+	 *            handler of edit form
 	 */
 	void addFormHandler(EditFormHandler<T> handler);
 }

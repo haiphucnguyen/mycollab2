@@ -19,20 +19,13 @@ package com.esofthead.mycollab.vaadin.events;
 import java.io.Serializable;
 
 /**
- * 
- * @author haiphucnguyen
- *
+ * Page handler of view list or table.
  */
-public interface PagableHandler extends Serializable{
+public interface PagableHandler extends Serializable {
 	/**
+	 * Move current view to new page
 	 * 
 	 * @param newPageNumber
 	 */
 	void move(int newPageNumber);
-	
-	/**
-	 * 
-	 * @param numOfItems
-	 */
-	void displayItemChange(int numOfItems);
 }

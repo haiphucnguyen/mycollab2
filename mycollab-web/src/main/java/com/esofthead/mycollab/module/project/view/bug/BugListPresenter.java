@@ -41,7 +41,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 	private static final long serialVersionUID = 1L;
 
 	private boolean isSelectAll = false;
-	
+
 	public BugListPresenter() {
 		super(BugListView.class);
 
@@ -50,11 +50,6 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 
 			@Override
 			public void move(int newPageNumber) {
-				pageChange();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
 				pageChange();
 			}
 

@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -49,7 +49,7 @@ public class EventListPresenter extends
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
 						}

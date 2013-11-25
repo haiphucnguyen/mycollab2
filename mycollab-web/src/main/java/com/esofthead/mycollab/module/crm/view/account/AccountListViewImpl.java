@@ -34,7 +34,7 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -94,23 +94,23 @@ public class AccountListViewImpl extends AbstractView implements
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
 		this.tableActionControls = new PopupButtonControl(
-				PopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(PopupActionHandler.MAIL_ACTION,
+				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
-				.addOptionItem(PopupActionHandler.EXPORT_CSV_ACTION,
+				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 		this.tableActionControls
-				.addOptionItem(PopupActionHandler.EXPORT_PDF_ACTION,
+				.addOptionItem(TablePopupActionHandler.EXPORT_PDF_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 		this.tableActionControls.addOptionItem(
-				PopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+				TablePopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 		this.tableActionControls
 				.addOptionItem(
-						PopupActionHandler.MASS_UPDATE_ACTION,
+						TablePopupActionHandler.MASS_UPDATE_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
 						AppContext

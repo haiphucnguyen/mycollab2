@@ -18,6 +18,10 @@ package com.esofthead.mycollab.module.mail;
 
 import org.apache.commons.mail.EmailAttachment;
 
+/**
+ * Attachment source of email
+ * 
+ */
 public interface EmailAttachementSource {
 	EmailAttachment getAttachmentObj();
 }

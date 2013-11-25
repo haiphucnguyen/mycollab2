@@ -34,6 +34,16 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * Generic list item
+ * 
+ * @param <SearchService>
+ *            search service generic interface
+ * @param <S>
+ *            search criteria
+ * @param <T>
+ *            bean item
+ */
 public class BeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
 		extends CustomComponent {
 

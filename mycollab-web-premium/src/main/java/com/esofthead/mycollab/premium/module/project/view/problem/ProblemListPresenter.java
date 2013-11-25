@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -41,10 +41,10 @@ public class ProblemListPresenter
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
-						} else if (PopupActionHandler.MASS_UPDATE_ACTION
+						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
 								.equals(id)) {
 							MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
 									"Mass Update Problems",

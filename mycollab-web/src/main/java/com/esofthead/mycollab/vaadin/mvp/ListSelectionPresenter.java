@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamRe
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
@@ -64,11 +64,6 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 			@Override
 			public void move(int newPageNumber) {
-				pageChange();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
 				pageChange();
 			}
 
@@ -177,7 +172,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 	abstract protected void deleteSelectedItems();
 
 	public static abstract class DefaultPopupActionHandler implements
-			PopupActionHandler {
+			TablePopupActionHandler {
 
 		private ListSelectionPresenter presenter;
 
@@ -187,7 +182,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 		@Override
 		public void onSelect(String id, String caption) {
-			if (PopupActionHandler.DELETE_ACTION.equals(id)) {
+			if (TablePopupActionHandler.DELETE_ACTION.equals(id)) {
 				ConfirmDialogExt
 						.show(presenter.getView().getWindow(),
 								LocalizationHelper.getMessage(
@@ -210,7 +205,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 									}
 								});
 
-			} else if (PopupActionHandler.EXPORT_CSV_ACTION.equals(id)) {
+			} else if (TablePopupActionHandler.EXPORT_CSV_ACTION.equals(id)) {
 				Resource res = null;
 				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 						.getView()).getPagedBeanTable();
@@ -239,7 +234,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				}
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");
-			} else if (PopupActionHandler.EXPORT_PDF_ACTION.equals(id)) {
+			} else if (TablePopupActionHandler.EXPORT_PDF_ACTION.equals(id)) {
 				Resource res = null;
 				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 						.getView()).getPagedBeanTable();
@@ -268,7 +263,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				}
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");
-			} else if (PopupActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
+			} else if (TablePopupActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
 				Resource res = null;
 				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 						.getView()).getPagedBeanTable();

@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -66,7 +66,7 @@ public class RoleListPresenter extends
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (PopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
 						}

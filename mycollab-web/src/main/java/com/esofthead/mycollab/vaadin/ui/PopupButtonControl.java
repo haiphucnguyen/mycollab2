@@ -22,7 +22,7 @@ import java.util.Set;
 import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -32,7 +32,7 @@ public class PopupButtonControl extends SplitButton implements
 
 	private static final long serialVersionUID = 1L;
 	private final VerticalLayout selectContent;
-	private Set<PopupActionHandler> handlers;
+	private Set<TablePopupActionHandler> handlers;
 
 	public PopupButtonControl(final String id, final String defaultName) {
 		super();
@@ -71,16 +71,16 @@ public class PopupButtonControl extends SplitButton implements
 
 	private void changeOption(String id, String caption) {
 		if (handlers != null) {
-			for (PopupActionHandler handler : handlers) {
+			for (TablePopupActionHandler handler : handlers) {
 				handler.onSelect(id, caption);
 			}
 		}
 	}
 
 	@Override
-	public void addPopupActionHandler(PopupActionHandler handler) {
+	public void addPopupActionHandler(TablePopupActionHandler handler) {
 		if (handlers == null) {
-			handlers = new HashSet<PopupActionHandler>();
+			handlers = new HashSet<TablePopupActionHandler>();
 		}
 		handlers.add(handler);
 

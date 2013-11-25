@@ -35,9 +35,16 @@ import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.validator.constraints.DateComparision;
 import com.esofthead.mycollab.web.AppContext;
 
-@SuppressWarnings("serial")
+/**
+ * Generic form with java bean as datasource. It includes validation against
+ * bean input
+ * 
+ * @param <T>
+ *            java bean as datasource map with form fields
+ */
 public class AdvancedEditBeanForm<T> extends GenericForm implements
 		HasEditFormHandlers<T> {
+	private static final long serialVersionUID = 1L;
 
 	private final Validator validation;
 	private List<EditFormHandler<T>> editFormHandlers;
@@ -45,9 +52,17 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 	public AdvancedEditBeanForm() {
 		this.setImmediate(true);
 		this.setWriteThrough(true);
-		validation = ApplicationContextUtil.getSpringBean(LocalValidatorFactoryBean.class);
+		validation = ApplicationContextUtil
+				.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
+	/**
+	 * Validate form against data
+	 * 
+	 * @param data
+	 * @return true if data is valid, otherwise return false and show result to
+	 *         form
+	 */
 	public boolean validateForm(Object data) {
 		for (Object propertyId : this.getItemPropertyIds()) {
 			this.getField(propertyId).removeStyleName("errorField");

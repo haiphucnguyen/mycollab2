@@ -18,10 +18,9 @@ package com.esofthead.mycollab.vaadin.events;
 
 /**
  * 
- * @author haiphucnguyen
  *
  */
-public interface PopupActionHandler {
+public interface TablePopupActionHandler {
 	public static final String MAIL_ACTION = "mail";
 
 	public static final String EXPORT_CSV_ACTION = "exportCsv";
