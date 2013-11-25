@@ -5145,7 +5145,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	position:absolute;
 	display:none;
 /* 	border:5px solid black; Border around tooltip */
-	background:white;
+	background-color: #FDFDEE;
 	z-index:3000;
 }
 

@@ -35,7 +35,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
@@ -147,68 +146,72 @@ public class ActivityStreamComponent extends Depot {
 
 					String content = "";
 
+					String dateTimeTypeIdStr = AppContext
+							.formatDateTime(itemCreatedDate).replace("/", "")
+							.trim().replace(" ", "").replace(":", "")
+							+ activityStream.getTypeid();
+					String idDivSeverData = "projectOverViewserverdata"
+							+ dateTimeTypeIdStr + "";
+					String idToopTipDiv = "projectOverViewtooltip"
+							+ dateTimeTypeIdStr + "";
+					String idStickyToolTipDiv = "projectOverViewmystickyTooltip"
+							+ dateTimeTypeIdStr;
+					String idtagA = "projectOverViewtagA" + dateTimeTypeIdStr;
+
+					String arg0 = UserAvatarControlFactory.getAvatarLink(
+							activityStream.getCreatedUserAvatarId(), 16);
+					String arg1 = ProjectLinkBuilder
+							.generateProjectMemberFullLink(
+									activityStream.getExtratypeid(),
+									activityStream.getCreateduser());
+					String arg2 = activityStream.getCreatedUserFullName();
+
+					String arg3 = LocalizationHelper
+							.getMessage(ProjectLocalizationTypeMap
+									.getType(activityStream.getType()));
+					String arg4 = ProjectResources
+							.getResourceLink(activityStream.getType());
+					String arg5 = idtagA;
+					String arg6 = ProjectLinkBuilder.generateProjectItemLink(
+							activityStream.getExtratypeid(),
+							activityStream.getType(),
+							activityStream.getTypeid());
+					String arg7 = "'" + dateTimeTypeIdStr + "'";
+					String arg8 = "'" + activityStream.getType() + "'";
+					String arg9 = "'" + activityStream.getTypeid() + "'";
+					String arg10 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+					String arg11 = "'" + activityStream.getSaccountid() + "'";
+					String arg12 = "'" + AppContext.getSiteUrl() + "'";
+					String arg13 = AppContext.getSession().getTimezone();
+					String arg14 = activityStream.getNamefield();
+					String arg15 = MyCollabResource
+							.newResourceLink("icons/16/project/project.png");
+					String arg16 = ProjectLinkBuilder.generateProjectFullLink(
+							activityStream.getProjectId(),
+							GenericLinkUtils.URL_PREFIX_PARAM);
+					String arg17 = activityStream.getProjectName();
+					String arg18 = idStickyToolTipDiv;
+					String arg19 = idToopTipDiv;
+					String arg20 = idDivSeverData;
+
 					if (ActivityStreamConstants.ACTION_CREATE
 							.equals(activityStream.getAction())) {
 						content = LocalizationHelper
 								.getMessage(
 										ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_CREATE_ACTION_TITLE,
-										UserAvatarControlFactory.getAvatarLink(
-												activityStream
-														.getCreatedUserAvatarId(),
-												16),
-										ProjectLinkBuilder.generateProjectMemberFullLink(
-												activityStream.getExtratypeid(),
-												activityStream.getCreateduser()),
-										activityStream.getCreatedUserFullName(),
-										LocalizationHelper
-												.getMessage(ProjectLocalizationTypeMap
-														.getType(activityStream
-																.getType())),
-										ProjectResources
-												.getResourceLink(activityStream
-														.getType()),
-										ProjectLinkBuilder.generateProjectItemLink(
-												activityStream.getExtratypeid(),
-												activityStream.getType(),
-												activityStream.getTypeid()),
-										activityStream.getNamefield(),
-										MyCollabResource
-												.newResourceLink("icons/16/project/project.png"),
-										ProjectLinkBuilder.generateProjectFullLink(
-												activityStream.getProjectId(),
-												GenericLinkUtils.URL_PREFIX_PARAM),
-										activityStream.getProjectName());
+										arg0, arg1, arg2, arg3, arg4, arg5,
+										arg6, arg7, arg8, arg9, arg10, arg11,
+										arg12, arg13, arg14, arg15, arg16,
+										arg17, arg18, arg19, arg20);
 					} else if (ActivityStreamConstants.ACTION_UPDATE
 							.equals(activityStream.getAction())) {
 						content = LocalizationHelper
 								.getMessage(
 										ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_UPDATE_ACTION_TITLE,
-										UserAvatarControlFactory.getAvatarLink(
-												activityStream
-														.getCreatedUserAvatarId(),
-												16),
-										ProjectLinkBuilder.generateProjectMemberFullLink(
-												activityStream.getExtratypeid(),
-												activityStream.getCreateduser()),
-										activityStream.getCreatedUserFullName(),
-										LocalizationHelper
-												.getMessage(ProjectLocalizationTypeMap
-														.getType(activityStream
-																.getType())),
-										ProjectResources
-												.getResourceLink(activityStream
-														.getType()),
-										ProjectLinkBuilder.generateProjectItemLink(
-												activityStream.getExtratypeid(),
-												activityStream.getType(),
-												activityStream.getTypeid()),
-										activityStream.getNamefield(),
-										MyCollabResource
-												.newResourceLink("icons/16/project/project.png"),
-										ProjectLinkBuilder.generateProjectFullLink(
-												activityStream.getProjectId(),
-												GenericLinkUtils.URL_PREFIX_PARAM),
-										activityStream.getProjectName());
+										arg0, arg1, arg2, arg3, arg4, arg5,
+										arg6, arg7, arg8, arg9, arg10, arg11,
+										arg12, arg13, arg14, arg15, arg16,
+										arg17, arg18, arg19, arg20);
 						if (activityStream.getAssoAuditLog() != null) {
 							content += ProjectActivityStreamGenerator
 									.generatorDetailChangeOfActivity(activityStream);

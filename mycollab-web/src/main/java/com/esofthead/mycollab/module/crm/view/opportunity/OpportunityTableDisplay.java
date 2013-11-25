@@ -252,16 +252,21 @@ public class OpportunityTableDisplay
 			div.appendChild(opportunityName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Currency:")).appendChild(
-					new Td().setStyle("vertical-align: top; text-align: left;")
-							.appendText(
-									StringUtils.getStringFieldValue(opportunity
-											.getCurrency().getSymbol())));
+							.appendText("Currency:"))
+					.appendChild(
+							new Td().setStyle(
+									"vertical-align: top; text-align: left;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue((opportunity
+															.getCurrency() != null) ? opportunity
+															.getCurrency()
+															.getSymbol() : "")));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")

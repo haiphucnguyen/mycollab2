@@ -409,7 +409,7 @@ public class TaskTableDisplay extends
 			div.appendChild(taksName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(

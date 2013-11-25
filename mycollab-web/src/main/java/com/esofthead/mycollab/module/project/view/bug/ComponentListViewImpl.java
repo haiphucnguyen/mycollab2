@@ -39,7 +39,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
-import com.esofthead.mycollab.servlet.AnotatedTooltipGeneratorHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -224,7 +223,8 @@ public class ComponentListViewImpl extends AbstractView implements
 
 		this.tableActionControls = new PopupButtonControl(
 				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
+		this.tableActionControls.addOptionItem(
+				TablePopupActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
 				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
@@ -288,7 +288,7 @@ public class ComponentListViewImpl extends AbstractView implements
 			div.appendChild(componentName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :350px; color: #5a5a5a; font: 11px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;");
+			table.setStyle("padding-left:10px; width :350px; color: #5a5a5a; font-size:12px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
