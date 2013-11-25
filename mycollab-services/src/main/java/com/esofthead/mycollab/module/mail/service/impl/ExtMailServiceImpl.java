@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.configuration.EmailConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.mail.IMailer;
-import com.esofthead.mycollab.module.mail.Mailer;
+import com.esofthead.mycollab.module.mail.DefaultMailer;
 import com.esofthead.mycollab.module.mail.NullMailer;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 
@@ -47,7 +47,7 @@ public class ExtMailServiceImpl extends AbstractMailService implements
 
 		// check whether email is configured properly
 
-		return new Mailer(emailConfiguration);
+		return new DefaultMailer(emailConfiguration);
 
 	}
 

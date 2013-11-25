@@ -30,15 +30,16 @@ import com.esofthead.mycollab.configuration.EmailConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
-public class Mailer implements IMailer {
-	private static Logger log = LoggerFactory.getLogger(Mailer.class);
+public class DefaultMailer implements IMailer {
+	
+	private static Logger log = LoggerFactory.getLogger(DefaultMailer.class);
 	protected String host;
 	protected String username = null;
 	protected String password = null;
 	protected boolean isTLS = false;
 	protected int port;
 
-	public Mailer(EmailConfiguration emailConf) {
+	public DefaultMailer(EmailConfiguration emailConf) {
 		this.host = emailConf.getHost();
 		this.username = emailConf.getUser();
 		this.password = emailConf.getPassword();

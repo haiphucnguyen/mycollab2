@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
+/**
+ * Dummy a mailer in case email configuration not properly set.
+ */
 public class NullMailer implements IMailer {
 
 	private static Logger log = LoggerFactory.getLogger(NullMailer.class);

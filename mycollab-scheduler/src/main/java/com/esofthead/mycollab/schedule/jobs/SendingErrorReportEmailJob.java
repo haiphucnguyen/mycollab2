@@ -30,7 +30,7 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.ReportBugIssueExample;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.module.mail.Mailer;
+import com.esofthead.mycollab.module.mail.DefaultMailer;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
@@ -51,7 +51,7 @@ public class SendingErrorReportEmailJob extends QuartzJobBean {
 						"My Collab Error Report",
 						"templates/email/errorReport.mt");
 				templateGenerator.putVariable("issueCol", listIssues);
-				Mailer mailer = new Mailer(
+				DefaultMailer mailer = new DefaultMailer(
 						SiteConfiguration.getEmailConfiguration());
 				mailer.sendHTMLMail("mail@mycollab.com", "Error Agent", Arrays
 						.asList(new MailRecipientField(SiteConfiguration

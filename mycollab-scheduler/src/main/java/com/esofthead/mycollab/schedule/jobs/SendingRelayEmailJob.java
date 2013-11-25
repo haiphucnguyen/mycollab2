@@ -33,7 +33,7 @@ import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
-import com.esofthead.mycollab.module.mail.Mailer;
+import com.esofthead.mycollab.module.mail.DefaultMailer;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailsAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -65,7 +65,7 @@ public class SendingRelayEmailJob extends QuartzJobBean {
 								recipientArr[0][i], recipientArr[1][i]));
 					}
 
-					Mailer mailer = new Mailer(
+					DefaultMailer mailer = new DefaultMailer(
 							SiteConfiguration.getEmailConfiguration());
 					mailer.sendHTMLMail(relayEmail.getFromemail(),
 							relayEmail.getFromname(), toMailList, null, null,
